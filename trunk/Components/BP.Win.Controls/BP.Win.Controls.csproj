@@ -1,0 +1,257 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7F863CBF-C33B-457A-B772-BB719AEE877C}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>CCBControls</AssemblyKeyContainerName>
+    <AssemblyName>BP.Win.Controls</AssemblyName>
+    <AssemblyOriginatorKeyFile>bin\Debug\CCB.snk</AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BP.Win32.Controls</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Data.OracleClient">
+      <Name>System.Data.OracleClient</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Name>System.EnterpriseServices</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppLog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Btn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CLB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DDL.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DG.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DGColumnInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DG_DDL.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DG_DDLColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DT.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DTP.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="D_Table.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FCheckedList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAttrBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IPaint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Lab.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ListItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LogBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MSG.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NUD.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pan.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RTB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TC.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UCBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WFContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WFLineBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WFNodeBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <EmbeddedResource Include="Btn.resx">
+      <DependentUpon>Btn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DDL.resx">
+      <DependentUpon>DDL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DG.resx">
+      <DependentUpon>DG.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FCheckedList.resx">
+      <DependentUpon>FCheckedList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase.resx">
+      <DependentUpon>FormBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAttrBase.resx">
+      <DependentUpon>FrmAttrBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GB.resx">
+      <DependentUpon>GB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lab.resx">
+      <DependentUpon>Lab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pan.resx">
+      <DependentUpon>Pan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCBase.resx">
+      <DependentUpon>UCBase.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Edu\Components\BP.En30\BP.En30.csproj">
+      <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
+      <Name>BP.En30</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

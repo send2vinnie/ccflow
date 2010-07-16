@@ -1,0 +1,7 @@
+D:\ShiDai\Components\BP.En30\obj\Release\ResolveAssemblyReference.cache
+D:\ShiDai\Components\BP.En30\obj\Release\BP.En30.dll
+D:\ShiDai\Components\BP.En30\BP.En30.dll
+D:\ShiDai\Components\BP.En30\ChineseConverter.dll
+D:\WorkFlow\Components\BP.En30\obj\Release\ResolveAssemblyReference.cache
+D:\WorkFlow\Components\BP.En30\obj\Release\BP.En30.dll
+D:\WorkFlow\Components\BP.En30\BP.En30.dll

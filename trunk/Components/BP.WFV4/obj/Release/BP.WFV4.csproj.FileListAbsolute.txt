@@ -1,0 +1,5 @@
+D:\WorkFlow\Components\BP.WFV4\bin\Release\BP.WFV4.dll
+D:\WorkFlow\Components\BP.WFV4\bin\Release\BP.En30.dll
+D:\WorkFlow\Components\BP.WFV4\bin\Release\ChineseConverter.dll
+D:\WorkFlow\Components\BP.WFV4\obj\Release\ResolveAssemblyReference.cache
+D:\WorkFlow\Components\BP.WFV4\obj\Release\BP.WFV4.dll

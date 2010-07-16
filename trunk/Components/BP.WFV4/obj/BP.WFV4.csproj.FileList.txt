@@ -1,0 +1,11 @@
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\BP.WFV4.dll
+bin\BP.WFV4.dll
+bin\BP.WFV4.pdb
+bin\BP.En30.dll
+bin\ChineseConverter.dll
+bin\BP.En30.pdb
+bin\ChineseConverter.xml
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\BP.WFV4.dll
+obj\Debug\BP.WFV4.pdb
