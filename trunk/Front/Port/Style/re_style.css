@@ -1,0 +1,66 @@
+
+/*--全局样式--*/
+body{margin:5px auto 0 auto; padding:0; font:Arial, Helvetica, sans-serif; font-size:14px; color:#333; text-align:center}
+table{font-size:12px}
+input,select {margin:0; padding:0; text-align:left; font-family:Arial, Helvetica, sans-serif; margin-left:10px; font-size:12px}
+img{border:0}
+a:link,a:visited {	color: #1c4185; text-decoration:none; font-size:12px}
+a:hover{color:#FF6600; text-decoration:underline}
+.arrow1{background-position: -36px -259px ; height:26px; width:13px; display:block}
+.font1{font-size:16px; font-family:Arial; font-weight:bolder}
+.font2{font-weight:bolder; color:#415e70}
+.font2 a:link,.font2 a:visited{color:#415e70}
+.font2 a:hover{ color:#FF9900 }
+.font3{font-weight:bolder; color:#415e70; font-family:Arial; font-size:16px}
+.font4{ font-size:13px;font-weight:bolder; font-family:Arial; }
+.font5{ font-size:20px; color:#0196D4; font-family:"黑体";}
+.font6{ font-size:9px; font-family:verdana;}
+.hide{display:none}
+.arrow{font-family:Verdana; font-size:12px}
+
+.red{color:#F00}
+.inp{border:1px solid #84a1bd; width:157px; padding:2px 2px 2px 2px ; background-position: -70px -424px}
+.sel{ width:164px;border:1px solid #84a1bd}
+ul{margin:5px 0 0 0; padding:0 }
+li{list-style:none; line-height:24px; margin-left:10px}
+
+#infobox-top,#infobox-bottom,#LoginBox-title,#btn1,#btn2,#btn3,#LoginBox-title2,#LoginBox-bottom,#ico1,#ico2,#ico3,#NewsDiv-left,#NewsDiv-mid,#NewsDiv-rig,#InfoDiv,#InfoDiv-left,#InfoDiv-rig,.C-line,.ico1,.ico2,.ico3,.ico4,.ico5,.ico6,#Footer-bg,#js3,.NewsDiv-mid2,.intr-title-div{ background:url(../Images/re_imgs.gif) no-repeat}
+
+
+#MainDiv{width:755px; margin:0 auto; position:relative; float:none; padding:0; text-align:left}
+
+/*顶部链接*/
+	#Top{ height:40px; margin-top:5px}
+		#Logo{float:left}
+		#Top-link{float:right}
+/*登录区域*/
+ 	#LoginDiv{position:relative;width:200px; height:460px}	
+		#LoginBox{position:absolute; top:-19px; right:18px!important; right:17px;width:246px;height:200px;z-index: 30;}
+		#infobox{position:absolute; top:340px; right:18px!important; right:17px;width:246px;height:10px;z-index: 33;}
+		 #infobox-top{background-position: -9px -95px; width:100%; height:8px}
+		 #infobox-txt{line-height:28px; font-family:'宋体'; padding:4px 10px !important;padding:0px 10px 4px 10px; background:#FEFEFE;border-left:1px solid #CECECE; border-right:1px solid #CECECE; color:#1C4186;}
+		 #infobox-bottom{background-position: -9px -180px ; height:8px}
+		.banner,.banner-img{background: url(../Images/re_banner.jpg)  no-repeat;}
+		.banner{height:155px; width:100%;  z-index:0; position:absolute;}	
+			.banner-img{position:absolute; left:0px; top:0px; width:190px; height:155px; z-index:35;}
+			.img1{background-position: 0px -155px;}
+			.img2{background-position: 0px -310px;}
+			.img3{background-position: 0px -465px;}
+			#banner-title{line-height:18px; color:#fff; position:absolute; left:215px; top:22px; width:279px; z-index:34;cursor:default; font-size:16px; font-family:"黑体"; font-weight:bolder; display:none;}
+			#banner-txt{line-height:18px; color:#fff; position:absolute; left:215px; top:50px; width:279px; z-index:31; cursor:default;}	
+			#banner-link{  position:absolute; left:380px; top:100px; width:150px; z-index:32; font-weight:bolder}
+				#banner-link a:link,#banner-link  a:visited{color:#fff}
+				#banner-link a:hover{color:#FF6600}
+			#LoginBox-input-table{ background:#FEFEFE;border-left:1px solid #CECECE; border-right:1px solid #CECECE}	
+			#LoginBox-title{background-position: -9px -95px; width:100%; height:57px}
+			#LoginBox-check{ vertical-align:middle;}
+			#LoginBox-check input{margin-left:10px !important; margin-left:6px;}
+			#Btn1-border,#btn2-border,#btn3-border{width:66px; height:23px; border:1px solid #D2E1EE; float:left;margin-left:10px !important; margin-left:4px;}
+			/*--#btn2-border{margin-left:24px;}
+			#btn3-border{float:none; margin:0px;}--*/
+			#Btn1,#btn2,#btn3{ background-position: -14px -195px; width:66px; height:23px; margin-left:0; cursor: pointer; text-align:center; line-height:23px; color:#666; border:0}
+			/*-#btn2{background-position:-82px -195px; }
+			#btn3{background-position:-14px -221px; height:31px; width:118px; font-size:12px; font-weight:bolder; }--*/
+			#LoginBox-title2{background-position: -8px -664px ; height:34px;}
+			#LoginBox-bottom{background-position: -9px -173px ; height:15px}
+			#js3{ background-position:-76px -399px; border:1px solid #999;  padding:4px  1px 2px 26px ; margin:auto auto 15px  auto; width:133px}
