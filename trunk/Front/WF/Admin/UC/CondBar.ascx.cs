@@ -21,19 +21,34 @@ public partial class WF_Admin_UC_CondBar :BP.Web.UC.UCBase3
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (this.Request.QueryString["CondType"] != "0")
+        if (this.Request.QueryString["CondType"] != "2")
             return;
-
 
         this.AddTable();
         this.AddTR();
-        this.AddTD("<a href='Cond.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>表单条件</a>");
 
-            this.AddTD("<a href='CondStation.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>岗位条件</a>");
-            this.AddTD("<a href='CondDept.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>部门条件</a>");
-
+        switch (this.PageID)
+        {
+            case "Cond":
+                this.AddTDB("<a href='Cond.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>表单条件</a>");
+                this.AddTD("<a href='CondStation.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>岗位条件</a>");
+                this.AddTD("<a href='CondDept.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>部门条件</a>");
+                break;
+            case "CondStation":
+                this.AddTD("<a href='Cond.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>表单条件</a>");
+                this.AddTDB("<a href='CondStation.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>岗位条件</a>");
+                this.AddTD("<a href='CondDept.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>部门条件</a>");
+                break;
+            case "CondDept":
+                this.AddTD("<a href='Cond.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>表单条件</a>");
+                this.AddTD("<a href='CondStation.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>岗位条件</a>");
+                this.AddTDB("<a href='CondDept.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>部门条件</a>");
+                break;
+            default:
+                break;
+        }
+        
         this.AddTREnd();
-
         this.AddTableEnd();
 
     }

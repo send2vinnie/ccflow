@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="CondDepts.ascx.cs" Inherits="WF_Admin_UC_CondDepts" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="CondDepts.ascx.cs" Inherits="WF_Admin_UC_CondDept" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <%@ Register src="CondBar.ascx" tagname="CondBar" tagprefix="uc2" %>
 <table border=0 width='100%' >

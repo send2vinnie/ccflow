@@ -185,7 +185,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         this.Pub1.AddTable(); 
         this.Pub1.AddTR();
         this.Pub1.AddTD("colspan=4", "岗位选择");
-
         this.Pub1.AddTREnd();
 
         SysEnums ses = new SysEnums("StaGrade");
