@@ -370,6 +370,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
 
         wk.Rec = WebUser.No;
+        wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
+        wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
+        wk.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
+
         if (wk.OID == 0)
         {
             switch (nd.HisFormType)
@@ -378,8 +382,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     this.UCEn1.Bind(wk, "ND" + nd.NodeID, false, false, null);
                     return;
                 case FormType.SelfForm:
-                    wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
-                    wk.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
+                   
                     wk.Insert();
                     this.UCEn1.AddIframeWithOnload(nd.FormUrl + "?WorkID=" + wk.OID);
                     return;
@@ -1027,14 +1030,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
         wk.WFState = 0;
         wk.NodeState = 0;
-        wk.FK_XJ = WebUser.FK_Dept;
+      
         wk.FK_Dept = WebUser.FK_Dept;
-
         wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
-        wk.SetValByKey("FK_XJText", WebUser.FK_DeptName);
+
 
         Dept Dept = new Dept(WebUser.FK_Dept);
-        wk.SetValByKey("FK_XJText", Dept.Name);
         wk.FID = 0;
         wk.SetValByKey("RecText", WebUser.Name);
 
