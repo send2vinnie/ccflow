@@ -130,10 +130,15 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(RememberMeAttr.EmpsExt);
+                string str= this.GetValStringByKey(RememberMeAttr.EmpsExt);
+                if (str.Substring(str.Length - 1) == "¡¢")
+                    return str.Substring(0, str.Length - 1);
+                else
+                    return str;
             }
             set
             {
+                
                 this.SetValByKey(RememberMeAttr.EmpsExt, value);
             }
         }
