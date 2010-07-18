@@ -1,0 +1,4 @@
+D:\WebApp\Components\BP.GTS\bin\Release\BP.GTS.dll
+D:\WebApp\Components\BP.GTS\bin\Release\BP.En.dll
+D:\WebApp\Components\BP.GTS\obj\Release\ResolveAssemblyReference.cache
+D:\WebApp\Components\BP.GTS\obj\Release\BP.GTS.dll
