@@ -181,7 +181,6 @@ namespace BP.XML
 	/// </summary>
 	abstract public class XmlEns:System.Collections.CollectionBase
 	{
-
         public bool Contine(string key, string val)
         {
             foreach (XmlEn en in this)
