@@ -13,13 +13,13 @@ function GroupBarClick( Field )
 {
   var alt= document.getElementById('Img'+Field).alert ; 
     var sta='block';  
-    if (alt=='Min' ) 
+    if (alt=='Max' ) 
      {
          sta='block';    
-         alt='Max' ;
+         alt='Min' ;
      } else {
        sta='none';    
-       alt='Min'; 
+       alt='Max'; 
       }
       
       document.getElementById('Img'+Field).src= './Img/'+ alt + '.gif';

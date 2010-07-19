@@ -12,11 +12,19 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
-        
+    <table border=0 width='100%'>
+    <tr>
+    <td valign=top  width='20%' >
+      <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
-    </div>
+    </td>
+    <td valign=top>
+      <asp:ContentPlaceHolder id="ContentPlaceHolder2" runat="server">
+        </asp:ContentPlaceHolder>
+    </td>
+    </tr>
+      
+        </table>
     </form>
 </body>
 </html>

@@ -97,13 +97,13 @@
 
   var alt= document.getElementById('Img'+Field).alert ; 
     var sta='block';  
-    if (alt=='Min' ) 
+    if (alt=='Max' ) 
      {
-         sta='block';    
-         alt='Max' ;
+         sta='block';
+         alt='Min' ;
      } else {
        sta='none';    
-       alt='Min'; 
+       alt='Max'; 
       }
       
       document.getElementById('Img'+Field).src= './Img/'+ alt + '.gif';
@@ -122,7 +122,6 @@
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
  <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; height: 100%; background-color:White">
             <tr>
                 <td style="height: 1px">

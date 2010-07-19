@@ -90,7 +90,7 @@ public partial class WF_MapDef_MapDef : WebPage
         if (cfg.GroupTitle.Length > 3)
         {
             this.Pub1.AddTR("onclick=\"GroupBarClick('ND');\" ");
-            this.Pub1.AddTD("colspan=4 class=FDesc width='600px' ", "&nbsp;&nbsp;<img src='./Style/Max.gif' alert='Max' id='ImgND'  border=0 />&nbsp;<b>" + md.Name + "</b>");
+            this.Pub1.AddTD("colspan=4 class=FDesc width='600px' ", "&nbsp;&nbsp;<img src='./Style/Max.gif' alert='Min' id='ImgND'  border=0 />&nbsp;<b>" + md.Name + "</b>");
             this.Pub1.AddTREnd();
         }
         else
@@ -127,7 +127,7 @@ public partial class WF_MapDef_MapDef : WebPage
                     GroupKey = ss[0];
                     GroupIdx = 0;
                     this.Pub1.AddTR("onclick=\"GroupBarClick('" + ss[0] + "');\" ");
-                    this.Pub1.AddTD("colspan=4 class=FDesc ", "&nbsp;&nbsp;<img src='./Style/Max.gif' alert='Max' id='Img" + ss[0] + "'  border=0 />&nbsp;<b>" + ss[1] + "</b>");
+                    this.Pub1.AddTD("colspan=4 class=FDesc ", "&nbsp;&nbsp;<img src='./Style/Max.gif' alert='Min' id='Img" + ss[0] + "'  border=0 />&nbsp;<b>" + ss[1] + "</b>");
                     this.Pub1.AddTREnd();
                     isLeft = true;
                     i = -1;
@@ -539,7 +539,7 @@ public partial class WF_MapDef_MapDef : WebPage
         }
         return "<a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向下移动顺序' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动顺序' border=0/></a>";
     }
-    public void InsertCellsData(MapData md ,   string groupID, int groupIdx)
+    public void InsertCellsData(MapData md, string groupID, int groupIdx)
     {
         this.Pub1.AddTR();
         this.Pub1.Add("<TD colspan=4  ID=" + groupID + groupIdx + " >");
@@ -551,9 +551,8 @@ public partial class WF_MapDef_MapDef : WebPage
             if (attr.UIVisible == false)
                 continue;
 
-            this.Pub1.AddTDTitle("<a href=\"javascript:Edit('" + this.MyPK + "T','" + attr.OID + "','" + attr.MyDataType + "');\" >" + attr.Name + "</a>");
 
-            //this.Pub1.AddTDTitle(attr.Name);
+            this.Pub1.AddTDTitle("width='" + attr.UIWidth + "px'", "<a href=\"javascript:Edit('" + this.MyPK + "T','" + attr.OID + "','" + attr.MyDataType + "');\" >" + attr.Name + "</a>");
         }
         this.Pub1.AddTREnd();
 
@@ -566,17 +565,110 @@ public partial class WF_MapDef_MapDef : WebPage
                 if (attr.UIVisible == false)
                     continue;
 
-                TB tb = new TB();
-                tb.ID = "s" + idx++ + y + attr.KeyOfEn;
-                tb.CssClass = "TB";
-                tb.Attributes["Width"] = attr.UIWidth.ToString();
-                this.Pub1.AddTD(tb);
+
+
+                switch (attr.LGType)
+                {
+                    case FieldTypeS.Normal:
+                        TB tb = new TB();
+                        tb.Attributes["width"] = "100%";
+                        tb.Columns = 60;
+                        tb.Enabled = attr.UIIsEnable;
+                        switch (attr.MyDataType)
+                        {
+                            case BP.DA.DataType.AppString:
+
+                                tb.ShowType = TBType.TB;
+                                tb.Text = attr.DefVal;
+                                this.Pub1.AddTD(tb);
+                                break;
+                            case BP.DA.DataType.AppDate:
+
+                                tb.ShowType = TBType.Date;
+                                tb.Text = attr.DefVal;
+                                this.Pub1.AddTD(tb);
+                                break;
+                            case BP.DA.DataType.AppDateTime:
+
+                                tb.ShowType = TBType.DateTime;
+                                tb.Text = attr.DefVal;
+                                this.Pub1.AddTD(tb);
+                                break;
+                            case BP.DA.DataType.AppBoolean:
+                                CheckBox cb = new CheckBox();
+                                cb.Text = attr.Name;
+                                cb.Checked = attr.DefValOfBool;
+                                cb.Enabled = attr.UIIsEnable;
+                                this.Pub1.AddTD(cb);
+                                break;
+                            case BP.DA.DataType.AppDouble:
+                            case BP.DA.DataType.AppFloat:
+                            case BP.DA.DataType.AppInt:
+                                tb.ShowType = TBType.Num;
+                                tb.Text = attr.DefVal;
+                                this.Pub1.AddTD("align=right",tb);
+                                break;
+                            case BP.DA.DataType.AppMoney:
+                            case BP.DA.DataType.AppRate:
+                                tb.ShowType = TBType.Moneny;
+                                tb.Text = attr.DefVal;
+                                this.Pub1.AddTD("align=right", tb);
+                                break;
+                            default:
+                                break;
+                        }
+
+                        tb.Attributes["width"] = "100%";
+                        switch (attr.MyDataType)
+                        {
+                            case BP.DA.DataType.AppString:
+                                tb.Attributes["class"] = "TB";
+                                break;
+                            case BP.DA.DataType.AppDateTime:
+                            case BP.DA.DataType.AppDate:
+                                if (tb.Enabled)
+                                    tb.Attributes["class"] = "TB";
+                                else
+                                    tb.Attributes["class"] = "TBReadonly";
+                                break;
+                            default:
+                                if (tb.Enabled)
+                                    tb.Attributes["class"] = "TBNum";
+                                else
+                                    tb.Attributes["class"] = "TBReadonlyNum";
+                                break;
+                        }
+                        break;
+                    case FieldTypeS.Enum:
+                        DDL ddle = new DDL();
+                        ddle.BindSysEnum(attr.KeyOfEn);
+                        ddle.SetSelectItem(attr.DefVal);
+                        ddle.Enabled = attr.UIIsEnable;
+                        this.Pub1.AddTD(ddle);
+                        break;
+                    case FieldTypeS.FK:
+                        DDL ddl1 = new DDL();
+                        ddl1.ID = "s" + attr.KeyOfEn;
+                        try
+                        {
+                            EntitiesNoName ens = attr.HisEntitiesNoName;
+                            ens.RetrieveAll();
+                            ddl1.BindEntities(ens);
+                            ddl1.SetSelectItem(attr.DefVal);
+                        }
+                        catch
+                        {
+                        }
+                        ddl1.Enabled = attr.UIIsEnable;
+                        this.Pub1.AddTD(ddl1);
+                        break;
+                    default:
+                        break;
+                }
             }
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();
-
-
         this.Pub1.AddTDEnd();
         this.Pub1.AddTREnd();
     }

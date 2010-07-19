@@ -11,7 +11,6 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using BP.Sys;
 using BP.En;
-using BP.En;
 using BP.Web;
 using BP.Web.UC;
 using BP.DA;
@@ -59,7 +58,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
                 this.Pub1.AddFieldSet(this.GetCaption);
                 MapAttr attr = new MapAttr(this.RefOID);
                 attr.MyDataType = this.FType;
-                switch (this.FType)
+                switch (attr.MyDataType)
                 {
                     case BP.DA.DataType.AppString:
                         this.EditString(attr);
@@ -122,6 +121,28 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         this.Pub1.AddTDTitle("&nbsp;");
         this.Pub1.AddTDTitle("&nbsp;");
         this.Pub1.AddTREnd();
+
+
+        if (mapAttr.IsTableAttr)
+        {
+            /* if here is table attr, It's will let use can change data type. */
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("改变数据类型");
+            DDL ddlType = new DDL();
+            ddlType.ID = "DDL_DTType";
+            BP.Sys.XML.SysDataTypes xmls = new BP.Sys.XML.SysDataTypes();
+            xmls.RetrieveAll();
+            ddlType.Bind(xmls, "No", "Name");
+            ddlType.SetSelectItem(mapAttr.MyDataTypeS);
+
+            ddlType.AutoPostBack = true;
+            ddlType.SelectedIndexChanged += new EventHandler(ddlType_SelectedIndexChanged);
+
+            this.Pub1.AddTD(ddlType);
+            this.Pub1.AddTD("");
+            this.Pub1.AddTREnd();
+        }
+        
 
 
         this.Pub1.AddTR();
@@ -188,7 +209,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
                 this.Pub1.AddTD(cb);
                 break;
             default:
-                this.Pub1.AddTD(" ");
+                this.Pub1.AddTD("&nbsp;");
                 break;
         }
         this.Pub1.AddTREnd();
@@ -292,6 +313,9 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
             rb.Checked = true;
 
         this.Pub1.Add(rb);
+        if (mapAttr.IsTableAttr)
+            rb.Enabled = false;
+
         rb = new RadioButton();
         rb.ID = "RB_UIVisible_1";
         rb.Text = this.ToE("IsView1", "界面可见"); // 界面可见;
@@ -302,35 +326,27 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         else
             rb.Checked = false;
 
+        if (mapAttr.IsTableAttr)
+            rb.Enabled = false;
+
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
         this.Pub1.AddTD("控制该它在表单的界面里是否可见");
         this.Pub1.AddTREnd();
         #endregion 是否可界面可见
 
+    }
+
+    void ddlType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        MapAttr attr = new MapAttr(this.RefOID);
+        attr.MyDataTypeS = this.Pub1.GetDDLByID("DDL_DTType").SelectedItemStringVal;
+        attr.Update();
 
 
+        this.Response.Redirect("EditF.aspx?DoType=" + this.DoType + "&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "&FType=" + attr.MyDataType, true);
 
-
-        
-
-        //if (mapAttr.OID > 0)
-        //{
-        //    this.Pub1.AddTR();
-        //    this.Pub1.AddTD("colspan=2", "<a href='javascript:WinOpen()' >" + this.ToE("AutoFull") + "</a>");
-        //    this.Pub1.AddTD("<a href=\"javascript:WinOpen('./Help/AutoFull.htm');\" >" + this.ToE("Help") + "</a>");
-        //    this.Pub1.AddTREnd();
-        //}
-
-        //// 添加自动填充功能 。
-        //this.Pub1.AddTR();
-        //this.Pub1.AddTD(this.ToE("AutoFull"));
-        //tb = new TB();
-        //tb.ID = "TB_AutoFull";
-        //tb.Text = mapAttr.AutoFull;
-        //this.Pub1.AddTD(tb);
-        //this.Pub1.AddTD("<a href=\"javascript:WinOpen('./Help/AutoFull.htm');\" >" + this.ToE("Help") + "</a>");
-        //this.Pub1.AddTREnd();
+        // this.Response.Redirect(this.Request.RawUrl, true);
     }
     public void EditBeforeEnd(MapAttr mapAttr)
     {
@@ -411,6 +427,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         //cb.Items.Add(new ListItem("Sina编辑框", "2"));
         //cb.Items.Add(new ListItem("FCKEditer编辑框", "3"));
 
+        this.Pub1.AddTD(tb);
         CheckBox cb = new CheckBox();
         cb.CheckedChanged += new EventHandler(cb_CheckedChanged);
         cb.ID = "CB_IsM";
@@ -426,9 +443,11 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
             cb.Checked = false;
             tb.Enabled = true;
         }
-        this.Pub1.AddTD(tb);
 
         this.Pub1.AddTD(cb);
+        if (mapAttr.IsTableAttr)
+            cb.Enabled = false;
+
         this.Pub1.AddTREnd();
 
 
@@ -474,11 +493,25 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         this.Pub1.AddTDTitle(""); // 描述
         this.Pub1.AddTREnd();
 
-        //this.Pub1.AddTR();
-        //this.Pub1.AddTDTitle("项目");
-        //this.Pub1.AddTDTitle("值");
-        //this.Pub1.AddTDTitle("描述");
-        //this.Pub1.AddTREnd();
+        if (mapAttr.IsTableAttr)
+        {
+            /* if here is table attr, It's will let use can change data type. */
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("改变数据类型");
+            DDL ddlType = new DDL();
+            ddlType.ID = "DDL_DTType";
+            BP.Sys.XML.SysDataTypes xmls = new BP.Sys.XML.SysDataTypes();
+            xmls.RetrieveAll();
+            ddlType.Bind(xmls, "No", "Name");
+            ddlType.SetSelectItem(mapAttr.MyDataTypeS);
+
+            ddlType.AutoPostBack = true;
+            ddlType.SelectedIndexChanged += new EventHandler(ddlType_SelectedIndexChanged);
+
+            this.Pub1.AddTD(ddlType);
+            this.Pub1.AddTD("");
+            this.Pub1.AddTREnd();
+        }
 
         this.Pub1.AddTR();
         this.Pub1.AddTD(this.ToE("FEName", "字段英文名称"));
