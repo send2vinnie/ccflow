@@ -159,24 +159,24 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
                 cond.FK_Flow = this.FK_Flow;
         }
 
-        this.Clear();
-        switch (this.HisCondType)
-        {
-            case CondType.Node:
-                this.AddFieldSet(this.ToE("NodeT", "节点方向") + " - " + this.ToE("CondDesign", "表单条件设计"));
-                break;
-            case CondType.Flow:
-                this.AddFieldSet(this.ToE("FlowT", "流程完成条件") + " - " + this.ToE("CondDesign", "表单条件设计"));
-                break;
-            case CondType.Dir:
-                this.AddFieldSet(this.ToE("DirT", "方向条件") + " - " + this.ToE("CondDesign", "表单条件设计"));
-                break;
-            case CondType.FLRole:
-                this.AddFieldSet(this.ToE("DirT", "分流完成条件设计") + " - " + this.ToE("CondDesign", "表单条件设计"));
-                break;
-            default:
-                break;
-        }
+        //this.Clear();
+        //switch (this.HisCondType)
+        //{
+        //    case CondType.Node:
+        //        this.AddFieldSet(this.ToE("NodeT", "节点方向") + " - " + this.ToE("CondDesign", "表单条件设计"));
+        //        break;
+        //    case CondType.Flow:
+        //        this.AddFieldSet(this.ToE("FlowT", "流程完成条件") + " - " + this.ToE("CondDesign", "表单条件设计"));
+        //        break;
+        //    case CondType.Dir:
+        //        this.AddFieldSet(this.ToE("DirT", "方向条件") + " - " + this.ToE("CondDesign", "表单条件设计"));
+        //        break;
+        //    case CondType.FLRole:
+        //        this.AddFieldSet(this.ToE("DirT", "分流完成条件设计") + " - " + this.ToE("CondDesign", "表单条件设计"));
+        //        break;
+        //    default:
+        //        break;
+        //}
         this.AddTable();
         this.AddTR();
         this.AddTDTitle(this.ToE("Item", "项目"));
@@ -428,7 +428,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         this.Add("</TD>");
         this.AddTREnd();
 
-        this.AddFieldSetEnd();
+        //this.AddFieldSetEnd();
 
 
 

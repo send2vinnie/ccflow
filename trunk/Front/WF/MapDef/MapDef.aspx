@@ -42,6 +42,12 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
+    function GroupField(mypk)
+    {
+        var url='GroupField.aspx?RefNo='+mypk;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+    }
      
     function Edit(mypk,refoid, ftype)
     {

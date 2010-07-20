@@ -141,25 +141,6 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         cond.MyPK = this.GenerMyPK;
         cond.RetrieveFromDBSources();
 
-        this.Pub1.Clear();
-        switch (this.HisCondType)
-        {
-            case CondType.Node:
-                this.Pub1.AddFieldSet(this.ToE("NodeT", "节点方向") + " - 节点发送人部门条件设计");
-                break;
-            case CondType.Flow:
-                this.Pub1.AddFieldSet(this.ToE("FlowT", "流程完成条件") + " - 节点发送人部门条件设计");
-                break;
-            case CondType.Dir:
-                this.Pub1.AddFieldSet(this.ToE("DirT", "方向条件") + " - 节点发送人部门条件设计");
-                break;
-            case CondType.FLRole:
-                this.Pub1.AddFieldSet(this.ToE("DirT", "分流完成条件设计") + " - 节点发送人部门条件设计");
-                break;
-            default:
-                break;
-        }
-
 
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         BP.WF.Node tond = new BP.WF.Node(this.ToNodeID);
@@ -242,7 +223,6 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         this.Pub1.Add(btn);
         this.Pub1.Add("</TD>");
         this.Pub1.AddTREnd();
-        this.Pub1.AddFieldSetEnd();
     }
     public DDL DDL_Node
     {

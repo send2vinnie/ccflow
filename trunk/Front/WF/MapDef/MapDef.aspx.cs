@@ -57,12 +57,39 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.AddB("[<a href='MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + dtl.No + "' >" + dtl.Name + "</a>]");
         }
     }
+    public void InsertDtl(MapDtls dtls, int idx)
+    {
+        MapDtl mydtl = null;
+        foreach (MapDtl dtl in dtls)
+        {
+            if (dtl.InsertIdx != idx)
+                continue;
+
+            mydtl = dtl;
+            break;
+        }
+
+        if (mydtl == null)
+            return;
+
+
+        this.Pub1.AddTR();
+        this.Pub1.Add("<TD　colspan=4 class=TD height=100px >");
+
+        this.Pub1.Add("<iframe frameborder=1 leftMargin='0' topMargin='0' src='MapDtlDe.aspx?DoType=Edit&FK_MapData="+mydtl.FK_MapData+"&FK_MapDtl="+mydtl.No+"' width='100%' height='100%' class=iframe name=fm style='border-style:none;' id=fm />");
+
+        this.Pub1.Add("</TD>");
+        this.Pub1.AddTREnd();
+    }
     /// <summary>
     /// 
     /// </summary>
     /// <param name="md"></param>
     public void BindAttrs(MapData md)
     {
+
+        MapDtls dtls = new MapDtls(md.No);
+
         Attrs attrs = md.GenerHisMap().Attrs;
         MapAttrs mattrs = new MapAttrs(md.No);
         QueryObject qo = new QueryObject(mattrs);
@@ -73,7 +100,7 @@ public partial class WF_MapDef_MapDef : WebPage
         int count = mattrs.Count;
         bool isReadonly = false;
 
-        this.Pub1.AddFieldSet(this.ToE("DesignSheet", "设计表单") + "-[<a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a>]- [<a href=\"javascript:AddTable('" + this.MyPK + "');\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("NewTable", "表格") + "</a>] -[<a href=\"CopyFieldFromNode.aspx?FK_Node=" + this.MyPK + "\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "从节点复制字段") + "</a>]-[<a href=\"MapDtl.aspx?DoType=DtlList&FK_MapData=" + this.MyPK + "\" >" + this.ToE("DesignDtl", "设计明细") + "</a>]");
+        this.Pub1.AddB(this.ToE("DesignSheet", "设计表单") + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:AddTable('" + this.MyPK + "');\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("NewTable", "表格") + "</a> - <a href=\"CopyFieldFromNode.aspx?FK_Node=" + this.MyPK + "\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "从节点复制字段") + "</a> - <a href=\"MapDtl.aspx?DoType=DtlList&FK_MapData=" + this.MyPK + "\" >" + this.ToE("DesignDtl", "设计明细") + "</a> - <a href=\"javascript:GroupField('" + md.No + "')\">字段分组</a><hr>");
 
         int i = -1;
         int idx = -1;
@@ -100,6 +127,7 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.Add("</TR>");
         }
 
+        int rowIdx = -1;
         foreach (MapAttr attr in mattrs)
         {
             if (attr.HisAttr.IsRefAttr)
@@ -110,14 +138,6 @@ public partial class WF_MapDef_MapDef : WebPage
                 isHaveH = true;
                 continue;
             }
-
-            if (md.CellsFrom == prvKey)
-            {
-                this.InsertCellsData(md, GroupKey, GroupIdx);
-                isLeft = true;
-                i = -1;
-            }
-            prvKey = attr.KeyOfEn;
 
             foreach (string g in gTitles)
             {
@@ -139,9 +159,10 @@ public partial class WF_MapDef_MapDef : WebPage
             idx++;
             if (attr.UIIsLine)
             {
+                rowIdx++;
+                this.Pub1.AddTR(" ID='" + GroupKey + GroupIdx + "'");
                 if (attr.IsBigDoc)
                 {
-                    this.Pub1.AddTR(" ID='" + GroupKey + GroupIdx + "'");
                     this.Pub1.Add("<TD class=FDesc colspan=4 >");
                     this.Pub1.Add(this.GenerLab(attr, idx, 0, count) + "<br>");
                     TextBox mytbLine = new TextBox();
@@ -157,9 +178,6 @@ public partial class WF_MapDef_MapDef : WebPage
                 }
                 else
                 {
-                    this.Pub1.AddTR(" ID='" + GroupKey + GroupIdx + "'");
-
-                    //this.Pub1.AddTR();
                     switch (attr.LGType)
                     {
                         case FieldTypeS.Normal:
@@ -270,9 +288,11 @@ public partial class WF_MapDef_MapDef : WebPage
                 continue;
             }
 
+
             i++;
             if (i == 0)
             {
+                rowIdx++;
                 this.Pub1.AddTR(" ID='" + GroupKey + GroupIdx + "'");
                 GroupIdx++;
             }
@@ -284,7 +304,7 @@ public partial class WF_MapDef_MapDef : WebPage
                 TextBox tb = new TextBox();
                 tb.TextMode = TextBoxMode.MultiLine;
                 tb.Rows = 8;
-               // tb.Columns = 30;
+                // tb.Columns = 30;
                 tb.Attributes["width"] = "100%";
                 this.Pub1.Add(tb);
                 this.Pub1.AddTDEnd();
@@ -411,8 +431,9 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.AddTD();
             this.Pub1.AddTREnd();
         }
-        this.Pub1.AddTableEnd();
 
+        this.InsertDtl(dtls, 99);
+        this.Pub1.AddTableEnd();
 
         // 输出隐藏的字段让用户编辑
 
@@ -421,9 +442,11 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.AddFieldSetEnd();
             return;
         }
+
+
         this.Pub1.AddFieldSet("编辑隐藏字段");
 
-        string msg = "" ; // +++++++ 编辑隐藏字段 +++++++++ <br>";
+        string msg = ""; // +++++++ 编辑隐藏字段 +++++++++ <br>";
         foreach (MapAttr attr in mattrs)
         {
             if (attr.UIVisible)
@@ -451,42 +474,40 @@ public partial class WF_MapDef_MapDef : WebPage
 
         this.Pub1.AddFieldSetEnd();
 
-        this.Pub1.AddFieldSetEnd();
 
 
+        //if (attrs.Count > 16 )
+        //{
+        //    this.Pub1.AddFieldSet("字段分组");
 
-        if (attrs.Count > 16 )
-        {
-            this.Pub1.AddFieldSet("字段分组");
+        //    this.Pub1.Add("比如:@Field2=分组1@Field2=分组2<br>");
+        //    TextBox tbt = new TextBox();
+        //    tbt.Text = "";
+        //    tbt.ID = "TB_GrouTitle";
+        //    tbt.Columns = 50;
+        //    tbt.Text = cfg.GroupTitle;
+        //    this.Pub1.Add(tbt);
 
-            this.Pub1.Add("比如:@Field2=分组1@Field2=分组2<br>");
-            TextBox tbt = new TextBox();
-            tbt.Text = "";
-            tbt.ID = "TB_GrouTitle";
-            tbt.Columns = 50;
-            tbt.Text = cfg.GroupTitle;
-            this.Pub1.Add(tbt);
+        //    Button btn = new Button();
+        //    btn.Text = " 应用 ";
+        //    btn.ID = "Btn_Save";
+        //    btn.Click += new EventHandler(btn_Click);
 
-            Button btn = new Button();
-            btn.Text = " 应用 ";
-            btn.ID = "Btn_Save";
-            btn.Click += new EventHandler(btn_Click);
+        //    this.Pub1.Add(btn); //, "<a href='javascript:HelpGroup()' ><img src='../../Images/Btn/Help.gif' border=0/>什么是字段分组？</a>");
 
-            this.Pub1.Add(btn); //, "<a href='javascript:HelpGroup()' ><img src='../../Images/Btn/Help.gif' border=0/>什么是字段分组？</a>");
-
-            this.Pub1.Add("<br>说明：利用字段分组就是把一个表单的字段分组显示它，用于表单数据字段较多的情况。");
-            this.Pub1.AddFieldSetEnd();
-        }
+        //    this.Pub1.Add("<br>说明：利用字段分组就是把一个表单的字段分组显示它，用于表单数据字段较多的情况。");
+        //    this.Pub1.AddFieldSetEnd();
+        //}
     }
 
-    void btn_Click(object sender, EventArgs e)
-    {
-        BP.Sys.EnCfg cfg = new EnCfg(this.MyPK);
-        cfg.No = this.MyPK;
-        cfg.GroupTitle = this.Pub1.GetTextBoxByID("TB_GrouTitle").Text;
-        cfg.Save();
-        this.Response.Redirect(this.PageID + ".aspx?MyPK=" + this.MyPK, true);
-    }
+    //void btn_Click(object sender, EventArgs e)
+    //{
+    //    BP.Sys.EnCfg cfg = new EnCfg(this.MyPK);
+    //    cfg.No = this.MyPK;
+    //    cfg.GroupTitle = this.Pub1.GetTextBoxByID("TB_GrouTitle").Text;
+    //    cfg.Save();
+    //    this.Response.Redirect(this.PageID + ".aspx?MyPK=" + this.MyPK, true);
+    //}
 
 
     public string GenerLab(MapAttr attr, int idx, int i, int count)
