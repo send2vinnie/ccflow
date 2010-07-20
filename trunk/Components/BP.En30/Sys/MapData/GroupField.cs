@@ -115,7 +115,7 @@ namespace BP.Sys
         /// <param name="EnName">s</param>
         public GroupFields(string EnName)
         {
-            this.Retrieve(GroupFieldAttr.EnName, EnName);
+            this.Retrieve(GroupFieldAttr.EnName, EnName, GroupFieldAttr.RowIdx);
         }
         /// <summary>
         /// 得到它的 Entity
