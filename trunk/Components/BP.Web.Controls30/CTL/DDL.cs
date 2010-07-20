@@ -611,6 +611,13 @@ namespace BP.Web.Controls
 			//this.Load +=new System.EventHandler(this.TBPreRender);			 
 		}
 
+        public void Bind(XML.XmlEns xmls, string key, string name)
+        {
+            foreach (XML.XmlEn xml in xmls)
+            {
+                this.Items.Add(new ListItem(xml.GetValStringByKey(name), xml.GetValStringByKey(key)));
+            }
+        }
 
         protected override void OnPreRender(System.EventArgs e)
         {
