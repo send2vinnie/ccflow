@@ -164,7 +164,13 @@ namespace BP.Sys
                 return myens;
             }
         }
-
+        public bool IsTableAttr
+        {
+            get
+            {
+                return DataType.IsNumStr( this.KeyOfEn.Replace("F", ""));
+            }
+        }
         public Attr HisAttr
         {
             get
@@ -518,6 +524,37 @@ namespace BP.Sys
                         throw new Exception("sdsdsd");
                 }
             }
+            set
+            {
+
+                switch (value)
+                {
+                    case "String":
+                        this.SetValByKey(MapAttrAttr.MyDataType, DataType.AppString);
+                        break;
+                    case "Int":
+                        this.SetValByKey(MapAttrAttr.MyDataType, DataType.AppInt);
+                        break;
+                    case "Float":
+                        this.SetValByKey(MapAttrAttr.MyDataType, DataType.AppFloat);
+                        break;
+                    case "Money":
+                        this.SetValByKey(MapAttrAttr.MyDataType, DataType.AppMoney);
+                        break;
+                    case "Date":
+                        this.SetValByKey(MapAttrAttr.MyDataType, DataType.AppDate);
+                        break;
+                    case "DateTime":
+                        this.SetValByKey(MapAttrAttr.MyDataType, DataType.AppDateTime);
+                        break;
+                    case "Bool":
+                        this.SetValByKey(MapAttrAttr.MyDataType, DataType.AppBoolean);
+                        break;
+                    default:
+                        throw new Exception("sdsdsd");
+                }
+
+            }
         }
         public string MyDataTypeStr
         {
@@ -573,7 +610,21 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValIntByKey(MapAttrAttr.UIWidth);
+                switch (this.MyDataType)
+                {
+                    case DataType.AppString:
+                        return this.GetValIntByKey(MapAttrAttr.UIWidth);
+                    case DataType.AppFloat:
+                    case DataType.AppInt:
+                    case DataType.AppMoney:
+                    case DataType.AppRate:
+                    case DataType.AppDouble:
+                    case DataType.AppDate:
+                    case DataType.AppDateTime:
+                        return 40;
+                    default:
+                        return 40;
+                }
             }
             set
             {

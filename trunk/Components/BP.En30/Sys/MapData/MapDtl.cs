@@ -36,6 +36,10 @@ namespace BP.Sys
         /// DtlOpenType
         /// </summary>
         public const string DtlOpenType = "DtlOpenType";
+        /// <summary>
+        /// 插入表单的位置
+        /// </summary>
+        public const string InsertIdx = "InsertIdx";
     }
     /// <summary>
     /// 映射明晰
@@ -66,6 +70,17 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapDtlAttr.FK_MapData, value);
+            }
+        }
+        public int InsertIdx
+        {
+            get
+            {
+                return this.GetValIntByKey(MapDtlAttr.InsertIdx);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.InsertIdx, value);
             }
         }
         public string PTable
@@ -147,6 +162,8 @@ namespace BP.Sys
                 map.AddTBString(MapDtlAttr.Name, null, "描述", true, false, 0, 50, 20);
                 map.AddTBString(MapDtlAttr.FK_MapData, null, "主表", true, false, 0, 30, 20);
                 map.AddTBString(MapDtlAttr.PTable, null, "物理表", true, false, 0, 30, 20);
+
+                map.AddTBInt(MapDtlAttr.InsertIdx, 99, "位置", false, false);
 
                 map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true, MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
 

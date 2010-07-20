@@ -105,7 +105,7 @@ namespace BP.Sys
         /// <summary>
         /// cells from Field
         /// </summary>
-        public string CellsFrom
+        public string CellsFrom_del
         {
             get
             {
