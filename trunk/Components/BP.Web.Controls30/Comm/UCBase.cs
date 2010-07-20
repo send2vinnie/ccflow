@@ -74,6 +74,20 @@ namespace BP.Web.UC
                 return int.Parse(s);
             }
         }
+        public string EnName
+        {
+            get
+            {
+                return this.Request.QueryString["EnName"];
+            }
+        }
+        public string EnsName
+        {
+            get
+            {
+                return this.Request.QueryString["EnsName"];
+            }
+        }
         public string RefNo
         {
             get
