@@ -226,7 +226,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         tb.Text = dtl.PTable ;
 
         //if (this.DoType == "Edit")
-        //    tb.Enabled = false;
+        // tb.Enabled = false;
 
         this.Pub1.AddTD(tb);
         this.Pub1.AddTDBigDoc(this.FK_MapData + "Dtl");

@@ -16,46 +16,99 @@ using BP.Web;
 
 public partial class WF_MapDef_GroupField : WebPage
 {
+    public new string RefNo
+    {
+        get
+        {
+            string s = this.Request.QueryString["RefNo"];
+            if (s == null)
+                return "t";
+            else
+                return s;
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
-        MapData md = new MapData(this.RefNo);
+        if (this.DoType == "Del")
+        {
+            GroupField en = new GroupField();
+            en.OID = this.RefOID;
+            en.Delete();
+        }
 
-        //string[] titles = md.histi
-
-
+        GroupFields ens = new GroupFields(this.RefNo);
+        ens.AddEntity(new GroupField());
         this.Pub1.AddTable();
         this.Pub1.AddCaptionLeft("字段分组");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("RowIdx");
         this.Pub1.AddTDTitle("Label");
-        this.Pub1.AddTDTitle("Default IsOpen.");
+        this.Pub1.AddTDTitle("Delete");
         this.Pub1.AddTREnd();
 
-
-
-        for (int i = 0; i < 5; i++)
+        foreach (GroupField en in ens)
         {
-
-            TextBox tbIdx = new TextBox();
-            tbIdx.ID = "TB_IDX_" + i;
-            tbIdx.Width = new Unit(30);
-
-                 
             this.Pub1.AddTR();
-            this.Pub1.AddTD(tbIdx);
-
-            TextBox tb = new TextBox();
-            tb.ID = "TB"+i;
-
+            TB tb = new TB();
+            tb.ID = "TB_IDX_" + en.OID;
+            tb.Width = new Unit(30);
+            tb.Text = en.RowIdx.ToString();
             this.Pub1.AddTD(tb);
-          
-            this.Pub1.AddTD("<a href=''><img src='../../../Images/Btn/Delete.gif' border=0/></a>");
+
+            tb = new TB();
+            tb.ID = "TB_Lab_" + en.OID;
+            tb.Text = en.Lab;
+            this.Pub1.AddTD(tb);
+
+            if (en.OID == 0)
+                this.Pub1.AddTD("New");
+            else
+                this.Pub1.AddTD("<a href='GroupField.aspx?RefNo=" + this.RefNo + "&DoType=Del&RefOID=" + en.OID + "'><img src='../../../Images/Btn/Delete.gif' border=0/></a>");
             this.Pub1.AddTREnd();
         }
 
+        this.Pub1.AddTRSum();
+        this.Pub1.Add("<TD align=center colspan=3>");
+        Btn btn = new Btn();
+        btn.Text = this.ToE("Save", "保存");
+        btn.ID = "Btn_Save";
+        btn.Click += new EventHandler(btn_Click);
+
+        this.Pub1.Add(btn);
+        btn = new Btn();
+        btn.Text = this.ToE("SaveAndClose", "保存并关闭");
+        btn.ID = "Btn_SaveAndClose";
+        btn.Click += new EventHandler(btn_Click);
+        this.Pub1.Add(btn);
+
+        this.Pub1.Add("</TD>");
+        this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
+    }
+
+    void btn_Click(object sender, EventArgs e)
+    {
+        GroupFields ens = new GroupFields(this.RefNo);
+        foreach (GroupField en in ens)
+        {
+            en.RowIdx = this.Pub1.GetTBByID("TB_IDX_" + en.OID).TextExtInt;
+            en.Lab = this.Pub1.GetTBByID("TB_Lab_" + en.OID).Text;
+            en.Update();
+        }
+        GroupField myen = new GroupField();
+        myen.RowIdx = this.Pub1.GetTBByID("TB_IDX_0").TextExtInt;
+        myen.Lab = this.Pub1.GetTBByID("TB_Lab_0").Text;
+        if (myen.Lab.Length > 2)
+        {
+            myen.EnName = this.RefNo;
+            myen.Insert();
+        }
 
 
-
+        Btn btn = sender as Btn;
+        if (btn.ID == "Btn_SaveAndClose")
+            this.WinClose();
+        else
+            this.Response.Redirect("GroupField.aspx?RefNo=" + this.RefNo, true);
     }
 }

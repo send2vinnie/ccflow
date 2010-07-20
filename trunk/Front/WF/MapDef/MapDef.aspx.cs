@@ -57,13 +57,14 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.AddB("[<a href='MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + dtl.No + "' >" + dtl.Name + "</a>]");
         }
     }
+
     public void InsertDtl(MapDtls dtls, int idx)
     {
         MapDtl mydtl = null;
         foreach (MapDtl dtl in dtls)
         {
-            if (dtl.InsertIdx != idx)
-                continue;
+            //if (dtl.InsertIdx != idx)
+            //    continue;
 
             mydtl = dtl;
             break;
@@ -89,32 +90,22 @@ public partial class WF_MapDef_MapDef : WebPage
     {
 
         MapDtls dtls = new MapDtls(md.No);
+        GroupFields gfs = new GroupFields(md.No);
+
 
         Attrs attrs = md.GenerHisMap().Attrs;
         MapAttrs mattrs = new MapAttrs(md.No);
-        QueryObject qo = new QueryObject(mattrs);
-        qo.AddWhere(MapAttrAttr.FK_MapData, md.No);
-        qo.addOrderBy(MapAttrAttr.IDX);
-        qo.DoQuery();
-
         int count = mattrs.Count;
         bool isReadonly = false;
-
         this.Pub1.AddB(this.ToE("DesignSheet", "设计表单") + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:AddTable('" + this.MyPK + "');\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("NewTable", "表格") + "</a> - <a href=\"CopyFieldFromNode.aspx?FK_Node=" + this.MyPK + "\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "从节点复制字段") + "</a> - <a href=\"MapDtl.aspx?DoType=DtlList&FK_MapData=" + this.MyPK + "\" >" + this.ToE("DesignDtl", "设计明细") + "</a> - <a href=\"javascript:GroupField('" + md.No + "')\">字段分组</a><hr>");
 
         int i = -1;
         int idx = -1;
         bool isHaveH = false;
 
-        BP.Sys.EnCfg cfg = new EnCfg(this.MyPK);
-        string[] gTitles = cfg.GroupTitle.Split('@');
-
-        string prvKey = "";
         string GroupKey = "ND";
-        int GroupIdx = 0;
-        bool isLeft = true;
         this.Pub1.Add("<Table border=1 class='' >");
-        if (cfg.GroupTitle.Length > 3)
+        if (gfs.Count >=1 )
         {
             this.Pub1.AddTR("onclick=\"GroupBarClick('ND');\" ");
             this.Pub1.AddTD("colspan=4 class=FDesc width='600px' ", "&nbsp;&nbsp;<img src='./Style/Max.gif' alert='Min' id='ImgND'  border=0 />&nbsp;<b>" + md.Name + "</b>");
@@ -127,9 +118,11 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.Add("</TR>");
         }
 
-        int rowIdx = -1;
+        int rowIdx = 0;
+        bool isLeft = true;
         foreach (MapAttr attr in mattrs)
         {
+            #region 处理不显示的
             if (attr.HisAttr.IsRefAttr)
                 continue;
 
@@ -138,29 +131,44 @@ public partial class WF_MapDef_MapDef : WebPage
                 isHaveH = true;
                 continue;
             }
+            #endregion
 
-            foreach (string g in gTitles)
+            #region deal groupField
+            if (isLeft == true)
             {
-                if (g.Contains(attr.KeyOfEn + "="))
+                foreach (GroupField gf in gfs)
                 {
-                    string[] ss = g.Split('=');
-                    GroupKey = ss[0];
-                    GroupIdx = 0;
-                    this.Pub1.AddTR("onclick=\"GroupBarClick('" + ss[0] + "');\" ");
-                    this.Pub1.AddTD("colspan=4 class=FDesc ", "&nbsp;&nbsp;<img src='./Style/Max.gif' alert='Min' id='Img" + ss[0] + "'  border=0 />&nbsp;<b>" + ss[1] + "</b>");
-                    this.Pub1.AddTREnd();
-                    isLeft = true;
-                    i = -1;
-                    break;
+                    if (rowIdx == gf.RowIdx)
+                    {
+                        this.Pub1.AddTR("onclick=\"GroupBarClick('TR" + gf.RowIdx + "');\" ");
+                        this.Pub1.AddTD("colspan=4 class=FDesc ", "&nbsp;&nbsp;<img src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b>");
+                        this.Pub1.AddTREnd();
+                        isLeft = true;
+                        i = -1;
+                        break;
+                    }
                 }
             }
+            #endregion deal groupField
 
-            GroupIdx++;
+
+            // 显示的顺序号.
             idx++;
+
+
+            int colspanOfCtl = 1;
+            if (attr.UIIsLine && attr.IsBigDoc)
+                colspanOfCtl = 4;
+            else if (attr.UIIsLine)
+                colspanOfCtl = 3;
+
+
+             
+
             if (attr.UIIsLine)
             {
                 rowIdx++;
-                this.Pub1.AddTR(" ID='" + GroupKey + GroupIdx + "'");
+                this.Pub1.AddTR(" ID='TR" + rowIdx + "'");
                 if (attr.IsBigDoc)
                 {
                     this.Pub1.Add("<TD class=FDesc colspan=4 >");
