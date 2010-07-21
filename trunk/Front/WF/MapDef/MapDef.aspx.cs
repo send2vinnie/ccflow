@@ -92,7 +92,6 @@ public partial class WF_MapDef_MapDef : WebPage
         MapDtls dtls = new MapDtls(md.No);
         GroupFields gfs = new GroupFields(md.No);
 
-
         Attrs attrs = md.GenerHisMap().Attrs;
         MapAttrs mattrs = new MapAttrs(md.No);
         int count = mattrs.Count;
@@ -163,6 +162,7 @@ public partial class WF_MapDef_MapDef : WebPage
                     this.Pub1.AddTREnd();
                 }
 
+                this.Pub1.AddTR();
                 this.Pub1.Add("<TD class=FDesc colspan=4 >");
                 this.Pub1.Add(this.GenerLab(attr, idx, 0, count) + "<br>");
                 TextBox mytbLine = new TextBox();
@@ -177,23 +177,43 @@ public partial class WF_MapDef_MapDef : WebPage
                 continue;
             }
 
+            if (attr.IsBigDoc)
+            {
+                if (isLeftNext)
+                {
+                    rowIdx++;
+                    this.Pub1.AddTR(" ID='TR" + rowIdx + "'");
+                }
 
+                this.Pub1.Add("<TD class=FDesc colspan=2>");
+                this.Pub1.Add(this.GenerLab(attr, idx, 0, count) + "<br>");
+                TextBox mytbLine = new TextBox();
+                mytbLine.TextMode = TextBoxMode.MultiLine;
+                mytbLine.Rows = 8;
+                mytbLine.Columns = 30;
+                mytbLine.Attributes["width"] = "100%";
+                this.Pub1.Add(mytbLine);
+                this.Pub1.AddTDEnd();
+
+                if (isLeftNext == false)
+                    this.Pub1.AddTREnd();
+
+                isLeftNext = !isLeftNext;
+                continue;
+            }
+
+            //计算 colspanOfCtl .
             int colspanOfCtl = 1;
             if (attr.UIIsLine)
                 colspanOfCtl = 3;
 
             if (isLeftNext)
             {
-                isLeftNext = false;
                 rowIdx++;
                 this.Pub1.AddTR(" ID='TR" + rowIdx + "'");
             }
-            else
-            {
-                isLeftNext = true;
-                this.Pub1.AddTREnd(); 
-            }
 
+            #region add contrals.
             switch (attr.LGType)
             {
                 case FieldTypeS.Normal:
@@ -299,6 +319,13 @@ public partial class WF_MapDef_MapDef : WebPage
                 default:
                     break;
             }
+            #endregion add contrals.
+
+            if (isLeftNext ==false)            
+            {
+                this.Pub1.AddTREnd(); 
+            }
+            isLeftNext = !isLeftNext;
         }
 
         if (isLeftNext == false)
