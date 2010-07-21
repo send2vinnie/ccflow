@@ -225,6 +225,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RememberMe.cs" />
+    <Compile Include="Xml\SysDataType.cs" />
     <Compile Include="Xml\Toolbar.cs" />
     <Compile Include="Xml\ToolBox.cs" />
     <Compile Include="Xml\Tool.cs" />
