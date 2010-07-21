@@ -119,7 +119,7 @@ public partial class WF_MapDef_MapDef : WebPage
         }
 
         int rowIdx = 0;
-        bool isLeft = true;
+        bool isLeftNext = true;
         foreach (MapAttr attr in mattrs)
         {
             #region 处理不显示的
@@ -134,7 +134,7 @@ public partial class WF_MapDef_MapDef : WebPage
             #endregion
 
             #region deal groupField
-            if (isLeft == true)
+            if (isLeftNext == true)
             {
                 foreach (GroupField gf in gfs)
                 {
@@ -143,7 +143,7 @@ public partial class WF_MapDef_MapDef : WebPage
                         this.Pub1.AddTR("onclick=\"GroupBarClick('TR" + gf.RowIdx + "');\" ");
                         this.Pub1.AddTD("colspan=4 class=FDesc ", "&nbsp;&nbsp;<img src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b>");
                         this.Pub1.AddTREnd();
-                        isLeft = true;
+                        isLeftNext = true;
                         i = -1;
                         break;
                     }
@@ -154,303 +154,164 @@ public partial class WF_MapDef_MapDef : WebPage
 
             // 显示的顺序号.
             idx++;
-
-
-            int colspanOfCtl = 1;
-            if (attr.UIIsLine && attr.IsBigDoc)
-                colspanOfCtl = 4;
-            else if (attr.UIIsLine)
-                colspanOfCtl = 3;
-
-
-             
-
-            if (attr.UIIsLine)
+            if (attr.IsBigDoc && attr.UIIsLine)
             {
-                rowIdx++;
-                this.Pub1.AddTR(" ID='TR" + rowIdx + "'");
-                if (attr.IsBigDoc)
+                if (isLeftNext == false)
                 {
-                    this.Pub1.Add("<TD class=FDesc colspan=4 >");
-                    this.Pub1.Add(this.GenerLab(attr, idx, 0, count) + "<br>");
-                    TextBox mytbLine = new TextBox();
-                    mytbLine.TextMode = TextBoxMode.MultiLine;
-                    mytbLine.Rows = 8;
-                    mytbLine.Columns = 60;
-                    mytbLine.Attributes["width"] = "100%";
-                    // mytbLine.Attributes["style"] = "width=100%;height=100%"; 
-                    this.Pub1.Add(mytbLine);
-                    this.Pub1.AddTDEnd();
-                    this.Pub1.AddTREnd();
-                    continue;
-                }
-                else
-                {
-                    switch (attr.LGType)
-                    {
-                        case FieldTypeS.Normal:
-                            TB tb = new TB();
-                            tb.Attributes["width"] = "100%";
-                            tb.Columns = 60;
-                            tb.Enabled = attr.UIIsEnable;
-                            switch (attr.MyDataType)
-                            {
-                                case BP.DA.DataType.AppString:
-                                    this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                    tb.ShowType = TBType.TB;
-                                    tb.Text = attr.DefVal;
-                                    this.Pub1.AddTD("colspan=3", tb);
-                                    break;
-                                case BP.DA.DataType.AppDate:
-                                    this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                    tb.ShowType = TBType.Date;
-                                    tb.Text = attr.DefVal;
-                                    this.Pub1.AddTD("colspan=3", tb);
-                                    break;
-                                case BP.DA.DataType.AppDateTime:
-                                    this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                    tb.ShowType = TBType.DateTime;
-                                    tb.Text = attr.DefVal;
-                                    this.Pub1.AddTD("colspan=3", tb);
-                                    break;
-                                case BP.DA.DataType.AppBoolean:
-                                    if (attr.UIIsLine)
-                                        this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                    else
-                                        this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-
-
-                                    CheckBox cb = new CheckBox();
-                                    cb.Text = attr.Name;
-                                    cb.Checked = attr.DefValOfBool;
-                                    cb.Enabled = attr.UIIsEnable;
-                                    this.Pub1.AddTD("colspan=3", cb);
-                                    break;
-                                case BP.DA.DataType.AppDouble:
-                                case BP.DA.DataType.AppFloat:
-                                case BP.DA.DataType.AppInt:
-                                    this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                    tb.ShowType = TBType.Num;
-                                    tb.Text = attr.DefVal;
-                                    this.Pub1.AddTD("colspan=3", tb);
-                                    break;
-                                case BP.DA.DataType.AppMoney:
-                                case BP.DA.DataType.AppRate:
-                                    this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                    tb.ShowType = TBType.Moneny;
-                                    tb.Text = attr.DefVal;
-                                    this.Pub1.AddTD("colspan=3", tb);
-                                    break;
-                                default:
-                                    break;
-                            }
-                            tb.Attributes["width"] = "100%";
-                            switch (attr.MyDataType)
-                            {
-                                case BP.DA.DataType.AppString:
-                                case BP.DA.DataType.AppDateTime:
-                                case BP.DA.DataType.AppDate:
-                                    if (tb.Enabled)
-                                        tb.Attributes["class"] = "TB";
-                                    else
-                                        tb.Attributes["class"] = "TBReadonly";
-                                    break;
-                                default:
-                                    if (tb.Enabled)
-                                        tb.Attributes["class"] = "TBNum";
-                                    else
-                                        tb.Attributes["class"] = "TBReadonlyNum";
-                                    break;
-                            }
-                            break;
-                        case FieldTypeS.Enum:
-                            this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                            DDL ddle = new DDL();
-                            ddle.BindSysEnum(attr.KeyOfEn);
-                            ddle.SetSelectItem(attr.DefVal);
-                            ddle.Enabled = attr.UIIsEnable;
-                            this.Pub1.AddTD("colspan=3", ddle);
-                            break;
-                        case FieldTypeS.FK:
-                            this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                            DDL ddl1 = new DDL();
-                            ddl1.ID = "s" + attr.KeyOfEn;
-                            try
-                            {
-                                EntitiesNoName ens = attr.HisEntitiesNoName;
-                                ens.RetrieveAll();
-                                ddl1.BindEntities(ens);
-                                ddl1.SetSelectItem(attr.DefVal);
-                            }
-                            catch
-                            {
-                            }
-                            ddl1.Enabled = attr.UIIsEnable;
-                            this.Pub1.AddTD("colspan=3", ddl1);
-                            break;
-                        default:
-                            break;
-                    }
+                    this.Pub1.AddTD();
+                    this.Pub1.AddTD();
                     this.Pub1.AddTREnd();
                 }
+
+                this.Pub1.Add("<TD class=FDesc colspan=4 >");
+                this.Pub1.Add(this.GenerLab(attr, idx, 0, count) + "<br>");
+                TextBox mytbLine = new TextBox();
+                mytbLine.TextMode = TextBoxMode.MultiLine;
+                mytbLine.Rows = 8;
+                mytbLine.Columns = 60;
+                mytbLine.Attributes["width"] = "100%";
+                this.Pub1.Add(mytbLine);
+                this.Pub1.AddTDEnd();
+                this.Pub1.AddTREnd();
+                isLeftNext = true;
                 continue;
             }
 
 
-            i++;
-            if (i == 0)
-            {
-                rowIdx++;
-                this.Pub1.AddTR(" ID='" + GroupKey + GroupIdx + "'");
-                GroupIdx++;
-            }
+            int colspanOfCtl = 1;
+            if (attr.UIIsLine)
+                colspanOfCtl = 3;
 
-            if (attr.IsBigDoc)
+            if (isLeftNext)
             {
-                this.Pub1.Add("<TD class=FDesc colspan=2>");
-                this.Pub1.Add(this.GenerLab(attr, idx, i, count) + "<br>");
-                TextBox tb = new TextBox();
-                tb.TextMode = TextBoxMode.MultiLine;
-                tb.Rows = 8;
-                // tb.Columns = 30;
-                tb.Attributes["width"] = "100%";
-                this.Pub1.Add(tb);
-                this.Pub1.AddTDEnd();
+                isLeftNext = false;
+                rowIdx++;
+                this.Pub1.AddTR(" ID='TR" + rowIdx + "'");
             }
             else
             {
-                switch (attr.LGType)
-                {
-                    case FieldTypeS.Normal:
-                        TB tb = new TB();
-                        tb.Enabled = attr.UIIsEnable;
-                        switch (attr.MyDataType)
-                        {
-                            case BP.DA.DataType.AppString:
-                                this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                tb.ShowType = TBType.TB;
-                                tb.Text = attr.DefVal;
-                                this.Pub1.AddTD(tb);
-                                break;
-                            case BP.DA.DataType.AppDate:
-                                this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                tb.ShowType = TBType.Date;
-                                tb.Text = attr.DefVal;
-                                this.Pub1.AddTD(tb);
-                                break;
-                            case BP.DA.DataType.AppDateTime:
-                                this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                tb.ShowType = TBType.DateTime;
-                                tb.Text = attr.DefVal;
-                                this.Pub1.AddTD(tb);
-                                break;
-                            case BP.DA.DataType.AppBoolean:
-                                if (attr.UIIsLine)
-                                    this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                else
-                                    this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-
-                                CheckBox cb = new CheckBox();
-                                cb.Text = attr.Name;
-                                cb.Checked = attr.DefValOfBool;
-                                cb.Enabled = attr.UIIsEnable;
-                                this.Pub1.AddTD(cb);
-
-                                break;
-                            case BP.DA.DataType.AppDouble:
-                            case BP.DA.DataType.AppFloat:
-                            case BP.DA.DataType.AppInt:
-                                this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                tb.ShowType = TBType.Num;
-                                tb.Text = attr.DefVal;
-                                this.Pub1.AddTD(tb);
-                                break;
-                            case BP.DA.DataType.AppMoney:
-                            case BP.DA.DataType.AppRate:
-                                this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                tb.ShowType = TBType.Moneny;
-                                tb.Text = attr.DefVal;
-                                this.Pub1.AddTD(tb);
-                                break;
-                            default:
-                                break;
-                        }
-
-                        tb.Attributes["width"] = "100%";
-                        switch (attr.MyDataType)
-                        {
-                            case BP.DA.DataType.AppString:
-                            case BP.DA.DataType.AppDateTime:
-                            case BP.DA.DataType.AppDate:
-                                if (tb.Enabled)
-                                    tb.Attributes["class"] = "TB";
-                                else
-                                    tb.Attributes["class"] = "TBReadonly";
-                                break;
-                            default:
-                                if (tb.Enabled)
-                                    tb.Attributes["class"] = "TBNum";
-                                else
-                                    tb.Attributes["class"] = "TBReadonlyNum";
-                                break;
-                        }
-
-                        break;
-                    case FieldTypeS.Enum:
-                        this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                        DDL ddle = new DDL();
-                        ddle.BindSysEnum(attr.KeyOfEn);
-                        ddle.SetSelectItem(attr.DefVal);
-                        ddle.Enabled = attr.UIIsEnable;
-                        this.Pub1.AddTD(ddle);
-                        break;
-                    case FieldTypeS.FK:
-                        this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                        DDL ddl1 = new DDL();
-                        ddl1.ID = "s" + attr.KeyOfEn;
-                        try
-                        {
-                            EntitiesNoName ens = attr.HisEntitiesNoName;
-                            ens.RetrieveAll();
-                            ddl1.BindEntities(ens);
-                            ddl1.SetSelectItem(attr.DefVal);
-                        }
-                        catch
-                        {
-
-                        }
-                        ddl1.Enabled = attr.UIIsEnable;
-                        this.Pub1.AddTD(ddl1);
-                        break;
-                    default:
-                        break;
-                }
+                isLeftNext = true;
+                this.Pub1.AddTREnd(); 
             }
-            if (i == 1)
+
+            switch (attr.LGType)
             {
-                this.Pub1.AddTREnd();
-                i = -1;
+                case FieldTypeS.Normal:
+                    TB tb = new TB();
+                    tb.Attributes["width"] = "100%";
+                    tb.Columns = 60;
+                    tb.Enabled = attr.UIIsEnable;
+                    switch (attr.MyDataType)
+                    {
+                        case BP.DA.DataType.AppString:
+                            this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
+                            tb.ShowType = TBType.TB;
+                            tb.Text = attr.DefVal;
+                            this.Pub1.AddTD("colspan=" + colspanOfCtl, tb);
+                            break;
+                        case BP.DA.DataType.AppDate:
+                            this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
+                            tb.ShowType = TBType.Date;
+                            tb.Text = attr.DefVal;
+                            this.Pub1.AddTD("colspan=" + colspanOfCtl, tb);
+                            break;
+                        case BP.DA.DataType.AppDateTime:
+                            this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
+                            tb.ShowType = TBType.DateTime;
+                            tb.Text = attr.DefVal;
+                            this.Pub1.AddTD("colspan=" + colspanOfCtl, tb);
+                            break;
+                        case BP.DA.DataType.AppBoolean:
+                            if (attr.UIIsLine)
+                                this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
+                            else
+                                this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
+
+
+                            CheckBox cb = new CheckBox();
+                            cb.Text = attr.Name;
+                            cb.Checked = attr.DefValOfBool;
+                            cb.Enabled = attr.UIIsEnable;
+                            this.Pub1.AddTD("colspan=" + colspanOfCtl, cb);
+                            break;
+                        case BP.DA.DataType.AppDouble:
+                        case BP.DA.DataType.AppFloat:
+                        case BP.DA.DataType.AppInt:
+                            this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
+                            tb.ShowType = TBType.Num;
+                            tb.Text = attr.DefVal;
+                            this.Pub1.AddTD("colspan=" + colspanOfCtl, tb);
+                            break;
+                        case BP.DA.DataType.AppMoney:
+                        case BP.DA.DataType.AppRate:
+                            this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
+                            tb.ShowType = TBType.Moneny;
+                            tb.Text = attr.DefVal;
+                            this.Pub1.AddTD("colspan=" + colspanOfCtl, tb);
+                            break;
+                        default:
+                            break;
+                    }
+                    tb.Attributes["width"] = "100%";
+                    switch (attr.MyDataType)
+                    {
+                        case BP.DA.DataType.AppString:
+                        case BP.DA.DataType.AppDateTime:
+                        case BP.DA.DataType.AppDate:
+                            if (tb.Enabled)
+                                tb.Attributes["class"] = "TB";
+                            else
+                                tb.Attributes["class"] = "TBReadonly";
+                            break;
+                        default:
+                            if (tb.Enabled)
+                                tb.Attributes["class"] = "TBNum";
+                            else
+                                tb.Attributes["class"] = "TBReadonlyNum";
+                            break;
+                    }
+                    break;
+                case FieldTypeS.Enum:
+                    this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
+                    DDL ddle = new DDL();
+                    ddle.BindSysEnum(attr.KeyOfEn);
+                    ddle.SetSelectItem(attr.DefVal);
+                    ddle.Enabled = attr.UIIsEnable;
+                    this.Pub1.AddTD("colspan=" + colspanOfCtl, ddle);
+                    break;
+                case FieldTypeS.FK:
+                    this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
+                    DDL ddl1 = new DDL();
+                    ddl1.ID = "s" + attr.KeyOfEn;
+                    try
+                    {
+                        EntitiesNoName ens = attr.HisEntitiesNoName;
+                        ens.RetrieveAll();
+                        ddl1.BindEntities(ens);
+                        ddl1.SetSelectItem(attr.DefVal);
+                    }
+                    catch
+                    {
+                    }
+                    ddl1.Enabled = attr.UIIsEnable;
+                    this.Pub1.AddTD("colspan=" + colspanOfCtl, ddl1);
+                    break;
+                default:
+                    break;
             }
         }
 
-        if (i == 1)
+        if (isLeftNext == false)
         {
             this.Pub1.AddTD();
             this.Pub1.AddTD();
             this.Pub1.AddTREnd();
         }
-
-        this.InsertDtl(dtls, 99);
         this.Pub1.AddTableEnd();
 
         // 输出隐藏的字段让用户编辑
-
         if (isHaveH == false)
-        {
-            this.Pub1.AddFieldSetEnd();
             return;
-        }
-
 
         this.Pub1.AddFieldSet("编辑隐藏字段");
 
@@ -524,21 +385,19 @@ public partial class WF_MapDef_MapDef : WebPage
         string lab = attr.Name;
         if (attr.MyDataType == DataType.AppBoolean && attr.UIIsLine)
             lab = "编辑";
-            
 
         bool isLeft = true;
         if (i == 1)
         {
             isLeft = false;
         }
+
         if (attr.HisEditType == EditType.Edit || attr.HisEditType == EditType.UnDel)
         {
             switch (attr.LGType)
             {
                 case FieldTypeS.Normal:
-
                     lab = "<a  href=\"javascript:Edit('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataType + "');\">" + lab + "</a>";
-
                     break;
                 case FieldTypeS.FK:
                     lab = "<a  href=\"javascript:EditTable('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataType + "');\">" + lab + "</a>";
