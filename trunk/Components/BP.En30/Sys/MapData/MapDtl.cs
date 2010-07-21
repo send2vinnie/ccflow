@@ -39,7 +39,7 @@ namespace BP.Sys
         /// <summary>
         /// 插入表单的位置
         /// </summary>
-        public const string InsertIdx = "InsertIdx";
+        public const string RowIdx = "RowIdx";
     }
     /// <summary>
     /// 映射明晰
@@ -47,6 +47,7 @@ namespace BP.Sys
     public class MapDtl : EntityNoName
     {
         #region 属性
+        public bool IsUse = false;
         /// <summary>
         /// 是否检查人员的权限
         /// </summary>
@@ -72,15 +73,15 @@ namespace BP.Sys
                 this.SetValByKey(MapDtlAttr.FK_MapData, value);
             }
         }
-        public int InsertIdx
+        public int RowIdx
         {
             get
             {
-                return this.GetValIntByKey(MapDtlAttr.InsertIdx);
+                return this.GetValIntByKey(MapDtlAttr.RowIdx);
             }
             set
             {
-                this.SetValByKey(MapDtlAttr.InsertIdx, value);
+                this.SetValByKey(MapDtlAttr.RowIdx, value);
             }
         }
         public string PTable
@@ -163,7 +164,7 @@ namespace BP.Sys
                 map.AddTBString(MapDtlAttr.FK_MapData, null, "主表", true, false, 0, 30, 20);
                 map.AddTBString(MapDtlAttr.PTable, null, "物理表", true, false, 0, 30, 20);
 
-                map.AddTBInt(MapDtlAttr.InsertIdx, 99, "位置", false, false);
+                map.AddTBInt(MapDtlAttr.RowIdx, 99, "位置", false, false);
 
                 map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true, MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
 

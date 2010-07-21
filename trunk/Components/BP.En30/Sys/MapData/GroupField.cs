@@ -29,6 +29,7 @@ namespace BP.Sys
     public class GroupField : EntityOID
     {
         #region  Ù–‘
+        public bool IsUse = false;
         public string EnName
         {
             get
@@ -69,6 +70,9 @@ namespace BP.Sys
         /// GroupField
         /// </summary>
         public GroupField()
+        {
+        }
+        public GroupField(int oid):base (oid)
         {
         }
         /// <summary>

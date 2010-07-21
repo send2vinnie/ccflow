@@ -138,8 +138,8 @@ namespace BP.Sys
         {
             get
             {
-                if ( this.CellsFrom == null)
-                    return null;
+                //if ( this.CellsFrom == null)
+                //    return null;
 
                 MapAttrs mapAttrs = new MapAttrs(this.No+"T");
                 if (mapAttrs.Count == 0)
