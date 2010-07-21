@@ -1394,11 +1394,12 @@ namespace BP.Web.Comm.UC
                  if (attr.MyFieldType == FieldType.RefText)
                             continue;
 
-                 if (md.CellsFrom == prvKey)
-                 {
-                     this.InsertCellsData(md, en, GroupKey, GroupIdx);
-                     isLeft = true;
-                 }
+                 //if (md.CellsFrom == prvKey)
+                 //{
+                 //    this.InsertCellsData(md, en, GroupKey, GroupIdx);
+                 //    isLeft = true;
+                 //}
+
                  prvKey = attr.Key;
 
                  val = en.GetValByKey(attr.Key);

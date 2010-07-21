@@ -29,13 +29,32 @@ public partial class WF_MapDef_GroupField : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (this.DoType == "Del")
-        {
-            GroupField en = new GroupField();
-            en.OID = this.RefOID;
-            en.Delete();
-        }
 
+        switch (this.DoType)
+        {
+            case "Del":
+                GroupField en = new GroupField();
+                en.OID = this.RefOID;
+                en.Delete();
+                break;
+            case "DelIt":
+                GroupField en1 = new GroupField();
+                en1.OID = this.RefOID;
+                en1.Delete();
+                this.WinClose();
+                return;
+            case "New":
+                GroupField enN = new GroupField();
+                enN.EnName = this.RefNo;
+                enN.RowIdx = 99;
+                enN.Lab = "新建字段分组";
+                enN.Insert();
+                this.WinClose();
+                return;
+            default:
+                break;
+        }
+ 
         GroupFields ens = new GroupFields(this.RefNo);
         ens.AddEntity(new GroupField());
         this.Pub1.AddTable();
@@ -58,6 +77,7 @@ public partial class WF_MapDef_GroupField : WebPage
             tb = new TB();
             tb.ID = "TB_Lab_" + en.OID;
             tb.Text = en.Lab;
+            tb.Columns = 40;
             this.Pub1.AddTD(tb);
 
             if (en.OID == 0)
@@ -66,6 +86,7 @@ public partial class WF_MapDef_GroupField : WebPage
                 this.Pub1.AddTD("<a href='GroupField.aspx?RefNo=" + this.RefNo + "&DoType=Del&RefOID=" + en.OID + "'><img src='../../../Images/Btn/Delete.gif' border=0/></a>");
             this.Pub1.AddTREnd();
         }
+
 
         this.Pub1.AddTRSum();
         this.Pub1.Add("<TD align=center colspan=3>");

@@ -22,6 +22,11 @@ a:hover
 	text-decoration: underline;
 }
   
+.Table
+{
+	border: thin groove #C0C0C0;
+	background-color: #FFFFFF;
+}
 
 .TB
 {
@@ -96,108 +101,11 @@ a:hover
 	height:100%;
 	
 }
- 
-
-/* BPTabStrip 默认属性 */
-.TabStrip1
-{
-	border-right: black 1px solid;
-	border-top: black 1px solid;
-	font: menu;
-	border-left: black 1px solid;
-	color: black;
-	line-height: 20px;
-	border-bottom: black 1px solid;
-	background-color: #bbe2ff;
-}
-
-.TabStrip2
-{
-	background-color: #bfead5;
-}
-
-.TabStrip3
-{
-	font: menu;
-	color: black;
-	line-height: 20px;
-	background-color: #fff0f8;
-}
-
-/* BPTabStrip 默认属性 */
-.TabDefaultStyle1
-{
-	border-right: silver solid;
-	border-top: silver solid;
-	font: menu;
-	border-left: silver solid;
-	color: black;
-	line-height: 20px;
-	border-bottom: silver solid;
-}
- 
-
-/* BPTabStrip 悬停 属性 */
-.TabHoverStyle1
-{
-	font: menu;
-	color: black;
-	line-height: 20px;
-}
- 
-
-/* BPTabStrip 选择 属性 */
-.TabSelectedStyle1
-{
-	font: menu;
-	color: black;
-	line-height: 20px;
-}
- 
-
-
-/* BPTab  特定de 属性 */
-.TabSepDefaultStyle1
-{
-	font: menu;
-	color: black;
-	line-height: 20px;
-}
-.TabSepDefaultStyle2
-{
-	border-right: black 1px solid;
-	border-top: black 1px solid;
-	background: none transparent scroll repeat 0% 0%;
-	font: menu;
-	border-left: black 1px solid;
-	color: red;
-	border-bottom: black 1px solid;
-}
-
-.TabSepDefaultStyle3
-{
-	font: menu;
-	color: black;
-	line-height: 20px;
-}
-
-/* BPTabStrip 默认属性 */
-.StripDefaultStyle1
-{
-	border-right: black 1px solid;
-	border-top: black 1px solid;
-	font: menu;
-	border-left: black 1px solid;
-	color: black;
-	line-height: 20px;
-	border-bottom: black 1px solid;
-}
-  
-
+    
  
 /* the style of ddl */
 
-.DDL2
+.DDL
 {
 	
 }

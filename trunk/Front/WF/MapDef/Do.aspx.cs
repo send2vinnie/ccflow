@@ -136,6 +136,25 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                 attr.Delete();
                 this.WinClose();
                 break;
+
+            case "GFDoUp":
+                GroupField gf = new GroupField(this.RefOID);
+                if (gf.RowIdx > 0)
+                {
+                    gf.RowIdx=gf.RowIdx-1;
+                    gf.Update();
+                }
+                this.WinClose();
+                break;
+            case "GFDoDown":
+                GroupField gf1 = new GroupField(this.RefOID);
+                if (gf1.RowIdx < 10)
+                {
+                    gf1.RowIdx = gf1.RowIdx + 1;
+                    gf1.Update();
+                }
+                this.WinClose();
+                break;
             default:
                 break;
         }

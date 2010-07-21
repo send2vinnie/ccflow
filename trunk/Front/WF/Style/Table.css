@@ -57,7 +57,7 @@
 /*   Title */
 .Title
 {
-    background-color: AliceBlue;
+   background-color: AliceBlue;
    text-align:center;
 }
 
@@ -65,7 +65,31 @@
 /* 在输入信息字段名称，单元格式的风格 */
 .FDesc
 {
-	background-color: #F3F7FA;
+	border-color: #C0C0C0;
+		padding: 4px;
+	margin: 4px;
+	border-bottom: lightgrey 1px solid;
+	border-left: lightgrey 1px solid;
+	border-right: lightgrey 1px solid;
+	font-family: 宋体;
+	text-align: left;
+	width:10%;
+}
+
+.GroupField
+{
+	background-color: #E1E1E1;
+	font-size: medium;
+	font-weight: bold;
+	font-style: normal;
+	font-variant: normal;
+	text-transform: capitalize;
+	color: #000000;
+	border-left: 10px;
+	border-right: 10px;
+	border-top: 10px;
+	border-bottom: 10px;
+	border-width: 5px;
 }
 
 .TB
@@ -75,7 +99,8 @@
 	float: left;
 	clear: left;
 	width: 100%;
-	border:none;
+	border: none;
+	padding:0px;
 }
  
  

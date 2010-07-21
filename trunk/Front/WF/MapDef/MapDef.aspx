@@ -5,8 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <script language="JavaScript" src="JS.js"></script>
     <script language="JavaScript" src="../JScript.js"></script>
-	<base target="_self" />
-	<script language=javascript>
+    <script language="javascript" >
 	function HelpGroup()
 	{
 	   var msg='字段分组：就是把类似的字段放在一起，让用户操作更友好。\t\n比如：我们纳税人设计一个基础信息采集节点。';
@@ -48,6 +47,18 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
+    function GroupFieldDel(mypk,refoid)
+    {
+        var url='GroupField.aspx?RefNo='+mypk+'&DoType=DelIt&RefOID='+refoid ;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+    }
+    function GroupFieldNew(mypk)
+    {
+        var url='GroupField.aspx?RefNo='+mypk+'&DoType=New';
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+    }
      
     function Edit(mypk,refoid, ftype)
     {
@@ -80,9 +91,20 @@
         var url='Do.aspx?DoType=Down&MyPK='+mypk+'&RefOID='+refoid +'&ToIdx='+idx;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
-       //   window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
-      //  window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
     }
+    function GFDoUp(refoid)
+    {
+        var url='Do.aspx?DoType=GFDoUp&RefOID='+refoid ;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href ;
+    }
+    function GFDoDown(refoid)
+    {
+        var url='Do.aspx?DoType=GFDoDown&RefOID='+refoid ;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+    }
+    
     function Del(mypk,refoid)
     {
         if (window.confirm('您确定要删除吗？') ==false)
@@ -98,39 +120,51 @@
         window.close();
        return true;
     }
-    function GroupBarClick( Field )
-{
-
-  var alt= document.getElementById('Img'+Field).alert ; 
+   
+  function GroupBarClick( rowIdx )
+  {
+    var alt= document.getElementById('Img'+rowIdx).alert ; 
     var sta='block';  
     if (alt=='Max' ) 
      {
          sta='block';
          alt='Min' ;
-     } else {
+         
+      } else {
+      
        sta='none';    
        alt='Max'; 
+      
       }
       
-      document.getElementById('Img'+Field).src= './Img/'+ alt + '.gif';
-      document.getElementById('Img'+Field).alert= alt  ;    
+      document.getElementById('Img'+rowIdx).src= './Img/'+ alt + '.gif';
+      document.getElementById('Img'+rowIdx).alert= alt  ;    
       
-        
        var i=0
-       for (i=0;i<=10;i++)
+       for (i=0;i<=40;i++)
        {
-          if (document.getElementById( Field + i )==null)
+          if (document.getElementById( rowIdx +'_'+ i )==null)
                    continue;
-          document.getElementById( Field + i ).style.display= sta ;
+                   
+          document.getElementById( rowIdx +'_' + i ).style.display= sta ;
       }
 }
 </script>
-	</script>
+	<base target="_self" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
  <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; height: 100%; background-color:White">
             <tr>
-                <td style="height: 1px">
+                <td style="width: 20%; background-color:InfoBackground" valign=top>
+                <fieldset>
+                <legend>设计帮助</legend>
+                表单设计器，能够帮助您快速的完成表单设计。
+                
+                </fieldset>
+               
+&nbsp;<uc1:Pub ID="Left" runat="server" />
+</td>
+                <td style="width: 80%;"  valign=top>
                 <uc1:Pub ID="Pub1" runat="server" />
                 </td>
             </tr>
