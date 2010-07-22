@@ -639,6 +639,20 @@ namespace BP.Sys
                 this.SetValByKey(MapAttrAttr.UIWidth, value);
             }
         }
+        public int UIWidthOfLab
+        {
+            get
+            {
+                return 0;
+
+                //Graphics2D g2 = (Graphics2D)g;
+                //g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                //                        RenderingHints.VALUE_ANTIALIAS_ON);
+
+                //int textWidth = getFontMetrics(g2.getFont()).bytesWidth(str.getBytes(), 0, str.getBytes().length); 
+
+            }
+        }
         /// <summary>
         ///  «∑Ò÷ª∂¡
         /// </summary>
@@ -1041,6 +1055,21 @@ namespace BP.Sys
             get
             {
                 return new MapAttr();
+            }
+        }
+        public int WithOfCtl
+        {
+            get
+            {
+                int i = 0;
+                foreach (MapAttr item in this)
+                {
+                    if (item.UIVisible == false)
+                        continue;
+
+                    i += item.UIWidth;
+                }
+                return i;
             }
         }
         #endregion

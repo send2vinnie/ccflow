@@ -210,9 +210,8 @@ namespace BP.Sys
 
                 map.AddTBInt(MapDtlAttr.RowIdx, 99, "位置", false, false);
                 map.AddTBInt(MapDtlAttr.RowsOfList, 6, "Rows", false, false);
-                map.AddTBInt(MapDtlAttr.IsShowSum, 1, "IsShowSum", false, false);
-                map.AddTBInt(MapDtlAttr.IsShowIdx, 1, "IsShowIdx", false, false);
-
+                map.AddBoolean(MapDtlAttr.IsShowSum, false, "IsShowSum", false, false);
+                map.AddBoolean(MapDtlAttr.IsShowIdx, false, "IsShowIdx", false, false);
 
 
                 map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true,
@@ -313,7 +312,7 @@ namespace BP.Sys
                 attr.MyDataType = BP.DA.DataType.AppDateTime;
                 attr.UIContralType = UIContralType.TB;
                 attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = true;
+                attr.UIVisible = false;
                 attr.UIIsEnable = false;
                 attr.Tag = "1";
                 attr.Insert();
@@ -330,7 +329,7 @@ namespace BP.Sys
                 attr.MyDataType = BP.DA.DataType.AppString;
                 attr.UIContralType = UIContralType.TB;
                 attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = true;
+                attr.UIVisible = false;
                 attr.UIIsEnable = false;
                 attr.MaxLen = 20;
                 attr.MinLen = 0;

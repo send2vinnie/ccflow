@@ -282,8 +282,12 @@ namespace BP.Web.UC
 
                         TextBox mytb = this.GetTextBoxByID(ctlid);
                         if (mytb != null)
+                        {
                             en.SetValByKey(attr.Key, mytb.Text);
-                        continue;
+                            continue;
+                        }
+
+                        break;
                     case UIContralType.DDL:
                         //if (attr.UIIsReadonly)
                         //    continue;
@@ -307,6 +311,16 @@ namespace BP.Web.UC
 
                         continue;
                     case UIContralType.CheckBok:
+                        ctlid = "CB_" + attr.Key + pk;
+                        CheckBox cb = this.GetCBByID(ctlid);
+                        if (cb != null)
+                        {
+                            if (cb.Checked)
+                                en.SetValByKey(attr.Key, 1);
+                            else
+                                en.SetValByKey(attr.Key, 0);
+                        }
+                        break;
                     default:
                         break;
                 }
