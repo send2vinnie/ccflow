@@ -10,7 +10,6 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using BP.Sys;
 using BP.En;
-using BP.En;
 using BP.Web.Controls;
 using BP.DA;
 using BP.Web;

@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/WF/MapDef/WinOpen.master" AutoEventWireup="true" CodeFile="MapDef.aspx.cs" Inherits="WF_MapDef_MapDef" Title="无标题页" %>
-
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <script language="JavaScript" src="JS.js"></script>
     <script language="JavaScript" src="../JScript.js"></script>
@@ -148,21 +146,58 @@
                    
           document.getElementById( rowIdx +'_' + i ).style.display= sta ;
       }
-}
+  }
+
+
+  function ReinitIframe(dtlid) {
+
+
+      try {
+
+
+          var iframe = document.getElementById("F" + dtlid);
+          var tdF = document.getElementById("TD" + dtlid);
+
+          if (tdF == null)
+              return;
+              
+
+          alert( "ss = "+tdF.width);
+          
+          iframe.height = iframe.contentWindow.document.body.scrollHeight;
+          iframe.width = iframe.contentWindow.document.body.scrollWidth ;
+
+          tdF.width = iframe.width;
+          tdF.height = iframe.height;
+          alert("ss = " + tdF.width);
+          
+          // tdF.width = iframe.width;
+          //     alert(tdF.width);
+          //  alert(iframe.width);
+          //tdF.width = iframe.width;
+          return;
+      } catch (ex) {
+          return;
+      }
+      return;
+      //      var bHeight = tdF.iframe.contentWindow.document.body.scrollHeight;
+      //      var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+      //      var height = Math.max(bHeight, dHeight);
+      //      iframe.height = height;
+      //      tdF.height = height;
+  }
+
+
 </script>
 	<base target="_self" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
- <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; height: 100%; background-color:White">
+ <table border="0" cellpadding="0" cellspacing="0" >
             <tr>
-                <td style="width: 20%; background-color:InfoBackground" valign=top>
-                <fieldset>
-                <legend>设计帮助</legend>
+                <td style="width: 20%; background-color:InfoBackground" class="BigDoc" valign=top>
+                设计帮助 
                 表单设计器，能够帮助您快速的完成表单设计。
-                
-                </fieldset>
-               
-&nbsp;<uc1:Pub ID="Left" runat="server" />
+<uc1:Pub ID="Left" runat="server" />
 </td>
                 <td style="width: 80%;"  valign=top>
                 <uc1:Pub ID="Pub1" runat="server" />

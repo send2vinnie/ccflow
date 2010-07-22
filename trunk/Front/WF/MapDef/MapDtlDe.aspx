@@ -7,6 +7,9 @@
 <head id="Head1" runat="server">
     <title>表单设计</title>
 	<script language="JavaScript" src="JS.js"></script>
+	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
+	
+	
 	<base target="_self" />
 	<script language=javascript>
 	function Insert(mypk,IDX)
@@ -52,8 +55,6 @@
         var url='Do.aspx?DoType=Down&MyPK='+mypk+'&RefOID='+refoid;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
-       //   window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
-      //  window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
     }
     function Del(mypk,refoid)
     {
@@ -80,33 +81,9 @@
     <link href="../Style/Style.css" rel="stylesheet" type="text/css" />
     <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="Esc()" >
+<body topmargin="0" leftmargin="0" onkeypress="Esc()" border=0  style="padding:0px">
     <form id="form1" runat="server">
-        <table class=Table border="0" cellpadding="0" cellspacing="0" style="width: 100%; height: 100%">
-         <tr>
-                <td style="height: 1px">
-                    <uc1:Pub ID="Pub1" runat="server" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <uc1:Pub ID="Pub2" runat="server" />
-                    
-                </td>
-            </tr>
-             <tr>
-                <td width='10%' valign=top>
-                <table width='10%' >
-                <tr>
-                <td>
-                    &nbsp;<uc2:UCEn ID="UCEn1" runat="server" />
-                    </td>
-            </tr>
-                    </table>
-                 </td>
-            </tr>
-                
-        </table>
-    </form>
+     <uc1:Pub ID="Pub1" runat="server" />
+     </form>
 </body>
 </html>

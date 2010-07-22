@@ -20,7 +20,7 @@
     </script>
     <base target=_self /> 
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="Esc()" >
+<body topmargin="0" leftmargin="0" onkeypress="Esc()" onload="RSize()"  >
     <form id="form1" runat="server">
         <uc1:ucsys ID="Ucsys1" runat="server" />
     </form>

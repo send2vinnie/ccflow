@@ -9,9 +9,11 @@
     </asp:ContentPlaceHolder>
     <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
     <link href="../Style/Style.css" rel="stylesheet" type="text/css" />
+	<script language="JavaScript" src="JS.js"></script>
     <base target=_self />
+    
 </head>
-<body>
+<body onload="RSize()" topmargin="0" leftmargin="0" >
     <form id="form1" runat="server">
     <div>
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">

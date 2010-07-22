@@ -24,7 +24,7 @@ public partial class WF_MapDef_MapDef : WebPage
             if (key == null)
                 key = this.Request.QueryString["PK"];
             if (key == null)
-                key = "ND201";
+                key = "ND1601";
             return key;
         }
     }
@@ -43,13 +43,13 @@ public partial class WF_MapDef_MapDef : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+
         MapData m2d = new MapData();
         m2d.CheckPhysicsTable();
 
         MapData md = new MapData(this.MyPK);
         BindAttrs(md);
-        
+
     }
 
     public void InsertObjects()
@@ -61,7 +61,9 @@ public partial class WF_MapDef_MapDef : WebPage
                 gf.IsUse = true;
                 currGF = gf;
                 this.Pub1.AddTR();
-                this.Pub1.AddTD("colspan=4 class=GroupField ", "&nbsp;&nbsp;<img onclick=\"GroupBarClick('" + gf.RowIdx + "');\" src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b><div > <a href=\"javascript:GroupField('" + this.MyPK + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" >上移</a>  <a href=\"javascript:GFDoDown('" + gf.OID + "')\" >下移</a> </div>");
+                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b></div><div style='text-align:right; float:right'><a href=\"javascript:GroupField('" + this.MyPK + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div>");
+
+//                this.Pub1.AddTD("colspan=4 class=GroupField ", "&nbsp;&nbsp;<img onclick=\"GroupBarClick('" + gf.RowIdx + "');\" src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b><div > <a href=\"javascript:GroupField('" + this.MyPK + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" >上移</a>  <a href=\"javascript:GFDoDown('" + gf.OID + "')\" >下移</a> </div>");
                 this.Pub1.AddTREnd();
                 isLeftNext = true;
                 break;
@@ -73,47 +75,47 @@ public partial class WF_MapDef_MapDef : WebPage
             {
                 dtl.IsUse = true;
                 this.Pub1.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "' ");
-                //this.Pub1.AddTR();
-                this.Pub1.AddTDBegin("colspan=4 width='100%' height='300px'  "); //, "&nbsp;&nbsp;<img onclick=\"GroupBarClick('" + gf.RowIdx + "');\" src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b><div > <a href=\"javascript:GroupField('" + md.No + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" >上移</a>  <a href=\"javascript:GFDoDown('" + gf.OID + "')\" >下移</a> </div>");
+                this.Pub1.AddTDBegin("colspan=4 class=TD nowarp=true id='TDF" + dtl.No + "'   style='padding:0px;border:0px;' "); //, "&nbsp;&nbsp;<img onclick=\"GroupBarClick('" + gf.RowIdx + "');\" src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b><div > <a href=\"javascript:GroupField('" + md.No + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" >上移</a>  <a href=\"javascript:GFDoDown('" + gf.OID + "')\" >下移</a> </div>");
+                this.Pub1.Add("Up Down");
 
                 string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + dtl.FK_MapData + "&FK_MapDtl=" + dtl.No;
-                this.Pub1.Add("<iframe frameborder=1 leftMargin='0' topMargin='0' src='" + src + "' width='100%' height='100%' class=iframe name=fm style='border-style:none;' id=fm > </iframe>");
 
+                this.Pub1.Add("<iframe padding:0px;border:0px; frameborder=1 leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='100%' class=iframe name=fm style='border-style:none;' id="+ dtl.No+" />");
                 this.Pub1.AddTDEnd();
                 this.Pub1.AddTREnd();
             }
         }
     }
     #region varable.
-    public GroupField currGF= new GroupField();
-   private  MapDtls _dtls;
-   public MapDtls dtls
-   {
-       get
-       {
-           if (_dtls == null)
-               _dtls = new MapDtls(this.MyPK);
+    public GroupField currGF = new GroupField();
+    private MapDtls _dtls;
+    public MapDtls dtls
+    {
+        get
+        {
+            if (_dtls == null)
+                _dtls = new MapDtls(this.MyPK);
 
-           return _dtls;
-       }
-   }
-     private  GroupFields _gfs;
-     public GroupFields gfs
-     {
-         get
-         {
-             if (_gfs == null)
-                 _gfs = new GroupFields(this.MyPK);
+            return _dtls;
+        }
+    }
+    private GroupFields _gfs;
+    public GroupFields gfs
+    {
+        get
+        {
+            if (_gfs == null)
+                _gfs = new GroupFields(this.MyPK);
 
-             return _gfs;
-         }
-     }
-     public int rowIdx = 0;
-     public bool isLeftNext = true;
+            return _gfs;
+        }
+    }
+    public int rowIdx = 0;
+    public bool isLeftNext = true;
 
-     #endregion varable.
+    #endregion varable.
 
-     /// <summary>
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="md"></param>
@@ -125,22 +127,21 @@ public partial class WF_MapDef_MapDef : WebPage
         //this.Pub1.AddB(this.ToE("DesignSheet", "设计表单") + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:AddTable('" + this.MyPK + "');\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("NewTable", "表格") + "</a> - <a href=\"CopyFieldFromNode.aspx?FK_Node=" + this.MyPK + "\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "从节点复制字段") + "</a> - <a href=\"MapDtl.aspx?DoType=DtlList&FK_MapData=" + this.MyPK + "\" >" + this.ToE("DesignDtl", "设计明细") + "</a> - <a href=\"javascript:GroupField('" + md.No + "')\">字段分组</a><hr>");
 
         this.Pub1.AddB("&nbsp;&nbsp;" + this.ToE("DesignSheet", "设计表单") + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"CopyFieldFromNode.aspx?FK_Node=" + this.MyPK + "\" ><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("NewField", "复制字段") + "</a> - <a href=\"MapDtl.aspx?DoType=DtlList&FK_MapData=" + this.MyPK + "\" >" + this.ToE("DesignDtl", "设计表格") + "</a> - <a href=\"javascript:GroupField('" + md.No + "')\">字段分组</a><hr>");
-
+        
         int i = -1;
         int idx = -1;
         bool isHaveH = false;
-
-        this.Pub1.Add("<Table class='Table' >");
+        this.Pub1.Add("<Table class='Table' width='500px' >");
         if (gfs.Count >= 1)
         {
             this.Pub1.AddTR("onclick=\"GroupBarClick('0');\"  class=GroupField ");
-            this.Pub1.AddTD("colspan=4 class=GroupField width='600px' ", "&nbsp;&nbsp;<img src='./Style/Max.gif' alert='Min' id='Img0'  border=0 />&nbsp;<b>" + md.Name + "</b>");
+            this.Pub1.AddTD("colspan=4 class=GroupField ", "<img src='./Style/Max.gif' alert='Min' id='Img0'  border=0 />&nbsp;<b>" + md.Name + "</b>");
             this.Pub1.AddTREnd();
         }
         else
         {
             this.Pub1.Add("<TR>");
-            this.Pub1.AddTD("colspan=4  width='600px' class=GroupField ", "&nbsp;&nbsp;<b>" + md.Name + "</b>");
+            this.Pub1.AddTD("colspan=4 class=GroupField ", "<b>" + md.Name + "</b>");
             this.Pub1.Add("</TR>");
         }
 
@@ -386,9 +387,9 @@ public partial class WF_MapDef_MapDef : WebPage
                     gf.RowIdx = rowIdx;
                     gf.Update();
                 }
-
+                currGF = gf;
                 this.Pub1.AddTR();
-                this.Pub1.AddTD("colspan=4 class=GroupField ", "&nbsp;&nbsp;<img src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b><div ><a href=\"javascript:GroupField('" + md.No + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" >上移</a> <a href=\"javascript:GroupFieldDel('" + md.No + "'," + gf.OID + "')\" >上移</a></div>");
+                this.Pub1.AddTD("colspan=4 class=GroupField ", "<div style='text-align:left; float:left'><img src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b></div><div style='text-align:right; float:right'><a href=\"javascript:GroupField('" + md.No + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" >上移</a> <a href=\"javascript:GroupFieldDel('" + md.No + "'," + gf.OID + "')\" >上移</a></div>");
                 this.Pub1.AddTREnd();
             }
         }
@@ -402,19 +403,28 @@ public partial class WF_MapDef_MapDef : WebPage
                     dtl.Update();
                 }
 
-                this.Pub1.AddTR();
-                this.Pub1.AddTDBegin("colspan=4  width='100%' height='300px'  "); //, "&nbsp;&nbsp;<img onclick=\"GroupBarClick('" + gf.RowIdx + "');\" src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b><div > <a href=\"javascript:GroupField('" + md.No + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" >上移</a>  <a href=\"javascript:GFDoDown('" + gf.OID + "')\" >下移</a> </div>");
+                this.Pub1.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "' ");
+                this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' style='padding:0px;border:0px;overflow:auto;' >");
 
                 string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + dtl.No;
-                this.Pub1.Add("<iframe frameborder=1 leftMargin='0' topMargin='0' src='" + src + "' width='100%' height='100%' class=iframe name=fm style='border-style:none;' id=fm > </iframe>");
+
+                this.Pub1.Add("<iframe ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
                 this.Pub1.AddTDEnd();
                 this.Pub1.AddTREnd();
             }
         }
+
         #endregion 补充上放在最后的几个。
-
-
         this.Pub1.AddTableEnd();
+
+        string js = "\t\n<script type='text/javascript' >";
+        foreach (MapDtl dtl in dtls)
+        {
+            js += "\t\n window.setInterval(\"ReinitIframe('"+dtl.No+"')\", 200);";
+        }
+        js += "\t\n</script>";
+        this.Pub1.Add(js);
+      
 
         // 输出隐藏的字段让用户编辑
         if (isHaveH == false)
@@ -430,6 +440,8 @@ public partial class WF_MapDef_MapDef : WebPage
             switch (attr.KeyOfEn)
             {
                 case "OID":
+                case "FID":
+                case "FK_NY":
                 case "Emps":
                 case "FK_Dept":
                 case "NodeState":
@@ -453,7 +465,6 @@ public partial class WF_MapDef_MapDef : WebPage
 
     public string GenerLab(MapAttr attr, int idx, int i, int count)
     {
-
         string lab = attr.Name;
         if (attr.MyDataType == DataType.AppBoolean && attr.UIIsLine)
             lab = "编辑";
@@ -498,138 +509,5 @@ public partial class WF_MapDef_MapDef : WebPage
             return "<a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动顺序' border=0/></a>" + lab;
         }
         return "<a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向下移动顺序' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动顺序' border=0/></a>";
-    }
-    public void InsertCellsData(MapData md, string groupID, int groupIdx)
-    {
-        this.Pub1.AddTR();
-        this.Pub1.Add("<TD colspan=4  ID=" + groupID + groupIdx + " >");
-        this.Pub1.Add("<table border=0  width=100%  >");
-        MapAttrs attrs1 = md.GenerHisTableCells;
-        this.Pub1.AddTR();
-        foreach (MapAttr attr in attrs1)
-        {
-            if (attr.UIVisible == false)
-                continue;
-
-
-            this.Pub1.AddTDTitle("width='" + attr.UIWidth + "px'", "<a href=\"javascript:Edit('" + this.MyPK + "T','" + attr.OID + "','" + attr.MyDataType + "');\" >" + attr.Name + "</a>");
-        }
-        this.Pub1.AddTREnd();
-
-        for (int y = 0; y < md.CellsY; y++)
-        {
-            this.Pub1.AddTR();
-            int idx = 0;
-            foreach (MapAttr attr in attrs1)
-            {
-                if (attr.UIVisible == false)
-                    continue;
-
-
-
-                switch (attr.LGType)
-                {
-                    case FieldTypeS.Normal:
-                        TB tb = new TB();
-                        tb.Attributes["width"] = "100%";
-                        tb.Columns = 60;
-                        tb.Enabled = attr.UIIsEnable;
-                        switch (attr.MyDataType)
-                        {
-                            case BP.DA.DataType.AppString:
-
-                                tb.ShowType = TBType.TB;
-                                tb.Text = attr.DefVal;
-                                this.Pub1.AddTD(tb);
-                                break;
-                            case BP.DA.DataType.AppDate:
-
-                                tb.ShowType = TBType.Date;
-                                tb.Text = attr.DefVal;
-                                this.Pub1.AddTD(tb);
-                                break;
-                            case BP.DA.DataType.AppDateTime:
-
-                                tb.ShowType = TBType.DateTime;
-                                tb.Text = attr.DefVal;
-                                this.Pub1.AddTD(tb);
-                                break;
-                            case BP.DA.DataType.AppBoolean:
-                                CheckBox cb = new CheckBox();
-                                cb.Text = attr.Name;
-                                cb.Checked = attr.DefValOfBool;
-                                cb.Enabled = attr.UIIsEnable;
-                                this.Pub1.AddTD(cb);
-                                break;
-                            case BP.DA.DataType.AppDouble:
-                            case BP.DA.DataType.AppFloat:
-                            case BP.DA.DataType.AppInt:
-                                tb.ShowType = TBType.Num;
-                                tb.Text = attr.DefVal;
-                                this.Pub1.AddTD("align=right",tb);
-                                break;
-                            case BP.DA.DataType.AppMoney:
-                            case BP.DA.DataType.AppRate:
-                                tb.ShowType = TBType.Moneny;
-                                tb.Text = attr.DefVal;
-                                this.Pub1.AddTD("align=right", tb);
-                                break;
-                            default:
-                                break;
-                        }
-
-                        tb.Attributes["width"] = "100%";
-                        switch (attr.MyDataType)
-                        {
-                            case BP.DA.DataType.AppString:
-                                tb.Attributes["class"] = "TB";
-                                break;
-                            case BP.DA.DataType.AppDateTime:
-                            case BP.DA.DataType.AppDate:
-                                if (tb.Enabled)
-                                    tb.Attributes["class"] = "TB";
-                                else
-                                    tb.Attributes["class"] = "TBReadonly";
-                                break;
-                            default:
-                                if (tb.Enabled)
-                                    tb.Attributes["class"] = "TBNum";
-                                else
-                                    tb.Attributes["class"] = "TBReadonlyNum";
-                                break;
-                        }
-                        break;
-                    case FieldTypeS.Enum:
-                        DDL ddle = new DDL();
-                        ddle.BindSysEnum(attr.KeyOfEn);
-                        ddle.SetSelectItem(attr.DefVal);
-                        ddle.Enabled = attr.UIIsEnable;
-                        this.Pub1.AddTD(ddle);
-                        break;
-                    case FieldTypeS.FK:
-                        DDL ddl1 = new DDL();
-                        ddl1.ID = "s" + attr.KeyOfEn;
-                        try
-                        {
-                            EntitiesNoName ens = attr.HisEntitiesNoName;
-                            ens.RetrieveAll();
-                            ddl1.BindEntities(ens);
-                            ddl1.SetSelectItem(attr.DefVal);
-                        }
-                        catch
-                        {
-                        }
-                        ddl1.Enabled = attr.UIIsEnable;
-                        this.Pub1.AddTD(ddl1);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            this.Pub1.AddTREnd();
-        }
-        this.Pub1.AddTableEnd();
-        this.Pub1.AddTDEnd();
-        this.Pub1.AddTREnd();
     }
 }

@@ -4,8 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
 <title runat=server /> 
-		<script language="JavaScript" src="JS.js"></script>
-    
+   <script language="JavaScript" src="JS.js"></script>
     <script language=javascript>
     /* ESC Key Down  */
     function Esc()
@@ -51,7 +50,7 @@
     </script>
     <base target=_self /> 
 </head>
-<body  topmargin="0" leftmargin="0" onkeypress="Esc()" >
+<body  topmargin="0" leftmargin="0" onkeypress="Esc()"  onload="RSize()" >
     <form id="form1" runat="server">
 <uc1:Pub ID="Pub1" runat="server" />
     </form>

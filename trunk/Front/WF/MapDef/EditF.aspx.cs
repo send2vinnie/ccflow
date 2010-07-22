@@ -171,7 +171,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         this.Pub1.AddTD(this.ToE("DefaultVal", "默认值"));
         tb = new TB();
         tb.ID = "TB_DefVal";
-        tb.Text = mapAttr.DefVal;
+        tb.Text = mapAttr.DefValReal;
 
         switch (this.FType)
         {

@@ -18,7 +18,7 @@
     <base target=_self /> 
     <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
-<body    topmargin="0" leftmargin="0" onkeypress="Esc()" >
+<body    topmargin="0" leftmargin="0" onkeypress="Esc()" onload="RSize()"  >
     <form id="form1" runat="server">
     <div>
         <uc2:Pub ID="Pub1" runat="server" />

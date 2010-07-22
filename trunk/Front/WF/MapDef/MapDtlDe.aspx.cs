@@ -10,7 +10,6 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using BP.Sys;
 using BP.En;
-using BP.En;
 using BP.Web.Controls;
 using BP.DA;
 using BP.Web;
@@ -56,8 +55,8 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
 
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
-        this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "' ><img src='../../Images/Btn/Back.gif' border=0/>" + this.ToE("Back","返回") + ":" + md.Name + "</a> - <img src='../../Images/Btn/Table.gif' border=0/>" + dtl.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> ");
+        this.Pub1.Add("<Table border=0  style='padding:0px' ");
+   //     this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "' ><img src='../../Images/Btn/Back.gif' border=0/>" + this.ToE("Back","返回") + ":" + md.Name + "</a> - <img src='../../Images/Btn/Table.gif' border=0/>" + dtl.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> ");
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
@@ -67,20 +66,20 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             if (attr.UIVisible == false)
                 continue;
 
-            this.Pub1.Add("<TD class=Title nowarp=true>");
+            this.Pub1.Add("<TD class=Title  nowarp=true >");
             this.Pub1.Add("<a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动' border=0/></a>");
-            if (attr.HisEditType == EditType.UnDel || attr.HisEditType== EditType.Edit)
+            if (attr.HisEditType == EditType.UnDel || attr.HisEditType == EditType.Edit)
             {
                 switch (attr.LGType)
                 {
                     case FieldTypeS.Normal:
-                        this.Pub1.AddB("<a href=\"javascript:Edit('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataType + "');\"  alt='" + attr.KeyOfEn + "'>" + attr.Name + "</a>");
+                        this.Pub1.Add("<a href=\"javascript:Edit('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataType + "');\"  alt='" + attr.KeyOfEn + "'>" + attr.Name + "</a>");
                         break;
                     case FieldTypeS.Enum:
-                        this.Pub1.AddB("<a href=\"javascript:EditEnum('" + this.MyPK + "','" + attr.OID + "');\" alt='" + attr.KeyOfEn + "' >" + attr.Name + "</a>");
+                        this.Pub1.Add("<a href=\"javascript:EditEnum('" + this.MyPK + "','" + attr.OID + "');\" alt='" + attr.KeyOfEn + "' >" + attr.Name + "</a>");
                         break;
                     case FieldTypeS.FK:
-                        this.Pub1.AddB("<a href=\"javascript:EditTable('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataTypeS + "');\"  alt='" + attr.KeyOfEn + "'>" + attr.Name + "</a>");
+                        this.Pub1.Add("<a href=\"javascript:EditTable('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataTypeS + "');\"  alt='" + attr.KeyOfEn + "'>" + attr.Name + "</a>");
                         break;
                     default:
                         break;
@@ -88,21 +87,22 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             }
             else
             {
-                this.Pub1.AddB(attr.Name);
+                this.Pub1.Add(attr.Name);
             }
             //  this.Pub1.Add("[<a href=\"javascript:Insert('" + this.MyPK + "','" + attr.IDX + "');\" ><img src='../../Images/Btn/Insert.gif' border=0/>插入</a>]");
             this.Pub1.Add("<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动' border=0/></a>");
-            this.Pub1.Add("</TD>");
+            this.Pub1.AddTDEnd();  
         }
         this.Pub1.AddTREnd();
 
-        for (int i = 0; i <= 10; i++)
+        for (int i = 0; i <= dtl.RowsOfList; i++)
         {
             this.Pub1.AddTR();
+             if (dtl.IsShowIdx)
             this.Pub1.AddTDIdx(i);
+
             foreach (MapAttr attr in attrs)
             {
-
                 if (attr.UIVisible == false)
                     continue;
                 switch (attr.LGType)
@@ -121,6 +121,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         TB tb = new TB();
                         tb.ID = "TB_" + attr.KeyOfEn + "_" + i;
                         tb.Text = attr.DefVal;
+
                         tb.Enabled = attr.UIIsEnable;
 
                         this.Pub1.AddTD(tb);
@@ -199,29 +200,34 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             }
             this.Pub1.AddTREnd();
         }
-        this.Pub1.AddTRSum();
-        this.Pub1.AddTD(this.ToE("Sum","合计"));
-        foreach (MapAttr attr in attrs)
+        if (dtl.IsShowSum)
         {
-            if (attr.UIVisible == false)
-                continue;
-            if (attr.IsNum && attr.LGType == FieldTypeS.Normal)
+            this.Pub1.AddTRSum();
+            if (dtl.IsShowIdx)
+                this.Pub1.AddTD(this.ToE("Sum", "合计"));
+
+            foreach (MapAttr attr in attrs)
             {
-                TB tb = new TB();
-                tb.ID = "TB_" + attr.KeyOfEn ;
-                tb.Text = attr.DefVal;
-                tb.ShowType = attr.HisTBType;
-                tb.ReadOnly = true;
-                tb.Font.Bold = true;
-                tb.BackColor = System.Drawing.Color.FromName("infobackground");
-                this.Pub1.AddTD(tb);
+                if (attr.UIVisible == false)
+                    continue;
+                if (attr.IsNum && attr.LGType == FieldTypeS.Normal)
+                {
+                    TB tb = new TB();
+                    tb.ID = "TB_" + attr.KeyOfEn;
+                    tb.Text = attr.DefVal;
+                    tb.ShowType = attr.HisTBType;
+                    tb.ReadOnly = true;
+                    tb.Font.Bold = true;
+                    tb.BackColor = System.Drawing.Color.FromName("infobackground");
+                    this.Pub1.AddTD(tb);
+                }
+                else
+                {
+                    this.Pub1.AddTD();
+                }
             }
-            else
-            {
-                this.Pub1.AddTD();
-            }
+            this.Pub1.AddTREnd();
         }
-        this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
 
         // 输出自动计算公式
@@ -236,6 +242,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                     continue;
                 if (attr.IsNum == false)
                     continue;
+                 
 
                 if (attr.LGType != FieldTypeS.Normal)
                     continue;
@@ -263,9 +270,12 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             if (attr.IsNum == false)
                 continue;
 
+            if (attr.MyDataType ==DataType.AppBoolean )
+                continue;
+
             string top = "\n<script language='JavaScript'> function C" + attr.KeyOfEn + "() { \n ";
             string end = "\n } </script>";
-            this.Response.Write(top + this.GenerSum(attr) + " ; \t\n" + end);
+            this.Response.Write(top + this.GenerSum(attr,dtl) + " ; \t\n" + end);
         }
     }
     /// <summary>
@@ -293,11 +303,14 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         return s += " C" + attr.KeyOfEn + "();";
     }
 
-    public string GenerSum(MapAttr mattr)
+    public string GenerSum(MapAttr mattr,MapDtl dtl)
     {
+        if (mattr.MyDataType == DataType.AppBoolean)
+            return "";
+
         string left = "\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value = ";
         string right = "";
-        for (int i = 0; i <= 10; i++)
+        for (int i = 0; i <= dtl.RowsOfList; i++)
         {
             string tbID = "TB_" + mattr.KeyOfEn + "_" + i;
             TB tb = this.Pub1.GetTBByID(tbID);
