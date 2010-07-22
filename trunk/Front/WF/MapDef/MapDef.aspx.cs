@@ -61,9 +61,7 @@ public partial class WF_MapDef_MapDef : WebPage
                 gf.IsUse = true;
                 currGF = gf;
                 this.Pub1.AddTR();
-                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b></div><div style='text-align:right; float:right'><a href=\"javascript:GroupField('" + this.MyPK + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div>");
-
-//                this.Pub1.AddTD("colspan=4 class=GroupField ", "&nbsp;&nbsp;<img onclick=\"GroupBarClick('" + gf.RowIdx + "');\" src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b><div > <a href=\"javascript:GroupField('" + this.MyPK + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" >上移</a>  <a href=\"javascript:GFDoDown('" + gf.OID + "')\" >下移</a> </div>");
+                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div>");
                 this.Pub1.AddTREnd();
                 isLeftNext = true;
                 break;
@@ -74,17 +72,20 @@ public partial class WF_MapDef_MapDef : WebPage
             if (rowIdx == dtl.RowIdx && dtl.IsUse == false)
             {
                 dtl.IsUse = true;
+
+                this.Pub1.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "1' ");
+                this.Pub1.Add("<TD class=TD colspan=4> <div style='text-align:left; float:left'>表格:<a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>插入表格列</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+                this.Pub1.AddTREnd();
+
                 this.Pub1.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "' ");
-                this.Pub1.AddTDBegin("colspan=4 class=TD nowarp=true id='TDF" + dtl.No + "'   style='padding:0px;border:0px;' "); //, "&nbsp;&nbsp;<img onclick=\"GroupBarClick('" + gf.RowIdx + "');\" src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b><div > <a href=\"javascript:GroupField('" + md.No + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" >上移</a>  <a href=\"javascript:GFDoDown('" + gf.OID + "')\" >下移</a> </div>");
-                this.Pub1.Add("Up Down");
-
-                string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + dtl.FK_MapData + "&FK_MapDtl=" + dtl.No;
-
-                this.Pub1.Add("<iframe padding:0px;border:0px; frameborder=1 leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='100%' class=iframe name=fm style='border-style:none;' id="+ dtl.No+" />");
+                this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' style='padding:0px;border:0px;overflow:auto;' >");
+                string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + dtl.No;
+                this.Pub1.Add("<iframe ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
                 this.Pub1.AddTDEnd();
                 this.Pub1.AddTREnd();
             }
         }
+
     }
     #region varable.
     public GroupField currGF = new GroupField();
@@ -126,12 +127,12 @@ public partial class WF_MapDef_MapDef : WebPage
         int count = mattrs.Count;
         //this.Pub1.AddB(this.ToE("DesignSheet", "设计表单") + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:AddTable('" + this.MyPK + "');\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("NewTable", "表格") + "</a> - <a href=\"CopyFieldFromNode.aspx?FK_Node=" + this.MyPK + "\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "从节点复制字段") + "</a> - <a href=\"MapDtl.aspx?DoType=DtlList&FK_MapData=" + this.MyPK + "\" >" + this.ToE("DesignDtl", "设计明细") + "</a> - <a href=\"javascript:GroupField('" + md.No + "')\">字段分组</a><hr>");
 
-        this.Pub1.AddB("&nbsp;&nbsp;" + this.ToE("DesignSheet", "设计表单") + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"CopyFieldFromNode.aspx?FK_Node=" + this.MyPK + "\" ><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("NewField", "复制字段") + "</a> - <a href=\"MapDtl.aspx?DoType=DtlList&FK_MapData=" + this.MyPK + "\" >" + this.ToE("DesignDtl", "设计表格") + "</a> - <a href=\"javascript:GroupField('" + md.No + "')\">字段分组</a><hr>");
-        
+        this.Pub1.AddB("&nbsp;&nbsp;" + this.ToE("DesignSheet", "设计表单") + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:CopyFieldFromNode('" + this.MyPK + "');\" ><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("NewField", "复制字段") + "</a> - <a href=\"javascript:MapDtl('"+this.MyPK+"')\" >" + this.ToE("DesignDtl", "设计表格") + "</a> - <a href=\"javascript:GroupField('" + md.No + "')\">字段分组</a><hr>");
+
         int i = -1;
         int idx = -1;
         bool isHaveH = false;
-        this.Pub1.Add("<Table class='Table' width='500px' >");
+        this.Pub1.Add("<Table class='Table' width='500px'  >");
         if (gfs.Count >= 1)
         {
             this.Pub1.AddTR("onclick=\"GroupBarClick('0');\"  class=GroupField ");
@@ -148,24 +149,11 @@ public partial class WF_MapDef_MapDef : WebPage
         isLeftNext = true;
         foreach (MapAttr attr in mattrs)
         {
-            #region 处理不显示的
-            if (attr.HisAttr.IsRefAttr)
+            if (attr.HisAttr.IsRefAttr || attr.UIVisible == false )
                 continue;
-
-            if (attr.UIVisible == false)
-            {
-                isHaveH = true;
-                continue;
-            }
-            #endregion
-
-            #region deal GroupField
 
             if (isLeftNext == true)
                 this.InsertObjects();
-
-            #endregion deal groupField
-
 
             // 显示的顺序号.
             idx++;
@@ -389,12 +377,14 @@ public partial class WF_MapDef_MapDef : WebPage
                 }
                 currGF = gf;
                 this.Pub1.AddTR();
-                this.Pub1.AddTD("colspan=4 class=GroupField ", "<div style='text-align:left; float:left'><img src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<b>" + gf.Lab + "</b></div><div style='text-align:right; float:right'><a href=\"javascript:GroupField('" + md.No + "')\" >编辑</a> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" >上移</a> <a href=\"javascript:GroupFieldDel('" + md.No + "'," + gf.OID + "')\" >上移</a></div>");
+                this.Pub1.AddTD("colspan=4 class=GroupField ", "<div style='text-align:left; float:left'><img src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "'  border=0 />&nbsp;<a href=\"javascript:GroupField('" + md.No + "')\">" + gf.Lab + "</a></div><div style='text-align:right; float:right'> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:GFDoDown(" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div>");
                 this.Pub1.AddTREnd();
             }
         }
+        i = 0;
         foreach (MapDtl dtl in dtls)
         {
+            i++;
             if (rowIdx <= dtl.RowIdx && dtl.IsUse == false)
             {
                 if (dtl.RowIdx > rowIdx)
@@ -403,11 +393,15 @@ public partial class WF_MapDef_MapDef : WebPage
                     dtl.Update();
                 }
 
+                this.Pub1.AddTR(" ID='" + currGF.RowIdx + "_"+i+ rowIdx + "' ");
+                this.Pub1.Add("<TD class='TD' colspan=4   > <div style='text-align:left; float:left'>表格:<a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>插入表格列</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+
+               // this.Pub1.AddTD("colspan=4", "<div style='text-align:left; float:left'>表格:<a href=\"javascript:EditDtl('" + md.No + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div>");
+                this.Pub1.AddTREnd();
+
                 this.Pub1.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "' ");
                 this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' style='padding:0px;border:0px;overflow:auto;' >");
-
                 string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + dtl.No;
-
                 this.Pub1.Add("<iframe ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
                 this.Pub1.AddTDEnd();
                 this.Pub1.AddTREnd();
@@ -420,18 +414,26 @@ public partial class WF_MapDef_MapDef : WebPage
         string js = "\t\n<script type='text/javascript' >";
         foreach (MapDtl dtl in dtls)
         {
-            js += "\t\n window.setInterval(\"ReinitIframe('"+dtl.No+"')\", 200);";
+            js += "\t\n window.setInterval(\"ReinitIframe('" + dtl.No + "')\", 200);";
         }
+
+
+        //js += " window.onload=function(){  ";
+        //foreach (MapDtl dtl in dtls)
+        //{
+        //     js += "\t\n window.setInterval(\"ReinitIframe('"+dtl.No+"')\", 200);";
+        //    js += "\t\n ReinitIframe('" + dtl.No + "');";
+        //    js += "\t\n ReinitIframe('" + dtl.No + "');";
+        //    js += "\t\n ReinitIframe('" + dtl.No + "');";
+        //}
+        //js += "\t\n }";
+
         js += "\t\n</script>";
         this.Pub1.Add(js);
-      
 
-        // 输出隐藏的字段让用户编辑
-        if (isHaveH == false)
-            return;
+ 
 
         this.Pub1.AddFieldSet("编辑隐藏字段");
-
         string msg = ""; // +++++++ 编辑隐藏字段 +++++++++ <br>";
         foreach (MapAttr attr in mattrs)
         {

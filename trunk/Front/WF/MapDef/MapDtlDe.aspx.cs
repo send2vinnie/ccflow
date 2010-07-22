@@ -53,20 +53,25 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
 
         MapData md = new MapData(this.FK_MapData);
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
+        MapAttrs attrs = new MapAttrs(this.MyPK);
+
 
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
-        this.Pub1.Add("<Table border=0  style='padding:0px' ");
+        this.Pub1.Add("<Table border=0  style='padding:0px' width='" + attrs.WithOfCtl+ "px' >");
+
    //     this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "' ><img src='../../Images/Btn/Back.gif' border=0/>" + this.ToE("Back","返回") + ":" + md.Name + "</a> - <img src='../../Images/Btn/Table.gif' border=0/>" + dtl.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> ");
 
+
         this.Pub1.AddTR();
+        if (dtl.IsShowIdx)
         this.Pub1.AddTDTitle("IDX");
-        MapAttrs attrs = new MapAttrs(this.MyPK);
+
         foreach (MapAttr attr in attrs)
         {
             if (attr.UIVisible == false)
                 continue;
 
-            this.Pub1.Add("<TD class=Title  nowarp=true >");
+            this.Pub1.Add("<TD class=Title  nowarp=true width='"+attr.UIWidth+"px' >");
             this.Pub1.Add("<a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动' border=0/></a>");
             if (attr.HisEditType == EditType.UnDel || attr.HisEditType == EditType.Edit)
             {
@@ -95,7 +100,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         }
         this.Pub1.AddTREnd();
 
-        for (int i = 0; i <= dtl.RowsOfList; i++)
+        for (int i =1 ; i <= dtl.RowsOfList; i++)
         {
             this.Pub1.AddTR();
              if (dtl.IsShowIdx)
@@ -121,15 +126,12 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         TB tb = new TB();
                         tb.ID = "TB_" + attr.KeyOfEn + "_" + i;
                         tb.Text = attr.DefVal;
-
                         tb.Enabled = attr.UIIsEnable;
 
                         this.Pub1.AddTD(tb);
 
                         tb.ShowType = attr.HisTBType;
 
-                        if (tb.Enabled == false)
-                            tb.Attributes["class"] = "TBReadonly";
                         switch (attr.MyDataType)
                         {
                             case BP.DA.DataType.AppString:
@@ -147,7 +149,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                                     tb.Attributes["class"] = "TBReadonly";
                                 break;
                             default:
-                                tb.Attributes["Width"] = "20px";
+                                tb.Attributes["Width"] = attr.UIWidth+"px";
                                 if (tb.Enabled)
                                 {
                                     // OnKeyPress="javascript:return VirtyNum(this);"
@@ -305,12 +307,18 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
 
     public string GenerSum(MapAttr mattr,MapDtl dtl)
     {
+        if (dtl.IsShowSum == false)
+            return "";
+
+
         if (mattr.MyDataType == DataType.AppBoolean)
             return "";
 
+   
+
         string left = "\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value = ";
         string right = "";
-        for (int i = 0; i <= dtl.RowsOfList; i++)
+        for (int i = 1; i <= dtl.RowsOfList; i++)
         {
             string tbID = "TB_" + mattr.KeyOfEn + "_" + i;
             TB tb = this.Pub1.GetTBByID(tbID);

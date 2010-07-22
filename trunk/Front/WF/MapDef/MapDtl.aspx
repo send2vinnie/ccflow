@@ -9,7 +9,6 @@
     <link href="../Menu.css" rel="stylesheet" type="text/css" />
     <link href="../Table.css" rel="stylesheet" type="text/css" />
 		<script language="JavaScript" src="JS.js"></script>
-    
 	<base target="_self" />
 	<script language=javascript>
 	function Insert(mypk,IDX)
@@ -78,33 +77,10 @@
     <link href="../Style/Style.css" rel="stylesheet" type="text/css" />
     <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="Esc()"  >
+<body topmargin="0" leftmargin="0" onkeypress="Esc()"  onload="RSize()" >
     <form id="form1" runat="server">
-        <table class=Table border="0" cellpadding="0"  cellspacing="0" style="width: 100%; height: 100%">
-         <tr>
-                <td style="height: 1px" >
-                    <uc1:Pub ID="Pub1" runat="server" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <uc1:Pub ID="Pub2" runat="server" />
-                    
-                </td>
-            </tr>
-             <tr>
-                <td width='10%' valign=top>
-                <table style="width: 21%" >
-                <tr>
-                <td>
-                    &nbsp;<uc2:UCEn ID="UCEn1" runat="server" />
-                    </td>
-            </tr>
-                    </table>
-                 </td>
-            </tr>
-                
-        </table>
+    <br />
+      <uc1:Pub ID="Pub1" runat="server" />
     </form>
 </body>
 </html>

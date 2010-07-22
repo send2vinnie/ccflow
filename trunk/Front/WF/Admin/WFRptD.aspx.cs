@@ -76,7 +76,7 @@ public partial class WF_Admin_RptD : WebPage
                 this.Ucsys1.Add("<a href=\"javascript:Del('" + attr.MyPK + "')\" ><img src='../../Images/Btn/Delete.gif' border=0/>" + this.ToE("Del", "删除") + "</a>");
 
 
-            this.Ucsys1.Add("<a href=\"javascript:AddF('" + this.RefNo + "','" + attr.IDX + "')\" ><img src='../../Images/Btn/Insert.gif' border=0/>" + this.ToE("Insert","插入") + "</a>");
+            this.Ucsys1.Add("<a href=\"javascript:AddF('" + this.RefNo + "','" + attr.IDX + "')\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("Insert","插入") + "</a>");
             this.Ucsys1.Add("</TD>");
             this.Ucsys1.AddTREnd();
         }

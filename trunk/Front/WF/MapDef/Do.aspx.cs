@@ -155,6 +155,25 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                 }
                 this.WinClose();
                 break;
+
+            case "DtlDoUp":
+                MapDtl dtl1 = new MapDtl(this.MyPK);
+                if (dtl1.RowIdx > 0)
+                {
+                    dtl1.RowIdx = dtl1.RowIdx - 1;
+                    dtl1.Update();
+                }
+                this.WinClose();
+                break;
+            case "DtlDoDown":
+                MapDtl dtl2 = new MapDtl(this.MyPK);
+                if (dtl2.RowIdx < 10)
+                {
+                    dtl2.RowIdx = dtl2.RowIdx + 1;
+                    dtl2.Update();
+                }
+                this.WinClose();
+                break;
             default:
                 break;
         }

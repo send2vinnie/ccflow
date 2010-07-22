@@ -8,10 +8,8 @@
     <title>表单设计</title>
 	<script language="JavaScript" src="JS.js"></script>
 	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
-	
-	
 	<base target="_self" />
-	<script language=javascript>
+	<script language="javascript">
 	function Insert(mypk,IDX)
     {
         var url='Do.aspx?DoType=AddF&MyPK='+mypk+'&IDX=' +IDX ;
@@ -73,7 +71,6 @@
        return true;
     }
 	</script>
-	
   <script language="javascript" for="document" event="onkeydown">
     if(event.keyCode==13)
        event.keyCode=9;

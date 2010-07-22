@@ -249,7 +249,7 @@ public partial class Comm_MapDef_EditTable : BP.Web.PageBase
         }
 
         string url = "Do.aspx?DoType=AddF&MyPK=" + mapAttr.FK_MapData + "&IDX=" + mapAttr.IDX;
-        this.Pub1.Add("<a href='" + url + "'><img src='../../Images/Btn/Insert.gif' border=0>" + this.ToE("New", "新建") + "</a></TD>");
+        this.Pub1.Add("<a href='" + url + "'><img src='../../Images/Btn/New.gif' border=0>" + this.ToE("New", "新建") + "</a></TD>");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }

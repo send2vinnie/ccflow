@@ -102,6 +102,18 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
+    function DtlDoUp(MyPK)
+    {
+        var url='Do.aspx?DoType=DtlDoUp&MyPK='+MyPK ;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href ;
+    }
+    function DtlDoDown(MyPK)
+    {
+        var url='Do.aspx?DoType=DtlDoDown&MyPK='+MyPK ;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+    }
     
     function Del(mypk,refoid)
     {
@@ -143,40 +155,40 @@
        {
           if (document.getElementById( rowIdx +'_'+ i )==null)
                    continue;
-                   
           document.getElementById( rowIdx +'_' + i ).style.display= sta ;
       }
   }
-
-
+   var isInser="";
   function ReinitIframe(dtlid) {
 
-
       try {
-
-
+ 
+   
           var iframe = document.getElementById("F" + dtlid);
           var tdF = document.getElementById("TD" + dtlid);
-
-          if (tdF == null)
-              return;
-              
-
-          alert( "ss = "+tdF.width);
-          
           iframe.height = iframe.contentWindow.document.body.scrollHeight;
           iframe.width = iframe.contentWindow.document.body.scrollWidth ;
-
-          tdF.width = iframe.width;
-          tdF.height = iframe.height;
-          alert("ss = " + tdF.width);
           
+          if (tdF.width < iframe.width)
+          {
+             //alert(tdF.width +'  ' + iframe.width);
+             tdF.width = iframe.width;
+          }else
+          {
+           iframe.width =tdF.width ;
+           
+          }
+          
+          tdF.height = iframe.height;
+          
+         // alert("ss = " + tdF.width);
           // tdF.width = iframe.width;
-          //     alert(tdF.width);
+          // alert(tdF.width);
           //  alert(iframe.width);
           //tdF.width = iframe.width;
           return;
       } catch (ex) {
+      //alert(ex.message);
           return;
       }
       return;
@@ -186,20 +198,39 @@
       //      iframe.height = height;
       //      tdF.height = height;
   }
+  
+  function CopyFieldFromNode( mypk )
+  {
+      var url='CopyFieldFromNode.aspx?FK_Node='+mypk ;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+  }
+  
+    function EditDtl( mypk , dtlKey )
+  {
+      var url='MapDtl.aspx?DoType=Edit&FK_MapData=' + mypk +'&FK_MapDtl='+ dtlKey ;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+  }
+   function MapDtl( mypk  )
+  {
+      var url='MapDtl.aspx?DoType=DtlList&FK_MapData=' + mypk   ;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+  }
+  
 
-
-</script>
+</script>   
 	<base target="_self" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
  <table border="0" cellpadding="0" cellspacing="0" >
             <tr>
-                <td style="width: 20%; background-color:InfoBackground" class="BigDoc" valign=top>
-                设计帮助 
-                表单设计器，能够帮助您快速的完成表单设计。
+                <td style="width: 1%; background-color:InfoBackground" class="BigDoc" valign=top>
+              
 <uc1:Pub ID="Left" runat="server" />
 </td>
-                <td style="width: 80%;"  valign=top>
+                <td style="width: 100%;"  valign=top>
                 <uc1:Pub ID="Pub1" runat="server" />
                 </td>
             </tr>

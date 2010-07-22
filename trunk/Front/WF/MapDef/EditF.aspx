@@ -10,7 +10,7 @@
 <head runat="server">
     <title>自动完成</title>
 		<script language="JavaScript" src="JS.js"></script>
-	<script language="JavaScript" src="../JScript.js"></script>
+	<script language="JavaScript" src="../../Comm/JScript.js"></script>
     <script language=javascript>
     /* ESC Key Down */
     function Esc()
