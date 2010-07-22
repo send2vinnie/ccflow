@@ -66,14 +66,15 @@
 .FDesc
 {
 	border-color: #C0C0C0;
-		padding: 4px;
+	padding: 4px;
 	margin: 4px;
 	border-bottom: lightgrey 1px solid;
 	border-left: lightgrey 1px solid;
 	border-right: lightgrey 1px solid;
 	font-family: ËÎÌו;
 	text-align: left;
-	width:10%;
+	width: 10%;
+	background-color: #F9F9F9;
 }
 
 .GroupField
@@ -143,6 +144,14 @@
 .TRHand
 {
 	cursor: hand;
+}
+.Idx
+{
+	padding: 4px;
+	margin: 4px;
+	border-bottom: lightgrey 1px solid;
+	font-family: ËÎÌו;
+	text-align: left;
 }
 
 .TD, Idx
