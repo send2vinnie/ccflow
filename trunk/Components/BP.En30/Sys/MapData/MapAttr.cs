@@ -372,6 +372,7 @@ namespace BP.Sys
                     case BP.DA.DataType.AppString:
                     case BP.DA.DataType.AppDate:
                     case BP.DA.DataType.AppDateTime:
+                    case BP.DA.DataType.AppBoolean:
                         return false;
                     default:
                         return true;
@@ -383,6 +384,13 @@ namespace BP.Sys
             get
             {
                 return decimal.Parse(this.DefVal);
+            }
+        }
+        public string DefValReal
+        {
+            get
+            {
+                return this.GetValStrByKey(MapAttrAttr.DefVal);
             }
         }
         /// <summary>

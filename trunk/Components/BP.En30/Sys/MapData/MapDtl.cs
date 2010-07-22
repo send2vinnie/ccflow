@@ -20,7 +20,7 @@ namespace BP.Sys
         ForFID
     }
     /// <summary>
-    /// 映射明晰
+    /// 明细
     /// </summary>
     public class MapDtlAttr : EntityNoNameAttr
     {
@@ -40,13 +40,46 @@ namespace BP.Sys
         /// 插入表单的位置
         /// </summary>
         public const string RowIdx = "RowIdx";
+        public const string RowsOfList = "RowsOfList";
+        public const string IsShowSum = "IsShowSum";
+        public const string IsShowIdx = "IsShowIdx";
+
     }
     /// <summary>
-    /// 映射明晰
+    /// 明细
     /// </summary>
     public class MapDtl : EntityNoName
     {
         #region 属性
+        public bool IsShowSum
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsShowSum);
+            }
+            set
+            {
+                //MapAttrs attrs = new MapAttrs(this.FK_MapData);
+                //foreach (MapAttr attr in attrs)
+                //{
+                //}
+                this.SetValByKey(MapDtlAttr.IsShowSum, value);
+            }
+        }
+        public bool IsShowIdx
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsShowIdx);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsShowIdx, value);
+            }
+        }
+
+
+
         public bool IsUse = false;
         /// <summary>
         /// 是否检查人员的权限
@@ -71,6 +104,17 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapDtlAttr.FK_MapData, value);
+            }
+        }
+        public int RowsOfList
+        {
+            get
+            {
+                return this.GetValIntByKey(MapDtlAttr.RowsOfList);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.RowsOfList, value);
             }
         }
         public int RowIdx
@@ -134,7 +178,7 @@ namespace BP.Sys
             }
         }
         /// <summary>
-        /// 映射明晰
+        /// 明细
         /// </summary>
         public MapDtl()
         {
@@ -156,7 +200,7 @@ namespace BP.Sys
                 Map map = new Map("Sys_MapDtl");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
-                map.EnDesc = "映射明晰";
+                map.EnDesc = "明细";
                 map.EnType = EnType.Sys;
 
                 map.AddTBStringPK(MapDtlAttr.No, null, "编号", true, false, 1, 20, 20);
@@ -165,8 +209,14 @@ namespace BP.Sys
                 map.AddTBString(MapDtlAttr.PTable, null, "物理表", true, false, 0, 30, 20);
 
                 map.AddTBInt(MapDtlAttr.RowIdx, 99, "位置", false, false);
+                map.AddTBInt(MapDtlAttr.RowsOfList, 6, "Rows", false, false);
+                map.AddTBInt(MapDtlAttr.IsShowSum, 1, "IsShowSum", false, false);
+                map.AddTBInt(MapDtlAttr.IsShowIdx, 1, "IsShowIdx", false, false);
 
-                map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true, MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
+
+
+                map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true,
+                    MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
 
                 this._enMap = map;
                 return this._enMap;
@@ -297,19 +347,19 @@ namespace BP.Sys
         }
     }
     /// <summary>
-    /// 映射明晰s
+    /// 明细s
     /// </summary>
     public class MapDtls : EntitiesNoName
     {
         #region 构造
         /// <summary>
-        /// 映射明晰s
+        /// 明细s
         /// </summary>
         public MapDtls()
         {
         }
         /// <summary>
-        /// 映射明晰s
+        /// 明细s
         /// </summary>
         /// <param name="fk_mapdata">s</param>
         public MapDtls(string fk_mapdata)
