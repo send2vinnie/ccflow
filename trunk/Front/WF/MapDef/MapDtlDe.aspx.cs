@@ -147,6 +147,10 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                                     tb.Attributes["class"] = "TB";
                                 else
                                     tb.Attributes["class"] = "TBReadonly";
+
+                                if (attr.UIIsEnable)
+                                    tb.Attributes["onfocus"] = "calendar();";
+
                                 break;
                             default:
                                 tb.Attributes["Width"] = attr.UIWidth+"px";

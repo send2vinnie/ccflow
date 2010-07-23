@@ -252,12 +252,20 @@ public partial class WF_MapDef_MapDef : WebPage
                             this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
                             tb.ShowType = TBType.Date;
                             tb.Text = attr.DefVal;
+
+                            if (attr.UIIsEnable )
+                                tb.Attributes["onfocus"] = "calendar();";
+
                             this.Pub1.AddTD("colspan=" + colspanOfCtl, tb);
                             break;
                         case BP.DA.DataType.AppDateTime:
                             this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
                             tb.ShowType = TBType.DateTime;
                             tb.Text = attr.DefVal;
+                            if (attr.UIIsEnable == false)
+                                tb.Attributes["onfocus"] = "calendar();";
+
+
                             this.Pub1.AddTD("colspan=" + colspanOfCtl, tb);
                             break;
                         case BP.DA.DataType.AppBoolean:
@@ -409,31 +417,27 @@ public partial class WF_MapDef_MapDef : WebPage
         }
 
         #endregion 补充上放在最后的几个。
+
         this.Pub1.AddTableEnd();
 
+
+        #region 处理iFrom 的自适应的问题。
         string js = "\t\n<script type='text/javascript' >";
         foreach (MapDtl dtl in dtls)
         {
             js += "\t\n window.setInterval(\"ReinitIframe('" + dtl.No + "')\", 200);";
         }
 
-
-        //js += " window.onload=function(){  ";
-        //foreach (MapDtl dtl in dtls)
-        //{
-        //     js += "\t\n window.setInterval(\"ReinitIframe('"+dtl.No+"')\", 200);";
-        //    js += "\t\n ReinitIframe('" + dtl.No + "');";
-        //    js += "\t\n ReinitIframe('" + dtl.No + "');";
-        //    js += "\t\n ReinitIframe('" + dtl.No + "');";
-        //}
-        //js += "\t\n }";
-
         js += "\t\n</script>";
         this.Pub1.Add(js);
+        #endregion 处理iFrom 的自适应的问题。
 
- 
 
-        this.Pub1.AddFieldSet("编辑隐藏字段");
+
+
+
+        #region 处理隐藏字段。
+        //string SysFields = "OID,FID,FK_NY,Emps,FK_Dept,NodeState,WFState,BillNo,RDT,MyNum,WFLog,";
         string msg = ""; // +++++++ 编辑隐藏字段 +++++++++ <br>";
         foreach (MapAttr attr in mattrs)
         {
@@ -459,10 +463,16 @@ public partial class WF_MapDef_MapDef : WebPage
             }
             msg += "<a href=\"javascript:Edit('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
         }
-        this.Pub1.Add(msg);
-        this.Pub1.Add("<br>说明：隐藏字段是不显示在表单里面，多用于属性的计算、方向条件的设置，报表的体现。");
 
-        this.Pub1.AddFieldSetEnd();
+        if (msg.Length > 10)
+        {
+            this.Pub1.AddFieldSet("编辑隐藏字段");
+            this.Pub1.Add(msg);
+            this.Pub1.Add("<br>说明：隐藏字段是不显示在表单里面，多用于属性的计算、方向条件的设置，报表的体现。");
+            this.Pub1.AddFieldSetEnd();
+        }
+        #endregion 处理隐藏字段。
+
     }
 
     public string GenerLab(MapAttr attr, int idx, int i, int count)

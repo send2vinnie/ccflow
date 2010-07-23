@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <script language="JavaScript" src="JS.js"></script>
     <script language="JavaScript" src="../JScript.js"></script>
+    <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
     <script language="javascript" >
 	function HelpGroup()
 	{
