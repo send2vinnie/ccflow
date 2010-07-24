@@ -43,6 +43,7 @@ namespace BP.Sys
         public const string RowsOfList = "RowsOfList";
         public const string IsShowSum = "IsShowSum";
         public const string IsShowIdx = "IsShowIdx";
+        public const string IsCopyNDData = "IsCopyNDData";
 
     }
     /// <summary>
@@ -77,8 +78,17 @@ namespace BP.Sys
                 this.SetValByKey(MapDtlAttr.IsShowIdx, value);
             }
         }
-
-
+        public bool IsCopyNDData
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsCopyNDData);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsCopyNDData, value);
+            }
+        }
 
         public bool IsUse = false;
         /// <summary>
@@ -212,7 +222,7 @@ namespace BP.Sys
                 map.AddTBInt(MapDtlAttr.RowsOfList, 6, "Rows", false, false);
                 map.AddBoolean(MapDtlAttr.IsShowSum, false, "IsShowSum", false, false);
                 map.AddBoolean(MapDtlAttr.IsShowIdx, false, "IsShowIdx", false, false);
-
+                map.AddBoolean(MapDtlAttr.IsCopyNDData, true, "IsCopyNDData", false, false);
 
                 map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true,
                     MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
