@@ -391,6 +391,29 @@ namespace BP.Web.UC
                 return s;
             }
         }
+        public int RefOID
+        {
+            get
+            {
+                string s = this.Request.QueryString["RefOID"];
+                if (s == "")
+                    s = this.Request.QueryString["OID"];
+                if (s == "")
+                    return 0;
+
+                return int.Parse(s);
+            }
+        }
+        public string MyPK
+        {
+            get
+            {
+                string s = this.Request.QueryString["MyPK"];
+                if (s == "")
+                    s = this.Request.QueryString["PK"];
+                return s;
+            }
+        }
         public string FK_Type
         {
             get
