@@ -23,7 +23,7 @@ namespace BP.Web.UC
         private void AddAttrDescVal(string desc, string doc, int colspan)
         {
             this.AddTDDesc(desc);
-            this.AddTD("colspan=" + colspan, doc);
+            this.AddTD(" class=TD colspan=" + colspan, doc);
         }
 
         private void AddAttrDescValDoc(string desc, string doc, int colspan)
@@ -35,13 +35,13 @@ namespace BP.Web.UC
                 this.AddTREnd();
 
                 this.AddTR();
-                this.AddTDBigDoc("colspan=4", doc);
+                this.AddTDBigDoc(" class=BigDoc colspan=4", doc);
                 this.AddTREnd();
 
             }
             else
             {
-                this.AddTDBegin("colspan=" + colspan);
+                this.AddTDBegin(" class=BigDoc colspan=" + colspan);
                 this.Add("<b>" + desc + "</b><br>");
                 this.Add(doc);
                 this.AddTDEnd();
