@@ -22,6 +22,12 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
+    function CopyF(mypk)
+    {
+        var url='CopyDtlField.aspx?MyPK='+mypk;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+    }
     function Edit(mypk,refoid, ftype)
     {
         var url='EditF.aspx?DoType=Edit&MyPK='+mypk+'&RefOID='+refoid +'&FType=' + ftype;

@@ -48,3 +48,10 @@ function VirtyDateTime(ctrl)
     else
         return true;
 }
+
+function Esc()
+    {
+        if (event.keyCode == 27)     
+        window.close();
+       return true;
+    }

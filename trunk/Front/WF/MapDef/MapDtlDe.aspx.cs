@@ -55,12 +55,14 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
         MapAttrs attrs = new MapAttrs(this.MyPK);
 
+        if (attrs.Count == 0)
+            dtl.IntMapAttrs();
+
 
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
-        this.Pub1.Add("<Table border=0  style='padding:0px' width='" + attrs.WithOfCtl+ "px' >");
+        this.Pub1.Add("<Table border=0  style='padding:0px' width='100%' >");
 
    //     this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "' ><img src='../../Images/Btn/Back.gif' border=0/>" + this.ToE("Back","返回") + ":" + md.Name + "</a> - <img src='../../Images/Btn/Table.gif' border=0/>" + dtl.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> ");
-
 
         this.Pub1.AddTR();
         if (dtl.IsShowIdx)
@@ -71,7 +73,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             if (attr.UIVisible == false)
                 continue;
 
-            this.Pub1.Add("<TD class=Title  nowarp=true width='"+attr.UIWidth+"px' >");
+            this.Pub1.Add("<TD class=Title width='"+attr.UIWidth+"px' >");
             this.Pub1.Add("<a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动' border=0/></a>");
             if (attr.HisEditType == EditType.UnDel || attr.HisEditType == EditType.Edit)
             {

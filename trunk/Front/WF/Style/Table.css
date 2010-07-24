@@ -36,7 +36,8 @@
 .Caption
 {
 	font: caption;
-	color: black;
+	color: #339966;
+	font-size: medium;
 }
 
 .TitleLeft
@@ -53,11 +54,15 @@
 	background-color: activeborder;
 	text-align: left;
 }
+br{  
+  display:none;  
+} 
 
 /*   Title */
 .Title
 {
-   background-color: AliceBlue;
+	background-color: #F0F8FF;
+	color: #669999;
 }
 
 

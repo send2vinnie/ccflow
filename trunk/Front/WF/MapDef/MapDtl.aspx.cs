@@ -304,6 +304,18 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTREnd();
 
 
+        this.Pub1.AddTR();
+        this.Pub1.AddTD();
+        cb = new CheckBox();
+        cb.ID = "CB_IsCopyNDData";
+        cb.Text = "是允许从上一个节点Copy数据";
+        cb.Checked = dtl.IsCopyNDData;
+
+        this.Pub1.AddTD("colspan=2 nowarp=true ", cb);
+        this.Pub1.AddTREnd();
+
+
+
         this.Pub1.AddTRSum();
         this.Pub1.AddTDBegin("colspan=3 align=center");
 
@@ -335,7 +347,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
             this.Pub1.Add(btn);
         }
         this.Pub1.AddTDEnd();
-
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }
