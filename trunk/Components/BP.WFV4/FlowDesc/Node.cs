@@ -378,6 +378,9 @@ namespace BP.WF
             if (nds.Count == 0)
                 return "流程[" + fl.No + fl.Name + "]中没有节点数据，您需要注册一下这个流程。";
 
+ 
+
+
             // 更新是否是有完成条件的节点。
             DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0");
             DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=1 WHERE NodeID IN (SELECT NodeID FROM WF_NodeCompleteCondition)");
@@ -499,6 +502,9 @@ namespace BP.WF
         {
             Flow fl = new Flow(this.FK_Flow);
             Node.CheckFlow(fl);
+
+            DBAccess.RunSQL("UPDATE Sys_MapData SET Name='"+ this.Name+"' WHERE No='ND"+this.NodeID+"'");
+
             if (this.IsCheckNode)
             {
                 if (this.HisSignType == SignType.OneSign)

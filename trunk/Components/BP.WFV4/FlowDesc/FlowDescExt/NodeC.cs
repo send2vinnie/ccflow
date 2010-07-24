@@ -24,6 +24,17 @@ namespace BP.WF.Ext
                 this.SetValByKey(NodeAttr.NodeID, value);
             }
         }
+        public string Name
+        {
+            get
+            {
+                return this.GetValStringByKey(NodeAttr.Name);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.Name, value);
+            }
+        }
         public override string PK
         {
             get
@@ -43,6 +54,11 @@ namespace BP.WF.Ext
             }
         }
         #endregion
+        protected override bool beforeUpdate()
+        {
+            DBAccess.RunSQL("UPDATE Sys_MapData SET Name='" + this.Name + "' WHERE No='ND" + this.NodeID + "'");
+            return base.beforeUpdate();
+        }
 
         #region ¹¹Ôìº¯Êý
         /// <summary>

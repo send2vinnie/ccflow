@@ -24,12 +24,28 @@ namespace BP.WF.Ext
                 this.SetValByKey(NodeAttr.NodeID, value);
             }
         }
+        public string Name
+        {
+            get
+            {
+                return this.GetValStringByKey(NodeAttr.Name);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.Name, value);
+            }
+        }
         public override string PK
         {
             get
             {
                 return "NodeID";
             }
+        }
+        protected override bool beforeUpdate()
+        {
+            DBAccess.RunSQL("UPDATE Sys_MapData SET Name='" + this.Name + "' WHERE No='ND" + this.NodeID + "'");
+            return base.beforeUpdate();
         }
 
         #region 初试化全局的 Nod
@@ -139,7 +155,7 @@ namespace BP.WF.Ext
                 this._enMap = map;
                 return this._enMap;
             }
-        }
+        }         
         public string DoShowSheets()
         {
             BP.WF.Node nd = new BP.WF.Node(this.NodeID);
