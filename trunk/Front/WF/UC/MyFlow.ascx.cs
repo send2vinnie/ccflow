@@ -63,7 +63,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     {
         get
         {
-            string s= this.Request.QueryString["FK_Flow"];
+            string s = this.Request.QueryString["FK_Flow"];
             if (s == null)
                 s = "012";
             return s;
@@ -140,7 +140,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return new BP.WF.Node(this.FK_Node);
         }
     }
-
     /// <summary>
     /// 取当前选择的流程
     /// </summary>
@@ -178,9 +177,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
         }
     }
-    //		private Work  _CurrentFlowStartWork=null;
-    //
-    //		private Work _CurrentWork=null;
     /// <summary>
     /// 当前的工作
     /// </summary>
@@ -249,13 +245,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 else
                     this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Attributes["onclick"] = " window.location.href='MyFlow.aspx?WorkID=" + rec.NextID + "&FK_Flow=" + this.FK_Flow + "';return false;";
 
-
                 if (rec.PreviouID == null)
                     this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Enabled = false;
                 else
                     this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Attributes["onclick"] = " window.location.href='MyFlow.aspx?WorkID=" + rec.PreviouID + "&FK_Flow=" + this.FK_Flow + "';return false;";
             }
-
 
             //  this.ToolBar1.AddBtn("Btn_PrintWorkRpt", "报告");
             //  this.ToolBar1.AddBtn(NamesOfBtn.Option, "选项");
@@ -305,10 +299,17 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
 
             if (this.ToolBar1.IsExit(NamesOfBtn.Send))
+            {
+                this.Btn_Send.Attributes["onclick"] = "return SaveDtl();";
                 this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            }
 
             if (this.ToolBar1.IsExit(NamesOfBtn.Save))
+            {
+                this.Btn_Save.Attributes["onclick"] = "return SaveDtl();";
+                // this.Btn_Save.Attributes["onclick"] = "javascript:return SaveDtl();";
                 this.Btn_Save.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            }
 
             if (this.ToolBar1.IsExit(NamesOfBtn.Forward))
                 this.Btn_Forward.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
@@ -379,7 +380,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             switch (nd.HisFormType)
             {
                 case FormType.SysForm:
-                    this.UCEn1.Bind(wk, "ND" + nd.NodeID, false, false, null);
+                    //this.UCEn1.Bind(wk, "ND" + nd.NodeID, false, false, null);
+                    this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID); //, false, false, null);
+
                     return;
                 case FormType.SelfForm:
                    
@@ -406,7 +409,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         switch (nd.HisFormType)
         {
             case FormType.SysForm:
-                this.UCEn1.Bind(wk, "ND" + nd.NodeID, false, false);
+                //this.UCEn1.Bind(wk, "ND" + nd.NodeID, false, false);
+                this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID );
+
                 break;
             case FormType.SelfForm:
                 this.UCEn1.AddIframeWithOnload(nd.FormUrl + "?WorkID=" + wk.OID);
@@ -904,7 +909,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (currNd.HisFormType == FormType.SysForm)
             {
-                this.UCEn1.Bind(work, "ND" + this.FK_Node, false, false, "FK_Taxpayer");
+                this.UCEn1.BindColumn4(work, "ND" + this.FK_Node );
+                //this.UCEn1.Bind(work, "ND" + this.FK_Node, false, false, "FK_Taxpayer");
+
                 string hzStr = this.GenerHZ(work, currNd);
 
                 this.OutJSAuto(work);
@@ -942,7 +949,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         if (currNd.IsPCNode)
         {
             // work.Retrieve();
-            this.UCEn1.Bind(work, "ND" + currNd.No, false, false);
+            //this.UCEn1.Bind(work, "ND" + currNd.No, false, false);
+            this.UCEn1.BindColumn4(work, "ND" + currNd.No );
+
             this.UCEn1.Add(work.WorkEndInfo);
         }
 
@@ -1016,33 +1025,43 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         StartWork wk = (StartWork)nd.HisWork;
 
         int num = wk.Retrieve(StartWorkAttr.NodeState, 0, StartWorkAttr.Rec, WebUser.No);
-        if (num > 1)
+        if (num == 0)
         {
-            DBAccess.RunSQL("DELETE " + wk.EnMap.PhysicsTable + " WHERE Rec='" + WebUser.No + "' AND NodeState=0 AND OID!=" + wk.OID);
+            wk.Title = "";
+            wk.Rec = WebUser.No;
+            wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+            wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+            wk.WFState = 0;
+            wk.NodeState = 0;
+            wk.Insert();
+            // DBAccess.RunSQL("DELETE " + wk.EnMap.PhysicsTable + " WHERE Rec='" + WebUser.No + "' AND NodeState=0 AND OID!=0");
         }
+       
 
-        if (num != 0)
-            this.WorkID = wk.OID;
+            wk.Title = "";
+            wk.Rec = WebUser.No;
+            wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+            wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+            wk.WFState = 0;
+            wk.NodeState = 0;
 
-        wk.Title = "";
-        wk.Rec = WebUser.No;
-        wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
-        wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
-        wk.WFState = 0;
-        wk.NodeState = 0;
-      
-        wk.FK_Dept = WebUser.FK_Dept;
-        wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
+            wk.FK_Dept = WebUser.FK_Dept;
+            wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
 
+            Dept Dept = new Dept(WebUser.FK_Dept);
+            wk.FID = 0;
+            wk.SetValByKey("RecText", WebUser.Name);
+         
 
-        Dept Dept = new Dept(WebUser.FK_Dept);
-        wk.FID = 0;
-        wk.SetValByKey("RecText", WebUser.Name);
+        this.WorkID = wk.OID;
+
 
         switch (nd.HisFormType)
         {
-            case FormType.SysForm:
-                this.UCEn1.Bind(wk, "ND" + nd.NodeID, false, false, "FK_Taxpayer");
+            case FormType.SysForm: 
+                //this.UCEn1.Bind(wk, "ND" + nd.NodeID, false, false, "FK_Taxpayer");
+                this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID );
+
                 this.UCEn1.Add(wk.WorkEndInfo);
                 // 生成 自动生成 的js.
                 this.OutJSAuto(wk);
@@ -1163,7 +1182,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             wn.HisWork.RecText = WebUser.Name;
 
             // this.HisWork = wn.HisWork;
-            this.UCEn1.Bind(wn.HisWork, "ND" + this.FK_Node, false, false);
+            //this.UCEn1.Bind(wn.HisWork, "ND" + this.FK_Node, false, false);
+            this.UCEn1.BindColumn4(wn.HisWork, "ND" + this.FK_Node );
+
             this.UCEn1.Add(wn.HisWork.WorkEndInfo + this.GenerHZ(wn.HisWork, wn.HisNode));
             this.Btn_Save.Enabled = true;
             this.Btn_ReturnWork.Enabled = true;

@@ -48,7 +48,6 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
     }
     public void BindEnum(MapAttr mapAttr)
     {
-        this.Pub1.AddFieldSet(this.GetCaption);
         
         this.Pub1.AddTable();
         this.Pub1.AddTR();
@@ -202,7 +201,6 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
 
-        this.Pub1.AddFieldSetEnd(); 
 
     }
     void btn_Save_Click(object sender, EventArgs e)

@@ -11,7 +11,6 @@ using System.Web.UI.WebControls.WebParts;
 using BP.WF;
 using BP.Port;
 using BP.Sys;
-using BP.Port;
 using BP.Web.Controls;
 using BP.DA;
 using BP.En;
@@ -86,7 +85,6 @@ public partial class WF_UC_MyFlowInfo : BP.Web.UC.UCBase3
             s = s.Replace("@@", "@");
             s = s.Replace("@", "<BR>@");
         }
-
 
         this.Pub1.AddFieldSet("操作提示", s);
 

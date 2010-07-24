@@ -238,9 +238,10 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         }
         this.Pub1.AddTableEnd();
 
+
         // 输出自动计算公式
         this.Response.Write("\n<script language='JavaScript'>");
-        for (int i = 0; i <= 10; i++)
+        for (int i = 1; i <= dtl.RowsOfList;  i++ )
         {
             string top = "\n function C" + i + "() { \n ";
             string script = "";
@@ -295,20 +296,30 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
     /// <returns></returns>
     public string GenerAutoFull(string pk, MapAttrs attrs, MapAttr attr)
     {
-        string left = "\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value = ";
-        string right = attr.AutoFullDoc;
-        foreach (MapAttr mattr in attrs)
+        try
         {
-            string tbID = "TB_" + mattr.KeyOfEn + "_" + pk;
-            TB tb = this.Pub1.GetTBByID(tbID);
-            if (tb == null)
-                continue;
-            right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + this.Pub1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
-            right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + this.Pub1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
+            string left = "\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk ).ClientID + ".value = ";
+            string right = attr.AutoFullDoc;
+            foreach (MapAttr mattr in attrs)
+            {
+                string tbID = "TB_" + mattr.KeyOfEn + "_" + pk;
+                TB tb = this.Pub1.GetTBByID(tbID);
+                if (tb == null)
+                    continue;
+                right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + this.Pub1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
+                right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + this.Pub1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
+            }
+            string s = left + right;
+            s += "\t\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value ) ;";
+            return s += " C" + attr.KeyOfEn + "();";
         }
-        string s = left + right;
-        s += "\t\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value ) ;";
-        return s += " C" + attr.KeyOfEn + "();";
+        catch (Exception ex)
+        {
+            this.Alert(ex.Message);
+
+            return "";
+        }
+        
     }
 
     public string GenerSum(MapAttr mattr,MapDtl dtl)

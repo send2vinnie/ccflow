@@ -3,42 +3,36 @@
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc4" %>
 <%@ Register src="../Pub.ascx" tagname="Pub" tagprefix="uc5" %>
 <%@ Register src="FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc1" %>
-    <%@ Register src="UCEn.ascx" tagname="UCEn" tagprefix="uc6" %>
-    <script language="JavaScript" src="./../Style/JScript.js"></script>
-    <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
-    <script language="JavaScript" src="../../Comm/ShortKey.js"></script>
+<%@ Register src="UCEn.ascx" tagname="UCEn" tagprefix="uc6" %>
+
+    <script language="JavaScript" src="./../Style/JScript.js" type="text/javascript"></script>
+    <script language="JavaScript" src="../../Comm/JS/Calendar.js" type="text/javascript"></script>
+    <script language="JavaScript" src="../../Comm/ShortKey.js" type="text/javascript"></script>
+    
 
 <script language=javascript>
-function GroupBarClick( Field )
-{
-  var alt= document.getElementById('Img'+Field).alert ; 
-    var sta='block';  
-    if (alt=='Max' ) 
-     {
-         sta='block';    
-         alt='Min' ;
-     } else {
-       sta='none';    
-       alt='Max'; 
-      }
-      
-      document.getElementById('Img'+Field).src= './Img/'+ alt + '.gif';
-      document.getElementById('Img'+Field).alert= alt  ;    
-      
-        
-       var i=0
-       for (i=0;i<=10;i++)
-       {
-          if (document.getElementById( Field + i )==null)
-                   continue;
-          document.getElementById( Field + i ).style.display= sta ;
-      }
-}
+    function GroupBarClick(rowIdx) {
+        var alt = document.getElementById('Img' + rowIdx).alert;
+        var sta = 'block';
+        if (alt == 'Max') {
+            sta = 'block';
+            alt = 'Min';
+        } else {
+            sta = 'none';
+            alt = 'Max';
+        }
+        document.getElementById('Img' + rowIdx).src = './Img/' + alt + '.gif';
+        document.getElementById('Img' + rowIdx).alert = alt;
+        var i = 0
+        for (i = 0; i <= 40; i++) {
+            if (document.getElementById(rowIdx + '_' + i) == null)
+                continue;
+            document.getElementById(rowIdx + '_' + i).style.display = sta;
+        }
+    }
 </script>
-		
 <table id="Table1" border='0'>
 <tr>
-
 <td  valign='top' nowarp='true' width='25%' >
     <uc1:FlowInfoSimple ID="FlowInfoSimple1" runat="server" />
 </td>

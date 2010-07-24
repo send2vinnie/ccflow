@@ -97,6 +97,8 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        return;
+
         if (this.WorkID != 0)
         {
            this.BindFlowStep1();

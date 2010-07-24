@@ -1,1 +1,2 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Calendar.ascx.cs" Inherits="GE_Calendar_Calendar" %>
+<%@ Control Language="c#" Inherits="BP.Web.Comm.UC.Calendar" CodeFile="Calendar.ascx.cs" CodeFileBaseClass="BP.Web.UC.UCBase" %>
+

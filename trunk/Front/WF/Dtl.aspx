@@ -7,29 +7,35 @@
 <head runat="server">
 		<Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)" />
 		<LINK href="./Style/Table.css" type="text/css" rel="stylesheet" />
-		<script language="JavaScript" src="./Style/JScript.js"></script>
+		
+		<script language="javascript" >
+		    var isChange = false;
+		    function TableOnFocus() {
+		        alert(' OnFocus');
+		        isChange = true;
+		    }
+		    function TableOnblur() {
+		        alert(' Onblur ');
+		        if (isChange) {
+		            var btn = document.getElementById('Button1');
+		            btn.click();
+		        }
+		    }
+    </script>
+		<script lan
+		guage="JavaScript" src="./Style/JScript.js"></script>
+    <script language="JavaScript" src="../../Comm/JS/Calendar.js" type="text/javascript"></script>    
+    
 		
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()"> 
     <form id="form1" runat="server">
-    <table  style="width: 100%" id="Table1" align="left" cellSpacing="1" cellPadding="1" border="1" width="100%" >
-     <tr>
-    <td >
-        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></td>
-    </tr>
-    <tr>
-    <td >
-        <cc1:BPToolBar ID="BPToolBar1" runat="server">
-        </cc1:BPToolBar>
-    </td>
-    </tr>
-      <tr>
-    <td>
-        <uc1:ucsys ID="Ucsys1" runat="server" />
+    <div onfocus='TableOnFocus()' Onblur='TableOnblur()' id='P'  >
+     <uc1:ucsys ID="Ucsys1" runat="server" />
         <uc1:ucsys ID="Ucsys2" runat="server" />
-    </td>
-    </tr>
-    </table>
+     <asp:Button ID="Button1" runat="server" Text="Button" 
+         onclick="Button1_Click1" />
+         </div>
     </form>
 </body>
 </html>

@@ -43,15 +43,12 @@ public partial class WF_MapDef_MapDef : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-
         MapData m2d = new MapData();
         m2d.CheckPhysicsTable();
-
         MapData md = new MapData(this.MyPK);
+        
         BindAttrs(md);
-
     }
-
     public void InsertObjects()
     {
         foreach (GroupField gf in gfs)
@@ -61,7 +58,7 @@ public partial class WF_MapDef_MapDef : WebPage
                 gf.IsUse = true;
                 currGF = gf;
                 this.Pub1.AddTR();
-                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Max.gif' alert='Min' id='Img" + gf.RowIdx + "' onclick=\"GroupBarClick('"+gf.RowIdx+"')\"  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div>");
+                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.RowIdx + "' onclick=\"GroupBarClick('" + gf.RowIdx + "')\"  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div>");
                 this.Pub1.AddTREnd();
                 isLeftNext = true;
                 break;
@@ -136,7 +133,7 @@ public partial class WF_MapDef_MapDef : WebPage
         if (gfs.Count >= 1)
         {
             this.Pub1.AddTR();
-            this.Pub1.AddTD("colspan=4 class=GroupField ", "<img src='./Style/Max.gif' alert='Min' id='Img101' onclick=\"GroupBarClick('101')\"  border=0 />&nbsp;<b>" + md.Name + "</b>");
+            this.Pub1.AddTD("colspan=4 class=GroupField ", "<img src='./Style/Min.gif' alert='Min' id='Img101' onclick=\"GroupBarClick('101')\"  border=0 />&nbsp;<b>" + md.Name + "</b>");
             this.Pub1.AddTREnd();
             currGF.RowIdx = 101;
 

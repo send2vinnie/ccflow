@@ -15,7 +15,6 @@ using BP.DA;
 public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
 {
 
-
     #region 属性
     public string DoType
     {

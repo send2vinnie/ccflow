@@ -46,16 +46,13 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         if (this.MyPK == null)
             throw new Exception("Mypk==null");
 
-        this.Title = this.ToE("GuideNewField", "增加新字段向导");
+        this.Title = this.ToE("EditField", "编辑字段");
         switch (this.DoType)
         {
             case "Add":
-                this.Pub1.AddFieldSet(this.GetCaption);
                 this.Add();
-                this.Pub1.AddFieldSetEnd();
                 break;
             case "Edit":
-                this.Pub1.AddFieldSet(this.GetCaption);
                 MapAttr attr = new MapAttr(this.RefOID);
                 attr.MyDataType = this.FType;
                 switch (attr.MyDataType)
@@ -77,7 +74,6 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
                         throw new Exception("为考虑的类型" + this.FType);
                         break;
                 }
-                this.Pub1.AddFieldSetEnd();
                 break;
             default:
                 break;
@@ -85,12 +81,10 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
     }
     public void Add()
     {
-
         MapAttr attr = new MapAttr();
         attr.MyDataType = this.FType;
         attr.FK_MapData = this.MyPK;
         attr.UIIsEnable = true;
-
         switch (this.FType)
         {
             case DataType.AppString:
@@ -109,8 +103,6 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
             default:
                 break;
         }
-
-
     }
     public void EditBeforeAdd(MapAttr mapAttr)
     {
@@ -121,7 +113,6 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         this.Pub1.AddTDTitle("&nbsp;");
         this.Pub1.AddTDTitle("&nbsp;");
         this.Pub1.AddTREnd();
-
 
         if (mapAttr.IsTableAttr)
         {
@@ -354,7 +345,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         this.Pub1.Add("<TD colspan=3 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = " " + this.ToE("Save","保存") + " ";
+        btn.Text = " " + this.ToE("Save", "保存") + " ";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
@@ -375,8 +366,8 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
             btn = new Button();
             btn.ID = "Btn_AutoFull";
             btn.Text = this.ToE("AutoFull", "自动填写");
-          //  btn.Click += new EventHandler(btn_Save_Click);
-            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFill.aspx?RefOID="+this.RefOID+"',''); return false;";
+            //  btn.Click += new EventHandler(btn_Save_Click);
+            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFill.aspx?RefOID=" + this.RefOID + "',''); return false;";
             this.Pub1.Add(btn);
 
             if (mapAttr.HisEditType == EditType.Edit)
@@ -391,9 +382,41 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         }
 
         string url = "Do.aspx?DoType=AddF&MyPK=" + mapAttr.FK_MapData + "&IDX=" + mapAttr.IDX;
-        this.Pub1.Add("<a href='" + url + "'><img src='../../Images/Btn/New.gif' border=0>" + this.ToE("New", "新建") + "</a></TD>");
+        btn = new Btn();
+        btn.ID = "Btn_New";
+        btn.Text = this.ToE("New", "新建");
+        btn.Click += new EventHandler(btn_Click);
+        this.Pub1.Add(btn);
+
+        btn = new Btn();
+        btn.ID = "Btn_Back";
+        btn.Text = this.ToE("Back", "返回");
+        btn.Click += new EventHandler(btn_Click);
+        this.Pub1.Add(btn);
+
+        // this.Pub1.Add("<input type=button class=Btn value='" + + "' onclick=\"window.location.href='" + url + "'\" >");
+        //        this.Pub1.Add("<a href='" + url + "'><img src='../../Images/Btn/New.gif' border=0>" + this.ToE("New", "新建") + "</a></TD>");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
+    }
+    public void btn_Click(object sender, EventArgs e)
+    {
+        Btn btn = sender as Btn;
+        switch (btn.ID)
+        {
+            case "Btn_New":
+                MapAttr mapAttr = new MapAttr(this.RefOID);
+                string url = "Do.aspx?DoType=AddF&MyPK=" + mapAttr.FK_MapData + "&IDX=" + mapAttr.IDX;
+                this.Response.Redirect(url, true);
+                return;
+            case "Btn_Back":
+                string url1 = "Do.aspx?DoType=AddF&MyPK=" + this.MyPK;
+                this.Response.Redirect(url1, true);
+                return;
+            default:
+                break;
+        }
+
     }
     /// <summary>
     /// 

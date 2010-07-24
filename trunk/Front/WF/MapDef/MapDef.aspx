@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <script language="JavaScript" src="JS.js"></script>
     <script language="JavaScript" src="../../Comm/JScript.js"></script>
-    <script language="JavaScript" src="../../Comm/JS.js"></script>
+    <script language="JavaScript" src="JS.js"></script>
     
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
     <script language="javascript" >
@@ -133,74 +133,51 @@
         window.close();
        return true;
     }
-   
-  function GroupBarClick( rowIdx )
-  {
-    var alt= document.getElementById('Img'+rowIdx).alert ; 
-    var sta='block';  
-    if (alt=='Max' ) 
-     {
-         sta='block';
-         alt='Min' ;
-         
-      } else {
-      
-       sta='none';    
-       alt='Max'; 
-      
-      }
-      
-      document.getElementById('Img'+rowIdx).src= './Img/'+ alt + '.gif';
-      document.getElementById('Img'+rowIdx).alert= alt  ;    
-      
-       var i=0
-       for (i=0;i<=40;i++)
-       {
-          if (document.getElementById( rowIdx +'_'+ i )==null)
-                   continue;
-          document.getElementById( rowIdx +'_' + i ).style.display= sta ;
-      }
-  }
-   var isInser="";
-  function ReinitIframe(dtlid) {
 
-      try {
- 
-   
-          var iframe = document.getElementById("F" + dtlid);
-          var tdF = document.getElementById("TD" + dtlid);
-          iframe.height = iframe.contentWindow.document.body.scrollHeight;
-          iframe.width = iframe.contentWindow.document.body.scrollWidth ;
-          
-          if (tdF.width < iframe.width)
-          {
-             //alert(tdF.width +'  ' + iframe.width);
-             tdF.width = iframe.width;
-          }else
-          {
-           iframe.width =tdF.width ;
-           
-          }
-          
-          tdF.height = iframe.height;
-          
-         // alert("ss = " + tdF.width);
-          // tdF.width = iframe.width;
-          // alert(tdF.width);
-          //  alert(iframe.width);
-          //tdF.width = iframe.width;
-          return;
-      } catch (ex) {
-      //alert(ex.message);
-          return;
-      }
-      return;
-      //      var bHeight = tdF.iframe.contentWindow.document.body.scrollHeight;
-      //      var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
-      //      var height = Math.max(bHeight, dHeight);
-      //      iframe.height = height;
-      //      tdF.height = height;
-  }
+    function GroupBarClick(rowIdx) {
+        var alt = document.getElementById('Img' + rowIdx).alert;
+        var sta = 'block';
+        if (alt == 'Max') {
+            sta = 'block';
+            alt = 'Min';
+        } else {
+            sta = 'none';
+            alt = 'Max';
+        }
+        document.getElementById('Img' + rowIdx).src = './Img/' + alt + '.gif';
+        document.getElementById('Img' + rowIdx).alert = alt;
+        var i = 0
+        for (i = 0; i <= 40; i++) {
+            if (document.getElementById(rowIdx + '_' + i) == null)
+                continue;
+            document.getElementById(rowIdx + '_' + i).style.display = sta;
+        }
+    }
+    
+   var isInser="";
+   function ReinitIframe(dtlid) {
+
+       try {
+           var iframe = document.getElementById("F" + dtlid);
+           var tdF = document.getElementById("TD" + dtlid);
+           iframe.height = iframe.contentWindow.document.body.scrollHeight;
+           iframe.width = iframe.contentWindow.document.body.scrollWidth;
+
+           if (tdF.width < iframe.width) {
+               //alert(tdF.width +'  ' + iframe.width);
+               tdF.width = iframe.width;
+           } else {
+               iframe.width = tdF.width;
+
+           }
+
+           tdF.height = iframe.height;
+           return;
+       } catch (ex) {
+           return;
+       }
+       return;
+   }
   
   function CopyFieldFromNode( mypk )
   {

@@ -16,6 +16,7 @@ using BP.Web.Controls;
 
 public partial class Comm_Dtl : WebPage
 {
+
     #region 属性
     public string EnsName
     {
@@ -49,29 +50,18 @@ public partial class Comm_Dtl : WebPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (this.IsPostBack == false)
-        {
-            this.BPToolBar1.AddBtn(NamesOfBtn.Save);
-            this.BPToolBar1.AddBtn(NamesOfBtn.SaveAndClose);
-            //this.BPToolBar1.AddBtn(NamesOfBtn.Close);
-            this.BPToolBar1.AddBtn(NamesOfBtn.Delete);
-            //   this.BPToolBar1.AddBtn(NamesOfBtn.Excel_S);
-            this.BPToolBar1.AddBtn(NamesOfBtn.Excel, "导出Excel");
-            //   this.BPToolBar1.AddBtn(NamesOfBtn.Close);
-        }
-        this.BPToolBar1.ButtonClick += new EventHandler(BPToolBar1_ButtonClick);
         this.Bind();
     }
     public void Bind()
     {
+        BP.Sys.MapDtl mdtl = new MapDtl(this.EnsName);
         #region 生成标题
         MapAttrs attrs = new MapAttrs(this.EnsName);
-        this.Ucsys1.AddTable();
+        this.Ucsys1.Add("<Table border=0 >");
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTDTitle();
-        CheckBox cb = new CheckBox();
-        cb.ID = "";
-        this.Ucsys1.AddTDTitle(cb);
+        if (mdtl.IsShowIdx)
+            this.Ucsys1.AddTDTitle();
+
         foreach (MapAttr attr in attrs)
         {
             if (attr.UIVisible == false)
@@ -80,15 +70,12 @@ public partial class Comm_Dtl : WebPage
             if (attr.IsPK)
                 continue;
 
-            this.Ucsys1.AddTDTitle(attr.Name);
+            this.Ucsys1.AddTD(attr.Name);
         }
         this.Ucsys1.AddTREnd();
         #endregion 生成标题
 
 
-        BP.Sys.MapDtl mdtl = new MapDtl(this.EnsName);
-        this.Title = mdtl.Name;
-      this.Label1.Text=  this.GenerCaption( mdtl.Name);
         GEDtls dtls = new GEDtls(this.EnsName);
         QueryObject qo = null;
         try
@@ -121,9 +108,19 @@ public partial class Comm_Dtl : WebPage
         this.Ucsys2.Clear();
         try
         {
+            int count = qo.GetCount();
             this.Ucsys2.Clear();
-            this.Ucsys2.BindPageIdx(qo.GetCount(), BP.SystemConfig.PageSize, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal);
-            qo.DoQuery("OID", BP.SystemConfig.PageSize, this.PageIdx, false);
+            this.Ucsys2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal);
+            qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
+
+            int dtlCount = dtls.Count;
+            for (int i = 0; i < mdtl.RowsOfList - dtlCount; i++)
+            {
+                BP.Sys.GEDtl dt = new GEDtl(this.EnsName);
+                dt.ResetDefaultVal();
+                dt.OID = i;
+                dtls.AddEntity(dt);
+            }
         }
         catch (Exception ex)
         {
@@ -133,34 +130,18 @@ public partial class Comm_Dtl : WebPage
         }
         #endregion 生成翻页
 
-
-        BP.Sys.GEDtl dt = new GEDtl(this.EnsName);
-        dt.ResetDefaultVal();
-        dt.OID = 0;
-        dtls.AddEntity(dt);
-
         DDL ddl = new DDL();
-
+        CheckBox cb = new CheckBox();
         #region 生成数据
-        int i = 0;
+        int idx = 0;
+
         foreach (BP.Sys.GEDtl dtl in dtls)
         {
-            i++;
-            if (dtl.OID == 0)
+            this.Ucsys1.AddTR();
+            if (mdtl.IsShowIdx)
             {
-                this.Ucsys1.AddTRSum();
-                this.Ucsys1.AddTD("colspan=2", "新建");
+                this.Ucsys1.AddTDIdx(idx++);
             }
-            else
-            {
-                this.Ucsys1.AddTR();
-                this.Ucsys1.AddTDIdx(i);
-                cb = new CheckBox();
-                cb.ID = "CB_" + dtl.OID;
-                this.Ucsys1.AddTD(cb);
-            }
-
-
             foreach (MapAttr attr in attrs)
             {
                 if (attr.UIVisible == false)
@@ -180,6 +161,13 @@ public partial class Comm_Dtl : WebPage
 
                         switch (attr.MyDataType)
                         {
+                            case DataType.AppDate:
+                            case DataType.AppDateTime:
+                                if (attr.UIIsEnable)
+                                    tb.Attributes["onfocus"] = "calendar();";
+
+                                tb.Text = val;
+                                break;
                             case DataType.AppMoney:
                             case DataType.AppRate:
                                 tb.TextExtMoney = decimal.Parse(val);
@@ -188,14 +176,6 @@ public partial class Comm_Dtl : WebPage
                                 tb.Text = val;
                                 break;
                         }
-
-                        //if (attr.UIIsEnable == false)
-                        //{
-                        //    if (attr.IsNum)
-                        //        tb.ReadOnly = true;
-                        //    else
-                        //        tb.Enabled = false;
-                        //}
 
                         if (attr.IsNum && attr.LGType == FieldTypeS.Normal)
                         {
@@ -238,55 +218,74 @@ public partial class Comm_Dtl : WebPage
         }
 
         #region 生成合计
-        this.Ucsys1.AddTRSum();
-        this.Ucsys1.AddTD("colspan=2", "合计");
-        foreach (MapAttr attr in attrs)
+        if (mdtl.IsShowSum)
         {
-            if (attr.UIVisible == false)
-                continue;
+            this.Ucsys1.AddTRSum();
+            if (mdtl.IsShowIdx)
+            this.Ucsys1.AddTD();
 
-            if (attr.IsNum && attr.LGType == FieldTypeS.Normal)
+            foreach (MapAttr attr in attrs)
             {
-                TB tb = new TB();
-                tb.ID = "TB_" + attr.KeyOfEn;
-                tb.Text = attr.DefVal;
-                tb.ShowType = attr.HisTBType;
-                tb.ReadOnly = true;
-                tb.Font.Bold = true;
-                tb.BackColor = System.Drawing.Color.FromName("infobackground");
+                if (attr.UIVisible == false)
+                    continue;
 
-                switch (attr.MyDataType)
+                if (attr.IsNum && attr.LGType == FieldTypeS.Normal)
                 {
-                    case DataType.AppRate:
-                    case DataType.AppMoney:
-                        tb.TextExtMoney = dtls.GetSumDecimalByKey(attr.KeyOfEn);
-                        break;
-                    case DataType.AppInt:
-                        tb.TextExtInt = dtls.GetSumIntByKey(attr.KeyOfEn);
-                        break;
-                    case DataType.AppFloat:
-                        tb.TextExtFloat = dtls.GetSumFloatByKey(attr.KeyOfEn);
-                        break;
-                    default:
-                        break;
+                    TB tb = new TB();
+                    tb.ID = "TB_" + attr.KeyOfEn;
+                    tb.Text = attr.DefVal;
+                    tb.ShowType = attr.HisTBType;
+                    tb.ReadOnly = true;
+                    tb.Font.Bold = true;
+                    tb.BackColor = System.Drawing.Color.FromName("infobackground");
+                    switch (attr.MyDataType)
+                    {
+                        case DataType.AppRate:
+                        case DataType.AppMoney:
+                            tb.TextExtMoney = dtls.GetSumDecimalByKey(attr.KeyOfEn);
+                            break;
+                        case DataType.AppInt:
+                            tb.TextExtInt = dtls.GetSumIntByKey(attr.KeyOfEn);
+                            break;
+                        case DataType.AppFloat:
+                            tb.TextExtFloat = dtls.GetSumFloatByKey(attr.KeyOfEn);
+                            break;
+                        default:
+                            break;
+                    }
+                    this.Ucsys1.AddTD(tb);
                 }
-                this.Ucsys1.AddTD(tb);
+                else
+                {
+                    this.Ucsys1.AddTD();
+                }
             }
-            else
-            {
-                this.Ucsys1.AddTD();
-            }
+            this.Ucsys1.AddTREnd();
         }
-        this.Ucsys1.AddTREnd();
         #endregion 生成合计
 
 
         #endregion 生成数据
         this.Ucsys1.AddTableEnd();
 
+        Button btn = new Button();
+        btn.Click += new EventHandler(Button1_Click);
+        btn.ID = "Btn_Save";
+        this.Ucsys2.Add(btn);
+
+
         #region 生成 自动计算行
         // 输出自动计算公式
         this.Response.Write("\n<script language='JavaScript'>");
+        this.Response.Write("\n function Submit() {");
+
+        this.Response.Write("\n  alert('submit'); return false; ");
+        this.Response.Write("\n   " + btn.ClientID + ".click(); ");
+
+        this.Response.Write("\n  return false; ");
+        this.Response.Write("\n } ");
+
+
         foreach (GEDtl dtl in dtls)
         {
             string top = "\n function C" + dtl.OID + "() { \n ";
@@ -330,12 +329,18 @@ public partial class Comm_Dtl : WebPage
         }
         #endregion
     }
+
+    void btn_Click(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
     public void Delete()
     {
 
     }
     public void Save()
     {
+
         BP.Sys.MapDtl mdtl = new MapDtl(this.EnsName);
         GEDtls dtls = new GEDtls(this.EnsName);
         QueryObject qo = null;
@@ -356,27 +361,43 @@ public partial class Comm_Dtl : WebPage
         }
 
 
-        qo.DoQuery("OID", BP.SystemConfig.PageSize, this.PageIdx, false);
+        qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
+
+        int dtlCount = dtls.Count;
+        for (int i = 0; i < mdtl.RowsOfList - dtlCount; i++)
+        {
+            BP.Sys.GEDtl dt = new GEDtl(this.EnsName);
+            dt.ResetDefaultVal();
+            dt.OID = i;
+            dtls.AddEntity(dt);
+        }
+
         Map map = dtls.GetNewEntity.EnMap;
         foreach (GEDtl dtl in dtls)
         {
             this.Ucsys1.Copy(dtl, dtl.OID.ToString(), map);
-            dtl.Update();
+            if (dtl.OID < mdtl.RowsOfList + 2)
+            {
+                if (dtl.IsBlank)
+                    continue;
+                dtl.RefPK = this.RefPKVal;
+                dtl.InsertAsNew();
+            }
+            else
+                dtl.Update();
         }
 
-
-        BP.Sys.GEDtl en = new GEDtl(this.EnsName);
-        en = (BP.Sys.GEDtl)this.Ucsys1.Copy(en, "0", map);
-        en.RefPK = this.RefPKVal;
-        en.SetValByKey("FID", this.RefPKVal );
-        en.Insert();
+        //BP.Sys.GEDtl en = new GEDtl(this.EnsName);
+        //en = (BP.Sys.GEDtl)this.Ucsys1.Copy(en, "0", map);
+        //en.RefPK = this.RefPKVal;
+        //en.SetValByKey("FID", this.RefPKVal );
+        //en.Insert();
 
         this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx, true);
     }
     public void ExpExcel()
     {
         BP.Sys.MapDtl mdtl = new MapDtl(this.EnsName);
-        this.Label1.Text = this.GenerCaption(mdtl.Name);
 
 
         this.Title = mdtl.Name;
@@ -503,4 +524,12 @@ public partial class Comm_Dtl : WebPage
         }
     }
 
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        this.Save();
+    }
+    protected void Button1_Click1(object sender, EventArgs e)
+    {
+        this.Save();
+    }
 }

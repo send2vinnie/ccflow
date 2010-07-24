@@ -203,7 +203,8 @@ public partial class Comm_MapDef_MapDtl : WebPage
             MapDtl dtl = new MapDtl();
             dtl.No = this.FK_MapDtl;
             dtl.Delete();
-            this.Response.Redirect("MapDtl.aspx?DoType=DtlList&FK_MapData=" + this.FK_MapData, true);
+            this.WinClose();
+            //this.Response.Redirect("MapDtl.aspx?DoType=DtlList&FK_MapData=" + this.FK_MapData, true);
         }
         catch(Exception ex)
         {
