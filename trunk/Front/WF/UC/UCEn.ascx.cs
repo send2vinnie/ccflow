@@ -311,7 +311,7 @@ namespace BP.Web.Comm.UC
                     this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' style='padding:0px;border:0px;overflow:auto;' >");
                     //string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=";
                     string src = "Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal;
-                    this.Add("<iframe ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
+                    this.Add("<iframe Onblur=\"SaveDtl('" + dtl.No + "');\"   ID='F" + dtl.No + "' frameboder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
                     this.AddTDEnd();
                     this.AddTREnd();
                 }
@@ -332,12 +332,17 @@ namespace BP.Web.Comm.UC
             #endregion 处理iFrom 的自适应的问题。
 
 
-            #region 处理iFrom 的自适应的问题。
+            #region 处理iFrom Save。
             js = "\t\n<script type='text/javascript' >";
-            js += "\t\n function SaveDtl() { ";
+            js += "\t\n function SaveDtl(dtl) { ";
             foreach (MapDtl dtl in dtls)
             {
-                js += "\t\n document.getElementById('F" + dtl.No + "').contentWindow.Submit();";
+               // js += "\t\n alert( dtl +' will saved ' )";
+
+                js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
+
+               // js += "\t\n setTimeout(\"alert('setTimeout end ')\",3000);";
+               // js += "\t\n return false; ";
             }
             js += "\t\n } ";
             js += "\t\n</script>";
@@ -373,7 +378,7 @@ namespace BP.Web.Comm.UC
 
                     string src = "Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal;
                     //string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=";
-                    this.Add("<iframe ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
+                    this.Add("<iframe  Onblur=\"SaveDtl('" + dtl.No + "');\"   frameboder=0 ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0' frameboder=0 topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
                     this.AddTDEnd();
                     this.AddTREnd();
                 }

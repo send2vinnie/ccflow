@@ -300,13 +300,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (this.ToolBar1.IsExit(NamesOfBtn.Send))
             {
-                this.Btn_Send.Attributes["onclick"] = "return SaveDtl();";
+               // this.Btn_Send.Attributes["onclick"] = "return SaveDtl();";
                 this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
             if (this.ToolBar1.IsExit(NamesOfBtn.Save))
             {
-                this.Btn_Save.Attributes["onclick"] = "return SaveDtl();";
+             //   this.Btn_Save.Attributes["onclick"] = "return SaveDtl();";
                 // this.Btn_Save.Attributes["onclick"] = "javascript:return SaveDtl();";
                 this.Btn_Save.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }

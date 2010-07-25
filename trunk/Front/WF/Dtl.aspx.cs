@@ -55,6 +55,7 @@ public partial class Comm_Dtl : WebPage
     public void Bind()
     {
         BP.Sys.MapDtl mdtl = new MapDtl(this.EnsName);
+
         #region 生成标题
         MapAttrs attrs = new MapAttrs(this.EnsName);
         this.Ucsys1.Add("<Table border=0 >");
@@ -276,15 +277,18 @@ public partial class Comm_Dtl : WebPage
 
         #region 生成 自动计算行
         // 输出自动计算公式
-        this.Response.Write("\n<script language='JavaScript'>");
+        this.Response.Write("\n<script language='JavaScript' >");
         this.Response.Write("\n function Submit() {");
 
-        this.Response.Write("\n  alert('submit'); return false; ");
+    //    this.Response.Write("\n  alert(' setTimeout start '); ");
+
         this.Response.Write("\n   " + btn.ClientID + ".click(); ");
 
-        this.Response.Write("\n  return false; ");
-        this.Response.Write("\n } ");
+        this.Response.Write("\n  setTimeout(\"alert('setTimeout ok ')\",3000); ");
 
+      //  this.Response.Write("\n  return false; ");
+
+        this.Response.Write("\n } ");
 
         foreach (GEDtl dtl in dtls)
         {
@@ -330,17 +334,11 @@ public partial class Comm_Dtl : WebPage
         #endregion
     }
 
-    void btn_Click(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
     public void Delete()
     {
-
     }
     public void Save()
     {
-
         BP.Sys.MapDtl mdtl = new MapDtl(this.EnsName);
         GEDtls dtls = new GEDtls(this.EnsName);
         QueryObject qo = null;
@@ -359,7 +357,6 @@ public partial class Comm_Dtl : WebPage
                 qo.AddWhere(GEDtlAttr.FID, this.RefPKVal);
                 break;
         }
-
 
         qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
 
@@ -387,18 +384,13 @@ public partial class Comm_Dtl : WebPage
                 dtl.Update();
         }
 
-        //BP.Sys.GEDtl en = new GEDtl(this.EnsName);
-        //en = (BP.Sys.GEDtl)this.Ucsys1.Copy(en, "0", map);
-        //en.RefPK = this.RefPKVal;
-        //en.SetValByKey("FID", this.RefPKVal );
-        //en.Insert();
+        return;
 
         this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx, true);
     }
     public void ExpExcel()
     {
         BP.Sys.MapDtl mdtl = new MapDtl(this.EnsName);
-
 
         this.Title = mdtl.Name;
 
@@ -512,7 +504,6 @@ public partial class Comm_Dtl : WebPage
 
             i++;
         }
-
         string s = left + right + " ;";
         switch (mattr.MyDataType)
         {
@@ -523,7 +514,6 @@ public partial class Comm_Dtl : WebPage
                 return s;
         }
     }
-
     protected void Button1_Click(object sender, EventArgs e)
     {
         this.Save();

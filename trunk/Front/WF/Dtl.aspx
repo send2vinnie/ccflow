@@ -11,26 +11,33 @@
 		<script language="javascript" >
 		    var isChange = false;
 		    function TableOnFocus() {
-		        alert(' OnFocus');
+		    return;
+		       // alert(' OnFocus');
 		        isChange = true;
 		    }
 		    function TableOnblur() {
-		        alert(' Onblur ');
+		    return ;
+		       // alert(' Onblur ');
 		        if (isChange) {
 		            var btn = document.getElementById('Button1');
 		            btn.click();
 		        }
 		    }
+		    function SaveDtlData()
+		    {
+		        var btn = document.getElementById('Button1');
+		  //      alert(btn);
+		            btn.click();
+		    }
     </script>
-		<script lan
-		guage="JavaScript" src="./Style/JScript.js"></script>
+		<script language="JavaScript" src="./Style/JScript.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js" type="text/javascript"></script>    
     
 		
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="Esc()"> 
+<body topmargin="0" leftmargin="0" onkeypress="Esc()" onfocus='TableOnFocus()' Onblur='TableOnblur()'  > 
     <form id="form1" runat="server">
-    <div onfocus='TableOnFocus()' Onblur='TableOnblur()' id='P'  >
+    <div id='P'  >
      <uc1:ucsys ID="Ucsys1" runat="server" />
         <uc1:ucsys ID="Ucsys2" runat="server" />
      <asp:Button ID="Button1" runat="server" Text="Button" 
