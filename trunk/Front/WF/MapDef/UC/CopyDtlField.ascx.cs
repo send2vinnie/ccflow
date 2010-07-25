@@ -130,7 +130,12 @@ public partial class WF_MapDef_UC_CopyDtlField :BP.Web.UC.UCBase3
         }
 
         MapDtl dtl = new MapDtl(this.MyPK);
-        string sql = "SELECT DISTINCT PTable, No, Name From sys_mapdtl WHERE  No <> '"+this.MyPK+"'";
+        //string sql = "SELECT DISTINCT PTable, No, Name From Sys_MapDtl WHERE  No <> '"+this.MyPK+"'";
+        string sql = "SELECT b.Name as NodeName, a.No AS DtlNo, a.Name as DtlName";
+        sql += " FROM Sys_MapDtl a , Sys_MapData b  ";
+        sql += " WHERE A.FK_MapData=b.No AND B.No LIKE '"+this.MyPK.Substring(0,4)+"%' AND B.No<>'"+this.MyPK+"'";
+
+
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count == 0)
         {
@@ -140,7 +145,7 @@ public partial class WF_MapDef_UC_CopyDtlField :BP.Web.UC.UCBase3
 
         if (dt.Rows.Count == 1)
         {
-            this.Response.Redirect("CopyDtlField.aspx?MyPK=" + this.MyPK + "&Dtl=" + dt.Rows[0]["No"].ToString(), true);
+            this.Response.Redirect("CopyDtlField.aspx?MyPK=" + this.MyPK + "&Dtl=" + dt.Rows[0]["DtlNo"].ToString(), true);
             return;
         }
 
@@ -148,7 +153,7 @@ public partial class WF_MapDef_UC_CopyDtlField :BP.Web.UC.UCBase3
         this.AddUL();
         foreach (DataRow dr in dt.Rows)
         {
-            this.AddLi("CopyDtlField.aspx?MyPK=" + this.MyPK + "&Dtl=" + dr["No"].ToString(), dr["Name"].ToString());
+            this.AddLi("CopyDtlField.aspx?MyPK=" + this.MyPK + "&Dtl=" + dr["DtlNo"].ToString(), "节点名：" + dr["NodeName"].ToString() + " 表名称：" + dr["DtlName"].ToString());
         }
         this.AddULEnd();
         this.AddFieldSetEnd();

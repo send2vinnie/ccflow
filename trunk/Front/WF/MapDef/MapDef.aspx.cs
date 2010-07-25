@@ -71,11 +71,11 @@ public partial class WF_MapDef_MapDef : WebPage
                 dtl.IsUse = true;
 
                 this.Pub1.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "1' ");
-                this.Pub1.Add("<TD class=TD colspan=4> <div style='text-align:left; float:left'>表格:<a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>插入列</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>复制列</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+                this.Pub1.Add("<TD class=TD colspan=4 ><div style='text-align:left; float:left'>表格:<a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>插入列</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>复制列</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
                 this.Pub1.AddTREnd();
 
                 this.Pub1.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "' ");
-                this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' style='padding:0px;border:0px;overflow:auto;' >");
+                this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' width='1000px'>");
                 string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + dtl.No;
                 this.Pub1.Add("<iframe ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
                 this.Pub1.AddTDEnd();
@@ -136,7 +136,6 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.AddTD("colspan=4 class=GroupField ", "<img src='./Style/Min.gif' alert='Min' id='Img101' onclick=\"GroupBarClick('101')\"  border=0 />&nbsp;<b>" + md.Name + "</b>");
             this.Pub1.AddTREnd();
             currGF.RowIdx = 101;
-
         }
         else
         {
@@ -412,9 +411,9 @@ public partial class WF_MapDef_MapDef : WebPage
                 this.Pub1.AddTREnd();
 
                 this.Pub1.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "' ");
-                this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' style='padding:0px;border:0px;overflow:auto;' >");
+                this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' >");
                 string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + dtl.No;
-                this.Pub1.Add("<iframe ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
+                this.Pub1.Add("<iframe ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' scrolling=no  /></iframe>");
                 this.Pub1.AddTDEnd();
                 this.Pub1.AddTREnd();
             }

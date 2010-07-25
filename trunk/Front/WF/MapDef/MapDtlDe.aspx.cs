@@ -60,8 +60,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
 
 
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
-        this.Pub1.Add("<Table border=0  style='padding:0px' width='100%' >");
-
+        this.Pub1.Add("<Table border=0 ID='Tab' style='padding:0px' >");
    //     this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "' ><img src='../../Images/Btn/Back.gif' border=0/>" + this.ToE("Back","返回") + ":" + md.Name + "</a> - <img src='../../Images/Btn/Table.gif' border=0/>" + dtl.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> ");
 
         this.Pub1.AddTR();
@@ -73,7 +72,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             if (attr.UIVisible == false)
                 continue;
 
-            this.Pub1.Add("<TD class=Title width='"+attr.UIWidth+"px' >");
+            this.Pub1.Add("<TH class=TDCenter >");
             this.Pub1.Add("<a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动' border=0/></a>");
             if (attr.HisEditType == EditType.UnDel || attr.HisEditType == EditType.Edit)
             {
@@ -98,7 +97,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             }
             //  this.Pub1.Add("[<a href=\"javascript:Insert('" + this.MyPK + "','" + attr.IDX + "');\" ><img src='../../Images/Btn/Insert.gif' border=0/>插入</a>]");
             this.Pub1.Add("<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动' border=0/></a>");
-            this.Pub1.AddTDEnd();  
+            this.Pub1.Add("</TH>");  
         }
         this.Pub1.AddTREnd();
 
@@ -133,11 +132,10 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         this.Pub1.AddTD(tb);
 
                         tb.ShowType = attr.HisTBType;
-
+                        //tb.Columns = attr.UIWidth;
                         switch (attr.MyDataType)
                         {
                             case BP.DA.DataType.AppString:
-                                tb.Attributes["Width"] = attr.UIWidth + "px";
                                 if (tb.Enabled)
                                     tb.Attributes["class"] = "TB";
                                 else
@@ -155,7 +153,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
 
                                 break;
                             default:
-                                tb.Attributes["Width"] = attr.UIWidth+"px";
                                 if (tb.Enabled)
                                 {
                                     // OnKeyPress="javascript:return VirtyNum(this);"

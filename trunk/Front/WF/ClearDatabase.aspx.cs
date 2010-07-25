@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using BP.WF;
+using BP.Sys;
 
 namespace BP.Web.WF.WF
 {
@@ -87,6 +88,34 @@ namespace BP.Web.WF.WF
                 {
                 }
             }
+
+            MapDatas mds = new MapDatas();
+            mds.RetrieveAll();
+            foreach (MapData nd in mds)
+            {
+                try
+                {
+                    DA.DBAccess.RunSQL("DELETE " + nd.PTable );
+                }
+                catch
+                {
+                }
+            }
+
+            MapDtls dtls = new MapDtls();
+            dtls.RetrieveAll();
+            foreach (MapDtl dtl in dtls)
+            {
+                try
+                {
+                    DA.DBAccess.RunSQL("DELETE " + dtl.PTable);
+                }
+                catch
+                {
+                }
+            }
+
+            this.Alert("clear ok.");
 
         }
         protected void Button3_Click(object sender, EventArgs e)

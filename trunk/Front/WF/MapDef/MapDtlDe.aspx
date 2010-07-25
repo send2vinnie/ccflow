@@ -8,6 +8,7 @@
     <title>表单设计</title>
 	<script language="JavaScript" src="JS.js"></script>
 	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
+    <script language="JavaScript" src="../../../Comm/JS/Calendar.js" type="text/javascript"></script>    
 	<base target="_self" />
 	<script language="javascript">
 	function Insert(mypk,IDX)
@@ -75,7 +76,9 @@
        if (event.keyCode == 27)     
         window.close();
        return true;
-    }
+   }
+    
+  
 	</script>
   <script language="javascript" for="document" event="onkeydown">
     if(event.keyCode==13)
@@ -84,7 +87,7 @@
     <link href="../Style/Style.css" rel="stylesheet" type="text/css" />
     <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="Esc()" border=0  style="padding:0px">
+<body topmargin="0" leftmargin="0" onkeypress="Esc()"  style="padding:0px"   >
     <form id="form1" runat="server">
      <uc1:Pub ID="Pub1" runat="server" />
      </form>

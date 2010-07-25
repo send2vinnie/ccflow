@@ -153,25 +153,46 @@
             document.getElementById(rowIdx + '_' + i).style.display = sta;
         }
     }
-    
-   var isInser="";
+
+    var isInser = "";
    function ReinitIframe(dtlid) {
 
        try {
            var iframe = document.getElementById("F" + dtlid);
            var tdF = document.getElementById("TD" + dtlid);
-           iframe.height = iframe.contentWindow.document.body.scrollHeight;
-           iframe.width = iframe.contentWindow.document.body.scrollWidth;
 
-           if (tdF.width < iframe.width) {
-               //alert(tdF.width +'  ' + iframe.width);
-               tdF.width = iframe.width;
-           } else {
-               iframe.width = tdF.width;
+           //var v1 = iframe.contentWindow.screen.availWidth;
 
-           }
+           //var v1 = iframe.contentWindow.document.body.getElementById("Tab").width;
+           //           var v1 = iframe.contentWindow.TabWidth();
 
-           tdF.height = iframe.height;
+           var v1 = iframe.contentWindow.document.body.scrollWidth ;
+           var v2 = tdF.width;
+           tdF.width = Math.max(v1, v2)  ;
+           iframe.width = Math.max(v1, v2);
+
+
+           var v1 = iframe.contentWindow.document.body.scrollHeight;
+           var v2 = tdF.height;
+           tdF.height = Math.max(v1, v2);
+           iframe.height = Math.max(v1, v2);
+           
+
+//           tdF.height = iframe.contentWindow.document.body.scrollHeight;
+//           tdF.width = iframe.contentWindow.document.body.scrollWidth;
+
+//           iframe.height = iframe.contentWindow.document.body.scrollHeight;
+//           iframe.width = iframe.contentWindow.document.body.scrollWidth;
+           
+
+//           if (tdF.width < iframe.width) {
+//               //alert(tdF.width +'  ' + iframe.width);
+//               tdF.width = iframe.width;
+//           } else {
+//               iframe.width = tdF.width;
+//           }
+
+//           tdF.height = iframe.height;
            return;
        } catch (ex) {
            return;

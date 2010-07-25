@@ -45,24 +45,22 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         BP.En.Attrs attrs = sNd.HisWork.EnMap.Attrs;
         BP.En.Attrs attrsCopy = nd.HisWork.EnMap.Attrs;
 
-        this.Pub2.AddFieldSet("<a href='MapDef.aspx?PK="+this.FK_Node+"' ><img src='../../Images/Btn/Back.gif' border=0/>返回表单设计</a>");
-
         this.Pub2.Add("<b>选择要复制的节点:</b>");
-        
-            BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
-            ddl.ID = "DDL1";
 
-            ddl.Attributes["onchange"] = "javascript:Go('" + this.FK_Node + "','"+ddl.ClientID+"', this.value );";
-            foreach (BP.WF.Node en in nds)
-            {
-                if (en.No == this.FK_Node)
-                    continue;
-                int nodeid = nd.NodeID;
-                ddl.Items.Add(new ListItem(en.Name, "ND" + en.NodeID.ToString()));
-            }
-            ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
-            this.Pub2.Add(ddl);
-            ddl.SetSelectItem(this.NodeOfSelect);
+        BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
+        ddl.ID = "DDL1";
+
+        ddl.Attributes["onchange"] = "javascript:Go('" + this.FK_Node + "','" + ddl.ClientID + "', this.value );";
+        foreach (BP.WF.Node en in nds)
+        {
+            if (en.No == this.FK_Node)
+                continue;
+            int nodeid = nd.NodeID;
+            ddl.Items.Add(new ListItem(en.Name, "ND" + en.NodeID.ToString()));
+        }
+        ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
+        this.Pub2.Add(ddl);
+        ddl.SetSelectItem(this.NodeOfSelect);
 
 
         this.Pub2.AddTable();
@@ -123,12 +121,10 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
 
 
         MapData md = new MapData(this.NodeOfSelect);
-       
-            CheckBox cb1 = new CheckBox();
-            cb1.ID = "CB_Table";
-            cb1.Text = "复制该表单据中的表格(注意如果当前表单中已经存在，就会覆盖它。)";
-            this.Pub2.Add(cb1);
-         
+        //CheckBox cb1 = new CheckBox();
+        //cb1.ID = "CB_Table";
+        //cb1.Text = "复制该表单据中的表格(注意如果当前表单中已经存在，就会覆盖它。)";
+        //this.Pub2.Add(cb1);
 
         Button btn = new Button();
         if (isHave == false)
@@ -139,12 +135,10 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         this.Pub2.AddHR();
 
         btn.ID = "Btn_OK";
-        btn.Text = "复制";
+        btn.Text = this.ToE("Copy", "复制");
         btn.Attributes["onclick"] = " return confirm('您确定要复制选择的字段到 [" + nd.Name + "]表单中吗？');";
         btn.Click += new EventHandler(btn_Click);
-
         this.Pub2.Add(btn);
-        this.Pub2.AddFieldSetEnd();
     }
 
     void ddl_SelectedIndexChanged(object sender, EventArgs e)
@@ -213,9 +207,12 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
             }
         }
 
+        this.WinClose();
+
+
         //this.WinCloseWithMsg("复制成功");
 
-        this.Response.Redirect("MapDef.aspx?PK=" + this.FK_Node + "&NodeOfSelect=" + this.NodeOfSelect);
+        //this.Response.Redirect("MapDef.aspx?PK=" + this.FK_Node + "&NodeOfSelect=" + this.NodeOfSelect);
     }
 }
 

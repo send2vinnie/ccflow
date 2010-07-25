@@ -880,7 +880,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             if (currNd.HisFormType == FormType.SysForm)
             {
                 MapData md = new MapData("ND" + currNd.NodeID);
-                this.UCEn1.SaveDataCells(md, work.OID.ToString());
                 //work.Update();
             }
         }

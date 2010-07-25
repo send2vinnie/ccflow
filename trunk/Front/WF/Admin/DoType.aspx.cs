@@ -15,7 +15,6 @@ using BP.Web.Controls;
 using BP.Web;
 using BP.Sys;
 
-
 public partial class WF_Admin_DoType : WebPage
 {
     public string FK_Flow

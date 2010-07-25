@@ -71,7 +71,7 @@ public partial class Comm_Dtl : WebPage
             if (attr.IsPK)
                 continue;
 
-            this.Ucsys1.AddTD(attr.Name);
+            this.Ucsys1.AddTDCenter(attr.Name);
         }
         this.Ucsys1.AddTREnd();
         #endregion 生成标题
@@ -86,8 +86,9 @@ public partial class Comm_Dtl : WebPage
             {
                 case DtlOpenType.ForEmp:
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
-                    qo.addAnd();
-                    qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
+#warning 需要判断。
+                   // qo.addAnd();
+                    //qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
                     break;
                 case DtlOpenType.ForWorkID:
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
@@ -114,13 +115,16 @@ public partial class Comm_Dtl : WebPage
             this.Ucsys2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal);
             qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
 
-            int dtlCount = dtls.Count;
-            for (int i = 0; i < mdtl.RowsOfList - dtlCount; i++)
+            if (mdtl.IsReadonly == false)
             {
-                BP.Sys.GEDtl dt = new GEDtl(this.EnsName);
-                dt.ResetDefaultVal();
-                dt.OID = i;
-                dtls.AddEntity(dt);
+                int dtlCount = dtls.Count;
+                for (int i = 0; i < mdtl.RowsOfList - dtlCount; i++)
+                {
+                    BP.Sys.GEDtl dt = new GEDtl(this.EnsName);
+                    dt.ResetDefaultVal();
+                    dt.OID = i;
+                    dtls.AddEntity(dt);
+                }
             }
         }
         catch (Exception ex)
@@ -159,14 +163,13 @@ public partial class Comm_Dtl : WebPage
                         this.Ucsys1.AddTD(tb);
                         tb.LoadMapAttr(attr);
                         tb.ID = "TB_" + attr.KeyOfEn + "_" + dtl.OID;
-
                         switch (attr.MyDataType)
                         {
                             case DataType.AppDate:
                             case DataType.AppDateTime:
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "calendar();";
-
+                                tb.Attributes["OnTextChanged"] = " isChange= true;";
                                 tb.Text = val;
                                 break;
                             case DataType.AppMoney:
@@ -174,6 +177,7 @@ public partial class Comm_Dtl : WebPage
                                 tb.TextExtMoney = decimal.Parse(val);
                                 break;
                             default:
+                                tb.Attributes["OnTextChanged"] = " isChange= true;";
                                 tb.Text = val;
                                 break;
                         }
@@ -196,10 +200,19 @@ public partial class Comm_Dtl : WebPage
                         break;
                     case UIContralType.DDL:
                         ddl = new DDL();
-                        ddl.LoadMapAttr(attr);
-                        ddl.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
+                        if (attr.UIIsEnable)
+                        {
+                            ddl.LoadMapAttr(attr);
+                            ddl.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
+                            ddl.SetSelectItem(val);
+                            ddl.Attributes["onchange"] = "isChange= true;";
+                        }
+                        else
+                        {
+                            ddl.Items.Add(new ListItem(dtl.GetValRefTextByKey(attr.KeyOfEn), val) );
+                            ddl.Enabled = false;
+                        }
                         this.Ucsys1.AddTD(ddl);
-                        ddl.SetSelectItem(val);
                         break;
                     case UIContralType.CheckBok:
                         cb = new CheckBox();
@@ -209,6 +222,8 @@ public partial class Comm_Dtl : WebPage
                             cb.Checked = true;
                         else
                             cb.Checked = false;
+
+                        cb.Attributes["onclick"] = "isChange= true;";
                         this.Ucsys1.AddTD(cb);
                         break;
                     default:
@@ -269,30 +284,19 @@ public partial class Comm_Dtl : WebPage
         #endregion 生成数据
         this.Ucsys1.AddTableEnd();
 
-        Button btn = new Button();
-        btn.Click += new EventHandler(Button1_Click);
-        btn.ID = "Btn_Save";
-        this.Ucsys2.Add(btn);
+        //Button btn = new Button();
+        //btn.Click += new EventHandler(Button1_Click);
+        //btn.ID = "Btn_Save";
+        //this.Ucsys2.Add(btn);
 
 
         #region 生成 自动计算行
         // 输出自动计算公式
         this.Response.Write("\n<script language='JavaScript' >");
-        this.Response.Write("\n function Submit() {");
-
-    //    this.Response.Write("\n  alert(' setTimeout start '); ");
-
-        this.Response.Write("\n   " + btn.ClientID + ".click(); ");
-
-        this.Response.Write("\n  setTimeout(\"alert('setTimeout ok ')\",3000); ");
-
-      //  this.Response.Write("\n  return false; ");
-
-        this.Response.Write("\n } ");
-
         foreach (GEDtl dtl in dtls)
         {
             string top = "\n function C" + dtl.OID + "() { \n ";
+
             string script = "";
             foreach (MapAttr attr in attrs)
             {
@@ -325,10 +329,10 @@ public partial class Comm_Dtl : WebPage
                 continue;
 
             if (attr.IsNum == false)
-                continue;
+                continue;         
 
             string top = "\n<script language='JavaScript'> function C" + attr.KeyOfEn + "() { \n ";
-            string end = "\n } </script>";
+            string end = "\n  isChange =true ;  } </script>";
             this.Response.Write(top + this.GenerSum(attr, dtls) + " ; \t\n" + end);
         }
         #endregion
@@ -383,8 +387,6 @@ public partial class Comm_Dtl : WebPage
             else
                 dtl.Update();
         }
-
-        return;
 
         this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx, true);
     }
@@ -514,11 +516,8 @@ public partial class Comm_Dtl : WebPage
                 return s;
         }
     }
+   
     protected void Button1_Click(object sender, EventArgs e)
-    {
-        this.Save();
-    }
-    protected void Button1_Click1(object sender, EventArgs e)
     {
         this.Save();
     }

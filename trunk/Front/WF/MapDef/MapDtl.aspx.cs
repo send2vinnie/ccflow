@@ -288,20 +288,28 @@ public partial class Comm_MapDef_MapDtl : WebPage
         cb.ID = "CB_IsShowSum";
         cb.Text = "是否合计行";
         cb.Checked = dtl.IsShowSum;
-
         this.Pub1.AddTD(cb);
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
 
 
         this.Pub1.AddTR();
-        this.Pub1.AddTD("页面行数");
+        this.Pub1.AddTD("初始化行数");
         tb = new TB();
         tb.ID = "TB_RowsOfList";
         tb.Attributes["class"] = "TBNum";
         tb.TextExtInt = dtl.RowsOfList;
         this.Pub1.AddTD(tb);
-        this.Pub1.AddTD("支持自动分页");
+        this.Pub1.AddTD("");
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("越出处理");
+        ddl = new DDL();
+        ddl.ID = "DDL_WhenOverSize";
+        ddl.BindSysEnum(MapDtlAttr.WhenOverSize, (int)dtl.HisWhenOverSize);
+        this.Pub1.AddTD(ddl);
+        this.Pub1.AddTD("行数显示方式");
         this.Pub1.AddTREnd();
 
 
@@ -311,7 +319,17 @@ public partial class Comm_MapDef_MapDtl : WebPage
         cb.ID = "CB_IsCopyNDData";
         cb.Text = "是允许从上一个节点Copy数据";
         cb.Checked = dtl.IsCopyNDData;
+        this.Pub1.AddTD("colspan=2 nowarp=true ", cb);
+        this.Pub1.AddTREnd();
 
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD();
+        cb = new CheckBox();
+        cb.ID = "CB_IsReadonly";
+        cb.Text = "所有的列不可编辑时它Readonly.（系统自动计算）";
+        cb.Enabled = false;
+        cb.Checked = dtl.IsReadonly;
         this.Pub1.AddTD("colspan=2 nowarp=true ", cb);
         this.Pub1.AddTREnd();
 
