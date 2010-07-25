@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{51C1DADA-1B9A-41CC-B731-FDE1196778F2}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -175,27 +175,6 @@
     <Compile Include="RunRecorde.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TA\CycleEvent.cs" />
-    <Compile Include="TA\CycleEventDo.cs" />
-    <Compile Include="TA\CycleEventDtl.cs" />
-    <Compile Include="TA\Notepad.cs" />
-    <Compile Include="TA\NotepadFolder.cs" />
-    <Compile Include="TA\PubClass.cs" />
-    <Compile Include="TA\TaLog.cs" />
-    <Compile Include="TA\Task.cs" />
-    <Compile Include="TA\TaskGroup.cs" />
-    <Compile Include="TA\TAUser.cs" />
-    <Compile Include="TA\TimeScope.cs" />
-    <Compile Include="TA\WorkExt.cs" />
-    <Compile Include="TA\Work\ReturnWork.cs" />
-    <Compile Include="TA\Work\ReWork.cs" />
-    <Compile Include="TA\Work\TADay.cs" />
-    <Compile Include="TA\Work\TAWeek.cs" />
-    <Compile Include="TA\Work\Work.cs" />
-    <Compile Include="TA\Work\WorkDtl.cs" />
-    <Compile Include="TA\Work\WorkDtlBase.cs" />
-    <Compile Include="TA\Work\WorkTemplate.cs" />
-    <Compile Include="TA\Work\WorkTemplateType.cs" />
     <Compile Include="WF\DataApply.cs" />
     <Compile Include="WF\DevelopCallRequest.cs" />
     <Compile Include="WF\GenerFH.cs" />
