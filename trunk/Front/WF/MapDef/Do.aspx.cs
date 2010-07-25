@@ -127,6 +127,12 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                 attrD.DoDown();
                 this.WinClose();
                 break;
+            case "Jump":
+                MapAttr attrFrom = new MapAttr( int.Parse( this.Request.QueryString["FromID"] ) );
+                MapAttr attrTo = new MapAttr(int.Parse(this.Request.QueryString["ToID"]));
+                attrFrom.DoJump(attrTo);
+                this.WinClose();
+                break;
             case "Edit":
                 Edit();
                 break;

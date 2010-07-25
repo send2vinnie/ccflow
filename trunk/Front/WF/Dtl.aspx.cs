@@ -86,8 +86,8 @@ public partial class Comm_Dtl : WebPage
             {
                 case DtlOpenType.ForEmp:
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
-#warning 需要判断。
-                   // qo.addAnd();
+                    // #warning 需要判断。
+                    // qo.addAnd();
                     //qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
                     break;
                 case DtlOpenType.ForWorkID:
@@ -97,7 +97,6 @@ public partial class Comm_Dtl : WebPage
                     qo.AddWhere(GEDtlAttr.FID, this.RefPKVal);
                     break;
             }
-
         }
         catch (Exception ex)
         {
@@ -204,8 +203,8 @@ public partial class Comm_Dtl : WebPage
                         {
                             ddl.LoadMapAttr(attr);
                             ddl.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
-                            ddl.SetSelectItem(val);
                             ddl.Attributes["onchange"] = "isChange= true;";
+                            ddl.SetSelectItem(val);
                         }
                         else
                         {
@@ -289,7 +288,6 @@ public partial class Comm_Dtl : WebPage
         //btn.ID = "Btn_Save";
         //this.Ucsys2.Add(btn);
 
-
         #region 生成 自动计算行
         // 输出自动计算公式
         this.Response.Write("\n<script language='JavaScript' >");
@@ -363,7 +361,6 @@ public partial class Comm_Dtl : WebPage
         }
 
         qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
-
         int dtlCount = dtls.Count;
         for (int i = 0; i < mdtl.RowsOfList - dtlCount; i++)
         {

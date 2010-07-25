@@ -4,9 +4,65 @@
 <script language="JavaScript" src="JS.js"></script>
     <script language="JavaScript" src="../../Comm/JScript.js"></script>
     <script language="JavaScript" src="JS.js"></script>
-    
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
+    
     <script language="javascript" >
+    
+document.onmousedown = mouseDown;
+document.onmouseup = mouseUp;
+document.onmousemove = mouseMove;
+
+function mouseDown()
+{
+  moveID = overAttrID;
+  return true;
+}
+function mouseUp()
+{
+  if ( overAttrID>0 && moveID >  0)
+  {
+  
+  Jump(moveID,overAttrID);
+  //  alert(" good . from = " + moveID +' to ' +overAttrID);
+  }else
+  {
+     //alert(" err . from = " + moveID +' to ' +overAttrID);
+  }
+  
+  overAttrID=0;
+  moveID=0;
+  return true;
+}
+function mouseMove()
+{
+  if ( overAttrID>0 && moveID >  0)
+  {
+  document.style.cursor='move';
+  }else
+  {
+  // document.style.cursor='default';
+  }
+  return true;
+}
+
+    var overAttrID=0;
+    var moveID=0;
+    var isMove=false;
+    function DivOnMouseOver(id)
+    {
+      overAttrID =id;
+      //ctrl.style.backgroundColor="#AAFFAA";
+      //ctrl.style.cursor='move';
+    }
+    
+    function DivOnMouseOut(id)
+    {
+      overAttrID=0;
+     // ctrl.style.cursor='move';
+      
+    }
+    
+    
 	function HelpGroup()
 	{
 	   var msg='字段分组：就是把类似的字段放在一起，让用户操作更友好。\t\n比如：我们纳税人设计一个基础信息采集节点。';
@@ -90,6 +146,12 @@
     function Down(mypk,refoid,idx)
     {
         var url='Do.aspx?DoType=Down&MyPK='+mypk+'&RefOID='+refoid +'&ToIdx='+idx;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+    }
+     function Jump(fromID,toID)
+    {
+        var url='Do.aspx?DoType=Jump&FromID='+fromID+'&ToID='+toID ;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
