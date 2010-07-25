@@ -664,10 +664,10 @@ namespace BP.WF
 
                 if (this.HisNode.HisFJOpen != FJOpen.None)
                 {
-                  //  if (this.OID == 0)
-                  //      tp += "[<a href=\"javascript:alert('" + this.ToE("ForFJ", "请保存后上传附件") + "');\" ><img src='../images/Btn/Search.gif' border=0/>" + this.ToE("FJ", "附件") + "</a>]";
-                  //  else
-                   //     tp += "[<a href=\"javascript:WinOpen('../WF/FileManager.aspx?WorkID=" + this.OID + "&FID=" + this.FID + "&FJOpen=" + (int)this.HisNode.HisFJOpen + "&FK_Node=" + this.HisNode.NodeID + "' ,'sd');\" ><img src='../images/Btn/Adjunct.gif' border=0/>" + this.ToE("FJ", "附件") + "-" + FileManagers.NumOfFile(this.OID, this.FID, this.HisNode.HisFJOpen) + "</a>]";
+                    //  if (this.OID == 0)
+                    //      tp += "[<a href=\"javascript:alert('" + this.ToE("ForFJ", "请保存后上传附件") + "');\" ><img src='../images/Btn/Search.gif' border=0/>" + this.ToE("FJ", "附件") + "</a>]";
+                    //  else
+                    //     tp += "[<a href=\"javascript:WinOpen('../WF/FileManager.aspx?WorkID=" + this.OID + "&FID=" + this.FID + "&FJOpen=" + (int)this.HisNode.HisFJOpen + "&FK_Node=" + this.HisNode.NodeID + "' ,'sd');\" ><img src='../images/Btn/Adjunct.gif' border=0/>" + this.ToE("FJ", "附件") + "-" + FileManagers.NumOfFile(this.OID, this.FID, this.HisNode.HisFJOpen) + "</a>]";
                 }
 
                 if (this.HisNode.IsSelectEmp && this.HisNode.IsEndNode == false)
@@ -685,52 +685,6 @@ namespace BP.WF
                     else
                         tp += "[<a href=\"javascript:WinOpen('../WF/Msg/Write.aspx?WorkID=" + this.OID + "&FK_Node=" + this.HisNode.NodeID + "' ,'s8d');\" ><img src='../images/Btn/CC.gif' border=0/>" + this.ToE("CC", "抄送") + "</a>]";
                 }
-
-                if (this.IsGECheckStand == false)
-                {
-                    /* 如果不是审核节点 */
-                    BP.Sys.MapDtls dtls = new BP.Sys.MapDtls("ND" + this.HisNode.NodeID);
-                    foreach (BP.Sys.MapDtl dtl in dtls)
-                    {
-                        if (this.OID == 0)
-                        {
-                            tp += "[<a href=\"javascript:alert('" + this.ToE("ForDtl1", "请保存后填写明细") + "');\" ><img src='../images/Btn/Table.gif' border=0/>" + dtl.Name + "</a>]";
-                        }
-                        else
-                        {
-
-                            int Num = 0;
-                            switch (dtl.DtlOpenType)
-                            {
-                                case BP.Sys.DtlOpenType.ForEmp:
-                                    Num = dtl.GetCountByFK("RefPK", this.OID, "Rec", Web.WebUser.No);
-                                    break;
-                                case BP.Sys.DtlOpenType.ForFID:
-                                    Num = dtl.GetCountByFK("FID", this.FID);
-                                    break;
-                                case BP.Sys.DtlOpenType.ForWorkID:
-                                    Num = dtl.GetCountByFK("RefPK", this.OID);
-                                    break;
-                                default:
-                                    throw new Exception("@没有判断的情况。");
-                            }
-
-                            tp += "[<a href=\"javascript:WinOpen('./../Comm/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.OID + "' ,'asd');\" ><img src='../images/Btn/Table.gif' border=0/>" + dtl.Name + "-" + Num + "</a>]";
-
-                        }
-                    }
-                }
-                //if (this.OID > 0)
-                //{
-                //    if (this.HisNode.IsFLHL)
-                //    {
-                //        if (this.HisNode.HisNodeWorkType == NodeWorkType.WorkHL)
-                //            tp += "[<a href=\"javascript:WinOpen('WFRptFHL.aspx?FID=" + this.FID + "' ,'asd');\" ><img src='./Img/WorkRpt.gif' border=0/>合流报告</a>]";
-                //        else
-                //            tp += "[<a href=\"javascript:WinOpen('WFRptFHL.aspx?FID=" + this.FID + "' ,'asd');\" ><img src='./Img/WorkRpt.gif' border=0/>分流报告</a>]";
-                //    }
-                //}
-
 
                 if (this.HisNode.HisNodeWorkType == NodeWorkType.GECheckMuls)
                 {
@@ -850,7 +804,7 @@ namespace BP.WF
                     }
                     break;
                 case BP.Sys.AutoFullWay.Way4_Dtl:
-                    string mysql = "SELECT @Way(@Field) FROM @Table WHERE RefPK=" + this.OID;
+                    string mysql = "SELECT @Way(@Field) FROM @Table WHERE RefPK='"+ this.OID+"'";
                     string[] strs = attr.AutoFullDoc.Split('@');
                     foreach (string str in strs)
                     {
@@ -967,17 +921,36 @@ namespace BP.WF
                 throw new Exception("@OID Not set val  you can not copy it.");
 
 
-            Sys.DataCells dsc = new BP.Sys.DataCells(fromRefVal);
-            dsc.Delete(Sys.DataCellAttr.RefVal, "ND" + this.HisNode.NodeID + "_" + this.OID);
+            //Sys.DataCells dsc = new BP.Sys.DataCells(fromRefVal);
+            //dsc.Delete(Sys.DataCellAttr.RefVal, "ND" + this.HisNode.NodeID + "_" + this.OID);
 
-            foreach (Sys.DataCell ds in dsc)
-            {
-                Sys.DataCell en = new BP.Sys.DataCell();
-                en.Copy(ds);
-                en.RefVal = "ND" + this.HisNode.NodeID + "_" + this.OID;
-                en.OID = 0;
-                en.Insert();
-            }
+            //foreach (Sys.DataCell ds in dsc)
+            //{
+            //    Sys.DataCell en = new BP.Sys.DataCell();
+            //    en.Copy(ds);
+            //    en.RefVal = "ND" + this.HisNode.NodeID + "_" + this.OID;
+            //    en.OID = 0;
+            //    en.Insert();
+            //}
+        }
+
+        public void CopyCellsData_bak(string fromRefVal)
+        {
+            if (this.OID == 0)
+                throw new Exception("@OID Not set val  you can not copy it.");
+
+
+            //Sys.DataCells dsc = new BP.Sys.DataCells(fromRefVal);
+            //dsc.Delete(Sys.DataCellAttr.RefVal, "ND" + this.HisNode.NodeID + "_" + this.OID);
+
+            //foreach (Sys.DataCell ds in dsc)
+            //{
+            //    Sys.DataCell en = new BP.Sys.DataCell();
+            //    en.Copy(ds);
+            //    en.RefVal = "ND" + this.HisNode.NodeID + "_" + this.OID;
+            //    en.OID = 0;
+            //    en.Insert();
+            //}
         }
 
         public override void Copy(Entity fromEn)

@@ -362,6 +362,8 @@ namespace BP.WF
             Nodes nds = new Nodes(this.No);
             Emps emps = new Emps();
 
+
+
             string rpt = "<html><title>" + this.Name + "-" + this.ToE("DesignRpt", "流程诊断报告") + "</title></html>";
             rpt += "\t\n<body>\t\n<table width='70%' align=center border=1>\t\n<tr>\t\n<td>";
             rpt += "<div aligen=center><h1><b>" + this.Name + " - " + this.ToE("FlowDRpt", "流程设计文档") + "</b></h1></div>";
@@ -376,6 +378,8 @@ namespace BP.WF
             #region 对节点进行检查
             foreach (Node nd in nds)
             {
+                DBAccess.RunSQL("UPDATE Sys_MapData SET Name='" + nd.Name + "' WHERE No='ND" + nd.NodeID + "'");
+
                 try
                 {
                     if (nd.IsCheckNode == false)
@@ -527,7 +531,6 @@ namespace BP.WF
 
             msg += "<br><a href='../../Data/FlowDesc/" + this.Name + ".htm' target=_s>" + this.ToE("DesignRpt", "设计报告") + "</a>";
             msg += "<hr><b> </b> &nbsp; <br>" + DataType.CurrentDataTimeCN + "<br><br><br>";
-
             rpt += "\t\n</td></tr>\t\n</table>\t\n</body>\t\n</html>";
 
             try
@@ -554,7 +557,6 @@ namespace BP.WF
                 if (ess.Count == 0)
                     msg += "@人员:" + emp.No + "," + emp.Name + ",没有工作岗位。";
 
-
                 EmpDepts eds = new EmpDepts();
                 eds.Retrieve(EmpStationAttr.FK_Emp, emp.No);
                 if (eds.Count == 0)
@@ -564,7 +566,6 @@ namespace BP.WF
             ////Depts depts =new Depts();
             ////depts.RetrieveAll();
             //string sql = "SELECT * FROM PORT_EMP WHERE FK_DEPT NOT IN (SELECT NO FROM PORT_DEPT)";
-
 
             return msg;
         }

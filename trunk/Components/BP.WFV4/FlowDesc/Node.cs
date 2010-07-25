@@ -2226,7 +2226,7 @@ namespace BP.WF
 
             attr = new BP.Sys.MapAttr();
             attr.FK_MapData = md.No;
-            attr.HisEditType = BP.Sys.EditType.Readonly;
+            attr.HisEditType = BP.Sys.EditType.Edit;
             attr.KeyOfEn = WorkAttr.RDT;
             attr.Name = BP.Sys.Language.GetValByUserLang("AcceptTime", "½ÓÊÜÊ±¼ä");  //"½ÓÊÜÊ±¼ä";
             attr.MyDataType = BP.DA.DataType.AppDateTime;
@@ -2436,72 +2436,76 @@ namespace BP.WF
                 attr.Insert();
             }
 
-            if (this.IsCheckNode)
+            if (this.NodePosType != NodePosType.Start)
             {
-                attr = new BP.Sys.MapAttr();
-                attr.FK_MapData = md.No;
-                attr.HisEditType = BP.Sys.EditType.UnDel;
-                attr.KeyOfEn = GECheckStandAttr.Note; // "CheckState";
-                attr.Name = "ÉóºËÒâ¼û"; // BP.Sys.Language.GetValByUserLang("CheckState", "ÉóºË×´Ì¬"); // "ÉóºË×´Ì¬";
-                attr.MyDataType = BP.DA.DataType.AppString;
-                attr.UIContralType = UIContralType.TB;
-                attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = true;
-                attr.UIIsEnable = false;
-                attr.UIIsLine = true;
-                attr.MinLen = 0;
-                attr.MaxLen = 4000;
-                attr.IDX = -100;
-                attr.Insert();
-
-                attr = new BP.Sys.MapAttr();
-                attr.FK_MapData = md.No;
-                attr.HisEditType = BP.Sys.EditType.UnDel;
-                attr.KeyOfEn = GECheckStandAttr.RefMsg; // "CheckState";
-                attr.Name = "¸¨ÖúÐÅÏ¢"; //BP.Sys.Language.GetValByUserLang("CheckState", "ÉóºË×´Ì¬"); // "ÉóºË×´Ì¬";
-                attr.MyDataType = BP.DA.DataType.AppString;
-                attr.UIContralType = UIContralType.TB;
-                attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = true;
-                attr.UIIsEnable = false;
-                attr.UIIsLine = true;
-                attr.MinLen = 0;
-                attr.MaxLen = 4000;
-                attr.IDX = -100;
-                attr.Insert();
-
-                attr = new BP.Sys.MapAttr();
-                attr.FK_MapData = md.No;
-                attr.HisEditType = BP.Sys.EditType.UnDel;
-                attr.KeyOfEn = GECheckStandAttr.CheckState;
-                attr.Name = "ÉóºË×´Ì¬"; // BP.Sys.Language.GetValByUserLang("CheckState", "ÉóºË×´Ì¬"); // "ÉóºË×´Ì¬";
-                attr.MyDataType = BP.DA.DataType.AppString;
-                attr.UIContralType = UIContralType.TB;
-                attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = true;
-                attr.UIIsEnable = false;
-                attr.UIIsLine = false;
-                attr.MinLen = 0;
-                attr.MaxLen = 20;
-                attr.IDX = -100;
-                attr.Insert();
-
-                attr = new BP.Sys.MapAttr();
-                attr.FK_MapData = md.No;
-                attr.HisEditType = BP.Sys.EditType.UnDel;
-                attr.KeyOfEn = GECheckStandAttr.Sender;
-                attr.Name = "·¢ËÍÈË"; // BP.Sys.Language.GetValByUserLang("CheckState", "ÉóºË×´Ì¬"); // "ÉóºË×´Ì¬";
-                attr.MyDataType = BP.DA.DataType.AppString;
-                attr.UIContralType = UIContralType.TB;
-                attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = true;
-                attr.UIIsEnable = false;
-                attr.UIIsLine = false;
-                attr.MinLen = 0;
-                attr.MaxLen = 20;
-                attr.IDX = -100;
-                attr.Insert();
+                //attr = new BP.Sys.MapAttr();
+                //attr.FK_MapData = md.No;
+                //attr.HisEditType = BP.Sys.EditType.UnDel;
+                //attr.KeyOfEn = GECheckStandAttr.Sender;
+                //attr.Name = "·¢ËÍÈË"; // BP.Sys.Language.GetValByUserLang("CheckState", "ÉóºË×´Ì¬"); // "ÉóºË×´Ì¬";
+                //attr.MyDataType = BP.DA.DataType.AppString;
+                //attr.UIContralType = UIContralType.TB;
+                //attr.LGType = FieldTypeS.Normal;
+                //attr.UIVisible = false;
+                //attr.UIIsEnable = false;
+                //attr.UIIsLine = false;
+                //attr.MinLen = 0;
+                //attr.MaxLen = 20;
+                //attr.IDX = -100;
+                //attr.Insert();
             }
+
+
+            //if (this.IsCheckNode)
+            //{
+            //    attr = new BP.Sys.MapAttr();
+            //    attr.FK_MapData = md.No;
+            //    attr.HisEditType = BP.Sys.EditType.UnDel;
+            //    attr.KeyOfEn = GECheckStandAttr.Note; // "CheckState";
+            //    attr.Name = "ÉóºËÒâ¼û"; // BP.Sys.Language.GetValByUserLang("CheckState", "ÉóºË×´Ì¬"); // "ÉóºË×´Ì¬";
+            //    attr.MyDataType = BP.DA.DataType.AppString;
+            //    attr.UIContralType = UIContralType.TB;
+            //    attr.LGType = FieldTypeS.Normal;
+            //    attr.UIVisible = true;
+            //    attr.UIIsEnable = false;
+            //    attr.UIIsLine = true;
+            //    attr.MinLen = 0;
+            //    attr.MaxLen = 4000;
+            //    attr.IDX = -100;
+            //    attr.Insert();
+
+            //    attr = new BP.Sys.MapAttr();
+            //    attr.FK_MapData = md.No;
+            //    attr.HisEditType = BP.Sys.EditType.UnDel;
+            //    attr.KeyOfEn = GECheckStandAttr.RefMsg; // "CheckState";
+            //    attr.Name = "¸¨ÖúÐÅÏ¢"; //BP.Sys.Language.GetValByUserLang("CheckState", "ÉóºË×´Ì¬"); // "ÉóºË×´Ì¬";
+            //    attr.MyDataType = BP.DA.DataType.AppString;
+            //    attr.UIContralType = UIContralType.TB;
+            //    attr.LGType = FieldTypeS.Normal;
+            //    attr.UIVisible = true;
+            //    attr.UIIsEnable = false;
+            //    attr.UIIsLine = true;
+            //    attr.MinLen = 0;
+            //    attr.MaxLen = 4000;
+            //    attr.IDX = -100;
+            //    attr.Insert();
+
+            //    attr = new BP.Sys.MapAttr();
+            //    attr.FK_MapData = md.No;
+            //    attr.HisEditType = BP.Sys.EditType.UnDel;
+            //    attr.KeyOfEn = GECheckStandAttr.CheckState;
+            //    attr.Name = "ÉóºË×´Ì¬"; // BP.Sys.Language.GetValByUserLang("CheckState", "ÉóºË×´Ì¬"); // "ÉóºË×´Ì¬";
+            //    attr.MyDataType = BP.DA.DataType.AppString;
+            //    attr.UIContralType = UIContralType.TB;
+            //    attr.LGType = FieldTypeS.Normal;
+            //    attr.UIVisible = true;
+            //    attr.UIIsEnable = false;
+            //    attr.UIIsLine = false;
+            //    attr.MinLen = 0;
+            //    attr.MaxLen = 20;
+            //    attr.IDX = -100;
+            //    attr.Insert();
+            //}
         }
 
 

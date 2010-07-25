@@ -5,6 +5,7 @@ using System.Collections;
 using System.Data;
 using BP.Port;
 using BP.Web;
+using BP.Sys;
 
 namespace BP.WF
 {
@@ -2386,7 +2387,6 @@ namespace BP.WF
                         DBAccess.RunSQL("UPDATE WF_FileManager SET FID=" + myfh.FID + " WHERE WorkID=" + this.WorkID);
 
 
-
                     // 开始更新明细的权限。
                     foreach (BP.Sys.MapDtl dtl in dtls)
                     {
@@ -2513,7 +2513,7 @@ namespace BP.WF
                 // 开始更新明细的权限问题。
                 foreach (BP.Sys.MapDtl dtl in dtls)
                 {
-                    DBAccess.RunSQL("Update " + dtl.PTable + " SET FID=" + fh.FID + " WHERE RefPK='" + this.WorkID + "'");
+                    DBAccess.RunSQL("Update " + dtl.PTable + " SET FID=" + fh.FID + " WHERE RefPK='"   + this.WorkID + "'");
                 }
 
                 return "@当前工作已经完成，流程已经运行到合流节点[" + nd.Name + "]。您是第一位到达此节点的人员。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID="+this.WorkID+"&NodeID="+nd.NodeID+"')\" >短信通知他们</a>，";
@@ -2576,7 +2576,7 @@ namespace BP.WF
                 // 开始更新明细的权限问题。
                 foreach (BP.Sys.MapDtl dtl in dtls)
                 {
-                    DBAccess.RunSQL("Update " + dtl.PTable + " SET FID=" + fh.FID + " where RefPK='" + this.WorkID + "'");
+                    DBAccess.RunSQL("Update " + dtl.PTable + " SET FID=" + fh.FID + " WHERE RefPK='"  + this.WorkID + "'");
                 }
 
                 return "@当前工作已经完成，流程已经运行到合流节点[" + nd.Name + "]。您不是第一个到达此节点的人员。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&NodeID=" + nd.NodeID + "')\" >短信通知他们</a>。";
@@ -2584,10 +2584,7 @@ namespace BP.WF
         }
         private void UpdateHeLiuFID()
         {
-
         }
-
-
         /// <summary>
         /// 启动下一个工作节点
         /// </summary>
@@ -2613,7 +2610,65 @@ namespace BP.WF
                 {
                 }
 
-                wk.CopyCellsData("ND" + this.HisNode.NodeID + "_" + this.HisWork.OID);
+                // 复制明细数据。
+                Sys.MapDtls dtls = new BP.Sys.MapDtls("ND" + this.HisNode.NodeID);
+                Sys.MapDtls toDtls = new BP.Sys.MapDtls("ND" + nd.NodeID);
+
+                int i = -1;
+                foreach (Sys.MapDtl dtl in dtls)
+                {
+                    i++;
+                    if (toDtls.Count < i)
+                        continue;
+
+                    Sys.MapDtl toDtl = (Sys.MapDtl)toDtls[i];
+                    if (toDtl.IsCopyNDData == false)
+                        continue;
+
+                    //获取明细数据。
+                    GEDtls gedtls = new GEDtls(dtl.No);
+                    QueryObject qo = null;
+                    qo = new QueryObject(gedtls);
+                    switch (dtl.DtlOpenType)
+                    {
+                        case DtlOpenType.ForEmp:
+                            qo.AddWhere(GEDtlAttr.RefPK, this.WorkID);
+                            qo.addAnd();
+                            qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
+                            break;
+                        case DtlOpenType.ForWorkID:
+                            qo.AddWhere(GEDtlAttr.RefPK,  this.WorkID);
+                            break;
+                        case DtlOpenType.ForFID:
+                            qo.AddWhere(GEDtlAttr.FID,  this.WorkID);
+                            break;
+                    }
+                    qo.DoQuery();
+
+                    foreach (GEDtl gedtl in gedtls)
+                    {
+                        BP.Sys.GEDtl dtCopy = new GEDtl(toDtl.No);
+                        dtCopy.Copy(gedtl);
+                        dtCopy.FK_MapDtl = toDtl.No;
+
+                        if (dtCopy.EnMap.PhysicsTable == gedtl.EnMap.PhysicsTable)
+                        {
+                            dtCopy.OID = 0;
+                            dtCopy.Insert();
+                            dtCopy.RefPK =  dtCopy.OID.ToString();
+                            dtCopy.Update();
+                        }
+                        else
+                        {
+                            dtCopy.RefPK =  this.WorkID.ToString();
+                            dtCopy.InsertAsOID(dtCopy.OID);
+                        }
+                    }
+
+                }
+
+
+              //  wk.CopyCellsData("ND" + this.HisNode.NodeID + "_" + this.HisWork.OID);
 
                 #endregion
 
