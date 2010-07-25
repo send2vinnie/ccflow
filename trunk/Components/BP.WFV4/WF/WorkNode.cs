@@ -2625,6 +2625,7 @@ namespace BP.WF
                     if (toDtl.IsCopyNDData == false)
                         continue;
 
+
                     //获取明细数据。
                     GEDtls gedtls = new GEDtls(dtl.No);
                     QueryObject qo = null;
@@ -2651,17 +2652,13 @@ namespace BP.WF
                         dtCopy.Copy(gedtl);
                         dtCopy.FK_MapDtl = toDtl.No;
 
-                        if (dtCopy.EnMap.PhysicsTable == gedtl.EnMap.PhysicsTable)
+                        dtCopy.RefPK = this.WorkID.ToString();
+                        try
                         {
-                            dtCopy.OID = 0;
-                            dtCopy.Insert();
-                            dtCopy.RefPK =  dtCopy.OID.ToString();
-                            dtCopy.Update();
-                        }
-                        else
-                        {
-                            dtCopy.RefPK =  this.WorkID.ToString();
                             dtCopy.InsertAsOID(dtCopy.OID);
+                        }
+                        catch
+                        {
                         }
                     }
 

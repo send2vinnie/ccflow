@@ -969,6 +969,31 @@ namespace BP.Sys
             this.Update(MapAttrAttr.IDX, this.IDX + 1);
             return null;
         }
+        public string DoJump(MapAttr attrTo)
+        {
+            this.IDX = attrTo.IDX;
+            this.Update();
+
+            string sql = "UPDATE Sys_MapAttr SET IDX=IDX-1 WHERE IDX <="+attrTo.IDX+" AND FK_MapData='"+this.FK_MapData+"' AND KeyOfEn<>'"+this.KeyOfEn+"'";
+
+            DBAccess.RunSQL(sql);
+            return null;
+
+
+            //this.DoOrder();
+            //this.RetrieveFromDBSources();
+
+            //MapAttrs attrs = new MapAttrs();
+            //attrs.SearchMapAttrsYesVisable(this.FK_MapData);
+
+            //if (this.IDX == attrs.Count)
+            //    return null;
+
+            //MapAttr attrDown = (MapAttr)attrs[this.IDX];
+            //attrDown.Update(MapAttrAttr.IDX, this.IDX);
+            //this.Update(MapAttrAttr.IDX, this.IDX + 1);
+            //return null;
+        }
         protected override bool beforeDelete()
         {
             try
