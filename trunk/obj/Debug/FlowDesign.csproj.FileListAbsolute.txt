@@ -1,0 +1,4 @@
+D:\WorkFlow\FlowDesign\bin\Debug\FlowDesign.exe
+D:\WorkFlow\FlowDesign\bin\Debug\BP.En30.dll
+D:\WorkFlow\FlowDesign\bin\Debug\BP.WFV4.dll
+D:\WorkFlow\FlowDesign\bin\Debug\BP.Win32.Controls.dll

@@ -1,0 +1,26 @@
+
+测试说明:(无法连接到远程服务器)
+1,本程序需要连接到Internet远程服务器上才能工作，如果连接不上，请检查本地的杀毒软件防火墙等软件的干扰问题，重新在试。
+2,由于测试人员过多可能会导致系统不稳定,或者数据库连接异常,请重试几次但是不影响您使用.
+3,本系统多为测试数据请不要随意执行删除操作.
+谢谢!!!
+
+測試說明:(無法連接到遠程服務器)
+1,本程序需要連接到Internet遠程服務器上才能工作，如果連接不上，請檢查本地的殺毒軟件防火牆等軟件的干擾問題，重新在試。 
+2,由於測試人員過多可能會導致系統不穩定,或者數據庫連接異常,請重試幾次但是不影響您使用. 
+3,本系統多為測試數據請不要隨意執行刪除操作. 
+謝謝!!!
+
+Test Description: (Unable to connect to remote server)
+1, this process needs to connect to the Internet to work on a remote server, if the connection is not on, please check the local anti-virus software, firewall software, such as interference, re-trial. 
+2, due to staff spending too much time testing system could lead to instability, or abnormal database connection, please try again several times but it does not affect your use. 
+3, the system for test data, please do not arbitrarily delete operation. 
+Thank you!!!
+
+試験概要： (リモートサーバーに接続できません)
+場合は、接続上で、下記は、ローカルのウイルス対策ソフトウェアは、干渉、再などのファイアウォールソフトウェアは、審判のチェックではない1は、このプロセスでは、インターネットへのリモートサーバーで動作するように接続する必要があります。 
+2 、不安定性により、データベースへの接続や異常につながる可能性も多くの時間をテストシステムでは、再度試してください数回の支出が、スタッフにご利用には影響しません。 
+3 、テストデータのためのシステムでは、任意の操作を削除しないでください。 
+ありがとうございました！
+
+website: http://ccflow.cn

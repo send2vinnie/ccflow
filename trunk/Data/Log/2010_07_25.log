@@ -1,0 +1,21 @@
+-----------------------------------------------------------------------------------------------------
+25日10时14分21秒Info:System');"成功[BP.Port.Emp-45]放入缓存。
+25日10时14分22秒Info:System');"成功[BP.WF.FlowSort-7]放入缓存。
+25日10时14分31秒Info:System');"成功[BP.WF.Node-84]放入缓存。
+25日10时47分51秒Info:System');"成功[BP.WF.FlowSort-7]放入缓存。
+25日10时48分02秒Info:System');"成功[BP.WF.Flow-16]放入缓存。
+25日10时48分03秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+25日10时48分03秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+25日10时48分18秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+25日10时48分18秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+25日10时48分18秒Info:System');"成功[BP.WF.FlowSort-7]放入缓存。
+25日10时48分23秒Info:System');"成功[BP.WF.Flow-16]放入缓存。
+25日10时49分39秒Info:System');"成功[BP.WF.Node-87]放入缓存。
+25日10时49分49秒Info:System');"成功[BP.WF.Node-87]放入缓存。
+25日10时50分06秒Info:System');"成功[BP.WF.Node-87]放入缓存。
+25日10时51分41秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+25日10时51分41秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+-----------------------------------------------------------------------------------------------------
+25日11时34分50秒Info:System');"成功[BP.Port.Emp-45]放入缓存。
+25日11时34分51秒Info:System');"成功[BP.WF.FlowSort-7]放入缓存。
+25日11时35分06秒Info:System');"成功[BP.WF.Node-87]放入缓存。

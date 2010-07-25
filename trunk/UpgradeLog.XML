@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="FlowDesign">
+</Property><Property Name="Solution File" Value="D:\WorkFlow\FlowDesign\FlowDesign.sln">
+</Property><Property Name="Date" Value="2010年7月25日">
+</Property><Property Name="Time" Value="上午 11:26:16">
+</Property></Properties><Event ErrorLevel="0" Project="BP.Win.Controls" Source="..\Components\BP.Win.Controls\BP.Win.Controls.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="BP.Win.Controls" Source="..\Components\BP.Win.Controls\BP.Win.Controls.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="BP.Win.Controls" Source="..\Components\BP.Win.Controls\BP.Win.Controls.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
