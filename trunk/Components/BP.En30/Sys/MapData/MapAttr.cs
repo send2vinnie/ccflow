@@ -412,10 +412,16 @@ namespace BP.Sys
                     case BP.DA.DataType.AppDate:
                         if (this.Tag == "1")
                             return DataType.CurrentData;
+                        else
+                            return "          ";
                         break;
                     case BP.DA.DataType.AppDateTime:
                         if (this.Tag == "1")
                             return DataType.CurrentDataTime;
+                        else
+                            return "               ";
+                        //return "    -  -    :  ";
+
                         break;
                     default:
                         break;

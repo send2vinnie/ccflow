@@ -248,7 +248,6 @@
     </Compile>
     <Compile Include="Sys\EnsAppCfg\EnsAppXml.cs" />
     <Compile Include="Sys\EnsAppCfg\EnsAppGroupXml.cs" />
-    <Compile Include="Sys\MapData\DataCell.cs" />
     <Compile Include="Sys\MapData\GEDtl.cs" />
     <Compile Include="Sys\MapData\GroupField.cs" />
     <Compile Include="Sys\MapData\MapData.cs" />

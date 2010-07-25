@@ -13,11 +13,9 @@ namespace BP.Sys
         public const string Dtls = "Dtls";
         public const string EnPK = "EnPK";
         public const string SearchKeys = "SearchKeys";
-
         public const string CellsFrom = "CellsFrom";
         public const string CellsX = "CellsX";
         public const string CellsY = "CellsY";
-
     }
 	/// <summary>
 	/// Ó³Éä»ù´¡

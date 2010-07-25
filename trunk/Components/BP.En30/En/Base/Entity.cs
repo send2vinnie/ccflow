@@ -2033,7 +2033,7 @@ namespace BP.En
                         if (this.PKVal == "0")
                             continue;
 
-                        string mysql = "SELECT @Way(@Field) FROM @Table WHERE RefPK=" + this.PKVal;
+                        string mysql = "SELECT @Way(@Field) FROM @Table WHERE RefPK =" + this.PKVal;
                         string[] strs = attr.AutoFullDoc.Split('@');
                         foreach (string str in strs)
                         {

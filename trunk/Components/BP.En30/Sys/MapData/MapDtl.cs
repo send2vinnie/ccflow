@@ -4,6 +4,24 @@ using BP.DA;
 using BP.En;
 namespace BP.Sys
 {
+    /// <summary>
+    /// 棫行处理
+    /// </summary>
+    public enum WhenOverSize
+    {
+        /// <summary>
+        /// 不处理
+        /// </summary>
+        None,
+        /// <summary>
+        /// 增加一行
+        /// </summary>
+        AddRow,
+        /// <summary>
+        /// 翻页
+        /// </summary>
+        TurnPage
+    }
     public enum DtlOpenType
     {
         /// <summary>
@@ -44,7 +62,9 @@ namespace BP.Sys
         public const string IsShowSum = "IsShowSum";
         public const string IsShowIdx = "IsShowIdx";
         public const string IsCopyNDData = "IsCopyNDData";
+        public const string IsReadonly = "IsReadonly";
 
+        public const string WhenOverSize = "WhenOverSize";
     }
     /// <summary>
     /// 明细
@@ -52,6 +72,17 @@ namespace BP.Sys
     public class MapDtl : EntityNoName
     {
         #region 属性
+        public WhenOverSize HisWhenOverSize
+        {
+            get
+            {
+                return (WhenOverSize)this.GetValIntByKey(MapDtlAttr.WhenOverSize);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.WhenOverSize, value);
+            }
+        }
         public bool IsShowSum
         {
             get
@@ -60,10 +91,6 @@ namespace BP.Sys
             }
             set
             {
-                //MapAttrs attrs = new MapAttrs(this.FK_MapData);
-                //foreach (MapAttr attr in attrs)
-                //{
-                //}
                 this.SetValByKey(MapDtlAttr.IsShowSum, value);
             }
         }
@@ -76,6 +103,17 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapDtlAttr.IsShowIdx, value);
+            }
+        }
+        public bool IsReadonly
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsReadonly);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsReadonly, value);
             }
         }
         public bool IsCopyNDData
@@ -223,6 +261,11 @@ namespace BP.Sys
                 map.AddBoolean(MapDtlAttr.IsShowSum, false, "IsShowSum", false, false);
                 map.AddBoolean(MapDtlAttr.IsShowIdx, false, "IsShowIdx", false, false);
                 map.AddBoolean(MapDtlAttr.IsCopyNDData, true, "IsCopyNDData", false, false);
+                map.AddBoolean(MapDtlAttr.IsReadonly, false, "IsReadonly", false, false);
+
+
+                map.AddDDLSysEnum(MapDtlAttr.WhenOverSize, 0, "WhenOverSize", true, true,
+                 MapDtlAttr.WhenOverSize, "@0=不处理@1=向下顺增行@2=次页显示");
 
                 map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true,
                     MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
@@ -347,6 +390,19 @@ namespace BP.Sys
                 attr.Tag = "@WebUser.No";
                 attr.Insert();
             }
+        }
+        protected override bool beforeUpdate()
+        {
+            MapAttrs attrs = new MapAttrs(this.No);
+            bool isHaveEnable=false;
+            foreach (MapAttr attr in attrs)
+            {
+                if (attr.UIIsEnable && attr.UIContralType == UIContralType.TB)
+                    isHaveEnable = true;
+            }
+
+            this.IsReadonly = !isHaveEnable;
+            return base.beforeUpdate();
         }
         protected override bool beforeDelete()
         {

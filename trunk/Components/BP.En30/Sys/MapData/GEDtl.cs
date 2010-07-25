@@ -133,7 +133,6 @@ namespace BP.Sys
                     throw new Exception("没有给" + this.FK_MapDtl + "值，您不能获取它的Map。");
 
                 BP.Sys.MapDtl md = new BP.Sys.MapDtl(this.FK_MapDtl);
-
                 this._enMap = md.GenerMap();
 
                 return this._enMap;
