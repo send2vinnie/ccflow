@@ -1181,7 +1181,7 @@ namespace BP.Web.UC
         }
         public void AddTDCenter(System.Web.UI.Control ctl)
         {
-            this.Add("\n<TD class='TDCenter'  nowrap >");
+            this.Add("\n<TD class='TD'  nowrap >");
             this.Controls.Add(ctl);
             this.Add("</TD>");
         }
