@@ -8,7 +8,7 @@ namespace BP.Sys
     /// <summary>
     /// GroupField
     /// </summary>
-    public class GroupFieldAttr : EntityNoNameAttr
+    public class GroupFieldAttr : EntityOIDAttr
     {
         /// <summary>
         /// Ö÷±í
@@ -135,6 +135,7 @@ namespace BP.Sys
             if (i == 0)
             {
                 GroupField gf = new GroupField();
+                gf.EnName = EnName;
                 MapData md = new MapData();
                 md.No = EnName;
                 if (md.RetrieveFromDBSources() == 0)

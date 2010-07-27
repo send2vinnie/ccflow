@@ -13,9 +13,9 @@ namespace BP.Sys
         public const string Dtls = "Dtls";
         public const string EnPK = "EnPK";
         public const string SearchKeys = "SearchKeys";
-        public const string CellsFrom = "CellsFrom";
-        public const string CellsX = "CellsX";
-        public const string CellsY = "CellsY";
+        //public const string CellsFrom = "CellsFrom";
+        //public const string CellsX = "CellsX";
+        //public const string CellsY = "CellsY";
     }
 	/// <summary>
 	/// Ó³Éä»ù´¡
@@ -53,28 +53,6 @@ namespace BP.Sys
                 this.SetValByKey(MapDataAttr.PTable, value);
             }
         }
-        public int CellsX
-        {
-            get
-            {
-                return this.GetValIntByKey(MapDataAttr.CellsX);
-            }
-            set
-            {
-                this.SetValByKey(MapDataAttr.CellsX, value);
-            }
-        }
-        public int CellsY
-        {
-            get
-            {
-                return this.GetValIntByKey(MapDataAttr.CellsY);
-            }
-            set
-            {
-                this.SetValByKey(MapDataAttr.CellsY, value);
-            }
-        }
         public string Dtls
         {
             get
@@ -100,24 +78,6 @@ namespace BP.Sys
                 this.SetValByKey(MapDataAttr.EnPK, value);
             }
         }
-        /// <summary>
-        /// cells from Field
-        /// </summary>
-        public string CellsFrom_del
-        {
-            get
-            {
-                string s = this.GetValStrByKey(MapDataAttr.CellsFrom);
-                if (s.Trim() == "")
-                    return null;
-                return s;
-            }
-            set
-            {
-                this.SetValByKey(MapDataAttr.CellsFrom, value);
-            }
-        }
-        
         public string SearchKeys
         {
             get
@@ -262,9 +222,9 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.Name, null, "ÃèÊö", true, false, 0, 500, 20);
 
                 // from which filed to show the cells data. if is null or "" then unenable it..
-                map.AddTBString(MapDataAttr.CellsFrom, null, "CellsFromField", true, false, 0, 500, 20);
-                map.AddTBInt(MapDataAttr.CellsX, 4, "X", true, true);
-                map.AddTBInt(MapDataAttr.CellsY, 5, "Y", true, true);
+                //map.AddTBString(MapDataAttr.CellsFrom, null, "CellsFromField", true, false, 0, 500, 20);
+                //map.AddTBInt(MapDataAttr.CellsX, 4, "X", true, true);
+                //map.AddTBInt(MapDataAttr.CellsY, 5, "Y", true, true);
 
                 this._enMap = map;
                 return this._enMap;

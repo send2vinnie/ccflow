@@ -63,7 +63,6 @@ namespace BP.Sys
         public const string IsShowIdx = "IsShowIdx";
         public const string IsCopyNDData = "IsCopyNDData";
         public const string IsReadonly = "IsReadonly";
-
         public const string WhenOverSize = "WhenOverSize";
         /// <summary>
         /// GroupID
@@ -151,7 +150,7 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStrByKey(MapDtlAttr.PTable);
+                return this.GetValStrByKey(MapDtlAttr.FK_MapData);
             }
             set
             {
