@@ -424,7 +424,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
         OutJSAuto(wk);
 
+        if (this.IsPostBack==false)
         this.UCEn1.Add(wk.WorkEndInfo);
+
 
         this.Btn_Send.Enabled = true;
 

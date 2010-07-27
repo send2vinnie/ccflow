@@ -50,7 +50,9 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
         ddl.ID = "DDL1";
 
-        ddl.Attributes["onchange"] = "javascript:Go('" + this.FK_Node + "','" + ddl.ClientID + "', this.value );";
+        ddl.AutoPostBack = true;
+
+        //ddl.Attributes["onchange"] = "javascript:Go('" + this.FK_Node + "','" + ddl.ClientID + "', this.value );";
         foreach (BP.WF.Node en in nds)
         {
             if (en.No == this.FK_Node)
@@ -187,8 +189,8 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
             {
                 MapData md1 = new MapData(this.NodeOfSelect);
                 MapData md2 = new MapData(this.FK_Node);
-                md2.CellsX = md1.CellsX;
-                md2.CellsY = md1.CellsY;
+                //md2.CellsX = md1.CellsX;
+                //md2.CellsY = md1.CellsY;
                 md2.Update();
 
                 MapAttrs ma1 = md1.GenerHisTableCells;
@@ -201,6 +203,8 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     MapAttr attr2 = new MapAttr();
                     attr2.Copy(attr);
                     attr2.OID = 0;
+                    attr2.GroupID = 0;
+                    attr2.IDX = 0;
                     attr2.FK_MapData = this.FK_Node + "T";
                     attr2.Insert();
                 }

@@ -174,6 +174,11 @@ public partial class Comm_MapDef_MapDtl : WebPage
                         }
                     }
                     dtl.FK_MapData = this.FK_MapData;
+
+                    GroupFields gfs = new GroupFields(dtl.FK_MapData );
+                    if (gfs.Count > 1)
+                        dtl.GroupID = this.Pub1.GetDDLByID("DDL_GroupID").SelectedItemIntVal;
+
                     if (this.DoType == "New")
                         dtl.Insert();
                     else
@@ -312,6 +317,18 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTD("行数显示方式");
         this.Pub1.AddTREnd();
 
+        GroupFields gfs = new GroupFields(md.No);
+        if (gfs.Count > 1)
+        {
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("显示在分组");
+            ddl = new DDL();
+            ddl.ID = "DDL_GroupID";
+            ddl.BindEntities(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab, false, AddAllLocation.None);
+            ddl.SetSelectItem(dtl.GroupID);
+            this.Pub1.AddTD(ddl);
+            this.Pub1.AddTREnd();
+        }
 
         this.Pub1.AddTR();
         this.Pub1.AddTD();

@@ -43,96 +43,26 @@ public partial class WF_MapDef_MapDef : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        MapData m2d = new MapData();
-        m2d.CheckPhysicsTable();
         MapData md = new MapData(this.MyPK);
-        BindAttrs(md);
-    }
-    public void InsertObjects()
-    {
-        foreach (MapDtl dtl in dtls)
-        {
-            if (dtl.GroupID == 0 && currGF.Idx == 0 && rowIdx==0 && dtl.IsUse==false  && currGF.Idx ==0 )
-            {
-                dtl.GroupID = currGF.OID;
-                dtl.RowIdx = 0;
-                dtl.Update();
-            }
-            else if (dtl.GroupID == currGF.OID && dtl.RowIdx == rowIdx && dtl.IsUse == false )
-            {
-            }
-            else
-            {
-                continue;
-            }
-
- 
-            dtl.IsUse = true;
-
-            this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "1' ");
-            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'>表格:<a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>插入列</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>复制列</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
-            this.Pub1.AddTREnd();
-
-            this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-            this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' width='1000px'>");
-            string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + dtl.No;
-            this.Pub1.Add("<iframe ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
-            this.Pub1.AddTDEnd();
-            this.Pub1.AddTREnd();
-        }
-    }
-
-    #region varable.
-    public GroupField currGF = new GroupField();
-    private MapDtls _dtls;
-    public MapDtls dtls
-    {
-        get
-        {
-            if (_dtls == null)
-                _dtls = new MapDtls(this.MyPK);
-
-            return _dtls;
-        }
-    }
-    private GroupFields _gfs;
-    public GroupFields gfs
-    {
-        get
-        {
-            if (_gfs == null)
-                _gfs = new GroupFields(this.MyPK);
-
-            return _gfs;
-        }
-    }
-    public int rowIdx = 0;
-    public bool isLeftNext = true;
-
-    #endregion varable.
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="md"></param>
-    public void BindAttrs(MapData md)
-    {
         Attrs attrs = md.GenerHisMap().Attrs;
         MapAttrs mattrs = new MapAttrs(md.No);
         int count = mattrs.Count;
-        //this.Pub1.AddB(this.ToE("DesignSheet", "设计表单") + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:AddTable('" + this.MyPK + "');\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("NewTable", "表格") + "</a> - <a href=\"CopyFieldFromNode.aspx?FK_Node=" + this.MyPK + "\" ><img src='../../Images/Btn/Add.gif' border=0/>" + this.ToE("NewField", "从节点复制字段") + "</a> - <a href=\"MapDtl.aspx?DoType=DtlList&FK_MapData=" + this.MyPK + "\" >" + this.ToE("DesignDtl", "设计明细") + "</a> - <a href=\"javascript:GroupField('" + md.No + "')\">字段分组</a><hr>");
 
-        this.Pub1.AddB("&nbsp;&nbsp;" + this.ToE("DesignSheet", "设计表单") + md.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:CopyFieldFromNode('" + this.MyPK + "');\" ><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("NewField", "复制字段") + "</a> - <a href=\"javascript:MapDtl('" + this.MyPK + "')\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("DesignDtl", "设计表格") + "</a> - <a href=\"javascript:GroupField('" + md.No + "')\">字段分组</a><hr>");
+        this.Pub1.AddB("&nbsp;&nbsp;" + this.ToE("DesignSheet", "设计表单") + md.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:CopyFieldFromNode('" + this.MyPK + "');\" ><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("NewField", "复制字段") + "</a> - <a href=\"javascript:MapDtl('" + this.MyPK + "')\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("DesignDtl", "设计表格") + "</a> - <a href=\"javascript:GroupFieldNew('" + md.No + "')\">字段分组</a><hr>");
         this.Pub1.Add("<Table class='Table' width='500px'  >");
         /*
          * 根据 GroupField 循环出现菜单。
          */
         foreach (GroupField gf in gfs)
         {
-            string gfAttr = " onmouseover=GFOnMouseOver('" + gf.OID + "') onmouseout=GFOnMouseOut()";
+            string gfAttr = " onmouseover=GFOnMouseOver('" + gf.OID + "','" + rowIdx + "') onmouseout=GFOnMouseOut()";
             currGF = gf;
             this.Pub1.AddTR(gfAttr);
-            this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div>");
+            if (gfs.Count==1)
+                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+            else
+                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div>");
+
             this.Pub1.AddTREnd();
             int i = -1;
             int idx = -1;
@@ -144,6 +74,7 @@ public partial class WF_MapDef_MapDef : WebPage
                 {
                     if (gf.Idx == 0 && attr.GroupID == 0)
                     {
+
                     }
                     else
                         continue;
@@ -151,10 +82,8 @@ public partial class WF_MapDef_MapDef : WebPage
 
                 if (attr.HisAttr.IsRefAttr || attr.UIVisible == false)
                     continue;
-
-                if (rowIdx==0)
-                    this.InsertObjects();
-
+                if (isLeftNext)
+                this.InsertObjects(true);
                 // 显示的顺序号.
                 idx++;
                 if (attr.IsBigDoc && attr.UIIsLine)
@@ -166,10 +95,9 @@ public partial class WF_MapDef_MapDef : WebPage
                         this.Pub1.AddTREnd();
                     }
                     rowIdx++;
-
-                    this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+                    this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'  " + gfAttr);
                     this.Pub1.Add("<TD class=FDesc colspan=4 width='100%' >");
-                    this.Pub1.Add(this.GenerLab(attr, idx, 0, count)  );
+                    this.Pub1.Add(this.GenerLab(attr, idx, 0, count));
                     TextBox mytbLine = new TextBox();
                     mytbLine.TextMode = TextBoxMode.MultiLine;
                     mytbLine.Rows = 8;
@@ -177,7 +105,6 @@ public partial class WF_MapDef_MapDef : WebPage
                     this.Pub1.Add(mytbLine);
                     this.Pub1.AddTDEnd();
                     this.Pub1.AddTREnd();
-                    rowIdx++;
                     isLeftNext = true;
                     continue;
                 }
@@ -186,10 +113,11 @@ public partial class WF_MapDef_MapDef : WebPage
                 {
                     if (isLeftNext)
                     {
-                        this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+                        rowIdx++;
+                        this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' " + gfAttr);
                     }
                     this.Pub1.Add("<TD class=FDesc colspan=4 width='100%' >");
-                    this.Pub1.Add(this.GenerLab(attr, idx, 0, count) );
+                    this.Pub1.Add(this.GenerLab(attr, idx, 0, count));
                     TextBox mytbLine = new TextBox();
                     mytbLine.TextMode = TextBoxMode.MultiLine;
                     mytbLine.Rows = 8;
@@ -199,7 +127,6 @@ public partial class WF_MapDef_MapDef : WebPage
                     if (isLeftNext == false)
                     {
                         this.Pub1.AddTREnd();
-                        rowIdx++;
                     }
 
                     isLeftNext = !isLeftNext;
@@ -218,15 +145,14 @@ public partial class WF_MapDef_MapDef : WebPage
                         this.Pub1.AddTD();
                         this.Pub1.AddTD();
                         this.Pub1.AddTREnd();
-                        rowIdx++;
                     }
                     isLeftNext = true;
-                    this.InsertObjects();
                 }
 
                 if (isLeftNext)
                 {
-                    this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+                    rowIdx++;
+                    this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' " + gfAttr);
                 }
 
                 TB tb = new TB();
@@ -350,7 +276,6 @@ public partial class WF_MapDef_MapDef : WebPage
                 {
                     isLeftNext = true;
                     this.Pub1.AddTREnd();
-                    rowIdx++;
                     continue;
                 }
 
@@ -358,7 +283,6 @@ public partial class WF_MapDef_MapDef : WebPage
                 {
                     isLeftNext = true;
                     this.Pub1.AddTREnd();
-                    rowIdx++;
                     continue;
                 }
                 isLeftNext = false;
@@ -369,13 +293,13 @@ public partial class WF_MapDef_MapDef : WebPage
                 this.Pub1.AddTD();
                 this.Pub1.AddTD();
                 this.Pub1.AddTREnd();
-                rowIdx++;
             }
+            this.InsertObjects(false);
         }
         this.Pub1.AddTableEnd();
 
 
-        #region 处理异常情况。 
+        #region 处理异常情况。
         foreach (MapDtl dtl in dtls)
         {
             if (dtl.IsUse == false)
@@ -383,11 +307,10 @@ public partial class WF_MapDef_MapDef : WebPage
                 dtl.RowIdx = 0;
                 dtl.GroupID = 0;
                 dtl.Update();
-                this.Response.Redirect(this.Request.RawUrl, true);
+                //    this.Response.Redirect(this.Request.RawUrl, true);
             }
         }
         #endregion 处理异常情况。
-
 
 
         #region 处理iFrom 的自适应的问题。
@@ -438,23 +361,94 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.AddFieldSetEnd();
         }
         #endregion 处理隐藏字段。
-
     }
+
+    public void InsertObjects(bool isJudgeRowIdx)
+    {
+        foreach (MapDtl dtl in dtls)
+        {
+            if (dtl.IsUse)
+                continue;
+
+            if (isJudgeRowIdx )
+            {
+                if (dtl.RowIdx != rowIdx)
+                    continue;
+            }
+
+            if (dtl.GroupID == 0 && rowIdx == 0)
+            {
+                dtl.GroupID = currGF.OID;
+                dtl.RowIdx = 0;
+                dtl.Update();
+            }
+            else if (dtl.GroupID == currGF.OID )
+            {
+
+            }
+            else
+            {
+                continue;
+            }
+
+
+            dtl.IsUse = true;
+            int myidx = rowIdx + 10;
+            this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
+            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'>"+ rowIdx +"表格:<a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>插入列</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>复制列</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            this.Pub1.AddTREnd();
+
+            myidx++;
+            this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
+            this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' width='1000px'>");
+            string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + dtl.No;
+            this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
+            this.Pub1.AddTDEnd();
+            this.Pub1.AddTREnd();
+        }
+    }
+
+    #region varable.
+    public GroupField currGF = new GroupField();
+    private MapDtls _dtls;
+    public MapDtls dtls
+    {
+        get
+        {
+            if (_dtls == null)
+                _dtls = new MapDtls(this.MyPK);
+
+            return _dtls;
+        }
+    }
+    private GroupFields _gfs;
+    public GroupFields gfs
+    {
+        get
+        {
+            if (_gfs == null)
+                _gfs = new GroupFields(this.MyPK);
+
+            return _gfs;
+        }
+    }
+    public int rowIdx = 0;
+    public bool isLeftNext = true;
+    #endregion varable.
+     
+
+     
 
     public string GenerLab(MapAttr attr, int idx, int i, int count)
     {
-
-        string divAttr = " onmouseover=DivOnMouseOver('" + attr.OID + "') onmouseout=DivOnMouseOut('"+attr.OID+"') ";
-
+        string divAttr = " onmouseover=FieldOnMouseOver('" + attr.OID + "') onmouseout=FieldOnMouseOut('" + attr.OID + "') ";
         string lab = attr.Name;
         if (attr.MyDataType == DataType.AppBoolean && attr.UIIsLine)
             lab = "编辑";
 
         bool isLeft = true;
         if (i == 1)
-        {
             isLeft = false;
-        }
 
         if (attr.HisEditType == EditType.Edit || attr.HisEditType == EditType.UnDel)
         {
@@ -481,7 +475,7 @@ public partial class WF_MapDef_MapDef : WebPage
         if (idx == 0)
         {
             /*第一个。*/
-            return "<div " + divAttr + " >"+lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右动顺序' border=0/></a></div>";
+            return "<div " + divAttr + " >" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右动顺序' border=0/></a></div>";
         }
 
         if (idx == count - 1)

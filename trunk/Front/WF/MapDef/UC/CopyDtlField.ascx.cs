@@ -116,6 +116,8 @@ public partial class WF_MapDef_UC_CopyDtlField :BP.Web.UC.UCBase3
             en.Copy(attr);
             en.FK_MapData = this.MyPK;
             en.OID = 0;
+            en.GroupID = 0;
+            en.IDX = 0;
             en.Insert();
         }
         this.WinCloseWithMsg("复制成功，您可以用调整明细表的顺序。");

@@ -78,7 +78,6 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
                     this.Add("<BR>执行人:" + wl.FK_EmpText);
                     this.Add("<br>接受日期:" + wl.RDT + "</font> ");
                     this.Add("<a href='WFRpt.aspx?WorkID=" + wl.WorkID + "&FID=0&FK_Flow=" + this.FK_Flow + "' target=_blank >详细..</a><hr>");
-
                     isHave = true;
                     break;
                 }
@@ -88,7 +87,9 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
                 continue;
 
             this.Add("第" + nd.Step + "步:<a href=FlowSearch.aspx?FK_Node=" + nd.NodeID + ">" + nd.Name + "</a>");
-            this.Add("<br>岗位:" + nd.HisStationsStr + "<hr>");
+          //  this.Add("<br>岗位:" + nd.HisStationsStr + "<hr>");
+            this.Add("<hr>");
+
         }
         this.AddTDEnd();
         this.AddTREnd();
@@ -97,7 +98,6 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        return;
 
         if (this.WorkID != 0)
         {
@@ -112,7 +112,10 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
         foreach (BP.WF.Node nd in nds)
         {
             this.Add("第" + nd.Step + "步:<a href=FlowSearch.aspx?FK_Node=" + nd.NodeID + ">" + nd.Name + "</a>");
-            this.Add("<br>岗位:" + nd.HisStationsStr + "<hr>");
+            if (nd.HisStationsStr.Length > 20)
+                this.Add("<br>岗位:<a href=\"javascript:alert('" + nd.HisStationsStr + "')\">更多....</a><hr/>");
+            else
+                this.Add("<br>岗位:" + nd.HisStationsStr + "<hr>");
         }
         this.AddFieldSetEnd();
 
@@ -141,7 +144,10 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
         foreach (BP.WF.Node nd in nds)
         {
             this.Add("第:" + nd.Step + "步:" + nd.Name);
-            this.Add("<br>岗位:" + nd.HisStationsStr + "<hr>");
+            if (nd.HisStationsStr.Length > 20 )
+                this.Add("<br>岗位:....<hr tip=" + nd.HisStationsStr + " />");
+            else
+                this.Add("<br>岗位:" + nd.HisStationsStr + "<hr>");
         }
         this.Add("<a href='FlowSearch.aspx?FK_Flow=" + this.FK_Flow + "' >流程查询</a></TD>");
         this.AddTREnd();

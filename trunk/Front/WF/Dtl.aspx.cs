@@ -204,14 +204,15 @@ public partial class Comm_Dtl : WebPage
                             ddl.LoadMapAttr(attr);
                             ddl.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
                             ddl.Attributes["onchange"] = "isChange= true;";
+                            this.Ucsys1.AddTD(ddl);
                             ddl.SetSelectItem(val);
                         }
                         else
                         {
                             ddl.Items.Add(new ListItem(dtl.GetValRefTextByKey(attr.KeyOfEn), val) );
+                            this.Ucsys1.AddTD(ddl);
                             ddl.Enabled = false;
                         }
-                        this.Ucsys1.AddTD(ddl);
                         break;
                     case UIContralType.CheckBok:
                         cb = new CheckBox();

@@ -4,80 +4,9 @@
 <script language="JavaScript" src="JS.js"></script>
     <script language="JavaScript" src="../../Comm/JScript.js"></script>
     <script language="JavaScript" src="JS.js"></script>
+    <script language="JavaScript" src="MapDef.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
-    
     <script language="javascript" >
-    
-document.onmousedown = mouseDown;
-document.onmouseup = mouseUp;
-document.onmousemove = mouseMove;
-function mouseDown()
-{
-   moveID = overAttrID;
-  return true;
-}
-function mouseUp()
-{
-   if ( gfID > -1 && moveID > 0 )
-   {
-         var url='Do.aspx?DoType=MoveTo&FromID='+moveID+'&ToGFID='+gfID ;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
-        window.location.href = window.location.href;
-        overAttrID=0;
-        moveID=0;
-        gfID=-1;
-        return;
-   }
-
-   if ( overAttrID>0  && moveID >  0 && overAttrID!=moveID  )
-   {
-      var url1='Do.aspx?DoType=Jump&FromID='+overAttrID+'&ToID='+moveID ;
-      var b1=window.showModalDialog( url1 , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
-      window.location.href = window.location.href;
-   } 
-  
-  overAttrID=0;
-  moveID=0;
-  gfID=-1;
-  return true;
-}
-function mouseMove()
-{
-  if ( overAttrID>0 && moveID >  0)
-  {
-  document.style.cursor='move';
-  }else
-  {
-  // document.style.cursor='default';
-  }
-  return true;
-}
-
-    var overAttrID=0;
-    var moveID=0;
-    var isMove=false;
-    var gfID=-1;
-    function DivOnMouseOver(id)
-    {
-      overAttrID =id;
-    }
-    
-    function DivOnMouseOut(id)
-    {
-      overAttrID=0;
-    }
-    
-    function GFOnMouseOver(id)
-    {
-      gfID =id;
-    }
-    
-    function GFOnMouseOut()
-    {
-       gfID=-1;
-    }
-    
-    
 	function HelpGroup()
 	{
 	   var msg='字段分组：就是把类似的字段放在一起，让用户操作更友好。\t\n比如：我们纳税人设计一个基础信息采集节点。';
@@ -113,12 +42,12 @@ function mouseMove()
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    function GroupField(mypk)
+    function GroupFieldNew(mypk)
     {
        if ( window.confirm('您确定是增加一个字段分组吗？')==false ) 
            return;
       
-        var url='GroupField.aspx?RefNo='+mypk;
+        var url='GroupField.aspx?RefNo='+mypk+"&RefOID=0";
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
@@ -173,7 +102,6 @@ function mouseMove()
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-   
     function GFDoUp(refoid)
     {
         var url='Do.aspx?DoType=GFDoUp&RefOID='+refoid ;
@@ -236,9 +164,7 @@ function mouseMove()
     }
 
     var isInser = "";
-    
     function ReinitIframe(dtlid) {
-
     try {
         var iframe = document.getElementById("F" + dtlid);
         var tdF = document.getElementById("TD" + dtlid);
@@ -260,52 +186,6 @@ function mouseMove()
     }
     return;
 }
-
-   function ReinitIframe_bak(dtlid) {
-
-       try {
-           var iframe = document.getElementById("F" + dtlid);
-           var tdF = document.getElementById("TD" + dtlid);
-
-           //var v1 = iframe.contentWindow.screen.availWidth;
-
-           //var v1 = iframe.contentWindow.document.body.getElementById("Tab").width;
-           //           var v1 = iframe.contentWindow.TabWidth();
-
-           var v1 = iframe.contentWindow.document.body.scrollWidth ;
-           var v2 = tdF.width;
-           tdF.width = Math.max(v1, v2)  ;
-           iframe.width = Math.max(v1, v2);
-
-
-           var v1 = iframe.contentWindow.document.body.scrollHeight;
-           var v2 = tdF.height;
-           tdF.height = Math.max(v1, v2);
-           iframe.height = Math.max(v1, v2);
-           
-
-//           tdF.height = iframe.contentWindow.document.body.scrollHeight;
-//           tdF.width = iframe.contentWindow.document.body.scrollWidth;
-
-//           iframe.height = iframe.contentWindow.document.body.scrollHeight;
-//           iframe.width = iframe.contentWindow.document.body.scrollWidth;
-           
-
-//           if (tdF.width < iframe.width) {
-//               //alert(tdF.width +'  ' + iframe.width);
-//               tdF.width = iframe.width;
-//           } else {
-//               iframe.width = tdF.width;
-//           }
-
-//           tdF.height = iframe.height;
-           return;
-       } catch (ex) {
-           return;
-       }
-       return;
-   }
-  
   function CopyFieldFromNode( mypk )
   {
       var url='CopyFieldFromNode.aspx?FK_Node='+mypk ;
@@ -325,8 +205,6 @@ function mouseMove()
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
   }
-  
-
 </script>   
 	<base target="_self" />
 </asp:Content>

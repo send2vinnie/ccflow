@@ -30,11 +30,13 @@ namespace BP.Web.Comm.UC
 
         #region add 2010-07-24 处理实体绑定的第二个算法。
 
-        public bool isLeftNext = false;
+        #region varable.
+        public GroupField currGF = new GroupField();
+        public MapDtls dtls;
+        private GroupFields gfs;
         public int rowIdx = 0;
-        public GroupFields gfs = null;
-        public GroupField currGF = null;
-        public MapDtls dtls = null;
+        public bool isLeftNext = true;
+        #endregion varable.
 
         public void BindColumn4(Entity en, string enName)
         {
@@ -42,279 +44,259 @@ namespace BP.Web.Comm.UC
                 return;
 
             this.HisEn = en;
-          currGF = new GroupField();
+            currGF = new GroupField();
             MapAttrs mattrs = new MapAttrs(enName);
             gfs = new GroupFields(enName);
             dtls = new MapDtls(enName);
-            int count = mattrs.Count;
-            int i = -1;
-            int idx = -1;
-            bool isHaveH = false;
-            this.Add("<Table class='Table' width='600px' >");
-            if (gfs.Count >= 1)
+            this.AddTable();
+            foreach (GroupField gf in gfs)
             {
+                currGF = gf;
                 this.AddTR();
-                this.AddTD("colspan=4 class=GroupField ", "<img src='./Style/Min.gif' alert='Min' id='Img101' onclick=\"GroupBarClick('101')\"  border=0 />&nbsp;<b>" + en.EnDesc + "</b>");
+                if (gfs.Count == 1)
+                    this.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+                else
+                    this.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'></div>");
                 this.AddTREnd();
-                currGF.Idx = 101;
-            }
-            else
-            {
-                this.Add("<TR>");
-                this.AddTD("colspan=4 class=GroupField ", "<b>" + en.EnDesc + "</b>");
-                this.Add("</TR>");
-            }
 
-            isLeftNext = true;
-            foreach (MapAttr attr in mattrs)
-            {
-                if (attr.HisAttr.IsRefAttr || attr.UIVisible == false)
-                    continue;
-
-                if (isLeftNext == true)
-                    this.InsertObjects();
-
-                // 显示的顺序号.
-                idx++;
-                if (attr.IsBigDoc && attr.UIIsLine)
+                bool isHaveH = false;
+                int i = -1;
+                int idx = -1;
+                isLeftNext = true;
+                rowIdx = 0;
+                foreach (MapAttr attr in mattrs)
                 {
-                    if (isLeftNext == false)
+
+                    if (attr.GroupID != gf.OID)
                     {
-                        this.AddTD();
-                        this.AddTD();
-                        this.AddTREnd();
+                        if (gf.Idx == 0 && attr.GroupID == 0)
+                        {
+
+                        }
+                        else
+                            continue;
                     }
-                    rowIdx++;
 
-                    this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
-                    this.Add("<TD  colspan=4 width='100%' valign=top>"+attr.Name);
-                    TextBox mytbLine = new TextBox();
-                    mytbLine.TextMode = TextBoxMode.MultiLine;
-                    mytbLine.Rows = 8;
-                    mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
-                    mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
 
-                    this.Add(mytbLine);
-                    this.AddTDEnd();
-                    this.AddTREnd();
-                    rowIdx++;
-                    isLeftNext = true;
-                    continue;
-                }
+                    if (attr.HisAttr.IsRefAttr || attr.UIVisible == false)
+                        continue;
 
-                if (attr.IsBigDoc)
-                {
+                    if (isLeftNext == true)
+                        this.InsertObjects(true);
+
+                    // 显示的顺序号.
+                    idx++;
+                    if (attr.IsBigDoc && attr.UIIsLine)
+                    {
+                        if (isLeftNext == false)
+                        {
+                            this.AddTD();
+                            this.AddTD();
+                            this.AddTREnd();
+                            rowIdx++;
+                        }
+
+                        this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
+                        this.Add("<TD  colspan=4 width='100%' valign=top>" + attr.Name);
+                        TextBox mytbLine = new TextBox();
+                        mytbLine.TextMode = TextBoxMode.MultiLine;
+                        mytbLine.Rows = 8;
+                        mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
+                        mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
+
+                        this.Add(mytbLine);
+                        this.AddTDEnd();
+                        this.AddTREnd();
+                        rowIdx++;
+                        isLeftNext = true;
+                        continue;
+                    }
+
+                    if (attr.IsBigDoc)
+                    {
+                        if (isLeftNext)
+                            this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+
+                        this.Add("<TD class=FDesc colspan=2>");
+                        this.Add(attr.Name);
+                        TextBox mytbLine = new TextBox();
+                        mytbLine.TextMode = TextBoxMode.MultiLine;
+                        mytbLine.Rows = 8;
+                        mytbLine.Columns = 30;
+                        mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
+                        mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
+
+                        this.Add(mytbLine);
+                        this.AddTDEnd();
+
+                        if (isLeftNext == false)
+                        {
+                            this.AddTREnd();
+                            rowIdx++;
+                        }
+
+                        isLeftNext = !isLeftNext;
+                        continue;
+                    }
+
+                    //计算 colspanOfCtl .
+                    int colspanOfCtl = 1;
+                    if (attr.UIIsLine)
+                        colspanOfCtl = 3;
+
+                    if (attr.UIIsLine)
+                    {
+                        if (isLeftNext == false)
+                        {
+                            this.AddTD();
+                            this.AddTD();
+                            this.AddTREnd();
+                            rowIdx++;
+                        }
+                        isLeftNext = true;
+                    }
+
                     if (isLeftNext)
+                    {
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+                    }
 
-                    this.Add("<TD class=FDesc colspan=2>");
-                    this.Add(attr.Name  );
-                    TextBox mytbLine = new TextBox();
-                    mytbLine.TextMode = TextBoxMode.MultiLine;
-                    mytbLine.Rows = 8;
-                    mytbLine.Columns = 30;
-                    mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
-                    mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
+                    TB tb = new TB();
+                    tb.Attributes["width"] = "100%";
+                    tb.Columns = 60;
 
-                    this.Add(mytbLine);
-                    this.AddTDEnd();
+                    #region add contrals.
+                    switch (attr.LGType)
+                    {
+                        case FieldTypeS.Normal:
+
+                            tb.Enabled = attr.UIIsEnable;
+                            switch (attr.MyDataType)
+                            {
+                                case BP.DA.DataType.AppString:
+                                    this.AddTDDesc(attr.Name);
+                                    tb.ShowType = TBType.TB;
+                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    this.AddTD("colspan=" + colspanOfCtl, tb);
+                                    break;
+                                case BP.DA.DataType.AppDate:
+                                    this.AddTDDesc(attr.Name);
+                                    tb.ShowType = TBType.Date;
+                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    if (attr.UIIsEnable)
+                                        tb.Attributes["onfocus"] = "calendar();";
+
+                                    this.AddTD("colspan=" + colspanOfCtl, tb);
+                                    break;
+                                case BP.DA.DataType.AppDateTime:
+                                    this.AddTDDesc(attr.Name);
+                                    tb.ShowType = TBType.DateTime;
+                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    if (attr.UIIsEnable == false)
+                                        tb.Attributes["onfocus"] = "calendar();";
+
+                                    this.AddTD("colspan=" + colspanOfCtl, tb);
+                                    break;
+                                case BP.DA.DataType.AppBoolean:
+                                    this.AddTDDesc("");
+                                    CheckBox cb = new CheckBox();
+                                    cb.Text = attr.Name;
+                                    cb.Checked = attr.DefValOfBool;
+                                    cb.Enabled = attr.UIIsEnable;
+                                    cb.Checked = en.GetValBooleanByKey(attr.KeyOfEn);
+                                    this.AddTD("colspan=" + colspanOfCtl, cb);
+                                    break;
+                                case BP.DA.DataType.AppDouble:
+                                case BP.DA.DataType.AppFloat:
+                                case BP.DA.DataType.AppInt:
+                                    this.AddTDDesc(attr.Name);
+                                    tb.ShowType = TBType.Num;
+                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    this.AddTD("colspan=" + colspanOfCtl, tb);
+                                    break;
+                                case BP.DA.DataType.AppMoney:
+                                case BP.DA.DataType.AppRate:
+                                    this.AddTDDesc(attr.Name);
+                                    tb.ShowType = TBType.Moneny;
+                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    this.AddTD("colspan=" + colspanOfCtl, tb);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            tb.Attributes["width"] = "100%";
+                            switch (attr.MyDataType)
+                            {
+                                case BP.DA.DataType.AppString:
+                                case BP.DA.DataType.AppDateTime:
+                                case BP.DA.DataType.AppDate:
+                                    if (tb.Enabled)
+                                        tb.Attributes["class"] = "TB";
+                                    else
+                                        tb.Attributes["class"] = "TBReadonly";
+                                    break;
+                                default:
+                                    if (tb.Enabled)
+                                        tb.Attributes["class"] = "TBNum";
+                                    else
+                                        tb.Attributes["class"] = "TBNumReadonly";
+                                    break;
+                            }
+                            break;
+                        case FieldTypeS.Enum:
+                            this.AddTDDesc(attr.Name);
+                            DDL ddle = new DDL();
+                            ddle.BindSysEnum(attr.KeyOfEn);
+                            ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
+                            ddle.Enabled = attr.UIIsEnable;
+                            this.AddTD("colspan=" + colspanOfCtl, ddle);
+                            break;
+                        case FieldTypeS.FK:
+                            this.AddTDDesc(attr.Name);
+                            DDL ddl1 = new DDL();
+                            ddl1.ID = "DDL_" + attr.KeyOfEn;
+                            try
+                            {
+                                EntitiesNoName ens = attr.HisEntitiesNoName;
+                                ens.RetrieveAll();
+                                ddl1.BindEntities(ens);
+                                ddl1.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
+                            }
+                            catch
+                            {
+                            }
+                            ddl1.Enabled = attr.UIIsEnable;
+                            this.AddTD("colspan=" + colspanOfCtl, ddl1);
+                            break;
+                        default:
+                            break;
+                    }
+                    #endregion add contrals.
+
+                    if (colspanOfCtl == 3)
+                    {
+                        isLeftNext = true;
+                        this.AddTREnd();
+                        continue;
+                    }
 
                     if (isLeftNext == false)
                     {
+                        isLeftNext = true;
                         this.AddTREnd();
-                        rowIdx++;
+                        continue;
                     }
-
-                    isLeftNext = !isLeftNext;
-                    continue;
+                    isLeftNext = false;
                 }
-
-                //计算 colspanOfCtl .
-                int colspanOfCtl = 1;
-                if (attr.UIIsLine)
-                    colspanOfCtl = 3;
-
-                if (attr.UIIsLine)
-                {
-                    if (isLeftNext == false)
-                    {
-                        this.AddTD();
-                        this.AddTD();
-                        this.AddTREnd();
-                        rowIdx++;
-                    }
-                    isLeftNext = true;
-                    this.InsertObjects();
-                }
-
-                if (isLeftNext)
-                {
-                    this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                }
-
-                TB tb = new TB();
-                tb.Attributes["width"] = "100%";
-                tb.Columns = 60;
-
-                #region add contrals.
-                switch (attr.LGType)
-                {
-                    case FieldTypeS.Normal:
-
-                        tb.Enabled = attr.UIIsEnable;
-                        switch (attr.MyDataType)
-                        {
-                            case BP.DA.DataType.AppString:
-                                this.AddTDDesc(attr.Name );
-                                tb.ShowType = TBType.TB;
-                                tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                this.AddTD("colspan=" + colspanOfCtl, tb);
-                                break;
-                            case BP.DA.DataType.AppDate:
-                                this.AddTDDesc(attr.Name );
-                                tb.ShowType = TBType.Date;
-                                tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                if (attr.UIIsEnable)
-                                    tb.Attributes["onfocus"] = "calendar();";
-
-                                this.AddTD("colspan=" + colspanOfCtl, tb);
-                                break;
-                            case BP.DA.DataType.AppDateTime:
-                                this.AddTDDesc(attr.Name );
-                                tb.ShowType = TBType.DateTime;
-                                tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                if (attr.UIIsEnable == false)
-                                    tb.Attributes["onfocus"] = "calendar();";
-
-                                this.AddTD("colspan=" + colspanOfCtl, tb);
-                                break;
-                            case BP.DA.DataType.AppBoolean:
-                                this.AddTDDesc("");
-                                CheckBox cb = new CheckBox();
-                                cb.Text = attr.Name;
-                                cb.Checked = attr.DefValOfBool;
-                                cb.Enabled = attr.UIIsEnable;
-                                cb.Checked = en.GetValBooleanByKey(attr.KeyOfEn);
-                                this.AddTD("colspan=" + colspanOfCtl, cb);
-                                break;
-                            case BP.DA.DataType.AppDouble:
-                            case BP.DA.DataType.AppFloat:
-                            case BP.DA.DataType.AppInt:
-                                this.AddTDDesc(attr.Name);
-                                tb.ShowType = TBType.Num;
-                                tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                this.AddTD("colspan=" + colspanOfCtl, tb);
-                                break;
-                            case BP.DA.DataType.AppMoney:
-                            case BP.DA.DataType.AppRate:
-                                this.AddTDDesc(attr.Name);
-                                tb.ShowType = TBType.Moneny;
-                                tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                this.AddTD("colspan=" + colspanOfCtl, tb);
-                                break;
-                            default:
-                                break;
-                        }
-                        tb.Attributes["width"] = "100%";
-                        switch (attr.MyDataType)
-                        {
-                            case BP.DA.DataType.AppString:
-                            case BP.DA.DataType.AppDateTime:
-                            case BP.DA.DataType.AppDate:
-                                if (tb.Enabled)
-                                    tb.Attributes["class"] = "TB";
-                                else
-                                    tb.Attributes["class"] = "TBReadonly";
-                                break;
-                            default:
-                                if (tb.Enabled)
-                                    tb.Attributes["class"] = "TBNum";
-                                else
-                                    tb.Attributes["class"] = "TBNumReadonly";
-                                break;
-                        }
-                        break;
-                    case FieldTypeS.Enum:
-                        this.AddTDDesc(attr.Name);
-                        DDL ddle = new DDL();
-                        ddle.BindSysEnum(attr.KeyOfEn);
-                        ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn) );
-                        ddle.Enabled = attr.UIIsEnable;
-                        this.AddTD("colspan=" + colspanOfCtl, ddle);
-                        break;
-                    case FieldTypeS.FK:
-                        this.AddTDDesc(attr.Name);
-                        DDL ddl1 = new DDL();
-                        ddl1.ID = "DDL_" + attr.KeyOfEn;
-                        try
-                        {
-                            EntitiesNoName ens = attr.HisEntitiesNoName;
-                            ens.RetrieveAll();
-                            ddl1.BindEntities(ens);
-                            ddl1.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn) );
-                        }
-                        catch
-                        {
-                        }
-                        ddl1.Enabled = attr.UIIsEnable;
-                        this.AddTD("colspan=" + colspanOfCtl, ddl1);
-                        break;
-                    default:
-                        break;
-                }
-                #endregion add contrals.
-
-                if (colspanOfCtl == 3)
-                {
-                    isLeftNext = true;
-                    this.AddTREnd();
-                    rowIdx++;
-                    continue;
-                }
-
+                // 最后处理补充上它。
                 if (isLeftNext == false)
                 {
-                    isLeftNext = true;
-                    this.AddTREnd();
-                    rowIdx++;
-                    continue;
-                }
-                isLeftNext = false;
-            }
-
-            // 最后处理补充上它。
-            if (isLeftNext == false)
-            {
-                this.AddTD();
-                this.AddTD();
-                this.AddTREnd();
-                rowIdx++;
-            }
-
-            #region 补充上放在最后的几个。
-            i = 0;
-            foreach (MapDtl dtl in dtls)
-            {
-                i++;
-                if (rowIdx <= dtl.RowIdx && dtl.IsUse == false)
-                {
-                    if (dtl.RowIdx > rowIdx)
-                    {
-                        dtl.RowIdx = rowIdx;
-                        dtl.Update();
-                    }
-
-                    this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                    this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' style='padding:0px;border:0px;overflow:auto;' >");
-                    //string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=";
-                    string src = "Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal;
-                    this.Add("<iframe Onblur=\"SaveDtl('" + dtl.No + "');\"   ID='F" + dtl.No + "' frameboder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
-                    this.AddTDEnd();
+                    this.AddTD();
+                    this.AddTD();
                     this.AddTREnd();
                 }
+                this.InsertObjects(false);
             }
-            #endregion 补充上放在最后的几个。
-
             this.AddTableEnd();
 
 
@@ -334,51 +316,50 @@ namespace BP.Web.Comm.UC
             js += "\t\n function SaveDtl(dtl) { ";
             foreach (MapDtl dtl in dtls)
             {
-               // js += "\t\n alert( dtl +' will saved ' )";
-
                 js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
-
-               // js += "\t\n setTimeout(\"alert('setTimeout end ')\",3000);";
-               // js += "\t\n return false; ";
             }
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
 
             #endregion 处理iFrom 的自适应的问题。
-
-
         }
-        public void InsertObjects()
+
+        public void InsertObjects(bool isJudgeRowIdx)
         {
-            foreach (GroupField gf in gfs)
-            {
-                if (rowIdx == gf.Idx && gf.IsUse == false)
-                {
-                    gf.IsUse = true;
-                    currGF = gf;
-                    this.AddTR();
-                    this.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;" + gf.Lab + "</div>");
-                    this.AddTREnd();
-                    isLeftNext = true;
-                    break;
-                }
-            }
             foreach (MapDtl dtl in dtls)
             {
-                if (rowIdx == dtl.RowIdx && dtl.IsUse == false)
+                if (dtl.IsUse)
+                    continue;
+
+                if (isJudgeRowIdx)
                 {
-                    dtl.IsUse = true;
-
-                    this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                    this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' style='padding:0px;border:0px;overflow:auto;' >");
-
-                    string src = "Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal="   + this.HisEn.PKVal;
-                    //string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=";
-                    this.Add("<iframe  Onblur=\"SaveDtl('" + dtl.No + "');\"   frameboder=0 ID='F" + dtl.No + "' style='padding:0px;border:0px;'  leftMargin='0' frameboder=0 topMargin='0' src='" + src + "' width='100%' height='10px'  scrolling=no  /></iframe>");
-                    this.AddTDEnd();
-                    this.AddTREnd();
+                    if (dtl.RowIdx != rowIdx)
+                        continue;
                 }
+
+                if (dtl.GroupID == 0 && rowIdx == 0)
+                {
+                    dtl.GroupID = currGF.OID;
+                    dtl.RowIdx = 0;
+                    dtl.Update();
+                }
+                else if (dtl.GroupID == currGF.OID)
+                {
+
+                }
+                else
+                {
+                    continue;
+                }
+                dtl.IsUse = true;
+                int myidx = rowIdx;
+                this.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
+                this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' width='1000px'>");
+                string src = "Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal;
+                this.Add("<iframe ID='F" + dtl.No + "' frameborder=0 Onblur=\"SaveDtl('" + dtl.No + "');\" style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
+                this.AddTDEnd();
+                this.AddTREnd();
             }
         }
         #endregion
@@ -1486,7 +1467,7 @@ namespace BP.Web.Comm.UC
         {
         }
 
-        
+
 
         public Entity GetEnData(Entity en)
         {
