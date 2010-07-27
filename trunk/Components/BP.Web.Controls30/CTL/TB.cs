@@ -227,7 +227,7 @@ namespace BP.Web.Controls
                             this.Text = "0";
 
                         if (this.ReadOnly)
-                            this.CssClass = "TBReadonlyNum";
+                            this.CssClass = "TBNumReadonly";
                         else
                             this.CssClass = "TBNum";
                         break;

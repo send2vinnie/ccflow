@@ -19,9 +19,9 @@ namespace BP.Sys
         /// </summary>
         public const string Lab = "Lab";
         /// <summary>
-        /// RowIdx
+        /// Idx
         /// </summary>
-        public const string RowIdx = "RowIdx";
+        public const string Idx = "Idx";
     }
     /// <summary>
     /// GroupField
@@ -34,7 +34,7 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStrByKey(GroupFieldAttr.Lab);
+                return this.GetValStrByKey(GroupFieldAttr.EnName);
             }
             set
             {
@@ -52,15 +52,15 @@ namespace BP.Sys
                 this.SetValByKey(GroupFieldAttr.Lab, value);
             }
         }
-        public int RowIdx
+        public int Idx
         {
             get
             {
-                return this.GetValIntByKey(GroupFieldAttr.RowIdx);
+                return this.GetValIntByKey(GroupFieldAttr.Idx);
             }
             set
             {
-                this.SetValByKey(GroupFieldAttr.RowIdx, value);
+                this.SetValByKey(GroupFieldAttr.Idx, value);
             }
         }
         #endregion
@@ -93,13 +93,25 @@ namespace BP.Sys
                 map.AddTBIntPKOID();
                 map.AddTBString(GroupFieldAttr.Lab, null, "Lab", true, false, 0, 30, 20);
                 map.AddTBString(GroupFieldAttr.EnName, null, "主表", true, false, 0, 30, 20);
-                map.AddTBInt(GroupFieldAttr.RowIdx, 99, "RowIdx", true, false);
-
+                map.AddTBInt(GroupFieldAttr.Idx, 99, "Idx", true, false);
                 this._enMap = map;
                 return this._enMap;
             }
         }
         #endregion
+
+        public void DoOrder()
+        {
+            GroupFields gfs = new GroupFields(this.EnName);
+
+            int i = -1;
+            foreach (GroupField en in gfs)
+            {
+                i++;
+                en.Idx = i;
+                en.Update(GroupFieldAttr.Idx, en.Idx);
+            }
+        }
     }
     /// <summary>
     /// GroupFields
@@ -119,7 +131,20 @@ namespace BP.Sys
         /// <param name="EnName">s</param>
         public GroupFields(string EnName)
         {
-            this.Retrieve(GroupFieldAttr.EnName, EnName, GroupFieldAttr.RowIdx);
+            int i = this.Retrieve(GroupFieldAttr.EnName, EnName, GroupFieldAttr.Idx);
+            if (i == 0)
+            {
+                GroupField gf = new GroupField();
+                MapData md = new MapData();
+                md.No = EnName;
+                if (md.RetrieveFromDBSources() == 0)
+                    gf.Lab = "基础信息";
+                else
+                    gf.Lab = md.Name;
+                gf.Idx = 0;
+                gf.Insert();
+                this.AddEntity(gf);
+            }
         }
         /// <summary>
         /// 得到它的 Entity

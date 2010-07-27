@@ -65,6 +65,10 @@ namespace BP.Sys
         public const string IsReadonly = "IsReadonly";
 
         public const string WhenOverSize = "WhenOverSize";
+        /// <summary>
+        /// GroupID
+        /// </summary>
+        public const string GroupID = "GroupID";
     }
     /// <summary>
     /// 明细
@@ -176,6 +180,17 @@ namespace BP.Sys
                 this.SetValByKey(MapDtlAttr.RowIdx, value);
             }
         }
+        public int GroupID
+        {
+            get
+            {
+                return this.GetValIntByKey(MapDtlAttr.GroupID);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.GroupID, value);
+            }
+        }
         public string PTable
         {
             get
@@ -257,6 +272,8 @@ namespace BP.Sys
                 map.AddTBString(MapDtlAttr.PTable, null, "物理表", true, false, 0, 30, 20);
 
                 map.AddTBInt(MapDtlAttr.RowIdx, 99, "位置", false, false);
+                map.AddTBInt(MapDtlAttr.GroupID, 0, "GroupID", false, false);
+
                 map.AddTBInt(MapDtlAttr.RowsOfList, 6, "Rows", false, false);
                 map.AddBoolean(MapDtlAttr.IsShowSum, false, "IsShowSum", false, false);
                 map.AddBoolean(MapDtlAttr.IsShowIdx, false, "IsShowIdx", false, false);
@@ -270,6 +287,7 @@ namespace BP.Sys
                 map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true,
                     MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
 
+                
                 this._enMap = map;
                 return this._enMap;
             }

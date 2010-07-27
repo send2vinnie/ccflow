@@ -141,6 +141,10 @@ namespace BP.Sys
         /// 自动填写方式
         /// </summary>
         public const string AutoFullWay = "AutoFullWay";
+        /// <summary>
+        /// GroupID
+        /// </summary>
+        public const string GroupID = "GroupID";
     }
     /// <summary>
     /// 实体属性
@@ -608,6 +612,17 @@ namespace BP.Sys
                 this.SetValByKey(MapAttrAttr.MinLen, value);
             }
         }
+        public int GroupID
+        {
+            get
+            {
+                return this.GetValIntByKey(MapAttrAttr.GroupID);
+            }
+            set
+            {
+                this.SetValByKey(MapAttrAttr.GroupID, value);
+            }
+        }
         public bool IsBigDoc
         {
             get
@@ -885,7 +900,9 @@ namespace BP.Sys
                 map.AddTBString(MapAttrAttr.AutoFullDoc, null, "自动填写内容", false, false, 0, 500, 20);
                 map.AddDDLSysEnum(MapAttrAttr.AutoFullWay, 0, "自动填写方式", true, false, MapAttrAttr.AutoFullWay,
                     "@0=不设置@1=本表单中数据计算@2=利用SQL自动填充@3=本表单中外键列@4=对明细表的列求值");
+
                 map.AddTBInt(MapAttrAttr.IDX, 0, "序号", true, false);
+                map.AddTBInt(MapAttrAttr.GroupID, 0, "GroupID", true, false);
 
                 this._enMap = map;
                 return this._enMap;
@@ -972,10 +989,10 @@ namespace BP.Sys
         public string DoJump(MapAttr attrTo)
         {
             this.IDX = attrTo.IDX;
+            this.GroupID = attrTo.GroupID;
             this.Update();
 
             string sql = "UPDATE Sys_MapAttr SET IDX=IDX-1 WHERE IDX <="+attrTo.IDX+" AND FK_MapData='"+this.FK_MapData+"' AND KeyOfEn<>'"+this.KeyOfEn+"'";
-
             DBAccess.RunSQL(sql);
             return null;
 
