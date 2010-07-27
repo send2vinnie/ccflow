@@ -193,7 +193,7 @@ public partial class Comm_Dtl : WebPage
                             else
                             {
                                 tb.Attributes["onpropertychange"] += "C" + attr.KeyOfEn + "();";
-                                tb.Attributes["class"] = "TBReadonlyNum";
+                                tb.Attributes["class"] = "TBNumReadonly";
                             }
                         }
                         break;
@@ -233,7 +233,7 @@ public partial class Comm_Dtl : WebPage
         }
 
         #region 生成合计
-        if (mdtl.IsShowSum)
+        if (mdtl.IsShowSum && dtls.Count >1 )
         {
             this.Ucsys1.AddTRSum();
             if (mdtl.IsShowIdx)
@@ -489,6 +489,9 @@ public partial class Comm_Dtl : WebPage
     }
     public string GenerSum(MapAttr mattr, GEDtls dtls)
     {
+        if (dtls.Count <= 1)
+            return "";
+
         string left = "\n  document.forms[0]." + this.Ucsys1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value = ";
         string right = "";
         int i = 0;

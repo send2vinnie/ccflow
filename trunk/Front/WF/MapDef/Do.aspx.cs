@@ -129,8 +129,14 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                 break;
             case "Jump":
                 MapAttr attrFrom = new MapAttr( int.Parse( this.Request.QueryString["FromID"] ) );
-                MapAttr attrTo = new MapAttr(int.Parse(this.Request.QueryString["ToID"]));
+                MapAttr attrTo = new MapAttr( int.Parse(this.Request.QueryString["ToID"]));
                 attrFrom.DoJump(attrTo);
+                this.WinClose();
+                break;
+            case "MoveTo":
+                MapAttr attrM = new MapAttr();
+                attrM.OID = int.Parse(this.Request.QueryString["FromID"]);
+                attrM.Update(MapAttrAttr.GroupID, int.Parse(this.Request.QueryString["ToGFID"]));
                 this.WinClose();
                 break;
             case "Edit":
@@ -142,26 +148,42 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                 attr.Delete();
                 this.WinClose();
                 break;
-
             case "GFDoUp":
                 GroupField gf = new GroupField(this.RefOID);
-                if (gf.RowIdx > 0)
+                gf.DoOrder();
+                gf.Retrieve();
+                if (gf.Idx == 0)
                 {
-                    gf.RowIdx=gf.RowIdx-1;
-                    gf.Update();
+                    this.WinClose();
+                    return;
                 }
+                int oidIdx = gf.Idx;
+                gf.Idx = gf.Idx -1;
+                GroupField gfUp = new GroupField();
+                if (gfUp.Retrieve(GroupFieldAttr.EnName, gf.EnName, GroupFieldAttr.Idx, gf.Idx) == 1)
+                {
+                    gfUp.Idx = oidIdx;
+                    gfUp.Update();
+                }
+                gf.Update();
                 this.WinClose();
                 break;
             case "GFDoDown":
-                GroupField gf1 = new GroupField(this.RefOID);
-                if (gf1.RowIdx < 10)
+                GroupField mygf = new GroupField(this.RefOID);
+                mygf.DoOrder();
+                mygf.Retrieve();
+
+                int oidIdx1 = mygf.Idx;
+                mygf.Idx = mygf.Idx + 1;
+                GroupField gfDown = new GroupField();
+                if (gfDown.Retrieve(GroupFieldAttr.EnName, mygf.EnName, GroupFieldAttr.Idx, mygf.Idx) == 1)
                 {
-                    gf1.RowIdx = gf1.RowIdx + 1;
-                    gf1.Update();
+                    gfDown.Idx = oidIdx1;
+                    gfDown.Update();
                 }
+                mygf.Update();
                 this.WinClose();
                 break;
-
             case "DtlDoUp":
                 MapDtl dtl1 = new MapDtl(this.MyPK);
                 if (dtl1.RowIdx > 0)

@@ -11,26 +11,34 @@
 document.onmousedown = mouseDown;
 document.onmouseup = mouseUp;
 document.onmousemove = mouseMove;
-
 function mouseDown()
 {
-  moveID = overAttrID;
+   moveID = overAttrID;
   return true;
 }
 function mouseUp()
 {
-  if ( overAttrID>0 && moveID >  0)
-  {
-  
-  Jump(moveID,overAttrID);
-  //  alert(" good . from = " + moveID +' to ' +overAttrID);
-  }else
-  {
-     //alert(" err . from = " + moveID +' to ' +overAttrID);
-  }
+   if ( gfID > -1 && moveID > 0 )
+   {
+         var url='Do.aspx?DoType=MoveTo&FromID='+moveID+'&ToGFID='+gfID ;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+        overAttrID=0;
+        moveID=0;
+        gfID=-1;
+        return;
+   }
+
+   if ( overAttrID>0  && moveID >  0 && overAttrID!=moveID  )
+   {
+      var url1='Do.aspx?DoType=Jump&FromID='+overAttrID+'&ToID='+moveID ;
+      var b1=window.showModalDialog( url1 , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+      window.location.href = window.location.href;
+   } 
   
   overAttrID=0;
   moveID=0;
+  gfID=-1;
   return true;
 }
 function mouseMove()
@@ -48,18 +56,25 @@ function mouseMove()
     var overAttrID=0;
     var moveID=0;
     var isMove=false;
+    var gfID=-1;
     function DivOnMouseOver(id)
     {
       overAttrID =id;
-      //ctrl.style.backgroundColor="#AAFFAA";
-      //ctrl.style.cursor='move';
     }
     
     function DivOnMouseOut(id)
     {
       overAttrID=0;
-     // ctrl.style.cursor='move';
-      
+    }
+    
+    function GFOnMouseOver(id)
+    {
+      gfID =id;
+    }
+    
+    function GFOnMouseOut()
+    {
+       gfID=-1;
     }
     
     
@@ -100,7 +115,16 @@ function mouseMove()
     }
     function GroupField(mypk)
     {
+       if ( window.confirm('您确定是增加一个字段分组吗？')==false ) 
+           return;
+      
         var url='GroupField.aspx?RefNo='+mypk;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+    }
+    function GroupField(mypk, OID )
+    {
+        var url='GroupField.aspx?RefNo='+mypk+"&RefOID="+OID ;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
@@ -149,12 +173,7 @@ function mouseMove()
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-     function Jump(fromID,toID)
-    {
-        var url='Do.aspx?DoType=Jump&FromID='+fromID+'&ToID='+toID ;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
-        window.location.href = window.location.href;
-    }
+   
     function GFDoUp(refoid)
     {
         var url='Do.aspx?DoType=GFDoUp&RefOID='+refoid ;
@@ -175,7 +194,7 @@ function mouseMove()
     }
     function DtlDoDown(MyPK)
     {
-        var url='Do.aspx?DoType=DtlDoDown&MyPK='+MyPK ;
+        var url='Do.aspx?DoType=DtlDoDown&MyPK='+MyPK;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
@@ -217,7 +236,32 @@ function mouseMove()
     }
 
     var isInser = "";
-   function ReinitIframe(dtlid) {
+    
+    function ReinitIframe(dtlid) {
+
+    try {
+        var iframe = document.getElementById("F" + dtlid);
+        var tdF = document.getElementById("TD" + dtlid);
+        iframe.height = iframe.contentWindow.document.body.scrollHeight;
+        iframe.width = iframe.contentWindow.document.body.scrollWidth;
+
+        if (tdF.width < iframe.width) {
+            //alert(tdF.width +'  ' + iframe.width);
+            tdF.width = iframe.width;
+        } else {
+            iframe.width = tdF.width;
+
+        }
+
+        tdF.height = iframe.height;
+        return;
+    } catch (ex) {
+        return;
+    }
+    return;
+}
+
+   function ReinitIframe_bak(dtlid) {
 
        try {
            var iframe = document.getElementById("F" + dtlid);

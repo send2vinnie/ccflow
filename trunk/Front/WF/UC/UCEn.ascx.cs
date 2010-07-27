@@ -50,13 +50,13 @@ namespace BP.Web.Comm.UC
             int i = -1;
             int idx = -1;
             bool isHaveH = false;
-            this.Add("<Table class='Table' width='400px' >");
+            this.Add("<Table class='Table' width='600px' >");
             if (gfs.Count >= 1)
             {
                 this.AddTR();
                 this.AddTD("colspan=4 class=GroupField ", "<img src='./Style/Min.gif' alert='Min' id='Img101' onclick=\"GroupBarClick('101')\"  border=0 />&nbsp;<b>" + en.EnDesc + "</b>");
                 this.AddTREnd();
-                currGF.RowIdx = 101;
+                currGF.Idx = 101;
             }
             else
             {
@@ -86,13 +86,12 @@ namespace BP.Web.Comm.UC
                     }
                     rowIdx++;
 
-                    this.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "'");
+                    this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
                     this.Add("<TD  colspan=4 width='100%' valign=top>"+attr.Name);
                     TextBox mytbLine = new TextBox();
                     mytbLine.TextMode = TextBoxMode.MultiLine;
                     mytbLine.Rows = 8;
-                    mytbLine.Columns = 80;
-                    mytbLine.Attributes["width"] = "100%";
+                    mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                     mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
 
                     this.Add(mytbLine);
@@ -106,15 +105,15 @@ namespace BP.Web.Comm.UC
                 if (attr.IsBigDoc)
                 {
                     if (isLeftNext)
-                        this.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "' ");
+                        this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
 
                     this.Add("<TD class=FDesc colspan=2>");
-                    this.Add(attr.Name + "<br>");
+                    this.Add(attr.Name  );
                     TextBox mytbLine = new TextBox();
                     mytbLine.TextMode = TextBoxMode.MultiLine;
                     mytbLine.Rows = 8;
                     mytbLine.Columns = 30;
-                    mytbLine.Attributes["width"] = "100%";
+                    mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                     mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
 
                     this.Add(mytbLine);
@@ -150,7 +149,7 @@ namespace BP.Web.Comm.UC
 
                 if (isLeftNext)
                 {
-                    this.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "' ");
+                    this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
                 }
 
                 TB tb = new TB();
@@ -231,7 +230,7 @@ namespace BP.Web.Comm.UC
                                 if (tb.Enabled)
                                     tb.Attributes["class"] = "TBNum";
                                 else
-                                    tb.Attributes["class"] = "TBReadonlyNum";
+                                    tb.Attributes["class"] = "TBNumReadonly";
                                 break;
                         }
                         break;
@@ -305,7 +304,7 @@ namespace BP.Web.Comm.UC
                         dtl.Update();
                     }
 
-                    this.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "' ");
+                    this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
                     this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' style='padding:0px;border:0px;overflow:auto;' >");
                     //string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=";
                     string src = "Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal;
@@ -354,12 +353,12 @@ namespace BP.Web.Comm.UC
         {
             foreach (GroupField gf in gfs)
             {
-                if (rowIdx == gf.RowIdx && gf.IsUse == false)
+                if (rowIdx == gf.Idx && gf.IsUse == false)
                 {
                     gf.IsUse = true;
                     currGF = gf;
                     this.AddTR();
-                    this.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.RowIdx + "' onclick=\"GroupBarClick('" + gf.RowIdx + "')\"  border=0 />&nbsp;" + gf.Lab + "</div>");
+                    this.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;" + gf.Lab + "</div>");
                     this.AddTREnd();
                     isLeftNext = true;
                     break;
@@ -371,7 +370,7 @@ namespace BP.Web.Comm.UC
                 {
                     dtl.IsUse = true;
 
-                    this.AddTR(" ID='" + currGF.RowIdx + "_" + rowIdx + "' ");
+                    this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
                     this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' style='padding:0px;border:0px;overflow:auto;' >");
 
                     string src = "Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal="   + this.HisEn.PKVal;

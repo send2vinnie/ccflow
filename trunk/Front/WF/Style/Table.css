@@ -124,7 +124,6 @@
 .TBNumReadonly
 {
 	font-size: 14px;
-	background-color: infobackground;
 	border-right: black thin;
 	border-top: black thin;
 	border-left: black thin;
@@ -199,7 +198,7 @@
 	border-left-style: none;
 	border-bottom-style: none;
 	text-align: right;
-	float: left;
+	float: right;
 	clear: left;
 	vertical-align: bottom;
 }
