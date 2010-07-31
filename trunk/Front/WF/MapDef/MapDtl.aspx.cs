@@ -44,7 +44,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
     {
         MapData md = new MapData(this.FK_MapData);
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
-
         switch (this.DoType)
         {
             case "DtlList":
@@ -151,11 +150,23 @@ public partial class Comm_MapDef_MapDtl : WebPage
                         }
                     }
                     dtlN.FK_MapData = this.FK_MapData;
-                    if (this.DoType == "New")
-                        dtlN.Insert();
+                    dtlN.GroupID = 0;
+                    dtlN.RowIdx = 0;
+                    GroupFields gfs1 = new GroupFields(this.FK_MapData);
+
+                    if (gfs1.Count == 1)
+                    {
+                        GroupField gf = (GroupField)gfs1[0];
+                        dtlN.GroupID = gf.OID;
+                    }
                     else
-                        dtlN.Update();
-                    if (btn.ID.Contains("AndC"))
+                    {
+                        dtlN.GroupID = this.Pub1.GetDDLByID("DDL_GroupField").SelectedItemIntVal;
+                    }
+
+                    dtlN.Insert();
+
+                    if (btn.ID.Contains("AndClose"))
                     {
                         this.WinClose();
                         return;
@@ -177,7 +188,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
 
                     GroupFields gfs = new GroupFields(dtl.FK_MapData );
                     if (gfs.Count > 1)
-                        dtl.GroupID = this.Pub1.GetDDLByID("DDL_GroupID").SelectedItemIntVal;
+                        dtl.GroupID = this.Pub1.GetDDLByID("DDL_GroupField").SelectedItemIntVal;
 
                     if (this.DoType == "New")
                         dtl.Insert();
@@ -323,7 +334,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
             this.Pub1.AddTR();
             this.Pub1.AddTD("显示在分组");
             ddl = new DDL();
-            ddl.ID = "DDL_GroupID";
+            ddl.ID = "DDL_GroupField";
             ddl.BindEntities(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab, false, AddAllLocation.None);
             ddl.SetSelectItem(dtl.GroupID);
             this.Pub1.AddTD(ddl);

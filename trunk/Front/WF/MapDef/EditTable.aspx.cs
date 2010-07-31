@@ -18,6 +18,19 @@ using BP.Web.UC;
 public partial class Comm_MapDef_EditTable : BP.Web.PageBase
 {
     /// <summary>
+    /// GroupField
+    /// </summary>
+    public string GroupField
+    {
+        get
+        {
+            string s = this.Request.QueryString["GroupField"];
+            if (s == "")
+                return null;
+            return s;
+        }
+    }
+    /// <summary>
     /// 执行类型
     /// </summary>
     public string DoType
@@ -292,6 +305,11 @@ public partial class Comm_MapDef_EditTable : BP.Web.PageBase
                 }
             }
 
+            if (this.GroupField != null)
+            {
+                attr.GroupID = int.Parse(this.GroupField);
+            }
+
             attr.Update();
 
             switch (btn.ID)
@@ -300,12 +318,12 @@ public partial class Comm_MapDef_EditTable : BP.Web.PageBase
                     this.WinClose();
                     return;
                 case "Btn_SaveAndNew":
-                    this.Response.Redirect("Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + attr.IDX, true);
+                    this.Response.Redirect("Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + attr.IDX + "&GroupField=" + this.GroupField, true);
                     return;
                 default:
                     break;
             }
-            this.Response.Redirect("EditTable.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefOID=" + attr.OID, true);
+            this.Response.Redirect("EditTable.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefOID=" + attr.OID + "&GroupField=" + this.GroupField, true);
         }
         catch (Exception ex)
         {
@@ -317,7 +335,7 @@ public partial class Comm_MapDef_EditTable : BP.Web.PageBase
         get
         {
             if (this.DoType == "Add")
-                return this.ToE("GuideNewField", "增加新字段向导") + "  - <a href='Do.aspx?DoType=ChoseFType'>" + this.ToE("ChoseType", "选择类型") + "</a> -" + this.ToE("EditField", "编辑字段");
+                return this.ToE("GuideNewField", "增加新字段向导") + "  - <a href='Do.aspx?DoType=ChoseFType&GroupField=" + this.GroupField + "'>" + this.ToE("ChoseType", "选择类型") + "</a> -" + this.ToE("EditField", "编辑字段");
             else
                 return this.ToE("EditField", "编辑字段"); // "编辑字段";
         }

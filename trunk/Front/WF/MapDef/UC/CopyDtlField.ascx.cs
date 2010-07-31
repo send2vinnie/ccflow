@@ -155,6 +155,7 @@ public partial class WF_MapDef_UC_CopyDtlField :BP.Web.UC.UCBase3
         this.AddUL();
         foreach (DataRow dr in dt.Rows)
         {
+            
             this.AddLi("CopyDtlField.aspx?MyPK=" + this.MyPK + "&Dtl=" + dr["DtlNo"].ToString(), "节点名：" + dr["NodeName"].ToString() + " 表名称：" + dr["DtlName"].ToString());
         }
         this.AddULEnd();

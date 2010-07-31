@@ -18,6 +18,19 @@ using BP.DA;
 public partial class Comm_MapDef_EditF : BP.Web.PageBase
 {
     /// <summary>
+    /// GroupField
+    /// </summary>
+    public string GroupField
+    {
+        get
+        {
+            string  s= this.Request.QueryString["GroupField"];
+            if (s == "")
+                return null;
+            return s;
+        }
+    }
+    /// <summary>
     /// 执行类型
     /// </summary>
     public string DoType
@@ -335,7 +348,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         attr.Update();
 
 
-        this.Response.Redirect("EditF.aspx?DoType=" + this.DoType + "&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "&FType=" + attr.MyDataType, true);
+        this.Response.Redirect("EditF.aspx?DoType=" + this.DoType + "&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "&FType=" + attr.MyDataType + "&GroupField=" + this.GroupField, true);
 
         // this.Response.Redirect(this.Request.RawUrl, true);
     }
@@ -366,7 +379,6 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
             btn = new Button();
             btn.ID = "Btn_AutoFull";
             btn.Text = this.ToE("AutoFull", "自动填写");
-            //  btn.Click += new EventHandler(btn_Save_Click);
             btn.Attributes["onclick"] = "javascript:WinOpen('AutoFill.aspx?RefOID=" + this.RefOID + "',''); return false;";
             this.Pub1.Add(btn);
 
@@ -406,11 +418,11 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         {
             case "Btn_New":
                 MapAttr mapAttr = new MapAttr(this.RefOID);
-                string url = "Do.aspx?DoType=AddF&MyPK=" + mapAttr.FK_MapData + "&IDX=" + mapAttr.IDX;
+                string url = "Do.aspx?DoType=AddF&MyPK=" + mapAttr.FK_MapData + "&IDX=" + mapAttr.IDX + "&GroupField = " + this.GroupField;
                 this.Response.Redirect(url, true);
                 return;
             case "Btn_Back":
-                string url1 = "Do.aspx?DoType=AddF&MyPK=" + this.MyPK;
+                string url1 = "Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&GroupField = " + this.GroupField;
                 this.Response.Redirect(url1, true);
                 return;
             default:
@@ -666,11 +678,9 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
             switch (btn.ID)
             {
                 case "Btn_Del":
-                    this.Response.Redirect("Do.aspx?DoType=Del&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID, true);
+                    this.Response.Redirect("Do.aspx?DoType=Del&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "&GroupField = " + this.GroupField, true);
                     return;
-                case "Btn_SaveAndNew":
-                    this.Response.Redirect("Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX, true);
-                    return;
+
                 default:
                     break;
             }
@@ -717,6 +727,10 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
                     attr.IDX = int.Parse(this.IDX) - 1;
 
                 attr.MyDataType = this.FType;
+                if (this.GroupField != null)
+                {
+                    attr.GroupID = int.Parse(this.GroupField);
+                }
                 switch (this.FType)
                 {
                     case DataType.AppBoolean:
@@ -735,10 +749,13 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
                 case "Btn_SaveAndClose":
                     this.WinClose();
                     return;
+                case "Btn_SaveAndNew":
+                    this.Response.Redirect("Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "&GroupField = " + this.GroupField, true);
+                    return;
                 default:
                     break;
             }
-            this.Response.Redirect("EditF.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefOID=" + attr.OID + "&FType=" + this.FType, true);
+            this.Response.Redirect("EditF.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefOID=" + attr.OID + "&FType=" + this.FType + "&GroupField=" + this.GroupField, true);
         }
         catch (Exception ex)
         {
@@ -751,9 +768,9 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         get
         {
             if (this.DoType == "Add")
-                return this.ToE("GuideNewField", "增加新字段向导") + " - <a href='Do.aspx?DoType=ChoseFType'>" + this.ToE("ChoseType", "返回类型选择") + "</a> - " + this.ToE("Edit", "编辑");
+                return this.ToE("GuideNewField", "增加新字段向导") + " - <a href='Do.aspx?DoType=ChoseFType&GroupField=" + this.GroupField + "' >" + this.ToE("ChoseType", "返回类型选择") + "</a> - " + this.ToE("Edit", "编辑");
             else
-                return "<a href='Do.aspx?DoType=ChoseFType&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "'>" + this.ToE("ChoseType", "返回类型选择") + "</a> - " + this.ToE("Edit", "编辑");
+                return "<a href='Do.aspx?DoType=ChoseFType&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "&GroupField=" + this.GroupField + "'>" + this.ToE("ChoseType", "返回类型选择") + "</a> - " + this.ToE("Edit", "编辑");
         }
     }
 }

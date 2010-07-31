@@ -71,12 +71,10 @@ namespace BP.Web.Comm.UC
                     {
                         if (gf.Idx == 0 && attr.GroupID == 0)
                         {
-
                         }
                         else
                             continue;
                     }
-
 
                     if (attr.HisAttr.IsRefAttr || attr.UIVisible == false)
                         continue;
@@ -97,12 +95,21 @@ namespace BP.Web.Comm.UC
                         }
 
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
-                        this.Add("<TD  colspan=4 width='100%' valign=top>" + attr.Name);
+                        if (attr.UIIsEnable)
+                            this.Add("<TD  colspan=4 width='100%' valign=top>" + attr.Name);
+                        else
+                            this.Add("<TD  colspan=4 width='100%' valign=top class=TBReadonly>" + attr.Name);
+
+
                         TextBox mytbLine = new TextBox();
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.Rows = 8;
                         mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
+                        mytbLine.Enabled = attr.UIIsEnable;
+                        if (mytbLine.Enabled == false)
+                            mytbLine.Attributes["class"] = "TBReadonly";
+
 
                         this.Add(mytbLine);
                         this.AddTDEnd();
@@ -125,6 +132,11 @@ namespace BP.Web.Comm.UC
                         mytbLine.Columns = 30;
                         mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
+                        mytbLine.Enabled = attr.UIIsEnable;
+                        if (mytbLine.Enabled == false)
+                            mytbLine.Attributes["class"] = "TBReadonly";
+
+
 
                         this.Add(mytbLine);
                         this.AddTDEnd();
@@ -1611,7 +1623,6 @@ namespace BP.Web.Comm.UC
             }
             #endregion
 
-
             return refstrs;
         }
 
@@ -1634,7 +1645,6 @@ namespace BP.Web.Comm.UC
 
         }
         #endregion
-
 
     }
 }

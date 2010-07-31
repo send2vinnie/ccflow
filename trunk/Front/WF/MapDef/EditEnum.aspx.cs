@@ -17,6 +17,19 @@ using BP.Web.UC;
 public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
 {
     /// <summary>
+    /// GroupField
+    /// </summary>
+    public string GroupField
+    {
+        get
+        {
+            string s = this.Request.QueryString["GroupField"];
+            if (s == "")
+                return null;
+            return s;
+        }
+    }
+    /// <summary>
     /// 执行类型
     /// </summary>
     public string DoType
@@ -224,6 +237,10 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
             attr = (MapAttr)this.Pub1.Copy(attr);
             attr.FK_MapData = this.MyPK;
             attr.DefVal = this.Pub1.GetDDLByID("DDL").SelectedItemStringVal;
+            if (this.GroupField != null)
+            {
+                attr.GroupID = int.Parse(this.GroupField);
+            }
             attr.Update();
 
             switch (btn.ID)
@@ -232,13 +249,13 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
                     this.WinClose();
                     return;
                 case "Btn_SaveAndNew":
-                    this.Response.Redirect("Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + attr.IDX, true);
+                    this.Response.Redirect("Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + attr.IDX + "&GroupField=" + this.GroupField, true);
                     return;
                 default:
                     break;
             }
             if (this.MyPK == null)
-                this.Response.Redirect("EditEnum.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefOID=" + attr.OID, true);
+                this.Response.Redirect("EditEnum.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefOID=" + attr.OID + "&GroupField=" + this.GroupField, true);
         }
         catch (Exception ex)
         {
@@ -250,9 +267,9 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
         get
         {
             if (this.DoType == "Add")
-                return this.ToE("GuideNewField", "增加新字段向导") + " - <a href='Do.aspx?DoType=ChoseFType'>" + this.ToE("ChoseType", "选择类型") + "</a>";
+                return this.ToE("GuideNewField", "增加新字段向导") + " - <a href='Do.aspx?DoType=ChoseFType&GroupField=" + this.GroupField + "'>" + this.ToE("ChoseType", "选择类型") + "</a>";
             else
-                return " <a href='Do.aspx?DoType=ChoseFType&MyPK="+this.MyPK+"&RefOID="+this.RefOID+"'>"+this.ToE("Edit","编辑")+"</a>";
+                return " <a href='Do.aspx?DoType=ChoseFType&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "&GroupField=" + this.GroupField + "'>" + this.ToE("Edit", "编辑") + "</a>";
         }
     }
 }

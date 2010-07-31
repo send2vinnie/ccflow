@@ -10,6 +10,10 @@ function Go(fk_node, cid,  seleNd)
                 var   pText     =   province.options[pindex].text;
   window.location.href='CopyFieldFromNode.aspx?FK_Node='+fk_node+'&NodeOfSelect='+pValue;
 }
+function GroupClick(groupID)
+{
+  
+}
 </script>
 
 </asp:Content>

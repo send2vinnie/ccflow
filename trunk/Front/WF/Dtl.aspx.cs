@@ -493,7 +493,20 @@ public partial class Comm_Dtl : WebPage
         if (dtls.Count <= 1)
             return "";
 
-        string left = "\n  document.forms[0]." + this.Ucsys1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value = ";
+        string ClientID = "";
+
+        try
+        {
+            ClientID = this.Ucsys1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID;
+        }
+        catch
+        {
+            return "";
+        }
+
+
+        string left = "\n  document.forms[0]." + ClientID + ".value = ";
+
         string right = "";
         int i = 0;
         foreach (GEDtl dtl in dtls)

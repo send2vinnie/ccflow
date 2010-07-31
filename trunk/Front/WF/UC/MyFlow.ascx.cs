@@ -1155,6 +1155,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
 
                     this.FlowMsg.DivInfoBlock("流程退回提示", msg);
+
                     this.FK_Node = wn.HisNode.NodeID;
                     this.WorkID = wn.HisWork.OID;
                     break;

@@ -542,7 +542,6 @@ namespace BP.Web.Comm.UC
 			this.AddTableEnd();
 		}
 
-
         private string MyMonthGetCell(DateTime dt, TaLogs tes, CycleEvents ces, Works wks, WorkDtls dtls, ReWorks rns, ReturnWorks rets)
         {
             string date = dt.ToString("yyyy-MM-dd");
