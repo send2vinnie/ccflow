@@ -2435,17 +2435,28 @@ namespace BP.En
         /// <returns>true / false </returns>
         public bool Contains(Entities ens)
         {
+            return this.Contains(ens, ens.GetNewEntity.PK);
+        }
+        public bool Contains(Entities ens, string key)
+        {
             if (ens.Count == 0)
                 return false;
-
-            string pk = ens.GetNewEntity.PK;
-
             foreach (Entity en in ens)
             {
-                if (this.Contains(pk, en.GetValByKey(pk)) == false)
+                if (this.Contains(key, en.GetValByKey(key)) == false)
                     return false;
             }
-
+            return true;
+        }
+        public bool Contains(Entities ens, string key1, string key2)
+        {
+            if (ens.Count == 0)
+                return false;
+            foreach (Entity en in ens)
+            {
+                if (this.Contains(key1, en.GetValByKey(key1), key2, en.GetValByKey(key2)) == false)
+                    return false;
+            }
             return true;
         }
         /// <summary>
@@ -2473,7 +2484,16 @@ namespace BP.En
             }
             return false;
         }
-
+        public bool Contains(string attr1, object pkVal1,string attr2, object pkVal2)
+        {
+            foreach (Entity myen in this)
+            {
+                if (myen.GetValByKey(attr1).ToString().Equals(pkVal1.ToString()) && myen.GetValByKey(attr2).ToString().Equals(pkVal2.ToString())
+                    )
+                    return true;
+            }
+            return false;
+        }
         /// <summary>
         /// 取得当前集合于传过来的集合交集.
         /// </summary>
