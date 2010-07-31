@@ -2255,7 +2255,7 @@ namespace BP.WF
             attr.MyDataType = BP.DA.DataType.AppDateTime;
             attr.UIContralType = UIContralType.TB;
             attr.LGType = FieldTypeS.Normal;
-            attr.UIVisible = true;
+            attr.UIVisible = false;
             attr.UIIsEnable = false;
             attr.DefVal = "@RDT";
             attr.Tag = "1";
@@ -2273,7 +2273,7 @@ namespace BP.WF
             attr.MyDataType = BP.DA.DataType.AppString;
             attr.UIContralType = UIContralType.TB;
             attr.LGType = FieldTypeS.Normal;
-            attr.UIVisible = true;
+            attr.UIVisible = false;
             attr.UIIsEnable = false;
             attr.MaxLen = 20;
             attr.MinLen = 0;

@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{51C1DADA-1B9A-41CC-B731-FDE1196778F2}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -133,6 +133,9 @@
     <Compile Include="FlowDesc\FlowStation.cs" />
     <Compile Include="FlowDesc\WorkBase\GECheckStand.cs" />
     <Compile Include="FlowDesc\WorkBase\GECheckMul.cs" />
+    <Compile Include="FlowTemplate\Flow.cs" />
+    <Compile Include="FlowTemplate\FlowSort.cs" />
+    <Compile Include="FlowTemplate\Tool.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="FlowDesc\Direction.cs">
       <SubType>Code</SubType>

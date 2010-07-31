@@ -2634,8 +2634,8 @@ namespace BP.WF
                     {
                         case DtlOpenType.ForEmp:
                             qo.AddWhere(GEDtlAttr.RefPK, this.WorkID);
-                            qo.addAnd();
-                            qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
+                            //qo.addAnd();
+                            //qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
                             break;
                         case DtlOpenType.ForWorkID:
                             qo.AddWhere(GEDtlAttr.RefPK,  this.WorkID);
