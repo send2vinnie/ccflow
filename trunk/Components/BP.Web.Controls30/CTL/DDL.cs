@@ -618,6 +618,13 @@ namespace BP.Web.Controls
                 this.Items.Add(new ListItem(xml.GetValStringByKey(name), xml.GetValStringByKey(key)));
             }
         }
+        public void Bind(Entities ens, string key, string name)
+        {
+            foreach (Entity en in ens)
+            {
+                this.Items.Add(new ListItem(en.GetValStringByKey(name), en.GetValStringByKey(key)));
+            }
+        }
 
         protected override void OnPreRender(System.EventArgs e)
         {

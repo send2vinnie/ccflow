@@ -128,7 +128,10 @@ namespace BP.Web
         {
             get
             {
-                return this.Request.QueryString["DoType"];
+                string str= this.Request.QueryString["DoType"];
+                if (str == "")
+                    str = null;
+                return str;
             }
         }
         public string EnsName
