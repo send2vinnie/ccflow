@@ -1,0 +1,147 @@
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Web;
+using System.Web.SessionState;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+using BP.Web.Controls;
+using BP.Sys;
+using BP.Rpt;
+using BP.Port;
+using BP.DA;
+using BP.En;
+using BP.En;
+
+
+namespace BP.Web.CT.Comm.Rpt.Self
+{
+	/// <summary>
+	/// D 的摘要说明。
+	/// </summary>
+	public class S1 : WebPage
+	{
+		protected System.Web.UI.WebControls.Label Label1;
+		protected BP.Web.Controls.CBL CBL1;
+		protected BP.Web.Controls.BPToolBar BPToolBar1;
+	
+		public string EnsName
+		{
+			get
+			{
+				return "BP.CT.HDs";
+				//return this.Request.QueryString["EnsName"];
+			}
+		}
+		public Entities HisEns
+		{
+			get
+			{
+				return DA.ClassFactory.GetEns(this.EnsName);
+			}
+		}
+		public Entity HisEn
+		{
+			get
+			{
+				return this.HisEns.GetNewEntity;
+			}
+		}
+		private void Page_Load(object sender, System.EventArgs e)
+		{
+			this.GenerLabel(this.Label1,"第一步:选择报表的查询条件");
+			if (this.IsPostBack==false)
+			{
+				this.BPToolBar1.AddBtn(NamesOfBtn.Save);
+				this.BPToolBar1.AddBtn(NamesOfBtn.Next,"保存进入下一步");
+				this.BPToolBar1.AddSpt("sd");
+				this.BPToolBar1.AddBtn(NamesOfBtn.Help);
+				this.Bind();
+			}
+			this.BPToolBar1.ButtonClick+=new EventHandler(BPToolBar1_ButtonClick);
+		}
+		public void Bind()
+		{
+			this.CBL1.Items.Clear();
+			Entity en =this.HisEn;
+			List l = new List(this.EnsName);
+			Map map =en.EnMap;
+			foreach(Attr attr in map.Attrs)
+			{
+				if (attr.MyFieldType==FieldType.Enum
+					|| attr.MyFieldType==FieldType.PKEnum
+					|| attr.MyFieldType==FieldType.FK
+					|| attr.MyFieldType==FieldType.PKFK
+					)
+				{
+					ListItem li = new ListItem(attr.Desc, attr.Field) ;
+					if (l.SearchAttrs.IndexOf(attr.Key)==-1)
+					{						
+					}
+					else
+					{
+						li.Selected=true;
+					}
+					this.CBL1.Items.Add(li);
+				}
+			}
+		}
+		public void Save()
+		{
+			List l = new List(this.EnsName);
+			string attrs="";
+			foreach(ListItem li in this.CBL1.Items)
+			{
+				if (li.Selected)
+					attrs+="@"+li.Value;
+			}
+			l.SearchAttrs=attrs;
+			l.Update();
+		}
+
+		#region Web 窗体设计器生成的代码
+		override protected void OnInit(EventArgs e)
+		{
+			//
+			// CODEGEN: 该调用是 ASP.NET Web 窗体设计器所必需的。
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		
+		/// <summary>
+		/// 设计器支持所需的方法 - 不要使用代码编辑器修改
+		/// 此方法的内容。
+		/// </summary>
+		private void InitializeComponent()
+		{    
+			this.Load += new System.EventHandler(this.Page_Load);
+
+		}
+		#endregion
+
+		private void BPToolBar1_ButtonClick(object sender, EventArgs e)
+		{
+			ToolbarBtn btn =(ToolbarBtn)sender;
+			switch(btn.ID)
+			{
+				case NamesOfBtn.Help:
+					this.Helper("Helper.htm");
+					break;
+				case NamesOfBtn.Next:
+					this.Save();
+					this.Response.Redirect("S2.aspx?EnsName="+this.EnsName,true);
+					break;
+				case NamesOfBtn.Save:
+					this.Save();
+					this.Bind();
+					break;
+				default:
+					break;
+			}
+		}
+	}
+}

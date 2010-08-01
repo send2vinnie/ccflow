@@ -1,0 +1,391 @@
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Web;
+using System.Web.SessionState;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+using Microsoft.Web.UI.WebControls;
+using BP.Rpt;
+using BP.En;
+using BP.En;
+using BP.DA;
+using BP.Web.Controls ; 
+using OWC10;
+using System.Xml;
+using BP.Sys;
+
+
+namespace BP.Web.Comm.Rpt
+{
+	/// <summary>
+	/// GenerRpt 的摘要说明
+	/// </summary>
+	public class RptOf3DV3 : WebPage
+	{
+		protected BP.Web.Controls.BPPanel BPPanel1;
+		protected BP.Web.Controls.BPToolBar BPToolBar1;
+		protected System.Web.UI.WebControls.Label Label1;
+		protected BP.Web.Controls.BPTabStrip BPTabStrip1;
+		protected BP.Web.Controls.BPMultiPage BPMultiPage1;		 
+		public BP.Web.Comm.Rpt.UCRpt UCRptOpention
+		{
+			get
+			{
+				return (BP.Web.Comm.Rpt.UCRpt)this.FindControl("UCRptOpention");
+			}
+		}
+		public BP.Web.Comm.Rpt.UCRpt UCRpt1
+		{
+			get
+			{
+				return (BP.Web.Comm.Rpt.UCRpt)this.FindControl("UCRpt1");
+			}
+		}
+		public BP.Web.Comm.Rpt.UCRpt UCRptCol
+		{
+			get
+			{
+				return (BP.Web.Comm.Rpt.UCRpt)this.FindControl("UCRptCol");
+			}
+		}
+		public BP.Web.Comm.Rpt.UCRpt UCRptLine
+		{
+			get
+			{
+				return (BP.Web.Comm.Rpt.UCRpt)this.FindControl("UCRptLine");
+			}
+		}
+		public BP.Web.Comm.Rpt.UCRpt UCRptPie
+		{
+			get
+			{
+				return (BP.Web.Comm.Rpt.UCRpt)this.FindControl("UCRptPie");
+			}
+		}
+
+		#region 属性
+		/// <summary>
+		/// 报表类
+		/// </summary>
+		public string RptName
+		{
+			get
+			{
+				return this.Request.QueryString["RptName"];
+			}
+		}
+		private Rpt3D _HisRpt3D=null;
+		public Rpt3D HisRpt3D
+		{
+			get
+			{
+				if (_HisRpt3D==null)
+				{
+					try
+					{
+						_HisRpt3D=(Rpt3D)DA.ClassFactory.GetObject(this.RptName) ;
+					}
+					catch(Exception ex)
+					{
+						throw ex;
+						// this.Response.Write("class name error"+this.RptName+" exception:"+ex.Message);
+						// isRpt3D = new BP.Port.Rpt.TaxpayerRpt();
+					}
+				}
+				return _HisRpt3D;
+			}
+		}		 
+		#endregion
+
+		private void Page_Load(object sender, System.EventArgs e)
+		{
+			this.Label1.Controls.Add( this.GenerLabel( "<img src='"+this.Request.ApplicationPath+"/Images/Pub/Rpt.ico' border=0 />"+this.HisRpt3D.Title ) ); 
+			this.BPToolBar1.CheckChange += new System.EventHandler(this.BPToolBar2_ButtonClick);
+			this.BPToolBar1.ButtonClick += new EventHandler(BPToolBar1_ButtonClick);
+			if (this.IsPostBack==false)
+			{
+				this.BPToolBar1.InitByMap(false,HisRpt3D.HisAttrsOfSearch,this.HisRpt3D.HisFKSearchAttrs,null);
+				RptTemplate rt = new RptTemplate( this.HisRpt3D );
+				this.UCRptOpention.RptTemplateSet(this.HisRpt3D,rt);
+				this.BindRpt(rt);
+			}
+			else
+			{
+				this.BindRpt(this.UCRptOpention.RptTemplateGet()) ; 
+			}
+		}
+		public void BindRptTemplate(RptTemplate rt)
+		{
+			this.UCRptOpention.RptTemplateSet(this.HisRpt3D,rt);
+		}
+ 
+ 
+
+		#region Web 窗体设计器生成的代码
+		override protected void OnInit(EventArgs e)
+		{
+			//
+			// CODEGEN: 该调用是 ASP.NET Web 窗体设计器所必需的。
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		/// <summary>
+		/// 设计器支持所需的方法 - 不要使用代码编辑器修改
+		/// 此方法的内容。
+		/// </summary>
+		private void InitializeComponent()
+		{    
+			this.Load += new System.EventHandler(this.Page_Load);
+
+		}
+		#endregion
+
+		private void BPToolBar2_ButtonClick(object sender, System.EventArgs e)
+		{
+			// 把查询条件设置到session.
+			foreach(AttrOfSearch attr in this.HisRpt3D.HisAttrsOfSearch )
+			{
+
+			}
+
+			foreach(Attr at in this.HisRpt3D.HisFKSearchAttrs )
+			{
+				string val=this.BPToolBar1.GetDDLByKey( "DDL_"+at.Key ).SelectedItemStringVal;
+				SetSessionByKey(this.HisRpt3D.ToString(), "DDL_"+at.Key, val);
+			}
+
+
+			ToolbarButton btn  = (ToolbarButton)sender;
+			switch(btn.ID)
+			{
+				case NamesOfBtn.DataCheck:			
+					this.InvokeDataCheck(this.HisRpt3D.HisEns);
+					return;
+				case NamesOfBtn.Help:
+					this.WinOpen("Help.htm","help","help",600,700,10,10,false,false);
+					return;
+				case NamesOfBtn.Search:
+					this.BindRpt(this.UCRpt1.RptTemplateGet());
+					break;			 
+				default:
+					this.BindRpt(this.UCRpt1.RptTemplateGet());					 
+					break;
+			}
+		}
+
+		#region bind 
+		 
+		public void Bind2DRpt( RptTemplate rt )
+		{
+			Entities d1=this.HisRpt3D.GetDEns(rt.D1 );
+			//d1.RetrieveAll();
+			Entities d2=this.HisRpt3D.GetDEns(rt.D2);
+			//d2.RetrieveAll();
+
+			this.HisRpt3D.AttrOfD1 = rt.D1;
+			this.HisRpt3D.AttrOfD2 = rt.D2;
+			this.HisRpt3D.AttrOfD3 = rt.D3;
+
+			string d1Field="";
+			string d2Field="";
+
+			try
+			{
+				d1Field=this.HisRpt3D.HisEn.EnMap.GetAttrByKey(rt.D1).Field;
+				d2Field=this.HisRpt3D.HisEn.EnMap.GetAttrByKey(rt.D2).Field;
+			}
+			catch(Exception ex)
+			{
+				throw new Exception("@可能是纬度属性设置错误。"+ex.Message);
+			}
+
+			string table=this.HisRpt3D.HisEns.GetNewEntity.EnMap.PhysicsTable;
+			
+			string sql="SELECT "+d1Field+", "+d2Field+", "+rt.AlObjs+" FROM "+
+				table +" "+this.BPToolBar1.InitTableSqlByEns(this.HisRpt3D.HisEns,this.HisRpt3D.HisAttrsOfSearch,this.HisRpt3D.HisFKSearchAttrs) +
+				" GROUP BY "+d1Field+","+d2Field;
+			//this.Response.Write(sql);
+			DataTable dt = DBAccess.RunSQLReturnTable(sql);
+			string searchAttr=this.GenerSearchAttrString();
+			//this.Response.Write("ssss"+Sys.SysEnsRefs.GetRefSubEnKey(d1.ToString(),d2.ToString()));
+
+			// 取出 分析目标的 adt 类型.
+			AnalyseDataType adt = this.HisRpt3D.HisAnalyseObjs.GetAnalyseObjByOperationColumn( rt.AlObjs ).HisADT;
+
+			RptPlanarEntity rpt = new RptPlanarEntity(d1,d2,dt,"RptOf3D2DDtl.aspx?RptEns="+this.HisRpt3D.HisEns.ToString()+"&RptName="+this.HisRpt3D.ToString()+searchAttr,adt);
+
+			rpt.CutNotRefD1();
+			rpt.CutNotRefD2();
+			rpt.DataProperty=rt.AlObjsText;
+
+			 
+			this.UCRpt1.BindRpt(rpt,false,true,true, rt.PercentModel  );
+			this.UCRptCol.BindHistogram(rpt, rt.Width, rt.Height)  ;
+			this.UCRptLine.BindLine(rpt,rt.Width,rt.Height)  ;
+			this.UCRptPie.BindPie(rpt, rt.Width, rt.Height)  ;
+
+		}		 
+		public void BindRpt(RptTemplate rt)
+		{
+			//判断d2. d3 是否相等。如果d2==d3输出2纬报表。
+			if (rt.D2==rt.D3 )
+			{
+				this.Bind2DRpt(rt);
+				return;
+			}
+
+			this.HisRpt3D.AttrOfD1 = rt.D1;
+			this.HisRpt3D.AttrOfD2 = rt.D2;
+			this.HisRpt3D.AttrOfD3 = rt.D3;
+
+			Entities d1=this.HisRpt3D.GetDEns(rt.D1);
+			//d1.RetrieveAll();
+			Entities d2 =this.HisRpt3D.GetDEns(rt.D2);
+			//d2.RetrieveAll();
+			Entities d3 = this.HisRpt3D.GetDEns(rt.D3);
+			//d3.RetrieveAll();
+
+			string d1Field="";
+			string d2Field="";
+			string d3Field="";
+			try
+			{
+				d1Field=this.HisRpt3D.HisEn.EnMap.GetAttrByKey(rt.D1).Field;
+				d2Field=this.HisRpt3D.HisEn.EnMap.GetAttrByKey(rt.D2).Field;
+				d3Field=this.HisRpt3D.HisEn.EnMap.GetAttrByKey(rt.D3).Field;
+			}
+			catch(Exception ex)
+			{
+				throw new Exception("@可能是纬度属性设置错误。"+ex.Message);
+			}
+
+			string table=this.HisRpt3D.HisEns.GetNewEntity.EnMap.PhysicsTable+" ";
+			string pk=HisRpt3D.HisEn.PKField;
+			string pkDesc=HisRpt3D.HisEn.EnMap.GetAttrByKey(pk).Desc;
+			string where=this.BPToolBar1.InitTableSqlByEns(this.HisRpt3D.HisEns,this.HisRpt3D.HisAttrsOfSearch,this.HisRpt3D.HisFKSearchAttrs) ;
+			
+			// 判断数据是否完整性.
+			string numMsg="";
+			string sqlNum="SELECT "+pk+" as "+pkDesc+", "+d1Field+"  as "+rt.D1+",  "+d2Field+" as "+rt.D2+", "+d3Field+" as "+rt.D3+" FROM "+table+ where+ " and  ("+d1Field+" IS NULL OR  "+d1Field+"='' OR "+d2Field+" IS NULL OR  "+d2Field+"='' OR "+d3Field+" IS NULL OR  "+d3Field+"='' ) ";
+			DataTable dt=DBAccess.RunSQLReturnTable(sqlNum);
+			if (dt.Rows.Count!=0)
+			{
+				numMsg+="@出现["+dt.Rows.Count+"]行空值,这些空值会导致大合计与小合计不正确,这些数据是由于录入不规范造成的,它回给其他的功能造成影响,请核实情况尽快处理.列表如下:";
+				numMsg+="<TABLE width='100%' id='AutoNumber1' border='1'>\n";
+				numMsg+="<TR>\n";
+				numMsg+=" <TD bgcolor='#C0C0C0' >"+pkDesc+"</TR>\n";		
+				numMsg+=" <TD bgcolor='#C0C0C0' >"+rt.D1+"</TD>\n";
+				numMsg+=" <TD bgcolor='#C0C0C0' >"+rt.D2+"</TD>\n";
+				numMsg+=" <TD bgcolor='#C0C0C0' >"+rt.D3+"</TD>\n";
+				numMsg+="</TR>\n";
+
+				foreach(DataRow dr in dt.Rows)
+				{
+					numMsg+="<TR>\n";
+					numMsg+="  <TD>"+dr[0].ToString()+"</TD>\n";
+
+					numMsg+="  <TD>"+EnExt.GetTextByValue(d1,dr[1].ToString(),"<font color=red>空值</font>" )+"</TD>\n";
+					numMsg+="  <TD>"+EnExt.GetTextByValue(d2,dr[2].ToString(),"<font color=red>空值</font>" )+"</TD>\n";
+					numMsg+="  <TD>"+EnExt.GetTextByValue(d3,dr[3].ToString(),"<font color=red>空值</font>" )+"</TD>\n";
+
+					numMsg+="</TR>\n";
+				}
+				numMsg+="</TABLE>";
+			}
+
+			if (numMsg!="")
+				this.ResponseWriteRedMsg(numMsg);
+ 
+
+			string sql="SELECT "+d1Field+", "+d2Field+", "+d3Field+", "+rt.AlObjs+" FROM "+
+				table +" "+where+
+				" GROUP BY "+d1Field+", "+d2Field+","+d3Field;
+			//this.ResponseWriteBlueMsg(sql);
+			dt = DBAccess.RunSQLReturnTable(sql);
+
+			//this.Response.Write("ssss"+Sys.SysEnsRefs.GetRefSubEnKey(d1.ToString(),d2.ToString())) ; 
+
+			#region 把查询条件，产生一个查询字符串,发送到明晰页面上。
+			string searchAttr=this.GenerSearchAttrString();
+			#endregion
+
+			Rpt3DEntity rpt = new Rpt3DEntity(d1,d2,d3,dt,"RptOf3D2DDtl.aspx?RptEns="+this.HisRpt3D.HisEns.ToString()+"&RptName="+this.HisRpt3D.ToString()+searchAttr );
+			//Rpt3DEntity rpt = new Rpt3DEntity(d1,d2,d3,dt,"RptOf3DDtl.aspx?RptEns="+this.HisRpt3D.HisEns.ToString()+"&RptName="+this.HisRpt3D.ToString()+searchAttr );
+			// 
+			//rpt.D2D3RefKey=BP.Sys.SysEnsRefs.GetRefSubEnKey(d2.ToString(),d3.ToString());
+			// 
+			rpt.CutNotRefD1();
+			rpt.CutNotRefD2();
+			rpt.CutNotRefD3();
+
+			rpt.CellUrlTarget="ss";
+			//	rpt.DataProperty =rt.D1.SelectedItem.Text; //数据属性。
+			// 取出 分析目标的 adt 类型.
+			AnalyseDataType adt = this.HisRpt3D.HisAnalyseObjs.GetAnalyseObjByOperationColumn( rt.AlObjs ).HisADT;
+			rpt.HisADT=adt; //设置它的分析数据类型。
+			if (this.HisRpt3D.IsShowSum)
+				this.UCRpt1.BindRpt(rpt, rt.PercentModel , rt.IsSumLittle,rt.IsSumBig,rt.IsSumRight );
+			else
+				this.UCRpt1.BindRpt(rpt, rt.PercentModel, false,false,false);
+				 
+			
+			this.UCRptCol.BindHistogram(rpt,rt.Width, rt.Height );
+			this.UCRptLine.BindPie(rpt, rt.Width ,  rt.Height );
+			this.UCRptPie.BindLine(rpt, rt.Width,  rt.Height );
+		}
+		#endregion
+
+		private string GenerSearchAttrString()
+		{
+			string searchkey="";
+			foreach(Microsoft.Web.UI.WebControls.ToolbarItem item in this.BPToolBar1.Items)
+			{
+				if (item.ID.IndexOf("DDL")!=-1)
+				{
+					ToolbarDDL ddl =(ToolbarDDL)item;
+					searchkey+="&"+ddl.ID+"="+ddl.SelectedItemStringVal ;
+				}
+
+				if (item.ID.IndexOf("TB")!=-1)
+				{
+					ToolbarTB tb =(ToolbarTB)item;
+					searchkey+="&"+tb.ID+"="+tb.Text;
+				}
+			}
+			return searchkey;
+		}
+		 
+		  
+
+		private void BPToolBar1_ButtonClick(object sender, EventArgs e)
+		{
+			ToolbarButton btn  = (ToolbarButton)sender;
+			switch(btn.ID)
+			{
+				case NamesOfBtn.DataCheck:
+					this.InvokeDataCheck(this.HisRpt3D.HisEns);
+					this.BindRpt(this.UCRpt1.RptTemplateGet());
+					return;
+				case NamesOfBtn.Help:
+					this.Helper("Help.htm");
+					this.BindRpt(this.UCRpt1.RptTemplateGet());
+					return;
+				case NamesOfBtn.Search:
+					this.BindRpt(this.UCRpt1.RptTemplateGet());
+					break;
+				case NamesOfBtn.Chart:
+					this.BindRpt(this.UCRpt1.RptTemplateGet());
+					break;
+				default:				
+					this.BindRpt(this.UCRpt1.RptTemplateGet());
+					break;
+			}
+
+		}
+	}
+}

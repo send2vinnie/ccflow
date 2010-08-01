@@ -1,0 +1,288 @@
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Web;
+using System.Web.SessionState;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+using BP.Rpt;
+using BP.En;
+using BP.En;
+using BP.DA;
+using BP.Web.Controls ; 
+using BP.Sys;
+namespace BP.Web.Comm.Rpt
+{
+	/// <summary>
+	/// RptOf3DDtl 的摘要说明。
+	/// </summary>
+	public class RptOf3DDtlV2 :WebPage
+	{
+		protected BP.Web.Controls.BPToolBar BPToolBar1;
+		protected BP.Web.Controls.DG DG1;
+		protected BP.Web.Controls.WebMenu WebMenu1;
+		protected BP.Web.Controls.WebMenu WebMenu2;
+		
+
+		#region 变量
+		/// <summary>
+		/// HisEnsName
+		/// </summary>
+		public string HisEnsName
+		{
+			get
+			{
+				return this.Request.QueryString["RptEns"];
+			}
+		}
+		#endregion 
+
+		/// <summary>
+		/// SheetType
+		/// </summary>
+		public string RptName
+		{
+			get
+			{
+				return this.Request.QueryString["RptName"] ; 
+			}
+		}
+
+		private Rpt3D _HisRpt3D=null ; 
+		public Rpt3D HisRpt3D
+		{
+			get
+			{
+				if (_HisRpt3D==null)
+				{
+					try
+					{
+						_HisRpt3D=(Rpt3D)DA.ClassFactory.GetObject(this.RptName) ;
+					}
+					catch(Exception ex)
+					{
+						this.Response.Write("class name error"+this.RptName+" exception:"+ex.Message);
+						///isRpt3D = new BP.Port.Rpt.TaxpayerRpt();
+					}
+				}
+				return _HisRpt3D;
+			}
+		}
+
+		private void Page_Load(object sender, System.EventArgs e)
+		{
+			UAC uac= this.HisRpt3D.HisEns.GetNewEntity.HisUAC;
+			this.DG1.HisWebMenuID =this.WebMenu1.ClientID;
+
+
+			this.WebMenu1.EnName=this.HisRpt3D.HisEn.ToString();
+			this.WebMenu1.EnsName=this.HisRpt3D.HisEns.ToString();
+
+			this.WebMenu1.BindEn(this.HisRpt3D.HisEn,uac,this.DG1.ClientID);
+			this.WebMenu1.Enabled=true;
+			this.WebMenu1.Visible=true;
+
+			//this.DG1.HisWebMenuID =this.WebMenu1.ClientID;
+
+			this.BPToolBar1.ButtonClick+=new EventHandler(BPToolBar1_ButtonClick);
+			if (this.IsPostBack==false)
+			{
+				this.BPToolBar1.InitByMap(false,HisRpt3D.HisAttrsOfSearch,this.HisRpt3D.HisFKSearchAttrs,null); 
+				this.BPToolBar1.AddSpt("ss");
+				this.BPToolBar1.AddLab("Lab_Num","");
+				this.DG1.PageSize=10000;
+
+				#region  set search attr
+				foreach(Microsoft.Web.UI.WebControls.ToolbarItem item in this.BPToolBar1.Items)
+				{
+					if (item.ID.IndexOf("DDL")!=-1)
+					{
+						ToolbarDDL ddl =(ToolbarDDL)item;
+						ddl.SetSelectItem(this.Request.QueryString[ddl.ID]);
+					}
+
+					if (item.ID.IndexOf("TB")!=-1)
+					{
+						ToolbarTB tb =(ToolbarTB)item;
+						try
+						{
+							tb.Text = this.Request.QueryString[tb.ID] ;
+						}
+						catch
+						{
+
+						}
+					}
+				}
+				#endregion
+
+				this.SetDG();
+			}
+			else
+			{
+				this.BindDG();
+			}
+			//this.WebMenu1.Bind(this.HisEn,uac,this.DG1.ClientID);
+		}
+		private void BindDG()
+		{
+			Entities ens = ClassFactory.GetEns(this.HisEnsName);
+			Entity en =ens.GetNewEntity ; 
+
+			this.DG1.InitDGColumns(en);
+			this.DG1.DataSource=this.Table;
+			this.DG1.EnableViewState=false;
+
+			this.DG1.IsReadonly=true;
+			this.DG1.DataBind();
+			this.DG1.PageSize=10000;
+
+			this.DG1.HisWebMenuID =this.WebMenu1.ClientID;
+
+
+			this.BPToolBar1.GetLabByKey("Lab_Num").Text=en.EnDesc+",合计:"+this.DG1.Items.Count+"个记录";
+
+		}
+		private void SetDG()
+		{
+			Entities ens = ClassFactory.GetEns(this.HisEnsName);
+			QueryObject qo = new QueryObject(ens);
+			Entity en =ens.GetNewEntity ; 
+			Attrs attrs  =en.EnMap.Attrs ; 
+
+			bool IsFist=true;
+			foreach(string str in this.Request.QueryString)
+			{
+				if (str=="abc" || str=="RptEns")
+					continue;
+				bool isHave=false;
+				Attr fkattr=null;
+				foreach(Attr attr in attrs)
+				{
+					if (attr.MyFieldType==FieldType.PKFK || attr.MyFieldType==FieldType.FK)
+					{
+						if ( attr.UIBindKey ==str)
+						{
+							isHave=true;
+							fkattr=attr;
+							break;
+						}
+					}
+				}
+
+				if (isHave==false)
+					continue;
+
+				if (IsFist==true)
+				{
+					IsFist=false;
+					if (str=="BP.Port.Depts")
+					{
+						qo.AddWhere(fkattr.Key, " like  ", this.Request.QueryString[str]);
+					}
+					else
+					{
+						qo.AddWhere(fkattr.Key, this.Request.QueryString[str]);
+					}
+					continue;
+				}
+				qo.addAnd();
+				qo.AddWhere(fkattr.Key, this.Request.QueryString[str]);
+			}
+			
+
+			qo.addAnd();
+
+			// 增加上查询属性。
+			qo.addLeftBracket();
+			 
+			qo.addLeftBracket();
+			qo.AddWhere("abc","all");
+			qo.addRightBracket();
+
+			#region 普通属性
+			string opkey=""; // 操作符号。
+			foreach(AttrOfSearch attr in  this.HisRpt3D.HisAttrsOfSearch)
+			{
+				if (attr.SymbolEnable==true)
+				{
+					opkey=this.BPToolBar1.GetDDLByKey("DDL_"+attr.Key).SelectedItemStringVal;
+					if (opkey=="all")
+						continue;
+				}
+				else
+				{
+					opkey=attr.DefaultSymbol;
+				}
+
+
+				qo.addAnd();
+				qo.addLeftBracket();
+
+				//string val="";
+				 
+				qo.AddWhere(attr.RefAttrKey,opkey, this.BPToolBar1.GetTBByID("TB_"+attr.Key).Text  ) ;
+				qo.addRightBracket();
+			}
+			#endregion
+
+			#region 外键
+		 
+			foreach(Attr attr in  this.HisRpt3D.HisFKSearchAttrs  )
+			{
+				if (attr.MyFieldType==FieldType.RefText) 
+					continue;
+				qo.addAnd();
+				qo.addLeftBracket();
+				if (attr.Key=="FK_Dept")
+				{
+					qo.AddWhere(attr.Key, "like", this.BPToolBar1.GetDDLByKey("DDL_"+attr.Key).SelectedItemStringVal+"%" ) ;
+				}
+				else
+				{
+					qo.AddWhere(attr.Key,this.BPToolBar1.GetDDLByKey("DDL_"+attr.Key).SelectedItemStringVal ) ;
+
+				}
+				qo.addRightBracket();
+			}
+			#endregion.
+
+
+			qo.addRightBracket(); // end bptoolbar 的条件。
+
+			//this.Response.Write(qo.SQL);
+
+			this.Table = qo.DoQueryToTable();
+			this.BindDG();
+		}
+
+		#region Web 窗体设计器生成的代码
+		override protected void OnInit(EventArgs e)
+		{
+			//
+			// CODEGEN: 该调用是 ASP.NET Web 窗体设计器所必需的。
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		
+		/// <summary>
+		/// 设计器支持所需的方法 - 不要使用代码编辑器修改
+		/// 此方法的内容。
+		/// </summary>
+		private void InitializeComponent()
+		{    
+			this.Load += new System.EventHandler(this.Page_Load);
+
+		}
+		#endregion
+
+		private void BPToolBar1_ButtonClick(object sender, EventArgs e)
+		{
+			this.SetDG();
+		}
+	}
+}
