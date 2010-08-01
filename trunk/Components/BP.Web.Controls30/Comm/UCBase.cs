@@ -687,7 +687,7 @@ namespace BP.Web.UC
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message + " 请确认：TB and TextBox ");
+                throw new Exception(ex.Message + " 请确认：TB and TextBox "+key);
             }
         }
         public TextBox GetTextBoxByID(string key)
