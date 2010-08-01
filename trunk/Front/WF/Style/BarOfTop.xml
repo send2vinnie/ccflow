@@ -11,7 +11,7 @@
   <Item No="Tools" CH="工具栏"  B5="工具栏"  EN="Rpt"  JP="工具栏" RU="Заявления" Url="Tools.aspx" Img="./Img/Tools.gif" Enable="0" Title="工具栏" />
 
   <Item No="Msg" CH="消息"  B5="消息"  EN="Msg"  JP="消息" RU="消息" Url="Msg.aspx" Img="./Img/Login.gif" Enable="0" Title="流程查询。" />
-  <Item No="Calendar" CH="Calendar"  B5="Calendar"  EN="Calendar"  JP="Calendar" RU="Calendar" Url="Calendar.aspx" Img="./Img/Login.gif" Enable="0" Title="Calendar。" />
+  <Item11s No="Calendar" CH="Calendar"  B5="Calendar"  EN="Calendar"  JP="Calendar" RU="Calendar" Url="Calendar.aspx" Img="./Img/Login.gif" Enable="0" Title="Calendar。" />
 
   
   <Item No="Login" CH="切换"  B5="切换"  EN="Rpt"  JP="切换" RU="Заявления" Url="Login.aspx" Img="./Img/Login.gif" Enable="0" Title="流程查询。" />

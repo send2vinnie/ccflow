@@ -131,6 +131,15 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         }
         this.Pub2.AddTableEndWithBR();
 
+     
+ 
+
+        Button btn = new Button();
+        if (isHave == false)
+        {
+            this.Pub2.AddMsgInfo("提示：","该节点下没有您要复制的字段。");
+            return;
+        }
         this.Pub2.Add("到分组:");
         gfs = new GroupFields(this.FK_Node);
         ddl = new BP.Web.Controls.DDL();
@@ -139,19 +148,6 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         ddl.SetSelectItem(this.GroupField);
         this.Pub2.Add(ddl);
 
-        MapData md = new MapData(this.NodeOfSelect);
-
-        //CheckBox cb1 = new CheckBox();
-        //cb1.ID = "CB_Table";
-        //cb1.Text = "复制该表单据中的表格(注意如果当前表单中已经存在，就会覆盖它。)";
-        //this.Pub2.Add(cb1);
-
-        Button btn = new Button();
-        if (isHave == false)
-        {
-            this.Pub2.AddH3("对不起该节点下没有您要复制的字段。");
-            btn.Enabled = false;
-        }
 
         btn.ID = "Btn_OK";
         btn.Text = this.ToE("Copy", " 复制 ");
