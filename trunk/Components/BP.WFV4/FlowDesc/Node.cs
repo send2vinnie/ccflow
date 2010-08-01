@@ -2236,7 +2236,7 @@ namespace BP.WF
             if (this.IsStartNode)
                 attr.UIVisible = false;
             else
-                attr.UIVisible = true;
+                attr.UIVisible = false;
 
             attr.UIIsEnable = false;
             attr.Tag = "1";

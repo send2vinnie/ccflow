@@ -453,6 +453,10 @@ namespace BP.Sys
                         return DataType.CurrentYear;
                     case "@FK_YF":
                         return DataType.CurrentMonth;
+                    case "@RDT":
+                        return DataType.CurrentDataTime;
+                    case "@RD":
+                        return DataType.CurrentData;
                     default:
                         throw new Exception("没有约定的变量默认值类型" + s);
                 }
