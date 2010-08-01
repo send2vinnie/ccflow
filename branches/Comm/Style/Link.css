@@ -1,0 +1,26 @@
+ 
+A:link
+{
+	color: blue;
+	text-decoration: none;
+}
+
+A:visited
+{
+    color: black;
+}
+
+A:active
+{
+	color: black;
+	text-decoration: underline;
+}
+
+A:hover
+{
+	color: yellow;
+	background-color: black;
+	text-decoration: none;
+}
+
+ 

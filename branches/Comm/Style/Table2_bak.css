@@ -1,0 +1,756 @@
+/*  Table 风格  */
+body, iframe
+{
+	font-size: 12px;
+	padding: 0px;
+	margin: 0;
+}
+
+/* 表格风格 */
+.Table
+{
+	width:100%;
+	border-collapse: collapse;
+	border: #89c6fd 1px solid;
+}
+.TableRed
+{
+	border-right: activeborder 1px solid;
+	padding-right: 5px;
+	border-top: activeborder 1px solid;
+	padding-left: 5px;
+	font-size: 14px;
+	padding-bottom: 1px;
+	margin: 1px;
+	border-left: activeborder 1px solid;
+	padding-top: 1px;
+	border-bottom: activeborder 1px solid;
+	border-color:#abcbe6;
+	width:100%;
+}
+
+.TableYellow
+{
+	border-right: activeborder 1px solid;
+	padding-right: 5px;
+	border-top: activeborder 1px solid;
+	padding-left: 5px;
+	font-size: 14px;
+	padding-bottom: 1px;
+	margin: 1px;
+	border-left: activeborder 1px solid;
+	padding-top: 1px;
+	border-bottom: activeborder 1px solid;
+	border-color:#abcbe6;
+	width:100%;
+}
+
+.TableBlue
+{
+	border-right: activeborder 1px solid;
+	padding-right: 5px;
+	border-top: activeborder 1px solid;
+	padding-left: 5px;
+	font-size: 14px;
+	padding-bottom: 1px;
+	margin: 1px;
+	border-left: activeborder 1px solid;
+	padding-top: 1px;
+	border-bottom: activeborder 1px solid;
+	border-color:#abcbe6;
+	width:100%;
+}
+
+/*表格头风格*/
+.Caption
+{
+	font: caption;
+	color: black;
+}
+
+/*表格表题，向左对起。*/
+.TitleLeft
+{
+	border-right: infobackground thin groove;
+	padding-right: 0px;
+	border-top: infobackground thin groove;
+	padding-left: 1px;
+	padding-bottom: 0px;
+	margin: 0px 0px 0px 1px;
+	border-left: infobackground thin groove;
+	padding-top: 0px;
+	border-bottom: infobackground thin groove;
+	background-color: activeborder;
+	text-align: left;
+	
+}
+
+/*表格表题*/
+.Title
+{
+	background-color:#eee;
+	font-weight:bold;
+	font-size:14px;
+	border:1px solid #ccc;
+    text-align: center;
+    background:#d8e9ed url(../Images/title1.gif) repeat-x bottom;
+    font-size:12px;
+    height:25px;
+}
+
+.TitleTopLeft
+{
+	background-color:#eee;
+	font-weight:bold;
+	font-size:14px;
+	border:1px solid #ccc;
+    text-align: center;
+    background:#d8e9ed url(../Images/title1.gif) repeat-x bottom;
+    font-size:12px;
+    height:25px;
+}
+
+.TitleTopRight
+{
+	background-color:#eee;
+	font-weight:bold;
+	font-size:14px;
+	border:1px solid #ccc;
+    text-align: center;
+    background:#d8e9ed url(../Images/title1.gif) repeat-x bottom;
+    font-size:12px;
+    height:25px;
+}
+
+
+
+
+.TitleRed
+{
+	background-color:#eee;
+	font-weight:bold;
+	font-size:14px;
+	border:1px solid #ccc;
+    text-align: center;
+    background:#d8e9ed url(../Images/title1.gif) repeat-x bottom;
+    font-size:12px;
+    height:25px;
+}
+
+.TitleBlue
+{
+	background-color:#eee;
+	font-weight:bold;
+	font-size:14px;
+	border:1px solid #ccc;
+    text-align: center;
+    background:#d8e9ed url(../Images/title1.gif) repeat-x bottom;
+    font-size:12px;
+    height:25px;
+}
+
+
+.TitleGreen
+{
+	background-color:#eee;
+	font-weight:bold;
+	font-size:14px;
+	border:1px solid #ccc;
+    text-align: center;
+    background:#d8e9ed url(../Images/title1.gif) repeat-x bottom;
+    font-size:12px;
+    height:25px;
+}
+
+/*分组的 title */
+.GroupTitle
+{
+	font-weight:bold;
+	font-size:14px;
+    text-align: left;
+    background:#d8e9ed;
+    font-size:12px;
+    height:25px;
+}
+
+.GroupTitleRed
+{
+	font-weight:bold;
+	font-size:14px;
+    text-align: left;
+    background:#d8e9ed;
+    font-size:12px;
+    height:25px;
+}
+
+.GroupTitleBlue
+{
+	font-weight:bold;
+	font-size:14px;
+    text-align: left;
+    background:#d8e9ed;
+    font-size:12px;
+    height:25px;
+}
+
+.GroupTitleGreen
+{
+	font-weight:bold;
+	font-size:14px;
+    text-align: left;
+    background:#d8e9ed;
+    font-size:12px;
+    height:25px;
+}
+
+
+/*表格中的序号*/
+.Idx
+{
+	border:#89c6fd 1px solid;
+    width: 2%;
+    font-weight: bold;
+    text-align: center;
+}
+ 
+
+/* 在输入信息字段名称，单元格式的风格 */
+.FDesc
+{
+    padding: 4px;
+    text-align: left;
+    font-size: 14px;
+    margin: 4px;
+    background-color: #f4f4f4;
+	border: lightgrey 1px solid;
+	border-top:none;
+}
+
+/* TextBox */
+.TB
+{
+	font-size: 14px;
+    text-align: left;
+    float: left;
+    clear: left;
+    width:100%;
+    border:0px solid #666;
+}
+
+/* TextBox 编号的风格 */
+.TBNum
+{
+	font-size: 14px;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;
+	border-bottom-style: none;
+	text-align: right;
+	float: left;
+	clear: left;
+	vertical-align: bottom;
+	margin-right:0px;
+}
+ 
+/* TextBox 只读风格 */
+.TBReadonly
+{
+	background-color: infobackground;
+	font-size: 14px;
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;
+    text-align: left;
+    float: left;
+    clear: left;
+}
+
+/* TextBox 数值只读风格 */
+.TBNumReadonly
+{
+	font-size: 14px;
+	background-color: infobackground;
+	border-right: black thin;
+	border-top: black thin;
+	border-left: black thin;
+	border-bottom: black thin;
+	text-align: right;
+	vertical-align: bottom;
+	margin-right:5px;
+	
+}
+
+/* TextBox 数值只读风格 */
+.TR
+{
+}
+
+
+/* 表格体下部的合计风格。 */
+.TRSum
+{
+	background-color: infobackground;
+	font-size: 14px;
+}
+
+/* 普通单元格风格 */
+.TD
+{
+	
+}
+
+/* 数值单元格风格 */
+.TDNum
+{
+	padding-right: 5px;
+	padding-left: 1px;
+	padding-bottom: 0px;
+	margin: 0px 0px 0px 1px;
+	padding-top: 0px;
+	font-family: 宋体;
+	text-align: center;
+	font-size:12px;
+	margin-right:12px;border:#89c6fd 1px solid;
+}
+
+/* 大块文本风格 */
+.BigDoc
+{
+	border-style: none;
+	padding: 5px;
+	font-size: 14px;
+	margin: 5px;
+	line-height: 20px;
+	letter-spacing: 0pc;
+}
+
+/* 内部标签风格 */
+fieldset
+{
+    padding: 5px;
+    margin: 5px;
+margin-bottom:5px;
+}
+legend
+{
+    color: #000066;
+}
+
+/* 工具栏风格 */
+.ToolBar
+{
+    background-color: #d8edff;
+    font-family:Verdana;
+    font-size:14px;
+    height:20px;
+    line-height:20px;
+    padding:4px;
+}
+
+/*表格头部 标题风格 */
+.Table_Title{
+	display:block;
+	height:28px;
+	line-height:28px;
+	padding:0px 15px;
+	font-weight:bolder;
+	margin-bottom:0px;
+	background: url(../Images/TitleCaption1.gif) no-repeat left;
+	font-size:12px;
+}
+
+/*按钮风格*/
+.Btn
+{
+    margin-right: 3px;
+    height: 25px;
+    line-height: 20px;
+}
+.TH {
+text-align:center;
+border:#89c6fd 1px solid;
+}
+
+/*   ===================菜单Tab导航风格-横向 ============= */
+
+/*导航标签通用属性*/
+.Menu,.MenuS,.MenuRed,.MenuGreen,.MenuBlue,.MenuYellow
+{
+	width:103px;
+	height:30px;
+	line-height:30px;
+	text-align:center; 
+	cursor:pointer;
+	display:block;
+}
+
+
+/* 导航标签超链接*/
+.Menu a,.MenuS a,.MenuRed a,.MenuGreen a,.MenuBlue a,.MenuYellow a
+{
+    display:block;
+    color:#fff;
+    font-weight:bold;
+    width:103px;
+}
+.MenuRed a,.MenuBlue a
+{
+    display:block;
+    color:#fff;
+    font-weight:bold;
+    width:103px;
+}
+
+
+/* 各种颜色的悬停状态*/
+.Menu
+{
+	background:url(nav_bg.png) no-repeat top center; 
+	cursor:pointer; 
+	color:#000;
+}
+
+.MenuRed
+{
+	background:url(../Images/menu/menured.gif) no-repeat center top; 
+}
+.MenuGreen
+{
+	background:url(../Images/menu/menuGreen.gif) no-repeat center top; 
+}
+.MenuBlue
+{
+	background:url(../Images/menu/menuBlue.gif) no-repeat center top; 
+}
+.MenuYellow
+{
+	background:url(../Images/menu/menuYellow.gif) no-repeat center top; 
+}
+
+/*选择的风格和鼠标滑过的*/
+.MenuS a,.Menu a:hover,.MenuGreen a:hover,.MenuYellow a:hover
+{
+	background:url(nav_bg_hover.png) no-repeat top center; 
+	text-align:center;
+}
+.MenuRed a:hover,.MenuBlue a:hover
+{
+    color:#fff;
+    background:url(../Images/menu/menudf_hover.gif) no-repeat center top; 
+	text-align:center; 
+}
+.MenuWin7 
+{
+    width:103px;
+    height:42px;
+	line-height:42px;
+	text-align:center; 
+	cursor:pointer;
+	background:url(../Images/menu/win7.gif) repeat-x; 
+}
+.MenuWin7S,.MenuWin7 
+{
+    border-left:1px #c3dfff solid;
+}
+.MenuWin7 a,.MenuWin7S a 
+{
+    color:#fff;
+}
+.MenuWin7S,.MenuWin7 a:hover
+{
+    display:block;
+    width:103px;
+    height:42px;
+	line-height:42px;
+	text-align:center; 
+    color:#fff;
+    font-weight:bold;
+    background:url(../Images/menu/win7hover.gif) repeat-x; 
+}
+
+
+/* 信息块 */
+.InfoBlock
+{
+}
+
+.InfoBlockRed
+{
+        
+}
+
+ 
+ .r_info p{
+  	margin:0;
+	}    
+ 
+.r_info{
+  	width:480px;
+	}    
+.r_info .info_in {
+	padding:5px 15px;
+	background-color:#f4fafe;
+ 	border:2px solid #d6ebf9;
+ 	border-top:none;
+ 	border-bottom:none}
+.info_in p
+{
+	padding:8px 0;
+}
+.newsBox{ 
+	width:690px;
+  margin-top:10px;
+  margin-left:10px;
+	
+  }
+  
+  /**/
+  .top_yj,.bottom_yj 
+  {
+  	height:4px;
+  	width:100%;
+  }
+  .top_left 
+  {
+  	float:left;
+  	width:4px;
+  	background:url(../GEFactory/Images/tl_df.jpg);
+  }
+  .top_middle 
+  {
+  	border-top:1px #ccc solid;
+  	background:#f9f9f9;
+  }
+  .top_right
+  {
+  	float:right;
+  	width:4px;
+  	background:url(../GEFactory/Images/tl_df.jpg);
+  }
+
+#font_list, #div8 {
+border:0;
+}
+
+.TagCloud {
+padding:8px;
+sont-size:14px;
+list-style:none;
+width:100%;
+}
+.TagCloud li {
+float:left;
+white-space: nowrap;
+margin-right:10px;
+}
+
+
+fieldset {
+    padding:10px;
+    margin:10px;
+    width:270px;
+    color:#333; 
+    border:#06c dashed 1px;
+} 
+legend {
+    color:#06c;
+    font-weight:800; 
+    background:#fff;
+    border:#b6b6b6 solid 1px;
+    padding:3px 6px;
+} 
+ul {
+    list-style-type: none;
+    margin:8px 0 4px 0;
+} 
+
+
+/* 输 */
+
+.MenuSelfVertical {
+margin:3px;
+}
+.MenuSelfVertical li {
+margin:0px;
+}
+.MenuSelfVerticalItem a,.MenuSelfVerticalItemS a:visited,.MenuSelfVerticalItemS a:active{
+ display:block;
+ height:25px;
+ text-align:center;
+ font-weight:bolder;
+ font-size:13px;
+ background:#f3f8fe/*url(tab_bg.jpg) repeat-x -10px*/;
+border:#89c6fd 0px solid;
+margin-bottom:3px;
+}
+.MenuSelfVerticalItem a:hover {
+
+ background:#a4dacc/*url(title_01bg.jpg) repeat-x -10px*/;
+color:#0060a8;
+
+}
+
+.GroupTitle img {
+ vertical-align:middle;
+margin-right:3px;
+margin-left:5px;
+}
+.GroupTitle
+{
+	background: #c7e7fa;
+	height: 23px;
+	line-height: 23px;
+	border: #89c6fd 1px solid;
+	text-align: center;
+	padding: 0px 3px;
+}
+.TD_title a
+{
+	color: #333;
+	text-decoration: none;
+}
+.TD_title a:hover
+{
+	color: #f00;
+}
+.TD_title
+{
+	text-align: left;
+	width: 150px;
+	text-overflow: ellipsis;
+	word-wrap: nowrap;
+	overflow: hidden;
+	border: #89c6fd 1px solid;
+}
+.TD_title img
+{
+	vertical-align: middle;
+	margin-right: 5px;
+	margin-left: 3px;
+}
+
+#user_ph{
+height:20px;
+}
+#PageIdx {
+width:100%;
+text-align:center;
+}
+#PageIdx a {
+margin:5px;
+text-decoration:none;
+color:#333;
+}
+
+#jspx .DefaultTop_tabcontent li {
+}
+#jspx .DefaultTop_tabcontent li {
+background:url(../R3/Style/images/ion/li_dot_01.gif) no-repeat left ;
+padding-left:8px;
+}
+
+#jspx .DefaultTop_tabcontent li table {
+height:20px !important;
+}
+#ctl00_ContentPlaceHolder1_TreeView1 a {
+display:block;
+padding:0px 8px;
+}
+.main_body {
+margin-bottom:5px;
+}
+.author {
+float:right;
+margin-right:3px;
+}
+
+.yj_style {
+height:4px !important;
+}
+
+
+/* 分页效果。*/
+
+.PageIdx,.PageIdx_red,.PageIdx_default,.PageIdx_simple {
+	width:100%;
+	height:18px;
+	line-height:18px;
+	text-align:center;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+.PageIdx a,.PageIdx_red a,.PageIdx_default a {
+	text-decoration:none;
+	color:#036;
+	font-size:12px;
+	display:block;
+	padding:3px 8px 0px 8px;
+	border:1px #ccc solid;
+	line-height:18px;
+}
+.PageIdx_default a {
+	text-decoration:none;
+	color:#036;
+	font-size:12px;
+	display:block;
+	padding:3px 8px 0px 8px;
+	border:1px #1EA5CC solid;
+	line-height:18px;
+	background:url(style/Img/tab_bg.gif) repeat-x top;
+}
+.PageIdx a:hover,.PageIdx .pick {
+	background:#036;
+	color:#FFF;
+}
+.PageIdx_red a:hover,.PageIdx_red .pickred {
+	background:#900;
+	color:#FFF;
+}
+.PageIdx_default a:hover,.PageIdx_default .pickdefault {
+	background:#eee url(style/Img/tab1hover.gif) repeat-x;
+	color:#fff;
+}
+.PageIdx ul,.PageIdx_red ul,.PageIdx_default ul,.PageIdx_simple ul {
+	padding:0;
+	margin:0;
+	margin-left:auto;
+	margin-right:auto;
+}
+.PageIdx li,.PageIdx_red li,.PageIdx_default li,.PageIdx_simple li {
+	float:left;
+	margin-right:3px;
+	list-style:none;
+}
+.PageIdx input,.PageIdx_red input,.PageIdx_default input,.PageIdx_simple input {
+	margin:0px 5px;
+}
+.PageIdx_simple a {
+	display:block;
+	padding:3px 8px;
+	background:#eee;
+	text-decoration:none;
+	color:#333;
+}
+.PageIdx_simple a:hover,.PageIdx_simple .picksimple {
+	display:block;
+	padding:3px 8px;
+	background:#666;
+	text-decoration:none;
+	color:#fff;
+}
+.tips {
+	color:#999;
+}
+.tips:hover {
+	color:#333;
+	vertical-align:middle
+}
+ 
+
+
+
+
+
+
+

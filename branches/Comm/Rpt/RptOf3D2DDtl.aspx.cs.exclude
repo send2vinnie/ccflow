@@ -1,0 +1,241 @@
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Web;
+using System.Web.SessionState;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+using BP.Rpt;
+using BP.En;
+using BP.En;
+using BP.DA;
+using BP.Web.Controls ; 
+using BP.Sys;
+namespace BP.Web.Comm.Rpt
+{
+	/// <summary>
+	/// RptOf3DDtl 的摘要说明。
+	/// </summary>
+	public class RptOf3D2DDtl :WebPage
+	{
+		protected BP.Web.Controls.DG DG1;
+		protected BP.Web.Controls.WebMenu WebMenu1;
+		protected System.Web.UI.WebControls.Label Label1;
+	 
+
+		#region 变量
+		/// <summary>
+		/// HisEnsName
+		/// </summary>
+		public string HisEnsName
+		{
+			get
+			{
+				return this.Request.QueryString["RptEns"];
+			}
+		}
+		#endregion 
+
+		/// <summary>
+		/// SheetType
+		/// </summary>
+		public string RptName
+		{
+			get
+			{
+				return this.Request.QueryString["RptName"] ; 
+			}
+		}
+
+		private Rpt3D _HisRpt3D=null ; 
+		public Rpt3D HisRpt3D
+		{
+			get
+			{
+				if (_HisRpt3D==null)
+				{
+					try
+					{
+						_HisRpt3D=(Rpt3D)DA.ClassFactory.GetObject(this.RptName) ;
+					}
+					catch(Exception ex)
+					{
+						this.Response.Write("class name error"+this.RptName+" exception:"+ex.Message);
+						///isRpt3D = new BP.Port.Rpt.TaxpayerRpt();
+					}
+				}
+				return _HisRpt3D;
+			}
+		}
+
+		private void Page_Load(object sender, System.EventArgs e)
+		{
+			UAC uac= this.HisRpt3D.HisEns.GetNewEntity.HisUAC;
+
+			this.WebMenu1.EnName=this.HisRpt3D.HisEn.ToString();
+			this.WebMenu1.EnsName=this.HisRpt3D.HisEns.ToString();
+
+			this.WebMenu1.BindEn(this.HisRpt3D.HisEn,uac,this.DG1.ClientID);
+			this.WebMenu1.Enabled=true;
+			this.WebMenu1.Visible=true;
+			this.DG1.HisWebMenuID =this.WebMenu1.ClientID;
+			this.DG1.PageSize=10000;
+			this.SetDG();
+		}
+		private void BindDG()
+		{
+			Entities ens = ClassFactory.GetEns(this.HisEnsName);
+			Entity en =ens.GetNewEntity ; 
+			this.DG1.InitDGColumns(en);
+			this.DG1.DataSource=this.Table;
+			this.DG1.EnableViewState=false;
+			this.DG1.IsReadonly=true;
+			this.DG1.DataBind();
+			this.DG1.PageSize=10000;
+			//this.BPToolBar1.GetLabByKey("Lab_Num").Text=en.EnDesc+",合计:"+this.DG1.Items.Count+"个记录";
+		}
+		private void SetDG()
+		{
+			//this.DG1.HisWebMenuID =this.WebMenu1.ClientID;
+			Entities ens = ClassFactory.GetEns(this.HisEnsName);
+			Rpt3D rpt = this.HisRpt3D;
+			Map map = ens.GetNewEntity.EnMap;
+			QueryObject qo = new QueryObject(ens);
+			bool isAddAnd=false;
+			// 加入普通键、year month day.
+			foreach(string str in this.Request.QueryString)
+			{
+				if (str.IndexOf("_Year")==-1)
+					continue;
+
+				string key="";
+				string[] mystrs=str.Split('_');
+				key=mystrs[2];
+				string ft=mystrs[1];
+				string date="";
+
+				try
+				{
+					/* 就可能是年月日。 */
+					string y=this.Request.QueryString["DDL_"+ft+"@"+ key +"_Year"];
+					string m=this.Request.QueryString["DDL_"+ft+"@"+ key +"_Month"]; 
+					string d=this.Request.QueryString["DDL_"+ft+"@"+ key +"_Day"]; 
+					date= y+"-"+m+"-"+d;
+				}
+				catch
+				{
+				}
+
+				if (isAddAnd==true)
+					qo.addAnd();
+
+				if (ft=="Form")
+					qo.AddWhere(key, ">=" , date  ) ;
+				else
+					qo.AddWhere(key, "<=" , date  ) ;
+
+				isAddAnd=true;
+			}
+				
+			// 加入外键. DDL_结尾。 
+			foreach(string str in this.Request.QueryString)
+			{
+				if (str.IndexOf("DDL_")==-1)
+					continue;
+
+				if (str.IndexOf("_Year") > 0
+					|| str.IndexOf("_Month") >0
+					|| str.IndexOf("_Day") >0
+					)
+					continue;
+
+
+
+				string key=str.Substring(4);
+				if (key=="PM")
+					continue;
+
+				string val=this.Request.QueryString[str];
+				if (val=="all")
+					continue;
+
+
+				if (isAddAnd==true)
+					qo.addAnd();
+				if (key=="FK_Dept")  //判断特殊情况。
+					qo.AddWhere(key, " LIKE ",val +"%" ) ;
+				else
+					qo.AddWhere(key, val ) ;
+
+				isAddAnd=true;
+			}
+
+			// 加入外键. 纬度 结尾。 
+			foreach(string str in this.Request.QueryString)
+			{
+				if (str=="RptEns")
+					continue;
+
+				if (str=="RptName")
+					continue;
+				
+				if (str.IndexOf("DDL_")!=-1 )
+					continue;
+
+				string val=this.Request.QueryString[str];
+				if (val=="all")
+					continue;
+
+				string key="";
+				try
+				{
+					key=map.GetAttrByKey(str).Key; 
+				}
+				catch
+				{
+					continue;
+				}
+
+				if (isAddAnd==true)
+					qo.addAnd();
+				qo.AddWhere(key, val) ;
+				isAddAnd=true;
+			}
+
+			//QueryObject qo =this.BPToolBar1.InitQueryObjectByEns(ens,false, ens.GetNewEntity.EnMap.Attrs, rpt.HisAttrsOfSearch, rpt.HisFKSearchAttrs );
+			//this.ResponseWriteBlueMsg(qo.SQL);
+			this.Table = qo.DoQueryToTable();
+			this.BindDG();
+			this.GenerLabel(this.Label1,"数据明细：共"+this.Table.Rows.Count+"条。");
+		}
+
+		#region Web 窗体设计器生成的代码
+		override protected void OnInit(EventArgs e)
+		{
+			//
+			// CODEGEN: 该调用是 ASP.NET Web 窗体设计器所必需的。
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		
+		/// <summary>
+		/// 设计器支持所需的方法 - 不要使用代码编辑器修改
+		/// 此方法的内容。
+		/// </summary>
+		private void InitializeComponent()
+		{    
+			this.Load += new System.EventHandler(this.Page_Load);
+
+		}
+		#endregion
+
+		private void BPToolBar1_ButtonClick(object sender, EventArgs e)
+		{
+			this.SetDG();
+		}
+	}
+}
