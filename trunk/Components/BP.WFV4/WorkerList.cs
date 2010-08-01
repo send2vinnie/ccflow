@@ -460,6 +460,7 @@ namespace BP.WF
         /// <returns></returns>
         public static bool CheckUserPower(Int64 workId, string empId)
         {
+
             string sql = "SELECT count( a.Workid) FROM dbo.WF_GenerWorkFlow a , dbo.WF_GenerWorkerList b WHERE a.workid=b.workid and a.fk_node=b.fk_node and b.fk_emp='" + empId + "' and b.IsEnable=1 and a.workid=" + workId;
             if (DBAccess.RunSQLReturnValInt(sql) == 0)
                 return false;
