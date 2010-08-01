@@ -7,7 +7,7 @@
 // 关联的内容页“comm\uc\ucen.ascx”也已修改，以引用新的类名。
 // 有关此代码模式的更多信息，请参考 http://go.microsoft.com/fwlink/?LinkId=46995 
 //===========================================================================
-namespace BP.Web.Comm.UC
+namespace BP.Web.Comm.UC.WF
 {
     using System;
     using System.Data;
@@ -40,15 +40,15 @@ namespace BP.Web.Comm.UC
 
         public void BindColumn4(Entity en, string enName)
         {
-            if (this.Controls.Count > 10)
-                return;
+            //this.Bind(en, this.CurrEn.ToString(), false, true);
+            //return;
 
             this.HisEn = en;
             currGF = new GroupField();
             MapAttrs mattrs = new MapAttrs(enName);
             gfs = new GroupFields(enName);
             dtls = new MapDtls(enName);
-            this.AddTable();
+            this.Add("<table class=TableFrom id=tabForm >");
             foreach (GroupField gf in gfs)
             {
                 currGF = gf;
@@ -82,6 +82,7 @@ namespace BP.Web.Comm.UC
                     if (isLeftNext == true)
                         this.InsertObjects(true);
 
+                    #region 加入字段
                     // 显示的顺序号.
                     idx++;
                     if (attr.IsBigDoc && attr.UIIsLine)
@@ -103,6 +104,7 @@ namespace BP.Web.Comm.UC
 
                         TextBox mytbLine = new TextBox();
                         mytbLine.TextMode = TextBoxMode.MultiLine;
+                        mytbLine.ID = "TB_" + attr.KeyOfEn;
                         mytbLine.Rows = 8;
                         mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
@@ -127,6 +129,7 @@ namespace BP.Web.Comm.UC
                         this.Add("<TD class=FDesc colspan=2>");
                         this.Add(attr.Name);
                         TextBox mytbLine = new TextBox();
+                        mytbLine.ID = "TB_" + attr.KeyOfEn;
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.Rows = 8;
                         mytbLine.Columns = 30;
@@ -135,7 +138,6 @@ namespace BP.Web.Comm.UC
                         mytbLine.Enabled = attr.UIIsEnable;
                         if (mytbLine.Enabled == false)
                             mytbLine.Attributes["class"] = "TBReadonly";
-
 
 
                         this.Add(mytbLine);
@@ -176,12 +178,12 @@ namespace BP.Web.Comm.UC
                     TB tb = new TB();
                     tb.Attributes["width"] = "100%";
                     tb.Columns = 60;
+                    tb.ID = "TB_" + attr.KeyOfEn;
 
                     #region add contrals.
                     switch (attr.LGType)
                     {
                         case FieldTypeS.Normal:
-
                             tb.Enabled = attr.UIIsEnable;
                             switch (attr.MyDataType)
                             {
@@ -189,6 +191,7 @@ namespace BP.Web.Comm.UC
                                     this.AddTDDesc(attr.Name);
                                     tb.ShowType = TBType.TB;
                                     tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+
                                     this.AddTD("colspan=" + colspanOfCtl, tb);
                                     break;
                                 case BP.DA.DataType.AppDate:
@@ -213,6 +216,7 @@ namespace BP.Web.Comm.UC
                                     this.AddTDDesc("");
                                     CheckBox cb = new CheckBox();
                                     cb.Text = attr.Name;
+                                    cb.ID = "CB_" + attr.KeyOfEn;
                                     cb.Checked = attr.DefValOfBool;
                                     cb.Enabled = attr.UIIsEnable;
                                     cb.Checked = en.GetValBooleanByKey(attr.KeyOfEn);
@@ -258,6 +262,7 @@ namespace BP.Web.Comm.UC
                         case FieldTypeS.Enum:
                             this.AddTDDesc(attr.Name);
                             DDL ddle = new DDL();
+                            ddle.ID = "DDL_" + attr.KeyOfEn;
                             ddle.BindSysEnum(attr.KeyOfEn);
                             ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
                             ddle.Enabled = attr.UIIsEnable;
@@ -285,6 +290,10 @@ namespace BP.Web.Comm.UC
                     }
                     #endregion add contrals.
 
+                    #endregion 加入字段
+
+                    #region 尾后处理。
+
                     if (colspanOfCtl == 3)
                     {
                         isLeftNext = true;
@@ -299,6 +308,8 @@ namespace BP.Web.Comm.UC
                         continue;
                     }
                     isLeftNext = false;
+                    #endregion add contrals.
+
                 }
                 // 最后处理补充上它。
                 if (isLeftNext == false)
@@ -308,6 +319,7 @@ namespace BP.Web.Comm.UC
                     this.AddTREnd();
                 }
                 this.InsertObjects(false);
+
             }
             this.AddTableEnd();
 
@@ -333,7 +345,6 @@ namespace BP.Web.Comm.UC
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
-
             #endregion 处理iFrom 的自适应的问题。
         }
 

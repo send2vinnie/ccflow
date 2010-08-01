@@ -212,6 +212,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, System.EventArgs e)
     {
         BP.WF.Node currND;
+        BP.WF.Work currWK;
+
         try
         {
             #region 增加按钮
@@ -258,55 +260,50 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.ToolBar1.AddSpt("Next");
             #endregion
 
-            if (this.IsPostBack == false)
+            currND = this.CurrentNode;
+            if (this.WorkID == 0)
             {
-                if (this.WorkID == 0)
-                {
-                    currND = this.CurrentNode;
-                    this.New(true, currND);
-                    this.Btn_ReturnWork.Enabled = false;
-                    this.Btn_Forward.Enabled = false;
-                }
-                else
-                {
-                    if (WorkerLists.CheckUserPower(this.WorkID, WebUser.No) == false)
-                    {
-                        this.ToolBar1.Clear();
-                        this.ToolBar1.Add("&nbsp;");
-
-                        this.UCEn1.Clear();
-                        this.UCEn1.DivInfoBlockBegin(); //("<b>提示</b><hr>@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
-                        this.UCEn1.AddB("提示");
-                        this.UCEn1.AddHR();
-                        this.UCEn1.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。");
-
-                        this.UCEn1.AddUL();
-                        this.UCEn1.AddLi("<a href='Start.aspx'>发起新流程。</a>");
-                        this.UCEn1.AddLi("<a href='Runing.aspx'>返回在途工作列表。</a>");
-                        this.UCEn1.AddULEnd();
-
-                        // this.UCEn1.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
-                        this.UCEn1.DivInfoBlockEnd();
-                        return;
-                    }
-                    currND = this.LoadWorkID(this.WorkID);
-                }
+                currWK = this.New(true, currND);
+                this.Btn_ReturnWork.Enabled = false;
+                this.Btn_Forward.Enabled = false;
             }
             else
             {
-                currND = new BP.WF.Node(this.FK_Node);
-                this.BindWork(currND);
+                if (this.CurrentNode.IsStartNode == false && WorkerLists.CheckUserPower(this.WorkID, WebUser.No) == false)
+                {
+                    this.ToolBar1.Clear();
+                    this.ToolBar1.Add("&nbsp;");
+
+                    this.FlowMsg.Clear();
+                    this.FlowMsg.DivInfoBlockBegin(); //("<b>提示</b><hr>@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
+                    this.FlowMsg.AddB("提示");
+                    this.FlowMsg.AddHR();
+                    this.FlowMsg.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。");
+
+                    this.FlowMsg.AddUL();
+                    this.FlowMsg.AddLi("<a href='Start.aspx'>发起新流程。</a>");
+                    this.FlowMsg.AddLi("<a href='Runing.aspx'>返回在途工作列表。</a>");
+                    this.FlowMsg.AddULEnd();
+
+                    // this.UCEn1.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
+                    this.FlowMsg.DivInfoBlockEnd();
+                    return;
+                }
+                currWK = this.GenerCurrWork(this.WorkID);
             }
+
+            currND = this.CurrentNode;
+            this.BindWork(currND, currWK);
 
             if (this.ToolBar1.IsExit(NamesOfBtn.Send))
             {
-               // this.Btn_Send.Attributes["onclick"] = "return SaveDtl();";
+                // this.Btn_Send.Attributes["onclick"] = "return SaveDtl();";
                 this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
             if (this.ToolBar1.IsExit(NamesOfBtn.Save))
             {
-             //   this.Btn_Save.Attributes["onclick"] = "return SaveDtl();";
+                //   this.Btn_Save.Attributes["onclick"] = "return SaveDtl();";
                 // this.Btn_Save.Attributes["onclick"] = "javascript:return SaveDtl();";
                 this.Btn_Save.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
@@ -361,81 +358,33 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// <summary>
     /// BindWork
     /// </summary>
-    public void BindWork(BP.WF.Node nd)
+    public void BindWork(BP.WF.Node nd, Work wk)
     {
-        Work wk = nd.HisWork;
-        wk.OID = this.WorkID;
-        if (nd.IsCheckNode)
-        {
-            wk.NodeID = this.FK_Node;
-        }
-
         wk.Rec = WebUser.No;
         wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
         wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
         wk.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
 
-        if (wk.OID == 0)
-        {
-            switch (nd.HisFormType)
-            {
-                case FormType.SysForm:
-                    //this.UCEn1.Bind(wk, "ND" + nd.NodeID, false, false, null);
-                    this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID); //, false, false, null);
-
-                    return;
-                case FormType.SelfForm:
-                   
-                    wk.Insert();
-                    this.UCEn1.AddIframeWithOnload(nd.FormUrl + "?WorkID=" + wk.OID);
-                    return;
-                default:
-                    throw new Exception("@没有涉及到的扩充。");
-                    break;
-            }
-        }
-        else
-        {
-            wk.Retrieve();
-        }
-
         if (wk.NodeState == NodeState.Back)
         {
             ReturnWork rw = new ReturnWork();
-            this.ResponseWriteBlueMsg(rw.NoteHtml);
-            //  return;
+            this.FlowMsg.AddMsgInfo("", rw.NoteHtml);
         }
 
         switch (nd.HisFormType)
         {
             case FormType.SysForm:
-                //this.UCEn1.Bind(wk, "ND" + nd.NodeID, false, false);
-                this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID );
-
-                break;
+                this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID); //, false, false, null);
+                OutJSAuto(wk);
+                return;
             case FormType.SelfForm:
+                wk.Insert();
                 this.UCEn1.AddIframeWithOnload(nd.FormUrl + "?WorkID=" + wk.OID);
                 return;
             default:
                 throw new Exception("@没有涉及到的扩充。");
                 break;
         }
-
-
-        OutJSAuto(wk);
-
-        if (this.IsPostBack==false)
-        this.UCEn1.Add(wk.WorkEndInfo);
-
-
-        this.Btn_Send.Enabled = true;
-
-
-        if (nd.ShowSheets.Length < 3)
-            return;
-
-        this.ShowSheets(nd,wk);
-
     }
     public void OutJSAuto(Entity en)
     {
@@ -619,6 +568,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 case NamesOfBtn.Save:
                     this.Send(true);
+                   // this.Response.Redirect(this.Request.RawUrl, true);
                     //BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
                     //Work work = nd.HisWork;
                     //work.OID = this.WorkID;
@@ -834,6 +784,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         BP.WF.Node currNd = this.CurrentNode;
         Work work = currNd.HisWork;
         work.OID = this.WorkID;
+        work.RetrieveFromDBSources();
         try
         {
             switch (currNd.HisFormType)
@@ -841,6 +792,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 case FormType.SelfForm:
                     break;
                 case FormType.SysForm:
+                    // work = this.UCEn1.GetEnData(work) as Work;
                     work = (Work)this.UCEn1.Copy(work);
                     break;
                 default:
@@ -881,7 +833,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             //save data cells.
             if (currNd.HisFormType == FormType.SysForm)
             {
-                MapData md = new MapData("ND" + currNd.NodeID);
+                //MapData md = new MapData("ND" + currNd.NodeID);
                 //work.Update();
             }
         }
@@ -897,9 +849,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
             throw ex;
         }
-
         this.WorkID = work.OID;
-
         string msg = "";
         // 调用工作流程，处理节点信息采集后保存后的工作。
         if (isSave)
@@ -907,16 +857,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.WorkID = work.OID;
             work.RetrieveFromDBSources();
             work.SetValByKey(GECheckStandAttr.NodeID, this.FK_Node);
-
             if (currNd.HisFormType == FormType.SysForm)
             {
-                this.UCEn1.BindColumn4(work, "ND" + this.FK_Node );
-                //this.UCEn1.Bind(work, "ND" + this.FK_Node, false, false, "FK_Taxpayer");
+                return;
 
+                this.UCEn1.Clear();
+
+                this.UCEn1.BindColumn4(work, "ND" + this.FK_Node);
                 string hzStr = this.GenerHZ(work, currNd);
-
                 this.OutJSAuto(work);
-                //work.DoCopy(); // 执行数据copy.
                 this.UCEn1.Add(work.WorkEndInfo + hzStr);
                 this.ShowSheets(currNd, work);
             }
@@ -947,14 +896,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return;
         }
 
-        if (currNd.IsPCNode)
-        {
-            // work.Retrieve();
-            //this.UCEn1.Bind(work, "ND" + currNd.No, false, false);
-            this.UCEn1.BindColumn4(work, "ND" + currNd.No );
-
-            this.UCEn1.Add(work.WorkEndInfo);
-        }
+        //if (currNd.IsPCNode)
+        //{
+        //    this.UCEn1.BindColumn4(work, "ND" + currNd.No );
+        //    this.UCEn1.Add(work.WorkEndInfo);
+        //}
 
         bool isCanDoNextWork = true;
         //能不能执行下一步工作
@@ -965,7 +911,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             /* 如果当前得节点任务还没有完成 */
             this.ToMsg(msg, "info");
-            //            this.ResponseWriteBlueMsg(msg);
             return;
         }
 
@@ -977,14 +922,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.Btn_Save.Enabled = false;
             msg += "@" + this.ToE("FlowOver", "此流程已经完成(删除它)");
             this.ToMsg(msg, "info");
-            // this.ResponseWriteBlueMsg(msg);
-            //  this.WinClose();
         }
         else
         {
             this.ToMsg(msg, "info");
-            //   this.ResponseWriteBlueMsg(msg);
-            // this.WinClose(); // 发送完毕后
         }
 
         /*
@@ -1012,7 +953,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// <summary>
     /// 新建一个工作
     /// </summary>
-    private void New(bool isPostBack, BP.WF.Node nd)
+    private Work New(bool isPostBack, BP.WF.Node nd)
     {
         Flow fl = new Flow(this.FK_Flow);
         this.FK_Node = fl.StartNodeID;
@@ -1021,59 +962,46 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
         // this.BPTabStrip1.SelectedIndex = 0;
         this.FK_Node = nd.NodeID;
-        this.WorkID = 0;
 
         StartWork wk = (StartWork)nd.HisWork;
 
         int num = wk.Retrieve(StartWorkAttr.NodeState, 0, StartWorkAttr.Rec, WebUser.No);
         if (num == 0)
         {
-            wk.Title = "";
             wk.Rec = WebUser.No;
             wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
             wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
             wk.WFState = 0;
             wk.NodeState = 0;
             wk.Insert();
-            // DBAccess.RunSQL("DELETE " + wk.EnMap.PhysicsTable + " WHERE Rec='" + WebUser.No + "' AND NodeState=0 AND OID!=0");
         }
-       
 
-            wk.Title = "";
-            wk.Rec = WebUser.No;
-            wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
-            wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
-            wk.WFState = 0;
-            wk.NodeState = 0;
-
-            wk.FK_Dept = WebUser.FK_Dept;
-            wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
-
-            Dept Dept = new Dept(WebUser.FK_Dept);
-            wk.FID = 0;
-            wk.SetValByKey("RecText", WebUser.Name);
-         
-
+        wk.Rec = WebUser.No;
+        wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+        wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+        wk.WFState = 0;
+        wk.NodeState = 0;
+        wk.FK_Dept = WebUser.FK_Dept;
+        wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
+        Dept Dept = new Dept(WebUser.FK_Dept);
+        wk.FID = 0;
+        wk.SetValByKey("RecText", WebUser.Name);
         this.WorkID = wk.OID;
+        return wk;
 
-
-        switch (nd.HisFormType)
-        {
-            case FormType.SysForm: 
-                //this.UCEn1.Bind(wk, "ND" + nd.NodeID, false, false, "FK_Taxpayer");
-                this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID );
-
-                this.UCEn1.Add(wk.WorkEndInfo);
-                // 生成 自动生成 的js.
-                this.OutJSAuto(wk);
-                return;
-            case FormType.SelfForm:
-                this.Pub1.Clear();
-                this.UCEn1.Clear();
-                this.Pub1.AddIframeWithOnload(nd.FormUrl + "?WorkID=" + wk.OID);
-                break;
-        }
-        //this.Btn_PrintWorkRpt.Enabled = false;
+        //switch (nd.HisFormType)
+        //{
+        //    case FormType.SysForm:
+        //        this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID);
+        //        this.UCEn1.Add(wk.WorkEndInfo);
+        //        this.OutJSAuto(wk);
+        //        return;
+        //    case FormType.SelfForm:
+        //        this.Pub1.Clear();
+        //        this.UCEn1.Clear();
+        //        this.Pub1.AddIframeWithOnload(nd.FormUrl + "?WorkID=" + wk.OID);
+        //        break;
+        //}
     }
     /// <summary>
     /// show worker list.
@@ -1090,7 +1018,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.Alert("@请选择要操作的工作。");
             return;
         }
-
         this.WinOpenShowModalDialog("Option.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow, "选项", "WF" + WorkID, 500, 300, 200, 200);
         //this.WinOpenShowModalDialog("OpWorkFlow.aspx?WorkID="+this.WorkID+"&FK_Flow="+this.FK_Flow,"选项","WF"+WorkID,600,400,150,160) ; 
         //this.WinOpen("Option.aspx?NodeId="+this.FK_Node+"&WorkID="+this.WorkID+"&FlowNo="+this.CurrentFlow.No,"选项","Task",700,500,200,200);
@@ -1112,18 +1039,27 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     #endregion
 
     #region DG_Works
-    private BP.WF.Node LoadWorkID(Int64 workid)
+    private Work GenerCurrWork(Int64 workid)
     {
-        Flow fl = new Flow(this.FK_Flow);
-        GenerWorkFlow gwf = new GenerWorkFlow(workid);
-        BP.WF.Node node = new BP.WF.Node(gwf.FK_Node);
-        Work wk = node.HisWork;
-        wk.OID = this.WorkID;
-        if (node.IsCheckNode)
-        {
-            wk.SetValByKey(GECheckStandAttr.NodeID, node.NodeID);
-        }
-        wk.Retrieve();
+        Work wk = null;
+        BP.WF.Node node = null;
+         
+            Flow fl = new Flow(this.FK_Flow);
+            GenerWorkFlow gwf = new GenerWorkFlow();
+            if (gwf.Retrieve(GenerWorkFlowAttr.WorkID, workid) == 0)
+            {
+                node = this.CurrentNode;
+                wk = node.HisWork;
+                wk.OID = workid;
+                wk.RetrieveFromDBSources();
+            }
+            else
+            {
+                node = new BP.WF.Node(gwf.FK_Node);
+                wk = node.HisWork;
+                wk.OID = this.WorkID;
+                wk.RetrieveFromDBSources();
+            }
 
         // 在工作区域内设置此流程的当前要处理的工作.(就是要走的节点.)
         // 如果流程完成任务,或者没有找到当前的工作节点。
@@ -1132,7 +1068,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         try
         {
             string msg = "";
-            bool isClose = true;
             switch (wn.HisWork.NodeState)
             {
                 case NodeState.Back:
@@ -1153,7 +1088,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     {
                     }
 
-
                     this.FlowMsg.DivInfoBlock("流程退回提示", msg);
 
                     this.FK_Node = wn.HisNode.NodeID;
@@ -1169,42 +1103,29 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         if (fw.IsTakeBack == false)
                         {
                             msg += "@" + this.ToE("Transfer", "转发人") + "[" + fw.FK_Emp + "]。@" + this.ToE("Accepter", "接受人") + "：" + fw.Emps + "。@" + this.ToE("FWNote", "转发原因") + "： @" + fw.NoteHtml;
-                            isClose = false;
                             this.FlowMsg.DivInfoBlock("转发提示:", msg);
                         }
                     }
                     break;
             }
 
-
             //是否启动  EnableReturnBtn 
             this.FK_Node = wn.HisNode.NodeID;
             // 设置当前的人员把记录人。
             wn.HisWork.Rec = WebUser.No;
             wn.HisWork.RecText = WebUser.Name;
-
-            // this.HisWork = wn.HisWork;
-            //this.UCEn1.Bind(wn.HisWork, "ND" + this.FK_Node, false, false);
-            this.UCEn1.BindColumn4(wn.HisWork, "ND" + this.FK_Node );
-
-            this.UCEn1.Add(wn.HisWork.WorkEndInfo + this.GenerHZ(wn.HisWork, wn.HisNode));
             this.Btn_Save.Enabled = true;
             this.Btn_ReturnWork.Enabled = true;
-
             if (wn.HisNode.IsEndNode)
                 this.Btn_Send.Text = "完成(G)";
-
-            this.ShowSheets(wn.HisNode,wn.HisWork);
-            return wn.HisNode;
+            return wn.HisWork;
         }
         catch (Exception ex)
         {
             this.FlowMsg.AddMsgOfWarning("提示:", this.ToE("WhenSeleWorkErr", "处理选择工作出现错误") + ex.Message);
             return null;
         }
-
-      //  this.ShowSheets(wn.HisNode);
-        return wn.HisNode;
+        return wn.HisWork;
     }
     #endregion
 }

@@ -4,6 +4,14 @@
 	border: 1px solid #E6E6E6;
 	margin: 2px;
 	padding: 5px;
+	background-color: #C0C0C0;
+}
+
+.TableFrom
+{
+	border: 2px solid #E6E6E6;
+	margin: 2px;
+	padding: 5px;
 }
 
 /* the style of Table */

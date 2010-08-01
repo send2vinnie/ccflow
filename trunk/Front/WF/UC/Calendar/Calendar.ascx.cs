@@ -549,7 +549,6 @@ namespace BP.Web.Comm.UC
             //string str= "<a href='Calendar.aspx?CalendarType=1&RefDate="+date+"' ><b>"+dt.Day+"</b></a> " ;
             string str = "<a href='Calendar.aspx?CalendarType=1&RefDate=" + date + "' ><b>" + dt.ToString("dd") + "</b></a> ";
 
-
             #region  工作日志
             foreach (TaLog te in tes)
             {
