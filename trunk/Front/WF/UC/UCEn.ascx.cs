@@ -102,7 +102,7 @@ namespace BP.Web.Comm.UC.WF
                             this.Add("<TD  colspan=4 width='100%' valign=top class=TBReadonly>" + attr.Name);
 
 
-                        TextBox mytbLine = new TextBox();
+                        TB mytbLine = new TB();
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         mytbLine.Rows = 8;
@@ -128,7 +128,7 @@ namespace BP.Web.Comm.UC.WF
 
                         this.Add("<TD class=FDesc colspan=2>");
                         this.Add(attr.Name);
-                        TextBox mytbLine = new TextBox();
+                        TB mytbLine = new TB();
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.Rows = 8;

@@ -372,6 +372,8 @@ namespace BP.Web.Comm.UC
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
 
+            this.MyMonth(DateTime.Now);
+
 		}
         public string FK_NY
         {
@@ -616,8 +618,8 @@ namespace BP.Web.Comm.UC
                     continue;
 
                 str += "<BR>" + wk.RDT.Substring(11);
-                string url = "Work.aspx?RefOID=" + wk.OID + "&ActionType=" + (int)BP.Web.TA.ActionType.ViewWork + "&WorkState=" + (int)wk.WorkState;
-                str += "<a href=\"javascript:WinOpen('" + url + "','" + (int)BP.Web.TA.ActionType.ViewWork + "')\" title='我发起的工作' ><img src='" + wk.EnMap.Icon + "' border=0 >" + wk.Title + "</a>";
+                string url = "Work.aspx?RefOID=" + wk.OID + "&ActionType=" + (int)BP.TA.ActionType.ViewWork + "&WorkState=" + (int)wk.WorkState;
+                str += "<a href=\"javascript:WinOpen('" + url + "','" + (int)BP.TA.ActionType.ViewWork + "')\" title='我发起的工作' ><img src='" + wk.EnMap.Icon + "' border=0 >" + wk.Title + "</a>";
             }
             #endregion
 
@@ -628,7 +630,7 @@ namespace BP.Web.Comm.UC
                     continue;
 
                 str += "<BR>" + dtl.DTOfSend;
-                string url = "Work.aspx?RefOID=" + dtl.OID + "&ActionType=" + (int)BP.Web.TA.ActionType.ViewWorkDtl;
+                string url = "Work.aspx?RefOID=" + dtl.OID + "&ActionType=" + (int)BP.TA.ActionType.ViewWorkDtl;
                 str += "<a href=\"javascript:WinOpen('" + url + "','workdtl' )\"  title='我接受的工作' >" + dtl.WorkDtlStateImg + dtl.HisWork.Title + "</a>";
                 //this.Add("<TR class='TR'  ondblclick=\"javascript:window.location.href='Work.aspx?RefOID="+dtl.OID+"&ActionType="+(int)ActionType.ViewWorkDtl+"&FK_From="+datafrom+"&FK_To="+datato+"&WorkDtlState="+state+"'\" onmouseover='TROver(this)' onmouseout='TROut(this)' >");
                 continue;
@@ -648,7 +650,7 @@ namespace BP.Web.Comm.UC
                 if (WebUser.No == tn.Sender)
                 {
                     /* 如果我是接受人, 我是工作的下达人。 */
-                    // str+="<br><img src='./Images/"+tn.ReWorkState.ToString()+".ico' /><a onclick=\"javascript:WinOpen('Work.aspx?RefOID="+tn.OID+"&ActionType="+(int)BP.Web.TA.ActionType.ViewReWork+ "') \" >"+tn.Title+"</a>";
+                    // str+="<br><img src='./Images/"+tn.ReWorkState.ToString()+".ico' /><a onclick=\"javascript:WinOpen('Work.aspx?RefOID="+tn.OID+"&ActionType="+(int)BP.TA.ActionType.ViewReWork+ "') \" >"+tn.Title+"</a>";
                     switch (tn.ReWorkState)
                     {
                         case ReWorkState.None:
@@ -658,7 +660,7 @@ namespace BP.Web.Comm.UC
                             //str+="<BR>"+tn.ReWorkState;
                             break;
                         case ReWorkState.UnRatify: // 就不让其显示
-                            //str+="<br><img src='./Images/"+icon+"' />"+tn.ExecuterText +"<a onclick=\"javascript:WinOpen('Work.aspx?RefOID="+tn.OID+"&ActionType="+(int)BP.Web.TA.ActionType.ViewReWork+ "') \" >"+tn.Title+"</a>";
+                            //str+="<br><img src='./Images/"+icon+"' />"+tn.ExecuterText +"<a onclick=\"javascript:WinOpen('Work.aspx?RefOID="+tn.OID+"&ActionType="+(int)BP.TA.ActionType.ViewReWork+ "') \" >"+tn.Title+"</a>";
                             break;
                         default:
                             continue;
@@ -673,15 +675,15 @@ namespace BP.Web.Comm.UC
                     switch (tn.ReWorkState)
                     {
                         case ReWorkState.Ratify: //认可的工作.
-                            str += "<br><img src='./Images/" + tn.ReWorkState + ".gif' />" + tn.ExecuterText + "<a onclick=\"javascript:WinOpen('Work.aspx?RefOID=" + tn.OID + "&ActionType=" + (int)BP.Web.TA.ActionType.ViewReWork + "') \" >" + tn.Title + "</a>";
+                            str += "<br><img src='./Images/" + tn.ReWorkState + ".gif' />" + tn.ExecuterText + "<a onclick=\"javascript:WinOpen('Work.aspx?RefOID=" + tn.OID + "&ActionType=" + (int)BP.TA.ActionType.ViewReWork + "') \" >" + tn.Title + "</a>";
                             //str+="<BR>"+tn.ReWorkState;
                             break;
                         case ReWorkState.UnRatify:
-                            str += "<br><img src='./Images/" + tn.ReWorkState + ".gif' />" + tn.ExecuterText + "<a onclick=\"javascript:WinOpen('Work.aspx?RefOID=" + tn.OID + "&ActionType=" + (int)BP.Web.TA.ActionType.ViewReWork + "') \" >" + tn.Title + "</a>";
+                            str += "<br><img src='./Images/" + tn.ReWorkState + ".gif' />" + tn.ExecuterText + "<a onclick=\"javascript:WinOpen('Work.aspx?RefOID=" + tn.OID + "&ActionType=" + (int)BP.TA.ActionType.ViewReWork + "') \" >" + tn.Title + "</a>";
                             //str+="<BR>"+tn.ReWorkState;
                             break;
                         case ReWorkState.Sending:
-                            //str+="<br><img src='./Images/"+tn.ReWorkState+".ico' />"+tn.ExecuterText +"<a onclick=\"javascript:WinOpen('Work.aspx?RefOID="+tn.OID+"&ActionType="+(int)BP.Web.TA.ActionType.ViewReWork+ "') \" >"+tn.Title+"</a>";
+                            //str+="<br><img src='./Images/"+tn.ReWorkState+".ico' />"+tn.ExecuterText +"<a onclick=\"javascript:WinOpen('Work.aspx?RefOID="+tn.OID+"&ActionType="+(int)BP.TA.ActionType.ViewReWork+ "') \" >"+tn.Title+"</a>";
                             break;
                         default:
                             throw new Exception("no such case11 " + tn.ReWorkState);
