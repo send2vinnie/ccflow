@@ -1,0 +1,39 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <otb>
+    <FK_Node>1201</FK_Node>
+    <FK_Station>03</FK_Station>
+  </otb>
+  <otb>
+    <FK_Node>1201</FK_Node>
+    <FK_Station>07</FK_Station>
+  </otb>
+  <otb>
+    <FK_Node>1201</FK_Node>
+    <FK_Station>08</FK_Station>
+  </otb>
+  <otb>
+    <FK_Node>1201</FK_Node>
+    <FK_Station>09</FK_Station>
+  </otb>
+  <otb>
+    <FK_Node>1208</FK_Node>
+    <FK_Station>05</FK_Station>
+  </otb>
+  <otb>
+    <FK_Node>1212</FK_Node>
+    <FK_Station>09</FK_Station>
+  </otb>
+  <otb>
+    <FK_Node>1299</FK_Node>
+    <FK_Station>03</FK_Station>
+  </otb>
+  <otb>
+    <FK_Node>1299</FK_Node>
+    <FK_Station>07</FK_Station>
+  </otb>
+  <otb>
+    <FK_Node>1299</FK_Node>
+    <FK_Station>08</FK_Station>
+  </otb>
+</NewDataSet>

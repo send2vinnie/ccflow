@@ -1,0 +1,41 @@
+-----------------------------------------------------------------------------------------------------
+18日08时54分45秒Info:System');"成功[BP.Port.Emp-45]放入缓存。
+18日08时54分46秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+18日08时56分48秒Info:System');"成功[BP.WF.Node-79]放入缓存。
+18日10时38分37秒Info:System');"成功[BP.WF.Flow-16]放入缓存。
+18日10时38分44秒Info:System');"成功[BP.WF.Node-79]放入缓存。
+18日10时43分22秒Info:System');"成功[BP.WF.Node-79]放入缓存。
+18日11时11分34秒Info:System');"成功[BP.WF.Node-79]放入缓存。
+18日11时13分59秒Info:System');"成功[BP.WF.Node-79]放入缓存。
+18日11时41分47秒Info:System');"成功[BP.WF.Node-79]放入缓存。
+18日11时41分53秒Info:System');"成功[BP.WF.Node-79]放入缓存。
+18日13时15分22秒Info:System');"成功[BP.WF.Node-79]放入缓存。
+18日13时15分29秒Info:System');"成功[BP.WF.Node-79]放入缓存。
+18日14时20分57秒Info:System');"成功[BP.WF.Flow-17]放入缓存。
+18日14时20分58秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+18日14时20分58秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+18日14时21分11秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+18日14时21分11秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+18日14时21分11秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+18日14时21分17秒Info:System');"成功[BP.WF.Flow-17]放入缓存。
+18日14时21分36秒Info:System');"成功[BP.WF.Node-83]放入缓存。
+18日14时22分00秒Info:System');"成功[BP.WF.Node-83]放入缓存。
+18日14时22分11秒Info:System');"成功[BP.WF.Node-83]放入缓存。
+18日14时22分30秒Info:System');"成功[BP.WF.Node-84]放入缓存。
+18日14时22分53秒Info:System');"成功[BP.WF.Node-84]放入缓存。
+18日14时22分56秒Info:System');"成功[BP.WF.Flow-18]放入缓存。
+18日14时22分57秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+18日14时22分57秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+18日14时23分05秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+18日14时23分05秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+18日14时23分05秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+18日14时23分08秒Info:System');"成功[BP.WF.Flow-18]放入缓存。
+18日14时23分19秒Info:System');"成功[BP.WF.Node-89]放入缓存。
+18日14时23分33秒Info:System');"成功[BP.WF.Node-89]放入缓存。
+18日14时23分44秒Info:System');"成功[BP.WF.Node-89]放入缓存。
+18日14时24分14秒Info:System');"成功[BP.WF.Node-89]放入缓存。
+18日14时24分31秒Info:System');"成功[BP.WF.Node-89]放入缓存。
+18日14时52分09秒Info:System');"成功[BP.WF.Node-89]放入缓存。
+18日15时05分01秒Info:System');"成功[BP.WF.Node-89]放入缓存。
+18日15时09分19秒Info:System');"成功[BP.WF.Node-89]放入缓存。
+18日15时57分43秒Info:System');"成功[BP.WF.Node-89]放入缓存。

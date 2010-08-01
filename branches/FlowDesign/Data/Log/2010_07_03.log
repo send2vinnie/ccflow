@@ -1,0 +1,87 @@
+-----------------------------------------------------------------------------------------------------
+03日11时57分28秒Info:System');"成功[BP.Port.Emp-44]放入缓存。
+03日11时57分29秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+03日11时57分38秒Info:System');"成功[BP.WF.Node-38]放入缓存。
+03日11时58分02秒Info:System');"成功[BP.WF.Flow-10]放入缓存。
+03日11时58分02秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+03日11时58分02秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+03日11时58分26秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+03日11时58分26秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+03日11时58分26秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+03日11时58分31秒Info:System');"成功[BP.WF.Node-40]放入缓存。
+03日11时58分31秒Info:System');"成功[BP.WF.Flow-10]放入缓存。
+03日12时00分19秒Info:System');"成功[BP.WF.Node-45]放入缓存。
+03日12时00分32秒Info:System');"成功[BP.WF.Node-45]放入缓存。
+03日12时00分51秒Info:System');"成功[BP.WF.Node-45]放入缓存。
+03日12时01分06秒Info:System');"成功[BP.WF.Node-45]放入缓存。
+03日12时01分15秒Info:System');"成功[BP.WF.Node-45]放入缓存。
+03日12时01分19秒Info:System');"成功[BP.WF.Node-45]放入缓存。
+03日12时01分29秒Info:System');"成功[BP.WF.Node-45]放入缓存。
+03日12时01分38秒Info:System');"成功[BP.WF.Node-45]放入缓存。
+03日12时01分57秒Info:System');"成功[BP.WF.Node-45]放入缓存。
+03日12时03分53秒Info:System');"成功[BP.WF.Node-46]放入缓存。
+03日12时04分02秒Info:System');"成功[BP.WF.Node-46]放入缓存。
+03日12时04分25秒Info:System');"成功[BP.WF.Node-46]放入缓存。
+03日12时04分41秒Info:System');"成功[BP.WF.Node-46]放入缓存。
+03日12时04分49秒Info:System');"成功[BP.WF.Node-46]放入缓存。
+03日12时05分53秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+03日12时05分53秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+03日12时06分00秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+03日12时06分00秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+03日12时06分05秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+03日12时06分05秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+03日12时06分27秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+03日12时06分27秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+03日13时15分59秒Info:System');"成功[BP.WF.Flow-10]放入缓存。
+03日13时16分55秒Info:System');"成功[BP.WF.Node-46]放入缓存。
+03日15时20分44秒Info:System');"成功[BP.WF.Node-46]放入缓存。
+03日15时21分12秒Info:System');"成功[BP.WF.Node-46]放入缓存。
+03日15时41分13秒Info:System');"成功[BP.WF.Node-46]放入缓存。
+-----------------------------------------------------------------------------------------------------
+03日18时06分43秒Info:System');"成功[BP.Port.Emp-44]放入缓存。
+03日18时06分43秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+03日18时06分53秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+03日18时07分03秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+03日18时07分17秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+03日18时07分24秒Info:System');"成功[BP.WF.Node-30]放入缓存。
+03日18时10分39秒Info:System');"成功[BP.WF.Flow-7]放入缓存。
+03日18时10分59秒Info:System');"成功[BP.WF.Node-30]放入缓存。
+03日18时11分04秒Info:System');"成功[BP.WF.Node-30]放入缓存。
+03日18时11分14秒Info:System');"成功[BP.WF.Node-30]放入缓存。
+03日18时43分42秒Info:System');"成功[BP.WF.Flow-8]放入缓存。
+03日18时43分42秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+03日18时43分42秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+03日18时43分43秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+03日18时43分43秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+03日18时43分43秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+03日18时43分50秒Info:System');"成功[BP.WF.Flow-8]放入缓存。
+03日18时44分02秒Info:System');"成功[BP.WF.Node-33]放入缓存。
+04日10时52分23秒Info:System');"成功[BP.WF.Node-33]放入缓存。
+04日10时52分46秒Info:System');"成功[BP.WF.Node-33]放入缓存。
+04日11时06分35秒Info:System');"成功[BP.WF.Node-33]放入缓存。
+04日11时19分47秒Info:System');"成功[BP.WF.Node-33]放入缓存。
+04日11时42分09秒Info:System');"成功[BP.WF.Node-33]放入缓存。
+04日14时29分16秒Info:System');"成功[BP.WF.Node-33]放入缓存。
+04日14时33分43秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+04日14时34分58秒Info:System');"成功[BP.WF.Node-30]放入缓存。
+04日14时35分16秒Info:System');"成功[BP.WF.Node-30]放入缓存。
+04日18时09分22秒Info:System');"成功[BP.WF.Node-31]放入缓存。
+04日18时12分36秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+04日18时13分14秒Info:System');"成功[BP.WF.Flow-8]放入缓存。
+04日18时13分14秒Info:System');"成功[BP.WF.Node-39]放入缓存。
+04日19时22分25秒Info:System');"成功[BP.WF.Flow-9]放入缓存。
+04日19时22分26秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+04日19时22分26秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+04日19时22分28秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = DocType
+04日19时22分28秒Fatal:System');"@没有[映射基础  Sys_MapData, 类[BP.Sys.MapData], 物理表[Sys_MapData] 实例。PK = XWType
+04日19时22分28秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+04日19时22分35秒Info:System');"成功[BP.WF.Flow-9]放入缓存。
+04日19时22分48秒Info:System');"成功[BP.WF.Node-42]放入缓存。
+04日19时32分49秒Info:System');"成功[BP.WF.Node-42]放入缓存。
+04日19时34分27秒Info:System');"成功[BP.WF.Node-42]放入缓存。
+04日19时34分46秒Info:System');"成功[BP.WF.Flow-10]放入缓存。
+04日19时34分50秒Info:System');"成功[BP.WF.FlowSort-6]放入缓存。
+04日19时35分51秒Info:System');"成功[BP.WF.Node-48]放入缓存。
+04日19时35分51秒Info:System');"成功[BP.WF.Flow-10]放入缓存。
+04日19时35分57秒Info:System');"成功[BP.WF.Node-48]放入缓存。
+04日19时39分17秒Info:System');"成功[BP.WF.Node-48]放入缓存。
