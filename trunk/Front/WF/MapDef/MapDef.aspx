@@ -44,10 +44,7 @@
     }
     function GroupFieldNew(mypk)
     {
-       if ( window.confirm('您确定是增加一个字段分组吗？')==false ) 
-           return;
-      
-        var url='GroupField.aspx?RefNo='+mypk+"&RefOID=0";
+        var url='GroupField.aspx?RefNo='+mypk+"&RefOID=0&DoType=FunList";
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
@@ -60,15 +57,6 @@
     function GroupFieldDel(mypk,refoid)
     {
         var url='GroupField.aspx?RefNo='+mypk+'&DoType=DelIt&RefOID='+refoid ;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
-        window.location.href = window.location.href;
-    }
-    function GroupFieldNew(mypk)
-    {
-     if ( window.confirm('您确定是增加一个字段分组吗？')==false ) 
-           return;
-           
-        var url='GroupField.aspx?RefNo='+mypk;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }

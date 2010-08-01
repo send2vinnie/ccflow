@@ -34,20 +34,138 @@ public partial class WF_MapDef_GroupField : WebPage
                 return s;
         }
     }
+
+    void btnc_Click(object sender, EventArgs e)
+    {
+        string sta = this.Pub1.GetTBByID("TB_Sta").Text.Trim();
+        if (sta.Length == 0)
+        {
+            this.Alert("审核岗位不能为空");
+            return;
+        }
+
+        string Prx = this.Pub1.GetTBByID("TB_Prx").Text.Trim();
+        if (Prx.Length == 0)
+        {
+            Prx = chs2py.convert(sta);
+        }
+
+        MapAttr attr = new MapAttr();
+        int i = attr.Retrieve(MapAttrAttr.FK_MapData, this.RefNo, MapAttrAttr.KeyOfEn, Prx + "_Note");
+        i += attr.Retrieve(MapAttrAttr.FK_MapData, this.RefNo, MapAttrAttr.KeyOfEn, Prx + "_Checker");
+        i += attr.Retrieve(MapAttrAttr.FK_MapData, this.RefNo, MapAttrAttr.KeyOfEn, Prx + "_RDT");
+
+        if (i > 0)
+        {
+            this.Alert("前缀已经使用：" + Prx + " ， 请确认您是否增加了这个审核分组或者，请您更换其他的前缀。");
+            return;
+        }
+
+        GroupField gf = new GroupField();
+        gf.Lab = sta;
+        gf.EnName = this.RefNo;
+        gf.Insert();
+
+        attr = new MapAttr();
+        attr.FK_MapData = this.RefNo;
+        attr.KeyOfEn = Prx + "_Note";
+        attr.Name = sta + "审核意见";
+        attr.MyDataType = DataType.AppString;
+        attr.UIContralType = UIContralType.TB;
+        attr.UIIsEnable = true;
+        attr.UIIsLine = true;
+        attr.MaxLen = 3001;
+        
+        attr.GroupID = gf.OID;
+        attr.Insert();
+
+
+        attr = new MapAttr();
+        attr.FK_MapData = this.RefNo;
+        attr.KeyOfEn = Prx + "_Checker";
+        attr.Name = sta + "审核人";
+        attr.MyDataType = DataType.AppString;
+        attr.UIContralType = UIContralType.TB;
+        attr.MaxLen = 50;
+        attr.MinLen = 0;
+        attr.UIIsEnable = true;
+        attr.UIIsLine = false;
+        attr.DefVal = "@WebUser.No";
+        attr.UIIsEnable = false;
+        attr.GroupID = gf.OID;
+        attr.Insert();
+
+        attr = new MapAttr();
+        attr.FK_MapData = this.RefNo;
+        attr.KeyOfEn = Prx + "_Checker";
+        attr.Name = sta + "日期";
+        attr.MyDataType = DataType.AppDateTime;
+        attr.UIContralType = UIContralType.TB;
+        attr.UIIsEnable = true;
+        attr.UIIsLine = false;
+        attr.DefVal = "@RDT";
+        attr.UIIsEnable = false;
+        attr.GroupID = gf.OID;
+        attr.Insert();
+        this.WinCloseWithMsg("增加成功，您可以调整它的位置与修改字段的标签。");
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "字段分组";
-        if (this.RefOID == 0)
+
+        switch (this.DoType)
         {
-            GroupFields mygfs = new GroupFields(this.RefNo);
-            GroupField gf1 = new GroupField();
-            gf1.Idx = mygfs.Count;
-            gf1.Lab = "新建字段分组";
-            gf1.EnName = this.RefNo;
-            gf1.Insert();
-            this.Response.Redirect("GroupField.aspx?RefNo=" + this.RefNo + "&RefOID=" + gf1.OID, true);
-            return;
+            case "FunList":
+                this.Pub1.AddFieldSet("字段分组向导");
+                this.Pub1.AddBR();
+
+                this.Pub1.AddUL();
+                this.Pub1.AddLi("GroupField.aspx?DoType=NewGroup&RefNo="+this.RefNo, "新建空白分组。<br><font color=green>增加后您可以向里面复制或者新建字段。</font>");
+                this.Pub1.AddLi("GroupField.aspx?DoType=NewCheckGroup&RefNo=" + this.RefNo, "新建审核分组。<br><font color=green>系统会让您输入审核的信息，并创建审核分组。</font>");
+                //TB tb = new TB();
+                this.Pub1.AddULEnd();
+                this.Pub1.AddFieldSetEnd();
+                return;
+            case "NewCheckGroup":
+                this.Pub1.AddFieldSet("<a href=GroupField.aspx?DoType=FunList&RefNo=" + this.RefNo + " >字段分组向导</a> - 审核分组");
+                TB tbc = new TB();
+                tbc.ID = "TB_Sta";
+                this.Pub1.Add("审核岗位<font color=red>*</font>");
+                this.Pub1.Add(tbc);
+                this.Pub1.AddBR("<font color=green>比如分局长审核、科长审核、总经理审核。。。</font>");
+                this.Pub1.AddBR();
+
+                tbc = new TB();
+                tbc.ID = "TB_Prx";
+                this.Pub1.Add("字段前缀:");
+                this.Pub1.Add(tbc);
+                this.Pub1.AddBR("<font color=green>用于自动创建字段，请输入英文字母或者字母数字组合。系统自动依据您的输入产生字段。如：XXX_Note，审核意见。XXX_RDT审核时间。XXX_Checker审核人，为空系统自动用拼音表示。</font>");
+                this.Pub1.AddBR();
+
+                this.Pub1.AddHR();
+                Btn btnc = new Btn();
+                btnc.Click += new EventHandler(btnc_Click);
+                this.Pub1.Add(btnc);
+                
+                this.Pub1.AddFieldSetEnd();
+
+                return;
+            case "NewGroup":
+                GroupFields mygfs = new GroupFields(this.RefNo);
+                GroupField gf1 = new GroupField();
+                gf1.Idx = mygfs.Count;
+                gf1.Lab = "新建字段分组";
+                gf1.EnName = this.RefNo;
+                gf1.Insert();
+                this.Response.Redirect("GroupField.aspx?RefNo=" + this.RefNo + "&RefOID=" + gf1.OID, true);
+                return;
+            default:
+                break;
         }
+
+        
+
+       
         
         #region edit operation
         GroupField en = new GroupField(this.RefOID);

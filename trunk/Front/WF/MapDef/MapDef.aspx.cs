@@ -48,6 +48,16 @@ public partial class WF_MapDef_MapDef : WebPage
         MapAttrs mattrs = new MapAttrs(md.No);
         int count = mattrs.Count;
 
+        if (gfs.Count == 1)
+        {
+            GroupField mygf = (GroupField)gfs[0];
+            if (mygf.Lab != md.Name)
+            {
+                mygf.Lab = md.Name;
+                mygf.Update();
+            }
+        }
+
         this.Pub1.AddB("&nbsp;&nbsp;" + this.ToE("DesignSheet", "设计表单") + md.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:CopyFieldFromNode('" + this.MyPK + "');\" ><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("NewField", "复制字段") + "</a> - <a href=\"javascript:MapDtl('" + this.MyPK + "')\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("DesignDtl", "设计表格") + "</a> - <a href=\"javascript:GroupFieldNew('" + md.No + "')\">字段分组</a><hr>");
         this.Pub1.Add("<Table class='Table' width='500px'  >");
         /*
