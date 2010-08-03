@@ -79,6 +79,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         this.Pub2.AddTREnd();
 
         GroupFields gfs = new GroupFields(this.NodeOfSelect);
+        MapDtls dtls = new MapDtls(this.NodeOfSelect);
         bool isHave = false;
         foreach (GroupField gf in gfs)
         {
@@ -88,6 +89,20 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
             cb.Text = gf.Lab;
             this.Pub2.AddTD("colspan=4", cb);
             this.Pub2.AddTREnd();
+
+            foreach (MapDtl dtl in dtls)
+            {
+                if (dtl.GroupID != gf.OID)
+                    continue;
+
+                this.Pub2.AddTR();
+                cb = new CheckBox();
+                cb.ID = "CB" + dtl.No+"_"+dtl.GroupID;
+                cb.Text = "复制明细表：" + dtl.Name;
+                this.Pub2.AddTD("colspan=4", cb);
+                this.Pub2.AddTREnd();
+            }
+
             foreach (MapAttr attr in attrs)
             {
                 if (gf.OID != attr.GroupID)
@@ -131,7 +146,6 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         }
         this.Pub2.AddTableEndWithBR();
 
-     
  
 
         Button btn = new Button();
@@ -148,11 +162,10 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         ddl.SetSelectItem(this.GroupField);
         this.Pub2.Add(ddl);
 
-
         btn.ID = "Btn_OK";
         btn.Text = this.ToE("Copy", " 复制 ");
         btn.Attributes["onclick"] = " return confirm('您确定要复制选择的字段到 [" + nd.Name + "]表单中吗？');";
-        btn.Click += new EventHandler(btn_Click);
+        btn.Click += new EventHandler(btn_Copy_Click);
         this.Pub2.Add(btn);
     }
     void ddl_SelectedIndexChanged(object sender, EventArgs e)
@@ -160,7 +173,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         this.Response.Redirect("CopyFieldFromNode.aspx?FK_Node=" + this.FK_Node + "&NodeOfSelect="+this.Pub2.GetDDLByID("DDL1").SelectedItemStringVal);
     }
 
-    void btn_Click(object sender, EventArgs e)
+    void btn_Copy_Click(object sender, EventArgs e)
     {
 
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
@@ -170,17 +183,44 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
 
         // 开始copy 分组的节点。
         GroupFields gfs = new GroupFields(this.NodeOfSelect);
+        MapDtls dtls = new MapDtls(this.NodeOfSelect);
+
         foreach (GroupField gf in gfs)
         {
             CheckBox cb = this.Pub2.GetCBByID("CB" + gf.OID);
             if (cb.Checked == false)
                 continue;
 
+            GroupField mygf = new GroupField();
+            mygf.Lab = gf.Lab;
+            mygf.EnName = this.FK_Node;
+            mygf.Idx = gf.Idx;
+            mygf.Insert();
 
-            GroupField ggggg = new GroupField();
-            ggggg.Lab = gf.Lab;
-            ggggg.EnName = this.FK_Node;
-            ggggg.Insert();
+            foreach (MapDtl dtl in dtls)
+            {
+                cb = this.Pub2.GetCBByID("CB_" + dtl.No + gf.OID);
+                MapDtl dtlNew = new MapDtl();
+                dtlNew.No = this.FK_Node + "Dtl";
+                if (dtlNew.IsExits )
+                    continue;
+
+                dtlNew.Copy(dtl);
+                dtlNew.FK_MapData = this.FK_Node;
+                dtlNew.No = this.FK_Node + "Dtl";
+                dtlNew.GroupID = mygf.OID;
+                dtlNew.PTable = dtlNew.No;
+                dtlNew.Insert();
+
+                MapAttrs mattrs = new MapAttrs(dtl.No);
+                foreach (MapAttr attr in mattrs)
+                {
+                    MapAttr attrNew = new MapAttr();
+                    attrNew.Copy(attr);
+                    attrNew.FK_MapData = dtlNew.No;
+                    attrNew.InsertAsNew();
+                }
+            }
 
             // copy his fields. 
             MapAttrs willCopyAttrs = new MapAttrs();
@@ -192,7 +232,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     continue;
 
                 attrNew.Copy(attr);
-                attrNew.GroupID = ggggg.OID;
+                attrNew.GroupID = mygf.OID;
                 attrNew.FK_MapData = this.FK_Node;
                 attrNew.InsertAsNew();
             }
@@ -220,6 +260,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
 
             if (ishavle)
                 continue;
+
 
             ma1.Copy(ma);
 

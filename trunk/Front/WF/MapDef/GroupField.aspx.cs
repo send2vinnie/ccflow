@@ -35,7 +35,7 @@ public partial class WF_MapDef_GroupField : WebPage
         }
     }
 
-    void btnc_Click(object sender, EventArgs e)
+    void btn_Check_Click(object sender, EventArgs e)
     {
         string sta = this.Pub1.GetTBByID("TB_Sta").Text.Trim();
         if (sta.Length == 0)
@@ -69,21 +69,22 @@ public partial class WF_MapDef_GroupField : WebPage
         attr = new MapAttr();
         attr.FK_MapData = this.RefNo;
         attr.KeyOfEn = Prx + "_Note";
-        attr.Name = sta + "审核意见";
+        attr.Name =  "审核意见";
         attr.MyDataType = DataType.AppString;
         attr.UIContralType = UIContralType.TB;
         attr.UIIsEnable = true;
         attr.UIIsLine = true;
-        attr.MaxLen = 3001;
+        attr.MaxLen = 4000;
         
         attr.GroupID = gf.OID;
+        attr.IDX = 1;
         attr.Insert();
 
 
         attr = new MapAttr();
         attr.FK_MapData = this.RefNo;
         attr.KeyOfEn = Prx + "_Checker";
-        attr.Name = sta + "审核人";
+        attr.Name =  "审核人";
         attr.MyDataType = DataType.AppString;
         attr.UIContralType = UIContralType.TB;
         attr.MaxLen = 50;
@@ -93,12 +94,13 @@ public partial class WF_MapDef_GroupField : WebPage
         attr.DefVal = "@WebUser.No";
         attr.UIIsEnable = false;
         attr.GroupID = gf.OID;
+        attr.IDX = 2;
         attr.Insert();
 
         attr = new MapAttr();
         attr.FK_MapData = this.RefNo;
         attr.KeyOfEn = Prx + "_Checker";
-        attr.Name = sta + "日期";
+        attr.Name = "审核日期";
         attr.MyDataType = DataType.AppDateTime;
         attr.UIContralType = UIContralType.TB;
         attr.UIIsEnable = true;
@@ -106,13 +108,13 @@ public partial class WF_MapDef_GroupField : WebPage
         attr.DefVal = "@RDT";
         attr.UIIsEnable = false;
         attr.GroupID = gf.OID;
+        attr.IDX = 3;
         attr.Insert();
         this.WinCloseWithMsg("增加成功，您可以调整它的位置与修改字段的标签。");
     }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "字段分组";
-
         switch (this.DoType)
         {
             case "FunList":
@@ -141,10 +143,9 @@ public partial class WF_MapDef_GroupField : WebPage
                 this.Pub1.Add(tbc);
                 this.Pub1.AddBR("<font color=green>用于自动创建字段，请输入英文字母或者字母数字组合。系统自动依据您的输入产生字段。如：XXX_Note，审核意见。XXX_RDT审核时间。XXX_Checker审核人，为空系统自动用拼音表示。</font>");
                 this.Pub1.AddBR();
-
                 this.Pub1.AddHR();
                 Btn btnc = new Btn();
-                btnc.Click += new EventHandler(btnc_Click);
+                btnc.Click += new EventHandler(btn_Check_Click);
                 this.Pub1.Add(btnc);
                 
                 this.Pub1.AddFieldSetEnd();
