@@ -99,7 +99,7 @@ public partial class WF_MapDef_GroupField : WebPage
 
         attr = new MapAttr();
         attr.FK_MapData = this.RefNo;
-        attr.KeyOfEn = Prx + "_Checker";
+        attr.KeyOfEn = Prx + "_RDT";
         attr.Name = "审核日期";
         attr.MyDataType = DataType.AppDateTime;
         attr.UIContralType = UIContralType.TB;
