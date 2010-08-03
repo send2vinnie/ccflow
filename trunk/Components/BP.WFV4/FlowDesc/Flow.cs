@@ -1240,9 +1240,10 @@ namespace BP.WF
                     {
                     }
                 }
+                sql = " DELETE Sys_MapData WHERE No='ND" + nd.NodeID + "'";
+                DBAccess.RunSQL(sql);
             }
 
-            sql = " DELETE Sys_MapData WHERE No='ND" + nd.NodeID + "'";
 
             sql = " DELETE WF_Node WHERE FK_Flow='" + this.No + "'";
             DBAccess.RunSQL(sql);

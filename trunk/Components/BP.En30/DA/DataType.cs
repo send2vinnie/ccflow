@@ -944,6 +944,10 @@ namespace BP.DA
 		/// <returns>DateTime</returns>
 		public static DateTime ParseSysDate2DateTime(string sysDateformat)
 		{
+            if (sysDateformat == null || sysDateformat.Trim().Length == 0)
+                return DateTime.Now;
+
+
             try
             {
                 if (sysDateformat.Length > 10)

@@ -2618,7 +2618,7 @@ namespace BP.WF
                 foreach (Sys.MapDtl dtl in dtls)
                 {
                     i++;
-                    if (toDtls.Count < i)
+                    if (toDtls.Count <= i)
                         continue;
 
                     Sys.MapDtl toDtl = (Sys.MapDtl)toDtls[i];
