@@ -330,7 +330,7 @@ namespace BP.WF
                 return book;
             }
         }
-       
+
         /// <summary>
         /// 执行复制
         /// </summary>
@@ -489,7 +489,7 @@ namespace BP.WF
                 msg += "<br>";
 
                 // 节点完成条件的定义.
-                Conds conds = new Conds(CondType.Node, nd.NodeID, 1 );
+                Conds conds = new Conds(CondType.Node, nd.NodeID, 1);
                 if (conds.Count == 0)
                 {
                     //msg += " 。";
@@ -887,7 +887,7 @@ namespace BP.WF
         {
             get
             {
-                return  this.GetValRefTextByKey(FlowAttr.DocType);
+                return this.GetValRefTextByKey(FlowAttr.DocType);
             }
         }
         /// <summary>
@@ -1026,7 +1026,7 @@ namespace BP.WF
                 map.AddTBInt(FlowAttr.FlowSheetType, (int)FlowSheetType.SheetFlow, "表单类型", false, false);
 
 
-                map.AddDDLSysEnum(FlowAttr.DocType, (int)DocType.OfficialDoc, "公文类型(对公文有效)", false, false, FlowAttr.DocType,"@0=正式公文@1=便函");
+                map.AddDDLSysEnum(FlowAttr.DocType, (int)DocType.OfficialDoc, "公文类型(对公文有效)", false, false, FlowAttr.DocType, "@0=正式公文@1=便函");
                 map.AddDDLSysEnum(FlowAttr.XWType, (int)XWType.Down, "行文类型(对公文有效)", false, false, FlowAttr.XWType, "@0=上行文@1=平行文@2=下行文");
 
 
@@ -1171,31 +1171,32 @@ namespace BP.WF
         public void DoDelete()
         {
             string sql = "";
-            sql = " DELETE wf_chofflow WHERE FK_FLOW='" + this.No + "'";
+            sql = " DELETE wf_chofflow WHERE FK_Flow='" + this.No + "'";
             DBAccess.RunSQL(sql);
 
-            sql = " DELETE wf_generworkerlist WHERE FK_FLOW='" + this.No + "'";
+            sql = " DELETE wf_generworkerlist WHERE FK_Flow='" + this.No + "'";
             DBAccess.RunSQL(sql);
 
-            sql = " DELETE wf_generworkflow WHERE FK_FLOW='" + this.No + "'";
+            sql = " DELETE wf_generworkflow WHERE FK_Flow='" + this.No + "'";
             DBAccess.RunSQL(sql);
 
             // 删除岗位节点。
-            sql = "  DELETE from wf_NodeStation  where   FK_Node in (select nodeid from wf_node where fk_flow='" + this.No + "')";
+            sql = "  DELETE from wf_NodeStation  where   FK_Node in (select nodeid from wf_node where FK_Flow='" + this.No + "')";
             DBAccess.RunSQL(sql);
 
             // 删除方向。
-            sql = "  DELETE from wf_direction  where   node in (select nodeid from wf_node where fk_flow='" + this.No + "')";
+            sql = "  DELETE from wf_direction  where   node in (select nodeid from wf_node where FK_Flow='" + this.No + "')";
             DBAccess.RunSQL(sql);
-            sql = "  DELETE from wf_direction  where   tonode in (select nodeid from wf_node where fk_flow='" + this.No + "')";
+
+            sql = "  DELETE from wf_direction  where   tonode in (select nodeid from wf_node where FK_Flow='" + this.No + "')";
             DBAccess.RunSQL(sql);
 
             //// 删除方向,条件.
-            //sql = "  DELETE from wf_nodecompletecondition  where   nodeid in (select nodeid from wf_node where fk_flow='" + this.No + "')";
+            //sql = "  DELETE from wf_nodecompletecondition  where   nodeid in (select nodeid from wf_node where FK_Flow='" + this.No + "')";
             //DBAccess.RunSQL(sql);
-            //sql = "  DELETE from wf_globalcompletecondition  where   fk_flow='" + this.No + "'";
+            //sql = "  DELETE from wf_globalcompletecondition  where   FK_Flow='" + this.No + "'";
             //DBAccess.RunSQL(sql);
-            //sql = "  DELETE from wf_directioncondition  where   nodeid in (select nodeid from wf_node where fk_flow='" + this.No + "')";
+            //sql = "  DELETE from wf_directioncondition  where   nodeid in (select nodeid from wf_node where FK_Flow='" + this.No + "')";
             //DBAccess.RunSQL(sql);
 
             // 删除报表
@@ -1203,20 +1204,29 @@ namespace BP.WF
             rpts.Delete();
 
             // 外部程序设置
-            sql = " DELETE WF_FAppSet WHERE  NodeID in (select NodeID from WF_Node where fk_flow='" + this.No + "')";
+            sql = " DELETE WF_FAppSet WHERE  NodeID in (select NodeID from WF_Node where FK_Flow='" + this.No + "')";
             DBAccess.RunSQL(sql);
 
             // 删除文书
-            sql = " DELETE WF_BookTemplate WHERE  NodeID in (SELECT NodeID from WF_Node where fk_flow='" + this.No + "')";
+            sql = " DELETE WF_BookTemplate WHERE  NodeID in (SELECT NodeID from WF_Node where FK_Flow='" + this.No + "')";
             DBAccess.RunSQL(sql);
 
             Nodes nds = new Nodes(this.No);
             foreach (Node nd in nds)
             {
+                string ndNo = "ND" + nd.NodeID;
+
+                //del his dtls.
+                Sys.MapDtls dtls = new BP.Sys.MapDtls(ndNo);
+                dtls.Delete();
+
                 sql = " DELETE Sys_MapData WHERE No='ND" + nd.NodeID + "'";
                 DBAccess.RunSQL(sql);
 
                 sql = " DELETE Sys_MapAttr WHERE FK_MapData='ND" + nd.NodeID + "'";
+                DBAccess.RunSQL(sql);
+
+                sql = " DELETE Sys_GroupField WHERE EnName='ND" + nd.NodeID + "' OR EnName='' ";
                 DBAccess.RunSQL(sql);
 
                 if (nd.IsCheckNode == false)
@@ -1230,17 +1240,14 @@ namespace BP.WF
                     {
                     }
                 }
-
-
-                // 删除明细信息。
-                Sys.MapDtls dtls = new BP.Sys.MapDtls("ND" + nd.NodeID);
-                dtls.Delete();
             }
 
-            sql = " DELETE WF_Node WHERE FK_FLOW='" + this.No + "'";
+            sql = " DELETE Sys_MapData WHERE No='ND" + nd.NodeID + "'";
+
+            sql = " DELETE WF_Node WHERE FK_Flow='" + this.No + "'";
             DBAccess.RunSQL(sql);
 
-            sql = " DELETE WF_LabNote WHERE FK_FLOW='" + this.No + "'";
+            sql = " DELETE WF_LabNote WHERE FK_Flow='" + this.No + "'";
             DBAccess.RunSQL(sql);
 
             this.Delete();
