@@ -183,7 +183,7 @@ public partial class Comm_GradeEns : WebPage
                             else
                             {
                                 //  tb.Attributes["onpropertychange"] += "C" + attr.Key + "();";
-                                tb.Attributes["class"] = "TBReadonlyNum";
+                                tb.Attributes["class"] = "TBNumReadonly";
                             }
                         }
                         break;

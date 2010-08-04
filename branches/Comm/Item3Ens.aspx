@@ -14,8 +14,8 @@ Inherits="BP.Web.Comm.Item3Ens" %>
 		<script language="JavaScript" src="JScript.js"></script>
 		<script language="JavaScript" src="Menu.js"></script>
 		<base target="_self" />
-		<LINK href="Menu.css" type="text/css" rel="stylesheet">
-		<LINK href="Table.css" type="text/css" rel="stylesheet">
+		<LINK href="./Style/Menu.css" type="text/css" rel="stylesheet">
+		<LINK href="./Style/Table.css" type="text/css" rel="stylesheet">
 		
 		<script language=javascript>
 		

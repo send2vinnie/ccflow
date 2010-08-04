@@ -37,11 +37,7 @@
                             <asp:Button ID="btnSubmit" runat="server" Text="执行" onclick="btnSubmit_Click" />&nbsp;&nbsp;
                             <input id="Button1" type="button" value="关闭" onclick="javascript:window.close();" />
                         </asp:Panel>
-                        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1" DisplayAfter="1000" EnableViewState="False">
-                            <ProgressTemplate>
-                                <p align="center"><img alt="正在执行，请耐心等待……" border="0" src="../Images/processbar.gif" width="200px" /><br />正在执行，请耐心等待……</p>
-                            </ProgressTemplate>
-                        </asp:UpdateProgress>
+                       
 				        </TD>
 				    </TR>
 					<TR>

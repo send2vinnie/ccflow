@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Ens.aspx.cs" Inherits="Comm_UIEnsV10" %>
-
 <%@ Register Assembly="BP.Web.Controls" Namespace="BP.Web.Controls" TagPrefix="cc1" %>
 <%@ Register Src="UC/ucsys.ascx" TagName="ucsys" TagPrefix="uc1" %>
 
@@ -15,7 +14,8 @@
 		<script language="JavaScript" src="ShortKey.js"></script>
 		 <script language="JavaScript" src="./JS/Calendar.js"></script>
 		    <script language="javascript">
-		    	function OpenAttrs(ensName)
+		
+		function OpenAttrs(ensName)
 		{
 	       var url= './Sys/EnsAppCfg.aspx?EnsName='+ensName;
            var s =  'dialogWidth=680px;dialogHeight=480px;status:no;center:1;resizable:yes'.toString() ;
@@ -29,22 +29,26 @@
            var  val=window.showModalDialog( url,null,s);
            window.location.href=window.location.href;
         }
+        
     </script>
     <style type="text/css">
         .Style1
         {
             width: 100%;
         }
+        .Idx
+        {
+        	width:10px;
+        }
+        
     </style>
-        <link href="Table.css" rel="stylesheet" type="text/css" />
-        <link href="Menu.css" rel="stylesheet" type="text/css" />
-        <link href="Menu1.css" rel="stylesheet" type="text/css" />
+        <link href="./Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()"  onkeydown='DoKeyDown();' > 
     <form id="aspnetForm" runat="server" name="aspnetForm" >
     <table  id="Table1" align="left" width="95%"  >
      <tr>
-    <td c >
+    <td >
         <uc3:Pub ID="Pub1" runat="server" />
         </td>
     </tr>

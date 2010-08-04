@@ -17,7 +17,6 @@ namespace BP.Web.Comm.UC
     using System.Web.UI.HtmlControls;
     using System.Web.UI;
     using BP.En;
-    using BP.En;
     using BP.Sys;
     using BP.Sys.Xml;
     using BP.DA;

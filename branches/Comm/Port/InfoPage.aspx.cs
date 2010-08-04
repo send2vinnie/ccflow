@@ -21,10 +21,8 @@ namespace BP.Web.Comm
         protected void Page_Load(object sender, System.EventArgs e)
         {
             Response.AddHeader("P3P", "CP=CAO PSA OUR");
+            this.UCSys1.AddMsgOfInfo("提示", this.Msg);
 
-            this.Label1.Text = this.GenerCaption("消息框");
-            // this.Label1.Controls.Add(this.GenerLabel("消息框"));
-            this.UCSys1.Add(this.Msg);
             this.Session["Info"] = null;
             this.Session["info"] = null;
         }

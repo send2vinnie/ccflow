@@ -16,26 +16,39 @@ using BP.Web.Controls;
 using BP.Sys;
 using BP.Web;
 using BP;
+
+
 public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
 {
     #region 属性
     /// <summary>
     /// 类名成．
     /// </summary>
+    public string EnsName
+    {
+        get
+        {
+            if (this.Request.QueryString["EnsName"] == null)
+            {
+                string s = this.Request.QueryString["EnName"];
+                if (s == null)
+                    return "BP.Port.Emps";
+
+                Entity en = BP.DA.ClassFactory.GetEn(s);
+                return en.GetNewEntities.ToString();
+            }
+            else
+                return this.Request.QueryString["EnsName"];
+        }
+    }
+    /// <summary>
+    /// 类名成
+    /// </summary>
     public string EnName
     {
         get
         {
-            if (this.Request.QueryString["EnName"] == null)
-            {
-                string s = this.Request.QueryString["EnName"];
-                if (s == null)
-                    return "BP.Port.Emp";
-                else
-                    return s;
-            }
-            else
-                return this.Request.QueryString["EnName"];
+            return this.Request.QueryString["EnName"];
         }
     }
     /// <summary>
@@ -45,7 +58,7 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
     {
         get
         {
-            Entity en = BP.DA.ClassFactory.GetEn(this.EnName);
+            Entity en = this.GetEns.GetNewEntity;
             if (en.PKCount == 1)
             {
                 if (this.Request.QueryString["PK"] != null)
@@ -115,6 +128,7 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
             return en;
         }
     }
+    public Entities _GetEns = null;
     public BP.Web.Controls.Btn Btn_New
     {
         get
@@ -143,28 +157,28 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
             return this.ToolBar1.GetBtnByID(NamesOfBtn.Adjunct);
         }
     }
-    ///// <summary>
-    ///// 当前的实体集合．
-    ///// </summary>
-    //public Entities GetEns
-    //{
-    //    get
-    //    {
-    //        if (_GetEns == null)
-    //        {
-    //            if (this.EnName != null)
-    //            {
-    //                Entity en = BP.DA.ClassFactory.GetEn(EnName);
-    //                _GetEns = en.GetNewEntities;
-    //            }
-    //            else
-    //            {
-    //                _GetEns = BP.DA.ClassFactory.GetEns(EnName);
-    //            }
-    //        }
-    //        return _GetEns;
-    //    }
-    //}
+    /// <summary>
+    /// 当前的实体集合．
+    /// </summary>
+    public Entities GetEns
+    {
+        get
+        {
+            if (_GetEns == null)
+            {
+                if (this.EnName != null)
+                {
+                    Entity en = BP.DA.ClassFactory.GetEn(EnName);
+                    _GetEns = en.GetNewEntities;
+                }
+                else
+                {
+                    _GetEns = BP.DA.ClassFactory.GetEns(EnsName);
+                }
+            }
+            return _GetEns;
+        }
+    }
     public Entity _CurrEn = null;
     public Entity CurrEn
     {
@@ -219,10 +233,16 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
             #endregion
 
             //  this.ToolBar1.DivInfoBlockBegin();
+
+
             this.ToolBar1.Add("&nbsp;&nbsp;");
+
             this.ToolBar1.InitFuncEn(uac, this.CurrEn);
 
+
             //  this.ToolBar1.DivInfoBlockEnd();
+
+
 
             this.UCEn1.IsReadonly = this.IsReadonly;
             this.UCEn1.IsShowDtl = true;
@@ -235,13 +255,12 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
             if (pk == null)
                 pk = this.Request.QueryString[this.CurrEn.PK];
 
-            this.UCEn1.Bind(this.CurrEn, this.CurrEn.ToString(), this.IsReadonly, false);
-
+            this.UCEn1.Bind(this.CurrEn, this.CurrEn.ToString(), this.IsReadonly, true);
         }
         catch (Exception ex)
         {
             this.Response.Write(ex.Message);
-            Entity en = ClassFactory.GetEn(this.EnName);
+            Entity en = ClassFactory.GetEn(this.EnName) ;
             en.CheckPhysicsTable();
             return;
         }
@@ -271,7 +290,7 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
 
         AttrFiles fls = this.CurrEn.EnMap.HisAttrFiles;
         foreach (AttrFile fl in fls)
-        { 
+        {
             if (this.UCEn1.IsExit("Btn_DelFile" + fl.FileNo))
                 this.UCEn1.GetImageButtonByID("Btn_DelFile" + fl.FileNo).Click += new ImageClickEventHandler(Btn_DelFile_X_Click);
         }
@@ -288,7 +307,9 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
     }
     public void DelFile(string id)
     {
+
     }
+
     private void Btn_DelFile_X_Click(object sender, ImageClickEventArgs e)
     {
         ImageButton btn = sender as ImageButton;
@@ -298,14 +319,14 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
 
         //     Entity en = this.UCEn1.GetEnData(this.GetEns.GetNewEntity);
 
-        string sql = "DELETE " + sf.EnMap.PhysicsTable + " WHERE " + SysFileManagerAttr.EnName + "='" +  this.EnName + "' and RefVal='" + this.PKVal + "' and " + SysFileManagerAttr.AttrFileNo + "='" + id + "'";
+        string sql = "DELETE " + sf.EnMap.PhysicsTable + " WHERE " + SysFileManagerAttr.EnName + "='" + this.GetEns.GetNewEntity.ToString() + "' and RefVal='" + this.PKVal + "' and " + SysFileManagerAttr.AttrFileNo + "='" + id + "'";
         BP.DA.DBAccess.RunSQL(sql);
-        this.Response.Redirect("UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PKVal, true);
+        this.Response.Redirect("UIEn.aspx?EnsName=" + this.EnsName + "&PK=" + this.PKVal, true);
     }
 
     private void Btn_DelFile_Click(object sender, ImageClickEventArgs e)
     {
-        Entity en = this.UCEn1.GetEnData( this.CurrEn );
+        Entity en = this.UCEn1.GetEnData(this.GetEns.GetNewEntity);
         string file = en.GetValStringByKey("MyFilePath") + "//" + en.PKVal + "." + en.GetValStringByKey("MyFileExt");
         try
         {
@@ -313,13 +334,12 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
         }
         catch
         {
-
         }
         en.SetValByKey("MyFileExt", "");
         en.SetValByKey("MyFileName", "");
         en.SetValByKey("MyFilePath", "");
         en.Update();
-        this.Response.Redirect("UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PKVal, true);
+        this.Response.Redirect("UIEn.aspx?EnsName=" + this.EnsName + "&EnName="+this.EnName+"&PK=" + this.PKVal, true);
     }
 
     private void ToolBar1_ButtonClick(object sender, System.EventArgs e)
@@ -337,7 +357,7 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
                     break;
                 case NamesOfBtn.New:
                     //   New();
-                    this.Response.Redirect("UIEn.aspx?EnName=" + this.EnName, true);
+                    this.Response.Redirect("UIEn.aspx?EnsName=" + this.EnsName+"&EnName="+this.EnName, true);
                     break;
                 case NamesOfBtn.SaveAndNew:
                     try
@@ -349,7 +369,7 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
                         this.ResponseWriteBlueMsg(ex.Message);
                         return;
                     }
-                    this.Response.Redirect("UIEn.aspx?EnName=" + this.EnName, true);
+                    this.Response.Redirect("UIEn.aspx?EnsName=" + this.EnsName + "&EnName=" + this.EnName, true);
                     break;
                 case NamesOfBtn.SaveAndClose:
                     try
@@ -373,12 +393,12 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
                         this.Alert(ex.Message);
                         return;
                     }
-                    this.Response.Redirect("UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PKVal, true);
+                    this.Response.Redirect("UIEn.aspx?EnsName=" + this.EnsName + "&PK=" + this.PKVal+"&EnName="+this.EnName, true);
                     break;
                 case NamesOfBtn.Delete:
                     try
                     {
-                        Entity en =  this.CurrEn;
+                        Entity en = this.UCEn1.GetEnData(this.GetEns.GetNewEntity);
                         if (this.PKVal != null)
                             en.PKVal = this.PKVal;
                         en.Delete();
@@ -444,15 +464,50 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
     /// </summary>
     public void New()
     {
-        this.Response.Redirect("UIEn.aspx?EnName=" + this.EnName, true);
+        this.Response.Redirect("UIEn.aspx?EnsName=" + this.EnsName, true);
         return;
+
+        this.CurrEn = this.GetEns.GetNewEntity;
+        this.PKVal = null;
+
+        if (this.CurrEn.EnMap.Attrs.Contains("No"))
+        {
+            Attr attr = this.CurrEn.EnMap.GetAttrByKey("No");
+
+            if (attr.UIIsReadonly || this.CurrEn.EnMap.IsAutoGenerNo)
+            {
+                if (this.CurrEn.GetValStringByKey("No") == "")
+                {
+                    this.CurrEn.SetValByKey("No", this.CurrEn.GenerNewNoByKey("No"));
+                    string val = BP.SystemConfig.GetConfigXmlEns(ConfigKeyEns.IsInsertBeforeNew, CurrEn.ToString());
+                    if (val == "1")
+                    {
+                        //CurrEn.SetValByKey("No",dr[attr.Key]);
+                        CurrEn.Insert();
+                    }
+                }
+            }
+        }
+
+        if (this.ToolBar1.IsExit(NamesOfBtn.Adjunct) == true)
+            this.Btn_Adjunct.Enabled = false;
+
+        if (this.ToolBar1.IsExit(NamesOfBtn.Delete) == true)
+            this.Btn_Delete.Enabled = false;
+
+        //if (this.ToolBar1.IsExitsContral(NamesOfBtn.Copy) == true)
+        //    this.Btn_Copy.Enabled = false;
+
+        this.UCEn1.Bind(this.CurrEn, this.CurrEn.ToString(), false, false);
+
+        this.PKVal = this.CurrEn.PKVal;
     }
     public void Copy()
     {
         try
         {
             this.PKVal = null;
-            Entity en = this.UCEn1.GetEnData( this.CurrEn );
+            Entity en = this.UCEn1.GetEnData(this.GetEns.GetNewEntity);
             en.Copy();
             this.UCEn1.Bind(en, en.ToString(), this.IsReadonly, true);
         }
@@ -473,7 +528,7 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
     }
     public void Save()
     {
-        Entity en = this.UCEn1.GetEnData( this.CurrEn ); 
+        Entity en = this.UCEn1.GetEnData(this.GetEns.GetNewEntity);
         if (this.PKVal != null)
             en.PKVal = this.PKVal;
 
@@ -623,7 +678,7 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
 
     public void EnList()
     {
-        this.Response.Redirect(this.Request.ApplicationPath + "/Comm/UIEns.aspx?EnName=" + this.EnName, true);
+        this.Response.Redirect(this.Request.ApplicationPath + "/Comm/UIEns.aspx?EnsName=" + this.EnsName, true);
     }
     #endregion
 }

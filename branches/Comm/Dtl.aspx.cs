@@ -209,7 +209,7 @@ public partial class Comm_Dtl : WebPage
                             else
                             {
                                 tb.Attributes["onpropertychange"] += "C" + attr.KeyOfEn + "();";
-                                tb.Attributes["class"] = "TBReadonlyNum";
+                                tb.Attributes["class"] = "TBNumReadonly";
                             }
                         }
                         break;

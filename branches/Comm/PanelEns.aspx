@@ -13,8 +13,8 @@
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-		<LINK href="Menu.css" type="text/css" rel="stylesheet">
-		<LINK href="Table<%=BP.Web.WebUser.Style%>.css" type="text/css" rel="stylesheet">
+			<LINK href="./Style/Menu.css" type="text/css" rel="stylesheet">
+		<LINK href="./Style/Table.css" type="text/css" rel="stylesheet">
 		<script language="JavaScript" src="JScript.js"></script>
 		<script language="JavaScript" src="ActiveX.js"></script>
 		<script language="JavaScript" src="Menu.js"></script>

@@ -216,11 +216,13 @@ namespace BP.Web.Comm
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            string url = this.Request.RawUrl.Replace("UIEn.aspx", "./RefFunc/UIEn.aspx");
-            this.Response.Redirect(url);
-            return; //
+            string url = this.Request.RawUrl;
+            url = url.Replace("/Comm/", "/Comm/RefFunc/");
+            this.Response.Redirect(url,true);
+            return;
 
 
+          //  UIEn.aspx?EnsName=BP.WF.Ext.NodeOs&PK=2801
 
             #region Çå³ý»º´æ;
             this.Response.Expires = -1;
@@ -230,8 +232,6 @@ namespace BP.Web.Comm
 
             try
             {
-                
-
                 #region ÅÐ¶ÏÈ¨ÏÞ
                 UAC uac = this.CurrEn.HisUAC;
                 if (uac.IsView == false)

@@ -36,7 +36,16 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
             throw new Exception("错误没有找到属性． ");
         }
     }
-  
+    /// <summary>
+    /// 一的工作类
+    /// </summary>
+    public string EnsName
+    {
+        get
+        {
+            return this.Request.QueryString["EnsName"];
+        }
+    }
     public string AttrKey
     {
         get
@@ -64,8 +73,7 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
                     pk = this.Request.QueryString["MyPK"];
 
 
-
-                if (this.Request.QueryString["PK"] != null)
+                if (pk != null)
                 {
                     ViewState["PK"] = pk;
                 }
@@ -75,7 +83,8 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
                     ViewState["PK"] = this.Request.QueryString[mainEn.PK];
                 }
             }
-            return (string)ViewState["PK"];
+
+            return ViewState["PK"].ToString();
         }
     }
     public DropDownList DDL_Group
@@ -190,13 +199,11 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
                 enP.Retrieve(); //查询。
                 enP.Update(); // 执行更新，处理写在 父实体 的业务逻辑。
             }
-
             MainEn = enP;
             #endregion
         }
         catch (Exception ex)
         {
-            //  this.Alert(ex.Message);
             this.ToErrorPage(ex.Message);
             //this.WinClose();
             return;
@@ -629,7 +636,7 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
             }
         }
 
-        Entity enP = ClassFactory.GetEn( this.EnName );
+        Entity enP = ClassFactory.GetEn(this.EnName);
         if (enP.EnMap.EnType != EnType.View)
         {
             enP.SetValByKey(enP.PK, this.PK);// =this.PK;

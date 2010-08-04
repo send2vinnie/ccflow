@@ -35,8 +35,7 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
                     pk = this.Request.QueryString["MyPK"];
 
 
-
-                if (this.Request.QueryString["PK"] != null)
+                if (pk != null)
                 {
                     ViewState["PK"] = pk;
                 }
@@ -46,7 +45,7 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
                     ViewState["PK"] = this.Request.QueryString[mainEn.PK];
                 }
             }
-            return (string)ViewState["PK"];
+            return ViewState["PK"].ToString();
         }
     }
     public string AttrKey
@@ -54,6 +53,48 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
         get
         {
             return this.Request.QueryString["AttrKey"];
+        }
+    }
+    public new string EnName
+    {
+        get
+        {
+            string enName = this.Request.QueryString["EnName"];
+            string ensName = this.Request.QueryString["EnsName"];
+            if (enName == null && ensName == null)
+                throw new Exception("@缺少参数");
+
+            if (enName == null)
+                enName = this.ViewState["EnName"] as string;
+
+            if (enName == null)
+            {
+                Entities ens = ClassFactory.GetEns(this.EnsName);
+                this.ViewState["EnName"] = ens.GetNewEntity.ToString();
+                enName = this.ViewState["EnName"].ToString();
+            }
+            return enName;
+        }
+    }
+    public new string EnsName
+    {
+        get
+        {
+            string enName = this.Request.QueryString["EnName"];
+            string ensName = this.Request.QueryString["EnsName"];
+            if (enName == null && ensName == null)
+                throw new Exception("@缺少参数");
+
+
+            if (ensName == null)
+                ensName = this.ViewState["EnsName"] as string;
+            if (ensName == null)
+            {
+                Entity en = ClassFactory.GetEn(this.EnName);
+                this.ViewState["EnsName"] = en.GetNewEntities.ToString();
+                ensName = this.ViewState["EnsName"].ToString();
+            }
+            return ensName;
         }
     }
 
@@ -64,9 +105,10 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
 
         string keys = "&" + en.PK + "=" + this.PK + "&r=" + DateTime.Now.ToString("MMddhhmmss");
 
-        this.AddFieldSet("<a href='UIEn.aspx?EnName=" + this.EnName + "&EnsName=" + this.EnsName + "&PK=" + this.PK + "' >" + en.EnDesc + "-主页</a>");
+        this.AddFieldSet("<a href='UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PK + "' >" + en.EnDesc + "-主页</a>");
 
         this.AddUL();
+
 
         #region 加入一对多的实体编辑
         AttrsOfOneVSM oneVsM = en.EnMap.AttrsOfOneVSM;
@@ -74,7 +116,7 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
         {
             foreach (AttrOfOneVSM vsM in oneVsM)
             {
-                string url = "Dot2Dot.aspx?EnName=" + en.ToString() + "&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
+                string url = "Dot2Dot.aspx?EnsName=" + en.GetNewEntities.ToString() + "&EnName="+this.EnName+"&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
                 string sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
                 int i = DBAccess.RunSQLReturnValInt(sql);
                 if (i == 0)

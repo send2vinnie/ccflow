@@ -19,21 +19,7 @@
 	</HEAD>
 	<body class="Body" onkeypress=Esc()  >
 		<form id="ErrPage" method="post" runat="server">
-				<TABLE id="Table1" class="Table" height="90%"  width="70%" border="0" >
-					<TR>
-						<TD valign="bottom"  height="3%" >
-							<asp:Label id="Label1" runat="server"></asp:Label></TD>
-					</TR>
-					<TR>
-						<TD class="Toolbar"  height="100%" valign=top style="font-size:14px"  valign=top  >
-							<br><uc1:UCSys id="UCSys1" runat="server"></uc1:UCSys></TD>
-					</TR>
-					<TR>
-						<TD class="Bottom"  align=center  valign=top  height="3%" >
-						   ¡¾<a  href="javascript:javascript:window.close(1)"  > <%=BP.Sys.Language.GetValByUserLang("Close"," ¹Ø±Õ ")%></a>¡¿
-							 </TD>
-					</TR>
-				</TABLE>
+		<uc1:UCSys id="UCSys1" runat="server"></uc1:UCSys>
 		</form>
 	</body>
 </HTML>

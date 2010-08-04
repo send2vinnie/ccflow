@@ -80,7 +80,7 @@ public partial class Comm_UIEnsV10 : WebPage
 
         if (this.GroupKey == null)
         {
-            this.Pub1.Add(  this.GenerCaption(en.EnDesc + en.EnMap.TitleExt) );
+            //this.Pub1.Add(  this.GenerCaption(en.EnDesc + en.EnMap.TitleExt) );
         }
         else
         {
@@ -241,7 +241,7 @@ public partial class Comm_UIEnsV10 : WebPage
                             else
                             {
                                 //   tb.Attributes["onpropertychange"] += "C" + attr.Key + "();";
-                                tb.Attributes["class"] = "TBReadonlyNum";
+                                tb.Attributes["class"] = "TBNumReadonly";
                             }
                         }
                         break;
