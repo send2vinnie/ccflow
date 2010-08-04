@@ -41,7 +41,7 @@ public partial class Face_EmpWorks : WebPage
     public void BindV2()
     {
         int colspan = 8;
-        this.Pub2.AddTable("width='90%'");
+        this.Pub2.AddTable("width='90%' align=center");
         this.Pub2.AddTR();
         this.Pub2.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.Pub2.AddTREnd();

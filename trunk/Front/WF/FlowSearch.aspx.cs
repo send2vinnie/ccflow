@@ -96,7 +96,7 @@ public partial class Face_FlowSearch : WebPage
                 continue;
             colspan++;
         }
-        this.Pub1.AddTable("width='100%' align=left");
+        this.Pub1.AddTable("width='100%' align=center");
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.Pub1.AddTREnd();
@@ -170,7 +170,7 @@ public partial class Face_FlowSearch : WebPage
                         this.Pub1.AddTD(en.GetValFloatByKey(attr.Key));
                         break;
                     case DataType.AppMoney:
-                        this.Pub1.AddTD(en.GetValDecimalByKey(attr.Key).ToString("0.00"));
+                        this.Pub1.AddTDMoney( en.GetValDecimalByKey(attr.Key) );
                         break;
                     default:
                         this.Pub1.AddTD(en.GetValStrByKey(attr.Key));
@@ -223,7 +223,7 @@ public partial class Face_FlowSearch : WebPage
     {
         Flow fl = new Flow(this.FK_Flow);
         int colspan = 5;
-        this.Pub1.AddTable("width='90%' align=left");
+        this.Pub1.AddTable("width='600px' ");
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.Pub1.AddTREnd();
@@ -292,7 +292,7 @@ public partial class Face_FlowSearch : WebPage
         }
 
         int colspan = 5;
-        this.Pub1.AddTable("width='90%' align=left");
+        this.Pub1.AddTable("width='600px'");
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.Pub1.AddTREnd();

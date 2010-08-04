@@ -365,6 +365,18 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
         wk.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
 
+        #region 设置默认值。
+        MapAttrs mattrs = new MapAttrs("ND" + nd.NodeID);
+        foreach (MapAttr attr in mattrs)
+        {
+
+            if (attr.DefValReal.Contains("@") == false || attr.Tag == "1")
+                continue;
+            wk.SetValByKey(attr.KeyOfEn, attr.DefVal);
+        }
+        #endregion 设置默认值。
+
+
         if (wk.NodeState == NodeState.Back)
         {
             ReturnWork rw = new ReturnWork();
@@ -814,7 +826,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 work.CheckPhysicsTable();
             throw ex;
         }
-
         work.NodeState = NodeState.Init;
         work.Rec = WebUser.No;
         work.SetValByKey("FK_Dept", WebUser.FK_Dept);
@@ -855,20 +866,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         if (isSave)
         {
             this.WorkID = work.OID;
-            work.RetrieveFromDBSources();
-            work.SetValByKey(GECheckStandAttr.NodeID, this.FK_Node);
-            if (currNd.HisFormType == FormType.SysForm)
-            {
-                return;
-
-                this.UCEn1.Clear();
-
-                this.UCEn1.BindColumn4(work, "ND" + this.FK_Node);
-                string hzStr = this.GenerHZ(work, currNd);
-                this.OutJSAuto(work);
-                this.UCEn1.Add(work.WorkEndInfo + hzStr);
-                this.ShowSheets(currNd, work);
-            }
+           // work.RetrieveFromDBSources();
+            // work.SetValByKey(GECheckStandAttr.NodeID, this.FK_Node);
             return;
         }
 

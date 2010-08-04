@@ -101,6 +101,8 @@
 	border-top: 10px;
 	border-bottom: 10px;
 	border-width: 5px;
+	font-size: small;
+	vertical-align:middle;
 }
 
 .TB
@@ -171,6 +173,7 @@
 	border-bottom: lightgrey 1px solid;
 	font-family: ËÎÌו;
 	text-align: center;
+	font-size: small;
 } 
 
 .TD, Idx
@@ -238,6 +241,7 @@ fieldset
 {
     table-layout: auto;
     padding: 9px;
+    text-align:left;
 }
 
 legend

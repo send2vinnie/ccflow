@@ -50,6 +50,16 @@ public partial class WF_Msg : WebPage
     }
     public void Bind()
     {
+
+        this.Left.DivInfoBlockBegin();
+        this.Left.AddUL();
+        this.Left.AddLi("Msg.aspx?Sta=0", "未读");
+        this.Left.AddLi("Msg.aspx?Sta=1", "已读");
+        this.Left.AddLi("Msg.aspx?Sta=9", "已发送");
+        this.Left.AddLi("javascript:WinOpen('./Msg/Write.aspx')", "编写");
+        this.Left.AddULEnd();
+        this.Left.DivInfoBlockEnd();
+
         int colspan = 5;
         BP.Sys.Msgs ens = new BP.Sys.Msgs();
         if (this.MsgSta == 9)
@@ -64,9 +74,7 @@ public partial class WF_Msg : WebPage
         this.Pub1.AddTREnd();
 
 
-        this.Pub1.AddTR();
-        this.Pub1.Add("<TD  class=TitleMsg colspan=" + colspan + "><div align=right><a href='Msg.aspx?Sta=0'>未读</a>|<a href='Msg.aspx?Sta=1'>已读</a>|<a href='Msg.aspx?Sta=9'>已发送</a>|<a href=\"javascript:WinOpen('./Msg/Write.aspx')\" >编写</a></div></TD>");
-        this.Pub1.AddTREnd();
+ 
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("");

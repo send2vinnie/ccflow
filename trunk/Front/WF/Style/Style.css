@@ -8,6 +8,16 @@ body
 	width: 80%;
 	font-family: ËÎÌו;
 	font-size: 14px;
+	background-color: #EFEFEF;
+}
+
+.MasterPage
+{
+	background-color: #FFFFFF;
+	font-family: ËÎÌו;
+	font-size: 13px;
+	border-left-style: double;
+	border-right-style: double;
 }
 
 a:link, a:visited, a:active

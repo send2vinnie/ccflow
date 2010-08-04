@@ -10,22 +10,13 @@
 	</HEAD>
 	<body >
 		<form id="Form1" method="post" runat="server">
-			
-            <table>
-                <tr>
-                    <td style="width: 262px; height: 119px"><asp:Button id="Button1" style="Z-INDEX: 101; LEFT: 533px; POSITION: absolute; TOP: 61px" runat="server"
-				Text="清除执法表数据"></asp:Button>
-                        <asp:Button ID="Button2" runat="server" Text="清楚流程数据" OnClick="Button2_Click" /></td>
-                    <td style="width: 299px; height: 119px">
-                        <asp:Button ID="Button3" runat="server" Text="清除微机定税数据" OnClick="Button3_Click" /></td>
-                    <td style="width: 422px; height: 119px">
-                        </td>
-                </tr>
-                <tr>
-                <td colspan=3  ><font color=red >在执行删除前一定要确认，这些运行中的数据是否需要。<BR>一但执行删除数据将无法恢复。</font>
-                </td>
-                </tr>
-            </table>
+		 <fieldset>
+                <legend>警告：</legend>
+                <font color=red >在执行删除前一定要确认，这些运行中的数据是否需要。<BR>一但执行删除数据将无法恢复。</font>
+                </fieldset>
+                <br />
+                        <asp:Button ID="Button2" runat="server" Text="清除流程数据" OnClick="Button2_Click" /></td>
+                 
 		</form>
 	</body>
 </HTML>

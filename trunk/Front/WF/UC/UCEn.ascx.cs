@@ -53,10 +53,7 @@ namespace BP.Web.Comm.UC.WF
             {
                 currGF = gf;
                 this.AddTR();
-                if (gfs.Count == 1)
                     this.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
-                else
-                    this.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'></div>");
                 this.AddTREnd();
 
                 bool isHaveH = false;
@@ -230,11 +227,12 @@ namespace BP.Web.Comm.UC.WF
                                     tb.Text = en.GetValStrByKey(attr.KeyOfEn);
                                     this.AddTD("colspan=" + colspanOfCtl, tb);
                                     break;
+
                                 case BP.DA.DataType.AppMoney:
                                 case BP.DA.DataType.AppRate:
                                     this.AddTDDesc(attr.Name);
                                     tb.ShowType = TBType.Moneny;
-                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    tb.Text = decimal.Parse( en.GetValStrByKey(attr.KeyOfEn)) .ToString("0.00");
                                     this.AddTD("colspan=" + colspanOfCtl, tb);
                                     break;
                                 default:

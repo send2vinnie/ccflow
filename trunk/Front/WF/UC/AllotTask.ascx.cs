@@ -178,7 +178,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             int NodeID = gwf.FK_Node;
             int workId = this.WorkID;
             //WorkerLists wls = new WorkerLists(this.WorkID,NodeID);
-            DBAccess.RunSQL("update  WF_GenerWorkerList set IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + NodeID);
+            DBAccess.RunSQL("UPDATE  WF_GenerWorkerList SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + NodeID);
             string vals = "";
             string emps = "";
             string myemp = "";
@@ -186,7 +186,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             {
                 emps += obj.ToString() + ",";
                 myemp = obj.ToString();
-                DBAccess.RunSQL("update  WF_GenerWorkerList set IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + NodeID + " and fk_emp='" + obj + "'");
+                DBAccess.RunSQL("UPDATE  WF_GenerWorkerList SET IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + NodeID + " and fk_emp='" + obj + "'");
             }
 
 
@@ -205,7 +205,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             }
             wk.Emps = emps;
             wk.Update();
-            DBAccess.RunSQL("UPDATE WF_CHOfNode SET Emps='" + emps + "' WHERE FK_NODE='" + NodeID + "' AND WorkID='" + this.WorkID + "'");
+            DBAccess.RunSQL("UPDATE WF_CHOfNode SET Emps='" + emps + "' WHERE FK_Node='" + NodeID + "' AND WorkID='" + this.WorkID + "'");
 
 
             // 保存记忆功能。
@@ -219,7 +219,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             foreach (WorkerList mywl in wlSeles)
             {
                 rm.Objs += mywl.FK_Emp + "@";
-                rm.ObjsExt += mywl.FK_EmpText + "、";
+                rm.ObjsExt += mywl.FK_EmpText + "&nbsp;&nbsp;";
             }
 
             rm.Emps = "@";
@@ -230,10 +230,11 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
                 rm.Emps += wl.FK_Emp + "@";
 
                 if (rm.Objs.IndexOf(wl.FK_Emp) != -1)
-                    rm.EmpsExt += wl.FK_EmpText + "、";
+                    rm.EmpsExt += "<font color=green>(" + wl.FK_Emp + ")" + wl.FK_EmpText + "</font>&nbsp;&nbsp;";
                 else
-                    rm.EmpsExt += "<strike>" + wl.FK_EmpText + "</strike>、";
+                    rm.EmpsExt += "<strike>(" + wl.FK_Emp + ")" + wl.FK_EmpText + "</strike>&nbsp;&nbsp;";
             }
+
             rm.FK_Emp = BP.Web.WebUser.No;
             rm.Update();
             this.WinCloseWithMsg("任务分配成功。");

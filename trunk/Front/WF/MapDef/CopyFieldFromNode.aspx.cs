@@ -107,6 +107,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
             {
                 if (gf.OID != attr.GroupID)
                     continue;
+
                 switch (attr.KeyOfEn)
                 {
                     case BP.WF.GEStartWorkAttr.CDT:

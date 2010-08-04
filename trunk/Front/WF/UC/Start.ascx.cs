@@ -22,7 +22,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         int colspan = 5;
-        this.AddTable("width='90%' align=center");
+        this.AddTable("width='60%' align=center");
         this.AddTR();
         this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.AddTREnd();

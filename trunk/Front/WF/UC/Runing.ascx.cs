@@ -24,7 +24,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.Page.Title = this.ToE("OnTheWayWork", "在途工作");
 
         int colspan = 6;
-        this.AddTable("width='90%' align=center");
+        this.AddTable("width='60%' align=center");
         this.AddTR();
         this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.AddTREnd();

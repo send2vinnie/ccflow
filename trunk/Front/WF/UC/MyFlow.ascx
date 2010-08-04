@@ -31,16 +31,16 @@
         }
     }
 </script>
-<table id="Table1" border='0'>
+<table id="Table1" border='0' width='600px'>
 <tr>
-<td  valign='top' nowarp='true' width='25%' >
+<td  valign='top' nowarp='true' width='1%' >
     <uc1:FlowInfoSimple ID="FlowInfoSimple1" runat="server" />
 </td>
 <td valign='top' id='Right' style="height:600px; width:75%" >
 <!--  开始Table -->
 <table width='100%' border=0  style="height:600px;width:100%" >
 <tr>
-<td style="height: 1px" class='ToolBar' >
+<td style="height: 1px" class='ToolBar' align=left >
                  <uc4:ToolBar ID="ToolBar1" runat="server" />
 </td>
 </tr>

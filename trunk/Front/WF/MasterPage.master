@@ -14,17 +14,16 @@
 </head>
 <body topmargin="0" leftmargin="0" bgcolor=white >
     <form id="form1" runat="server">
-    <table width=95%   bgcolor="White" height='500px'  align=center >
+    <table width=95%  height='500px' bgcolor=white  align=center class="MasterPageTable" >
     <tr>
     <td>
         <uc1:Pub ID="Pub1" runat="server" />
         </td>
         </tr>
     <tr>
-    <td height=100% valign=top>
+    <td height=100% valign=top align=center>
       <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
-        
           </td>
         </tr>
      

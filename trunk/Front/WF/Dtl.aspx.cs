@@ -170,14 +170,20 @@ public partial class Comm_Dtl : WebPage
                                     tb.Attributes["onfocus"] = "calendar();";
                                 tb.Attributes["OnTextChanged"] = " isChange= true;";
                                 tb.Text = val;
+                                if (attr.MyDataType == DataType.AppDate)
+                                    tb.Columns = 10;
+                                else
+                                    tb.Columns = 14;
                                 break;
                             case DataType.AppMoney:
                             case DataType.AppRate:
                                 tb.TextExtMoney = decimal.Parse(val);
+                                tb.Columns = 10;
                                 break;
                             default:
                                 tb.Attributes["OnTextChanged"] = " isChange= true;";
                                 tb.Text = val;
+                                tb.Columns = attr.UIWidth;
                                 break;
                         }
 

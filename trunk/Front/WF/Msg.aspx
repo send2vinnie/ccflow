@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="Msg.aspx.cs" 
 Inherits="WF_Msg" Title="消息" %>
-<%@ Register src="../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
+<%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 	<script language="JavaScript" src="../Comm/JScript.js"></script>
 		<script language="JavaScript" src="../Comm/Table.js"></script>
@@ -21,8 +21,11 @@ Inherits="WF_Msg" Title="消息" %>
 		
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<div align=center>
-    <uc1:Pub ID="Pub1" runat="server" />
-    </div>
+<table border=0 width='90%' align=center>
+<tr>
+<TD valign=top width='20%' align=left ><uc1:Pub ID="Left" runat="server" /></TD>
+<TD valign=top><uc1:Pub ID="Pub1" runat="server" /></TD>
+    </tr>
+    </table>
 </asp:Content>
 

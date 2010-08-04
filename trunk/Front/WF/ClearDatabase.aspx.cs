@@ -44,7 +44,7 @@ namespace BP.Web.WF.WF
         /// </summary>
         private void InitializeComponent()
         {
-            this.Button1.Click += new System.EventHandler(this.Button1_Click);
+            //this.Button1.Click += new System.EventHandler(this.Button1_Click);
             this.Load += new System.EventHandler(this.Page_Load);
         }
         #endregion

@@ -40,35 +40,45 @@ public partial class WF_Admin_TestFlow : WebPage
         fls.RetrieveAll();
 
         this.Left.AddFieldSet("系统流程列表");
+        FlowSorts fss = new FlowSorts();
+        fss.RetrieveAll();
 
-        this.Left.AddTable();
-        bool is1 = false;
-        foreach (BP.WF.Flow fl in fls)
+        this.Left.AddUL();
+        foreach (FlowSort fs in fss)
         {
-            is1 = this.Left.AddTR(is1);
-            this.Left.AddTD(fl.FK_FlowSortText);
-            if (fl.No == this.FK_Flow)
-                this.Left.AddTDB("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New'>" + fl.Name + "</a>");
-            else
-                this.Left.AddTD("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New'>" + fl.Name + "</a>");
+            //this.Left.AddB(fs.Name);
 
-            this.Left.AddTD("<a href='/Front/Data/FlowDesc/" + fl.No + ".gif' target=_blank>流程图</a>");
-            this.Left.AddTD("<a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK="+fl.No+"','s')\" >属性</a>");
-            this.Left.AddTREnd();
+            foreach (BP.WF.Flow fl in fls)
+            {
+                if (fs.No != fl.FK_FlowSort)
+                    continue;
+                if (fl.No == this.FK_Flow)
+                    this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New'><b>" + fl.Name + "</b></a> - <a href='/Front/Data/FlowDesc/" + fl.No + ".gif' target=_blank>流程图</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >属性</a>");
+                else
+                    this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New'>" + fl.Name + "</a> - <a href='/Front/Data/FlowDesc/" + fl.No + ".gif' target=_blank>流程图</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >属性</a>");
+            }
         }
-
-        this.Left.AddTableEnd();
+        this.Left.AddULEnd();
         this.Left.AddFieldSetEnd();
 
 
 
-        this.Left.AddFieldSet("系统管理");
+        this.Left.AddFieldSet("组织结构管理");
         this.Left.AddUL();
-        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.Port.Stations')\">岗位维护</a>");
-        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.Port.Depts')\">部门维护</a>");
-        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.Port.Emps')\">人员维护</a>");
+        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.WF.Port.Stations')\">岗位维护</a>");
+        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.WF.Port.Depts')\">部门维护</a>");
+        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.WF.Port.Emps')\">人员维护</a>");
+        this.Left.AddULEnd();
+        this.Left.AddFieldSetEnd();
+
+
+        this.Left.AddFieldSet("系统工具");
+        this.Left.AddUL();
+        this.Left.AddLi("<a href=\"javascript:WinOpen('../../WF/ClearDatabase.aspx')\">清除所有流程数据</a>");
+        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Sys/EditWebConfig.aspx')\">系统设置</a>");
         this.Left.AddULEnd();
         this.Left.AddFieldSetEnd(); 
+
 
         this.Left.AddFieldSet("相关下载");
         this.Left.Add("<a href=http://flow.ccflow.cn/ > http://flow.ccflow.cn/ 相关下载</a>");
