@@ -18,7 +18,7 @@ namespace BP.Web.UC
         {
             string path = this.Request.ApplicationPath;
 
-            this.Add("\n<table cellspacing='0'>");
+            this.Add("\n<table cellspacing='0' align=left>");
             this.Add("\n<tr class='yj_style'>");
             this.Add("\n<td style='text-align:right'><img src='" + path + "/Images/Div/tl_df.jpg'></td>");
             this.Add("\n<td style='border-top:1px #ccc solid;background:#f9f9f9;'></td>");

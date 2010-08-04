@@ -60,6 +60,26 @@ namespace BP.WF.Port
                 SetValByKey(WFEmpAttr.Tel, value);
             }
         }
+        public string TelHtml
+        {
+            get
+            {
+                if (this.Tel.Length == 0)
+                    return "未设置";
+                else
+                    return this.Tel;
+            }
+        }
+          public string EmailHtml
+        {
+            get
+            {
+                if (this.Email.Length == 0)
+                    return "未设置";
+                else
+                    return this.Email;
+            }
+        }
         public string Email
         {
             get
@@ -75,7 +95,7 @@ namespace BP.WF.Port
         {
             get
             {
-                return this.GetValStringByKey(WFEmpAttr.Author);
+                return this.GetValStrByKey(WFEmpAttr.Author);
             }
             set
             {
@@ -152,6 +172,7 @@ namespace BP.WF.Port
                 map.AddTBString(WFEmpAttr.Email, null, "Email", true, true, 0, 50, 20);
 
                 map.AddTBString(WFEmpAttr.Author, null, "授权人", true, true, 0, 50, 20);
+
                 map.AddTBString(WFEmpAttr.AuthorDate, null, "授权日期", true, true, 0, 50, 20);
                 map.AddTBInt(WFEmpAttr.AuthorIsOK, 0, "是否授权成功", true, true);
 

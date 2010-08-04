@@ -130,7 +130,11 @@ namespace BP.WF
         {
             get
             {
-                string str= this.GetValStringByKey(RememberMeAttr.EmpsExt);
+                 
+                string str= this.GetValStringByKey(RememberMeAttr.EmpsExt).Trim();
+                if (str.Length == 0)
+                    return str;
+
                 if (str.Substring(str.Length - 1) == "¡¢")
                     return str.Substring(0, str.Length - 1);
                 else

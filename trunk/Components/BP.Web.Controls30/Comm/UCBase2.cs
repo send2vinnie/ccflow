@@ -391,7 +391,7 @@ namespace BP.Web.UC
                 return s;
             }
         }
-        public int RefOID
+        public new int RefOID
         {
             get
             {

@@ -894,7 +894,6 @@ namespace BP.WF
 
                     /* 判断他的主要工作岗位,主要工作岗位优先. */
                     string mainStatNo = this.HisWork.HisRec.No;
-#warning
                     foreach (Station myst in gainSts)
                     {
                         if (myst.No == mainStatNo)
