@@ -162,7 +162,7 @@ public partial class Comm_Batch : WebPage
         int maxPageNum = 0;
         try
         {
-            maxPageNum = this.UCSys2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, "Batch.aspx?EnsName="+this.EnsName);
+            maxPageNum = this.UCSys2.BindPageIdx(qo.GetCOUNT(), SystemConfig.PageSize, pageIdx, "Batch.aspx?EnsName="+this.EnsName);
         }
         catch (Exception ex)
         {

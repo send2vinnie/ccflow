@@ -73,9 +73,15 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
                         en.PKVal = this.Request.QueryString[en.PK];
                 }
                 if (en.IsExits == false)
+                {
                     throw new Exception("@记录不存在,或者没有保存.");
+                }
                 else
-                    en.RetrieveFromDBSources();
+                {
+                    int i = en.RetrieveFromDBSources();
+                    if (i == 0)
+                        en.RetrieveFromDBSources();
+                }
                 return en;
             }
             else if (en.IsMIDEntity)
@@ -222,6 +228,10 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
         try
         {
             #region 判断权限
+            string pk = this.Request.QueryString["PK"];
+            if (pk == null)
+                pk = this.Request.QueryString[this.CurrEn.PK];
+
             UAC uac = this.CurrEn.HisUAC;
             if (uac.IsView == false)
                 throw new Exception("@对不起，您没有查看的权限！");
@@ -232,35 +242,35 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
                 this.IsReadonly = true;
             #endregion
 
-            //  this.ToolBar1.DivInfoBlockBegin();
-
-
             this.ToolBar1.Add("&nbsp;&nbsp;");
-
             this.ToolBar1.InitFuncEn(uac, this.CurrEn);
 
-
-            //  this.ToolBar1.DivInfoBlockEnd();
-
-
+            #region 解决Access 不刷新的问题。
+            if (uac.IsUpdate == false)
+            {
+                string rowUrl = this.Request.RawUrl;
+                if (rowUrl.IndexOf("rowUrl") > 1)
+                {
+                }
+                else
+                {
+                    this.Response.Redirect(rowUrl + "&rowUrl=1", true);
+                    return;
+                }
+            }
+            #endregion
 
             this.UCEn1.IsReadonly = this.IsReadonly;
             this.UCEn1.IsShowDtl = true;
             this.UCEn1.HisEn = this.CurrEn;
 
-            //if (this.IsReadonly)
-            //    this.ToolBar1.Enabled = false;
-
-            string pk = this.Request.QueryString["PK"];
-            if (pk == null)
-                pk = this.Request.QueryString[this.CurrEn.PK];
 
             this.UCEn1.Bind(this.CurrEn, this.CurrEn.ToString(), this.IsReadonly, true);
         }
         catch (Exception ex)
         {
             this.Response.Write(ex.Message);
-            Entity en = ClassFactory.GetEn(this.EnName) ;
+            Entity en = ClassFactory.GetEn(this.EnName);
             en.CheckPhysicsTable();
             return;
         }
@@ -319,7 +329,7 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
 
         //     Entity en = this.UCEn1.GetEnData(this.GetEns.GetNewEntity);
 
-        string sql = "DELETE " + sf.EnMap.PhysicsTable + " WHERE " + SysFileManagerAttr.EnName + "='" + this.GetEns.GetNewEntity.ToString() + "' and RefVal='" + this.PKVal + "' and " + SysFileManagerAttr.AttrFileNo + "='" + id + "'";
+        string sql = "DELETE FROM " + sf.EnMap.PhysicsTable + " WHERE " + SysFileManagerAttr.EnName + "='" + this.GetEns.GetNewEntity.ToString() + "' AND RefVal='" + this.PKVal + "' AND " + SysFileManagerAttr.AttrFileNo + "='" + id + "'";
         BP.DA.DBAccess.RunSQL(sql);
         this.Response.Redirect("UIEn.aspx?EnsName=" + this.EnsName + "&PK=" + this.PKVal, true);
     }

@@ -622,7 +622,7 @@ namespace BP.Web.Comm
 
 
             #region 生成Where  _OLD .   通过这个过程产生两个 where.
-            // 找到 Where 数据。
+            // 找到 WHERE 数据。
             string where = " WHERE ";
             string whereOfLJ = " WHERE "; // 累计的where.
             string url = "";
@@ -660,7 +660,7 @@ namespace BP.Web.Comm
                             case DBType.SQL2000:
                             default:
                                 where += " FK_Dept LIKE  @V_Dept+'%'   AND ";
-                                //  where += " FK_Dept LIKE '@V_Dept%'   AND ";
+                                //  WHERE += " FK_Dept LIKE '@V_Dept%'   AND ";
                                 break;
                         }
                     }

@@ -360,11 +360,11 @@ public partial class Comm_GradeEns : WebPage
         int len = pNo.Length + 2;
 
         string sql = "";
-        sql = "SELECT count(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND LEN(GradeNo)=" + len;
+        sql = "SELECT COUNT(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND LEN(GradeNo)=" + len;
         if (en.EnMap.Attrs.Contains("FK_Emp"))
-            sql = "SELECT count(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND fk_emp='" + WebUser.No + "' AND LEN(GradeNo)=" + len;
+            sql = "SELECT COUNT(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND fk_emp='" + WebUser.No + "' AND LEN(GradeNo)=" + len;
         if (en.EnMap.Attrs.Contains("FK_Dept"))
-            sql = "SELECT count(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND fk_dept='" + WebUser.FK_Dept + "' AND LEN(GradeNo)=" + len;
+            sql = "SELECT COUNT(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND fk_dept='" + WebUser.FK_Dept + "' AND LEN(GradeNo)=" + len;
 
         int i = BP.DA.DBAccess.RunSQLReturnValInt(sql) + 1;
         Entity enNew = BP.DA.ClassFactory.GetEns(this.EnsName).GetNewEntity;
@@ -398,11 +398,11 @@ public partial class Comm_GradeEns : WebPage
         int len = pNo.Length;
 
         string sql = "";
-        sql = "SELECT count(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND LEN(GradeNo)=" + len;
+        sql = "SELECT COUNT(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND LEN(GradeNo)=" + len;
         if (en.EnMap.Attrs.Contains("FK_Emp"))
-            sql = "SELECT count(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND fk_emp='" + WebUser.No + "' AND LEN(GradeNo)=" + len;
+            sql = "SELECT COUNT(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND fk_emp='" + WebUser.No + "' AND LEN(GradeNo)=" + len;
         if (en.EnMap.Attrs.Contains("FK_Dept"))
-            sql = "SELECT count(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND fk_dept='" + WebUser.FK_Dept + "' AND LEN(GradeNo)=" + len;
+            sql = "SELECT COUNT(*) FROM " + en.EnMap.PhysicsTable + " WHERE GradeNo like '" + pNo + "%' AND fk_dept='" + WebUser.FK_Dept + "' AND LEN(GradeNo)=" + len;
 
         int i = BP.DA.DBAccess.RunSQLReturnValInt(sql) + 1;
         Entity enNew = BP.DA.ClassFactory.GetEns(this.EnsName).GetNewEntity;

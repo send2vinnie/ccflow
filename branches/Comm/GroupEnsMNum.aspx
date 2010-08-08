@@ -1,4 +1,3 @@
-<%@ Reference Control="~/comm/rpt/ucgraphics.ascx" %>
 <%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
 <%@ Register TagPrefix="cc1" Namespace="BP.Web.Controls" Assembly="BP.Web.Controls" %>
 <%@ Register TagPrefix="uc1" TagName="UCEn" Src="UC/UCEn.ascx" %>
@@ -6,6 +5,7 @@
 <%@ Page language="c#" Inherits="BP.Web.Comm.GroupEnsNum" CodeFile="GroupEnsMNum.aspx.cs" %>
 <%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
 <%@ Register src="UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc2" %>
+<%@ Register src="Rpt/ucgraphics.ascx" tagname="ucgraphics" tagprefix="uc3" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>
@@ -19,8 +19,7 @@
 		<LINK href="Table<%=BP.Web.WebUser.Style%>.css" type="text/css" rel="stylesheet">
 		<base target=_self />
 	</HEAD>
-	<body  onkeypress=Esc() 
- leftMargin=0 background=BJ1.gif topMargin=0>
+	<body  onkeypress=Esc() leftMargin=0 background=BJ1.gif topMargin=0>
 		<form id="Form1" method="post" runat="server">
 			<TABLE height="100%" style="background:none;"  cellPadding=0 width="100%" align=left border=0>
 				<TR>

@@ -105,7 +105,7 @@ public partial class Comm_HelperOfTBNum : WebPage
 
         string like_Dept = "'%'||:FK_Dept||'%'";
         string like = "'%'||:key||'%'";
-        string sql = "SELECT No,Name,Addr, FR, Tel FROM DS_Taxpayer WHERE (FK_Dept LIKE " + like_Dept + ") AND ( No LIKE " + like + "  OR Name LIKE " + like + " OR FR LIKE " + like + ") and rownum <=100 ";
+        string sql = "SELECT No,Name,Addr, FR, Tel FROM DS_Taxpayer WHERE (FK_Dept LIKE " + like_Dept + ") AND ( No LIKE " + like + "  OR Name LIKE " + like + " OR FR LIKE " + like + ") AND rownum <=100 ";
 
         BP.DA.Paras ps = new Paras();
         ps.SQL = sql;
@@ -149,7 +149,7 @@ public partial class Comm_HelperOfTBNum : WebPage
         //if (url.IndexOf("PageIdx") != -1)
         //    url = url.Substring(0, url.IndexOf("PageIdx") - 1);
 
-        //this.Ucsys2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, url);
+        //this.Ucsys2.BindPageIdx(qo.GetCOUNT(), SystemConfig.PageSize, pageIdx, url);
 
         //qo.DoQuery(en.PK, SystemConfig.PageSize, pageIdx);
 
@@ -191,7 +191,7 @@ public partial class Comm_HelperOfTBNum : WebPage
         //this.Ucsys1.AddTableEnd();
 
 
-        //this.Ucsys2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, url);
+        //this.Ucsys2.BindPageIdx(qo.GetCOUNT(), SystemConfig.PageSize, pageIdx, url);
         //qo.DoQuery(en.PK, SystemConfig.PageSize, pageIdx);
         //this.BPToolBar1.SaveSearchState(this.EnsName);
         //return ens;

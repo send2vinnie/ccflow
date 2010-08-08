@@ -350,7 +350,7 @@ namespace BP.Web.Comm
 
        //     Entity en = this.UCEn1.GetEnData(this.GetEns.GetNewEntity);
 
-            string sql = "DELETE " + sf.EnMap.PhysicsTable + " WHERE " + SysFileManagerAttr.EnName + "='" + this.GetEns.GetNewEntity.ToString() + "' and RefVal='" + this.PKVal + "' and " + SysFileManagerAttr.AttrFileNo + "='" + id + "'";
+            string sql = "DELETE FROM " + sf.EnMap.PhysicsTable + " WHERE " + SysFileManagerAttr.EnName + "='" + this.GetEns.GetNewEntity.ToString() + "' AND RefVal='" + this.PKVal + "' AND " + SysFileManagerAttr.AttrFileNo + "='" + id + "'";
             BP.DA.DBAccess.RunSQL(sql);
             this.Response.Redirect("UIEn.aspx?EnsName=" + this.EnsName + "&PK=" + this.PKVal, true);
         }

@@ -174,7 +174,7 @@ namespace BP.Web.Comm.UI
             string sql = "";
             if (this.CurrentSelectedCheckButton.Index == 0)
             {
-                sql = "SELECT Val FROM Sys_DefVal WHERE FK_Emp='" + this.FK_Emp + "' and EnsName='" + this.EnsName + "' and AttrKey='" + this.AttrKey + "'";
+                sql = "SELECT Val FROM Sys_DefVal WHERE FK_Emp='" + this.FK_Emp + "' AND EnsName='" + this.EnsName + "' AND AttrKey='" + this.AttrKey + "'";
             }
             else if (this.CurrentSelectedCheckButton.Index == 1)
             {
@@ -184,7 +184,7 @@ namespace BP.Web.Comm.UI
                     this.Btn_Delete.Enabled = true;
 
 
-                sql = "SELECT Val FROM Sys_DefVal WHERE EnsName='" + this.EnsName + "' and AttrKey='" + this.AttrKey + "' and FK_Emp='0'";
+                sql = "SELECT Val FROM Sys_DefVal WHERE EnsName='" + this.EnsName + "' AND AttrKey='" + this.AttrKey + "' AND FK_Emp='0'";
             }
             else if (this.CurrentSelectedCheckButton.Index == 2)
             {
@@ -195,7 +195,7 @@ namespace BP.Web.Comm.UI
                 switch (DBAccess.AppCenterDBType)
                 {
                     case DBType.Oracle9i:
-                        sql = "SELECT DISTINCT  " + field + "  FROM  " + en.EnMap.PhysicsTable + " WHERE  length(   trim(" + field + " )  ) > 0 and rownum <=40  ";
+                        sql = "SELECT DISTINCT  " + field + "  FROM  " + en.EnMap.PhysicsTable + " WHERE  length(   trim(" + field + " )  ) > 0 AND rownum <=40  ";
                         break;
                     default:
                         sql = "SELECT DISTINCT TOP 40  " + field + "  FROM  " + en.EnMap.PhysicsTable + " WHERE  len(rtrim(ltrim(" + field + " )) ) > 0 ";
@@ -258,7 +258,7 @@ namespace BP.Web.Comm.UI
                     case NamesOfBtn.Update:
                         if (AttrKeyValue == null || AttrKeyValue == "")
                             throw new Exception("@默认值不能为空.");
-                        //DBAccess.RunSQL("update  Sys_UIDefaultValue set DefaultVal='"+this.AttrKeyValue+"' where EnsName='"+this.EnsName+"' and AttrKey='"+this.AttrKey+"' and DefaultVal='"+this.DG1.CurrendSelectedNo+"'" );
+                        //DBAccess.RunSQL("update  Sys_UIDefaultValue set DefaultVal='"+this.AttrKeyValue+"' WHERE EnsName='"+this.EnsName+"' AND AttrKey='"+this.AttrKey+"' AND DefaultVal='"+this.DG1.CurrendSelectedNo+"'" );
                         this.ResponseWriteBlueMsg_UpdataOK();
                         this.SetDGData();
                         break;
@@ -281,7 +281,7 @@ namespace BP.Web.Comm.UI
                                     DefValAttr.EnsName, this.EnsName,
                                     DefValAttr.FK_Emp, this.FK_Emp);
 
-                                // DBAccess.RunSQL("delete Sys_UIDefaultValue where DefaultVal='" + li.Text + "' and ENSCLASSNAME='" + this.EnsName + "' and AttrKey='" + this.AttrKey + "' and No='" + this.FK_Emp + "'");
+                                // DBAccess.RunSQL("delete Sys_UIDefaultValue WHERE DefaultVal='" + li.Text + "' AND ENSCLASSNAME='" + this.EnsName + "' AND AttrKey='" + this.AttrKey + "' AND No='" + this.FK_Emp + "'");
                             }
                         }
                         else
@@ -299,7 +299,7 @@ namespace BP.Web.Comm.UI
                                     DefValAttr.EnsName, this.EnsName,
                                     DefValAttr.FK_Emp, "0");
 
-                                // DBAccess.RunSQL("delete Sys_UIDefaultValue where DefaultVal='" + li.Text + "' and ENSCLASSNAME='" + this.EnsName + "' and AttrKey='" + this.AttrKey + "' and No='0'");
+                                // DBAccess.RunSQL("delete Sys_UIDefaultValue WHERE DefaultVal='" + li.Text + "' AND ENSCLASSNAME='" + this.EnsName + "' AND AttrKey='" + this.AttrKey + "' AND No='0'");
                             }
                         }
                         this.ResponseWriteBlueMsg_DeleteOK();

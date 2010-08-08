@@ -71,5 +71,6 @@ input{padding-top:2px}
 
 .help_topic_desc{padding:12px;line-height:120%;}
 .help_topic_desc a{color:#000;text-decoration:underline;}
-.help_topic_desc_hidden{cursor: pointer; cursor: hand;line-height=150%;color:#999999;overflow:hidden;}
+.help_topic_desc_hidden{ cursor: pointer; cursor: hand;line-height=150%;color:#999999;overflow:hidden; }
+
 .help_topic_title{cursor: pointer; cursor: hand;}

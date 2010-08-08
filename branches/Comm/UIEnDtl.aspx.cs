@@ -157,7 +157,7 @@ namespace BP.Web.Comm.UI
             this.ucsys2.Clear();
             try
             {
-                this.ucsys2.BindPageIdx(qo.GetCount(), BP.SystemConfig.PageSize, this.PageIdx, "UIEnDtl.aspx?EnsName=" + this.EnsName + "&RefVal=" + this.RefVal + "&RefKey=" + this.RefKey + "&MainEnsName=" + this.MainEnsName);
+                this.ucsys2.BindPageIdx(qo.GetCOUNT(), BP.SystemConfig.PageSize, this.PageIdx, "UIEnDtl.aspx?EnsName=" + this.EnsName + "&RefVal=" + this.RefVal + "&RefKey=" + this.RefKey + "&MainEnsName=" + this.MainEnsName);
                 qo.DoQuery(en.PK, this.PageSize , this.PageIdx, false);
             }
             catch (Exception ex)

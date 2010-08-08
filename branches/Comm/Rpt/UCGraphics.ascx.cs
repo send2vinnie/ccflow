@@ -498,7 +498,7 @@ namespace BP.Web.UC
 //			BP.Port.Depts d2= new BP.Port.Depts();
 //			d2.RetrieveAll();
 //
-//			DataTable dt = DBAccess.RunSQLReturnTable("SELECT FK_HYOfBig,FK_Dept, count(*) FROM GS_Taxpayer WHERE (1=1) AND ( ( ( 1=1 ) ) AND ( ( GS_Taxpayer.SignDate < '2004-10-14') ) AND ( ( 1=1 ) ) ) GROUP BY FK_HYOfBig, FK_Dept") ; 
+//			DataTable dt = DBAccess.RunSQLReturnTable("SELECT FK_HYOfBig,FK_Dept, COUNT(*) FROM GS_Taxpayer WHERE (1=1) AND ( ( ( 1=1 ) ) AND ( ( GS_Taxpayer.SignDate < '2004-10-14') ) AND ( ( 1=1 ) ) ) GROUP BY FK_HYOfBig, FK_Dept") ; 
 //			RptPlanarEntity rpt= new RptPlanarEntity(d1,d2,dt);
 
 			#endregion

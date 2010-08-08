@@ -555,7 +555,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             this.AddBtn(NamesOfBtn.Adjunct);
             if (en.IsEmpty == false)
             {
-                int i = DBAccess.RunSQLReturnValInt("select count(*) from Sys_FileManager where RefTable='" + en.ToString() + "' and RefKey='" + en.PKVal + "'");
+                int i = DBAccess.RunSQLReturnValInt("select COUNT(*) from Sys_FileManager WHERE RefTable='" + en.ToString() + "' AND RefKey='" + en.PKVal + "'");
                 if (i != 0)
                 {
                     this.GetBtnByID(NamesOfBtn.Adjunct).Text += "-" + i;

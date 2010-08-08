@@ -112,13 +112,27 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
 
         #region 加入一对多的实体编辑
         AttrsOfOneVSM oneVsM = en.EnMap.AttrsOfOneVSM;
+        string sql = "";
+        int i = 0;
+
         if (oneVsM.Count > 0)
         {
             foreach (AttrOfOneVSM vsM in oneVsM)
             {
                 string url = "Dot2Dot.aspx?EnsName=" + en.GetNewEntities.ToString() + "&EnName="+this.EnName+"&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
-                string sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
-                int i = DBAccess.RunSQLReturnValInt(sql);
+
+                try
+                {
+                    sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
+                    i = DBAccess.RunSQLReturnValInt(sql);
+                }
+                catch
+                {
+                    sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal;
+                    i = DBAccess.RunSQLReturnValInt(sql);
+                }
+
+
                 if (i == 0)
                 {
                     if (this.AttrKey == vsM.EnsOfMM.ToString())
@@ -150,8 +164,16 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
             foreach (EnDtl enDtl in enDtls)
             {
                 string url = "UIEnDtl.aspx?EnsName=" + enDtl.EnsName + "&RefKey=" + enDtl.RefKey + "&RefVal=" + en.PKVal.ToString() + "&MainEnsName=" + en.ToString() + keys;
+                try
+                {
+                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "='" + en.PKVal + "'");
+                }
+                catch
+                {
+                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "=" + en.PKVal);
+                }
 
-                int i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "='" + en.PKVal + "'");
+
                 if (i == 0)
                     this.AddLi("<a href='" + url + "'  >" + enDtl.Desc + "</a>");
                 else

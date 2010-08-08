@@ -60,7 +60,7 @@ namespace BP.Web.CT.Comm.Sys
                     if (COUNT1 != COUNT2)
                     {
                         msg += "<BR>@关联表(" + refen.EnMap.EnDesc + ")主键不唯一，它会造成数据查询不准确或者意向不到的错误：<BR>sql1=" + sql1 + " <BR>sql2=" + sql2;
-                        msg += "@SQL= SELECT * FROM (  select " + refen.PK + ",  count(*) AS NUM  from " + table + " GROUP BY " + refen.PK + " ) WHERE NUM!=1";
+                        msg += "@SQL= SELECT * FROM (  select " + refen.PK + ",  COUNT(*) AS NUM  from " + table + " GROUP BY " + refen.PK + " ) WHERE NUM!=1";
                     }
                      
                     sql = "SELECT " + attr.Field + " FROM " + map.PhysicsTable + " WHERE " + attr.Field + " NOT IN (SELECT " + attr.UIRefKeyValue + " FROM " + table + " )";
@@ -92,7 +92,7 @@ namespace BP.Web.CT.Comm.Sys
                 if (COUNT1 != COUNT2)
                 {
                     msg += "@物理表(" + map.EnDesc + ")中主键不唯一;它会造成数据查询不准确或者意向不到的错误：<BR>sql1=" + sql1 + " <BR>sql2=" + sql2;
-                    msg += "@SQL= SELECT * FROM (  select " + en.PK + ",  count(*) AS NUM  from " + map.PhysicsTable + " GROUP BY " + en.PK + " ) WHERE NUM!=1";
+                    msg += "@SQL= SELECT * FROM (  select " + en.PK + ",  COUNT(*) AS NUM  from " + map.PhysicsTable + " GROUP BY " + en.PK + " ) WHERE NUM!=1";
                 }
             }
 

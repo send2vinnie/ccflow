@@ -115,18 +115,12 @@ public partial class Comm_UIEnsV10 : WebPage
         Entity en = this.HisEn;
         Map map = this.HisEn.EnMap;
         EnCfg cfg = new EnCfg(en.ToString());
-
         Attrs attrs = map.Attrs;
-
-      //  this.ucsys1.AddTable
-
-
         if (attrs.Count>=4)
         this.ucsys1.Add("<table border=0 cellpadding='0'  style='border-collapse: collapse;width:100%' cellspacing='0'  >");
         else
             this.ucsys1.Add("<table border=0 cellpadding='0'  style='border-collapse: collapse;width:50%' cellspacing='0'  >");
 
-      //  this.ucsys1.AddTable();
         this.ucsys1.AddTR();
         CheckBox cb = new CheckBox();
         string str1 = "<INPUT id='checkedAll' onclick='selectAll()' type='checkbox' name='checkedAll'>";
@@ -169,7 +163,7 @@ public partial class Comm_UIEnsV10 : WebPage
         try
         {
             this.ucsys2.Clear();
-            this.ucsys2.BindPageIdx(qo.GetCount(), BP.SystemConfig.PageSize, this.PageIdx, "Ens.aspx?EnsName=" + this.EnsName);
+            this.ucsys2.BindPageIdx(qo.GetCOUNT(), BP.SystemConfig.PageSize, this.PageIdx, "Ens.aspx?EnsName=" + this.EnsName);
             qo.DoQuery(en.PK, BP.SystemConfig.PageSize, this.PageIdx, false);
         }
         catch (Exception ex)
@@ -183,6 +177,7 @@ public partial class Comm_UIEnsV10 : WebPage
         ens.AddEntity(en);
         DDL ddl = new DDL();
         bool is1 = false;
+
         #region 生成数据
         int i = 0;
         foreach (Entity dtl in ens)

@@ -266,10 +266,29 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
         }
 
         this.ToolBar1.AddSpt("spt");
-        if (ensattr.EnsOfMM.GetNewEntity.HisUAC.IsInsert == true)
+        UAC uac = ensattr.EnsOfMM.GetNewEntity.HisUAC;
+        if (uac.IsInsert == true)
         {
             this.ToolBar1.AddBtn("Btn_Save", "保存");
             this.ToolBar1.AddBtn("Btn_SaveAndClose", "保存并关闭");
+        }
+        else
+        {
+            #region 解决Access 不刷新的问题。
+            if (uac.IsUpdate == false)
+            {
+                string rowUrl = this.Request.RawUrl;
+                if (rowUrl.IndexOf("rowUrl") > 1)
+                {
+                }
+                else
+                {
+                    this.Response.Redirect(rowUrl + "&rowUrl=1", true);
+                    return;
+                }
+            }
+            #endregion
+
         }
 
         CheckBox cb = new CheckBox();
@@ -400,11 +419,7 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
             foreach (SysEnum se in ses)
             {
                // Node tn = this.Tree1.GetNodeByID("TN_T" + se.IntKey) as Node;
-
                 TreeNode tn = new TreeNode();
-
-
-
                 //   Microsoft.Web.UI.WebControls.TreeNode tn = this.Tree1.GetNodeByID("TN_T" + se.IntKey);
 
                 if (tn != null)
@@ -433,22 +448,22 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
         #region 绑定分组 元素
         foreach (Entity en in ensOfM)
         {
-           //  #warning error
-           // string val = en.GetValStringByKey(gropkey);
-           //Microsoft.Web.UI.WebControls.TreeNode tn = this.Tree1.GetNodeByID("TN_T" + val);
+            //  #warning error
+            // string val = en.GetValStringByKey(gropkey);
+            //Microsoft.Web.UI.WebControls.TreeNode tn = this.Tree1.GetNodeByID("TN_T" + val);
 
-           // //TreeNode tn = new TreeNode(); // this.Tree1.GetNodeByID("TN_T" + val);
-           // if (tn == null)
-           //     continue;
+            // //TreeNode tn = new TreeNode(); // this.Tree1.GetNodeByID("TN_T" + val);
+            // if (tn == null)
+            //     continue;
 
-           // if (this.Tree1.GetNodeByID("TN_" + en.GetValStringByKey("No"), tn) != null)
-           //     continue;
+            // if (this.Tree1.GetNodeByID("TN_" + en.GetValStringByKey("No"), tn) != null)
+            //     continue;
 
-           // Node nd = new Node();
-           // nd.Text = en.GetValStringByKey("Name");
-           // nd.ID = "TN_" + en.GetValStringByKey("No");
-           // nd.CheckBox = true;
-           // tn.Nodes.Add(nd);
+            // Node nd = new Node();
+            // nd.Text = en.GetValStringByKey("Name");
+            // nd.ID = "TN_" + en.GetValStringByKey("No");
+            // nd.CheckBox = true;
+            // tn.Nodes.Add(nd);
 
         }
 

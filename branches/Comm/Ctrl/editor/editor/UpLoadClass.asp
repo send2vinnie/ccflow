@@ -90,7 +90,7 @@ Class UpLoadClass
 			Exit Function
 		end if
 		Dim lngRequestSize : lngRequestSize=Request.TotalBytes
-		if m_TotalSize>0 and lngRequestSize>m_TotalSize then
+		if m_TotalSize>0 AND lngRequestSize>m_TotalSize then
 			m_Error=5
 			Exit Function
 		elseif lngRequestSize<1 then
@@ -168,7 +168,7 @@ Class UpLoadClass
 						do while not m_binItem.EOS
 							do
 								intTemp = Ascb(m_binItem.Read(1))
-							loop while intTemp = 255 and not m_binItem.EOS
+							loop while intTemp = 255 AND not m_binItem.EOS
 							if intTemp < 192 or intTemp > 195 then
 								m_binItem.read(Bin2Val(m_binItem.Read(2))-2)
 							else
@@ -176,7 +176,7 @@ Class UpLoadClass
 							end if
 							do
 								intTemp = Ascb(m_binItem.Read(1))
-							loop while intTemp < 255 and not m_binItem.EOS
+							loop while intTemp < 255 AND not m_binItem.EOS
 						loop
 						m_binItem.Read(3)
 						m_dicForm.Add strInam&"_Height",Bin2Val(m_binItem.Read(2))
@@ -261,11 +261,11 @@ Class UpLoadClass
 	Private Function GetFerr(lngFsiz,strFext)
 		dim intFerr
 		intFerr=0
-		if lngFsiz>m_MaxSize and m_MaxSize>0 then
+		if lngFsiz>m_MaxSize AND m_MaxSize>0 then
 			if m_Error=0 or m_Error=2 then m_Error=m_Error+1
 			intFerr=intFerr+1
 		end if
-		if Instr(1,LCase("/"&m_FileType&"/"),LCase("/"&strFext&"/"))=0 and m_FileType<>"" then
+		if Instr(1,LCase("/"&m_FileType&"/"),LCase("/"&strFext&"/"))=0 AND m_FileType<>"" then
 			if m_Error<2 then m_Error=m_Error+2
 			intFerr=intFerr+2
 		end if
