@@ -7,20 +7,20 @@
     <uc2:FlowInfoSimple ID="FlowInfoSimple1" runat="server" />
 </TD>
 <TD valign=top>
-<table border=0  style="width: 100%; height: 100%">
+<table border=0  style="width: 100%; height: 100%" align=left>
 
             <tr>
-                <td colspan=2  valign=top class=ToolBar >
+                <td colspan=2  valign=top class=ToolBar align=left>
                     <uc1:ToolBar ID="ToolBar1" runat="server" />
                 </td>
             </tr>
             <tr>
-            <td bgcolor=InfoBackground style="width: 20%"   valign=top>
+            <td bgcolor=InfoBackground style="width: 200px" align=left  valign=top>
             转发对象：<hr>
                     <asp:CheckBoxList ID="CheckBoxList1" runat="server">
                     </asp:CheckBoxList>
                 </td>
-            <td  valign=top>
+            <td  valign=top style="width: 300px" align=left>
                 <%=BP.Sys.Language.GetValByUserLang("FNote", "转发原因")%> ：
                 <asp:TextBox ID="TextBox1"  Text=''  runat="server" Height="270px" TextMode="MultiLine" Width="90%" Columns="18"></asp:TextBox></td>
             </tr>

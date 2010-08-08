@@ -53,14 +53,13 @@ public partial class WF_Admin_TestFlow : WebPage
                 if (fs.No != fl.FK_FlowSort)
                     continue;
                 if (fl.No == this.FK_Flow)
-                    this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New'><b>" + fl.Name + "</b></a> - <a href='/Front/Data/FlowDesc/" + fl.No + ".gif' target=_blank>流程图</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >属性</a>");
+                    this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New'><b>" + fl.Name + "</b></a> - <a href='/" + System.Web.HttpContext.Current.Request.ApplicationPath + "/Data/FlowDesc/" + fl.No + ".gif' target=_blank>流程图</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >属性</a>");
                 else
-                    this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New'>" + fl.Name + "</a> - <a href='/Front/Data/FlowDesc/" + fl.No + ".gif' target=_blank>流程图</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >属性</a>");
+                    this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New'>" + fl.Name + "</a> - <a href='/" + System.Web.HttpContext.Current.Request.ApplicationPath + "/Data/FlowDesc/" + fl.No + ".gif' target=_blank>流程图</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >属性</a>");
             }
         }
         this.Left.AddULEnd();
         this.Left.AddFieldSetEnd();
-
 
 
         this.Left.AddFieldSet("组织结构管理");
@@ -137,7 +136,7 @@ public partial class WF_Admin_TestFlow : WebPage
 
         Flow fl = new Flow(this.FK_Flow);
 
-        this.Ucsys1.AddFieldSet("流程:"+fl.Name);
+        this.Ucsys1.AddFieldSet(fl.Name+"-节点信息设置");
         this.Ucsys1.AddUL();
         Nodes nds = new Nodes(this.FK_Flow);
         foreach (BP.WF.Node nd in nds)
@@ -149,7 +148,7 @@ public partial class WF_Admin_TestFlow : WebPage
 
         int nodeid = int.Parse(this.FK_Flow + "01");
         Emps emps = new Emps();
-        emps.RetrieveInSQL_Order("select fk_emp from port_empstation where fk_station in (select fk_station from wf_nodestation where fk_node='" + nodeid + "' )", "FK_Dept");
+        emps.RetrieveInSQL_Order("select fk_emp from Port_Empstation WHERE fk_station in (select fk_station from WF_NodeStation WHERE FK_Node=" + nodeid + " )", "FK_Dept");
 
         if (emps.Count == 0)
         {
@@ -158,7 +157,7 @@ public partial class WF_Admin_TestFlow : WebPage
             return;
         }
 
-        this.Ucsys1.AddFieldSet(this.ToE("ChoseStarter", "可发起流程的人员"));
+        this.Ucsys1.AddFieldSet(this.ToE("ChoseStarter", "可发起(<font color=red>"+ fl.Name+"</font>)流程的人员"));
 
         this.Ucsys1.Add("说明:点击用户名，您就可以以他的身份登录并发起流程。");
         this.Ucsys1.AddUL();

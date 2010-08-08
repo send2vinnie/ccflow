@@ -259,9 +259,9 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
                     //  this.Pub1.AddTD("<a href='Tools.aspx?DoType=Times&FK_Node=" + nd.NodeID + "'>分析</a>");
                     string sql = "";
                     if (nd.IsCheckNode)
-                        sql = "SELECT count(*) FROM WF_GECheckStand where NodeID=" + nd.NodeID;
+                        sql = "SELECT COUNT(*) FROM WF_GECheckStand WHERE NodeID=" + nd.NodeID;
                     else
-                        sql = "SELECT  count(*) FROM ND" + nd.NodeID;
+                        sql = "SELECT  COUNT(*) FROM ND" + nd.NodeID;
 
                     try
                     {
@@ -277,7 +277,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 
 
                     if (nd.IsCheckNode)
-                        sql = "SELECT AVG( DateDiff(d, cast(RDT as datetime),  cast(CDT as datetime) ) ) FROM WF_GECheckStand where NodeID=" + nd.NodeID;
+                        sql = "SELECT AVG( DateDiff(d, cast(RDT as datetime),  cast(CDT as datetime) ) ) FROM WF_GECheckStand WHERE NodeID=" + nd.NodeID;
                     else
                         sql = "SELECT AVG( DateDiff(d, cast(RDT as datetime),  cast(CDT as datetime) ) ) FROM ND" + nd.NodeID;
 
@@ -343,35 +343,53 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
     }
     public void BindAuto()
     {
-        string sql = "SELECT a.No,a.Name,b.Name as DeptName FROM Port_Emp a, Port_Dept b WHERE a.FK_Dept=b.No and a.FK_Dept LIKE '" + WebUser.FK_Dept + "%'";
+        string sql = "SELECT a.No,a.Name,b.Name as DeptName FROM Port_Emp a, Port_Dept b WHERE a.FK_Dept=b.No AND a.FK_Dept LIKE '" + WebUser.FK_Dept + "%' ORDER  BY a.FK_Dept ";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
         this.Pub1.AddFieldSet("请选择您要授权的人员");
         string deptName = null;
-        this.Pub1.AddUL();
+
+        this.Pub1.AddTable("width=80% align=center");
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("IDX");
+        this.Pub1.AddTDTitle("部门");
+        this.Pub1.AddTDTitle("要执行授权的人员");
+        this.Pub1.AddTREnd();
+
+        int idx = 0;
         foreach (DataRow dr in dt.Rows)
         {
             string fk_emp = dr["No"].ToString();
             if (fk_emp == "admin" || fk_emp == WebUser.No)
                 continue;
 
+
+            idx++;
             if (dr["DeptName"].ToString() != deptName)
             {
                 deptName = dr["DeptName"].ToString();
-                this.Pub1.AddBR();
-                this.Pub1.AddB(deptName);
-
+                this.Pub1.AddTRSum();
+                this.Pub1.AddTDIdx(idx);
+                this.Pub1.AddTD(deptName);
             }
-            if (Glo.IsShowUserNoOnly)
-                this.Pub1.AddLi("<a href=\"javascript:DoAutoTo('" + fk_emp + "','')\" >" + fk_emp + "</a>");
             else
-                this.Pub1.AddLi("<a href=\"javascript:DoAutoTo('" + fk_emp +"," +dr["Name"]+ "','" + dr["Name"] + "')\" >" + fk_emp + " - " + dr["Name"] + "</a>");
+            {
+                this.Pub1.AddTR();
+                this.Pub1.AddTDIdx(idx);
+                this.Pub1.AddTD();
+            }
 
+
+            if (Glo.IsShowUserNoOnly)
+                this.Pub1.AddTD("<a href=\"javascript:DoAutoTo('" + fk_emp + "','')\" >" + fk_emp + "</a>");
+            else
+                this.Pub1.AddTD("<a href=\"javascript:DoAutoTo('" + fk_emp + "," + dr["Name"] + "','" + dr["Name"] + "')\" >" + fk_emp + " - " + dr["Name"] + "</a>");
+
+            this.AddTREnd();
         }
-        this.Pub1.AddULEnd();
+        this.Pub1.AddTableEnd();
 
         this.Pub1.AddFieldSetEnd();
-
     }
     public void BindPer()
     {
@@ -385,12 +403,11 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         this.Pub1.Add("用户帐号：" + WebUser.No);
         this.Pub1.AddBR("用户名：" + WebUser.Name);
 
-        this.Pub1.AddBR(" 电子签字：<img src='../Data/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>" );
+        this.Pub1.AddBR(" 电子签字：<img src='../Data/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
 
         this.Pub1.AddBR();
 
-        this.Pub1.Add("部门编号：" + WebUser.FK_Dept);
-        this.Pub1.Add("部门名称：" + WebUser.FK_DeptName);
+        this.Pub1.Add("所在部门：<font color=green>" + WebUser.FK_DeptName+"</font>");
 
         this.Pub1.AddBR();
 
@@ -401,7 +418,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         }
         else
         {
-            this.Pub1.Add("授权情况：授权给：" + au.Author + "，授权日期：" + au.AuthorDate + " <a href=\"javascript:TakeBack('" + au.Author + "')\" >取消授权</a>");
+            this.Pub1.Add("授权情况：授权给：<font color=green>" + au.Author + "</font>，授权日期：<font color=green>" + au.AuthorDate + "</font> <a href=\"javascript:TakeBack('" + au.Author + "')\" >取消授权</a>");
         }
 
 
@@ -409,33 +426,31 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 
         this.Pub1.Add("安全：<a href='Tools.aspx?RefNo=Pass'>修改密码</a>");
 
-        
-        this.Pub1.AddBR("<hr><b>信息提示：</b><a href='Tools.aspx?RefNo=Profile'>修改</a>");
-        this.Pub1.Add("<br>接受短消息提醒手机号：<font color=blue>" + au.TelHtml + "</font>");
-        this.Pub1.Add("<br>接受短E-mail提醒：<font color=blue>" + au.EmailHtml+"</font>");
 
-        this.Pub1.AddFieldSetEnd();
+        this.Pub1.AddBR("<hr><b>信息提示：</b><a href='Tools.aspx?RefNo=Profile'>设置/修改</a>");
+        this.Pub1.Add("<br>接受短消息提醒手机号：<font color=green>" + au.TelHtml + "</font>");
+        this.Pub1.Add("<br>接受短E-mail提醒：<font color=green>" + au.EmailHtml + "</font>");
 
-        this.Pub1.AddBR();
-
+        this.Pub1.AddHR();
         Stations sts = WebUser.HisStations;
-        this.Pub1.AddFieldSet("岗位权限");
+        this.Pub1.AddB("岗位/部门-权限");
+
+        this.Pub1.AddBR("岗位权限");
         foreach (Station st in sts)
         {
-            this.Pub1.Add(st.No + " - " + st.Name);
+            this.Pub1.Add(" - <font color=green>" + st.Name+"</font>");
         }
-        this.Pub1.AddFieldSetEnd();
-
-        this.Pub1.AddBR();
 
         Depts depts = WebUser.HisDepts;
-        this.Pub1.AddFieldSet("部门权限");
+        this.Pub1.AddBR();
+        this.Pub1.Add("部门权限");
         foreach (Dept st in depts)
         {
-            this.Pub1.Add(st.No + " - " + st.Name);
+            this.Pub1.Add(" - <font color=green>" + st.Name + "</font>");
         }
         this.Pub1.AddFieldSetEnd();
     }
+
     public void BindTools()
     {
         BP.WF.XML.Tools tools = new BP.WF.XML.Tools();

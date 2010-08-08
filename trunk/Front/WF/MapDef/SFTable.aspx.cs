@@ -177,7 +177,7 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
                 main.No = this.Ucsys1.GetTBByID("TB_No").Text;
                 if (main.IsExits)
                 {
-                    string sql = "select No,Name from " + main.No + " where 1=2";
+                    string sql = "select No,Name from " + main.No + " WHERE 1=2";
                     try
                     {
                         BP.DA.DBAccess.RunSQLReturnTable(sql);

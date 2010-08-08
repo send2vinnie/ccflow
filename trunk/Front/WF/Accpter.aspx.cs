@@ -66,9 +66,9 @@ public partial class WF_Accpter : WebPage
             throw new Exception("@流程设计错误：设计员没有设计节点[" + toNd.Name + "]，接受人的岗位范围。");
         }
 
-        string sql = "SELECT No,Name,FK_Dept, '' as DeptName FROM PORT_EMP WHERE NO IN ( ";
-        sql += "SELECT FK_EMP FROM PORT_EMPSTATION WHERE FK_STATION ";
-        sql += "IN (SELECT FK_STATION FROM WF_NODESTATION WHERE FK_Node='" + nodeID + "') ";
+        string sql = "SELECT No,Name,FK_Dept, '' as DeptName FROM Port_Emp WHERE NO IN ( ";
+        sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
+        sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + nodeID + ") ";
         sql += ") ORDER BY FK_DEPT";
         return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }

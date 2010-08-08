@@ -37,7 +37,7 @@ namespace BP.Web.WF
         {
             GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
             QueryObject qo = new QueryObject(gwfs);
-            qo.AddWhereInSQL(GenerWorkFlowAttr.WorkID, " SELECT WorkID FROM WF_GenerWorkFlow WHERE FK_Node IN ( SELECT FK_NODE FROM WF_GenerWorkerList WHERE FK_Emp='" + Web.WebUser.No + "' AND FK_Flow='" + fl.No + "' AND WORKID=WF_GenerWorkFlow.WORKID AND ISENABLE=1 ) ");
+            qo.AddWhereInSQL(GenerWorkFlowAttr.WorkID, " SELECT WorkID FROM WF_GenerWorkFlow WHERE FK_Node IN ( SELECT FK_Node FROM WF_GenerWorkerlist WHERE FK_Emp='" + Web.WebUser.No + "' AND FK_Flow='" + fl.No + "' AND WORKID=WF_GenerWorkFlow.WORKID AND ISENABLE=1 ) ");
             qo.addOrderBy(GenerWorkFlowAttr.FK_Node, GenerWorkFlowAttr.WorkID);
             qo.DoQuery();
 

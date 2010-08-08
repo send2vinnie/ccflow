@@ -54,11 +54,11 @@ public partial class Comm_Dtl : WebPage
     }
     public void Bind()
     {
-        BP.Sys.MapDtl mdtl = new MapDtl(this.EnsName);
+        MapDtl mdtl = new MapDtl(this.EnsName);
 
         #region 生成标题
         MapAttrs attrs = new MapAttrs(this.EnsName);
-        this.Ucsys1.Add("<Table border=0 >");
+        this.Ucsys1.Add("<Table border=0  style='padding:0px' >");
         this.Ucsys1.AddTR();
         if (mdtl.IsShowIdx)
             this.Ucsys1.AddTDTitle();
@@ -101,7 +101,21 @@ public partial class Comm_Dtl : WebPage
         catch (Exception ex)
         {
             dtls.GetNewEntity.CheckPhysicsTable();
-            this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal, true);
+
+            #region 解决Access 不刷新的问题。
+            string rowUrl = this.Request.RawUrl;
+            if (rowUrl.IndexOf("rowUrl") > 1)
+            {
+                throw ex;
+            }
+            else
+            {
+                this.Response.Redirect(rowUrl + "&rowUrl=1", true);
+                return;
+            }
+            #endregion
+
+            //this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal, true);
             return;
         }
 
@@ -109,7 +123,7 @@ public partial class Comm_Dtl : WebPage
         this.Ucsys2.Clear();
         try
         {
-            int count = qo.GetCount();
+            int count = qo.GetCOUNT();
             this.Ucsys2.Clear();
             this.Ucsys2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal);
             qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
@@ -129,13 +143,28 @@ public partial class Comm_Dtl : WebPage
         catch (Exception ex)
         {
             dtls.GetNewEntity.CheckPhysicsTable();
-            this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal, true);
-            return;
+
+            #region 解决Access 不刷新的问题。
+            string rowUrl = this.Request.RawUrl;
+            if (rowUrl.IndexOf("rowUrl") > 1)
+            {
+                throw ex;
+            }
+            else
+            {
+                this.Response.Redirect(rowUrl + "&rowUrl=1", true);
+                return;
+            }
+            #endregion
+
+            //this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal, true);
+            //return;
         }
         #endregion 生成翻页
 
         DDL ddl = new DDL();
         CheckBox cb = new CheckBox();
+
         #region 生成数据
         int idx = 0;
 
@@ -162,28 +191,23 @@ public partial class Comm_Dtl : WebPage
                         this.Ucsys1.AddTD(tb);
                         tb.LoadMapAttr(attr);
                         tb.ID = "TB_" + attr.KeyOfEn + "_" + dtl.OID;
+                        tb.Columns = attr.UIWidth;
+                        tb.Enabled = attr.UIIsEnable;
                         switch (attr.MyDataType)
                         {
                             case DataType.AppDate:
                             case DataType.AppDateTime:
                                 if (attr.UIIsEnable)
-                                    tb.Attributes["onfocus"] = "calendar();";
-                                tb.Attributes["OnTextChanged"] = " isChange= true;";
+                                    tb.Attributes["onfocus"] = "calendar();isChange= true;";
                                 tb.Text = val;
-                                if (attr.MyDataType == DataType.AppDate)
-                                    tb.Columns = 10;
-                                else
-                                    tb.Columns = 14;
                                 break;
                             case DataType.AppMoney:
                             case DataType.AppRate:
                                 tb.TextExtMoney = decimal.Parse(val);
-                                tb.Columns = 10;
                                 break;
                             default:
                                 tb.Attributes["OnTextChanged"] = " isChange= true;";
                                 tb.Text = val;
-                                tb.Columns = attr.UIWidth;
                                 break;
                         }
 
@@ -228,7 +252,6 @@ public partial class Comm_Dtl : WebPage
                             cb.Checked = true;
                         else
                             cb.Checked = false;
-
                         cb.Attributes["onclick"] = "isChange= true;";
                         this.Ucsys1.AddTD(cb);
                         break;
@@ -348,7 +371,8 @@ public partial class Comm_Dtl : WebPage
     }
     public void Save()
     {
-        BP.Sys.MapDtl mdtl = new MapDtl(this.EnsName);
+        MapDtl mdtl = new MapDtl(this.EnsName);
+
         GEDtls dtls = new GEDtls(this.EnsName);
         QueryObject qo = null;
         qo = new QueryObject(dtls);
@@ -421,11 +445,9 @@ public partial class Comm_Dtl : WebPage
 
         // this.ExportDGToExcelV2(dtls, this.Title + ".xls");
         //DataTable dt = dtls.ToDataTableDesc();
+        // this.GenerExcel(dtls.ToDataTableDesc(), mdtl.Name + ".xls");
 
-       // this.GenerExcel(dtls.ToDataTableDesc(), mdtl.Name + ".xls");
-
-        this.GenerExcel_pri_Text(dtls.ToDataTableDesc(), mdtl.Name+"@"+WebUser.No +"@"+DataType.CurrentData+ ".xls");
-
+        this.GenerExcel_pri_Text(dtls.ToDataTableDesc(), mdtl.Name + "@" + WebUser.No + "@" + DataType.CurrentData + ".xls");
 
         //this.ExportDGToExcelV2(dtls, this.Title + ".xls");
         //dtls.GetNewEntity.CheckPhysicsTable();
@@ -465,7 +487,7 @@ public partial class Comm_Dtl : WebPage
                 this.ExpExcel();
                 break;
             default:
-                BP.PubClass.Alert("当前版本不支持此功能。");
+                BP.PubClass.Alert("@当前版本不支持此功能。");
                 break;
         }
     }
@@ -486,6 +508,7 @@ public partial class Comm_Dtl : WebPage
             TB tb = this.Ucsys1.GetTBByID(tbID);
             if (tb == null)
                 continue;
+
             right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + this.Ucsys1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
             right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + this.Ucsys1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
         }
@@ -510,9 +533,7 @@ public partial class Comm_Dtl : WebPage
             return "";
         }
 
-
         string left = "\n  document.forms[0]." + ClientID + ".value = ";
-
         string right = "";
         int i = 0;
         foreach (GEDtl dtl in dtls)

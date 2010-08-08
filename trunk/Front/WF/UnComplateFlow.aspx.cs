@@ -24,8 +24,8 @@ namespace BP.Web.WFQH.WF
 			string fk_flow = this.Request.QueryString["FK_Flow"] ; 
 
 			//查询未完成的工作信息
-			string sql="SELECT FK_FLOW, FK_Node AS FK_NODE, COUNT(*) AS NUM "
-				+"FROM WF_GENERWORKFLOW WHERE WORKID IN (SELECT WORKID FROM WF_GENERWORKERLIST WHERE FK_EMP='"+WebUser.No+"' )"
+			string sql="SELECT FK_FLOW, FK_Node AS FK_Node, COUNT(*) AS NUM "
+				+"FROM WF_GENERWORKFLOW WHERE WORKID IN (SELECT WORKID FROM WF_GenerWorkerlist WHERE FK_EMP='"+WebUser.No+"' )"
 				+"GROUP BY FK_FLOW, FK_Node";
 
 			DataTable dt = DBAccess.RunSQLReturnTable(sql);

@@ -37,7 +37,7 @@ public partial class Face_Home : WebPage
     {
         if (this.UserNo != null && this.UserNo != BP.Web.WebUser.No)
         {
-            string sql = "select sid  from port_emp where no='" + this.UserNo + "'";
+            string sql = "select sid  from Port_Emp WHERE no='" + this.UserNo + "'";
             string sid = BP.DA.DBAccess.RunSQLReturnVal(sql).ToString();
             if (sid != this.SID)
             {
@@ -390,7 +390,7 @@ public partial class Face_Home : WebPage
         //this.Pub1.Add("<TD background='./Images/TdHome_background.bmp' align='center'>待办工作个数</TD>");
         //this.Pub1.AddTREnd();
         //获取待办工作个数
-        //string sql="SELECT FK_FLOW,  COUNT(*) AS NUM  FROM  wf_generworkerlist WHERE isenable=1 and FK_NODE IN (SELECT FK_Node FROM wf_generworkflow WHERE wf_generworkflow.Workid=wf_generworkerlist.Workid   AND FK_Node<>20206 and fk_flow!='220' ) AND FK_EMP='"+WebUser.No+"' GROUP BY FK_FLOW ";
+        //string sql="SELECT FK_FLOW,  COUNT(*) AS NUM  FROM  WF_GenerWorkerlist WHERE isenable=1 AND FK_Node IN (SELECT FK_Node FROM wf_generworkflow WHERE wf_generworkflow.Workid=WF_GenerWorkerlist.Workid   AND FK_Node<>20206 AND fk_flow!='220' ) AND FK_EMP='"+WebUser.No+"' GROUP BY FK_FLOW ";
         //DataTable dt=DBAccess.RunSQLReturnTable(sql);
         //int i=0;
         //foreach(DataRow dr in dt.Rows)
@@ -452,7 +452,7 @@ public partial class Face_Home : WebPage
             this.Pub1.Add("<TD align='center'>" + this.ToE("Num", "个数") + "</TD>");
             this.Pub1.AddTREnd();
             //获取待办工作个数
-            string sql = "SELECT FK_FLOW,  COUNT(*) AS NUM  FROM  wf_generworkerlist WHERE isenable=1 and FK_NODE IN (SELECT FK_Node FROM wf_generworkflow WHERE wf_generworkflow.Workid=wf_generworkerlist.Workid   AND FK_Node<>20206 and fk_flow!='220' ) AND FK_EMP='" + WebUser.No + "' GROUP BY FK_FLOW ";
+            string sql = "SELECT FK_FLOW,  COUNT(*) AS NUM  FROM  WF_GenerWorkerlist WHERE isenable=1 AND FK_Node IN (SELECT FK_Node FROM wf_generworkflow WHERE wf_generworkflow.Workid=WF_GenerWorkerlist.Workid   AND FK_Node<>20206 AND fk_flow!='220' ) AND FK_EMP='" + WebUser.No + "' GROUP BY FK_FLOW ";
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
             int i = 0;
             foreach (DataRow dr in dt.Rows)

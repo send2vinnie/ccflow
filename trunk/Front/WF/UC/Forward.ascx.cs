@@ -99,13 +99,13 @@ public partial class WF_UC_Forward : BP.Web.UC.UCBase3
             int nodeId = gwf.FK_Node;
             int workId = this.WorkID;
             //WorkerLists wls = new WorkerLists(this.WorkID,nodeId);
-            DBAccess.RunSQL("update WF_GenerWorkerList SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId);
+            DBAccess.RunSQL("update WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId);
             string vals = "";
             string emps = "";
             foreach (Object obj in al)
             {
                 emps += obj + ",";
-                int i = DBAccess.RunSQL("update WF_GenerWorkerList set IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId + " and fk_emp='" + obj + "'");
+                int i = DBAccess.RunSQL("update WF_GenerWorkerlist set IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId + " AND fk_emp='" + obj + "'");
                 if (i == 0)
                 {
                     /*说明: 用其它的岗位上的人来处理的，就给他增加待办工作。*/
@@ -133,7 +133,7 @@ public partial class WF_UC_Forward : BP.Web.UC.UCBase3
             wk.Update();
 
 
-            DBAccess.RunSQL("UPDATE WF_CHOfNode SET Emps='" + emps + "' WHERE FK_NODE='" + nodeId + "' AND WorkID='" + this.WorkID + "'");
+            DBAccess.RunSQL("UPDATE WF_CHOfNode SET Emps='" + emps + "' WHERE FK_Node=" + nodeId + " AND WorkID='" + this.WorkID + "'");
             // CHOfNode ch = new CHOfNode(this.WorkID, nodeId, BP.Web.WebUser.No);
             // ch.Emps = emps;
             // ch.Update();
@@ -171,7 +171,7 @@ public partial class WF_UC_Forward : BP.Web.UC.UCBase3
         this.CheckBoxList1.Items.Clear();
         // 当前用的员工权限。
         string sql = "";
-        sql = " SELECT NO,NAME FROM Port_Emp WHERE NO IN (SELECT FK_EMP FROM PORT_EMPDept WHERE FK_Dept IN (  SELECT FK_Dept FROM Port_EmpDept where fk_emp='" + BP.Web.WebUser.No + "') ) or FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%'";
+        sql = " SELECT [No],Name FROM Port_Emp WHERE NO IN (SELECT FK_EMP FROM Port_EmpDept WHERE FK_Dept IN (  SELECT FK_Dept FROM Port_EmpDept WHERE fk_emp='" + BP.Web.WebUser.No + "') ) or FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%'";
 
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
         foreach (DataRow dr in dt.Rows)

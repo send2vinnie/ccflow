@@ -30,19 +30,16 @@ namespace BP.Web.Comm.UC.WF
 
         #region add 2010-07-24 处理实体绑定的第二个算法。
 
-        #region varable.
+        #region add varable.
         public GroupField currGF = new GroupField();
         public MapDtls dtls;
         private GroupFields gfs;
         public int rowIdx = 0;
         public bool isLeftNext = true;
-        #endregion varable.
+        #endregion add varable.
 
         public void BindColumn4(Entity en, string enName)
         {
-            //this.Bind(en, this.CurrEn.ToString(), false, true);
-            //return;
-
             this.HisEn = en;
             currGF = new GroupField();
             MapAttrs mattrs = new MapAttrs(enName);
@@ -53,7 +50,7 @@ namespace BP.Web.Comm.UC.WF
             {
                 currGF = gf;
                 this.AddTR();
-                    this.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+                    this.AddTD("colspan=4 class=GroupField valign='top' ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
                 this.AddTREnd();
 
                 bool isHaveH = false;
@@ -94,7 +91,7 @@ namespace BP.Web.Comm.UC.WF
 
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
                         if (attr.UIIsEnable)
-                            this.Add("<TD  colspan=4 width='100%' valign=top>" + attr.Name);
+                            this.Add("<TD  colspan=4 width='100%' valign=top align=left>" + attr.Name);
                         else
                             this.Add("<TD  colspan=4 width='100%' valign=top class=TBReadonly>" + attr.Name);
 
@@ -108,7 +105,6 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.Enabled = attr.UIIsEnable;
                         if (mytbLine.Enabled == false)
                             mytbLine.Attributes["class"] = "TBReadonly";
-
 
                         this.Add(mytbLine);
                         this.AddTDEnd();
@@ -135,7 +131,6 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.Enabled = attr.UIIsEnable;
                         if (mytbLine.Enabled == false)
                             mytbLine.Attributes["class"] = "TBReadonly";
-
 
                         this.Add(mytbLine);
                         this.AddTDEnd();
@@ -188,7 +183,6 @@ namespace BP.Web.Comm.UC.WF
                                     this.AddTDDesc(attr.Name);
                                     tb.ShowType = TBType.TB;
                                     tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-
                                     this.AddTD("colspan=" + colspanOfCtl, tb);
                                     break;
                                 case BP.DA.DataType.AppDate:
@@ -384,110 +378,7 @@ namespace BP.Web.Comm.UC.WF
             }
         }
         #endregion
-
-        public static string GetRefstrs_del(string keys, Entity en, Entities hisens)
-        {
-            string refstrs = "";
-            string path = System.Web.HttpContext.Current.Request.ApplicationPath;
-            int i = 0;
-
-            #region 加入一对多的实体编辑
-            AttrsOfOneVSM oneVsM = en.EnMap.AttrsOfOneVSM;
-            if (oneVsM.Count > 0)
-            {
-                foreach (AttrOfOneVSM vsM in oneVsM)
-                {
-                    //  string url = path + "/Comm/UIEn1ToM.aspx?ClassName=" + en.ToString() + "&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
-                    string url = "UIEn1ToM.aspx?En=" + en.ToString() + "&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
-
-                    string sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
-                    try
-                    {
-                        i = DBAccess.RunSQLReturnValInt(sql);
-                    }
-                    catch (Exception ex)
-                    {
-                        vsM.EnsOfMM.GetNewEntity.CheckPhysicsTable();
-                        throw ex;
-                    }
-
-                    if (i == 0)
-                        refstrs += "[<a href=\"javascript:WinShowModalDialog('" + url + "','onVsM'); \"  >" + vsM.Desc + "</a>]";
-                    else
-                        refstrs += "[<a href=\"javascript:WinShowModalDialog('" + url + "','onVsM'); \"  >" + vsM.Desc + "-" + i + "</a>]";
-                }
-            }
-            #endregion
-
-            #region 加入他门的相关功能
-            //			SysUIEnsRefFuncs reffuncs = en.GetNewEntities.HisSysUIEnsRefFuncs ;
-            //			if ( reffuncs.Count > 0  )
-            //			{
-            //				foreach(SysUIEnsRefFunc en1 in reffuncs)
-            //				{
-            //					string url=path+"/Comm/RefFuncLink.aspx?RefFuncOID="+en1.OID.ToString()+"&MainClassName="+hisens.ToString()+keys;
-            //					refstrs+="[<a href=\"javascript:WinOpen('"+url+"','ref'); \"  >"+en1.Name+"</a>]";
-            //				}
-            //			}
-            #endregion
-
-            #region 加入他门的 方法
-            RefMethods myreffuncs = en.EnMap.HisRefMethods;
-            if (myreffuncs.Count > 0)
-            {
-                foreach (RefMethod func in myreffuncs)
-                {
-                    if (func.Visable == false)
-                        continue;
-
-                    // string url = path + "/Comm/RefMethod.aspx?Index=" + func.Index + "&EnsName=" + hisens.ToString() + keys;
-                    string url = path + "/Comm/RefMethod.aspx?Index=" + func.Index + "&EnsName=" + hisens.ToString() + keys;
-                    if (func.Warning == null)
-                    {
-                        if (func.Target == null)
-                            refstrs += "[" + func.GetIcon(path) + "<a href='" + url + "' ToolTip='" + func.ToolTip + "' >" + func.Title + "</a>]";
-                        else
-                            refstrs += "[" + func.GetIcon(path) + "<a href=\"javascript:WinOpen('" + url + "','" + func.Target + "')\" ToolTip='" + func.ToolTip + "' >" + func.Title + "</a>]";
-                    }
-                    else
-                    {
-                        if (func.Target == null)
-                            refstrs += "[" + func.GetIcon(path) + "<a href=\"javascript: if ( confirm('" + func.Warning + "') ) { window.location.href='" + url + "' }\" ToolTip='" + func.ToolTip + "' >" + func.Title + "</a>]";
-                        else
-                            refstrs += "[" + func.GetIcon(path) + "<a href=\"javascript: if ( confirm('" + func.Warning + "') ) { WinOpen('" + url + "','" + func.Target + "') }\" ToolTip='" + func.ToolTip + "' >" + func.Title + "</a>]";
-                    }
-                }
-            }
-            #endregion
-
-            #region 加入他的明细
-            EnDtls enDtls = en.EnMap.Dtls;
-            //  string path = this.Request.ApplicationPath;
-            if (enDtls.Count > 0)
-            {
-                foreach (EnDtl enDtl in enDtls)
-                {
-                    //string url = path + "/Comm/UIEnDtl.aspx?ClassName=" + enDtl.ClassName + "&Key=" + enDtl.RefKey + "&Val=" + en.PKVal.ToString() + "&MainClassName=" + en.ToString() + keys;
-                    string url = path + "/Comm/UIEnDtl.aspx?EnsName=" + enDtl.EnsName + "&Key=" + enDtl.RefKey + "&Val=" + en.PKVal.ToString() + "&MainClassName=" + en.ToString() + keys;
-                    try
-                    {
-                        i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "='" + en.PKVal + "'");
-                    }
-                    catch (Exception ex)
-                    {
-                        enDtl.Ens.GetNewEntity.CheckPhysicsTable();
-                        throw ex;
-                    }
-
-                    if (i == 0)
-                        refstrs += "[<a href=\"javascript:WinOpen('" + url + "', 'dtl" + enDtl.RefKey + "'); \" >" + enDtl.Desc + "</a>]";
-                    else
-                        refstrs += "[<a href=\"javascript:WinOpen('" + url + "', 'dtl" + enDtl.RefKey + "'); \"  >" + enDtl.Desc + "-" + i + "</a>]";
-                }
-            }
-            #endregion
-            return refstrs;
-        }
+        
         public static string GetRefstrs(string keys, Entity en, Entities hisens)
         {
             string refstrs = "";
@@ -502,10 +393,16 @@ namespace BP.Web.Comm.UC.WF
                 {
                     //  string url = path + "/Comm/UIEn1ToM.aspx?EnsName=" + en.ToString() + "&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
                     string url = "UIEn1ToM.aspx?EnsName=" + en.ToString() + "&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
-                    string sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
                     try
                     {
-                        i = DBAccess.RunSQLReturnValInt(sql);
+                        try
+                        {
+                            i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'");
+                        }
+                        catch
+                        {
+                            i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal );
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -561,7 +458,14 @@ namespace BP.Web.Comm.UC.WF
                     string url = path + "/Comm/UIEnDtl.aspx?EnsName=" + enDtl.EnsName + "&RefKey=" + enDtl.RefKey + "&RefVal=" + en.PKVal.ToString() + "&MainEnsName=" + en.ToString();
                     try
                     {
-                        i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "='" + en.PKVal + "'");
+                        try
+                        {
+                            i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "='" + en.PKVal + "'");
+                        }
+                        catch
+                        {
+                            i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "=" + en.PKVal);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -1591,8 +1495,15 @@ namespace BP.Web.Comm.UC.WF
                 foreach (AttrOfOneVSM vsM in oneVsM)
                 {
                     string url = "UIEn1ToM.aspx?EnsName=" + en.ToString() + "&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
-                    string sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
-                    int i = DBAccess.RunSQLReturnValInt(sql);
+                    int i = 0;
+                    try
+                    {
+                          i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'");
+                    }
+                    catch
+                    {
+                        i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal );
+                    }
 
                     if (i == 0)
                         refstrs += "[<a href='" + url + "'  >" + vsM.Desc + "</a>]";
@@ -1622,8 +1533,16 @@ namespace BP.Web.Comm.UC.WF
                 foreach (EnDtl enDtl in enDtls)
                 {
                     string url = "UIEnDtl.aspx?EnsName=" + enDtl.EnsName + "&RefKey=" + enDtl.RefKey + "&RefVal=" + en.PKVal.ToString() + "&MainEnsName=" + en.ToString() + keys;
+                    int i = 0;
+                    try
+                    {
+                         i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "='" + en.PKVal + "'");
+                    }
+                    catch
+                    {
+                        i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "=" + en.PKVal );
+                    }
 
-                    int i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "='" + en.PKVal + "'");
                     if (i == 0)
                         refstrs += "[<a href='" + url + "'  >" + enDtl.Desc + "</a>]";
                     else

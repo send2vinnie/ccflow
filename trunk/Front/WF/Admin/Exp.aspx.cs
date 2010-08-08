@@ -86,15 +86,15 @@ public partial class WF_Admin_Exp : System.Web.UI.Page
         switch (exp.DLink)
         {
             case BP.WF.DLink.AppCenterDSN:
-                sql = "select tname from tab where tname not like 'WF%' and tname not like 'SYS_%' and tname not like 'ND%' and tname not like 'CN%' and tname not like 'PORT_%' and tname not like 'PUB_%' and tname not like 'V_%'";
+                sql = "select tname from tab WHERE tname not like 'WF%' AND tname not like 'SYS_%' AND tname not like 'ND%' AND tname not like 'CN%' AND tname not like 'PORT_%' AND tname not like 'PUB_%' AND tname not like 'V_%'";
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 break;
             case BP.WF.DLink.ODBC:
-                sql = "select tname from tab where tname not like 'WF%' and tname not like 'Sys_%' and tname not like 'ND%' and tname not like 'CN%' and tname not like 'Port_%'";
+                sql = "select tname from tab WHERE tname not like 'WF%' AND tname not like 'Sys_%' AND tname not like 'ND%' AND tname not like 'CN%' AND tname not like 'Port_%'";
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 break;
             default:
-                sql = "select tname from tab where tname not like 'WF%' and tname not like 'Sys_%' and tname not like 'ND%' and tname not like 'CN%' and tname not like 'Port_%'";
+                sql = "select tname from tab WHERE tname not like 'WF%' AND tname not like 'Sys_%' AND tname not like 'ND%' AND tname not like 'CN%' AND tname not like 'Port_%'";
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 break;
         }

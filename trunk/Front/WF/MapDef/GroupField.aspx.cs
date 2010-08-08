@@ -164,8 +164,6 @@ public partial class WF_MapDef_GroupField : WebPage
                 break;
         }
 
-        
-
        
         
         #region edit operation
@@ -173,7 +171,6 @@ public partial class WF_MapDef_GroupField : WebPage
         this.Pub1.AddBR();
         this.Pub1.Add("<Table border=0 >");
         this.Pub1.AddTR();
-
         this.Pub1.AddTD("分组名称");
 
         TB tb = new TB();
@@ -181,11 +178,10 @@ public partial class WF_MapDef_GroupField : WebPage
         tb.Text = en.Lab;
         tb.Columns = 50;
         this.Pub1.AddTD(tb);
-        this.Pub1.AddTD("<a href=\"javascript:Del('" + this.RefNo + "','" + this.RefOID + "');\"  ><img src='../../../Images/Btn/Delete.gif' border=0/></a>");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTRSum();
-        this.Pub1.Add("<TD align=center colspan=3>");
+        this.Pub1.Add("<TD align=center colspan=2>");
         Btn btn = new Btn();
         btn.Text = this.ToE("Save", "保存");
         btn.ID = "Btn_Save";

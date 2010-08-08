@@ -120,8 +120,8 @@ namespace BP.Web.WF
 			switch( fst)
 			{
 				case FlowShowType.MyWorks:
-					string sql="SELECT a.FK_Node, c.Name as NodeName, b.WorkID, b.Title,b.Rec,b.RDT FROM WF_GENERWORKERLIST a,  WF_GENERWORKFLOW b, WF_Node c";
-					sql+=" WHERE a.FK_Node=c.NodeID and a.WORKID=b.WorkID and a.FK_Node=b.FK_Node and b.FK_Flow='"+flow+"' and a.FK_Emp='"+WebUser.No+"'";
+					string sql="SELECT a.FK_Node, c.Name as NodeName, b.WorkID, b.Title,b.Rec,b.RDT FROM WF_GenerWorkerlist a,  WF_GENERWORKFLOW b, WF_Node c";
+					sql+=" WHERE a.FK_Node=c.NodeID AND a.WORKID=b.WorkID AND a.FK_Node=b.FK_Node AND b.FK_Flow='"+flow+"' AND a.FK_Emp='"+WebUser.No+"'";
 					DataTable dt =DBAccess.RunSQLReturnTable(sql);
 					this.Text+="<TABLE class='TableFlow'   >";
 					this.Text+="<TR class='TableFlowTR' >";
@@ -161,14 +161,14 @@ namespace BP.Web.WF
 		{
 
 		}
-		public void BindMyWork(int fk_node)
+		public void BindMyWork(int FK_Node)
 		{
-			Node nd = new Node(fk_node);
+			Node nd = new Node(FK_Node);
 			//Works wks = nd.HisWorks;
 			//Work wk =wks.GetNewEntity;
             GenerWorkFlows gwfs = new GenerWorkFlows();
 			QueryObject qo = new QueryObject(gwfs);
-			qo.AddWhereInSQL(GenerWorkFlowAttr.WorkID , "SELECT WORKID FROM WF_GenerWorkerList WHERE FK_Node='"+fk_node+"' and FK_Emp='"+WebUser.No+"'");
+			qo.AddWhereInSQL(GenerWorkFlowAttr.WorkID , "SELECT WorkID FROM WF_GenerWorkerlist WHERE FK_Node="+FK_Node+" AND FK_Emp='"+WebUser.No+"'");
 			qo.DoQuery();
 
 			this._Text="<table class='MyWork' id='strs'  cellSpacing='0' cellPadding='0' >";
@@ -265,7 +265,7 @@ namespace BP.Web.WF
 				qo.DoQuery();
 
 
-				//DataTable mytable=DBAccess.RunSQLReturnTable( "SELECT distinct c.No FROM WF_NodeStation a, WF_Node b, WF_Flow c WHERE a.FK_Node=b.NodeID and b.FK_Flow =c.No and a.FK_Station in (SELECT FK_Station FROM port_EmpStation WHERE FK_Emp ='"+WebUser.No+"' and FK_Station='"+st.No+"')" );
+				//DataTable mytable=DBAccess.RunSQLReturnTable( "SELECT distinct c.No FROM WF_NodeStation a, WF_Node b, WF_Flow c WHERE a.FK_Node=b.NodeID AND b.FK_Flow =c.No AND a.FK_Station in (SELECT FK_Station FROM Port_EmpStation WHERE FK_Emp ='"+WebUser.No+"' AND FK_Station='"+st.No+"')" );
 				foreach(Flow fl in fls)
 				{
 					/* 看看有没有此流程的工作 */
@@ -279,7 +279,7 @@ namespace BP.Web.WF
 					this.Text+="</TR>";
 
                     ps.Clear();
-                    ps.SQL = "SELECT FK_Node, COUNT(*) FROM WF_GenerWorkerList WHERE FK_Emp=:FK_Emp AND FK_Node in (SELECT NodeiD FROM wf_node WHERE FK_Flow=:FK_Flow ) GROUP BY FK_Node";
+                    ps.SQL = "SELECT FK_Node, COUNT(*) FROM WF_GenerWorkerlist WHERE FK_Emp=:FK_Emp AND FK_Node in (SELECT NodeiD FROM wf_node WHERE FK_Flow=:FK_Flow ) GROUP BY FK_Node";
                     ps.Add("FK_Emp",WebUser.No);
                     ps.Add("FK_Flow", fl.No);
 

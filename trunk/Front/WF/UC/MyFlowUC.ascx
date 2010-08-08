@@ -1,14 +1,13 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="MyFlow.ascx.cs" Inherits="WF_UC_MyFlow" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="MyFlowUC.ascx.cs" Inherits="WF_UC_MyFlowUC" %>
 <%@ Register src="../../Comm/UC/UCSys.ascx" tagname="UCSys" tagprefix="uc3" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc4" %>
-<%@ Register src="../Pub.ascx" tagname="Pub" tagprefix="uc5" %>
+<%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc5" %>
 <%@ Register src="FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc1" %>
 <%@ Register src="UCEn.ascx" tagname="UCEn" tagprefix="uc6" %>
 
     <script language="JavaScript" src="./../Style/JScript.js" type="text/javascript"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js" type="text/javascript"></script>
     <script language="JavaScript" src="../../Comm/ShortKey.js" type="text/javascript"></script>
-    
 
 <script language=javascript>
     function GroupBarClick(rowIdx) {
@@ -31,12 +30,13 @@
         }
     }
 </script>
-<table id="Table1" border='0' width='600px'>
+
+<table id="Table1" border='0' width='800px' >
 <tr>
-<td  valign='top' nowarp='true' width='1%' >
+<td  valign='top' align=left   >
     <uc1:FlowInfoSimple ID="FlowInfoSimple1" runat="server" />
 </td>
-<td valign='top' id='Right' style="height:600px; width:75%" >
+<td valign='top' id='Right' style="height:600px;" >
 <!--  开始Table -->
 <table width='100%' border=0  style="height:600px;width:100%" >
 <tr>
@@ -53,7 +53,6 @@
         </tr>
 </table>
 <!--  End Table -->
-    
     </td>
     </tr>
  </table>

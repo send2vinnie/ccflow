@@ -82,9 +82,12 @@ public partial class Face_FlowSearch : WebPage
         QueryObject qo = new QueryObject(wks);
         qo.AddWhere(WorkAttr.Rec, WebUser.No);
         qo.addAnd();
-        qo.AddWhere("substring(RDT,1,10) >='"+this.DT_F+"' AND substring(RDT,1,10) <='"+this.DT_T+"' ");
+        if (BP.SystemConfig.AppCenterDBType == DBType.Access)
+            qo.AddWhere("Mid(RDT,1,10) >='" + this.DT_F + "' AND Mid(RDT,1,10) <='" + this.DT_T + "' ");
+        else
+            qo.AddWhere("substring(RDT,1,10) >='" + this.DT_F + "' AND substring(RDT,1,10) <='" + this.DT_T + "' ");
 
-        this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch.aspx?FK_Node=" + this.FK_Node);
+        this.Pub2.BindPageIdx(qo.GetCOUNT(), 10, this.PageIdx, "FlowSearch.aspx?FK_Node=" + this.FK_Node);
         qo.DoQuery("OID", 10, this.PageIdx);
 
         // 生成页面数据。

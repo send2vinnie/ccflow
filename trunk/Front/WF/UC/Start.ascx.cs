@@ -39,7 +39,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
         this.AddTDTitle(this.ToE("Desc", "描述"));
         this.AddTREnd();
 
-        string sql = "SELECT FK_Flow FROM WF_Node WHERE NODEID IN (  SELECT FK_NODE FROM WF_NODESTATION WHERE FK_STATION IN (SELECT FK_STATION FROM PORT_EMPSTATION WHERE FK_EMP='" + WebUser.No + "')  ) ";
+        string sql = "SELECT FK_Flow FROM WF_Node WHERE NODEID IN (  SELECT FK_Node FROM WF_NodeStation WHERE FK_STATION IN (SELECT FK_STATION FROM Port_EmpSTATION WHERE FK_EMP='" + WebUser.No + "')  ) ";
         Flows fls = new Flows();
         BP.En.QueryObject qo = new BP.En.QueryObject(fls);
         qo.AddWhereInSQL("No", sql);

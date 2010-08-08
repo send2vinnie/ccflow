@@ -735,6 +735,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
                 {
                     case DataType.AppBoolean:
                         attr.MyDataType = BP.DA.DataType.AppBoolean;
+                        attr.UIContralType = UIContralType.CheckBok; 
                         attr.DefValOfBool = this.Pub1.GetCBByID("CB_DefVal").Checked;
                         break;
                     default:

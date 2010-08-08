@@ -41,7 +41,7 @@ public partial class Face_WhySendToThem : System.Web.UI.Page
     {
         this.Title = "分析此问题有助于您，查看流程节点是否正确。";
 
-        this.Pub1.AddH1("为什么会发给下列人员<hr>");
+        this.Pub1.AddFieldSet("为什么会发给下列人员");
 
         this.Pub1.Add("当前操作人员："+BP.Web.WebUser.No+" 操作员权限部门："+WebUser.FK_Dept+ " " +WebUser.FK_DeptName );
         this.Pub1.AddB("<br>当前操作员部门集合如下：<hr>");
@@ -93,8 +93,9 @@ public partial class Face_WhySendToThem : System.Web.UI.Page
                 this.Pub1.AddBR(myde.FK_Dept + myde.FK_DeptT);
             }
 
-            this.Pub1.AddHR();
         }
+
+        this.Pub1.AddFieldSetEnd(); 
         return;
 
 

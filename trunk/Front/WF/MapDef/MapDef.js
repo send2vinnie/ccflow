@@ -11,7 +11,7 @@ function mouseUp()
 {
    if ( gfID > -1 && moveToFieldID > 0 && currFieldID != moveToFieldID )
    {
-         var url='Do.aspx?DoType=MoveTo&FromID='+moveToFieldID+'&ToGFID='+gfID ;
+         var url='Do.aspx?DoType=MoveTo&FromID='+moveToFieldID+'&ToGFID='+gfID+'&ToID='+moveToFieldID ;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
         moveToFieldID=0;
@@ -23,7 +23,8 @@ function mouseUp()
    if ( currFieldID>0  && moveToFieldID >  0 && currFieldID != moveToFieldID  )
    {
       var url1='Do.aspx?DoType=Jump&FromID='+currFieldID+'&ToID='+moveToFieldID ;
-      var b1=window.showModalDialog( url1 , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+alert(url1);
+      var b1=window.showModalDialog( url1 , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
       window.location.href = window.location.href;
    } 
   currFieldID=0;

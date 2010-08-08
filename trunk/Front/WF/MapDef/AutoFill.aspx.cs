@@ -146,7 +146,7 @@ public partial class Comm_MapDef_AutoFill : BP.Web.PageBase
 
         this.Ucsys1.Add(tb);
         this.Ucsys1.AddTDEnd();
-        this.Ucsys1.AddTD("比如:<font color=blue>Select Addr From <br>商品表 where No=@FK_Pro </font> <br>FK_Pro是本表中的任意字段名");
+        this.Ucsys1.AddTD("比如:<font color=blue>Select Addr From <br>商品表 WHERE No=@FK_Pro </font> <br>FK_Pro是本表中的任意字段名");
         this.Ucsys1.AddTREnd();
 
         // 方式3 本表单中外键列
@@ -208,15 +208,15 @@ public partial class Comm_MapDef_AutoFill : BP.Web.PageBase
             switch (BP.SystemConfig.AppCenterDBType)
             {
                 case DBType.Oracle9i:
-                    sql = "Select fname as 'No' ,fDesc as 'Name' FROM Sys_FieldDesc Where tableName='" + attr.HisFKEn.EnMap.PhysicsTable + "'";
+                    sql = "Select fname as 'No' ,fDesc as 'Name' FROM Sys_FieldDesc WHERE tableName='" + attr.HisFKEn.EnMap.PhysicsTable + "'";
                     break;
                 default:
-                    sql = "Select name as 'No' ,Name as 'Name' from syscolumns Where ID=OBJECT_ID('" + attr.HisFKEn.EnMap.PhysicsTable + "')";
+                    sql = "Select name as 'No' ,Name as 'Name' from syscolumns WHERE ID=OBJECT_ID('" + attr.HisFKEn.EnMap.PhysicsTable + "')";
                     break;
             }
 
-            //  string sql = "Select fname as 'No' ,fDesc as 'Name' FROM Sys_FieldDesc Where tableName='" + attr.HisFKEn.EnMap.PhysicsTable + "'";
-            //string sql = "Select NO , NAME  FROM pORT_EMP ";
+            //  string sql = "Select fname as 'No' ,fDesc as 'Name' FROM Sys_FieldDesc WHERE tableName='" + attr.HisFKEn.EnMap.PhysicsTable + "'";
+            //string sql = "Select NO , NAME  FROM Port_Emp ";
 
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
             foreach (DataRow dr in dt.Rows)

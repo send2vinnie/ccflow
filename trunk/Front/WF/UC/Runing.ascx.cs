@@ -42,7 +42,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.AddTDTitle(this.ToE("Oper", "操作"));
         this.AddTREnd();
 
-        string sql = "  SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerList B  WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + BP.Web.WebUser.No + "' AND B.IsEnable=1";
+        string sql = "  SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + BP.Web.WebUser.No + "' AND B.IsEnable=1";
         GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
         gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
         int i = 0;

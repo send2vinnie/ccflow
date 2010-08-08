@@ -80,7 +80,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         this.ToolBar1.AddBtn("Btn_OK","确定");
         this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('您确定要执行吗？');";
 
-        this.ToolBar1.AddBtn("Btn_Cancel", "取消退回并返回");
+        this.ToolBar1.AddBtn("Btn_Cancel", "取消");
         this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_Click);
         this.ToolBar1.GetBtnByID("Btn_Cancel").Click += new EventHandler(WF_UC_ReturnWork_Click);
 

@@ -54,7 +54,7 @@ public partial class Face_EmpWorks : WebPage
         this.Pub2.AddTR();
         this.Pub2.AddTDBegin("align=right nowarp=0 colspan=" + colspan);
 
-        string sql = "SELECT FK_Flow, FlowName, COUNT(*) Num FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' GROUP BY FK_Flow, FlowName";
+        string sql = "SELECT FK_Flow, FlowName, COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' GROUP BY FK_Flow, FlowName";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         int num = 0;
         if (this.FK_Flow == null)

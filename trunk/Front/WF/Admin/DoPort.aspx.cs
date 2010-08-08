@@ -94,7 +94,7 @@ public partial class WF_Admin_DoPort : System.Web.UI.Page
     }
     public void GetNewMsg()
     {
-        string sql = "SELECT WorkID, FK_Node , FK_Emp, '001' as FK_Flow,  RDT FROM WF_GENERWORKERLIST  WHERE RDT='" + BP.DA.DataType.CurrentData + "' AND ISENABLE=1 AND FK_EMP='" + this.UserNo + "'";
+        string sql = "SELECT WorkID, FK_Node , FK_Emp, '001' as FK_Flow,  RDT FROM WF_GenerWorkerlist  WHERE RDT='" + BP.DA.DataType.CurrentData + "' AND ISENABLE=1 AND FK_EMP='" + this.UserNo + "'";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count == 0)
         {

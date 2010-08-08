@@ -59,7 +59,7 @@ public partial class WF_MapDef_MapDef : WebPage
         }
 
         this.Pub1.AddB("&nbsp;&nbsp;" + this.ToE("DesignSheet", "设计表单") + md.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:CopyFieldFromNode('" + this.MyPK + "');\" ><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("NewField", "复制字段") + "</a> - <a href=\"javascript:MapDtl('" + this.MyPK + "')\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("DesignDtl", "设计表格") + "</a> - <a href=\"javascript:GroupFieldNew('" + md.No + "')\">字段分组</a><hr>");
-        this.Pub1.Add("<Table class='Table' width='500px'  >");
+        this.Pub1.Add("<Table class='Table' width='100%' align=center >");
         /*
          * 根据 GroupField 循环出现菜单。
          */
@@ -69,9 +69,9 @@ public partial class WF_MapDef_MapDef : WebPage
             currGF = gf;
             this.Pub1.AddTR(gfAttr);
             if (gfs.Count == 1)
-                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'>&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'></div>");
             else
-                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div>");
+                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' style='height: 24px;' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' class='Arrow' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' class='Arrow' border=0/></a></div>");
 
             this.Pub1.AddTREnd();
             int i = -1;
@@ -429,7 +429,7 @@ public partial class WF_MapDef_MapDef : WebPage
             dtl.IsUse = true;
             int myidx = rowIdx + 10;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'>"+ rowIdx +"表格:<a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>插入列</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>复制列</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'>表格:<a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>插入列</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>复制列</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
             this.Pub1.AddTREnd();
 
             myidx++;
@@ -469,9 +469,6 @@ public partial class WF_MapDef_MapDef : WebPage
     public int rowIdx = 0;
     public bool isLeftNext = true;
     #endregion varable.
-     
-
-     
 
     public string GenerLab(MapAttr attr, int idx, int i, int count)
     {
@@ -509,14 +506,14 @@ public partial class WF_MapDef_MapDef : WebPage
         if (idx == 0)
         {
             /*第一个。*/
-            return "<div " + divAttr + " >" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右动顺序' border=0/></a></div>";
+            return "<div " + divAttr + " >" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Right.gif' class='Arrow' alt='向右动顺序' border=0/></a></div>";
         }
 
         if (idx == count - 1)
         {
             /*到数第一个。*/
-            return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动顺序' border=0/></a>" + lab + "</div>";
+            return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动顺序' class='Arrow' border=0/></a>" + lab + "</div>";
         }
-        return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向下移动顺序' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动顺序' border=0/></a></div>";
+        return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向下移动顺序' class='Arrow' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动顺序' class='Arrow' border=0/></a></div>";
     }
 }

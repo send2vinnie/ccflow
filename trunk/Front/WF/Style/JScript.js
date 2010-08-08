@@ -92,7 +92,7 @@ function WinOpen( url, winName  )
 //    newWindow.focus();
 }
 
-/* 鼠标On and Out. */
+/* 鼠标On AND Out. */
 function DGTBOn1(ctrl)
 {
  //  ctrl.select();
@@ -137,7 +137,7 @@ function DGTROutSelected1(ctrl)
 }
 /* */
 
-/* Style1  DGCell 鼠标 On  and Out */
+/* Style1  DGCell 鼠标 On  AND Out */
 function DGCellOn1(ctrl)
 {
   // ctrl.style.backgroundColor='Silver'

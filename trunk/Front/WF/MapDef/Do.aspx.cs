@@ -134,9 +134,18 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                 this.WinClose();
                 break;
             case "MoveTo":
+                MapAttr toAttr = new MapAttr();
+                toAttr.OID = int.Parse(this.Request.QueryString["ToID"]);
+                toAttr.Retrieve();
+                int ToGFID =  int.Parse(this.Request.QueryString["ToGFID"]);
+                if (ToGFID == toAttr.GroupID)
+                {
+                    this.Response.Redirect(this.Request.RawUrl.Replace("MoveTo", "Jump"), true);
+                    return;
+                }
                 MapAttr attrM = new MapAttr();
                 attrM.OID = int.Parse(this.Request.QueryString["FromID"]);
-                attrM.Update(MapAttrAttr.GroupID, int.Parse(this.Request.QueryString["ToGFID"]));
+                attrM.Update(MapAttrAttr.GroupID, ToGFID);
                 this.WinClose();
                 break;
             case "Edit":

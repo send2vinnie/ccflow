@@ -7,8 +7,8 @@ body
 	line-height: 20px;
 	width: 80%;
 	font-family: ËÎÌו;
-	font-size: 14px;
 	background-color: #EFEFEF;
+	font-size: 12px;
 }
 
 .MasterPage
@@ -141,6 +141,4 @@ a:hover
 {
 	font: icon;
 }
-  
 
-   

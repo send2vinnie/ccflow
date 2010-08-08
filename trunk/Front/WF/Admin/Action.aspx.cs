@@ -79,8 +79,8 @@ public partial class WF_Admin_Action : WebPage
     {
         string script = "";
         string proName = "ND" + this.NodeID + "_" + flag;
-        //string sql = "SELECT text FROM user_source where name=UPPER('" + proName + "') ORDER BY LINE ";
-        string sql = "SELECT no FROM port_emp where 1=2 ";
+        //string sql = "SELECT text FROM user_source WHERE name=UPPER('" + proName + "') ORDER BY LINE ";
+        string sql = "SELECT no FROM Port_Emp WHERE 1=2 ";
 
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count == 0)

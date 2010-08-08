@@ -9,270 +9,16 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using BP.WF;
-using BP.En;
 using BP.DA;
+using BP.En;
 using BP.Web;
 
-public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
+public partial class WF_UC_Pub : BP.Web.UC.UCBase3
 {
-
-
-    #region 属性
-    public string DoType
-    {
-        get
-        {
-            return this.Request.QueryString["DoType"];
-        }
-    }
-    public int StartNodeID
-    {
-        get
-        {
-            return int.Parse(this.FK_Flow + "01");
-        }
-    }
-    public string FK_Flow
-    {
-        get
-        {
-            string flow = this.Request.QueryString["FK_Flow"];
-            if (flow == null)
-            {
-                throw new Exception("@没有获取它的流程编号。");
-                //BP.WF.CHOfFlow fl = new CHOfFlow(this.WorkID);
-                //return fl.FK_Flow;
-            }
-            else
-            {
-                return flow;
-            }
-        }
-    }
-    public int WorkID
-    {
-        get
-        {
-            return int.Parse(this.Request.QueryString["WorkID"]);
-        }
-    }
-    public int NodeID
-    {
-        get
-        {
-            try
-            {
-                return int.Parse(this.Request.QueryString["NodeID"]);
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-    }
-    public int FID
-    {
-        get
-        {
-            try
-            {
-                return int.Parse(this.Request.QueryString["FID"]);
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-    }
-    #endregion
-
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Clear();
-        Flow fl = new Flow(this.FK_Flow);
-        switch (fl.HisFlowType)
-        {
-            case FlowType.Panel:
-                this.BindPanel(fl);
-                break;
-            default:
-                if (this.WorkID == this.FID)
-                    this.BindRavie(fl);
-                else
-                    this.BindBrach(fl);
-                break;
-        }
-    }
-    public void BindPanel(Flow fl)
-    {
-        try
-        {
-            WorkFlow wf = new WorkFlow(new Flow(this.FK_Flow), this.WorkID, this.FID);
-            this.BindWFRptV2(wf);
-        }
-        catch (Exception ex)
-        {
-            this.AddHR();
-            this.AddMsgOfInfo("生成工作报告期间出现错误,造成此原因如下:", "<BR><BR>1, 此流程为虚拟流程。<BR><BR>2，流程数据已经删除。3，参与此流程上的人员编号错误。<BR><BR>技术信息:" + ex.Message);
-        }
-    }
-
-    #region 分流
-    /// <summary>
-    /// 分流干流
-    /// </summary>
-    /// <param name="fl"></param>
-    public void BindRavie(Flow fl)
-    {
-        //  WorkFlow wf = new WorkFlow(fl, this.WorkID, this.FID);
-
-        this.AddH4("关于（" + fl.Name + "）工作报告");
-        this.AddHR();
-
-        Node ndStart = fl.HisStartNode;
-        StartWork sw = ndStart.HisWork as StartWork;
-        sw.OID = this.WorkID;
-        sw.Retrieve();
-
-        this.Add("流程发起人：" + sw.RecText + "，发起日期：" + sw.RDT + " ；流程状态：" + sw.WFStateT);
-
-        Nodes nds = fl.HisNodes;
-        foreach (Node nd in nds)
-        {
-            if (nd.HisFNType != FNType.Branch)
-                continue;
-
-            string sql = "SELECT OID,Rec,RDT FROM ND" + nd.NodeID + " WHERE FID=" + this.FID;
-            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-            if (dt.Rows.Count == 0)
-                continue;
-
-            this.AddBR("分支流程如下：");
-            this.AddTable();
-            this.AddTR();
-            this.AddTDTitle("接受人");
-            this.AddTDTitle("接受日期");
-            this.AddTDTitle("工作报告");
-            this.AddTREnd();
-
-            foreach (DataRow dr in dt.Rows)
-            {
-                this.AddTR();
-                this.AddTD(dr["Rec"].ToString());
-                this.AddTD(dr["RDT"].ToString());
-                this.AddTD("<a href='WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&WorkID=" + dr["OID"] + "' target=_blank >工作报告</a>");
-                this.AddTREnd();
-            }
-            this.AddTableEnd();
-            break;
-        }
-
-        ReturnWorks rws = new ReturnWorks();
-        rws.Retrieve(ReturnWorkAttr.WorkID, this.WorkID);
-
-        ForwardWorks fws = new ForwardWorks();
-        fws.Retrieve(ReturnWorkAttr.WorkID, this.WorkID);
-
-        WorkNodes wns = new WorkNodes();
-        wns.GenerByFID(fl, this.FID);
-
-        this.BindWorkNodes(wns, rws, fws);
-
-        this.AddHR("流程报告结束");
-    }
-    /// <summary>
-    /// 分流支流
-    /// </summary>
-    /// <param name="fl"></param>
-    public void BindBrach(Flow fl)
-    {
-        //  WorkFlow wf = new WorkFlow(fl, this.WorkID, this.FID);
-        WorkNodes wns = new WorkNodes();
-        wns.GenerByFID(fl, this.FID);
-
-        this.AddH4("关于（" + fl.Name + "）工作报告");
-        this.AddHR();
-
-        Node nd = fl.HisStartNode;
-        StartWork sw = nd.HisWork as StartWork;
-        sw.FID = this.FID;
-        sw.OID = this.WorkID;
-        sw.RetrieveFID();
-
-        this.Add("流程发起人：" + sw.RecText + "，发起日期：" + sw.RDT + " ；流程状态：" + sw.WFStateT);
-
-        ReturnWorks rws = new ReturnWorks();
-        rws.Retrieve(ReturnWorkAttr.WorkID, this.WorkID);
-
-        ForwardWorks fws = new ForwardWorks();
-        fws.Retrieve(ReturnWorkAttr.WorkID, this.WorkID);
-
-        this.BindWorkNodes(wns, rws, fws);
-
-        this.AddHR("流程报告结束");
-    }
-    #endregion 分流
-
-
-    #region 合流
-    /// <summary>
-    /// 合流干流
-    /// </summary>
-    /// <param name="fl"></param>
-    public void BindHeLiuRavie(Flow fl)
-    {
 
     }
-    /// <summary>
-    /// 合流支流
-    /// </summary>
-    /// <param name="fl"></param>
-    public void BindHeLiuBrach(Flow fl)
-    {
-
-    }
-    #endregion 合流
-
-    public void BindFHLWork(GenerFH hf)
-    {
-        this.AddH4(hf.Title);
-        this.AddHR();
-
-        this.AddFieldSet("当前节点基本信息");
-        this.AddBR("接受时间：" + hf.RDT);
-        this.AddBR("接受人：" + hf.ToEmpsMsg);
-        this.AddFieldSetEndBR();
-
-        GenerWorkFlows gwfs = new GenerWorkFlows();
-        gwfs.Retrieve(GenerWorkFlowAttr.FID, this.FID);
-
-        this.AddFieldSet("分流人员信息");
-
-        this.AddTable();
-        this.AddTR();
-        this.AddTDTitle("标题");
-        this.AddTDTitle("发起人");
-        this.AddTDTitle("发起日期");
-        this.AddTDTitle("");
-        this.AddTREnd();
-
-        foreach (GenerWorkFlow gwf in gwfs)
-        {
-            if (gwf.WorkID == this.FID)
-                continue;
-
-            this.AddTR();
-            this.AddTD(gwf.Title);
-            this.AddTD(gwf.Rec);
-            this.AddTD(gwf.RDT);
-            this.AddTD("<a href='WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=" + gwf.FID + "' target=_b" + gwf.WorkID + ">工作报告</a>");
-            this.AddTREnd();
-        }
-        this.AddTableEndWithBR();
-        this.AddFieldSetEnd();
-    }
-
-
     public void BindWFRptV2(WorkFlow wf)
     {
         Int64 workid = wf.WorkID;
@@ -284,7 +30,6 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         // 加上附件信息 
         FileManagers fms = new FileManagers();
         fms.Retrieve(FileManagerAttr.WorkID, workid);
-
         if (fms.Count > 0)
         {
             this.AddTable();
@@ -500,7 +245,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                 }
                 catch
                 {
-                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "=" + en.PKVal );
+                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + enDtl.Ens.GetNewEntity.EnMap.PhysicsTable + " WHERE " + enDtl.RefKey + "=" + en.PKVal);
                 }
 
                 if (i == 0)
@@ -518,8 +263,15 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             foreach (AttrOfOneVSM vsM in oneVsM)
             {
                 string url = "UIEn1ToM.aspx?EnsName=" + en.ToString() + "&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
-                string sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
-                int i = DBAccess.RunSQLReturnValInt(sql);
+                int i = 0;
+                try
+                {
+                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'");
+                }
+                catch
+                {
+                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal);
+                }
 
                 if (i == 0)
                     refstrs += "[<a href='" + url + "' target='_blank' >" + vsM.Desc + "</a>]";
@@ -550,5 +302,4 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         // 不知道为什么去掉。
         this.Add(refstrs);
     }
-
 }

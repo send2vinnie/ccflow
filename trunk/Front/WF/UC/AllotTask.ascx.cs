@@ -178,7 +178,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             int NodeID = gwf.FK_Node;
             int workId = this.WorkID;
             //WorkerLists wls = new WorkerLists(this.WorkID,NodeID);
-            DBAccess.RunSQL("UPDATE  WF_GenerWorkerList SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + NodeID);
+            DBAccess.RunSQL("UPDATE  WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + NodeID);
             string vals = "";
             string emps = "";
             string myemp = "";
@@ -186,7 +186,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             {
                 emps += obj.ToString() + ",";
                 myemp = obj.ToString();
-                DBAccess.RunSQL("UPDATE  WF_GenerWorkerList SET IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + NodeID + " and fk_emp='" + obj + "'");
+                DBAccess.RunSQL("UPDATE  WF_GenerWorkerlist SET IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + NodeID + " AND fk_emp='" + obj + "'");
             }
 
 
@@ -205,7 +205,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             }
             wk.Emps = emps;
             wk.Update();
-            DBAccess.RunSQL("UPDATE WF_CHOfNode SET Emps='" + emps + "' WHERE FK_Node='" + NodeID + "' AND WorkID='" + this.WorkID + "'");
+            DBAccess.RunSQL("UPDATE WF_CHOfNode SET Emps='" + emps + "' WHERE FK_Node=" + NodeID + " AND WorkID='" + this.WorkID + "'");
 
 
             // 保存记忆功能。

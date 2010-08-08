@@ -16,8 +16,9 @@ using BP.Web.Controls;
 using BP.DA;
 using BP.En;
 using BP.Web;
-public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
+public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
 {
+
     #region 控件
     /// <summary>
     /// 发送
@@ -241,7 +242,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
             else
             {
-                NextPreviouRec rec = new NextPreviouRec("WF_EmpWorks", "WorkID", this.WorkID, " FK_Emp='" + WebUser.No + "' and FK_Flow='" + this.FK_Flow + "' ");
+                NextPreviouRec rec = new NextPreviouRec("WF_EmpWorks", "WorkID", this.WorkID, " FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "' ");
                 if (rec.NextID == null)
                     this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Enabled = false;
                 else
@@ -327,11 +328,23 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         catch (Exception ex)
         {
+            #region 解决开始节点数据库字段变化修复数据库问题 。
+            string rowUrl = this.Request.RawUrl;
+            if (rowUrl.IndexOf("rowUrl") > 1)
+            {
+            }
+            else
+            {
+                this.Response.Redirect(rowUrl + "&rowUrl=1", true);
+                return;
+            }
+            #endregion
+
+
             this.FlowMsg.DivInfoBlock(ex.Message);
             string Ect = this.Session["Ect"] as string;
             if (Ect == null)
                 Ect = "0";
-
             if (int.Parse(Ect) < 2)
             {
                 this.Session["Ect"] = int.Parse(Ect) + 1;
@@ -490,15 +503,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             if (str == null || str == "")
                 continue;
 
-            int fk_node = int.Parse(str);
+            int FK_Node = int.Parse(str);
             BP.WF.Node mynd;
             try
             {
-                mynd = new BP.WF.Node(fk_node);
+                mynd = new BP.WF.Node(FK_Node);
             }
             catch
             {
-                nd.ShowSheets = nd.ShowSheets.Replace("@" + fk_node, "");
+                nd.ShowSheets = nd.ShowSheets.Replace("@" + FK_Node, "");
                 nd.Update();
                 continue;
             }
@@ -963,7 +976,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         this.FK_Node = nd.NodeID;
 
         StartWork wk = (StartWork)nd.HisWork;
-
         int num = wk.Retrieve(StartWorkAttr.NodeState, 0, StartWorkAttr.Rec, WebUser.No);
         if (num == 0)
         {

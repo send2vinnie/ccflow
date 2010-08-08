@@ -72,8 +72,8 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             if (attr.UIVisible == false)
                 continue;
 
-            this.Pub1.Add("<TH class=TDCenter >");
-            this.Pub1.Add("<a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动' border=0/></a>");
+            this.Pub1.Add("<TD class=TDCenter>");
+            this.Pub1.Add("<a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "');\" ><img src='../../Images/Btn/Left.gif' class=Arrow alt='向左移动' border=0/></a>");
             if (attr.HisEditType == EditType.UnDel || attr.HisEditType == EditType.Edit)
             {
                 switch (attr.LGType)
@@ -96,8 +96,8 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                 this.Pub1.Add(attr.Name);
             }
             //  this.Pub1.Add("[<a href=\"javascript:Insert('" + this.MyPK + "','" + attr.IDX + "');\" ><img src='../../Images/Btn/Insert.gif' border=0/>插入</a>]");
-            this.Pub1.Add("<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动' border=0/></a>");
-            this.Pub1.Add("</TH>");  
+            this.Pub1.Add("<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "');\" ><img src='../../Images/Btn/Right.gif' class=Arrow alt='向右移动' border=0/></a>");
+            this.Pub1.Add("</TD>");  
         }
         this.Pub1.AddTREnd();
 

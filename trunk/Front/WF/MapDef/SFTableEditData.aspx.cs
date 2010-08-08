@@ -55,7 +55,7 @@ public partial class Comm_MapDef_SFTableEditData : BP.Web.WebPage
 
         GENoNames ens = new GENoNames(sf.No, sf.Name);
         QueryObject qo = new QueryObject(ens);
-        this.Ucsys2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "SFTableEditData.aspx?RefNo=" + this.RefNo);
+        this.Ucsys2.BindPageIdx(qo.GetCOUNT(), 10, this.PageIdx, "SFTableEditData.aspx?RefNo=" + this.RefNo);
         qo.DoQuery("No", 10, this.PageIdx, false);
 
         foreach (GENoName en in ens)
@@ -118,7 +118,7 @@ public partial class Comm_MapDef_SFTableEditData : BP.Web.WebPage
             string name1 = this.Ucsys1.GetTextBoxByID("TB_" + myen.No).Text;
             if (name1 == "")
                 continue;
-            BP.DA.DBAccess.RunSQL("update " + this.RefNo + " set Name='" + name1 + "' where no='" + no + "'");
+            BP.DA.DBAccess.RunSQL("update " + this.RefNo + " set Name='" + name1 + "' WHERE no='" + no + "'");
         }
 
 

@@ -66,15 +66,15 @@ namespace BP.Web.WF.WF
                 return;
             }
 
-            DA.DBAccess.RunSQL("delete WF_CHOfNode");
-            DA.DBAccess.RunSQL("delete WF_CHOfFlow");
-            DA.DBAccess.RunSQL("delete WF_Book");
-            DA.DBAccess.RunSQL("delete WF_GENERWORKERLIST");
-            DA.DBAccess.RunSQL("delete WF_GENERWORKFLOW");
-            DA.DBAccess.RunSQL("delete WF_WORKLIST");
-            DA.DBAccess.RunSQL("delete WF_ReturnWork");
-            DA.DBAccess.RunSQL("delete WF_ReturnWork");
-            DA.DBAccess.RunSQL("delete WF_SelectAccper");
+            DA.DBAccess.RunSQL("DELETE FROM WF_CHOfNode");
+            DA.DBAccess.RunSQL("DELETE FROM WF_CHOfFlow");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Book");
+            DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist");
+            DA.DBAccess.RunSQL("DELETE FROM WF_GENERWORKFLOW");
+         //   DA.DBAccess.RunSQL("DELETE FROM WF_WORKLIST");
+            DA.DBAccess.RunSQL("DELETE FROM WF_ReturnWork");
+            DA.DBAccess.RunSQL("DELETE FROM WF_ReturnWork");
+            DA.DBAccess.RunSQL("DELETE FROM WF_SelectAccper");
 
             Nodes nds = new Nodes();
             foreach (Node nd in nds)
@@ -82,7 +82,7 @@ namespace BP.Web.WF.WF
                 try
                 {
                     Work wk = nd.HisWork;
-                    DA.DBAccess.RunSQL("DELETE " + wk.EnMap.PhysicsTable);
+                    DA.DBAccess.RunSQL("DELETE FROM " + wk.EnMap.PhysicsTable);
                 }
                 catch
                 {
@@ -95,7 +95,7 @@ namespace BP.Web.WF.WF
             {
                 try
                 {
-                    DA.DBAccess.RunSQL("DELETE " + nd.PTable );
+                    DA.DBAccess.RunSQL("DELETE FROM " + nd.PTable);
                 }
                 catch
                 {
@@ -108,7 +108,7 @@ namespace BP.Web.WF.WF
             {
                 try
                 {
-                    DA.DBAccess.RunSQL("DELETE " + dtl.PTable);
+                    DA.DBAccess.RunSQL("DELETE FROM " + dtl.PTable);
                 }
                 catch
                 {

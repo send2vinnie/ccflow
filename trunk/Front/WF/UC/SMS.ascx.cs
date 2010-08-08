@@ -39,7 +39,7 @@ public partial class WF_UC_SMS : BP.Web.UC.UCBase3
 
         this.Page.Title = "手机短信提醒";
 
-        string sql="SELECT No,Name,Tel FROM WF_Emp WHERE NO IN (select FK_Emp from WF_GenerWorkerList WHERE WorkID="+this.WorkID+" and FK_Node="+this.NodeID+")";
+        string sql="SELECT No,Name,Tel FROM WF_Emp WHERE NO IN (select FK_Emp from WF_GenerWorkerlist WHERE WorkID="+this.WorkID+" AND FK_Node="+this.NodeID+")";
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
 
         if (dt.Rows.Count == 0)

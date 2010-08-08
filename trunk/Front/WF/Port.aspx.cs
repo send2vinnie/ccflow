@@ -80,7 +80,7 @@ namespace BP.Web.Port
 
             if (this.UserNo != null && this.SID != null)
             {
-                string sql = "select sid  from port_emp where no='" + this.UserNo + "'";
+                string sql = "select sid  from Port_Emp WHERE no='" + this.UserNo + "'";
                 string sid = BP.DA.DBAccess.RunSQLReturnVal(sql).ToString();
                 if (sid != this.SID)
                 {

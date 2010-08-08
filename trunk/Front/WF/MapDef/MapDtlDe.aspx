@@ -69,24 +69,20 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-	
 	function Esc()
     {
        if (event.keyCode == 27)     
         window.close();
        return true;
-   }
-    
-  
+    }
 	</script>
   <script language="javascript" for="document" event="onkeydown">
     if(event.keyCode==13)
        event.keyCode=9;
     </script>
-    <link href="../Style/Style.css" rel="stylesheet" type="text/css" />
     <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="Esc()"  style="padding:0px"   >
+<body topmargin="0" leftmargin="0" onkeypress="Esc()"  style="padding:0px"   bgcolor="white" >
     <form id="form1" runat="server">
      <uc1:Pub ID="Pub1" runat="server" />
      </form>

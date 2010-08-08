@@ -167,7 +167,6 @@
             tdF.width = iframe.width;
         } else {
             iframe.width = tdF.width;
-
         }
 
         tdF.height = iframe.height;
@@ -184,32 +183,29 @@
         window.location.href = window.location.href;
   }
   
-    function EditDtl( mypk , dtlKey )
+  function EditDtl( mypk , dtlKey )
   {
       var url='MapDtl.aspx?DoType=Edit&FK_MapData=' + mypk +'&FK_MapDtl='+ dtlKey ;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
   }
-   function MapDtl( mypk  )
+  
+  function MapDtl( mypk  )
   {
       var url='MapDtl.aspx?DoType=DtlList&FK_MapData=' + mypk   ;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
   }
 </script>   
+
 	<base target="_self" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
- <table border="0" cellpadding="0" cellspacing="0" >
+ <table border="0" cellpadding="0" cellspacing="0" class="Table"  width='95%' height="500px" >
             <tr>
-                <td style="width: 1%; background-color:InfoBackground" class="BigDoc" valign=top>
-              
-<uc1:Pub ID="Left" runat="server" />
-</td>
-                <td style="width: 100%;"  valign=top>
+                <td valign="top"  align=center>
                 <uc1:Pub ID="Pub1" runat="server" />
                 </td>
             </tr>
         </table>
 </asp:Content>
-
