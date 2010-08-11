@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" masterpagefile="~/WF/MasterPage.master" autoeventwireup="true" inherits="WF_Forward, App_Web_gjlztgne" title="无标题页" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/WF/MasterPage.master" AutoEventWireup="true" CodeFile="Forward.aspx.cs" Inherits="WF_Forward" Title="无标题页" %>
 
 <%@ Register src="UC/Forward.ascx" tagname="Forward" tagprefix="uc1" %>
 

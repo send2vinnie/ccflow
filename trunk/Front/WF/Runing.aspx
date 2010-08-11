@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" masterpagefile="~/WF/MasterPage.master" autoeventwireup="true" inherits="WF_Runing, App_Web_gjlztgne" title="无标题页" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/WF/MasterPage.master" AutoEventWireup="true" CodeFile="Runing.aspx.cs" Inherits="WF_Runing" Title="无标题页" %>
 
 <%@ Register src="UC/Runing.ascx" tagname="Runing" tagprefix="uc1" %>
 

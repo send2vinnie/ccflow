@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" masterpagefile="~/WF/MasterPage.master" autoeventwireup="true" inherits="WF_ReturnWork, App_Web_gjlztgne" title="无标题页" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/WF/MasterPage.master" AutoEventWireup="true" CodeFile="ReturnWork.aspx.cs" Inherits="WF_ReturnWork" Title="无标题页" %>
 
 <%@ Register src="UC/ReturnWork.ascx" tagname="ReturnWork" tagprefix="uc1" %>
 

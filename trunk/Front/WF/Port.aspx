@@ -1,4 +1,4 @@
-<%@ page language="c#" inherits="BP.Web.Port.Port, App_Web_cgmehdjt" %>
+<%@ Page language="c#" Inherits="BP.Web.Port.Port" CodeFile="Port.aspx.cs" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
 <html>
 	<head>

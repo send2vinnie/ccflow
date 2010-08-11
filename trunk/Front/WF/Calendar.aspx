@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" masterpagefile="~/WF/MasterPage.master" autoeventwireup="true" inherits="WF_Calendar, App_Web_gjlztgne" title="未命名頁面" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/WF/MasterPage.master" AutoEventWireup="true" CodeFile="Calendar.aspx.cs" Inherits="WF_Calendar" Title="未命名頁面" %>
 <%@ Register src="UC/Calendar/Calendar.ascx" tagname="Calendar" tagprefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>

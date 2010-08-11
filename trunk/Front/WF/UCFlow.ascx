@@ -1,1 +1,1 @@
-<%@ control language="c#" inherits="BP.Web.WF.UCFlow, App_Web_cgmehdjt" %>
+<%@ Control Language="c#" Inherits="BP.Web.WF.UCFlow" CodeFile="UCFlow.ascx.cs" CodeFileBaseClass="BP.Web.UC.UCBase" %>

@@ -1,4 +1,4 @@
-<%@ page language="c#" autoeventwireup="false" inherits="BP.Web.WF.WF.DeleteZF, App_Web_cgmehdjt" %>
+<%@ Page language="c#" CodeFile="ClearDatabase.aspx.cs" AutoEventWireup="false" Inherits="BP.Web.WF.WF.DeleteZF" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>

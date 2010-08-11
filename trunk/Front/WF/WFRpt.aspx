@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" masterpagefile="~/WF/Style/WinOpen.master" autoeventwireup="true" inherits="WF_WFRpt, App_Web_cgmehdjt" title="未命名頁面" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/WF/Style/WinOpen.master" AutoEventWireup="true" CodeFile="WFRpt.aspx.cs" Inherits="WF_WFRpt" Title="未命名頁面" %>
 <%@ Register src="UC/WFRpt.ascx" tagname="WFRpt" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>

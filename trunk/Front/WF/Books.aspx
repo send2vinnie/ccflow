@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" masterpagefile="MasterPage.master" autoeventwireup="true" inherits="Face_Books, App_Web_gjlztgne" title="无标题页" %>
+﻿<%@ Page Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="Books.aspx.cs" Inherits="Face_Books" Title="无标题页" %>
 
 <%@ Register src="../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 

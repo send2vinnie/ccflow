@@ -1,1 +1,1 @@
-﻿<%@ control language="C#" autoeventwireup="true" inherits="UC_Pub, App_Web_cgmehdjt" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Pub.ascx.cs" Inherits="UC_Pub" %>

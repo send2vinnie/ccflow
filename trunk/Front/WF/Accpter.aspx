@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" masterpagefile="~/WF/Style/WinOpen.master" autoeventwireup="true" inherits="WF_Accpter, App_Web_hqdhdw61" title="无标题页" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/WF/Style/WinOpen.master" AutoEventWireup="true" CodeFile="Accpter.aspx.cs" Inherits="WF_Accpter" Title="无标题页" %>
 
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 

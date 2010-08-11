@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" masterpagefile="MasterPage.master" autoeventwireup="true" inherits="Face_Rpt, App_Web_gjlztgne" title="无标题页" %>
+﻿<%@ Page Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="Rpt.aspx.cs" Inherits="Face_Rpt" Title="无标题页" %>
 
 <%@ Register src="../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 

@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" masterpagefile="Style/WinOpen.master" autoeventwireup="true" inherits="Face_WhySendToThem, App_Web_hqdhdw61" title="无标题页" %>
+﻿<%@ Page Language="C#" MasterPageFile="Style/WinOpen.master" AutoEventWireup="true" CodeFile="WhySendToThem.aspx.cs" Inherits="Face_WhySendToThem" Title="无标题页" %>
 
 <%@ Register src="../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 
