@@ -44,7 +44,7 @@ public partial class WF_MapDef_MapDef : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         MapData md = new MapData(this.MyPK);
-        Attrs attrs = md.GenerHisMap().Attrs;
+       // Attrs attrs = md.GenerHisMap().Attrs;
         MapAttrs mattrs = new MapAttrs(md.No);
         int count = mattrs.Count;
 
@@ -384,7 +384,7 @@ public partial class WF_MapDef_MapDef : WebPage
                 default:
                     break;
             }
-            msg += "<a href=\"javascript:Edit('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
+            msg += "<a href=\"javascript:Edit('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
         }
 
         if (msg.Length > 10)
@@ -472,7 +472,7 @@ public partial class WF_MapDef_MapDef : WebPage
 
     public string GenerLab(MapAttr attr, int idx, int i, int count)
     {
-        string divAttr = " onmouseover=FieldOnMouseOver('" + attr.OID + "') onmouseout=FieldOnMouseOut('" + attr.OID + "') ";
+        string divAttr = " onmouseover=FieldOnMouseOver('" + attr.MyPK + "') onmouseout=FieldOnMouseOut('" + attr.MyPK + "') ";
         string lab = attr.Name;
         if (attr.MyDataType == DataType.AppBoolean && attr.UIIsLine)
             lab = "编辑";
@@ -486,13 +486,13 @@ public partial class WF_MapDef_MapDef : WebPage
             switch (attr.LGType)
             {
                 case FieldTypeS.Normal:
-                    lab = "<a  href=\"javascript:Edit('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataType + "');\">" + lab + "</a>";
+                    lab = "<a  href=\"javascript:Edit('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
                     break;
                 case FieldTypeS.FK:
-                    lab = "<a  href=\"javascript:EditTable('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataType + "');\">" + lab + "</a>";
+                    lab = "<a  href=\"javascript:EditTable('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
                     break;
                 case FieldTypeS.Enum:
-                    lab = "<a  href=\"javascript:EditEnum('" + this.MyPK + "','" + attr.OID + "','" + attr.MyDataType + "');\">" + lab + "</a>";
+                    lab = "<a  href=\"javascript:EditEnum('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
                     break;
                 default:
                     break;
@@ -506,14 +506,14 @@ public partial class WF_MapDef_MapDef : WebPage
         if (idx == 0)
         {
             /*第一个。*/
-            return "<div " + divAttr + " >" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Right.gif' class='Arrow' alt='向右动顺序' border=0/></a></div>";
+            return "<div " + divAttr + " >" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Right.gif' class='Arrow' alt='向右动顺序' border=0/></a></div>";
         }
 
         if (idx == count - 1)
         {
             /*到数第一个。*/
-            return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动顺序' class='Arrow' border=0/></a>" + lab + "</div>";
+            return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动顺序' class='Arrow' border=0/></a>" + lab + "</div>";
         }
-        return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向下移动顺序' class='Arrow' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.OID + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动顺序' class='Arrow' border=0/></a></div>";
+        return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向下移动顺序' class='Arrow' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动顺序' class='Arrow' border=0/></a></div>";
     }
 }

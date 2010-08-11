@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="BP.Web.WF.WorkList" CodeFile="WorkList.aspx.cs" %>
+<%@ page language="c#" inherits="BP.Web.WF.WorkList, App_Web_hqdhdw61" %>
 <%@ Register TagPrefix="uc1" TagName="UCFlow" Src="../WF/UCFlow.ascx" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"  >
 <HTML>

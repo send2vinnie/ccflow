@@ -1,5 +1,5 @@
 <%@ Register TagPrefix="uc1" TagName="UCSys" Src="../Comm/UC/UCSys.ascx" %>
-<%@ Page language="c#" Inherits="BP.Web.WFQH.WF.UnComplateFlow" CodeFile="UnComplateFlow.aspx.cs" %>
+<%@ page language="c#" inherits="BP.Web.WFQH.WF.UnComplateFlow, App_Web_cgmehdjt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>

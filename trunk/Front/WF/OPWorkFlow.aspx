@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="BP.Web.WF.StopWorkFlow" CodeFile="OPWorkFlow.aspx.cs" %>
+<%@ page language="c#" inherits="BP.Web.WF.StopWorkFlow, App_Web_cgmehdjt" %>
 <%@ Register TagPrefix="cc1" Namespace="BP.Web.Controls" Assembly="BP.Web.Controls" %>
 <%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
 

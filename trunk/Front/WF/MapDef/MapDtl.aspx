@@ -23,21 +23,21 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    function Edit(mypk,refoid, ftype)
+    function Edit(mypk,refno, ftype)
     {
-        var url='EditF.aspx?DoType=Edit&MyPK='+mypk+'&RefOID='+refoid +'&FType=' + ftype;
+        var url='EditF.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refno +'&FType=' + ftype;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    function EditEnum(mypk,refoid)
+    function EditEnum(mypk,refno)
     {
-        var url='EditEnum.aspx?DoType=Edit&MyPK='+mypk+'&RefOID='+refoid;
+        var url='EditEnum.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refno;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-     function EditTable(mypk,refoid)
+     function EditTable(mypk,refno)
     {
-        var url='EditTable.aspx?DoType=Edit&MyPK='+mypk+'&RefOID='+refoid;
+        var url='EditTable.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refno;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }

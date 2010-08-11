@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/WF/MasterPage.master" AutoEventWireup="true" CodeFile="MyFlow.aspx.cs" Inherits="WF_MyFlow" Title="无标题页" %>
+﻿<%@ page language="C#" masterpagefile="~/WF/MasterPage.master" autoeventwireup="true" inherits="WF_MyFlow, App_Web_gjlztgne" title="无标题页" %>
 <%@ Register src="UC/MyFlowUC.ascx" tagname="MyFlowUC" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>

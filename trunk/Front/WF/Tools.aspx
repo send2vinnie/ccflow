@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/WF/MasterPage.master" AutoEventWireup="true" CodeFile="Tools.aspx.cs" Inherits="WF_Tools" Title="无标题页" %>
+﻿<%@ page language="C#" masterpagefile="~/WF/MasterPage.master" autoeventwireup="true" inherits="WF_Tools, App_Web_gjlztgne" title="无标题页" %>
 
 <%@ Register src="UC/Tools.ascx" tagname="Tools" tagprefix="uc1" %>
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Dtl.aspx.cs" Inherits="Comm_Dtl" %>
+﻿<%@ page language="C#" autoeventwireup="true" inherits="Comm_Dtl, App_Web_cgmehdjt" %>
 <%@ Register Assembly="BP.Web.Controls" Namespace="BP.Web.Controls" TagPrefix="cc1" %>
 <%@ Register Src="UC/ucsys.ascx" TagName="ucsys" TagPrefix="uc1" %>
 

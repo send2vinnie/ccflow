@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" 
-CodeFile="EmpWorks.aspx.cs" Inherits="Face_EmpWorks" Title="待办工作" %>
+﻿<%@ page language="C#" masterpagefile="MasterPage.master" autoeventwireup="true" inherits="Face_EmpWorks, App_Web_gjlztgne" title="待办工作" %>
 <%@ Register src="../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>

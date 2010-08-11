@@ -14,7 +14,7 @@ using BP.En;
 using BP.En;
 using BP.Web;
 using BP.Web.UC;
-public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
+public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
 {
     /// <summary>
     /// GroupField
@@ -56,7 +56,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = this.ToE("EditEnum", "编辑枚举类型"); // "编辑枚举类型";
-        MapAttr attr = new MapAttr(this.RefOID);
+        MapAttr attr = new MapAttr(this.RefNo);
         BindEnum(attr);
     }
     public void BindEnum(MapAttr mapAttr)
@@ -74,7 +74,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
         TB tb = new TB();
         tb.ID = "TB_KeyOfEn";
         tb.Text = mapAttr.KeyOfEn;
-        if (this.RefOID > 0)
+        if (this.RefNo !=null )
             tb.Enabled = false;
 
         this.Pub1.AddTD(tb);
@@ -189,13 +189,13 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
 
  
 
-        if (this.RefOID > 0)
+        if (this.RefNo!=null )
         {
             btn = new Button();
             btn.ID = "Btn_AutoFull";
             btn.Text = this.ToE("AutoFull", "自动填写");
             //  btn.Click += new EventHandler(btn_Save_Click);
-            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFill.aspx?RefOID=" + this.RefOID + "',''); return false;";
+            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFill.aspx?RefNo=" + this.RefNo + "',''); return false;";
             this.Pub1.Add(btn);
 
             if (mapAttr.HisEditType == EditType.Edit)
@@ -224,7 +224,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
             switch (btn.ID)
             {
                 case "Btn_Del":
-                    this.Response.Redirect("Do.aspx?DoType=Del&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID, true);
+                    this.Response.Redirect("Do.aspx?DoType=Del&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo, true);
                     return;
 
                 default:
@@ -232,7 +232,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
             }
 
             MapAttr attr = new MapAttr();
-            attr.OID = this.RefOID;
+            attr.MyPK = this.RefNo;
             attr.Retrieve();
             attr = (MapAttr)this.Pub1.Copy(attr);
             attr.FK_MapData = this.MyPK;
@@ -255,7 +255,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
                     break;
             }
             if (this.MyPK == null)
-                this.Response.Redirect("EditEnum.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefOID=" + attr.OID + "&GroupField=" + this.GroupField, true);
+                this.Response.Redirect("EditEnum.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefNo=" + attr.MyPK + "&GroupField=" + this.GroupField, true);
         }
         catch (Exception ex)
         {
@@ -269,7 +269,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.PageBase
             if (this.DoType == "Add")
                 return this.ToE("GuideNewField", "增加新字段向导") + " - <a href='Do.aspx?DoType=ChoseFType&GroupField=" + this.GroupField + "'>" + this.ToE("ChoseType", "选择类型") + "</a>";
             else
-                return " <a href='Do.aspx?DoType=ChoseFType&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "&GroupField=" + this.GroupField + "'>" + this.ToE("Edit", "编辑") + "</a>";
+                return " <a href='Do.aspx?DoType=ChoseFType&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo + "&GroupField=" + this.GroupField + "'>" + this.ToE("Edit", "编辑") + "</a>";
         }
     }
 }

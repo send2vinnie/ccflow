@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/WF/MapDef/WinOpen.master" AutoEventWireup="true" CodeFile="AllotTask.aspx.cs" Inherits="WF_AllotTask" Title="无标题页" %>
+﻿<%@ page language="C#" masterpagefile="~/WF/MapDef/WinOpen.master" autoeventwireup="true" inherits="WF_AllotTask, App_Web_cgmehdjt" title="无标题页" %>
 
 <%@ Register src="UC/AllotTask.ascx" tagname="AllotTask" tagprefix="uc1" %>
 

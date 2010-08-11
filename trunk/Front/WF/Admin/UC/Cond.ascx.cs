@@ -40,25 +40,14 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             return this.Request.QueryString["FK_Flow"];
         }
     }
-    public int FK_Attr
+    public string FK_Attr
     {
         get
         {
-            try
-            {
-                return int.Parse(this.Request.QueryString["FK_Attr"]);
-            }
-            catch
-            {
-                try
-                {
-                    return this.DDL_Attr.SelectedItemIntVal;
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
+            string s = this.Request.QueryString["FK_Attr"];
+            if (s == null)
+                s = this.DDL_Attr.SelectedItemStringVal;
+            return s;
         }
     }
     /// <summary>
@@ -149,7 +138,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         cond.MyPK = this.MyPK;
         if (cond.RetrieveFromDBSources() == 0)
         {
-            if (this.FK_Attr != 0)
+            if (this.FK_Attr.Length != 0)
                 cond.FK_Attr = this.FK_Attr;
             if (this.FK_MainNode != 0)
                 cond.NodeID = this.FK_MainNode;
@@ -262,7 +251,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         this.AddTD("");
         this.AddTREnd();
 
-        MapAttr attrS = new MapAttr(this.DDL_Attr.SelectedItemIntVal);
+        MapAttr attrS = new MapAttr(this.DDL_Attr.SelectedItemStringVal);
         this.AddTR();
         this.AddTD(this.ToE("OperS", "操作符"));
         ddl = new DDL();

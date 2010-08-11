@@ -365,13 +365,13 @@ public partial class WF_Admin_RptD : WebPage
                                 mattrN.LGType = FieldTypeS.FK;
                                 mattrN.UIBindKey = "BP.Port.Emps";
                                 mattrN.UIContralType = UIContralType.DDL;
-                                mattrN.InsertAsNew();
+                                mattrN.Insert();
                                 break;
                             default:
                                 mattrN.MyDataType = BP.DA.DataType.AppString;
                                 mattrN.MinLen = 0;
                                 mattrN.MinLen = 3000;
-                                mattrN.InsertAsNew();
+                                mattrN.Insert();
                                 break;
                         }
                     }
@@ -382,7 +382,7 @@ public partial class WF_Admin_RptD : WebPage
                         mattrN.FK_MapData = this.RefNo;
                         mattrN.Name = attrNOfRpt.FieldName;
                         mattrN.KeyOfEn = attrNOfRpt.Field;
-                        mattrN.InsertAsNew();
+                        mattrN.Insert();
                     }
                     continue;
                 }

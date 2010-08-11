@@ -15,7 +15,7 @@ using BP.En;
 using BP.Web;
 using BP.Web.UC;
 
-public partial class Comm_MapDef_Do : BP.Web.PageBase
+public partial class Comm_MapDef_Do : BP.Web.WebPage
 {
     public string DoType
     {
@@ -66,7 +66,7 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                     attrAdd.IDX = int.Parse(this.IDX);
                 }
                 attrAdd.Insert();
-                this.Response.Redirect("EditEnum.aspx?MyPK=" + this.MyPK + "&RefOID=" + attrAdd.OID, true);
+                this.Response.Redirect("EditEnum.aspx?MyPK=" + this.MyPK + "&RefNo=" + attrAdd.MyPK, true);
                 this.WinClose();
                 return;
             case "DelEnum":
@@ -110,7 +110,7 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                     attrAddFK.IDX = int.Parse(this.IDX);
                 }
                 attrAddFK.Insert();
-                this.Response.Redirect("EditTable.aspx?MyPK=" + this.MyPK + "&RefOID=" + attrAddFK.OID, true);
+                this.Response.Redirect("EditTable.aspx?MyPK=" + this.MyPK + "&RefNo=" + attrAddFK.MyPK, true);
                 this.WinClose();
                 return;
             case "AddF":
@@ -118,24 +118,24 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                 this.AddF();
                 break;
             case "Up":
-                MapAttr attrU = new MapAttr(this.RefOID);
+                MapAttr attrU = new MapAttr(this.RefNo);
                 attrU.DoUp();
                 this.WinClose();
                 break;
             case "Down":
-                MapAttr attrD = new MapAttr(this.RefOID);
+                MapAttr attrD = new MapAttr(this.RefNo);
                 attrD.DoDown();
                 this.WinClose();
                 break;
             case "Jump":
-                MapAttr attrFrom = new MapAttr( int.Parse( this.Request.QueryString["FromID"] ) );
-                MapAttr attrTo = new MapAttr( int.Parse(this.Request.QueryString["ToID"]));
+                MapAttr attrFrom = new MapAttr(   this.Request.QueryString["FromID"]   );
+                MapAttr attrTo = new MapAttr(  this.Request.QueryString["ToID"]  );
                 attrFrom.DoJump(attrTo);
                 this.WinClose();
                 break;
             case "MoveTo":
                 MapAttr toAttr = new MapAttr();
-                toAttr.OID = int.Parse(this.Request.QueryString["ToID"]);
+                toAttr.MyPK =  this.Request.QueryString["ToID"];
                 toAttr.Retrieve();
                 int ToGFID =  int.Parse(this.Request.QueryString["ToGFID"]);
                 if (ToGFID == toAttr.GroupID)
@@ -144,7 +144,7 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                     return;
                 }
                 MapAttr attrM = new MapAttr();
-                attrM.OID = int.Parse(this.Request.QueryString["FromID"]);
+                attrM.MyPK =  this.Request.QueryString["FromID"] ;
                 attrM.Update(MapAttrAttr.GroupID, ToGFID);
                 this.WinClose();
                 break;
@@ -153,7 +153,7 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
                 break;
             case "Del":
                 MapAttr attr = new MapAttr();
-                attr.OID = this.RefOID;
+                attr.MyPK = this.RefNo;
                 attr.Delete();
                 this.WinClose();
                 break;
@@ -217,7 +217,7 @@ public partial class Comm_MapDef_Do : BP.Web.PageBase
     }
     public void Edit()
     {
-        MapAttr attr = new MapAttr(this.RefOID);
+        MapAttr attr = new MapAttr(this.RefNo);
         switch (attr.MyDataType)
         {
             case BP.DA.DataType.AppString:

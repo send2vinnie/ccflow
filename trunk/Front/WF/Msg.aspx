@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="Msg.aspx.cs" 
-Inherits="WF_Msg" Title="消息" %>
+﻿<%@ page language="C#" masterpagefile="MasterPage.master" autoeventwireup="true" inherits="WF_Msg, App_Web_gjlztgne" title="消息" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 	<script language="JavaScript" src="../Comm/JScript.js"></script>

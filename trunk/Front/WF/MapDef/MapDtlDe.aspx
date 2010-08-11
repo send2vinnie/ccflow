@@ -28,44 +28,44 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    function Edit(mypk,refoid, ftype)
+    function Edit(mypk,refNo, ftype)
     {
-        var url='EditF.aspx?DoType=Edit&MyPK='+mypk+'&RefOID='+refoid +'&FType=' + ftype;
+        var url='EditF.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refNo +'&FType=' + ftype;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    function EditEnum(mypk,refoid)
+    function EditEnum(mypk,refNo)
     {
-        var url='EditEnum.aspx?DoType=Edit&MyPK='+mypk+'&RefOID='+refoid;
+        var url='EditEnum.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refNo;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-     function EditTable(mypk,refoid)
+     function EditTable(mypk,refno)
     {
-        var url='EditTable.aspx?DoType=Edit&MyPK='+mypk+'&RefOID='+refoid;
+        var url='EditTable.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refno;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
     
-	function Up(mypk,refoid)
+	function Up(mypk,refNo)
     {
-        var url='Do.aspx?DoType=Up&MyPK='+mypk+'&RefOID='+refoid;
+        var url='Do.aspx?DoType=Up&MyPK='+mypk+'&RefNo='+refNo;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         //window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
         window.location.href = window.location.href ;
     }
-    function Down(mypk,refoid)
+    function Down(mypk,refNo)
     {
-        var url='Do.aspx?DoType=Down&MyPK='+mypk+'&RefOID='+refoid;
+        var url='Do.aspx?DoType=Down&MyPK='+mypk+'&RefNo='+refNo;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    function Del(mypk,refoid)
+    function Del(mypk,refNo)
     {
         if (window.confirm('您确定要删除吗？') ==false)
             return ;
     
-        var url='Do.aspx?DoType=Del&MyPK='+mypk+'&RefOID='+refoid;
+        var url='Do.aspx?DoType=Del&MyPK='+mypk+'&RefNo='+refNo;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }

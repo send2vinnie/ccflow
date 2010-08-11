@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="Login.aspx.cs" 
-Inherits="Face_Login" Title="登陆" %>
+﻿<%@ page language="C#" masterpagefile="MasterPage.master" autoeventwireup="true" inherits="Face_Login, App_Web_gjlztgne" title="登陆" %>
 <%@ Register src="UC/Login.ascx" tagname="Login" tagprefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 

@@ -219,7 +219,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     MapAttr attrNew = new MapAttr();
                     attrNew.Copy(attr);
                     attrNew.FK_MapData = dtlNew.No;
-                    attrNew.InsertAsNew();
+                    attrNew.Insert();
                 }
             }
 
@@ -235,7 +235,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                 attrNew.Copy(attr);
                 attrNew.GroupID = mygf.OID;
                 attrNew.FK_MapData = this.FK_Node;
-                attrNew.InsertAsNew();
+                attrNew.Insert();
             }
         }
 
@@ -269,7 +269,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
             ma1.KeyOfEn = ma.KeyOfEn;
             ma1.Name = ma.Name;
             ma1.GroupID = GroupField;
-            ma1.InsertAsNew();
+            ma1.Insert();
         }
 
         if (this.Pub2.IsExit("CB_Table"))
@@ -291,7 +291,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                 {
                     MapAttr attr2 = new MapAttr();
                     attr2.Copy(attr);
-                    attr2.OID = 0;
+                   // attr2.OID = 0;
                     attr2.GroupID = 0;
                     attr2.IDX = 0;
                     attr2.FK_MapData = this.FK_Node + "T";

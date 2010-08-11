@@ -58,7 +58,7 @@ public partial class WF_MapDef_UC_CopyDtlField :BP.Web.UC.UCBase3
 
             this.AddTR();
             CheckBox cb = new CheckBox();
-            cb.ID = "CB_" + attr.OID;
+            cb.ID = "CB_" + attr.MyPK;
             cb.Text = attr.Name;
             if (attrs.Contains(MapAttrAttr.KeyOfEn, attr.KeyOfEn))
                 cb.Enabled = false;
@@ -109,13 +109,13 @@ public partial class WF_MapDef_UC_CopyDtlField :BP.Web.UC.UCBase3
             if (attrs.Contains(MapAttrAttr.KeyOfEn, attr.KeyOfEn))
                 continue;
 
-            if (this.GetCBByID("CB_" + attr.OID).Checked == false)
+            if (this.GetCBByID("CB_" + attr.MyPK).Checked == false)
                 continue;
 
             MapAttr en = new MapAttr();
             en.Copy(attr);
             en.FK_MapData = this.MyPK;
-            en.OID = 0;
+           // en.OID = 0;
             en.GroupID = 0;
             en.IDX = 0;
             en.Insert();

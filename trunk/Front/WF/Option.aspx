@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="BP.Web.WF.WF.Option" CodeFile="Option.aspx.cs" %>
+<%@ page language="c#" inherits="BP.Web.WF.WF.Option, App_Web_cgmehdjt" %>
 <%@ Register TagPrefix="cc1" Namespace="BP.Web.Controls" Assembly="BP.Web.Controls" %>
 <%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >

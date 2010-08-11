@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="WFRptDtl.aspx.cs" Inherits="WF_WFDtl" %>
+﻿<%@ page language="C#" autoeventwireup="true" inherits="WF_WFDtl, App_Web_cgmehdjt" %>
 
 <%@ Register Src="../Comm/UC/ucsys.ascx" TagName="ucsys" TagPrefix="uc1" %>
 

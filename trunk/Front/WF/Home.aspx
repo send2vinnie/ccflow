@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="Home.aspx.cs" Inherits="Face_Home" Title="无标题页" %>
+﻿<%@ page language="C#" masterpagefile="MasterPage.master" autoeventwireup="true" inherits="Face_Home, App_Web_gjlztgne" title="无标题页" %>
 <%@ Register src="../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">

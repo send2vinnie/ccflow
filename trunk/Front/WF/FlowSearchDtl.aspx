@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/WF/Style/WinOpen.master" AutoEventWireup="true" CodeFile="FlowSearchDtl.aspx.cs" Inherits="WF_FlowSearchDtl" Title="未命名頁面" %>
+﻿<%@ page language="C#" masterpagefile="~/WF/Style/WinOpen.master" autoeventwireup="true" inherits="WF_FlowSearchDtl, App_Web_hqdhdw61" title="未命名頁面" %>
 
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 

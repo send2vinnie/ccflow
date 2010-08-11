@@ -15,7 +15,7 @@ using BP.En;
 using BP.Web;
 using BP.Web.UC;
 
-public partial class Comm_MapDef_EditTable : BP.Web.PageBase
+public partial class Comm_MapDef_EditTable : BP.Web.WebPage
 {
     /// <summary>
     /// GroupField
@@ -57,7 +57,7 @@ public partial class Comm_MapDef_EditTable : BP.Web.PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "编辑外键类型";
-        MapAttr attr = new MapAttr(this.RefOID);
+        MapAttr attr = new MapAttr(this.RefNo);
         BindTable(attr);
     }
     public void BindTable(MapAttr mapAttr)
@@ -75,7 +75,7 @@ public partial class Comm_MapDef_EditTable : BP.Web.PageBase
         TB tb = new TB();
         tb.ID = "TB_KeyOfEn";
         tb.Text = mapAttr.KeyOfEn;
-        if (this.RefOID > 0)
+        if (this.RefNo!=null)
             tb.Enabled = false;
 
         this.Pub1.AddTD(tb);
@@ -241,13 +241,13 @@ public partial class Comm_MapDef_EditTable : BP.Web.PageBase
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
-        if (this.RefOID > 0)
+        if (this.RefNo !=null )
         {
             btn = new Button();
             btn.ID = "Btn_AutoFull";
             btn.Text = this.ToE("AutoFull", "自动填写");
             //  btn.Click += new EventHandler(btn_Save_Click);
-            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFill.aspx?RefOID=" + this.RefOID + "',''); return false;";
+            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFill.aspx?RefNo=" + this.RefNo + "',''); return false;";
             this.Pub1.Add(btn);
 
             if (mapAttr.HisEditType == EditType.Edit)
@@ -274,14 +274,14 @@ public partial class Comm_MapDef_EditTable : BP.Web.PageBase
             switch (btn.ID)
             {
                 case "Btn_Del":
-                    this.Response.Redirect("Do.aspx?DoType=Del&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID, true);
+                    this.Response.Redirect("Do.aspx?DoType=Del&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo, true);
                     return;
                 default:
                     break;
             }
 
             MapAttr attr = new MapAttr();
-            attr.OID = this.RefOID;
+            attr.MyPK = this.RefNo;
             attr.Retrieve();
             attr = (MapAttr)this.Pub1.Copy(attr);
             attr.FK_MapData = this.MyPK;
@@ -323,7 +323,7 @@ public partial class Comm_MapDef_EditTable : BP.Web.PageBase
                 default:
                     break;
             }
-            this.Response.Redirect("EditTable.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefOID=" + attr.OID + "&GroupField=" + this.GroupField, true);
+            this.Response.Redirect("EditTable.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefNo=" + attr.MyPK + "&GroupField=" + this.GroupField, true);
         }
         catch (Exception ex)
         {

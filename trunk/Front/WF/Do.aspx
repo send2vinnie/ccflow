@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="BP.Web.WF.Do" CodeFile="Do.aspx.cs" %>
+<%@ page language="c#" inherits="BP.Web.WF.Do, App_Web_cgmehdjt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>

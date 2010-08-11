@@ -15,7 +15,7 @@ using BP.Web;
 using BP.Web.UC;
 using BP.DA;
 
-public partial class Comm_MapDef_EditF : BP.Web.PageBase
+public partial class Comm_MapDef_EditF : BP.Web.WebPage
 {
     /// <summary>
     /// GroupField
@@ -66,7 +66,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
                 this.Add();
                 break;
             case "Edit":
-                MapAttr attr = new MapAttr(this.RefOID);
+                MapAttr attr = new MapAttr(this.RefNo);
                 attr.MyDataType = this.FType;
                 switch (attr.MyDataType)
                 {
@@ -154,7 +154,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         TB tb = new TB();
         tb.ID = "TB_KeyOfEn";
         tb.Text = mapAttr.KeyOfEn;
-        if (this.RefOID > 0)
+        if (this.RefNo !=null )
             tb.Enabled = false;
 
         this.Pub1.AddTD(tb);
@@ -343,12 +343,12 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
 
     void ddlType_SelectedIndexChanged(object sender, EventArgs e)
     {
-        MapAttr attr = new MapAttr(this.RefOID);
+        MapAttr attr = new MapAttr(this.RefNo);
         attr.MyDataTypeS = this.Pub1.GetDDLByID("DDL_DTType").SelectedItemStringVal;
         attr.Update();
 
 
-        this.Response.Redirect("EditF.aspx?DoType=" + this.DoType + "&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "&FType=" + attr.MyDataType + "&GroupField=" + this.GroupField, true);
+        this.Response.Redirect("EditF.aspx?DoType=" + this.DoType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo + "&FType=" + attr.MyDataType + "&GroupField=" + this.GroupField, true);
 
         // this.Response.Redirect(this.Request.RawUrl, true);
     }
@@ -374,12 +374,12 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
-        if (this.RefOID > 0)
+        if (this.RefNo !=null )
         {
             btn = new Button();
             btn.ID = "Btn_AutoFull";
             btn.Text = this.ToE("AutoFull", "自动填写");
-            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFill.aspx?RefOID=" + this.RefOID + "',''); return false;";
+            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFill.aspx?RefNo=" + this.RefNo + "',''); return false;";
             this.Pub1.Add(btn);
 
             if (mapAttr.HisEditType == EditType.Edit)
@@ -417,7 +417,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         switch (btn.ID)
         {
             case "Btn_New":
-                MapAttr mapAttr = new MapAttr(this.RefOID);
+                MapAttr mapAttr = new MapAttr(this.RefNo);
                 string url = "Do.aspx?DoType=AddF&MyPK=" + mapAttr.FK_MapData + "&IDX=" + mapAttr.IDX + "&GroupField = " + this.GroupField;
                 this.Response.Redirect(url, true);
                 return;
@@ -554,7 +554,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         tb.ID = "TB_KeyOfEn";
         tb.Text = mapAttr.KeyOfEn;
 
-        if (this.RefOID > 0)
+        if (this.RefNo != null)
             tb.Enabled = false;
 
         this.Pub1.AddTD(tb);
@@ -667,7 +667,6 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
         this.Pub1.AddTREnd();
         #endregion 是否可界面可见
 
-
         this.EditBeforeEnd(mapAttr);
     }
     public void btn_Save_Click(object sender, EventArgs e)
@@ -678,17 +677,16 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
             switch (btn.ID)
             {
                 case "Btn_Del":
-                    this.Response.Redirect("Do.aspx?DoType=Del&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "&GroupField = " + this.GroupField, true);
+                    this.Response.Redirect("Do.aspx?DoType=Del&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo + "&GroupField = " + this.GroupField, true);
                     return;
-
                 default:
                     break;
             }
 
             MapAttr attr = new MapAttr();
-            if (this.RefOID > 1)
+            if (this.RefNo !=null )
             {
-                attr.OID = this.RefOID;
+                attr.MyPK = this.RefNo;
                 attr.Retrieve();
                 attr = (MapAttr)this.Pub1.Copy(attr);
                 switch (this.FType)
@@ -744,6 +742,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
             }
 
             attr.FK_MapData = this.MyPK;
+            attr.MyPK = this.RefNo;
             attr.Save();
             switch (btn.ID)
             {
@@ -756,7 +755,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
                 default:
                     break;
             }
-            this.Response.Redirect("EditF.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefOID=" + attr.OID + "&FType=" + this.FType + "&GroupField=" + this.GroupField, true);
+            this.Response.Redirect("EditF.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefNo=" + attr.MyPK  + "&FType=" + this.FType + "&GroupField=" + this.GroupField, true);
         }
         catch (Exception ex)
         {
@@ -771,7 +770,7 @@ public partial class Comm_MapDef_EditF : BP.Web.PageBase
             if (this.DoType == "Add")
                 return this.ToE("GuideNewField", "增加新字段向导") + " - <a href='Do.aspx?DoType=ChoseFType&GroupField=" + this.GroupField + "' >" + this.ToE("ChoseType", "返回类型选择") + "</a> - " + this.ToE("Edit", "编辑");
             else
-                return "<a href='Do.aspx?DoType=ChoseFType&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "&GroupField=" + this.GroupField + "'>" + this.ToE("ChoseType", "返回类型选择") + "</a> - " + this.ToE("Edit", "编辑");
+                return "<a href='Do.aspx?DoType=ChoseFType&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo + "&GroupField=" + this.GroupField + "'>" + this.ToE("ChoseType", "返回类型选择") + "</a> - " + this.ToE("Edit", "编辑");
         }
     }
 }

@@ -16,7 +16,7 @@ using BP.Web;
 using BP.Web.UC;
 using BP.DA;
 
-public partial class Comm_MapDef_AutoFill : BP.Web.PageBase
+public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
 {
     /// <summary>
     /// 执行类型
@@ -44,7 +44,7 @@ public partial class Comm_MapDef_AutoFill : BP.Web.PageBase
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        MapAttr mattr = new MapAttr(this.RefOID);
+        MapAttr mattr = new MapAttr(this.RefNo);
         Attr attr = mattr.HisAttr;
         this.Title = "为[" + mattr.KeyOfEn + "][" + mattr.Name + "]设置自动完成"; // this.ToE("GuideNewField");
 
@@ -353,7 +353,7 @@ public partial class Comm_MapDef_AutoFill : BP.Web.PageBase
     /// <param name="e"></param>
     void btn_Click(object sender, EventArgs e)
     {
-        MapAttr mattr = new MapAttr(this.RefOID);
+        MapAttr mattr = new MapAttr(this.RefNo);
         if (this.Ucsys1.GetRadioButtonByID("RB_Way_0").Checked)
         {
             mattr.HisAutoFull = AutoFullWay.Way0;
@@ -441,13 +441,12 @@ public partial class Comm_MapDef_AutoFill : BP.Web.PageBase
     }
     public string GetCaption
     {
-
         get
         {
             if (this.DoType == "Add")
-                return this.ToE("GuideNewField","新增向导") + " - <a href='Do.aspx?DoType=ChoseFType'>" + this.ToE("ChoseType", "选择类型") + "</a> - " + this.ToE("Edit", "编辑");
+                return this.ToE("GuideNewField", "新增向导") + " - <a href='Do.aspx?DoType=ChoseFType'>" + this.ToE("ChoseType", "选择类型") + "</a> - " + this.ToE("Edit", "编辑");
             else
-                return "<a href='Do.aspx?DoType=ChoseFType&MyPK=" + this.MyPK + "&RefOID=" + this.RefOID + "'>" + this.ToE("ChoseType", "选择类型") + "</a> - " + this.ToE("Edit", "编辑");
+                return "<a href='Do.aspx?DoType=ChoseFType&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo + "'>" + this.ToE("ChoseType", "选择类型") + "</a> - " + this.ToE("Edit", "编辑");
         }
     }
 }
