@@ -221,8 +221,7 @@ namespace BP.Web.Comm
             this.Response.Redirect(url,true);
             return;
 
-
-          //  UIEn.aspx?EnsName=BP.WF.Ext.NodeOs&PK=2801
+          // UIEn.aspx?EnsName=BP.WF.Ext.NodeOs&PK=2801
 
             #region Çå³ý»º´æ;
             this.Response.Expires = -1;
@@ -245,15 +244,11 @@ namespace BP.Web.Comm
 
               //  this.ToolBar1.DivInfoBlockBegin();
 
-
                 this.ToolBar1.Add("&nbsp;&nbsp;");
 
                 this.ToolBar1.InitFuncEn(uac, this.CurrEn);
 
-
               //  this.ToolBar1.DivInfoBlockEnd();
-
-
 
                 this.UCEn1.IsReadonly = this.IsReadonly;
                 this.UCEn1.IsShowDtl = true;

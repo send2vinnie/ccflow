@@ -28,17 +28,22 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
     {
         get
         {
-            if (this.Request.QueryString["EnsName"] == null)
+            string ensName = this.Request.QueryString["EnsName"];
+            if (ensName == null || ensName == "")
+                ensName = this.ViewState["EnsName"] as string;
+            else
+                this.ViewState["EnsName"] = ensName;
+
+            if (ensName == null)
             {
                 string s = this.Request.QueryString["EnName"];
-                if (s == null)
-                    return "BP.Port.Emps";
-
                 Entity en = BP.DA.ClassFactory.GetEn(s);
-                return en.GetNewEntities.ToString();
+                this.ViewState["EnsName"] = en.GetNewEntities.ToString();
+                this.ViewState["EnName"] = en.ToString();
             }
-            else
-                return this.Request.QueryString["EnsName"];
+
+            ensName = this.ViewState["EnsName"] as string;
+            return ensName;
         }
     }
     /// <summary>
@@ -48,7 +53,24 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
     {
         get
         {
-            return this.Request.QueryString["EnName"];
+            string enName = this.Request.QueryString["EnName"];
+            if (enName == null || enName == "")
+                enName = this.ViewState["EnName"] as string;
+            else
+                this.ViewState["EnName"] = enName;
+
+            if (enName == null)
+            {
+                string s = this.Request.QueryString["EnsName"];
+                if (s == null)
+                    s = this.ViewState["EnsName"] as string;
+
+                Entities ens = BP.DA.ClassFactory.GetEns(s);
+                this.ViewState["EnsName"] = ens.ToString();
+                this.ViewState["EnName"] = ens.GetNewEntity.ToString();
+            }
+            enName = this.ViewState["EnName"] as string;
+            return enName;
         }
     }
     /// <summary>
@@ -264,8 +286,8 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
             this.UCEn1.IsShowDtl = true;
             this.UCEn1.HisEn = this.CurrEn;
 
-
             this.UCEn1.Bind(this.CurrEn, this.CurrEn.ToString(), this.IsReadonly, true);
+
         }
         catch (Exception ex)
         {
@@ -276,7 +298,6 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
         }
 
         this.Page.Title = this.CurrEn.EnDesc;
-
 
         #region 设置事件
         if (this.Btn_DelFile != null)
