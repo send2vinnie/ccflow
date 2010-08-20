@@ -17,6 +17,10 @@
                 <br />
                         <asp:Button ID="Button2" runat="server" Text="清除流程数据" OnClick="Button2_Click" /></td>
                  
+		&nbsp;&nbsp;&nbsp; ---&nbsp;
+         <asp:Button ID="Button3" runat="server" onclick="Button3_Click1" 
+             Text="清除所有的流程" />
+                 
 		</form>
 	</body>
 </HTML>

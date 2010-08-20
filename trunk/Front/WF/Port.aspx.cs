@@ -112,15 +112,6 @@ namespace BP.Web.Port
 				BP.Web.WebUser.SignInOfGener(emp); //开始执行登陆。
 				switch( this.DoWhat )
 				{
-					case DoWhatList.RequestCJ: // 请求调用流程
-						this.Response.Redirect("../ZF/CJ.htm",true);
-						break;
-					case DoWhatList.RequsetMyCT: // 请求调用流程
-						this.Response.Redirect("../../CT/CT/Port/Home.htm",true);
-						break;
-					case DoWhatList.RequsetMyZF: // 请求调用流程
-						this.Response.Redirect("../../ZF/ZF/Port/Home.htm",true);
-						break;
 					case DoWhatList.RequestStart: // 请求调用流程业务受理。
 						this.Response.Redirect("Start.aspx",true);
 						break;
@@ -141,25 +132,6 @@ namespace BP.Web.Port
 					case DoWhatList.FlowSearch: // 流程查询。
 						this.Response.Redirect("../Comm/PanelEns.aspx?EnsName=BP.WF.CHOfFlows&FK_Flow="+this.FK_Flow,true);
 						break;	
-					case DoWhatList.KYDJ:
-//						BP.Port.WF.DJ.ND1 kydj= new BP.Port.WF.DJ.ND1();
-//						if (kydj.IsExit("FK_Taxpayer",this.Taxpayer)==true)
-//						{
-//							this.ShowMsg( "流程已经启动." );
-//							WebUser.Exit();
-//							return;
-//						}
-//						kydj.FK_Taxpayer=this.Taxpayer;
-//						kydj.Rec=WebUser.No;
-//						kydj.RDT=DataType.CurrentDataTime;
-//						kydj.CDT=DataType.CurrentDataTime;
-//						kydj.Insert();
-//
-//						WorkNode wn = new WorkNode(kydj,new Node( 11001 ));
-//						string msg=wn.AfterNodeSave(true,false);
-//						WebUser.Exit();
-//						this.ShowMsg(msg); 
-						break;
 					default:
 						this.ToErrorPage("没有约定的标记:DoWhat="+this.DoWhat );
 						break;

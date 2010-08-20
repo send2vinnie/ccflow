@@ -71,10 +71,14 @@ namespace BP.Web.WF.WF
             DA.DBAccess.RunSQL("DELETE FROM WF_Book");
             DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist");
             DA.DBAccess.RunSQL("DELETE FROM WF_GENERWORKFLOW");
-         //   DA.DBAccess.RunSQL("DELETE FROM WF_WORKLIST");
             DA.DBAccess.RunSQL("DELETE FROM WF_ReturnWork");
-            DA.DBAccess.RunSQL("DELETE FROM WF_ReturnWork");
+            DA.DBAccess.RunSQL("DELETE FROM WF_GenerFH");
             DA.DBAccess.RunSQL("DELETE FROM WF_SelectAccper");
+            DA.DBAccess.RunSQL("DELETE FROM WF_FileManager");
+            DA.DBAccess.RunSQL("DELETE FROM WF_RememberMe");
+            DA.DBAccess.RunSQL("DELETE FROM WF_WorkList");
+            DA.DBAccess.RunSQL("DELETE FROM WF_RunRecord");
+
 
             Nodes nds = new Nodes();
             foreach (Node nd in nds)
@@ -114,21 +118,99 @@ namespace BP.Web.WF.WF
                 {
                 }
             }
-
             this.Alert("clear ok.");
-
         }
         protected void Button3_Click(object sender, EventArgs e)
         {
-
+            if (WebUser.No != "admin")
+            {
+                this.ToErrorPage("非法用户。");
+                return;
+            }
+        }
+        protected void Button3_Click1(object sender, EventArgs e)
+        {
             if (WebUser.No != "admin")
             {
                 this.ToErrorPage("非法用户。");
                 return;
             }
 
+            //删除他们的数据。
+            this.Button2_Click(null, null);
 
+            // 删除流程设计数据。
+            DA.DBAccess.RunSQL("DELETE FROM WF_Node");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Flow");
+            DA.DBAccess.RunSQL("DELETE FROM WF_FlowSort WHERE [No] Not in ('01','02') ");
+            DA.DBAccess.RunSQL("DELETE FROM WF_FAppSet");
+            DA.DBAccess.RunSQL("DELETE FROM WF_FileManager");
+            DA.DBAccess.RunSQL("DELETE FROM WF_RptStation");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Direction");
+
+            DA.DBAccess.RunSQL("DELETE FROM WF_StandardCheck");
+            DA.DBAccess.RunSQL("DELETE FROM WF_SelectAccper");
+            DA.DBAccess.RunSQL("DELETE FROM WF_RptEmp");
+            DA.DBAccess.RunSQL("DELETE FROM WF_RptAttr");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Rpt");
+            DA.DBAccess.RunSQL("DELETE FROM WF_NodeStation");
+            DA.DBAccess.RunSQL("DELETE FROM WF_NodeDept");
+            DA.DBAccess.RunSQL("DELETE FROM WF_NodeCompleteCondition");
+            DA.DBAccess.RunSQL("DELETE FROM WF_LabNote");
+            DA.DBAccess.RunSQL("DELETE FROM WF_FlowStation");
+            DA.DBAccess.RunSQL("DELETE FROM WF_FlowNode");
+
+            DA.DBAccess.RunSQL("DELETE FROM WF_FlowCompleteCondition");
+            DA.DBAccess.RunSQL("DELETE FROM WF_FAppSet");
+            DA.DBAccess.RunSQL("DELETE FROM WF_ExpDtl");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Exp");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Direction");
+            DA.DBAccess.RunSQL("DELETE FROM WF_DataApply");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Cond");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Book");
+            DA.DBAccess.RunSQL("DELETE FROM WF_BookTemplate");
+            DA.DBAccess.RunSQL("DELETE FROM TA_Mail");
+            DA.DBAccess.RunSQL("DELETE FROM TA_MailDtl");
+
+            //DA.DBAccess.RunSQL("DELETE FROM WF_FlowNode");
+            //DA.DBAccess.RunSQL("DELETE FROM WF_FlowNode");
+            //DA.DBAccess.RunSQL("DELETE FROM WF_FlowNode");
+            //DA.DBAccess.RunSQL("DELETE FROM WF_FlowNode");
+            //DA.DBAccess.RunSQL("DELETE FROM WF_FlowNode");
+
+
+            MapDatas mds = new MapDatas();
+            mds.RetrieveAll();
+            foreach (MapData md in mds)
+            {
+                try
+                {
+                    DA.DBAccess.RunSQL("DROP TABLE  " + md.No);
+                }
+                catch
+                {
+                }
+            }
+
+
+            MapDtls dtls = new MapDtls();
+            dtls.RetrieveAll();
+            foreach (MapDtl dtl in dtls)
+            {
+                try
+                {
+                    DA.DBAccess.RunSQL("DROP TABLE  " + dtl.No);
+                }
+                catch
+                {
+                }
+            }
+
+            DA.DBAccess.RunSQL("DELETE FROM Sys_MapDtl");
+            DA.DBAccess.RunSQL("DELETE FROM Sys_MapData");
+            DA.DBAccess.RunSQL("DELETE FROM Sys_MapAttr");
+            DA.DBAccess.RunSQL("DELETE FROM Sys_GroupField");
 
         }
-}
+    }
 }
