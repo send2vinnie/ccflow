@@ -7,7 +7,8 @@
     <title>表单设计</title>
 	<script language="JavaScript" src="JS.js"></script>
 	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
-    <script language="JavaScript" src="../../../Comm/JS/Calendar.js" type="text/javascript"></script>    
+    <script language="JavaScript" src="../../../Comm/JS/Calendar.js" type="text/javascript"></script>  
+      
 	<base target="_self" />
 	<script language="javascript">
 	function Insert(mypk,IDX)

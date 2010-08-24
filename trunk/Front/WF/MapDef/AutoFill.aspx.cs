@@ -300,7 +300,7 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
             MapAttrs mattrs1 = new MapAttrs(dtl.No);
             foreach (MapAttr mattr1 in mattrs1)
             {
-                if (mattr1.KeyOfEn == MapAttrAttr.OID)
+                if (mattr1.KeyOfEn == MapAttrAttr.MyPK)
                     continue;
 
                 if (mattr1.KeyOfEn == "RefOID")

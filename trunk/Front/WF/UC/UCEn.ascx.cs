@@ -190,7 +190,7 @@ namespace BP.Web.Comm.UC.WF
                                     tb.ShowType = TBType.Date;
                                     tb.Text = en.GetValStrByKey(attr.KeyOfEn);
                                     if (attr.UIIsEnable)
-                                        tb.Attributes["onfocus"] = "calendar();";
+                                        tb.Attributes["onfocus"] = "calendar(this);";
 
                                     this.AddTD("colspan=" + colspanOfCtl, tb);
                                     break;
@@ -198,8 +198,8 @@ namespace BP.Web.Comm.UC.WF
                                     this.AddTDDesc(attr.Name);
                                     tb.ShowType = TBType.DateTime;
                                     tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                    if (attr.UIIsEnable == false)
-                                        tb.Attributes["onfocus"] = "calendar();";
+                                    if (attr.UIIsEnable)
+                                        tb.Attributes["onfocus"] = "CalendarHM();";
 
                                     this.AddTD("colspan=" + colspanOfCtl, tb);
                                     break;

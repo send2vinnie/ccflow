@@ -46,7 +46,18 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         {
             string s = this.Request.QueryString["FK_Attr"];
             if (s == null)
-                s = this.DDL_Attr.SelectedItemStringVal;
+            {
+                try
+                {
+                    s = this.DDL_Attr.SelectedItemStringVal;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            if (s == "")
+                return null;
             return s;
         }
     }
@@ -138,7 +149,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         cond.MyPK = this.MyPK;
         if (cond.RetrieveFromDBSources() == 0)
         {
-            if (this.FK_Attr.Length != 0)
+            if (this.FK_Attr != null)
                 cond.FK_Attr = this.FK_Attr;
             if (this.FK_MainNode != 0)
                 cond.NodeID = this.FK_MainNode;
@@ -229,7 +240,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
 
         ddl = new DDL();
         ddl.ID = "DDL_Attr";
-        ddl.BindEntities(attrNs, MapAttrAttr.OID, MapAttrAttr.Name);
+        ddl.BindEntities(attrNs, MapAttrAttr.MyPK, MapAttrAttr.Name);
         ddl.AutoPostBack = true;
         ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
         ddl.SetSelectItem(cond.FK_Attr);

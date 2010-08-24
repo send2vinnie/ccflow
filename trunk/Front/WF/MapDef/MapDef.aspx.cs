@@ -219,9 +219,8 @@ public partial class WF_MapDef_MapDef : WebPage
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
                                 tb.ShowType = TBType.DateTime;
                                 tb.Text = attr.DefVal;
-                                if (attr.UIIsEnable == false)
-                                    tb.Attributes["onfocus"] = "calendar();";
-
+                                if (attr.UIIsEnable)
+                                    tb.Attributes["onfocus"] = "calendarHM();";
 
                                 this.Pub1.AddTD("colspan=" + colspanOfCtl, tb);
                                 break;

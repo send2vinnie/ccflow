@@ -684,7 +684,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             }
 
             MapAttr attr = new MapAttr();
-            if (this.RefNo !=null )
+            if (this.RefNo != null)
             {
                 attr.MyPK = this.RefNo;
                 attr.Retrieve();
@@ -733,13 +733,16 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                 {
                     case DataType.AppBoolean:
                         attr.MyDataType = BP.DA.DataType.AppBoolean;
-                        attr.UIContralType = UIContralType.CheckBok; 
+                        attr.UIContralType = UIContralType.CheckBok;
                         attr.DefValOfBool = this.Pub1.GetCBByID("CB_DefVal").Checked;
                         break;
                     default:
                         break;
                 }
             }
+
+            Response.Buffer = true;
+
 
             attr.FK_MapData = this.MyPK;
             attr.MyPK = this.RefNo;
@@ -755,10 +758,11 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                 default:
                     break;
             }
-            this.Response.Redirect("EditF.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefNo=" + attr.MyPK  + "&FType=" + this.FType + "&GroupField=" + this.GroupField, true);
+            this.Response.Redirect("EditF.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefNo=" + attr.MyPK + "&FType=" + this.FType + "&GroupField=" + this.GroupField, true);
         }
         catch (Exception ex)
         {
+
             this.Alert(ex.Message);
         }
     }

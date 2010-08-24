@@ -6,6 +6,7 @@
     <script language="JavaScript" src="JS.js"></script>
     <script language="JavaScript" src="MapDef.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
+    
     <script language="javascript" >
 	function HelpGroup()
 	{
@@ -82,14 +83,14 @@
     
 	function Up(mypk,refoid,idx)
     {
-        var url='Do.aspx?DoType=Up&MyPK='+mypk+'&RefOID='+refoid+'&ToIdx='+idx;
+        var url='Do.aspx?DoType=Up&MyPK='+mypk+'&RefNo='+refoid+'&ToIdx='+idx;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         //window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
         window.location.href = window.location.href ;
     }
     function Down(mypk,refoid,idx)
     {
-        var url='Do.aspx?DoType=Down&MyPK='+mypk+'&RefOID='+refoid +'&ToIdx='+idx;
+        var url='Do.aspx?DoType=Down&MyPK='+mypk+'&RefNo='+refoid +'&ToIdx='+idx;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
