@@ -219,7 +219,7 @@ public partial class WF_MapDef_MapDef : WebPage
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
                                 tb.ShowType = TBType.DateTime;
                                 tb.Text = attr.DefVal;
-                                if (attr.UIIsEnable)
+                                if (attr.UIIsEnable == false)
                                     tb.Attributes["onfocus"] = "calendarHM();";
 
                                 this.Pub1.AddTD("colspan=" + colspanOfCtl, tb);
@@ -254,6 +254,7 @@ public partial class WF_MapDef_MapDef : WebPage
                             default:
                                 break;
                         }
+
                         tb.Attributes["width"] = "100%";
                         switch (attr.MyDataType)
                         {

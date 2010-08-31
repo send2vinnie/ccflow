@@ -86,12 +86,15 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                 SFTable sf = new SFTable(this.Request.QueryString["RefNo"]);
                 MapAttr attrAddFK = new MapAttr();
                 attrAddFK.KeyOfEn = sf.FK_Val;
-                if (attrAddFK.IsExit(MapAttrAttr.FK_MapData, this.MyPK, MapAttrAttr.KeyOfEn, sf.FK_Val))
-                {
-                    BP.PubClass.Alert(this.ToE("FExits", "字段已经存在") + " [" + sf.FK_Val + "]。");
-                    BP.PubClass.WinClose();
-                    return;
-                }
+                //while (true)
+                //{
+                //    if (attrAddFK.IsExit(MapAttrAttr.FK_MapData, this.MyPK, MapAttrAttr.KeyOfEn, sf.FK_Val))
+                //    {
+                //        BP.PubClass.Alert(this.ToE("FExits", "字段已经存在") + " [" + sf.FK_Val + "]。");
+                //        BP.PubClass.WinClose();
+                //        return;
+                //    }
+                //}
                 attrAddFK.FK_MapData = this.MyPK;
                 attrAddFK.Name = sf.Name;
                 attrAddFK.UIContralType = UIContralType.DDL;
@@ -137,7 +140,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                 MapAttr toAttr = new MapAttr();
                 toAttr.MyPK =  this.Request.QueryString["ToID"];
                 toAttr.Retrieve();
-                int ToGFID =  int.Parse(this.Request.QueryString["ToGFID"]);
+                int ToGFID = int.Parse(this.Request.QueryString["ToGFID"]);
                 if (ToGFID == toAttr.GroupID)
                 {
                     this.Response.Redirect(this.Request.RawUrl.Replace("MoveTo", "Jump"), true);

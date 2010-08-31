@@ -134,7 +134,7 @@ public partial class WF_MapDef_GroupField : WebPage
                 tbc.ID = "TB_Sta";
                 this.Pub1.Add("审核岗位<font color=red>*</font>");
                 this.Pub1.Add(tbc);
-                this.Pub1.AddBR("<font color=green>比如分局长审核、科长审核、总经理审核。。。</font>");
+                this.Pub1.AddBR("<font color=green>比如:分局长审核、科长审核、总经理审核。。。</font>");
                 this.Pub1.AddBR();
 
                 tbc = new TB();
@@ -147,9 +147,7 @@ public partial class WF_MapDef_GroupField : WebPage
                 Btn btnc = new Btn();
                 btnc.Click += new EventHandler(btn_Check_Click);
                 this.Pub1.Add(btnc);
-                
                 this.Pub1.AddFieldSetEnd();
-
                 return;
             case "NewGroup":
                 GroupFields mygfs = new GroupFields(this.RefNo);

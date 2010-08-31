@@ -5,57 +5,62 @@ document.onmousemove = mouseMove;
 function mouseDown()
 {
    moveToFieldID = currFieldID;
-  return true;
+    return true;
 }
 function mouseUp()
 {
-   if ( gfID > -1 && moveToFieldID > 0 && currFieldID != moveToFieldID )
+
+   if ( (gfID !=null && moveToFieldID !=null ) && (currFieldID != moveToFieldID) )
    {
-         var url='Do.aspx?DoType=MoveTo&FromID='+moveToFieldID+'&ToGFID='+gfID+'&ToID='+moveToFieldID ;
+        var url='Do.aspx?DoType=MoveTo&FromID='+moveToFieldID+'&ToGFID='+gfID+'&ToID='+moveToFieldID ;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
-        moveToFieldID=0;
-        gfID=-1;
-        currFieldID=0;
+        moveToFieldID=null;
+        gfID=null;
+        currFieldID=null;
         return;
    }
-
-   if ( currFieldID>0  && moveToFieldID >  0 && currFieldID != moveToFieldID  )
-   {
-      var url1='Do.aspx?DoType=Jump&FromID='+currFieldID+'&ToID='+moveToFieldID ;
-alert(url1);
-      var b1=window.showModalDialog( url1 , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
-      window.location.href = window.location.href;
-   } 
-  currFieldID=0;
-  moveToFieldID=0;
-  gfID=-1;
+   
+//   if ( currFieldID!=null  && moveToFieldID !=null  && currFieldID != moveToFieldID  )
+//   {
+//      var url1='Do.aspx?DoType=Jump&FromID='+currFieldID+'&ToID='+moveToFieldID ;
+//      var b1=window.showModalDialog( url1 , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+//      window.location.href = window.location.href;
+//   }
+    
+  currFieldID=null;
+  moveToFieldID=null;
+  gfID=null;
   rowIdx=-1;
   return true;
 }
-    var currFieldID=0;
-    var moveToFieldID=0;
+    var currFieldID=null;
+    var moveToFieldID=null;
     var isMove=false;
-    var gfID=-1;
+    var gfID=null;
     var DrgType="";
     function FieldOnMouseOver(id)
     {
+//alert("FieldOnMouseOver = currFieldID="+id);
        currFieldID =id;
     }
     
     function FieldOnMouseOut(id)
     {
-      currFieldID=0;
+//alert("FieldOnMouseOut currFieldID=0" );
+      currFieldID=null;
     }
     
     function GFOnMouseOver(id,rowIdx)
     {
+//alert("GFOnMouseOver"+id+" - " +rowIdx );
        gfID =id;
        rowIdx =id;
     }
     
     function GFOnMouseOut()
     {
-       gfID=-1;
+       gfID=null;
        rowIdx=-1;
+    //   alert("GFOnMouseOver gfID="+gfID+" - rowIdx=" +rowIdx );
     }

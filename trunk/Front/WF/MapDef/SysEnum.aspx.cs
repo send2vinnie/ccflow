@@ -47,13 +47,16 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
     {
         SysEnums ses = new SysEnums();
         if (en.No.Length > 0)
-            ses = new SysEnums(en.No);
+        {
+            //ses = new SysEnums(en.No);
+            ses.Retrieve(SysEnumAttr.EnumKey, en.No);
+        }
 
         this.Ucsys1.AddTable();
         if (this.RefNo == null)
-            this.Ucsys1.AddCaptionLeftTX("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("New", "新建"));
+            this.Ucsys1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("New", "新建"));
         else
-            this.Ucsys1.AddCaptionLeftTX("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("Edit", "编辑"));
+            this.Ucsys1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("Edit", "编辑"));
 
         if (this.RefNo == null)
             this.Title = this.ToE("NewEnum", "新建枚举");
@@ -100,7 +103,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
         while (idx < 20)
         {
             this.Ucsys1.AddTR();
-            this.Ucsys1.AddTD(idx);
+            this.Ucsys1.AddTDIdx(idx);
             tb = new BP.Web.Controls.TB();
             tb.ID = "TB_" + idx;
             SysEnum se = ses.GetEntityByKey(SysEnumAttr.IntKey, idx) as SysEnum;
@@ -163,7 +166,6 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
                 {
                     //this.Alert("编号（枚举英文名称）[" + main.No + "]已经存在。");
                     this.Alert(this.ToE("No", "编号") + "（" + this.ToE("EnumEName", "枚举英文名称") + "）[" + main.No + "]" + this.ToE("Exits", "已经存在") + "。");
-
                     return;
                 }
 

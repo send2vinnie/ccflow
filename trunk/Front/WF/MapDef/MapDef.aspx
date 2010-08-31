@@ -6,7 +6,6 @@
     <script language="JavaScript" src="JS.js"></script>
     <script language="JavaScript" src="MapDef.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
-    
     <script language="javascript" >
 	function HelpGroup()
 	{

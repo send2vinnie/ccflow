@@ -20,14 +20,14 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
     /// <summary>
     /// GroupField
     /// </summary>
-    public string GroupField
+    public int GroupField
     {
         get
         {
             string  s= this.Request.QueryString["GroupField"];
-            if (s == "")
-                return null;
-            return s;
+            if (s == "" || s==null)
+                return 0;
+            return int.Parse( s);
         }
     }
     /// <summary>
@@ -684,6 +684,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             }
 
             MapAttr attr = new MapAttr();
+            attr.GroupID = this.GroupField;
             if (this.RefNo != null)
             {
                 attr.MyPK = this.RefNo;
@@ -725,9 +726,9 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                     attr.IDX = int.Parse(this.IDX) - 1;
 
                 attr.MyDataType = this.FType;
-                if (this.GroupField != null)
+                if (this.GroupField != 0)
                 {
-                    attr.GroupID = int.Parse(this.GroupField);
+                    attr.GroupID =  this.GroupField;
                 }
                 switch (this.FType)
                 {
