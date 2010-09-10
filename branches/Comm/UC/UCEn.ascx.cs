@@ -39,6 +39,8 @@ namespace BP.Web.Comm.UC
             {
                 foreach (AttrOfOneVSM vsM in oneVsM)
                 {
+                    continue;
+
                     //  string url = path + "/Comm/UIEn1ToM.aspx?EnsName=" + en.ToString() + "&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
                     string url = "UIEn1ToM.aspx?EnsName=" + en.ToString() + "&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
                     string sql = "";
@@ -290,7 +292,7 @@ namespace BP.Web.Comm.UC
         public void AddContralDoc(string desc, TB tb)
         {
             //if (desc.Length>
-            this.Add("<td class='FDesc'  colspan='2' nowrap height='200px' width='50%' >" + desc + "<br>");
+            this.Add("<td class='FDesc'  colspan='2' width='50%' >" + desc + "<br>");
             if (tb.ReadOnly)
                 tb.Attributes["Class"] = "TBReadonly";
             this.Add(tb);
@@ -299,7 +301,7 @@ namespace BP.Web.Comm.UC
         public void AddContralDoc(string desc, TB tb, int colspanOfctl)
         {
             //if (desc.Length>
-            this.Add("<td class='FDesc'  colspan='" + colspanOfctl + "' nowrap height='200px' width='50%' >" + desc + "<br>");
+            this.Add("<td class='FDesc'  colspan='" + colspanOfctl + "' width='50%' >" + desc + "<br>");
             if (tb.ReadOnly)
                 tb.Attributes["Class"] = "TBReadonly";
             this.Add(tb);
@@ -1142,7 +1144,7 @@ namespace BP.Web.Comm.UC
                                   //  input.Attributes["id"] = "TBH_"+attr.Key;
                                     input.ID = "TBH_" + attr.Key;
                                     input.Value = val as string;
-                                    this.Add("<td class='FDesc'  colspan='4' nowrap height='200px' width='50%'>");
+                                    this.Add("<td class='FDesc'  colspan='4' width='50%'>");
                                     this.Add(input);
                                     this.Add("<iframe ID='eWebEditor1' src='./Ctrl/editor/editor.htm?id=" + input.ClientID + "&style=coolblue' frameborder='0' scrolling='no' width='600' HEIGHT='350'></iframe>");
                                     this.AddTDEnd();
@@ -1308,7 +1310,7 @@ namespace BP.Web.Comm.UC
                                     HtmlInputHidden input = new HtmlInputHidden();
                                     input.Attributes["id"] = "txtContent";
                                     //input.ID = attr.Key;
-                                    this.Add("<td class='FDesc'  colspan='2' nowrap height='200px' width='50%' >" + attr.Desc + "<br>");
+                                    this.Add("<td class='FDesc'  colspan='2' nowrap width='50%' >" + attr.Desc + "<br>");
                                     this.Add(input);
                                     this.Add("<iframe ID='eWebEditor1' src='./Ctrl/Edit/editor.htm?id=txtContent&style=coolblue' frameborder='0' scrolling='no' width='600' HEIGHT='350'></iframe>");
                                     this.AddTDEnd();
@@ -1549,7 +1551,6 @@ namespace BP.Web.Comm.UC
                 // 增加相关信息
                 AttrsOfOneVSM oneVsM = en.EnMap.AttrsOfOneVSM;
                 foreach (AttrOfOneVSM vsM in oneVsM)
-                    //this.Add("[<a href=\"javascript:alert('请保存后，填写。');\" >" + vsM.Desc + "</a>]");
                     endMsg += "[<a href=\"javascript:alert('请在保存后填写。');\" >" + vsM.Desc + "</a>]";
 
                 RefMethods myreffuncs = en.EnMap.HisRefMethods;
@@ -1560,7 +1561,6 @@ namespace BP.Web.Comm.UC
                     endMsg += "[<a href=\"javascript:alert('请在保存后执行。');\" >" + func.Title + "</a>]";
                 }
 
-                // this.Add("[<a href=\"javascript:alert('请保存后，执行。');\" >" + func.Title + "</a>]");
 
                 if (isShowDtl)
                 {
@@ -1574,7 +1574,6 @@ namespace BP.Web.Comm.UC
                     this.Add("<table border=0><TR><TD class=TD><font style='font-size:14px' >" + endMsg + "</font></TD></TR></table>");
                 }
 
-                // this.Add("[<a href=\"javascript:alert('请保存后，填写。');\" >" + enDtl.Desc + "</a>]");
                 return;
             }
 

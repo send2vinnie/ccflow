@@ -45,7 +45,7 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
                     ViewState["PK"] = this.Request.QueryString[mainEn.PK];
                 }
             }
-            return ViewState["PK"].ToString();
+            return ViewState["PK"] as string;
         }
     }
     public string AttrKey
@@ -101,6 +101,9 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         Entity en = ClassFactory.GetEn(this.EnName);
+        if (this.PK == null)
+            return;
+
         en.PKVal = this.PK;
 
         string keys = "&" + en.PK + "=" + this.PK + "&r=" + DateTime.Now.ToString("MMddhhmmss");
