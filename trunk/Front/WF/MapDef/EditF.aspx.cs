@@ -754,7 +754,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                     this.WinClose();
                     return;
                 case "Btn_SaveAndNew":
-                    this.Response.Redirect("Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "&GroupField = " + this.GroupField, true);
+                    this.Response.Redirect("Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField, true);
                     return;
                 default:
                     break;

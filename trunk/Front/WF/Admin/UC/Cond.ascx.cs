@@ -190,8 +190,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         Nodes ndsN = new Nodes();
         foreach (BP.WF.Node mynd in nds)
         {
-            if (mynd.IsCheckNode)
-                continue;
+           
 
             ndsN.AddEntity(mynd);
         }
@@ -451,6 +450,9 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         int i = 0;
         foreach (Cond mync in conds)
         {
+            if (mync.HisDataFrom.ToString() == "Stas"
+                || mync.HisDataFrom.ToString() == "Depts")
+                continue;
             i++;
             
 

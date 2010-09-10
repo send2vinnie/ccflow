@@ -396,10 +396,66 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
             this.FlowMsg.AddMsgInfo("", rw.NoteHtml);
         }
 
+        #region 判断是否合流节点。。
+        if (nd.HisNodeWorkType == NodeWorkType.WorkHL || nd.HisNodeWorkType == NodeWorkType.WorkFHL)
+        {
+             
+            WorkerLists wls = new WorkerLists();
+            QueryObject qo = new QueryObject(wls);
+            //qo.AddWhereInSQL(WorkerListAttr.WorkID, "select workid");
+            //qo.addAnd();
+            qo.AddWhere(WorkerListAttr.FK_Node, nd.HisFromNodes[0].GetValByKey(NodeAttr.NodeID) );
+            qo.DoQuery();
+
+
+            this.FlowMsg.AddTable();
+            this.FlowMsg.AddCaptionLeft("分流信息");
+
+            this.FlowMsg.AddTR();
+            this.FlowMsg.AddTDTitle("工作人员账号");
+            this.FlowMsg.AddTDTitle("工作人员名称");
+            this.FlowMsg.AddTDTitle("部门");
+            this.FlowMsg.AddTDTitle("状态");
+            this.FlowMsg.AddTDTitle("应完成日期");
+            this.FlowMsg.AddTDTitle("实际完成日期");
+            this.FlowMsg.AddTDTitle("");
+            this.FlowMsg.AddTREnd();
+
+            foreach (WorkerList wl in wls)
+            {
+                this.FlowMsg.AddTR();
+                this.FlowMsg.AddTD(wl.FK_Emp);
+                this.FlowMsg.AddTD(wl.FK_EmpText);
+
+                this.FlowMsg.AddTD(wl.FK_DeptT);
+                if (wl.IsPass && wl.FID == wk.FID)
+                    this.FlowMsg.AddTD("已完成");
+                else
+                    this.FlowMsg.AddTD("未完成-<a href=\"javascript:WinOpen('');\"><img src='./Img/sms.gif' border=0/>催办</a>");
+
+                this.FlowMsg.AddTD(wl.SDT);
+                this.FlowMsg.AddTD(wl.RDT);
+
+                if (wl.IsPass == false)
+                    this.FlowMsg.AddTD("<a href=\"javascript:DoUnSend('" + wl.WorkID + "')\">撤销工作</a>");
+                else
+                    this.FlowMsg.AddTD();
+
+                this.FlowMsg.AddTREnd();
+            }
+            this.FlowMsg.AddTableEnd();
+        }
+        #endregion 判断是否合流节点。
+
+
         switch (nd.HisFormType)
         {
             case FormType.SysForm:
                 this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID); //, false, false, null);
+                if (wk.WorkEndInfo.Length > 2)
+                {
+                    this.UCEn1.Add(wk.WorkEndInfo);
+                }
                 OutJSAuto(wk);
                 return;
             case FormType.SelfForm:
@@ -518,8 +574,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
 
             Work nwk = mynd.HisWork;
             nwk.OID = this.WorkID;
-            if (nd.IsCheckNode)
-                nwk.SetValByKey(GECheckStandAttr.NodeID, nd.NodeID);
+            
 
             if (nwk.RetrieveFromDBSources() == 0)
                 continue;
@@ -847,7 +902,15 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         try
         {
             if (currNd.IsStartNode)
+            {
                 work.FID = 0;
+            }
+
+// 处理传递过来的参数。
+            foreach (string k in this.Request.QueryString.AllKeys)
+            {
+                work.SetValByKey(k, this.Request.QueryString[k]);
+            }
 
             if (work.OID == 0)
                 work.Insert();
@@ -890,7 +953,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         }
         catch (Exception ex)
         {
-            if (BP.SystemConfig.IsDebug && currNd.IsCheckNode == false)
+            if (BP.SystemConfig.IsDebug )
                 work.CheckPhysicsTable();
             throw ex;
         }

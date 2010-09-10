@@ -118,17 +118,10 @@ public partial class WF_UC_Forward : BP.Web.UC.UCBase3
             }
             BP.WF.Node nd = new BP.WF.Node(nodeId);
             Work wk = nd.HisWork;
-            if (wk.IsGECheckStand)
-            {
-                wk.SetValByKey(GECheckStandAttr.NodeID, nodeId);
+           
                 wk.OID = this.WorkID;
                 wk.Retrieve();
-            }
-            else
-            {
-                wk.OID = this.WorkID;
-                wk.Retrieve();
-            }
+             
             wk.Emps = emps;
             wk.Update();
 

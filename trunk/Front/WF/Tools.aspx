@@ -14,10 +14,8 @@ function DoAutoTo( fk_emp, empName )
     var url='Do.aspx?DoType=AutoTo&FK_Emp='+fk_emp;
     WinShowModalDialog(url,'');
     alert('授权成功，请别忘记收回。'); 
-    
     window.location.href='Tools.aspx';
 }
-
 
 function ExitAuth( fk_emp )
 {

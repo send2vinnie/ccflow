@@ -58,7 +58,42 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
     {
         WorkerLists wls = new WorkerLists(this.WorkID, this.FK_Flow);
         Flow fl = new Flow(this.FK_Flow);
-        this.Add("<Table border=0 wdith=100%>");
+        this.Add("<Table border=0 wdith=100% align=left>");
+        this.AddTR();
+        this.Add("<TD colspan=1 class=ToolBar  >" + fl.Name + "</TD>");
+        this.AddTREnd();
+
+        Nodes nds = fl.HisNodes;
+        this.AddTR();
+        this.Add("<TD colspan=1 class=BigDoc align=left >");
+        foreach (BP.WF.Node nd in nds)
+        {
+            bool isHave = false;
+            foreach (WorkerList wl in wls)
+            {
+                if (wl.FK_Node == nd.NodeID)
+                {
+                    this.Add("<font color=green>第" + nd.Step + "步:<a href=FlowSearch.aspx?FK_Node=" + nd.NodeID + ">" + nd.Name + "</a>");
+                    this.Add("<BR>执行人:" + wl.FK_EmpText);
+                    this.Add("<br>接受日期:" + wl.RDT + "</font> ");
+                    this.Add("<a href='WFRpt.aspx?WorkID=" + wl.WorkID + "&FID=0&FK_Flow=" + this.FK_Flow + "' target=_blank >详细..</a><hr>");
+                    isHave = true;
+                    break;
+                }
+            }
+
+            if (isHave)
+                continue;
+        }
+        this.AddTDEnd();
+        this.AddTREnd();
+        this.AddTableEnd();
+    }
+    public void BindFlowStep_bak1()
+    {
+        WorkerLists wls = new WorkerLists(this.WorkID, this.FK_Flow);
+        Flow fl = new Flow(this.FK_Flow);
+        this.Add("<Table border=0 wdith=100% align=left>");
         this.AddTR();
         this.Add("<TD colspan=1 class=ToolBar  >" + fl.Name + "</TD>");
         this.AddTREnd();
@@ -96,6 +131,9 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (this.Request.RawUrl.Contains("WAP"))
+            return;
+
         if (this.WorkID != 0)
         {
            this.BindFlowStep1();
@@ -104,7 +142,7 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
 
         Flow fl = new Flow(this.FK_Flow);
 
-        this.Add("<Table border=0 wdith=100%>");
+        this.Add("<Table border=0 wdith=100% align=left>");
         this.AddTR();
         this.Add("<TD colspan=1 class=ToolBar nowarp=true >" + fl.Name + "</TD>");
         this.AddTREnd();
@@ -143,7 +181,7 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
     {
 
         Flow fl = new Flow(this.FK_Flow);
-        this.Add("<Table border=0 wdith=100%>");
+        this.Add("<Table border=0 wdith=100% align=left>");
         this.AddTR();
         this.Add("<TD colspan=1 class=ToolBar >" + fl.Name + "</TD>");
         this.AddTREnd();

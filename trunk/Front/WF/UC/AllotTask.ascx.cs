@@ -192,17 +192,10 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
 
             BP.WF.Node nd = new BP.WF.Node(NodeID);
             Work wk = nd.HisWork;
-            if (wk.IsGECheckStand)
-            {
-                wk.SetValByKey(GECheckStandAttr.NodeID, NodeID);
+            
                 wk.OID = this.WorkID;
                 wk.Retrieve();
-            }
-            else
-            {
-                wk.OID = this.WorkID;
-                wk.Retrieve();
-            }
+             
             wk.Emps = emps;
             wk.Update();
             DBAccess.RunSQL("UPDATE WF_CHOfNode SET Emps='" + emps + "' WHERE FK_Node=" + NodeID + " AND WorkID='" + this.WorkID + "'");

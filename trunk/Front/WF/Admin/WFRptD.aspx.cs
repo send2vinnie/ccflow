@@ -162,19 +162,13 @@ public partial class WF_Admin_RptD : WebPage
 
         int i = 0;
         int nodeid = 0;
-        GECheckStand sc = new GECheckStand();
-       BP.En.Attrs checkAttrs= sc.EnMap.Attrs;
+    //   BP.En.Attrs checkAttrs= sc.EnMap.Attrs;
        foreach (BP.WF.Node nd in nds)
        {
            BP.En.Attrs attrs = new BP.En.Attrs();
-           if (nd.IsCheckNode)
-           {
-               attrs = checkAttrs;
-           }
-           else
-           {
+           
                attrs = nd.HisWork.EnMap.Attrs;
-           }
+            
 
            foreach (BP.En.Attr attr in attrs)
            {
@@ -183,16 +177,13 @@ public partial class WF_Admin_RptD : WebPage
 
                switch (attr.Key)
                {
-                   case GECheckStandAttr.OID:
-                   case GECheckStandAttr.NodeID:
-                   case GECheckStandAttr.RDT:
-                   case GECheckStandAttr.CDT:
-                   case GECheckStandAttr.CheckState:
-                   case GECheckStandAttr.NodeState:
+                   case WorkAttr.OID:
+                   case WorkAttr.RDT:
+                   case WorkAttr.CDT:
+                   case WorkAttr.NodeState:
                   // case GECheckStandAttr.TaxpayerName:
-                   case GECheckStandAttr.Sender:
-                   case GECheckStandAttr.Emps:
-                   case GECheckStandAttr.RefMsg:
+                   case WorkAttr.Sender:
+                   case WorkAttr.Emps:
                    case "FK_NY":
                    case "MyNum":
                    case "FK_Dept":
@@ -256,19 +247,14 @@ public partial class WF_Admin_RptD : WebPage
         WFRpt rpt = new WFRpt(this.RefNo);
         Flow fl = new Flow(rpt.FK_Flow);
         Nodes nds = new Nodes(rpt.FK_Flow);
-        GECheckStand sc = new GECheckStand();
-        BP.En.Attrs checkAttrs = sc.EnMap.Attrs;
+        //GECheckStand sc = new GECheckStand();
+        //BP.En.Attrs checkAttrs = sc.EnMap.Attrs;
         foreach (BP.WF.Node nd in nds)
         {
             BP.En.Attrs attrs = new BP.En.Attrs();
-            if (nd.IsCheckNode)
-            {
-                attrs = checkAttrs;
-            }
-            else
-            {
+           
                 attrs = nd.HisWork.EnMap.Attrs;
-            }
+             
 
             foreach (BP.En.Attr attr in attrs)
             {
@@ -277,16 +263,13 @@ public partial class WF_Admin_RptD : WebPage
 
                 switch (attr.Key)
                 {
-                    case GECheckStandAttr.OID:
-                    case GECheckStandAttr.NodeID:
-                    case GECheckStandAttr.RDT:
-                    case GECheckStandAttr.CDT:
-                    case GECheckStandAttr.CheckState:
-                    case GECheckStandAttr.NodeState:
+                    case WorkAttr.OID:
+                    case WorkAttr.RDT:
+                    case WorkAttr.CDT:
+                    case WorkAttr.NodeState:
 //                    case GECheckStandAttr.TaxpayerName:
-                    case GECheckStandAttr.Sender:
-                    case GECheckStandAttr.Emps:
-                    case GECheckStandAttr.RefMsg:
+                    case WorkAttr.Sender:
+                    case WorkAttr.Emps:
                     case "FK_NY":
                     case "MyNum":
                         continue;
@@ -354,36 +337,13 @@ public partial class WF_Admin_RptD : WebPage
                     mattrN.KeyOfEn = attrNOfRpt.Field;
 
                     // mattrN.Key = attrN.Key;
-                    if (nd.IsCheckNode)
-                    {
-                        mattrN.FK_MapData = this.RefNo;
-                        mattrN.Name = attrNOfRpt.FieldName;
-                        mattrN.KeyOfEn = attrNOfRpt.Field;
-                        switch (attr.Key)
-                        {
-                            case "Rec": //如果是记录人。
-                                mattrN.LGType = FieldTypeS.FK;
-                                mattrN.UIBindKey = "BP.Port.Emps";
-                                mattrN.UIContralType = UIContralType.DDL;
-                                mattrN.Insert();
-                                break;
-                            default:
-                                mattrN.MyDataType = BP.DA.DataType.AppString;
-                                mattrN.MinLen = 0;
-                                mattrN.MinLen = 3000;
-                                mattrN.Insert();
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        MapAttr mattrOfNode = new MapAttr("ND" + nd.NodeID, attr.Key);
-                        mattrN.Copy(mattrOfNode);
-                        mattrN.FK_MapData = this.RefNo;
-                        mattrN.Name = attrNOfRpt.FieldName;
-                        mattrN.KeyOfEn = attrNOfRpt.Field;
-                        mattrN.Insert();
-                    }
+                    MapAttr mattrOfNode = new MapAttr("ND" + nd.NodeID, attr.Key);
+                    mattrN.Copy(mattrOfNode);
+                    mattrN.FK_MapData = this.RefNo;
+                    mattrN.Name = attrNOfRpt.FieldName;
+                    mattrN.KeyOfEn = attrNOfRpt.Field;
+                    mattrN.Insert();
+
                     continue;
                 }
 

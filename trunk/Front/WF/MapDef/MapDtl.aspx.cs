@@ -186,7 +186,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
                     }
                     dtl.FK_MapData = this.FK_MapData;
 
-                    GroupFields gfs = new GroupFields(dtl.FK_MapData );
+                    GroupFields gfs = new GroupFields(dtl.FK_MapData);
                     if (gfs.Count > 1)
                         dtl.GroupID = this.Pub1.GetDDLByID("DDL_GroupField").SelectedItemIntVal;
 
@@ -201,13 +201,13 @@ public partial class Comm_MapDef_MapDtl : WebPage
                         return;
                     }
 
-                    this.Response.Redirect("MapDtl.aspx?DoType=Edit&FK_MapDtl=" + dtl.No+"&FK_MapData="+this.FK_MapData, true);
+                    this.Response.Redirect("MapDtl.aspx?DoType=Edit&FK_MapDtl=" + dtl.No + "&FK_MapData=" + this.FK_MapData, true);
                     break;
                 default:
                     break;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             this.Alert(ex.Message);
         }
@@ -287,10 +287,42 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTD("用于明细表的权限控制");
         this.Pub1.AddTREnd();
 
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("");
+        CheckBox cb = new CheckBox();
+        cb.ID = "CB_IsUpdate";
+        cb.Text = "是否可以修改行";
+        cb.Checked = dtl.IsUpdate;
+        this.Pub1.AddTD(cb);
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTD("");
-        CheckBox 　cb =new CheckBox();
+        cb = new CheckBox();
+        cb.ID = "CB_IsInsert";
+        cb.Text = "是否可以新增行";
+        cb.Checked = dtl.IsInsert;
+        this.Pub1.AddTD(cb);
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("");
+        cb = new CheckBox();
+        cb.ID = "CB_IsDelete";
+        cb.Text = "是否可以删除行";
+        cb.Checked = dtl.IsDelete;
+        this.Pub1.AddTD(cb);
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("");
+        cb =new CheckBox();
         cb.ID = "CB_IsShowIdx";
         cb.Text = "是否显示序号列";
         cb.Checked = dtl.IsShowIdx;
@@ -351,16 +383,15 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTREnd();
 
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTD();
-        cb = new CheckBox();
-        cb.ID = "CB_IsReadonly";
-        cb.Text = "所有的列不可编辑时它Readonly.（系统自动计算）";
-        cb.Enabled = false;
-        cb.Checked = dtl.IsReadonly;
-        this.Pub1.AddTD("colspan=2 nowarp=true ", cb);
-        this.Pub1.AddTREnd();
-
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTD();
+        //cb = new CheckBox();
+        //cb.ID = "CB_IsReadonly";
+        //cb.Text = "所有的列不可编辑时它Readonly.（系统自动计算）";
+        //cb.Enabled = false;
+        //cb.Checked = dtl.IsReadonly;
+        //this.Pub1.AddTD("colspan=2 nowarp=true ", cb);
+        //this.Pub1.AddTREnd();
 
 
         this.Pub1.AddTRSum();

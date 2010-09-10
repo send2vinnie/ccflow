@@ -4,11 +4,9 @@
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc5" %>
 <%@ Register src="FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc1" %>
 <%@ Register src="UCEn.ascx" tagname="UCEn" tagprefix="uc6" %>
-
     <script language="JavaScript" src="./../Style/JScript.js" type="text/javascript"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js" type="text/javascript"></script>
     <script language="JavaScript" src="../../Comm/ShortKey.js" type="text/javascript"></script>
-
 <script language=javascript>
     function GroupBarClick(rowIdx) {
         var alt = document.getElementById('Img' + rowIdx).alert;
@@ -30,7 +28,6 @@
         }
     }
 </script>
-
 <table id="Table1" border='0' width='800px' >
 <tr>
 <td  valign='top' align=left   >
@@ -45,7 +42,7 @@
 </td>
 </tr>
 <tr valign="top">
-            <td valign="top" height="100%" width="100%">
+            <td valign="top" height="100%" width="100%" align=left>
                     <uc5:Pub ID="FlowMsg" runat="server" />
                     <uc6:UCEn ID="UCEn1" runat="server" />
                     <uc5:Pub ID="Pub1" runat="server" />

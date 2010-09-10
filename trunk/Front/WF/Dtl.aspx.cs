@@ -52,16 +52,33 @@ public partial class Comm_Dtl : WebPage
     {
         this.Bind();
     }
+    public bool IsEnable
+    {
+        get
+        {
+            string s = this.ViewState["R"] as string;
+            if (s == null || s == "0")
+                return false;
+            return true;
+        }
+        set
+        {
+            if (value)
+                this.ViewState["R"] = "1";
+            else
+                this.ViewState["R"] = "0";
+        }
+    }
     public void Bind()
     {
         MapDtl mdtl = new MapDtl(this.EnsName);
 
         #region 生成标题
         MapAttrs attrs = new MapAttrs(this.EnsName);
-        this.Ucsys1.Add("<Table border=0  style='padding:0px' >");
-        this.Ucsys1.AddTR();
+        this.Pub1.Add("<Table border=0 style='padding:0px' width='100px'>");
+        this.Pub1.AddTR();
         if (mdtl.IsShowIdx)
-            this.Ucsys1.AddTDTitle();
+            this.Pub1.AddTDTitle();
 
         foreach (MapAttr attr in attrs)
         {
@@ -71,10 +88,14 @@ public partial class Comm_Dtl : WebPage
             if (attr.IsPK)
                 continue;
 
-            this.Ucsys1.AddTDCenter(attr.Name);
+            if (attr.UIIsEnable)
+                this.IsEnable = true;
+            this.Pub1.AddTDCenter("<font color=blue>" + attr.Name + "</font>");
         }
-        this.Ucsys1.AddTREnd();
+        this.Pub1.AddTREnd();
         #endregion 生成标题
+
+
 
 
         GEDtls dtls = new GEDtls(this.EnsName);
@@ -120,15 +141,15 @@ public partial class Comm_Dtl : WebPage
         }
 
         #region 生成翻页
-        this.Ucsys2.Clear();
+        this.Pub2.Clear();
         try
         {
             int count = qo.GetCOUNT();
-            this.Ucsys2.Clear();
-            this.Ucsys2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal);
+            this.Pub2.Clear();
+            this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal);
             qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
 
-            if (mdtl.IsReadonly == false)
+            if (mdtl.IsInsert)
             {
                 int dtlCount = dtls.Count;
                 for (int i = 0; i < mdtl.RowsOfList - dtlCount; i++)
@@ -170,10 +191,10 @@ public partial class Comm_Dtl : WebPage
 
         foreach (BP.Sys.GEDtl dtl in dtls)
         {
-            this.Ucsys1.AddTR();
+            this.Pub1.AddTR();
             if (mdtl.IsShowIdx)
             {
-                this.Ucsys1.AddTDIdx(idx++);
+                this.Pub1.AddTDIdx(idx++);
             }
             foreach (MapAttr attr in attrs)
             {
@@ -188,7 +209,7 @@ public partial class Comm_Dtl : WebPage
                 {
                     case UIContralType.TB:
                         TB tb = new TB();
-                        this.Ucsys1.AddTD(tb);
+                        this.Pub1.AddTD(tb);
                         tb.LoadMapAttr(attr);
                         tb.ID = "TB_" + attr.KeyOfEn + "_" + dtl.OID;
                         tb.Columns = attr.UIWidth;
@@ -206,7 +227,7 @@ public partial class Comm_Dtl : WebPage
                                 tb.TextExtMoney = decimal.Parse(val);
                                 break;
                             default:
-                                tb.Attributes["OnTextChanged"] = " isChange= true;";
+                                tb.Attributes["onchange"] = " isChange= true;";
                                 tb.Text = val;
                                 break;
                         }
@@ -234,13 +255,13 @@ public partial class Comm_Dtl : WebPage
                             ddl.LoadMapAttr(attr);
                             ddl.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
                             ddl.Attributes["onchange"] = "isChange= true;";
-                            this.Ucsys1.AddTD(ddl);
+                            this.Pub1.AddTD(ddl);
                             ddl.SetSelectItem(val);
                         }
                         else
                         {
                             ddl.Items.Add(new ListItem(dtl.GetValRefTextByKey(attr.KeyOfEn), val) );
-                            this.Ucsys1.AddTD(ddl);
+                            this.Pub1.AddTD(ddl);
                             ddl.Enabled = false;
                         }
                         break;
@@ -253,21 +274,21 @@ public partial class Comm_Dtl : WebPage
                         else
                             cb.Checked = false;
                         cb.Attributes["onclick"] = "isChange= true;";
-                        this.Ucsys1.AddTD(cb);
+                        this.Pub1.AddTD(cb);
                         break;
                     default:
                         break;
                 }
             }
-            this.Ucsys1.AddTREnd();
+            this.Pub1.AddTREnd();
         }
 
         #region 生成合计
         if (mdtl.IsShowSum && dtls.Count >1 )
         {
-            this.Ucsys1.AddTRSum();
+            this.Pub1.AddTRSum();
             if (mdtl.IsShowIdx)
-            this.Ucsys1.AddTD();
+            this.Pub1.AddTD();
 
             foreach (MapAttr attr in attrs)
             {
@@ -298,25 +319,25 @@ public partial class Comm_Dtl : WebPage
                         default:
                             break;
                     }
-                    this.Ucsys1.AddTD(tb);
+                    this.Pub1.AddTD(tb);
                 }
                 else
                 {
-                    this.Ucsys1.AddTD();
+                    this.Pub1.AddTD();
                 }
             }
-            this.Ucsys1.AddTREnd();
+            this.Pub1.AddTREnd();
         }
         #endregion 生成合计
 
 
         #endregion 生成数据
-        this.Ucsys1.AddTableEnd();
+        this.Pub1.AddTableEnd();
 
         //Button btn = new Button();
         //btn.Click += new EventHandler(Button1_Click);
         //btn.ID = "Btn_Save";
-        //this.Ucsys2.Add(btn);
+        //this.Pub2.Add(btn);
 
         #region 生成 自动计算行
         // 输出自动计算公式
@@ -380,8 +401,8 @@ public partial class Comm_Dtl : WebPage
         {
             case DtlOpenType.ForEmp:
                 qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
-                qo.addAnd();
-                qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
+                //qo.addAnd();
+                //qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
                 break;
             case DtlOpenType.ForWorkID:
                 qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
@@ -404,7 +425,7 @@ public partial class Comm_Dtl : WebPage
         Map map = dtls.GetNewEntity.EnMap;
         foreach (GEDtl dtl in dtls)
         {
-            this.Ucsys1.Copy(dtl, dtl.OID.ToString(), map);
+            this.Pub1.Copy(dtl, dtl.OID.ToString(), map);
             if (dtl.OID < mdtl.RowsOfList + 2)
             {
                 if (dtl.IsBlank)
@@ -431,8 +452,8 @@ public partial class Comm_Dtl : WebPage
         {
             case DtlOpenType.ForEmp:
                 qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
-                qo.addAnd();
-                qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
+                //qo.addAnd();
+                //qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
                 break;
             case DtlOpenType.ForWorkID:
                 qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
@@ -473,14 +494,14 @@ public partial class Comm_Dtl : WebPage
                 qo.DoQuery("OID", BP.SystemConfig.PageSize, this.PageIdx, false);
                 foreach (GEDtl dtl in dtls)
                 {
-                    CheckBox cb = this.Ucsys1.GetCBByID("CB_" + dtl.PKVal);
+                    CheckBox cb = this.Pub1.GetCBByID("CB_" + dtl.PKVal);
                     if (cb == null)
                         continue;
 
                     if (cb.Checked)
                         dtl.Delete();
                 }
-                this.Ucsys1.Clear();
+                this.Pub1.Clear();
                 this.Bind();
                 break;
             case NamesOfBtn.Excel:
@@ -500,21 +521,21 @@ public partial class Comm_Dtl : WebPage
     /// <returns></returns>
     public string GenerAutoFull(string pk, MapAttrs attrs, MapAttr attr)
     {
-        string left = "\n  document.forms[0]." + this.Ucsys1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value = ";
+        string left = "\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value = ";
         string right = attr.AutoFullDoc;
         foreach (MapAttr mattr in attrs)
         {
             string tbID = "TB_" + mattr.KeyOfEn + "_" + pk;
-            TB tb = this.Ucsys1.GetTBByID(tbID);
+            TB tb = this.Pub1.GetTBByID(tbID);
             if (tb == null)
                 continue;
 
-            right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + this.Ucsys1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
-            right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + this.Ucsys1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
+            right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + this.Pub1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
+            right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + this.Pub1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
         }
 
         string s = left + right;
-        s += "\t\n  document.forms[0]." + this.Ucsys1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Ucsys1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value ) ;";
+        s += "\t\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value ) ;";
         return s += " C" + attr.KeyOfEn + "();";
     }
     public string GenerSum(MapAttr mattr, GEDtls dtls)
@@ -526,7 +547,7 @@ public partial class Comm_Dtl : WebPage
 
         try
         {
-            ClientID = this.Ucsys1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID;
+            ClientID = this.Pub1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID;
         }
         catch
         {
@@ -539,7 +560,7 @@ public partial class Comm_Dtl : WebPage
         foreach (GEDtl dtl in dtls)
         {
             string tbID = "TB_" + mattr.KeyOfEn + "_" + dtl.OID;
-            TB tb = this.Ucsys1.GetTBByID(tbID);
+            TB tb = this.Pub1.GetTBByID(tbID);
             if (i == 0)
                 right += " parseFloat( document.forms[0]." + tb.ClientID + ".value.replace( ',' ,  '' ) )  ";
             else
@@ -552,7 +573,7 @@ public partial class Comm_Dtl : WebPage
         {
             case BP.DA.DataType.AppMoney:
             case BP.DA.DataType.AppRate:
-                return s += "\t\n  document.forms[0]." + this.Ucsys1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Ucsys1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value ) ;";
+                return s += "\t\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Pub1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value ) ;";
             default:
                 return s;
         }

@@ -173,19 +173,19 @@ public partial class WF_FileManager : WebPage
         if (System.IO.Directory.Exists(tempDir) == false)
             System.IO.Directory.CreateDirectory(tempDir);
 
-        ICSharpCode.SharpZipLib.Zip.ZipFile zf = ICSharpCode.SharpZipLib.Zip.ZipFile.Create(tempDir + zipFile);
-        zf.BeginUpdate();
+        //ICSharpCode.SharpZipLib.Zip.ZipFile zf = ICSharpCode.SharpZipLib.Zip.ZipFile.Create(tempDir + zipFile);
+        //zf.BeginUpdate();
         foreach (FileManager fm in fms)
         {
             string ffile = "D:\\WorkFlow\\FlowFile\\" + fm.FK_Dept + "\\" + fm.OID + "." + fm.Ext;
             string toFile = tempDir + fm.FK_DeptT + fm.FK_Emp + "_" + fm.Name;
 
             System.IO.File.Copy(ffile, toFile, true);
-            zf.Add(toFile);
+          //  zf.Add(toFile);
         }
 
-        zf.CommitUpdate();
-        zf.Close();
+        //zf.CommitUpdate();
+        //zf.Close();
 
         string httpDir = "D:\\WorkFlow\\FlowFile\\Temp\\" + WebUser.No + "\\";
         if (System.IO.Directory.Exists(httpDir) == false)

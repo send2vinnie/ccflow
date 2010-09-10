@@ -50,7 +50,11 @@ namespace BP.Web.Comm.UC.WF
             {
                 currGF = gf;
                 this.AddTR();
-                    this.AddTD("colspan=4 class=GroupField valign='top' ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+                if (gfs.Count == 1)
+                    this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+                else
+                    this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;<img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+
                 this.AddTREnd();
 
                 bool isHaveH = false;
@@ -88,7 +92,7 @@ namespace BP.Web.Comm.UC.WF
                             this.AddTREnd();
                             rowIdx++;
                         }
-
+                        rowIdx++;
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
                         if (attr.UIIsEnable)
                             this.Add("<TD  colspan=4 width='100%' valign=top align=left>" + attr.Name);
@@ -117,7 +121,10 @@ namespace BP.Web.Comm.UC.WF
                     if (attr.IsBigDoc)
                     {
                         if (isLeftNext)
+                        {
+                            rowIdx++;
                             this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+                        }
 
                         this.Add("<TD class=FDesc colspan=2>");
                         this.Add(attr.Name);
@@ -164,6 +171,7 @@ namespace BP.Web.Comm.UC.WF
 
                     if (isLeftNext)
                     {
+                        rowIdx++;
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
                     }
 
@@ -226,7 +234,7 @@ namespace BP.Web.Comm.UC.WF
                                 case BP.DA.DataType.AppRate:
                                     this.AddTDDesc(attr.Name);
                                     tb.ShowType = TBType.Moneny;
-                                    tb.Text = decimal.Parse( en.GetValStrByKey(attr.KeyOfEn)) .ToString("0.00");
+                                    tb.Text = decimal.Parse(en.GetValStrByKey(attr.KeyOfEn)).ToString("0.00");
                                     this.AddTD("colspan=" + colspanOfCtl, tb);
                                     break;
                                 default:
@@ -321,6 +329,7 @@ namespace BP.Web.Comm.UC.WF
             foreach (MapDtl dtl in dtls)
             {
                 js += "\t\n window.setInterval(\"ReinitIframe('" + dtl.No + "')\", 200);";
+                break;
             }
             js += "\t\n</script>";
             this.Add(js);
@@ -330,10 +339,7 @@ namespace BP.Web.Comm.UC.WF
             #region ¥¶¿ÌiFrom Save°£
             js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveDtl(dtl) { ";
-            foreach (MapDtl dtl in dtls)
-            {
-                js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
-            }
+            js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
@@ -368,11 +374,12 @@ namespace BP.Web.Comm.UC.WF
                     continue;
                 }
                 dtl.IsUse = true;
-                int myidx = rowIdx;
-                this.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-                this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' width='1000px'>");
-                string src = "Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal;
-                this.Add("<iframe ID='F" + dtl.No + "' frameborder=0 Onblur=\"SaveDtl('" + dtl.No + "');\" style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
+                rowIdx++;
+               // myidx++;
+                this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+                this.Add("<TD colspan=3 ID='TD" + dtl.No + "' height='50px'  >");
+                string src = this.Request.ApplicationPath+"/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal;
+                this.Add("<iframe ID='F" + dtl.No + "' frameborder=0 Onblur=\"SaveDtl('" + dtl.No + "');\" style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' height='10px' scrolling=no  /></iframe>");
                 this.AddTDEnd();
                 this.AddTREnd();
             }

@@ -22,13 +22,12 @@ function ReinitIframe(dtlid) {
         iframe.height = iframe.contentWindow.document.body.scrollHeight;
         iframe.width = iframe.contentWindow.document.body.scrollWidth;
 
-        if (tdF.width < iframe.width) {
-            //alert(tdF.width +'  ' + iframe.width);
-            tdF.width = iframe.width;
-        } else {
-            iframe.width = tdF.width;
-
-        }
+//        if (tdF.width < iframe.width) {
+//            //alert(tdF.width +'  ' + iframe.width);
+//            tdF.width = iframe.width;
+//        } else {
+//            iframe.width = tdF.width;
+//        }
 
         tdF.height = iframe.height;
         return;

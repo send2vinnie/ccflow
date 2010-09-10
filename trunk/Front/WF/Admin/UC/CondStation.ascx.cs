@@ -150,8 +150,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         Nodes ndsN = new Nodes();
         foreach (BP.WF.Node mynd in nds)
         {
-            if (mynd.IsCheckNode)
-                continue;
+            
 
             ndsN.AddEntity(mynd);
         }

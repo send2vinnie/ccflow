@@ -23,7 +23,6 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
     {
         this.BindTools();
 
-
         this.Page.Title = "流程工具";
         int colspan = 1;
 
@@ -61,7 +60,6 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle();
         this.Pub1.AddTDTitle();
         this.Pub1.AddTREnd();
-
 
         this.Pub1.AddTR();
         this.Pub1.AddTD("原密码");
@@ -135,27 +133,50 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 
 
         this.Pub1.AddTR();
+        this.Pub1.AddTD("信息接收方式");
+        DDL ddl = new DDL();
+        ddl.ID = "DDL_Way";
+        ddl.Items.Add(new ListItem("不接收", "0"));
+        ddl.Items.Add(new ListItem("手机短信", "1"));
+        ddl.Items.Add(new ListItem("邮件", "2"));
+        ddl.Items.Add(new ListItem("手机短信+邮件", "3"));
+        this.Pub1.AddTD(ddl);
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
         this.Pub1.AddTD("");
 
         Btn btn = new Btn();
-        btn.Text = "确定";
+        btn.Text = " 保存 ";
         btn.Click += new EventHandler(btn_Profile_Click);
         this.Pub1.AddTD(btn);
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
         this.Pub1.AddFieldSetEnd();
-
     }
     void btn_Profile_Click(object sender, EventArgs e)
     {
         string tel = this.Pub1.GetTextBoxByID("TB_Tel").Text;
         string mail = this.Pub1.GetTextBoxByID("TB_Email").Text;
+        int way = this.Pub1.GetDDLByID("DDL_Way").SelectedItemIntVal;
+
         BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(WebUser.No);
         emp.Tel = tel;
         emp.Email = mail;
-        emp.Update();
-        this.Alert("修改成功。");
+
+        emp.HisAlertWay = (BP.WF.Port.AlertWay)way;
+
+        try
+        {
+            emp.Update();
+            this.Alert("设置生效，谢谢使用。");
+        }
+        catch(Exception ex)
+        {
+            this.Alert("设置生效，谢谢使用。");
+        }
     }
     void btn_Click(object sender, EventArgs e)
     {
@@ -245,6 +266,10 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
                 //  this.Pub1.AddTD("<a href='Tools.aspx?DoType=Times&FK_Flow=" + fl.No + "'>分析</a>");
                 this.Pub1.AddTD("工作数");
                 this.Pub1.AddTD("平均天" + fl.AvgDay.ToString("0.00"));
+
+                this.Pub1.AddTD("我参与的工作数");
+                this.Pub1.AddTD("工作总数");
+
                 this.Pub1.AddTREnd();
 
                 decimal avgDay = 0;
@@ -258,9 +283,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
                     this.Pub1.AddTD(nd.Name);
                     //  this.Pub1.AddTD("<a href='Tools.aspx?DoType=Times&FK_Node=" + nd.NodeID + "'>分析</a>");
                     string sql = "";
-                    if (nd.IsCheckNode)
-                        sql = "SELECT COUNT(*) FROM WF_GECheckStand WHERE NodeID=" + nd.NodeID;
-                    else
+                    
                         sql = "SELECT  COUNT(*) FROM ND" + nd.NodeID;
 
                     try
@@ -270,15 +293,12 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
                     }
                     catch (Exception ex)
                     {
-                        if (nd.IsCheckNode == false)
                             nd.CheckPhysicsTable();
                         this.Pub1.AddTD("无效");
                     }
 
 
-                    if (nd.IsCheckNode)
-                        sql = "SELECT AVG( DateDiff(d, cast(RDT as datetime),  cast(CDT as datetime) ) ) FROM WF_GECheckStand WHERE NodeID=" + nd.NodeID;
-                    else
+                  
                         sql = "SELECT AVG( DateDiff(d, cast(RDT as datetime),  cast(CDT as datetime) ) ) FROM ND" + nd.NodeID;
 
                     try
@@ -289,10 +309,14 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
                     }
                     catch (Exception ex)
                     {
-                        if (nd.IsCheckNode == false)
                             nd.CheckPhysicsTable();
                         this.Pub1.AddTD("无效");
                     }
+
+                    // day = DBAccess.RunSQLReturnValDecimal(sql, 0, 2);
+                    //this.Pub1.AddTD(DBAccess.RunSQLReturnValInt(""));
+                    this.Pub1.AddTD("无效");
+
                     this.Pub1.AddTREnd();
                 }
 

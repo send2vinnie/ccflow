@@ -111,13 +111,12 @@
 {
 	font-size: 14px;
 	text-align: left;
+	width:100%;
 	float: left;
 	clear: left;
-	width: 100%;
 	border: none;
 	padding:0px;
 }
- 
  
 .TBReadonly
 {
