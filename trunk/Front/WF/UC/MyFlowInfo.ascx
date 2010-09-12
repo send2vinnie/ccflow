@@ -3,6 +3,8 @@
 <%@ Register src="FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc2" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc4" %>
 
+<%@ Register src="MyFlowInfoWap.ascx" tagname="MyFlowInfoWap" tagprefix="uc3" %>
+
 <table id="Table1" height="99%" align=center border=0 >
   <TR >
   <td width="25%" valign=top align=left >
@@ -10,7 +12,7 @@
   </td>
   <td valign=top align=left >
     <uc4:ToolBar ID="ToolBar1" runat="server"  />
-      <uc1:Pub ID="Pub1" runat="server" />
+      <uc3:MyFlowInfoWap ID="MyFlowInfoWap1" runat="server" />
   </td>
   </TR>
   </table>

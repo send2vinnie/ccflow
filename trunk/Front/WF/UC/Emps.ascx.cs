@@ -36,7 +36,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
 
 
 
-        this.AddTable("width=100% align=center border=1");
+        this.AddTable("width=80% align=center border=1");
         if (WebUser.IsWap)
             this.AddCaptionLeft("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>");
 
@@ -45,6 +45,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
         this.AddTDTitle("部门");
         this.AddTDTitle("人员");
         this.AddTDTitle("电话");
+        this.AddTDTitle("Email");
         this.AddTDTitle("岗位 <a href=Emps.aspx?DoType=1>刷新</a>");
         if (this.DoType != null)
         {
@@ -57,7 +58,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
         foreach (DataRow dr in dt.Rows)
         {
             string fk_emp = dr["No"].ToString();
-            if (fk_emp == "admin" )
+            if (fk_emp == "admin")
                 continue;
 
 
@@ -80,27 +81,28 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
             if (Glo.IsShowUserNoOnly)
                 this.AddTD("<a href=\"javascript:DoAutoTo('" + fk_emp + "','')\" >" + fk_emp + "</a>");
             else
-                this.AddTD( fk_emp + "-" + dr["Name"] );
+                this.AddTD(fk_emp + "-" + dr["Name"]);
 
 
             BP.WF.Port.WFEmp emp = emps.GetEntityByKey(fk_emp) as BP.WF.Port.WFEmp;
             if (emp != null)
             {
                 this.AddTD(emp.TelHtml);
+                this.AddTD(emp.EmailHtml);
+
                 this.AddTD(emp.Stas);
             }
             else
             {
                 this.AddTD("未设置");
+                this.AddTD(emp.EmailHtml);
                 this.AddTD("");
                 // BP.WF.Port.WFEmp.DTSData();
                 break;
                 //  this.Response.Redirect(this.Request.RawUrl, true);
             }
 
-          //  this.AddTD(emp.hisst);
-
-
+            //  this.AddTD(emp.hisst);
             this.AddTREnd();
         }
         this.AddTableEnd();
