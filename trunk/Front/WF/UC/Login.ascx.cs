@@ -16,7 +16,6 @@ using BP.Sys;
 using BP.Port;
 using BP;
 
-
 public partial class WF_UC_Login :BP.Web.UC.UCBase3
 {
     public string Lang
@@ -105,10 +104,14 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
 
         if (WebUser.No != null)
         {
+            string home = "";
+            if (WebUser.IsWap)
+                home = "-<a href='Home.aspx'>" + this.ToE("Home", "主页") + "</a>";
+
             if (WebUser.IsAuthorize)
-                this.Add(" - <a href=\"javascript:ExitAuth('" + WebUser.Auth + "')\" >退出授权模式[" + WebUser.Auth + "]</a>");
+                this.Add(" - <a href=\"javascript:ExitAuth('" + WebUser.Auth + "')\" >退出授权模式[" + WebUser.Auth + "]</a>" + home);
             else
-                this.Add(" - <a href='Tools.aspx?RefNo=AutoLog' >授权方式登录</a>");
+                this.Add(" - <a href='Tools.aspx?RefNo=AutoLog' >授权方式登录</a>" + home);
         }
 
         this.AddTDEnd();
