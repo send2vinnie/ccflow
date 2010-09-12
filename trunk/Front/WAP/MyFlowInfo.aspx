@@ -2,9 +2,11 @@
 
 <%@ Register src="../WF/UC/MyFlowInfo.ascx" tagname="MyFlowInfo" tagprefix="uc1" %>
 
+<%@ Register src="../WF/UC/MyFlowInfoWap.ascx" tagname="MyFlowInfoWap" tagprefix="uc2" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <uc1:MyFlowInfo ID="MyFlowInfo1" runat="server" />
+    <uc2:MyFlowInfoWap ID="MyFlowInfoWap1" runat="server" />
 </asp:Content>
 
