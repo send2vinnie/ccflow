@@ -158,7 +158,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 if (attr.UIVisible == false)
                     continue;
 
-               
+
 
 
                 switch (attr.MyDataType)
@@ -179,7 +179,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                         break;
                 }
             }
-            this.Pub1.AddTD("<a href=\"WFRpt.aspx?WorkID=" + en.GetValIntByKey("OID") + "&FID=" + en.GetValByKey("FID") + "&FK_Flow=" + nd.FK_Flow + "\" target=bk >报告</a>");
+            this.Pub1.AddTD("<a href=\"./../WF/WFRpt.aspx?WorkID=" + en.GetValIntByKey("OID") + "&FID=" + en.GetValByKey("FID") + "&FK_Flow=" + nd.FK_Flow + "\" target=bk >报告</a>");
             this.Pub1.AddTREnd();
         }
 

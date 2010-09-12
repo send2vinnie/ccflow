@@ -77,7 +77,6 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
                 this.AddTD();
             }
 
-
             if (Glo.IsShowUserNoOnly)
                 this.AddTD("<a href=\"javascript:DoAutoTo('" + fk_emp + "','')\" >" + fk_emp + "</a>");
             else
