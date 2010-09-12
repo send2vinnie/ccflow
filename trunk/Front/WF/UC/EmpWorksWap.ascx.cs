@@ -17,7 +17,7 @@ using BP.DA;
 using BP.En;
 using BP.Web;
 
-public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
+public partial class WF_UC_EmpWorksWap : BP.Web.UC.UCBase3
 {
     public string FK_Flow
     {
@@ -49,48 +49,12 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         this.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
             
         this.AddTREnd();
-
-        #region  输出流程类别.
-        this.AddTR();
-        this.AddTDBegin("align=right nowarp=0 colspan=" + colspan);
-
-        string sql = "SELECT FK_Flow, FlowName, COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' GROUP BY FK_Flow, FlowName";
-        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-        int num = 0;
-        if (this.FK_Flow == null)
-        {
-            if (dt.Rows.Count > 0)
-                this.FK_Flow = dt.Rows[0][0].ToString();
-        }
-
-        bool isShowNum = BP.WF.Glo.IsShowFlowNum;
-        foreach (DataRow dr in dt.Rows)
-        {
-            if (isShowNum)
-            {
-                if (this.FK_Flow != dr["FK_Flow"] as string)
-                    this.Add("<a href='EmpWorks.aspx?FK_Flow=" + dr["FK_Flow"] + "'>" + dr["FlowName"] + "-" + dr["Num"] + "</a>&nbsp;&nbsp;");
-                else
-                    this.AddB(dr["FlowName"].ToString() + "&nbsp;&nbsp;");
-            }
-            else
-            {
-                if (this.FK_Flow != dr["FK_Flow"] as string)
-                    this.Add("<a href='EmpWorks.aspx?FK_Flow=" + dr["FK_Flow"] + "'>" + dr["FlowName"] + "</a>&nbsp;&nbsp;");
-                else
-                    this.AddB(dr["FlowName"].ToString() + "&nbsp;&nbsp;");
-            }
-        }
-        this.AddTDEnd();
-        this.AddTREnd();
-
-        #endregion  输出流程类别
-
+        
 
         #region  输出流程类别.
         this.AddTR();
         this.AddTDTitle("ID");
-        this.AddTDTitle(this.ToE("NodeName", "节点"));
+       // this.AddTDTitle(this.ToE("NodeName", "节点"));
         this.AddTDTitle(this.ToE("Title", "标题"));
         this.AddTDTitle(this.ToE("Starter", "发起人"));
         this.AddTDTitle(this.ToE("RDT", "发起日期"));
@@ -100,8 +64,8 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         this.AddTREnd();
         #endregion  输出流程类别
 
-        sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "' ORDER BY WorkID ";
-        dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+        string sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "' ORDER BY WorkID ";
+        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         int i = 0;
         bool is1 = false;
         DateTime cdt = DateTime.Now;
@@ -120,9 +84,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             i++;
             this.AddTD(i);
 
-            this.AddTD(dr["NodeName"].ToString());
+           // this.AddTD(dr["NodeName"].ToString());
 
-            this.AddTD("<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+            this.AddTD("<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString()+"</a>"+dr["NodeName"].ToString());
             this.AddTD(dr["Starter"].ToString());
             this.AddTD(dr["RDT"].ToString());
             this.AddTD(dr["ADT"].ToString());

@@ -28,15 +28,22 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
         this.AddTREnd();
 
         this.AddTR();
-        this.Add("<TD class=TitleMsg colspan=" + colspan + "><img src='./Img/Start.gif' > <b>" + this.ToE("Start", "发起") + "</b></TD>");
+        if (WebUser.IsWap)
+            this.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/Start.gif' >" + this.ToE("Start", "发起") + "</TD>");
+        else
+            this.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b>" + this.ToE("Start", "发起") + "</b></TD>");
+
         this.AddTREnd();
 
         this.AddTR();
         this.AddTDTitle(this.ToE("IDX", "序"));
         this.AddTDTitle(this.ToE("FlowSort", "流程类别"));
         this.AddTDTitle(this.ToE("Name", "名称"));
-        this.AddTDTitle(this.ToE("FlowPict", "流程图"));
-        this.AddTDTitle(this.ToE("Desc", "描述"));
+        if (WebUser.IsWap == false)
+        {
+            this.AddTDTitle(this.ToE("FlowPict", "流程图"));
+            this.AddTDTitle(this.ToE("Desc", "描述"));
+        }
         this.AddTREnd();
 
         string sql = "SELECT FK_Flow FROM WF_Node WHERE NODEID IN (  SELECT FK_Node FROM WF_NodeStation WHERE FK_STATION IN (SELECT FK_STATION FROM Port_EmpSTATION WHERE FK_EMP='" + WebUser.No + "')  ) ";
@@ -69,9 +76,11 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             this.AddTD("<a href='MyFlow.aspx?FK_Flow=" + fl.No + "' >" + fl.Name + "</a>");
             //this.AddTD("<a href=\"javascript:Open('" + fl.No + "')\">" + fl.Name + "</a>");
 
-
-            this.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/" + fl.No + ".gif','sd');\"  >打开</a>");
-            this.AddTD(fl.Note);
+            if (WebUser.IsWap == false)
+            {
+                this.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/" + fl.No + ".gif','sd');\"  >打开</a>");
+                this.AddTD(fl.Note);
+            }
             this.AddTREnd();
         }
 

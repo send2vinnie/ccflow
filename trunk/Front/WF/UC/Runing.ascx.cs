@@ -23,23 +23,29 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
     {
         this.Page.Title = this.ToE("OnTheWayWork", "在途工作");
 
-        int colspan = 6;
-        this.AddTable("width='60%' align=center");
+        int colspan = 7;
+        this.AddTable("width='100%' align=center");
         this.AddTR();
         this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.AddTREnd();
 
         this.AddTR();
-        this.Add("<TD class=TitleMsg colspan=" + colspan + "><img src='./Img/Runing.gif' > <b>" + this.ToE("OnTheWayWork", "在途工作") + "</b></TD>");
+
+        if (WebUser.IsWap)
+            this.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作") + "</TD>");
+        else
+        this.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Runing.gif' ><b>" + this.ToE("OnTheWayWork", "在途工作") + "</b></TD>");
         this.AddTREnd();
 
         this.AddTR();
-        this.AddTDTitle(this.ToE("IDX", "序"));
-        this.AddTDTitle(this.ToE("Name", "名称"));
-        this.AddTDTitle(this.ToE("CurrNode", "当前节点"));
-        this.AddTDTitle(this.ToE("StartDate", "发起日期"));
-        this.AddTDTitle(this.ToE("StartDate", "发起人"));
-        this.AddTDTitle(this.ToE("Oper", "操作"));
+        this.AddTDTitle("nowarp=true",this.ToE("IDX", "序"));
+        this.AddTDTitle("nowarp=true", this.ToE("Name", "名称"));
+        this.AddTDTitle("nowarp=true", this.ToE("CurrNode", "当前节点"));
+        this.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起日期"));
+        this.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起人"));
+        this.AddTDTitle("nowarp=true", this.ToE("Oper", "操作"));
+        this.AddTDTitle("nowarp=true", this.ToE("Rpt", "报告"));
+
         this.AddTREnd();
 
         string sql = "  SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + BP.Web.WebUser.No + "' AND B.IsEnable=1";
@@ -52,11 +58,13 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
             i++;
             is1 = this.AddTR(is1);
             this.AddTD(i);
-            this.AddTD(gwf.FK_FlowText);
+            this.AddTDA("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
             this.AddTD(gwf.FK_NodeText);
             this.AddTD(gwf.RDT);
             this.AddTD(gwf.RecText);
-            this.AddTD("[<a href='MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "' ><img src='../images/btn/do.gif' border=0 />" + this.ToE("Do", "执行") + "</a>][<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo.aspx?DoType=UnSend&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>][<a href=\"javascript:WinOpen('WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>]");
+            this.AddTD("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo.aspx?DoType=UnSend&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
+            this.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
+
             this.AddTREnd();
         }
 

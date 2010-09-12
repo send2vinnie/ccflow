@@ -86,7 +86,12 @@ public partial class WF_UC_MyFlowInfo : BP.Web.UC.UCBase3
             s = s.Replace("@", "<BR>@");
         }
 
-        this.Pub1.AddFieldSet("操作提示", s);
+        if (WebUser.IsWap)
+            this.Pub1.AddFieldSet("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>-<a href='EmpWorks.aspx'><img src='./Img/Home.gif' border=0/>待办</a>-操作提示", s);
+        else
+            this.Pub1.AddFieldSet("操作提示", s);
+
+
 
         //if (this.FK_Type.ToLower() == "warning")
         //    this.Pub1.AddMsgOfWarning("提示", s);
@@ -118,14 +123,13 @@ public partial class WF_UC_MyFlowInfo : BP.Web.UC.UCBase3
             {
                 color = "";
             }
-            //this.Pub1.AddLi("sdsdsdsdsdsdsdsds");
 
-            int workid = int.Parse(dr["WorkID"].ToString()); 
-            if (workid==this.WorkID)
-            this.Pub1.AddB("<li><font color='" + color + "' ><a href='MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "' >"+dr["NodeName"] +","+ dr["Title"].ToString() + ", 发起人:" + dr["Starter"].ToString() + "</a></font></li>");
+
+            int workid = int.Parse(dr["WorkID"].ToString());
+            if (workid == this.WorkID)
+                this.Pub1.AddB("<li><font color='" + color + "' ><a href='MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "' >" + dr["NodeName"] + "," + dr["Title"].ToString() + ", 发起人:" + dr["Starter"].ToString() + "</a></font></li>");
             else
                 this.Pub1.Add("<li><font color='" + color + "' ><a href='MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "' >" + dr["NodeName"] + "," + dr["Title"].ToString() + ", 发起人:" + dr["Starter"].ToString() + "</a></font></li>");
-
         }
 
         this.Pub1.Add("</ul>");

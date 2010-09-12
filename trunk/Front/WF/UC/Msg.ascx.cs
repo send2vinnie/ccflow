@@ -52,14 +52,16 @@ public partial class WF_UC_Msg : BP.Web.UC.UCBase3
     public void Bind()
     {
 
-        this.Left.DivInfoBlockBegin();
+
+        if (WebUser.IsWap)
+            this.Left.Add("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>");
+
         this.Left.AddUL();
         this.Left.AddLi("Msg.aspx?Sta=0", "未读");
         this.Left.AddLi("Msg.aspx?Sta=1", "已读");
         this.Left.AddLi("Msg.aspx?Sta=9", "已发送");
-        this.Left.AddLi("javascript:WinOpen('./Msg/Write.aspx')", "编写");
+        this.Left.AddLi("javascript:WinOpen('./../WF/Msg/Write.aspx')", "编写");
         this.Left.AddULEnd();
-        this.Left.DivInfoBlockEnd();
 
         int colspan = 5;
         BP.Sys.Msgs ens = new BP.Sys.Msgs();

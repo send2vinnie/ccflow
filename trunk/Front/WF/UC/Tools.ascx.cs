@@ -165,7 +165,6 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(WebUser.No);
         emp.Tel = tel;
         emp.Email = mail;
-
         emp.HisAlertWay = (BP.WF.Port.AlertWay)way;
 
         try
@@ -175,7 +174,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         }
         catch(Exception ex)
         {
-            this.Alert("设置生效，谢谢使用。");
+            this.Alert("设置错误："+ex.Message);
         }
     }
     void btn_Click(object sender, EventArgs e)
@@ -253,6 +252,9 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
             this.Pub1.AddTD("");
             this.Pub1.AddTD();
             this.Pub1.AddTD();
+            this.Pub1.AddTD();
+            this.Pub1.AddTD();
+
             this.Pub1.AddTREnd();
 
             foreach (Flow fl in fls)
@@ -497,9 +499,13 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         //this.Left.MenuSelfEnd();
 
 
-        this.Left.DivInfoBlockBegin();
+        //this.Left.DivInfoBlockBegin();
+
+        if (WebUser.IsWap)
+        this.Left.Add("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>");
 
         this.Left.AddUL();
+
         foreach (BP.WF.XML.Tool tool in tools)
         {
             if (tool.No == refno)
@@ -509,7 +515,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         }
         this.Left.AddULEnd();
 
-        this.Left.DivInfoBlockEnd();
+       // this.Left.DivInfoBlockEnd();
 
     }
 

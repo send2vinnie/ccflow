@@ -9,7 +9,7 @@
 
 .TableFrom
 {
-	border: 2px solid #E6E6E6;
+	border: 1px solid #E6E6E6;
 	margin: 2px;
 	padding: 5px;
 	text-align: left;
@@ -262,5 +262,5 @@ legend
 
 .TitleMsg
 {
-    background-color: #CCFFFF;
+	background-color: #EEEEEE;
 }

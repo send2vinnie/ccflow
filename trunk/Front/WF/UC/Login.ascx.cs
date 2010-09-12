@@ -64,11 +64,11 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
         this.AddTR();
         this.Add("<TD align=center >");
 
-        this.AddTable();
-        this.AddTRSum();
-        this.AddTD();
-        this.AddTD();
-        this.AddTREnd();
+        this.AddTable("border=1px");
+        //this.AddTRSum();
+        //this.AddTD();
+        //this.AddTD();
+        //this.AddTREnd();
 
         this.AddTR();
         this.AddTD(this.ToE("UserName", "用户名："));
@@ -77,6 +77,7 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
         tb.ID = "TB_User";
         tb.Text = BP.Web.WebUser.No;
         tb.Columns = 20;
+     //   tb.Attributes["class"] = "TB";
 
         this.AddTD(tb);
         this.AddTREnd();
@@ -87,6 +88,7 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
         tb = new TextBox();
         tb.ID = "TB_Pass";
         tb.TextMode = TextBoxMode.Password;
+       // tb.Attributes["class"] = "TB";
         tb.Columns = 22;
         this.AddTD(tb);
         this.AddTREnd();
@@ -96,7 +98,7 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
         this.AddTDBegin("colspan=3 align=center");
         Button btn = new Button();
 
-        btn.Text = this.ToE("Login", "登 陆：");
+        btn.Text = this.ToE("Login", "登 陆");
 
         btn.Click += new EventHandler(btn_Click);
         this.Add(btn);
@@ -135,7 +137,16 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
             if (pass == "test" || SystemConfig.IsDebug || em.CheckPass(pass))
             {
                 WebUser.SignInOfGenerLang(em, this.Lang);
+
+                if (this.Request.RawUrl.ToLower().Contains("wap"))
+                    WebUser.IsWap = true;
+                else
+                    WebUser.IsWap = false;
+
                 WebUser.Token = this.Session.SessionID;
+                if (WebUser.IsWap)
+                    ToWhere = "Home.aspx";
+
                 Response.Redirect(this.ToWhere, false);
                 return;
             }

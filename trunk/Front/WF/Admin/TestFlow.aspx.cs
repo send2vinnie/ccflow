@@ -126,10 +126,19 @@ public partial class WF_Admin_TestFlow : WebPage
 
             if (this.Request.QueryString["Type"] != null)
             {
-                this.Response.Redirect("../../WF/MyFlow.aspx?FK_Flow=" + this.FK_Flow, true);
+                string url = "../../WAP/MyFlow.aspx?FK_Flow=" + this.FK_Flow;
+                if (this.Request.QueryString["IsWap"] == "1")
+                {
+                    //  this.Response.Write("<script  language=javascript>  window.open( '" + url + "' , 'ass' ,'width=50,top=50,left=50,height=20,scrollbars=yes,resizable=yes,toolbar=false,location=false') </script>");
+                    this.Response.Redirect("../../WAP/MyFlow.aspx?FK_Flow=" + this.FK_Flow, true);
+                }
+                else
+                    this.Response.Redirect("../../WF/MyFlow.aspx?FK_Flow=" + this.FK_Flow, true);
             }
             else
+            {
                 this.Response.Redirect("../Port/Home.htm?FK_Flow=" + this.FK_Flow, true);
+            }
             return;
         }
 
@@ -163,12 +172,10 @@ public partial class WF_Admin_TestFlow : WebPage
         this.Ucsys1.AddUL();
         foreach (Emp emp in emps)
         {
-            this.Ucsys1.AddLi(emp.No + "&nbsp;&nbsp;&nbsp;&nbsp;<a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  >" + emp.No + emp.Name + "</a>   " + emp.FK_DeptText);
+            this.Ucsys1.AddLi(emp.No + "," + emp.Name + "&nbsp;&nbsp;&nbsp;&nbsp;<a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  >PC平台</a> - <a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  >手机平台</a>  " + emp.FK_DeptText);
         }
         this.Ucsys1.AddULEnd();
         this.Ucsys1.AddFieldSetEnd(); 
-
-
 
         
        // this.Ucsys1.Add("<a href='../../Data/FlowDesc/" + this.FK_Flow + ".gif' target=_blank><img border=0 src='../../Data/FlowDesc/" + this.FK_Flow + ".gif' width=300px height=300px ></a>");

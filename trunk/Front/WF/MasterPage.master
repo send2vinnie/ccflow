@@ -10,13 +10,43 @@
     <link href="Style/Table.css" rel="stylesheet" type="text/css" />
     <script language="JavaScript" src="Style/JScript.js"></script>
 	<script language="JavaScript" src="Style/ActiveX.js"></script>
-		<Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)">
+   <Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)">
+   
+   <style  type="text/css">
+       #ImgIcon
+       {
+       	width:8px;
+       	height:8px;
+       }
+       #main_nav {
+	MARGIN: 10px 0px 12px; BORDER-BOTTOM: #36a 1px solid; HEIGHT: 25px
+}
+#main_nav LI {
+	FLOAT: left; MARGIN: 0px 12px; LIST-STYLE-TYPE: none
+}
+#main_nav A {
+	BORDER-RIGHT: #36a 1px solid; PADDING-RIGHT: 1em; BORDER-TOP: #36a 1px solid; DISPLAY: block; PADDING-LEFT: 1em; BACKGROUND: #ddd; PADDING-BOTTOM: 0.25em; BORDER-LEFT: #36a 1px solid; COLOR: black; PADDING-TOP: 0.25em; BORDER-BOTTOM: #36a 1px; TEXT-DECORATION: none
+}
+#main_nav LI.activetab A {
+	BACKGROUND: #fff; BORDER-BOTTOM: white 1px solid
+}
+UL#main_nav A:hover {
+	BACKGROUND: #fff; BORDER-BOTTOM: white 1px solid
+}
+#main_nav LI.nonetab {
+	PADDING-LEFT: 30px
+}
+#main_nav LI.nonetab A {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; PADDING-BOTTOM: 0px; WIDTH: 200px; BORDER-TOP-STYLE: none; PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+   
+   </style>
 </head>
 <body topmargin="0" leftmargin="0" bgcolor=white >
     <form id="form1" runat="server">
     <table width=95%  height='500px' bgcolor=white  align=center class="MasterPageTable" >
     <tr>
-    <td>
+    <td align=center>
         <uc1:Pub ID="Pub1" runat="server" />
         </td>
         </tr>

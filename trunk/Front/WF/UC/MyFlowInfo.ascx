@@ -8,7 +8,7 @@
   <td width="25%" valign=top align=left >
       <uc2:FlowInfoSimple ID="FlowInfoSimple1" runat="server" />
   </td>
-  <td valign=top align=center >
+  <td valign=top align=left >
     <uc4:ToolBar ID="ToolBar1" runat="server"  />
       <uc1:Pub ID="Pub1" runat="server" />
   </td>

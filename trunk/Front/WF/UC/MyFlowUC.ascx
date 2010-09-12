@@ -4,6 +4,12 @@
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc5" %>
 <%@ Register src="FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc1" %>
 <%@ Register src="UCEn.ascx" tagname="UCEn" tagprefix="uc6" %>
+    <style type="text/css">
+        .style1
+        {
+            width: 225px;
+        }
+    </style>
     <script language="JavaScript" src="./../Style/JScript.js" type="text/javascript"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js" type="text/javascript"></script>
     <script language="JavaScript" src="../../Comm/ShortKey.js" type="text/javascript"></script>
@@ -30,7 +36,7 @@
 </script>
 <table id="Table1" border='0' width='800px' >
 <tr>
-<td  valign='top' align=left   >
+<td  valign='top' align=left class="style1"    >
     <uc1:FlowInfoSimple ID="FlowInfoSimple1" runat="server" />
 </td>
 <td valign='top' id='Right' style="height:600px;" >
@@ -41,8 +47,9 @@
                  <uc4:ToolBar ID="ToolBar1" runat="server" />
 </td>
 </tr>
+
 <tr valign="top">
-            <td valign="top" height="100%" width="100%" align=left>
+            <td valign="top" height="100%" align=left>
                     <uc5:Pub ID="FlowMsg" runat="server" />
                     <uc6:UCEn ID="UCEn1" runat="server" />
                     <uc5:Pub ID="Pub1" runat="server" />

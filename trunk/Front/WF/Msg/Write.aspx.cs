@@ -52,6 +52,9 @@ public partial class WF_Msg_Write : WebPage
 
 
         this.Pub1.AddTable("width='95%'");
+        if (WebUser.IsWap)
+            this.Pub1.AddCaptionLeft("<a href='./../Home.aspx' ><img src='./../Img/Home.gif' border=0>Home</a> - <a href='./../../WAP/Msg.aspx' >列表</a>");
+
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("width=10%","<b>接受人</b>");
         TextBox tb = new TextBox();

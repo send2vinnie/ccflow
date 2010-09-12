@@ -107,7 +107,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.Add("<TD class=TitleMsg  align=left colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>您的位置：<a href=FlowSearch.aspx >流程查询</a> =><a href='FlowSearch.aspx?FK_Flow=" + nd.FK_Flow + "'>" + nd.FlowName + "</a> => " + nd.Name + "</b></TD>");
+        this.Pub1.Add("<TD class=TitleMsg  align=left colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b><a href=FlowSearch.aspx >流程查询</a>-<a href='FlowSearch.aspx?FK_Flow=" + nd.FK_Flow + "'>" + nd.FlowName + "</a>-" + nd.Name + "</b></TD>");
         this.Pub1.AddTREnd();
 
 
@@ -219,6 +219,63 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
         this.Response.Redirect("FlowSearch.aspx?FK_Node=" + this.FK_Node, true);
     }
+    public void BindFlowWap()
+    {
+        Flow fl = new Flow(this.FK_Flow);
+        int colspan = 4;
+        this.Pub1.AddTable("width='600px' ");
+        this.Pub1.AddTR();
+        this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+       
+        this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b><a href='FlowSearch.aspx' >返回</a> - " + fl.Name + "</b></TD>");
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle(this.ToE("Name", "步骤"));
+        this.Pub1.AddTDTitle(this.ToE("Name", "节点"));
+        this.Pub1.AddTDTitle(this.ToE("FlowPict", "可执行否?"));
+        this.Pub1.AddTREnd();
+
+        Nodes nds = new Nodes(this.FK_Flow);
+        Stations sts = WebUser.HisStations;
+        foreach (Node nd in nds)
+        {
+            bool isCan = false;
+            foreach (Station st in sts)
+            {
+                if (nd.HisStas.Contains("@" + st.No))
+                {
+                    isCan = true;
+                    break;
+                }
+            }
+
+            this.Pub1.AddTR();
+            this.Pub1.AddTDIdx(nd.Step);
+            if (isCan)
+                this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Node=" + nd.NodeID + "'>" + nd.Name + "</a>");
+            else
+                this.Pub1.AddTD(nd.Name);
+
+            if (isCan)
+            {
+                this.Pub1.AddTD("可执行");
+            }
+            else
+            {
+                this.Pub1.AddTD("不可执行");
+            }
+            this.Pub1.AddTREnd();
+        }
+
+        this.Pub1.AddTRSum();
+        this.Pub1.AddTD("colspan=" + colspan, "&nbsp;");
+        this.Pub1.AddTREnd();
+        this.Pub1.AddTableEnd();
+    }
     public void BindFlow()
     {
         Flow fl = new Flow(this.FK_Flow);
@@ -229,7 +286,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b><a href='FlowSearch.aspx' >返回流程列表</a>：流程查询=>" + fl.Name + "</b></TD>");
+
+        this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b><a href='FlowSearch.aspx' >返回</a> - " + fl.Name + "</b></TD>");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
@@ -248,7 +306,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             this.Pub1.AddTD(nd.Name);
 
             bool isCan = false;
-
             foreach (Station st in sts)
             {
                 if (nd.HisStas.Contains("@" + st.No))
@@ -281,7 +338,10 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
     {
         if (this.FK_Flow != null)
         {
-            this.BindFlow();
+            if (WebUser.IsWap)
+                this.BindFlowWap();
+            else
+                this.BindFlow();
             return;
         }
 
@@ -298,15 +358,22 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left ><img src='./Img/Start.gif' > <b>点流程名称执行查询</b></TD>");
+        if (WebUser.IsWap)
+            this.Pub1.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a> - <img src='./Img/Search.gif' > - " + this.ToE("FlowSearch", "流程查询") + " </TD>");
+        else
+            this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left ><img src='./Img/Search.gif' > <b>流程查询</b></TD>");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle(this.ToE("IDX", "序"));
         this.Pub1.AddTDTitle(this.ToE("FlowSort", "流程类别"));
         this.Pub1.AddTDTitle(this.ToE("Name", "名称"));
-        this.Pub1.AddTDTitle(this.ToE("FlowPict", "流程图"));
-        this.Pub1.AddTDTitle(this.ToE("Desc", "描述"));
+
+        if (WebUser.IsWap == false)
+        {
+            this.Pub1.AddTDTitle(this.ToE("FlowPict", "流程图"));
+            this.Pub1.AddTDTitle(this.ToE("Desc", "描述"));
+        }
         this.Pub1.AddTREnd();
 
         string sql = "SELECT FK_Flow FROM WF_Node ";
@@ -329,10 +396,13 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
             fk_sort = fl.FK_FlowSort;
 
-            this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "'>" + fl.Name + "</a>");
 
-            this.Pub1.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/" + fl.No + ".gif','sd');\"  >打开</a>");
-            this.Pub1.AddTD(fl.Note);
+            this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "'>" + fl.Name + "</a>");
+            if (WebUser.IsWap == false)
+            {
+                this.Pub1.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/" + fl.No + ".gif','sd');\"  >打开</a>");
+                this.Pub1.AddTD(fl.Note);
+            }
             this.Pub1.AddTREnd();
         }
 

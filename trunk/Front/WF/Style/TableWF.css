@@ -1,17 +1,5 @@
 /*  Table */
-.Table
-{
-	border-right: activeborder 1px solid;
-	padding-right: 5px;
-	border-top: activeborder 1px solid;
-	padding-left: 5px;
-	font-size: 14px;
-	padding-bottom: 1px;
-	margin: 1px;
-	border-left: activeborder 1px solid;
-	padding-top: 1px;
-	border-bottom: activeborder 1px solid;
-}
+
 
 .TableGreen
 {

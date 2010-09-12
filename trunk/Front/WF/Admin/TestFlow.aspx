@@ -14,13 +14,18 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-     function WinOpen(url)
+    function WinOpen(url)
     {
         var b=window.open( url , 'ass' ,'width=700,top=50,left=50,height=500,scrollbars=yes,resizable=yes,toolbar=false,location=false'); 
        // var b=window.open( url , 'ass' ,'Height: 600px; dialogWidth: 700px;center: yes;'); 
-        
        // var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 600px; dialogWidth: 700px;center: yes; help: no'); 
-        
+        //window.location.href = window.location.href;
+    }
+    function WinOpenWAP_Cross(url)
+    {
+        var b=window.open( url , 'ass' ,'width=50,top=50,left=50,height=20,scrollbars=yes,resizable=yes,toolbar=false,location=false'); 
+       // var b=window.open( url , 'ass' ,'Height: 600px; dialogWidth: 700px;center: yes;'); 
+       // var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 600px; dialogWidth: 700px;center: yes; help: no'); 
         //window.location.href = window.location.href;
     }
     </script>

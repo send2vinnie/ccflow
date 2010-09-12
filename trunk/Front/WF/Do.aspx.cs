@@ -58,6 +58,18 @@ namespace BP.Web.WF
                 string str = "";
                 switch (this.ActionType)
                 {
+                    case "OF":
+                        string sid = this.Request.QueryString["SID"];
+                        string[] strs = sid.Split('_');
+                        WorkerList wl = new WorkerList();
+                        int i = wl.Retrieve(WorkerListAttr.FK_Emp, strs[0], WorkerListAttr.WorkID, strs[1], WorkerListAttr.FK_Node, strs[2]);
+                        if (i == 0)
+                            return;
+                        BP.Port.Emp emp155 = new BP.Port.Emp(wl.FK_Emp);
+                        Web.WebUser.SignInOfGener(emp155, true);
+                        string u="MyFlow.aspx?FK_Flow=" + wl.FK_Flow + "&WorkID=" + wl.WorkID ;
+                        this.Response.Write("<script> window.location.href='" + u + "'</script> *^_^*  <br><br>正在进入系统请稍后，如果长时间没有反应，请<a href='" + u + "'>点这里进入。</a>");
+                        return;
                     case "ExitAuth":
                         BP.Port.Emp emp = new BP.Port.Emp(this.FK_Emp);
                         BP.Web.WebUser.SignInOfGenerLang(emp, WebUser.SysLang);
@@ -65,7 +77,7 @@ namespace BP.Web.WF
                         return;
                     case "LogAs":
                         BP.Port.Emp emp1 = new BP.Port.Emp(this.FK_Emp);
-                        BP.Web.WebUser.SignInOfGener(emp1, WebUser.SysLang, WebUser.No,true);
+                        BP.Web.WebUser.SignInOfGener(emp1, WebUser.SysLang, WebUser.No, true);
                         this.WinClose();
                         return;
                     case "TakeBack": // 取消授权。
