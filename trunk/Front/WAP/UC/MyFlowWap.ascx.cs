@@ -229,6 +229,35 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
         BP.WF.Node currND;
         BP.WF.Work currWK;
 
+        if (this.IsPostBack == false)
+        {
+            if ( WorkerLists.CheckUserPower(this.WorkID, WebUser.No) == false)
+            {
+                //WorkerList wl = new WorkerList();
+               // wl.Retrieve(WorkerListAttr.WorkID,this.WorkID
+                this.ToolBar1.Clear();
+                this.ToolBar1.Add("&nbsp;");
+
+                this.FlowMsg.Clear();
+                this.FlowMsg.DivInfoBlockBegin(); //("<b>提示</b><hr>@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
+                this.FlowMsg.AddB("提示");
+                this.FlowMsg.AddHR();
+                this.FlowMsg.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。");
+
+                this.FlowMsg.AddUL();
+                this.FlowMsg.AddLi("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>返回主页</a>");
+                this.FlowMsg.AddLi("<a href='Start.aspx'><img src='./Img/Start.gif' border=0/>发起新流程</a>");
+                this.FlowMsg.AddLi("<a href='Runing.aspx'><img src='./Img/Runing.gif' border=0/>在途工作</a>");
+
+                this.FlowMsg.AddULEnd();
+
+                // this.UCEn1.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
+                this.FlowMsg.DivInfoBlockEnd();
+                return;
+            }
+        }
+
+
         try
         {
             #region 增加按钮
