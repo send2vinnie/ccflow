@@ -77,7 +77,6 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
                 break;
         }
 
-
         string s = this.Session["info"] as string;
         this.Session["info"] = null;
         if (s != null)

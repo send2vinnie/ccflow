@@ -78,8 +78,8 @@ namespace BP.Web.Comm.UC.WF
                     if (attr.HisAttr.IsRefAttr || attr.UIVisible == false)
                         continue;
 
-                    //if (isLeftNext == true)
-                    //    this.InsertObjects(true);
+                    if (isLeftNext == true)
+                        this.InsertObjects2Col(true);
 
                     rowIdx++;
                     this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
@@ -271,6 +271,44 @@ namespace BP.Web.Comm.UC.WF
             #endregion 处理iFrom 的自适应的问题。
         }
 
+        public void InsertObjects2Col(bool isJudgeRowIdx)
+        {
+            foreach (MapDtl dtl in dtls)
+            {
+                if (dtl.IsUse)
+                    continue;
+
+                if (isJudgeRowIdx)
+                {
+                    if (dtl.RowIdx != rowIdx)
+                        continue;
+                }
+
+                if (dtl.GroupID == 0 && rowIdx == 0)
+                {
+                    dtl.GroupID = currGF.OID;
+                    dtl.RowIdx = 0;
+                    dtl.Update();
+                }
+                else if (dtl.GroupID == currGF.OID)
+                {
+
+                }
+                else
+                {
+                    continue;
+                }
+                dtl.IsUse = true;
+                rowIdx++;
+                // myidx++;
+                this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+                string src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal + "&IsWap=1";
+                this.Add("<TD colspan=2 class=FDesc ID='TD" + dtl.No + "'><a href='" + src + "'>" + dtl.Name + "</a></TD>");
+                // this.Add("<iframe ID='F" + dtl.No + "' frameborder=0 Onblur=\"SaveDtl('" + dtl.No + "');\" style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' height='10px' scrolling=no  /></iframe>");
+                //this.AddTDEnd();
+                this.AddTREnd();
+            }
+        }
 
         public void BindColumn4(Entity en, string enName)
         {

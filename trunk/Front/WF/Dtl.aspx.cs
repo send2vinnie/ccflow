@@ -52,6 +52,15 @@ public partial class Comm_Dtl : WebPage
     {
         this.Bind();
     }
+    public int IsWap
+    {
+        get
+        {
+            if (this.Request.QueryString["IsWap"] == "1")
+                return 1;
+            return 0;
+        }
+    }
     public bool IsEnable
     {
         get
@@ -74,6 +83,17 @@ public partial class Comm_Dtl : WebPage
         MapDtl mdtl = new MapDtl(this.EnsName);
 
         #region 生成标题
+        if (this.IsWap == 1)
+        {
+            this.Pub1.AddTable();
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("<a href='./../WAP/MyFlow.aspx?WorkID=" + this.RefPKVal + "' />返回</a>");
+
+            this.Pub1.AddTD("<input type=button onclick=\"javascript:SaveDtlData();\" value='保存' />");
+            this.Pub1.AddTREnd();
+            this.Pub1.AddTableEnd();
+        }
+
         MapAttrs attrs = new MapAttrs(this.EnsName);
         this.Pub1.Add("<Table border=0 style='padding:0px' width='100px'>");
         this.Pub1.AddTR();
@@ -131,7 +151,7 @@ public partial class Comm_Dtl : WebPage
             }
             else
             {
-                this.Response.Redirect(rowUrl + "&rowUrl=1", true);
+                this.Response.Redirect(rowUrl + "&rowUrl=1&IsWap=" + this.IsWap, true);
                 return;
             }
             #endregion
@@ -146,7 +166,7 @@ public partial class Comm_Dtl : WebPage
         {
             int count = qo.GetCOUNT();
             this.Pub2.Clear();
-            this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal);
+            this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap);
             qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
 
             if (mdtl.IsInsert)
@@ -173,7 +193,7 @@ public partial class Comm_Dtl : WebPage
             }
             else
             {
-                this.Response.Redirect(rowUrl + "&rowUrl=1", true);
+                this.Response.Redirect(rowUrl + "&rowUrl=1&IsWap=" + this.IsWap, true);
                 return;
             }
             #endregion
@@ -260,7 +280,7 @@ public partial class Comm_Dtl : WebPage
                         }
                         else
                         {
-                            ddl.Items.Add(new ListItem(dtl.GetValRefTextByKey(attr.KeyOfEn), val) );
+                            ddl.Items.Add(new ListItem(dtl.GetValRefTextByKey(attr.KeyOfEn), val));
                             this.Pub1.AddTD(ddl);
                             ddl.Enabled = false;
                         }
@@ -284,11 +304,11 @@ public partial class Comm_Dtl : WebPage
         }
 
         #region 生成合计
-        if (mdtl.IsShowSum && dtls.Count >1 )
+        if (mdtl.IsShowSum && dtls.Count > 1)
         {
             this.Pub1.AddTRSum();
             if (mdtl.IsShowIdx)
-            this.Pub1.AddTD();
+                this.Pub1.AddTD();
 
             foreach (MapAttr attr in attrs)
             {
@@ -378,7 +398,7 @@ public partial class Comm_Dtl : WebPage
                 continue;
 
             if (attr.IsNum == false)
-                continue;         
+                continue;
 
             string top = "\n<script language='JavaScript'> function C" + attr.KeyOfEn + "() { \n ";
             string end = "\n  isChange =true ;  } </script>";

@@ -62,10 +62,10 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
         string sql = "SELECT * FROM WF_RememberMe WHERE FK_Emp='" + WebUser.No + "' AND FK_Node=" + this.NodeID;
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
 
-        this.AddFieldSet("工作指定");
+        this.AddFieldSet("<a href='Home.aspx' ><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "主页") + "</a> - 工作指定");
 
         if (dt.Rows.Count == 0)
-            throw new Exception("@系统错误....."+sql);
+            throw new Exception("@系统错误....." + sql);
 
         string[] objs = dt.Rows[0]["Objs"].ToString().Split('@');
         string[] emps = dt.Rows[0]["Emps"].ToString().Split('@');
@@ -101,12 +101,13 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
         btn.Text = "执行";
         btn.Click += new EventHandler(BPToolBar1_ButtonClick);
         this.Add(btn);
-        this.Add("<input type=button value='取消' onclick='window.close();' class=Btn />");
+
+        //this.Add("<input type=button value='取消' onclick='window.close();' class=Btn />");
 
         this.Add("<br><br>帮助:系统会记住本次的工作指定，下次您在发送时间它会自动把工作投递给您本次指定的人。");
         this.AddFieldSetEnd();
-    }
 
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.Title = "指定同事处理";
@@ -120,8 +121,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
             }
         }
         this.BindLB();
-        this.GetBtnByID("Btn_Do").Click += new EventHandler(BPToolBar1_ButtonClick);
-
+        //    this.GetBtnByID("Btn_Do").Click += new EventHandler(BPToolBar1_ButtonClick);
     }
     private void BPToolBar1_ButtonClick(object sender, System.EventArgs e)
     {
@@ -136,6 +136,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
 
         if (dt.Rows.Count == 0)
             throw new Exception("@系统错误.....");
+
         try
         {
             string[] objs = dt.Rows[0]["Objs"].ToString().Split('@');
@@ -160,7 +161,6 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
                     continue;
 
                 WorkerList wl = wls.GetEntityByKey(WorkerListAttr.FK_Emp, fk_emp) as WorkerList;
-
                 al.Add(cb.ID.Substring(3));
                 wlSeles.AddEntity(wl);
             }
@@ -168,6 +168,17 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
 
             if (al.Count == 0)
             {
+
+                //if (WebUser.IsWap)
+                //{
+                //    this.Alert("当前工作中你没有分配给任何人，此工作将不能被其他人所执行！");
+                //    this.Clear();
+                //    this.AddFieldSet("<a href='Home.aspx' ><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "主页") + "</a> - <a href='Start.aspx' ><img src='./Img/Start.gif' border=0/>发起</a> - 提示信息");
+                //    this.Add("当前工作中你没有分配给任何人，此工作将不能被其他人所执行！");
+                //    this.AddFieldSetEnd();
+                //    return;
+                //}
+
                 this.Alert("当前工作中你没有分配给任何人，此工作将不能被其他人所执行！");
                 return;
             }
@@ -192,10 +203,10 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
 
             BP.WF.Node nd = new BP.WF.Node(NodeID);
             Work wk = nd.HisWork;
-            
-                wk.OID = this.WorkID;
-                wk.Retrieve();
-             
+
+            wk.OID = this.WorkID;
+            wk.Retrieve();
+
             wk.Emps = emps;
             wk.Update();
             DBAccess.RunSQL("UPDATE WF_CHOfNode SET Emps='" + emps + "' WHERE FK_Node=" + NodeID + " AND WorkID='" + this.WorkID + "'");
@@ -230,7 +241,24 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
 
             rm.FK_Emp = BP.Web.WebUser.No;
             rm.Update();
-            this.WinCloseWithMsg("任务分配成功。");
+
+
+            if (WebUser.IsWap)
+            {
+                this.Clear();
+                this.AddFieldSet("提示信息");
+                this.Add("<br>&nbsp;&nbsp;任务分配成功，特别提示：当下一次流程发送时系统会按照您设置的路径进行智能投递。");
+                this.AddUL();
+                this.AddLi("<a href='Home.aspx' ><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "主页") + "</a>");
+                this.AddLi("<a href='Start.aspx' ><img src='./Img/Start.gif' border=0/>" + this.ToE("Start", "发起") + "</a>");
+                this.AddLi("<a href='Runing.aspx' ><img src='./Img/Runing.gif' border=0/>待办</a>");
+                this.AddULEnd();
+                this.AddFieldSetEnd();
+            }
+            else
+            {
+               this.WinCloseWithMsg("任务分配成功。");
+            }
         }
         catch (Exception ex)
         {

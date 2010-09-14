@@ -35,7 +35,6 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
             emps.RetrieveAll();
 
 
-
         this.AddTable("width=80% align=center border=1");
         if (WebUser.IsWap)
             this.AddCaptionLeft("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>");

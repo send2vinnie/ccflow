@@ -23,14 +23,28 @@ public partial class WF_UC_SMS : BP.Web.UC.UCBase3
     {
         get
         {
-            return Int32.Parse(this.Request.QueryString["WorkID"]);
+            try
+            {
+                return Int32.Parse(this.Request.QueryString["WorkID"]);
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
     public int NodeID
     {
         get
         {
-            return int.Parse(this.Request.QueryString["FK_Node"]);
+            try
+            {
+                return int.Parse(this.Request.QueryString["FK_Node"]);
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 
@@ -38,6 +52,10 @@ public partial class WF_UC_SMS : BP.Web.UC.UCBase3
     {
 
         this.Page.Title = "手机短信提醒";
+
+        this.AddMsgOfInfo("错误", "没有安装短信猫设备");
+        return;
+
 
         string sql="SELECT No,Name,Tel FROM WF_Emp WHERE NO IN (select FK_Emp from WF_GenerWorkerlist WHERE WorkID="+this.WorkID+" AND FK_Node="+this.NodeID+")";
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
