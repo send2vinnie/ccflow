@@ -1,0 +1,13 @@
+D:\ShiDai\Components\BP.GE\bin\Release\BP.GE.dll
+D:\ShiDai\Components\BP.GE\bin\Release\BP.GE.pdb
+D:\ShiDai\Components\BP.GE\bin\Release\BP.En30.dll
+D:\ShiDai\Components\BP.GE\bin\Release\BP.Web.Controls.dll
+D:\ShiDai\Components\BP.GE\bin\Release\ChineseConverter.dll
+D:\ShiDai\Components\BP.GE\bin\Release\Interop.Excel.dll
+D:\ShiDai\Components\BP.GE\bin\Release\Interop.VBIDE.dll
+D:\ShiDai\Components\BP.GE\bin\Release\BP.Web.Controls.pdb
+D:\ShiDai\Components\BP.GE\obj\Release\ResolveAssemblyReference.cache
+D:\ShiDai\Components\BP.GE\obj\Release\BP.GE.Properties.Resources.resources
+D:\ShiDai\Components\BP.GE\obj\Release\BP.GE.csproj.GenerateResource.Cache
+D:\ShiDai\Components\BP.GE\obj\Release\BP.GE.dll
+D:\ShiDai\Components\BP.GE\obj\Release\BP.GE.pdb

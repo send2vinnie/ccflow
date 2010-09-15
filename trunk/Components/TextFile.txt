@@ -1,0 +1,10 @@
+﻿            //Entities ens = (Entities)BP.DA.ClassFactory.GetEns("BP.GE.PJ.FiveStares");
+            //ens.RetrieveAll();
+            //foreach (Entity en in ens)
+            //{
+            //    string no = en.GetValStringByKey("No");
+            //    string url = en.GetValStringByKey("ImgUrl");
+            //    string url = en.GetValStringByKey("ImgUrl");
+            //}
+            //writer.Write("客户端按钮<input type='radio' id='ddd' name='sss' value='客户端按钮'/>");
+ 昌 

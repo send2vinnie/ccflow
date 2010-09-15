@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{08D61255-641C-4327-9B33-D525822780EA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BP.GE</RootNamespace>
+    <AssemblyName>BP.GE</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FtpSupport, Version=1.0.1817.24824, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DLL\FtpSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Glo.cs" />
+    <Compile Include="LiuMingWu\Base\BadWord.cs" />
+    <Compile Include="LiuMingWu\Base\BadWordDtl.cs" />
+    <Compile Include="LiuMingWu\Base\CtrlBase.cs" />
+    <Compile Include="LiuMingWu\Base\CtrlBaseDB.cs" />
+    <Compile Include="LiuMingWu\Base\CtrlNoPagingDB.cs" />
+    <Compile Include="LiuMingWu\Base\Enum.cs" />
+    <Compile Include="LiuMingWu\Base\GeFun.cs" />
+    <Compile Include="LiuMingWu\Base\GEProperty.cs" />
+    <Compile Include="LiuMingWu\Base\Items.cs" />
+    <Compile Include="LiuMingWu\Base\ListItem.cs" />
+    <Compile Include="LiuMingWu\Base\UrlItems.cs" />
+    <Compile Include="LiuMingWu\Base\UrlList.cs" />
+    <Compile Include="LiuMingWu\GeAlbums.cs" />
+    <Compile Include="LiuMingWu\GeAlbums\AlbumsAttr.cs" />
+    <Compile Include="LiuMingWu\GeComment.cs" />
+    <Compile Include="LiuMingWu\GeComment\CommentMap.cs" />
+    <Compile Include="LiuMingWu\GEFavorite.cs" />
+    <Compile Include="LiuMingWu\GEFavorite\GEFavList.cs" />
+    <Compile Include="LiuMingWu\GEFavorite\GEFavName.cs" />
+    <Compile Include="LiuMingWu\GEHTMLRun.cs" />
+    <Compile Include="LiuMingWu\GEHTMLRun\ImageRunItems.cs" />
+    <Compile Include="LiuMingWu\GeImage.cs" />
+    <Compile Include="LiuMingWu\GeImage\ImageList.cs" />
+    <Compile Include="LiuMingWu\GEMenu.cs" />
+    <Compile Include="LiuMingWu\GEMessage\GeFriend.cs" />
+    <Compile Include="LiuMingWu\GEMessage\GeInbox.cs" />
+    <Compile Include="LiuMingWu\GEMessage\GeMessage.cs" />
+    <Compile Include="LiuMingWu\GEMessage\GeMsgDoc.cs" />
+    <Compile Include="LiuMingWu\GEMessage\GeOutbox.cs" />
+    <Compile Include="LiuMingWu\GeMsg.cs" />
+    <Compile Include="LiuMingWu\GeMyView.cs" />
+    <Compile Include="LiuMingWu\GeMyView\GeViewEntity.cs" />
+    <Compile Include="LiuMingWu\GEPJ.cs" />
+    <Compile Include="LiuMingWu\GEPJ\PJEmpInfo.cs" />
+    <Compile Include="LiuMingWu\GEPJ\PJSubject.cs" />
+    <Compile Include="LiuMingWu\GEPJ\PJTotals.cs" />
+    <Compile Include="LiuMingWu\GEPJ\PJType.cs" />
+    <Compile Include="LiuMingWu\GeTab.cs" />
+    <Compile Include="LiuMingWu\GeTab\Tab.cs" />
+    <Compile Include="LiuMingWu\GEWebPlayer.cs" />
+    <Compile Include="LiuMingWu\MyTextBox.cs" />
+    <Compile Include="LiuXianchen\GEMail\GEMail.cs" />
+    <Compile Include="OA\AddrList\ListDept.cs" />
+    <Compile Include="OA\AddrList\ListDuty.cs" />
+    <Compile Include="OA\AddrList\ListEmp.cs" />
+    <Compile Include="OA\InfoReq\InfoReq.cs" />
+    <Compile Include="OA\InfoReq\InfoReqSort.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="OA\InfoReq\vssver2.scc" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="WuXiaoyun\FDB\FDB.cs" />
+    <Compile Include="WuXiaoyun\FDB\FDBDir.cs" />
+    <Compile Include="WuXiaoyun\FDB\FDBDTS.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WuXiaoyun\FDB\GloFTP.cs" />
+    <Compile Include="WuXiaoyun\InfoList\InfoList1.cs" />
+    <Compile Include="WuXiaoyun\InfoList\InfoList2.cs" />
+    <Compile Include="WuXiaoyun\InfoList\InfoList3.cs" />
+    <Compile Include="WuXiaoyun\InfoList\InfoListBase.cs" />
+    <Compile Include="WuXiaoyun\Info\Info1\Info1.cs" />
+    <Compile Include="WuXiaoyun\Info\Info1\InfoSort1.cs" />
+    <Compile Include="WuXiaoyun\Info\Info2\Info2.cs" />
+    <Compile Include="WuXiaoyun\Info\Info2\InfoSort2.cs" />
+    <Compile Include="WuXiaoyun\Info\InfoBase.cs" />
+    <Compile Include="WuXiaoyun\Info\Info\Info.cs" />
+    <Compile Include="WuXiaoyun\Info\Info\InfoSort.cs" />
+    <Compile Include="WuXiaoyun\Pict\Pict.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WuXiaoyun\Pict\PictSort.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WuXiaoyun\Soft\Soft.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WuXiaoyun\Soft\SoftSort.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WuXiaoyun\Video\Video1\Video1.cs" />
+    <Compile Include="WuXiaoyun\Video\Video1\VideoSort1.cs" />
+    <Compile Include="WuXiaoyun\Video\Video2\Video2.cs" />
+    <Compile Include="WuXiaoyun\Video\Video2\VideoSort2.cs" />
+    <Compile Include="WuXiaoyun\Video\Video3\Video3.cs" />
+    <Compile Include="WuXiaoyun\Video\Video3\VideoSort3.cs" />
+    <Compile Include="WuXiaoyun\Video\VideoBase.cs" />
+    <Compile Include="WuXiaoyun\Video\Video\Video.cs" />
+    <Compile Include="WuXiaoyun\Video\Video\VideoSort.cs" />
+    <Compile Include="WuXiaoyun\WuXiaoyun.cs" />
+    <Compile Include="XieYunhui\ImageLink\ImgLink.cs" />
+    <Compile Include="XieYunhui\ImageLink\ImgLink1.cs" />
+    <Compile Include="XieYunhui\ImageLink\ImgLinkSort.cs" />
+    <Compile Include="XieYunhui\NetDisk\DKDir.cs" />
+    <Compile Include="XieYunhui\NetDisk\DKFile.cs" />
+    <Compile Include="XieYunhui\NetDisk\DKFileAdds.cs" />
+    <Compile Include="XieYunhui\NetDisk\GloDK.cs" />
+    <Compile Include="zhoupeng\Upload\BigFileUploadModuleHandle.cs" />
+    <Compile Include="zhoupeng\Upload\DataReader.cs" />
+    <Compile Include="zhoupeng\Upload\UploadContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LiuMingWu\GEWebPlayer\swfobject.js" />
+    <Content Include="TextFile.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\VisualWorkFlow\Components\BP.En30\BP.En30.csproj">
+      <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
+      <Name>BP.En30</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LiuMingWu\GEImageRun\" />
+    <Folder Include="zhoupeng\FDB\" />
+    <Folder Include="zhoupeng\Xml\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
