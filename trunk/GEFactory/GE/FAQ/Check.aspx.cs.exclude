@@ -1,0 +1,367 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.IO;
+using System.Collections.Generic;
+using BP.DA;
+using BP.Edu;
+using BP.Edu.TH;
+using BP.Port;
+using BP.En;
+using BP.Web;
+using BP.Web.Controls;
+
+public partial class FAQ_Check : BP.Web.WebPage
+{
+    public string staJS;
+    public string staNR;
+    public string FK_Type
+    {
+        get
+        {
+            string s = this.Request.QueryString["FK_Type"];
+            if (s == null)
+                return "01";
+            return s;
+        }
+    }
+    public string SHType
+    {
+        get
+        {
+            string s = this.Request.QueryString["SHType"];
+            if (s == null)
+                return "3";
+            return s;
+        }
+    }
+    public string FK_KM
+    {
+        get
+        {
+            string s = this.Request.QueryString["FK_KM"];
+            if (s == null)
+                s = EduUser.FK_KM;
+            return s;
+        }
+    }
+
+    private void BindKMNJ()
+    {
+
+        this.Top.Add("<table class=\"tab_setwork\" >");
+        this.Top.Add("<tr>");
+        this.Top.Add("<td width=\"113\"><img src=\"../Port/Image/ttlm_setwork.gif\" alt=\"工作岗位\" /></td>");
+        this.Top.Add("</tr></table>");
+        this.Top.Add("<table class=\"tab_work\" >");
+        this.Top.Add("<tr>");
+        this.Top.Add("<td colspan=\"3\"><img src=\"../Style/Img/work_t_l.gif\" alt=\"\"></td>");
+        this.Top.Add("</tr>");
+        this.Top.Add("<tr>");
+        this.Top.Add("<td width=\"13\" class=\"line_l\"></td>");
+        this.Top.Add("<td width=\"670\" ><ul class=\"list_work clearfix\">");
+        KMs ews = EduUser.HisKMs;
+        foreach (KM km in ews)
+        {
+            if (km.No != null)
+            {
+                if (km.No == this.FK_KM)
+                    this.Top.Add("<li class=\"select\">" + km.Name + "</li>");
+                else
+                    this.Top.Add("<li><a href='Check.aspx?FK_Type=" + this.FK_Type + "&SHType=" + this.SHType + "&FK_KM=" + km.No + "' >" + km.Name + "</a></li>");
+            }
+
+        }
+
+        this.Top.Add("</ul></td>");
+        this.Top.Add("<td width=\"17\" class=\"line_r\">&nbsp;</td>");
+        this.Top.Add("</tr>");
+        this.Top.Add("<tr>");
+        this.Top.Add("<td colspan=\"3\"><img src=\"../Style/Img/work_b_l.gif\" alt=\"\"></td>");
+        this.Top.Add("</tr>");
+        this.Top.Add("</table>");
+
+    }
+    private void BindType()
+    {
+        this.Top.Add("<div class=\"nvaiBox\">");
+        if (this.ShowType != "00")
+            this.Top.Add("<a href='Check.aspx?FK_Type=00&SHType=" + this.SHType + "&FK_KM=" + this.FK_KM + "'>全部</a>&nbsp&nbsp&nbsp");
+        else
+            this.Top.Add("全部&nbsp&nbsp&nbsp");
+
+
+        ResTypes tps = new ResTypes();
+        tps.RetrieveAll();
+
+        foreach (ResType tp in tps)
+        {
+
+            if (tp.No == this.ShowType)
+                this.Top.Add(tp.Name + "&nbsp&nbsp&nbsp");
+            else
+                this.Top.Add("<a href='Check.aspx?ShowType=" + tp.No + "&SHType=" + this.SHType + "&FK_KM=" + this.FK_KM + "' >" + tp.Name + "</a>&nbsp&nbsp&nbsp");
+
+        }
+        this.Top.Add("</div>");
+    }
+    /// <summary>
+    /// 初始化类型
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    /// 
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (EduUser.IsCHOfContext || EduUser.IsCHOfTech)
+        {
+
+            BindKMNJ();
+
+
+            this.Top.AddBR();
+            BindType();
+
+            if (EduUser.HisWorkGrade == WorkGrade.ShiJi)
+            {
+                if (SHType == "4")
+                    Binddel();
+                else
+                    BindSJ();
+
+            }
+            else if (EduUser.HisWorkGrade == WorkGrade.QuXian)
+            {
+                if (SHType == "4")
+                    Binddel();
+                else
+                    BindQX();
+            }
+            else if (EduUser.HisWorkGrade == WorkGrade.School)
+            {
+                if (SHType == "4")
+                    Binddel();
+                else
+                    BindSch();
+            }
+            else
+            {
+                if (SHType == "4")
+                    Binddel();
+
+            }
+        }
+    }
+    /// <summary>
+    /// 学校审核人员 绑定数据
+    /// </summary>
+    public void BindSch()
+    {
+        OKRess oks = new OKRess();
+        QueryObject qo = new QueryObject(oks);
+        qo.AddWhere(OKResAttr.FK_KM, FK_KM);
+        qo.addAnd();
+        switch (this.SHType)
+        {
+            case "3":
+                string sql = "SELECT oid FROM FAQ_OKRES WHERE STARESCHZT=3 AND OID NOT IN (SELECT FK_SRC FROM FAQ_SHDtl WHERE FK_DEPT='" + EduUser.FK_Dept.Substring(0, 4) + "') and FK_Type='" + this.FK_Type + "'  and oid not  in (select  fk_src from  faq_shdtl where fk_dept='" + EduUser.FK_Dept + "' and StaResCHZT!=0 )";
+                qo.AddWhereInSQL(OKResAttr.OID, sql);
+                break;
+            case "0":
+                sql = "SELECT oid FROM FAQ_OKRES WHERE STARESCHZT=3 AND OID NOT IN (SELECT FK_SRC FROM FAQ_SHDtl WHERE FK_DEPT='" + EduUser.FK_Dept.Substring(0, 4) + "') and FK_Type='" + this.FK_Type + "'  and oid  in (select  fk_src from  faq_shdtl where fk_dept='" + EduUser.FK_Dept + "' and StaResCHZT=0 )";
+                qo.AddWhereInSQL(OKResAttr.OID, sql);
+                break;
+            case "1":
+                sql = "SELECT oid FROM FAQ_OKRES WHERE STARESCHZT=3 AND OID NOT IN (SELECT FK_SRC FROM FAQ_SHDtl WHERE FK_DEPT='" + EduUser.FK_Dept.Substring(0, 4) + "') and FK_Type='" + this.FK_Type + "'  and oid  in (select  fk_src from  faq_shdtl where fk_dept='" + EduUser.FK_Dept + "' and StaResCHZT=1 )";
+                qo.AddWhereInSQL(OKResAttr.OID, sql);
+                break;
+            case "2":
+                sql = "SELECT oid FROM FAQ_OKRES WHERE STARESCHZT=3 AND OID NOT IN (SELECT FK_SRC FROM FAQ_SHDtl WHERE FK_DEPT='" + EduUser.FK_Dept.Substring(0, 4) + "') and FK_Type='" + this.FK_Type + "'  and oid  in (select  fk_src from  faq_shdtl where fk_dept='" + EduUser.FK_Dept + "' and StaResCHZT=2 )";
+                qo.AddWhereInSQL(OKResAttr.OID, sql);
+                break;
+            default:
+                break;
+        }
+
+        qo.DoQuery();
+
+        this.Pub1.AddTable("width=99.95%");
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("文件名称");
+        this.Pub1.AddTDTitle("单位");
+        this.Pub1.AddTDTitle("创建时间");
+        if (this.SHType != "2" && this.SHType != "1")
+            this.Pub1.AddTDTitle("审核");
+        this.Pub1.AddTREnd();
+        foreach (OKRes ok in oks)
+        {
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("style='text-align:left'", "<a href=\"javascript:DoSelect('OKDesc.aspx," + ok.OID + "')\"><img src= '../Images/FileType/" + ok.FileExt + ".gif'  />" + ok.FileName + "</a>");
+            this.Pub1.AddTD(ok.FK_DeptName);
+            this.Pub1.AddTD(ok.RDT);
+            if (this.SHType != "2" && this.SHType != "1")
+
+                this.Pub1.AddTD("<a href=\"javascript:DoSH('" + ok.OID + "," + ok.OID + "," + this.SHType + "')\">审核</a>");
+            this.Pub1.AddTREnd();
+
+        }
+        this.Pub1.AddTableEnd();
+    }
+    /// <summary>
+    /// 区县审核人员 绑定数据
+    /// </summary>
+    public void BindQX()
+    {
+        OKRess oks = new OKRess();
+        QueryObject qo = new QueryObject(oks);
+        qo.AddWhere(OKResAttr.FK_KM, FK_KM);
+        qo.addAnd();
+        switch (this.SHType)
+        {
+            case "3":
+                string sql = "SELECT oid FROM FAQ_OKRES WHERE STARESCHZT=3 AND OID NOT IN (SELECT FK_SRC FROM FAQ_SHDtl WHERE FK_DEPT='" + EduUser.FK_Dept + "') and FK_Type='" + FK_Type + "'";
+                qo.AddWhereInSQL(OKResAttr.OID, sql);
+                break;
+            case "0":
+                sql = "SELECT oid FROM FAQ_OKRES WHERE STARESCHZT=3 AND OID IN (SELECT FK_SRC FROM FAQ_SHDtl WHERE FK_DEPT='" + EduUser.FK_Dept + "' and STARESCHZT=0 ) and FK_Type='" + FK_Type + "'";
+                qo.AddWhereInSQL(OKResAttr.OID, sql);
+                break;
+            case "1":
+                sql = "SELECT oid FROM FAQ_OKRES WHERE STARESCHZT=3 AND OID IN (SELECT FK_SRC FROM FAQ_SHDtl WHERE FK_DEPT='" + EduUser.FK_Dept + "' and STARESCHZT=1 ) and FK_Type='" + FK_Type + "'";
+                qo.AddWhereInSQL(OKResAttr.OID, sql);
+                break;
+            case "2":
+                sql = "SELECT oid FROM FAQ_OKRES WHERE STARESCHZT=3 AND OID IN (SELECT FK_SRC FROM FAQ_SHDtl WHERE FK_DEPT='" + EduUser.FK_Dept + "' and STARESCHZT=2 ) and FK_Type='" + FK_Type + "'";
+                qo.AddWhereInSQL(OKResAttr.OID, sql);
+                break;
+            default:
+                break;
+        }
+
+        qo.DoQuery();
+
+        this.Pub1.AddTable("width=99.95%");
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("文件名称");
+        this.Pub1.AddTDTitle("单位");
+        this.Pub1.AddTDTitle("创建时间");
+        if (this.SHType != "2" && this.SHType != "1")
+            this.Pub1.AddTDTitle("审核");
+        this.Pub1.AddTREnd();
+        foreach (OKRes ok in oks)
+        {
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("style='text-align:left'", "<a href=\"javascript:DoSelect('" + ok.OID + "')\"><img src= '../Images/FileType/" + ok.FileExt + ".gif'  />" + ok.FileName + "</a>");
+            this.Pub1.AddTD(ok.FK_DeptName);
+            this.Pub1.AddTD(ok.RDT);
+            if (this.SHType != "2" && this.SHType != "1")
+                this.Pub1.AddTD("<a href=\"javascript:DoSH('" + ok.OID + "," + ok.OID + "," + this.SHType + "')\">审核</a>");
+            this.Pub1.AddTREnd();
+
+        }
+        this.Pub1.AddTableEnd();
+    }
+    /// <summary>
+    /// 市级审核人员 绑定数据
+    /// </summary>
+    public void BindSJ()
+    {
+        OKRess oks = new OKRess();
+        QueryObject qo = new QueryObject(oks);
+        qo.AddWhere(OKResAttr.FK_Type, this.FK_Type);
+        qo.addAnd();
+        qo.AddWhere(OKResAttr.FK_KM, FK_KM);
+        switch (this.SHType)
+        {
+            case "3":
+                qo.addAnd();
+                qo.AddWhere(OKResAttr.StaResCHZT, "3");
+                break;
+            case "0":
+                qo.addAnd();
+                qo.AddWhere(OKResAttr.StaResCHZT, "0");
+                break;
+            case "1":
+                qo.addAnd();
+                qo.AddWhere(OKResAttr.StaResCHZT, "1");
+                break;
+            case "2":
+                qo.addAnd();
+                qo.AddWhere(OKResAttr.StaResCHZT, "2");
+                break;
+            default:
+                break;
+
+        }
+        qo.DoQuery();
+
+        this.Pub1.AddTable("width=99.95% ");
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("文件名称");
+        this.Pub1.AddTDTitle("单位");
+        this.Pub1.AddTDTitle("创建时间");
+        if (this.SHType != "2" && this.SHType != "1")
+            this.Pub1.AddTDTitle("审核");
+        this.Pub1.AddTREnd();
+        foreach (OKRes ok in oks)
+        {
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("style='text-align:left;border:none'", "<a href=\"javascript:DoSelect('" + ok.OID + "')\"><img  src= '../Images/FileType/" + ok.FileExt + ".gif'  />" + ok.FileName + "</a>");
+
+            this.Pub1.AddTD(ok.FK_DeptName);
+            this.Pub1.AddTD(ok.RDT);
+            if (this.SHType != "2" && this.SHType != "1")
+                this.Pub1.AddTD("<a href=\"javascript:DoSH('" + ok.OID + "," + ok.OID + "," + this.SHType + "')\">审核</a>");
+            this.Pub1.AddTREnd();
+
+        }
+        this.Pub1.AddTableEnd();
+    }
+    /// <summary>
+    /// 删除信息绑定
+    /// </summary>
+    public void Binddel()
+    {
+        this.Pub1.AddTable("width=99.5%");
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("width=25%", "文件关联名称");
+        this.Pub1.AddTDTitle("删除时间");
+        this.Pub1.AddTDTitle("上传人");
+        this.Pub1.AddTDTitle("删除人");
+        this.Pub1.AddTREnd();
+
+
+        QDtls ens = new QDtls();
+        QueryObject qo = new QueryObject(ens);
+
+        BLogs bls = new BLogs();
+        QueryObject qo1 = new QueryObject(bls);
+        qo1.AddWhere(BLogAttr.FK_BType, "like", "FAQ_" + "%" + "Del" + "%");
+        qo1.addOrderByDesc(BLogAttr.RDT);
+        qo1.Top = 40;
+        qo1.DoQuery();
+
+        foreach (BLog bl in bls)
+        {
+            Emp e = new Emp();
+            e.Retrieve(EmpAttr.No, bl.RefEmp);
+            this.Pub1.AddTR();
+            Pub1.AddTD("style='text-align:left'", bl.Title);
+            this.Pub1.AddTD(bl.RDT);
+            this.Pub1.AddTD(bl.FK_EmpName);
+            this.Pub1.AddTD(e.Name);
+            this.Pub1.AddTREnd();
+
+        }
+        this.Pub1.AddTableEnd();
+    }
+
+}
+

@@ -1,0 +1,63 @@
+﻿using System;
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using BP.DA;
+using BP.Edu;
+using BP.Edu.TH;
+using BP.Port;
+using BP.En;
+using System.IO;
+
+public partial class FAQ_ImgScan : BP.Web.WebPage
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Question q = new Question();
+        q.Retrieve(QuestionAttr.OID,this.RefOID);
+        QDtl qd = new QDtl();
+        qd.Retrieve(QDtlAttr.MyPK,this.RefNo);
+
+
+        //获取图片
+        #region
+        if (File.Exists("D:\\ShiDai\\FDB\\FAQ\\" + q.FK_KM + "\\" + Convert.ToDateTime(qd.RDT).ToString("yyMM") + "\\" + qd.MyPK + "." + qd.FileExt) == false)
+        {
+            FtpSupport.FtpConnection conn = Glo.FileFtpConn;
+            conn.SetCurrentDirectory("/FAQ/" + q.FK_KM + "/" + Convert.ToDateTime(qd.RDT).ToString("yyMM"));
+
+            try
+            {
+                conn.GetFile(qd.MyPK + "." + qd.FileExt, "D:\\ShiDai\\FDB\\FAQ\\" + q.FK_KM + "\\" + Convert.ToDateTime(qd.RDT).ToString("yyMM") + "\\" + qd.MyPK + "." + qd.FileExt, true, FileAttributes.Normal);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    Directory.CreateDirectory("D:\\ShiDai\\FDB\\FAQ\\" + q.FK_KM + "\\" + Convert.ToDateTime(qd.RDT).ToString("yyMM") + "\\");
+                    conn.GetFile(qd.MyPK + "." + qd.FileExt, "D: \\ShiDai\\FDB\\FAQ\\" + q.FK_KM + "\\" + Convert.ToDateTime(qd.RDT).ToString("yyMM") + "\\" + qd.MyPK + "." + qd.FileExt, true, FileAttributes.Normal);
+                }
+                catch (Exception myex)
+                {
+                    string msg = "@下载期间出现错误:" + this.RefNo + " , " + qd.FileName + ", @技术信息:" + ex.Message;
+
+                    this.Pub1.Clear();
+                    this.Pub1.AddMsgOfWarning("错误", msg);
+                    //this.Alert(msg);
+                    Log.DefaultLogWriteLineError(msg);
+                    return;
+                }
+            }
+        }
+        #endregion
+        //目录为FDB下的FAQ，这样才可以寻找到地址（虚拟目录FDB）
+        this.Pub1.Add("<img src='\\FDB\\FAQ\\" + q.FK_KM + "\\" + Convert.ToDateTime(qd.RDT).ToString("yyMM") + "\\" + qd.MyPK + "." + qd.FileExt+"' ");
+    }
+}

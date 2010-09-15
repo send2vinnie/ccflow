@@ -1,0 +1,5 @@
+<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+  <Item No="RunType" Name="运行类型" Keys="@0=系统管理@1=用户管理员@2=普通用户" Vals="@0=超级用户@1=管理员@2=普通用户"    />
+  <Item No="UserType" Name="用户类型" Keys="@0=超级用户@1=管理员@2=普通用户"    Vals="@0=超级用户@1=管理员@2=普通用户"   />
+</NewDataSet>

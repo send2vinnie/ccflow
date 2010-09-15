@@ -1,0 +1,228 @@
+﻿using System;
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using BP.DA;
+using BP.Edu;
+using BP.Edu.TH;
+using BP.Port;
+using BP.En;
+using System.IO;
+
+public partial class FAQ_FileDownload : BP.Web.WebPage
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Bind();
+    }
+    private void Bind()
+    {
+        Question q = new Question(this.RefOID);
+        QDtl qd = new QDtl(this.RefNo);
+        this.Pub1.Add("<div class=\"showBox\">");
+         this.Pub1.Add("<table class=\"tab_02\" width=\"100%\">");
+
+
+         //if (qd.FK_Type == "02")
+         //{
+
+         //    this.Pub1.AddTR();
+         //    this.Pub1.AddTD("colspan=2 align=center", "<a href=\"javascript:See('" + qd.MyPK + "," + this.RefOID + "') \"><img src='/Edu/ShareFile/Image/11.jpg' style='border:0px;' /> 点此预览</a>");
+         //    this.Pub1.AddTREnd();
+         //}
+
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th>");
+        this.Pub1.Add("标题");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td colspan='3'>");
+        this.Pub1.Add(q.Title);
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+
+
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th>");
+        this.Pub1.Add("适用于：");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td>");
+
+
+        ZhangJie zj = new ZhangJie(qd.FK_ZJ);
+        this.Pub1.Add(zj.FK_KMText + "." + zj.FK_NJText + "." + zj.FK_JCText + "." + zj.FK_CBText + "." + zj.HisParent.Name + "." + zj.Name);
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+
+
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th>");
+        this.Pub1.Add("作者：");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td>");
+        this.Pub1.Add(qd.Author);
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th>");
+        this.Pub1.Add("贡献者：");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td>");
+        this.Pub1.Add(qd.FK_EmpName);
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th>");
+        this.Pub1.Add("创建时间：");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td>");
+        this.Pub1.Add(qd.RDT);
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th>");
+        this.Pub1.Add("资源类型：");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td>");
+        this.Pub1.Add(qd.FK_BTypeName);
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th>");
+        this.Pub1.Add("资源格式：");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td>");
+        ResType type = new ResType(qd.FK_Type);
+        this.Pub1.Add(type.Name + "/" + qd.FileExt);
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th>");
+        this.Pub1.Add("资源大小：");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td>");
+        this.Pub1.Add(qd.FSize / 1024 + "&nbsp;KB");
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+
+
+
+
+
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th style=\"background:none\">");
+        this.Pub1.Add("描述：");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td colspan='3'  style='background:none'>");
+        string DescsHtml = q.DescsHtml.Length == 0 ? "用户没有添加描述" : q.DescsHtml;
+        this.Pub1.Add(DescsHtml);
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+
+
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th >");
+        this.Pub1.Add("下载次数：");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td >");
+        Label lab = new Label();
+        lab.ID = "Lbl_Count";
+        lab.Text = qd.NumDown + "次";
+        this.Pub1.Add(lab);
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+
+
+
+
+
+
+        //if (qd.UpDateRDT == null || qd.UpDateRDT == "")
+        //    this.Pub1.Add("贡献者还没有修改过");
+        //else
+        //    this.Pub1.Add(qd.UpDateRDT + "</td>");
+      this.Pub1.Add("<div class=\"btnBox\">");
+        this.Pub1.Add("<tr>");
+        this.Pub1.Add("<th >");
+        this.Pub1.Add("<a href=\"javascript:DownLoad('" + qd.MyPK + "," + this.RefOID + "')\"><img src='Img/xz.gif'/></a>");
+        this.Pub1.Add("</th>");
+
+        this.Pub1.Add("<td >");
+
+
+        string EXT = "";
+        ResExt re = new ResExt();
+        int num = re.Retrieve(ResExtAttr.Name, qd.FileExt);
+        if (num > 0)
+        {
+            EXT = re.Name;
+        }
+        else
+        {
+            EXT = "txt";
+        }
+        //this.Pub1.Add("<a href=\"javascript:DownLoad('" + qd.MyPK + "," + this.RefOID + "')\">" + qd.FileName + "</a><a href=\"javascript:DownLoad('" + qd.MyPK + "," + this.RefOID + "')\"><img src='Img/xz.gif'/></a>");//下载
+
+        //this.Pub1.Add("<a href=\"javascript:DownLoad('" + qd.MyPK + "," + this.RefOID + "')\"><img src='Img/xz.gif'/></a>");//下载
+
+
+
+        this.Pub1.Add("</td>");
+        this.Pub1.Add("</tr>");
+
+
+        this.Pub1.Add("</div>");
+  
+        if (EduUser.No != qd.FK_Emp)
+        {
+            
+
+            this.Pub1.AddTable("width=90% style='text-align:center' border=0");
+            this.Pub1.Add("<h2 style='padding-bottom:5px;font-size:15px;font-weight:bolder;color:#333;width=200px;border-bottom:3px solid #789262'>在此区域，点击图片，可以进行评价</h2>");
+            this.Pub1.AddTR("align=center");
+            this.Pub1.AddTD("<a href=\"javascript:DoPJ('" + qd.MyPK + ",PJA') \"><img src='/Edu/ShareFile/Image/4.gif' style='border:0px;' /></a>");
+            this.Pub1.AddTD("<a href=\"javascript:DoPJ('" + qd.MyPK + ",PJB') \"><img src='/Edu/ShareFile/Image/3.gif' style='border:0px;' /></a>");
+            this.Pub1.AddTD("<a href=\"javascript:DoPJ('" + qd.MyPK + ",PJC') \"><img src='/Edu/ShareFile/Image/2.gif' style='border:0px;' /></a>");
+            this.Pub1.AddTD("<a href=\"javascript:DoPJ('" + qd.MyPK + ",PJD') \"><img src='/Edu/ShareFile/Image/1.gif' style='border:0px;' /></a>");
+            this.Pub1.AddTREnd();
+
+            this.Pub1.AddTR();
+            this.Pub1.AddTD(qd.NumA + "人");
+            this.Pub1.AddTD(qd.NumB + "人");
+            this.Pub1.AddTD(qd.NumC + "人");
+            this.Pub1.AddTD(qd.NumD + "人");
+            this.Pub1.AddTREnd();
+            this.Pub1.AddTableEnd();
+        }
+
+    }
+}

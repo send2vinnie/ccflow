@@ -1,0 +1,52 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="FileDownload.aspx.cs" Inherits="FAQ_FileDownload" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ Register Src="../UC/Pub.ascx" TagName="Pub" TagPrefix="uc1" %>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>资源信息</title>
+    <link href="../Style/css/import.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/css/openwindow.css" rel="stylesheet" type="text/css" />
+
+    <script language="javascript" type="text/javascript">
+                       var iWidth=780; 
+                       var iHeight=800;
+                        window.resizeTo(iWidth,iHeight); 
+                 function DownLoad(TEST) {
+
+                      var iHeight = 0;
+                      var iWidth = 0;
+                      var iTop = (window.screen.availHeight - 30 - iHeight) / 2;        //获得窗口的中心位置;
+                      var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
+                      
+                      ss = TEST.split(",");
+                      var url = 'DownLoad.aspx?RefNo=' + ss[0] + '&RefOID=' + ss[1];
+                      window.open(url, '1234', 'top='+iTop+', left='+iLeft+',width=1,height=1,alwaysLowered=yes, toolbar=no, menubar=no, scrollbars=no,resizable=no,location=no, status=no');
+                      return;
+                  }
+                  function DoPJ(TEST) {
+                      ss = TEST.split(",");
+                      var url = 'Do.aspx?RefNo=' + ss[0] + '&pjtype='+ss[1]+'&DoType=PJ';
+                      window.showModalDialog(url);
+                      alert('您的评价已提交，谢谢！');
+                      window.location.reload();
+                      return;
+                  }
+                  function See(TEST) {
+                      ss = TEST.split(",");
+                      var url = 'ImgScan.aspx?RefNo=' + ss[0] + '&RefOID=' + ss[1];
+                      //window.open(url, 'newwindow', ' top=0, left=0, toolbar=no, menubar=yes, scrollbars=yes,resizable=yes,location=no, status=no');
+                      window.showModalDialog(url, '图片预览', 'dialogHeight: 300px; dialogWidth: 400px;toolbar:yes;scrollbars:yes;location:yes; status:no;  center: yes; help: no');
+                      return;
+                  }
+    </script>
+
+</head>
+<body>
+    <div id="open_wrapper">
+        <h2 class="ttlm_share_01">
+            <img src="../Style/Img/openwindow/ttls_down_01.gif" alt="单个共享" /></h2>
+        <uc1:Pub ID="Pub1" runat="server" />
+    </div>
+</body>
+</html>

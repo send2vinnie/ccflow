@@ -1,0 +1,96 @@
+
+/*  DefaultEnd  */ 
+.DefaultEnd_tabbox
+{
+    width: 100%;
+}
+.DefaultEnd_tabmenu
+{
+    width: 100%;
+    height: 28px;
+    position:relative;
+    top:137px;
+}
+.DefaultEnd_tabmenu ul
+{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.DefaultEnd_tabmenu li
+{
+    text-align: center;
+    float: left;
+    display: block;
+    width:20px;
+    height: 20px;
+    overflow: hidden;
+    line-height: 20px;
+    display: inline;
+    font-size: 12px;
+    cursor: pointer;
+    border: #89c6fd 1px solid;
+    margin-left:5px;
+    background:url(Img/tt03_bg.gif) repeat-x;
+}
+
+.DefaultEnd_tabmenu .DefaultEnd_cli
+{
+    text-align: center;
+    float: left;
+    display: block;
+    width:20px;
+    height: 20px;
+    overflow: hidden;
+    line-height: 20px;
+    display: inline;
+    font-size: 12px;
+    cursor: pointer;
+    position:relative;
+    bottom:0px;margin-left:5px;
+    background:#fff;
+}
+.DefaultEnd_tabcontent
+{
+    width: 100%;
+    line-height:30px;
+    position:relative;
+    bottom:28px;
+    padding-left:5px;
+ 
+}
+.DefaultEnd_tabcontent ul
+{
+    margin: 0;
+    padding: 0px;
+    list-style-type: none;
+}
+.DefaultEnd_tabcontent .DefaultEnd_hidden
+{
+    display: none;
+}
+
+.DefaultEnd_hidden
+{
+    display: none;
+}
+
+.DefaultEnd_tabcontent .td {
+height:25px;
+border:0;
+background:url(img/li_dot_05.gif) no-repeat left;
+padding-left:5px;
+}
+
+.DefaultEnd_tabcontent td {
+height:25px;
+}
+
+
+.DefaultEnd_tabcontent li div {
+height:245px;
+}
+
+#tabmore,.tabmore {
+float:right;
+}

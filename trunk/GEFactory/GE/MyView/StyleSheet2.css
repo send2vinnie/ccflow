@@ -1,0 +1,45 @@
+﻿.viewTitle
+{
+	font-size:12px;
+}
+.viewTitle
+{
+	float: right;
+	width: 100%;
+	line-height: 20px;
+	font-size:12px;
+	list-style:none;
+margin-left:0px;
+}
+.viewTitle ul li
+{
+    margin:0px;}
+.viewHead
+{
+	border: #89c6fd  1px solid;
+	padding-left: 15px;
+	font-weight: bolder;
+	background: url(tab_bg.gif) #e3f6ff repeat-x 50% top;
+	font-size: 12px;
+	height: 25px;
+	line-height: 25px;
+	margin-top: 10px;
+	list-style:none;
+	width:93%;
+}
+.viewItem
+{
+	background-color: #fff;
+	font-size: 12px;
+	border: #89c6fd 1px solid;
+	border-top: 0;
+	list-style:none;
+	padding-left: 15px;
+	height:25px;
+	line-height:25px;
+	background:url(dot_or.gif) no-repeat 2px ;width:93%;
+	text-overflow:ellipsis; 
+	word-wrap: nowrap; 
+    white-space:nowrap; 
+	overflow:hidden;
+}

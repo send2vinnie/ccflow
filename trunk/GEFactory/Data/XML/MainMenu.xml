@@ -1,0 +1,8 @@
+<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+  <Item No="Home" Name="首页" Url="Home.aspx" Target="_self"   Img=""   />
+  <Item No="Info" Name="信息发布" Url="Info.aspx"    Target="_self" Img=""   />
+  <Item No="Pict" Name="图片" Url="Pict.aspx"    Target="_self" Img=""   />
+  <Item No="Etc" Name="其它" Url="Etc.aspx"    Target="_self" Img=""   />
+  <Item No="Menu" Name="信息发布s" Url="Menu.aspx"    Target="_self" Img=""   />
+</NewDataSet>

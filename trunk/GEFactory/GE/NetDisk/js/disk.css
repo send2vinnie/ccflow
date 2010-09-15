@@ -1,0 +1,46 @@
+body 
+{
+	font-size:12px;
+}
+.TD 
+{
+	height:20px;
+}
+.TD img 
+{
+	margin-right:3px;
+	vertical-align:middle;
+	margin-bottom:3px;
+}
+
+a
+{
+	color: #333;
+	text-decoration: none;
+}
+a:hover 
+{
+	color:#f00; text-decoration:underline;
+}
+a:active 
+{
+	color:#f00; text-decoration:underline;
+}      
+
+.disk_title td
+{
+	background:url(../img/rx_2.gif) repeat-x bottom;
+	height:26px;
+	line-height:26px;
+	border:1px #ececec solid;
+	text-align:center;
+	font-weight:bold;
+}
+.TableDef 
+{
+	border:1px #ececec solid;
+	border-top:0;
+	width:100%;
+}
+
+  

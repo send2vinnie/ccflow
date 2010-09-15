@@ -1,0 +1,25 @@
+﻿.video_info {
+text-align:left;
+color:#333333;
+}
+.typeList 
+{
+	height:40px;
+	line-height:40px;
+	margin:5px 0px;
+	border:1px solid #ececec;
+	padding-left:10px;
+}
+.typeList span 
+{
+	font-weight:bold;
+}
+.typeList a 
+{
+	margin-right:8px;
+}
+.video_name h2 
+{
+	text-align:center;
+	margin:8px 0px;
+}

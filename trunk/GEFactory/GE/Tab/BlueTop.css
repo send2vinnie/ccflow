@@ -1,0 +1,88 @@
+.BlueTop_tabbox
+{
+    width: 100%;
+}
+.BlueTop_tabmenu
+{
+    width: 100%;
+    height: 25px;
+}
+
+.BlueTop_tabmenu ul
+{
+    margin: 0;
+    padding: 0;
+}
+.BlueTop_tabmenu li
+{
+    text-align: center;
+    float: left;
+    display: block;
+    width: 58px;
+    height: 27px;
+    overflow: hidden;
+    background-color: #D2E8F7;
+    line-height: 27px;
+    border: #89c6fd 1px solid;
+    display: inline;
+    font-size: 12px;
+    margin-right:3px;
+    background:url(Img/tt03_bg.gif) repeat-x;
+    position:relative;
+    bottom:0px;
+    cursor: pointer;border-bottom:#89c6fd 1px solid;
+    font-weight:bold;
+}
+.BlueTop_tabmenu .BlueTop_cli
+{
+    text-align: center;
+    float: left;
+    display: block;
+    width: 58px;
+    height: 27px;
+    overflow: hidden;
+    background:url(Img/tab_bg.gif) repeat-x;
+    line-height: 27px;
+    border: #89c6fd 1px solid;
+    border-bottom:0;
+    display: inline;
+    font-size: 12px;
+    cursor: pointer;
+    position:relative;
+    bottom:-1px;
+    color:#f90;
+}
+.BlueTop_tabcontent
+{
+    width: 100%;
+    background-color: #fff;
+    border: #89c6fd 1px solid;
+    height:30px;
+    margin-bottom:5px;
+    background:#c6e6fa;
+}
+.BlueTop_tabcontent a{
+margin:0px 3px;
+
+}
+.BlueTop_tabcontent ul
+{
+    margin: 0;
+    padding: 5px;
+}
+.BlueTop_tabcontent BlueTop_.hidden
+{
+    display: none;
+}
+.BlueTop_hidden
+{
+    display: none;
+}
+.BlueTop_tabTitle
+{
+   
+}
+
+#tabmore,.tabmore {
+float:right;
+}

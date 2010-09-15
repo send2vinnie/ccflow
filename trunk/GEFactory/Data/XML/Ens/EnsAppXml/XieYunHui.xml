@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <!--
+  作用：描述与设置 Ens 的信息。
+  其它：信息存储在BP.Sys.AppCfg
+  DBType = String Int Enum Boolen
+  -->
+  <!--  -->
+  <Item EnsName="BP.GE.DKFiles" No="ShowFileNUM" Name="显示文件个数" DefVal="10" Desc="显示文件个数" DBType="Int" EnumKey="" EnumVals="" /> 
+
+  <Item EnsName="BP.GE.ImgLinks" No="AppName" Name="应用名称" DefVal="专辑资源(链接)"  Desc="应用名称" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="TabTitle" Name="标题" DefVal="专辑资源" Desc="显示在TabTitle上的标题" DBType="String" EnumKey="" EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="NumOfCol" Name="列数" DefVal="3" Desc="图片列数" DBType="Int" EnumKey="" EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="NumOfRow" Name="行数" DefVal="2"  Desc="图片行数" DBType="Int" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="ImageH" Name="图片高度" DefVal="90px"  Desc="设置图片高度" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="ImageW" Name="图片宽度" DefVal="120px"  Desc="设置图片宽度" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="ContextURL" Name="图片更多链接" DefVal="http://baidu.com"  Desc="查看更多图片链接" DBType="Int" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="GroupTitleCSS" Name="GroupTitle的样式" DefVal="title_03"  Desc="页面中GroupTitle所使用的样式名称" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="C_TabTitle" Name="标题" DefVal="专辑资源" Desc="显示在TabTitle上的标题" DBType="String" EnumKey="" EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="C_NumOfCol" Name="列数" DefVal="6" Desc="图片列数" DBType="Int" EnumKey="" EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="C_NumOfRow" Name="行数" DefVal="3"  Desc="图片行数" DBType="Int" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="C_ImageH" Name="图片高度" DefVal="180px"  Desc="设置图片高度" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="C_ImageW" Name="图片宽度" DefVal="240px"  Desc="设置图片宽度" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLinks" No="C_ContextURL" Name="图片更多链接" DefVal="http://baidu.com"  Desc="查看更多图片链接" DBType="Int" EnumKey=""  EnumVals="" />
+
+  <!--专辑资源(无分类)  -->
+  <Item EnsName="BP.GE.ImgLink1s" No="AppName" Name="应用名称" DefVal="专辑资源"  Desc="应用名称" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="Title" Name="标题" DefVal="专辑资源" Desc="Title" DBType="String" EnumKey="" EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="NumOfCol" Name="列数" DefVal="3" Desc="首页中显示图片的列数" DBType="Int" EnumKey="" EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="NumOfRow" Name="行数" DefVal="2"  Desc="首页中显示图片的行数" DBType="Int" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="M_Target" Name="更多页面的打开方式" DefVal="0" Desc="更多页面的打开方式" DBType="Enum" EnumKey="M_Target" EnumVals="@0=本窗口打开@1=新窗口打开" />
+  <Item EnsName="BP.GE.ImgLink1s" No="M_NumOfCol" Name="列数" DefVal="5" Desc="更多页面中，显示图片的列数" DBType="Int" EnumKey="" EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="M_NumOfRow" Name="行数" DefVal="4"  Desc="更多页面中，显示图片的行数" DBType="Int" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="ImageH" Name="图片高度" DefVal="90"  Desc="设置图片高度" DBType="Int" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="ImageW" Name="图片宽度" DefVal="120"  Desc="设置图片宽度" DBType="Int" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="GroupTitleCSS" Name="GroupTitle的样式" DefVal="title_03"  Desc="页面中GroupTitle所使用的样式名称" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="FtpIP" Name="FtpIP" DefVal="192.168.0.164"  Desc="FtpIP" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="FtpUser" Name="FtpUser" DefVal="administrator"  Desc="FtpUser" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="FtpPass" Name="FtpPass" DefVal="863"  Desc="FtpPass" DBType="String" EnumKey=""  EnumVals="" />
+  <Item EnsName="BP.GE.ImgLink1s" No="FtpPath" Name="FtpPath" DefVal="FDB"  Desc="Ftp路径" DBType="String" EnumKey=""  EnumVals="" />
+
+
+</NewDataSet>

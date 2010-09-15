@@ -1,0 +1,59 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Check.aspx.cs" Inherits="FAQ_Check" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ Register Src="../UC/Pub.ascx" TagName="Pub" TagPrefix="uc1" %>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="../Style/css/beike.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/css/part.css" rel="stylesheet" type="text/css" />
+    <link href="/Edu/Style/css/import.css" rel="stylesheet" type="text/css" />
+    <link href="/Edu/Style/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="/Edu/Style/css/index.css" rel="stylesheet" type="text/css" />
+
+    <script language="javascript" type="text/javascript">
+         function DoSelect(test) {
+            ss = test.split(",");
+            var url = 'Do.aspx?DoType=NumOfRead&OID=' + ss[1];
+            window.showModalDialog(url);
+            var url2 = ss[0] + '?RefOID=' + ss[1];
+            
+            var iHeight = 0;
+            var iWidth = 900;
+            var iTop = (window.screen.availHeight - 30 - iHeight) / 2;        //获得窗口的垂直位置;
+            var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
+            
+            window.open(url2,ss[1]);
+            window.location.reload();
+            return;
+        }
+        function DoSH(test) {
+            ss = test.split(",");
+            var url = 'CheckDetail.aspx?RefNo=' + ss[0] + '&RefOID=' + ss[1];
+
+            var iHeight = 500;
+            var iWidth = 700;
+            var iTop = (window.screen.availHeight - 30 - iHeight) / 2;        //获得窗口的中心位置;
+            var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
+            window.open(url, '审核信息', 'top=' + iTop + ', left=' + iLeft + ',width=700,height=500,toolbar=no, menubar=no, scrollbars=yes,resizable=no,location=no, status=no')
+            return;
+        }
+    </script>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+    <p>
+        <img src="../Style/Img/right_line_t.jpg" alt="" /></p>
+    <div class="r_inner" style="width: 740px">
+        <p class="siteMap">
+            所在位置： <a class="link_black" target="_parent" href="/edu/port/default.aspx">个人中心</a>
+            - <span class="font_b">请求审核</span></p>
+        <uc1:Pub ID="Top" runat="server" />
+        <uc1:Pub ID="Pub1" runat="server" />
+    </div>
+    <p>
+        <img src="/Edu/Style/Img/right_line_b.jpg" alt="" /></p>
+    </form>
+</body>
+</html>
