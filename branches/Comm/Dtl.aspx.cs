@@ -122,7 +122,7 @@ public partial class Comm_Dtl : WebPage
         try
         {
             this.Ucsys2.Clear();
-            this.Ucsys2.BindPageIdx(qo.GetCOUNT(), BP.SystemConfig.PageSize, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal);
+            this.Ucsys2.BindPageIdx(qo.GetCount(), BP.SystemConfig.PageSize, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal);
             qo.DoQuery("OID", BP.SystemConfig.PageSize, this.PageIdx, false);
         }
         catch (Exception ex)

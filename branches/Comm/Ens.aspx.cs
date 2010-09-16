@@ -163,7 +163,7 @@ public partial class Comm_UIEnsV10 : WebPage
         try
         {
             this.ucsys2.Clear();
-            this.ucsys2.BindPageIdx(qo.GetCOUNT(), BP.SystemConfig.PageSize, this.PageIdx, "Ens.aspx?EnsName=" + this.EnsName);
+            this.ucsys2.BindPageIdx(qo.GetCount(), BP.SystemConfig.PageSize, this.PageIdx, "Ens.aspx?EnsName=" + this.EnsName);
             qo.DoQuery(en.PK, BP.SystemConfig.PageSize, this.PageIdx, false);
         }
         catch (Exception ex)

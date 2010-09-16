@@ -280,7 +280,7 @@ namespace BP.Web.Comm
             qo = this.ToolBar1.GetnQueryObject(ens, en);
 
             this.UCSys2.Clear();
-            int maxPageNum = this.UCSys2.BindPageIdx(qo.GetCOUNT(), SystemConfig.PageSize, pageIdx, "PanelEns.aspx?EnsName=" + this.EnsName);
+            int maxPageNum = this.UCSys2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, "PanelEns.aspx?EnsName=" + this.EnsName);
             if (maxPageNum > 1)
                 this.UCSys2.Add("·­Ò³¼ü:¡û ¡ú PageUp PageDown");
 
