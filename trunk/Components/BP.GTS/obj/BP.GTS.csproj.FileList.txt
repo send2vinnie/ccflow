@@ -1,0 +1,15 @@
+bin\Debug\BP.GTS.dll
+bin\Debug\BP.GTS.pdb
+bin\Debug\BP.En30.dll
+bin\Debug\ChineseConverter.dll
+bin\Debug\BP.En30.pdb
+bin\Debug\ChineseConverter.xml
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\BP.GTS.dll
+obj\Debug\BP.GTS.pdb
+bin\Release\BP.GTS.dll
+bin\Release\BP.En30.dll
+bin\Release\ChineseConverter.dll
+bin\Release\ChineseConverter.xml
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\BP.GTS.dll

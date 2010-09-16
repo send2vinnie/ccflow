@@ -1,0 +1,322 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B01940E2-5AB3-4921-A6A7-5A8BA2A92B0E}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>BP.GTS</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BP.GTS</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>http://localhost/BP.GTS/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GTS\GTSUser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GTS\Study.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GTS\ThemeSort.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GTS\ThemeType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GTS\GTSEmp.cs" />
+    <Compile Include="GTS\GTSDept.cs" />
+    <Compile Include="PaperDesign\Paper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperDesign\PaperFix.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperDesign\PaperVSChoseM.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperDesign\PaperVSChoseOne.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperDesign\PaperVSEmp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperDesign\PaperVSEssayQuestion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperDesign\PaperVSFillBlank.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperDesign\PaperVSJudgeTheme.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperDesign\PaperVSRC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperDesign\PaperVSRCDtl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperExam\PaperExam.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperExam\PaperExamOfChose.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperExam\PaperExamOfEssayQuestion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperExam\PaperExamOfFillBlank.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperExam\PaperExamOfJudgeTheme.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperExam\PaperExamOfRCDtl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaperExam\PaperExamThemeBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Random\PaperExamRandom.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Random\PaperRandomDesign.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Random\PaperRandomFB.cs" />
+    <Compile Include="Rpt.Exam\ExamRpt.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rpt.Exam\Level.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rpt.Exam\PaperExamExt.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rpt.Exam\PaperExt.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rpt.Work\WorkDtl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rpt.Work\WorkExt.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Rpt.Work\WorkRpt.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Theme\Chose\Chose.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Theme\Chose\ChoseBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Theme\Chose\ChoseItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Theme\Chose\ChoseM.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Theme\Chose\ChoseOne.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Theme\EssayQuestion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Theme\FillBlank.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Theme\JudgeTheme.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Theme\RC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Theme\RCDtl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Design\WorkFixDesign.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Design\WorkVSBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Design\WorkVSChoseM.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Design\WorkVSChoseOne.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Design\WorkVSEmp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Design\WorkVSEssayQuestion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Design\WorkVSFillBlank.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Design\WorkVSJudgeTheme.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Design\WorkVSRC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Design\WorkVSRCDtl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Save\WorkFix.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Save\WorkOfChose.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Save\WorkOfEssayQuestion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Save\WorkOfFillBlank.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Save\WorkOfJudgeTheme.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Save\WorkOfRCDtl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkFix\Save\WorkThemeBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkRandom\Design\WorkRandom.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkRandom\Design\WorkRandomDesign.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WorkRandom\Design\WorkRandomVSEmp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\VisualWorkFlow\Components\BP.En30\BP.En30.csproj">
+      <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
+      <Name>BP.En30</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+    <Folder Include="bin\Release\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
