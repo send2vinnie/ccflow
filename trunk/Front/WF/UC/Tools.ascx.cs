@@ -28,6 +28,9 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 
         switch (this.RefNo)
         {
+            case "AdminSet":
+                AdminSet();
+                break;
             case "AutoLog":
                 BindAutoLog();
                 break;
@@ -49,6 +52,56 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
                 break;
         }
     }
+    public void AdminSet()
+    {
+        this.Pub1.AddFieldSet("网站设置");
+
+        this.Pub1.AddTable();
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle();
+        this.Pub1.AddTDTitle();
+        this.Pub1.AddTDTitle();
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("网站标题图片");
+
+
+        FileUpload fu = new FileUpload();
+        fu.ID = "F";
+        this.Pub1.AddTD(fu);
+        this.Pub1.AddTD("请您自己调整好图片大小，然后把它上传上去。");
+        this.Pub1.AddTREnd();
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("");
+
+        Btn btn = new Btn();
+        btn.Text = "确定";
+        btn.Click += new EventHandler(btn_AdminSet_Click);
+        this.Pub1.AddTD(btn);
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+        this.Pub1.AddTableEnd();
+
+        this.Pub1.AddFieldSetEnd(); 
+    }
+    void btn_AdminSet_Click(object sender, EventArgs e)
+    {
+        FileUpload f = (FileUpload)this.Pub1.FindControl("F");
+
+        if (f.HasFile == false)
+            return;
+
+        f.SaveAs(BP.SystemConfig.PathOfWebApp + "/WF/Style/Title.gif");
+
+        this.Response.Redirect(this.Request.RawUrl, true);
+
+         
+        //this.Alert("保存成功。");
+    }
+
 
     public void BindPass()
     {
@@ -333,6 +386,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
     }
     public void BindTimesFlow()
     {
+
     }
     public void BindTimesND()
     {
@@ -512,6 +566,10 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
                 this.Left.AddLi("<b>" + tool.Name + "</b>");
             else
                 this.Left.AddLi("Tools.aspx?RefNo=" + tool.No, tool.Name, "_self");
+        }
+        if (WebUser.No == "admin")
+        {
+            this.Left.AddLi("Tools.aspx?RefNo=AdminSet", "网站设置", "_self");
         }
         this.Left.AddULEnd();
 

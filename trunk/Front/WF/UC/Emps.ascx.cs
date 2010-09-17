@@ -19,6 +19,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Page.Title = "成员";
         if (WebUser.IsWap)
         {
             this.BindWap();

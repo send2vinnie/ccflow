@@ -89,7 +89,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         else
             qo.AddWhere("substring(RDT,1,10) >='" + this.DT_F + "' AND substring(RDT,1,10) <='" + this.DT_T + "' ");
 
-        this.Pub2.BindPageIdx(qo.GetCOUNT(), 10, this.PageIdx, "FlowSearch.aspx?FK_Node=" + this.FK_Node);
+        this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch.aspx?FK_Node=" + this.FK_Node);
         qo.DoQuery("OID", 10, this.PageIdx);
 
         // 生成页面数据。

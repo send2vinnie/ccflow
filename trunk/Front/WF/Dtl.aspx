@@ -10,7 +10,7 @@
 		    var isChange = false;
 		    function SaveDtlData() {
 
-     alert( isChange );
+    // alert( isChange );
    
 		        if (isChange == false)
 		            return;

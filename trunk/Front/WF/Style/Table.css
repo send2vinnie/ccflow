@@ -1,7 +1,9 @@
 /*  Table */
 .Table
 {
-	border: 1px;
+	border-style: none;
+	border-width: 2px;
+	border-color: #C0C0C0;
 	margin: 2px;
 	padding: 5px;
 	background-color: #FFFFFF;

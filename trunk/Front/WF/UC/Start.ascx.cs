@@ -21,11 +21,12 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Page.Title = "工作发起";
         int colspan = 5;
         this.AddTable("width='60%' align=center");
-        this.AddTR();
-        this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
-        this.AddTREnd();
+        //this.AddTR();
+        //this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
+        //this.AddTREnd();
 
         this.AddTR();
         if (WebUser.IsWap)

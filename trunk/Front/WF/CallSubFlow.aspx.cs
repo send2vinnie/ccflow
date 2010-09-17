@@ -46,7 +46,7 @@ public partial class WF_CallSubFlow : WebPage
         QueryObject qo = new QueryObject(wks);
         qo.AddWhere(WorkAttr.FID, this.FID);
 
-        this.Pub2.BindPageIdx(qo.GetCOUNT(), 10, this.PageIdx, "CallSubFlow.aspx?FK_Flow=" + this.FK_Flow+ "&FID="+this.FID+"&FK_FlowFrom="+this.FK_FlowFrom);
+        this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "CallSubFlow.aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_FlowFrom=" + this.FK_FlowFrom);
         qo.DoQuery("OID", 10, this.PageIdx);
 
         // 生成页面数据。

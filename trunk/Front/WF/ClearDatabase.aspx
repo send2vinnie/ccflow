@@ -15,11 +15,11 @@
                 <font color=red >在执行删除前一定要确认，这些运行中的数据是否需要。<BR>一但执行删除数据将无法恢复。</font>
                 </fieldset>
                 <br />
-                        <asp:Button ID="Button2" runat="server" Text="清除流程数据" OnClick="Button2_Click" /></td>
+                        <asp:Button ID="Button2" runat="server"  Text="清除流程中运行的数据" OnClick="Button2_Click" /></td>
                  
 		&nbsp;&nbsp;&nbsp; ---&nbsp;
          <asp:Button ID="Button3" runat="server" onclick="Button3_Click1" 
-             Text="清除所有的流程" />
+             Text="清除所有设计的流程" />
                  
 		</form>
 	</body>

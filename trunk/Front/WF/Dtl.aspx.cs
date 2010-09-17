@@ -164,7 +164,7 @@ public partial class Comm_Dtl : WebPage
         this.Pub2.Clear();
         try
         {
-            int count = qo.GetCOUNT();
+            int count = qo.GetCount();
             this.Pub2.Clear();
             this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap);
             qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);

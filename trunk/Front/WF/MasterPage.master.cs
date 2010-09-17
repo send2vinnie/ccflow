@@ -57,6 +57,8 @@ public partial class Face_MasterPage : System.Web.UI.MasterPage
 //</DIV>
 
         string dotype = this.PageID;
+        this.Pub1.Add("<Img src='./Style/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
+
         this.Pub1.Add("<DIV align=center><UL id=main_nav align=center>");
         this.Pub1.Add("<LI>Hi:"+BP.Web.WebUser.No+ BP.Web.WebUser.Name+"</LI>");
 

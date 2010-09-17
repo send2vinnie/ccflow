@@ -57,6 +57,8 @@ namespace BP.Web.WF.WF
                 return;
             }
 
+            Button2.Attributes["onclick"] = "return window.confirm('您确定要删除吗？');";
+            Button3.Attributes["onclick"] = "return window.confirm('您确定要删除吗？');";
         }
         protected void Button2_Click(object sender, EventArgs e)
         {
