@@ -104,7 +104,11 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
         if (this.PK == null)
             return;
 
+        if (en.EnMap.AttrsOfOneVSM.Count == 0)
+            return;
+
         en.PKVal = this.PK;
+
 
         string keys = "&" + en.PK + "=" + this.PK + "&r=" + DateTime.Now.ToString("MMddhhmmss");
 
