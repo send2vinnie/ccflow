@@ -71,7 +71,7 @@ namespace BP.Web.Comm
             Entity en = ens.GetNewEntity;
 
             QueryObject qo = new QueryObject(ens);
-            int num = qo.GetCOUNT();
+            int num = qo.GetCount();
             qo.DoQuery(en.PK, this.PageSize, this.PageIdx, true);
 
 
