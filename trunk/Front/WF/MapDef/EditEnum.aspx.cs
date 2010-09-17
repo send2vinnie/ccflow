@@ -19,14 +19,14 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
     /// <summary>
     /// GroupField
     /// </summary>
-    public string GroupField
+    public int GroupField
     {
         get
         {
             string s = this.Request.QueryString["GroupField"];
-            if (s == "")
-                return null;
-            return s;
+            if (s == "" || s==null)
+                return 0;
+            return int.Parse(s);
         }
     }
     /// <summary>
@@ -59,6 +59,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
         MapAttr attr = new MapAttr(this.RefNo);
         BindEnum(attr);
     }
+
     public void BindEnum(MapAttr mapAttr)
     {
         
@@ -165,6 +166,24 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
         #endregion 是否可编辑
 
 
+        #region 字段分组
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("字段分组");
+        DDL ddlGroup = new DDL();
+        ddlGroup.ID = "DDL_GroupID";
+        GroupFields gfs = new GroupFields(mapAttr.FK_MapData);
+        ddlGroup.Bind(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab);
+        if (mapAttr.GroupID == 0)
+            mapAttr.GroupID = this.GroupField;
+
+        ddlGroup.SetSelectItem(mapAttr.GroupID);
+        this.Pub1.AddTD(ddlGroup);
+        this.Pub1.AddTD("修改隶属分组");
+        this.Pub1.AddTREnd();
+        #endregion 字段分组
+
+
+
 
         this.Pub1.AddTRSum();
         this.Pub1.Add("<TD colspan=3 >");
@@ -237,10 +256,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
             attr = (MapAttr)this.Pub1.Copy(attr);
             attr.FK_MapData = this.MyPK;
             attr.DefVal = this.Pub1.GetDDLByID("DDL").SelectedItemStringVal;
-            if (this.GroupField != null)
-            {
-                attr.GroupID = int.Parse(this.GroupField);
-            }
+            attr.GroupID = this.Pub1.GetDDLByID("DDL_GroupID").SelectedItemIntVal;
             attr.Update();
 
             switch (btn.ID)

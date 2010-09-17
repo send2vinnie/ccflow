@@ -20,14 +20,14 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
     /// <summary>
     /// GroupField
     /// </summary>
-    public string GroupField
+    public int GroupField
     {
         get
         {
             string s = this.Request.QueryString["GroupField"];
-            if (s == "")
-                return null;
-            return s;
+            if (s == "" || s == null)
+                return 0;
+            return int.Parse( s);
         }
     }
     /// <summary>
@@ -144,6 +144,26 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
             }
         }
         this.Pub1.AddTREnd();
+
+
+
+        #region 字段分组
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("字段分组");
+        DDL ddlGroup = new DDL();
+        ddlGroup.ID = "DDL_GroupID";
+        GroupFields gfs = new GroupFields(mapAttr.FK_MapData);
+        ddlGroup.Bind(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab);
+        if (mapAttr.GroupID == 0)
+            mapAttr.GroupID = this.GroupField;
+
+        ddlGroup.SetSelectItem(mapAttr.GroupID);
+        this.Pub1.AddTD(ddlGroup);
+        this.Pub1.AddTD("修改隶属分组");
+        this.Pub1.AddTREnd();
+        #endregion 字段分组
+
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTD(this.ToE("FLabel", "字段中文名称")); // 字段中文名称
@@ -285,6 +305,8 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
             attr.Retrieve();
             attr = (MapAttr)this.Pub1.Copy(attr);
             attr.FK_MapData = this.MyPK;
+            attr.GroupID = this.Pub1.GetDDLByID("DDL_GroupID").SelectedItemIntVal;
+
             if (this.Pub1.IsExit("CB_IsDefValNull"))
             {
                 if (this.Pub1.GetCBByID("CB_IsDefValNull").Checked == false)
@@ -303,11 +325,6 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
                 {
                     attr.DefVal = s;
                 }
-            }
-
-            if (this.GroupField != null)
-            {
-                attr.GroupID = int.Parse(this.GroupField);
             }
 
             attr.Update();

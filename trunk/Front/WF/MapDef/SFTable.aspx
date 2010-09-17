@@ -5,8 +5,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title runat=server />
-    <link href="../Menu.css" rel="stylesheet" type="text/css" />
-    <link href="../Table.css" rel="stylesheet" type="text/css" />
+    <link href="./../Style/Table.css" rel="stylesheet" type="text/css" />
+    <link href="./../Style/Style.css" rel="stylesheet" type="text/css" />
+    
 		<script language="JavaScript" src="JS.js"></script>
     
     <script language=javascript>

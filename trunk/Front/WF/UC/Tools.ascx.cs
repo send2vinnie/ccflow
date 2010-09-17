@@ -83,6 +83,15 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         this.Pub1.AddTD(btn);
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD();
+        this.Pub1.AddTD("<a href=\"javascript:WinOpen('../../Comm/Sys/EditWebConfig.aspx')\" >系统设置</a>");
+        this.Pub1.AddTD("<a href=\"javascript:WinOpen('../../WF/ClearDatabase.aspx')\" >清除所有流程数据</a>");
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+
         this.Pub1.AddTableEnd();
 
         this.Pub1.AddFieldSetEnd(); 

@@ -56,23 +56,50 @@ public partial class Face_MasterPage : System.Web.UI.MasterPage
 //  <LI><A href="http://app.javaeye.com/email">注册邮箱</A> </LI></UL>
 //</DIV>
 
+        string sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'";
+        int num = BP.DA.DBAccess.RunSQLReturnValInt(sql);
+        string msg = "待办";
+        if (num != 0)
+        {
+            msg = "<div id='blink'>待办-" + num + "</div>";
+            string script = "";
+            script += "<script language=javascript>";
+            script += "function changeColor(){";
+            script += " var color='#f00|#0f0|#00f|#880|#808|#088|yellow|green|blue|gray';";
+            script += " color=color.split('|'); ";
+            script += " document.getElementById('blink').style.color=color[parseInt(Math.random() * color.length)] ";
+            script += " }";
+            script += " setInterval('changeColor()',200);";
+            script += "</script> ";
+            this.Page.RegisterClientScriptBlock("s", script);
+        }
+       
+
         string dotype = this.PageID;
         this.Pub1.Add("<Img src='./Style/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
 
         this.Pub1.Add("<DIV align=center><UL id=main_nav align=center>");
         this.Pub1.Add("<LI>Hi:"+BP.Web.WebUser.No+ BP.Web.WebUser.Name+"</LI>");
+         
 
         foreach (BP.WF.XML.ToolBar en in ens)
         {
             if (en.No == dotype)
             {
-                this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
+                if (en.No == "EmpWorks")
+                    this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
+                else
+                    this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
+
                 // this.Pub1.Add("<TD nowrap=true><img src='" + en.Img + "' border='0' class=ImgIcon ><b>" + en.Name + "</b></TD>"); <img src='" + en.Img + "' border='0' height='9px' width='9px' >
             }
             else
             {
                 // this.Pub1.Add("<LI><A href=http://app.javaeye.com/profile">个人资料</A> </LI>
-                this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
+                if (en.No == "EmpWorks")
+                    this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
+                else
+                    this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
             }
         }
         this.Pub1.Add("</UL><DIV>");

@@ -127,6 +127,8 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.AddTDTitle("&nbsp;");
         this.Pub1.AddTREnd();
 
+     
+
         if (mapAttr.IsTableAttr)
         {
             /* if here is table attr, It's will let use can change data type. */
@@ -354,6 +356,25 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
     }
     public void EditBeforeEnd(MapAttr mapAttr)
     {
+
+
+        #region 字段分组
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("字段分组");
+        DDL ddlGroup = new DDL();
+        ddlGroup.ID = "DDL_GroupID";
+        GroupFields gfs = new GroupFields(mapAttr.FK_MapData);
+        ddlGroup.Bind(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab);
+        if (mapAttr.GroupID == 0)
+            mapAttr.GroupID = this.GroupField;
+
+        ddlGroup.SetSelectItem(mapAttr.GroupID);
+        this.Pub1.AddTD(ddlGroup);
+        this.Pub1.AddTD("修改隶属分组");
+        this.Pub1.AddTREnd();
+        #endregion 字段分组
+
+
         this.Pub1.AddTRSum();
         this.Pub1.Add("<TD colspan=3 align=center>");
         Button btn = new Button();
@@ -374,7 +395,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
-        if (this.RefNo !=null )
+        if (this.RefNo != null)
         {
             btn = new Button();
             btn.ID = "Btn_AutoFull";
@@ -684,12 +705,13 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             }
 
             MapAttr attr = new MapAttr();
-            attr.GroupID = this.GroupField;
+
             if (this.RefNo != null)
             {
                 attr.MyPK = this.RefNo;
                 attr.Retrieve();
                 attr = (MapAttr)this.Pub1.Copy(attr);
+                attr.GroupID = this.Pub1.GetDDLByID("DDL_GroupID").SelectedItemIntVal;
                 switch (this.FType)
                 {
                     case DataType.AppBoolean:
@@ -710,6 +732,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             else
             {
                 attr = (MapAttr)this.Pub1.Copy(attr);
+                attr.GroupID = this.Pub1.GetDDLByID("DDL_GroupID").SelectedItemIntVal;
                 MapAttrs attrS = new MapAttrs(this.MyPK);
                 int idx = 0;
                 foreach (MapAttr en in attrS)
@@ -726,10 +749,10 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                     attr.IDX = int.Parse(this.IDX) - 1;
 
                 attr.MyDataType = this.FType;
-                if (this.GroupField != 0)
-                {
-                    attr.GroupID =  this.GroupField;
-                }
+                //if (this.GroupField != 0)
+                //{
+                //    attr.GroupID = this.GroupField;
+                //}
                 switch (this.FType)
                 {
                     case DataType.AppBoolean:
@@ -754,12 +777,12 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                     this.WinClose();
                     return;
                 case "Btn_SaveAndNew":
-                    this.Response.Redirect("Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField, true);
+                    this.Response.Redirect("Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "&GroupField=" + attr.GroupID, true);
                     return;
                 default:
                     break;
             }
-            this.Response.Redirect("EditF.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefNo=" + attr.MyPK + "&FType=" + this.FType + "&GroupField=" + this.GroupField, true);
+            this.Response.Redirect("EditF.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefNo=" + attr.MyPK + "&FType=" + this.FType + "&GroupField=" + attr.GroupID, true);
         }
         catch (Exception ex)
         {

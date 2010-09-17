@@ -55,7 +55,16 @@ public partial class Comm_MapDef_SFTableEditData : BP.Web.WebPage
 
         GENoNames ens = new GENoNames(sf.No, sf.Name);
         QueryObject qo = new QueryObject(ens);
-        this.Ucsys2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "SFTableEditData.aspx?RefNo=" + this.RefNo);
+        try
+        {
+            this.Ucsys2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "SFTableEditData.aspx?RefNo=" + this.RefNo);
+        }
+        catch
+        {
+            sf.CheckPhysicsTable();
+            this.Ucsys2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "SFTableEditData.aspx?RefNo=" + this.RefNo);
+        }
+
         qo.DoQuery("No", 10, this.PageIdx, false);
 
         foreach (GENoName en in ens)
@@ -65,8 +74,11 @@ public partial class Comm_MapDef_SFTableEditData : BP.Web.WebPage
             TextBox tb = new TextBox();
             tb.ID = "TB_" + en.No;
             tb.Text = en.Name;
+            tb.Attributes["width"] = "500px";
+            tb.Columns = 80 ;
+
             this.Ucsys1.AddTD(tb);
-            this.Ucsys1.AddTD("<a href=\"javascript:Del('"+this.RefNo+"','"+this.PageIdx+"','"+en.No+"')\" >删除</a>");
+            this.Ucsys1.AddTD("<a href=\"javascript:Del('" + this.RefNo + "','" + this.PageIdx + "','" + en.No + "')\" >删除</a>");
             this.Ucsys1.AddTREnd();
         }
 
@@ -76,6 +88,8 @@ public partial class Comm_MapDef_SFTableEditData : BP.Web.WebPage
         TextBox tb1 = new TextBox();
         tb1.ID = "TB_Name";
         tb1.Text = newen.Name;
+        tb1.Columns = 80;
+
         this.Ucsys1.AddTD(tb1);
         Button btn = new Button();
         btn.Text = "保存";
