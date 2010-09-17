@@ -29,6 +29,26 @@ public partial class WAP_Home : System.Web.UI.Page
         ens.RetrieveAll();
 
 
+
+        string sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'";
+        int num = BP.DA.DBAccess.RunSQLReturnValInt(sql);
+        string msg = "待办";
+        if (num != 0)
+        {
+            msg = "<div id='blink'>待办-" + num + "</div>";
+            string script = "";
+            script += "<script language=javascript>";
+            script += "function changeColor(){";
+            script += " var color='#f00|#0f0|#00f|#880|#808|#088|yellow|green|blue|gray';";
+            script += " color=color.split('|'); ";
+            script += " document.getElementById('blink').style.color=color[parseInt(Math.random() * color.length)] ";
+            script += " }";
+            script += " setInterval('changeColor()',200);";
+            script += "</script> ";
+            this.RegisterClientScriptBlock("s", script);
+        }
+
+
         this.Top.AddTable();
         this.Top.AddCaptionLeft("<img src='./Img/Home.gif' border=0/>  Hi:" + WebUser.No + "," + WebUser.Name + "-<a href='DoWap.aspx?DoType=Out'>注销</a>");
 
@@ -38,12 +58,13 @@ public partial class WAP_Home : System.Web.UI.Page
             if (isTR)
                 this.Top.AddTR();
 
-            this.Top.AddTDBigDoc("class=BigDoc align=center","<a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><img src='" + en.Img + "' border='0' ><br>" + en.Name + "</a>");
-
+            if (en.No == "EmpWorks")
+                this.Top.AddTDBigDoc("class=BigDoc align=center", "<a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><img src='" + en.Img + "' border='0' ><br>" + msg + "</a>");
+            else
+                this.Top.AddTDBigDoc("class=BigDoc align=center", "<a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><img src='" + en.Img + "' border='0' ><br>" + en.Name + "</a>");
 
             if (isTR == false)
                 this.Top.AddTREnd();
-
             isTR = !isTR;
         }
         this.Top.AddTableEnd();
