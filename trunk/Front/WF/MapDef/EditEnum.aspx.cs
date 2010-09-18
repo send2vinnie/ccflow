@@ -73,14 +73,21 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
         this.Pub1.AddTR();
         this.Pub1.AddTD(this.ToE("FEName", "字段英文名称"));
         TB tb = new TB();
-        tb.ID = "TB_KeyOfEn";
-        tb.Text = mapAttr.KeyOfEn;
-        if (this.RefNo !=null )
-            tb.Enabled = false;
-
-        this.Pub1.AddTD(tb);
-        this.Pub1.AddTD("");
+        if (this.RefNo != null)
+        {
+            this.Pub1.AddTD(mapAttr.KeyOfEn);
+        }
+        else
+        {
+            tb = new TB();
+            tb.ID = "TB_KeyOfEn";
+            tb.Text = mapAttr.KeyOfEn;
+            this.Pub1.AddTD(tb);
+        }
+       // this.Pub1.AddTDTitle("&nbsp;");
+        //this.Pub1.AddTD("不要以数字开头、不要中文。");
         this.Pub1.AddTREnd();
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTD(this.ToE("DefaultVal", "默认值"));

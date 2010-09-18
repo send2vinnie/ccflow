@@ -45,7 +45,10 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         get
         {
             string s = this.Request.QueryString["FK_Attr"];
-            if (s == null)
+            if (s == null || s == "")
+                s = ViewState["FK_Attr"] as string;
+ 
+            if (s == null || s== "")
             {
                 try
                 {
@@ -59,6 +62,10 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             if (s == "")
                 return null;
             return s;
+        }
+        set
+        {
+            ViewState["FK_Attr"] = value;
         }
     }
     /// <summary>
@@ -139,6 +146,11 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             return;
         }
         this.BindCond();
+
+        if (this.FK_Attr == null)
+        {
+            this.FK_Attr = this.DDL_Attr.SelectedItemStringVal;
+        }
     }
     public void BindCond()
     {
@@ -547,8 +559,10 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         }
         catch
         {
+
         }
 
+        string sql = "UPDATE  WF_Cond SET ConnJudgeWay=" + (int)cond.HisConnJudgeWay + ", DataFrom=" + (int)ConnDataFrom.Form + " WHERE NodeID=" + cond.NodeID + "  AND FK_Node=" + cond.FK_Node + " AND ToNodeID=" + this.ToNodeID;
         switch (this.HisCondType)
         {
             case CondType.Flow:
@@ -556,6 +570,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             case CondType.FLRole:
                 cond.MyPK = BP.DA.DBAccess.GenerOID().ToString();   //cond.NodeID + "_" + cond.FK_Node + "_" + cond.FK_Attr + "_" + cond.OperatorValue;
                 cond.Insert();
+                BP.DA.DBAccess.RunSQL(sql);
                 this.Response.Redirect("Cond.aspx?MyPK=" + cond.MyPK + "&FK_Flow=" + cond.FK_Flow + "&FK_Node=" + cond.FK_Node + "&FK_MainNode=" + cond.NodeID + "&CondType=" + (int)cond.HisCondType + "&FK_Attr=" + cond.FK_Attr, true);
                 return;
             case CondType.Dir:
@@ -563,6 +578,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
                 cond.MyPK = BP.DA.DBAccess.GenerOID().ToString();   //cond.NodeID + "_" + cond.FK_Node + "_" + cond.FK_Attr + "_" + cond.OperatorValue;
                 cond.ToNodeID = this.ToNodeID;
                 cond.Insert();
+                BP.DA.DBAccess.RunSQL(sql);
                 //if (cond.Update() == 0)
                 //    cond.Insert();
                 this.Response.Redirect("Cond.aspx?MyPK=" + cond.MyPK + "&FK_Flow=" + cond.FK_Flow + "&FK_Node=" + cond.FK_Node + "&FK_MainNode=" + cond.NodeID + "&CondType=" + (int)cond.HisCondType + "&FK_Attr=" + cond.FK_Attr + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);

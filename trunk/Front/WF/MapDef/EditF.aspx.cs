@@ -127,7 +127,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.AddTDTitle("&nbsp;");
         this.Pub1.AddTREnd();
 
-     
 
         if (mapAttr.IsTableAttr)
         {
@@ -148,7 +147,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             this.Pub1.AddTD("");
             this.Pub1.AddTREnd();
         }
-        
 
 
         this.Pub1.AddTR();
@@ -156,13 +154,12 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         TB tb = new TB();
         tb.ID = "TB_KeyOfEn";
         tb.Text = mapAttr.KeyOfEn;
-        if (this.RefNo !=null )
+        if (this.RefNo != null)
             tb.Enabled = false;
-
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD(this.ToE("FENameD", "字母或者字母数字组合"));
         this.Pub1.AddTREnd();
-    
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTD(this.ToE("FLabel", "字段中文名称"));
@@ -264,7 +261,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.Add(rb);
         rb = new RadioButton();
         rb.ID = "RB_UIIsEnable_1";
-        rb.Text = this.ToE("CanEdit", "可编辑");  
+        rb.Text = this.ToE("CanEdit", "可编辑");
         rb.GroupName = "s";
         rb.Checked = mapAttr.UIIsEnable;
 
