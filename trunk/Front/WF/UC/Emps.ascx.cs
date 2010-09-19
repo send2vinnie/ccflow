@@ -88,13 +88,12 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
             {
                 this.AddTD(emp.TelHtml);
                 this.AddTD(emp.EmailHtml);
-
                 this.AddTD(emp.Stas);
             }
             else
             {
-                this.AddTD("未设置");
-                this.AddTD(emp.EmailHtml);
+                this.AddTD("");
+                this.AddTD("");
                 this.AddTD("");
                 // BP.WF.Port.WFEmp.DTSData();
                 break;
