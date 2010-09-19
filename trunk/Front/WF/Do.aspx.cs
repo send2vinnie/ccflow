@@ -114,11 +114,7 @@ namespace BP.Web.WF
                         // this.Response.Redirect("MyFlow.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow, true);
                         break;
                     case "SetBookState":
-                        Book bk = new Book(this.Request.QueryString["OID"]);
-                        bk.SetValByKey(BookAttr.BookState, this.Request.QueryString["State"]);
-                        bk.Update();
-                        this.Alert("状态设置成功。");
-                        this.WinClose();
+                        
                         break;
                     case "WorkRpt":
                         Book bk1 = new Book(this.Request.QueryString["OID"]);
@@ -128,10 +124,10 @@ namespace BP.Web.WF
                         //this.WinClose();
                         break;
                     case "PrintBook":
-                        Book bk2 = new Book(this.Request.QueryString["OID"]);
-                        Node nd2 = new Node(bk2.FK_Node);
-                        this.Response.Redirect("NodeRefFunc.aspx?NodeId=" + bk2.FK_Node + "&FlowNo=" + nd2.FK_Flow + "&NodeRefFuncOID=" + bk2.FK_NodeRefFunc + "&WorkFlowID=" + bk2.WorkID);
-                        //this.WinClose();
+                        //Book bk2 = new Book(this.Request.QueryString["OID"]);
+                        //Node nd2 = new Node(bk2.FK_Node);
+                        //this.Response.Redirect("NodeRefFunc.aspx?NodeId=" + bk2.FK_Node + "&FlowNo=" + nd2.FK_Flow + "&NodeRefFuncOID=" + bk2.FK_NodeRefFunc + "&WorkFlowID=" + bk2.WorkID);
+                        ////this.WinClose();
                         break;
                     //删除流程中第一个节点的数据，包括待办工作
                     case "DeleteFlow":

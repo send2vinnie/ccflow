@@ -150,8 +150,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         Nodes ndsN = new Nodes();
         foreach (BP.WF.Node mynd in nds)
         {
-            
-
             ndsN.AddEntity(mynd);
         }
         DDL ddl = new DDL();
@@ -313,6 +311,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
             if (this.Pub1.GetCBByID("CB_" + st.No).Checked)
                 val += "@" + st.No;
         }
+
         if (val == "")
         {
             cond.Delete();
@@ -320,8 +319,9 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         }
 
         cond.OperatorValue = val;
+        cond.HisDataFrom = ConnDataFrom.Stas;
         cond.FK_Flow = this.FK_Flow;
-        cond.HisCondType = this.HisCondType;
+        cond.HisCondType =  this.HisCondType;
         cond.FK_Node = this.FK_Node;
         switch (this.HisCondType)
         {

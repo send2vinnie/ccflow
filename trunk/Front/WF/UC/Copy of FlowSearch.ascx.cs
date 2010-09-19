@@ -333,67 +333,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTableEnd();
     }
 
-    public void BindBill()
-    {
-
-        Books books = new Books();
-        books.RetrieveAll();
-
-        this.Pub1.AddTable();
-        this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("ID");
-        this.Pub1.AddTDTitle("流程");
-        this.Pub1.AddTDTitle("节点");
-        this.Pub1.AddTDTitle("部门");
-        this.Pub1.AddTDTitle("单据名称");
-        this.Pub1.AddTDTitle("打印日期");
-        this.Pub1.AddTDTitle("打印人");
-        this.Pub1.AddTREnd();
-
-        int i = 0;
-        bool is1 = false;
-        foreach (Book book in books)
-        {
-            this.Pub1.AddTR(is1);
-            i++;
-            this.Pub1.AddTDIdx(i);
-            this.Pub1.AddTD(book.FK_FlowT);
-            this.Pub1.AddTD(book.FK_NodeT);
-            this.Pub1.AddTD(book.FK_DeptT);
-
-            this.Pub1.AddTDA("javascript:WinOpen('" + book.Url + "')", "<img src='../../Images/Btn/Word.gif' border=0 />" + book.FK_BookText);
-            this.Pub1.AddTD(book.RDT);
-            this.Pub1.AddTD(book.FK_EmpT);
-            this.Pub1.AddTREnd();
-        }
-        this.Pub1.AddTableEnd();
-
-    }
-
-    public void BindLeft()
-    {
-
-        this.Left.AddUL();
-        this.Left.AddLi("FlowSearch.aspx?DoType=Flow","按流程查询");
-        this.Left.AddLi("FlowSearch.aspx?DoType=Bill", "单据查询");
-        this.Left.AddLi("FlowSearch.aspx?DoType=Rpt", "系统报表");
-        this.Left.AddULEnd();
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        this.BindLeft();
-
-        switch (this.DoType)
-        {
-            case "Bill":
-                this.BindBill();
-                return;
-            default:
-                break;
-        }
-
         if (this.FK_Flow != null)
         {
             if (WebUser.IsWap)
