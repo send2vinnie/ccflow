@@ -211,6 +211,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                 dtlNew.No = this.FK_Node + "Dtl";
                 dtlNew.GroupID = mygf.OID;
                 dtlNew.PTable = dtlNew.No;
+
                 dtlNew.Insert();
 
                 MapAttrs mattrs = new MapAttrs(dtl.No);
@@ -220,6 +221,9 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     attrNew.Copy(attr);
                     attrNew.FK_MapData = dtlNew.No;
                     attrNew.UIIsEnable = false;
+                    if (attrNew.DefVal.Contains("@"))
+                        attrNew.DefVal = "";
+
                     attrNew.Insert();
                 }
             }

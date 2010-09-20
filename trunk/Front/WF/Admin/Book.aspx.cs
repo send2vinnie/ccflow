@@ -162,7 +162,7 @@ public partial class WF_Admin_BookSet : WebPage
         }
 
         HtmlInputFile file = this.Ucsys1.FindControl("f") as HtmlInputFile;
-        if (file != null && file.Value.IndexOf(":") != -1)
+        if (file != null && file.Value.IndexOf(".") != -1)
         {
             /* 如果包含这二个字段。*/
             string fileName = file.PostedFile.FileName;

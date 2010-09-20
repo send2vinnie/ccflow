@@ -38,7 +38,7 @@
            <tr>
                 <td  colspan=2    bgcolor="Silver"   >
                 &nbsp;
-                &nbsp;<b>流程测试设计 - 感谢您选择驰骋工作流引擎</b> <a href='http://ccflow.cn:666/BugFree/'>缺陷管理/Report</a>
+                &nbsp;<b>流程测试设计 - 感谢您选择驰骋工作流引擎</b> <a href='http://ccflow.cn:666/BugFree/'>缺陷管理/Report</a> - <a href='./../Login.aspx' > 登陆系统 </a>
                     </td>
 </tr>        
           
