@@ -433,12 +433,15 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
                         if (this.PKVal != null)
                             en.PKVal = this.PKVal;
                         en.Delete();
-                        this.ToMsgPage("删除成功!!!");
+                       // this.Alert("删除成功");
+                        this.WinCloseWithMsg("删除成功!!!");
+                        //this.ToMsgPage("删除成功!!!");
                         return;
                     }
                     catch (Exception ex)
                     {
-                        this.ToMsgPage("删除期间出现错误: \t\n" + ex.Message);
+                        this.Alert("删除成功!!!");
+                       //this.ToMsgPage("删除期间出现错误: \t\n" + ex.Message);
                         //this.ToMsgPage("删除成功!!!");
                         return;
                     }

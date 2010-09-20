@@ -55,12 +55,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <table id="Table1" align="left" class="Table" cellspacing1 width='40%'>
-        <tr>
-         <td>
-                <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-            </td>
-        </tr>
+    <table id="Table1" align="left" class="Table" cellspacing1 width='100%'>
         <tr>
             <td Class='ToolBar' >
                 <uc2:ToolBar ID="ToolBar1" runat="server" />

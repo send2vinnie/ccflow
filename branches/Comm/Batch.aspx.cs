@@ -53,11 +53,19 @@ public partial class Comm_Batch : WebPage
         Entities ens = ClassFactory.GetEns(this.EnsName);
         Entity en = ens.GetNewEntity;
         Map map = en.EnMap;
+
+        //this.Label1.Text = this.GenerCaption(this.HisEn.EnMap.EnDesc + "" + this.HisEn.EnMap.TitleExt);
+
+        this.Title = this.HisEn.EnMap.EnDesc;
+
+       // this.ToolBar1.AddLab("sd", this.GenerCaption(this.HisEn.EnMap.EnDesc + "" + this.HisEn.EnMap.TitleExt));
+        this.ToolBar1.AddLab("sd",  "<b>"+this.HisEn.EnMap.EnDesc+"管理</b>:" );
+
+
         this.ToolBar1.InitByMapV2(map, 1);
 
         #region 设置选择的 默认值
         //判断是否有传进来的设置的查询条件，如果有就设置为空。
-
         bool isHave = false;
         AttrSearchs searchs = map.SearchAttrs;
         foreach (AttrSearch attr in searchs)
@@ -115,7 +123,9 @@ public partial class Comm_Batch : WebPage
             }
         }
 
-        this.Label1.Text = this.GenerCaption(this.HisEn.EnMap.EnDesc + "" + this.HisEn.EnMap.TitleExt);
+        
+
+
         this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ButtonClick);
         //this.ToolBar1.Btn_Click();
         //   this.GenerLabel(this.Lab1, this.HisEn);

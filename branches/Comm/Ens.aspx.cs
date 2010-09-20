@@ -361,7 +361,7 @@ public partial class Comm_UIEnsV10 : WebPage
 
         // BP.Sys.MapDtl
         en = this.ucsys1.Copy(en, "0", map);
-        if (en.IsBlank == false)
+        if (en.IsBlank == false && en.PKVal!="0" )
         {
             if (en.IsNoEntity)
             {
