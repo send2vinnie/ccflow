@@ -157,10 +157,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             {
                 if (attr.UIVisible == false)
                     continue;
-
-
-
-
                 switch (attr.MyDataType)
                 {
                     case DataType.AppBoolean:
@@ -376,7 +372,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
     {
 
         this.Left.AddUL();
-        this.Left.AddLi("FlowSearch.aspx?DoType=Flow","按流程查询");
+        this.Left.AddLi("FlowSearch.aspx", "查询主页");
+        //this.Left.AddLi("FlowSearch.aspx?DoType=Flow", "按流程查询");
         this.Left.AddLi("FlowSearch.aspx?DoType=Bill", "单据查询");
         this.Left.AddLi("FlowSearch.aspx?DoType=Rpt", "系统报表");
         this.Left.AddULEnd();
@@ -411,7 +408,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             return;
         }
 
-        int colspan = 6;
+        int colspan = 8;
         this.Pub1.AddTable("width='600px'");
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
@@ -436,6 +433,9 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         }
 
         this.Pub1.AddTDTitle("单据查询");
+        this.Pub1.AddTDTitle("流程查询");
+        this.Pub1.AddTDTitle("节点查询");
+
         this.Pub1.AddTREnd();
 
         string sql = "SELECT FK_Flow FROM WF_Node ";
@@ -458,7 +458,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
             fk_sort = fl.FK_FlowSort;
 
-
             this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "'>" + fl.Name + "</a>");
             if (WebUser.IsWap == false)
             {
@@ -466,7 +465,11 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 this.Pub1.AddTD(fl.Note);
             }
 
-            this.Pub1.AddTD("<a href='Bill.aspx?FK_Flow=" + fl.No + "'>单据查询</a>");
+            this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "&DoType=Bill'>单据查询</a>");
+            this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "&DoType=Flow'>流程查询</a>");
+            this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "'>节点查询</a>");
+
+
             this.Pub1.AddTREnd();
         }
 

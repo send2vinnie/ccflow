@@ -190,6 +190,8 @@ public partial class WF_Admin_BookSet : WebPage
             try
             {
                 bt.No = BP.DA.chs2py.convert(bt.Name);
+                if (bt.IsExits)
+                    bt.No = bt.No + "." + BP.DA.DBAccess.GenerOID().ToString();
             }
             catch
             {
