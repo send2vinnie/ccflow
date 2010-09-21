@@ -51,8 +51,8 @@
 <tr valign="top">
             <td valign="top" height="100%" align=left>
                     <uc5:Pub ID="FlowMsg" runat="server" />
-                    <uc6:UCEn ID="UCEn1" runat="server" />
                     <uc5:Pub ID="Pub1" runat="server" />
+                    <uc6:UCEn ID="UCEn1" runat="server" />
                     </td>
         </tr>
 </table>

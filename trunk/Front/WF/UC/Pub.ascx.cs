@@ -19,6 +19,82 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
     {
 
     }
+    public void BindWorkDtl(Node nd, Works wks)
+    {
+        Attrs attrs = wks.GetNewEntity.EnMap.Attrs;
+
+        this.AddTable("width='100%' align=center class=Table");
+        this.AddTR();
+        this.AddTDTitle("序");
+        foreach (Attr attr in attrs)
+        {
+            if (attr.UIVisible == false)
+                continue;
+
+            this.AddTDTitle(attr.Desc);
+        }
+        this.AddTDTitle("操作");
+        this.AddTREnd();
+
+        int idx = 0;
+        bool is1 = false;
+        foreach (Entity en in wks)
+        {
+            idx++;
+            is1 = this.AddTR(is1);
+            this.AddTD(idx);
+            foreach (Attr attr in attrs)
+            {
+                if (attr.UIVisible == false)
+                    continue;
+                switch (attr.MyDataType)
+                {
+                    case DataType.AppBoolean:
+                        this.AddTD(en.GetValBoolStrByKey(attr.Key));
+                        break;
+                    case DataType.AppFloat:
+                    case DataType.AppInt:
+                    case DataType.AppDouble:
+                        this.AddTD(en.GetValFloatByKey(attr.Key));
+                        break;
+                    case DataType.AppMoney:
+                        this.AddTDMoney(en.GetValDecimalByKey(attr.Key));
+                        break;
+                    default:
+                        this.AddTD(en.GetValStrByKey(attr.Key));
+                        break;
+                }
+            }
+            this.AddTD("<a href=\"./../WF/WFRpt.aspx?WorkID=" + en.GetValIntByKey("OID") + "&FID=" + en.GetValByKey("FID") + "&FK_Flow=" + nd.FK_Flow + "\" target=bk >报告</a>");
+            this.AddTREnd();
+        }
+
+        this.AddTRSum();
+        this.AddTD("");
+        foreach (Attr attr in attrs)
+        {
+            if (attr.UIVisible == false)
+                continue;
+            switch (attr.MyDataType)
+            {
+                case DataType.AppFloat:
+                case DataType.AppInt:
+                case DataType.AppDouble:
+                    this.AddTD("align=right class=TD", wks.GetSumDecimalByKey(attr.Key));
+                    break;
+                case DataType.AppMoney:
+                    this.AddTD("align=right class=TD",wks.GetSumDecimalByKey(attr.Key).ToString("0.00") );
+                    break;
+                default:
+                    this.AddTD();
+                    break;
+            }
+        }
+        this.AddTD();
+        this.AddTREnd();
+        this.AddTableEnd();
+    }
+  
     public void BindWFRptV2(WorkFlow wf)
     {
         Int64 workid = wf.WorkID;

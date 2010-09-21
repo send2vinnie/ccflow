@@ -370,7 +370,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
     public void BindLeft()
     {
-
         this.Left.AddUL();
         this.Left.AddLi("FlowSearch.aspx", "查询主页");
         //this.Left.AddLi("FlowSearch.aspx?DoType=Flow", "按流程查询");

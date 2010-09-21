@@ -204,7 +204,125 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
     #endregion
 
     #region Page load 事件
-   
+    public void DoDoType()
+    {
+        switch (this.DoType)
+        {
+            case "Runing":
+                ShowRuning();
+                return;
+            case "History":
+                ShowHistory();
+                return;
+            case "Warting":
+                ShowWarting();
+                return;
+            default:
+                break;
+        }
+    }
+    public void ShowWarting()
+    {
+        this.ToolBar1.AddLab("s", "待办工作");
+
+        string sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "' ORDER BY WorkID ";
+        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+        if (dt.Rows.Count == 0)
+            return;
+
+        int i = 0;
+        bool is1 = false;
+        DateTime cdt = DateTime.Now;
+
+        string color = "";
+        this.Pub1.AddFieldSet("相关待办工作 (" + dt.Rows.Count + ") 个");
+        this.Pub1.Add("<ul>");
+        foreach (DataRow dr in dt.Rows)
+        {
+            string sdt = dr["SDT"] as string;
+            DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
+            if (cdt >= mysdt)
+            {
+                color = "red";
+            }
+            else
+            {
+                color = "";
+            }
+
+
+            int workid = int.Parse(dr["WorkID"].ToString());
+            if (workid == this.WorkID)
+                this.Pub1.AddB("<li><font color='" + color + "' ><a href='MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "' >" + dr["NodeName"] + "," + dr["Title"].ToString() + ", 发起人:" + dr["Starter"].ToString() + "</a></font></li>");
+            else
+                this.Pub1.Add("<li><font color='" + color + "' ><a href='MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "' >" + dr["NodeName"] + "," + dr["Title"].ToString() + ", 发起人:" + dr["Starter"].ToString() + "</a></font></li>");
+        }
+
+        this.Pub1.Add("</ul>");
+
+        this.Pub1.AddFieldSetEnd(); // ; ("此流程待办工作");
+
+    }
+    public void ShowRuning()
+    {
+        this.ToolBar1.AddLab("s", "在途工作");
+
+        this.Pub1.AddTable("width='80%' align=left");
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("IDX", "序"));
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("Name", "名称"));
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("Flow", "流程"));
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("CurrNode", "当前节点"));
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起日期"));
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起人"));
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("Oper", "操作"));
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("Rpt", "报告"));
+        this.Pub1.AddTREnd();
+
+        string sql = "  SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID   AND B.FK_Emp='" + BP.Web.WebUser.No + "' AND B.IsEnable=1 AND b.FK_Flow='"+this.FK_Flow+"'";
+        //this.Response.Write(sql);
+
+        GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
+        gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
+        int i = 0;
+        bool is1 = false;
+        foreach (GenerWorkFlowExt gwf in gwfs)
+        {
+            i++;
+            is1 = this.Pub1.AddTR(is1);
+            this.Pub1.AddTDIdx(i);
+            this.Pub1.AddTDA("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
+            this.Pub1.AddTD(gwf.FK_FlowText);
+            this.Pub1.AddTD(gwf.FK_NodeText);
+            this.Pub1.AddTD(gwf.RDT);
+            this.Pub1.AddTD(gwf.RecText);
+            this.Pub1.AddTD("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo.aspx?DoType=UnSend&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
+            this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
+            this.Pub1.AddTREnd();
+        }
+        this.Pub1.AddTableEnd();
+    }
+    public void ShowHistory()
+    {
+        BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
+        this.ToolBar1.AddLab("s", "历史工作:" + nd.Name);
+        Works wks = nd.HisWorks;
+        QueryObject qo = new QueryObject(wks);
+        qo.AddWhere(WorkAttr.Rec, WebUser.No);
+        qo.addAnd();
+        qo.AddWhere(WorkAttr.NodeState, 1);
+        qo.DoQuery();
+        this.Pub1.BindWorkDtl(nd, wks);
+
+        //this.UCEn1.AddTable();
+        //this.UCEn1.AddTR();
+        //this.UCEn1.AddTREnd();
+        //this.UCEn1.AddTableEnd();
+    }
+    #endregion
+
+
+    #region Page load 事件
     /// <summary>
     /// Page_Load
     /// </summary>
@@ -212,6 +330,13 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
     /// <param name="e"></param>
     protected void Page_Load(object sender, System.EventArgs e)
     {
+        if (this.DoType != null)
+        {
+            DoDoType();
+            return;
+        }
+
+
         BP.WF.Node currND;
         BP.WF.Work currWK;
 

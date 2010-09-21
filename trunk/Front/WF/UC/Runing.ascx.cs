@@ -28,7 +28,6 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.AddTR();
         this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.AddTREnd();
-
         this.AddTR();
 
         if (WebUser.IsWap)
