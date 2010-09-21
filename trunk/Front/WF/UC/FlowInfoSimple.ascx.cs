@@ -148,7 +148,7 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
 
 
         string tab = "";
-        if (this.FK_Node == null )
+        if (this.FK_Node == null)
             tab = "ND" + int.Parse(this.FK_Flow) + "01";
         else
             tab = "ND" + this.FK_Node;
@@ -163,10 +163,14 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
 
         string sql = "SELECT count(workid) FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "'";
         this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Warting&FK_Flow=" + this.FK_Flow, "待办工作（" + DBAccess.RunSQLReturnValInt(sql) + "）");
-        this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Runing&FK_Flow=" + this.FK_Flow, "在途工作（" + DBAccess.RunSQLReturnValInt("SELECT COUNT(WorkID) AS Num FROM  WF_GenerWorkerList  WHERE FK_Emp='" + WebUser.No + "' AND  IsEnable=1 AND FK_Flow='"+this.FK_Flow+"'") + "）");
-        this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=History&FK_Flow=" + this.FK_Flow, "历史工作（" + DBAccess.RunSQLReturnValInt("SELECT COUNT(OID) AS Num FROM  " + tab + "  WHERE Rec='" + WebUser.No + "' AND WFState=1 ") + "）");
 
-      
+        sql = "SELECT COUNT(WorkID) AS Num FROM  WF_GenerWorkerList WHERE FK_Emp='" + WebUser.No + "' AND IsCurr=0 AND IsEnable=1 AND FK_Flow='" + this.FK_Flow + "'";
+        this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Runing&FK_Flow=" + this.FK_Flow,  "在途工作（" + DBAccess.RunSQLReturnValInt(sql) + "）");
+
+
+        sql = "SELECT COUNT(OID) AS Num FROM  " + tab + "  WHERE Rec='" + WebUser.No + "' AND WFState=1 ";
+        this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=History&FK_Flow=" + this.FK_Flow,  "历史工作（" + DBAccess.RunSQLReturnValInt(sql) + "）");
+
         //this.AddLi("EmpWorks.aspx?FK_Flow=" + this.FK_Flow, "已处理（" + DBAccess.RunSQLReturnValInt("SELECT COUNT(OID) AS Num FROM " + tab + " WHERE Rec='" + WebUser.No + "' AND NodeState=1 ") + "）");
 
         this.AddULEnd();

@@ -5,7 +5,7 @@
 
 <%@ Register src="MyFlowInfoWap.ascx" tagname="MyFlowInfoWap" tagprefix="uc3" %>
 
-<table id="Table1" height="99%" align=center border=0 >
+<table id="Table1" height="99%" width='100%'  align=center border=1 cellpadding=1 cellspacing=1 >
   <TR >
   <td width="25%" valign=top align=left >
       <uc2:FlowInfoSimple ID="FlowInfoSimple1" runat="server" />

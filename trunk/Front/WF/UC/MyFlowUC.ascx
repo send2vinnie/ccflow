@@ -34,22 +34,32 @@
         }
     }
 </script>
-<table id="Table1" border='0' width='800px' >
+<script language=javascript>
+		function Do(warning, url)
+		{
+		  if (window.confirm(warning)==false)
+		    return;
+		 
+		 window.location.href=url;
+		 // WinOpen(url);
+		}
+</script>
+<table id="Table1" border='1' cellspacing=1 cellpadding=1  width='100%' >
 <tr>
-<td  valign='top' align=left class="style1"    >
+<td  valign='top'  align="Left" class="style1"  width='20%'   >
     <uc1:FlowInfoSimple ID="FlowInfoSimple1" runat="server" />
 </td>
-<td valign='top' id='Right' style="height:600px;" >
+<td valign='top' id='Right' style="height:600px;" width='80%' >
 <!--  开始Table -->
 <table width='100%' border=0  style="height:600px;width:100%" >
+
 <tr>
-<td style="height: 1px" class='ToolBar' align=left >
-                 <uc4:ToolBar ID="ToolBar1" runat="server" />
+<td style="height: 1px;width:100%;" class="ToolBar"  align="left"  >
+<uc4:ToolBar ID="ToolBar1" runat="server" />
 </td>
 </tr>
-
 <tr valign="top">
-            <td valign="top" height="100%" align=left>
+            <td valign="top" height="100%"  align="left" width=100% >
                     <uc5:Pub ID="FlowMsg" runat="server" />
                     <uc5:Pub ID="Pub1" runat="server" />
                     <uc6:UCEn ID="UCEn1" runat="server" />

@@ -421,12 +421,15 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
             }
             else
             {
-            
                 currWK = this.GenerCurrWork(this.WorkID);
             }
 
             currND = this.CurrentNode;
             this.BindWork(currND, currWK);
+
+
+            if (currND.HisFormType == FormType.SelfForm)
+                this.Btn_Save.Enabled = false;
 
             if (this.ToolBar1.IsExit(NamesOfBtn.Send))
             {
@@ -434,7 +437,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
                 this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
-            if (this.ToolBar1.IsExit(NamesOfBtn.Save))
+            if ( this.ToolBar1.IsExit(NamesOfBtn.Save))
             {
                 //   this.Btn_Save.Attributes["onclick"] = "return SaveDtl();";
                 // this.Btn_Save.Attributes["onclick"] = "javascript:return SaveDtl();";
@@ -591,7 +594,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
                 OutJSAuto(wk);
                 return;
             case FormType.SelfForm:
-                wk.Insert();
+                wk.Save();
                 this.UCEn1.AddIframeWithOnload(nd.FormUrl + "?WorkID=" + wk.OID);
                 return;
             default:
