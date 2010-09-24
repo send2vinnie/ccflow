@@ -115,7 +115,7 @@ function EditOneVsM1( path, enName, vsMName , attrKey, ensName, keys )
 {
    var url=path+'/Comm/'+'UIEn1ToM.aspx?EnName='+enName+'&EnsName='+ensName+"&AttrKey="+attrKey+keys;
   // alert (url ) ;
-  alert(url);
+ // alert(url);
   
    var a=window.showModalDialog( url , 'OneVs' ,'dialogHeight: 600px; dialogWidth: 800px; dialogTop: 100px; dialogLeft: 110px; center: yes; help: no'); 
    return true;
