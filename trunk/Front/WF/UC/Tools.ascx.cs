@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Configuration;
 using System.Data;
+using System.Drawing;
 using System.Web;
+using System.IO;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -28,6 +30,9 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 
         switch (this.RefNo)
         {
+            case "Siganture":
+                this.Siganture();
+                break;
             case "AdminSet":
                 AdminSet();
                 break;
@@ -51,6 +56,146 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
                 BindPer();
                 break;
         }
+    }
+    public void Siganture()
+    {
+        string path = BP.SystemConfig.PathOfData + "\\Siganture\\T.JPG";
+        if (this.DoType != null || System.IO.File.Exists(path) == false)
+        {
+
+            string pathMe = BP.SystemConfig.PathOfData + "\\Siganture\\"+WebUser.No+".JPG";
+
+            File.Copy(BP.SystemConfig.PathOfData + "\\Siganture\\Templete.JPG",
+                path, true);
+
+            string fontName = "宋体";
+            switch (this.DoType)
+            {
+                case "ST":
+                    fontName = "宋体";
+                    break;
+                case "LS":
+                    fontName = "隶书";
+                    break;
+                default:
+                    break;
+            }
+
+            System.Drawing.Image img = System.Drawing.Image.FromFile(path);
+            Font font = new Font(fontName, 15);
+            Graphics g = Graphics.FromImage(img);
+            System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
+            System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat(StringFormatFlags.DirectionVertical);//文本
+            g.DrawString(WebUser.Name, font, drawBrush, 3, 3);
+
+            try
+            {
+                File.Delete(pathMe);
+            }
+            catch
+            {
+
+            }
+            img.Save(pathMe);
+            img.Dispose();
+            g.Dispose();
+
+            File.Copy(pathMe,
+            BP.SystemConfig.PathOfData + "\\Siganture\\" + WebUser.Name + ".JPG", true);
+        }
+
+        this.Pub1.AddFieldSet("电子签名设置");
+
+        this.Pub1.Add("<img src='../Data/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/> ");
+
+        this.Pub1.AddTable();
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle();
+        this.Pub1.AddTDTitle();
+        this.Pub1.AddTDTitle();
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("图片");
+
+        FileUpload fu = new FileUpload();
+        fu.ID = "F";
+        this.Pub1.AddTD(fu);
+        this.Pub1.AddTD("仅支持jpg格式文件。");
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("");
+
+        Btn btn = new Btn();
+        btn.Text = "确定";
+        btn.Click += new EventHandler(btn_Siganture_Click);
+        this.Pub1.AddTD(btn);
+        this.Pub1.AddTD("");
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTableEnd();
+
+
+        this.Pub1.AddB("利用扫描仪设置步骤:");
+        this.Pub1.AddUL();
+        this.Pub1.AddLi("在白纸上写下您的签名");
+        this.Pub1.AddLi("送入扫描仪扫描，并得到jpg文件。");
+        this.Pub1.AddLi("利用出片处理工具把他们处理缩小到 90*30像素大小。");
+        this.Pub1.AddULEnd();
+
+
+        this.Pub1.AddB("手写设置:");
+        this.Pub1.AddUL();
+        this.Pub1.AddLi("启动画板程序，写下您的签名。");
+        this.Pub1.AddLi("保存成.jpg文件，设置文件为90*30像素大小。");
+        this.Pub1.AddULEnd();
+
+        this.Pub1.AddB("让系统自动为您创建（请选择字体）:");
+        this.Pub1.AddUL();
+        this.Pub1.AddLi("<a href='Tools.aspx?RefNo=Siganture&DoType=ST'>宋体</a>");
+        this.Pub1.AddLi("<a href='Tools.aspx?RefNo=Siganture&DoType=LS'>隶书</a>");
+        this.Pub1.AddULEnd();
+
+        this.Pub1.AddFieldSetEnd();
+    }
+
+    void btn_Siganture_Click(object sender, EventArgs e)
+    {
+        FileUpload f = (FileUpload)this.Pub1.FindControl("F");
+
+        if (f.HasFile == false)
+            return;
+
+        try
+        {
+            System.IO.File.Delete( BP.SystemConfig.PathOfWebApp + "/Data/Siganture/T.jpg" );
+
+            f.SaveAs(BP.SystemConfig.PathOfWebApp + "/Data/Siganture/T.jpg");
+            System.Drawing.Image img = System.Drawing.Image.FromFile(BP.SystemConfig.PathOfWebApp + "/Data/Siganture/T.jpg");
+            if (img.Width != 90 || img.Height != 30)
+            {
+                img.Dispose();
+                throw new Exception("您上传的图片不符合要求高度=30px 宽度=90px 的要求。");
+            }
+
+            img.Dispose();
+        }
+        catch (Exception ex)
+        {
+            this.Alert(ex.Message);
+            return;
+        }
+
+        f.SaveAs(BP.SystemConfig.PathOfWebApp + "/Data/Siganture/" + WebUser.No + ".jpg");
+        f.SaveAs(BP.SystemConfig.PathOfWebApp + "/Data/Siganture/" + WebUser.Name + ".jpg");
+
+        f.PostedFile.InputStream.Close();
+        f.PostedFile.InputStream.Dispose();
+        f.Dispose();
+
+        this.Response.Redirect(this.Request.RawUrl, true);
+        //this.Alert("保存成功。");
     }
     public void AdminSet()
     {
@@ -107,10 +252,8 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 
         this.Response.Redirect(this.Request.RawUrl, true);
 
-         
         //this.Alert("保存成功。");
     }
-
 
     public void BindPass()
     {
@@ -490,9 +633,10 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 
         this.Pub1.AddFieldSet("基本信息" + WebUser.Auth);
         this.Pub1.Add("用户帐号：" + WebUser.No);
-        this.Pub1.AddBR("用户名：" + WebUser.Name);
+        this.Pub1.Add("用户名：" + WebUser.Name);
+        this.Pub1.AddHR();
 
-        this.Pub1.AddBR(" 电子签字：<img src='../Data/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
+        this.Pub1.AddB(" 电子签字：<img src='../Data/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/> ，<a href='Tools.aspx?RefNo=Siganture' >设置/修改</a>。");
 
         this.Pub1.AddBR();
 
@@ -562,7 +706,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         //this.Left.MenuSelfEnd();
 
 
-        //this.Left.DivInfoBlockBegin();
+        this.Left.DivInfoBlockBegin();
 
         if (WebUser.IsWap)
         this.Left.Add("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>");
@@ -582,7 +726,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         }
         this.Left.AddULEnd();
 
-       // this.Left.DivInfoBlockEnd();
+       this.Left.DivInfoBlockEnd();
 
     }
 

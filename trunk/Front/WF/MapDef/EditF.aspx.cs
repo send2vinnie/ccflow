@@ -353,8 +353,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
     }
     public void EditBeforeEnd(MapAttr mapAttr)
     {
-
-
         #region 字段分组
         this.Pub1.AddTR();
         this.Pub1.AddTD("字段分组");
@@ -369,6 +367,23 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.AddTD(ddlGroup);
         this.Pub1.AddTD("修改隶属分组");
         this.Pub1.AddTREnd();
+        #endregion 字段分组
+
+
+        #region 字段分组
+        if (mapAttr.UIIsEnable == false && mapAttr.MyDataType == DataType.AppString)
+        {
+            this.Pub1.AddTR();
+            this.Pub1.AddTD();
+            CheckBox cb = new CheckBox();
+            cb.ID = "CB_IsSigan";
+            cb.Text = "是否是数字签名字段";
+            cb.Checked = mapAttr.IsSigan;
+
+            this.Pub1.AddTD(cb);
+            this.Pub1.AddTD("");
+            this.Pub1.AddTREnd();
+        }
         #endregion 字段分组
 
 
@@ -706,9 +721,30 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             if (this.RefNo != null)
             {
                 attr.MyPK = this.RefNo;
-                attr.Retrieve();
+                try
+                {
+                    attr.Retrieve();
+                }
+                catch
+                {
+                    attr.CheckPhysicsTable();
+                    attr.Retrieve();
+                }
+
                 attr = (MapAttr)this.Pub1.Copy(attr);
                 attr.GroupID = this.Pub1.GetDDLByID("DDL_GroupID").SelectedItemIntVal;
+
+                if (attr.UIIsEnable == false && attr.MyDataType == DataType.AppString)
+                {
+                    try
+                    {
+                        attr.IsSigan = this.Pub1.GetCBByID("CB_IsSigan").Checked;
+                    }
+                    catch
+                    {
+                    }
+                }
+
                 switch (this.FType)
                 {
                     case DataType.AppBoolean:

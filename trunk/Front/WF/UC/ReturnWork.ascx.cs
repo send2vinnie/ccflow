@@ -116,7 +116,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 }
 
                 this.DDL1.SetSelectItem(pwn.HisNode.NodeID);
-                this.DDL1.Enabled = false;
+                this.DDL1.Enabled = true;
 
                 Work wk = pwn.HisWork;
                 this.TB1.Text = this.ToEP4("WBackInfo",

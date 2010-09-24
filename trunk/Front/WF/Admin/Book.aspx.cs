@@ -58,7 +58,7 @@ public partial class WF_Admin_BookSet : WebPage
         }
 
         this.Ucsys1.AddTD(tb);
-        this.Ucsys1.AddTD("比如：NoteBill");
+        this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
@@ -134,86 +134,102 @@ public partial class WF_Admin_BookSet : WebPage
     }
     void btn_Click(object sender, EventArgs e)
     {
+        HtmlInputFile file = this.Ucsys1.FindControl("f") as HtmlInputFile;
         BookTemplate bt = new BookTemplate();
-        if (this.RefNo != null && this.RefNo != "")
+        bt.NodeID = this.NodeID;
+        if (this.RefNo != null)
         {
             bt.No = this.RefNo;
             bt.Retrieve();
-        }
-
-        bt = this.Ucsys1.Copy(bt) as BookTemplate;
-        if (this.RefNo == null)
-        {
-            try
+            bt = this.Ucsys1.Copy(bt) as BookTemplate;
+            bt.NodeID = this.NodeID;
+            if (file.Value == null || file.Value.Trim() == "")
             {
-                bt.No = BP.DA.chs2py.convert(bt.Name);
-
-            }
-            catch
-            {
-                bt.No = BP.DA.DBAccess.GenerOID().ToString();
-            }
-
-            if (bt.IsExits)
-            {
-                //this.Alert(this.ToE("NoExits", "不存在") + " [" + bt.No + "]");
-                bt.No = BP.DA.DBAccess.GenerOID().ToString();
+                bt.Update();
+                this.Alert("保存成功");
                 return;
             }
-        }
 
-        HtmlInputFile file = this.Ucsys1.FindControl("f") as HtmlInputFile;
-        if (file != null && file.Value.IndexOf(".") != -1)
-        {
-            /* 如果包含这二个字段。*/
-            string fileName = file.PostedFile.FileName;
-            fileName = fileName.Substring(fileName.LastIndexOf("\\") + 1);
-
-            if (bt.Name == "")
-                bt.Name = fileName.Replace(".rtf", "");
-
-            string ext = "";
-            if (fileName.IndexOf(".") != -1)
-                ext = fileName.Substring(fileName.LastIndexOf(".") + 1);
-
-            if (ext.ToLower().Contains("rtf") == false)
+            if (file.Value.ToLower().Contains(".rtf") == false)
             {
-                this.Alert(this.ToE("WaringRtf", "必须是 rtf 格式的 才能被识别。"));
+                this.Alert("@错误，非法的rtf 格式文件。");
+                return;
+            }
+            string temp = BP.SystemConfig.PathOfCyclostyleFile + "\\Temp.rtf";
+            file.PostedFile.SaveAs(temp);
+
+            //检查文件是否正确。
+            try
+            {
+                string[] paras = BP.DA.Cash.GetBookParas_Gener("Temp.rtf");
+            }
+            catch (Exception ex)
+            {
+                this.Ucsys2.AddMsgOfWarning("错误信息", ex.Message);
                 return;
             }
             string fullFile = BP.SystemConfig.PathOfCyclostyleFile + "\\" + bt.No + ".rtf";
             file.PostedFile.SaveAs(fullFile);
+            return;
         }
 
-        bt.NodeID = this.NodeID;
-        if (this.RefNo == null)
+        bt = this.Ucsys1.Copy(bt) as BookTemplate;
+
+        if (file.Value == null || file.Value.ToLower().Contains(".rtf") == false)
         {
-            try
-            {
-                bt.No = BP.DA.chs2py.convert(bt.Name);
-                if (bt.IsExits)
-                    bt.No = bt.No + "." + BP.DA.DBAccess.GenerOID().ToString();
-            }
-            catch
-            {
-                bt.No = BP.DA.DBAccess.GenerOID().ToString();
-            }
-            bt.Insert();
-        }
-        else
-        {
-            bt.Update();
+            this.Alert("@错误，非法的 rtf 格式文件。");
+            return;
         }
 
+
+        /* 如果包含这二个字段。*/
+        string fileName = file.PostedFile.FileName;
+        fileName = fileName.Substring(fileName.LastIndexOf("\\") + 1);
+        if (bt.Name == "")
+            bt.Name = fileName.Replace(".rtf", "");
+
+        try
+        {
+            bt.No = BP.DA.chs2py.convert(bt.Name);
+            if (bt.IsExits)
+                bt.No = bt.No + "." + BP.DA.DBAccess.GenerOID().ToString();
+        }
+        catch
+        {
+            bt.No = BP.DA.DBAccess.GenerOID().ToString();
+        }
+
+
+        string tmp = BP.SystemConfig.PathOfCyclostyleFile + "\\Temp.rtf";
+        file.PostedFile.SaveAs(tmp);
+
+        //检查文件是否正确。
+        try
+        {
+            string[] paras1 = BP.DA.Cash.GetBookParas_Gener("Temp.rtf");
+        }
+        catch (Exception ex)
+        {
+            this.Ucsys2.AddMsgOfWarning("错误信息", ex.Message);
+            return;
+        }
+
+
+        string fullFile1 = BP.SystemConfig.PathOfCyclostyleFile + "\\" + bt.No + ".rtf";
+        file.PostedFile.SaveAs(fullFile1);
+        bt.Insert();
+
+        #region 更新节点信息。
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
         string bookids = "";
         BookTemplates tmps = new BookTemplates(nd);
-        foreach (BookTemplate tmp in tmps)
+        foreach (BookTemplate Btmp in tmps)
         {
-            bookids += "@"+tmp.No;
+            bookids += "@" + Btmp.No;
         }
         nd.HisBookIDs = bookids;
         nd.Update();
+        #endregion 更新节点信息。
 
         this.Response.Redirect("Book.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID, true);
     }
@@ -222,6 +238,19 @@ public partial class WF_Admin_BookSet : WebPage
         BookTemplate t = new BookTemplate();
         t.No = this.RefNo;
         t.Delete();
+
+        #region 更新节点信息。
+        BP.WF.Node nd = new BP.WF.Node(this.NodeID);
+        string bookids = "";
+        BookTemplates tmps = new BookTemplates(nd);
+        foreach (BookTemplate tmp in tmps)
+        {
+            bookids += "@" + tmp.No;
+        }
+        nd.HisBookIDs = bookids;
+        nd.Update();
+        #endregion 更新节点信息。
+
         this.Response.Redirect("Book.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID, true);
     }
     protected void Page_Load(object sender, EventArgs e)

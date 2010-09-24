@@ -185,9 +185,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         {
             if (attr.UIVisible == false)
                 continue;
-
-             
-
             switch (attr.MyDataType)
             {
                 case DataType.AppFloat:
@@ -370,12 +367,16 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
     public void BindLeft()
     {
+        this.Left.DivInfoBlockBegin();
         this.Left.AddUL();
         this.Left.AddLi("FlowSearch.aspx", "查询主页");
         //this.Left.AddLi("FlowSearch.aspx?DoType=Flow", "按流程查询");
         this.Left.AddLi("FlowSearch.aspx?DoType=Bill", "单据查询");
         this.Left.AddLi("FlowSearch.aspx?DoType=Rpt", "系统报表");
         this.Left.AddULEnd();
+
+        this.Left.DivInfoBlockEnd();
+
     }
 
     protected void Page_Load(object sender, EventArgs e)

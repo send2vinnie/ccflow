@@ -44,7 +44,7 @@
 		 // WinOpen(url);
 		}
 </script>
-<table id="Table1" border='1' cellspacing=1 cellpadding=1  width='100%' >
+<table id="Table1" border='0' cellspacing=1 cellpadding=1  width='100%' >
 <tr>
 <td  valign='top'  align="Left" class="style1"  width='20%'   >
     <uc1:FlowInfoSimple ID="FlowInfoSimple1" runat="server" />

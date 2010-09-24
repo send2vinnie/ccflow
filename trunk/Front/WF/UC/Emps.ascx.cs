@@ -47,6 +47,8 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
         this.AddTDTitle("电话");
         this.AddTDTitle("Email");
         this.AddTDTitle("岗位 <a href=Emps.aspx?DoType=1>刷新</a>");
+        this.AddTDTitle("签名");
+
         if (this.DoType != null)
         {
             BP.WF.Port.WFEmp.DTSData();
@@ -100,6 +102,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
                 //  this.Response.Redirect(this.Request.RawUrl, true);
             }
 
+            this.AddTD("<img src='../Data/Siganture/" + fk_emp + ".jpg' border=1 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
             //  this.AddTD(emp.hisst);
             this.AddTREnd();
         }

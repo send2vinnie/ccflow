@@ -224,44 +224,51 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
     public void ShowWarting()
     {
         this.ToolBar1.AddLab("s", "待办工作");
-
         string sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "' ORDER BY WorkID ";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count == 0)
             return;
-
         int i = 0;
         bool is1 = false;
         DateTime cdt = DateTime.Now;
-
         string color = "";
-        this.Pub1.AddFieldSet("相关待办工作 (" + dt.Rows.Count + ") 个");
-        this.Pub1.Add("<ul>");
+        this.Pub1.AddTable();
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("ID");
+        this.Pub1.AddTDTitle(this.ToE("NodeName", "节点"));
+        this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
+        this.Pub1.AddTDTitle(this.ToE("Starter", "发起人"));
+        this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
+        this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
+        this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));
+        this.Pub1.AddTREnd();
+
+        int idx = 0;
         foreach (DataRow dr in dt.Rows)
         {
             string sdt = dr["SDT"] as string;
             DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
             if (cdt >= mysdt)
             {
-                color = "red";
+                this.Pub1.AddTRRed(); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
             }
             else
             {
-                color = "";
+                is1 = this.Pub1.AddTR(is1); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
             }
+            i++;
+            this.Pub1.AddTD(i);
 
+            this.Pub1.AddTD(dr["NodeName"].ToString());
 
-            int workid = int.Parse(dr["WorkID"].ToString());
-            if (workid == this.WorkID)
-                this.Pub1.AddB("<li><font color='" + color + "' ><a href='MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "' >" + dr["NodeName"] + "," + dr["Title"].ToString() + ", 发起人:" + dr["Starter"].ToString() + "</a></font></li>");
-            else
-                this.Pub1.Add("<li><font color='" + color + "' ><a href='MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "' >" + dr["NodeName"] + "," + dr["Title"].ToString() + ", 发起人:" + dr["Starter"].ToString() + "</a></font></li>");
+            this.Pub1.AddTD("<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+            this.Pub1.AddTD(dr["Starter"].ToString());
+            this.Pub1.AddTD(dr["RDT"].ToString());
+            this.Pub1.AddTD(dr["ADT"].ToString());
+            this.Pub1.AddTD(dr["SDT"].ToString());
+            this.Pub1.AddTREnd();
         }
-
-        this.Pub1.Add("</ul>");
-
-        this.Pub1.AddFieldSetEnd(); // ; ("此流程待办工作");
-
+        this.Pub1.AddTableEnd();
     }
     public void ShowRuning()
     {
@@ -271,7 +278,6 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("IDX", "序"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("Name", "名称"));
-        this.Pub1.AddTDTitle("nowarp=true", this.ToE("Flow", "流程"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("CurrNode", "当前节点"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起日期"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起人"));
@@ -279,7 +285,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("Rpt", "报告"));
         this.Pub1.AddTREnd();
 
-        string sql = "  SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID   AND B.FK_Emp='" + BP.Web.WebUser.No + "' AND B.IsEnable=1 AND b.FK_Flow='"+this.FK_Flow+"'";
+        string sql = "  SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID   AND B.FK_Emp='" + BP.Web.WebUser.No + "' AND B.IsEnable=1 AND B.IsCurr=0 AND b.FK_Flow='"+this.FK_Flow+"'";
         //this.Response.Write(sql);
 
         GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
@@ -292,7 +298,6 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
             is1 = this.Pub1.AddTR(is1);
             this.Pub1.AddTDIdx(i);
             this.Pub1.AddTDA("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
-            this.Pub1.AddTD(gwf.FK_FlowText);
             this.Pub1.AddTD(gwf.FK_NodeText);
             this.Pub1.AddTD(gwf.RDT);
             this.Pub1.AddTD(gwf.RecText);

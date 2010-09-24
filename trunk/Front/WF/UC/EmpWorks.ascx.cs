@@ -37,67 +37,80 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         int colspan = 8;
-        this.AddTable("width='90%' align=center");
-        this.AddTR();
-        this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
-        this.AddTREnd();
-
-        this.AddTR();
-        if (WebUser.IsWap)
-            this.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
-        else
-        this.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
-            
-        this.AddTREnd();
+      
 
         #region  输出流程类别.
-        this.AddTR();
-        this.AddTDBegin("align=right nowarp=0 colspan=" + colspan);
-
         string sql = "SELECT FK_Flow, FlowName, COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' GROUP BY FK_Flow, FlowName";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+        if (dt.Rows.Count == 0)
+        {
+
+            this.Pub1.DivInfoBlockBegin();
+
+            this.Pub1.Add("<b>提示:</b> 当前您没有工作要去处理.");
+            this.Pub1.AddHR();
+
+            //this.Pub1.AddMsgGreen("提示", "当前您没有工作要去处理。");
+
+            this.Pub1.AddUL();
+            this.Pub1.AddLi("Start.aspx", "发起工作");
+            this.Pub1.AddLi("Runing.aspx", "在途工作");
+            this.Pub1.AddLi("FlowSearch.aspx", "工作查询");
+            this.Pub1.AddULEnd();
+
+            this.Pub1.DivInfoBlockEnd();
+
+            return;
+        }
+
+
+        this.Left.DivInfoBlockBegin();
+        this.Left.AddUL();
         int num = 0;
         if (this.FK_Flow == null)
         {
             if (dt.Rows.Count > 0)
                 this.FK_Flow = dt.Rows[0][0].ToString();
         }
-
         bool isShowNum = BP.WF.Glo.IsShowFlowNum;
         foreach (DataRow dr in dt.Rows)
         {
-            if (isShowNum)
-            {
-                if (this.FK_Flow != dr["FK_Flow"] as string)
-                    this.Add("<a href='EmpWorks.aspx?FK_Flow=" + dr["FK_Flow"] + "'>" + dr["FlowName"] + "-" + dr["Num"] + "</a>&nbsp;&nbsp;");
-                else
-                    this.AddB(dr["FlowName"].ToString() + "&nbsp;&nbsp;");
-            }
+            if (this.FK_Flow != dr["FK_Flow"] as string)
+                this.Left.AddLi("EmpWorks.aspx?FK_Flow=" + dr["FK_Flow"].ToString(), dr["FlowName"].ToString() + "-" + dr["Num"].ToString());
             else
-            {
-                if (this.FK_Flow != dr["FK_Flow"] as string)
-                    this.Add("<a href='EmpWorks.aspx?FK_Flow=" + dr["FK_Flow"] + "'>" + dr["FlowName"] + "</a>&nbsp;&nbsp;");
-                else
-                    this.AddB(dr["FlowName"].ToString() + "&nbsp;&nbsp;");
-            }
+                this.Left.AddLiB("EmpWorks.aspx?FK_Flow=" + dr["FK_Flow"].ToString(), dr["FlowName"].ToString() + "-" + dr["Num"].ToString());
         }
-        this.AddTDEnd();
-        this.AddTREnd();
+        this.Left.AddULEnd();
+        this.Left.DivInfoBlockEnd();
 
         #endregion  输出流程类别
 
 
         #region  输出流程类别.
-        this.AddTR();
-        this.AddTDTitle("ID");
-        this.AddTDTitle(this.ToE("NodeName", "节点"));
-        this.AddTDTitle(this.ToE("Title", "标题"));
-        this.AddTDTitle(this.ToE("Starter", "发起人"));
-        this.AddTDTitle(this.ToE("RDT", "发起日期"));
-        this.AddTDTitle(this.ToE("ADT", "接受日期"));
-        this.AddTDTitle(this.ToE("SDT", "期限"));
 
-        this.AddTREnd();
+        this.Pub1.AddTable("width='100%'");
+        this.Pub1.AddTR();
+        this.Pub1.Add("<TD class=ToolBar colspan=" + colspan + " > " + this.ToE("OnTheWayWork", "待办工作") + "</TD>");
+        this.Pub1.AddTREnd();
+        this.Pub1.AddTableEnd();
+
+        //this.Pub1.AddTR();
+        //if (WebUser.IsWap)
+        //    this.Pub1.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
+        //else
+        //    this.Pub1.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
+        //this.Pub1.AddTREnd();
+
+        this.Pub1.AddTable("width='90%' align=left");
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("ID");
+        this.Pub1.AddTDTitle(this.ToE("NodeName", "节点"));
+        this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
+        this.Pub1.AddTDTitle(this.ToE("Starter", "发起人"));
+        this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
+        this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
+        this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));
+        this.Pub1.AddTREnd();
         #endregion  输出流程类别
 
         sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "' ORDER BY WorkID ";
@@ -111,29 +124,29 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
             if (cdt >= mysdt)
             {
-                this.AddTRRed(); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
+                this.Pub1.AddTRRed(); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
             }
             else
             {
-                is1 = this.AddTR(is1); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
+                is1 = this.Pub1.AddTR(is1); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
             }
             i++;
-            this.AddTD(i);
+            this.Pub1.AddTD(i);
 
-            this.AddTD(dr["NodeName"].ToString());
+            this.Pub1.AddTD(dr["NodeName"].ToString());
 
-            this.AddTD("<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
-            this.AddTD(dr["Starter"].ToString());
-            this.AddTD(dr["RDT"].ToString());
-            this.AddTD(dr["ADT"].ToString());
-            this.AddTD(dr["SDT"].ToString());
-            this.AddTREnd();
+            this.Pub1.AddTD("<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+            this.Pub1.AddTD(dr["Starter"].ToString());
+            this.Pub1.AddTD(dr["RDT"].ToString());
+            this.Pub1.AddTD(dr["ADT"].ToString());
+            this.Pub1.AddTD(dr["SDT"].ToString());
+            this.Pub1.AddTREnd();
         }
 
-        this.AddTRSum();
-        this.AddTD("colspan=" + colspan, "&nbsp;");
-        this.AddTREnd();
-        this.AddTableEnd();
+        this.Pub1.AddTRSum();
+        this.Pub1.AddTD("colspan=" + colspan, "&nbsp;");
+        this.Pub1.AddTREnd();
+        this.Pub1.AddTableEnd();
         return;
     }
 }

@@ -24,6 +24,7 @@
             <tr>
                 <td valign=top>
                    <uc2:ucsys ID="Ucsys1" runat="server" />
+                   <uc2:ucsys ID="Ucsys2" runat="server" />
                 </td>
             </tr>
         </table>

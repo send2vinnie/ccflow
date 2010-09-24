@@ -461,9 +461,16 @@ namespace BP.Web.Comm.UC.WF
                             {
                                 case BP.DA.DataType.AppString:
                                     this.AddTDDesc(attr.Name);
-                                    tb.ShowType = TBType.TB;
-                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                    this.AddTD("colspan=" + colspanOfCtl, tb);
+                                    if (attr.IsSigan )
+                                    {
+                                        this.AddTD("colspan=" + colspanOfCtl, "<img src='../Data/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
+                                    }
+                                    else
+                                    {
+                                        tb.ShowType = TBType.TB;
+                                        tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                        this.AddTD("colspan=" + colspanOfCtl, tb);
+                                    }
                                     break;
                                 case BP.DA.DataType.AppDate:
                                     this.AddTDDesc(attr.Name);
