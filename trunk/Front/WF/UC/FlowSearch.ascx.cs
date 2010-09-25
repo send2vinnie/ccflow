@@ -271,8 +271,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
     public void BindFlow()
     {
         Flow fl = new Flow(this.FK_Flow);
-        int colspan = 5;
-        this.Pub1.AddTable("width='600px' ");
+        int colspan = 1;
+        this.Pub1.AddTable("width=100%");
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.Pub1.AddTREnd();
@@ -281,6 +281,28 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
         this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b><a href='FlowSearch.aspx' >返回</a> - " + fl.Name + "</b></TD>");
         this.Pub1.AddTREnd();
+
+       // GEEntity ge = fl.HisFlowData;
+        string ens = "ND" + int.Parse(fl.No) + "Rpt";
+
+        this.Pub1.AddTR();
+        this.Pub1.Add("<TD  class=TD  height=800px  width=100% >");
+        string src = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=" + ens ;
+        this.Pub1.Add("<iframe ID='f23' frameborder=0   style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' height='100%' width='100%' scrolling=no  /></iframe>");
+        this.Pub1.AddTDEnd();
+        this.Pub1.AddTREnd();
+        this.Pub1.AddTableEnd();
+        return;
+
+
+
+
+        this.Pub1.AddTR();
+        this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
+        this.Pub1.AddTREnd();
+
+        
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle(this.ToE("Name", "节点步骤"));

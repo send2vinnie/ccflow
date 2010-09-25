@@ -52,6 +52,7 @@ public partial class WF_UC_Msg : BP.Web.UC.UCBase3
     public void Bind()
     {
 
+       
 
         if (WebUser.IsWap)
             this.Left.Add("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>");

@@ -1046,7 +1046,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
                 work.FID = 0;
             }
 
-// 处理传递过来的参数。
+            // 处理传递过来的参数。
             foreach (string k in this.Request.QueryString.AllKeys)
             {
                 work.SetValByKey(k, this.Request.QueryString[k]);
@@ -1074,7 +1074,8 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
             {
                 throw new Exception("@保存错误:" + ex.Message + "@检查物理表错误：" + ex1.Message);
             }
-            throw ex;
+            this.Pub1.AddMsgOfWarning("错误", ex.Message + "@有可能此错误被系统自动修复,请您从新保存一次.");
+            //throw new Exception(ex+);
         }
         this.WorkID = work.OID;
         string msg = "";
@@ -1082,8 +1083,8 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         if (isSave)
         {
             this.WorkID = work.OID;
-           // work.RetrieveFromDBSources();
-            // work.SetValByKey(GECheckStandAttr.NodeID, this.FK_Node);
+            work.RetrieveFromDBSources();
+            this.UCEn1.ResetEnVal(work);
             return;
         }
 

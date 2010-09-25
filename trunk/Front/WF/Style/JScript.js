@@ -176,6 +176,9 @@ var appPath="YSWF";
 
 function VirtyNum(ctrl)
 {
+    if (event.keyCode <= 105 && event.keyCode >= 96)
+        return true;
+
     if (event.keyCode==8 || event.keyCode==190 )
        return true;
   
