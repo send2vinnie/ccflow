@@ -137,6 +137,8 @@ public partial class WF_Admin_BookSet : WebPage
         HtmlInputFile file = this.Ucsys1.FindControl("f") as HtmlInputFile;
         BookTemplate bt = new BookTemplate();
         bt.NodeID = this.NodeID;
+        BP.WF.Node nd = new BP.WF.Node(this.NodeID);
+
         if (this.RefNo != null)
         {
             bt.No = this.RefNo;
@@ -158,10 +160,12 @@ public partial class WF_Admin_BookSet : WebPage
             string temp = BP.SystemConfig.PathOfCyclostyleFile + "\\Temp.rtf";
             file.PostedFile.SaveAs(temp);
 
+
+
             //检查文件是否正确。
             try
             {
-                string[] paras = BP.DA.Cash.GetBookParas_Gener("Temp.rtf");
+                string[] paras = BP.DA.Cash.GetBookParas_Gener("Temp.rtf", nd.HisFlow.HisFlowData.EnMap.Attrs);
             }
             catch (Exception ex)
             {
@@ -169,7 +173,7 @@ public partial class WF_Admin_BookSet : WebPage
                 return;
             }
             string fullFile = BP.SystemConfig.PathOfCyclostyleFile + "\\" + bt.No + ".rtf";
-            file.PostedFile.SaveAs(fullFile);
+           System.IO.File.Copy(temp,fullFile,true);
             return;
         }
 
@@ -206,7 +210,7 @@ public partial class WF_Admin_BookSet : WebPage
         //检查文件是否正确。
         try
         {
-            string[] paras1 = BP.DA.Cash.GetBookParas_Gener("Temp.rtf");
+            string[] paras1 = BP.DA.Cash.GetBookParas_Gener("Temp.rtf", nd.HisFlow.HisFlowData.EnMap.Attrs);
         }
         catch (Exception ex)
         {
@@ -216,11 +220,11 @@ public partial class WF_Admin_BookSet : WebPage
 
 
         string fullFile1 = BP.SystemConfig.PathOfCyclostyleFile + "\\" + bt.No + ".rtf";
-        file.PostedFile.SaveAs(fullFile1);
+        System.IO.File.Copy(tmp, fullFile1, true);
+       // file.PostedFile.SaveAs(fullFile1);
         bt.Insert();
 
         #region 更新节点信息。
-        BP.WF.Node nd = new BP.WF.Node(this.NodeID);
         string bookids = "";
         BookTemplates tmps = new BookTemplates(nd);
         foreach (BookTemplate Btmp in tmps)
