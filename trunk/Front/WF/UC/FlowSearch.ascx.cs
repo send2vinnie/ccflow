@@ -395,8 +395,28 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         //this.Left.AddLi("FlowSearch.aspx?DoType=Flow", "按流程查询");
         this.Left.AddLi("FlowSearch.aspx?DoType=Bill", "单据查询");
         this.Left.AddLi("FlowSearch.aspx?DoType=Rpt", "系统报表");
-        this.Left.AddULEnd();
 
+        if (this.DoType == "Bill")
+        {
+
+            this.Left.AddHR();
+           
+            BookTemplates ens = new BookTemplates();
+            ens.RetrieveAll();
+
+            foreach (BookTemplate en in ens)
+            {
+                this.Left.AddLi("FlowSearch.aspx?FK_Flow=004&DoType=Bill",en.Name);
+            }
+
+            this.Left.AddULEnd();
+            this.Left.DivInfoBlockEnd();
+
+            return;
+        }
+
+
+        this.Left.AddULEnd();
         this.Left.DivInfoBlockEnd();
 
     }
