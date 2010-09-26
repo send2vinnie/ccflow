@@ -31,7 +31,7 @@ public partial class WF_Admin_FApp : WebPage
             return this.Request.QueryString["FK_Flow"];
         }
     }
-    public void DoNew(FAppSet book)
+    public void DoNew(FAppSet Bill)
     {
         this.Ucsys1.Clear();
 
@@ -51,7 +51,7 @@ public partial class WF_Admin_FApp : WebPage
         DDL ddl = new DDL();
         ddl.ID = "DDL_AppType";
         ddl.BindSysEnum("AppType");
-        ddl.SetSelectItem(book.AppType);
+        ddl.SetSelectItem(Bill.AppType);
 
         this.Ucsys1.AddTD(ddl);
         this.Ucsys1.AddTD("");
@@ -62,7 +62,7 @@ public partial class WF_Admin_FApp : WebPage
         ddl = new DDL();
         ddl.ID = "DDL_ShowTime";
         ddl.BindSysEnum(FAppSetAttr.ShowTime);
-        ddl.SetSelectItem(book.ShowTime);
+        ddl.SetSelectItem(Bill.ShowTime);
         this.Ucsys1.AddTD(ddl);
         this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
@@ -72,7 +72,7 @@ public partial class WF_Admin_FApp : WebPage
         this.Ucsys1.AddTD(this.ToE("Label","标签"));
         TB tb = new TB();
         tb.ID = "TB_Name";
-        tb.Text = book.Name;
+        tb.Text = Bill.Name;
         this.Ucsys1.AddTD(tb);
         this.Ucsys1.AddTD(this.ToE("ShowName","显示名称") ); // 显示名称
         this.Ucsys1.AddTREnd();
@@ -81,7 +81,7 @@ public partial class WF_Admin_FApp : WebPage
         this.Ucsys1.AddTD(this.ToE("DoWhat","执行内容")); //"执行内容"
         tb = new TB();
         tb.ID = "TB_DoWhat";
-        tb.Text = book.DoWhat;
+        tb.Text = Bill.DoWhat;
         this.Ucsys1.AddTD(tb);
         this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
@@ -94,7 +94,7 @@ public partial class WF_Admin_FApp : WebPage
         this.Ucsys1.Add(btn);
         btn.Click += new EventHandler(btn_Click);
         this.Ucsys1.Add(btn);
-        if (book.OID > 1)
+        if (Bill.OID > 1)
         {
             btn = new Button();
             btn.ID = "Btn_Del";
@@ -164,16 +164,16 @@ public partial class WF_Admin_FApp : WebPage
                 break;
         }
 
-        FAppSets books = new FAppSets(this.NodeID);
-        if (books.Count == 0)
+        FAppSets Bills = new FAppSets(this.NodeID);
+        if (Bills.Count == 0)
         {
             this.Response.Redirect("FAppSet.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New", true);
             return;
         }
 
-        if (books.Count ==1)
+        if (Bills.Count ==1)
         {
-            //this.Response.Redirect("FAppSet.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefOID="+books[0].GetValByKey("OID"), true);
+            //this.Response.Redirect("FAppSet.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefOID="+Bills[0].GetValByKey("OID"), true);
            // return;
         }
 
@@ -191,21 +191,21 @@ public partial class WF_Admin_FApp : WebPage
         this.Ucsys1.AddTDTitle(this.ToE("Oper", "操作"));
         this.Ucsys1.AddTREnd();
         int i = 0;
-        foreach (FAppSet book in books)
+        foreach (FAppSet Bill in Bills)
         {
             i++;
             this.Ucsys1.AddTR();
             this.Ucsys1.AddTDIdx(i);
             this.Ucsys1.AddTD(nd.Name );
-            this.Ucsys1.AddTD(book.Name);
+            this.Ucsys1.AddTD(Bill.Name);
 
-            this.Ucsys1.AddTD(book.AppTypeT);
-            this.Ucsys1.AddTD(book.ShowTimeT);
+            this.Ucsys1.AddTD(Bill.AppTypeT);
+            this.Ucsys1.AddTD(Bill.ShowTimeT);
 
-            this.Ucsys1.AddTD(book.DoWhat);
+            this.Ucsys1.AddTD(Bill.DoWhat);
 
 
-            this.Ucsys1.AddTD("<a href='FAppSet.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefOID=" + book.OID + "'><img src='../../Images/Btn/Edit.gif' border=0/>"+this.ToE("Edit","编辑")+"</a>");
+            this.Ucsys1.AddTD("<a href='FAppSet.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefOID=" + Bill.OID + "'><img src='../../Images/Btn/Edit.gif' border=0/>"+this.ToE("Edit","编辑")+"</a>");
             this.Ucsys1.AddTREnd();
         }
         this.Ucsys1.AddTableEnd();

@@ -15,7 +15,7 @@ using BP.WF;
 using BP.Port;
 using BP.Sys;
 
-public partial class Face_Books : WebPage
+public partial class Face_Bills : WebPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {

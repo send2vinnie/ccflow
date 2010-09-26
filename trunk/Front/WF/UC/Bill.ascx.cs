@@ -21,8 +21,8 @@ public partial class WF_UC_Bill : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        Books books = new Books();
-        books.RetrieveAll();
+        Bills Bills = new Bills();
+        Bills.RetrieveAll();
 
         this.AddTable();
         this.AddTR();
@@ -37,18 +37,18 @@ public partial class WF_UC_Bill : BP.Web.UC.UCBase3
 
         int i = 0;
         bool is1 = false;
-        foreach (Book book in books)
+        foreach (Bill Bill in Bills)
         {
             this.AddTR(is1);
             i++;
             this.AddTDIdx(i);
-            this.AddTD(book.FK_FlowT);
-            this.AddTD(book.FK_NodeT);
-            this.AddTD(book.FK_DeptT);
+            this.AddTD(Bill.FK_FlowT);
+            this.AddTD(Bill.FK_NodeT);
+            this.AddTD(Bill.FK_DeptT);
 
-            this.AddTDA("javascript:WinOpen('"+book.Url+"')","<img src='../../Images/Btn/Word.gif' border=0 />"+book.FK_BookText);
-            this.AddTD(book.RDT);
-            this.AddTD(book.FK_EmpT);
+            this.AddTDA("javascript:WinOpen('"+Bill.Url+"')","<img src='../../Images/Btn/Word.gif' border=0 />"+Bill.FK_BillText);
+            this.AddTD(Bill.RDT);
+            this.AddTD(Bill.FK_EmpT);
             this.AddTREnd();
         }
         this.AddTableEnd();

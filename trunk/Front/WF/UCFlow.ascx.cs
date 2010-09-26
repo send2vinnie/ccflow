@@ -157,7 +157,7 @@ namespace BP.Web.WF
 
 		}
 		
-		public void BindBook(Book bk)
+		public void BindBill(Bill bk)
 		{
 
 		}

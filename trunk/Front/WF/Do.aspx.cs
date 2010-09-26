@@ -113,18 +113,18 @@ namespace BP.Web.WF
                         }
                         // this.Response.Redirect("MyFlow.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow, true);
                         break;
-                    case "SetBookState":
+                    case "SetBillState":
                         
                         break;
                     case "WorkRpt":
-                        Book bk1 = new Book(this.Request.QueryString["OID"]);
+                        Bill bk1 = new Bill(this.Request.QueryString["OID"]);
                         Node nd = new Node(bk1.FK_Node);
                         this.Response.Redirect("WFRpt.aspx?WorkID=" + bk1.WorkID + "&FID=" + bk1.FID + "&FK_Flow=" + nd.FK_Flow + "&NodeId=" + bk1.FK_Node, false);
                         //this.WinOpen();
                         //this.WinClose();
                         break;
-                    case "PrintBook":
-                        //Book bk2 = new Book(this.Request.QueryString["OID"]);
+                    case "PrintBill":
+                        //Bill bk2 = new Bill(this.Request.QueryString["OID"]);
                         //Node nd2 = new Node(bk2.FK_Node);
                         //this.Response.Redirect("NodeRefFunc.aspx?NodeId=" + bk2.FK_Node + "&FlowNo=" + nd2.FK_Flow + "&NodeRefFuncOID=" + bk2.FK_NodeRefFunc + "&WorkFlowID=" + bk2.WorkID);
                         ////this.WinClose();

@@ -207,16 +207,16 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
                 this.Add("<p align='left' style='line-height: 100%' >&nbsp;&nbsp;&nbsp;&nbsp;<a name='ND" + wn.HisNode.NodeID + "' >" + this.ToEP1("NStep", "@第{0}步", idx.ToString()) + "</a>" + wn.HisNode.Name + "，" + this.ToE("DealEmp", "处理人") + "：" + wn.HisWork.Rec + wn.HisWork.HisRec.Name + "，" + this.ToE("NodeState", "节点状态") + "：" + wn.HisWork.NodeStateText + "。");
             }
 
-            BookTemplates reffunc = wn.HisNode.HisBookTemplates;
+            BillTemplates reffunc = wn.HisNode.HisBillTemplates;
             if (reffunc.Count > 0)
             {
-                this.Add("&nbsp;" + this.ToE("Book", "文书") + "：");
-                bool isMyBook = false;
+                this.Add("&nbsp;" + this.ToE("Bill", "单据") + "：");
+                bool isMyBill = false;
                 if (wn.HisWork.Rec == WebUser.No)
-                    isMyBook = true;
+                    isMyBill = true;
 
                 string year = DateTime.Now.Year.ToString();
-                foreach (BookTemplate func in reffunc)
+                foreach (BillTemplate func in reffunc)
                 {
                     if (wn.HisWork.NodeState == 0)
                     {
@@ -227,12 +227,12 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
                         string file = year + "_" + WebUser.FK_Dept + "_" + func.No + "_" + workid + ".doc";
                         string[] paths = file.Split('_');
                         string path = paths[0] + "/" + paths[1] + "/" + paths[2] + "/";
-                        string bookInfo = "<img src='./../Images/Btn/Word.gif' /><a href='./../FlowFile/Book/" + path + file + "' target=_blank >" + func.Name + "</a>";
-                        this.Add(bookInfo);
+                        string BillInfo = "<img src='./../Images/Btn/Word.gif' /><a href='./../FlowFile/Bill/" + path + file + "' target=_blank >" + func.Name + "</a>";
+                        this.Add(BillInfo);
 
                         //  string  = BP.SystemConfig.GetConfig("FtpPath") + file;
                         // path = BP.SystemConfig.AppSettings["FtpPath"].ToString() + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
-                        // this.Add("<img src='../Images/Btn/Word.gif' /><a href=\"javascript:Run('C:\\\\ds2002\\\\OpenBook.EXE','" + file + "','0');\"  >" + func.Name + "</a>");
+                        // this.Add("<img src='../Images/Btn/Word.gif' /><a href=\"javascript:Run('C:\\\\ds2002\\\\OpenBill.EXE','" + file + "','0');\"  >" + func.Name + "</a>");
                     }
                 }
 

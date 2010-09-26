@@ -9,7 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 
-namespace BP.Web.WFQH.WF.Book
+namespace BP.Web.WFQH.WF.Bill
 {
 	/// <summary>
 	/// Home 的摘要说明。

@@ -13,7 +13,7 @@
   <Item11s No="Calendar" CH="Calendar"  B5="Calendar"  EN="Calendar"  JP="Calendar" RU="Calendar" Url="Calendar.aspx" Img="./Img/Login.gif" Enable="0" Title="Calendar。" />
   <Item1 No="WF" CH="报表" EN="Rpt" RU="Заявления" Url="SelfWFRpt.aspx" Img="./Img/Runing.gif" Enable="0" Title="自定义报表。" />
   <Item1 No="Warning" CH="预警" EN="Waring" RU="Предупреждение" Url="Warning.aspx" Img="./Img/Warning.gif" Enable="1" Title="我的工作的警告的工作状态。" />
-  <Item1 No="Home" CH="文书" EN="Book" RU="Инструменты" Url="../Book/Home.aspx" Img="./Img/Book.gif" Enable="1" Title="" />
+  <Item1 No="Home" CH="单据" EN="Bill" RU="Инструменты" Url="../Bill/Home.aspx" Img="./Img/Bill.gif" Enable="1" Title="" />
   <Item1 No="Help" CH="帮助" EN="Help" RU="Помощь" Url="./Help/Default.aspx" Img="./Img/Help.gif" Enable="1" />
   <Item1 No="CS" CH="切换系统" EN="Cheange" RU="Включение системы" Url="../../Comm/Port/ChangeSystem.aspx" Img="./Img/ChangeSys.gif" Enable="1" />
 </NewDataSet>

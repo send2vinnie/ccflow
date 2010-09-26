@@ -15,7 +15,7 @@ using BP.Web.Controls;
 using BP.Web;
 using BP.Sys;
 
-public partial class WF_Admin_BookSet : WebPage
+public partial class WF_Admin_BillSet : WebPage
 {
     public int NodeID
     {
@@ -32,14 +32,14 @@ public partial class WF_Admin_BookSet : WebPage
         }
     }
 
-    public void DoNew(BookTemplate book)
+    public void DoNew(BillTemplate bill)
     {
         this.Ucsys1.Clear();
 
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
 
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX("<a href='Book.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "' >" + this.ToE("Back","返回") + "</a> - <img src='../../Images/Btn/New.gif' />" + this.ToE("New", "新建") + "-" + BP.WF.Glo.GenerHelp("Book" ));
+        this.Ucsys1.AddCaptionLeftTX("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "' >" + this.ToE("Back","返回") + "</a> - <img src='../../Images/Btn/New.gif' />" + this.ToE("New", "新建") + "-" + BP.WF.Glo.GenerHelp("Bill" ));
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle(ToE("Item", "项目"));
         this.Ucsys1.AddTDTitle(ToE("Input","输入"));
@@ -47,10 +47,24 @@ public partial class WF_Admin_BookSet : WebPage
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
+        this.Ucsys1.AddTD("单据类型"); // 单据/单据名称
+        DDL ddl = new DDL();
+        ddl.ID = "DDL_BillType";
+        BP.WF.BillTypes ens = new BillTypes();
+        ens.RetrieveAll();
+        ddl.BindEntities(ens);
+        ddl.SetSelectItem(bill.FK_BillType);
+
+        this.Ucsys1.AddTD(ddl);
+        this.Ucsys1.AddTD("<a href='javascript:AddBillType();' >新建类型</a>");
+        this.Ucsys1.AddTREnd();
+
+
+        this.Ucsys1.AddTR();
         this.Ucsys1.AddTD(ToE("No","编号"));
         TB tb = new TB();
         tb.ID = "TB_No";
-        tb.Text = book.No;
+        tb.Text = bill.No;
         tb.Enabled = false;
         if (tb.Text == "")
         {
@@ -62,19 +76,19 @@ public partial class WF_Admin_BookSet : WebPage
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(this.ToE("Name","名称")); // 文书/单据名称
+        this.Ucsys1.AddTD(this.ToE("Name","名称")); // 单据/单据名称
         tb = new TB();
         tb.ID = "TB_Name";
-        tb.Text = book.Name;
+        tb.Text = bill.Name;
         this.Ucsys1.AddTD(tb);
         this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(this.ToE("ReplaceVal", "要替换<br>特殊字段")); // 文书/单据名称
+        this.Ucsys1.AddTD(this.ToE("ReplaceVal", "要替换<br>特殊字段")); // 单据/单据名称
         tb = new TB();
         tb.ID = "TB_ReplaceVal";
-        tb.Text = book.ReplaceVal;
+        tb.Text = bill.ReplaceVal;
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 3;
         this.Ucsys1.AddTD(tb);
@@ -82,11 +96,11 @@ public partial class WF_Admin_BookSet : WebPage
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(this.ToE("BookTemplete", "文书模板") );
+        this.Ucsys1.AddTD(this.ToE("BillTemplete", "单据模板") );
         HtmlInputFile file = new HtmlInputFile();
         file.ID = "f";
         this.Ucsys1.AddTD("colspan=2", file);
-       // this.Ucsys1.AddTD("colspan=2",this.ToE("BookTempleteD","选择本地模板上传"));
+       // this.Ucsys1.AddTD("colspan=2",this.ToE("BillTempleteD","选择本地模板上传"));
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTRSum();
@@ -97,31 +111,31 @@ public partial class WF_Admin_BookSet : WebPage
         this.Ucsys1.Add(btn);
         btn.Click += new EventHandler(btn_Click);
         this.Ucsys1.Add(btn);
-        if (book.No.Length > 1)
+        if (bill.No.Length > 1)
         {
-            btn = new Button();
-            btn.ID = "Btn_Gener";
-            btn.Text = this.ToE("Test", "测试生成");   //"测试生成";
-            this.Ucsys1.Add(btn);
-            btn.Click += new EventHandler(btn_Gener_Click);
-            this.Ucsys1.Add(btn);
+            //btn = new Button();
+            //btn.ID = "Btn_Gener";
+            //btn.Text = this.ToE("Test", "测试生成");   //"测试生成";
+            //this.Ucsys1.Add(btn);
+            //btn.Click += new EventHandler(btn_Gener_Click);
+            //this.Ucsys1.Add(btn);
 
             btn = new Button();
             btn.ID = "Btn_Del";
-            btn.Text = this.ToE("Del", "删除"); // "删除文书";
+            btn.Text = this.ToE("Del", "删除"); // "删除单据";
             this.Ucsys1.Add(btn);
             btn.Attributes["onclick"] += " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
             btn.Click += new EventHandler(btn_Del_Click);
         }
         string url = "";
         if (this.RefNo != null)
-            url = "<a href='../../Data/CyclostyleFile/" + book.No + ".rtf'><img src='../../Images/Btn/save.gif' border=0/>" + this.ToE("DownTemplete", "模板下载") + "</a>";
+            url = "<a href='../../Data/CyclostyleFile/" + bill.No + ".rtf'><img src='../../Images/Btn/save.gif' border=0/>" + this.ToE("DownTemplete", "模板下载") + "</a>";
 
         this.Ucsys1.Add(url + "</TD>");
         this.Ucsys1.AddTREnd();
 
         //this.Ucsys1.AddTRSum();
-        //this.Ucsys1.AddTDBigDoc("colspan=3 class=BigDoc", "提示：关于如何制作文书请打开帮助。");
+        //this.Ucsys1.AddTDBigDoc("colspan=3 class=BigDoc", "提示：关于如何制作单据请打开帮助。");
         //this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTable();
@@ -129,13 +143,13 @@ public partial class WF_Admin_BookSet : WebPage
     void btn_Gener_Click(object sender, EventArgs e)
     {
         this.Alert("测试成功");
-        string url = "Book.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefNo=" + this.RefNo;
+        string url = "Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefNo=" + this.RefNo;
         this.Response.Redirect(url, true);
     }
     void btn_Click(object sender, EventArgs e)
     {
         HtmlInputFile file = this.Ucsys1.FindControl("f") as HtmlInputFile;
-        BookTemplate bt = new BookTemplate();
+        BillTemplate bt = new BillTemplate();
         bt.NodeID = this.NodeID;
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
 
@@ -143,8 +157,9 @@ public partial class WF_Admin_BookSet : WebPage
         {
             bt.No = this.RefNo;
             bt.Retrieve();
-            bt = this.Ucsys1.Copy(bt) as BookTemplate;
+            bt = this.Ucsys1.Copy(bt) as BillTemplate;
             bt.NodeID = this.NodeID;
+            bt.FK_BillType = this.Ucsys1.GetDDLByID("DDL_BillType").SelectedItemStringVal;
             if (file.Value == null || file.Value.Trim() == "")
             {
                 bt.Update();
@@ -163,7 +178,7 @@ public partial class WF_Admin_BookSet : WebPage
             //检查文件是否正确。
             try
             {
-                string[] paras = BP.DA.Cash.GetBookParas_Gener("Temp.rtf", nd.HisFlow.HisFlowData.EnMap.Attrs);
+                string[] paras = BP.DA.Cash.GetBillParas_Gener("Temp.rtf", nd.HisFlow.HisFlowData.EnMap.Attrs);
             }
             catch (Exception ex)
             {
@@ -175,7 +190,7 @@ public partial class WF_Admin_BookSet : WebPage
             return;
         }
 
-        bt = this.Ucsys1.Copy(bt) as BookTemplate;
+        bt = this.Ucsys1.Copy(bt) as BillTemplate;
 
         if (file.Value == null || file.Value.ToLower().Contains(".rtf") == false)
         {
@@ -207,7 +222,7 @@ public partial class WF_Admin_BookSet : WebPage
         //检查文件是否正确。
         try
         {
-            string[] paras1 = BP.DA.Cash.GetBookParas_Gener("Temp.rtf", nd.HisFlow.HisFlowData.EnMap.Attrs);
+            string[] paras1 = BP.DA.Cash.GetBillParas_Gener("Temp.rtf", nd.HisFlow.HisFlowData.EnMap.Attrs);
         }
         catch (Exception ex)
         {
@@ -215,58 +230,58 @@ public partial class WF_Admin_BookSet : WebPage
             return;
         }
 
-
         string fullFile1 = BP.SystemConfig.PathOfCyclostyleFile + "\\" + bt.No + ".rtf";
         System.IO.File.Copy(tmp, fullFile1, true);
-       // file.PostedFile.SaveAs(fullFile1);
+        // file.PostedFile.SaveAs(fullFile1);
+        bt.FK_BillType = this.Ucsys1.GetDDLByID("DDL_BillType").SelectedItemStringVal;
         bt.Insert();
 
         #region 更新节点信息。
-        string bookids = "";
-        BookTemplates tmps = new BookTemplates(nd);
-        foreach (BookTemplate Btmp in tmps)
+        string Billids = "";
+        BillTemplates tmps = new BillTemplates(nd);
+        foreach (BillTemplate Btmp in tmps)
         {
-            bookids += "@" + Btmp.No;
+            Billids += "@" + Btmp.No;
         }
-        nd.HisBookIDs = bookids;
+        nd.HisBillIDs = Billids;
         nd.Update();
         #endregion 更新节点信息。
 
-        this.Response.Redirect("Book.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID, true);
+        this.Response.Redirect("Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID, true);
     }
     void btn_Del_Click(object sender, EventArgs e)
     {
-        BookTemplate t = new BookTemplate();
+        BillTemplate t = new BillTemplate();
         t.No = this.RefNo;
         t.Delete();
 
         #region 更新节点信息。
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
-        string bookids = "";
-        BookTemplates tmps = new BookTemplates(nd);
-        foreach (BookTemplate tmp in tmps)
+        string Billids = "";
+        BillTemplates tmps = new BillTemplates(nd);
+        foreach (BillTemplate tmp in tmps)
         {
-            bookids += "@" + tmp.No;
+            Billids += "@" + tmp.No;
         }
-        nd.HisBookIDs = bookids;
+        nd.HisBillIDs = Billids;
         nd.Update();
         #endregion 更新节点信息。
 
-        this.Response.Redirect("Book.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID, true);
+        this.Response.Redirect("Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID, true);
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Title = this.ToE("NodeBookDesign", "节点文书设计"); //"节点文书设计";
+        this.Title = this.ToE("NodeBillDesign", "节点单据设计"); //"节点单据设计";
 
         switch (this.DoType)
         {
             case "New":
-                BookTemplate bk = new BookTemplate();
+                BillTemplate bk = new BillTemplate();
                 bk.NodeID = this.RefOID;
                 this.DoNew(bk);
                 return;
             case "Edit":
-                BookTemplate bk1 = new BookTemplate(this.RefNo);
+                BillTemplate bk1 = new BillTemplate(this.RefNo);
                 bk1.NodeID = this.NodeID;
                 this.DoNew(bk1);
                 return;
@@ -274,17 +289,17 @@ public partial class WF_Admin_BookSet : WebPage
                 break;
         }
 
-        BookTemplates books = new BookTemplates(this.NodeID);
-        if (books.Count == 0)
+        BillTemplates Bills = new BillTemplates(this.NodeID);
+        if (Bills.Count == 0)
         {
-            this.Response.Redirect("Book.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New", true);
+            this.Response.Redirect("Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New", true);
             return;
         }
 
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
-        this.Title = nd.Name + " - " + this.ToE("BookMang", "文书管理");  //文书管理
+        this.Title = nd.Name + " - " + this.ToE("BillMang", "单据管理");  //单据管理
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX(nd.Name + " - <a href='Book.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
+        this.Ucsys1.AddCaptionLeftTX(nd.Name + " - <a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("IDX");
         this.Ucsys1.AddTDTitle(this.ToE("Node","节点"));
@@ -293,15 +308,15 @@ public partial class WF_Admin_BookSet : WebPage
         this.Ucsys1.AddTDTitle(this.ToE("Oper", "操作"));
         this.Ucsys1.AddTREnd();
         int i = 0;
-        foreach (BookTemplate book in books)
+        foreach (BillTemplate Bill in Bills)
         {
             i++;
             this.Ucsys1.AddTR();
             this.Ucsys1.AddTDIdx(i);
-            this.Ucsys1.AddTD(book.NodeID);
-            this.Ucsys1.AddTD(book.No);
-            this.Ucsys1.AddTD("<img src='../../Images/Btn/Word.gif' >" + book.Name);
-            this.Ucsys1.AddTD("<a href='Book.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefNo=" + book.No + "'><img src='../../Images/Btn/Edit.gif' border=0/>" + this.ToE("Edit", "编辑") + "</a>|<a href='../../Data/CyclostyleFile/" + book.No + ".rtf'><img src='../../Images/Btn/save.gif' border=0/>" + this.ToE("DownTemplete", "模板下载") + "</a>");
+            this.Ucsys1.AddTD(Bill.NodeID);
+            this.Ucsys1.AddTD(Bill.No);
+            this.Ucsys1.AddTD("<img src='../../Images/Btn/Word.gif' >" + Bill.Name);
+            this.Ucsys1.AddTD("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefNo=" + Bill.No + "'><img src='../../Images/Btn/Edit.gif' border=0/>" + this.ToE("Edit", "编辑") + "</a>|<a href='../../Data/CyclostyleFile/" + Bill.No + ".rtf'><img src='../../Images/Btn/save.gif' border=0/>" + this.ToE("DownTemplete", "模板下载") + "</a>");
             this.Ucsys1.AddTREnd();
         }
         this.Ucsys1.AddTableEnd();

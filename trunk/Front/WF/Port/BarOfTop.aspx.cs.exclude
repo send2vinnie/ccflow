@@ -45,7 +45,7 @@ namespace BP.Web.CT.GTS.Port
             this.UCSys1.Add("<a href='../Warning.aspx' target='mainfrm' title='待办工作汇总'><img src='images/alert.gif' border='0' width='15' height='15'>工作预警&nbsp;</a>");
             //this.UCSys1.Add("<font>&nbsp;</font>");
 
-            this.UCSys1.Add("<a href='../Book/Home.aspx' target='mainfrm' title='文书统计、管理、分类'><img src='images/index.gif' border='0' width='15' height='15'>文书管理&nbsp;</a>");
+            this.UCSys1.Add("<a href='../Bill/Home.aspx' target='mainfrm' title='单据统计、管理、分类'><img src='images/index.gif' border='0' width='15' height='15'>单据管理&nbsp;</a>");
             //this.UCSys1.Add("<font>&nbsp;&nbsp;</font>");
 
       //      this.UCSys1.Add("<a href='../../NSR/shenbaotaizhang.aspx' target='mainfrm' title='纳税台帐'><img src='images/311.gif' border='0' width='15' height='15'>纳税台帐&nbsp;</a>");

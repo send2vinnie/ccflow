@@ -70,7 +70,7 @@ namespace BP.Web.WF.WF
 
             DA.DBAccess.RunSQL("DELETE FROM WF_CHOfNode");
             DA.DBAccess.RunSQL("DELETE FROM WF_CHOfFlow");
-            DA.DBAccess.RunSQL("DELETE FROM WF_Book");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Bill");
             DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist");
             DA.DBAccess.RunSQL("DELETE FROM WF_GENERWORKFLOW");
             DA.DBAccess.RunSQL("DELETE FROM WF_ReturnWork");
@@ -169,8 +169,8 @@ namespace BP.Web.WF.WF
             DA.DBAccess.RunSQL("DELETE FROM WF_Direction");
             DA.DBAccess.RunSQL("DELETE FROM WF_DataApply");
             DA.DBAccess.RunSQL("DELETE FROM WF_Cond");
-            DA.DBAccess.RunSQL("DELETE FROM WF_Book");
-            DA.DBAccess.RunSQL("DELETE FROM WF_BookTemplate");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Bill");
+            DA.DBAccess.RunSQL("DELETE FROM WF_BillTemplate");
             DA.DBAccess.RunSQL("DELETE FROM TA_Mail");
             DA.DBAccess.RunSQL("DELETE FROM TA_MailDtl");
 

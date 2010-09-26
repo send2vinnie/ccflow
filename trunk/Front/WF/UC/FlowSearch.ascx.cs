@@ -350,37 +350,87 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
     public void BindBill()
     {
+        //if (this.RefNo == null)
+        //{
+        //    this.Pub1.AddTable("width=100%");
+        //    this.Pub1.AddTR();
+        //    this.Pub1.AddTD("colspan=1 class=ToolBar", "选择您是查询的单据");
+        //    this.Pub1.AddTREnd();
 
-        Books books = new Books();
-        books.RetrieveAll();
+        //    this.Pub1.AddTR();
+        //    this.Pub1.AddTDBegin();
+
+        //    BillTypes ens = new BillTypes();
+        //    ens.RetrieveAll();
+
+        //    this.Pub1.AddUL();
+        //    foreach (BillType en in ens)
+        //    {
+        //        this.Pub1.AddLi("FlowSearch.aspx?FK_Flow="+en.No+"&DoType=Bill&Type=" + en.No, en.Name);
+        //    }
+        //    this.Pub1.AddULEnd();
+
+        //    this.Pub1.AddTDEnd();
+        //    this.Pub1.AddTREnd();
+        //    this.Pub1.AddTableEnd();
+        //    return;
+        //}
+
+        Bills bills = new Bills();
+        QueryObject qo = new QueryObject(bills);
+        qo.AddWhere(BillAttr.FK_Flow, this.FK_Flow);
+        qo.addAnd();
+        qo.addLeftBracket();
+        qo.AddWhere(BillAttr.FK_Emp, WebUser.No);
+        qo.addOr();
+        qo.AddWhere(BillAttr.FK_Starter, WebUser.No);
+        qo.addRightBracket();
+        qo.DoQuery();
+
+
+        //if (this.FK_Flow != null)
+        //{
+        //    bills.Retrieve(BillAttr.FK_BillType, this.RefNo);
+        //}
+        //else
+        //{
+        //    bills.Retrieve(BillAttr.FK_BillType, this.RefNo);
+        //}
+
 
         this.Pub1.AddTable();
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
-        this.Pub1.AddTDTitle("流程");
-        this.Pub1.AddTDTitle("节点");
-        this.Pub1.AddTDTitle("部门");
+        this.Pub1.AddTDTitle("标题");
+        this.Pub1.AddTDTitle("发起人");
+        this.Pub1.AddTDTitle("发起人部门");
+
+
         this.Pub1.AddTDTitle("单据编号");
         this.Pub1.AddTDTitle("单据名称");
         this.Pub1.AddTDTitle("打印日期");
         this.Pub1.AddTDTitle("打印人");
+        this.Pub1.AddTDTitle("发起人");
+        this.Pub1.AddTDTitle("月份");
         this.Pub1.AddTREnd();
 
         int i = 0;
         bool is1 = false;
-        foreach (Book book in books)
+        foreach (Bill bill in bills)
         {
             this.Pub1.AddTR(is1);
             i++;
             this.Pub1.AddTDIdx(i);
-            this.Pub1.AddTD(book.FK_FlowT);
-            this.Pub1.AddTD(book.FK_NodeT);
-            this.Pub1.AddTD(book.FK_DeptT);
+            this.Pub1.AddTD(bill.FK_FlowT);
+            this.Pub1.AddTD(bill.FK_NodeT);
+            this.Pub1.AddTD(bill.FK_DeptT);
 
-            this.Pub1.AddTD(book.BillNo);
-            this.Pub1.AddTDA("javascript:WinOpen('" + book.Url + "')", "<img src='../../Images/Btn/Word.gif' border=0 />" + book.FK_BookText);
-            this.Pub1.AddTD(book.RDT);
-            this.Pub1.AddTD(book.FK_EmpT);
+            this.Pub1.AddTD(bill.BillNo);
+            this.Pub1.AddTDA("javascript:WinOpen('" + bill.Url + "')", "<img src='../../Images/Btn/Word.gif' border=0 />" + bill.FK_BillText);
+            this.Pub1.AddTD(bill.RDT);
+            this.Pub1.AddTD(bill.FK_EmpT);
+            this.Pub1.AddTD(bill.FK_EmpT);
+            this.Pub1.AddTD(bill.FK_NY);
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();
@@ -396,19 +446,20 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Left.AddLi("FlowSearch.aspx?DoType=Bill", "单据查询");
         this.Left.AddLi("FlowSearch.aspx?DoType=Rpt", "系统报表");
 
-        if (this.DoType == "Bill")
+        if (this.DoType == "Bill" && this.RefNo!=null )
         {
 
             this.Left.AddHR();
-           
-            BookTemplates ens = new BookTemplates();
+
+            BillTypes ens = new BillTypes();
             ens.RetrieveAll();
-
-            foreach (BookTemplate en in ens)
+            foreach (BillType en in ens)
             {
-                this.Left.AddLi("FlowSearch.aspx?FK_Flow=004&DoType=Bill",en.Name);
+                if (en.No == this.RefNo)
+                    this.Left.AddLiB("FlowSearch.aspx?FK_Flow=004&DoType=Bill&Type=" + en.No, en.Name);
+                else
+                    this.Left.AddLi("FlowSearch.aspx?FK_Flow=004&DoType=Bill&Type=" + en.No, en.Name);
             }
-
             this.Left.AddULEnd();
             this.Left.DivInfoBlockEnd();
 
@@ -471,10 +522,10 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         if (WebUser.IsWap == false)
         {
             this.Pub1.AddTDTitle(this.ToE("FlowPict", "流程图"));
-            this.Pub1.AddTDTitle(this.ToE("Desc", "描述"));
+           // this.Pub1.AddTDTitle(this.ToE("Desc", "描述"));
         }
 
-        this.Pub1.AddTDTitle("单据查询");
+        this.Pub1.AddTDTitle("单据");
         this.Pub1.AddTDTitle("流程查询");
         this.Pub1.AddTDTitle("节点查询");
 
@@ -504,11 +555,15 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             if (WebUser.IsWap == false)
             {
                 this.Pub1.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/" + fl.No + ".gif','sd');\"  >打开</a>");
-                this.Pub1.AddTD(fl.Note);
+                //   this.Pub1.AddTD(fl.Note);
             }
 
-            this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "&DoType=Bill'>单据查询</a>");
-            this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "&DoType=Flow'>流程查询</a>");
+            if (fl.NumOfBill == 0)
+                this.Pub1.AddTD("...");
+            else
+                this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "&DoType=Bill'><img src='./../Images/Btn/Word.gif' border=0/>单据</a>");
+
+            this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "&DoType=Flow'>流程</a>");
             this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "'>节点查询</a>");
 
 
