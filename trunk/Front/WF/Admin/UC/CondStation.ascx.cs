@@ -75,7 +75,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
             }
             catch
             {
-                return this.FK_MainNode;
+                return 0;
             }
         }
     }
@@ -155,7 +155,11 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         DDL ddl = new DDL();
         ddl.ID = "DDL_Node";
         ddl.BindEntities(ndsN, "NodeID", "Name");
-        ddl.SetSelectItem(this.FK_Node);
+        if (this.FK_Node==0)
+        ddl.SetSelectItem( cond.FK_Node );
+        else
+            ddl.SetSelectItem(this.FK_Node);
+
         ddl.AutoPostBack = true;
         ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
         this.Pub1.Add(ddl);
