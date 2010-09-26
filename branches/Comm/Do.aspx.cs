@@ -49,7 +49,7 @@ namespace BP.Web.Comm
 					SysFileManager sysfile = new SysFileManager( int.Parse(this.Request.QueryString["OID"]) );
 					sysfile.Delete();
 					break;
-				case ActionType.PrintEnBook:
+				case ActionType.PrintEnBill:
 					string className=this.Request.QueryString["MainEnsName"];
 					Entity en =ClassFactory.GetEns(className).GetNewEntity;
 					try

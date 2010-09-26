@@ -100,9 +100,19 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        Entity en = ClassFactory.GetEn(this.EnName);
+      //  Entity en = ClassFactory.GetEn(this.EnName);
+
+        Entity en = BP.DA.ClassFactory.GetEns(this.EnsName).GetNewEntity;
+
+        //if (en==null)
+        //    en = ClassFactory.GetEn(this.EnsName);
+
         if (this.PK == null)
             return;
+
+        if (en == null)
+            throw new Exception(this.EnsName + " " + this.EnName);
+
 
         if (en.EnMap.AttrsOfOneVSM.Count == 0)
             return;

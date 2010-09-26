@@ -292,7 +292,7 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
         catch (Exception ex)
         {
             this.Response.Write(ex.Message);
-            Entity en = ClassFactory.GetEn(this.EnName);
+            Entity en = ClassFactory.GetEns(this.EnsName).GetNewEntity;
             en.CheckPhysicsTable();
             return;
         }
