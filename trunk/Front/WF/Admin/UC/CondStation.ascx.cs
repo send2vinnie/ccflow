@@ -145,7 +145,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         BP.WF.Node tond = new BP.WF.Node(this.ToNodeID);
 
-        this.Pub1.Add("节点从:<b>" + nd.Name + "</b> 节点到:<b>" + tond.Name + "</b> 要计算的节点:");
+        this.Pub1.Add("节点从:<b>" + nd.Name + "</b> 节点到:<b>" + tond.Name + "</b> <br>要计算的节点:");
         Nodes nds = new Nodes(this.FK_Flow);
         Nodes ndsN = new Nodes();
         foreach (BP.WF.Node mynd in nds)
@@ -300,7 +300,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
             cond.ToNodeID = this.ToNodeID;
             cond.Insert();
         }
- 
+
         string val = "";
         Stations sts = new Stations();
         sts.RetrieveAllFromDBSource();
@@ -321,8 +321,8 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         cond.OperatorValue = val;
         cond.HisDataFrom = ConnDataFrom.Stas;
         cond.FK_Flow = this.FK_Flow;
-        cond.HisCondType =  this.HisCondType;
-        cond.FK_Node = this.FK_Node;
+        cond.HisCondType = this.HisCondType;
+        cond.FK_Node = this.DDL_Node.SelectedItemIntVal;
         switch (this.HisCondType)
         {
             case CondType.Flow:

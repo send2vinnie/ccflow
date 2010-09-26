@@ -160,8 +160,6 @@ public partial class WF_Admin_BookSet : WebPage
             string temp = BP.SystemConfig.PathOfCyclostyleFile + "\\Temp.rtf";
             file.PostedFile.SaveAs(temp);
 
-
-
             //检查文件是否正确。
             try
             {
@@ -173,7 +171,7 @@ public partial class WF_Admin_BookSet : WebPage
                 return;
             }
             string fullFile = BP.SystemConfig.PathOfCyclostyleFile + "\\" + bt.No + ".rtf";
-           System.IO.File.Copy(temp,fullFile,true);
+            System.IO.File.Copy(temp, fullFile, true);
             return;
         }
 
@@ -184,7 +182,6 @@ public partial class WF_Admin_BookSet : WebPage
             this.Alert("@错误，非法的 rtf 格式文件。");
             return;
         }
-
 
         /* 如果包含这二个字段。*/
         string fileName = file.PostedFile.FileName;
