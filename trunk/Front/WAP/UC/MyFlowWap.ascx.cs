@@ -757,7 +757,7 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
     public void DealNodeRefFunc(string btnId)
     {
         //int oid= int.Parse(btnId.Substring("Btn_NodeRef".Length) );
-        //   BookTemplate en = new BookTemplate(oid);
+        //   BillTemplate en = new BillTemplate(oid);
         //if (en.RefFuncType==1)
         //{
         //	if (this.WorkID==0)
@@ -857,7 +857,7 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
 
     }
     /// <summary>
-    /// 生成回执文书
+    /// 生成回执单据
     /// </summary>
     private string GenerHZ(Work wk, BP.WF.Node nd)
     {
@@ -878,10 +878,10 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
         //return msg1;
 
 
-        //BookTemplate func = new BookTemplate("SLHZ"); // 回执
+        //BillTemplate func = new BillTemplate("SLHZ"); // 回执
         //string year = DateTime.Now.Year.ToString();
         //string file = year + "_" + WebUser.FK_Dept + "_" + func.No + "_" + wk.OID + ".doc";
-        //string msg = "<img src='../../" + SystemConfig.AppName + "/Images/Btn/Word.gif' /><a href=\"javascript:Run('C:\\\\ds2002\\\\OpenBook.EXE','" + file + "','0');\"  >" + func.Name + "</a>";
+        //string msg = "<img src='../../" + SystemConfig.AppName + "/Images/Btn/Word.gif' /><a href=\"javascript:Run('C:\\\\ds2002\\\\OpenBill.EXE','" + file + "','0');\"  >" + func.Name + "</a>";
 
 
         //BP.Rpt.RTF.RTFEngine rtf = new BP.Rpt.RTF.RTFEngine();
