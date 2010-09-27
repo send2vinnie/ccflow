@@ -294,14 +294,9 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTableEnd();
         return;
 
-
-
-
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.Pub1.AddTREnd();
-
-        
 
 
         this.Pub1.AddTR();
@@ -388,29 +383,19 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         qo.DoQuery();
 
 
-        //if (this.FK_Flow != null)
-        //{
-        //    bills.Retrieve(BillAttr.FK_BillType, this.RefNo);
-        //}
-        //else
-        //{
-        //    bills.Retrieve(BillAttr.FK_BillType, this.RefNo);
-        //}
-
-
         this.Pub1.AddTable();
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle("标题");
         this.Pub1.AddTDTitle("发起人");
+        this.Pub1.AddTDTitle("发起日期");
         this.Pub1.AddTDTitle("发起人部门");
 
 
         this.Pub1.AddTDTitle("单据编号");
         this.Pub1.AddTDTitle("单据名称");
-        this.Pub1.AddTDTitle("打印日期");
         this.Pub1.AddTDTitle("打印人");
-        this.Pub1.AddTDTitle("发起人");
+        this.Pub1.AddTDTitle("打印日期");
         this.Pub1.AddTDTitle("月份");
         this.Pub1.AddTREnd();
 
@@ -421,15 +406,16 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             this.Pub1.AddTR(is1);
             i++;
             this.Pub1.AddTDIdx(i);
-            this.Pub1.AddTD(bill.FK_FlowT);
-            this.Pub1.AddTD(bill.FK_NodeT);
+            this.Pub1.AddTD(bill.Title);
+            this.Pub1.AddTD(bill.FK_StarterT);
+            this.Pub1.AddTD(bill.RDT);
             this.Pub1.AddTD(bill.FK_DeptT);
+
 
             this.Pub1.AddTD(bill.BillNo);
             this.Pub1.AddTDA("javascript:WinOpen('" + bill.Url + "')", "<img src='../../Images/Btn/Word.gif' border=0 />" + bill.FK_BillText);
+            this.Pub1.AddTD(bill.FK_EmpT);
             this.Pub1.AddTD(bill.RDT);
-            this.Pub1.AddTD(bill.FK_EmpT);
-            this.Pub1.AddTD(bill.FK_EmpT);
             this.Pub1.AddTD(bill.FK_NY);
             this.Pub1.AddTREnd();
         }

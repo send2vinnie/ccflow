@@ -694,7 +694,6 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
             refno = "Per";
 
 
-
         //this.Left.MenuSelfBegin();
         //foreach (BP.WF.XML.Tool tool in tools)
         //{

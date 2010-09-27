@@ -522,9 +522,9 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         MapAttrs mattrs = new MapAttrs("ND" + nd.NodeID);
         foreach (MapAttr attr in mattrs)
         {
-
             if (attr.DefValReal.Contains("@") == false || attr.Tag == "1")
                 continue;
+
             wk.SetValByKey(attr.KeyOfEn, attr.DefVal);
         }
         #endregion 设置默认值。
@@ -1038,7 +1038,6 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         work.Rec = WebUser.No;
         work.SetValByKey("FK_Dept", WebUser.FK_Dept);
         work.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
-
         try
         {
             if (currNd.IsStartNode)
@@ -1094,7 +1093,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         }
         catch (Exception ex)
         {
-            if (BP.SystemConfig.IsDebug )
+            if (BP.SystemConfig.IsDebug)
                 work.CheckPhysicsTable();
             throw ex;
         }

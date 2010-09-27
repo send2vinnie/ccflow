@@ -45,79 +45,79 @@ public partial class Comm_MapDef_SFTableEditData : BP.Web.WebPage
     public void BindSFTable()
     {
         SFTable sf = new SFTable(this.RefNo);
-        this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX("编辑:" + sf.Name);
-        this.Ucsys1.AddTR();
-        this.Ucsys1.AddTDTitle("编号");
-        this.Ucsys1.AddTDTitle("名称");
-        this.Ucsys1.AddTDTitle("操作");
-        this.Ucsys1.AddTREnd();
+        this.Pub1.AddTable();
+        this.Pub1.AddCaptionLeftTX("编辑:" + sf.Name);
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("编号");
+        this.Pub1.AddTDTitle("名称");
+        this.Pub1.AddTDTitle("操作");
+        this.Pub1.AddTREnd();
 
         GENoNames ens = new GENoNames(sf.No, sf.Name);
         QueryObject qo = new QueryObject(ens);
         try
         {
-            this.Ucsys2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "SFTableEditData.aspx?RefNo=" + this.RefNo);
+            this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "SFTableEditData.aspx?RefNo=" + this.RefNo);
         }
         catch
         {
             sf.CheckPhysicsTable();
-            this.Ucsys2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "SFTableEditData.aspx?RefNo=" + this.RefNo);
+            this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "SFTableEditData.aspx?RefNo=" + this.RefNo);
         }
 
         qo.DoQuery("No", 10, this.PageIdx, false);
 
         foreach (GENoName en in ens)
         {
-            this.Ucsys1.AddTR();
-            this.Ucsys1.AddTDDesc(en.No);
+            this.Pub1.AddTR();
+            this.Pub1.AddTDDesc(en.No);
             TextBox tb = new TextBox();
             tb.ID = "TB_" + en.No;
             tb.Text = en.Name;
             tb.Attributes["width"] = "500px";
             tb.Columns = 80 ;
 
-            this.Ucsys1.AddTD(tb);
-            this.Ucsys1.AddTD("<a href=\"javascript:Del('" + this.RefNo + "','" + this.PageIdx + "','" + en.No + "')\" >删除</a>");
-            this.Ucsys1.AddTREnd();
+            this.Pub1.AddTD(tb);
+            this.Pub1.AddTD("<a href=\"javascript:Del('" + this.RefNo + "','" + this.PageIdx + "','" + en.No + "')\" >删除</a>");
+            this.Pub1.AddTREnd();
         }
 
         GENoName newen = new GENoName(sf.No, sf.Name);
-        this.Ucsys1.AddTR();
-        this.Ucsys1.AddTDDesc("新记录");
+        this.Pub1.AddTR();
+        this.Pub1.AddTDDesc("新记录");
         TextBox tb1 = new TextBox();
         tb1.ID = "TB_Name";
         tb1.Text = newen.Name;
         tb1.Columns = 80;
 
-        this.Ucsys1.AddTD(tb1);
+        this.Pub1.AddTD(tb1);
         Button btn = new Button();
         btn.Text = "保存";
         btn.Click += new EventHandler(btn_Click);
-        this.Ucsys1.AddTD(btn);
-        this.Ucsys1.AddTREnd();
-        this.Ucsys1.AddTableEnd();
+        this.Pub1.AddTD(btn);
+        this.Pub1.AddTREnd();
+        this.Pub1.AddTableEnd();
 
-        //this.Ucsys3.AddTable();
-        //this.Ucsys3.AddTRSum();
-        //this.Ucsys3.AddTD("编号");
-        //this.Ucsys3.AddTD("名称");
-        //this.Ucsys3.AddTD("");
-        //this.Ucsys3.AddTREnd();
+        //this.Pub3.AddTable();
+        //this.Pub3.AddTRSum();
+        //this.Pub3.AddTD("编号");
+        //this.Pub3.AddTD("名称");
+        //this.Pub3.AddTD("");
+        //this.Pub3.AddTREnd();
 
         //GENoName newen = new GENoName(sf.No, sf.Name);
-        //this.Ucsys3.AddTRSum();
-        //this.Ucsys3.AddTD(newen.GenerNewNo);
+        //this.Pub3.AddTRSum();
+        //this.Pub3.AddTD(newen.GenerNewNo);
         //TextBox tbn = new TextBox();
         //tbn.ID = "TB_Name";
 
-        //this.Ucsys3.AddTD(tbn);
+        //this.Pub3.AddTD(tbn);
         //Button btn = new Button();
         //btn.Text = "增加";
         //btn.Click += new EventHandler(btn_Click);
-        //this.Ucsys3.AddTD(btn);
-        //this.Ucsys3.AddTREnd();
-        //this.Ucsys3.AddTableEnd();
+        //this.Pub3.AddTD(btn);
+        //this.Pub3.AddTREnd();
+        //this.Pub3.AddTableEnd();
     }
 
     void btn_Click(object sender, EventArgs e)
@@ -129,7 +129,7 @@ public partial class Comm_MapDef_SFTableEditData : BP.Web.WebPage
         foreach (GENoName myen in ens)
         {
             string no = myen.No;
-            string name1 = this.Ucsys1.GetTextBoxByID("TB_" + myen.No).Text;
+            string name1 = this.Pub1.GetTextBoxByID("TB_" + myen.No).Text;
             if (name1 == "")
                 continue;
             BP.DA.DBAccess.RunSQL("update " + this.RefNo + " set Name='" + name1 + "' WHERE no='" + no + "'");
@@ -137,7 +137,7 @@ public partial class Comm_MapDef_SFTableEditData : BP.Web.WebPage
 
 
         BP.En.GENoName en = new GENoName(this.RefNo, "sd");
-        string name = this.Ucsys1.GetTextBoxByID("TB_Name").Text.Trim();
+        string name = this.Pub1.GetTextBoxByID("TB_Name").Text.Trim();
         if (name.Length > 0)
         {
             en.Name = name;

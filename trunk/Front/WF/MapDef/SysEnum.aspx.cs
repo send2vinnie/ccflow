@@ -52,31 +52,31 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
             ses.Retrieve(SysEnumAttr.EnumKey, en.No);
         }
 
-        this.Ucsys1.AddTable();
+        this.Pub1.AddTable();
         if (this.RefNo == null)
-            this.Ucsys1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("New", "新建"));
+            this.Pub1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("New", "新建"));
         else
-            this.Ucsys1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("Edit", "编辑"));
+            this.Pub1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("Edit", "编辑"));
 
         if (this.RefNo == null)
             this.Title = this.ToE("NewEnum", "新建枚举");
         else
             this.Title = this.ToE("EditEnum", "编辑枚举类型");
 
-        //this.Ucsys1.AddTR();
-        //this.Ucsys1.AddTDTitle("项目");
-        //this.Ucsys1.AddTDTitle("采集");
-        //this.Ucsys1.AddTDTitle("备注");
-        //this.Ucsys1.AddTREnd();
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTDTitle("项目");
+        //this.Pub1.AddTDTitle("采集");
+        //this.Pub1.AddTDTitle("备注");
+        //this.Pub1.AddTREnd();
 
-        this.Ucsys1.AddTR();
-        this.Ucsys1.AddTDTitle("&nbsp;");
-        this.Ucsys1.AddTDTitle("&nbsp;");
-        this.Ucsys1.AddTDTitle(this.ToE("Note","备注"));
-        this.Ucsys1.AddTREnd();
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("&nbsp;");
+        this.Pub1.AddTDTitle("&nbsp;");
+        this.Pub1.AddTDTitle(this.ToE("Note","备注"));
+        this.Pub1.AddTREnd();
          
-        this.Ucsys1.AddTRSum();
-        this.Ucsys1.AddTD( this.ToE("No","编号") );
+        this.Pub1.AddTRSum();
+        this.Pub1.AddTD( this.ToE("No","编号") );
         BP.Web.Controls.TB tb = new BP.Web.Controls.TB();
         tb.ID = "TB_No";
         tb.Text = en.No;
@@ -85,44 +85,44 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
         else
             tb.Enabled = false;
 
-        this.Ucsys1.AddTD(tb);
-        this.Ucsys1.AddTD(this.ToE("EnumEName", "枚举英文名称"));
-        this.Ucsys1.AddTREnd();
+        this.Pub1.AddTD(tb);
+        this.Pub1.AddTD(this.ToE("EnumEName", "枚举英文名称"));
+        this.Pub1.AddTREnd();
 
 
-        this.Ucsys1.AddTRSum();
-        this.Ucsys1.AddTD(this.ToE("Name","名称") );
+        this.Pub1.AddTRSum();
+        this.Pub1.AddTD(this.ToE("Name","名称") );
         tb = new BP.Web.Controls.TB();
         tb.ID = "TB_Name";
         tb.Text = en.Name;
-        this.Ucsys1.AddTD(tb);
-        this.Ucsys1.AddTD(this.ToE("EnumLabel", "枚举中文名称"));
-        this.Ucsys1.AddTREnd();
+        this.Pub1.AddTD(tb);
+        this.Pub1.AddTD(this.ToE("EnumLabel", "枚举中文名称"));
+        this.Pub1.AddTREnd();
 
         int idx = 0;
         while (idx < 20)
         {
-            this.Ucsys1.AddTR();
-            this.Ucsys1.AddTDIdx(idx);
+            this.Pub1.AddTR();
+            this.Pub1.AddTDIdx(idx);
             tb = new BP.Web.Controls.TB();
             tb.ID = "TB_" + idx;
             SysEnum se = ses.GetEntityByKey(SysEnumAttr.IntKey, idx) as SysEnum;
             if (se != null)
                 tb.Text = se.Lab;
             //   tb.Text = en.Name;
-            this.Ucsys1.AddTD(tb);
-            this.Ucsys1.AddTD("");
-            this.Ucsys1.AddTREnd();
+            this.Pub1.AddTD(tb);
+            this.Pub1.AddTD("");
+            this.Pub1.AddTREnd();
             idx++;
         }
 
-        this.Ucsys1.AddTRSum();
-        this.Ucsys1.Add("<TD colspan=3 align=center>");
+        this.Pub1.AddTRSum();
+        this.Pub1.Add("<TD colspan=3 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = " "+this.ToE("Save","保存")+" ";
         btn.Click += new EventHandler(btn_Save_Click);
-        this.Ucsys1.Add(btn);
+        this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_Add";
@@ -131,7 +131,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
         btn.Click += new EventHandler(btn_Add_Click);
         if (this.RefNo == null)
             btn.Enabled = false;
-        this.Ucsys1.Add(btn);
+        this.Pub1.Add(btn);
 
 
         btn = new Button();
@@ -142,11 +142,11 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
             btn.Enabled = false;
 
         btn.Click += new EventHandler(btn_Del_Click);
-        this.Ucsys1.Add(btn);
+        this.Pub1.Add(btn);
 
-        this.Ucsys1.Add("</TD>");
-        this.Ucsys1.AddTREnd();
-        this.Ucsys1.AddTableEnd();
+        this.Pub1.Add("</TD>");
+        this.Pub1.AddTREnd();
+        this.Pub1.AddTableEnd();
     }
     void btn_Add_Click(object sender, EventArgs e)
     {
@@ -161,7 +161,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
             SysEnumMain main = new SysEnumMain();
             if (this.RefNo == null)
             {
-                main.No = this.Ucsys1.GetTBByID("TB_No").Text;
+                main.No = this.Pub1.GetTBByID("TB_No").Text;
                 if (main.IsExits)
                 {
                     //this.Alert("编号（枚举英文名称）[" + main.No + "]已经存在。");
@@ -176,7 +176,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
                     return;
                 }
 
-                main = (SysEnumMain)this.Ucsys1.Copy(main);
+                main = (SysEnumMain)this.Pub1.Copy(main);
                 if (main.No.Length == 0 || main.Name.Length == 0)
                     throw new Exception(this.ToE("NoNameBlank", "编号与名称不能为空"));
             }
@@ -184,7 +184,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
             {
                 main.No = this.RefNo;
                 main.Retrieve();
-                main = (SysEnumMain)this.Ucsys1.Copy(main);
+                main = (SysEnumMain)this.Pub1.Copy(main);
                 if (main.No.Length == 0 || main.Name.Length == 0)
                     throw new Exception(this.ToE("NoNameBlank", "编号与名称不能为空"));
             }
@@ -194,7 +194,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
             while (idx < 19)
             {
                 idx++;
-                string t = this.Ucsys1.GetTBByID("TB_" + idx).Text.Trim();
+                string t = this.Pub1.GetTBByID("TB_" + idx).Text.Trim();
                 if (t.Length == 0)
                     continue;
 
