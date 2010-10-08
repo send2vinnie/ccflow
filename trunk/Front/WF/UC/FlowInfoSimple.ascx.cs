@@ -77,7 +77,6 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
 
         this.AddInbox();
 
-
         Nodes nds = fl.HisNodes;
         this.AddTR();
         this.Add("<TD colspan=1 class=BigDoc align=left >");
@@ -88,12 +87,12 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
             {
                 if (wl.FK_Node == nd.NodeID)
                 {
-                    this.Add("<font color=green>第" + nd.Step + "步:<a href=FlowSearch.aspx?FK_Node=" + nd.NodeID + ">" + nd.Name + "</a>");
+                    this.Add("<font color=green>第" + nd.Step + "步:" + nd.Name );
                     //this.Add("<BR>执行人:" + wl.FK_EmpText);
                     this.Add("<BR>执行人: <img src='../Data/Siganture/" + wl.FK_Emp + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
 
-                    this.Add("<br>接受日期:" + wl.RDT + "</font> ");
-                    this.Add("<a href='WFRpt.aspx?WorkID=" + wl.WorkID + "&FID=0&FK_Flow=" + this.FK_Flow + "' target=_blank >详细..</a><hr>");
+                    this.Add("<br>日期:" + wl.RDT + "</font><hr>");
+                    //this.Add("<a href='WFRpt.aspx?WorkID=" + wl.WorkID + "&FID=0&FK_Flow=" + this.FK_Flow + "' target=_blank >详细..</a><hr>");
                     isHave = true;
                     break;
                 }

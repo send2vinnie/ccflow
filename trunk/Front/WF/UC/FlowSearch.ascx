@@ -6,7 +6,7 @@
 <uc1:Pub ID="Left" runat="server" />
 </td>
 
-<td valign=top width='80%'>
+<td valign=top width='85%'>
 <uc1:Pub ID="Pub1" runat="server" />
 <uc1:Pub ID="Pub2" runat="server" />
 </td>
