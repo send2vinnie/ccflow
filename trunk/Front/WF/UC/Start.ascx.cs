@@ -53,6 +53,8 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
         qo.AddWhereInSQL("No", sql);
         qo.addAnd();
         qo.AddWhere(FlowAttr.IsOK, true);
+        qo.addAnd();
+        qo.AddWhere(FlowAttr.IsCanStart, true);
         qo.addOrderBy("FK_FlowSort", "No");
         qo.DoQuery();
         int i = 0;
