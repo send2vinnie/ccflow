@@ -199,7 +199,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
     }
     public void AdminSet()
     {
-        this.Pub1.AddFieldSet("网站设置");
+        this.Pub1.AddFieldSet("系统设置");
 
         this.Pub1.AddTable();
         this.Pub1.AddTR();
@@ -209,7 +209,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.AddTD("网站标题图片");
+        this.Pub1.AddTD("标题图片");
 
 
         FileUpload fu = new FileUpload();
