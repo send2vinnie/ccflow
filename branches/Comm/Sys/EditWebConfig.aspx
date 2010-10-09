@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Comm/MasterPage.master" AutoEventWireup="true" CodeFile="EditWebConfig.aspx.cs" Inherits="Comm_Sys_EditWebconfig" Title="无标题页" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Comm/MasterPage.master" AutoEventWireup="true" CodeFile="EditWebConfig.aspx.cs" Inherits="Comm_Sys_EditWebconfig" Title="System Seting" %>
 <%@ Register src="../UC/UCSys.ascx" tagname="UCSys" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <link href="../Style/Table.css" rel="stylesheet" type="text/css" />

@@ -1315,8 +1315,8 @@ namespace BP.Web.Comm.UC
             bool IsEnableFocusField = false;
             bool isShowOpenICON = false;
             string FocusField = null;
-            int WinCardH = 500;
-            int WinCardW = 400;
+            int WinCardH = 600;
+            int WinCardW = 500;
 
             try
             {

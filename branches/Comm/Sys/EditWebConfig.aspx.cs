@@ -74,14 +74,14 @@ public partial class Comm_Sys_EditWebconfig : WebPage
                     this.UCSys1.Add(rb1);
                     this.UCSys1.Add(rb0);
                     this.UCSys1.AddTDEnd();
-
-
                     break;
                 case "Enum":
-                    DropDownList ddl = new DropDownList();
+                    BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
                     ddl.ID = "DDL_" + en.No;
                     ddl.Enabled = en.IsEnable;
 
+                    BP.Sys.SysEnums ses = new BP.Sys.SysEnums(en.No, en.Vals);
+                    ddl.BindSysEnum(en.No, int.Parse( System.Web.Configuration.WebConfigurationManager.AppSettings[en.No] ));
                     this.UCSys1.AddTD(ddl);
                     break;
                 case "String":

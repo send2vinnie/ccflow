@@ -118,6 +118,7 @@ public partial class Comm_Sys_EnsAppCfg : WebPage
     {
         EnsAppCfgs ens = new EnsAppCfgs();
         ens.Retrieve(EnsAppCfgAttr.EnsName, this.EnsName);
+
         EnsAppXmls xmls = new EnsAppXmls();
         xmls.Retrieve(EnsAppCfgAttr.EnsName, this.EnsName);
 
@@ -130,61 +131,59 @@ public partial class Comm_Sys_EnsAppCfg : WebPage
         this.UCSys1.AddTREnd();
 
         bool is1 = false;
-        if (this.DoType == null)
+        foreach (EnsAppXml xml in xmls)
         {
-            foreach (EnsAppXml xml in xmls)
+            EnsAppCfg en = ens.GetEntityByKey(EnsAppCfgAttr.CfgKey, xml.No) as EnsAppCfg;
+            is1 = this.UCSys1.AddTR(is1);
+            this.UCSys1.AddTD(xml.No);
+            this.UCSys1.AddTD(xml.Name);
+            switch (xml.DBType)
             {
-                EnsAppCfg en = ens.GetEntityByKey(EnsAppCfgAttr.CfgKey, xml.No) as EnsAppCfg;
-                is1 = this.UCSys1.AddTR(is1);
-                this.UCSys1.AddTD(xml.No);
-                this.UCSys1.AddTD(xml.Name);
-                switch (xml.DBType)
-                {
-                    case "Enum":
-                        BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
-                        ddl.ID = "DDL_" + xml.No;
+                case "Enum":
+                    BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
+                    ddl.ID = "DDL_" + xml.No;
 
-                        SysEnums ses = new SysEnums(xml.EnumKey, xml.EnumVals);
-                        ddl.BindSysEnum(xml.EnumKey);
+                    SysEnums ses = new SysEnums(xml.EnumKey, xml.EnumVals);
+                    ddl.BindSysEnum(xml.EnumKey);
 
-                        if (en == null)
-                            ddl.SetSelectItem(xml.DefValInt);
-                        else
-                            ddl.SetSelectItem(en.CfgValOfInt);
-                        this.UCSys1.AddTD(ddl);
-                        break;
-                    case "Boolen":
-                        CheckBox cb = new CheckBox();
-                        cb.ID = "CB_" + xml.No;
-                        cb.Text = xml.Name;
-                        if (en == null)
-                            cb.Checked = xml.DefValBoolen;
-                        else
-                            cb.Checked = en.CfgValOfBoolen;
-                        this.UCSys1.AddTD(cb);
-                        break;
-                    default:
-                        TextBox tb = new TextBox();
-                        tb.ID = "TB_" + xml.No;
-                        if (en == null)
-                            tb.Text = xml.DefVal;
-                        else
-                            tb.Text = en.CfgVal;
-                        tb.Attributes["width"] = "100%";
-                        this.UCSys1.AddTD(tb);
-                        break;
-                }
-                this.UCSys1.AddTDBigDoc(xml.Desc);
-                this.UCSys1.AddTREnd();
+                    if (en == null)
+                        ddl.SetSelectItem(xml.DefValInt);
+                    else
+                        ddl.SetSelectItem(en.CfgValOfInt);
+                    this.UCSys1.AddTD(ddl);
+                    break;
+                case "Boolen":
+                    CheckBox cb = new CheckBox();
+                    cb.ID = "CB_" + xml.No;
+                    cb.Text = xml.Name;
+                    if (en == null)
+                        cb.Checked = xml.DefValBoolen;
+                    else
+                        cb.Checked = en.CfgValOfBoolen;
+                    this.UCSys1.AddTD(cb);
+                    break;
+                default:
+                    TextBox tb = new TextBox();
+                    tb.ID = "TB_" + xml.No;
+                    if (en == null)
+                        tb.Text = xml.DefVal;
+                    else
+                        tb.Text = en.CfgVal;
+                    tb.Attributes["width"] = "100%";
+                    this.UCSys1.AddTD(tb);
+                    break;
             }
-            if (xmls.Count == 0)
-            {
-                this.UCSys1.AddTableEnd();
-                return;
-            }
+            this.UCSys1.AddTDBigDoc(xml.Desc);
+            this.UCSys1.AddTREnd();
         }
 
-        
+        if (xmls.Count == 0)
+        {
+            this.UCSys1.AddTableEnd();
+            return;
+        }
+
+
         this.UCSys1.AddTableEnd();
         Button btn = new Button();
         btn.ID = "Btn_Save";
@@ -201,9 +200,10 @@ public partial class Comm_Sys_EnsAppCfg : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         if (BP.Web.WebUser.No == "admin")
-            this.UCSys1.AddCaptionLeftTX("<a href='?EnsName=" + this.EnsName + "'>基本设置</a> - <a href='?EnsName=" + this.EnsName + "&DoType=Adv'>高级设置</a> - <a href='EnsDataIO.aspx?EnsName="+this.EnsName+"' >导入导出</a>");
+            this.UCSys1.AddCaptionLeftTX("<a href='?EnsName=" + this.EnsName + "'>基本设置</a> - <a href='?EnsName=" + this.EnsName + "&DoType=Adv'>高级设置</a> - <a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "' >导入导出</a>");
         else
             this.UCSys1.AddCaptionLeftTX("基本设置");
+
         switch (this.DoType)
         {
             case "Adv":

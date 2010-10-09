@@ -13,7 +13,6 @@
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-			<LINK href="./Style/Menu.css" type="text/css" rel="stylesheet">
 		<LINK href="./Style/Table.css" type="text/css" rel="stylesheet">
 		<script language="JavaScript" src="JScript.js"></script>
 		<script language="JavaScript" src="ActiveX.js"></script>
@@ -40,7 +39,7 @@
 		}
 		</script>
 	</HEAD>
-	<body     onkeypress="Esc()"   onkeydown='DoKeyDown();' >
+	<body   onkeypress="Esc()"   onkeydown='DoKeyDown();' topmargin="0" leftmargin="0" >
 		<form id="Form1" method="post" runat="server">
 			<TABLE id="Table" align="left" cellSpacing="1" cellPadding="1" border="0" width="100%">
 				<TR>

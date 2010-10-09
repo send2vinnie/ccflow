@@ -194,10 +194,18 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
         {
             if (_GetEns == null)
             {
-                if (this.EnName != null)
+                string enName = this.EnName;
+                if (enName != null)
                 {
-                    Entity en = BP.DA.ClassFactory.GetEn(EnName);
-                    _GetEns = en.GetNewEntities;
+                    if (enName.Contains("."))
+                    {
+                        Entity en = BP.DA.ClassFactory.GetEn(enName);
+                        _GetEns = en.GetNewEntities;
+                    }
+                    else
+                    {
+                        _GetEns = BP.DA.ClassFactory.GetEns(enName);
+                    }
                 }
                 else
                 {
