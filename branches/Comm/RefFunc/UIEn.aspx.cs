@@ -13,10 +13,15 @@ public partial class Comm_RefFunc_En : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        string enName = this.Request.QueryString["EnName"];
+        if (enName==null || enName=="")
+            enName = this.Request.QueryString["EnsName"];
 
-        if (this.Request.QueryString["EnsName"].Contains(".") == false)
+
+
+        if (enName.Contains(".") == false)
         {
-            this.Response.Redirect("SysMapEn.aspx?EnsName="+this.Request.QueryString["EnsName"]+"&PK="+this.Request["PK"],true);
+            this.Response.Redirect("SysMapEn.aspx?EnsName=" + enName + "&PK=" + this.Request["PK"], true);
             return;
         }
 
