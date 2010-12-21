@@ -1,8 +1,0 @@
-D:\WebApp\Components\BP.GTS\obj\Debug\ResolveAssemblyReference.cache
-D:\WebApp\Components\BP.GTS\obj\Debug\BP.GTS.dll
-D:\WebApp\Components\BP.GTS\obj\Debug\BP.GTS.pdb
-D:\WebApp\Components\BP.GTS\bin\Debug\BP.GTS.dll
-D:\WebApp\Components\BP.GTS\bin\Debug\BP.GTS.pdb
-D:\WebApp\Components\BP.GTS\bin\Debug\BP.En30.dll
-D:\WebApp\Components\BP.GTS\bin\Debug\ChineseConverter.dll
-D:\WebApp\Components\BP.GTS\bin\Debug\BP.En30.pdb
