@@ -1,8 +1,0 @@
-<?xml version="1.0" standalone="yes"?>
-<NewDataSet>
-  <otb>
-    <No>QJType</No>
-    <Name>请假类型</Name>
-    <CfgVal>@0=事假@1=病假@2=婚嫁@3=其它</CfgVal>
-  </otb>
-</NewDataSet>
