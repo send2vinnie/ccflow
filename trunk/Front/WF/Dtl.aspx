@@ -5,12 +5,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
 		<Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)" />
-		<LINK href="./Style/Table.css" type="text/css" rel="stylesheet" />
+		 <link href="./../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
+    <link href="./../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+    
+		 <style type="text/css">
+		     body
+		     {
+		     	font-size:smaller;
+		     }
+		     </style>
+		
 		<script language="javascript" >
 		    var isChange = false;
 		    function SaveDtlData() {
-
-    // alert( isChange );
    
 		        if (isChange == false)
 		            return;
@@ -18,6 +25,26 @@
 		        btn.click();
 		        isChange = false;
 		    }
+function TROver(ctrl)
+{
+   ctrl.style.backgroundColor='LightSteelBlue';
+}
+
+function TROut(ctrl)
+{
+  ctrl.style.backgroundColor='white';
+}
+
+function Del(id,ens)
+{
+  if (window.confirm('您确定要执行删除吗？')==false)
+     return;
+      
+        var url='Do.aspx?DoType=DelDtl&OID='+id+'&EnsName='+ens;
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+}
+
     </script>
     <style type="text/css">
         .HBtn
@@ -27,9 +54,9 @@
         	 display:none;
         }
     </style>
-
 	<script language="JavaScript" src="./Style/JScript.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js" type="text/javascript"></script>    
+        <link href="Style/Style.css" rel="stylesheet" type="text/css" />
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()" style="font-size:smaller"> 
     <form id="form1" runat="server">

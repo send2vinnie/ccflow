@@ -36,6 +36,8 @@ public partial class WF_UC_EmpWorksWap : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Page.Title = "Work on the way.";
+
         int colspan = 8;
         this.AddTable("width='90%' align=center");
         this.AddTR();
@@ -58,7 +60,9 @@ public partial class WF_UC_EmpWorksWap : BP.Web.UC.UCBase3
         this.AddTDTitle(this.ToE("Title", "标题"));
         this.AddTDTitle(this.ToE("Starter", "发起人"));
         this.AddTDTitle(this.ToE("RDT", "发起日期"));
+
         this.AddTDTitle(this.ToE("ADT", "接受日期"));
+
         this.AddTDTitle(this.ToE("SDT", "期限"));
 
         this.AddTREnd();

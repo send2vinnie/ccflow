@@ -8,9 +8,11 @@
 		<meta name="CODE_LANGUAGE" Content="C#">
 		<meta name="vs_defaultClientScript" content="JavaScript">
 		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
-		<LINK href="../Comm/Style.css" type="text/css" rel="stylesheet">
-		<LINK href="../Comm/Menu.css" type="text/css" rel="stylesheet">
-		<LINK href="../Comm/Table.css" type="text/css" rel="stylesheet">
+		
+	
+		  <link href="../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
+    <link href="../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+		
 		<script language="JavaScript" src="../Comm/JScript.js"></script>
 		<script language="JavaScript" src="../Comm/Menu.js"></script>
 		<script language="JavaScript" src="../Comm/Table.js"></script>

@@ -7,6 +7,20 @@
     <script language="JavaScript" src="MapDef.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
     <script language="javascript" >
+    function AddDtl( kv )
+    {
+       var b=window.showModalDialog( 'WFRptDtl.aspx?MyPK='+kv , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+       // window.location.href = 'WFRptDtl.aspx?PK='+ kv;
+    }
+    
+    function DoReset( kv )
+    {
+       if (window.confirm('Are you sure ? ')==false)
+            return ;
+        window.location.href = 'WFRpt.aspx?PK='+ kv+'&DoType=Reset';
+    }
+    
 	function HelpGroup()
 	{
 	   var msg='字段分组：就是把类似的字段放在一起，让用户操作更友好。\t\n比如：我们纳税人设计一个基础信息采集节点。';
@@ -14,6 +28,11 @@
        alert( msg);
 	}
 	function DoGroupF( enName)
+	{
+	    var b=window.showModalDialog( 'GroupTitle.aspx?EnName='+enName , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+	}
+	function DoGroupF( AddDtl)
 	{
 	    var b=window.showModalDialog( 'GroupTitle.aspx?EnName='+enName , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;

@@ -318,6 +318,9 @@ namespace BP.Web.Comm.UC.WF
             gfs = new GroupFields(enName);
             dtls = new MapDtls(enName);
             this.Add("<table class=TableFrom id=tabForm >");
+            string url = "";
+            string script = "";
+            string appPath = this.Page.Request.ApplicationPath;
             foreach (GroupField gf in gfs)
             {
                 currGF = gf;
@@ -366,11 +369,13 @@ namespace BP.Web.Comm.UC.WF
                         }
                         rowIdx++;
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
+
+                        string ctlID = "_ctl0_ContentPlaceHolder1_MyFlowUC1_UCEn1_TB_" + attr.KeyOfEn;
+
                         if (attr.UIIsEnable)
-                            this.Add("<TD  colspan=4 width='100%' valign=top align=left>" + attr.Name);
+                            this.Add("<TD  colspan=4 width='100%' valign=top align=left><a href=\"javascript:TBHelp('" + ctlID + "','" + appPath + "','"+enName+"','"+attr.KeyOfEn+"')\">" + attr.Name + "</a>");
                         else
                             this.Add("<TD  colspan=4 width='100%' valign=top class=TBReadonly>" + attr.Name);
-
 
                         TB mytbLine = new TB();
                         mytbLine.TextMode = TextBoxMode.MultiLine;
@@ -378,6 +383,9 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.Rows = 8;
                         mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
+
+                       // mytbLine.Attributes["onmousedown"] = script;
+
                         mytbLine.Enabled = attr.UIIsEnable;
                         if (mytbLine.Enabled == false)
                             mytbLine.Attributes["class"] = "TBReadonly";
@@ -461,7 +469,7 @@ namespace BP.Web.Comm.UC.WF
                             {
                                 case BP.DA.DataType.AppString:
                                     this.AddTDDesc(attr.Name);
-                                    if (attr.IsSigan )
+                                    if (attr.IsSigan)
                                     {
                                         this.AddTD("colspan=" + colspanOfCtl, "<img src='../Data/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
                                     }
@@ -598,7 +606,6 @@ namespace BP.Web.Comm.UC.WF
                     this.AddTREnd();
                 }
                 this.InsertObjects(false);
-
             }
             this.AddTableEnd();
 
@@ -608,7 +615,6 @@ namespace BP.Web.Comm.UC.WF
             foreach (MapDtl dtl in dtls)
             {
                 js += "\t\n window.setInterval(\"ReinitIframe('" + dtl.No + "')\", 200);";
-                break;
             }
             js += "\t\n</script>";
             this.Add(js);
@@ -656,9 +662,9 @@ namespace BP.Web.Comm.UC.WF
                 rowIdx++;
                // myidx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                this.Add("<TD colspan=3 ID='TD" + dtl.No + "' height='50px'  >");
+                this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' width='100%'  >");
                 string src = this.Request.ApplicationPath+"/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal;
-                this.Add("<iframe ID='F" + dtl.No + "' frameborder=0 Onblur=\"SaveDtl('" + dtl.No + "');\" style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' height='10px' scrolling=no  /></iframe>");
+                this.Add("<iframe ID='F" + dtl.No + "' frameborder=0 Onblur=\"SaveDtl('" + dtl.No + "');\" style='padding:0px;border:0px;width:100%'  leftMargin='0'  topMargin='0' src='" + src + "' height='10px' scrolling=no  /></iframe>");
                 this.AddTDEnd();
                 this.AddTREnd();
             }

@@ -1,7 +1,5 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/WF/MasterPage.master" AutoEventWireup="false" CodeFile="MasterPageSearch.master.cs" Inherits="WF_MasterPageSearch" %>
-
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
         .style1
@@ -10,7 +8,6 @@
         }
     </style>
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <table border=1 id='' width='100%'>
 <tr>
@@ -19,11 +16,9 @@
 </td>
 <td>
    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-   
         <p>
             <br />
         </p>
-   
         </asp:ContentPlaceHolder>
 </td>
 </tr>

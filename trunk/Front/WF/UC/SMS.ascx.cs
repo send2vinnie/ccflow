@@ -51,9 +51,9 @@ public partial class WF_UC_SMS : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        this.Page.Title = "手机短信提醒";
+        this.Page.Title = "SMS";
 
-        this.AddMsgOfInfo("错误", "没有安装短信猫设备");
+        this.AddMsgOfInfo(this.ToE("Error", "错误"), this.ToE("SMS1", "没有安装短信发送设备"));
         return;
 
 

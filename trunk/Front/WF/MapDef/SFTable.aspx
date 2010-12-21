@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title runat=server />
-    <link href="./../Style/Table.css" rel="stylesheet" type="text/css" />
-    <link href="./../Style/Style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
     
 		<script language="JavaScript" src="JS.js"></script>
     
@@ -22,7 +22,9 @@
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()" onload="RSize()"  >
     <form id="form1" runat="server">
+    <div align=center>
         <uc1:ucsys ID="Ucsys1" runat="server" />
+        </div>
     </form>
 </body>
 </html>

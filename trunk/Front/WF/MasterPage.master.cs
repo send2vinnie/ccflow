@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 
-public partial class Face_MasterPage : System.Web.UI.MasterPage
+public partial class Face_MasterPage : BP.Web.MasterPage
 {
     private string _pageID = null;
     public string PageID
@@ -49,19 +49,19 @@ public partial class Face_MasterPage : System.Web.UI.MasterPage
         BP.WF.XML.ToolBars ens = new BP.WF.XML.ToolBars();
         ens.RetrieveAll();
 
-       
-        
-//  <LI><A href="http://app.javaeye.com/profile">个人资料</A> </LI>
-//  <LI class=activetab><A href="http://app.javaeye.com/password">修改密码</A> </LI>
-//  <LI><A href="http://app.javaeye.com/email">注册邮箱</A> </LI></UL>
-//</DIV>
+
+
+        //  <LI><A href="http://app.javaeye.com/profile">个人资料</A> </LI>
+        //  <LI class=activetab><A href="http://app.javaeye.com/password">修改密码</A> </LI>
+        //  <LI><A href="http://app.javaeye.com/email">注册邮箱</A> </LI></UL>
+        //</DIV>
 
         string sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'";
         int num = BP.DA.DBAccess.RunSQLReturnValInt(sql);
-        string msg = "待办";
+        string msg = this.ToE("PendingWork", "待办")  ;
         if (num != 0)
         {
-            msg = "<div id='blink'>待办-" + num + "</div>";
+            msg = "<div id='blink'>" + this.ToE("PendingWork", "待办") + "-" + num + "</div>";
             string script = "";
             script += "<script language=javascript>";
             script += "function changeColor(){";
@@ -73,14 +73,15 @@ public partial class Face_MasterPage : System.Web.UI.MasterPage
             script += "</script> ";
             this.Page.RegisterClientScriptBlock("s", script);
         }
-       
+
 
         string dotype = this.PageID;
-        this.Pub1.Add("<Img src='./Style/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
+        if (BP.WF.Glo.IsShowTitle)
+            this.Pub1.Add("<Img src='./Style/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
 
         this.Pub1.Add("<DIV align=center><UL id=main_nav align=center>");
-        this.Pub1.Add("<LI>Hi:"+BP.Web.WebUser.No+ BP.Web.WebUser.Name+"</LI>");
-         
+        this.Pub1.Add("<LI>Hi:" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "</LI>");
+
 
         foreach (BP.WF.XML.ToolBar en in ens)
         {

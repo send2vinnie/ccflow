@@ -50,6 +50,13 @@ public partial class Comm_MapDef_MapDtl : WebPage
                 BindDtlList(md);
                 break;
             case "New":
+                int num = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapDtl WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
+                MapDtl dtl1 = new MapDtl();
+                dtl1.Name = this.ToE("DtlTable", "明细表") + num;
+                dtl1.No = this.FK_MapData + "Dtl" + num;
+                dtl1.PTable = this.FK_MapData + "Dtl" + num;
+                BindEdit(md, dtl1);
+                break;
             case "Edit":
                 MapDtl dtl = new MapDtl();
                 if (this.FK_MapDtl == null)
@@ -85,7 +92,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
 
         this.Pub1.AddTable();
         this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + this.MyPK + "'>" + this.ToE("Back", "返回") + ":" + md.Name + "</a> - <a href='MapDtl.aspx?DoType=New&FK_MapData=" + this.FK_MapData + "&sd=sd'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
-
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle(this.ToE("No", "编号"));
@@ -102,6 +108,12 @@ public partial class Comm_MapDef_MapDtl : WebPage
             i++;
             this.Pub1.AddTR();
             this.Pub1.AddTDIdx(i);
+            this.Pub1.AddTD(dtl.No);
+            this.Pub1.AddTD(dtl.Name);
+            this.Pub1.AddTD(dtl.PTable);
+            this.Pub1.AddTD("<a href='MapDtl.aspx?FK_MapData=" + this.FK_MapData + "&DoType=Edit&FK_MapDtl=" + dtl.No + "'>" + this.ToE("Edit", "编辑") + "</a>");
+            this.Pub1.AddTREnd();
+            continue;
 
             tb = new TB();
             tb.ID = "TB_No_" + dtl.No;
@@ -118,17 +130,17 @@ public partial class Comm_MapDef_MapDtl : WebPage
             tb.Text = dtl.PTable;
             this.Pub1.AddTD(tb);
 
-            this.Pub1.AddTD("<a href='MapDtl.aspx?FK_MapData=" + this.FK_MapData + "&DoType=Edit&FK_MapDtl=" + dtl.No + "'>" + this.ToE("Edit", "编辑") + "</a>|<a href=''>" + this.ToE("Design", "设计") + "</a>");
+            this.Pub1.AddTD("<a href='MapDtl.aspx?FK_MapData=" + this.FK_MapData + "&DoType=Edit&FK_MapDtl=" + dtl.No + "'>" + this.ToE("Edit", "编辑") + "</a>");
             this.Pub1.AddTREnd();
         }
 
-        this.Pub1.AddTRSum();
-        Button btn = new Button();
-        btn.ID = "Btn_Save";
-        btn.Text = this.ToE("Save", "保存");
-        btn.Click += new EventHandler(btn_Click);
-        this.Pub1.AddTD("colspan=5", btn);
-        this.Pub1.AddTREnd();
+        //this.Pub1.AddTRSum();
+        //Button btn = new Button();
+        //btn.ID = "Btn_Save";
+        //btn.Text = this.ToE("Save", "保存");
+        //btn.Click += new EventHandler(btn_Click);
+        //this.Pub1.AddTD("colspan=5", btn);
+        //this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }
     void btn_Click(object sender, EventArgs e)
@@ -227,6 +239,25 @@ public partial class Comm_MapDef_MapDtl : WebPage
             this.Alert(ex.Message);
         }
     }
+    void btn_New_Click(object sender, EventArgs e)
+    {
+        this.Response.Redirect("MapDtl.aspx?DoType=New&FK_MapData=" + this.FK_MapData, true);
+
+        //MapData md = new MapData(this.FK_MapData);
+        //MapDtls dtls = new MapDtls(md.No);
+        //MapDtl d = (MapDtl)dtls[0];
+        //try
+        //{
+        //    MapDtl dtl = new MapDtl();
+        //    dtl.No = this.FK_MapDtl;
+        //    dtl.Delete();
+        //    this.WinClose();
+        //}
+        //catch (Exception ex)
+        //{
+        //    this.Alert(ex.Message);
+        //}
+    }
     void btn_Go_Click(object sender, EventArgs e)
     {
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
@@ -239,70 +270,83 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTable();
       //  this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "'>" + this.ToE("Back", "返回") + ":" + md.Name + "</a> -  " + this.ToE("DtlTable", "明细表") + ":（" + dtl.Name + "）");
         this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Item", "项目"));
         this.Pub1.AddTDTitle(this.ToE("Gather", "采集"));
         this.Pub1.AddTDTitle(this.ToE("Note","备注") );
         this.Pub1.AddTREnd();
 
-
+        int idx = 1;
         this.Pub1.AddTR();
-        this.Pub1.AddTD(this.ToE("PTable", "物理表名"));
-        TB tb = new TB();
-        tb.ID = "TB_PTable";
-        tb.Text = dtl.PTable ;
-
-        this.Pub1.AddTD(tb);
-        this.Pub1.AddTDBigDoc(this.FK_MapData + "Dtl");
-        this.Pub1.AddTREnd();
-
-
-        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("TableEName", "表英文名称"));
-        tb = new TB();
+        TB tb = new TB();
         tb.ID = "TB_No";
         tb.Text = dtl.No;
         if (this.DoType == "Edit")
             tb.Enabled = false;
-
         this.Pub1.AddTD(tb);
-        this.Pub1.AddTDBigDoc( this.FK_MapData + "Dtl");
+        this.Pub1.AddTD();
+        //this.Pub1.AddTD("英文名称全局唯一");
         this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
+
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("TableName", "表中文名称"));
         tb = new TB();
         tb.ID = "TB_Name";
-        tb.Text =dtl.Name;
+        tb.Text = dtl.Name;
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD("XX " + this.ToE("Dtl", "明细表"));
         this.Pub1.AddTREnd();
 
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("PTable", "物理表名"));
+        tb = new TB();
+        tb.ID = "TB_PTable";
+        tb.Text = dtl.PTable;
+
+        this.Pub1.AddTD(tb);
+
+        this.Pub1.AddTD();
+        //this.Pub1.AddTD("存储数据的物理表名称");
+      //  this.Pub1.AddTD("存储数据的物理表名称");
+        this.Pub1.AddTREnd();
+
+
+
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("TableName", "操作权限"));
         DDL ddl = new DDL();
         ddl.BindSysEnum(MapDtlAttr.DtlOpenType, (int)dtl.DtlOpenType);
         ddl.ID = "DDL_DtlOpenType";
         this.Pub1.AddTD(ddl);
-        this.Pub1.AddTD("用于明细表的权限控制");
+        this.Pub1.AddTD();
+       // this.Pub1.AddTD("用于明细表的权限控制");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD("");
         CheckBox cb = new CheckBox();
         cb.ID = "CB_IsUpdate";
-        cb.Text = "是否可以修改行";
+        cb.Text = this.ToE("IsUpdateR", "是否可以修改行"); // "是否可以修改行";
         cb.Checked = dtl.IsUpdate;
         this.Pub1.AddTD(cb);
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
 
 
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD("");
         cb = new CheckBox();
         cb.ID = "CB_IsInsert";
-        cb.Text = "是否可以新增行";
+        cb.Text = this.ToE("IsInsertR", "是否可以新增行"); // "是否可以新增行";
         cb.Checked = dtl.IsInsert;
         this.Pub1.AddTD(cb);
         this.Pub1.AddTD();
@@ -310,39 +354,40 @@ public partial class Comm_MapDef_MapDtl : WebPage
 
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD("");
         cb = new CheckBox();
         cb.ID = "CB_IsDelete";
-        cb.Text = "是否可以删除行";
+        cb.Text = this.ToE("IsDeleteR", "是否可以删除行"); // "是否可以删除行";
         cb.Checked = dtl.IsDelete;
         this.Pub1.AddTD(cb);
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
 
 
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD("");
         cb =new CheckBox();
         cb.ID = "CB_IsShowIdx";
-        cb.Text = "是否显示序号列";
+        cb.Text = this.ToE("IsShowIdx", "是否显示序号列"); //"是否显示序号列";
         cb.Checked = dtl.IsShowIdx;
-        this.Pub1.AddTD(cb);
-        this.Pub1.AddTD();
+        this.Pub1.AddTD("colspan=2", cb);
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD("");
         cb = new CheckBox();
         cb.ID = "CB_IsShowSum";
-        cb.Text = "是否合计行";
+        cb.Text = this.ToE("IsShowSum", "是否合计行");// "是否合计行";
         cb.Checked = dtl.IsShowSum;
-        this.Pub1.AddTD(cb);
-        this.Pub1.AddTD();
+        this.Pub1.AddTD("colspan=2",cb);
         this.Pub1.AddTREnd();
 
-
-        this.Pub1.AddTR();
-        this.Pub1.AddTD("初始化行数");
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("RowsOfList", "初始化行数"));
         tb = new TB();
         tb.ID = "TB_RowsOfList";
         tb.Attributes["class"] = "TBNum";
@@ -352,19 +397,21 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.AddTD("越出处理");
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("WhenOverSize", "越出处理"));
         ddl = new DDL();
         ddl.ID = "DDL_WhenOverSize";
         ddl.BindSysEnum(MapDtlAttr.WhenOverSize, (int)dtl.HisWhenOverSize);
         this.Pub1.AddTD(ddl);
-        this.Pub1.AddTD("行数显示方式");
+       // this.Pub1.AddTD("行数显示方式");
+        this.Pub1.AddTD(); // ("行数显示方式");
         this.Pub1.AddTREnd();
 
         GroupFields gfs = new GroupFields(md.No);
         if (gfs.Count > 1)
         {
             this.Pub1.AddTR();
-            this.Pub1.AddTD("显示在分组");
+            this.Pub1.AddTD( this.ToE("ShowInGroup","显示在分组") );
             ddl = new DDL();
             ddl.ID = "DDL_GroupField";
             ddl.BindEntities(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab, false, AddAllLocation.None);
@@ -373,14 +420,32 @@ public partial class Comm_MapDef_MapDtl : WebPage
             this.Pub1.AddTREnd();
         }
 
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD();
         cb = new CheckBox();
         cb.ID = "CB_IsCopyNDData";
-        cb.Text = "是允许从上一个节点Copy数据";
+        cb.Text =this.ToE("IsCopyNDData","是允许从上一个节点Copy数据");
         cb.Checked = dtl.IsCopyNDData;
         this.Pub1.AddTD("colspan=2 nowarp=true ", cb);
         this.Pub1.AddTREnd();
+
+
+        //#region 字段分组
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTD("字段分组");
+        //DDL ddlGroup = new DDL();
+        //ddlGroup.ID = "DDL_GroupID";
+        //GroupFields gfs = new GroupFields(this.FK_MapData);
+        //ddlGroup.Bind(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab);
+        //if (mapAttr.GroupID == 0)
+        //    mapAttr.GroupID = this.GroupField;
+
+        //ddlGroup.SetSelectItem(mapAttr.GroupID);
+        //this.Pub1.AddTD(ddlGroup);
+        //this.Pub1.AddTD("修改隶属分组");
+        //this.Pub1.AddTREnd();
+        //#endregion 字段分组
 
 
         //this.Pub1.AddTR();
@@ -393,8 +458,8 @@ public partial class Comm_MapDef_MapDtl : WebPage
         //this.Pub1.AddTD("colspan=2 nowarp=true ", cb);
         //this.Pub1.AddTREnd();
 
-
         this.Pub1.AddTRSum();
+        this.Pub1.AddTD("");
         this.Pub1.AddTDBegin("colspan=3 align=center");
 
         Button btn = new Button();
@@ -423,7 +488,15 @@ public partial class Comm_MapDef_MapDtl : WebPage
             btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
             btn.Click += new EventHandler(btn_Del_Click);
             this.Pub1.Add(btn);
+
+
+            btn = new Button();
+            btn.ID = "Btn_New";
+            btn.Text = this.ToE("New", "新建"); // "删除";
+            btn.Click += new EventHandler(btn_New_Click);
+            this.Pub1.Add(btn);
         }
+     
         this.Pub1.AddTDEnd();
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();

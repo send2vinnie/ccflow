@@ -172,9 +172,23 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
         try
         {
             SFTable main = new SFTable();
+            main = (SFTable)this.Ucsys1.Copy(main);
+            if (main.No.Length == 0 || main.Name.Length == 0)
+                throw new Exception(this.ToE("NoNameBlank", "编号与名称不能为空"));
+
+            try
+            {
+                main.HisEns.GetNewEntity.CheckPhysicsTable();
+            }
+            catch
+            {
+            }
+
+
             if (this.RefNo == null)
             {
                 main.No = this.Ucsys1.GetTBByID("TB_No").Text;
+
                 if (main.IsExits)
                 {
                     string sql = "select No,Name from " + main.No + " WHERE 1=2";
@@ -188,10 +202,6 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
                         return;
                     }
                 }
-
-                main = (SFTable)this.Ucsys1.Copy(main);
-                if (main.No.Length == 0 || main.Name.Length == 0)
-                    throw new Exception(this.ToE("NoNameBlank", "编号与名称不能为空"));
             }
             else
             {
@@ -231,6 +241,8 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
             //    throw new Exception("错误，您必须输入表，请参考帮助。");
             // main.IsDel = true;
             main.Save();
+
+          
             //重新生成
             this.Response.Redirect("SFTable.aspx?RefNo=" + main.No + "&MyPK=" + this.MyPK + "&IDX=" + this.IDX, true);
         }

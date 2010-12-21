@@ -41,12 +41,52 @@ public partial class WF_MapDef_WFRpt : WebPage
             return false;
         }
     }
+    public string FK_Flow
+    {
+        get
+        {
+            string flowNo = this.MyPK.Replace("ND", "");
+
+            flowNo = flowNo.Replace("Rpt", "");
+
+            flowNo = flowNo.Replace("Dtl1", "");
+            flowNo = flowNo.Replace("Dtl2", "");
+            flowNo = flowNo.Replace("Dtl3", "");
+            flowNo = flowNo.Replace("Dtl4", "");
+            flowNo = flowNo.Replace("Dtl", "");
+
+            flowNo = flowNo.PadLeft(3, '0');
+            return flowNo;
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Title = this.ToE("FlowRptDef", "流程报表定义");
+
+        switch (this.DoType)
+        {
+            case "Reset":
+                BP.WF.Flow fl = new BP.WF.Flow(this.FK_Flow);
+                fl.CheckRptOfReset();
+                this.Response.Redirect("WFRpt.aspx?PK=" + this.MyPK, true);
+                return;
+            default:
+                break;
+        }
+
+        Cash.Map_Cash.Remove(this.MyPK);
+
         MapData md = new MapData(this.MyPK);
-       // Attrs attrs = md.GenerHisMap().Attrs;
+        // Attrs attrs = md.GenerHisMap().Attrs;
         MapAttrs mattrs = new MapAttrs(md.No);
         int count = mattrs.Count;
+        if (mattrs.Count == 0)
+        {
+            BP.WF.Flow f = new BP.WF.Flow(this.FK_Flow);
+            f.CheckRpt();
+            this.Response.Redirect(this.Request.RawUrl, true);
+            return;
+        }
 
         if (gfs.Count == 1)
         {
@@ -58,7 +98,44 @@ public partial class WF_MapDef_WFRpt : WebPage
             }
         }
 
-        this.Pub1.AddB("&nbsp;&nbsp;流程报表设计 - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:GroupFieldNew('" + md.No + "')\">字段分组</a><hr>");
+        this.Pub1.AddB( this.Title +"&nbsp;&nbsp;<a href=\"javascript:GroupFieldNew('" + md.No + "')\">" + this.ToE("FieldGroup", "字段分组") + "</a>");
+      //  this.Pub1.AddB("-<a href=\"javascript:WinOpen('../../Comm/PanelEns.aspx?EnsName=" + this.MyPK + "')\">查询预览</a>");
+       // this.Pub1.AddB("-<a href=\"javascript:WinOpen('../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">分析预览</a>");
+
+        if (this.MyPK.Contains("RptDtl")==false)
+        {
+            this.Pub1.AddB("-<a href=\"javascript:DoReset('" + this.MyPK + "')\">" + this.ToE("ResetFields","重设字段") + "</a>");
+
+            /* 说明是主表：判断它是否有明细表。*/
+            string sql = "SELECT COUNT(*) FROM dbo.Sys_MapDtl WHERE No LIKE 'ND" + int.Parse(this.FK_Flow) + "%'";
+            if (BP.DA.DBAccess.RunSQLReturnValInt(sql) >= 1)
+            {
+                this.Pub1.AddB("-<a href=\"javascript:AddDtl('" + md.No + "')\">插入明细表</a>");
+
+
+                sql = "SELECT No FROM Sys_MapData WHERE No LIKE '" + this.MyPK + "Dtl%'";
+                DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+                switch (dt.Rows.Count)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        this.Pub1.AddB("-<a href='WFRpt.aspx?MyPK=" + dt.Rows[0][0].ToString() + "'>明细报表设计</a>");
+                        break;
+                    default:
+                        this.Pub1.AddB("-<a href='WFRpt.aspx?DoType=DeDtl&MyPK=" + this.MyPK + "'>明细报表设计</a>");
+                        break;
+                }
+            }
+        }
+        else
+        {
+            this.Pub1.AddB("-<a href=\"WFRpt.aspx?MyPK=ND" + int.Parse(this.FK_Flow) + "Rpt\">"+this.ToE("Back","返回")+"</a>");
+        }
+
+        this.Pub1.AddHR();
+
+
         this.Pub1.Add("<Table class='Table' width='100%' align=center >");
         /*
          * 根据 GroupField 循环出现菜单。
@@ -125,9 +202,9 @@ public partial class WF_MapDef_WFRpt : WebPage
                     mytbLine.Rows = 8;
                     mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                     mytbLine.Enabled = attr.UIIsEnable;
-                    if (mytbLine.Enabled==false)
-                    mytbLine.Attributes["class"] = "TBReadonly";
-                     
+                    if (mytbLine.Enabled == false)
+                        mytbLine.Attributes["class"] = "TBReadonly";
+
                     this.Pub1.Add(mytbLine);
                     this.Pub1.AddTDEnd();
                     this.Pub1.AddTREnd();
@@ -152,7 +229,6 @@ public partial class WF_MapDef_WFRpt : WebPage
                     mytbLine.Enabled = attr.UIIsEnable;
                     if (mytbLine.Enabled == false)
                         mytbLine.Attributes["class"] = "TBReadonly";
-
 
                     this.Pub1.Add(mytbLine);
                     this.Pub1.AddTDEnd();
@@ -395,6 +471,52 @@ public partial class WF_MapDef_WFRpt : WebPage
             this.Pub1.AddFieldSetEnd();
         }
         #endregion 处理隐藏字段。
+
+        #region 查询条件定义
+        this.Pub1.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义") + " - <a href=\"javascript:WinOpen('../../Comm/PanelEns.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt2r", "查询预览") + "</a>-<a href=\"javascript:WinOpen('../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt3r", "分析预览") + "</a>");
+        foreach (MapAttr mattr in mattrs)
+        {
+            if (mattr.UIContralType != UIContralType.DDL)
+                continue;
+
+            CheckBox cb = new CheckBox();
+            cb.ID = "CB_F_" + mattr.KeyOfEn;
+            if (md.SearchKeys.Contains("@" + mattr.KeyOfEn))
+                cb.Checked = true;
+
+            cb.Text = mattr.Name;
+            this.Pub1.Add(cb);
+        }
+
+        this.Pub1.AddHR();
+        Button btn = new Button();
+        btn.Text = this.ToE("Save", "保存");
+        btn.ID = "Btn_Save";
+        btn.Click += new EventHandler(btn_Click);
+        this.Pub1.Add(btn);
+
+        this.Pub1.AddFieldSetEnd();
+        #endregion
+    }
+
+    void btn_Click(object sender, EventArgs e)
+    {
+        MapData md = new MapData(this.MyPK);
+        MapAttrs mattrs = new MapAttrs(md.No);
+        string keys = "";
+        foreach (MapAttr mattr in mattrs)
+        {
+            if (mattr.UIContralType != UIContralType.DDL)
+                continue;
+
+            CheckBox cb = this.Pub1.GetCBByID("CB_F_" + mattr.KeyOfEn);
+            if (cb.Checked)
+                keys += "@" + mattr.KeyOfEn;
+        }
+        md.SearchKeys = keys;
+        md.Update();
+
+        Cash.Map_Cash.Remove(this.MyPK);
     }
 
     public void InsertObjects(bool isJudgeRowIdx)
@@ -429,7 +551,7 @@ public partial class WF_MapDef_WFRpt : WebPage
             dtl.IsUse = true;
             int myidx = rowIdx + 10;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'>表格:<a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>插入列</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>复制列</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("Insert", "插入列") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("Copy", "复制列") + "</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
             this.Pub1.AddTREnd();
 
             myidx++;

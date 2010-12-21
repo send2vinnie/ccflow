@@ -31,7 +31,6 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
         WebUser.SysLang = this.Lang;
         Response.AddHeader("P3P", "CP=CAO PSA OUR");
         int colspan = 1;
@@ -42,12 +41,11 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
         this.AddTREnd();
 
         this.AddTR();
-        this.Add("<TD class=TitleMsg align=left colspan=" + colspan + "><img src='./Img/Login.gif' > <b>" + this.ToE("Login", "系统登陆") + "</b> " + this.ToE("PlsChoseLang", "请选择系统支持的语言") + "</TD>");
+        this.Add("<TD class=BigDoc align=left colspan=" + colspan + "><img src='./Img/Login.gif' > <b>" + this.ToE("Login", "系统登陆") + "</b> " + this.ToE("PlsChoseLang", "请选择系统支持的语言") + "</TD>");
         this.AddTREnd();
 
         this.AddTR();
         this.Add("<TD align=center >");
-
 
         BP.WF.XML.Langs langs = new BP.WF.XML.Langs();
         langs.RetrieveAll();
@@ -111,7 +109,7 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
             if (WebUser.IsAuthorize)
                 this.Add(" - <a href=\"javascript:ExitAuth('" + WebUser.Auth + "')\" >退出授权模式[" + WebUser.Auth + "]</a>" + home);
             else
-                this.Add(" - <a href='Tools.aspx?RefNo=AutoLog' >授权方式登录</a>" + home);
+                this.Add(" - <a href='Tools.aspx?RefNo=AutoLog' >" + this.ToE("AutoLog", "授权方式登录") + "</a>" + home);
         }
 
         this.AddTDEnd();

@@ -60,18 +60,20 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         MapAttr attr = new MapAttr(this.RefNo);
         BindTable(attr);
     }
+    int idx = 1;
     public void BindTable(MapAttr mapAttr)
     {
-
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX(this.GetCaption);
+       // this.Pub1.AddCaptionLeftTX(this.GetCaption);
         this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Item", "项目"));
         this.Pub1.AddTDTitle(this.ToE("Value", "值"));
         this.Pub1.AddTDTitle(this.ToE("Desc","描述") );
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("FEName", "字段英文名称")); // "字段英文名称"
 
         TB tb = new TB();
@@ -90,7 +92,8 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         this.Pub1.AddTD("不要以数字开头、不要中文。");
         this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("DefaultVal", "默认值")); // "默认值"
 
         DDL ddl = new DDL();
@@ -98,7 +101,6 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         ddl.BindEntities(mapAttr.HisEntitiesNoName);
         ddl.SetSelectItem(mapAttr.DefVal);
         this.Pub1.AddTD(ddl);
-
 
         if (mapAttr.UIBindKey.Contains(".") == false)
         {
@@ -157,7 +159,8 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
 
         #region 字段分组
         this.Pub1.AddTR();
-        this.Pub1.AddTD("字段分组");
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("FieldGroup", "字段分组"));
         DDL ddlGroup = new DDL();
         ddlGroup.ID = "DDL_GroupID";
         GroupFields gfs = new GroupFields(mapAttr.FK_MapData);
@@ -166,23 +169,27 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
             mapAttr.GroupID = this.GroupField;
 
         ddlGroup.SetSelectItem(mapAttr.GroupID);
-        this.Pub1.AddTD(ddlGroup);
+        this.Pub1.AddTD("colspan=2",ddlGroup);
         this.Pub1.AddTD("修改隶属分组");
         this.Pub1.AddTREnd();
         #endregion 字段分组
 
 
 
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("FLabel", "字段中文名称")); // 字段中文名称
         tb = new TB();
         tb.ID = "TB_Name";
         tb.Text = mapAttr.Name;
+        tb.Attributes["width"] = "100%";
+
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("IsCanEdit", "是否可编辑"));
         this.Pub1.Add("<TD>");
         RadioButton rb = new RadioButton();
@@ -213,7 +220,8 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
 
 
         #region 是否可单独行显示
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("CtlShowWay", "呈现方式")); //呈现方式;
         this.Pub1.AddTDBegin();
         rb = new RadioButton();
@@ -238,13 +246,14 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
 
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD("控制该它在表单的显示方式");
+        this.Pub1.AddTD();
+        //this.Pub1.AddTD("控制该它在表单的显示方式");
         this.Pub1.AddTREnd();
         #endregion 是否可编辑
 
 
         this.Pub1.AddTRSum();
-        this.Pub1.Add("<TD colspan=3>");
+        this.Pub1.Add("<TD colspan=4>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = this.ToE("Save","保存");

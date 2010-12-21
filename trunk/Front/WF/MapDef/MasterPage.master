@@ -9,12 +9,12 @@
     <title>无标题页</title>
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
-    <link href="../Style/Style.css" rel="stylesheet" type="text/css" />
-    <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+    
     <script language="JavaScript" src="JS.js"></script>
     <script language="JavaScript" src="../JScript.js"></script>
 	<base target="_self" />
-	
 </head>
 <body>
     <form id="form1" runat="server">

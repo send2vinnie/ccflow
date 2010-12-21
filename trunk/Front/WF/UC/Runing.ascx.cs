@@ -29,9 +29,9 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         }
 
         this.Left.DivInfoBlockBegin();
-        this.Left.AddB("什么是在途工作?");
+        this.Left.AddB(this.ToE("Ring1" ,"什么是在途工作?") );
         this.Left.AddHR();
-        this.Left.Add("在途工作就是我参与流程中的一个节点的工作，但是这条流程还没有完成，并且我不能处理当前的工作环节。");
+        this.Left.Add(this.ToE("Ring2", "在途工作就是我参与流程中的一个节点的工作，但是这条流程还没有完成，并且我不能处理当前的工作环节。"));
         this.Left.DivInfoBlockEnd();
 
 
@@ -43,9 +43,9 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.Pub1.AddTR();
 
         if (WebUser.IsWap)
-            this.Pub1.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作") + "</TD>");
+            this.Pub1.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/Home.gif' >&nbsp;<a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作") + "</TD>");
         else
-            this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Runing.gif' ><b>" + this.ToE("OnTheWayWork", "在途工作") + "</b></TD>");
+            this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "在途工作") + "</b></TD>");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
@@ -53,7 +53,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("Name", "名称"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("CurrNode", "当前节点"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起日期"));
-        this.Pub1.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起人"));
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("Emp", "发起人"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("Oper", "操作"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("Rpt", "报告"));
 
@@ -68,7 +68,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         {
             i++;
             is1 = this.Pub1.AddTR(is1);
-            this.Pub1.AddTD(i);
+            this.Pub1.AddTDIdx(i);
          //   this.Pub1.AddTDA("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
             this.Pub1.AddTD( gwf.Title);
 
@@ -109,7 +109,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.AddTDTitle("nowarp=true", this.ToE("Name", "名称"));
         this.AddTDTitle("nowarp=true", this.ToE("CurrNode", "当前节点"));
         this.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起日期"));
-        this.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起人"));
+        this.AddTDTitle("nowarp=true", this.ToE("Emp", "发起人"));
         this.AddTDTitle("nowarp=true", this.ToE("Oper", "操作"));
         this.AddTDTitle("nowarp=true", this.ToE("Rpt", "报告"));
 

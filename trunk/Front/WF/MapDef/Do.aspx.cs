@@ -273,9 +273,10 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
     {
         this.Title = this.ToE("GuideNewField", "增加新字段向导");
 
-        this.Pub1.AddFieldSet("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='SysEnum.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' >" + this.ToE("NewEnum", "新建枚举") + "</a>");
+     //   this.Pub1.AddFieldSet("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='SysEnum.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' >" + this.ToE("NewEnum", "新建枚举") + "</a>");
 
         this.Pub1.AddTable();
+        this.Pub1.AddCaptionLeftTX("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='SysEnum.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' >" + this.ToE("NewEnum", "新建枚举") + "</a>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle(this.ToE("No", "编号") + "(" + this.ToE("ClickToAdd", "点击增加到表单") + ")");
@@ -284,8 +285,12 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
         this.Pub1.AddTDTitle();
         this.Pub1.AddTREnd();
 
+
         BP.Sys.SysEnumMains sems = new SysEnumMains();
-        sems.RetrieveAll();
+        QueryObject qo = new QueryObject(sems);
+        this.Pub2.BindPageIdx(qo.GetCount(), pageSize, this.PageIdx, "Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=&GroupField");
+        qo.DoQuery("No", pageSize, this.PageIdx);
+
         bool is1 = false;
         int idx = 0;
         foreach (BP.Sys.SysEnumMain sem in sems)
@@ -296,11 +301,13 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                 ddl = new BP.Web.Controls.DDL();
                 ddl.BindSysEnum(sem.No);
             }
-            catch
+            catch(Exception ex)
             {
-                continue;
-            }
+                sem.Delete();
 
+               // this.Response.Write(ex.Message);
+                //continue;
+            }
             idx++;
             is1 = this.Pub1.AddTR(is1);
             this.Pub1.AddTDIdx(idx);
@@ -310,39 +317,45 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
             this.Pub1.AddTD(ddl);
             this.Pub1.AddTREnd();
         }
-
         this.Pub1.AddTableEnd();
-        this.Pub1.AddFieldSetEnd();  
-    }
 
+
+    }
+    int pageSize = 10;
     public void AddSFTable()
     {
         this.Title = this.ToE("GuideNewField", "增加新字段向导");
 
-        this.Pub1.AddFieldSet("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - " + this.ToE("NewFK", "增加外键字段") + " - <a href='SFTable.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' >" + this.ToE("NewTable", "新建表") + "</a>");
-
         this.Pub1.AddTable();
+        this.Pub1.AddCaptionLeftTX("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - " + this.ToE("NewFK", "增加外键字段") + " - <a href='SFTable.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' >" + this.ToE("NewTable", "新建表") + "</a>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle(this.ToE("No", "编号") + "(" + this.ToE("ClickToAdd", "点击增加到表单") + ")");
-        this.Pub1.AddTDTitle(this.ToE("Name","名称"));
+        this.Pub1.AddTDTitle(this.ToE("Name", "名称"));
         this.Pub1.AddTDTitle(this.ToE("Sort", "类别"));
-        this.Pub1.AddTDTitle( this.ToE("Desc","描述") );
+        this.Pub1.AddTDTitle(this.ToE("Desc", "描述/编辑"));
+
+        this.Pub1.AddTDTitle(this.ToE("Edit", "编辑数据"));
+
         this.Pub1.AddTREnd();
 
+
         BP.Sys.SFTables ens = new SFTables();
-        ens.RetrieveAllFromDBSource();
+        QueryObject qo = new QueryObject(ens);
+        this.Pub2.BindPageIdx(qo.GetCount(), pageSize, this.PageIdx, "Do.aspx?DoType=AddSFTable&MyPK=" + this.MyPK + "&IDX=&GroupField");
+        qo.DoQuery("No", pageSize, this.PageIdx);
+
         bool is1 = false;
         int idx = 0;
         foreach (BP.Sys.SFTable sem in ens)
         {
             idx++;
             //is1 = this.Pub1.AddTR(is1);
-            is1=this.Pub1.AddTR(is1);
+            is1 = this.Pub1.AddTR(is1);
             this.Pub1.AddTDIdx(idx);
             this.Pub1.AddTD("<a  href=\"javascript:AddSFTable('" + this.MyPK + "','" + this.IDX + "','" + sem.No + "')\" >" + sem.No + "</a>");
             this.Pub1.AddTD(sem.Name);
-          
+
             this.Pub1.AddTD(sem.SFTableTypeT);
 
             if (sem.IsClass)
@@ -350,12 +363,15 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
             else
                 this.Pub1.AddTD("<a href=\"javascript:WinOpen('SFTable.aspx?DoType=Edit&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "&RefNo=" + sem.No + "','sg')\"  ><img src='../../Images/Btn/Edit.gif' border=0/>" + sem.TableDesc + "</a>");
 
+
+            if (sem.No.Contains(".") )
+              //  this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../../Comm/Ens.aspx?EnsName=" + sem.No + "');\" >编辑</a>");
+                this.Pub1.AddTD("");
+            else
+                this.Pub1.AddTD("<a href=\"javascript:WinOpen('SFTableEditData.aspx?RefNo=" + sem.No + "');\" >编辑</a>");
+
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();
-
-
-        this.Pub1.AddFieldSetEnd();  
-
     }
 }

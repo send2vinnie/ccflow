@@ -54,9 +54,9 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
 
         this.Pub1.AddTable();
         if (this.RefNo == null)
-            this.Pub1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("New", "新建"));
+            this.Pub1.AddCaptionLeftTX("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("New", "新建"));
         else
-            this.Pub1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("Edit", "编辑"));
+            this.Pub1.AddCaptionLeftTX("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("Edit", "编辑"));
 
         if (this.RefNo == null)
             this.Title = this.ToE("NewEnum", "新建枚举");

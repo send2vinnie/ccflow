@@ -10,6 +10,8 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using BP.WF;
 using BP.Web;
+using BP.En;
+using BP.DA;
 
 public partial class WF_FileManager : WebPage
 {
@@ -82,28 +84,33 @@ public partial class WF_FileManager : WebPage
         //BP.WF.CHOfFlow f = new CHOfFlow(this.WorkID);
         //Flow fl = new Flow(this.FK_Flow);
 
+
         FileManagers fms = new FileManagers();
         switch (this.HisFJOpen)
         {
             case FJOpen.ForEmp:
-                fms.Retrieve(FileManagerAttr.WorkID, this.WorkID,
-                    FileManagerAttr.FK_Emp, BP.Web.WebUser.No);
+                QueryObject qo = new QueryObject(fms);
+                qo.AddWhere(FileManagerAttr.WorkID, this.WorkID);
+                qo.addAnd();
+                qo.AddWhere(FileManagerAttr.FK_Emp, BP.Web.WebUser.No);
+                qo.addOrderBy(FileManagerAttr.RDT);
+                qo.DoQuery();
                 break;
             case FJOpen.ForFID:
-                fms.Retrieve(FileManagerAttr.FID, this.FID);
+                fms.Retrieve(FileManagerAttr.FID, this.FID, FileManagerAttr.RDT);
                 break;
             case FJOpen.ForWorkID:
-                fms.Retrieve(FileManagerAttr.WorkID, this.WorkID);
+                fms.Retrieve(FileManagerAttr.WorkID, this.WorkID, FileManagerAttr.RDT);
                 break;
             default:
                 throw new Exception("@没有判断的情况。");
         }
 
-
-        this.Pub1.Add("<Table border=0 width='100%' >");
+        this.Pub1.AddTable(); // ("<Table border=0 width='100%' >");
         //this.Pub1.AddCaptionLeft("流程附件 -  <a href='" + this.GenerUrl + "&DoType=DB' ><img src='../Images/FileType/zip.gif' border=0/>打包下载</a>");
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle("节点");
         this.Pub1.AddTDTitle("上传人");
         this.Pub1.AddTDTitle("文件名称");
@@ -114,11 +121,20 @@ public partial class WF_FileManager : WebPage
 
         string appPath = this.Request.ApplicationPath;
         int i = 1;
+        Node nd = new Node(this.FK_Node);
+        Nodes nds = nd.HisFromNodes;
         foreach (FileManager fm in fms)
         {
-            this.Pub1.AddTR();
-           // this.Pub1.AddTDIdx(i++);
+
+            if (nds.Contains(fm.FK_Node) || this.FK_Node == fm.FK_Node)
+                this.Pub1.AddTRSum();
+            else
+                this.Pub1.AddTR();
+
+            this.Pub1.AddTDIdx(i++);
+
             this.Pub1.AddTD(fm.FK_NodeText);
+
             if (Glo.IsShowUserNoOnly)
                 this.Pub1.AddTD(fm.FK_Emp);
             else
@@ -166,7 +182,6 @@ public partial class WF_FileManager : WebPage
         if (this.DoType == null)
             return;
 
-        Node nd = new Node(this.FK_Node);
         string zipFile = nd.Name + BP.DA.DataType.CurrentData + "_" + BP.Web.WebUser.No + ".rar";
 
         string tempDir = "D:\\流程文件\\" + nd.Name + "\\";
@@ -202,7 +217,7 @@ public partial class WF_FileManager : WebPage
         try
         {
             // string filePath = "D:\\WorkFlow\\FlowFile\\" + BP.Web.WebUser.FK_Dept + "\\";
-            string filePath = "D:\\WorkFlow\\FlowFile\\" + BP.Web.WebUser.FK_Dept + "\\";
+            string filePath = BP.SystemConfig.PathOfWorkDir+  @"\VisualFlow\FlowFile\\" + BP.Web.WebUser.FK_Dept + "\\";
 
             if (System.IO.Directory.Exists(filePath) == false)
                 System.IO.Directory.CreateDirectory(filePath);

@@ -155,8 +155,11 @@
     }
 
     var isInser = "";
-    function ReinitIframe(dtlid) {
-    try {
+    function ReinitIframe(dtlid) 
+    {
+    
+     try {
+     
         var iframe = document.getElementById("F" + dtlid);
         var tdF = document.getElementById("TD" + dtlid);
         iframe.height = iframe.contentWindow.document.body.scrollHeight;
@@ -171,11 +174,12 @@
 
         tdF.height = iframe.height;
         return;
-    } catch (ex) {
-        return;
-    }
+        
+       }catch (ex) {
+         return;
+       }
     return;
-}
+   }
   function CopyFieldFromNode( mypk )
   {
       var url='CopyFieldFromNode.aspx?FK_Node='+mypk ;
@@ -201,11 +205,11 @@
 	<base target="_self" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
- <table border="0" cellpadding="0" cellspacing="0" class="Table"  width='95%' height="500px" >
-            <tr>
-                <td valign="top"  align=center>
-                <uc1:Pub ID="Pub1" runat="server" />
-                </td>
-            </tr>
-        </table>
+                <table width='80%'  align=center >
+                <tr>
+                <td valign=top>
+                 <uc1:Pub ID="Pub1" runat="server" />
+                 </td>
+                 </tr>
+                </table>
 </asp:Content>

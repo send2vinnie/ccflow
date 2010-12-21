@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/WF/MasterPage.master" AutoEventWireup="true" CodeFile="MyFlowInfo.aspx.cs" Inherits="WF_MyFlowInfo" Title="无标题页" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/WF/MasterPage.master" AutoEventWireup="true" CodeFile="MyFlowInfo.aspx.cs" Inherits="WF_MyFlowInfo" Title="ccflow" %>
 
 <%@ Register src="UC/MyFlowInfo.ascx" tagname="MyFlowInfo" tagprefix="uc1" %>
 

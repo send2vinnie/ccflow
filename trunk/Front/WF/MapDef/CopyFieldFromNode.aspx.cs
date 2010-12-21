@@ -46,14 +46,14 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Title = "字段复制";
+       // this.Title = "字段复制";
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
         BP.WF.Nodes nds = new BP.WF.Nodes(nd.FK_Flow);
         Node sNd = new Node(this.NodeOfSelect);
         MapAttrs attrs = new MapAttrs(this.NodeOfSelect);
         MapAttrs attrsCopy = new MapAttrs(this.FK_Node);
 
-        this.Pub2.Add("<b>选择要复制的节点与分组:</b>");
+      //  this.Pub2.Add("<b>选择要复制的节点与分组:</b>");
         BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
         ddl.ID = "DDL1";
         ddl.AutoPostBack = true;
@@ -67,16 +67,22 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
             ddl.Items.Add(new ListItem(en.Name, "ND" + en.NodeID.ToString()));
         }
         ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
-        this.Pub2.Add(ddl);
         ddl.SetSelectItem(this.NodeOfSelect);
 
         this.Pub2.AddTable("width='400px'");
         this.Pub2.AddTR();
-        this.Pub2.AddTDTitle("字段");
-        this.Pub2.AddTDTitle("描述");
-        this.Pub2.AddTDTitle("类型");
-        this.Pub2.AddTDTitle("显示");
+        this.Pub2.AddTDB(this.ToE("SelectNode", "选择节点"));
+        this.Pub2.AddTD("colspan=3", ddl);
         this.Pub2.AddTREnd();
+
+        this.Pub2.AddTR();
+        this.Pub2.AddTDTitle( this.ToE("Field","字段") );
+        this.Pub2.AddTDTitle( this.ToE("Desc","描述") );
+        this.Pub2.AddTDTitle( this.ToE("Type","类型") );
+        this.Pub2.AddTDTitle(this.ToE("Show","显示") );
+        this.Pub2.AddTREnd();
+       
+
 
         GroupFields gfs = new GroupFields(this.NodeOfSelect);
         MapDtls dtls = new MapDtls(this.NodeOfSelect);
@@ -97,8 +103,8 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
 
                 this.Pub2.AddTR();
                 cb = new CheckBox();
-                cb.ID = "CB" + dtl.No+"_"+dtl.GroupID;
-                cb.Text = "复制明细表：" + dtl.Name;
+                cb.ID = "CB" + dtl.No + "_" + dtl.GroupID;
+                cb.Text = this.ToE("CopyDtl", "复制明细表") + ":" + dtl.Name;
                 this.Pub2.AddTD("colspan=4", cb);
                 this.Pub2.AddTREnd();
             }
@@ -147,15 +153,16 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         }
         this.Pub2.AddTableEndWithBR();
 
- 
+
 
         Button btn = new Button();
         if (isHave == false)
         {
-            this.Pub2.AddMsgInfo("提示：","该节点下没有您要复制的字段。");
+            //this.Pub2.AddMsgInfo("提示：",
+            //    "该节点下没有您要复制的字段。");
             return;
         }
-        this.Pub2.Add("到分组:");
+        this.Pub2.Add(this.ToE("Group", "到分组:"));
         gfs = new GroupFields(this.FK_Node);
         ddl = new BP.Web.Controls.DDL();
         ddl.ID = "DDL_GroupField";
@@ -165,7 +172,9 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
 
         btn.ID = "Btn_OK";
         btn.Text = this.ToE("Copy", " 复制 ");
-        btn.Attributes["onclick"] = " return confirm('您确定要复制选择的字段到 [" + nd.Name + "]表单中吗？');";
+        //        btn.Attributes["onclick"] = " return confirm('您确定要复制选择的字段到 [" + nd.Name + "]表单中吗？');";
+        btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要复制选择的字段到 [" + nd.Name + "]表单中吗？") + "');";
+
         btn.Click += new EventHandler(btn_Copy_Click);
         this.Pub2.Add(btn);
     }
@@ -201,17 +210,24 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
             foreach (MapDtl dtl in dtls)
             {
                 cb = this.Pub2.GetCBByID("CB_" + dtl.No + gf.OID);
+
                 MapDtl dtlNew = new MapDtl();
-                dtlNew.No = this.FK_Node + "Dtl";
+                dtlNew.No =dtl.No.Replace(this.NodeOfSelect,this.FK_Node);
                 if (dtlNew.IsExits )
                     continue;
 
                 dtlNew.Copy(dtl);
                 dtlNew.FK_MapData = this.FK_Node;
-                dtlNew.No = this.FK_Node + "Dtl";
+                dtlNew.No = dtl.No.Replace(this.NodeOfSelect, this.FK_Node);
+
+              //  dtlNew.No = this.FK_Node + "Dtl";
+               // dtlNew.No = dtl.No.Replace(this.FK_Node, this.NodeOfSelect);
+                dtlNew.IsInsert = false;
+                dtlNew.IsUpdate = false;
+                dtlNew.IsDelete = false;
+
                 dtlNew.GroupID = mygf.OID;
                 dtlNew.PTable = dtlNew.No;
-
                 dtlNew.Insert();
 
                 MapAttrs mattrs = new MapAttrs(dtl.No);

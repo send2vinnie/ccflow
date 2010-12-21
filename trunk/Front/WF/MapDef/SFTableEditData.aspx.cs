@@ -92,7 +92,7 @@ public partial class Comm_MapDef_SFTableEditData : BP.Web.WebPage
 
         this.Pub1.AddTD(tb1);
         Button btn = new Button();
-        btn.Text = "保存";
+        btn.Text = this.ToE("Save", "保存");
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.AddTD(btn);
         this.Pub1.AddTREnd();

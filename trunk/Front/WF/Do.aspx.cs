@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 using BP.Web;
 using BP.WF;
 using BP.En;
-using BP.En;
+using BP.Sys;
 
 namespace BP.Web.WF
 {
@@ -37,6 +37,20 @@ namespace BP.Web.WF
                 return this.Request.QueryString["FK_Flow"];
             }
         }
+        public string RefNo
+        {
+            get
+            {
+                return this.Request.QueryString["RefNo"];
+            }
+        }
+        public string EnsName
+        {
+            get
+            {
+                return this.Request.QueryString["EnsName"];
+            }
+        }
         public string FK_Emp
         {
             get
@@ -51,6 +65,13 @@ namespace BP.Web.WF
                 return int.Parse(this.Request.QueryString["WorkID"]);
             }
         }
+        public int NodeID
+        {
+            get
+            {
+                return int.Parse(this.Request.QueryString["NodeID"]);
+            }
+        }
         protected void Page_Load(object sender, System.EventArgs e)
         {
             try
@@ -58,6 +79,47 @@ namespace BP.Web.WF
                 string str = "";
                 switch (this.ActionType)
                 {
+                    case "PrintNode": // 打印节点信息。
+                        //Node nd = new Node(this.NodeID);
+                        //try
+                        //{
+                            WorkNode wn = new WorkNode(this.WorkID, this.NodeID);
+                            wn.MakeWordDoc();
+                        //}
+                        //catch(Exception ex)
+                        //{
+                        //    this.WinCloseWithMsg("");
+                        //}
+                        break;
+                    case "DownBill":
+                        BP.WF.Bill b = new Bill(this.MyPK);
+                        b.DoOpen();
+                        break;
+                    case  "DelDtl":
+                         GEDtls dtls = new GEDtls(this.EnsName);
+                         GEDtl dtl = (GEDtl)dtls.GetNewEntity;
+                         dtl.OID = this.RefOID;
+                         dtl.Delete();
+                         this.WinClose();
+                        break;
+                    case "EmpDoUp":
+                        BP.WF.Port.WFEmp ep = new BP.WF.Port.WFEmp(this.RefNo);
+                        ep.DoUp();
+
+                        BP.WF.Port.WFEmps emps111=new BP.WF.Port.WFEmps();
+                        emps111.RemoveCash();
+                        emps111.RetrieveAll();
+                        this.WinClose();
+                        break;
+                    case "EmpDoDown":
+                        BP.WF.Port.WFEmp ep1 = new BP.WF.Port.WFEmp(this.RefNo);
+                        ep1.DoDown();
+
+                        BP.WF.Port.WFEmps emps11441 = new BP.WF.Port.WFEmps();
+                        emps11441.RemoveCash();
+                        emps11441.RetrieveAll();
+                        this.WinClose();
+                        break;
                     case "OF":
                         string sid = this.Request.QueryString["SID"];
                         string[] strs = sid.Split('_');

@@ -58,14 +58,13 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         if (attrs.Count == 0)
             dtl.IntMapAttrs();
 
-
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
         this.Pub1.Add("<Table border=0 ID='Tab' style='padding:0px' >");
    //     this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "' ><img src='../../Images/Btn/Back.gif' border=0/>" + this.ToE("Back","返回") + ":" + md.Name + "</a> - <img src='../../Images/Btn/Table.gif' border=0/>" + dtl.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> ");
 
         this.Pub1.AddTR();
         if (dtl.IsShowIdx)
-        this.Pub1.AddTDTitle("IDX");
+            this.Pub1.AddTD("class=TDCenter","");
 
         foreach (MapAttr attr in attrs)
         {
@@ -124,39 +123,43 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                             break;
                         }
 
-                        TB tb = new TB();
+                        TextBox tb = new TextBox();
                         tb.ID = "TB_" + attr.KeyOfEn + "_" + i;
                         tb.Text = attr.DefVal;
                         tb.Enabled = attr.UIIsEnable;
 
                         this.Pub1.AddTD(tb);
 
-                        tb.ShowType = attr.HisTBType;
+                     //   tb.ShowType = attr.HisTBType;
                         //tb.Columns = attr.UIWidth;
                         switch (attr.MyDataType)
                         {
                             case BP.DA.DataType.AppString:
-                                if (tb.Enabled)
-                                    tb.Attributes["class"] = "TB";
-                                else
-                                    tb.Attributes["class"] = "TBReadonly";
+                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border: none;";
+                                //if (tb.Enabled)
+                                //    tb.Attributes["class"] = "TB";
+                                //else
+                                //    tb.Attributes["class"] = "TBReadonly";
                                 break;
                             case BP.DA.DataType.AppDateTime:
                             case BP.DA.DataType.AppDate:
-                                if (tb.Enabled)
-                                    tb.Attributes["class"] = "TB";
-                                else
-                                    tb.Attributes["class"] = "TBReadonly";
-
+                                tb.Attributes["style"] = "width:65px;border: none;";
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "calendar();";
 
                                 break;
                             default:
+                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border: none;";
                                 if (tb.Enabled)
                                 {
                                     // OnKeyPress="javascript:return VirtyNum(this);"
-                                    tb.Attributes["OnKeyDown"] = "javascript:return VirtyNum(this);";
+                                    //tb.Attributes["OnKeyDown"] = "javascript:return VirtyNum(this);";
+
+                                    if (attr.MyDataType == DataType.AppInt)
+                                        tb.Attributes["OnKeyDown"] = "javascript:return VirtyInt(this);";
+                                    else
+                                        tb.Attributes["OnKeyDown"] = "javascript:return VirtyNum(this);";
+
                                     tb.Attributes["onkeyup"] += "javascript:C" + i + "();C" + attr.KeyOfEn + "();";
                                     tb.Attributes["class"] = "TBNum";
                                 }
@@ -224,6 +227,8 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                     tb.ReadOnly = true;
                     tb.Font.Bold = true;
                     tb.BackColor = System.Drawing.Color.FromName("infobackground");
+                  //  tb.Attributes["class"] = "TBNum";
+                    tb.Attributes["class"] = "TBNumReadonly";
                     this.Pub1.AddTD(tb);
                 }
                 else
@@ -295,19 +300,19 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
     {
         try
         {
-            string left = "\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk ).ClientID + ".value = ";
+            string left = "\n  document.forms[0]." + this.Pub1.GetTextBoxByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value = ";
             string right = attr.AutoFullDoc;
             foreach (MapAttr mattr in attrs)
             {
                 string tbID = "TB_" + mattr.KeyOfEn + "_" + pk;
-                TB tb = this.Pub1.GetTBByID(tbID);
+                TextBox tb = this.Pub1.GetTextBoxByID(tbID);
                 if (tb == null)
                     continue;
-                right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + this.Pub1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
-                right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + this.Pub1.GetTBByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
+                right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + this.Pub1.GetTextBoxByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
+                right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + this.Pub1.GetTextBoxByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
             }
             string s = left + right;
-            s += "\t\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Pub1.GetTBByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value ) ;";
+            s += "\t\n  document.forms[0]." + this.Pub1.GetTextBoxByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Pub1.GetTextBoxByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value ) ;";
             return s += " C" + attr.KeyOfEn + "();";
         }
         catch (Exception ex)
@@ -324,18 +329,15 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         if (dtl.IsShowSum == false)
             return "";
 
-
         if (mattr.MyDataType == DataType.AppBoolean)
             return "";
 
-   
-
-        string left = "\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value = ";
+        string left = "\n  document.forms[0]." + this.Pub1.GetTextBoxByID("TB_" + mattr.KeyOfEn).ClientID + ".value = ";
         string right = "";
         for (int i = 1; i <= dtl.RowsOfList; i++)
         {
             string tbID = "TB_" + mattr.KeyOfEn + "_" + i;
-            TB tb = this.Pub1.GetTBByID(tbID);
+            TextBox tb = this.Pub1.GetTextBoxByID(tbID);
             if (i == 0)
                 right += " parseFloat( document.forms[0]." + tb.ClientID + ".value.replace( ',' ,  '' ) )  ";
             else
@@ -347,7 +349,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         {
             case BP.DA.DataType.AppMoney:
             case BP.DA.DataType.AppRate:
-                return s += "\t\n  document.forms[0]." + this.Pub1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Pub1.GetTBByID("TB_" + mattr.KeyOfEn).ClientID + ".value ) ;";
+                return s += "\t\n  document.forms[0]." + this.Pub1.GetTextBoxByID("TB_" + mattr.KeyOfEn).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Pub1.GetTextBoxByID("TB_" + mattr.KeyOfEn).ClientID + ".value ) ;";
             default:
                 return s;
         }

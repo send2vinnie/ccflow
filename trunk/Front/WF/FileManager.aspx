@@ -17,8 +17,7 @@
 	        window.location.href= url;
          }
 		</script>
-    <link href="Style/Table.css" rel="stylesheet" type="text/css" />
-    <link href="Style/Style.css" rel="stylesheet" type="text/css" />
+      <link href="./../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
 <body topmargin="0" leftmargin="0" >
     <form id="form1" runat="server">

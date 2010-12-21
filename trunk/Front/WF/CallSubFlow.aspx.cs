@@ -45,9 +45,18 @@ public partial class WF_CallSubFlow : WebPage
         Works wks = nd.HisWorks;
         QueryObject qo = new QueryObject(wks);
         qo.AddWhere(WorkAttr.FID, this.FID);
+        qo.DoQuery();
 
-        this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "CallSubFlow.aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_FlowFrom=" + this.FK_FlowFrom);
-        qo.DoQuery("OID", 10, this.PageIdx);
+        Flow from = new Flow(this.FK_FlowFrom);
+        string currNode = BP.DA.DBAccess.RunSQLReturnVal("select FK_Node from WF_GenerWorkFlow where workid=" + this.FID).ToString();
+        if (wks.Count == 0)
+        {
+            this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_Node_From=" + currNode);
+            return;
+        }
+
+        //this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "CallSubFlow.aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_FlowFrom=" + this.FK_FlowFrom);
+        //qo.DoQuery("OID", 10, this.PageIdx);
 
         // 生成页面数据。
         Attrs attrs = nd.HisWork.EnMap.Attrs;
@@ -62,14 +71,10 @@ public partial class WF_CallSubFlow : WebPage
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.Pub1.AddTREnd();
-
-        Flow from = new Flow(this.FK_FlowFrom);
-
-
+      
         this.Pub1.AddTR();
-        this.Pub1.Add("<TD class=TitleMsg  align=left colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>您的位置：<a href='MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.FID + "' >流程处理：" + from.Name + "</a> => <a href='MyFlow.aspx?FK_Flow="+this.FK_Flow+"&FID="+this.FID+"'>流程发起</a></b></TD>");
+        this.Pub1.Add("<TD class=TitleMsg  align=left colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>您的位置:<a href='MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.FID + "' >流程处理:" + from.Name + "</a> => <a href='MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_Node_From=" + currNode + "'>流程发起</a></b> - <a href=\"javascript:WinOpen('./../Comm/PanelEns.aspx?EnsName=ND"+int.Parse(this.FK_Flow)+"Rpt');\" >流程查询</a></TD>");
         this.Pub1.AddTREnd();
-
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("序");
@@ -78,12 +83,10 @@ public partial class WF_CallSubFlow : WebPage
             if (attr.UIVisible == false)
                 continue;
            
-
             this.Pub1.AddTDTitle(attr.Desc);
         }
         this.Pub1.AddTDTitle("操作");
         this.Pub1.AddTREnd();
-
       
         int idx = 0;
         bool is1 = false;
@@ -96,8 +99,6 @@ public partial class WF_CallSubFlow : WebPage
             {
                 if (attr.UIVisible == false)
                     continue;
-
-               
 
                 switch (attr.MyDataType)
                 {

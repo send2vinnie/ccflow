@@ -56,8 +56,8 @@ namespace BP.Web.WF
             this.UCFlow1.AddTable();
             this.UCFlow1.AddCaptionLeftTX(fl.Name);
             this.UCFlow1.AddTR();
-            this.UCFlow1.AddTDTitle("序号");
-            this.UCFlow1.AddTDTitle("标题");
+            this.UCFlow1.AddTDTitle("IDX");
+            this.UCFlow1.AddTDTitle( "标题");
             this.UCFlow1.AddTDTitle("停留节点");
             this.UCFlow1.AddTDTitle("发起日期");
             // this.UCFlow1.AddTDTitle("预先警日期");

@@ -6,9 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head id="Head1" runat="server">
     <title>表单设计</title>
-    <link href="../Menu.css" rel="stylesheet" type="text/css" />
-    <link href="../Table.css" rel="stylesheet" type="text/css" />
-		<script language="JavaScript" src="JS.js"></script>
+     <link href="../../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+	<script language="JavaScript" src="JS.js"></script>
 	<base target="_self" />
 	<script language=javascript>
 	function Insert(mypk,IDX)
@@ -26,7 +26,7 @@
     function Edit(mypk,refno, ftype)
     {
         var url='EditF.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refno +'&FType=' + ftype;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
     function EditEnum(mypk,refno)
@@ -74,13 +74,13 @@
        return true;
     }
 	</script>
-    <link href="../Style/Style.css" rel="stylesheet" type="text/css" />
-    <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
+     
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="Esc()"  onload="RSize()" >
+<body topmargin="0" leftmargin="0" onkeypress="Esc()"  >
     <form id="form1" runat="server">
-    <br />
+    <div align=center>
       <uc1:Pub ID="Pub1" runat="server" />
+      </div>
     </form>
 </body>
 </html>

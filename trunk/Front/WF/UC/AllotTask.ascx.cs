@@ -251,7 +251,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
                 this.AddUL();
                 this.AddLi("<a href='Home.aspx' ><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "主页") + "</a>");
                 this.AddLi("<a href='Start.aspx' ><img src='./Img/Start.gif' border=0/>" + this.ToE("Start", "发起") + "</a>");
-                this.AddLi("<a href='Runing.aspx' ><img src='./Img/Runing.gif' border=0/>待办</a>");
+                this.AddLi("<a href='Runing.aspx' ><img src='./Img/Runing.gif' border=0/>" + this.ToE("PendingWork", "待办") + "</a>");
                 this.AddULEnd();
                 this.AddFieldSetEnd();
             }

@@ -78,7 +78,7 @@ public partial class WF_Admin_WorkEndSheet : WebPage
         this.ucsys1.AddTD();
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = "保存";
+        btn.Text = this.ToE("Save", "保存");
         btn.Click += new EventHandler(btn_Click);
         this.ucsys1.AddTD(btn);
         this.ucsys1.AddTREnd();

@@ -51,8 +51,8 @@ public partial class WF_Admin_CCNode : WebPage
         this.Ucsys1.AddTable("width=100%");
         this.Ucsys1.AddCaptionLeftTX("为流程:" + fl.Name + "，设置抄送节点。");
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTDTitle("步骤");
-        this.Ucsys1.AddTDTitle("节点名称");
+        this.Ucsys1.AddTDTitle( this.ToE("Step", "步骤") );
+        this.Ucsys1.AddTDTitle( this.ToE("NodeName", "节点名称") );
         this.Ucsys1.AddTREnd();
 
         Nodes nds = fl.HisNodes;

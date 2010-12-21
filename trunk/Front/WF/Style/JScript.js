@@ -18,7 +18,6 @@ function OpenHelperTBNo( appPath ,  EnsName, ctl  )
       
      ctl.value = str;
      return;
-      
 }
 
  function To( url)
@@ -174,15 +173,12 @@ function Esc()
 /* 用来验证 输入的是不是一个数字． onkeypress */
 var appPath="YSWF";
 
-function VirtyNum(ctrl)
+function VirtyInt(ctrl)
 {
-    if (event.keyCode <= 105 && event.keyCode >= 96)
-        return true;
-
-    if (event.keyCode==8 || event.keyCode==190 )
-       return true;
-  
-    if (event.keyCode == 13)
+  if (event.keyCode == 190)
+        return false; //如果是逗号。
+        
+  if (event.keyCode == 13)
         return true;
        
     if (event.keyCode == 46)
@@ -190,7 +186,69 @@ function VirtyNum(ctrl)
         
     if (event.keyCode == 45)
         return true;
+
+     if (event.keyCode == 229 || event.keyCode ==190 )
+        return true;
         
+        
+  if (event.keyCode <= 40 && event.keyCode >= 34)
+        return true;
+ 
+    if (event.keyCode <= 105 && event.keyCode >= 96)
+        return true;
+
+    if (event.keyCode==8 || event.keyCode==190 )
+       return true;
+  
+    if (event.keyCode < 48 || event.keyCode > 57)
+        return false;
+    else
+        return true;
+}
+
+function VirtyNum(ctrl)
+{
+  if (event.keyCode == 190)
+        return true; //如果是逗号。
+
+// if (event.keyCode == 13)
+//        return true;
+
+//alert( event.keyCode );
+
+//  var  v= parseFloat(ctrl.value);
+//   if (v==NaN)
+//   return false;
+//   else
+//   {
+//   ctrl.value = v;
+//  //var  v= parseFloat(ctrl.value);
+//    return true;
+//    }
+//    
+    
+  if (event.keyCode == 13)
+        return true;
+       
+    if (event.keyCode == 46)
+        return true;
+        
+    if (event.keyCode == 45)
+        return true;
+
+     if (event.keyCode == 229 || event.keyCode ==190 )
+        return true;
+        
+        
+  if (event.keyCode <= 40 && event.keyCode >= 34)
+        return true;
+ 
+    if (event.keyCode <= 105 && event.keyCode >= 96)
+        return true;
+
+    if (event.keyCode==8 || event.keyCode==190 )
+       return true;
+  
     if (event.keyCode < 48 || event.keyCode > 57)
         return false;
     else
@@ -460,3 +518,13 @@ function outputCents(amount)
   amount = Math.round( ( (amount) - Math.floor(amount) ) *100); 
   return (amount<10 ? '.0' + amount : '.' + amount); 
 }
+function TBHelp(ctrl,appPath,enName,attrKey) 
+{ 
+  var url = appPath + "/Comm/DataHelp.htm?" + appPath + "/Comm/HelperOfTB.aspx?EnsName=" + enName + "&AttrKey=" + attrKey;
+  var  str= window.showModalDialog(url ,'sd', 'dialogHeight: 500px; dialogWidth:850px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no');
+  
+  if ( str==undefined) 
+      return ;
+    document.getElementById(  ctrl  ).value=str;
+}
+

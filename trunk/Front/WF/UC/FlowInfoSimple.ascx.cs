@@ -87,11 +87,11 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
             {
                 if (wl.FK_Node == nd.NodeID)
                 {
-                    this.Add("<font color=green>第" + nd.Step + "步:" + nd.Name );
+                    this.Add("<font color=green>Step:" + nd.Step  + nd.Name );
                     //this.Add("<BR>执行人:" + wl.FK_EmpText);
-                    this.Add("<BR>执行人: <img src='../Data/Siganture/" + wl.FK_Emp + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
+                    this.Add("<BR>: <img src='../Data/Siganture/" + wl.FK_Emp + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
 
-                    this.Add("<br>日期:" + wl.RDT + "</font><hr>");
+                    this.Add("<br>" + wl.RDT + "</font><hr>");
                     //this.Add("<a href='WFRpt.aspx?WorkID=" + wl.WorkID + "&FID=0&FK_Flow=" + this.FK_Flow + "' target=_blank >详细..</a><hr>");
                     isHave = true;
                     break;
@@ -124,10 +124,10 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
             {
                 if (wl.FK_Node == nd.NodeID)
                 {
-                    this.Add("<font color=green>第" + nd.Step + "步:<a href=FlowSearch.aspx?FK_Node=" + nd.NodeID + ">" + nd.Name + "</a>");
-                    this.Add("<BR>执行人: <img src='../Data/Siganture/" + wl.FK_Emp + ".jpg' border=1 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>"  );
-                    this.Add("<br>接受日期:" + wl.RDT + "</font> ");
-                    this.Add("<a href='WFRpt.aspx?WorkID=" + wl.WorkID + "&FID=0&FK_Flow=" + this.FK_Flow + "' target=_blank >详细..</a><hr>");
+                    this.Add("<font color=green>Step " + nd.Step + ":<a href=FlowSearch.aspx?FK_Node=" + nd.NodeID + ">" + nd.Name + "</a>");
+                    this.Add("<BR>" + this.ToE("Executor", "执行人") + " : <img src='../Data/Siganture/" + wl.FK_Emp + ".jpg' border=1 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
+                    this.Add("<br>" + this.ToE("ADT", "接受日期") + ":" + wl.RDT + "</font> ");
+                    this.Add("<a href='WFRpt.aspx?WorkID=" + wl.WorkID + "&FID=0&FK_Flow=" + this.FK_Flow + "' target=_blank >"+this.ToE("Dtl","明细")+"..</a><hr>");
                     isHave = true;
                     break;
                 }
@@ -149,7 +149,6 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
         if (this.FK_Flow == null)
             return;
 
-
         string tab = "";
         tab = "ND" + int.Parse(this.FK_Flow) + "Rpt";
 
@@ -169,18 +168,18 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
         string sql = "SELECT count(workid) FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "'";
 
         if (this.DoType == "Warting")
-            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Warting&FK_Flow=" + this.FK_Flow, "<b>待办工作（" + DBAccess.RunSQLReturnValInt(sql) + "）</b>");
+            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Warting&FK_Flow=" + this.FK_Flow, "<b>" + this.ToE("PendingWork", "待办工作") + "（" + DBAccess.RunSQLReturnValInt(sql) + "）</b>");
         else
-            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Warting&FK_Flow=" + this.FK_Flow, "待办工作（" + DBAccess.RunSQLReturnValInt(sql) + "）");
+            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Warting&FK_Flow=" + this.FK_Flow, this.ToE("PendingWork", "待办工作") + "（" + DBAccess.RunSQLReturnValInt(sql) + "）");
 
 
 
         sql = "SELECT COUNT(WorkID) AS Num FROM  WF_GenerWorkerList WHERE FK_Emp='" + WebUser.No + "' AND IsCurr=0 AND IsEnable=1 AND FK_Flow='" + this.FK_Flow + "'";
 
         if (this.DoType == "Runing")
-            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Runing&FK_Flow=" + this.FK_Flow, "<b>在途工作（" + DBAccess.RunSQLReturnValInt(sql) + "）</b>");
+            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Runing&FK_Flow=" + this.FK_Flow, "<b>" + this.ToE("OnTheWayWork", "在途工作") + "（" + DBAccess.RunSQLReturnValInt(sql) + "）</b>");
         else
-            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Runing&FK_Flow=" + this.FK_Flow, "在途工作（" + DBAccess.RunSQLReturnValInt(sql) + "）");
+            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=Runing&FK_Flow=" + this.FK_Flow, this.ToE("OnTheWayWork", "在途工作") + "（" + DBAccess.RunSQLReturnValInt(sql) + "）");
 
 
 
@@ -188,9 +187,9 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
         sql = "SELECT COUNT(OID) AS Num FROM  " + tab + "  WHERE Rec='" + WebUser.No + "' AND WFState=1 ";
 
         if (this.DoType == "History")
-            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=History&FK_Flow=" + this.FK_Flow, "<b>历史工作（" + DBAccess.RunSQLReturnValInt(sql) + "）</b>");
+            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=History&FK_Flow=" + this.FK_Flow, this.ToE("HistoryWork", "历史工作") + "<b>（" + DBAccess.RunSQLReturnValInt(sql) + "）</b>");
         else
-            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=History&FK_Flow=" + this.FK_Flow, "历史工作（" + DBAccess.RunSQLReturnValInt(sql) + "）");
+            this.AddLi("MyFlow.aspx?FK_Node=" + this.FK_Node + "&DoType=History&FK_Flow=" + this.FK_Flow, this.ToE("HistoryWork", "历史工作") + "（" + DBAccess.RunSQLReturnValInt(sql) + "）");
 
 
         //this.AddLi("EmpWorks.aspx?FK_Flow=" + this.FK_Flow, "已处理（" + DBAccess.RunSQLReturnValInt("SELECT COUNT(OID) AS Num FROM " + tab + " WHERE Rec='" + WebUser.No + "' AND NodeState=1 ") + "）");

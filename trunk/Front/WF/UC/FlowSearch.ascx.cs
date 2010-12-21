@@ -94,20 +94,20 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
         // 生成页面数据。
         Attrs attrs = nd.HisWork.EnMap.Attrs;
-        int colspan = 2;
+        int colspan = 1;
         foreach (Attr attr in attrs)
         {
             if (attr.UIVisible == false)
                 continue;
             colspan++;
         }
-        this.Pub1.AddTable("width='100%' align=center");
-        this.Pub1.AddTR();
-        this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
-        this.Pub1.AddTREnd();
+        this.Pub1.AddTable("width='100%' align=center ");
+        //this.Pub1.AddTR();
+        //this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
+        //this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.Add("<TD class=TitleMsg  align=left colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b><a href=FlowSearch.aspx >流程查询</a>-<a href='FlowSearch.aspx?FK_Flow=" + nd.FK_Flow + "'>" + nd.FlowName + "</a>-" + nd.Name + "</b></TD>");
+        this.Pub1.Add("<TD class=TitleMsg  align=left colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b><a href=FlowSearch.aspx >"+this.ToE("FlowSearch","流程查询")+"</a>-<a href='FlowSearch.aspx?FK_Flow=" + nd.FK_Flow + "'>" + nd.FlowName + "</a>-" + nd.Name + "</b></TD>");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
@@ -128,6 +128,13 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
         Button btn = new Button();
         btn.Text = " 查询 ";
+        btn.ID = "Btn_Search";
+        btn.Click += new EventHandler(btn_Click);
+        this.Pub1.Add(btn);
+
+        btn = new Button();
+        btn.Text = "导出Excel";
+        btn.ID = "Btn_Excel";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
         this.Pub1.Add("</TD>");
@@ -162,9 +169,18 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                         this.Pub1.AddTD(en.GetValBoolStrByKey(attr.Key));
                         break;
                     case DataType.AppFloat:
-                    case DataType.AppInt:
                     case DataType.AppDouble:
                         this.Pub1.AddTD(en.GetValFloatByKey(attr.Key));
+                        break;
+                    case DataType.AppInt:
+                        if (attr.UIContralType == UIContralType.DDL)
+                        {
+                            this.Pub1.AddTD(en.GetValRefTextByKey(attr.Key));
+                        }
+                        else
+                        {
+                            this.Pub1.AddTD(en.GetValIntByKey(attr.Key));
+                        }
                         break;
                     case DataType.AppMoney:
                         this.Pub1.AddTDMoney(en.GetValDecimalByKey(attr.Key));
@@ -206,6 +222,43 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
     void btn_Click(object sender, EventArgs e)
     {
+        Button btn = (Button)sender;
+
+        if (btn.ID == "Btn_Excel")
+        {
+            Node nd = new Node(this.FK_Node);
+            Works wks = nd.HisWorks;
+            QueryObject qo = new QueryObject(wks);
+            qo.AddWhere(WorkAttr.Rec, WebUser.No);
+            qo.addAnd();
+            if (BP.SystemConfig.AppCenterDBType == DBType.Access)
+                qo.AddWhere("Mid(RDT,1,10) >='" + this.DT_F + "' AND Mid(RDT,1,10) <='" + this.DT_T + "' ");
+            else
+                qo.AddWhere("substring(RDT,1,10) >='" + this.DT_F + "' AND substring(RDT,1,10) <='" + this.DT_T + "' ");
+
+            this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch.aspx?FK_Node=" + this.FK_Node);
+            qo.DoQuery();
+
+
+            try
+            {
+                //this.ExportDGToExcel(ens.ToDataTableDescField(), this.HisEn.EnDesc);
+                this.ExportDGToExcel(wks.ToDataTableDesc(), nd.Name);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    this.ExportDGToExcel(wks.ToDataTableDescField(), nd.Name);
+                }
+                catch(Exception ex1)
+                {
+                    this.ToErrorPage("数据没有正确导出可能的原因之一是:系统管理员没正确的安装Excel组件，请通知他，参考安装说明书解决。@系统异常信息：" + ex.Message);
+                }
+            }
+            return;
+        }
+
         this.Session["DF"] = this.Pub1.GetTextBoxByID("TB_F").Text;
         this.Session["DT"] = this.Pub1.GetTextBoxByID("TB_T").Text;
         this.Response.Redirect("FlowSearch.aspx?FK_Node=" + this.FK_Node, true);
@@ -342,7 +395,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
     public void BindBill()
     {
-
         Flow fl1 = new Flow(this.FK_Flow);
         string ens = "BP.WF.Bills";
         this.Pub1.AddTable("width='100%'");
@@ -441,38 +493,37 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
     public void BindLeft()
     {
-        this.Left.DivInfoBlockBegin();
-        this.Left.AddUL();
-        this.Left.AddLi("FlowSearch.aspx", "查询主页");
-        //this.Left.AddLi("FlowSearch.aspx?DoType=Flow", "按流程查询");
-        this.Left.AddLi("FlowSearch.aspx?DoType=Bill", "单据查询");
-        this.Left.AddLi("FlowSearch.aspx?DoType=Rpt", "系统报表");
-        this.Left.AddULEnd();
-        this.Left.DivInfoBlockEnd();
+        return;
 
+     //   this.Left.DivInfoBlockBegin();
+     //   this.Left.AddUL();
+     //   this.Left.AddLi("FlowSearch.aspx", "查询主页");
+     //   //this.Left.AddLi("FlowSearch.aspx?DoType=Flow", "按流程查询");
+     ////   this.Left.AddLi("FlowSearch.aspx?DoType=Bill", "单据查询");
+     // //  this.Left.AddLi("FlowSearch.aspx?DoType=Rpt", "系统报表");
+     //   this.Left.AddULEnd();
+     //   this.Left.DivInfoBlockEnd();
 
-        if (this.DoType == "Bill")
-        {
-            BillTypes ens = new BillTypes();
-            ens.RetrieveAll();
-            if (ens.Count >= 2)
-            {
-                this.Left.AddFieldSet("");
-                this.Left.AddUL();
-                foreach (BillType en in ens)
-                {
-                    if (en.No == this.RefNo)
-                        this.Left.AddLiB("FlowSearch.aspx?FK_Flow=004&DoType=Bill&Type=" + en.No, en.Name);
-                    else
-                        this.Left.AddLi("FlowSearch.aspx?FK_Flow=004&DoType=Bill&Type=" + en.No, en.Name);
-                }
-                this.Left.AddULEnd();
-                this.Left.AddFieldSetEnd();
-            }
-        }
-  
+     //   if (this.DoType == "Bill")
+     //   {
+     //       BillTypes ens = new BillTypes();
+     //       ens.RetrieveAll();
+     //       if (ens.Count >= 2)
+     //       {
+     //           this.Left.AddFieldSet("");
+     //           this.Left.AddUL();
+     //           foreach (BillType en in ens)
+     //           {
+     //               if (en.No == this.RefNo)
+     //                   this.Left.AddLiB("FlowSearch.aspx?FK_Flow=004&DoType=Bill&Type=" + en.No, en.Name);
+     //               else
+     //                   this.Left.AddLi("FlowSearch.aspx?FK_Flow=004&DoType=Bill&Type=" + en.No, en.Name);
+     //           }
+     //           this.Left.AddULEnd();
+     //           this.Left.AddFieldSetEnd();
+     //       }
+     //   }
     }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         this.BindLeft();
@@ -510,7 +561,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         if (WebUser.IsWap)
             this.Pub1.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a> - <img src='./Img/Search.gif' > - " + this.ToE("FlowSearch", "流程查询") + " </TD>");
         else
-            this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left ><img src='./Img/Search.gif' > <b>流程查询</b></TD>");
+            this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left ><img src='./Img/Search.gif' > <b>" + this.ToE("FlowSearch", "流程查询-分析") + "</b></TD>");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
@@ -524,9 +575,9 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             // this.Pub1.AddTDTitle(this.ToE("Desc", "描述"));
         }
 
-        this.Pub1.AddTDTitle("单据");
-        this.Pub1.AddTDTitle("流程查询");
-        this.Pub1.AddTDTitle("节点查询");
+        this.Pub1.AddTDTitle( this.ToE("Bill", "单据"));
+        this.Pub1.AddTDTitle(this.ToE("FlowSearch", "流程查询-分析") );
+        this.Pub1.AddTDTitle(this.ToE("NodeSearch", "节点查询") );
 
         this.Pub1.AddTREnd();
 
@@ -540,17 +591,21 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         FlowSorts fss = new FlowSorts();
         fss.RetrieveAll();
 
+        string open = this.ToE("Open", "打开");
+        string search = this.ToE("Search", "查询");
+        string dtl = this.ToE("Dtl", "明细");
+        string bill = this.ToE("Bill", "单据");
+        string nodeSearch = this.ToE("NodeSearch", "节点查询");
+        string FX = this.ToE("FX", "分析");
+
         foreach (FlowSort fs in fss)
         {
-            if (fs.No == "01")
-                continue;
-
+            //if (fs.No == "01")
+            //    continue;
             foreach (Flow fl in fls)
             {
-
                 if (fl.FK_FlowSort != fs.No)
                     continue;
-
                 i++;
                 is1 = this.Pub1.AddTR(is1);
                 this.Pub1.AddTDIdx(i);
@@ -566,7 +621,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
                 if (WebUser.IsWap == false)
                 {
-                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/" + fl.No + ".gif','sd');\"  >打开</a>");
+                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/" + fl.No + ".gif','sd');\"  >" + open + "</a>");
                     //   this.Pub1.AddTD(fl.Note);
                 }
 
@@ -575,15 +630,24 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 else
                 {
                     string src = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=BP.WF.Bills&FK_Flow=" + fl.No;
-                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('" + src + "');\"  ><img src='./../Images/Btn/Word.gif' border=0/>单据</a>");
+                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('" + src + "');\"  ><img src='./../Images/Btn/Word.gif' border=0/>" + bill + "</a>");
                 }
 
 
+                this.Pub1.AddTDBegin();
 
                 string src1 = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";
 
-                this.Pub1.AddTD("<a   href=\"javascript:WinOpen('" + src1 + "');\" >流程</a>");
-                this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "'>节点查询</a>");
+                this.Pub1.Add("<a href=\"javascript:WinOpen('" + src1 + "');\" >" + search + "</a>");
+                this.Pub1.Add("-<a href=\"javascript:Dtl('" + fl.No + "');\" >" + dtl + "</a>");
+
+                src1 = this.Request.ApplicationPath + "/Comm/GroupEnsMNum.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";
+                this.Pub1.Add("-<a href=\"javascript:WinOpen('" + src1 + "');\" >" + FX + "</a>");
+
+                this.Pub1.AddTDEnd();
+
+
+                this.Pub1.AddTD("<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "'>" + nodeSearch + "</a>");
                 this.Pub1.AddTREnd();
             }
         }

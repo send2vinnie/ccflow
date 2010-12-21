@@ -70,10 +70,10 @@ namespace BP.Web.WF
 				}
 
 				//this.AddTD("<a href=\"javascript:WinOpen('MyFlow.aspx?FK_Flow="+nd.FK_Flow+"&IsClose=1',  'hsd');\"  >"+nd.FlowName+"</a>");
-				this.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/"+nd.FK_Flow+".gif','sd');\"  >打开</a>");
+				this.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/"+nd.FK_Flow+".gif','sd');\"  >"+this.ToE("Open","打开")+"</a>");
 
 				this.AddTD(nd.HisFlow.Note );
-				this.AddTD("  onclick=\"window.open( 'UnComplateFlow.aspx?FK_Flow="+nd.FK_Flow+"&FK_Emp="+Web.WebUser.No+"&IsClose=1' , 'f"+nd.NodeID+"',  'width=550,top=200,left=300,height=300,scrollbars=yes,resizable=no,toolbar=false,location=false')\"  ","<font color=blue>工作查询</font>");
+                this.AddTD("  onclick=\"window.open( 'UnComplateFlow.aspx?FK_Flow=" + nd.FK_Flow + "&FK_Emp=" + Web.WebUser.No + "&IsClose=1' , 'f" + nd.NodeID + "',  'width=550,top=200,left=300,height=300,scrollbars=yes,resizable=no,toolbar=false,location=false')\"  ", "<font color=blue>" + this.ToE("FlowSearch", "工作查询") + "</font>");
 				this.AddTREnd();
 			}
 			this.AddTableEnd();
@@ -82,13 +82,13 @@ namespace BP.Web.WF
 		{
 			Flow fl = new Flow(flow);
 			//this.Text="<img src='../TA/Images/Today.ico' borer=0 /><a href='../TA/ToDay.aspx'>主页</a><img src='../TA/Images/Flow.ico' borer=0 /><img src='../TA/Images/Flow.ico' borer=0 /><a href='MyWork.aspx'>当前工作</a>=>"+fl.Name+"<br>";
-			this.Text="<img src='../TA/Images/Flow.ico' borer=0 /><img src='../TA/Images/Flow.ico' borer=0 /><a href='MyWork.aspx'>当前工作</a>=>"+fl.Name+"<br>";
+			this.Text="<img src='../TA/Images/Flow.ico' borer=0 /><img src='../TA/Images/Flow.ico' borer=0 /><a href='MyWork.aspx'>"+this.ToE("CurrWork","当前工作")+"</a>=>"+fl.Name+"<br>";
 			this.Text+="<TABLE class='TableST'  id='strs'  cellSpacing='0' cellPadding='0' >";
 			this.Text+="<TR>";
 			switch( fst)
 			{
 				case FlowShowType.MyWorks:
-					this.Text+="<TD class='SelectedTitle' onclick=\"FlowShowType('"+flow+"','0');\" >当前工作</TD>";
+                    this.Text += "<TD class='SelectedTitle' onclick=\"FlowShowType('" + flow + "','0');\" >" + this.ToE("CurrWork", "当前工作") + "</TD>";
 					this.Text+="<TD class='Title' onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"FlowShowType('"+flow+"','1');\" >新建</TD>";
 					this.Text+="<TD class='Title' onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"FlowShowType('"+flow+"','2');\"  >工作步骤</TD>";
 					this.Text+="<TD class='Title' onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"FlowShowType('"+flow+"','3');\" >流程图</TD>";
@@ -125,7 +125,7 @@ namespace BP.Web.WF
 					DataTable dt =DBAccess.RunSQLReturnTable(sql);
 					this.Text+="<TABLE class='TableFlow'   >";
 					this.Text+="<TR class='TableFlowTR' >";
-					this.Text+="<TD class='TableFlowTD' >节点名称</TD>";
+					this.Text+="<TD class='TableFlowTD' >"+this.ToE("NodeName","节点名称")+"</TD>";
 					this.Text+="<TD class='TableFlowTD' >标题</TD>";
 					this.Text+="<TD class='TableFlowTD' >记录人</TD>";
 					this.Text+="<TD class='TableFlowTD' >记录时间</TD>";

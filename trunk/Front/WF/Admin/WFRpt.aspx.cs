@@ -84,7 +84,7 @@ public partial class WF_Admin_View : WebPage
             btn.ID = "Btn_Del";
             btn.Text = " " + this.ToE("Del", "删除") + " ";
             this.Ucsys1.Add(btn);
-            btn.Attributes["onclick"] += " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
+            btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
 
             btn.Click += new EventHandler(btn_Del_Click);
         }

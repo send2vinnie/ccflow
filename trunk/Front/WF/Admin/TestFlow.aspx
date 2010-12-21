@@ -1,13 +1,14 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TestFlow.aspx.cs" Inherits="WF_Admin_TestFlow" %>
 <%@ Register Src="../../Comm/UC/ucsys.ascx" TagName="ucsys" TagPrefix="uc2" %>
 <%@ Register src="../UC/FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc1" %>
+<%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc3" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head id="Head1" runat="server">
     <script  language=javascript>
     function Del(mypk, fk_flow, refoid)
     {
-        if (window.confirm('您确定要删除吗？') ==false)
+        if (window.confirm('Are you sure?') ==false)
             return ;
     
         var url='Do.aspx?DoType=Del&MyPK='+mypk+'&RefOID='+refoid;
@@ -29,19 +30,21 @@
         //window.location.href = window.location.href;
     }
     </script>
-    <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
-    <link href="../Style/Style.css" rel="stylesheet" type="text/css" />
+    <link href="./../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+    <link href="./../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
     </head>
 <body    leftMargin=0  topMargin=0 bgcolor=white >
     <form id="form1" runat="server">
         <table border="0" cellpadding="0" align=center cellspacing="0"  bgcolor=white width='90%'  class=Table >
            <tr>
                 <td  colspan=2    bgcolor="Silver"   >
-                &nbsp;
-                &nbsp;<b>流程测试设计 - 感谢您选择驰骋工作流引擎</b> <a href='http://ccflow.cn:666/BugFree/'>缺陷管理/Report</a> - <a href='./../Login.aspx' > 登陆系统 </a>
+                
+                <!-- 
+                <b>流程测试设计 - 感谢您选择驰骋工作流引擎</b> <a href='http://ccflow.cn:666/BugFree/'>Bug Report</a> - <a href='./../Login.aspx' > <% this.ToE("Login", "登陆"); %>   </a>
+                -->
+                    <uc3:Pub ID="Pub1" runat="server" />
                     </td>
 </tr>        
-          
             <tr>
                 <td valign=top align=left  align=left height=200%>
                    <uc2:ucsys ID="Left" runat="server" />

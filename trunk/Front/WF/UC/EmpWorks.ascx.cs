@@ -47,15 +47,15 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
 
             this.Pub1.DivInfoBlockBegin();
 
-            this.Pub1.Add("<b>提示:</b> 当前您没有工作要去处理.");
+            this.Pub1.Add("<b>" + this.ToE("Note", "提示") + ":</b> " + this.ToE("EW1", "当前您没有工作要去处理") );
             this.Pub1.AddHR();
 
             //this.Pub1.AddMsgGreen("提示", "当前您没有工作要去处理。");
 
             this.Pub1.AddUL();
-            this.Pub1.AddLi("Start.aspx", "发起工作");
-            this.Pub1.AddLi("Runing.aspx", "在途工作");
-            this.Pub1.AddLi("FlowSearch.aspx", "工作查询");
+            this.Pub1.AddLi("Start.aspx", this.ToE("StartWork", "发起工作") );
+            this.Pub1.AddLi("Runing.aspx", this.ToE("OnTheWayWork", "在途工作"));
+            this.Pub1.AddLi("FlowSearch.aspx", this.ToE("FlowSearch", "工作查询"));
             this.Pub1.AddULEnd();
 
             this.Pub1.DivInfoBlockEnd();
@@ -88,11 +88,11 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
 
         #region  输出流程类别.
 
-        this.Pub1.AddTable("width='100%'");
-        this.Pub1.AddTR();
-        this.Pub1.Add("<TD class=ToolBar colspan=" + colspan + " > " + this.ToE("OnTheWayWork", "待办工作") + "</TD>");
-        this.Pub1.AddTREnd();
-        this.Pub1.AddTableEnd();
+        //this.Pub1.AddTable("width='100%'");
+        //this.Pub1.AddTR();
+        //this.Pub1.Add("<TD class=ToolBar colspan=" + colspan + " > " + this.ToE("OnTheWayWork", "待办工作") + "</TD>");
+        //this.Pub1.AddTREnd();
+        //this.Pub1.AddTableEnd();
 
         //this.Pub1.AddTR();
         //if (WebUser.IsWap)
@@ -101,7 +101,13 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         //    this.Pub1.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
         //this.Pub1.AddTREnd();
 
-        this.Pub1.AddTable("width='90%' align=left");
+        this.Pub1.AddTable("width='80%'");
+        this.Pub1.AddTR();
+            this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
+        this.Pub1.AddTREnd();
+
+        
+
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("NodeName", "节点"));
@@ -131,7 +137,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                 is1 = this.Pub1.AddTR(is1); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
             }
             i++;
-            this.Pub1.AddTD(i);
+            this.Pub1.AddTDIdx(i);
 
             this.Pub1.AddTD(dr["NodeName"].ToString());
 

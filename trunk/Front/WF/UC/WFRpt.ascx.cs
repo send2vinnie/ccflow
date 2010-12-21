@@ -15,8 +15,6 @@ using BP.Web;
 
 public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
 {
-
-
     #region 属性
     public string DoType
     {
@@ -151,7 +149,10 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.AddTable();
             this.AddTR();
             this.AddTDTitle("接受人");
-            this.AddTDTitle("接受日期");
+
+            this.AddTDTitle(this.ToE("ADT", "接受日期"));
+
+          //  this.AddTDTitle("接受日期");
             this.AddTDTitle("工作报告");
             this.AddTREnd();
 
@@ -445,6 +446,9 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
     /// <param name="nodeId"></param>
     public void ADDWork(Work en, ReturnWorks rws, ForwardWorks fws, int nodeId)
     {
+        if (en.NodeState != NodeState.Complete)
+            return;
+
         this.BindViewEn(en, "width=90%");
 
         foreach (ReturnWork rw in rws)

@@ -71,95 +71,95 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
     public void BindNumType(MapAttr mattr)
     {
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX(this.Title);
+    //    this.Pub1.AddCaptionLeftTX(this.Title);
+
 
         this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("方式");
-        this.Pub1.AddTDTitle("内容");
-        this.Pub1.AddTDTitle("说明");
-        this.Pub1.AddTREnd();
-
-        this.Pub1.AddTRTX();
+        this.Pub1.Add("<TD>");
         RadioBtn rb = new RadioBtn();
         rb.GroupName = "s";
-        rb.Text = "<b>不设置</b>";
+        rb.Text = this.ToE("Way0","方式0：不做任何设置。");
         rb.ID = "RB_Way_0";
         if (mattr.HisAutoFull == AutoFullWay.Way0)
             rb.Checked = true;
+        this.Pub1.AddFieldSet(rb);
+        this.Pub1.Add( this.ToE("Way0D", "不做任何设置。"));
+        this.Pub1.AddFieldSetEnd();
 
-        this.Pub1.AddTD(rb);
-        this.Pub1.AddTDBegin();
-        this.Pub1.Add("不做任何设置。");
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD("无");
         this.Pub1.AddTREnd();
 
-        this.Pub1.AddTRTX();
+        this.Pub1.AddTR();
+        this.Pub1.Add("<TD>");
+
         rb = new RadioBtn();
         rb.GroupName = "s";
-        rb.Text = "<b>方式1：</b><br>本表单中数据计算";
+        rb.Text = this.ToE("Way1", "方式1：本表单中数据计算。"); //"";
         rb.ID = "RB_Way_1";
         if (mattr.HisAutoFull == AutoFullWay.Way1_JS)
             rb.Checked = true;
-
-        this.Pub1.AddTD(rb);
-        this.Pub1.AddTDBegin();
+        this.Pub1.AddFieldSet(rb);
+        this.Pub1.Add(this.ToE("Way1D", "比如:@单价*@数量"));
+        this.Pub1.AddBR();
 
         TextBox tb = new TextBox();
         tb.ID = "TB_JS";
-        tb.Width = 300;
+        tb.Width = 450;
         tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 3;
+        tb.Rows = 5;
         if (mattr.HisAutoFull == AutoFullWay.Way1_JS)
         {
             tb.Text = mattr.AutoFullDoc;
         }
-
         this.Pub1.Add(tb);
+        this.Pub1.AddFieldSetEnd();
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD("比如:@单价*@数量");
         this.Pub1.AddTREnd();
 
-
         // 方式2 利用SQL自动填充
-        this.Pub1.AddTRTX();
+        this.Pub1.AddTR();
+        this.Pub1.Add("<TD>");
+
         rb = new RadioBtn();
         rb.GroupName = "s";
-        rb.Text = "<b>方式2：</b><br>利用SQL自动填充";
+        rb.Text = this.ToE("Way2", "方式2：利用SQL自动填充。");  
         rb.ID = "RB_Way_2";
         if (mattr.HisAutoFull == AutoFullWay.Way2_SQL)
             rb.Checked = true;
 
-        this.Pub1.AddTD(rb);
-        this.Pub1.AddTDBegin();
+        this.Pub1.AddFieldSet(rb);
+        this.Pub1.Add(this.ToE("Way2D", "比如:Select Addr From 商品表 WHERE No=@FK_Pro  FK_Pro是本表中的任意字段名"));
 
         tb = new TextBox();
         tb.ID = "TB_SQL";
-        tb.Width = 300;
+        tb.Width = 450;
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 5;
         if (mattr.HisAutoFull == AutoFullWay.Way2_SQL)
-        {
             tb.Text = mattr.AutoFullDoc;
-        }
 
 
         this.Pub1.Add(tb);
+
+        this.Pub1.AddFieldSetEnd();
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD("比如:<font color=blue>Select Addr From <br>商品表 WHERE No=@FK_Pro </font> <br>FK_Pro是本表中的任意字段名");
         this.Pub1.AddTREnd();
 
         // 方式3 本表单中外键列
-        this.Pub1.AddTRTX();
+        this.Pub1.AddTR();
+        this.Pub1.Add("<TD>");
         rb = new RadioBtn();
         rb.GroupName = "s";
-        rb.Text = "<b>方式3：</b><br>本表单中外键列";
+        rb.Text = this.ToE("Way3", "方式3：本表单中外键列。");  
+       // rb.Text = "方式3：本表单中外键列</font></b>";
         rb.ID = "RB_Way_3";
         if (mattr.HisAutoFull == AutoFullWay.Way3_FK)
             rb.Checked = true;
 
-        this.Pub1.AddTD(rb);
-        this.Pub1.AddTDBegin();
+        this.Pub1.AddFieldSet(rb);
+        this.Pub1.Add(this.ToE("Way3D","比如:表单中有商品编号列,需要填充商品地址、供应商电话。"));
+        this.Pub1.AddBR();
+
 
         // 让它等于外键表的一个值。
         Attrs attrs = null;
@@ -167,7 +167,7 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
         md.No = mattr.FK_MapData;
         if (md.RetrieveFromDBSources() == 0)
         {
-              attrs = md.GenerHisMap().HisFKAttrs;
+            attrs = md.GenerHisMap().HisFKAttrs;
         }
         else
         {
@@ -231,25 +231,26 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
 
             this.Pub1.Add(ddl);
             this.Pub1.AddBR();
-            this.Pub1.AddBR();
         }
 
+        this.Pub1.AddFieldSetEnd();
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD("比如:表单中有商品编号列,<br>需要填充商品地址、<br>供应商电话。");
         this.Pub1.AddTREnd();
 
-
         // 方式3 本表单中外键列
-        this.Pub1.AddTRTX();
+        this.Pub1.AddTR();
+        this.Pub1.Add("<TD>");
         rb = new RadioBtn();
         rb.GroupName = "s";
-        rb.Text = "<b>方式4：</b><br>对一个明细表的列求值。";
+        rb.Text = this.ToE("Way4", "方式4：对一个明细表的列求值。");
         rb.ID = "RB_Way_4";
         if (mattr.HisAutoFull == AutoFullWay.Way4_Dtl)
             rb.Checked = true;
 
-        this.Pub1.AddTD(rb);
-        this.Pub1.AddTDBegin();
+        this.Pub1.AddFieldSet(rb);
+        this.Pub1.Add(this.ToE("Way4D", "比如:对明细表中的列求值。"));
+        this.Pub1.AddBR();
+
         // 让它对一个明细表求和、求平均、求最大、求最小值。
         MapDtls dtls = new MapDtls(mattr.FK_MapData);
         if (dtls.Count > 0)
@@ -260,11 +261,39 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
             rb.Enabled = false;
             if (rb.Checked)
                 rb.Checked = false;
-            this.Pub1.Add("@没有明细表。");
+           // this.Pub1.Add("@没有明细表。");
         }
-
         foreach (MapDtl dtl in dtls)
         {
+            DDL ddlF = new DDL();
+            ddlF.ID = "DDL_" + dtl.No + "_F";
+            MapAttrs mattrs1 = new MapAttrs(dtl.No);
+            int count = 0;
+            foreach (MapAttr mattr1 in mattrs1)
+            {
+                if (mattr1.KeyOfEn == MapAttrAttr.MyPK)
+                    continue;
+                if (mattr1.IsNum == false)
+                    continue;
+                switch (mattr1.KeyOfEn)
+                {
+                    case "OID":
+                    case "RefOID":
+                    case "FID":
+                        continue;
+                    default:
+                        break;
+                }
+                count++;
+                ListItem li = new ListItem(mattr1.Name, mattr1.KeyOfEn);
+                if (mattr.HisAutoFull == AutoFullWay.Way4_Dtl)
+                    if (mattr.AutoFullDoc.Contains("=" + mattr1.KeyOfEn))
+                        li.Selected = true;
+                ddlF.Items.Add(li);
+            }
+            if (count == 0)
+                continue;
+
             rb = new RadioBtn();
             rb.Text = dtl.Name;
             rb.ID = "RB_" + dtl.No;
@@ -294,43 +323,19 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
                     ddl.SetSelectItem("MIN");
             }
 
-            ddl = new DDL();
-            ddl.ID = "DDL_" + dtl.No+"_F";
-
-            MapAttrs mattrs1 = new MapAttrs(dtl.No);
-            foreach (MapAttr mattr1 in mattrs1)
-            {
-                if (mattr1.KeyOfEn == MapAttrAttr.MyPK)
-                    continue;
-
-                if (mattr1.KeyOfEn == "RefOID")
-                    continue;
-
-                ListItem li = new ListItem(mattr1.Name, mattr1.KeyOfEn);
-
-                if (mattr.HisAutoFull == AutoFullWay.Way4_Dtl)
-                    if (mattr.AutoFullDoc.Contains("=" + mattr1.KeyOfEn))
-                        li.Selected = true;
-
-                ddl.Items.Add(li);
-            }
-            this.Pub1.Add(ddl);
-            this.Pub1.AddBR();
+            this.Pub1.Add(ddlF);
             this.Pub1.AddBR();
         }
 
+        this.Pub1.AddFieldSetEnd();
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD("比如:对明细表中的列求值。");
         this.Pub1.AddTREnd();
 
-
         this.Pub1.AddTRSum();
-        this.Pub1.AddTD();
-
-        this.Pub1.AddTDBegin();
+        this.Pub1.AddTDBegin("aligen=center");
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = " " + this.ToE("Save","保存") + " ";
+        btn.Text = " " + this.ToE("Save", "保存") + " ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
@@ -339,9 +344,6 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
         btn.Text = " " + this.ToE("SaveAndClose", "保存并关闭") + " ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
-        this.Pub1.AddTDEnd();
-
-        this.Pub1.AddTD();
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
         return;
@@ -422,7 +424,9 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
         }
 
 
-       this.Alert("保存成功");
+         
+
+        this.Alert(this.ToE("SaveOK", "保存成功") );
 
        this.Pub1.Clear();
 

@@ -12,13 +12,7 @@
 <base target=_self />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<table border=0 class="Table" width='100%' >
-<tr>
-<td valign=top >
     <uc1:Pub ID="Pub1" runat="server" />
-    </td>
-    </tr>
-</table>
     
 </asp:Content>
 

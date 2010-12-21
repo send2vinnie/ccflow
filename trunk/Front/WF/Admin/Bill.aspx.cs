@@ -47,16 +47,26 @@ public partial class WF_Admin_BillSet : WebPage
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD("单据类型"); // 单据/单据名称
+        this.Ucsys1.AddTD(this.ToE("BillType", "单据类型")); // 单据/单据名称
         DDL ddl = new DDL();
         ddl.ID = "DDL_BillType";
         BP.WF.BillTypes ens = new BillTypes();
         ens.RetrieveAll();
+        if (ens.Count == 0)
+        {
+            BP.WF.BillType enB = new BillType();
+            enB.Name = this.ToE("NewType", "新建类型") +"1";
+            enB.FK_Flow = this.FK_Flow;
+            enB.No = enB.GenerNewNo;
+            enB.Insert();
+            ens.AddEntity(enB);
+        }
+
         ddl.BindEntities(ens);
         ddl.SetSelectItem(bill.FK_BillType);
 
         this.Ucsys1.AddTD(ddl);
-        this.Ucsys1.AddTD("<a href='javascript:AddBillType();' >新建类型</a>");
+        this.Ucsys1.AddTD("<a href='javascript:AddBillType();' >" + this.ToE("NewType", "新建类型") + "</a>");
         this.Ucsys1.AddTREnd();
 
 
@@ -84,16 +94,16 @@ public partial class WF_Admin_BillSet : WebPage
         this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
 
-        this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(this.ToE("ReplaceVal", "要替换<br>特殊字段")); // 单据/单据名称
-        tb = new TB();
-        tb.ID = "TB_ReplaceVal";
-        tb.Text = bill.ReplaceVal;
-        tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 3;
-        this.Ucsys1.AddTD(tb);
-        this.Ucsys1.AddTD("格式为:@表名称.字段名称=要替换的值 比如：@NodeName.ID='' ");
-        this.Ucsys1.AddTREnd();
+        //this.Ucsys1.AddTR();
+        //this.Ucsys1.AddTD(this.ToE("ReplaceVal", "要替换<br>特殊字段")); // 单据/单据名称
+        //tb = new TB();
+        //tb.ID = "TB_ReplaceVal";
+        //tb.Text = bill.ReplaceVal;
+        //tb.TextMode = TextBoxMode.MultiLine;
+        //tb.Rows = 3;
+        //this.Ucsys1.AddTD(tb);
+        //this.Ucsys1.AddTD("格式为:@表名称.字段名称=要替换的值 比如：@NodeName.ID='' ");
+        //this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTD(this.ToE("BillTemplete", "单据模板") );
@@ -142,7 +152,6 @@ public partial class WF_Admin_BillSet : WebPage
     }
     void btn_Gener_Click(object sender, EventArgs e)
     {
-        this.Alert("测试成功");
         string url = "Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefNo=" + this.RefNo;
         this.Response.Redirect(url, true);
     }
@@ -163,13 +172,13 @@ public partial class WF_Admin_BillSet : WebPage
             if (file.Value == null || file.Value.Trim() == "")
             {
                 bt.Update();
-                this.Alert("保存成功");
+                this.Alert( this.ToE("SaveOK","保存成功"));
                 return;
             }
 
             if (file.Value.ToLower().Contains(".rtf") == false)
             {
-                this.Alert("@错误，非法的rtf 格式文件。");
+                this.Alert(this.ToE("Bill1", "@错误，非法的 rtf 格式文件。"));
                 return;
             }
             string temp = BP.SystemConfig.PathOfCyclostyleFile + "\\Temp.rtf";
@@ -194,7 +203,8 @@ public partial class WF_Admin_BillSet : WebPage
 
         if (file.Value == null || file.Value.ToLower().Contains(".rtf") == false)
         {
-            this.Alert("@错误，非法的 rtf 格式文件。");
+            this.Alert(this.ToE("Bill1", "@错误，非法的 rtf 格式文件。"));
+           // this.Alert("@错误，非法的 rtf 格式文件。");
             return;
         }
 
@@ -226,7 +236,7 @@ public partial class WF_Admin_BillSet : WebPage
         }
         catch (Exception ex)
         {
-            this.Ucsys2.AddMsgOfWarning("错误信息", ex.Message);
+            this.Ucsys2.AddMsgOfWarning("Error:", ex.Message);
             return;
         }
 
@@ -275,17 +285,17 @@ public partial class WF_Admin_BillSet : WebPage
 
         switch (this.DoType)
         {
-            case "New":
-                BillTemplate bk = new BillTemplate();
-                bk.NodeID = this.RefOID;
-                this.DoNew(bk);
-                return;
+
             case "Edit":
                 BillTemplate bk1 = new BillTemplate(this.RefNo);
                 bk1.NodeID = this.NodeID;
                 this.DoNew(bk1);
-                return;
+                break;
+            case "New":
             default:
+                BillTemplate bk = new BillTemplate();
+                bk.NodeID = this.RefOID;
+                this.DoNew(bk);
                 break;
         }
 
@@ -299,10 +309,12 @@ public partial class WF_Admin_BillSet : WebPage
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
         this.Title = nd.Name + " - " + this.ToE("BillMang", "单据管理");  //单据管理
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX(nd.Name + " - <a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
+     //   this.Ucsys1.AddCaptionLeftTX(nd.Name + " - <a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("IDX");
         this.Ucsys1.AddTDTitle(this.ToE("Node","节点"));
+        this.Ucsys1.AddTDTitle(this.ToE("NodeName", "节点名称"));
+
         this.Ucsys1.AddTDTitle(this.ToE("No","编号"));
         this.Ucsys1.AddTDTitle(this.ToE("Name","名称"));
         this.Ucsys1.AddTDTitle(this.ToE("Oper", "操作"));
@@ -314,6 +326,8 @@ public partial class WF_Admin_BillSet : WebPage
             this.Ucsys1.AddTR();
             this.Ucsys1.AddTDIdx(i);
             this.Ucsys1.AddTD(Bill.NodeID);
+            this.Ucsys1.AddTD(  Bill.NodeName);
+
             this.Ucsys1.AddTD(Bill.No);
             this.Ucsys1.AddTD("<img src='../../Images/Btn/Word.gif' >" + Bill.Name);
             this.Ucsys1.AddTD("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefNo=" + Bill.No + "'><img src='../../Images/Btn/Edit.gif' border=0/>" + this.ToE("Edit", "编辑") + "</a>|<a href='../../Data/CyclostyleFile/" + Bill.No + ".rtf'><img src='../../Images/Btn/save.gif' border=0/>" + this.ToE("DownTemplete", "模板下载") + "</a>");

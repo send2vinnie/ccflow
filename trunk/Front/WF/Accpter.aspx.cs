@@ -193,7 +193,7 @@ public partial class WF_Accpter : WebPage
 
         this.Pub1.AddHR();
         Button btn = new Button();
-        btn.Text = " 保存 ";
+        btn.Text = this.ToE("Save", " 保存 ");
         btn.ID = "Btn_Save";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);

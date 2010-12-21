@@ -145,7 +145,11 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         BP.WF.Node tond = new BP.WF.Node(this.ToNodeID);
 
-        this.Pub1.Add("节点从:<b>" + nd.Name + "</b> 节点到:<b>" + tond.Name + "</b> 要计算的节点:");
+        //this.Pub1.Add("要计算的节点:");
+       // this.Pub1.Add("节点从:<b>" + nd.Name + "</b> 节点到:<b>" + tond.Name + "</b> 要计算的节点:");
+
+        this.Pub1.Add( this.ToE("Node","节点") );
+
         Nodes nds = new Nodes(this.FK_Flow);
         Nodes ndsN = new Nodes();
         foreach (BP.WF.Node mynd in nds)

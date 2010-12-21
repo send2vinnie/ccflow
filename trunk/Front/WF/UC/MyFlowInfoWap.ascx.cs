@@ -86,9 +86,9 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
         }
 
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>-<a href='EmpWorks.aspx'><img src='./Img/Home.gif' border=0/>待办</a>-操作提示", s);
+            this.AddFieldSet("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>-<a href='EmpWorks.aspx'><img src='./Img/Home.gif' border=0/>" + this.ToE("PendingWork", "待办") + "</a>-" + this.ToE("Note", "操作提示"), s);
         else
-            this.AddFieldSet("操作提示", s);
+            this.AddFieldSet( this.ToE("Note", "操作提示"), s);
 
 
         //if (this.FK_Type.ToLower() == "warning")
@@ -107,7 +107,7 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
         DateTime cdt = DateTime.Now;
 
         string color = "";
-        this.AddFieldSet("相关待办工作 (" + dt.Rows.Count + ") 个");
+        this.AddFieldSet(this.ToE("PendingWork","待办工作") + " (" + dt.Rows.Count + ") 个");
         this.Add("<ul>");
         foreach (DataRow dr in dt.Rows)
         {

@@ -131,6 +131,13 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
             ViewState["FK_Node"] = value;
         }
     }
+    public int FID
+    {
+        get
+        {
+            return int.Parse( this.Request.QueryString["FID"]);
+        }
+    }
     /// <summary>
     /// 当前的节点
     /// </summary>
@@ -223,7 +230,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
     }
     public void ShowWarting()
     {
-        this.ToolBar1.AddLab("s", "待办工作");
+        this.ToolBar1.AddLab("s", this.ToE("PendingWork", "待办工作") );
         string sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "' ORDER BY WorkID ";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count == 0)
@@ -272,7 +279,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
     }
     public void ShowRuning()
     {
-        this.ToolBar1.AddLab("s", "在途工作");
+        this.ToolBar1.AddLab("s", this.ToE("OnTheWayWork", "在途工作"));
 
         this.Pub1.AddTable("width='80%' align=left");
         this.Pub1.AddTR();
@@ -280,12 +287,12 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("Name", "名称"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("CurrNode", "当前节点"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起日期"));
-        this.Pub1.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起人"));
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("Emp", "发起人"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("Oper", "操作"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("Rpt", "报告"));
         this.Pub1.AddTREnd();
 
-        string sql = "  SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID   AND B.FK_Emp='" + BP.Web.WebUser.No + "' AND B.IsEnable=1 AND B.IsCurr=0 AND b.FK_Flow='"+this.FK_Flow+"'";
+        string sql = "  SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID AND B.FK_Emp='" + BP.Web.WebUser.No + "' AND B.IsEnable=1 AND B.IsCurr=0 AND b.FK_Flow='" + this.FK_Flow + "'";
         //this.Response.Write(sql);
 
         GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
@@ -310,19 +317,17 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
     public void ShowHistory()
     {
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-        this.ToolBar1.AddLab("s", "历史工作:" + nd.Name);
+        this.ToolBar1.AddLab("s",  this.ToE("HistoryWork", "历史工作") +":" + nd.Name);
         Works wks = nd.HisWorks;
         QueryObject qo = new QueryObject(wks);
         qo.AddWhere(WorkAttr.Rec, WebUser.No);
         qo.addAnd();
-        qo.AddWhere(WorkAttr.NodeState, 1);
+        qo.AddWhereInSQL(WorkAttr.OID, "SELECT OID FROM  ND"+int.Parse(nd.FK_Flow)+"Rpt WHERE WFState="+(int)WFState.Complete);
+
+      //qo.AddWhere(WorkAttr.NodeState, 1);
+
         qo.DoQuery();
         this.Pub1.BindWorkDtl(nd, wks);
-
-        //this.UCEn1.AddTable();
-        //this.UCEn1.AddTR();
-        //this.UCEn1.AddTREnd();
-        //this.UCEn1.AddTableEnd();
     }
     #endregion
 
@@ -341,7 +346,6 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
             return;
         }
 
-
         BP.WF.Node currND;
         BP.WF.Work currWK;
 
@@ -355,13 +359,17 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
 
                 this.FlowMsg.Clear();
                 this.FlowMsg.DivInfoBlockBegin(); //("<b>提示</b><hr>@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
-                this.FlowMsg.AddB("提示");
+                this.FlowMsg.AddB(this.ToE("Note", "提示"));
                 this.FlowMsg.AddHR();
-                this.FlowMsg.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。");
+
+
+                this.FlowMsg.Add(this.ToE("FW1", "@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。"));
 
                 this.FlowMsg.AddUL();
-                this.FlowMsg.AddLi("<a href='Start.aspx'>发起新流程。</a>");
-                this.FlowMsg.AddLi("<a href='Runing.aspx'>返回在途工作列表。</a>");
+                this.FlowMsg.AddLi("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "返回主页") + "</a>");
+                this.FlowMsg.AddLi("<a href='Start.aspx'><img src='./Img/Start.gif' border=0/>" + this.ToE("StartWork", "发起流程") + "</a>");
+                this.FlowMsg.AddLi("<a href='Runing.aspx'><img src='./Img/Runing.gif' border=0/>" + this.ToE("OnTheWayWork", "在途工作") + "</a>");
+
                 this.FlowMsg.AddULEnd();
 
                 // this.UCEn1.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
@@ -374,22 +382,21 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         try
         {
             #region 增加按钮
-            this.ToolBar1.AddBtn(NamesOfBtn.Send, "发送(G)");
-            this.ToolBar1.AddBtn(NamesOfBtn.Save, "保存(S)");
+            this.ToolBar1.AddBtn(NamesOfBtn.Send, this.ToE("Send", "发送(G)") );
+            this.ToolBar1.AddBtn(NamesOfBtn.Save, this.ToE("Save", "保存(S)") );
             this.ToolBar1.AddSpt("ss");
-            //this.ToolBar1.AddBtn(NamesOfBtn.Save, "保存(S)");
-            //this.ToolBar1.AddBtn("Btn_ReturnWork", this.ToE("Return", "退回(R)"));
-            this.ToolBar1.AddBtn("Btn_ReturnWork", "退回(R)");
-            this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Forward, "转发(F)");
 
-            if (this.WorkID > 0)
-                this.ToolBar1.Add("<input type=button value='抄送' enable=true onclick=\"WinOpen('./Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=1601','ds'); \" class=Btn/>");
-            else
-                this.ToolBar1.Add("<input type=button value='抄送' enable=false onclick=\"WinOpen('./Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=1601','ds'); \" class=Btn/>");
+            this.ToolBar1.AddBtn("Btn_ReturnWork", this.ToE("Return", "退回") + "(R)");
+            this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Forward,this.ToE("Forward", "转发(F)") );
+
+            //if (this.WorkID > 0)
+            //    this.ToolBar1.Add("<input type=button value='抄送' enable=true onclick=\"WinOpen('./Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=1601','ds'); \" class=Btn/>");
+            //else
+            //    this.ToolBar1.Add("<input type=button value='抄送' enable=false onclick=\"WinOpen('./Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=1601','ds'); \" class=Btn/>");
 
             this.ToolBar1.AddSpt("ss");
-            this.ToolBar1.AddBtn(NamesOfBtn.Previous, "上一条(P)");
-            this.ToolBar1.AddBtn(NamesOfBtn.Next, "下一条(N)");
+            this.ToolBar1.AddBtn(NamesOfBtn.Previous, this.ToE("Previous", "上一条") + "(P)");
+            this.ToolBar1.AddBtn(NamesOfBtn.Next, this.ToE("Next", "下一条") + "(N)");
 
             if (this.WorkID == 0)
             {
@@ -513,16 +520,58 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
     /// </summary>
     public void BindWork(BP.WF.Node nd, Work wk)
     {
+        if (nd.IsStartNode )
+        {
+            /*判断是否来与子流程.*/
+            if (this.Request.QueryString["FK_Node_From"] != null)
+            {
+                int fk_node_From = int.Parse(this.Request.QueryString["FK_Node_From"]);
+                BP.WF.Node fk_node_From_nd = new BP.WF.Node(fk_node_From);
+                Work fromWk = fk_node_From_nd.HisWork;
+                fromWk.OID = this.FID;
+                fromWk.RetrieveFromDBSources();
+                wk.Copy(fromWk);
+                wk.FID = this.FID;
+            }
+        }
+
         wk.Rec = WebUser.No;
         wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
         wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
         wk.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
 
+        // 处理传递过来的参数。
+        foreach (string k in this.Request.QueryString.AllKeys)
+        {
+            wk.SetValByKey(k, this.Request.QueryString[k]);
+        }
+
         #region 设置默认值。
+
+        if (nd.IsStartNode)
+        {
+            StartWork swk = (StartWork)wk;
+            if (swk.Title == "")
+            {
+                swk.Title = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
+            }
+            else if (swk.Title.Contains("在") == true)
+            {
+                string msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
+                if (swk.Title.Length == msg.Length)
+                    swk.Title = msg;
+                else
+                    swk.Title = msg + "" + swk.Title.Substring(msg.Length);
+            }
+        }
+
         MapAttrs mattrs = new MapAttrs("ND" + nd.NodeID);
         foreach (MapAttr attr in mattrs)
         {
-            if (attr.DefValReal.Contains("@") == false || attr.Tag == "1")
+            if (attr.UIIsEnable)
+                continue;
+
+            if (attr.DefValReal.Contains("@") == false)
                 continue;
 
             wk.SetValByKey(attr.KeyOfEn, attr.DefVal);
@@ -592,6 +641,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         {
             case FormType.SysForm:
                 this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID); //, false, false, null);
+
                 if (wk.WorkEndInfo.Length > 2)
                 {
                     this.UCEn1.Add(wk.WorkEndInfo);
@@ -629,7 +679,13 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
 
             tb.Attributes["OnKeyPress"] = "javascript:C();";
             tb.Attributes["onkeyup"] = "javascript:C();";
-            tb.Attributes["OnKeyDown"] = "javascript:return VirtyNum(this);";
+
+            if (attr.MyDataType == DataType.AppInt)
+                tb.Attributes["OnKeyDown"] = "javascript:return VirtyInt(this);";
+            else
+                tb.Attributes["OnKeyDown"] = "javascript:return VirtyNum(this);";
+
+         //   tb.Attributes["OnKeyDown"] = "javascript:return VirtyNum(this);";
 
             if (attr.MyDataType == DataType.AppMoney)
                 tb.Attributes["onblur"] = "this.value=VirtyMoney(this.value);";
@@ -1045,11 +1101,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
                 work.FID = 0;
             }
 
-            // 处理传递过来的参数。
-            foreach (string k in this.Request.QueryString.AllKeys)
-            {
-                work.SetValByKey(k, this.Request.QueryString[k]);
-            }
+          
 
             if (work.OID == 0)
                 work.Insert();
@@ -1331,7 +1383,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
             this.Btn_Save.Enabled = true;
             this.Btn_ReturnWork.Enabled = true;
             if (wn.HisNode.IsEndNode)
-                this.Btn_Send.Text = "完成(G)";
+                this.Btn_Send.Text = this.ToE("Complete", "完成")+"(G)";
             return wn.HisWork;
         }
         catch (Exception ex)

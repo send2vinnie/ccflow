@@ -20,31 +20,31 @@
 	function AddF(mypk)
     {
         var url='Do.aspx?DoType=AddF&MyPK='+mypk;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
     function CopyF(mypk)
     {
         var url='CopyDtlField.aspx?MyPK='+mypk;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
     function Edit(mypk,refNo, ftype)
     {
         var url='EditF.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refNo +'&FType=' + ftype;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
     function EditEnum(mypk,refNo)
     {
         var url='EditEnum.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refNo;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
      function EditTable(mypk,refno)
     {
         var url='EditTable.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refno;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
     
@@ -81,7 +81,9 @@
     if(event.keyCode==13)
        event.keyCode=9;
     </script>
-    <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
+    
+    <link href="../../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()"  style="padding:0px"   bgcolor="white" >
     <form id="form1" runat="server">

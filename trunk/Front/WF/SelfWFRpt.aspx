@@ -10,7 +10,6 @@
     <LINK href="../Comm/Style.css" type="text/css" rel="stylesheet">
 		<LINK href="../Comm/Table.css" type="text/css" rel="stylesheet">
 		<LINK href="../Comm/Style.css" type="text/css" rel="stylesheet">
-		<LINK href="../Comm/Table.css" type="text/css" rel="stylesheet">
 		<script language="JavaScript" src="../Comm/JScript.js"></script>
 		<script language="JavaScript" src="../Comm/ActiveX.js"></script>
 </head>

@@ -60,6 +60,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             throw new Exception("Mypk==null");
 
         this.Title = this.ToE("EditField", "编辑字段");
+
         switch (this.DoType)
         {
             case "Add":
@@ -117,21 +118,22 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                 break;
         }
     }
+    int idx = 1;
     public void EditBeforeAdd(MapAttr mapAttr)
     {
-
         this.Pub1.AddTable();
         this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("&nbsp;");
-        this.Pub1.AddTDTitle("&nbsp;");
-        this.Pub1.AddTDTitle("&nbsp;");
+        this.Pub1.AddTDTitle("ID");
+        this.Pub1.AddTDTitle(this.ToE("Item","项目") );
+        this.Pub1.AddTDTitle(this.ToE("Input","采集") );
+        this.Pub1.AddTDTitle(this.ToE("Note","备注"));
         this.Pub1.AddTREnd();
-
 
         if (mapAttr.IsTableAttr)
         {
             /* if here is table attr, It's will let use can change data type. */
             this.Pub1.AddTR();
+            this.Pub1.AddTDIdx(idx++);
             this.Pub1.AddTD("改变数据类型");
             DDL ddlType = new DDL();
             ddlType.ID = "DDL_DTType";
@@ -150,6 +152,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("FEName", "字段英文名称"));
         TB tb = new TB();
         tb.ID = "TB_KeyOfEn";
@@ -161,20 +164,26 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.AddTREnd();
 
 
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("FLabel", "字段中文名称"));
         tb = new TB();
         tb.ID = "TB_Name";
         tb.Text = mapAttr.Name;
+        tb.Attributes["width"] = "100%";
+
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("DefaultVal", "默认值"));
         tb = new TB();
         tb.ID = "TB_DefVal";
         tb.Text = mapAttr.DefValReal;
+
+       // tb.Width = 20;
 
         switch (this.FType)
         {
@@ -205,11 +214,39 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                 CheckBox cb = new CheckBox();
                 cb.Text = this.ToE("DefSysData", "默认系统当前日期");
                 cb.ID = "CB_DefVal";
-                if (mapAttr.Tag == "1")
+                if (mapAttr.DefValReal == "@RDT")
                     cb.Checked = true;
                 else
                     cb.Checked = false;
+                cb.AutoPostBack = true;
+                cb.CheckedChanged += new EventHandler(cb_CheckedChanged_rdt);
                 this.Pub1.AddTD(cb);
+                break;
+            case DataType.AppString:
+                DDL ddl = new DDL();
+                ddl.AutoPostBack = true;
+
+                BP.WF.XML.DefVals vals = new BP.WF.XML.DefVals();
+                vals.Retrieve("Lang", WebUser.SysLang);
+                foreach (BP.WF.XML.DefVal def in vals)
+                    ddl.Items.Add(new ListItem(def.Name, def.Val));
+
+                //ddl.Items.Add(new ListItem("选择系统约定默认值", ""));
+                //ddl.Items.Add(new ListItem("操作员编号", "@WebUser.No"));
+                //ddl.Items.Add(new ListItem("操作员名称", "@WebUser.Name"));
+                //ddl.Items.Add(new ListItem("操作员部门编号", "@WebUser.FK_Dept"));
+                //ddl.Items.Add(new ListItem("操作员部门名称", "@WebUser.FK_DeptName"));
+
+                //ddl.Items.Add(new ListItem("当前日期-1", "@yyyy年mm月dd日"));
+                //ddl.Items.Add(new ListItem("当前日期-2", "@yy年mm月dd日"));
+
+                //ddl.Items.Add(new ListItem("当前年度", "@FK_ND"));
+                //ddl.Items.Add(new ListItem("当前月份", "@FK_YF"));
+
+                ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged_DefVal);
+                ddl.SetSelectItem(mapAttr.DefValReal);
+                ddl.ID = "DDL_SelectDefVal";
+                this.Pub1.AddTD(ddl);
                 break;
             default:
                 this.Pub1.AddTD("&nbsp;");
@@ -248,7 +285,8 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             //this.Pub1.AddTREnd();
         }
 
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("IsCanEdit", "是否可编辑"));
         this.Pub1.Add("<TD>");
 
@@ -273,6 +311,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         #region 是否可单独行显示
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("CtlShowWay", "呈现方式")); //呈现方式;
         this.Pub1.AddTDBegin();
         rb = new RadioButton();
@@ -297,13 +336,16 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD("控制该它在表单的显示方式");
+        this.Pub1.AddTD();
+
+       // this.Pub1.AddTD("控制该它在表单的显示方式");
         this.Pub1.AddTREnd();
         #endregion 是否可编辑
 
 
         #region 是否可界面可见
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("IsView", "是否界面可见")); //是否界面可见
         this.Pub1.AddTDBegin();
         rb = new RadioButton();
@@ -334,10 +376,17 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD("控制该它在表单的界面里是否可见");
+
+        this.Pub1.AddTD();
+     //   this.Pub1.AddTD("控制该它在表单的界面里是否可见");
         this.Pub1.AddTREnd();
         #endregion 是否可界面可见
 
+    }
+
+    void ddl_SelectedIndexChanged_DefVal(object sender, EventArgs e)
+    {
+        this.Pub1.GetTBByID("TB_DefVal").Text = this.Pub1.GetDDLByID("DDL_SelectDefVal").SelectedItemStringVal;
     }
 
     void ddlType_SelectedIndexChanged(object sender, EventArgs e)
@@ -345,8 +394,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         MapAttr attr = new MapAttr(this.RefNo);
         attr.MyDataTypeS = this.Pub1.GetDDLByID("DDL_DTType").SelectedItemStringVal;
         attr.Update();
-
-
         this.Response.Redirect("EditF.aspx?DoType=" + this.DoType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo + "&FType=" + attr.MyDataType + "&GroupField=" + this.GroupField, true);
 
         // this.Response.Redirect(this.Request.RawUrl, true);
@@ -355,7 +402,8 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
     {
         #region 字段分组
         this.Pub1.AddTR();
-        this.Pub1.AddTD("字段分组");
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("FieldGroup", "字段分组"));
         DDL ddlGroup = new DDL();
         ddlGroup.ID = "DDL_GroupID";
         GroupFields gfs = new GroupFields(mapAttr.FK_MapData);
@@ -365,15 +413,17 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         ddlGroup.SetSelectItem(mapAttr.GroupID);
         this.Pub1.AddTD(ddlGroup);
-        this.Pub1.AddTD("修改隶属分组");
+
+        this.Pub1.AddTD();
+      //  this.Pub1.AddTD("修改隶属分组");
         this.Pub1.AddTREnd();
         #endregion 字段分组
 
 
-        #region 字段分组
+        #region 是否是数字签名字段
         if (mapAttr.UIIsEnable == false && mapAttr.MyDataType == DataType.AppString)
         {
-            this.Pub1.AddTR();
+            this.Pub1.AddTRTX();
             this.Pub1.AddTD();
             CheckBox cb = new CheckBox();
             cb.ID = "CB_IsSigan";
@@ -388,7 +438,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
 
         this.Pub1.AddTRSum();
-        this.Pub1.Add("<TD colspan=3 align=center>");
+        this.Pub1.Add("<TD colspan=4 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = " " + this.ToE("Save", "保存") + " ";
@@ -397,7 +447,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
-        btn.Text = this.ToE("SaveAndClose", "保存并关闭"); // "保存并关闭";
+        btn.Text = this.ToE("SaveAndClose",  "保存并关闭" ); // "保存并关闭";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
@@ -472,6 +522,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.EditBeforeAdd(mapAttr);
         TB tb = new TB();
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("MinLen", "最小长度"));
         tb = new TB();
         tb.ID = "TB_MinLen";
@@ -481,7 +532,8 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("MaxLen", "最大长度"));
         tb = new TB();
         tb.ID = "TB_MaxLen";
@@ -520,6 +572,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("TBWidth", "文本框宽度"));
         tb = new TB();
         tb.ID = "TB_UIWidth";
@@ -533,6 +586,18 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.EditBeforeEnd(mapAttr);
     }
 
+    void cb_CheckedChanged_rdt(object sender, EventArgs e)
+    {
+        CheckBox cb = this.Pub1.GetCBByID("CB_DefVal");
+        if (cb.Checked)
+        {
+            this.Pub1.GetTBByID("TB_DefVal").Text = "@RDT";
+        }
+        else
+        {
+            this.Pub1.GetTBByID("TB_DefVal").Text = "";
+        }
+    }
     void cb_CheckedChanged(object sender, EventArgs e)
     {
         CheckBox cb = this.Pub1.GetCBByID("CB_IsM");
@@ -556,15 +621,17 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
     {
         this.Pub1.AddTable();
         this.Pub1.AddTR();
-        this.Pub1.AddTDTitle(""); // 项目
-        this.Pub1.AddTDTitle("");   // 值
-        this.Pub1.AddTDTitle(""); // 描述
+        this.Pub1.AddTDTitle("ID"); // 项目
+        this.Pub1.AddTDTitle("项目"); // 项目
+        this.Pub1.AddTDTitle("采集");   // 值
+        this.Pub1.AddTDTitle("描述"); // 描述
         this.Pub1.AddTREnd();
 
         if (mapAttr.IsTableAttr)
         {
             /* if here is table attr, It's will let use can change data type. */
             this.Pub1.AddTR();
+            this.Pub1.AddTDIdx(idx++);
             this.Pub1.AddTD("改变数据类型");
             DDL ddlType = new DDL();
             ddlType.ID = "DDL_DTType";
@@ -582,6 +649,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         }
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("FEName", "字段英文名称"));
         TB tb = new TB();
         tb.ID = "TB_KeyOfEn";
@@ -594,7 +662,8 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.AddTD(this.ToE("FENameD", "字母或者字母数字组合"));
         this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("DefaultVal", "默认值"));
         CheckBox cb = new CheckBox();
         cb.ID = "CB_DefVal";
@@ -606,15 +675,19 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("FLabel", "字段中文名称"));
         tb = new TB();
         tb.ID = "TB_Name";
         tb.Text = mapAttr.Name;
+        tb.Attributes["width"] = "100%";
+
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("IsEdit", "是否可编辑"));
         this.Pub1.Add("<TD>");
 
@@ -641,7 +714,8 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         #region 是否可单独行显示
         this.Pub1.AddTR();
-        this.Pub1.AddTD(this.ToE("CtlShowWay", "呈现方式")); //呈现方式;
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD( this.ToE("CtlShowWay", "呈现方式") ); //呈现方式;
         this.Pub1.AddTDBegin();
         rb = new RadioButton();
         rb.ID = "RB_UIIsLine_0";
@@ -665,13 +739,16 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD("控制该它在表单的显示方式");
+
+        this.Pub1.AddTD();
+        //this.Pub1.AddTD("控制该它在表单的显示方式");
         this.Pub1.AddTREnd();
         #endregion 是否可编辑
 
 
         #region 是否可界面可见
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("IsView", "是否界面可见")); //是否界面可见
         this.Pub1.AddTDBegin();
         rb = new RadioButton();
@@ -696,7 +773,9 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD("控制该它在表单的界面里是否可见");
+
+        this.Pub1.AddTD();
+        //this.Pub1.AddTD("控制该它在表单的界面里是否可见");
         this.Pub1.AddTREnd();
         #endregion 是否可界面可见
 
@@ -717,7 +796,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             }
 
             MapAttr attr = new MapAttr();
-
             if (this.RefNo != null)
             {
                 attr.MyPK = this.RefNo;
@@ -753,10 +831,11 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                         break;
                     case DataType.AppDateTime:
                     case DataType.AppDate:
-                        if (this.Pub1.GetCBByID("CB_DefVal").Checked)
-                            attr.Tag = "1";
-                        else
-                            attr.Tag = "";
+                        attr.DefValReal = this.Pub1.GetTBByID("TB_DefVal").Text;
+                        //if (this.Pub1.GetCBByID("CB_DefVal").Checked)
+                        //    attr.DefValReal = "1";
+                        //else
+                        //    attr.DefValReal = "0";
                         break;
                     default:
                         break;
@@ -800,10 +879,10 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
             Response.Buffer = true;
 
-
             attr.FK_MapData = this.MyPK;
             attr.MyPK = this.RefNo;
             attr.Save();
+
             switch (btn.ID)
             {
                 case "Btn_SaveAndClose":
@@ -819,7 +898,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         }
         catch (Exception ex)
         {
-
             this.Alert(ex.Message);
         }
     }
