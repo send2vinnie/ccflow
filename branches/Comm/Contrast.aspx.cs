@@ -672,7 +672,7 @@ namespace BP.Web.Comm
         {
             this.BindContrastKey(this.HisEn.EnMap);
             this.UCSys1.Clear();
-            this.UCSys1.AddMsgOfInfo("操作提示：", "&nbsp;&nbsp;&nbsp;&nbsp;请您设置好查询比较条件，之后点工具栏上的查找按钮。");
+            this.UCSys1.AddMsgOfInfo( this.ToE("Note", "操作提示："), "&nbsp;&nbsp;&nbsp;&nbsp;请您设置好查询比较条件，之后点工具栏上的查找按钮。");
         }
 	}
 }

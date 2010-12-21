@@ -122,7 +122,7 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
 
         string keys = "&" + en.PK + "=" + this.PK + "&r=" + DateTime.Now.ToString("MMddhhmmss");
 
-        this.AddFieldSet("<a href='UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PK + "' >" + en.EnDesc + "-主页</a>");
+        this.AddFieldSet("<a href='UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PK + "' >" + en.EnDesc + "-" + this.ToE("Home", "主页") + "</a>");
 
         this.AddUL();
 

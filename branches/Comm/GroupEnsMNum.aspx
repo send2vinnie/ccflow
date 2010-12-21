@@ -16,8 +16,8 @@
 		<META http-equiv="Page-Enter" content="revealTrans(duration=0.5, transition=8)" >
 		<META content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
 		<script language="JavaScript" src="JScript.js"></script>
-		<LINK href="Table<%=BP.Web.WebUser.Style%>.css" type="text/css" rel="stylesheet">
 		<base target=_self />
+	    <link href="Style/Table.css" rel="stylesheet" type="text/css" />
 	</HEAD>
 	<body  onkeypress=Esc() leftMargin=0 background=BJ1.gif topMargin=0>
 		<form id="Form1" method="post" runat="server">
@@ -71,13 +71,13 @@
   TabHoverStyle="color:red;"
   TabSelectedStyle="background:white;border-bottom:none"
 							>
-							<iewc:Tab Text=" ±í¸ñ" DefaultImageUrl="../Images/Pub/Table.gif" ></iewc:Tab>
+							<iewc:Tab Text=" ±í¸ñ" ID="ShowTable" DefaultImageUrl="../Images/Pub/Table.gif" ></iewc:Tab>
 							<iewc:TabSeparator></iewc:TabSeparator>
-							<iewc:Tab Text=" Öù×´Í¼" DefaultImageUrl="../Images/Pub/Histogram.ico"></iewc:Tab>
+							<iewc:Tab Text=" Öù×´Í¼"  ID="ShowZZT" DefaultImageUrl="../Images/Pub/Histogram.ico"></iewc:Tab>
 							<iewc:TabSeparator></iewc:TabSeparator>
-							<iewc:Tab Text=" ±ýÍ¼" DefaultImageUrl="../Images/Pub/Pie.ico"></iewc:Tab>
+							<iewc:Tab Text=" ±ýÍ¼"  ID="ShowPie" DefaultImageUrl="../Images/Pub/Pie.ico"></iewc:Tab>
 							<iewc:TabSeparator></iewc:TabSeparator>
-							<iewc:Tab Text=" ÕÛÏßÍ¼" DefaultImageUrl="../Images/Pub/ZX.ico"></iewc:Tab>
+							<iewc:Tab Text=" ÕÛÏßÍ¼" ID="ShowZXT" DefaultImageUrl="../Images/Pub/ZX.ico"></iewc:Tab>
 							<iewc:TabSeparator></iewc:TabSeparator>
 						</cc1:bptabstrip>
 						<cc1:bpmultipage id="BPMultiPage1" runat="server" Width="95%" Height="100%" BorderColor=GhostWhite>

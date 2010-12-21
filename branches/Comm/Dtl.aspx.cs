@@ -202,7 +202,12 @@ public partial class Comm_Dtl : WebPage
                             if (tb.Enabled)
                             {
                                 // OnKeyPress="javascript:return VirtyNum(this);"
-                                tb.Attributes["OnKeyDown"] = "javascript:return VirtyNum(this);";
+                                if (attr.MyDataType == DataType.AppInt)
+                                    tb.Attributes["OnKeyDown"] = "javascript:return VirtyInt(this);";
+                                else
+                                    tb.Attributes["OnKeyDown"] = "javascript:return VirtyNum(this);";
+
+
                                 tb.Attributes["onkeyup"] += "javascript:C" + dtl.OID + "();C" + attr.KeyOfEn + "();";
                                 tb.Attributes["class"] = "TBNum";
                             }

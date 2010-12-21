@@ -41,6 +41,7 @@ public partial class Comm_Sys_EnsDataIO : WebPage
     public void Bind2()
     {
         this.Pub1.DivInfoBlockBegin();
+
         this.Pub1.Add("<b>第2/3步：</b>设置字段对应关系<hr>");
 
         string filePath = BP.SystemConfig.PathOfWebApp + "/Temp/" + WebUser.No + "DTS.xls";
@@ -201,7 +202,7 @@ public partial class Comm_Sys_EnsDataIO : WebPage
     {
         Entities ens = BP.DA.ClassFactory.GetEns(this.EnsName);
         ens.RetrieveAll();
-        string msg = "执行信息如下：<hr>";
+        string msg = this.ToE("Info","执行信息如下")+ "：<hr>";
         try
         {
             string filePath = BP.SystemConfig.PathOfWebApp + "/Temp/" + WebUser.No + "DTS.xls";
@@ -245,11 +246,11 @@ public partial class Comm_Sys_EnsDataIO : WebPage
                 try
                 {
                     en1.Save();
-                    msg += "@行号：" + idx + "执行成功。";
+                    msg += "@row：" + idx + " OK。";
                 }
                 catch (Exception ex)
                 {
-                    msg += "<font color=red>@行号：" + idx + "执行失败。" + rowMsg + " @失败信息:" + ex.Message + "</font>";
+                    msg += "<font color=red>@Row：" + idx + "error。" + rowMsg + " @error:" + ex.Message + "</font>";
                     msg += ex.Message;
                 }
             }
@@ -270,7 +271,7 @@ public partial class Comm_Sys_EnsDataIO : WebPage
                     myen.Insert();
                 }
             }
-            this.ResponseWriteRedMsg("执行错误：数据已经回滚回来。错误信息：" + ex.Message + "。 MSG= " + msg);
+            this.ResponseWriteRedMsg(  "执行错误：数据已经回滚回来。错误信息：" + ex.Message + "。 MSG= " + msg);
         }
     }
     public void OutAll()
@@ -282,7 +283,7 @@ public partial class Comm_Sys_EnsDataIO : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Pub1.AddH1("导入导出数据");
+        this.Pub1.AddH1( this.ToE("ExpImp", "导入导出数据") );
         switch (this.DoType)
         {
             case "OutHtml":
@@ -322,13 +323,15 @@ public partial class Comm_Sys_EnsDataIO : WebPage
             default:
                 this.Pub1.DivInfoBlockBegin();
 
-                this.Pub1.AddH3("<a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "&Step=1' target=_self  >执行数据导入</a>");
-                this.Pub1.Add("<font color=green>按照固定的格式从Excel中导入数据。</font>");
-
-                this.Pub1.AddH3("<a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "&DoType=OutAll' target=_self >导出全部数据到Excel。</a>");
-                this.Pub1.Add("<font color=green>把全部的数据输出到excel中。</font>");
+                this.Pub1.AddH3("<a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "&DoType=OutAll' target=_self >" + this.ToE("Exp2Excel", "导出全部数据到Excel。") + "</a>");
+                this.Pub1.Add("<font color=green>" + this.ToE("Exp2Excel", "导出全部数据到Excel。") + "</font>");
 
 
+
+                this.Pub1.AddH3("<a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "&Step=1' target=_self  >" + this.ToE("DoImp", "执行数据导入") + "</a>");
+                this.Pub1.Add("<font color=green>" + this.ToE("DoImpD", "按照固定的格式从Excel中导入数据。") + " </font>");
+
+              
                 //this.Pub1.AddH3("<a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "&DoType=OutCurrent' target=_self  >导出当前的查询到Excel。</a>");
                 //this.Pub1.Add("<font color=green>按照当前的查询条件导出数据。</font>");
                 this.Pub1.DivInfoBlockEnd();

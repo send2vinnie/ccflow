@@ -1,4 +1,29 @@
 /*  Table 风格  */
+body
+{
+	margin: 0 auto;
+	font-size: 16px;
+	color: #000;
+	line-height: 20px;
+	width: 80%;
+	font-family: 宋体;
+	font-size: 12px;
+}
+
+.Table_Title
+{
+	font-weight: bold;
+}
+
+.MasterPage
+{
+	background-color: #FFFFFF;
+	font-family: 宋体;
+	font-size: 13px;
+	border-left-style: double;
+	border-right-style: double;
+}
+
 .Table
 {
 border: 1px solid #808080;
@@ -26,13 +51,28 @@ border: 1px solid #808080;
 	background-color: activeborder;
 	text-align: left;
 }
+
 .Title
 {
-	background-color:#eee;
-	font-weight:bold;
-	font-size:14px;
-	border:1px solid #ccc;
-    text-align: center;
+	background-color: #eee;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+}
+
+
+.TitleMsg
+{
+	border-style: none;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-size: 14px;
+	padding-bottom: 5px;
+	margin: 5px;
+	padding-top: 5px;
+	line-height: 15pt;
+	letter-spacing: 0pc;
+	background-color: infobackground;
 }
 
 .Idx
@@ -67,11 +107,11 @@ border: 1px solid #808080;
 
 .TBNum
 {
-  font-size: 14px;
-    text-align: right;
-    float: left;
-    clear: left;
-    width:100%;
+	font-size: 14px;
+	text-align: right;
+	float: left;
+	clear: left;
+	width: 98%;
 }
  
 .TBReadonly
@@ -102,6 +142,14 @@ border: 1px solid #808080;
 .TR
 {
 }
+
+.TR1
+{
+background-color:AliceBlue
+}
+
+
+
 .TRSum
 {
 	background-color: infobackground;
@@ -116,19 +164,19 @@ padding: 4px;
 	text-align: left;
 }
 
+
 .TDNum
 {
+	padding: 0px 0px 0px 2px;
 	border-right: lightgrey 1px solid;
-	padding-right: 0px;
 	border-top: lightgrey 1px solid;
-	padding-left: 1px;
-	padding-bottom: 0px;
-	margin: 0px 0px 0px 1px;
+	margin: 0px 0px 0px 2px;
 	border-left: lightgrey 1px solid;
-	padding-top: 0px;
 	border-bottom: lightgrey 1px solid;
 	font-family: 宋体;
 	text-align: right;
+	border-width: 1px;
+	border-style: none none inset none;
 }
 
 .BigDoc
@@ -145,35 +193,21 @@ padding: 4px;
 }
 
 /* 内部标签风格 */
+
 fieldset
 {
-    padding: 5px;
-    margin: 5px;
+    table-layout: auto;
+    padding: 9px;
+    text-align:left;
 }
+
 legend
 {
-    color: #000066;
+    color: green;
+    font-style: inherit;
+    font-weight: bold;
 }
 
-
-A:active
-{
-	color: blue;
-	text-decoration: none;
-}
-A:visited
-{
-	color: blue;
-    text-decoration:none;
-}
-
-a:link
-{
-}
-a:link
-{
-    text-decoration: none;
-}
 
 .ToolBar,Toolbar,GroupTitle
 {
@@ -195,3 +229,54 @@ a:link
 	padding: 2px;
 	font-weight:bolder;
 }
+
+.GroupField
+{
+	background-color: #E1E1E1;
+	font-size: medium;
+	font-weight: bold;
+	font-style: normal;
+	font-variant: normal;
+	text-transform: capitalize;
+	color: #000000;
+	border-left: 10px;
+	border-right: 10px;
+	border-top: 10px;
+	border-bottom: 10px;
+	border-width: 5px;
+	font-size: small;
+	vertical-align: middle;
+	padding: 1px;
+}
+
+.TDCenter
+{
+	background-color: #E1E1E1;
+	font-size: medium;
+	font-weight: bold;
+	font-style: normal;
+	font-variant: normal;
+	text-transform: capitalize;
+	color: #000000;
+	border-left: 10px;
+	border-right: 10px;
+	border-top: 10px;
+	border-bottom: 10px;
+	border-width: 5px;
+	font-size: small;
+	vertical-align: middle;
+	padding: 1px;
+}
+
+
+a:link, a:visited, a:active
+{
+	color: blue;
+	text-decoration: none;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
+

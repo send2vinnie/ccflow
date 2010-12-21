@@ -1,31 +1,19 @@
-
-
 /* 默认植问题 */
 function OpenHelperTBNo( appPath ,  EnsName, ctl  )
 { 
-	// alert( EnsName);
-	// alert( ctl );
-	 
     var url =appPath+ '/Comm/DataHelp.htm?' +appPath+ '/Comm/HelperOfTBNo.aspx?EnsName='+EnsName ;
-    
     var str= window.showModalDialog(url , '','dialogHeight: 550px; dialogWidth:950px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no');
-    
     if (str==undefined )
       return;
-      
     if (str==null)
       return;
-      
      ctl.value = str;
      return;
-      
 }
-
  function To( url)
  {
    window.location.href=url;
  }
-
 window.onerror=function()
 {
   return true;
@@ -57,11 +45,8 @@ function OpenItme3(webAppPath, className, url)
 
 function Helper()
 {
-  // alert('Thanks for you chose bpsoft! more info please visit helper.bpsoft.net. ');
    newWindow=window.open('/Helper/Helper.htm','helper','width=600,top=10,left=10,height=400,scrollbars=yes,resizable=yes,toolbar=false,location=false');
    newWindow.focus();  
-
-  // var newWindow=window.open( url,'card', 'width=700,top=100,left=200,height=400,scrollbars=yes,resizable=yes,toolbar=false,location=false' );
 }
 function Print( url )
 {
@@ -80,24 +65,8 @@ function WinOpen( url, winName)
     var  newWindow=window.showModelessDialog( url , winName, 'scroll:1;status:1;help:1;resizable:1;dialogWidth:680px;dialogHeight:420px');
     newWindow.focus();
     return;
- //  alert(winName);
- //  var  newWindow=window.showModelessDialog( url,  'cd','scroll:1;status:1;help:1;resizable:1;dialogWidth:780px;dialogHeight:420px');
-    var  newWindow=window.open( url , winName, 'scroll:1;status:1;help:1;resizable:1;width=200,height=200');
-    newWindow.focus();
 }
  
-function WinOpen_del( url, winName, w, h)
-{
-
-alert(w);
-
-    var  newWindow=window.showModelessDialog( url , winName, 'scroll:1;status:1;help:1;resizable:1;dialogWidth:780px;dialogHeight:520px');
-  //  var  newWindow=window.showModelessDialog( url , winName, 'scroll:1;status:1;help:1;resizable:1;dialogWidth:'+w+'px;dialogHeight:'+h+'px');
-    newWindow.focus();
-     // alert (url ) ;
-    // var  newWindow=window.open( url , winName, 'width=700,height=400,top=100,left=300,scrollbars=yes,resizable=yes,toolbar=false,location=false,center=yes,center: yes;');
-    //  newWindow.focus();
-}
 /* ESC Key Down  */
 function Esc()
 {
@@ -105,13 +74,13 @@ function Esc()
         window.close();
     return true;
 }
-
 /* 用来验证 输入的是不是一个数字． onkeypress */
 var appPath="YSWF";
-
 function VirtyNum(ctrl)
 {
- 
+ if (event.keyCode == 229)
+        return true;
+        
     if (event.keyCode <= 105 && event.keyCode >= 96)
         return true;
 
@@ -153,15 +122,8 @@ function VirtyDateTime(ctrl)
 /* 显示日期 */
 function ShowDateTime( appPath , ctrl)
 { 
-
      url =appPath+'/Comm/Pub/CalendarHelp.htm';
-//alert(url);
-     
-//	 if ( event.button != 2) 
-//	   return;
-//	val=window.showModalDialog( url , '','dialogHeight: 335px; dialogWidth: 340px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no'); 
   val=window.showModalDialog( url , '','dialogHeight: 335px; dialogWidth: 340px; center: yes; help: no'); 
-
 	if ( val==undefined)
 	     return;
 	 ctrl.value=val;
@@ -205,9 +167,7 @@ function DoZoom(ctl, size )
 function DoZoom( ctl1,ctl2, size )
 {
    FontSize= size;
- //  alert(ctl2);
    document.getElementById( ctl2 ).style.fontSize=size;
- //  alert(document.getElementById( ctl2 ).style.fontSize );
    document.getElementById( ctl1 ).style.fontSize=size;
    SetCookie('FontSize',size);
 }
@@ -346,3 +306,20 @@ function TROut(ctrl)
 {
   ctrl.style.backgroundColor='white';
 }
+
+function RSize() {
+    if (document.body.scrollWidth > (window.screen.availWidth - 100)) {
+        window.dialogWidth = (window.screen.availWidth - 50).toString() + "px"
+    } else {
+        window.dialogWidth = (document.body.scrollWidth + 100).toString() + "px"
+    }
+
+    if (document.body.scrollHeight > (window.screen.availHeight - 70)) {
+        window.dialogHeight = (window.screen.availHeight ).toString() + "px"
+    } else {
+        window.dialogHeight = (document.body.scrollHeight + 165).toString() + "px"
+    }
+
+    window.dialogLeft = ((window.screen.availWidth - document.body.clientWidth) / 2).toString() + "px"
+    window.dialogTop = ((window.screen.availHeight - document.body.clientHeight) / 2).toString() + "px"
+} 

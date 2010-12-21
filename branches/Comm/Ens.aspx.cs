@@ -65,8 +65,9 @@ public partial class Comm_UIEnsV10 : WebPage
             }
         }
 
-        this.ToolBar1.AddBtn(NamesOfBtn.Save, "保存(S)");
-        this.ToolBar1.AddBtn(NamesOfBtn.Delete, "删除(D)");
+        this.ToolBar1.AddBtn(NamesOfBtn.Save, this.ToE("Save","保存(S)")   );
+        this.ToolBar1.AddBtn(NamesOfBtn.Delete, this.ToE("Del","删除(D)")  );
+
         this.ToolBar1.GetBtnByID("Btn_Save").Click += new EventHandler(ToolBar1_ButtonClick);
         //   this.ToolBar1.GetBtnByID("Btn_New").Click += new EventHandler(ToolBar1_ButtonClick);
         this.ToolBar1.GetBtnByID("Btn_Delete").Click += new EventHandler(ToolBar1_ButtonClick);

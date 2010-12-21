@@ -89,7 +89,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                 text = "选择列查询";
                 break;
             case NamesOfBtn.Excel:
-                text = "导出全部";
+                text = this.ToE("Excel", "导出全部");
                 break;
             case NamesOfBtn.Excel_S:
                 text = "导出当前";
@@ -174,7 +174,8 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                 text = "消息";
                 break;
             case NamesOfBtn.New:
-                text = "新建";
+                text = this.ToE("New", "新建");
+              //  text = "新建";
                 break;
             case NamesOfBtn.Print:
                 text = "打印";
@@ -523,22 +524,23 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         {
             if (en.EnMap.EnType != EnType.Dtl)
             {
-                this.AddBtn(NamesOfBtn.New,"新建(N)");
+                this.AddBtn(NamesOfBtn.New, this.ToE("New",  "新建(N)") );
+                 
                 // this.AddBtn(NamesOfBtn.Copy);
             }
         }
 
         if (uac.IsUpdate)
         {
-            this.AddBtn(NamesOfBtn.Save, "保存(S)");
-            this.AddBtn(NamesOfBtn.SaveAndClose, "保存并关闭(C)");
+            this.AddBtn(NamesOfBtn.Save, this.ToE("Save", "保存(S)") );
+            this.AddBtn(NamesOfBtn.SaveAndClose, this.ToE("SaveAndClose", "保存并关闭(C)")   );
         }
 
         if (uac.IsInsert && uac.IsUpdate)
         {
             if (en.EnMap.EnType != EnType.Dtl)
             {
-                this.AddBtn(NamesOfBtn.SaveAndNew, "保存并新建(R)");
+                this.AddBtn(NamesOfBtn.SaveAndNew,  this.ToE("SaveAndNew", "保存并新建(R)")  );
                 //this.AddBtn(NamesOfBtn.SaveAndClose );
             }
         }
@@ -547,7 +549,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
 
         if (uac.IsDelete && pkval!="0" && pkval.Length >= 1 )
         {
-            this.AddBtn(NamesOfBtn.Delete, "删除(D)");
+            this.AddBtn(NamesOfBtn.Delete, this.ToE("Del",  "删除(D)")  );
         }
 
         if (uac.IsAdjunct)
@@ -892,6 +894,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                 switch (attr.UIBindKey)
                 {
                     case "BP.Port.Depts":
+                        ddl.Items.Clear();
                         BP.Port.Depts depts = new BP.Port.Depts();
                         depts.RetrieveAll();
                         foreach (BP.Port.Dept dept in depts)

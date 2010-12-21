@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="BP.Web.Comm.UI.CalendarHelp1" CodeFile="CalendarHelp.aspx.cs" %>
+<%@ Page language="c#" Inherits="BP.Web.Comm.UI.CalendarHelp1" CodeFile="Calendarhelp.aspx.cs" %>
 <%@ Register TagPrefix="cc1" Namespace="BP.Web.Controls" Assembly="BP.Web.Controls" %>
 <!DocType HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>

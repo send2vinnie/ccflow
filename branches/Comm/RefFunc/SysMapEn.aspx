@@ -8,22 +8,33 @@
     <link href="Style/Table.css" rel="stylesheet" type="text/css" />
     <script language="JavaScript" src="Style/JScript.js"></script>
     <script language="javascript">
-    function RSize() {
-    if (document.body.scrollWidth > (window.screen.availWidth - 100)) {
-        window.dialogWidth = (window.screen.availWidth - 50).toString() + "px"
-    } else {
-        window.dialogWidth = (document.body.scrollWidth + 100).toString() + "px"
-    }
+     function ReinitIframe(dtlid) 
+    {
+    
+     try {
+     
+        var iframe = document.getElementById("F" + dtlid);
+        var tdF = document.getElementById("TD" + dtlid);
+        iframe.height = iframe.contentWindow.document.body.scrollHeight;
+        iframe.width = iframe.contentWindow.document.body.scrollWidth;
 
-    if (document.body.scrollHeight > (window.screen.availHeight - 70)) {
-        window.dialogHeight = (window.screen.availHeight ).toString() + "px"
-    } else {
-        window.dialogHeight = (document.body.scrollHeight + 165).toString() + "px"
-    }
+        if (tdF.width < iframe.width) {
+            //alert(tdF.width +'  ' + iframe.width);
+            tdF.width = iframe.width;
+        } else {
+            iframe.width = tdF.width;
+        }
 
-    window.dialogLeft = ((window.screen.availWidth - document.body.clientWidth) / 2).toString() + "px"
-    window.dialogTop = ((window.screen.availHeight - document.body.clientHeight) / 2).toString() + "px"
-   } 
+        tdF.height = iframe.height;
+        return;
+        
+       }catch (ex) {
+         return;
+       }
+    return;
+   }
+   
+    
     function GroupBarClick(rowIdx) {
         var alt = document.getElementById('Img' + rowIdx).alert;
         var sta = 'block';

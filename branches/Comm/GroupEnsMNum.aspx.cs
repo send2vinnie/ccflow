@@ -147,6 +147,14 @@ namespace BP.Web.Comm
         }
         protected void Page_Load(object sender, System.EventArgs e)
         {
+
+            this.CB_IsShowPict.Text = this.ToE("IsShowPict", "显示图形");
+
+            this.BPTabStrip1.Items[2].Text = this.ToE("Histogram", "柱状图");
+            this.BPTabStrip1.Items[4].Text = this.ToE("Pie",  "饼图");
+            this.BPTabStrip1.Items[6].Text = this.ToE("Line","折线图");
+            
+
             #region 权限问题
             UAC uac = new UAC();
             try
@@ -267,7 +275,7 @@ namespace BP.Web.Comm
 
             //this.ToolBar1.InitByMapVGroup(this.HisEn.EnMap);
             this.ToolBar1.AddSpt("spt1");
-            this.ToolBar1.AddBtn(NamesOfBtn.Excel, "导出");
+            this.ToolBar1.AddBtn(NamesOfBtn.Excel);
 
             //this.ToolBar1.AddBtn(NamesOfBtn.Excel);
             //this.ToolBar1.AddBtn(NamesOfBtn.Help);
@@ -586,7 +594,8 @@ namespace BP.Web.Comm
 
             if (groupKey == "")
             {
-                this.UCSys1.AddMsgOfWarning(this.ToE("Warning", "预警"), "<img src='../Images/Pub/warning.gif' /><b><font color=red>" + this.ToE("NoSelectGroupData", "您没有选择分析的数据") + "</font></b>"); //您没有选择分析的数据。
+                this.UCSys1.AddMsgOfWarning(this.ToE("Warning", "预警"),
+                    "<img src='../Images/Pub/warning.gif' /><b><font color=red>" + this.ToE("NoSelectGroupData", "您没有选择分析的数据") + "</font></b>"); //您没有选择分析的数据。
                 return null;
             }
 
@@ -1255,7 +1264,13 @@ namespace BP.Web.Comm
                             d = 0;
                             foreach (DataRow dr1 in dt.Rows)
                             {
-                                d += decimal.Parse(dr1[attr.Key].ToString());
+                                try
+                                {
+                                    d += decimal.Parse(dr1[attr.Key].ToString());
+                                }
+                                catch
+                                { 
+                                }
                             }
 
                             if (StateNumKey.IndexOf(attr.Key + "=AVG") < 1)

@@ -48,7 +48,8 @@ public partial class Comm_GradeEns : WebPage
         Button btn = new Button();
         btn = new Button();
         btn.ID = "Btn_Del";
-        btn.Text = "删除";
+        btn.Text = this.ToE("Del", "删除");
+        btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
         btn.Click += new EventHandler(btn_Del_Click);
         this.UCSys1.Add(btn);
 

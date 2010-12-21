@@ -58,9 +58,8 @@ public partial class Comm_Batch : WebPage
 
         this.Title = this.HisEn.EnMap.EnDesc;
 
-       // this.ToolBar1.AddLab("sd", this.GenerCaption(this.HisEn.EnMap.EnDesc + "" + this.HisEn.EnMap.TitleExt));
-        this.ToolBar1.AddLab("sd",  "<b>"+this.HisEn.EnMap.EnDesc+"管理</b>:" );
-
+        // this.ToolBar1.AddLab("sd", this.GenerCaption(this.HisEn.EnMap.EnDesc + "" + this.HisEn.EnMap.TitleExt));
+        this.ToolBar1.AddLab("sd", "<b>" + this.HisEn.EnMap.EnDesc + "</b>:");
 
         this.ToolBar1.InitByMapV2(map, 1);
 
@@ -91,20 +90,17 @@ public partial class Comm_Batch : WebPage
                         this.ToolBar1.GetDDLByKey("DDL_" + attr.Key).SetSelectItem("all", attr.HisAttr);
                     continue;
                 }
-
                 this.ToolBar1.GetDDLByKey("DDL_" + attr.Key).SetSelectItem(mykey, attr.HisAttr);
             }
         }
-
-
         #endregion
 
         //   this.BPToolBar1.ButtonClick += new System.EventHandler(this.ButtonClick);
         if (en.HisUAC.IsInsert)
             this.ToolBar1.AddLab("inse",
-                "<input type=button id='ToolBar1$Btn_New' name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='新建(N)' class=Btn />");
+                "<input type=button id='ToolBar1$Btn_New' name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='" + this.ToE("New", "新建") + "(N)' class=Btn />");
 
-        this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='设置(P)' class=Btn />");
+        this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置") + "(P)' class=Btn />");
 
         // this.ToolBar1.AddLab("s", "<input type=button onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='设置(S)' class=Btn />");
         this.SetDGData();
@@ -123,15 +119,11 @@ public partial class Comm_Batch : WebPage
             }
         }
 
-        
-
-
         this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ButtonClick);
         //this.ToolBar1.Btn_Click();
         //   this.GenerLabel(this.Lab1, this.HisEn);
         //this.GenerLabel(this.Lab1, "<b>" + map.EnDesc + "</b>" + map.TitleExt);
-
-        this.UCSys2.Add("<a href='./Sys/EnsDataIO.aspx?EnsName="+this.EnsName+"' target=_blank><img src='../Images/Btn/Excel.gif' border=0 />导入/导出</a>");
+        this.UCSys2.Add("<a href='./Sys/EnsDataIO.aspx?EnsName=" + this.EnsName + "' target=_blank><img src='../Images/Btn/Excel.gif' border=0 />" + this.ToE("ExpImp", "导入/导出") + "</a>");
     }
 
     private void ButtonClick(object sender, System.EventArgs e)
@@ -145,7 +137,6 @@ public partial class Comm_Batch : WebPage
         //Entity en = ens.GetNewEntity;
         //QueryObject qo = new QueryObject(ens);
         //qo = this.ToolBar1.GetnQueryObject(ens, en);
-
         this.Response.Redirect("Batch.aspx?EnsName=" + this.EnsName, true);
     }
 
@@ -172,7 +163,7 @@ public partial class Comm_Batch : WebPage
         int maxPageNum = 0;
         try
         {
-            maxPageNum = this.UCSys2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, "Batch.aspx?EnsName="+this.EnsName);
+            maxPageNum = this.UCSys2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, "Batch.aspx?EnsName=" + this.EnsName);
         }
         catch (Exception ex)
         {
@@ -185,7 +176,7 @@ public partial class Comm_Batch : WebPage
 
 
         if (maxPageNum > 1)
-            this.UCSys2.Add("翻页键:← → PageUp PageDown");
+            this.UCSys2.Add( this.ToE("PageKey","翻页键")+ ":← → PageUp PageDown");
 
         qo.DoQuery(en.PK, SystemConfig.PageSize, pageIdx);
         this.UCSys1.DataPanelDtlCheckBox(ens);
@@ -206,7 +197,7 @@ public partial class Comm_Batch : WebPage
             btn.Text = rm.Title;
             btn.Attributes["Class"] = "Btn";
             if (rm.Warning == null)
-                btn.Attributes["onclick"] = " return confirm('您确定要执行吗？');";
+                btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗？") + "');";
             else
                 btn.Attributes["onclick"] = " return confirm('" + rm.Warning + "');";
 
@@ -219,12 +210,13 @@ public partial class Comm_Batch : WebPage
         {
             Button btn = new Button();
             btn.ID = "Btn_Del";
-            btn.Text = "删除";
+            btn.Text = this.ToE("Del", "删除");
             btn.Attributes["Class"] = "Btn";
-            btn.Attributes["onclick"] = "return confirm('您确定要执行删除吗？');";
+            btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
             this.UCSys3.Add(btn);
             btn.Click += new EventHandler(btn_Click);
         }
+
         MoveToShowWay showWay = (MoveToShowWay)ens.GetEnsAppCfgByKeyInt("MoveToShowWay");
 
         // 执行移动.
@@ -244,9 +236,9 @@ public partial class Comm_Batch : WebPage
             {
                 Button btnM = new Button();
                 btnM.ID = "Btn_Move";
-                btnM.Text = "移动到";
+                btnM.Text = this.ToE("MoveTo", "移动到");
                 btnM.Attributes["Class"] = "Btn";
-                btnM.Attributes["onclick"] = "return confirm('您确实要移动吗？');";
+                btnM.Attributes["onclick"] = "return confirm('" + this.ToE("AYS", "您确实要移动吗？") + "');";
                 this.UCSys3.Add("&nbsp;&nbsp;");
                 this.UCSys3.Add(btnM);
 
@@ -257,14 +249,14 @@ public partial class Comm_Batch : WebPage
                 if (attr.IsEnum)
                 {
                     ddl.BindSysEnum(attr.Key);
-                    ddl.Items.Insert(0, new ListItem("选择=>" + attr.Desc, "all"));
+                    ddl.Items.Insert(0, new ListItem( this.ToE("Chose","选择")+ "=>" + attr.Desc, "all"));
                 }
                 else
                 {
                     EntitiesNoName ens1 = attr.HisFKEns as EntitiesNoName;
                     ens1.RetrieveAll();
                     ddl.BindEntities(ens1);
-                    ddl.Items.Insert(0, new ListItem("选择=>" + attr.Desc, "all"));
+                    ddl.Items.Insert(0, new ListItem(this.ToE("Chose", "选择") + "=>" + attr.Desc, "all"));
                 }
                 this.UCSys3.Add(ddl);
             }
@@ -278,7 +270,7 @@ public partial class Comm_Batch : WebPage
                     {
                         Button btn = new Button();
                         btn.ID = "Btn_Move_" + se.IntKey;
-                        btn.Text = "设置:" + se.Lab;
+                        btn.Text = this.ToE("Set", "设置") + ":" + se.Lab;
                         btn.Attributes["Class"] = "Btn";
                         btn.Attributes["onclick"] = "return confirm('您确实要执行设置[" + se.Lab + "]吗？');";
                         btn.Click += new EventHandler(btn_Move_Click);

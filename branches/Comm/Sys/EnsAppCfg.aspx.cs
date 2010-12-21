@@ -40,9 +40,9 @@ public partial class Comm_Sys_EnsAppCfg : WebPage
 
         this.UCSys1.AddTable("width='90%'");
         this.UCSys1.AddTR();
-        this.UCSys1.AddTDTitle("配置项");
-        this.UCSys1.AddTDTitle("内容");
-        this.UCSys1.AddTDTitle("信息");
+        this.UCSys1.AddTDTitle( this.ToE("Item", "配置项"));
+        this.UCSys1.AddTDTitle(this.ToE("Value","内容"));
+        this.UCSys1.AddTDTitle( this.ToE("Note","信息") );
         this.UCSys1.AddTREnd();
 
         Entity en1 = BP.DA.ClassFactory.GetEns(this.EnsName).GetNewEntity;
@@ -104,13 +104,13 @@ public partial class Comm_Sys_EnsAppCfg : WebPage
         this.UCSys1.AddTableEnd();
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = "保存";
+        btn.Text = this.ToE("Save", "保存");
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
-        btn.Text = "保存并关闭";
+        btn.Text = this.ToE("SaveAndClose", "保存并关闭");
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.Add(btn);
     }
@@ -124,10 +124,17 @@ public partial class Comm_Sys_EnsAppCfg : WebPage
 
         this.UCSys1.AddTable();
         this.UCSys1.AddTR();
-        this.UCSys1.AddTDTitle("配置项");
-        this.UCSys1.AddTDTitle("内容");
-        this.UCSys1.AddTDTitle("信息");
-        this.UCSys1.AddTDTitle("备注");
+
+        this.UCSys1.AddTR();
+        this.UCSys1.AddTDTitle(this.ToE("Item", "配置项"));
+        this.UCSys1.AddTDTitle(this.ToE("Value", "内容"));
+        this.UCSys1.AddTDTitle(this.ToE("Info", "信息"));
+        this.UCSys1.AddTDTitle(this.ToE("Note", "备注"));
+
+        //this.UCSys1.AddTDTitle("配置项");
+        //this.UCSys1.AddTDTitle("内容");
+        //this.UCSys1.AddTDTitle("信息");
+        //this.UCSys1.AddTDTitle("备注");
         this.UCSys1.AddTREnd();
 
         bool is1 = false;
@@ -187,22 +194,22 @@ public partial class Comm_Sys_EnsAppCfg : WebPage
         this.UCSys1.AddTableEnd();
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = "保存";
+        btn.Text = this.ToE("Save", "保存");
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
-        btn.Text = "保存并关闭";
+        btn.Text = this.ToE("SaveAndClose", "保存并关闭");
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.Add(btn);
     }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (BP.Web.WebUser.No == "admin")
-            this.UCSys1.AddCaptionLeftTX("<a href='?EnsName=" + this.EnsName + "'>基本设置</a> - <a href='?EnsName=" + this.EnsName + "&DoType=Adv'>高级设置</a> - <a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "' >导入导出</a>");
+            this.UCSys1.AddCaptionLeftTX("<a href='?EnsName=" + this.EnsName + "'>" + this.ToE("BaseSet", "基本设置") + "</a> - <a href='?EnsName=" + this.EnsName + "&DoType=Adv'>" + this.ToE("AdvSet", "高级设置") + "</a> - <a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "' >" + this.ToE("ExpImp", "导入导出") + "</a>");
         else
-            this.UCSys1.AddCaptionLeftTX("基本设置");
+            this.UCSys1.AddCaptionLeftTX(   this.ToE("BaseSet", "基本设置") );
 
         switch (this.DoType)
         {

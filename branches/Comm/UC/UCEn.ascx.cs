@@ -1768,6 +1768,7 @@ namespace BP.Web.Comm.UC
 
         public Entity GetEnData(Entity en)
         {
+            string key = "";
             try
             {
                 foreach (Attr attr in en.EnMap.Attrs)
@@ -1777,6 +1778,12 @@ namespace BP.Web.Comm.UC
 
                     if (attr.Key == "MyNum")
                         continue;
+
+                    if (attr.UIVisible == false)
+                        continue;
+
+
+                    key = attr.Key;
 
                     switch (attr.UIContralType)
                     {
@@ -1831,7 +1838,7 @@ namespace BP.Web.Comm.UC
             }
             catch (Exception ex)
             {
-                throw new Exception("GetEnData error :" + ex.Message);
+                throw new Exception("GetEnData error :" + ex.Message +" key = "+key);
             }
             return en;
         }

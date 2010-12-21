@@ -117,7 +117,7 @@ namespace BP.Web.Comm.UI
 
                 this.BPToolBar1.AddLab("Lab_desc", "获取或设置默认值");
                 this.BPToolBar1.AddSpt("spt14");
-                this.BPToolBar1.AddBtn(NamesOfBtn.Delete, "删除");
+                this.BPToolBar1.AddBtn(NamesOfBtn.Delete, this.ToE("Del", "删除") );
                 this.BPToolBar1.AddSpt("spt1");
 
                 this.BPToolBar1.AddToolbarCheckBtnGroup("ToolbarCheckBtnGroup1");
@@ -144,7 +144,7 @@ namespace BP.Web.Comm.UI
                 }
                 else
                 {
-                    this.BPToolBar2.AddBtn("Btn_SaveToMyDefaultValues", "保存");
+                    this.BPToolBar2.AddBtn("Btn_SaveToMyDefaultValues", this.ToE("Save", "保存"));
                 }
 
                 this.BPToolBar2.AddSpt("spt1");
@@ -373,10 +373,11 @@ namespace BP.Web.Comm.UI
             try
             {
                 ToolbarBtn btn = (ToolbarBtn)sender;
+
                 DefVal en = new DefVal();
                 QueryObject qo = new QueryObject(en);
 
-                BP.En.Entity enDA = DA.ClassFactory.GetEn(this.EnsName);
+               // BP.En.Entity enDA = DA.ClassFactory.GetEn(this.EnsName);
 
                 switch (btn.ID)
                 {
@@ -389,16 +390,12 @@ namespace BP.Web.Comm.UI
 
                         en.FK_Emp = WebUser.No;
                         en.EnsName = this.EnsName;
-                        en.EnsDesc = enDA.EnDesc;
 
+                      //  en.EnsDesc = enDA.EnDesc;
                         en.AttrKey = this.AttrKey;
-                        en.AttrDesc = enDA.EnMap.GetAttrByKey(this.AttrKey).Desc;
+                      //  en.AttrDesc = enDA.EnMap.GetAttrByKey(this.AttrKey).Desc;
 
                         en.Val = this.AttrKeyValue;
-
-
-
-                       
 
                         qo.AddWhere(DefValAttr.FK_Emp, en.FK_Emp);
                         qo.addAnd();

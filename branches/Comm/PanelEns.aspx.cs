@@ -193,11 +193,12 @@ namespace BP.Web.Comm
             //this.WebMenu1.DataPanel(this.HisEns, uac);
             //this.WebMenu1.Visible = true;
 
-
             if (this.Request.QueryString["PageIdx"] == null)
                 this.PageIdx = 1;
             else
                 this.PageIdx = int.Parse(this.Request.QueryString["PageIdx"]);
+
+          
 
             try
             {
@@ -208,7 +209,7 @@ namespace BP.Web.Comm
                 if (uac.IsView == false)
                     throw new Exception("@对不起，您没有查看的权限！");
 
-                #region 设置toolbar2 的 contral  设置查寻功能
+                #region 设置toolbar2 的 contral  设置查寻功能.
 
                 this.ToolBar1.InitByMapV2(map, 1);
                 //if (map.IsShowSearchKey)
@@ -217,7 +218,7 @@ namespace BP.Web.Comm
                 //this.ToolBar1.AddLab("Lab_Result","记录个数[0]");
 
                 this.ToolBar1.AddSpt("spt2");
-                // this.ToolBar1.AddBtn(NamesOfBtn.Excel);
+                this.ToolBar1.AddBtn(NamesOfBtn.Excel);
                 // this.ToolBar1.AddBtn(NamesOfBtn.Excel_S);
 
                 bool isEdit = true;
@@ -229,9 +230,9 @@ namespace BP.Web.Comm
 
                 if (isEdit)
                     this.ToolBar1.AddLab("inse",
-          "<input type=button id='ToolBar1$Btn_New' name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='新建(N)' class=Btn />");
+          "<input type=button id='ToolBar1$Btn_New' name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='" + this.ToE("New", "新建(N)") + "' class=Btn />");
 
-                this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='设置(P)' class=Btn />");
+                this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置(P)") + "' class=Btn />");
                 #endregion
 
                 #region 设置选择的 默认值
@@ -243,6 +244,11 @@ namespace BP.Web.Comm
                         continue;
                     else
                         this.ToolBar1.GetDDLByKey("DDL_" + attr.Key).SetSelectItem(mykey, attr.HisAttr);
+                }
+
+                if (this.Request.QueryString["Key"] != null)
+                {
+                    this.ToolBar1.GetTBByID("TB_Key").Text = this.Request.QueryString["Key"];
                 }
                 #endregion
 
@@ -260,6 +266,8 @@ namespace BP.Web.Comm
             }
 
             this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            this.ToolBar1.GetBtnByID("Btn_Excel").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+
             this.Label1.Text = this.GenerCaption(this.HisEn.EnMap.EnDesc + "" + this.HisEn.EnMap.TitleExt);
 
             //this.GenerLabel(this.Label1, this.HisEn);
@@ -452,13 +460,22 @@ namespace BP.Web.Comm
                         QueryObject qo = new QueryObject(ens);
                         qo = this.ToolBar1.GetnQueryObject(ens, en);
                         qo.DoQuery();
+                        string file = "";
                         try
                         {
-                            this.ExportDGToExcel(ens.ToDataTableDesc(), this.HisEn.EnDesc);
+                            //this.ExportDGToExcel(ens.ToDataTableDescField(), this.HisEn.EnDesc);
+                            file =this.ExportDGToExcel(ens.ToDataTableDesc(), this.HisEn.EnDesc);
                         }
                         catch (Exception ex)
                         {
-                            throw new Exception("数据没有正确导出可能的原因之一是:系统管理员没正确的安装Excel组件，请通知他，参考安装说明书解决。@系统异常信息：" + ex.Message);
+                            try
+                            {
+                              file=  this.ExportDGToExcel(ens.ToDataTableDescField(), this.HisEn.EnDesc);
+                            }
+                            catch
+                            {
+                                throw new Exception("数据没有正确导出可能的原因之一是:系统管理员没正确的安装Excel组件，请通知他，参考安装说明书解决。@系统异常信息：" + ex.Message);
+                            }
                         }
                         this.SetDGData();
                         return;

@@ -211,7 +211,7 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
 
         AttrOfOneVSM ensattr = this.AttrOfOneVSM;
         //this.Label1.Text = ensattr.Desc ;
-        this.ToolBar1.AddLab("lab_desc", "分组:");
+        this.ToolBar1.AddLab("lab_desc",  this.ToE("Group", "分组") +":"  );
         DropDownList ddl = new DropDownList();
         ddl.ID = "DDL_Group";
         ddl.AutoPostBack = true;
@@ -269,8 +269,8 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
         UAC uac = ensattr.EnsOfMM.GetNewEntity.HisUAC;
         if (uac.IsInsert == true)
         {
-            this.ToolBar1.AddBtn("Btn_Save", "保存");
-            this.ToolBar1.AddBtn("Btn_SaveAndClose", "保存并关闭");
+            this.ToolBar1.AddBtn("Btn_Save", this.ToE("Save", "保存"));
+            this.ToolBar1.AddBtn("Btn_SaveAndClose", this.ToE("SaveAndClose", "保存并关闭") );
         }
         else
         {
@@ -293,12 +293,13 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
 
         CheckBox cb = new CheckBox();
         cb.ID = "checkedAll";
+
      //   cb.Attributes["name"] = "checkedAll";
         cb.Attributes["onclick"] = "SelectAll()";
-        cb.Text = "选择全部";
+        cb.Text = this.ToE("SelectAll", "选择全部");
 
         this.ToolBar1.Add(cb); // ("<input type=checkbox values='选择全部' text='选择全部'  name=checkedAll onclick='SelectAll()' >选择全部");
-        this.ToolBar1.AddBtn("Btn_Close", "关闭");
+        this.ToolBar1.AddBtn("Btn_Close", this.ToE("Close", "关闭") );
         this.DDL_Group.SelectedIndexChanged += new EventHandler(DDL_Group_SelectedIndexChanged);
 
         #region 增加按钮事件

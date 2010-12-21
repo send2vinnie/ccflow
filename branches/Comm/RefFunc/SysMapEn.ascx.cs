@@ -245,7 +245,6 @@ public partial class Comm_RefFunc_SysMapEn : BP.Web.UC.UCBase3
             foreach (MapDtl dtl in dtls)
             {
                 js += "\t\n window.setInterval(\"ReinitIframe('" + dtl.No + "')\", 200);";
-                break;
             }
             js += "\t\n</script>";
             this.Add(js);
@@ -459,7 +458,14 @@ public partial class Comm_RefFunc_SysMapEn : BP.Web.UC.UCBase3
                                     else
                                     {
                                         tb.ShowType = TBType.TB;
-                                        tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                        try
+                                        {
+                                            tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                        }
+                                        catch
+                                        {
+                                            tb.Text =  attr.KeyOfEn;
+                                        }
                                         this.AddTD("colspan=" + colspanOfCtl, tb);
                                     }
                                     break;
@@ -593,13 +599,11 @@ public partial class Comm_RefFunc_SysMapEn : BP.Web.UC.UCBase3
             }
             this.AddTableEnd();
 
-
             #region 处理iFrom 的自适应的问题。
             string js = "\t\n<script type='text/javascript' >";
             foreach (MapDtl dtl in dtls)
             {
                 js += "\t\n window.setInterval(\"ReinitIframe('" + dtl.No + "')\", 200);";
-                break;
             }
             js += "\t\n</script>";
             this.Add(js);
@@ -645,10 +649,10 @@ public partial class Comm_RefFunc_SysMapEn : BP.Web.UC.UCBase3
                 }
                 dtl.IsUse = true;
                 rowIdx++;
-               // myidx++;
+                // myidx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                this.Add("<TD colspan=3 ID='TD" + dtl.No + "' height='50px'  >");
-                string src = this.Request.ApplicationPath+"/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal;
+                this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px'>");
+                string src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal;
                 this.Add("<iframe ID='F" + dtl.No + "' frameborder=0 Onblur=\"SaveDtl('" + dtl.No + "');\" style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' height='10px' scrolling=no  /></iframe>");
                 this.AddTDEnd();
                 this.AddTREnd();

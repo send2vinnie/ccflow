@@ -10,6 +10,7 @@
     <script language="JavaScript" src="Style/JScript.js"></script>
     <script language="javascript">
     function RSize() {
+    
     if (document.body.scrollWidth > (window.screen.availWidth - 100)) {
         window.dialogWidth = (window.screen.availWidth - 100).toString() + "px"
     } else {

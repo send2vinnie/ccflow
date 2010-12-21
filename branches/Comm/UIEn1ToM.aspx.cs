@@ -224,7 +224,7 @@ namespace BP.Web.Comm.UI
 
             AttrOfOneVSM ensattr = this.AttrOfOneVSM;
             //this.Label1.Text = ensattr.Desc ;
-            this.ToolBar1.AddLab("lab_desc", "分组:");
+            this.ToolBar1.AddLab("lab_desc", this.ToE("Group", "分组") +":");
             DropDownList ddl = new DropDownList();
             ddl.ID = "DDL_Group";
             ddl.AutoPostBack = true;
@@ -282,11 +282,11 @@ namespace BP.Web.Comm.UI
             this.ToolBar1.AddSpt("spt");
             if (ensattr.EnsOfMM.GetNewEntity.HisUAC.IsInsert == true)
             {
-                this.ToolBar1.AddBtn("Btn_Save", "保存");
-                this.ToolBar1.AddBtn("Btn_SaveAndClose", "保存并关闭");
+                this.ToolBar1.AddBtn("Btn_Save", this.ToE("Save", "保存"));
+                this.ToolBar1.AddBtn("Btn_SaveAndClose", this.ToE("SaveAndClose", "保存并关闭"));
             }
 
-            this.ToolBar1.Add("<input type=checkbox values='选择全部' text='选择全部'  name=checkedAll onclick='SelectAll()' >选择全部");
+            this.ToolBar1.Add("<input type=checkbox value='" + this.ToE("SelectAll", "选择全部") + "' text='选择全部'  name=checkedAll onclick='SelectAll()' >");
 
             //checkedAll
 

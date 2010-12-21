@@ -293,9 +293,7 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
             this.UCEn1.IsReadonly = this.IsReadonly;
             this.UCEn1.IsShowDtl = true;
             this.UCEn1.HisEn = this.CurrEn;
-
             this.UCEn1.Bind(this.CurrEn, this.CurrEn.ToString(), this.IsReadonly, true);
-
         }
         catch (Exception ex)
         {
