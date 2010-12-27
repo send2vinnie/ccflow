@@ -458,7 +458,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle("标题");
-        this.Pub1.AddTDTitle("发起人");
+        this.Pub1.AddTDTitle("发起");
         this.Pub1.AddTDTitle("发起日期");
         this.Pub1.AddTDTitle("发起人部门");
 
@@ -621,7 +621,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
                 if (WebUser.IsWap == false)
                 {
-                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/" + fl.No + ".gif','sd');\"  >" + open + "</a>");
+                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('../DataUser/FlowDesc/" + fl.No + ".gif','sd');\"  >" + open + "</a>");
                     //   this.Pub1.AddTD(fl.Note);
                 }
 

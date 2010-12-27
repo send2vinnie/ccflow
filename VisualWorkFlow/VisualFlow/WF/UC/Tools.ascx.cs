@@ -311,7 +311,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         if (f.HasFile == false)
             return;
 
-        f.SaveAs(BP.SystemConfig.PathOfWebApp + "/WF/Style/Title.gif");
+        f.SaveAs(BP.SystemConfig.PathOfWebApp + "/DataUser/Title.gif");
 
         this.Response.Redirect(this.Request.RawUrl, true);
 

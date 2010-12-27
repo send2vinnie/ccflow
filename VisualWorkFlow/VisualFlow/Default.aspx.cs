@@ -122,7 +122,7 @@ public partial class _Default : System.Web.UI.Page
       //      this.Ucsys1.AddTD(fl.FK_FlowSortText);
       //      // this.Ucsys1.AddTD("<a href='./WF/Admin/TestFlow.aspx?FK_Flow=" + fl.No + "'>" + fl.Name + "</a>");
       //      this.Ucsys1.AddTD("<a href='./WF/Admin/TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New'>" + fl.Name + "</a>");
-      //      this.Ucsys1.AddTD("<a href='./Data/FlowDesc/" + fl.No + ".gif' target=_blank>流程图</a>");
+      //      this.Ucsys1.AddTD("<a href='./DataUser/FlowDesc/" + fl.No + ".gif' target=_blank>流程图</a>");
       //      this.Ucsys1.AddTREnd();
       //  }
 

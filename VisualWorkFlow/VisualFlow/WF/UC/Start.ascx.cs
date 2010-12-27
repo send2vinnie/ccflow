@@ -124,7 +124,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
 
             this.AddTD("<a href='MyFlow.aspx?FK_Flow=" + fl.No + "' >" + fl.Name + "</a>");
 
-            this.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/" + fl.No + ".gif','sd');\"  >打开</a>");
+            this.AddTD("<a href=\"javascript:WinOpen('../DataUser/FlowDesc/" + fl.No + ".gif','sd');\"  >打开</a>");
             this.AddTD(fl.Note);
             this.AddTREnd();
         }

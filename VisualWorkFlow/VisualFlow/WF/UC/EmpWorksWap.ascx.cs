@@ -39,7 +39,7 @@ public partial class WF_UC_EmpWorksWap : BP.Web.UC.UCBase3
         this.Page.Title = "Work on the way.";
 
         int colspan = 8;
-        this.AddTable("width='90%' align=center");
+        this.AddTable("width='100%' align=center");
         this.AddTR();
         this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.AddTREnd();
@@ -48,17 +48,17 @@ public partial class WF_UC_EmpWorksWap : BP.Web.UC.UCBase3
         if (WebUser.IsWap)
             this.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
         else
-        this.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
-            
+            this.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
+
         this.AddTREnd();
-        
+
 
         #region  输出流程类别.
         this.AddTR();
         this.AddTDTitle("ID");
-       // this.AddTDTitle(this.ToE("NodeName", "节点"));
+        // this.AddTDTitle(this.ToE("NodeName", "节点"));
         this.AddTDTitle(this.ToE("Title", "标题"));
-        this.AddTDTitle(this.ToE("Starter", "发起人"));
+        this.AddTDTitle(this.ToE("Starter", "发起"));
         this.AddTDTitle(this.ToE("RDT", "发起日期"));
 
         this.AddTDTitle(this.ToE("ADT", "接受日期"));
@@ -88,9 +88,9 @@ public partial class WF_UC_EmpWorksWap : BP.Web.UC.UCBase3
             i++;
             this.AddTD(i);
 
-           // this.AddTD(dr["NodeName"].ToString());
+            // this.AddTD(dr["NodeName"].ToString());
 
-            this.AddTD("<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString()+"</a>"+dr["NodeName"].ToString());
+            this.AddTD("<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString() + "</a>" + dr["NodeName"].ToString());
             this.AddTD(dr["Starter"].ToString());
             this.AddTD(dr["RDT"].ToString());
             this.AddTD(dr["ADT"].ToString());

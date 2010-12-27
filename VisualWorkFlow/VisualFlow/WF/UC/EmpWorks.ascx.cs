@@ -101,18 +101,17 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         //    this.Pub1.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
         //this.Pub1.AddTREnd();
 
-        this.Pub1.AddTable("width='80%'");
+        this.Pub1.AddTable("width='100%'");
         this.Pub1.AddTR();
             this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
         this.Pub1.AddTREnd();
 
-        
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("NodeName", "节点"));
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
-        this.Pub1.AddTDTitle(this.ToE("Starter", "发起人"));
+        this.Pub1.AddTDTitle(this.ToE("Starter", "发起"));
         this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
         this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
         this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));

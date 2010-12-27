@@ -244,7 +244,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("NodeName", "节点"));
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
-        this.Pub1.AddTDTitle(this.ToE("Starter", "发起人"));
+        this.Pub1.AddTDTitle(this.ToE("Starter", "发起"));
         this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
         this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
         this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));

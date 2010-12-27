@@ -70,7 +70,7 @@ namespace BP.Web.WF
 				}
 
 				//this.AddTD("<a href=\"javascript:WinOpen('MyFlow.aspx?FK_Flow="+nd.FK_Flow+"&IsClose=1',  'hsd');\"  >"+nd.FlowName+"</a>");
-				this.AddTD("<a href=\"javascript:WinOpen('../Data/FlowDesc/"+nd.FK_Flow+".gif','sd');\"  >"+this.ToE("Open","打开")+"</a>");
+				this.AddTD("<a href=\"javascript:WinOpen('../DataUser/FlowDesc/"+nd.FK_Flow+".gif','sd');\"  >"+this.ToE("Open","打开")+"</a>");
 
 				this.AddTD(nd.HisFlow.Note );
                 this.AddTD("  onclick=\"window.open( 'UnComplateFlow.aspx?FK_Flow=" + nd.FK_Flow + "&FK_Emp=" + Web.WebUser.No + "&IsClose=1' , 'f" + nd.NodeID + "',  'width=550,top=200,left=300,height=300,scrollbars=yes,resizable=no,toolbar=false,location=false')\"  ", "<font color=blue>" + this.ToE("FlowSearch", "工作查询") + "</font>");
@@ -142,7 +142,7 @@ namespace BP.Web.WF
 					this.Text+="</TABLE>";
 					break;
 				case FlowShowType.WorkImages:
-					this.Text+="<img src='../Data/FlowDesc/"+flow+".gif' border=1 />";
+					this.Text+="<img src='../DataUser/FlowDesc/"+flow+".gif' border=1 />";
 					break;
 				case FlowShowType.WorkNew:
 					break;
@@ -273,7 +273,7 @@ namespace BP.Web.WF
 					this.Text+=" <TD class='MyWorkTD' nowrap >&nbsp;</TD>";
 					this.Text+=" <TD class='MyWorkTD' nowrap >"+fl.Name+"</TD>";
 					//this.Text+=" <TD class='MyWorkTD' nowrap >&nbsp;</TD>";
-					//this.Text+=" <TD class='MyWorkTD' nowrap ><a href=\"javascript:WinOpen( 'FlowSV2.aspx?FK_Flow="+fl.No+"' )\" >新建</a>  <a href=\"../Data/FlowDesc/"+fl.No+".gif\" target='flowP' >流程图</a> </TD>";
+					//this.Text+=" <TD class='MyWorkTD' nowrap ><a href=\"javascript:WinOpen( 'FlowSV2.aspx?FK_Flow="+fl.No+"' )\" >新建</a>  <a href=\"../DataUser/FlowDesc/"+fl.No+".gif\" target='flowP' >流程图</a> </TD>";
 					this.Text+=" <TD class='MyWorkTD' nowrap ><a href=\"javascript:WinOpen( 'FlowSV2.aspx?FK_Flow="+fl.No+"' )\" >新建</a>  </TD>";
 
 					this.Text+="</TR>";
