@@ -107,7 +107,7 @@ public partial class WF_MapDef_WFRpt : WebPage
             this.Pub1.AddB("-<a href=\"javascript:DoReset('" + this.MyPK + "')\">" + this.ToE("ResetFields","重设字段") + "</a>");
 
             /* 说明是主表：判断它是否有明细表。*/
-            string sql = "SELECT COUNT(*) FROM dbo.Sys_MapDtl WHERE No LIKE 'ND" + int.Parse(this.FK_Flow) + "%'";
+            string sql = "SELECT COUNT(*) FROM Sys_MapDtl WHERE No LIKE 'ND" + int.Parse(this.FK_Flow) + "%'";
             if (BP.DA.DBAccess.RunSQLReturnValInt(sql) >= 1)
             {
                 this.Pub1.AddB("-<a href=\"javascript:AddDtl('" + md.No + "')\">插入明细表</a>");

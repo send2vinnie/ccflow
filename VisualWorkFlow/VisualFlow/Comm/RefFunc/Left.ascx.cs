@@ -140,12 +140,12 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
 
                 try
                 {
-                    sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
+                    sql = "SELECT COUNT(*) as NUM FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
                     i = DBAccess.RunSQLReturnValInt(sql);
                 }
                 catch
                 {
-                    sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal;
+                    sql = "SELECT COUNT(*) as NUM FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal;
                     i = DBAccess.RunSQLReturnValInt(sql);
                 }
 

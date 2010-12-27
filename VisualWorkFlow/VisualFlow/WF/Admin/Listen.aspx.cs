@@ -47,6 +47,7 @@ public partial class WF_Admin_listen : WebPage
         }
 
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
+
         this.Pub1.AddTable();
         this.Pub1.AddCaptionLeftTX("设置收听：" + nd.Name + "- <a href='Listen.aspx?FK_Node=" + this.FK_Node + "' >返回列表</a>");
 
@@ -112,7 +113,7 @@ public partial class WF_Admin_listen : WebPage
         //this.Pub1.AddTDEnd();
         //this.Pub1.AddTREnd();
 
-        this.Pub1.AddB("特别说明:");
+        this.Pub1.AddB( this.ToE("Note", "特别说明:") );
         this.Pub1.Add("消息以什么样的渠道(短信，邮件)发送出去，是以用户设置的 “信息提示”来确定的。");
         this.Pub1.AddTDEnd();
         this.Pub1.AddTREnd();
@@ -207,23 +208,21 @@ public partial class WF_Admin_listen : WebPage
             return;
         }
 
-        this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX("设置收听：" + nd.Name + "- <a href='Listen.aspx?FK_Node="+this.FK_Node+"&DoType=New' >新建</a>");
+        this.Pub1.AddTable("width=80%");
+        this.Pub1.AddCaptionLeftTX("设置收听：" + nd.Name + "- <a href='Listen.aspx?FK_Node=" + this.FK_Node + "&DoType=New' >" + this.ToE("New", "新建") + "</a>");
         this.Pub1.AddTR();
-        //this.Pub1.AddTDTitle("收听方式");
-        this.Pub1.AddTDTitle("收听节点");
-        this.Pub1.AddTDTitle("标题");
-        this.Pub1.AddTDTitle("内容");
-        this.Pub1.AddTDTitle("操作");
+        this.Pub1.AddTDTitle(this.ToE("CurrNode", "当前节点"));
+        this.Pub1.AddTDTitle(this.ToE("CurrNode", "收听节点"));
+        this.Pub1.AddTDTitle(this.ToE("Oper", "操作"));
         this.Pub1.AddTREnd();
         foreach (Listen en in ens)
         {
             this.Pub1.AddTR();
-          //  this.Pub1.AddTD(en.AlertWayT);
+            this.Pub1.AddTD(nd.Name);
             this.Pub1.AddTD(en.Nodes);
-            this.Pub1.AddTD(en.Title);
-            this.Pub1.AddTD(en.Doc);
-            this.Pub1.AddTD("<a href='Listen.aspx?FK_Node="+this.FK_Node+"&DoType=New&RefOID="+en.OID+"'>删除-编辑</a>");
+            // this.Pub1.AddTD(en.Title);
+            //this.Pub1.AddTD(en.Doc);
+            this.Pub1.AddTD("<a href='Listen.aspx?FK_Node=" + this.FK_Node + "&DoType=New&RefOID=" + en.OID + "'>" + this.ToE("Edit", "删除-编辑") + "</a>");
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();

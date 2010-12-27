@@ -129,7 +129,9 @@ namespace BP.Web.WF
                             return;
                         BP.Port.Emp emp155 = new BP.Port.Emp(wl.FK_Emp);
                         Web.WebUser.SignInOfGener(emp155, true);
-                        string u="MyFlow.aspx?FK_Flow=" + wl.FK_Flow + "&WorkID=" + wl.WorkID ;
+                        string u="MyFlow.aspx?FK_Flow=" + wl.FK_Flow + "&WorkID=" + wl.WorkID;
+                        if (this.Request.QueryString["IsWap"] != null)
+                            u = "./../WAP/" + u;
                         this.Response.Write("<script> window.location.href='" + u + "'</script> *^_^*  <br><br>正在进入系统请稍后，如果长时间没有反应，请<a href='" + u + "'>点这里进入。</a>");
                         return;
                     case "ExitAuth":

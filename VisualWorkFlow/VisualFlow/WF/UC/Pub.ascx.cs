@@ -83,7 +83,7 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
                     this.AddTD("align=right class=TD", wks.GetSumDecimalByKey(attr.Key));
                     break;
                 case DataType.AppMoney:
-                    this.AddTD("align=right class=TD",wks.GetSumDecimalByKey(attr.Key).ToString("0.00") );
+                    this.AddTD("align=right class=TD", wks.GetSumDecimalByKey(attr.Key).ToString("0.00"));
                     break;
                 default:
                     this.AddTD();
@@ -349,11 +349,11 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
                 int i = 0;
                 try
                 {
-                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'");
+                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM  as NUM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'");
                 }
                 catch
                 {
-                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal);
+                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM  as NUM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal);
                 }
 
                 if (i == 0)

@@ -279,7 +279,7 @@ namespace BP.Web.WF
 					this.Text+="</TR>";
 
                     ps.Clear();
-                    ps.SQL = "SELECT FK_Node, COUNT(*) FROM WF_GenerWorkerlist WHERE FK_Emp=:FK_Emp AND FK_Node in (SELECT NodeiD FROM wf_node WHERE FK_Flow=:FK_Flow ) GROUP BY FK_Node";
+                    ps.SQL = "SELECT FK_Node, COUNT(*) FROM WF_GenerWorkerlist WHERE FK_Emp=:FK_Emp AND FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow=:FK_Flow ) GROUP BY FK_Node";
                     ps.Add("FK_Emp",WebUser.No);
                     ps.Add("FK_Flow", fl.No);
 

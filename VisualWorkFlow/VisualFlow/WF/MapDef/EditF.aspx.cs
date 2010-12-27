@@ -421,7 +421,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
 
         #region 是否是数字签名字段
-        if (mapAttr.UIIsEnable == false && mapAttr.MyDataType == DataType.AppString)
+        if (mapAttr.UIIsEnable == false && mapAttr.MyDataType == DataType.AppString && mapAttr.LGType== FieldTypeS.Normal)
         {
             this.Pub1.AddTRTX();
             this.Pub1.AddTD();
@@ -431,6 +431,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             cb.Checked = mapAttr.IsSigan;
 
             this.Pub1.AddTD(cb);
+            this.Pub1.AddTD("");
             this.Pub1.AddTD("");
             this.Pub1.AddTREnd();
         }

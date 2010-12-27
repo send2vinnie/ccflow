@@ -106,6 +106,22 @@
    JP="Specify a particular colleague treatment"
    RU="Specify a particular colleague treatment" />
 
+  <Item No="WN25" CH="此信息无法发送给：{0}，因为他关闭了信息提醒，给他打电话：{1}。"
+ EN="This information can not be sent to: {0}, as he closed the message reminders to call him: {1}."
+ JP="This information can not be sent to: {0}, as he closed the message reminders to call him: {1}."
+ RU="This information can not be sent to: {0}, as he closed the message reminders to call him: {1}." />
+
+
+  <Item No="WN26" CH="@您的操作已经通过{0}的方式发送给：{1}。"
+ EN="@Your operation has passed {0} sent to {1}."
+ JP="@Your operation has passed {0} sent to {1}."
+ RU="@Your operation has passed {0} sent to {1}." />
+
+  <Item No="WN27" CH="流程:{0}.工作:{1},发送人{2},需您处理"
+ EN="Process: {0}. work: {1} {2} to send people, need you to deal with."
+ JP="Process: {0}. work: {1} {2} to send people, need you to deal with."
+ RU="Process: {0}. work: {1} {2} to send people, need you to deal with." />
+
 
   <!-- 以下是工作发送时提示的各种信息。 -->
   <Item No="StartNextNodeErr" CH="启动下一下节点出错" EN="Error start next node" JP="次のノードをクリックしてエラーを開始する" RU="Нажмите кнопку, чтобы начать следующий узел ошибке" />

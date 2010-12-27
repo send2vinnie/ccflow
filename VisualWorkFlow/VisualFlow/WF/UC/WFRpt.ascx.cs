@@ -522,7 +522,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             foreach (AttrOfOneVSM vsM in oneVsM)
             {
                 string url = "UIEn1ToM.aspx?EnsName=" + en.ToString() + "&AttrKey=" + vsM.EnsOfMM.ToString() + keys;
-                string sql = "SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
+                string sql = "SELECT COUNT(*)  as NUM FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'";
                 int i = DBAccess.RunSQLReturnValInt(sql);
 
                 if (i == 0)

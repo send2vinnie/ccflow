@@ -562,7 +562,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
 
         }
 
-        string sql = "UPDATE  WF_Cond SET ConnJudgeWay=" + (int)cond.HisConnJudgeWay + ", DataFrom=" + (int)ConnDataFrom.Form + " WHERE NodeID=" + cond.NodeID + "  AND FK_Node=" + cond.FK_Node + " AND ToNodeID=" + this.ToNodeID;
+        string sql = "UPDATE WF_Cond SET ConnJudgeWay=" + (int)cond.HisConnJudgeWay + ", DataFrom=" + (int)ConnDataFrom.Form + " WHERE NodeID=" + cond.NodeID + "  AND FK_Node=" + cond.FK_Node + " AND ToNodeID=" + this.ToNodeID;
         switch (this.HisCondType)
         {
             case CondType.Flow:

@@ -2433,7 +2433,7 @@ namespace BP.Web.Comm.UC
         {
             this.EnableViewState = true;
             this.Controls.Clear();
-            this.Add("<TABLE class='Table' cellSpacing='1' cellPadding='1'  border='1'   >");
+            this.Add("<TABLE class='Table' cellSpacing='1' cellPadding='1'  border='1' width='80%' >");
 
             Attr attr = ens.GetNewEntity.EnMap.GetAttrByKey(groupKey);
             if (attr.MyFieldType == FieldType.Enum || attr.MyFieldType == FieldType.PKEnum) // 检查是否是 enum 类型。
@@ -2570,7 +2570,7 @@ namespace BP.Web.Comm.UC
         public void UIEn1ToM_OneLine(Entities ens, string showVal, string showText, Entities selectedEns, string selecteVal)
         {
             this.Controls.Clear();
-            this.AddTable();  
+            this.AddTable("width='70%'");  
             bool is1 = false;
             foreach (Entity en in ens)
             {

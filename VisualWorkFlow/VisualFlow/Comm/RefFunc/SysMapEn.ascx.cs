@@ -307,6 +307,7 @@ public partial class Comm_RefFunc_SysMapEn : BP.Web.UC.UCBase3
             MapAttrs mattrs = new MapAttrs(enName);
             gfs = new GroupFields(enName);
             dtls = new MapDtls(enName);
+
             this.Add("<table class=TableFrom id=tabForm width='600px' >");
             foreach (GroupField gf in gfs)
             {
@@ -481,7 +482,7 @@ public partial class Comm_RefFunc_SysMapEn : BP.Web.UC.UCBase3
                                 case BP.DA.DataType.AppDateTime:
                                     this.AddTDDesc(attr.Name);
                                     tb.ShowType = TBType.DateTime;
-                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    tb.Text = en.GetValStringByKey(attr.KeyOfEn);
                                     if (attr.UIIsEnable)
                                         tb.Attributes["onfocus"] = "CalendarHM();";
 
@@ -678,11 +679,11 @@ public partial class Comm_RefFunc_SysMapEn : BP.Web.UC.UCBase3
                     {
                         try
                         {
-                            i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'");
+                            i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*)  as NUM FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'");
                         }
                         catch
                         {
-                            i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal );
+                            i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*)  as NUM FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal);
                         }
                     }
                     catch (Exception ex)
@@ -1775,11 +1776,11 @@ public partial class Comm_RefFunc_SysMapEn : BP.Web.UC.UCBase3
                     int i = 0;
                     try
                     {
-                          i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'");
+                        i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*)  as NUM FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "='" + en.PKVal + "'");
                     }
                     catch
                     {
-                        i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal );
+                        i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*)  as NUM FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal);
                     }
 
                     if (i == 0)
