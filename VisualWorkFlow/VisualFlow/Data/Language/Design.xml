@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <!-- 设计器 -->
-  <Item No="CloseCurrWindows" B5=""  CH="关闭当前窗口" RU="Закрыть текущее окно" EN="Close current window" JP="現在のウィンドウを閉じる" />
+  <Item No="CloseCurrWindows" B5=""  CH="关闭当前窗口" RU="Закрыть текущее окно" EN="Close current window" JP="現在のウィンドウを閉じる"   UG=""  />
   <Item No="CloseAllWindows" CH="关闭所有窗口" RU="Закройте все окна" EN="Close all windows" JP="すべてのウィンドウを閉じる" />
   <Item No="ZXPP" CH="纵向平铺窗口" RU="Черепица окна по вертикали" EN="Tile windows vertically" JP="タイル窓垂直" />
   <Item No="HXPP" CH="横向平铺窗口" RU="Черепица окна по горизонтали" EN="Tile windows horizontally" JP="タイル張りのウィンドウを水平方向" />
