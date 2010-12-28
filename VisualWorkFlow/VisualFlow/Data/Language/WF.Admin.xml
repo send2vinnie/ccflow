@@ -5,7 +5,7 @@
   <Item No="TestTitle" B5="感谢您选择驰骋工作流程引擎-流程设计与测试界面" CH="感谢您选择驰骋工作流程引擎-流程设计与测试界面"
         EN="Thank you for choosing Chicheng Workflow Engine - Workflow design and testing interface" 
         JP="Thank you for choosing ride workflow engine - process design and test interface"  
-        RU="Thank you for choosing ride workflow engine - process design and test interface" />
+        RU="Thank you for choosing ride workflow engine - process design and test interface"   UG="" />
   <Item No="PortData" B5="组织结构维护" CH="组织结构维护" EN="Organization Maintenance" JP="Maintenance Organization"  RU="Maintenance Organization" />
   <Item No="Tools" B5="系统工具" CH="系统工具" EN="Tools" JP="Tools"  RU="Tools" />
   <Item No="FlowTest" B5="流程测试" CH="流程测试" EN="FlowTest" JP="Flow Testing"  RU="FlowTest" />
