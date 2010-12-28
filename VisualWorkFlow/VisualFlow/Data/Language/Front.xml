@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <!-- 设计器 -->
-  <Item No="MySts" CH="我的岗位" B5=""  RU="Моя должностей" EN="My Position" JP="自分の投稿&#xD;&#xA;" />
+  <Item No="MySts" CH="我的岗位" B5=""  RU="Моя должностей" EN="My Position" JP="自分の投稿&#xD;&#xA;"  UG=""  />
   <Item No="MyBill" CH="我的单据" RU="Мои документы" EN="My documents" JP="マイ楽器" />
   <Item No="MyDepts" CH="我的部门" RU="Мой отдел" EN="My departments" JP="私の部門" />
   <Item No="WorkWarning" CH="工作预警" RU="Работа систем раннего предупреждения" EN="Early warning of works" JP="早期警戒の活動" />

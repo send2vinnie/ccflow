@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <!-- 设计器 -->
-  <Item No="ChonseType" CH="选择类型" B5=""  RU="Выбор типа" EN="Select data type" JP="このタイプの選択" />
+  <Item No="ChonseType" CH="选择类型" B5=""  RU="Выбор типа" EN="Select data type" JP="このタイプの選択"   UG=""  />
   <Item No="GuideNewField" CH="增加新字段向导" RU="Добавить новое поле руководства" EN="Add New Field Wizard" JP="新しいフィールドをガイドに追加" />
   <Item No="ChoseType" CH="选择类型" RU="Выбор типа" EN="Select data type" JP="このタイプの選択" />
   <Item No="FType1" CH="普通" RU="Общее" EN="General" JP="一般的な" />

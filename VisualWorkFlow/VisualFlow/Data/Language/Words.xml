@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <!-- 设计器 -->
-  <Item No="QJ" B5=""  CH="期间" RU="В течение" EN="Duration" JP="〜の間" />
+  <Item No="QJ" B5=""  CH="期间" RU="В течение" EN="Duration" JP="〜の間"  UG=""  />
   <Item No="State" CH="状态" RU="Государство" EN="State" JP="状態" />
   <Item No="Desc" CH="描述" RU="Описание" EN="Description" JP="説明" />
   <Item No="Input" CH="输入" RU="Введите" EN="Input" JP="入力" />

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <!-- 设计器 -->
-  <Item No="EW1" B5="当前您没有工作要去处理"  CH="当前您没有工作要去处理" EN="You have no work to handle at this time" JP="〜の間" RU="В течение" />
+  <Item No="EW1" B5="当前您没有工作要去处理"  CH="当前您没有工作要去处理" EN="You have no work to handle at this time" JP="〜の間" RU="В течение"  UG=""  />
 
   <Item No="StartWork" B5="工作发起"  CH="工作发起" EN="Start work" JP="〜の間" RU="В течение" />
 

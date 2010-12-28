@@ -5,11 +5,11 @@
   <Item No="UIRowStyleGlo" CH="表格数据行风格(应用全局)"
         B5="表格数据行风格(应用全局)" 
         EN="Table row style (application global)" JP="Table row style (application global)"
-        RU="Presentation" />
+        RU="Presentation"   UG=""  />
   <Item No="IsEnableDouclickGlo" CH="是否启动双击打开(应用全局)" B5="Presentation"
         EN="Whether to activate the double click to open (application global)" 
         JP="Whether to activate the double click to open (application global)" 
-        RU="Whether to activate the double click to open (application global)" />
+        RU="Whether to activate the double click to open (application global)"  UG=""  />
   
   <Item No="IsEnableFocusField" CH="是否启用焦点字段" 
         B5="Whether to enable the focus field" 

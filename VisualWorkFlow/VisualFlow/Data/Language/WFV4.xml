@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
 
-  <Item No="IsCanRunBySelf" CH="可以独立启动否？" EN="Can be started independently" JP="Is Can Run Byself" RU="Report" />
+  <Item No="IsCanRunBySelf" CH="可以独立启动否？" EN="Can be started independently" JP="Is Can Run Byself" RU="Report"  UG=""  />
   <Item No="EndFlowRunSQL" CH="流程结束执行后执行的SQL" EN="Execute SQL when flow completes" JP="End Flow Run SQL" RU="Report" />
   <Item No="RunDoc" CH="运行内容" EN="Content" JP="Run Doc" RU="Report" />
   <Item No="NodeFrom" CH="节点从" EN="From Node" JP="Node From" RU="Report" />

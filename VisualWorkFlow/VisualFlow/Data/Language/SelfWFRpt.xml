@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <!-- 设计器 -->
-  <Item No="FieldsChose" B5=""  CH="为构造视图选择字段" RU="Посмотри на эту структуру на местах" EN="Choose fields to construct view" JP="その構造を表示オプションフィールド" />
+  <Item No="FieldsChose" B5=""  CH="为构造视图选择字段" RU="Посмотри на эту структуру на местах" EN="Choose fields to construct view" JP="その構造を表示オプションフィールド"  UG=""  />
   <Item No="SelfRpt" CH="自定义报表" RU="Пользовательские отчеты" EN="Custom reports" JP="カスタムレポート" />
   <Item No="Sort" CH="类别" RU="Категория" EN="Category" JP="カテゴリ" />
   <Item No="RptSort" CH="报表类别" RU="Заявление категории" EN="Report category" JP="声明のカテゴリー" />

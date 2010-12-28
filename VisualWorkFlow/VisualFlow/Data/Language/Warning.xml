@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <!-- 设计器 -->
-  <Item No="Flow" B5=""  CH="业务流程" RU="Бизнес-процесс" EN="Business Process" JP="ビジネスプロセス" />
+  <Item No="Flow" B5=""  CH="业务流程" RU="Бизнес-процесс" EN="Business Process" JP="ビジネスプロセス"  UG=""  />
   <Item No="StopOverNode" CH="停留节点" RU="Вершины пребывания" EN="Suspension Node" JP="ノード滞在&#xD;&#xA;" />
   <Item1 No="AcceptTime" CH="接受日期" RU="接受日期" EN="Accept Date" />
   <Item No="WarningDate" CH="预警日期" RU="Предупреждение Дата" EN="Warning Date" JP="警告日" />

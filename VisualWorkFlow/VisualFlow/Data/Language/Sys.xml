@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <!-- 设计器 -->
-  <Item No="NY" B5=""  CH="年月" RU="Годы" EN="Year/Month" JP="年月" />
+  <Item No="NY" B5=""  CH="年月" RU="Годы" EN="Year/Month" JP="年月"  UG=""  />
   <Item No="YF" CH="月份" RU="Месяц" EN="Month" JP="月" />
   <Item No="ND" CH="年度" RU="Ежегодный" EN="Year" JP="年間" />
   <Item No="NYR" CH="年月日" RU="Свидание" EN="Date" JP="日付&#xD;&#xA;" />

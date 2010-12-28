@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
-  <Item No="Ordinary" CH="正常" B5=""  RU="Нормальный" EN="Normal" JP="通常の" />
+  <Item No="Ordinary" CH="正常" B5=""  RU="Нормальный" EN="Normal" JP="通常の"  UG=""  />
   <Item No="Warning" CH="预警" RU="Предупреждение" EN="Warning" JP="警告" />
   <Item No="OutTime" CH="逾期" RU="Просроченные" EN="Overdue" JP="延滞" />
   <Item No="Oper" CH="操作" RU="Операция" EN="Operation" JP="操作" />

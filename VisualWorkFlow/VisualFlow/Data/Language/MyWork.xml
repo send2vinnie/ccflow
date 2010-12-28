@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <!-- 设计器 -->
-  <Item No="FlowSearch" CH="流程查询" B5=""  RU="Процесс запроса" EN="Workflow Query" JP="プロセスのクエリ" />
+  <Item No="FlowSearch" CH="流程查询" B5=""  RU="Процесс запроса" EN="Workflow Query" JP="プロセスのクエリ"   UG="" />
   <Item No="WorkArea" CH="工作区" RU="Рабочая область" EN="Workspace" JP="ワークスペース" />
   <Item No="FlowInfo" CH="流程图" RU="Схема" EN="Flow chart" JP="フローチャート" />
   <Item No="FlowOver" CH="此流程已经完成" RU="Этот процесс был завершен" EN="This workflow has been completed" JP="このプロセスを完了している" />
