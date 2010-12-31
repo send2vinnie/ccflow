@@ -14,7 +14,6 @@
   <Item No="CrrStopNode" CH="当前停留工作节点" RU="Остановка работы текущего узла" EN="Current work node" JP="現在のノードの動作を停止" />
   <Item No="Bill" CH="单据" RU="Инструменты" EN="Document" JP="楽器" />
   <Item No="Mouse" CH="鼠标" RU="Mouse" EN="Pointer" JP="Mouse" />
-  
   <Item No="FX" CH="分析" RU="Analysis" EN="Analysis" JP="Analysis" />
   <Item No="Complete" CH="完成"  EN="Complete" JP="Complete" RU="完成" />
   <Item No="Return" CH="退出"  EN="Return" JP="Return" RU="Return" />
