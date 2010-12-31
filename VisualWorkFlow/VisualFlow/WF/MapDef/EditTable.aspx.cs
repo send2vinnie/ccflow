@@ -219,6 +219,47 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         this.Pub1.AddTREnd();
 
 
+        #region 是否可界面可见
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("IsView", "是否界面可见")); //是否界面可见
+        this.Pub1.AddTDBegin();
+        rb = new RadioButton();
+        rb.ID = "RB_UIVisible_0";
+        rb.Text = this.ToE("IsView0", "不可见"); // 界面不可见
+        rb.GroupName = "sa3";
+        if (mapAttr.UIVisible)
+            rb.Checked = false;
+        else
+            rb.Checked = true;
+
+        this.Pub1.Add(rb);
+        if (mapAttr.IsTableAttr)
+            rb.Enabled = false;
+
+        rb = new RadioButton();
+        rb.ID = "RB_UIVisible_1";
+        rb.Text = this.ToE("IsView1", "界面可见"); // 界面可见;
+        rb.GroupName = "sa3";
+
+        if (mapAttr.UIVisible)
+            rb.Checked = true;
+        else
+            rb.Checked = false;
+
+        if (mapAttr.IsTableAttr)
+            rb.Enabled = false;
+
+        this.Pub1.Add(rb);
+        this.Pub1.AddTDEnd();
+
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+        #endregion 是否可界面可见
+
+
+
+
         #region 是否可单独行显示
         this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);

@@ -144,7 +144,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
         btn.Click += new EventHandler(btn_Del_Click);
         this.Pub1.Add(btn);
 
-        this.Pub1.Add("</TD>");
+        this.Pub1.AddTDEnd(); 
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }
