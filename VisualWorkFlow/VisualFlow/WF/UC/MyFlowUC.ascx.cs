@@ -331,7 +331,6 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
     }
     #endregion
 
-
     #region Page load 事件
     /// <summary>
     /// Page_Load
@@ -340,6 +339,8 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
     /// <param name="e"></param>
     protected void Page_Load(object sender, System.EventArgs e)
     {
+        
+
         if (this.DoType != null)
         {
             DoDoType();

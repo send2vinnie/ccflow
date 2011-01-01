@@ -2,8 +2,8 @@
 <%@ Register src="../../Comm/UC/UCSys.ascx" tagname="UCSys" tagprefix="uc3" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc4" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc5" %>
-<%@ Register src="FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc1" %>
 <%@ Register src="UCEn.ascx" tagname="UCEn" tagprefix="uc6" %>
+    <%@ Register src="FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc1" %>
     <style type="text/css">
         .style1
         {
@@ -46,7 +46,7 @@
 </script>
 <table id="Table1" border='0' cellspacing=1 cellpadding=1  width='100%' >
 <tr>
-<td  valign='top'  align="Left" class="style1"  width='20%'   >
+<td  valign='top'  align="Left" class="style1"  width='20%' >
     <uc1:FlowInfoSimple ID="FlowInfoSimple1" runat="server" />
 </td>
 <td valign='top' id='Right' style="height:600px;" width='80%' >

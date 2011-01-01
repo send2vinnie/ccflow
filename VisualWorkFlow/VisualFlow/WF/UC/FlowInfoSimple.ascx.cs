@@ -73,7 +73,7 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
         this.Add("<TD colspan=1 class=ToolBar  >" + fl.Name + "</TD>");
         this.AddTREnd();
 
-        this.BindWarting();
+        //this.BindWarting();
 
         this.AddInbox();
 
@@ -87,7 +87,7 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
             {
                 if (wl.FK_Node == nd.NodeID)
                 {
-                    this.Add("<font color=green>Step:" + nd.Step  + nd.Name );
+                    this.Add("<font color=green>Step:" + nd.Step + nd.Name);
                     //this.Add("<BR>执行人:" + wl.FK_EmpText);
                     this.Add("<BR>: <img src='../Data/Siganture/" + wl.FK_Emp + ".jpg' border=0 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
 
@@ -105,45 +105,6 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
         this.AddTREnd();
         this.AddTableEnd();
     }
-    public void BindFlowStep_bak1()
-    {
-        WorkerLists wls = new WorkerLists(this.WorkID, this.FK_Flow);
-        Flow fl = new Flow(this.FK_Flow);
-        this.Add("<Table border=0 wdith=100% align=left>");
-        this.AddTR();
-        this.Add("<TD colspan=1 class=ToolBar  >" + fl.Name + "</TD>");
-        this.AddTREnd();
-
-        Nodes nds = fl.HisNodes;
-        this.AddTR();
-        this.Add("<TD colspan=1 class=BigDoc align=left >");
-        foreach (BP.WF.Node nd in nds)
-        {
-            bool isHave = false;
-            foreach (WorkerList wl in wls)
-            {
-                if (wl.FK_Node == nd.NodeID)
-                {
-                    this.Add("<font color=green>Step " + nd.Step + ":<a href=FlowSearch.aspx?FK_Node=" + nd.NodeID + ">" + nd.Name + "</a>");
-                    this.Add("<BR>" + this.ToE("Executor", "执行人") + " : <img src='../Data/Siganture/" + wl.FK_Emp + ".jpg' border=1 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
-                    this.Add("<br>" + this.ToE("ADT", "接受日期") + ":" + wl.RDT + "</font> ");
-                    this.Add("<a href='WFRpt.aspx?WorkID=" + wl.WorkID + "&FID=0&FK_Flow=" + this.FK_Flow + "' target=_blank >"+this.ToE("Dtl","明细")+"..</a><hr>");
-                    isHave = true;
-                    break;
-                }
-            }
-
-            if (isHave)
-                continue;
-
-            this.Add("第" + nd.Step + "步:<a href=FlowSearch.aspx?FK_Node=" + nd.NodeID + ">" + nd.Name + "</a>");
-            //  this.Add("<br>岗位:" + nd.HisStationsStr + "<hr>");
-            this.Add("<hr>");
-        }
-        this.AddTDEnd();
-        this.AddTREnd();
-        this.AddTableEnd();
-    }
     public void AddInbox()
     {
         if (this.FK_Flow == null)
@@ -152,18 +113,11 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
         string tab = "";
         tab = "ND" + int.Parse(this.FK_Flow) + "Rpt";
 
-        //if (this.FK_Node == null)
-        //    tab = "ND" + int.Parse(this.FK_Flow) + "Rpt";
-        //else
-        //    tab = "ND" + this.FK_Node;
-
-
         this.AddTR();
         this.Add("<TD colspan=1 class=BigDoc align=left >");
         this.AddUL();
 
         int nodeid = 0;
-
 
         string sql = "SELECT count(workid) FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "'";
 
@@ -202,58 +156,15 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
         this.Add("<TD colspan=1 class=ToolBar nowarp=true ></TD>");
         this.AddTREnd();
     }
-    public void BindWarting()
-    {
-        //this.AddTR();
-        //this.Add("<TD colspan=1 class=ToolBar  >待办工作</TD>");
-        //this.AddTREnd();
 
-        //this.AddTR();
-        //this.AddTDBegin("align=right nowarp=0 ");
-        //this.AddUL();
-
-        //string sql = "SELECT FK_Flow, FlowName, COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' GROUP BY FK_Flow, FlowName";
-        //DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-
-        //bool isShowNum = BP.WF.Glo.IsShowFlowNum;
-        //foreach (DataRow dr in dt.Rows)
-        //{
-        //    if (this.FK_Flow != dr["FK_Flow"] as string)
-        //        this.AddLi("<a href='EmpWorks.aspx?FK_Flow=" + dr["FK_Flow"] + "'>" + dr["FlowName"] + "-" + dr["Num"] + "</a>");
-        //    else
-        //        this.AddLi(dr["FlowName"].ToString() + "&nbsp;&nbsp;");
-        //}
-        //this.AddULEnd();
-        //this.AddTDEnd();
-        //this.AddTREnd();
-    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Request.RawUrl.Contains("WAP"))
             return;
 
-        //#region 菜单
-        //this.Add("<Table border=0 wdith=100% align=left>");
-        //this.AddTR();
-        //this.Add("<TD colspan=1 class=ToolBar nowarp=true >我的工作</TD>");
-        //this.AddTREnd();
-
-        //this.AddTR();
-        //this.Add("<TD colspan=1 class=BigDoc align=left >");
-        //this.AddUL();
-        //this.AddLi("待处理（2）");
-        //this.AddLi("已处理（2）");
-        //this.AddULEnd();
-        //this.Add("</TD>");
-        //this.AddTREnd();
-        //this.AddTableEnd();
-        //#endregion 菜单
-
-
         if (this.WorkID != 0)
         {
             this.BindFlowStep1();
-
             return;
         }
 
@@ -264,7 +175,6 @@ public partial class WF_UC_FlowInfoSimple : BP.Web.UC.UCBase3
         this.AddTREnd();
 
         this.AddInbox();
-
 
         this.AddTR();
         this.Add("<TD colspan=1 class=BigDoc align=left >" + fl.NoteHtml + "</TD>");
