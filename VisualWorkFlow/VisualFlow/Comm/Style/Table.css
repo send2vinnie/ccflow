@@ -10,6 +10,8 @@ body
 	font-size: 12px;
 }
 
+
+
 .Table_Title
 {
 	font-weight: bold;
@@ -74,7 +76,7 @@ border: 1px solid #808080;
 	letter-spacing: 0pc;
 	background-color: infobackground;
 }
-
+ 
 .Idx
 {
 	background-color:#eee;
@@ -280,3 +282,10 @@ a:hover
 	text-decoration: underline;
 }
 
+ul
+{
+	border-right-style: 0;
+	border-left-style: 0;
+	left: 2px;
+	clip: rect(auto, auto, auto, 2px);
+}

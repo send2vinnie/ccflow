@@ -533,7 +533,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         if (uac.IsUpdate)
         {
             this.AddBtn(NamesOfBtn.Save, this.ToE("Save", "保存(S)") );
-            this.AddBtn(NamesOfBtn.SaveAndClose, this.ToE("SaveAndClose", "保存并关闭(C)")   );
+           // this.AddBtn(NamesOfBtn.SaveAndClose, this.ToE("SaveAndClose", "保存并关闭(C)")   );
         }
 
         if (uac.IsInsert && uac.IsUpdate)
