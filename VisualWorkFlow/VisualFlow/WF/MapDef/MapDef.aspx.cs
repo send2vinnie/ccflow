@@ -142,7 +142,7 @@ public partial class WF_MapDef_MapDef : WebPage
                         rowIdx++;
                         this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' " + gfAttr);
                     }
-                    this.Pub1.Add("<TD class=FDesc colspan=4 width='100%' >");
+                    this.Pub1.Add("<TD class=FDesc colspan=2 width='50%' >");
                     this.Pub1.Add(this.GenerLab(attr, idx, 0, count));
                     TextBox mytbLine = new TextBox();
                     mytbLine.TextMode = TextBoxMode.MultiLine;

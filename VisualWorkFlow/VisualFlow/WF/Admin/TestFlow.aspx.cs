@@ -90,11 +90,15 @@ public partial class WF_Admin_TestFlow : WebPage
         this.Left.AddFieldSetEnd();
 
 
-        this.Left.AddFieldSet(this.ToE("Tools", "系统工具"));
+        this.Left.AddFieldSet(this.ToE("Tools", "系统管理"));
         //this.Left.AddFieldSet("系统工具");
         this.Left.AddUL();
         this.Left.AddLi("<a href=\"javascript:WinOpen('../../WF/ClearDatabase.aspx')\">" + this.ToE("ClearDatabase","清除所有流程数据")+ "</a>");
         this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Sys/EditWebConfig.aspx')\">" + this.ToE("WebConfig", "系统设置") + "</a>");
+
+
+        this.Left.AddLi("<a href=\"javascript:WinOpen('TitleSet.aspx')\">" + this.ToE("TitleImg", "标题图片设置") + "</a>");
+        
         this.Left.AddULEnd();
         this.Left.AddFieldSetEnd(); 
 

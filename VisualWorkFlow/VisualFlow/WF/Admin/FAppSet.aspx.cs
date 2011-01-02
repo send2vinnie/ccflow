@@ -57,15 +57,15 @@ public partial class WF_Admin_FApp : WebPage
         this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
 
-        this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(this.ToE("InvoWhen", "调用时间"));
-        ddl = new DDL();
-        ddl.ID = "DDL_ShowTime";
-        ddl.BindSysEnum(FAppSetAttr.ShowTime);
-        ddl.SetSelectItem(Bill.ShowTime);
-        this.Ucsys1.AddTD(ddl);
-        this.Ucsys1.AddTD("");
-        this.Ucsys1.AddTREnd();
+        //this.Ucsys1.AddTR();
+        //this.Ucsys1.AddTD(this.ToE("InvoWhen", "调用时间"));
+        //ddl = new DDL();
+        //ddl.ID = "DDL_ShowTime";
+        //ddl.BindSysEnum(FAppSetAttr.ShowTime);
+        //ddl.SetSelectItem(Bill.ShowTime);
+        //this.Ucsys1.AddTD(ddl);
+        //this.Ucsys1.AddTD("");
+        //this.Ucsys1.AddTREnd();
 
 
         this.Ucsys1.AddTR();
@@ -186,7 +186,7 @@ public partial class WF_Admin_FApp : WebPage
         this.Ucsys1.AddTDTitle( this.ToE("Node","节点") );
         this.Ucsys1.AddTDTitle(this.ToE("ShowName","显示名称"));
         this.Ucsys1.AddTDTitle(this.ToE("InvoType", "调用类型"));
-        this.Ucsys1.AddTDTitle(this.ToE("InvoWhen", "调用时间"));
+       // this.Ucsys1.AddTDTitle(this.ToE("InvoWhen", "调用时间"));
         this.Ucsys1.AddTDTitle(this.ToE("DoWhat", "执行内容"));
         this.Ucsys1.AddTDTitle(this.ToE("Oper", "操作"));
         this.Ucsys1.AddTREnd();
@@ -200,10 +200,7 @@ public partial class WF_Admin_FApp : WebPage
             this.Ucsys1.AddTD(Bill.Name);
 
             this.Ucsys1.AddTD(Bill.AppTypeT);
-            this.Ucsys1.AddTD(Bill.ShowTimeT);
-
             this.Ucsys1.AddTD(Bill.DoWhat);
-
 
             this.Ucsys1.AddTD("<a href='FAppSet.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefOID=" + Bill.OID + "'><img src='../../Images/Btn/Edit.gif' border=0/>"+this.ToE("Edit","编辑")+"</a>");
             this.Ucsys1.AddTREnd();

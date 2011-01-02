@@ -50,6 +50,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             {
                 this.AddTDB(fl.FK_FlowSortText);
                 this.AddTREnd();
+                fk_sort = fl.FK_FlowSort;
                 continue;
             }
 

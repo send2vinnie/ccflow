@@ -553,6 +553,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         cond.OperatorValueT = this.GetOperValText;
         cond.FK_Flow = this.FK_Flow;
         cond.HisCondType = this.HisCondType;
+
         try
         {
             cond.HisConnJudgeWay = (ConnJudgeWay)this.DDL_ConnJudgeWay.SelectedItemIntVal;
