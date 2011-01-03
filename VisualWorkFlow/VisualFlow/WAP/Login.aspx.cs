@@ -13,6 +13,8 @@ public partial class WAP_Login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        this.Title = BP.SystemConfig.SysName;
        
     }
 }

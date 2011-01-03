@@ -260,7 +260,9 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
         try
         {
             #region 增加按钮
-            this.ToolBar1.Add("<a href=Home.aspx ><img src='./Img/Home.gif' border=0/>Home</a>");
+            //this.ToolBar1.Add("<a href=Home.aspx ><img src='./Img/Home.gif' border=0/>Home</a>");
+
+            this.ToolBar1.Add("<input type=button value=" + this.ToE("Home", "主页") + " onclick=\"javascript:window.location.href='Home.aspx' \" />");
 
             this.ToolBar1.AddBtn(NamesOfBtn.Send, this.ToE("Send", "发送") );
             this.ToolBar1.AddBtn(NamesOfBtn.Save, this.ToE("Save", "保存") );
@@ -436,7 +438,6 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
         MapAttrs mattrs = new MapAttrs("ND" + nd.NodeID);
         foreach (MapAttr attr in mattrs)
         {
-
             if (attr.DefValReal.Contains("@") == false || attr.Tag == "1")
                 continue;
             wk.SetValByKey(attr.KeyOfEn, attr.DefVal);

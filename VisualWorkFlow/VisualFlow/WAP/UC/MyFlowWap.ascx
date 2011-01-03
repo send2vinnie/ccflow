@@ -33,6 +33,11 @@
         }
     }
 </script>
+<%--
+
+<fieldset> 
+<legend align=right><a href='Home.aspx' > <img src='./Img/Home.gif' border=0 >Home</a></legend>--%>
+
 <table width='100%'   >
 <tr>
 <td class='ToolBar' align=left >
@@ -40,11 +45,13 @@
 </td>
 </tr>
 <tr valign="top">
-            <td valign="top" align=left >
-                    <uc5:Pub ID="FlowMsg" runat="server" />
-                    <uc6:UCEn ID="UCEn1" runat="server" />
-                    <uc5:Pub ID="Pub1" runat="server" />
-                    </td>
-        </tr>
+<td valign="top" align=left >
+<uc5:Pub ID="FlowMsg" runat="server" />
+<uc6:UCEn ID="UCEn1" runat="server" />
+<uc5:Pub ID="Pub1" runat="server" />
+</td>
+</tr>
 </table>
+<%--
+ </fieldset>--%>
  
