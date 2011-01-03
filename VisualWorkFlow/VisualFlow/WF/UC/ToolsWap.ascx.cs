@@ -389,28 +389,23 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         else
             this.AddFieldSet(this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
 
-        this.AddFieldSet("修改个人信息");
-
-        this.AddTable();
-
+        this.Add("<br><table border=0 width='80%' align=center >");
         this.AddTR();
-        this.AddTD("用于接受短信的手机");
+        this.AddTD("手机");
         TextBox tb = new TextBox();
         tb.TextMode = TextBoxMode.SingleLine;
         tb.ID = "TB_Tel";
         tb.Text = emp.Tel;
         this.AddTD(tb);
-        this.AddTD();
         this.AddTREnd();
 
         this.AddTR();
-        this.AddTD("用于接受短信的Email");
+        this.AddTD("Email");
         tb = new TextBox();
         tb.TextMode = TextBoxMode.SingleLine;
         tb.ID = "TB_Email";
         tb.Text = emp.Email;
         this.AddTD(tb);
-        this.AddTD();
         this.AddTREnd();
 
 
@@ -427,19 +422,19 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         ddl.SetSelectItem((int)emp.HisAlertWay);
 
         this.AddTD(ddl);
-        this.AddTD();
         this.AddTREnd();
 
         this.AddTR();
-        this.AddTD("");
-
         Btn btn = new Btn();
-        btn.Text = " 保存 ";
+        btn.Text = this.ToE("Save", "保存");
         btn.Click += new EventHandler(btn_Profile_Click);
-        this.AddTD(btn);
-        this.AddTD();
+        this.AddTD("colspan=2 align=center",btn);
         this.AddTREnd();
         this.AddTableEnd();
+
+        this.AddBR();
+
+
         this.AddFieldSetEnd();
     }
     void btn_Profile_Click(object sender, EventArgs e)

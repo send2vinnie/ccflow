@@ -162,7 +162,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
     {
         this.AddTable("width=100% align=center");
         this.AddTR();
-        this.AddTDTitle("colspan=4 align=left","<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a> - 成员");
+        this.AddTD("colspan=4 align=left class=FDesc","<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a> - 成员");
         this.AddTREnd();
 
         BP.Port.Depts depts = new BP.Port.Depts();

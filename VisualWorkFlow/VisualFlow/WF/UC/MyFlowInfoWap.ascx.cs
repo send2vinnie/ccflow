@@ -86,10 +86,9 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
         }
 
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>-<a href='EmpWorks.aspx'><img src='./Img/Home.gif' border=0/>" + this.ToE("PendingWork", "待办") + "</a>-" + this.ToE("Note", "操作提示"), s);
+            this.AddFieldSet("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>-<a href='EmpWorks.aspx'><img src='./Img/Home.gif' border=0/>" + this.ToE("PendingWork", "待办") + "</a>-" + this.ToE("Note", "操作提示"), "" + s + "<br><br>");
         else
             this.AddFieldSet( this.ToE("Note", "操作提示"), s);
-
 
         //if (this.FK_Type.ToLower() == "warning")
         //    this.AddMsgOfWarning("提示", s);

@@ -119,7 +119,8 @@ namespace BP.Web.Comm.UC.WF
                     int colspanOfCtl = 1;
                     TB tb = new TB();
                     tb.Attributes["width"] = "100%";
-                    tb.Columns = 60;
+                    tb.Attributes["border"] = "1px";
+                    tb.Columns = 40;
                     tb.ID = "TB_" + attr.KeyOfEn;
                     Control ctl = tb;
 
@@ -166,7 +167,7 @@ namespace BP.Web.Comm.UC.WF
                                 default:
                                     break;
                             }
-                            tb.Attributes["width"] = "100%";
+                       //     tb.Attributes["width"] = "100%";
                             switch (attr.MyDataType)
                             {
                                 case BP.DA.DataType.AppString:
@@ -219,14 +220,14 @@ namespace BP.Web.Comm.UC.WF
 
                     if (desc.Length >= 5)
                     {
-                        this.Add("<TD colspan=2 class=TBReadonly>" + desc + "<br>");
+                        this.Add("<TD colspan=2 class=FDesc width='100%' >" + desc + "<br>");
                         this.Add(ctl);
                         this.AddTREnd();
                     }
                     else
                     {
                         this.AddTDDesc(desc);
-                        this.AddTD(ctl);
+                        this.AddTD("width='100%' class=TBReadonly", ctl);
                         this.AddTREnd();
                     }
                     #endregion ¼ÓÈë×Ö¶Î

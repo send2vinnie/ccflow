@@ -186,7 +186,7 @@ public partial class WF_Admin_TestFlow : WebPage
         this.Ucsys1.AddUL();
         foreach (Emp emp in emps)
         {
-            this.Ucsys1.AddLi(emp.No + "," + emp.Name + "&nbsp;&nbsp;&nbsp;&nbsp;<a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  >IE</a> - <a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  >Mobile</a>  " + emp.FK_DeptText);
+            this.Ucsys1.AddLi(emp.No + "," + emp.Name + "&nbsp;&nbsp;&nbsp;&nbsp;<a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />IE</a> - <a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  ><img src='./../Img/Mobile.gif' border=0 width=30px height=15px />Mobile</a>  " + emp.FK_DeptText);
         }
         this.Ucsys1.AddULEnd();
         this.Ucsys1.AddFieldSetEnd();
