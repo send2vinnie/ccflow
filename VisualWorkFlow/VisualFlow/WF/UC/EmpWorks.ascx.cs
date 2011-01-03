@@ -36,30 +36,27 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        int colspan = 8;
-      
 
+        int colspan = 8;
         #region  输出流程类别.
         string sql = "SELECT FK_Flow, FlowName, COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' GROUP BY FK_Flow, FlowName";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count == 0)
         {
-
             this.Pub1.DivInfoBlockBegin();
 
-            this.Pub1.Add("<b>" + this.ToE("Note", "提示") + ":</b> " + this.ToE("EW1", "当前您没有工作要去处理") );
+            this.Pub1.Add("<b>" + this.ToE("Note", "提示") + ":</b> " + this.ToE("EW1", "当前您没有工作要去处理"));
             this.Pub1.AddHR();
 
             //this.Pub1.AddMsgGreen("提示", "当前您没有工作要去处理。");
 
             this.Pub1.AddUL();
-            this.Pub1.AddLi("Start.aspx", this.ToE("StartWork", "发起工作") );
+            this.Pub1.AddLi("Start.aspx", this.ToE("StartWork", "发起工作"));
             this.Pub1.AddLi("Runing.aspx", this.ToE("OnTheWayWork", "在途工作"));
             this.Pub1.AddLi("FlowSearch.aspx", this.ToE("FlowSearch", "工作查询"));
             this.Pub1.AddULEnd();
 
             this.Pub1.DivInfoBlockEnd();
-
             return;
         }
 

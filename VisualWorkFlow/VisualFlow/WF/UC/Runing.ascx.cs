@@ -91,13 +91,57 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
     {
         this.Clear();
 
+        this.AddFieldSet("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作"));
+
+        string sql = " SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + BP.Web.WebUser.No + "' AND B.IsEnable=1";
+        GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
+        gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
+        int i = 0;
+        bool is1 = true;
+        //this.Add("<Table border=0 width='100%'>");
+        this.AddUL();
+        foreach (GenerWorkFlowExt gwf in gwfs)
+        {
+            i++;
+            is1 = this.AddTR(is1);
+            this.AddTDBegin("border=0");
+
+            //this.AddUL();
+            this.AddLi("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title + gwf.FK_NodeText);
+            this.Add("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo.aspx?DoType=UnSend&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
+            this.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
+        }
+        this.AddULEnd();
+
+        // this.AddTableEnd();
+        //this.AddUL();
+        //foreach (GenerWorkFlowExt gwf in gwfs)
+        //{
+        //    i++;
+        //    is1 = this.AddTR(is1);
+        //    this.AddLi("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
+
+        //    this.Add(gwf.FK_NodeText);
+        //    //this.Add(gwf.RDT);
+        //    //this.Add(gwf.RecText);
+        //    this.AddBR("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo.aspx?DoType=UnSend&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
+        //    this.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
+        //    //this.AddTREnd();
+        //}
+        //this.AddULEnd();
+        this.AddFieldSetEnd();
+    }
+    public void BindWap_bal()
+    {
+        this.Clear();
+
         int colspan = 7;
-        this.AddTable("width='80%' align=center");
+        this.AddTable("width='100%' align=center");
         this.AddTR();
         this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.AddTREnd();
-        this.AddTR();
 
+        this.AddTR();
         if (WebUser.IsWap)
             this.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作") + "</TD>");
         else

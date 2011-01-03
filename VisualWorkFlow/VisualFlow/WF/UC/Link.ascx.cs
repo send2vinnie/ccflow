@@ -19,19 +19,39 @@ using BP;
 
 public partial class WF_UC_Link : BP.Web.UC.UCBase3
 {
+    public void BindWap()
+    {
+        Links ens = new Links();
+        ens.RetrieveAll();
+        this.AddFieldSet("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>");
+        this.AddUL();
+        foreach (Link en in ens)
+        {
+            this.AddLi(en.Url, "<b>" + en.Name + "</b>", en.Target);
+            this.Add("<font color=green>" + en.Url + "</font><br>" + en.Note);
+
+        }
+        this.AddULEnd();
+        this.AddFieldSetEnd();
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (WebUser.IsWap)
+        {
+            BindWap();
+            return;
+        }
+
         Links ens = new Links();
         ens.RetrieveAll();
 
         this.DivInfoBlockBegin();
-        if (WebUser.IsWap)
-            this.Add("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>");
-
+         
         this.AddUL();
         foreach (Link en in ens)
         {
-            this.AddLi(en.Url, "<b>" + en.Name + "</b>&nbsp;&nbsp;<font color=green>" + en.Url + "</font><br>" + en.Note, en.Target);
+            this.AddLi(en.Url, "<b>" + en.Name + "</b>", en.Target);
+            this.Add("<font color=green>" + en.Url + "</font><br>" + en.Note);
         }
         this.AddULEnd();
         this.AddBR();

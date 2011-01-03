@@ -21,16 +21,8 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
 {
     public void BindWap(Flows fls)
     {
-        this.AddTable("width='60%' align=center");
-        this.AddTR();
-        this.Add("<TD class=TitleMsg colspan=2 align=left><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/Start.gif' >" + this.ToE("Start", "发起") + "</TD>");
-        this.AddTREnd();
-
-        this.AddTR();
-        this.AddTDTitle("IDX");
-        this.AddTDTitle(this.ToE("Name", "名称"));
-        this.AddTREnd();
-
+        this.AddFieldSet("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/Start.gif' >" + this.ToE("Start", "发起"));
+        this.AddUL();
         int i = 0;
         bool is1 = false;
         string fk_sort = null;
@@ -40,33 +32,63 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
                 continue;
 
             i++;
-            is1 = this.AddTR(is1);
-            this.AddTDIdx(i);
-            if (fl.FK_FlowSort == fk_sort)
-            {
-
-            }
-            else
-            {
-                this.AddTDB(fl.FK_FlowSortText);
-                this.AddTREnd();
-                fk_sort = fl.FK_FlowSort;
-                continue;
-            }
-
+            //if (fl.FK_FlowSort == fk_sort)
+            //{
+            //}
+            //else
+            //{
+            // //   this.Add("<font color=green > <b>" + fl.FK_FlowSortText + "</b><br></front>");
+            //    fk_sort = fl.FK_FlowSort;
+            //    continue;
+            //}
             fk_sort = fl.FK_FlowSort;
-            this.AddTD("<a href='MyFlow.aspx?FK_Flow=" + fl.No + "' >" + fl.Name + "</a>");
-            this.AddTREnd();
+            this.AddLi("<a href='MyFlow.aspx?FK_Flow=" + fl.No + "' >" + fl.Name + "</a>&nbsp;<font style=\"color:#77c;font-size=4px\" >"+fl.FK_FlowSortText+"</font>");
         }
+        this.AddULEnd();
+        this.AddFieldSetEnd();
+        return;
 
+        //this.AddTable("width='60%' align=center");
+        //this.AddTR();
+        //this.Add("<TD class=TitleMsg colspan=2 align=left><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/Start.gif' >" + this.ToE("Start", "发起") + "</TD>");
+        //this.AddTREnd();
 
-        this.AddTRSum();
-        this.AddTD();
-        this.AddTD();
-        this.AddTREnd();
-        this.AddTableEnd();
+        //this.AddTR();
+        //this.AddTDTitle("IDX");
+        //this.AddTDTitle(this.ToE("Name", "名称"));
+        //this.AddTREnd();
+
+        //int i = 0;
+        //bool is1 = false;
+        //string fk_sort = null;
+        //foreach (Flow fl in fls)
+        //{
+        //    if (fl.HisFlowSheetType == FlowSheetType.DocFlow)
+        //        continue;
+
+        //    i++;
+        //    is1 = this.AddTR(is1);
+        //    this.AddTDIdx(i);
+        //    if (fl.FK_FlowSort == fk_sort)
+        //    {
+        //    }
+        //    else
+        //    {
+        //        this.AddTDB(fl.FK_FlowSortText);
+        //        this.AddTREnd();
+        //        fk_sort = fl.FK_FlowSort;
+        //        continue;
+        //    }
+        //    fk_sort = fl.FK_FlowSort;
+        //    this.AddTD("<a href='MyFlow.aspx?FK_Flow=" + fl.No + "' >" + fl.Name + "</a>");
+        //    this.AddTREnd();
+        //}
+        //this.AddTRSum();
+        //this.AddTD();
+        //this.AddTD();
+        //this.AddTREnd();
+        //this.AddTableEnd();
     }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.Title = this.ToE("StartWork", "工作发起");

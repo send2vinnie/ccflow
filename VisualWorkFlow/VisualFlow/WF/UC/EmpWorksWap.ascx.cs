@@ -33,40 +33,22 @@ public partial class WF_UC_EmpWorksWap : BP.Web.UC.UCBase3
             this.ViewState["FK_Flow"] = value;
         }
     }
+    public int WorkID
+    {
+        get
+        {
+            if (this.Request.QueryString["WorkID"] == null)
+                return 0;
 
+            return int.Parse(this.Request.QueryString["WorkID"]);
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.Title = "Work on the way.";
 
-        int colspan = 8;
-        this.AddTable("width='100%' align=center");
-        this.AddTR();
-        this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
-        this.AddTREnd();
-
-        this.AddTR();
-        if (WebUser.IsWap)
-            this.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
-        else
-            this.Add("<TD align=left class=TitleMsg colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b></TD>");
-
-        this.AddTREnd();
-
-
-        #region  输出流程类别.
-        this.AddTR();
-        this.AddTDTitle("ID");
-        // this.AddTDTitle(this.ToE("NodeName", "节点"));
-        this.AddTDTitle(this.ToE("Title", "标题"));
-        this.AddTDTitle(this.ToE("Starter", "发起"));
-        this.AddTDTitle(this.ToE("RDT", "发起日期"));
-
-        this.AddTDTitle(this.ToE("ADT", "接受日期"));
-
-        this.AddTDTitle(this.ToE("SDT", "期限"));
-
-        this.AddTREnd();
-        #endregion  输出流程类别
+        this.AddFieldSet("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' > <b>" + this.ToE("OnTheWayWork", "待办工作") + "</b>");
+        this.AddUL();
 
         string sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "' ORDER BY WorkID ";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
@@ -79,29 +61,16 @@ public partial class WF_UC_EmpWorksWap : BP.Web.UC.UCBase3
             DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
             if (cdt >= mysdt)
             {
-                this.AddTRRed(); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
+                this.AddLi("<font color=red ><a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString() + " - " + dr["NodeName"].ToString() + "</a></font>");
             }
             else
             {
-                is1 = this.AddTR(is1); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
+                this.AddLi("<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString() + " - " + dr["NodeName"].ToString() + "</a>");
             }
-            i++;
-            this.AddTD(i);
 
-            // this.AddTD(dr["NodeName"].ToString());
-
-            this.AddTD("<a href=\"MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString() + "</a>" + dr["NodeName"].ToString());
-            this.AddTD(dr["Starter"].ToString());
-            this.AddTD(dr["RDT"].ToString());
-            this.AddTD(dr["ADT"].ToString());
-            this.AddTD(dr["SDT"].ToString());
-            this.AddTREnd();
+            this.Add(dr["Starter"].ToString() + " - " + dr["RDT"].ToString());
         }
-
-        this.AddTRSum();
-        this.AddTD("colspan=" + colspan, "&nbsp;");
-        this.AddTREnd();
-        this.AddTableEnd();
-        return;
+        this.AddULEnd();
+        this.AddFieldSetEnd();
     }
 }

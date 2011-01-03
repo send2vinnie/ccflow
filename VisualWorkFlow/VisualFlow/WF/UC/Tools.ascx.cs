@@ -123,9 +123,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         string path = BP.SystemConfig.PathOfData + "\\Siganture\\T.JPG";
         if (this.DoType != null || System.IO.File.Exists(path) == false)
         {
-
             string pathMe = BP.SystemConfig.PathOfData + "\\Siganture\\"+WebUser.No+".JPG";
-
             File.Copy(BP.SystemConfig.PathOfData + "\\Siganture\\Templete.JPG",
                 path, true);
 
@@ -760,28 +758,11 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 
     public void BindTools()
     {
-
-     
-
         BP.WF.XML.Tools tools = new BP.WF.XML.Tools();
         tools.RetrieveAll();
-
         string refno = this.RefNo;
         if (refno == null)
             refno = "Per";
-
-
-        //this.Left.MenuSelfBegin();
-        //foreach (BP.WF.XML.Tool tool in tools)
-        //{
-        //    if (tool.No == refno)
-        //        this.Left.MenuSelfItemS("Tools.aspx?RefNo=" + tool.No, tool.Name, "_self");
-        //    else
-        //        this.Left.MenuSelfItem("Tools.aspx?RefNo=" + tool.No, tool.Name, "_self");
-        //}
-        //this.Left.MenuSelfEnd();
-
-       
 
 
 

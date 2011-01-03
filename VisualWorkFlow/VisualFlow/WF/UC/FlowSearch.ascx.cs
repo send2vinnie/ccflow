@@ -526,6 +526,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Page.Title = "Flow Search";
+
         this.BindLeft();
         switch (this.DoType)
         {
@@ -551,6 +553,12 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             return;
         }
 
+        if (WebUser.IsWap)
+        {
+            BindWap();
+            return;
+        }
+
         int colspan = 8;
         this.Pub1.AddTable("width='600px'");
         this.Pub1.AddTR();
@@ -572,7 +580,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         if (WebUser.IsWap == false)
         {
             this.Pub1.AddTDTitle(this.ToE("FlowPict", "流程图"));
-            // this.Pub1.AddTDTitle(this.ToE("Desc", "描述"));
         }
 
         this.Pub1.AddTDTitle( this.ToE("Bill", "单据"));
@@ -656,5 +663,70 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTD("colspan=" + colspan, "&nbsp;");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
+    }
+    public void BindWap()
+    {
+        this.Pub1.AddFieldSet("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>");
+
+
+
+
+        string sql = "SELECT FK_Flow FROM WF_Node ";
+        Flows fls = new Flows();
+        fls.RetrieveAll();
+        int i = 0;
+        bool is1 = false;
+        string fk_sort = null;
+
+        FlowSorts fss = new FlowSorts();
+        fss.RetrieveAll();
+
+        string open = this.ToE("Open", "打开");
+        string search = this.ToE("Search", "查询");
+        string dtl = this.ToE("Dtl", "明细");
+        string bill = this.ToE("Bill", "单据");
+        string nodeSearch = this.ToE("NodeSearch", "节点");
+        string FX = this.ToE("FX", "分析");
+
+        this.Pub1.Add("<table width='100%' border=0 >");
+        foreach (FlowSort fs in fss)
+        {
+            this.Pub1.AddTR();
+            this.Pub1.AddTDTitle(fs.Name);
+            this.Pub1.AddTREnd();
+            foreach (Flow fl in fls)
+            {
+                if (fl.FK_FlowSort != fs.No)
+                    continue;
+
+                is1 = this.Pub1.AddTR(is1);
+                this.Pub1.AddTDBegin();
+
+                this.Pub1.Add(fl.Name);
+                this.Pub1.AddBR();
+
+                if (fl.NumOfBill == 0)
+                    this.Pub1.Add("--");
+                else
+                {
+                    string src = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=BP.WF.Bills&FK_Flow=" + fl.No;
+                    this.Pub1.Add("<a href=\"javascript:WinOpen('" + src + "');\"  >" + bill + "</a>");
+                }
+
+
+                string src1 = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";
+                this.Pub1.Add("-<a href=\"javascript:WinOpen('" + src1 + "');\" >" + search + "</a>");
+                this.Pub1.Add("-<a href=\"javascript:Dtl('" + fl.No + "');\" >" + dtl + "</a>");
+
+                src1 = this.Request.ApplicationPath + "/Comm/GroupEnsMNum.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";
+                this.Pub1.Add("-<a href=\"javascript:WinOpen('" + src1 + "');\" >" + FX + "</a>");
+
+                this.Pub1.Add("-<a href='FlowSearch.aspx?FK_Flow=" + fl.No + "'>" + nodeSearch + "</a>");
+                this.Pub1.AddTDEnd();
+                this.Pub1.AddTREnd();
+            }
+        }
+        this.Pub1.AddTableEnd();
+        this.Pub1.AddFieldSetEnd();
     }
 }
