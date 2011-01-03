@@ -233,8 +233,6 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
         {
             if ( WorkerLists.CheckUserPower(this.WorkID, WebUser.No) == false)
             {
-                //WorkerList wl = new WorkerList();
-               // wl.Retrieve(WorkerListAttr.WorkID,this.WorkID
                 this.ToolBar1.Clear();
                 this.ToolBar1.Add("&nbsp;");
 
@@ -250,7 +248,6 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
                 this.FlowMsg.AddLi("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>"+this.ToE("Home","返回主页")+ "</a>");
                 this.FlowMsg.AddLi("<a href='Start.aspx'><img src='./Img/Start.gif' border=0/>" + this.ToE("StartWork", "发起流程") + "</a>");
                 this.FlowMsg.AddLi("<a href='Runing.aspx'><img src='./Img/Runing.gif' border=0/>" + this.ToE("OnTheWayWork", "在途工作") + "</a>");
-
                 this.FlowMsg.AddULEnd();
 
                 // this.UCEn1.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
@@ -267,9 +264,8 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
 
             this.ToolBar1.AddBtn(NamesOfBtn.Send, this.ToE("Send", "发送") );
             this.ToolBar1.AddBtn(NamesOfBtn.Save, this.ToE("Save", "保存") );
-            this.ToolBar1.AddSpt("ss");
 
-            this.ToolBar1.AddBtn("Btn_ReturnWork", this.ToE("Return", this.ToE("Return", "退回") + "(R)"));
+            this.ToolBar1.AddBtn("Btn_ReturnWork", this.ToE("Return", this.ToE("Return", "退回") ));
             this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Forward, this.ToE("Forward", "转发")  );
 
             //if (this.WorkID > 0)
@@ -277,27 +273,27 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
             //else
             //    this.ToolBar1.Add("<input type=button value='抄送' enable=false onclick=\"WinOpen('./Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=1601','ds'); \" class=Btn/>");
 
-            this.ToolBar1.AddSpt("ss");
-            this.ToolBar1.AddBtn(NamesOfBtn.Previous, "<<-" );
-            this.ToolBar1.AddBtn(NamesOfBtn.Next,  "->>" );
+            //this.ToolBar1.AddSpt("ss");
+            //this.ToolBar1.AddBtn(NamesOfBtn.Previous, "<<-" );
+            //this.ToolBar1.AddBtn(NamesOfBtn.Next,  "->>" );
 
             if (this.WorkID == 0)
             {
-                this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Enabled = false;
-                this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Enabled = false;
+                //   this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Enabled = false;
+                // this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Enabled = false;
             }
             else
             {
-                NextPreviouRec rec = new NextPreviouRec("WF_EmpWorks", "WorkID", this.WorkID, " FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "' ");
-                if (rec.NextID == null)
-                    this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Enabled = false;
-                else
-                    this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Attributes["onclick"] = " window.location.href='MyFlow.aspx?WorkID=" + rec.NextID + "&FK_Flow=" + this.FK_Flow + "';return false;";
+                //NextPreviouRec rec = new NextPreviouRec("WF_EmpWorks", "WorkID", this.WorkID, " FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "' ");
+                //if (rec.NextID == null)
+                //    this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Enabled = false;
+                //else
+                //    this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Attributes["onclick"] = " window.location.href='MyFlow.aspx?WorkID=" + rec.NextID + "&FK_Flow=" + this.FK_Flow + "';return false;";
 
-                if (rec.PreviouID == null)
-                    this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Enabled = false;
-                else
-                    this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Attributes["onclick"] = " window.location.href='MyFlow.aspx?WorkID=" + rec.PreviouID + "&FK_Flow=" + this.FK_Flow + "';return false;";
+                //if (rec.PreviouID == null)
+                //    this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Enabled = false;
+                //else
+                //    this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Attributes["onclick"] = " window.location.href='MyFlow.aspx?WorkID=" + rec.PreviouID + "&FK_Flow=" + this.FK_Flow + "';return false;";
             }
 
             //  this.ToolBar1.AddBtn("Btn_PrintWorkRpt", "报告");
@@ -323,7 +319,7 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
 
                     this.FlowMsg.Clear();
                     this.FlowMsg.DivInfoBlockBegin(); //("<b>提示</b><hr>@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
-                    this.FlowMsg.AddB(this.ToE("Note", "提示") );
+                    this.FlowMsg.AddB(this.ToE("Note", "提示"));
                     this.FlowMsg.AddHR();
                     this.FlowMsg.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。");
 
@@ -377,13 +373,11 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
             if (this.Btn_ReturnWork.Enabled == false)
                 this.Btn_ReturnWork.Visible = false;
 
-            if (this.Btn_Previous.Enabled == false)
-                this.Btn_Previous.Visible = false;
+            //if (this.Btn_Previous.Enabled == false)
+            //    this.Btn_Previous.Visible = false;
 
-            if (this.Btn_Next.Enabled == false)
-                this.Btn_Next.Visible = false;
-
-
+            //if (this.Btn_Next.Enabled == false)
+            //    this.Btn_Next.Visible = false;
 
             this.Session["Ect"] = null;
         }
@@ -400,7 +394,6 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
                 return;
             }
             #endregion
-
 
             this.FlowMsg.DivInfoBlock(ex.Message);
             string Ect = this.Session["Ect"] as string;
@@ -505,7 +498,6 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
             this.FlowMsg.AddTableEnd();
         }
         #endregion 判断是否合流节点。
-
 
         switch (nd.HisFormType)
         {

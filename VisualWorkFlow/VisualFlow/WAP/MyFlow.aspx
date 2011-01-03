@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/WAP/MasterPage.master" AutoEventWireup="true" CodeFile="MyFlow.aspx.cs" Inherits="WAP_MyFlow" Title="Untitled Page" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/WAP/MasterPage.master" AutoEventWireup="true" CodeFile="MyFlow.aspx.cs" Inherits="WAP_MyFlow" Title="My Flow" %>
 <%@ Register src="UC/MyFlowWap.ascx" tagname="MyFlowWap" tagprefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>

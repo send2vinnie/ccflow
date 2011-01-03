@@ -23,12 +23,10 @@ public partial class WAP_Home : WebPage
             return;
         }
 
-        this.Title = "您好：" + WebUser.No + "," + WebUser.Name;
+        this.Title = "Hi: " + WebUser.No + "," + WebUser.Name;
 
         BP.WF.XML.ToolBars ens = new BP.WF.XML.ToolBars();
         ens.RetrieveAll();
-
-
 
         string sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'";
         int num = BP.DA.DBAccess.RunSQLReturnValInt(sql);
@@ -48,9 +46,9 @@ public partial class WAP_Home : WebPage
             this.RegisterClientScriptBlock("s", script);
         }
 
+        this.Top.AddFieldSet("<img src='./Img/Home.gif' border=0/>  Hi:" + WebUser.No + "," + WebUser.Name + "-<a href='DoWap.aspx?DoType=Out'>" + this.ToE("LogOut", "注销") + "</a>");
 
-        this.Top.AddTable();
-        this.Top.AddCaptionLeft("<img src='./Img/Home.gif' border=0/>  Hi:" + WebUser.No + "," + WebUser.Name + "-<a href='DoWap.aspx?DoType=Out'>" + this.ToE("LogOut","注销") + "</a>");
+        this.Top.Add("<table border=0 width=100% >");
 
         bool isTR = true;
         foreach (BP.WF.XML.ToolBar en in ens)
@@ -70,20 +68,6 @@ public partial class WAP_Home : WebPage
         this.Top.AddTableEnd();
         return;
 
-        this.Top.Add("<div align=center><Table width='100%' >");
-        this.Top.Add("<TR>");
-        this.Top.Add("<TD nowarp=true ><a href='Tools.aspx' >您好:" + BP.Web.WebUser.No + "</a>&nbsp;</TD>");
-        this.Top.Add("</TR>");
-        string dotype = "";
-        foreach (BP.WF.XML.ToolBar en in ens)
-        {
-            this.Top.Add("<TR>");
-            this.Top.Add("<TD nowrap=true><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><img src='" + en.Img + "' border='0' >" + en.Name + "</a></TD>");
-            this.Top.Add("</TR>");
-        }
-        this.Top.Add("</Table></div>");
-
-
-
+         
     }
 }
