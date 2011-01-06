@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="SysMapEn.master" AutoEventWireup="true" CodeFile="SysMapEn.aspx.cs" Inherits="Comm_RefFunc_SysMapEn" Title="Untitled Page" %>
-
 <%@ Register src="SysMapEn.ascx" tagname="SysMapEn" tagprefix="uc1" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <link href="Style/TableWF.css" rel="stylesheet" type="text/css" />
     <link href="Style/Style.css" rel="stylesheet" type="text/css" />

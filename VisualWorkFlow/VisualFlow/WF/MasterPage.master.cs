@@ -44,11 +44,20 @@ public partial class Face_MasterPage : BP.Web.MasterPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        if (this.Request.RawUrl.ToLower().Contains("Login.aspx") == false)
+        {
+            if (BP.Web.WebUser.No == null)
+            {
+                this.Response.Redirect("Login.aspx", true);
+                return;
+            }
+        }
+
         Response.AddHeader("P3P", "CP=CAO PSA OUR");
 
         BP.WF.XML.ToolBars ens = new BP.WF.XML.ToolBars();
         ens.RetrieveAll();
-
 
 
         //  <LI><A href="http://app.javaeye.com/profile">个人资料</A> </LI>

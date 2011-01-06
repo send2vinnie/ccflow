@@ -390,10 +390,10 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
             this.ToolBar1.AddBtn("Btn_ReturnWork", this.ToE("Return", "退回") + "(R)");
             this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Forward,this.ToE("Forward", "转发(F)") );
 
-            //if (this.WorkID > 0)
-            //    this.ToolBar1.Add("<input type=button value='抄送' enable=true onclick=\"WinOpen('./Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=1601','ds'); \" class=Btn/>");
-            //else
-            //    this.ToolBar1.Add("<input type=button value='抄送' enable=false onclick=\"WinOpen('./Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=1601','ds'); \" class=Btn/>");
+            if (this.WorkID > 0)
+                this.ToolBar1.Add("<input type=button value='抄送' enable=true onclick=\"WinOpen('./Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=1601','ds'); \" class=Btn/>");
+            else
+                this.ToolBar1.Add("<input type=button value='抄送' enable=false onclick=\"WinOpen('./Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=1601','ds'); \" class=Btn/>");
 
             this.ToolBar1.AddSpt("ss");
             this.ToolBar1.AddBtn(NamesOfBtn.Previous, this.ToE("Previous", "上一条") + "(P)");

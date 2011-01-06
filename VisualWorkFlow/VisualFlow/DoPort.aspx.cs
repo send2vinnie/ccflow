@@ -74,10 +74,10 @@ public partial class DoPort : System.Web.UI.Page
         string fk_flow = this.Request.QueryString["FK_Flow"];
         switch (this.DoType)
         {
-            case "Ens":
+            case "Ens": // 实体编辑.
                 this.Response.Redirect("./Comm/Batch.aspx?EnsName=" + this.EnsName, true);
                 break;
-            case "En":
+            case "En": // 单个实体编辑.
                 switch (this.EnName)
                 {
                     case "BP.WF.Flow":
@@ -96,26 +96,26 @@ public partial class DoPort : System.Web.UI.Page
                         break;
                 }
                 break;
-            case "StaDef":
+            case "StaDef": // 节点岗位.
                 this.Response.Redirect("./Comm/UIEn1ToM.aspx?EnName=BP.WF.Ext.NodeO&AttrKey=BP.WF.NodeStations&PK=" + this.PK + "&NodeID=" + this.PK + "&RunModel=0&FLRole=0&FJOpen=0&r=" + this.PK, true);
                 break;
-            case "WFRpt":
+            case "WFRpt": // 报表设计.
                 this.Response.Redirect("./WF/MapDef/WFRpt.aspx?PK=" + this.PK, true);
                 break;
-            case "MapDef":
+            case "MapDef": //定义.
                 this.Response.Redirect("./WF/MapDef/MapDef.aspx?PK=" + this.PK, true);
                 break;
-            case "Dir":
+            case "Dir": // 方向。
                 this.Response.Redirect("./WF/Admin/Cond.aspx?CondType=" + this.Request.QueryString["CondType"] + "&FK_Flow=" + this.Request.QueryString["FK_Flow"] + "&FK_MainNode=" + this.Request.QueryString["FK_MainNode"] + "&FK_Node=" + this.Request.QueryString["FK_Node"] + "&FK_Attr=" + this.Request.QueryString["FK_Attr"] + "&DirType=" + this.Request.QueryString["DirType"] + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);
                 break;
-            case "RunFlow":
+            case "RunFlow": //运行流程。
                 //BP.WF.Flow fl = new BP.WF.Flow(fk_flow);
                 //if (fl.HisFlowSheetType== BP.WF.FlowSheetType.DocFlow)
                 //   this.Response.Redirect("./WF/Admin/TestFlow.aspx?FK_Flow=" + fk_flow+ "&Lang=" + BP.Web.WebUser.SysLang, true);
                 // else
                 this.Response.Redirect("./WF/Admin/TestFlow.aspx?FK_Flow=" + fk_flow + "&Lang=" + BP.Web.WebUser.SysLang, true);
                 break;
-            case "FlowCheck":
+            case "FlowCheck": // 流程设计。
                 this.Response.Redirect("./WF/Admin/DoType.aspx?RefNo=" + this.Request.QueryString["RefNo"] + "&DoType=" + this.DoType, true);
                 break;
             default:

@@ -17,13 +17,11 @@ public partial class Comm_RefFunc_En : System.Web.UI.Page
         if (enName==null || enName=="")
             enName = this.Request.QueryString["EnsName"];
 
-
         if (enName.Contains(".") == false)
         {
             this.Response.Redirect("SysMapEn.aspx?EnsName=" + enName + "&PK=" + this.Request["PK"], true);
             return;
         }
-
 
     }
 }

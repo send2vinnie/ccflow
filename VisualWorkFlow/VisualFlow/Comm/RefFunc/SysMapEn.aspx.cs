@@ -40,7 +40,7 @@ public partial class Comm_RefFunc_SysMapEn : System.Web.UI.Page
         Entity en = ens.GetNewEntity;
         en.PKVal = this.PK;
         en.RetrieveFromDBSources();
-     //   this.SysMapEn1.BindColumn4(en, this.EnsName);
+        this.SysMapEn1.BindColumn4(en, this.EnsName);
         this.Title = en.EnDesc;
     }
 }
