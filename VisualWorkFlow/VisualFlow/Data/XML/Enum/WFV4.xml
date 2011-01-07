@@ -1,0 +1,110 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  
+  <!-- 节点状态  -->
+  <Item Key="NodeState"  IntKey="0"  CH=""  EN="" JP="" RU="" />
+
+  <!-- 审核模式  -->
+  <Item Key="SignType"  IntKey="0"  CH="单签"  EN="" RU=""  JP=""/>
+  <Item Key="SignType"  IntKey="1"  CH="汇签"  EN="" RU="" JP=""  />
+
+  <!-- 运行模式  -->
+  <Item Key="RunModel"  IntKey="0"  CH="普通"  EN="" RU=""  JP=""/>
+  <Item Key="RunModel"  IntKey="1"  CH="合流"  EN="" RU="" JP=""  />
+  <Item Key="RunModel"  IntKey="2"  CH="分流"  EN="" RU="" JP=""  />
+  <Item Key="RunModel"  IntKey="3"  CH="分合流"  EN="" RU="" JP=""  />
+
+  <!-- 分流规则  -->
+  <Item Key="FLRole"  IntKey="0"  CH="按接受人"  EN="" RU=""  JP=""/>
+  <Item Key="FLRole"  IntKey="1"  CH="按部门"  EN="" RU="" JP=""  />
+  <Item Key="FLRole"  IntKey="2"  CH="按岗位"  EN="" RU="" JP=""  />
+
+
+  <!-- 附件权限  -->
+  <Item Key="FJOpen"  IntKey="0"  CH="关闭附件"  EN="" RU=""  JP=""/>
+  <Item Key="FJOpen"  IntKey="1"  CH="操作员"  EN="" RU="" JP=""  />
+  <Item Key="FJOpen"  IntKey="2"  CH="工作ID"  EN="" RU="" JP=""  />
+  <Item Key="FJOpen"  IntKey="3"  CH="流程ID"  EN="" RU="" JP=""  />
+  
+
+  <!-- 表单类型  -->
+  <Item Key="FormType"  IntKey="0"  CH="系统表单"  EN="" RU=""  JP=""/>
+  <Item Key="FormType"  IntKey="1"  CH="自定义表单"  EN="" RU="" JP=""  />
+
+  <!-- 公文类型  -->
+  <Item Key="DocType"  IntKey="0"  CH="正式公文"  EN="" RU=""  JP=""/>
+  <Item Key="DocType"  IntKey="1"  CH="便函"  EN="" RU="" JP=""  />
+
+  <!-- 运行方式  -->
+  <Item Key="FlowRunWay"  IntKey="0"  CH="手工启动"  EN="" RU=""  JP=""/>
+  <Item Key="FlowRunWay"  IntKey="1"  CH="按月启动"  EN="" RU="" JP=""  />
+  <Item Key="FlowRunWay"  IntKey="2"  CH="按周启动"  EN="" RU="" JP=""  />
+  <Item Key="FlowRunWay"  IntKey="3"  CH="按天启动"  EN="" RU="" JP=""  />
+  <Item Key="FlowRunWay"  IntKey="4"  CH="按小时启动"  EN="" RU="" JP=""  />
+
+
+  <!-- 应用类型  -->
+<Item Key="AppType"  IntKey="0"  CH="外部Url连接"  EN="" RU=""  JP=""/>
+<Item Key="AppType"  IntKey="1"  CH="本地可执行文件"  EN="" RU="" JP=""  />
+
+  <!-- 发生时间  -->
+  <Item Key="AppType"  IntKey="0"  CH="无(显示在表单底部)"  EN="" RU=""  JP=""/>
+  <Item Key="AppType"  IntKey="1"  CH="本地可执行文件"  EN="" RU="" JP=""  />
+
+
+  <!-- 运行模式  -->
+  <Item Key="RunModel"  IntKey="0"  CH="普通"  EN="" RU=""  JP=""/>
+  <Item Key="RunModel"  IntKey="1"  CH="合流"  EN="" RU="" JP=""  />
+  <Item Key="RunModel"  IntKey="2"  CH="分流"  EN="" RU="" JP=""  />
+  <Item Key="RunModel"  IntKey="3"  CH="分合流"  EN="" RU="" JP=""  />
+
+
+  <!-- 提示信息类型  -->
+  <Item Key="AlertType"  IntKey="0"  CH="短信"  EN="" RU=""  JP=""/>
+  <Item Key="AlertType"  IntKey="1"  CH="邮件"  EN="" RU="" JP=""  />
+  <Item Key="AlertType"  IntKey="2"  CH="邮件与短信"  EN="" RU="" JP=""  />
+
+  <!-- 提示信息类型  -->
+  <Item Key="AlertType"  IntKey="0"  CH="短信"  EN="" RU=""  JP=""/>
+  <Item Key="AlertType"  IntKey="1"  CH="邮件"  EN="" RU="" JP=""  />
+  <Item Key="AlertType"  IntKey="2"  CH="邮件与短信"  EN="" RU="" JP=""  />
+
+  <!-- 收听方式  -->
+  <Item Key="AlertWay"  IntKey="0"  CH="不接收"  EN="" RU=""  JP=""/>
+  <Item Key="AlertWay"  IntKey="1"  CH="手机短信"  EN="" RU="" JP=""  />
+  <Item Key="AlertWay"  IntKey="2"  CH="邮件"  EN="" RU="" JP=""  />
+  <Item Key="AlertWay"  IntKey="3"  CH="手机短信+邮件"  EN="" RU="" JP=""  />
+
+
+  <!-- CycleWay  -->
+<Item Key="CycleWay"  IntKey="0"  CH="未设置"  EN="" RU=""  JP=""/>
+<Item Key="CycleWay"  IntKey="1"  CH="按周"  EN="" RU="" JP=""  />
+<Item Key="CycleWay"  IntKey="2"  CH="按月"  EN="" RU="" JP=""  />
+<Item Key="CycleWay"  IntKey="3"  CH="按年"  EN="" RU="" JP=""  />
+
+  <!-- Target  -->
+  <Item Key="Target"  IntKey="0"  CH="新窗口"  EN="" RU=""  JP=""/>
+  <Item Key="Target"  IntKey="1"  CH="本窗口"  EN="" RU="" JP=""  />
+  <Item Key="Target"  IntKey="2"  CH="父窗口"  EN="" RU="" JP=""  />
+
+  <!-- SharingType  -->
+  <Item Key="SharingType"  IntKey="0"  CH="共享"  EN="" RU=""  JP=""/>
+  <Item Key="SharingType"  IntKey="1"  CH="私有"  EN="" RU="" JP=""  />
+
+
+  <!-- TaskSta状态  -->
+  <Item Key="TaskSta"  IntKey="0"  CH="未开始"  EN="" RU=""  JP=""/>
+  <Item Key="TaskSta"  IntKey="1"  CH="进行中"  EN="" RU="" JP=""  />
+  <Item Key="TaskSta"  IntKey="2"  CH="完成"  EN="" RU="" JP=""  />
+  <Item Key="TaskSta"  IntKey="3"  CH="推迟"  EN="" RU="" JP=""  />
+
+  <!-- PRI 优先级  -->
+  <Item Key="PRI"  IntKey="0"  CH="高"  EN="" RU=""  JP=""/>
+  <Item Key="PRI"  IntKey="1"  CH="中"  EN="" RU="" JP=""  />
+  <Item Key="PRI"  IntKey="2"  CH="低"  EN="" RU="" JP=""  />
+
+  <!-- SharingType 共享类型  -->
+  <Item Key="SharingType"  IntKey="0"  CH="共享"  EN="" RU=""  JP=""/>
+  <Item Key="SharingType"  IntKey="1"  CH="私有"  EN="" RU="" JP=""  />
+
+</NewDataSet>
