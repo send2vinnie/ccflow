@@ -296,7 +296,7 @@ public partial class WF_Admin_BillSet : WebPage
                 BillTemplate bk = new BillTemplate();
                 bk.NodeID = this.RefOID;
                 this.DoNew(bk);
-                break;
+                return;
         }
 
         BillTemplates Bills = new BillTemplates(this.NodeID);
