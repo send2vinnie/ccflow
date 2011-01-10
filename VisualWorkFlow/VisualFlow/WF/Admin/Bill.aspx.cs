@@ -50,8 +50,10 @@ public partial class WF_Admin_BillSet : WebPage
         this.Ucsys1.AddTD(this.ToE("BillType", "单据类型")); // 单据/单据名称
         DDL ddl = new DDL();
         ddl.ID = "DDL_BillType";
+
         BP.WF.BillTypes ens = new BillTypes();
         ens.RetrieveAll();
+
         if (ens.Count == 0)
         {
             BP.WF.BillType enB = new BillType();
@@ -292,11 +294,12 @@ public partial class WF_Admin_BillSet : WebPage
                 this.DoNew(bk1);
                 break;
             case "New":
-            default:
-                BillTemplate bk = new BillTemplate();
+                 BillTemplate bk = new BillTemplate();
                 bk.NodeID = this.RefOID;
                 this.DoNew(bk);
                 return;
+            default:
+                break;
         }
 
         BillTemplates Bills = new BillTemplates(this.NodeID);
