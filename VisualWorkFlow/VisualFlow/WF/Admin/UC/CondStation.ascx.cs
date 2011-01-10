@@ -289,7 +289,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
             return this.FK_MainNode + "_" + this.ToNodeID + "_" + this.HisCondType.ToString() + "_" + ConnDataFrom.Stas.ToString();
         }
     }
-
     void ddl_SelectedIndexChanged(object sender, EventArgs e)
     {
         this.Response.Redirect("CondStation.aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.DDL_Node.SelectedItemStringVal + "&FK_MainNode=" + this.FK_MainNode + "&CondType=" + (int)this.HisCondType + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);
