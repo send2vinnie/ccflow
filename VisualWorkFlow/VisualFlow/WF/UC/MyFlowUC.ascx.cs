@@ -562,7 +562,7 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
                 if (swk.Title.Length == msg.Length)
                     swk.Title = msg;
                 else
-                    swk.Title = msg + "" + swk.Title.Substring(msg.Length);
+                    swk.Title = msg; // +"" + swk.Title.Substring(msg.Length);
             }
         }
 
