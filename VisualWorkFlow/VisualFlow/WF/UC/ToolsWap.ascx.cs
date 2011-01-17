@@ -261,26 +261,27 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
     }
     public void AdminSet()
     {
-        this.AddFieldSet("系统设置");
+        this.AddFieldSet( this.ToE("Setting","系统设置") );
 
         this.AddTable();
         this.AddTR();
-        this.AddTDTitle("项目");
-        this.AddTDTitle("项目值");
-        this.AddTDTitle("描述");
+        this.AddTDTitle( this.ToE("Item", "项目"));
+        this.AddTDTitle( this.ToE("Value","项目值"));
+        this.AddTDTitle( this.ToE("Desc", "描述") );
         this.AddTREnd();
 
 
         this.AddTR();
-        this.AddTD("标题图片");
+        this.AddTD(this.ToE("TitleImg","标题图片") );
         FileUpload fu = new FileUpload();
         fu.ID = "F";
         this.AddTD(fu);
-        this.AddTDBigDoc("请您自己调整好图片大小，然后把它上传上去。在系统设置里可以控制标题图片是否显示。");
+        this.AddTD();
+     //   this.AddTDBigDoc("请您自己调整好图片大小，然后把它上传上去。在系统设置里可以控制标题图片是否显示。");
         this.AddTREnd();
 
         this.AddTR();
-        this.AddTD("ftp服务器URL");
+        this.AddTD("ftp URL");
         TextBox tb = new TextBox();
         tb.Width = 200;
         tb.ID = "TB_FtpUrl";
@@ -293,17 +294,16 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddTD("");
 
         Btn btn = new Btn();
-        btn.Text = "确定";
+        btn.Text = " OK ";
         btn.Click += new EventHandler(btn_AdminSet_Click);
         this.AddTD(btn);
         this.AddTD();
         this.AddTREnd();
 
-
         this.AddTR();
         this.AddTD();
-        this.AddTD("<a href=\"javascript:WinOpen('../../Comm/Sys/EditWebConfig.aspx')\" >系统设置</a>-<a href=\"javascript:WinOpen('../OA/FtpSet.aspx')\" >设置用户ftp服务</a>-<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.OA.Links')\" >链接</a>");
-        this.AddTD("<a href=\"javascript:WinOpen('../../WF/ClearDatabase.aspx')\" >清除所有流程数据</a>");
+        this.AddTD("<a href=\"javascript:WinOpen('../../Comm/Sys/EditWebConfig.aspx')\" >System Setting</a>-<a href=\"javascript:WinOpen('../OA/FtpSet.aspx')\" >FTP Services</a>-<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.OA.Links')\" >Link</a>");
+        this.AddTD("<a href=\"javascript:WinOpen('../../WF/ClearDatabase.aspx')\" >" + this.ToE("ClearDB", "清除流程数据") + "</a>");
         this.AddTD();
         this.AddTREnd();
 
@@ -632,7 +632,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
     }
     public void BindAutoLog()
     {
-        string sql = "SELECT a.No + a.Name as Empstr,AuthorDate FROM WF_Emp a WHERE Author='" + WebUser.No + "' AND AuthorIsOK=1";
+        string sql = "SELECT a.No + a.Name as Empstr,AuthorDate, a.No FROM WF_Emp a WHERE Author='" + WebUser.No + "' AND AuthorIsOK=1";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
         if (dt.Rows.Count == 0)
@@ -670,7 +670,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.Add("<ul>");
         foreach (DataRow dr in dt.Rows)
         {
-            this.AddLi("<a href=\"javascript:LogAs('" + dr[0] + "')\">" + this.ToE("Authorized", "授权人") + ":" + dr["Empstr"] + " - " + this.ToE("Date", "授权日期") + ":" + dr["AuthorDate"] + "</a>");
+            this.AddLi("<a href=\"javascript:LogAs('" + dr[2] + "')\">" + this.ToE("Authorized", "授权人") + ":" + dr["Empstr"] + " - " + this.ToE("Date", "授权日期") + ":" + dr["AuthorDate"] + "</a>");
         }
         this.Add("</ul>");
         this.AddFieldSetEnd();
@@ -739,16 +739,26 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
     {
         if (WebUser.Auth != null)
         {
-            this.AddMsgOfInfo(this.ToE("Note", "提示"),
-                this.ToE("To8", "您的登陆是授权模式，您不能查看个人信息。") + "<br> <a href=\"javascript:ExitAuth('" + WebUser.Auth + "')\">" + this.ToE("ExitLiM", "退出授权模式") + "</a> - <a href='Home.aspx'>Home-</a> - <a href=Tools.aspx >Setting</a>");
+            this.AddFieldSet(this.ToE("Note", "提示"));
+
+            this.AddBR();
+            this.Add(this.ToE("To8", "您的登陆是授权模式，您不能查看个人信息。"));
+            this.AddUL();
+            this.AddLi("<a href=\"javascript:ExitAuth('" + WebUser.Auth + "')\">" + this.ToE("ExitLiM", "退出授权模式") + "</a>");
+            this.AddLi("<a href=Tools.aspx >" + this.ToE("Set", "设置") + "</a>");
+            if (WebUser.IsWap)
+                this.AddLi("<a href='Home.aspx'>" + this.ToE("Home", "返回主页") + "</a>");
+
+            this.AddULEnd();
+            this.AddFieldSetEnd();
             return;
         }
+
 
         if (WebUser.IsWap)
             this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='Tools.aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
         else
             this.AddFieldSet(this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
-
 
         this.Add(this.ToE("UserAcc", "用户帐号") + ":" + WebUser.No);
         this.Add(this.ToE("UserName", "用户名") + ":" + WebUser.Name);

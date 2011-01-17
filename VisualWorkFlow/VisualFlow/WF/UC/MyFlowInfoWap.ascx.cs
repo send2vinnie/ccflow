@@ -77,6 +77,10 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
                 break;
         }
 
+        //FlowSorts fss = new FlowSorts();
+        //fss.RetrieveAll();
+        //DataSet = fss.ToDataSet();
+
         string s = this.Session["info"] as string;
         this.Session["info"] = null;
         if (s != null)

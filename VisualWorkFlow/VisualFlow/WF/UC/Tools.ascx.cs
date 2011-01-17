@@ -23,8 +23,6 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
-
         BP.WF.XML.Tools tools = new BP.WF.XML.Tools();
         tools.RetrieveAll();
         string refno = this.RefNo;

@@ -92,7 +92,6 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.Title = this.ToE("StartWork", "工作发起");
-
         string sql = "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NODEID IN (  SELECT FK_Node FROM WF_NodeStation WHERE FK_STATION IN (SELECT FK_STATION FROM Port_EmpSTATION WHERE FK_EMP='" + WebUser.No + "')  ) ";
         Flows fls = new Flows();
         BP.En.QueryObject qo = new BP.En.QueryObject(fls);
@@ -108,7 +107,6 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             BindWap(fls);
             return;
         }
-
 
 
         int colspan = 5;

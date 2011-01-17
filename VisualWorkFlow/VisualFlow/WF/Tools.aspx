@@ -33,7 +33,7 @@ function TakeBack( fk_emp )
 {
    if (window.confirm('您确定要取消对['+fk_emp+']的授权吗？')==false)
        return;
-       
+
     var url='Do.aspx?DoType=TakeBack';
     WinShowModalDialog(url,'');
     alert('您已经成功的取消。'); 
@@ -44,7 +44,7 @@ function LogAs( fk_emp )
 {
    if (window.confirm('您确定要以['+fk_emp+']授权方式登陆吗？')==false)
        return;
-       
+
     var url='Do.aspx?DoType=LogAs&FK_Emp='+fk_emp;
     WinShowModalDialog(url,'');
     alert('登陆成功，现在您可以以['+fk_emp+']处理工作。'); 
@@ -57,6 +57,5 @@ function CHPass()
    // WinShowModalDialog(url,'');
     alert('密码修改成功，请牢记您的新密码。'); 
 }
-
 </script>
 </asp:Content>

@@ -61,14 +61,14 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Page.Title = "成员";
+        this.Page.Title = "Empleyes";
         if (WebUser.IsWap)
         {
             this.BindWap();
             return;
         }
 
-        string sql = "SELECT a.No,a.Name, b.Name as DeptName FROM Port_Emp a, Port_Dept b WHERE a.FK_Dept=b.No ORDER  BY a.FK_Dept ";
+        string sql = "SELECT a.No,a.Name, b.Name as DeptName FROM WF_Emp a, Port_Dept b WHERE a.FK_Dept=b.No ORDER BY a.FK_Dept,a.IDX ";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
         BP.WF.Port.WFEmps emps = new BP.WF.Port.WFEmps();
@@ -84,15 +84,14 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
 
         this.AddTR();
         this.AddTDTitle("IDX");
-        this.AddTDTitle("部门");
-        this.AddTDTitle("人员");
-        this.AddTDTitle("电话");
+        this.AddTDTitle(this.ToE("Dept", "部门"));
+        this.AddTDTitle(this.ToE("Emp", "人员"));
+        this.AddTDTitle("Tel");
         this.AddTDTitle("Email");
-        this.AddTDTitle("岗位 <a href=Emps.aspx?DoType=1>刷新</a>");
-        this.AddTDTitle("签名");
+        this.AddTDTitle(this.ToE("Station", "岗位")); // <a href=Emps.aspx?DoType=1>刷新</a> ");
+        this.AddTDTitle(this.ToE("Dept", "签名"));
         if (WebUser.No == "admin")
-            this.AddTDTitle("顺序");
-
+            this.AddTDTitle(this.ToE("Order", "顺序"));
 
         if (this.DoType != null)
         {
@@ -100,6 +99,8 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
             this.GenerAllImg();
         }
         this.AddTREnd();
+
+        string keys = DateTime.Now.ToString("MMddhhmmss");
 
         string deptName = null;
         int idx = 0;
@@ -134,7 +135,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
             if (emp != null)
             {
                 this.AddTD(emp.TelHtml);
-                this.AddTD(emp.EmailHtml);
+                this.AddTD(emp.EmailHtml );
                 this.AddTD(emp.Stas);
             }
             else
@@ -142,27 +143,24 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
                 this.AddTD("");
                 this.AddTD("");
                 this.AddTD("");
-                // BP.WF.Port.WFEmp.DTSData();
                 break;
-                //  this.Response.Redirect(this.Request.RawUrl, true);
             }
 
             this.AddTD("<img src='../Data/Siganture/" + fk_emp + ".jpg' border=1 onerror=\"this.src='../Data/Siganture/UnName.jpg'\"/>");
-
             if (WebUser.No == "admin")
             {
-                this.AddTD("<a href=\"javascript:DoUp('" + emp.No + "')\" >上移</a>-<a href=\"javascript:DoDown('" + emp.No + "')\" >下移</a>");
+                this.AddTD("<a href=\"javascript:DoUp('" + emp.No + "','" + keys + "')\" ><img src='./../../Images/Btn/Up.gif' border=0 /></a>-<a href=\"javascript:DoDown('" + emp.No + "','" + keys + "')\" ><img src='./../../Images/Btn/Down.gif' border=0 /></a>");
             }
-            //  this.AddTD(emp.hisst);
             this.AddTREnd();
         }
         this.AddTableEnd();
     }
+
     public void BindWap()
     {
         this.AddTable("width=100% align=center");
         this.AddTR();
-        this.AddTD("colspan=4 align=left class=FDesc","<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a> - 成员");
+        this.AddTD("colspan=4 align=left class=FDesc", "<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a> - " + this.ToE("Emp","成员") );
         this.AddTREnd();
 
         BP.Port.Depts depts = new BP.Port.Depts();

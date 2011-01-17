@@ -29,11 +29,13 @@ public partial class WF_Admin_TitleSet : BP.Web.WebPage
         //this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.AddTD("标题图片");
+        this.Pub1.AddTD( this.ToE("TitleImg", "标题图片"));
         FileUpload fu = new FileUpload();
         fu.ID = "F";
         this.Pub1.AddTD(fu);
-        this.Pub1.AddTDBigDoc("请您自己调整好图片大小，然后把它上传上去。在系统设置里可以控制标题图片是否显示。");
+        this.Pub1.AddTD();
+       // this.Pub1.AddTDBigDoc("请您自己调整好图片大小，然后把它上传上去。在系统设置里可以控制标题图片是否显示。");
+       // this.Pub1.AddTDBigDoc("请您自己调整好图片大小，然后把它上传上去。在系统设置里可以控制标题图片是否显示。");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
@@ -58,7 +60,7 @@ public partial class WF_Admin_TitleSet : BP.Web.WebPage
 
         this.Pub1.AddTR();
         this.Pub1.AddTD();
-        this.Pub1.AddTD("<a href='../../OA/FtpSet.aspx'  >设置用户ftp服务</a>-<a href='../../Comm/Ens.aspx?EnsName=BP.OA.Links' >链接</a>");
+        this.Pub1.AddTD("<a href='../../OA/FtpSet.aspx'  >FTP Server</a>-<a href='../../Comm/Ens.aspx?EnsName=BP.OA.Links' >Link</a>");
         this.Pub1.AddTD();
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();

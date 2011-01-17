@@ -93,7 +93,7 @@ public partial class WF_Admin_TestFlow : WebPage
         this.Left.AddFieldSet(this.ToE("Tools", "系统管理"));
         //this.Left.AddFieldSet("系统工具");
         this.Left.AddUL();
-        this.Left.AddLi("<a href=\"javascript:WinOpen('../../WF/ClearDatabase.aspx')\">" + this.ToE("ClearDatabase","清除所有流程数据")+ "</a>");
+        this.Left.AddLi("<a href=\"javascript:WinOpen('../../WF/ClearDatabase.aspx')\">" + this.ToE("ClearDatabase","清除流程数据")+ "</a>");
         this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Sys/EditWebConfig.aspx')\">" + this.ToE("WebConfig", "系统设置") + "</a>");
 
 
@@ -159,16 +159,7 @@ public partial class WF_Admin_TestFlow : WebPage
 
 
         Flow fl = new Flow(this.FK_Flow);
-
-        this.Ucsys1.AddFieldSet(fl.Name);
-        this.Ucsys1.AddUL();
-        Nodes nds = new Nodes(this.FK_Flow);
-        foreach (BP.WF.Node nd in nds)
-        {
-            this.Ucsys1.AddLi("Step " + nd.Step + " :<a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.NodeO&PK=" + nd.NodeID + "')\">" + nd.Name + "</a>, <a href=\"javascript:WinOpen('../MapDef/MapDef.aspx?PK=ND" + nd.NodeID + "')\">" + this.ToE("DNode", "设计表单") + "</a>");
-        }
-        this.Ucsys1.AddULEnd();
-        this.Ucsys1.AddFieldSetEnd();
+     
 
         int nodeid = int.Parse(this.FK_Flow + "01");
         Emps emps = new Emps();
@@ -186,7 +177,18 @@ public partial class WF_Admin_TestFlow : WebPage
         this.Ucsys1.AddUL();
         foreach (Emp emp in emps)
         {
-            this.Ucsys1.AddLi(emp.No + "," + emp.Name + "&nbsp;&nbsp;&nbsp;&nbsp;<a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />IE</a> - <a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  ><img src='./../Img/Mobile.gif' border=0 width=30px height=15px />Mobile</a>  " + emp.FK_DeptText);
+            this.Ucsys1.AddLi(emp.No + "," + emp.Name + "&nbsp;&nbsp;&nbsp;&nbsp;<a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a> - <a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  ><img src='./../Img/Mobile.gif' border=0 width=25px height=18px />Mobile</a>  " + emp.FK_DeptText);
+        }
+        this.Ucsys1.AddULEnd();
+        this.Ucsys1.AddFieldSetEnd();
+
+
+        this.Ucsys1.AddFieldSet(fl.Name);
+        this.Ucsys1.AddUL();
+        Nodes nds = new Nodes(this.FK_Flow);
+        foreach (BP.WF.Node nd in nds)
+        {
+            this.Ucsys1.AddLi("Step " + nd.Step + " :<a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.NodeO&PK=" + nd.NodeID + "')\">" + nd.Name + "</a>, <a href=\"javascript:WinOpen('../MapDef/MapDef.aspx?PK=ND" + nd.NodeID + "')\">" + this.ToE("DNode", "设计表单") + "</a>");
         }
         this.Ucsys1.AddULEnd();
         this.Ucsys1.AddFieldSetEnd();

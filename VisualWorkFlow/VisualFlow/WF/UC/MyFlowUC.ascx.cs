@@ -367,7 +367,8 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
                 this.FlowMsg.Add(this.ToE("FW1", "@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。"));
 
                 this.FlowMsg.AddUL();
-                this.FlowMsg.AddLi("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "返回主页") + "</a>");
+                if (WebUser.IsWap)
+                    this.FlowMsg.AddLi("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "返回主页") + "</a>");
                 this.FlowMsg.AddLi("<a href='Start.aspx'><img src='./Img/Start.gif' border=0/>" + this.ToE("StartWork", "发起流程") + "</a>");
                 this.FlowMsg.AddLi("<a href='Runing.aspx'><img src='./Img/Runing.gif' border=0/>" + this.ToE("OnTheWayWork", "在途工作") + "</a>");
 
@@ -552,19 +553,25 @@ public partial class WF_UC_MyFlowUC : BP.Web.UC.UCBase3
         if (nd.IsStartNode)
         {
             StartWork swk = (StartWork)wk;
+            string msg = "";
+            if (WebUser.SysLang == "CH")
+                msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
+            else
+                msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") +" " + this.ToE("Start", "发起");
+
             if (swk.Title == "")
             {
-                swk.Title = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
+                if (WebUser.SysLang == "CH")
+                    swk.Title = msg;
+                else
+                    swk.Title = msg;
             }
             else if (swk.Title.Contains("在") == true)
             {
-                string msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
-                if (swk.Title.Length == msg.Length)
-                    swk.Title = msg;
-                else
-                    swk.Title = msg; // +"" + swk.Title.Substring(msg.Length);
+                swk.Title = msg;
             }
         }
+
 
         MapAttrs mattrs = new MapAttrs("ND" + nd.NodeID);
         foreach (MapAttr attr in mattrs)

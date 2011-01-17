@@ -206,10 +206,10 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
             {
                 this.Add("<p align='left' style='line-height: 100%' >&nbsp;&nbsp;&nbsp;&nbsp;<a name='ND" + wn.HisNode.NodeID + "' >" + this.ToEP1("NStep", "@第{0}步", idx.ToString()) + "</a>" + wn.HisNode.Name + "，" + this.ToE("DealEmp", "处理人") + "：" + wn.HisWork.Rec + wn.HisWork.HisRec.Name + "，" + this.ToE("NodeState", "节点状态") + "：" + wn.HisWork.NodeStateText + "。");
             }
-           
-            Bills bills=new Bills();
-         //   bills.rea
-            
+
+            Bills bills = new Bills();
+            //   bills.rea
+
             BillTemplates reffunc = wn.HisNode.HisBillTemplates;
             if (reffunc.Count > 0)
             {
@@ -219,7 +219,7 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
                     isMyBill = true;
 
                 string year = DateTime.Now.Year.ToString();
-                
+
                 foreach (BillTemplate func in reffunc)
                 {
                     if (wn.HisWork.NodeState == 0)
@@ -232,7 +232,7 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
                         //string[] paths = file.Split('_');
                         //string path = paths[0] + "/" + paths[1] + "/" + paths[2] + "/";
 
-                     //   string BillInfo = "<img src='./../Images/Btn/Word.gif' /><a href='./../FlowFile/Bill/" + path + file + "' target=_blank >" + func.Name + "</a>";
+                        //   string BillInfo = "<img src='./../Images/Btn/Word.gif' /><a href='./../FlowFile/Bill/" + path + file + "' target=_blank >" + func.Name + "</a>";
 
                         //string BillInfo = "<img src='./../Images/Btn/Word.gif' /><a href=\"javascript:WinOpen('Do.aspx?DoType=DownBill&MyPK="+func+"')\" target=_blank >" + func.Name + "</a>";
                         //this.Add(BillInfo);
@@ -242,7 +242,6 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
                         // this.Add("<img src='../Images/Btn/Word.gif' /><a href=\"javascript:Run('C:\\\\ds2002\\\\OpenBill.EXE','" + file + "','0');\"  >" + func.Name + "</a>");
                     }
                 }
-
                 this.Add("</p>");
             }
 
@@ -254,7 +253,6 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
             this.Add("</div>");
         }
     }
-
     protected void AddContral(string desc, string text)
     {
         this.Add("<td  class='FDesc' nowrap> " + desc + "</td>");

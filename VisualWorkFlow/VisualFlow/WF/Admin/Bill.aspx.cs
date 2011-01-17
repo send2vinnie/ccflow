@@ -141,7 +141,7 @@ public partial class WF_Admin_BillSet : WebPage
         }
         string url = "";
         if (this.RefNo != null)
-            url = "<a href='../../Data/CyclostyleFile/" + bill.No + ".rtf'><img src='../../Images/Btn/save.gif' border=0/>" + this.ToE("DownTemplete", "模板下载") + "</a>";
+            url = "<a href='../../DataUser/CyclostyleFile/" + bill.No + ".rtf'><img src='../../Images/Btn/save.gif' border=0/>" + this.ToE("DownTemplete", "模板下载") + "</a>";
 
         this.Ucsys1.Add(url + "</TD>");
         this.Ucsys1.AddTREnd();
@@ -333,7 +333,7 @@ public partial class WF_Admin_BillSet : WebPage
 
             this.Ucsys1.AddTD(Bill.No);
             this.Ucsys1.AddTD("<img src='../../Images/Btn/Word.gif' >" + Bill.Name);
-            this.Ucsys1.AddTD("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefNo=" + Bill.No + "'><img src='../../Images/Btn/Edit.gif' border=0/>" + this.ToE("Edit", "编辑") + "</a>|<a href='../../Data/CyclostyleFile/" + Bill.No + ".rtf'><img src='../../Images/Btn/save.gif' border=0/>" + this.ToE("DownTemplete", "模板下载") + "</a>");
+            this.Ucsys1.AddTD("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefNo=" + Bill.No + "'><img src='../../Images/Btn/Edit.gif' border=0/>" + this.ToE("Edit", "编辑") + "</a>|<a href='../../DataUser/CyclostyleFile/" + Bill.No + ".rtf'><img src='../../Images/Btn/save.gif' border=0/>" + this.ToE("DownTemplete", "模板下载") + "</a>");
             this.Ucsys1.AddTREnd();
         }
         this.Ucsys1.AddTableEnd();
