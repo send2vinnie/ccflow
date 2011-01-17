@@ -146,10 +146,15 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
                 catch
                 {
                     sql = "SELECT COUNT(*) as NUM FROM " + vsM.EnsOfMM.GetNewEntity.EnMap.PhysicsTable + " WHERE " + vsM.AttrOfOneInMM + "=" + en.PKVal;
-                    i = DBAccess.RunSQLReturnValInt(sql);
+                    try
+                    {
+                        i = DBAccess.RunSQLReturnValInt(sql);
+                    }
+                    catch
+                    {
+                        vsM.EnsOfMM.GetNewEntity.CheckPhysicsTable();
+                    }
                 }
-
-
                 if (i == 0)
                 {
                     if (this.AttrKey == vsM.EnsOfMM.ToString())
