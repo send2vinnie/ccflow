@@ -1,0 +1,15 @@
+C:\项目2011\TaxWeb\Code\TaxProject\Common\bin\Debug\Tax666.Common.dll
+C:\项目2011\TaxWeb\Code\TaxProject\Common\bin\Debug\Tax666.Common.pdb
+C:\项目2011\TaxWeb\Code\TaxProject\Common\obj\Debug\ResolveAssemblyReference.cache
+C:\项目2011\TaxWeb\Code\TaxProject\Common\obj\Debug\Tax666.Common.dll
+C:\项目2011\TaxWeb\Code\TaxProject\Common\obj\Debug\Tax666.Common.pdb
+F:\刘莹\TaxProject20110114\Common\bin\Debug\Tax666.Common.dll
+F:\刘莹\TaxProject20110114\Common\bin\Debug\Tax666.Common.pdb
+F:\刘莹\TaxProject20110114\Common\obj\Debug\ResolveAssemblyReference.cache
+F:\刘莹\TaxProject20110114\Common\obj\Debug\Tax666.Common.dll
+F:\刘莹\TaxProject20110114\Common\obj\Debug\Tax666.Common.pdb
+D:\YeeGen\Common\bin\Debug\Tax666.Common.dll
+D:\YeeGen\Common\bin\Debug\Tax666.Common.pdb
+D:\YeeGen\Common\obj\Debug\ResolveAssemblyReference.cache
+D:\YeeGen\Common\obj\Debug\Tax666.Common.dll
+D:\YeeGen\Common\obj\Debug\Tax666.Common.pdb

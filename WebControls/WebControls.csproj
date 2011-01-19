@@ -1,0 +1,82 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6D65A999-1FEC-46E1-9E8F-8A81E0E581B6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tax666.WebControls</RootNamespace>
+    <AssemblyName>Tax666.WebControls</AssemblyName>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AspNetPager.cs" />
+    <Compile Include="Common\EventMessage.cs" />
+    <Compile Include="Common\MessageBox.cs" />
+    <Compile Include="Common\NavigationUrl.cs" />
+    <Compile Include="Common\PopedomType.cs" />
+    <Compile Include="Common\PublicCommon.cs" />
+    <Compile Include="HeadMenuButtonItem.cs" />
+    <Compile Include="HeadMenuWebControls.cs" />
+    <Compile Include="MultiListBox.cs" />
+    <Compile Include="PopedomType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubContainerControlDesigner.cs" />
+    <Compile Include="TabOptionItem.cs" />
+    <Compile Include="TaboptionItemCollection.cs" />
+    <Compile Include="TabOptionWebControls.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AspNetPagerDocs.xml" />
+    <EmbeddedResource Include="Resource\moveAllLeft.gif" />
+    <EmbeddedResource Include="Resource\moveAllLeft2.gif" />
+    <EmbeddedResource Include="Resource\moveAllRight.gif" />
+    <EmbeddedResource Include="Resource\moveAllRight2.gif" />
+    <EmbeddedResource Include="Resource\moveLeft.gif" />
+    <EmbeddedResource Include="Resource\moveLeft2.gif" />
+    <EmbeddedResource Include="Resource\moveRight.gif" />
+    <EmbeddedResource Include="Resource\moveRight2.gif" />
+    <EmbeddedResource Include="Resource\MultiListBox.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{CCFD6793-3A2D-4C46-B43C-2271382EFBB7}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,16 @@
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\ResolveAssemblyReference.cache
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\bin\Debug\Tax666.WebControls.dll
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\bin\Debug\Tax666.WebControls.pdb
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\bin\Debug\Tax666.Common.dll
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\bin\Debug\Tax666.Common.pdb
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.dll
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.pdb
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.Resource.moveAllLeft.gif
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.Resource.moveAllLeft2.gif
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.Resource.moveAllRight.gif
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.Resource.moveAllRight2.gif
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.Resource.moveLeft.gif
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.Resource.moveLeft2.gif
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.Resource.moveRight.gif
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.Resource.moveRight2.gif
+E:\项目2011\TaxWeb\Code\TaxProject\WebControls\obj\Debug\Tax666.WebControls.Resource.MultiListBox.js

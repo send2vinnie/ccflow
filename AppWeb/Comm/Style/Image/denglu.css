@@ -1,0 +1,57 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	font-size: 12px;
+	color: #6899D1;
+}.denglu_z {
+	height: 391px;
+	width: auto;
+	padding-top: 10%;
+	background-image: url(denglu_z.jpg);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+.denglu_nei {
+	height: 393px;
+	width: 689px;
+	margin-right: auto;
+	margin-left: auto;
+	background-image: url(2_r2_c4.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.font_lan  {
+	color: #DAFDEB;
+	font-size: 14px;
+}
+.anniu_denglu1  {
+
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=2_r4_c6.png);
+	background-image: url(2_r4_c6.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin: 0px;
+	height: 34px;
+	width: 141px;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+}

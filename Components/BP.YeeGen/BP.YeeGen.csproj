@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D6A56F96-131B-42BD-9486-B95D3F5377B5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BP.YeeGen</RootNamespace>
+    <AssemblyName>BP.YeeGen</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Glo.cs" />
+    <Compile Include="JiangPin.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Member\CBuess.cs" />
+    <Compile Include="Member\CBuessType.cs" />
+    <Compile Include="Member\CFriend.cs" />
+    <Compile Include="Member\Favorite.cs" />
+    <Compile Include="Member\Member.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShareFile\SFSort.cs" />
+    <Compile Include="ShareFile\SFSort1.cs" />
+    <Compile Include="ShareFile\ShareFile.cs" />
+    <Compile Include="YGPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ZJ.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ZJType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BP.En30\BP.En30.csproj">
+      <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
+      <Name>BP.En30</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BP.Web.Controls30\BP.Web.Controls30.csproj">
+      <Project>{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}</Project>
+      <Name>BP.Web.Controls30</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="old_ver\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

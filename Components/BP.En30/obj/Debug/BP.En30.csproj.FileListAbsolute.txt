@@ -1,0 +1,12 @@
+D:\WorkFlow\Components\BP.En30\bin\BP.En30.dll
+D:\WorkFlow\Components\BP.En30\bin\BP.En30.pdb
+D:\WorkFlow\Components\BP.En30\bin\ChineseConverter.dll
+D:\WorkFlow\Components\BP.En30\obj\Debug\ResolveAssemblyReference.cache
+D:\WorkFlow\Components\BP.En30\obj\Debug\BP.En30.dll
+D:\WorkFlow\Components\BP.En30\obj\Debug\BP.En30.pdb
+d:\VisualWorkFlow\Components\BP.En30\bin\BP.En30.dll
+d:\VisualWorkFlow\Components\BP.En30\bin\BP.En30.pdb
+d:\VisualWorkFlow\Components\BP.En30\bin\ChineseConverter.dll
+d:\VisualWorkFlow\Components\BP.En30\obj\Debug\ResolveAssemblyReference.cache
+d:\VisualWorkFlow\Components\BP.En30\obj\Debug\BP.En30.dll
+d:\VisualWorkFlow\Components\BP.En30\obj\Debug\BP.En30.pdb
