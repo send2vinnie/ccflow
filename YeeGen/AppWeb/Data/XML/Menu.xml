@@ -7,4 +7,9 @@
 	<Item No="0102" Name="奖品维护"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.JiangPins" Img="../../Images/Pub/Table.gif" Enable="1" />
 	<Item No="0102" Name="投稿管理"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.TouGaos" Img="../../Images/Pub/Table.gif" Enable="1" />
 
+
+	<Item No="0102" Name="资讯模块"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.InfoModels" Img="../../Images/Pub/Table.gif" Enable="1" />
+	<Item No="0102" Name="资讯模块明细"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.InfoItems" Img="../../Images/Pub/Table.gif" Enable="1" />
+	<Item No="0102" Name="资讯"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.Infos" Img="../../Images/Pub/Table.gif" Enable="1" />
+
 </NewDataSet>
