@@ -83,12 +83,11 @@ namespace BP.YG
 				return wherego;
 			}
 		}
-
         protected void Button1_Click(object sender, System.EventArgs e)
         {
             try
             {
-                Customer c = new Customer();
+                Member c = new Member();
                 c.No = this.TB_No.Text;
                 if (c.IsExit("No", this.TB_No.Text) == false)
                     throw new Exception("用户名[" + c.No + "]不存在。");
@@ -105,7 +104,7 @@ namespace BP.YG
                 {
                     comefrom = Global.GoWhere;
                     if (comefrom == null)
-                        comefrom = "FAQ.aspx";
+                        comefrom = "Default.aspx";
                     else
                         Global.GoWhere = null;
                 }
@@ -114,7 +113,7 @@ namespace BP.YG
                     string url = this.Request.RawUrl;
                     if (url.ToLower().Contains("login.aspx") || url.ToLower().Contains("reguser.aspx"))
                     {
-                        comefrom = "FAQ.aspx";
+                        comefrom = "Default.aspx";
                     }
                     else
                     {
@@ -125,7 +124,7 @@ namespace BP.YG
                             comefrom = comefrom + "?from=23&" + url.Substring(url.IndexOf("?"));
 
                         if (comefrom.IndexOf("Msg.aspx") != -1)
-                            comefrom = "FAQ.aspx";
+                            comefrom = "Default.aspx";
                     }
                 }
                 this.Response.Redirect(comefrom, true);

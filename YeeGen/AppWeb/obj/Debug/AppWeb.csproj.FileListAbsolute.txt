@@ -37,11 +37,8 @@ F:\刘莹\TaxProject20110114\AppWeb\obj\Debug\ResolveAssemblyReference.cache
 F:\刘莹\TaxProject20110114\AppWeb\obj\Debug\Tax666.AppWeb.dll
 F:\刘莹\TaxProject20110114\AppWeb\obj\Debug\Tax666.AppWeb.pdb
 F:\刘莹\TaxProject20110114\AppWeb\obj\Debug\Tax666.AppWeb.dll.licenses
-D:\YeeGen\AppWeb\obj\Debug\ResolveAssemblyReference.cache
-D:\YeeGen\AppWeb\obj\Debug\AppWeb.csproj.ResolveComReference.cache
-D:\YeeGen\AppWeb\obj\Debug\Tax666.AppWeb.dll.licenses
-D:\YeeGen\AppWeb\bin\Tax666.AppWeb.dll
-D:\YeeGen\AppWeb\bin\Tax666.AppWeb.pdb
+D:\YeeGen\AppWeb\bin\BP.YG.WebUI.dll
+D:\YeeGen\AppWeb\bin\BP.YG.WebUI.pdb
 D:\YeeGen\AppWeb\bin\BP.En30.dll
 D:\YeeGen\AppWeb\bin\BP.Web.Controls.dll
 D:\YeeGen\AppWeb\bin\BP.YeeGen.dll
@@ -69,5 +66,8 @@ D:\YeeGen\AppWeb\bin\Tax666.Common.pdb
 D:\YeeGen\AppWeb\bin\Tax666.BusinessRules.pdb
 D:\YeeGen\AppWeb\bin\BP.YeeGen.pdb
 D:\YeeGen\AppWeb\bin\Tax666.BusinessFacade.pdb
-D:\YeeGen\AppWeb\obj\Debug\Tax666.AppWeb.dll
-D:\YeeGen\AppWeb\obj\Debug\Tax666.AppWeb.pdb
+D:\YeeGen\AppWeb\obj\Debug\ResolveAssemblyReference.cache
+D:\YeeGen\AppWeb\obj\Debug\AppWeb.csproj.ResolveComReference.cache
+D:\YeeGen\AppWeb\obj\Debug\BP.YG.WebUI.dll.licenses
+D:\YeeGen\AppWeb\obj\Debug\BP.YG.WebUI.dll
+D:\YeeGen\AppWeb\obj\Debug\BP.YG.WebUI.pdb

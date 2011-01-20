@@ -50,17 +50,17 @@ namespace HiTax
 
 		protected void Button1_Click(object sender, System.EventArgs e)
 		{
-			Customer c = new Customer();
-			if (c.IsExit("No",this.TB_No.Text))
-			{
-				ToMsgPage("系统已经把您的密码发送到["+c.Email+"]，请查收。其它：如果您的信息");
-				//this.Response.Write("<script language=javascript >alert('系统已经把您的密码发送到[]，请查收。');</script>");
-				//this.Response.Redirect("Login.aspx",true);
-			}
-			else
-			{
-				this.Label1.Text="用户名错误。";
-			}
+            Member c = new Member();
+            //if (c.IsExit("No",this.TB_No.Text))
+            //{
+            //    ToMsgPage("系统已经把您的密码发送到["+c.Email+"]，请查收。其它：如果您的信息");
+            //    //this.Response.Write("<script language=javascript >alert('系统已经把您的密码发送到[]，请查收。');</script>");
+            //    //this.Response.Redirect("Login.aspx",true);
+            //}
+            //else
+            //{
+            //    this.Label1.Text="用户名错误。";
+            //}
 		}
 	}
 }

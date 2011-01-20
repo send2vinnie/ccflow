@@ -8,8 +8,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tax666.AppWeb</RootNamespace>
-    <AssemblyName>Tax666.AppWeb</AssemblyName>
+    <RootNamespace>BP.YG.WebUI</RootNamespace>
+    <AssemblyName>BP.YG.WebUI</AssemblyName>
     <OldToolsVersion>3.5</OldToolsVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -1541,7 +1541,6 @@
     <None Include="Manager\JScript\FineMessBox\Images\Thumbs.db" />
     <Content Include="JiangPin.aspx" />
     <Content Include="Pub.ascx" />
-    <Content Include="RegUserLicese.htm" />
     <Content Include="Site.Master" />
     <Content Include="CuteSoft_Client\CuteEditor\Load.ashx" />
     <Content Include="CuteSoft_Client\CuteEditor\Web.config" />
@@ -1768,6 +1767,7 @@
     <Folder Include="App_Themes\Manager\Images\" />
     <Folder Include="CuteSoft_Client\CuteEditor\ImageEditor\TempFiles\" />
     <Folder Include="Images\" />
+    <Folder Include="Member\" />
     <Folder Include="Pages\" />
     <Folder Include="Uploads\" />
     <Folder Include="Utils\" />
