@@ -37,6 +37,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Info\InfoItem.cs" />
+    <Compile Include="Info\Info.cs" />
+    <Compile Include="Info\InfoModel.cs" />
     <Compile Include="TouGao.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="JiangPin.cs">
