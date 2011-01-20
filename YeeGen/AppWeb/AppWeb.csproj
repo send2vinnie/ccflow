@@ -1318,9 +1318,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
+    <Compile Include="JiangPin.aspx.cs">
+      <DependentUpon>JiangPin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="JiangPin.aspx.designer.cs">
+      <DependentUpon>JiangPin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Manager\AdminLogin.aspx.cs">
       <DependentUpon>AdminLogin.aspx</DependentUpon>
@@ -1435,20 +1438,19 @@
     <Compile Include="Pub.ascx.designer.cs">
       <DependentUpon>Pub.ascx</DependentUpon>
     </Compile>
-    <Compile Include="RegUser.aspx.cs">
-      <DependentUpon>RegUser.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="RequestMyPass.aspx.cs">
-      <DependentUpon>RequestMyPass.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="TouGao.aspx.cs">
+      <DependentUpon>TouGao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TouGao.aspx.designer.cs">
+      <DependentUpon>TouGao.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ArticleBigType.ascx.cs">
       <DependentUpon>ArticleBigType.ascx</DependentUpon>
@@ -1537,11 +1539,9 @@
     <Content Include="CuteSoft_Client\CuteEditor\Dialogs\Web.config" />
     <None Include="CuteSoft_Client\CuteEditor\Editor.cep" />
     <None Include="Manager\JScript\FineMessBox\Images\Thumbs.db" />
-    <Content Include="Login.aspx" />
+    <Content Include="JiangPin.aspx" />
     <Content Include="Pub.ascx" />
-    <Content Include="RegUser.aspx" />
     <Content Include="RegUserLicese.htm" />
-    <Content Include="RequestMyPass.aspx" />
     <Content Include="Site.Master" />
     <Content Include="CuteSoft_Client\CuteEditor\Load.ashx" />
     <Content Include="CuteSoft_Client\CuteEditor\Web.config" />
@@ -1714,6 +1714,7 @@
     <Content Include="Manager\JScript\tree.js" />
     <Content Include="Manager\LeftMenu.aspx" />
     <Content Include="Manager\Pub.ascx" />
+    <Content Include="TouGao.aspx" />
     <Content Include="UserControls\ArticleBigType.ascx" />
     <Content Include="UserControls\ArticleSmallType.ascx" />
     <Content Include="ZJ.aspx" />

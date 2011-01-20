@@ -4,4 +4,7 @@
   <Item No="01" Name="系统维护" Url="" Img="../../Images/Pub/Bill.gif" Enable="1" />
   <Item No="0102" Name="专家类别维护"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.ZJTypes" Img="../../Images/Pub/Table.gif" Enable="1" />
   <Item No="0102" Name="专家维护"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.ZJs" Img="../../Images/Pub/Table.gif" Enable="1" />
+	<Item No="0102" Name="奖品维护"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.JiangPins" Img="../../Images/Pub/Table.gif" Enable="1" />
+	<Item No="0102" Name="投稿管理"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.TouGaos" Img="../../Images/Pub/Table.gif" Enable="1" />
+
 </NewDataSet>

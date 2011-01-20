@@ -95,31 +95,6 @@ namespace BP.YG
                 }
             }
         }
-        public string BureauNo
-        {
-            get
-            {
-                string s = ViewState["B"] as string;
-                if (s == null)
-                {
-                    s = this.Request.QueryString["B"];
-                    if (s == null)
-                    {
-                        s = Global.BureauNo;
-                        ViewState["B"] = s;
-                    }
-
-                    if (s.IndexOf(",") != -1)
-                    {
-                        string[] strs = s.Split(',');
-                        s = strs[0];
-                        ViewState["B"] = s;
-                    }
-                }
-                return s;
-            }
-        }
-
 		public int PageIdx
 		{
 			get
@@ -173,7 +148,7 @@ namespace BP.YG
         ///// <returns></returns>
         //public bool CheckCustomrSession(string msg, string B)
         //{
-        //    if (Global.CustomerNo == null)
+        //    if (Global.MemberNo == null)
         //    {
         //        //string msg = "您登陆时间太长或者您没有登陆。登陆成功后系统会自动转入上一页面上去。";
         //        Global.MsgOfReLogin = msg;
@@ -185,7 +160,7 @@ namespace BP.YG
         //}
         //public bool CheckCustomrSession(string msg)
         //{
-        //    if (Global.CustomerNo == null)
+        //    if (Global.MemberNo == null)
         //    {
         //        //string msg1 = " var url='/Port.aspx';";
         //        //msg1 += " var b=window.showModalDialog(url, 'ass' ,'dialogHeight: 450px; dialogWidth: 500px;center: yes; help: no');";
@@ -203,7 +178,7 @@ namespace BP.YG
         }
         public string CheckCustomrSession(string msg)
         {
-            if (Global.CustomerNo != null)
+            if (Glo.MemberNo != null)
             {
                 return null;
             }
@@ -211,7 +186,7 @@ namespace BP.YG
         }
         public bool CheckCustomrSessionAlert()
         {
-            if (Global.CustomerNo == null)
+            if (Glo.MemberNo == null)
             {
                 BP.PubClass.Alert("重新登陆或者注册");
                 return false;
@@ -222,18 +197,18 @@ namespace BP.YG
 		{
 			try
 			{
-				Global.Msg = msg;
-				this.ToUrl("/Msg.aspx?B="+this.BureauNo);
+                Glo.Msg = msg;
+				this.ToUrl("/Msg.aspx?B=");
 			}
 			catch
 			{
-                this.ToUrl("/Msg.aspx?B=" + this.BureauNo);
+                this.ToUrl("/Msg.aspx?B=" );
 			}
 			return;
 		}
 		public void ToLoginPage_(string msg)
 		{
-			Global.MsgOfReLogin = msg;
+            Glo.MsgOfReLogin = msg;
 			string url ="/Login.aspx?GoWhere="+this.Request.RawUrl;
 			this.Response.Redirect(url,true);
 		}

@@ -155,7 +155,7 @@ namespace BP.YG
                 map.AddTBString(JiangPinAttr.Name, null, "奖品名称", true, false, 0, 50, 200);
                 map.AddTBMoney(JiangPinAttr.Cost, 0, "价值(人民币)", true, false);
                 map.AddTBInt(JiangPinAttr.KuChun, 0, "剩余", true, false);
-                map.AddTBInt(JiangPinAttr.PayCent, 0, "积分", true, false);
+                map.AddTBInt("PayCent", 0, "积分", true, false);
                 map.AddTBStringDoc(JiangPinAttr.Note, null, "介绍", true, false);
                 map.AddMyFile("奖品照片");
                 #endregion

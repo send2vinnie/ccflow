@@ -33,23 +33,23 @@ namespace BP.YG
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            if (this.IsPostBack == false)
-            {
-                HttpCookie hc = this.Request.Cookies["HiTax"];
-                if (hc != null)
-                {
-                    this.TB_No.Text = hc.Values["UserNo"];
-                    string script = "<script language=javascript>function setFocus(ctl) {if (document.forms[0][ctl] !=null )  { document.forms[0][ctl].focus(); } } setFocus('" + this.TB_Pass.ClientID + "'); </script>";
-                    this.RegisterStartupScript("func", script);
-                }
-                else
-                {
-                    //this.TB_No.Text=hc.Values["UserNo"];
-                    string script1 = "<script language=javascript>function setFocus(ctl) {if (document.forms[0][ctl] !=null )  { document.forms[0][ctl].focus(); } } setFocus('" + this.TB_No.ClientID + "'); </script>";
-                    this.RegisterStartupScript("func", script1);
-                }
-                this.Label1.Text = Global.MsgOfReLogin;
-            }
+            //if (this.IsPostBack == false)
+            //{
+            //    HttpCookie hc = this.Request.Cookies["HiTax"];
+            //    if (hc != null)
+            //    {
+            //        this.TB_No.Text = hc.Values["UserNo"];
+            //        string script = "<script language=javascript>function setFocus(ctl) {if (document.forms[0][ctl] !=null )  { document.forms[0][ctl].focus(); } } setFocus('" + this.TB_Pass.ClientID + "'); </script>";
+            //        this.RegisterStartupScript("func", script);
+            //    }
+            //    else
+            //    {
+            //        //this.TB_No.Text=hc.Values["UserNo"];
+            //        string script1 = "<script language=javascript>function setFocus(ctl) {if (document.forms[0][ctl] !=null )  { document.forms[0][ctl].focus(); } } setFocus('" + this.TB_No.ClientID + "'); </script>";
+            //        this.RegisterStartupScript("func", script1);
+            //    }
+            //    this.Label1.Text = Global.MsgOfReLogin;
+            //}
         }
 
 		#region Web 窗体设计器生成的代码

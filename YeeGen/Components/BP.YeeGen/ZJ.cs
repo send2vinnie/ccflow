@@ -45,7 +45,7 @@ namespace BP.YG
 	/// <summary>
 	/// 专家焦点
 	/// </summary>
-	public class ZJ : EntityOIDName
+	public class ZJ : EntityNoName
 	{
 
 		#region  属性
@@ -136,8 +136,6 @@ namespace BP.YG
 		/// 专家
 		/// </summary>
 		public ZJ(){}
-
-		public ZJ(int no):base(no){}
 		/// <summary>
 		/// ZJMap
 		/// </summary>
@@ -155,9 +153,9 @@ namespace BP.YG
                 map.DepositaryOfEntity = Depositary.None;
                 map.IsAutoGenerNo = false;
 
-                map.AddTBIntPKOID();
-                map.AddTBString(ZJAttr.Name, null, "名称", true, false, 0, 50, 200);
 
+                map.AddTBStringPK(ZJAttr.No, null, "编号", true, false, 1, 20, 20);
+                map.AddTBString(ZJAttr.Name, null, "名称", true, false, 0, 50, 200);
                 map.AddTBString(ZJAttr.Dept, null, "任职于", true, false, 0, 500, 200);
                 map.AddDDLEntities(ZJAttr.FK_ZJType, null, "类别", new ZJTypes(), true);
                 map.AddTBStringDoc();
@@ -184,7 +182,7 @@ namespace BP.YG
 	/// <summary>
 	/// 局集合
 	/// </summary>
-	public class ZJs: EntitiesOIDName
+    public class ZJs : EntitiesNoName
 	{
 		/// <summary>
 		/// 专家

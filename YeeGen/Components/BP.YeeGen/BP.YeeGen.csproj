@@ -37,6 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TouGao.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="JiangPin.cs">
       <SubType>Code</SubType>
@@ -67,9 +68,6 @@
       <Project>{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}</Project>
       <Name>BP.Web.Controls30</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="old_ver\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

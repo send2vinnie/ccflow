@@ -1215,7 +1215,6 @@ namespace BP.Web.UC
         }
         public void AddTable(string attr)
         {
-            //this.Add("<Table id='table_01' "+attr+" >");
             this.Add("<Table class='Table' border='0' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0' " + attr + " >");
         }
         public void AddTable(string id, string styleClass)

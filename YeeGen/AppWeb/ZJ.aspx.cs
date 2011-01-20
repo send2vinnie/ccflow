@@ -18,12 +18,13 @@ namespace Tax666.AppWeb
         {
             ZJs ens = new ZJs();
             ens.RetrieveAll();
+
             this.Pub1.AddTable("width=100%");
             bool is1 = false;
             foreach (BP.YG.ZJ en in ens)
             {
                 is1 = this.Pub1.AddTR(is1);
-                this.Pub1.AddTD("valign=top", "<img src='./Data/BP.YG.ZJs/" + en.OID + "." + en.MyFileExt + "' width='90px' height='90px' border=0/>");
+                this.Pub1.AddTD("valign=top", "<img src='./Data/BP.YG.ZJ/" + en.No + "." + en.MyFileExt + "' width='90px' height='90px' border=0/>");
                 this.Pub1.AddTDBigDoc("valign=top align=left", "<b>" + en.Name + "</b><br>" + en.DocS);
                 this.Pub1.AddTREnd();
             }
