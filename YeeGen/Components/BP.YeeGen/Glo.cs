@@ -6,7 +6,7 @@ using BP.DA;
 
 namespace BP.YG
 {
-    class Glo
+    public class Glo
     {
         public static string PathFDBWordFile
         {
