@@ -1,0 +1,6 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <Item No="03" Name="评估清册维护" URL="/PG/Comm/UIEns.aspx?ClassName=BP.PG.WorkTPs&amp;FK_Work=@FK_Work" ICON="/Images/Btn/Do.gif" DESC="" />
+  <Item No="10" Name="纳税评估对象清册文书" URL="/PG/App/Do.aspx?DoType=DoTPList&amp;FK_Work=@FK_Work&amp;FK_Type=all" ICON="/Images/Btn/Word.gif" />
+  <Item No="11" Name="纳税评估工作总结" URL="/PG/Comm/UIEn.aspx?ClassName=BP.PG.Book.WorkSumarys&amp;No=@FK_Work" ICON="/Images/Btn/Word.gif" />
+</NewDataSet>

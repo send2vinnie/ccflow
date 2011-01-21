@@ -1,0 +1,5 @@
+<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+	<Field Key="@本期应税主营业务收入"    QJ="BQ"  Ref="BP.Tax.Taxpayers" />
+  <Field Key="@本期应税主营业务收入"    QJ="BQ"  Ref="BP.Tax.Taxpayers" />
+</NewDataSet>

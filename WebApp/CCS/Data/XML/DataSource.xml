@@ -1,0 +1,17 @@
+<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+  <!-- 数据源配置 -->
+  <Item
+  No="00" 
+	Name="重点户数据源"
+	DESC="标准格式"
+	IsBQOnly="1"
+	Item1="1"
+	Item1_1="1"
+	Item1_2="1"
+  
+  Item2="1"
+	Item2_1="1"
+	Item2_2="1"
+	 />
+</NewDataSet>

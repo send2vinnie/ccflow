@@ -1,0 +1,16 @@
+
+update pg_dataele set name1='@基期累计应纳所得税额_7等于5乘6_' where no='0137'
+
+@GO
+
+
+
+update pg_dataele set name1='@本期累计应纳所得税额_7等于5乘6_' 
+where no='0139'
+
+@GO
+
+
+update pg_datasource set Item1_1='2' where no='05'
+@GO
+

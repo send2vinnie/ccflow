@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+  <!-- 测试设置 -->
+  <TestSet  FK_Taxpayer="39232323" FK_ND="2007"  FK_YF="2002-01"   />
+  
+  <!-- 纳税评估中自动获取sql,  DBType=DBAccessOfMSSQL2000　　-->
+  <AutoSQL	
+  Name="纳税人月份收入" 
+  SQL="SELECT COUNT(*) FROM DS_Taxpayer Where FK_ZSJG='@FK_ZSJG' AND FK_ND='' "
+  DBType="DBAccessOfMSSQL2000"
+  RunType="SQL"
+	DESC="查询出来纳税人一个年度的信息。" />
+  
+
+
+  <AutoSQL	
+ Name="@本期本期期初存货" 
+ SQL="SELECT COUNT(*) FROM DS_Taxpayer Where FK_ZSJG='@FK_ZSJG' AND FK_ND='' "
+ DBType="DBAccessOfMSSQL2000"
+ RunType="SQL"
+ DESC="查询出来纳税人一个年度的信息。" />
+
+
+  <AutoSQL	
+Name="@本期累计期末存货" 
+SQL="SELECT COUNT(*) FROM DS_Taxpayer Where FK_ZSJG='@FK_ZSJG' AND FK_ND='' "
+DBType="DBAccessOfMSSQL2000"
+RunType="SQL"
+DESC="查询出来纳税人一个年度的信息。" />
+
+</NewDataSet>

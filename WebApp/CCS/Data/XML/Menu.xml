@@ -1,0 +1,69 @@
+<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+
+<!-- 基础信息维护  -->
+	<Item No="01" Name="网站数据" Url="" Img="../../Images/Btn/Help.gif" DFor=""
+		DESC="" />
+	<Item No="0101" Name="信息发布" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.GE.Infos" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="0101" Name="图片介绍" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.GE.Picts" Img="../../Images/Arrowhead_Next.gif" />
+    <Item No="0101" Name="经典案例" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.GE.InfoList2s" Img="../../Images/Arrowhead_Next.gif" />
+    <Item No="0101" Name="流程ABC" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.GE.InfoList1s" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="0101" Name="图片链接" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.GE.ImgLinks" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="0101" Name="免费下载" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.GE.Softs" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="0101" Name="领军人物" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.GE.InfoList3s" Img="../../Images/Arrowhead_Next.gif" />
+
+    <!-- 纳税评估  -->
+	<Item No="02" Name="合作伙伴" Url="" Img="../../Images/Btn/Help.gif" ForUser="SysAdmin" 	DESC="" />
+  <Item No="0202" Name="发起工作" Url=" ../../Comm/UIEn.aspx?ClassName=BP.PG.Works" Img="../../Images/Arrowhead_Next.gif" />
+  <Item22 No="020201" Name="纳税人范围选取" Url=" ../../Comm/PanelEns.aspx?ClassName=BP.Tax.Taxpayers" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="0203" Name="工作导航" Url="../../App/WorkNav.aspx" Img="../../Images/Arrowhead_Next.gif" />
+  <Item1 No="020301" Name="评估进程" Url=" ../../Comm/PanelEns.aspx?ClassName=BP.PG.WorkLists" Img="../../Images/Arrowhead_Next.gif" />
+
+  <Item No="0204" Name="集合计算" Url="../../App/DB.aspx" Img="../../Images/Arrowhead_Next.gif" />
+
+  <Item No="0205" Name="历史数据" Url=" ../../Comm/PanelEns.aspx?ClassName=BP.PG.TPFiles" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="020501" Name="采集接口" Url=" ../../Comm/Item3.aspx?EnName=BP.PG.TPFile" Img="../../Images/Arrowhead_Next.gif" />
+ 
+	<Item No="09" Name="系统管理" Url="" Img="../../Images/Btn/Help.gif" ForUser="SysAdmin" 	DESC="" />
+
+  <Item No="0904" Name="获取外部数据" Url=" ../../AutoSQL.aspx" Img="../../Images/Dot/1.gif" />
+
+  <Item No="0904" Name="管理员工具" Url=" ../../Comm/Sys/AdminTools.aspx" Img="../../Images/Dot/1.gif" />
+	<Item No="0904" Name="操作员工具" Url=" ../../Comm/Sys/UserTools.aspx" Img="../../Images/Dot/1.gif" />
+
+  <Item No="0904" Name="清除数据" Url="../Delete.aspx" Img="../../Images/Btn/Help.gif"	Enable="1" />
+	<Item No="0906" Name="基础维护"  Img="../../Images/Dot/1.gif"  />
+	<Item No="090601" Name="数据来源" Url=" ../../Comm/UIEns.aspx?ClassName=BP.PG.DTFroms" Img="../../Images/Arrowhead_Next.gif" />
+	<Item No="090601" Name="指标类别" Url=" ../../Comm/UIEns.aspx?ClassName=BP.PG.ZBSorts" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="090601" Name="数据源" Url=" ../../Comm/UIEns.aspx?ClassName=BP.PG.DataSources" Img="../../Images/Arrowhead_Next.gif" />
+
+  <Item No="0905" Name="纳税人" Url="../../Comm/PanelEns.aspx?ClassName=BP.Tax.Taxpayers" Img="../../Images/Btn/Help.gif"	Enable="0" />
+	<Item No="090501" Name="特定行业维护" Url="../../Comm/UIEns.aspx?ClassName=BP.Tax.THYs" Img="../../Images/Btn/Help.gif"	Enable="1" />
+	<Item No="090502" Name="收入税款范围" Url="../../Comm/UIEns.aspx?ClassName=BP.Tax.SKFWs" Img="../../Images/Btn/Help.gif"	Enable="1" />
+	<Item No="090502" Name="收入范围" Url="../../Comm/UIEns.aspx?ClassName=BP.Tax.IncomeFWs" Img="../../Images/Btn/Help.gif"	Enable="1" />
+	
+	<Item No="090502" Name="管理机关" Url="../../Comm/UIEns.aspx?ClassName=BP.Tax.ZSJGs" Img="../../Images/Btn/Help.gif"	Enable="1" />
+	<Item No="090502" Name="征收方式" Url="../../Comm/UIEns.aspx?ClassName=BP.Tax.ZSFSs" Img="../../Images/Btn/Help.gif"	Enable="1" />
+	
+	<Item No="090502" Name="维护" Url="../../Comm/UIEns.aspx?ClassName=BP.Tax.PTaxpayers" Img="../../Images/Btn/Help.gif"	Enable="1" />
+	<Item No="090502" Name="查询" Url="../../Comm/PanelEns.aspx?ClassName=BP.Tax.Taxpayers" Img="../../Images/Btn/Help.gif"	Enable="1" />
+	<Item No="090502" Name="导入" Url="../../App/Upload/UploadTaxpayer.aspx" Img="../../Images/Btn/Excel.gif"	Enable="1" />
+	
+	<Item No="0907" Name="税款分析"  Img="../../Images/Dot/1.gif" Enable="0"  />
+	<Item No="090701" Name="税款查询" Url="../../Comm/PanelEns.aspx?ClassName=BP.Tax.SKs" Img="../../Images/Arrowhead_Next.gif" />
+	<Item No="090702" Name="分组分析" Url="../../Comm/GroupEns.aspx?ClassName=BP.Tax.SKs" Img="../../Images/Arrowhead_Next.gif" />
+	<Item No="090703" Name="旋转分析" Url=" ../../Comm/GroupEnsMNum.aspx?ClassName=BP.Tax.SKs" Img="../../Images/Arrowhead_Next.gif" />
+
+	<Item No="0908" Name="采集数据导入" Url="../../App/Upload/SK.aspx" Img="../../Images/Btn/Excel.gif" Enable="0" />
+  <Item No="0909" Name="操作员维护" Url="../../Comm/PanelEns.aspx?ClassName=BP.En.Emps" Img="../../Images/Btn/Help.gif"	Enable="1" />
+
+  <!-- fast keys . -->
+	<ShortKey No="01" Name="工作导航" URL="../../App/WorkNav.aspx" Img="../Images/Home.gif"  CH="工作导航"  />
+  <ShortKey No="01" Name="帮助" URL="../../App/Help/Help.htm" Img="../../Images/Btn/Help.gif"  CH="帮助" />
+
+
+  <ShortKey1 No="01" Name="纳税评估" URL="../../App/WorkNav.aspx?Type=1" Img="../Images/Today_s.ico" CH="" />
+	<ShortKey1 No="01" Name="评估工作" URL="../List.aspx?StateOfHD=1" Img="../Images/Today_s.ico" />
+	<ShortKey1 No="01" Name="调查工作" URL="../WorkOfDC.aspx?StateOfHD=1" Img="../../TA/Images/Calendar_s.ico" />
+	<ShortKey1 No="01" Name="切换系统" URL="../../Comm/Port/ChangeSystem.aspx" Img="../../Images/Btn/CycleEvent.gif" />
+</NewDataSet>

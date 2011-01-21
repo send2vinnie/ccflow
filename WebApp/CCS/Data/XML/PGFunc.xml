@@ -1,0 +1,137 @@
+<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+	<PGFunc>
+		<ICON> ./Images/Task.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.Tax.Taxpayers&amp;No=@FK_Taxpayer</URL>
+		<Name>纳税人基本信息</Name>
+		<DESC> 纳税人基本信息</DESC>
+	</PGFunc>
+	
+	<PGFunc>
+		<ICON> ./Images/Task.gif  </ICON>
+		<URL>../Comm/UIEns.aspx?ClassName=BP.PG.WorkLists&amp;Key=@FK_Taxpayer</URL>
+		<Name>历史评估信息</Name>
+		<DESC> 纳税人基本信息</DESC>
+	</PGFunc>
+	 
+	<PGFunc>
+		<ICON> ./Images/Task.gif  </ICON>
+		<URL> ../../TP/TP/Port.aspx?No=@FK_Taxpayer</URL>
+		<Name>申报信息</Name>
+		<DESC> 纳税人基本信息</DESC>
+	</PGFunc>
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.YTJZs&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>约谈举证记录</Name>
+		<DESC> 纳税人基本信息</DESC>
+	</PGFunc>
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.YTJZ_JLs&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>约谈举证结论</Name>
+		<DESC> 纳税人基本信息</DESC>
+	</PGFunc>
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.FXs&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估分析情况表</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>税务约谈通知书</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估约谈审批表</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>举证资料签收单</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估实地核查审批表</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估实地核查通知书</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估实地核查记录</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估实地核查结论</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估情况报告表</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>申报缴款错误更正通知书</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估移送单</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估选案建议书</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估选案建议反馈书</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+	
+	<PGFunc>
+		<ICON> ../Images/Btn/Word.gif  </ICON>
+		<URL>../Comm/UIEn.aspx?ClassName=BP.PG.Advises&amp;FK_Taxpayer=@FK_Taxpayer&amp;WorkID=@WorkID</URL>
+		<Name>纳税评估工作报告</Name>
+		<DESC> 纳税评估分析情况表</DESC>
+	</PGFunc>
+</NewDataSet>
