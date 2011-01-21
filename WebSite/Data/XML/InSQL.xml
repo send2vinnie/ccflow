@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <!-- 基础信息维护  -->
+  <Item No="01" Name="基础信息"  Url="" Img="../../Images/Pub/Book.gif" Enable="1" DFor="" />
+
+  <Item No="0101" Name="学校维护"   Url="../../Comm/PanelEns.aspx?EnsName=BP.Edu.Schools@FK_DeptNo" Img="../../Images/Pub/Table.gif" Enable="1" />
+
+  <Item No="0101" Name="单位信息"   Url="../../Comm/UIEn.aspx?EnsName=BP.Edu.JYJs@FK_DeptNo"
+        Img="../../Images/Pub/Table.gif" Enable="1" />
+  
+  
+<Item No="0101" Name="教材版本"   Url="../../Comm/PanelEns.aspx?EnsName=BP.Edu.JYJKMVers"
+        Img="../../Images/Pub/Table.gif" Enable="1" />
+
+  <Item No="0101" Name="用户管理"   Url="../../Comm/PanelEns.aspx?EnsName=BP.Edu.EduEmps"
+        Img="../../Images/Pub/Table.gif" Enable="1" />
+
+  <Item No="0101" Name="批量审核"   Url="../../App/BathCheck.aspx?EnsName=BP.Edu.EduEmpSPs"
+     Img="../../Images/Pub/Table.gif" Enable="1" />
+
+  <Item No="0101" Name="教案模板"   Url="../../Comm/PanelEns.aspx?EnsName=BP.Edu.TH.TempleJASyss" Img="../../Images/Pub/Table.gif" Enable="1" />
+
+  <Item No="0101" Name="教学计划"   Url="../../Comm/PanelEns.aspx?EnsName=BP.Edu.WorkJYJs" Img="../../Images/Pub/Table.gif" Enable="1" />
+
+  <Item No="04" Name="统计分析"  Url="" Img="../../Images/Pub/Book.gif" Enable="1" DFor="" />
+  <Item No="0401" Name="全部资源"   Url="../../Comm/GroupEnsMNum.aspx?EnsName=BP.Edu.Res.ResAlls" Img="../../Images/Pub/Table.gif" Enable="1" />
+  <Item No="0401" Name="静态资源"   Url="../../Comm/GroupEnsMNum.aspx?EnsName=BP.Edu.Res.ResStatics" Img="../../Images/Pub/Table.gif" Enable="1" />
+  <Item No="0401" Name="单位资源"   Url="../../Comm/GroupEnsMNum.aspx?EnsName=BP.Edu.Res.ResQXs" Img="../../Images/Pub/Table.gif" Enable="1" />
+  <Item No="0401" Name="私有资源"   Url="../../Comm/GroupEnsMNum.aspx?EnsName=BP.Edu.Res.ResPrivates" Img="../../Images/Pub/Table.gif" Enable="1" />
+
+</NewDataSet>

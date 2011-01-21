@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+	<!-- 外部连接配置说明  No, 管理机关编号，URL 对方sqlserver 的连接。  -->
+	<Item No="1"  FtpIP="192.168.1.159" FtpUser="administrator" FtpPass="jy" />
+  <Item No="2"  FtpIP="192.168.1.149" FtpUser="administrator" FtpPass="jy" />
+</NewDataSet>

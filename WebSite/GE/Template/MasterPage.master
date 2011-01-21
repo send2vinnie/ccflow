@@ -1,0 +1,41 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="GE_Template_MasterPage" %>
+<%@ Register src="Top.ascx" tagname="Top" tagprefix="uc1" %>
+<%@ Register src="End.ascx" tagname="End" tagprefix="uc2" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>无标题页</title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="../../Comm/Table2.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <table width='80%' align=center>
+    <tr>
+    <TD>
+        <uc1:Top ID="Top1" runat="server" />
+    </TD>
+    </tr>
+    
+      <tr>
+    <TD>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+        
+         </TD>
+    </tr>
+    
+       <tr>
+    <TD>
+        <uc2:End ID="End1" runat="server" />
+    </TD>
+    </tr>
+        
+        </table>
+    </form>
+</body>
+</html>

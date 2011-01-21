@@ -1,0 +1,8 @@
+﻿
+
+// 打开我的消息.
+function CallInbox()
+{
+  // window.open('default.aspx','');
+}
+

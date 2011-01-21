@@ -1,0 +1,62 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <!-- 描述webconfig中的配置信息 
+  No=是webconfig中配置的Key。
+  Name=是它的名称， 
+  Note=是描述 DBType是数据类型。 
+  IsEnable=是否可以修改它。
+  修改web.config中的连接. 功能连接为:\Comm\Sys\EditWebconfig.aspx。
+  其他：要想能够修改web。config，您需要在文件里面设置。
+    <identity impersonate="true"  userName="administrator" password="" />
+  -->
+  <Item No="IsDebug" Name="是否测试状态"  Note="" DBType="Boolen" IsEnable="1"  />
+  <Item No="SysLanguage" Name="系统语言"  Note="系统中默认的语言CH中文，EN英文，JP日文。" DBType="String"  IsEnable="0" />
+  <Item No="SysNo" Name="系统语言"  Note="系统编号" DBType="String"  IsEnable="0"  />
+  <Item No="SysName" Name="系统名称"  Note="系统名称" DBType="String"  IsEnable="1"  />
+
+  <Item No="InitConnNum" Name="系统连接数"  Note="初始化系统的连接数据" DBType="String"  IsEnable="0"  />
+  <Item No="AppCenterDSN" Name="应用程序连接"  Note="连接到的数据库密码与用户" DBType="String" />
+  <Item No="AppCenterDBType" Name="数据库类型"  Note="主应用程序数据库类型 MSSQL2000, Access,Oracle,Sybase,DB2 " DBType="String" />
+  <Item No="DBAccessOfMSSQL2000" Name=" 辅应用数据MSSQL2000连接"  Note="本系统的名称" DBType="String" IsEnable="0" />
+
+  <Item No="DBAccessOfOLE" Name="辅应用数据Ole连接"  Note="辅应用数据Ole连接  " DBType="String" />
+  <Item No="DBAccessOfODBC" Name="辅应用数据 ODBC 连接"  Note="同上" DBType="String" />
+  
+  <Item No="DeveloperName" Name="开发商"  Note="开发商" DBType="String" />
+  <Item No="DeveloperShortName" Name=" 开发商"  Note="开发商" DBType="String" />
+  <Item No="DeveloperTel" Name="电话"  Note="电话" DBType="String" />
+  <Item No="DeveloperAddr" Name="地址"  Note="开发者地址" DBType="String" />
+  <Item No="DeveloperMail" Name="邮件"  Note="开发者邮件" DBType="String" />
+  
+  <Item No="ServiceMail" Name="Tel"  Note="系统用户有问题，或者出现异常就会显示此信息。" DBType="String" />
+  <Item No="ServiceTel" Name="E-mail"  Note="同上" DBType="String" />
+  
+  <Item No="CustomerNo" Name="客户编号"  Note="本系统的名称" DBType="String" />
+  <Item No="CustomerName" Name="客户名称"  Note="本系统的名称" DBType="String" />
+  <Item No="CustomerShortName" Name=" 简称"  Note="本系统的名称" DBType="String" />
+  <Item No="CustomerTel" Name=" 电话"  Note="开发者电话" DBType="String" />
+  <Item No="CustomerAddr" Name="地址"  Note="开发者" DBType="String" />
+
+  <Item No="ICP" Name="网站备案号"  Note="网站备案号码，没有需要申请。" DBType="String" IsEnable="1" />
+  <Item No="CityNo" Name="城市编号"  Note="城市编号" DBType="String" IsEnable="1" />
+
+  <Item No="TopNum" Name="显示条数"  Note="地址" DBType="String" />
+  <Item No="PageSize" Name="页面大小"  Note="页面大小" DBType="String" />
+
+  <Item No="CIP" Name="群集IP"  Note="" DBType="String" />
+  <Item No="FtpIP" Name="FtpIP"  Note="FtpIP" DBType="String" />
+  <Item No="FtpUser" Name="FtpUser"  Note="FtpUser" DBType="String" />
+  <Item No="FileFtpPass" Name="FileFtpPass"  Note="FileFtpPass" DBType="String" />
+
+  <Item No="IsCheckFAQ" Name="提问问题前是否审核？"  Note="如果选择是，教师发布的提问都需要管理员审核后才能发布" DBType="Boolen" />
+  <Item No="IsCheckSF" Name="共享资源前是否审核？"  Note="如果选择是，同上。" DBType="Boolen" />
+  <Item No="IsCheckPPT" Name="共享教案前是否审核？" Note="共享教案前是否审核？" DBType="Boolen"  />
+  <Item No="IsCheckJiaoAn" Name="共享教案前是否审核？" Note="选择为否，直接发布，否则？" DBType="Boolen"  />
+  <Item No="IsHaveJW" Name="是否为系统设置教委级别？" Note="有的区县设置教委，有的不设置它。" DBType="Boolen"  />
+
+  <Item No="NetDiskFtpIP" Name="网络硬盘ＩＰ" Note="可以设置域名" DBType="String"  />
+  <Item No="NetDiskFtpUser" Name="网络硬盘用户名" Note="" DBType="String"  />
+  <Item No="NetDiskFtpPass" Name="网络硬盘密码" Note="" DBType="String"  />
+  <Item No="IsVSTO" Name="是否是VSTO" Note="如果试用的VSTO,请填写1，否则填写0." DBType="Boolen"  />
+
+</NewDataSet>

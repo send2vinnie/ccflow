@@ -1,0 +1,320 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using BP.Web;
+using BP.GE;
+using System.Drawing;
+
+public partial class GE_Port_Port : BP.Web.UC.UCBase3
+{
+    public string DoType
+    {
+        get
+        {
+            string DoType = this.Request.QueryString["DoType"];
+            if (DoType == null)
+                DoType = "Lgn";
+
+            return DoType;
+        }
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        this.Response.Write("<base target='_self' />");
+        switch (this.DoType)
+        {
+            case "Reg":
+                BindReg();
+                break;
+            case "Lgn":
+                BindLogin();
+                break;
+            default:
+                break;
+        }
+        
+    }
+   
+    public void BindReg()
+    {
+        string m = "<b><font color=red>*</font></b>";
+
+        this.AddTable("width='100%'");
+
+        this.AddTR();
+        this.AddTD("colspan=2", "&nbsp;&nbsp;<B>注册</B> --- <a href='Port.aspx?DoType=Lgn'>登  陆</a>");// target='_self'
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTD("align=right ", "用户名" + m + "");
+        TextBox tb = new TextBox();
+        tb.ID = "TB_No";
+        tb.MaxLength = 14;
+        this.AddTD(tb);
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTD("align=right ", "密码" + m + "");
+        tb = new TextBox();
+        tb.ID = "TB_Pass1";
+        tb.MaxLength = 15;
+        tb.Width = 150;
+        tb.TextMode = TextBoxMode.Password;
+        this.AddTD(tb);
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTD("align=right ", "重输密码:");
+        tb = new TextBox();
+        tb.ID = "TB_Pass2";
+        tb.MaxLength = 15;
+        tb.Width = 150;
+        tb.TextMode = TextBoxMode.Password;
+
+        this.AddTD(tb);
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTD("align=right ", "QQ:");
+        tb = new TextBox();
+        tb.ID = "TB_QQ";
+        tb.MaxLength =20;
+        this.AddTD(tb);
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTD("align=right ", "联系电话:");
+        tb = new TextBox();
+        tb.ID = "TB_Tel";
+        tb.MaxLength =20;
+        
+
+        this.AddTD(tb);
+        this.AddTREnd();
+
+
+        this.AddTR();
+        this.AddTD("align=right ", "邮件" + m + "");
+        tb = new TextBox();
+        tb.ID = "TB_Mail";
+        tb.MaxLength = 100;
+        tb.Width = 250;
+        this.AddTD(tb, "");
+        this.AddTREnd();
+
+
+        this.AddTR();
+        this.Add("<TD valign=top  align=right>称谓</TD>");
+        this.Add("<TD >");
+        RadioButton rb = new RadioButton();
+        rb.Text = "先生";
+        rb.ID = "RB_1";
+        rb.Checked = false;
+        rb.GroupName = "s";
+        this.Add(rb);
+        rb = new RadioButton();
+        rb.Text = "女士";
+        rb.ID = "RB_2";
+        rb.Checked = true;
+        rb.GroupName = "s";
+        this.Add(rb);
+        this.Add("</TD>");
+        this.AddTREnd();
+
+
+        this.AddTR();
+        this.Add("<TD ></TD><TD>");
+        Button btnR = new Button();
+        btnR.Text = "注册";
+        btnR.ID = "Btn_Reg";
+        btnR.Click += new EventHandler(btnR_Click);
+
+        this.Add(btnR);
+        this.AddTREnd();
+
+        this.AddTR();
+        this.Add("<TD></TD>");
+        this.Add("<TD>");
+
+        Label lab = new Label();
+        lab.ID = "Lab_Msg";
+        lab.ForeColor = Color.Red;
+        lab.Font.Bold = true;
+
+        this.Add(lab);
+        this.Add("</TD>");
+        this.AddTREnd();
+        this.AddTableEnd();
+    }
+
+    void btnR_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string no = this.GetTextBoxByID("TB_No").Text.Trim();
+            if (no.Length <= 1)
+                throw new Exception("用户名长度必须等于2位数。");
+
+            GEEmps c = new GEEmps(no);
+            if (c.Count > 0)
+                throw new Exception("很抱歉，用户名[" + no + "]，已经存在，请选择其它的用户名。");
+            GEEmp emp = new GEEmp();
+
+            emp.QQ = this.GetTextBoxByID("TB_QQ").Text.Trim();
+
+            string mail = this.GetTextBoxByID("TB_Mail").Text.Trim();
+
+            string pass1 = this.GetTextBoxByID("TB_Pass1").Text.Trim();
+            string pass2 = this.GetTextBoxByID("TB_Pass2").Text.Trim();
+
+            if (pass1 != pass2)
+                throw new Exception("两次密码不一致。");
+
+            if (pass1 == "" || pass1.Length == 0)
+                throw new Exception("密码不能为空。");
+
+            emp.No = no;
+            emp.Name = no;
+            emp.Email = mail;
+            if (this.GetRadioButtonByID("RB_1").Checked)
+                emp.Sex = 0;
+            else
+                emp.Sex = 1;
+
+            emp.RDT = DateTime.Now.ToString();
+
+            emp.Tel = this.GetTextBoxByID("TB_Tel").Text.Trim();
+            emp.Pass = pass1;
+            emp.IsChecked = "0";
+            emp.Insert();
+
+            BP.PubClass.Alert("恭喜您，注册成功!");
+            HttpCookie cookie = new HttpCookie("CCS");
+            cookie.Expires = DateTime.Now.AddHours(1);
+            cookie.Values.Add("No", no);
+
+            cookie.Values.Add("Token", System.Web.HttpContext.Current.Session.SessionID);
+            System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+
+            this.Response.Write("<script>window.returnValue=11;window.close();</script>");
+           
+          
+
+
+        }
+        catch (Exception ex)
+        {
+            this.GetLabelByID("Lab_Msg").Text = "注册期间出现如下错误：" + ex.Message;
+        }
+    }
+
+
+    public void BindLogin()
+    {
+        this.AddTable("width='100%'");
+
+        this.AddTR();
+        this.AddTD("colspan=2", "&nbsp;&nbsp;<a href='Port.aspx?DoType=Reg' >注册</A> --- <B>登  陆</B>");// target='_self'
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTD("align=right ", "用户名");
+        TextBox tb = new TextBox();
+        tb.ID = "TB_No";
+        tb.MaxLength = 14;
+        this.AddTD(tb);
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTD("align=right ", "密码");
+        tb = new TextBox();
+        tb.ID = "TB_Pass";
+        tb.MaxLength = 15;
+        tb.Width = 150;
+        tb.TextMode = TextBoxMode.Password;
+        this.AddTD(tb);
+        this.AddTREnd();
+
+
+        this.AddTR();
+        this.Add("<TD></TD><TD>");
+        Button btn = new Button();
+        btn.Text = "登陆到网站";
+        btn.ID = "Btn_Submit";
+        btn.CssClass = "Btn";
+        btn.Click += new EventHandler(btn_Click);
+
+        this.Add(btn);
+        this.AddTDEnd();
+        this.AddTREnd();
+
+        this.AddTR();
+        this.Add("<TD></TD>");
+        this.Add("<TD>");
+
+        Label lab = new Label();
+        lab.ID = "Lab_Msg";
+        lab.ForeColor =Color.Red;
+        lab.Font.Bold = true;
+
+        this.Add(lab);
+        this.Add("</TD>");
+        this.Add("<TD></TD>");
+        this.AddTREnd();
+        this.AddTableEnd();
+        
+    }
+
+    void btn_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string no = this.GetTextBoxByID("TB_No").Text;
+            string pass = this.GetTextBoxByID("TB_Pass").Text;
+
+            GEEmps emps =null;
+        
+                emps = new GEEmps(no);
+                
+            if(emps.Count==0)
+                throw new Exception("用户名[" + no + "]不存在。");
+            foreach (GEEmp emp in emps)
+            {
+                if (emp.Pass != pass)
+                    throw new Exception("密码或者用户名错误。<BR> 提示：密码区分大小写。");
+                else
+                {
+                    BP.PubClass.WinClose("ex");
+                }
+            }
+            HttpCookie cookie = new HttpCookie("CCS");
+            cookie.Expires = DateTime.Now.AddHours(1);
+            cookie.Values.Add("No", no);
+            BP.Web.WebUser.No = no;
+            cookie.Values.Add("Token", System.Web.HttpContext.Current.Session.SessionID);
+            System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+
+            string Url= this.Request.ServerVariables["Http_Referer"];
+            this.Response.Redirect(Url);
+            System.Web.Security.FormsAuthentication.RedirectFromLoginPage(no, true);
+           
+
+            //this.Response.Redirect("");
+            //this.Response.Write("<script>window.returnValue=true;window.close();</script>");
+            
+        }
+        catch (Exception ex)
+        {
+            this.GetLabelByID("Lab_Msg").Text = "错误：" + ex.Message;
+        }
+       
+    }
+}

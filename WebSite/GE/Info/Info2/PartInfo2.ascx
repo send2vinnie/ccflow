@@ -1,0 +1,1 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="PartInfo2.ascx.cs" Inherits="Comm_GE_Info_PartInfo2" %>
