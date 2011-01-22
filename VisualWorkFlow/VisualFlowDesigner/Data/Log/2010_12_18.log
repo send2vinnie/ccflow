@@ -1,0 +1,96 @@
+-----------------------------------------------------------------------------------------------------
+18日11时04分07秒Info:System');"成功[BP.Port.Emp-49]放入缓存。
+18日11时04分09秒Info:System');"成功[BP.WF.FlowSort-9]放入缓存。
+18日11时04分11秒Fatal:System');"RunSQL2   SQL=CREATE INDEX Sys_EnumID ON Sys_Enum (MyPK)列名 'MyPK' 在目标表或视图中不存在。
+18日11时04分12秒Fatal:System');"RunSQL2   SQL=CREATE INDEX Sys_EnumID ON Sys_Enum (MyPK)操作失败，因为在 表 'Sys_Enum' 上已存在名称为 'Sys_EnumID' 的索引或统计信息。
+18日11时04分12秒Fatal:System');"RunSQL2   SQL=CREATE INDEX WF_FlowID ON WF_Flow (No)操作失败，因为在 表 'WF_Flow' 上已存在名称为 'WF_FlowID' 的索引或统计信息。
+-----------------------------------------------------------------------------------------------------
+18日11时06分13秒Info:System');"成功[BP.Port.Emp-49]放入缓存。
+18日11时06分13秒Info:System');"成功[BP.WF.FlowSort-9]放入缓存。
+18日11时06分36秒Info:System');"成功[BP.WF.FlowSort-9]放入缓存。
+18日11时06分45秒Info:System');"成功[BP.WF.FlowSort-9]放入缓存。
+18日11时06分49秒Info:System');"成功[BP.WF.FlowSort-8]放入缓存。
+18日11时06分54秒Info:System');"成功[BP.WF.FlowSort-7]放入缓存。
+-----------------------------------------------------------------------------------------------------
+18日11时07分21秒Info:System');"成功[BP.Port.Emp-49]放入缓存。
+18日11时07分21秒Info:System');"成功[BP.WF.FlowSort-7]放入缓存。
+18日11时07分42秒Info:System');"成功[BP.WF.FlowSort-7]放入缓存。
+18日11时07分49秒Info:System');"成功[BP.WF.FlowSort-7]放入缓存。
+18日11时08分09秒Info:System');"成功[BP.WF.Node-256]放入缓存。
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+18日19时41分41秒Info:System');"成功[BP.Port.Emp-45]放入缓存。
+18日19时41分42秒Info:System');"成功[BP.WF.FlowSort-3]放入缓存。
+18日19时41分42秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_FLOW ADD CONSTRAINT WF_Flowpk PRIMARY KEY(NO)CONSTRAINT 子句语法错误。
+18日19时41分42秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_FlowID ON WF_Flow (No)CREATE INDEX 语句中的语法错误。
+18日19时41分43秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE SYS_ENUM ADD CONSTRAINT Sys_Enumpk PRIMARY KEY(MYPK)主控键已存在。
+18日19时41分43秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX Sys_EnumID ON Sys_Enum (MyPK)在索引或关系的定义中的字段定义 'MyPK' 无效。
+18日19时41分43秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE SYS_ENUM ADD CONSTRAINT Sys_Enumpk PRIMARY KEY(MYPK)主控键已存在。
+18日19时41分43秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_FLOW ADD CONSTRAINT WF_Flowpk PRIMARY KEY(NO)CONSTRAINT 子句语法错误。
+18日19时41分43秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_FlowID ON WF_Flow (No)CREATE INDEX 语句中的语法错误。
+-----------------------------------------------------------------------------------------------------
+18日19时41分56秒Info:System');"成功[BP.Port.Emp-45]放入缓存。
+18日19时41分56秒Info:System');"成功[BP.WF.FlowSort-3]放入缓存。
+18日19时41分58秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODE ADD CONSTRAINT WF_Nodepk PRIMARY KEY(NODEID)主控键已存在。
+18日19时41分58秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeID ON WF_Node (NodeID)表 'WF_Node' 中已经有名为 'WF_NodeID' 的索引。
+18日19时41分59秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODE ADD CONSTRAINT WF_Nodepk PRIMARY KEY(NODEID)主控键已存在。
+18日19时41分59秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeID ON WF_Node (NodeID)表 'WF_Node' 中已经有名为 'WF_NodeID' 的索引。
+18日19时42分09秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时42分09秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时42分09秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时42分14秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE SYS_MAPATTR ADD CONSTRAINT Sys_MapAttrpk PRIMARY KEY(MYPK)主控键已存在。
+18日19时42分14秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX Sys_MapAttrID ON Sys_MapAttr (MyPK)表 'Sys_MapAttr' 中已经有名为 'Sys_MapAttrID' 的索引。
+18日19时43分55秒Info:System');"成功[BP.WF.FlowSort-3]放入缓存。
+18日19时44分02秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时44分02秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时44分02秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时44分02秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时44分07秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时44分07秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时44分07秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时44分07秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时45分03秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时45分03秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时45分03秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时45分03秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时45分14秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时45分14秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时45分14秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时45分14秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时45分23秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时45分23秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日19时45分23秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日19时45分23秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日21时07分33秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日21时07分34秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日21时07分34秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日21时07分34秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时48分08秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日22时48分08秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时48分08秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日22时48分08秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时48分36秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日22时48分36秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时48分36秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日22时48分36秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时48分40秒Info:System');"成功[BP.WF.Flow-3]放入缓存。
+18日22时48分40秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日22时48分40秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时48分40秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日22时48分40秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时48分40秒Fatal:System');"@在[节点调用子流程]查询时出现错误:@运行查询在(RunSQLReturnTable_200705_OLE with paras)出错 sql= SELECT TOP 99999 IIf( ISNULL(WF_NodeFlow.FK_Node), '', WF_NodeFlow.FK_Node ) AS [FK_Node], IIf( ISNULL(WF_NodeExt_FK_Node.Name) ,'',WF_NodeExt_FK_Node.Name) AS FK_NodeText, IIf( ISNULL(WF_NodeFlow.FK_Flow), '', WF_NodeFlow.FK_Flow ) AS [FK_Flow], IIf( ISNULL(WF_Flow_FK_Flow.Name) ,'',WF_Flow_FK_Flow.Name) AS FK_FlowText FROM ((WF_NodeFlow LEFT OUTER JOIN WF_NodeExt AS WF_NodeExt_FK_Node ON IIf( ISNULL( WF_NodeFlow.FK_Node), '', WF_NodeFlow.FK_Node )=WF_NodeExt_FK_Node.No) LEFT OUTER JOIN WF_Flow AS WF_Flow_FK_Flow ON IIf( ISNULL( WF_NodeFlow.FK_Flow), '', WF_NodeFlow.FK_Flow )=WF_Flow_FK_Flow.No) WHERE (1=1) AND ( ( WF_NodeFlow.FK_Node =@FK_Node) )  @异常信息：表达式中的类型不匹配。@Para Num= 1@FK_Node=301
+18日22时49分26秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日22时49分26秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时49分26秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日22时49分26秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时49分49秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日22时49分49秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时49分49秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日22时49分49秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日22时49分49秒Fatal:System');"@在[节点调用子流程]查询时出现错误:@运行查询在(RunSQLReturnTable_200705_OLE with paras)出错 sql= SELECT TOP 99999 IIf( ISNULL(WF_NodeFlow.FK_Node), '', WF_NodeFlow.FK_Node ) AS [FK_Node], IIf( ISNULL(WF_NodeExt_FK_Node.Name) ,'',WF_NodeExt_FK_Node.Name) AS FK_NodeText, IIf( ISNULL(WF_NodeFlow.FK_Flow), '', WF_NodeFlow.FK_Flow ) AS [FK_Flow], IIf( ISNULL(WF_Flow_FK_Flow.Name) ,'',WF_Flow_FK_Flow.Name) AS FK_FlowText FROM ((WF_NodeFlow LEFT OUTER JOIN WF_NodeExt AS WF_NodeExt_FK_Node ON IIf( ISNULL( WF_NodeFlow.FK_Node), '', WF_NodeFlow.FK_Node )=WF_NodeExt_FK_Node.No) LEFT OUTER JOIN WF_Flow AS WF_Flow_FK_Flow ON IIf( ISNULL( WF_NodeFlow.FK_Flow), '', WF_NodeFlow.FK_Flow )=WF_Flow_FK_Flow.No) WHERE (1=1) AND ( ( WF_NodeFlow.FK_Node =@FK_Node) )  @异常信息：表达式中的类型不匹配。@Para Num= 1@FK_Node=301
+18日23时12分11秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日23时12分11秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日23时12分11秒Fatal:System');"RunSQL_200705_OLE   SQL=ALTER TABLE WF_NODEFLOW ADD CONSTRAINT WF_NodeFlowpk  PRIMARY KEY(FK_NODE,FK_FLOW)主控键已存在。
+18日23时12分11秒Fatal:System');"RunSQL_200705_OLE   SQL=CREATE INDEX WF_NodeFlowID ON WF_NodeFlow (FK_Node,FK_Flow)表 'WF_NodeFlow' 中已经有名为 'WF_NodeFlowID' 的索引。
+18日23时12分11秒Fatal:System');"@在[节点调用子流程]查询时出现错误:@运行查询在(RunSQLReturnTable_200705_OLE with paras)出错 sql= SELECT TOP 99999 IIf( ISNULL(WF_NodeFlow.FK_Node), '', WF_NodeFlow.FK_Node ) AS [FK_Node], IIf( ISNULL(WF_NodeExt_FK_Node.Name) ,'',WF_NodeExt_FK_Node.Name) AS FK_NodeText, IIf( ISNULL(WF_NodeFlow.FK_Flow), '', WF_NodeFlow.FK_Flow ) AS [FK_Flow], IIf( ISNULL(WF_Flow_FK_Flow.Name) ,'',WF_Flow_FK_Flow.Name) AS FK_FlowText FROM ((WF_NodeFlow LEFT OUTER JOIN WF_NodeExt AS WF_NodeExt_FK_Node ON IIf( ISNULL( WF_NodeFlow.FK_Node), '', WF_NodeFlow.FK_Node )=WF_NodeExt_FK_Node.No) LEFT OUTER JOIN WF_Flow AS WF_Flow_FK_Flow ON IIf( ISNULL( WF_NodeFlow.FK_Flow), '', WF_NodeFlow.FK_Flow )=WF_Flow_FK_Flow.No) WHERE (1=1) AND ( ( WF_NodeFlow.FK_Node =@FK_Node) )  @异常信息：表达式中的类型不匹配。@Para Num= 1@FK_Node=301
