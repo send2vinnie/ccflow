@@ -1,3 +1,4 @@
+D:\VisualWorkFlow\VisualWorkFlowServices\bin\Release\VisualWorkFlowServices.exe.config
 D:\VisualWorkFlow\VisualWorkFlowServices\bin\Release\VisualWorkFlowServices.exe
 D:\VisualWorkFlow\VisualWorkFlowServices\bin\Release\VisualWorkFlowServices.pdb
 D:\VisualWorkFlow\VisualWorkFlowServices\bin\Release\BP.En30.dll
@@ -6,6 +7,7 @@ D:\VisualWorkFlow\VisualWorkFlowServices\bin\Release\ChineseConverter.dll
 D:\VisualWorkFlow\VisualWorkFlowServices\obj\Release\ResolveAssemblyReference.cache
 D:\VisualWorkFlow\VisualWorkFlowServices\obj\Release\SMSServices.FrmMain.resources
 D:\VisualWorkFlow\VisualWorkFlowServices\obj\Release\VisualWorkFlowServices.Properties.Resources.resources
-D:\VisualWorkFlow\VisualWorkFlowServices\obj\Release\VisualWorkFlowServices.csproj.GenerateResource.Cache
+D:\VisualWorkFlow\VisualWorkFlowServices\obj\Release\GenerateResource.read.1.tlog
+D:\VisualWorkFlow\VisualWorkFlowServices\obj\Release\GenerateResource.write.1.tlog
 D:\VisualWorkFlow\VisualWorkFlowServices\obj\Release\VisualWorkFlowServices.exe
 D:\VisualWorkFlow\VisualWorkFlowServices\obj\Release\VisualWorkFlowServices.pdb
