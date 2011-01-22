@@ -136,9 +136,11 @@ namespace BP.YG
 		/// <summary>
 		/// ×ÊÑ¶
 		/// </summary>		
-		public Info()
-		{
-		}
+        public Info()
+        {
+
+          
+        }
 		/// <summary>
 		/// InfoMap
 		/// </summary>

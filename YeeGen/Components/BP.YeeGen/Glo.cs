@@ -2,12 +2,58 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
+using System.Net.Mail;
 using BP.DA;
 
 namespace BP.YG
 {
     public class Glo
     {
+        #region 公共操作方法
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
+        /// <param name="mailAddr"></param>
+        /// <param name="title"></param>
+        /// <param name="doc"></param>
+        public static void SendMail(string mailAddr, string title, string doc)
+        {
+            System.Net.Mail.MailMessage myEmail = new System.Net.Mail.MailMessage();
+            myEmail.From = new MailAddress("ccflow.cn@gmail.com", "ccflow", System.Text.Encoding.UTF8);
+            // myEmail.From = new MailAddress("pengzhou86@gmail.com", "public", System.Text.Encoding.UTF8);
+
+            myEmail.To.Add(mailAddr);
+            myEmail.Subject = title;
+            myEmail.SubjectEncoding = System.Text.Encoding.UTF8;//邮件标题编码
+
+
+            myEmail.Body = doc;
+            myEmail.BodyEncoding = System.Text.Encoding.UTF8;//邮件内容编码
+            myEmail.IsBodyHtml = true;//是否是HTML邮件
+
+            myEmail.Priority = MailPriority.High;//邮件优先级
+
+            SmtpClient client = new SmtpClient();
+            client.Credentials = new System.Net.NetworkCredential("ccflow.cn@gmail.com", "www.ccflow.cn");
+
+            //上述写你的GMail邮箱和密码
+            client.Port = 587;//Gmail使用的端口
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;//经过ssl加密
+            object userState = myEmail;
+            try
+            {
+                //简单一点儿可以client.Send(msg);
+                // MessageBox.Show("发送成功");
+                client.SendAsync(myEmail, userState);
+            }
+            catch (System.Net.Mail.SmtpException ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
         public static string PathFDBWordFile
         {
             get
@@ -652,7 +698,14 @@ namespace BP.YG
                 cookie.Values.Add("IsRememberMe", "0");
 
             cookie.Values.Add("Online", "1");
-            Glo.Trade(CBuessType.CZ_Login, System.DateTime.Now.ToString("yy-MM-dd HH"), "");
+            try
+            {
+                Glo.Trade(CBuessType.CZ_Login, System.DateTime.Now.ToString("yy-MM-dd HH"), "用户登陆");
+            }
+            catch
+            {
+            }
+
             System.Web.HttpContext.Current.Response.AppendCookie(cookie);
         }
         #endregion
