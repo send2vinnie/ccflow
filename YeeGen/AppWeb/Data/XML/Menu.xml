@@ -6,6 +6,8 @@
   <Item No="0102" Name="专家维护"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.ZJs" Img="../../Images/Pub/Table.gif" Enable="1" />
 	<Item No="0102" Name="奖品维护"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.JiangPins" Img="../../Images/Pub/Table.gif" Enable="1" />
 	<Item No="0102" Name="投稿管理"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.TouGaos" Img="../../Images/Pub/Table.gif" Enable="1" />
+	<Item No="0102" Name="积分规则"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.CBuessTypes" Img="../../Images/Pub/Table.gif" Enable="1" />
+	<Item No="0102" Name="积分查询"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.CBuesss" Img="../../Images/Pub/Table.gif" Enable="1" />
 
 
 	<Item No="0102" Name="资讯模块"   Url="../../Comm/PanelEns.aspx?EnsName=BP.YG.InfoModels" Img="../../Images/Pub/Table.gif" Enable="1" />

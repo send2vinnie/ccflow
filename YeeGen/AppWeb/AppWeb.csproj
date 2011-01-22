@@ -1444,6 +1444,55 @@
     <Compile Include="Manager\Pub.ascx.designer.cs">
       <DependentUpon>Pub.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Port\UC\ChangePass.ascx.cs">
+      <DependentUpon>ChangePass.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\UC\ChangePass.ascx.designer.cs">
+      <DependentUpon>ChangePass.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Port\UC\Login.ascx.cs">
+      <DependentUpon>Login.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\UC\Login.ascx.designer.cs">
+      <DependentUpon>Login.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Port\UC\MyCent.ascx.cs">
+      <DependentUpon>MyCent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\UC\MyCent.ascx.designer.cs">
+      <DependentUpon>MyCent.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Port\UC\PerInfo.ascx.cs">
+      <DependentUpon>PerInfo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\UC\PerInfo.ascx.designer.cs">
+      <DependentUpon>PerInfo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Port\UC\RegUser.ascx.cs">
+      <DependentUpon>RegUser.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\UC\RegUser.ascx.designer.cs">
+      <DependentUpon>RegUser.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Port\UC\RequestPass.ascx.cs">
+      <DependentUpon>RequestPass.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\UC\RequestPass.ascx.designer.cs">
+      <DependentUpon>RequestPass.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Port\WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pub.ascx.cs">
       <DependentUpon>Pub.ascx</DependentUpon>
@@ -1556,6 +1605,13 @@
     <None Include="Manager\JScript\FineMessBox\Images\Thumbs.db" />
     <Content Include="Info\Dtl.aspx" />
     <Content Include="JiangPin.aspx" />
+    <Content Include="Port\UC\ChangePass.ascx" />
+    <Content Include="Port\UC\Login.ascx" />
+    <Content Include="Port\UC\MyCent.ascx" />
+    <Content Include="Port\UC\PerInfo.ascx" />
+    <Content Include="Port\UC\RegUser.ascx" />
+    <Content Include="Port\UC\RequestPass.ascx" />
+    <Content Include="Port\WebForm1.aspx" />
     <Content Include="Pub.ascx" />
     <Content Include="Site.Master" />
     <Content Include="CuteSoft_Client\CuteEditor\Load.ashx" />

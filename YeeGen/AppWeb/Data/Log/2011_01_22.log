@@ -1,0 +1,97 @@
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+22日14时57分47秒Info:System');"成功[BP.Port.Emp-1]放入缓存。
+22日14时57分56秒Info:System');"成功[BP.Sys.EnsAppCfg-75]放入缓存。
+22日14时57分56秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuessTypes@WinCardH
+22日14时57分56秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuessTypes@WinCardW
+22日14时58分05秒Info:System');"成功[BP.Sys.EnsAppCfg-77]放入缓存。
+22日14时58分05秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuessTypes@UIRowStyleGlo
+22日14时58分05秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuessTypes@IsEnableDouclickGlo
+22日14时58分05秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuessTypes@IsEnableRefFunc
+22日14时58分05秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuessTypes@IsEnableFocusField
+22日14时58分05秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuessTypes@IsEnableOpenICON
+22日14时58分05秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuessTypes@FocusField
+22日14时58分07秒Info:System');"成功[BP.YG.ZJType-3]放入缓存。
+22日14时58分20秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日14时58分20秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.ZJType
+22日14时58分20秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日14时58分28秒Info:System');"成功[BP.Sys.EnsAppCfg-83]放入缓存。
+22日14时58分32秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日14时58分32秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.CBuessType
+22日14时58分32秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日14时59分43秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日14时59分43秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.CBuessType
+22日14时59分43秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日14时59分43秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日14时59分43秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.CBuessType
+22日14时59分43秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日14时59分50秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日14时59分50秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.CBuessType
+22日14时59分50秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时00分01秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时00分01秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.CBuessType
+22日15时00分01秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时00分01秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时00分01秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.CBuessType
+22日15时00分01秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时00分40秒Fatal:System');"@没有[业务类型  YG_CBuessType, 类[BP.YG.CBuessType], 物理表[YG_CBuessType] 实例。PK = CZ_Login
+22日15时00分48秒Fatal:System');"@没有[业务类型  YG_CBuessType, 类[BP.YG.CBuessType], 物理表[YG_CBuessType] 实例。PK = CZ_Login
+22日15时01分03秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时01分03秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.CBuessType
+22日15时01分03秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时01分28秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时01分28秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.CBuessType
+22日15时01分28秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时01分33秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时01分33秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.CBuessType
+22日15时01分33秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时01分33秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日15时01分33秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.CBuessType
+22日15时01分33秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+-----------------------------------------------------------------------------------------------------
+22日15时03分25秒Info:System');"成功[BP.Port.Emp-1]放入缓存。
+22日15时03分27秒Info:System');"成功[BP.Sys.EnsAppCfg-83]放入缓存。
+22日15时03分29秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuesss@WinCardH
+22日15时03分29秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuesss@WinCardW
+22日15时03分30秒Info:System');"成功[BP.Sys.EnsAppCfg-85]放入缓存。
+22日15时03分30秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuesss@UIRowStyleGlo
+22日15时03分30秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuesss@IsEnableDouclickGlo
+22日15时03分30秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuesss@IsEnableRefFunc
+22日15时03分30秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuesss@IsEnableFocusField
+22日15时03分31秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuesss@IsEnableOpenICON
+22日15时03分31秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.YG.CBuesss@FocusField
+22日15时03分32秒Info:System');"成功[BP.Sys.EnsAppCfg-91]放入缓存。
+22日15时09分20秒Info:System');"成功[BP.YG.ZJType-3]放入缓存。
+-----------------------------------------------------------------------------------------------------
+22日16时41分11秒Info:System');"成功[BP.Sys.EnsAppCfg-91]放入缓存。
+22日16时44分35秒Info:System');"成功[BP.YG.ZJType-3]放入缓存。
+22日16时44分47秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分47秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.Info
+22日16时44分47秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分47秒Info:System');"成功[BP.YG.InfoItem-9]放入缓存。
+22日16时44分53秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分53秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.Info
+22日16时44分53秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分53秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分53秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.Info
+22日16时44分53秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分53秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分53秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.Info
+22日16时44分53秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分54秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分54秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.Info
+22日16时44分54秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分56秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分56秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.Info
+22日16时44分56秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分56秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时44分56秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.Info
+22日16时44分56秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时45分50秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+22日16时45分50秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnCfg,PKVal=BP.YG.ZJ
+22日16时45分50秒Info:System');"成功[BP.Sys.EnCfg-0]放入缓存。
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
