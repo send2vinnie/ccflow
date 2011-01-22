@@ -59,13 +59,13 @@ namespace BP.YG.WebUI.Port {
         protected global::BP.YG.WebUI.Port.UC.RegUser RegUser1;
         
         /// <summary>
-        /// MyCent1 control.
+        /// Bill1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::BP.YG.WebUI.Port.UC.MyCent MyCent1;
+        protected global::BP.YG.WebUI.Port.UC.MyCent Bill1;
         
         /// <summary>
         /// ChangePass1 control.

@@ -6,8 +6,9 @@
 <%@ Register src="UC/PerInfo.ascx" tagname="PerInfo" tagprefix="uc3" %>
 <%@ Register src="UC/Login.ascx" tagname="Login" tagprefix="uc4" %>
 
-<%@ Register src="UC/MyCent.ascx" tagname="MyCent" tagprefix="uc5" %>
 <%@ Register src="UC/ChangePass.ascx" tagname="ChangePass" tagprefix="uc6" %>
+
+<%@ Register src="UC/Bill.ascx" tagname="Bill" tagprefix="uc5" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -45,7 +46,7 @@
         <tr>
     
      <td>
-         <uc5:MyCent ID="MyCent1" runat="server" />
+          <uc5:Bill ID="Bill1" runat="server" />
           </td>
     </tr>
         <tr>

@@ -1458,12 +1458,12 @@
     <Compile Include="Port\UC\Login.ascx.designer.cs">
       <DependentUpon>Login.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Port\UC\MyCent.ascx.cs">
-      <DependentUpon>MyCent.ascx</DependentUpon>
+    <Compile Include="Port\UC\Bill.ascx.cs">
+      <DependentUpon>Bill.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Port\UC\MyCent.ascx.designer.cs">
-      <DependentUpon>MyCent.ascx</DependentUpon>
+    <Compile Include="Port\UC\Bill.ascx.designer.cs">
+      <DependentUpon>Bill.ascx</DependentUpon>
     </Compile>
     <Compile Include="Port\UC\PerInfo.ascx.cs">
       <DependentUpon>PerInfo.ascx</DependentUpon>
@@ -1607,7 +1607,7 @@
     <Content Include="JiangPin.aspx" />
     <Content Include="Port\UC\ChangePass.ascx" />
     <Content Include="Port\UC\Login.ascx" />
-    <Content Include="Port\UC\MyCent.ascx" />
+    <Content Include="Port\UC\Bill.ascx" />
     <Content Include="Port\UC\PerInfo.ascx" />
     <Content Include="Port\UC\RegUser.ascx" />
     <Content Include="Port\UC\RequestPass.ascx" />
