@@ -1444,6 +1444,20 @@
     <Compile Include="Manager\Pub.ascx.designer.cs">
       <DependentUpon>Pub.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Port\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Port\RegUser.aspx.cs">
+      <DependentUpon>RegUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\RegUser.aspx.designer.cs">
+      <DependentUpon>RegUser.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Port\UC\ChangePass.ascx.cs">
       <DependentUpon>ChangePass.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1605,6 +1619,8 @@
     <None Include="Manager\JScript\FineMessBox\Images\Thumbs.db" />
     <Content Include="Info\Dtl.aspx" />
     <Content Include="JiangPin.aspx" />
+    <Content Include="Port\Login.aspx" />
+    <Content Include="Port\RegUser.aspx" />
     <Content Include="Port\UC\ChangePass.ascx" />
     <Content Include="Port\UC\Login.ascx" />
     <Content Include="Port\UC\Bill.ascx" />
