@@ -1,0 +1,10 @@
+D:\YeeGen\Components\BP.YeeGen\bin\Release\BP.YeeGen.dll
+D:\YeeGen\Components\BP.YeeGen\bin\Release\BP.YeeGen.pdb
+D:\YeeGen\Components\BP.YeeGen\bin\Release\BP.En30.dll
+D:\YeeGen\Components\BP.YeeGen\bin\Release\BP.Web.Controls.dll
+D:\YeeGen\Components\BP.YeeGen\bin\Release\Interop.Excel.dll
+D:\YeeGen\Components\BP.YeeGen\bin\Release\Interop.VBIDE.dll
+D:\YeeGen\Components\BP.YeeGen\bin\Release\ChineseConverter.dll
+D:\YeeGen\Components\BP.YeeGen\obj\Release\ResolveAssemblyReference.cache
+D:\YeeGen\Components\BP.YeeGen\obj\Release\BP.YeeGen.dll
+D:\YeeGen\Components\BP.YeeGen\obj\Release\BP.YeeGen.pdb

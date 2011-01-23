@@ -40,6 +40,7 @@
     <Compile Include="Info\InfoItem.cs" />
     <Compile Include="Info\Info.cs" />
     <Compile Include="Info\InfoModel.cs" />
+    <Compile Include="Port\Doc.cs" />
     <Compile Include="TouGao.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="JiangPin.cs">
