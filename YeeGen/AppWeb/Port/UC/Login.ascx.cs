@@ -35,6 +35,7 @@ namespace BP.YG.WebUI.Port.UC
 
             tb = new TextBox();
             tb.ID = "TB_Pass";
+            tb.TextMode = TextBoxMode.SingleLine;
             this.AddTR();
             this.AddTD("密码");
             this.AddTD(tb);

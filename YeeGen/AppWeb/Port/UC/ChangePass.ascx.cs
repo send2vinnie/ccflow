@@ -32,7 +32,7 @@ namespace BP.YG.WebUI.Port.UC
             this.AddTREnd();
 
             tb = new TextBox();
-            tb.ID = "TB_P1";
+            tb.ID = "TB_P2";
             tb.TextMode = TextBoxMode.Password;
             this.AddTR();
             this.AddTD("新密码");
@@ -40,7 +40,7 @@ namespace BP.YG.WebUI.Port.UC
             this.AddTREnd();
 
             tb = new TextBox();
-            tb.ID = "TB_P2";
+            tb.ID = "TB_P3";
             tb.TextMode = TextBoxMode.Password;
             this.AddTR();
             this.AddTD("重输一次");
@@ -82,16 +82,11 @@ namespace BP.YG.WebUI.Port.UC
                 if (pass2 != pass3)
                     throw new Exception("两次密码不一致。");
 
-
-              
                 Member m = new Member();
                 m.No = Glo.MemberNo;
                 m.RetrieveFromDBSources();
-
                 if (m.Pass.Equals(pass1) == false)
                     throw new Exception("老密码错误");
-
-
 
                 this.Clear();
                 this.AddMsgGreen("提示", "密码修改成功。");

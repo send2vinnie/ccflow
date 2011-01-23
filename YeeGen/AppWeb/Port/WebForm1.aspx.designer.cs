@@ -75,5 +75,23 @@ namespace BP.YG.WebUI.Port {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::BP.YG.WebUI.Port.UC.ChangePass ChangePass1;
+        
+        /// <summary>
+        /// DocRelease1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BP.YG.WebUI.Port.UC.ReleaseDoc DocRelease1;
+        
+        /// <summary>
+        /// DocList1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BP.YG.WebUI.Port.UC.DocList DocList1;
     }
 }

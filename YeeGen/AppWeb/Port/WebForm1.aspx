@@ -10,6 +10,9 @@
 
 <%@ Register src="UC/Bill.ascx" tagname="Bill" tagprefix="uc5" %>
 
+<%@ Register src="UC/DocList.ascx" tagname="DocList" tagprefix="uc8" %>
+<%@ Register src="UC/DocRelease.ascx" tagname="DocRelease" tagprefix="uc9" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
@@ -53,6 +56,18 @@
     
      <td>
          <uc6:ChangePass ID="ChangePass1" runat="server" />
+          </td>
+    </tr>
+        <tr>
+    
+     <td>
+         <uc9:DocRelease ID="DocRelease1" runat="server" />
+          </td>
+    </tr>
+        <tr>
+    
+     <td>
+         <uc8:DocList ID="DocList1" runat="server" />
           </td>
     </tr>
     </table>

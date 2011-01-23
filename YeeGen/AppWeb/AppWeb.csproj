@@ -1465,6 +1465,20 @@
     <Compile Include="Port\UC\ChangePass.ascx.designer.cs">
       <DependentUpon>ChangePass.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Port\UC\DocList.ascx.cs">
+      <DependentUpon>DocList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\UC\DocList.ascx.designer.cs">
+      <DependentUpon>DocList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Port\UC\DocReader.ascx.cs">
+      <DependentUpon>DocReader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\UC\DocReader.ascx.designer.cs">
+      <DependentUpon>DocReader.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Port\UC\Login.ascx.cs">
       <DependentUpon>Login.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1492,6 +1506,13 @@
     </Compile>
     <Compile Include="Port\UC\RegUser.ascx.designer.cs">
       <DependentUpon>RegUser.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Port\UC\DocRelease.ascx.cs">
+      <DependentUpon>DocRelease.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Port\UC\DocRelease.ascx.designer.cs">
+      <DependentUpon>DocRelease.ascx</DependentUpon>
     </Compile>
     <Compile Include="Port\UC\RequestPass.ascx.cs">
       <DependentUpon>RequestPass.ascx</DependentUpon>
@@ -1622,10 +1643,13 @@
     <Content Include="Port\Login.aspx" />
     <Content Include="Port\RegUser.aspx" />
     <Content Include="Port\UC\ChangePass.ascx" />
+    <Content Include="Port\UC\DocList.ascx" />
+    <Content Include="Port\UC\DocReader.ascx" />
     <Content Include="Port\UC\Login.ascx" />
     <Content Include="Port\UC\Bill.ascx" />
     <Content Include="Port\UC\PerInfo.ascx" />
     <Content Include="Port\UC\RegUser.ascx" />
+    <Content Include="Port\UC\DocRelease.ascx" />
     <Content Include="Port\UC\RequestPass.ascx" />
     <Content Include="Port\WebForm1.aspx" />
     <Content Include="Pub.ascx" />
