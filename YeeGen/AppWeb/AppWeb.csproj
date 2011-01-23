@@ -1641,6 +1641,7 @@
     <Content Include="Info\Dtl.aspx" />
     <Content Include="JiangPin.aspx" />
     <Content Include="Port\Login.aspx" />
+    <Content Include="Port\Readme.txt" />
     <Content Include="Port\RegUser.aspx" />
     <Content Include="Port\UC\ChangePass.ascx" />
     <Content Include="Port\UC\DocList.ascx" />
