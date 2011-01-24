@@ -13,7 +13,6 @@
 
 .TR
 {
-	 
 }
 
 .TD
@@ -43,6 +42,7 @@
 
 .WeekTable
 {
+    
 }
 
 /* opencell css  */
@@ -57,12 +57,14 @@
 {
     background-color: khaki;
     cursor: default;
+    text-align:left;
 }
 /* opencell 非动时间样式 */
 .TimeNoActive
 {
     background-color: tan;
     cursor: default;
+    text-align:left;
 }
 
 /* 非本月的日期 */

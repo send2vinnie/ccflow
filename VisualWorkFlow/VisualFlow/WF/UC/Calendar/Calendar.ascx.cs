@@ -282,107 +282,104 @@ namespace BP.Web.Comm.UC
 
             this.Controls.Clear();
             int time = 7;
-            this.Add("<TABLE  class='WeekTable' border=0>");
+            this.Add("<TABLE  class='WeekTable' width='100%' border=0>");
             this.Add("<TR  class='CTitle'  ><TD ondblclick=\"CelldblClick('" + dt.ToString("yyyy-MM-dd") + "','0');\" >" + dt.ToString("M月d日") + "&nbsp;周日</TD><TD ondblclick=\"CelldblClick('" + dt.AddDays(1).ToString("yyyy-MM-dd") + "','0');\" >" + dt.AddDays(1).ToString("M月d日") + "&nbsp;周一</TD><TD ondblclick=\"CelldblClick('" + dt.AddDays(2).ToString("yyyy-MM-dd") + "','0');\"  >" + dt.AddDays(2).ToString("M月d日") + "&nbsp;周二</TD><TD ondblclick=\"window.location.href='Calendar.aspx?CalendarType=2&RefDate=" + dt.AddDays(3).ToString("yyyy-MM-dd") + "';\" >" + dt.AddDays(3).ToString("M月d日") + "&nbsp;周三</TD><TD  ondblclick=\"window.location.href='Calendar.aspx?CalendarType=0&RefDate=" + dt.AddDays(4).ToString("yyyy-MM-dd") + "';\">" + dt.AddDays(4).ToString("M月d日") + "&nbsp;周四</TD><TD ondblclick=\"window.location.href='Calendar.aspx?CalendarType=0&RefDate=" + dt.AddDays(5).ToString("yyyy-MM-dd") + "';\">" + dt.AddDays(5).ToString("M月d日") + "&nbsp;周五</TD><TD  ondblclick=\"window.location.href='Calendar.aspx?CalendarType=0&RefDate=" + dt.AddDays(6).ToString("yyyy-MM-dd") + "';\">" + dt.AddDays(6).ToString("M月d日") + "&nbsp;周六</TD></TR>");
 
             this.AddTR();
             //this.Add("<TD >" + this.MyWeek_TimeBar(dt) + "</TD>");
             //this.Add("<TD ></TD>");
+            this.Add("<TD valign=top hight=100% class=TimeNoActive align=left >" + this.MyWeek_Day(dt) + "</TD>");
+            this.Add("<TD valign=top hight=100% class=TimeActive align=left >" + this.MyWeek_Day(dt.AddDays(1)) + "</TD>");
+            this.Add("<TD valign=top hight=100% class=TimeActive align=left >" + this.MyWeek_Day(dt.AddDays(2)) + "</TD>");
+            this.Add("<TD valign=top hight=100% class=TimeActive align=left >" + this.MyWeek_Day(dt.AddDays(3)) + "</TD>");
+            this.Add("<TD valign=top hight=100% class=TimeActive align=left >" + this.MyWeek_Day(dt.AddDays(4)) + "</TD>");
+            this.Add("<TD valign=top hight=100% class=TimeActive align=left >" + this.MyWeek_Day(dt.AddDays(5)) + "</TD>");
+            this.Add("<TD valign=top hight=100% class=TimeNoActive align=left >" + this.MyWeek_Day(dt.AddDays(6)) + "</TD>");
+            this.AddTREnd();
 
-            this.Add("<TD valign=top hight=100% >" + this.MyWeek_Day(dt) + "</TD>");
-            this.Add("<TD valign=top hight=100%>" + this.MyWeek_Day(dt.AddDays(1)) + "</TD>");
-            this.Add("<TD valign=top hight=100%>" + this.MyWeek_Day(dt.AddDays(2)) + "</TD>");
-            this.Add("<TD valign=top hight=100%>" + this.MyWeek_Day(dt.AddDays(3)) + "</TD>");
-            this.Add("<TD valign=top hight=100%>" + this.MyWeek_Day(dt.AddDays(4)) + "</TD>");
-            this.Add("<TD valign=top hight=100%>" + this.MyWeek_Day(dt.AddDays(5)) + "</TD>");
-            this.Add("<TD valign=top hight=100%>" + this.MyWeek_Day(dt.AddDays(6)) + "</TD>");
+            this.AddTR("class=CTitle");
+            this.AddTD(this.ToE("W0", "周日"));
+            this.AddTD(this.ToE("W1", "周一"));
+            this.AddTD(this.ToE("W2", "周二"));
+            this.AddTD(this.ToE("W3", "周三"));
+            this.AddTD(this.ToE("W4", "周四"));
+            this.AddTD(this.ToE("W5", "周五"));
+            this.AddTD(this.ToE("W6", "周六"));
             this.AddTREnd();
             this.AddTableEnd();
         }
-
-        public string MyWeek_Day_Time(string strs)
-        {
-            return "&nbsp;";
-            //return null;
-        }
         /// <summary>
-        /// 
+        /// MyWeek_Day
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
-        //		public string MyWeek_Day(DateTime dt)
         public string MyWeek_Day(DateTime dt)
         {
             string date = dt.ToString("yyyy-MM-dd");
             string cdID = ""; // this.Page.FindControl("WebMenu1").ClientID;
             string hh = "";
-            string html = "<Table border='1' width='100%' height='100%' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#111111' >";
+            string html = "";  
 
             //string sql = "SELECT FlowName, Title,RDT FROM WF_EmpWorks WHERE FK_Emp='wlc' and RDT LIKE '%"+date+"%' ";
             string sql = "SELECT FlowName, Title,RDT FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "' AND RDT LIKE '%" + date + "%' ";
             sql += "ORDER BY FK_Flow,RDT ";
             DataTable dtWork = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
-            html += "<TR>";
-            html += "<TD class=TimeActive height='100%' align=left ><ul>";
             foreach (DataRow dr in dtWork.Rows)
             {
-                html += "<li>" + dr["Title"] + "</li>";
+                html +=   dr["Title"] + "<br>";
             }
-            html += "</ul></TD>";
-            html += "</TR>";
-            html += "</TABLE>";
             return html;
 
-            for (int h = 6; h <= 24; h++)
-            {
-                hh = h.ToString();
-                hh = hh.PadLeft(2, '0');
-                string timebarcss = "TimeNoActive";
-                if (h >= 8 && h <= 18)
-                {
-                    timebarcss = "TimeActive";
-                }
+            //for (int h = 6; h <= 24; h++)
+            //{
+            //    hh = h.ToString();
+            //    hh = hh.PadLeft(2, '0');
+            //    string timebarcss = "TimeNoActive";
+            //    if (h >= 8 && h <= 18)
+            //    {
+            //        timebarcss = "TimeActive";
+            //    }
 
-                /*如果没有要加入的事情。*/
-                html += "<TR >";
-                html += "<TD  class='" + timebarcss + "' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate=" + date + "&RefTime=" + hh + "_00' , 'log' )\" >" + this.MyWeek_Day_Time(hh + ":00") + "</TD>";
-                html += "</TR>";
+            //    /*如果没有要加入的事情。*/
+            //    html += "<TR >";
+            //    html += "<TD  class='" + timebarcss + "' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate=" + date + "&RefTime=" + hh + "_00' , 'log' )\" >" + this.MyWeek_Day_Time(hh + ":00") + "</TD>";
+            //    html += "</TR>";
 
-                html += "<TR>";
-                html += "<TD class='" + timebarcss + "' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate=" + date + "&RefTime=" + hh + "_30' , 'log' )\" >" + this.MyWeek_Day_Time(hh + ":30") + "</TD>";
-                html += "</TR>";
-            }
+            //    html += "<TR>";
+            //    html += "<TD class='" + timebarcss + "' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate=" + date + "&RefTime=" + hh + "_30' , 'log' )\" >" + this.MyWeek_Day_Time(hh + ":30") + "</TD>";
+            //    html += "</TR>";
+            //}
 
         }
-        public string MyWeek_Day_bak(DateTime dt)
-        {
-            string date = dt.ToString("yyyy-MM-dd");
-            string cdID = ""; // this.Page.FindControl("WebMenu1").ClientID;
-            string hh = "";
-            string html = "<Table  border='1' width=100% cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#111111' >";
-            for (int h = 6; h <= 24; h++)
-            {
-                hh = h.ToString();
-                hh = hh.PadLeft(2, '0');
-                string timebarcss = "TimeNoActive";
-                if (h >= 8 && h <= 18)
-                {
-                    timebarcss = "TimeActive";
-                }
+        //public string MyWeek_Day_bak(DateTime dt)
+        //{
+        //    string date = dt.ToString("yyyy-MM-dd");
+        //    string cdID = ""; // this.Page.FindControl("WebMenu1").ClientID;
+        //    string hh = "";
+        //    string html = "<Table  border='1' width=100% cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#111111' >";
+        //    for (int h = 6; h <= 24; h++)
+        //    {
+        //        hh = h.ToString();
+        //        hh = hh.PadLeft(2, '0');
+        //        string timebarcss = "TimeNoActive";
+        //        if (h >= 8 && h <= 18)
+        //        {
+        //            timebarcss = "TimeActive";
+        //        }
 
-                /*如果没有要加入的事情。*/
-                html += "<TR >";
-                html += "<TD  class='" + timebarcss + "' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate=" + date + "&RefTime=" + hh + "_00' , 'log' )\" >" + this.MyWeek_Day_Time(hh + ":00") + "</TD>";
-                html += "</TR>";
+        //        /*如果没有要加入的事情。*/
+        //        html += "<TR >";
+        //        html += "<TD  class='" + timebarcss + "' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate=" + date + "&RefTime=" + hh + "_00' , 'log' )\" >" + this.MyWeek_Day_Time(hh + ":00") + "</TD>";
+        //        html += "</TR>";
 
-                html += "<TR>";
-                html += "<TD class='" + timebarcss + "' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate=" + date + "&RefTime=" + hh + "_30' , 'log' )\" >" + this.MyWeek_Day_Time(hh + ":30") + "</TD>";
-                html += "</TR>";
-            }
-            html += "</TABLE>";
-            return html;
-        }
+        //        html += "<TR>";
+        //        html += "<TD class='" + timebarcss + "' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate=" + date + "&RefTime=" + hh + "_30' , 'log' )\" >" + this.MyWeek_Day_Time(hh + ":30") + "</TD>";
+        //        html += "</TR>";
+        //    }
+        //    html += "</TABLE>";
+        //    return html;
+        //}
         //		public string MyWeek_TimeBar(DateTime dt)
         public string MyWeek_TimeBar(DateTime dt)
         {
