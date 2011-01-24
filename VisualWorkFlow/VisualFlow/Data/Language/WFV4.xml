@@ -5,8 +5,9 @@
   <Item No="EndFlowRunSQL" CH="流程结束执行后执行的SQL" EN="Execute SQL when flow completes" JP="End Flow Run SQL" RU="Report" />
   <Item No="RunDoc" CH="运行内容" EN="Content" JP="Run Doc" RU="Report" />
   <Item No="NodeFrom" CH="节点从" EN="From Node" JP="Node From" RU="Report" />
+  <Item No="CCNode" CH="抄送节点" EN="CCNode" JP="CCNode" RU="CCNode" />
 
-  <!-- 节点属性-->
+    <!-- 节点属性-->
   <Item No="IsTask" CH="允许分配工作否?" EN="Can assign work" JP="Is can alort task" RU="Is can alort task" />
   <Item No="IsSelectEmp" CH="可否选择接受人?" EN="Can select receiver" JP="Is can select emp" RU="Is can select emp" />
   <Item No="IsCanReturn" CH="是否可以退回?" EN="Can be returned" JP="Is can return" RU="Is can return" />
@@ -19,7 +20,6 @@
 
   <Item No="DocCl" CH="公文类" EN="Document class" JP="Document class" RU="Document class" />
   <Item No="BCL" CH="办公类" EN="Business class" JP="Business class" RU="Business class" />
-
 
   <Item No="FlowMenu" B5=""  CH="流程菜单" EN="Flow Menu" JP="FlowMenu" RU="FlowMenu" />
   <Item No="TSSH" CH="同事审核" EN="Audited by Colleague" JP="同事审核" RU="同事审核" />

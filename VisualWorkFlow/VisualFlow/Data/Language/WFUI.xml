@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <!-- 设计器 -->
-  <Item No="EW1" B5="当前您没有工作要去处理"  CH="当前您没有工作要去处理" EN="You have no work to handle at this time" JP="〜の間" RU="В течение"  UG=""  />
+
+    <Item No="ClearDB" B5="清除流程数据"  CH="清除流程数据" EN="Clear Flow data" JP="Clear Flow data" RU="Clear Flow data"  UG="Clear Flow data"  />
+    <Item No="Setting" B5="设置"  CH="设置" EN="Setting" JP="Setting" RU="Setting"  UG="Setting"  />
+    <Item No="Upload" B5="上传"  CH="上传" EN="Upload" JP="Upload" RU="Upload"  UG="Upload"  />
+    
+    <Item No="TitleImg" B5="标题图片设置"  CH="标题图片设置" EN="Header Image Set" JP="Header Image Set" RU="Header Image Set"  UG="Header Image Set"  />
+    <Item No="EW1" B5="当前您没有工作要去处理"  CH="当前您没有工作要去处理" EN="You have no work to handle at this time" JP="〜の間" RU="В течение"  UG=""  />
 
   <Item No="StartWork" B5="工作发起"  CH="工作发起" EN="Start work" JP="〜の間" RU="В течение" />
 
@@ -17,7 +23,6 @@
   <Item No="DeptP" B5="部门权限"  CH="部门权限" EN="Department Permissions" JP="Department permission" RU="Department permission" />
   <Item No="StaP" B5="岗位权限"  CH="岗位权限" EN="Position Permissions" JP="Status privileges" RU="Status privileges" />
   <Item No="Executor" B5="执行人"  CH="执行人" EN="Executor" JP="Executor" RU="Executor" />
-
   <Item No="SMS1" B5="没有安装短信猫设备。"  
         CH="没有安装短信猫设备。" 
         EN="SMS is not installed equipment" 
@@ -36,9 +41,6 @@
       EN="Email address to accept reminders"
       JP="E-mail reminder to accept"
       RU="E-mail reminder to accept" />
-
-
-  
 
   <Item No="To1" B5="授权情况：未授权"  CH="授权情况：未授权"
         EN="Authorization: no authorization" 
