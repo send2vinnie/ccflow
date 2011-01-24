@@ -182,9 +182,8 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                 break;
             case "GFDoDown":
                 GroupField mygf = new GroupField(this.RefOID);
-                mygf.DoOrder();
+                mygf.DoDown();
                 mygf.Retrieve();
-
                 int oidIdx1 = mygf.Idx;
                 mygf.Idx = mygf.Idx + 1;
                 GroupField gfDown = new GroupField();

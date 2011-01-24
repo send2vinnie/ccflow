@@ -64,12 +64,12 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
     public void BindTable(MapAttr mapAttr)
     {
         this.Pub1.AddTable();
-       // this.Pub1.AddCaptionLeftTX(this.GetCaption);
+        // this.Pub1.AddCaptionLeftTX(this.GetCaption);
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Item", "项目"));
         this.Pub1.AddTDTitle(this.ToE("Value", "值"));
-        this.Pub1.AddTDTitle(this.ToE("Desc","描述") );
+        this.Pub1.AddTDTitle(this.ToE("Desc", "描述"));
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
@@ -143,8 +143,6 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
                 }
                 ddl.Items.Add(new ListItem("默认值为空", ""));
                 ddl.Items.Add(new ListItem("默认当前选择", "@Select"));
-
-
                 string rel = mapAttr.GetValStrByKey(MapAttrAttr.DefVal);
                 if (rel.Contains("@") == false && rel != "")
                     rel = "@Select";
@@ -154,26 +152,6 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
             }
         }
         this.Pub1.AddTREnd();
-
-
-
-        #region 字段分组
-        this.Pub1.AddTR();
-        this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD(this.ToE("FieldGroup", "字段分组"));
-        DDL ddlGroup = new DDL();
-        ddlGroup.ID = "DDL_GroupID";
-        GroupFields gfs = new GroupFields(mapAttr.FK_MapData);
-        ddlGroup.Bind(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab);
-        if (mapAttr.GroupID == 0)
-            mapAttr.GroupID = this.GroupField;
-
-        ddlGroup.SetSelectItem(mapAttr.GroupID);
-        this.Pub1.AddTD("colspan=2",ddlGroup);
-        this.Pub1.AddTD("修改隶属分组");
-        this.Pub1.AddTREnd();
-        #endregion 字段分组
-
 
 
         this.Pub1.AddTR1();
@@ -293,17 +271,36 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         #endregion 是否可编辑
 
 
+        #region 字段分组
+        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("FieldGroup", "字段分组"));
+        DDL ddlGroup = new DDL();
+        ddlGroup.ID = "DDL_GroupID";
+        GroupFields gfs = new GroupFields(mapAttr.FK_MapData);
+        ddlGroup.Bind(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab);
+        if (mapAttr.GroupID == 0)
+            mapAttr.GroupID = this.GroupField;
+
+        ddlGroup.SetSelectItem(mapAttr.GroupID);
+
+        this.Pub1.AddTD("colspan=2", ddlGroup);
+        this.Pub1.AddTD();  //( this.to "隶属分组");
+        this.Pub1.AddTREnd();
+        #endregion 字段分组
+
+        #region 字段按钮
         this.Pub1.AddTRSum();
         this.Pub1.Add("<TD colspan=4>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = this.ToE("Save","保存");
+        btn.Text = this.ToE("Save", "保存");
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose1";
-        btn.Text = this.ToE("Close","关闭"); ;
+        btn.Text = this.ToE("Close", "关闭"); ;
         btn.Attributes["onclick"] = " window.close(); return false;";
         this.Pub1.Add(btn);
 
@@ -311,7 +308,7 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         btn.ID = "Btn_SaveAndClose";
         btn.Text = this.ToE("SaveAndClose", "保存并关闭"); //"保存并关闭";
         btn.Click += new EventHandler(btn_Save_Click);
-        this.Pub1.Add(btn);   
+        this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndNew";
@@ -319,7 +316,7 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
-        if (this.RefNo !=null )
+        if (this.RefNo != null)
         {
             btn = new Button();
             btn.ID = "Btn_AutoFull";
@@ -343,6 +340,7 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         this.Pub1.Add("<a href='" + url + "'><img src='../../Images/Btn/New.gif' border=0>" + this.ToE("New", "新建") + "</a></TD>");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
+        #endregion 字段按钮
     }
     void btn_Save_Click(object sender, EventArgs e)
     {

@@ -264,7 +264,7 @@ public partial class WF_MapDef_WFRptDtl : WebPage
                 attrFlow.FK_MapData = md.No;
                 attrFlow.HisEditType = BP.Sys.EditType.UnDel;
                 attrFlow.KeyOfEn = "Title";
-                attrFlow.Name = "流程标题"; //
+                attrFlow.Name = "标题"; //
                 attrFlow.MyDataType = BP.DA.DataType.AppString;
                 attrFlow.UIContralType = UIContralType.TB;
                 attrFlow.LGType = FieldTypeS.Normal;

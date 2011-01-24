@@ -1,0 +1,183 @@
+.ToDayMailTD
+{
+	font: messagebox;
+	width: 80%;
+	cursor: hand;
+}
+
+.Title
+{
+	background-color: activeborder;
+	text-align: center;
+}
+
+.TR
+{
+	 
+}
+
+.TD
+{
+}
+
+.Field
+{
+	border-right: activeborder thin solid;
+	border-top: activeborder thin solid;
+	border-left: activeborder thin solid;
+	border-bottom: activeborder thin solid;
+	background-color: activeborder;
+}
+
+.ToolBar
+{
+  background-color: activeborder;
+  width:100%;
+  height:1%;
+}
+
+.TABody
+{
+	background-color: infobackground;
+}
+
+.WeekTable
+{
+}
+
+/* opencell css  */
+.Timelist
+{
+	CURSOR:default;	 
+	background-color: buttonface;
+}
+
+/* 活动时间样式 */
+.TimeActive
+{
+    background-color: khaki;
+    cursor: default;
+}
+/* opencell 非动时间样式 */
+.TimeNoActive
+{
+    background-color: tan;
+    cursor: default;
+}
+
+/* 非本月的日期 */
+.UnMonthDay
+{
+    background-color: infobackground;
+    cursor: default;
+}
+
+.TBTask
+{
+	font-size: 9pt;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;
+	border-bottom-style: none;
+}
+
+.TaskEndTable
+{
+	 
+}
+
+.TaskEndTR
+{
+	 
+}
+
+.TaskEndTD
+{
+	 
+}
+
+.Calendar
+{
+	font: menu;
+}
+
+.DTable
+{
+	width: 100%;
+	background-color: activeborder;
+}
+
+
+.CTable
+{
+	 
+	font: menu;
+	width:100%;
+}
+
+
+.CNYTitle
+{
+	font: menu;
+	background-color: buttonface;
+}
+
+.CTitle
+{
+	font: menu;
+	background-color: activeborder;
+}
+.CWeekTD
+{
+	font: menu;
+	width: 15%;
+	background-color: activeborder;
+	text-align: center;
+}
+
+.CCell
+{
+	position: absolute;
+	top: 100%;
+	height: 100%;
+}
+
+.Week
+{
+	font: menu;
+	background-color: lavender;
+	width:1%;
+}
+
+.WeekEnd
+{
+	background-color: tan;
+	CURSOR:default;
+	/*
+	font: menu;
+	background-color: gainsboro;
+    */
+}
+
+.ToDay
+{
+	font: menu;
+	background-color: lightsteelblue;
+}
+
+.SelectedDay
+{
+	font: menu;
+	background-color: cornflowerblue;
+}
+
+
+/* */
+
+.EnumLeft
+{
+    background-color: honeydew;
+    width:20%;
+}
+
+ 

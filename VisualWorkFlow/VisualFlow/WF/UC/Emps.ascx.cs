@@ -75,7 +75,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
         if (this.DoType != null)
             emps.RetrieveAllFromDBSource();
         else
-            emps.RetrieveAll();
+            emps.RetrieveAllFromDBSource();
 
 
         this.AddTable("width=80% align=center border=1");

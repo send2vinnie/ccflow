@@ -211,6 +211,7 @@ public partial class WF_MapDef_MapDef : WebPage
                             case BP.DA.DataType.AppDate:
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
                                 tb.ShowType = TBType.Date;
+
                                 tb.Text = attr.DefVal;
 
                                 if (attr.UIIsEnable)

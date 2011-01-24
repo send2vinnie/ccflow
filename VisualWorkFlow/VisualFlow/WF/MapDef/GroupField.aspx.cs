@@ -80,7 +80,6 @@ public partial class WF_MapDef_GroupField : WebPage
         attr.IDX = 1;
         attr.Insert();
 
-
         attr = new MapAttr();
         attr.FK_MapData = this.RefNo;
         attr.KeyOfEn = Prx + "_Checker";
@@ -116,6 +115,7 @@ public partial class WF_MapDef_GroupField : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = this.ToE("FieldGroup", "字段分组");
+
         switch (this.DoType)
         {
             case "FunList":
