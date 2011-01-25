@@ -678,15 +678,14 @@ namespace BP.YG
 
             try
             {
-                Glo.FK_Area = c.FK_Area;
-                Glo.FK_SF = c.FK_Area.Substring(0, 2);
-                Glo.FK_City = c.FK_Area.Substring(0, 4);
+              //  Glo.FK_Area = c.FK_Area;
+         //       Glo.FK_SF = c.FK_Area.Substring(0, 2);
+              //  Glo.FK_City = c.FK_Area.Substring(0, 4);
             }
             catch
             {
 
             }
-
 
             HttpCookie cookie = new HttpCookie("caishui800");
             cookie.Expires = DateTime.Now.AddMonths(10);

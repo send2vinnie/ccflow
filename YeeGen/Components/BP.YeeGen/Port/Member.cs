@@ -24,7 +24,6 @@ namespace BP.YG
         public const string SEX = "SEX";
         public const string Pass = "Pass";
         public const string Addr = "Addr";
-
         /// <summary>
         /// Email
         /// </summary>
@@ -74,9 +73,9 @@ namespace BP.YG
 
         public const string MemberType = "MemberType";
 
-        public const string FK_Area = "FK_Area";
 
 
+        public const string FK_Level = "FK_Level";
 
 
 
@@ -349,15 +348,15 @@ namespace BP.YG
                 this.SetValByKey(MemberAttr.ADT, value);
             }
         }
-        public string FK_Area
+        public string FK_Level
         {
             get
             {
-                return this.GetValStringByKey(MemberAttr.FK_Area);
+                return this.GetValStringByKey(MemberAttr.FK_Level);
             }
             set
             {
-                this.SetValByKey(MemberAttr.FK_Area, value);
+                this.SetValByKey(MemberAttr.FK_Level, value);
             }
         }
         public string Img
@@ -578,7 +577,7 @@ namespace BP.YG
                 map.PhysicsTable = "YG_Member";
                 map.AdjunctType = AdjunctType.AllType;
                 map.DepositaryOfMap = Depositary.Application;
-                map.DepositaryOfEntity = Depositary.None;
+                map.DepositaryOfEntity = Depositary.Application;
                 map.IsAllowRepeatNo = false;
                 map.IsCheckNoLength = false;
                 map.EnDesc = "用户";
@@ -592,18 +591,20 @@ namespace BP.YG
                 map.AddTBString(MemberAttr.Name, null, "名称", false, false, 0, 50, 200);
                 map.AddDDLSysEnum(MemberAttr.SEX, 0, "性别", true, true, MemberAttr.SEX,"@0=女@1=男");
                 map.AddTBString(MemberAttr.Pass, null, "密码", false, false, 0, 50, 50);
+
                 map.AddTBString(MemberAttr.Addr, null, "来自", false, false, 0, 100, 200);
                 map.AddTBString(MemberAttr.QQ, null, "QQ", false, false, 0, 100, 200);
                 map.AddTBString(MemberAttr.Tel, null, "Tel", false, false, 0, 100, 200);
                 map.AddTBString(MemberAttr.Email, null, "Email", true, false, 0, 50, 200);
 
-
                 map.AddTBInt(MemberAttr.Cent, 0, "积分", true, true);
                 map.AddTBDateTime(MemberAttr.ADT, null, "最近登陆日期", true, true);
                 map.AddTBDateTime(MemberAttr.RDT, null, "注册日期", true, true);
 
-                map.AddDDLSysEnum(MemberAttr.MemberType, 1, "状态", true, true, MemberAttr.MemberType,
-                  "@0=禁用@1=普通@2=白金@3=黄金@4=钻石");
+                map.AddDDLEntities(MemberAttr.FK_Level, null, "级别", new Levels(), false);
+
+                //map.AddDDLSysEnum(MemberAttr.MemberType, 1, "状态", true, true, MemberAttr.MemberType,
+                //  "@0=禁用@1=普通@2=白金@3=黄金@4=钻石");
                 #endregion
 
                 this._enMap = map;
@@ -611,6 +612,41 @@ namespace BP.YG
             }
         }
         #endregion
+
+        protected override bool beforeInsert()
+        {
+            if (this.No.Length <= 4)
+                throw new Exception("sssss");
+
+            return base.beforeInsert();
+        }
+
+        public void RegIt()
+        {
+         
+            try
+            {
+                this.Insert();
+
+             //   BP.DA.DataType.ap
+
+
+                string spName = "RegSP";
+                BP.DA.Paras paras = new Paras();
+                paras.Add("Name", this.Name);
+                paras.Add("No", this.No);
+                BP.DA.DBAccess.RunSP("Spsddss", paras);
+
+                string sql = "update sss ";
+                BP.DA.DBAccess.RunSQL(sql);
+                DataTable dt = BP.DA.DBAccess.RunSQLReturnTable("select * from sss");
+            }
+            catch
+            {
+                BP.DA.DBAccess.RunSQL("  ss ");
+                this.Delete();
+            }
+        }
 
         /// <summary>
         /// 向他发送密码
@@ -622,6 +658,7 @@ namespace BP.YG
                 "您好：\t\n 感谢您注册易根网，用户名：" + this.No + "，密码：" + this.Pass + "。");
             return "密码已经发送到邮件里:" + this.Email;
         }
+
     }
 	/// <summary>
 	/// 用户
@@ -661,6 +698,14 @@ namespace BP.YG
         public int SearchCashNewUser()
         {
             return this.RetrieveFromCash("newUser", "SELECT  No FROM YG_Member  WHERE ROWNUM<=15 ORDER BY RDT");
+        }
+        /// <summary>
+        /// ssss
+        /// </summary>
+        /// <returns></returns>
+        public int DoXyx()
+        {
+
         }
 		#endregion
 	}

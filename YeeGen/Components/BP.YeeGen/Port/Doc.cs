@@ -166,6 +166,10 @@ namespace BP.YG
 		/// ╩Ат╠ндуб
 		/// </summary>
 		public Doc(){}
+
+        public Doc(int oid):base(oid) 
+        {
+        }
 		#endregion 
 	}
 	/// <summary>
