@@ -74,6 +74,18 @@ namespace BP.Web.WF
         }
         protected void Page_Load(object sender, System.EventArgs e)
         {
+            Response.AddHeader("P3P", "CP=CAO PSA OUR");
+            Response.AddHeader("Cache-Control", "no-store");
+            Response.AddHeader("Expires", "0");
+            Response.AddHeader("Pragma", "no-cache");
+            string url = this.Request.RawUrl;
+            if (url.Contains("DTT=") == false)
+            {
+                //this.Response.Redirect(url + "&DTT=" + DateTime.Now.ToString("mmDDhhmmss"), true);
+                //return;
+            }
+
+
             try
             {
                 string str = "";

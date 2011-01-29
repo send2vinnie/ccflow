@@ -280,14 +280,23 @@ namespace BP.Web.Comm.UC
                     break;
             }
 
-            this.Controls.Clear();
             int time = 7;
             this.Add("<TABLE  class='WeekTable' width='100%' border=0>");
-            this.Add("<TR  class='CTitle'  ><TD ondblclick=\"CelldblClick('" + dt.ToString("yyyy-MM-dd") + "','0');\" >" + dt.ToString("M月d日") + "&nbsp;周日</TD><TD ondblclick=\"CelldblClick('" + dt.AddDays(1).ToString("yyyy-MM-dd") + "','0');\" >" + dt.AddDays(1).ToString("M月d日") + "&nbsp;周一</TD><TD ondblclick=\"CelldblClick('" + dt.AddDays(2).ToString("yyyy-MM-dd") + "','0');\"  >" + dt.AddDays(2).ToString("M月d日") + "&nbsp;周二</TD><TD ondblclick=\"window.location.href='Calendar.aspx?CalendarType=2&RefDate=" + dt.AddDays(3).ToString("yyyy-MM-dd") + "';\" >" + dt.AddDays(3).ToString("M月d日") + "&nbsp;周三</TD><TD  ondblclick=\"window.location.href='Calendar.aspx?CalendarType=0&RefDate=" + dt.AddDays(4).ToString("yyyy-MM-dd") + "';\">" + dt.AddDays(4).ToString("M月d日") + "&nbsp;周四</TD><TD ondblclick=\"window.location.href='Calendar.aspx?CalendarType=0&RefDate=" + dt.AddDays(5).ToString("yyyy-MM-dd") + "';\">" + dt.AddDays(5).ToString("M月d日") + "&nbsp;周五</TD><TD  ondblclick=\"window.location.href='Calendar.aspx?CalendarType=0&RefDate=" + dt.AddDays(6).ToString("yyyy-MM-dd") + "';\">" + dt.AddDays(6).ToString("M月d日") + "&nbsp;周六</TD></TR>");
+            this.Add("<TR class='CTitle'>");
+            this.Add("<TD></TD>");
+            this.Add("<TD >" + dt.ToString("M月d日") + "&nbsp;周日</TD>");
+            this.Add("<TD >" + dt.AddDays(1).ToString("M月d日") + "&nbsp;周一</TD>");
+            this.Add("<TD >" + dt.AddDays(2).ToString("M月d日") + "&nbsp;周二</TD>");
+            this.Add("<TD >" + dt.AddDays(3).ToString("M月d日") + "&nbsp;周三</TD>");
+            this.Add("<TD >" + dt.AddDays(4).ToString("M月d日") + "&nbsp;周四</TD>");
+            this.Add("<TD >" + dt.AddDays(5).ToString("M月d日") + "&nbsp;周五</TD>");
+            this.Add("<TD >" + dt.AddDays(6).ToString("M月d日") + "&nbsp;周六</TD>");
+            this.AddTREnd();  
+
 
             this.AddTR();
-            //this.Add("<TD >" + this.MyWeek_TimeBar(dt) + "</TD>");
-            //this.Add("<TD ></TD>");
+            this.Add("<TD >" + this.MyWeek_TimeBar(dt) + "</TD>");
+            //this.Add("<TD ><br><br><br><br><br><br><br><br><br><br></TD>");
             this.Add("<TD valign=top hight=100% class=TimeNoActive align=left >" + this.MyWeek_Day(dt) + "</TD>");
             this.Add("<TD valign=top hight=100% class=TimeActive align=left >" + this.MyWeek_Day(dt.AddDays(1)) + "</TD>");
             this.Add("<TD valign=top hight=100% class=TimeActive align=left >" + this.MyWeek_Day(dt.AddDays(2)) + "</TD>");
@@ -298,6 +307,7 @@ namespace BP.Web.Comm.UC
             this.AddTREnd();
 
             this.AddTR("class=CTitle");
+            this.Add("<TD ></TD>");
             this.AddTD(this.ToE("W0", "周日"));
             this.AddTD(this.ToE("W1", "周一"));
             this.AddTD(this.ToE("W2", "周二"));
@@ -400,21 +410,19 @@ namespace BP.Web.Comm.UC
                 /*如果没有要加入的事情。*/
 
                 html += "<TR>";
-                html += "<TD width=1% onmousedown=\"javascript:OnDGMousedown( '" + cdID + "', '" + date + "' , '" + timeStr + ":00' );\" class='TimeList' valign=top ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate=" + date + "&RefTime=" + timeStr + "_00' , 'log' )\" >" + timeStr + ":00</TD>";
-                //html+="<TD onmousedown=\"javascript:OnDGMousedown( '"+cdID+"', '"+date+"' , '"+timeStr+":00' );\" class='"+timebarcss+"' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate="+date+"&RefTime="+timeStr+"_00' , 'log' )\" >&nbsp;</TD>";
+                html += "<TD width=1%  class='TimeList' valign=top >" + timeStr + ":00</TD>";
                 html += "</TR>";
 
-                html += "<TR>";
-                html += "<TD width=1% onmousedown=\"javascript:OnDGMousedown( '" + cdID + "', '" + date + "' , '" + timeStr + ":30' );\" class='TimeList' valign=top ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate=" + date + "&RefTime=" + timeStr + "_30' , 'log' )\" >&nbsp;&nbsp;:30</TD>";
-                //html+="<TD onmousedown=\"javascript:OnDGMousedown( '"+cdID+"', '"+date+"' , '"+timeStr+":30' );\" class='"+timebarcss+"' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate="+date+"&RefTime="+timeStr+"_30' , 'log' )\" >&nbsp;</TD>";
-                html += "</TR>";
+                //html += "<TR>";
+                //html += "<TD width=1% class='TimeList' valign=top >&nbsp;&nbsp;:30</TD>";
+                ////html+="<TD onmousedown=\"javascript:OnDGMousedown( '"+cdID+"', '"+date+"' , '"+timeStr+":30' );\" class='"+timebarcss+"' ondblclick=\"javascript:WinOpen( 'Log.aspx?RefDate="+date+"&RefTime="+timeStr+"_30' , 'log' )\" >&nbsp;</TD>";
+                //html += "</TR>";
             }
             html += "</TABLE>";
             return html;
         }
         protected void Page_Load(object sender, System.EventArgs e)
         {
-
             DateTime dt;
             try
             {

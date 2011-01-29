@@ -162,7 +162,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                 break;
             case "GFDoUp":
                 GroupField gf = new GroupField(this.RefOID);
-                gf.DoOrder();
+                gf.DoUp();
                 gf.Retrieve();
                 if (gf.Idx == 0)
                 {

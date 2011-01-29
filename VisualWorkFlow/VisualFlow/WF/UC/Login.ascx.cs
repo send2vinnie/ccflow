@@ -148,11 +148,10 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
                 if (WebUser.IsWap)
                     ToWhere = "Home.aspx";
 
-                if (WebUser.No == "admin")
-                    Response.Redirect("./../WF/Admin/TestFlow.aspx?FK_Flow=001&Lang=" + this.Lang, false);
-                else
+                //if (WebUser.No == "admin")
+                //    Response.Redirect("./../WF/Admin/TestFlow.aspx?Lang=" + this.Lang, false);
+                //else
                     Response.Redirect(this.ToWhere, false);
-
                 return;
             }
             this.Alert("用户名密码错误，注意密码区分大小写，请检查是否按下了CapsLock.。");
@@ -161,7 +160,5 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
         {
             this.Response.Write("<font color=red ><b>@用户名密码错误!@检查是否按下了CapsLock.@更详细的信息:" + ex.Message + "</b></font>");
         }
-
     }
-
 }

@@ -56,6 +56,11 @@ public partial class Face_MasterPage : BP.Web.MasterPage
 
         Response.AddHeader("P3P", "CP=CAO PSA OUR");
 
+        Response.AddHeader("Cache-Control", "no-store");
+        Response.AddHeader("Expires", "0");
+        Response.AddHeader("Pragma", "no-cache");
+
+
         BP.WF.XML.ToolBars ens = new BP.WF.XML.ToolBars();
         ens.RetrieveAll();
 
