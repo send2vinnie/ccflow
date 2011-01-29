@@ -119,7 +119,6 @@ namespace BP.Web.Comm.UI
         {
             this.UCSys1.Controls.Clear();
             ArrayList al = null;
-
             try
             {
                 string info = this.TB_EnsName.Text;

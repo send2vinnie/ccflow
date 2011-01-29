@@ -21,7 +21,6 @@ namespace BP.Web.Comm.UI
     public partial class HelperOfTB : PageBase
     {
         protected System.Web.UI.WebControls.Label Label1;
-        //protected System.Web.UI.WebControls.TextBox TextBox1;
         /// <summary>
         /// TB_Key
         /// </summary>
@@ -60,7 +59,7 @@ namespace BP.Web.Comm.UI
             }
         }
         /// <summary>
-        /// 属性Key
+        /// 属性 Key
         /// </summary>
         public string AttrKey
         {
@@ -113,7 +112,6 @@ namespace BP.Web.Comm.UI
             if (this.IsPostBack == false)
             {
                 En.Entity en = ClassFactory.GetEn(this.EnsName);
-                
 
                 this.BPToolBar1.AddLab("Lab_desc", "获取或设置默认值");
                 this.BPToolBar1.AddSpt("spt14");
