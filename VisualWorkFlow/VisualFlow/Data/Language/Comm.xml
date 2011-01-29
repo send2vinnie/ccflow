@@ -17,7 +17,6 @@
         JP="Whether to enable the focus field" 
         RU="Whether to enable the focus field" />
   
-  
   <Item No="FocusField" CH="焦点字段(用于显示点击打开的列)" 
         B5="焦点字段(用于显示点击打开的列)" 
         EN="Focus field (for display click on open columns)" 

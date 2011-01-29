@@ -56,14 +56,13 @@
     EN="@0=Official documents@1=Memo"
     JP="@0=Official documents@1=Memo"
     RU="@0=Official documents@1=Memo" />
-     
 
   <!-- 运行方式  -->
 <Item Key="FlowRunWay"
- CH="@0=手工启动@1=按月启动@2=按周启动@3=按天启动@4=按小时启动"
- EN="@0=By Hand@1=By Month@2=By Week@3=By Day@4=By Hour"
- JP="@0=By Hand@1=By Month@2=By Week@3=By Day@4=By Hour"
- RU="@0=By Hand@1=By Month@2=By Week@3=By Day@4=By Hour" />
+ CH="@0=手工启动@1=按年启动@2=按月启动@3=按周启动@4=按天启动@5=按小时启动"
+ EN="@0=By Hand@1=By Year@2=By Month@3=By Week@4=By Day@5=By Hour"
+ JP="@0=By Hand@1=By Year@2=By Month@3=By Week@4=By Day@5=By Hour"
+ RU="@0=By Hand@1=By Year@2=By Month@3=By Week@4=By Day@5=By Hour" />
 
 <!-- 应用类型  -->
 <Item Key="AppType"

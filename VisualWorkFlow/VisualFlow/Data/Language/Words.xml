@@ -17,4 +17,12 @@
   <Item No="FX" CH="分析" RU="Analysis" EN="Analysis" JP="Analysis" />
   <Item No="Complete" CH="完成"  EN="Complete" JP="Complete" RU="完成" />
   <Item No="Return" CH="退出"  EN="Return" JP="Return" RU="Return" />
+
+    <Item No="W0" CH="周日"  EN="Sunday" JP="Sunday" RU="Sunday" />
+    <Item No="W1" CH="周一"  EN="Monday" JP="Monday" RU="Monday" />
+    <Item No="W2" CH="周二"  EN="Tuesday" JP="Tuesday" RU="Tuesday" />
+    <Item No="W3" CH="周三"  EN="Wednesday" JP="Wednesday" RU="Wednesday" />
+    <Item No="W4" CH="周四"  EN="Thursday" JP="Thursday" RU="Thursday" />
+    <Item No="W5" CH="周五"  EN="Friday" JP="Friday" RU="Friday" />
+    <Item No="W6" CH="周六"  EN="Saturday" JP="Saturday" RU="Saturday" />
 </NewDataSet>
