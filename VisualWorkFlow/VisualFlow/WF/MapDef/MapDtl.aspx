@@ -6,8 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head id="Head1" runat="server">
     <title>表单设计</title>
-     <link href="../../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
-    <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+    <link href="../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
 	<script language="JavaScript" src="JS.js"></script>
 	<base target="_self" />
 	<script language=javascript>

@@ -53,9 +53,7 @@ public partial class Face_MasterPage : BP.Web.MasterPage
                 return;
             }
         }
-
         Response.AddHeader("P3P", "CP=CAO PSA OUR");
-
         Response.AddHeader("Cache-Control", "no-store");
         Response.AddHeader("Expires", "0");
         Response.AddHeader("Pragma", "no-cache");
@@ -63,12 +61,7 @@ public partial class Face_MasterPage : BP.Web.MasterPage
 
         BP.WF.XML.ToolBars ens = new BP.WF.XML.ToolBars();
         ens.RetrieveAll();
-
-
-        //  <LI><A href="http://app.javaeye.com/profile">个人资料</A> </LI>
-        //  <LI class=activetab><A href="http://app.javaeye.com/password">修改密码</A> </LI>
-        //  <LI><A href="http://app.javaeye.com/email">注册邮箱</A> </LI></UL>
-        //</DIV>
+     
 
         string sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'";
         int num = BP.DA.DBAccess.RunSQLReturnValInt(sql);

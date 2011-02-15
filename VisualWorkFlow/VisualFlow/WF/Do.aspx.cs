@@ -91,6 +91,18 @@ namespace BP.Web.WF
                 string str = "";
                 switch (this.ActionType)
                 {
+                    case "DelSubFlow": //删除进程。
+                        try
+                        {
+                            WorkFlow wf14 = new WorkFlow(this.FK_Flow, this.WorkID);
+                            wf14.DoDeleteWorkFlowByReal();
+                            this.WinClose();
+                        }
+                        catch(Exception ex)
+                        {
+                            this.WinCloseWithMsg(ex.Message);
+                        }
+                        break;
                     case "PrintNode": // 打印节点信息。
                         //Node nd = new Node(this.NodeID);
                         //try
@@ -175,7 +187,7 @@ namespace BP.Web.WF
                         try
                         {
                             WorkFlow mwf = new WorkFlow(this.FK_Flow, this.WorkID);
-                            str = mwf.UnSend(WebUser.No);
+                            str = mwf.DoUnSend();
                             this.Session["info"] = str;
                             this.Response.Redirect("MyFlowInfo.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID, true);
                             return;
@@ -188,9 +200,7 @@ namespace BP.Web.WF
                             //  this.ToMsgPage("@执行撤消失败。@失败信息"+ex.Message);
                         }
                         // this.Response.Redirect("MyFlow.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow, true);
-                        break;
                     case "SetBillState":
-                        
                         break;
                     case "WorkRpt":
                         Bill bk1 = new Bill(this.Request.QueryString["OID"]);

@@ -49,8 +49,6 @@
   
     </script>
     <base target=_self /> 
-        <link href="../../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
-    <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
 <body  topmargin="20" leftmargin="20" onkeypress="Esc()"  onload="RSize()" >
     <form id="form1" runat="server">
@@ -66,5 +64,9 @@
  
 
 </title>
+  
+
+    <link href="../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+
   
 

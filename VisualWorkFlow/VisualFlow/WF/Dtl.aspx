@@ -5,9 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
 		<Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)" />
-		 <link href="./../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
     <link href="./../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
-    
 		 <style type="text/css">
 		     body
 		     {
@@ -56,7 +54,6 @@ function Del(id,ens)
     </style>
 	<script language="JavaScript" src="./Style/JScript.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js" type="text/javascript"></script>    
-        <link href="Style/Style.css" rel="stylesheet" type="text/css" />
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()" style="font-size:smaller"> 
     <form id="form1" runat="server">

@@ -3,8 +3,7 @@
 <%@ Register src="UC/CopyDtlField.ascx" tagname="CopyDtlField" tagprefix="uc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-   <link href="../../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
-    <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+    <link href="../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
     <script language="JavaScript" src="JS.js"></script>
 	<base target="_self" />
 </asp:Content>

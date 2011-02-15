@@ -129,7 +129,6 @@ namespace BP.Web.Port
             if (this.IsPostBack == false)
             {
                 this.IsCanLogin();
-
                 BP.Port.Emp emp = new BP.Port.Emp(this.UserNo);
                 BP.Web.WebUser.SignInOfGener(emp); //¿ªÊ¼Ö´ÐÐµÇÂ½¡£
 

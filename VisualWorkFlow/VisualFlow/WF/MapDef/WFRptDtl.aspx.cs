@@ -262,9 +262,9 @@ public partial class WF_MapDef_WFRptDtl : WebPage
 
                 attrFlow = new BP.Sys.MapAttr();
                 attrFlow.FK_MapData = md.No;
-                attrFlow.HisEditType = BP.Sys.EditType.UnDel;
+                attrFlow.HisEditType = EditType.UnDel;
                 attrFlow.KeyOfEn = "Title";
-                attrFlow.Name = "标题"; //
+                attrFlow.Name = "标题"; 
                 attrFlow.MyDataType = BP.DA.DataType.AppString;
                 attrFlow.UIContralType = UIContralType.TB;
                 attrFlow.LGType = FieldTypeS.Normal;
@@ -277,10 +277,9 @@ public partial class WF_MapDef_WFRptDtl : WebPage
                 attrFlow.GroupID = gfFlow.OID;
                 attrFlow.Insert();
 
-               
 
                 attrFlow.FK_MapData = md.No;
-                attrFlow.HisEditType = BP.Sys.EditType.UnDel;
+                attrFlow.HisEditType = EditType.UnDel;
                 attrFlow.KeyOfEn = "FlowStarter";
                 attrFlow.Name = BP.Sys.Language.GetValByUserLang("Sponsor", "发起人"); //"发起人";
                 attrFlow.MyDataType = BP.DA.DataType.AppString;
@@ -294,10 +293,9 @@ public partial class WF_MapDef_WFRptDtl : WebPage
                 attrFlow.MinLen = 0;
                 attrFlow.Insert();
 
-
                 attrFlow = new BP.Sys.MapAttr();
                 attrFlow.FK_MapData = md.No;
-                attrFlow.HisEditType = BP.Sys.EditType.UnDel;
+                attrFlow.HisEditType = EditType.UnDel;
                 attrFlow.KeyOfEn = "FlowStarterDept";
                 attrFlow.Name = "发起人部门";
                 attrFlow.MyDataType = BP.DA.DataType.AppString;
@@ -315,7 +313,7 @@ public partial class WF_MapDef_WFRptDtl : WebPage
 
                 attrFlow = new BP.Sys.MapAttr();
                 attrFlow.FK_MapData = md.No;
-                attrFlow.HisEditType = BP.Sys.EditType.UnDel;
+                attrFlow.HisEditType = EditType.UnDel;
                 attrFlow.KeyOfEn = "FlowEmps";
                 attrFlow.Name = "参与人"; //  
                 attrFlow.MyDataType = BP.DA.DataType.AppString;
@@ -333,7 +331,7 @@ public partial class WF_MapDef_WFRptDtl : WebPage
 
                 attrFlow = new BP.Sys.MapAttr();
                 attrFlow.FK_MapData = md.No;
-                attrFlow.HisEditType = BP.Sys.EditType.UnDel;
+                attrFlow.HisEditType = EditType.UnDel;
                 attrFlow.KeyOfEn = "FlowStartRDT";
                 attrFlow.Name = "发起时间"; //  
                 attrFlow.MyDataType = BP.DA.DataType.AppDateTime;
@@ -350,7 +348,7 @@ public partial class WF_MapDef_WFRptDtl : WebPage
 
                 attrFlow = new BP.Sys.MapAttr();
                 attrFlow.FK_MapData = md.No;
-                attrFlow.HisEditType = BP.Sys.EditType.UnDel;
+                attrFlow.HisEditType = EditType.UnDel;
                 attrFlow.KeyOfEn = "FlowNY";
                 attrFlow.Name = "隶属年月"; 
                 attrFlow.MyDataType = BP.DA.DataType.AppString;
@@ -366,7 +364,7 @@ public partial class WF_MapDef_WFRptDtl : WebPage
 
                 attrFlow = new BP.Sys.MapAttr();
                 attrFlow.FK_MapData = md.No;
-                attrFlow.HisEditType = BP.Sys.EditType.UnDel;
+                attrFlow.HisEditType = EditType.UnDel;
                 attrFlow.KeyOfEn = "MyNum";
                 attrFlow.Name = "条"; //  
                 attrFlow.MyDataType = BP.DA.DataType.AppInt;

@@ -82,8 +82,8 @@
        event.keyCode=9;
     </script>
     
-    <link href="../../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
-    <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+    
+    <link href="../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()"  style="padding:0px"   bgcolor="white" >
     <form id="form1" runat="server">

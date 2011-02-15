@@ -68,7 +68,7 @@ namespace BP.Web.WF.WF
                 return;
             }
 
-            DA.DBAccess.RunSQL("DELETE FROM WF_CHOfNode");
+          //  DA.DBAccess.RunSQL("DELETE FROM WF_CHOfNode");
             DA.DBAccess.RunSQL("DELETE FROM WF_CHOfFlow");
             DA.DBAccess.RunSQL("DELETE FROM WF_Bill");
             DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist");

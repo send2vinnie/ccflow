@@ -7,12 +7,11 @@
     <title>无标题页</title>
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
-    <link href="../../../Comm/Style/Style.css" rel="stylesheet" type="text/css" />
-    <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
 	<script language="JavaScript" src="JS.js"></script>
 <base target="_self" />
+    <link href="../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
-<body onload="RSize()" topmargin="0" leftmargin="0" onkeypress="Esc();" >
+<body onload="RSize()"  onkeypress="Esc();" >
     <form id="form1" runat="server">
     <div>
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">

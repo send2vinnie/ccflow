@@ -112,7 +112,6 @@ public partial class Comm_Dtl : WebPage
         this.Pub1.AddTR();
         if (mdtl.IsShowIdx)
             this.Pub1.Add("<TD class='FDesc'></TD>");
-          //  this.Pub1.AddTD();
 
         foreach (MapAttr attr in attrs)
         {
@@ -124,20 +123,7 @@ public partial class Comm_Dtl : WebPage
 
             if (attr.UIIsEnable)
                 this.IsEnable = true;
-
-           // FontUnit f = new FontUnit(attr.Name, UnitType.Pixel);
-
-
-            //FontUnit un = new FontUnit(attr.Name);
-
             this.Pub1.Add("<TD class='FDesc' nowarp=true width=" + attr.UIWidth + "px ><label>" + attr.Name + "</label></TD>");
-
-            //this.Pub1.Add("<a href=\"javascript:Up('ND1801Dtl1','ND1801Dtl1_diaoxiutianshu');\" ><img src='../../Images/Btn/Left.gif' class=Arrow alt='向左移动' border=0/></a><a href=\"javascript:Edit('ND1801Dtl1','ND1801Dtl1_diaoxiutianshu','3');\"  alt='diaoxiutianshu'>调休天数</a><a href=\"javascript:Down('ND1801Dtl1','ND1801Dtl1_diaoxiutianshu');\" ><img src='../../Images/Btn/Right.gif' class=Arrow alt='向右移动' border=0/></a></TD><TD class=TDCenter><a href=\"javascript:Up('ND1801Dtl1','ND1801Dtl1_beizhu');\" ><img src='../../Images/Btn/Left.gif' class=Arrow alt='向左移动' border=0/></a><a href=\"javascript:Edit('ND1801Dtl1','ND1801Dtl1_beizhu','1');\"  alt='beizhu'>备注详细说民</a><a href=\"javascript:Down('ND1801Dtl1','ND1801Dtl1_beizhu');\" ><img src='../../Images/Btn/Right.gif' class=Arrow alt='向右移动' border=0/></a>");
-
-            //if (attr.UIContralType == UIContralType.TB)
-            //    this.Pub1.AddTD("align=center nowarp=true width='" + attr.UIWidth + "px'", "<font color=Green >" + attr.Name + "</font>");
-            //else
-            //    this.Pub1.AddTD("align=center", "<font color=Green >" + attr.Name + "</font>");
         }
         if (mdtl.IsDelete)
         {
@@ -234,8 +220,6 @@ public partial class Comm_Dtl : WebPage
                 return;
             }
             #endregion
-            //this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal, true);
-            //return;
         }
         #endregion 生成翻页
 
@@ -366,7 +350,7 @@ public partial class Comm_Dtl : WebPage
 
             if (mdtl.IsDelete && dtl.OID > mdtl.RowsOfList + 1)
             {
-                this.Pub1.Add("<TD class='TD' nowarp=true  onmouseover='TROver(this)' onmouseout='TROut(this)' ><img src='../../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','"+this.EnsName+"')\" /></TD>");
+                this.Pub1.Add("<TD class='TD' nowarp=true  onmouseover='TROver(this)' onmouseout='TROut(this)' ><img src='../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','"+this.EnsName+"')\" /></TD>");
             }
             else if (mdtl.IsDelete)
             {
