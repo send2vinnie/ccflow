@@ -67,9 +67,6 @@ public partial class WF_FileManager : WebPage
             this.Response.Redirect(this.GenerUrl, true);
             return;
         }
-
-
-
         this.BindFiles();
     }
     public string GenerUrl
@@ -115,7 +112,7 @@ public partial class WF_FileManager : WebPage
         this.Pub1.AddTDTitle("上传人");
         this.Pub1.AddTDTitle("文件名称");
         this.Pub1.AddTDTitle("日期");
-        this.Pub1.AddTDTitle("大小");
+        this.Pub1.AddTDTitle("KB");
         this.Pub1.AddTDTitle("操作");
         this.Pub1.AddTREnd();
 

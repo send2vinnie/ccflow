@@ -410,17 +410,21 @@ public partial class Comm_MapDef_MapDtl : WebPage
         GroupFields gfs = new GroupFields(md.No);
         if (gfs.Count > 1)
         {
-            this.Pub1.AddTR();
+            this.Pub1.AddTR1();
+            this.Pub1.AddTDIdx(idx++);
             this.Pub1.AddTD( this.ToE("ShowInGroup","显示在分组") );
             ddl = new DDL();
             ddl.ID = "DDL_GroupField";
             ddl.BindEntities(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab, false, AddAllLocation.None);
             ddl.SetSelectItem(dtl.GroupID);
-            this.Pub1.AddTD(ddl);
+            this.Pub1.AddTD("colspan=2",ddl);
             this.Pub1.AddTREnd();
         }
+        if (gfs.Count > 1)
+            this.Pub1.AddTR();
+        else
+            this.Pub1.AddTR1();
 
-        this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD();
         cb = new CheckBox();

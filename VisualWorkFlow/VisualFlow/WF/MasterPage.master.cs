@@ -64,7 +64,12 @@ public partial class Face_MasterPage : BP.Web.MasterPage
      
 
         string sql = "SELECT COUNT(*) AS Num FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'";
-        int num = BP.DA.DBAccess.RunSQLReturnValInt(sql);
+        string numStr = BP.DA.DBAccess.RunSQLReturnVal(sql) as string;
+        if (numStr == null)
+            numStr = "0";
+
+        int num = int.Parse(numStr);
+
         string msg = this.ToE("PendingWork", "待办")  ;
         if (num != 0)
         {

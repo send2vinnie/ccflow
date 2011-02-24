@@ -46,18 +46,26 @@ public partial class WF_Chart : WebPage
     {
         switch (this.DoType)
         {
-            case "FlowChart": // 流程图形。
+            case "Chart": //流程图形.
+                FlowChart(this.FK_Flow);
                 break;
-            case "FlowDT": // 流程运行数据。。
+            case "DT": // 流程运行数据。。
+                FlowDT(this.FK_Flow, this.WorkID);
+                break;
+            case "ALS": // 流程数据分析。
+                FlowALS(this.FK_Flow);
                 break;
             default:
                 break;
         }
     }
-    public void FlowChart()
+    public void FlowChart(string fk_flow)
     {
     }
-    public void FlowDT()
+    public void FlowDT(string fk_flow,Int64 workid)
+    {
+    }
+    public void FlowALS(string fk_flow)
     {
     }
 }

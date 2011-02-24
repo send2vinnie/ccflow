@@ -401,7 +401,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
     public void EditBeforeEnd(MapAttr mapAttr)
     {
         #region 字段分组
-        this.Pub1.AddTR();
+        this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("FieldGroup", "字段分组"));
         DDL ddlGroup = new DDL();
@@ -410,12 +410,8 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         ddlGroup.Bind(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab);
         if (mapAttr.GroupID == 0)
             mapAttr.GroupID = this.GroupField;
-
         ddlGroup.SetSelectItem(mapAttr.GroupID);
-        this.Pub1.AddTD(ddlGroup);
-
-        this.Pub1.AddTD();
-      //  this.Pub1.AddTD("修改隶属分组");
+        this.Pub1.AddTD("colspan=3", ddlGroup);
         this.Pub1.AddTREnd();
         #endregion 字段分组
 
@@ -423,16 +419,14 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         #region 是否是数字签名字段
         if (mapAttr.UIIsEnable == false && mapAttr.MyDataType == DataType.AppString && mapAttr.LGType== FieldTypeS.Normal)
         {
-            this.Pub1.AddTRTX();
-            this.Pub1.AddTD();
+            this.Pub1.AddTR();
+            this.Pub1.AddTDIdx(idx++);
             CheckBox cb = new CheckBox();
             cb.ID = "CB_IsSigan";
             cb.Text = "是否是数字签名字段";
             cb.Checked = mapAttr.IsSigan;
 
-            this.Pub1.AddTD(cb);
-            this.Pub1.AddTD("");
-            this.Pub1.AddTD("");
+            this.Pub1.AddTD("colspan=3",cb);
             this.Pub1.AddTREnd();
         }
         #endregion 字段分组

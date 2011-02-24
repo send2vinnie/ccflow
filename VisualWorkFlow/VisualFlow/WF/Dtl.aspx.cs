@@ -108,7 +108,7 @@ public partial class Comm_Dtl : WebPage
         }
 
         MapAttrs attrs = new MapAttrs(this.EnsName);
-        this.Pub1.Add("<Table border=0 style='padding:0px' >");
+        this.Pub1.Add("<Table border=1 style='padding:0px' >");
         this.Pub1.AddTR();
         if (mdtl.IsShowIdx)
             this.Pub1.Add("<TD class='FDesc'></TD>");
@@ -169,9 +169,7 @@ public partial class Comm_Dtl : WebPage
                 return;
             }
             #endregion
-
             //this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal, true);
-            return;
         }
 
         #region 生成翻页
@@ -256,19 +254,19 @@ public partial class Comm_Dtl : WebPage
                         switch (attr.MyDataType)
                         {
                             case DataType.AppString:
-                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border:none";
+                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
                                 this.Pub1.AddTD("width='2px'", tb);
                                 tb.Text = val;
                                 break;
                             case DataType.AppDate:
-                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border:none";
+                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
                                 tb.Text = val;
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "calendar(this);isChange=true;";
                                 this.Pub1.AddTD("width='2px'", tb);
                                 break;
                             case DataType.AppDateTime:
-                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border:none";
+                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
                                 tb.Text = val;
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "CalendarHM();isChange=true;";
@@ -276,10 +274,10 @@ public partial class Comm_Dtl : WebPage
                                 break;
                             case DataType.AppMoney:
                             case DataType.AppRate:
-                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border:none";
+                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
                                 try
                                 {
-                                    tb.Text = decimal.Parse(val).ToString();
+                                    tb.Text = decimal.Parse(val).ToString("0.00");
                                 }
                                 catch(Exception ex)
                                 {
@@ -289,7 +287,7 @@ public partial class Comm_Dtl : WebPage
                                 this.Pub1.AddTDNum(tb);
                                 break;
                             default:
-                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;text-align:right;border:none";
+                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;text-align:right;border-width:0px;";
                                 tb.Text = val;
                                 this.Pub1.AddTDNum(tb);
                                 break;
@@ -306,12 +304,12 @@ public partial class Comm_Dtl : WebPage
                                     tb.Attributes["OnKeyDown"] = "javascript:return VirtyNum(this);";
 
                                 tb.Attributes["onkeyup"] += "javascript:C" + dtl.OID + "();C" + attr.KeyOfEn + "();";
-                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;text-align:right;border:none";
+                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;text-align:right;border-width:0px;";
                             }
                             else
                             {
                                 tb.Attributes["onpropertychange"] += "C" + attr.KeyOfEn + "();";
-                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;text-align:right;border:none";
+                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;text-align:right;border-width:0px;";
                             }
                         }
                         break;
@@ -350,11 +348,11 @@ public partial class Comm_Dtl : WebPage
 
             if (mdtl.IsDelete && dtl.OID > mdtl.RowsOfList + 1)
             {
-                this.Pub1.Add("<TD class='TD' nowarp=true  onmouseover='TROver(this)' onmouseout='TROut(this)' ><img src='../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','"+this.EnsName+"')\" /></TD>");
+                this.Pub1.Add("<TD border=0><img src='../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','" + this.EnsName + "')\" /></TD>");
             }
             else if (mdtl.IsDelete)
             {
-                this.Pub1.AddTD();
+                this.Pub1.Add("<TD class=TD border=0></TD>");
             }
             this.Pub1.AddTREnd();
         }
@@ -513,26 +511,39 @@ public partial class Comm_Dtl : WebPage
 
         Map map = dtls.GetNewEntity.EnMap;
         bool isTurnPage = false;
+        string err = "";
+        int idx=0;
         foreach (GEDtl dtl in dtls)
         {
-            this.Pub1.Copy(dtl, dtl.OID.ToString(), map);
-            if (dtl.OID < mdtl.RowsOfList + 2)
+            idx++;
+            try
             {
-                int myOID = dtl.OID;
-                dtl.OID = 0;
-                if (dtl.IsBlank)
-                    continue;
+                this.Pub1.Copy(dtl, dtl.OID.ToString(), map);
+                if (dtl.OID < mdtl.RowsOfList + 2)
+                {
+                    int myOID = dtl.OID;
+                    dtl.OID = 0;
+                    if (dtl.IsBlank)
+                        continue;
 
-                dtl.OID = myOID;
-                if (dtl.OID == mdtl.RowsOfList + 1)
-                    isTurnPage = true;
+                    dtl.OID = myOID;
+                    if (dtl.OID == mdtl.RowsOfList + 1)
+                        isTurnPage = true;
 
-                dtl.RefPK = this.RefPKVal;
-                dtl.InsertAsNew();
+                    dtl.RefPK = this.RefPKVal;
+                    dtl.InsertAsNew();
+                }
+                else
+                    dtl.Update();
             }
-            else
-                dtl.Update();
+            catch(Exception ex)
+            {
+                err += "Row: " + idx + " Error \r\n" + ex.Message;
+            }
         }
+
+        if (err != "")
+            this.Alert(err);
 
         if (isTurnPage)
         {

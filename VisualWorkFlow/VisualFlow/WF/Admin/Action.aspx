@@ -1,32 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Action.aspx.cs" Inherits="WF_Admin_Action" %>
-<%@ Register Src="../../Comm/UC/ucsys.ascx" TagName="ucsys" TagPrefix="uc2" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" >
-<head id="Head1" runat="server">
-    <link href="../../Comm/Style.css" rel="stylesheet" type="text/css" />
-    <link href="../../Comm/Table.css" rel="stylesheet" type="text/css" />
-    <script  language=javascript>
-    function Del(mypk, fk_flow, refoid)
-    {
-        if (window.confirm('您确定要删除吗？') ==false)
-            return ;
-    
-        var url='Do.aspx?DoType=Del&MyPK='+mypk+'&RefOID='+refoid;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
-        window.location.href = window.location.href;
-    }
-    </script>
-</head>
-<body class="Body<%=BP.Web.WebUser.Style%>"   leftMargin=0  topMargin=0>
-    <form id="form1" runat="server">
-        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;
-            height: 100%">
-            <tr>
-                <td valign=top>
-                   <uc2:ucsys ID="Ucsys1" runat="server" />
-                </td>
-            </tr>
-        </table>
-    </form>
-</body>
-</html>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="WinOpen.master" AutoEventWireup="true" CodeFile="Action.aspx.cs" Inherits="WF_Admin_Action" %>
+<%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <uc1:Pub ID="Pub1" runat="server" />
+</asp:Content>
+

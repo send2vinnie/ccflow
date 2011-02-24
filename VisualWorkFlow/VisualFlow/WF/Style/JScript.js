@@ -210,22 +210,6 @@ function VirtyNum(ctrl)
 {
   if (event.keyCode == 190)
         return true; //Èç¹ûÊÇ¶ººÅ¡£
-
-// if (event.keyCode == 13)
-//        return true;
-
-//alert( event.keyCode );
-
-//  var  v= parseFloat(ctrl.value);
-//   if (v==NaN)
-//   return false;
-//   else
-//   {
-//   ctrl.value = v;
-//  //var  v= parseFloat(ctrl.value);
-//    return true;
-//    }
-//    
     
   if (event.keyCode == 13)
         return true;
@@ -418,65 +402,7 @@ function onDDLSelectedMore( ddlID, MainEns, EnsName, refkeyvalue , reftext )
         hrf=hrf+'&'+ddlID+'='+str;
         window.location.href=hrf;
    }
-
-//   var url=''; // appPath+"/Comm/DataHelp.htm?HelperOfDDL.aspx?EnsName="+EnsName+"&RefKey="+refkeyvalue+"&RefText="+reftext;
-//   if ( appPath=='/')
-//     url=  "DataHelp.htm?HelperOfDDL.aspx?EnsName="+EnsName+"&RefKey="+refkeyvalue+"&RefText="+reftext;
-//     else
-//     url= appPath+"/Comm/DataHelp.htm?HelperOfDDL.aspx?EnsName="+EnsName+"&RefKey="+refkeyvalue+"&RefText="+reftext;
-//   
-//   var str=window.showModalDialog( url  , '','dialogHeight: 500px; dialogWidth:800px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no'); 
-////return;
-
-//    alert('h');
-//    
-//    //alert( toolbarID );
-//    
-//  alert ( window.event.srcElement.tagName ) ;
-// // alert ( window.event.srcElement.tagID ) ;
-// 
-//   var toolbar  =   document.getElementById(  toolbarID  ); 
-//   
-//   if (toolbar==null)
-//        return;
-//   
-//   alert( 'start get item3' );
-//    
-//   //var  ddl3   =  toolbar.Items[2]; 
-//   
-//  // var  ddl3   =  toolbar.Items[2]; 
-//  
-//   var ddl3  =   toolbar.getElementByIdx(  3  ); 
-//   
-//   if (ddl3==null)
-//   {
-//       alert( 'obj3 is null ' );
-//       return;
-//   }
-//       
-//    alert(' ddl3 is not null ');
-//    
-//    
-//   
-//   var  mylen  =  ddl3.options.length -1 ;  
-//      
-//  alert(mylen);
-//   
-//   
-//   while  ( mylen  >  0 )
-//   {  
-//      alert( ddl.options[ mylen ].value );
-//      
-////     {
-////         ddl.options[ mylen  ].selected=true;
-////     }
-//     
-//      mylen  --;  
-//   }
-   
 }
-
-
 function onkeydown()
 {
   if (window.event.srcElement.tagName=="TEXTAREA") 
@@ -484,7 +410,6 @@ function onkeydown()
   if(event.keyCode==13)
      event.keyCode=9;
 }
- 
  
 function VirtyMoney(number) 
 { 

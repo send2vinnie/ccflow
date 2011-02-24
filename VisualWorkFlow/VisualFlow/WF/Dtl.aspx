@@ -6,13 +6,14 @@
 <head runat="server">
 		<Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)" />
     <link href="./../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
+    <script language="JavaScript" src="./../Comm/JS/Calendar.js"></script>
+
 		 <style type="text/css">
 		     body
 		     {
 		     	font-size:smaller;
 		     }
 		     </style>
-		
 		<script language="javascript" >
 		    var isChange = false;
 		    function SaveDtlData() {

@@ -213,6 +213,24 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                 }
                 this.WinClose();
                 break;
+            case "FrameDoUp":
+                MapFrame frame1 = new MapFrame(this.MyPK);
+                if (frame1.RowIdx > 0)
+                {
+                    frame1.RowIdx = frame1.RowIdx - 1;
+                    frame1.Update();
+                }
+                this.WinClose();
+                break;
+            case "FrameDoDown":
+                MapFrame frame2 = new MapFrame(this.MyPK);
+                if (frame2.RowIdx < 10)
+                {
+                    frame2.RowIdx = frame2.RowIdx + 1;
+                    frame2.Update();
+                }
+                this.WinClose();
+                break;
             default:
                 break;
         }
@@ -240,7 +258,6 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
     {
         this.Title = this.ToE("GuideNewField", "增加新字段向导");
      //   this.Pub1.AddH4(this.Title);
-
 
         this.Pub1.AddFieldSet(this.ToE("FType1", "新增普通字段"));
         this.Pub1.AddUL();

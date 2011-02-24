@@ -14,7 +14,6 @@ using BP.En;
 using BP.Port;
 using BP.Sys;
 
-
 namespace BP.Web.Port
 {
 	/// <summary>
@@ -156,6 +155,12 @@ namespace BP.Web.Port
                         break;
                     case DoWhatList.Tools: // 我的工作。
                         this.Response.Redirect("Tools.aspx", true);
+                        break;
+                    case DoWhatList.EmpWorksSmall: // 我的工作。
+                        if (this.FK_Flow == null)
+                            this.Response.Redirect("EmpWorksSmall.aspx", true);
+                        else
+                            this.Response.Redirect("EmpWorksSmall.aspx?FK_Flow=" + this.FK_Flow, true);
                         break;
                     case DoWhatList.EmpWorks: // 我的工作。
                     case DoWhatList.Login:

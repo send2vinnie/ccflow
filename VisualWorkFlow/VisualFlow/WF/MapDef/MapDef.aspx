@@ -105,6 +105,20 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
+
+    function FrameDoUp(MyPK) {
+        var url = 'Do.aspx?DoType=FrameDoUp&MyPK=' + MyPK;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+    function FrameDoDown(MyPK) {
+        var url = 'Do.aspx?DoType=FrameDoDown&MyPK=' + MyPK;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+
+    
+
     function DtlDoUp(MyPK)
     {
         var url='Do.aspx?DoType=DtlDoUp&MyPK='+MyPK ;
@@ -199,7 +213,20 @@
       var url='MapDtl.aspx?DoType=DtlList&FK_MapData=' + mypk   ;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
-  }
+    }
+
+    function EditFrame(mypk, dtlKey) {
+        var url = 'MapFrame.aspx?DoType=Edit&FK_MapData=' + mypk + '&FK_MapFrame=' + dtlKey;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+
+    function MapFrame(mypk) {
+        var url = 'MapFrame.aspx?DoType=DtlList&FK_MapData=' + mypk;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+    
 </script>   
 
 	<base target="_self" />

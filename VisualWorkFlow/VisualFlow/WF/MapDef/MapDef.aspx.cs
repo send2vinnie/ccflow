@@ -44,7 +44,7 @@ public partial class WF_MapDef_MapDef : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         MapData md = new MapData(this.MyPK);
-       // Attrs attrs = md.GenerHisMap().Attrs;
+       //Attrs attrs = md.GenerHisMap().Attrs;
         MapAttrs mattrs = new MapAttrs(md.No);
         int count = mattrs.Count;
 
@@ -58,7 +58,7 @@ public partial class WF_MapDef_MapDef : WebPage
             }
         }
 
-        this.Pub1.AddB("&nbsp;&nbsp;" + this.ToE("DesignSheet", "设计表单") + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:CopyFieldFromNode('" + this.MyPK + "');\" ><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("CopyField", "复制字段") + "</a> - <a href=\"javascript:MapDtl('" + this.MyPK + "')\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("DesignDtl", "设计表格") + "</a> - <a href=\"javascript:GroupFieldNew('" + md.No + "')\">" + this.ToE("FieldGroup", "字段分组") + "</a><hr>");
+        this.Pub1.AddB("&nbsp;&nbsp;" + this.ToE("DesignSheet", "设计表单") + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> - <a href=\"javascript:CopyFieldFromNode('" + this.MyPK + "');\" ><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("CopyField", "复制字段") + "</a> - <a href=\"javascript:MapDtl('" + this.MyPK + "')\" ><img src='../../Images/Btn/Table.gif' border=0/>" + this.ToE("DesignDtl", "设计表格") + "</a> - <a href=\"javascript:MapFrame('" + this.MyPK + "')\" ><img src='./Img/Frame.gif' border=0/>" + this.ToE("DesignIFM", "设置框架") + "</a> - <a href=\"javascript:GroupFieldNew('" + md.No + "')\">" + this.ToE("FieldGroup", "字段分组") + "</a><hr>");
         this.Pub1.Add("<Table class='Table' width='100%' align=center >");
         /*
          * 根据 GroupField 循环出现菜单。
@@ -403,6 +403,7 @@ public partial class WF_MapDef_MapDef : WebPage
 
     public void InsertObjects(bool isJudgeRowIdx)
     {
+        #region 增加明细表
         foreach (MapDtl dtl in dtls)
         {
             if (dtl.IsUse)
@@ -444,6 +445,65 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();
         }
+        #endregion 增加明细表
+
+        #region 增加框架
+        foreach (MapFrame fram in frams)
+        {
+            if (fram.IsUse)
+                continue;
+
+            if (isJudgeRowIdx)
+            {
+                if (fram.RowIdx != rowIdx)
+                    continue;
+            }
+
+            if (fram.GroupID == 0 && rowIdx == 0)
+            {
+                fram.GroupID = currGF.OID;
+                fram.RowIdx = 0;
+                fram.Update();
+            }
+            else if (fram.GroupID == currGF.OID)
+            {
+
+            }
+            else
+            {
+                continue;
+            }
+
+            fram.IsUse = true;
+            int myidx = rowIdx + 10;
+            this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
+            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditFrame('" + this.MyPK + "','" + fram.No + "')\" >" + fram.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:FrameDoUp('" + fram.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:FrameDoDown('" + fram.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            this.Pub1.AddTREnd();
+
+            myidx++;
+            this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
+            if (fram.IsAutoSize)
+                this.Pub1.Add("<TD colspan=4 ID='TD" + fram.No + "' height='50px' width='1000px'>");
+            else
+                this.Pub1.Add("<TD colspan=4 ID='TD" + fram.No + "' height='" + fram.H + "px' width='" + fram.W + "px'>");
+
+
+            string src = fram.URL; // "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + fram.No;
+            if (src.Contains("?"))
+                src += "&FK_Node=" + this.RefNo + "&WorkID=" + this.RefOID;
+            else
+                src += "?FK_Node=" + this.RefNo + "&WorkID=" + this.RefOID;
+
+            if (fram.IsAutoSize)
+                this.Pub1.Add("<iframe ID='F" + fram.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
+            else
+                this.Pub1.Add("<iframe ID='F" + fram.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + fram.W + "px' height='" + fram.H + "px' scrolling=no /></iframe>");
+
+            this.Pub1.AddTDEnd();
+            this.Pub1.AddTREnd();
+        }
+        #endregion 增加明细表
+
     }
 
     #region varable.
@@ -455,8 +515,17 @@ public partial class WF_MapDef_MapDef : WebPage
         {
             if (_dtls == null)
                 _dtls = new MapDtls(this.MyPK);
-
             return _dtls;
+        }
+    }
+    private MapFrames _frams;
+    public MapFrames frams
+    {
+        get
+        {
+            if (_frams == null)
+                _frams = new MapFrames(this.MyPK);
+            return _frams;
         }
     }
     private GroupFields _gfs;

@@ -70,7 +70,7 @@ namespace BP.Web.WF
 				}
 
 				//this.AddTD("<a href=\"javascript:WinOpen('MyFlow.aspx?FK_Flow="+nd.FK_Flow+"&IsClose=1',  'hsd');\"  >"+nd.FlowName+"</a>");
-				this.AddTD("<a href=\"javascript:WinOpen('../DataUser/FlowDesc/"+nd.FK_Flow+".gif','sd');\"  >"+this.ToE("Open","打开")+"</a>");
+                this.AddTD("<a href=\"javascript:WinOpen('Chart.aspx?FK_Flow=" + nd.FK_Flow + "&DoType=Chart','sd');\"  >" + this.ToE("Open", "打开") + "</a>");
 
 				this.AddTD(nd.HisFlow.Note );
                 this.AddTD("  onclick=\"window.open( 'UnComplateFlow.aspx?FK_Flow=" + nd.FK_Flow + "&FK_Emp=" + Web.WebUser.No + "&IsClose=1' , 'f" + nd.NodeID + "',  'width=550,top=200,left=300,height=300,scrollbars=yes,resizable=no,toolbar=false,location=false')\"  ", "<font color=blue>" + this.ToE("FlowSearch", "工作查询") + "</font>");
@@ -133,10 +133,10 @@ namespace BP.Web.WF
 					foreach(DataRow dr in dt.Rows)
 					{
 						this.Text+="<TR class='TableFlowTR' ondblclick=\" OpenWork('"+flow+"', '"+dr["WorkID"].ToString()+"' )  \"  onmouseover='FlowTROver(this)' onmouseout='FlowTROut(this)' >";
-						this.Text+="<TD   >"+dr["NodeName"].ToString()+"</TD>";
-						this.Text+="<TD   >"+dr["Title"].ToString()+"</TD>";
-						this.Text+="<TD   >"+dr["Rec"].ToString()+"</TD>";
-						this.Text+="<TD   >"+dr["RDT"].ToString()+"</TD>";
+						this.Text+="<TD >"+dr["NodeName"].ToString()+"</TD>";
+						this.Text+="<TD >"+dr["Title"].ToString()+"</TD>";
+						this.Text+="<TD >"+dr["Rec"].ToString()+"</TD>";
+						this.Text+="<TD >"+dr["RDT"].ToString()+"</TD>";
 						this.Text+="</TR>";
 					}		 
 					this.Text+="</TABLE>";

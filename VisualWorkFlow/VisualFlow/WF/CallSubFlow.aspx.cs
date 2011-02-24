@@ -118,7 +118,7 @@ public partial class WF_CallSubFlow : WebPage
                         break;
                 }
             }
-            this.Pub1.AddTD("<a href=\"WFRpt.aspx?WorkID=" + en.GetValIntByKey("OID") + "&FID=" + en.GetValByKey("FID") + "&FK_Flow=" + nd.FK_Flow + "\" target=bk >报告</a>");
+            this.Pub1.AddTD("<a href=\"WFRpt.aspx?WorkID=" + en.GetValIntByKey("OID") + "&FID=" + en.GetValByKey("FID") + "&FK_Flow=" + nd.FK_Flow + "\" target=bk >" + this.ToE("WorkRpt", "报告") + "</a>-<a href=\"Chart.aspx?WorkID=" + en.GetValIntByKey("OID") + "&FID=" + en.GetValByKey("FID") + "&FK_Flow=" + nd.FK_Flow + "\" target=bk >" + this.ToE("Track", "轨迹") + "</a>");
             this.Pub1.AddTREnd();
         }
 

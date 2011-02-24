@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
+using System.Collections.Generic;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using BP.WF;
+using BP.WF.XML;
 using BP.En;
 using BP.Port;
 using BP.Web.Controls;
@@ -17,108 +13,104 @@ using BP.Sys;
 
 public partial class WF_Admin_Action : WebPage
 {
-    public int NodeID
+    public int FK_Node
     {
         get
         {
-            return int.Parse( this.Request.QueryString["NodeID"] );
+            return int.Parse(this.Request.QueryString["NodeID"]);
         }
     }
-    public string FK_Flow
-    {
-        get
-        {
-            return this.Request.QueryString["FK_Flow"];
-        }
-    }
-     
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX(this.ToE("NodeAction", "事件接口"));
+        this.Pub1.AddTable();
+        this.Pub1.AddCaptionLeftTX(this.ToE("NodeAction", "节点事件接口"));
+        this.Pub1.AddTR();
+        this.Pub1.AddTDTitle("IDX");
+        this.Pub1.AddTDTitle("事件");
+        this.Pub1.AddTDTitle("执行内容");
+        this.Pub1.AddTDTitle("内容");
+        this.Pub1.AddTDTitle("成功提示");
+        this.Pub1.AddTDTitle("错误提示");
+        this.Pub1.AddTREnd();
 
-        this.Ucsys1.AddTR();
-        this.Ucsys1.AddTDTitle("<b><a href='Action.aspx?DoType=Help&NodeID=" + this.NodeID + "' ><img src='../../Images/Btn/Help.gif' border=0/>" + this.ToE("Help","帮助") + "</a></b>");
-        this.Ucsys1.AddTDTitle("<b><a href='Action.aspx?DoType=WhenSave&NodeID=" + this.NodeID + "' ><img src='../../Images/Btn/Help.gif' border=0/>" + this.ToE("WhenNodeSave", "当保存节点时") + "</a></b>");
-        this.Ucsys1.AddTDTitle("<b><a href='Action.aspx?DoType=WhenSend&NodeID=" + this.NodeID + "' ><img src='../../Images/Btn/Help.gif' border=0/>" + this.ToE("WhenNodeSend", "当发送时") + "</a></b>");
-        this.Ucsys1.AddTDTitle("<b><a href='Action.aspx?DoType=WhenSendOK&NodeID=" + this.NodeID + "' ><img src='../../Images/Btn/Help.gif' border=0/>" + this.ToE("WhenNodeSendOK", "当发送成功时") + "</a></b>");
-        this.Ucsys1.AddTDTitle("<b><a href='Action.aspx?DoType=WhenSendError&NodeID=" + this.NodeID + "' ><img src='../../Images/Btn/Help.gif' border=0/>" + this.ToE("WhenNodeSendErr", "当发送失败时") + "</a></b>");
+        NDEvents ndevs = new NDEvents();
+        ndevs.Retrieve(NDEventAttr.FK_Node, this.FK_Node);
 
-        this.Ucsys1.AddTREnd();
-
-
-        this.Ucsys1.AddTR();
-        this.Ucsys1.Add("<TD class=BigDoc colspan=5>");
-        switch (this.DoType)
+        EventLists xmls = new EventLists();
+        xmls.RetrieveAll();
+        int i = 1;
+        bool is1 = false;
+        foreach (BP.WF.XML.EventList xml in xmls)
         {
-            case "WhenSave":
-                this.Ucsys1.Add( GetHtml("WhenSave") );
-                break;
-            case "WhenSend":
-                this.Ucsys1.Add(GetHtml("WhenSend"));
-                break;
-            case "WhenSendOK":
-                this.Ucsys1.Add(GetHtml("WhenSendOK"));
-                break;
-            case "WhenSendError":
-                this.Ucsys1.Add(GetHtml("WhenSendError"));
-                break;
-            default:
-                string s = BP.DA.DataType.ReadTextFile(BP.SystemConfig.PathOfWebApp + "/WF/Admin/Help/EditAction.htm");
-                this.Ucsys1.Add(s);
-                //this.Ucsys1.AddIframe("./Help/EditAction.htm");
-                break;
-        }
+            NDEvent nde = ndevs.GetEntityByKey(NDEventAttr.FK_Event, xml.No) as NDEvent;
+            if (nde == null)
+                nde = new NDEvent();
 
-        this.Ucsys1.Add("</TD>");
-        this.Ucsys1.AddTR();
-        this.Ucsys1.AddTREnd();
-        this.Ucsys1.AddTable();
+            is1 = this.Pub1.AddTR(is1);
+            this.Pub1.AddTDIdx(i++);
+            this.Pub1.AddTD(xml.Name);
+            TextBox tb = new TextBox();
+            tb.ID = "TB_Doc_" + xml.No;
+            tb.Columns = 40;
+            tb.Text = nde.DoDoc;
+
+            this.Pub1.AddTD(tb);
+            DDL ddl = new DDL();
+            ddl.BindSysEnum("EventDoType");
+            ddl.ID = "DDL_EventDoType_" + xml.No;
+            ddl.SetSelectItem( (int)nde.HisDoType );
+            this.Pub1.AddTD(ddl);
+
+            tb = new TextBox();
+            tb.ID = "TB_MsgOK_" + xml.No;
+            tb.Columns = 20;
+            this.Pub1.AddTD(tb);
+
+            tb = new TextBox();
+            tb.ID = "TB_MsgErr_" + xml.No;
+            tb.Columns = 20;
+            this.Pub1.AddTD(tb);
+            this.Pub1.AddTREnd();
+        }
+        this.Pub1.AddTableEndWithHR();
+        Button btn = new Button();
+        this.Pub1.Add(btn);
+        btn.ID = "Btn_Save";
+        btn.Text = "Save";
+        btn.Click += new EventHandler(btn_Click);
     }
-    public string GetHtml(string flag)
+
+    void btn_Click(object sender, EventArgs e)
     {
-        string script = "";
-        string proName = "ND" + this.NodeID + "_" + flag;
-        //string sql = "SELECT text FROM user_source WHERE name=UPPER('" + proName + "') ORDER BY LINE ";
-        string sql = "SELECT no FROM Port_Emp WHERE 1=2 ";
+        NDEvents ndevs = new NDEvents();
+        ndevs.Retrieve(NDEventAttr.FK_Node, this.FK_Node);
 
-        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-        if (dt.Rows.Count == 0)
+        EventLists xmls = new EventLists();
+        xmls.RetrieveAll();
+        int i = 1;
+        bool is1 = false;
+        foreach (EventList xml in xmls)
         {
-            script += "下面是该事件的所要调用的存储过程模板， 如果您要在事件里编写您的业务逻辑请 Copy 到存储过程编辑器中执行。<hr>";
-            script += "/* -- 存储过程<b> " + proName + "</b>  编写日期:"+BP.DA.DataType.CurrentDataTimeCN+" 编写人: xxx */ ";
-            script += "<br>CREATE OR REPLACE PROCEDURE " + proName;
-            script += "<br>(workid in integer,-- 工作ID ";
-            script += "<br>userno varchar2, -- 当前操作员 ";
-            script += "<br>workpara out varchar2 -- 参数集合。";
-            script += "<br>)";
-            script += "<br>AS";
-            script += "<br>BEGIN";
+            NDEvent nde = ndevs.GetEntityByKey(NDEventAttr.FK_Event, xml.No) as NDEvent;
+            if (nde == null)
+                nde = new NDEvent();
+            string doc = this.Pub1.GetTextBoxByID("TB_Doc_" + xml.No).Text.Trim();
+            if (doc == "" || doc == null)
+            {
+                if (nde.MyPK.Length > 3)
+                    nde.Delete();
+                continue;
+            }
 
-            script += "<br>/*";
-            script += "<font color=blue> <br>写给程序员:</b>  ";
-            script += "在这里根据传递的参数，编写您的业务逻辑。<br>参数格式为:@属性1=属性值1@属性2=属性值2 .... ";
-            script += "<br>比如：@FK_Emp=zhangsan@Age=24@Addr=山东济南@Weight=70.5";
-            script += "<br>系统为您提供的函数:";
-            script += "<br>获取字符串 GetValStrByKey( para, key) ，比如：GetValStrByKey(workpara,'Addr') 返回 山东济南 ";
-            script += "<br>获取Int串 GetValIntByKey( para, key) ，比如：GetValIntByKey(workpara,'Age') 返回 24 ";
-            script += "<br>获取Float串 GetValFloatByKey( para, key) ，比如：GetValFloatByKey(workpara,'Weight') 返回 70.5 ";
-
-            script += "<br><br>如果您想阻止下一步的执行，您可以在这里抛出异常，这个异常信息直接抛给用户界面。";
-            script += "<br></font>*/";
-
-            script += "<br>RETURN;";
-            script += "<br>END " + proName + ";";
-            return script;
+            nde.MyPK = this.FK_Node + "_" + xml.No;
+            nde.DoDoc = doc;
+            nde.FK_Event = xml.No;
+            nde.FK_Node = this.FK_Node;
+            nde.HisDoType = (EventDoType)this.Pub1.GetDDLByID("DDL_EventDoType_" + xml.No).SelectedItemIntVal;//.Trim();
+            nde.MsgOK = this.Pub1.GetTextBoxByID("TB_MsgOK_" + xml.No).Text;
+            nde.MsgError = this.Pub1.GetTextBoxByID("TB_MsgErr_" + xml.No).Text;
+            nde.Save();
+            
         }
-
-        script =" <b>现有的存储过程内容如下，如果您想编辑它，请转到数据库执行。 </b><hr>";
-        foreach (DataRow dr in dt.Rows)
-            script += dr[0].ToString() + " <br>";
-
-        return script;
     }
-
-
 }
-

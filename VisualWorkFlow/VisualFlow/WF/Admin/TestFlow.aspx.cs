@@ -60,9 +60,9 @@ public partial class WF_Admin_TestFlow : WebPage
                         continue;
 
                     if (fl.No == this.FK_Flow)
-                        this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New&Lang=" + WebUser.SysLang + "'><b><font color=green>" + fl.Name + "</b></font></a> - <a href='./../../DataUser/FlowDesc/" + fl.No + ".gif' target=_blank>" + FlowChart + "</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >" + FlowProperty + "</a>");
+                        this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New&Lang=" + WebUser.SysLang + "'><b><font color=green>" + fl.Name + "</b></font></a> - <a href='./../WF/Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart' target=_blank>" + FlowChart + "</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >" + FlowProperty + "</a>");
                     else
-                        this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New&Lang=" + WebUser.SysLang + "'>" + fl.Name + "</a> - <a  href='./../../DataUser/FlowDesc/" + fl.No + ".gif' target=_blank>" + FlowChart + "</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >" + FlowProperty + "</a>");
+                        this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New&Lang=" + WebUser.SysLang + "'>" + fl.Name + "</a> - <a  href='./../WF/Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart' target=_blank>" + FlowChart + "</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >" + FlowProperty + "</a>");
                 }
             }
             this.Left.AddULEnd();
@@ -74,7 +74,7 @@ public partial class WF_Admin_TestFlow : WebPage
 
             this.Left.AddFieldSet( fl.Name);
 
-            this.Left.AddH3("<a href='./../../DataUser/FlowDesc/" + fl.No + ".gif' target=_blank >" + this.ToE("FlowChart", "流程图") + "</a>");
+            this.Left.AddH3("<a href='./../WF/Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart' target=_blank >" + this.ToE("FlowChart", "流程图") + "</a>");
             this.Left.AddH3("<a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >"+this.ToE("FlowProperty","流程属性")+"</a>");
             this.Left.AddH3("<a href='TestFlow.aspx?Lang=" + this.Lang + "'>" + this.ToE("AllFlow", "全部流程") + "....</a>");
             this.Left.AddFieldSetEnd();
