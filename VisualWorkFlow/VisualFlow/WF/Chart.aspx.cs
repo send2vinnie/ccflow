@@ -1,5 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -7,7 +13,6 @@ using BP.Web;
 using BP.WF;
 using BP.En;
 using BP.Sys;
-
 
 public partial class WF_Chart : WebPage
 {
@@ -62,7 +67,7 @@ public partial class WF_Chart : WebPage
     public void FlowChart(string fk_flow)
     {
     }
-    public void FlowDT(string fk_flow,Int64 workid)
+    public void FlowDT(string fk_flow, Int64 workid)
     {
     }
     public void FlowALS(string fk_flow)

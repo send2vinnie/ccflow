@@ -72,26 +72,29 @@ namespace BP.Web.Port
         protected void Page_Load(object sender, System.EventArgs e)
         {
             Response.AddHeader("P3P", "CP=CAO PSA OUR");
+            //if (this.UserNo != null && this.SID != null)
+            //{
+            //    string sql = "SELECT SID  FROM Port_Emp WHERE No='" + this.UserNo + "'";
+            //    string sid = BP.DA.DBAccess.RunSQLReturnVal(sql) as string;
+            //    if (sid != this.SID)
+            //    {
+            //        this.Response.Write("非法的访问，请与管理员联系。sid=" + sid);
+            //        //this.UCSys1.AddMsgOfWarning("错误：", "非法的访问，请与管理员联系。");
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        Emp em = new Emp(this.UserNo);
+            //        WebUser.Token = this.Session.SessionID;
+            //        WebUser.SignInOfGenerLang(em, SystemConfig.SysLanguage);
+            //    }
+            //    //  this.Response.Redirect("EmpWorks.aspx", true);
+            //    //  return;
+            //}
 
-            if (this.UserNo != null && this.SID != null)
-            {
-                string sql = "SELECT SID  FROM Port_Emp WHERE No='" + this.UserNo + "'";
-                string sid = BP.DA.DBAccess.RunSQLReturnVal(sql) as string;
-                if (sid != this.SID)
-                {
-                    this.Response.Write("非法的访问，请与管理员联系。sid=" + sid);
-                    //this.UCSys1.AddMsgOfWarning("错误：", "非法的访问，请与管理员联系。");
-                    return;
-                }
-                else
-                {
-                    Emp em = new Emp(this.UserNo);
-                    WebUser.Token = this.Session.SessionID;
-                    WebUser.SignInOfGenerLang(em, SystemConfig.SysLanguage);
-                }
-                //  this.Response.Redirect("EmpWorks.aspx", true);
-                //  return;
-            }
+            Emp em = new Emp(this.UserNo);
+            WebUser.Token = this.Session.SessionID;
+            WebUser.SignInOfGenerLang(em, SystemConfig.SysLanguage);
 
             string paras = "";
             foreach (string str in this.Request.QueryString)
@@ -130,7 +133,6 @@ namespace BP.Web.Port
                 this.IsCanLogin();
                 BP.Port.Emp emp = new BP.Port.Emp(this.UserNo);
                 BP.Web.WebUser.SignInOfGener(emp); //开始执行登陆。
-
                 switch (this.DoWhat)
                 {
                     case DoWhatList.Start: // 发起工作。
@@ -146,18 +148,21 @@ namespace BP.Web.Port
                     case DoWhatList.StartSmall: // 发起工作。
                         if (this.FK_Flow == null)
                         {
-                            throw new Exception("@流程编号为空。");
+                            this.Response.Redirect("StartSmall.aspx?FK_Flow=" + this.FK_Flow + paras, true);
                         }
                         else
                         {
                             this.Response.Redirect("MyFlowSmall.aspx?FK_Flow=" + this.FK_Flow + paras, true);
                         }
                         break;
+                    case DoWhatList.RuningSmall: // 流程查询。
+                        this.Response.Redirect("RuningSmall.aspx?FK_Flow=" + this.FK_Flow, true);
+                        break;
                     case DoWhatList.Tools: // 我的工作。
                         this.Response.Redirect("Tools.aspx", true);
                         break;
                     case DoWhatList.EmpWorksSmall: // 我的工作。
-                        if (this.FK_Flow == null)
+                        if (this.FK_Flow == null || this.FK_Flow=="" )
                             this.Response.Redirect("EmpWorksSmall.aspx", true);
                         else
                             this.Response.Redirect("EmpWorksSmall.aspx?FK_Flow=" + this.FK_Flow, true);
@@ -174,7 +179,13 @@ namespace BP.Web.Port
                         break;
                     case DoWhatList.FlowSearch: // 流程查询。
                         if (this.FK_Flow == null)
-                            this.Response.Redirect("FlowSearch.aspx?FK_Flow=" + this.FK_Flow, true);
+                            this.Response.Redirect("FlowSearch.aspx", true);
+                        else
+                            this.Response.Redirect("../Comm/PanelEns.aspx?EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt" + paras, true);
+                        break;
+                    case DoWhatList.FlowSearchSmall: // 流程查询。
+                        if (this.FK_Flow == null)
+                            this.Response.Redirect("FlowSearchSmall.aspx", true);
                         else
                             this.Response.Redirect("../Comm/PanelEns.aspx?EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt" + paras, true);
                         break;
