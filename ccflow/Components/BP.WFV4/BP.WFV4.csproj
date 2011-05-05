@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{51C1DADA-1B9A-41CC-B731-FDE1196778F2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>BP.WFV4</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BP.WFV4</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>http://localhost/BP.WFV4/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>0</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Data.OracleClient">
+      <Name>System.Data.OracleClient</Name>
+      <HintPath>..\..\WF\bin\System.Data.OracleClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices">
+      <Name>System.EnterpriseServices</Name>
+      <HintPath>..\..\WF\bin\System.EnterpriseServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Bill\Bill.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Bill\BillType.cs" />
+    <Compile Include="Dev2Interface\BtnState.cs" />
+    <Compile Include="DTS\DTSLog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DTS\WFDTS.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlowDesc\Condition\Cond.cs" />
+    <Compile Include="FlowDesc\FlowEmp.cs" />
+    <Compile Include="FlowDesc\FlowExt\Exp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlowDesc\FlowExt\ExpDtl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlowDesc\Listen.cs" />
+    <Compile Include="FlowDesc\NodeFlow.cs" />
+    <Compile Include="FlowDesc\FlowDescExt\FlowDoc.cs" />
+    <Compile Include="FlowDesc\FlowDescExt\FlowSheet.cs" />
+    <Compile Include="FlowDesc\FlowDescExt\NodeO.cs" />
+    <Compile Include="FlowDesc\FlowExt\RptStation.cs" />
+    <Compile Include="FlowDesc\FlowExt\WFRpt.cs" />
+    <Compile Include="FlowDesc\FlowExt\RptAttr.cs" />
+    <Compile Include="FlowDesc\FlowExt\RptEmp.cs" />
+    <Compile Include="FlowDesc\FlowNode.cs" />
+    <Compile Include="FlowDesc\LabNote.cs" />
+    <Compile Include="FlowDesc\FAppSet.cs" />
+    <Compile Include="FlowDesc\NodeEmp.cs" />
+    <Compile Include="FlowDesc\SelectAccper.cs" />
+    <Compile Include="FlowDesc\NodeDept.cs" />
+    <Compile Include="FlowDesc\FlowStation.cs" />
+    <Compile Include="FlowDesc\NodeUnitData.cs" />
+    <Compile Include="FlowDesc\NDEvent.cs" />
+    <Compile Include="FlowDesc\M2M.cs" />
+    <Compile Include="FlowTemplate\Flow.cs" />
+    <Compile Include="FlowTemplate\FlowSort.cs" />
+    <Compile Include="FlowTemplate\Tool.cs" />
+    <Compile Include="Glo.cs" />
+    <Compile Include="FlowDesc\Direction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlowDesc\Flow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlowDesc\FlowSort.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlowDesc\Node.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlowDesc\NodeStation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="db\NewFolder1\CHOfFlow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="db\NewFolder1\CHOfFlowRpt.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="db\NewFolder1\CHOfQL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dev2Interface\Dev2Interface.cs" />
+    <Compile Include="NodeExt.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Port\Dept.cs" />
+    <Compile Include="Port\Emp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Port\EmpDept.cs" />
+    <Compile Include="Port\EmpStation.cs" />
+    <Compile Include="Port\Station.cs" />
+    <Compile Include="RunRecorde.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Port\SMS\SMS.cs" />
+    <Compile Include="TA\Class.cs" />
+    <Compile Include="TA\Link.cs" />
+    <Compile Include="TA\CycleEvent.cs" />
+    <Compile Include="TA\CycleEventDo.cs" />
+    <Compile Include="TA\CycleEventDtl.cs" />
+    <Compile Include="TA\Notepad.cs" />
+    <Compile Include="TA\NotepadFolder.cs" />
+    <Compile Include="TA\PubClass.cs" />
+    <Compile Include="TA\TaLog.cs" />
+    <Compile Include="TA\Task.cs" />
+    <Compile Include="TA\TaskGroup.cs" />
+    <Compile Include="TA\TAUser.cs" />
+    <Compile Include="TA\TimeScope.cs" />
+    <Compile Include="TA\WorkExt.cs" />
+    <Compile Include="TA\Work\ReturnWork.cs" />
+    <Compile Include="TA\Work\ReWork.cs" />
+    <Compile Include="TA\Work\TADay.cs" />
+    <Compile Include="TA\Work\TAWeek.cs" />
+    <Compile Include="TA\Work\Work.cs" />
+    <Compile Include="TA\Work\WorkDtl.cs" />
+    <Compile Include="TA\Work\WorkDtlBase.cs" />
+    <Compile Include="TA\Work\WorkTemplate.cs" />
+    <Compile Include="TA\Work\WorkTemplateType.cs" />
+    <Compile Include="WF.cs" />
+    <Compile Include="WF\GERpt.cs" />
+    <Compile Include="WF\DataApply.cs" />
+    <Compile Include="WF\DevelopCallRequest.cs" />
+    <Compile Include="WF\GenerFH.cs" />
+    <Compile Include="FlowDesc\WorkBase\FileManager.cs" />
+    <Compile Include="WF\GenerWorkFlow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Msg.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Bill\BillTemplate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WF\GenerWorkFlowExt.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WF\DTS\MDCheck.cs" />
+    <Compile Include="WF\ReturnWork.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WF\WFPubClass.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WF\WorkFlow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WF\WorkNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WF\ForwardWork.cs" />
+    <Compile Include="FlowDesc\WorkBase\GEWork.cs" />
+    <Compile Include="FlowDesc\WorkBase\Work.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlowDesc\WorkBase\StartWork.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlowDesc\WorkBase\GEStartWork.cs" />
+    <Compile Include="Port\WFEmp.cs" />
+    <Compile Include="WF\GenerWorkerList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RememberMe.cs" />
+    <Compile Include="Xml\AdminMenu.cs" />
+    <Compile Include="Xml\DefVal.cs" />
+    <Compile Include="Xml\MapDef\MapMenu.cs" />
+    <Compile Include="Xml\SysDataType.cs" />
+    <Compile Include="Xml\Toolbar.cs" />
+    <Compile Include="Xml\Tool.cs" />
+    <Compile Include="Xml\Lang.cs" />
+    <Compile Include="Xml\GovDocBar.cs" />
+    <Compile Include="Xml\FlowBar.cs" />
+    <Compile Include="Xml\EventList.cs" />
+    <Compile Include="Xml\FeatureSet.cs" />
+    <Compile Include="Xml\SDK.cs" />
+    <Compile Include="Xml\Skin.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BP.En30\BP.En30.csproj">
+      <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
+      <Name>BP.En30</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App\" />
+    <Folder Include="DemoData\" />
+    <Folder Include="DTS\dts\" />
+    <Folder Include="FlowDesc\WorkBase\CheckWork\" />
+    <Folder Include="Interface\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
