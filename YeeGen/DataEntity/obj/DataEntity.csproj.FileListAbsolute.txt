@@ -1,7 +1,0 @@
-E:\项目2011\TaxWeb\Code\TaxProject\DataEntity\bin\Debug\Tax666.DataEntity.dll
-E:\项目2011\TaxWeb\Code\TaxProject\DataEntity\bin\Debug\Tax666.DataEntity.pdb
-E:\项目2011\TaxWeb\Code\TaxProject\DataEntity\bin\Debug\Tax666.SystemFramework.dll
-E:\项目2011\TaxWeb\Code\TaxProject\DataEntity\bin\Debug\Tax666.SystemFramework.pdb
-E:\项目2011\TaxWeb\Code\TaxProject\DataEntity\obj\Debug\ResolveAssemblyReference.cache
-E:\项目2011\TaxWeb\Code\TaxProject\DataEntity\obj\Debug\Tax666.DataEntity.dll
-E:\项目2011\TaxWeb\Code\TaxProject\DataEntity\obj\Debug\Tax666.DataEntity.pdb

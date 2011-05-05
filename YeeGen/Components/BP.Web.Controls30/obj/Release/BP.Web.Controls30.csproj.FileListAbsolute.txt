@@ -1,6 +1,0 @@
-D:\WorkFlow\DLL\BP.Web.Controls.dll
-D:\WorkFlow\Components\BP.Web.Controls30\obj\Release\ResolveAssemblyReference.cache
-D:\WorkFlow\Components\BP.Web.Controls30\obj\Release\BP.Web.Controls.dll
-D:\VisualWorkFlow\DLL\BP.Web.Controls.dll
-D:\VisualWorkFlow\Components\BP.Web.Controls30\obj\Release\ResolveAssemblyReference.cache
-D:\VisualWorkFlow\Components\BP.Web.Controls30\obj\Release\BP.Web.Controls.dll

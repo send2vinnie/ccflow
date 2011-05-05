@@ -1,5 +1,0 @@
-E:\项目2011\TaxWeb\Code\TaxProject\Common\bin\Debug\Tax666.Common.dll
-E:\项目2011\TaxWeb\Code\TaxProject\Common\bin\Debug\Tax666.Common.pdb
-E:\项目2011\TaxWeb\Code\TaxProject\Common\obj\Debug\ResolveAssemblyReference.cache
-E:\项目2011\TaxWeb\Code\TaxProject\Common\obj\Debug\Tax666.Common.dll
-E:\项目2011\TaxWeb\Code\TaxProject\Common\obj\Debug\Tax666.Common.pdb
