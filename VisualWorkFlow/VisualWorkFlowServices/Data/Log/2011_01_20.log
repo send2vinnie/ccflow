@@ -1,4 +1,0 @@
------------------------------------------------------------------------------------------------------
-20日14时43分07秒Info:System');"成功[BP.Port.Emp-50]放入缓存。
-21日15时38分32秒Fatal:System');"RunSQL2   SQL=CREATE INDEX TA_SMSID ON TA_SMS (MyPK)操作失败，因为在 表 'TA_SMS' 上已存在名称为 'TA_SMSID' 的索引或统计信息。
-21日15时38分33秒Fatal:System');"RunSQL2   SQL=CREATE INDEX TA_SMSID ON TA_SMS (MyPK)操作失败，因为在 表 'TA_SMS' 上已存在名称为 'TA_SMSID' 的索引或统计信息。
