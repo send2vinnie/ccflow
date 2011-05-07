@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DS>
+  <MapMenu No="NewF" CH="新建字段"   JS="javascript:AddF(@MyPK);"  Img="../../Images/Btn/New.gif" />
+  <MapMenu No="CopyF" CH="复制字段"  JS="javascript:CopyFieldFromNode(@MyPK);"  Img="../../Images/Btn/Copy.gif" />
+  <MapMenu No="DTable" CH="设计表格" JS="javascript:MapDtl(@MyPK);" Img="../../Images/Btn/Table.gif"  />
+  <MapMenu No="DM" CH="设计多选"     JS="javascript:MapM2M(@MyPK);" Img="../../Images/Btn/Table.gif"  />
+  <MapMenu No="Frm" CH="设置框架"    JS="javascript:MapFrame(@MyPK);" Img="./Img/Frame.gif"  />
+  <MapMenu No="FGroup" CH="字段分组" JS="javascript:GroupFieldNew(@MyPK);" Img="./Img/Frame.gif"  />
+  <MapMenu No="Ext" CH="扩展设置"    JS="javascript:MapExt(@MyPK);" Img="./Img/Frame.gif" />
+
+
+  <InputCheck No="01" CH="文本框只能输入数字代码(小数点也不能输入)"    JS="this.value=this.value.replace(/\D/g,'')" />
+  <InputCheck No="02" CH="只能输入数字,能输小数点"    JS="this.value=this.value.replace(/\D/g,'')" />
+
+</DS>
+
