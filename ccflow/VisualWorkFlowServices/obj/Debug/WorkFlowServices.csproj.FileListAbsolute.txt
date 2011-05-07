@@ -1,0 +1,13 @@
+D:\VisualWorkFlow\SMSServices\SMSServices\bin\Debug\SMSServices.exe
+D:\VisualWorkFlow\SMSServices\SMSServices\bin\Debug\SMSServices.pdb
+D:\VisualWorkFlow\SMSServices\SMSServices\bin\Debug\BP.En30.dll
+D:\VisualWorkFlow\SMSServices\SMSServices\bin\Debug\BP.WFV4.dll
+D:\VisualWorkFlow\SMSServices\SMSServices\bin\Debug\ChineseConverter.dll
+D:\VisualWorkFlow\SMSServices\SMSServices\bin\Debug\BP.En30.pdb
+D:\VisualWorkFlow\SMSServices\SMSServices\bin\Debug\BP.WFV4.pdb
+D:\VisualWorkFlow\SMSServices\SMSServices\obj\Debug\ResolveAssemblyReference.cache
+D:\VisualWorkFlow\SMSServices\SMSServices\obj\Debug\SMSServices.FrmMain.resources
+D:\VisualWorkFlow\SMSServices\SMSServices\obj\Debug\SMSServices.Properties.Resources.resources
+D:\VisualWorkFlow\SMSServices\SMSServices\obj\Debug\WorkFlowServices.csproj.GenerateResource.Cache
+D:\VisualWorkFlow\SMSServices\SMSServices\obj\Debug\SMSServices.exe
+D:\VisualWorkFlow\SMSServices\SMSServices\obj\Debug\SMSServices.pdb
