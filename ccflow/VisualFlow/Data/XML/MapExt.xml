@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+	<!-- 外部连接配置说明  No, 部门编号，URL 对方sqlserver 的连接。  -->
+  <Item No="ActiveDDL"   CH="联动菜单"  />
+  <Item No="InputCheck"   CH="脚本验证"  />
+  <Item No="AutoFull"     CH="自动完成"  />
+  <Item No="PopVal"       CH="Pop返回值"  />
+</NewDataSet>

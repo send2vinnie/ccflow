@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+	<!-- 外部连接配置说明  No, 部门编号，URL 对方sqlserver 的连接。  -->
+ 
+  <Item No="SaveBefore"  CH="当节点保存前" EN="When the node before saving"  />
+  <Item No="SaveAfter" CH="当节点保存后" EN="When the node saved"  />
+	
+  <Item No="SendWhen" CH="当节点发送时" EN="When a node is sent"  />
+  <Item No="SendSuccess" CH="节点发送成功时" EN="Node has a successful"  />
+  <Item No="SendError" CH="节点发送失败时" EN="Node fails to send"  />
+	
+  <Item No="ReturnBefore" CH="当节点退回前" EN="When the node before returning"  />
+  <Item No="ReturnAfter" CH="当节点退回后" EN="When the node returned after"  />
+	
+  <Item No="UndoneBefore" CH="当节点撤销发送前" EN="When a node before sending cancellation"  />
+  <Item No="UndoneAfter" CH="当节点撤销发送后" EN="When the node after sending cancellation"  />
+	
+	<Item No="FlowOverBefore" CH="流程结束前" EN="When the node after sending cancellation"  />
+	<Item No="FlowOverAfter" CH="流程结束后" EN="When the node after sending cancellation"  />
+
+	<Item No="FlowDelBefore" CH="流程删除前" EN="When the node after sending cancellation"  />
+	<Item No="FlowDelAfter" CH="流程删除后" EN="When the node after sending cancellation"  />
+
+</NewDataSet>
