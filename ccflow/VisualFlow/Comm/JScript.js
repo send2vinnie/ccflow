@@ -65,6 +65,23 @@ function VirtyInt(ctrl) {
 }
 function VirtyNum(ctrl) {
 
+   // alert(event.keyCode);
+//    if (event.keyCode == 8) {
+//        // type del]
+//        alert(ctrl.value);
+//    }
+
+    if (event.keyCode == 190) {
+        if (ctrl.value.indexOf('.') == -1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    // alert(event.keyCode);
+
 
     if (event.keyCode >= 37 && event.keyCode <= 40)
         return true;
