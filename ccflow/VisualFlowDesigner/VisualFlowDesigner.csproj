@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EA5CBEEC-CD93-4F19-AD48-10FD24860680}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VisualFlowDesigner</RootNamespace>
+    <AssemblyName>VisualFlowDesigner</AssemblyName>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationIcon>WF_Gener.ICO</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>true</GenerateManifests>
+    <ManifestCertificateThumbprint>00B30061E1F2E6B12E1011199DF0988D1305BD03</ManifestCertificateThumbprint>
+    <ManifestKeyFile>VisualFlowDesigner_TemporaryKey.pfx</ManifestKeyFile>
+    <SignManifests>false</SignManifests>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>E:\ccflow.Install\VisualFlowDesigner\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <SupportUrl>http://ccflow.cn</SupportUrl>
+    <CreateWebPageOnPublish>false</CreateWebPageOnPublish>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>4.5.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>0</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ChineseConverter, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9ecab500adebae88, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\ChineseConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Microsoft.Office.Core, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\Interop.Microsoft.Office.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Deployment">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrmAction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAction.Designer.cs">
+      <DependentUpon>FrmAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmAD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAD.Designer.cs">
+      <DependentUpon>FrmAD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmAttr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDesigner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDTSWin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmIE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmIE.Designer.cs">
+      <DependentUpon>FrmIE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmLanguage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLanguage.Designer.cs">
+      <DependentUpon>FrmLanguage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmNodeLabel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmNodeLabel.Designer.cs">
+      <DependentUpon>FrmNodeLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmAction.resx">
+      <DependentUpon>FrmAction.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAD.resx">
+      <DependentUpon>FrmAD.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAttr.resx">
+      <DependentUpon>FrmAttr.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDesigner.resx">
+      <DependentUpon>FrmDesigner.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDTSWin.resx">
+      <DependentUpon>FrmDTSWin.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmIE.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FrmIE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLanguage.resx">
+      <DependentUpon>FrmLanguage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmNodeLabel.resx">
+      <DependentUpon>FrmNodeLabel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TreeNodeAttr.resx">
+      <DependentUpon>TreeNodeAttr.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WFForm.resx">
+      <DependentUpon>WFForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WFToolBar.resx">
+      <DependentUpon>WFToolBar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinWFFlow.resx">
+      <DependentUpon>WinWFFlow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinWFNode.resx">
+      <DependentUpon>WinWFNode.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinWFLab.resx">
+      <DependentUpon>WinWFLab.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="TreeNodeAttr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WFForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WFGlobal.cs" />
+    <Compile Include="WFToolBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WinFlow.cs" />
+    <Compile Include="WinNodes.cs" />
+    <Compile Include="WinWFFlow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WinWFLine.cs" />
+    <Compile Include="WinWFNode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinWFLab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BJ.gif" />
+    <None Include="BJ1.gif" />
+    <Content Include="DataUser\log.jpg" />
+    <Content Include="Data\Img\log.jpg" />
+    <Content Include="Data\Img_Engg\log.gif" />
+    <Content Include="Data\Cfg.txt" />
+    <Content Include="Data\Node\LabNote.bmp" />
+    <Content Include="Data\Node\MulChecks.bmp" />
+    <Content Include="Data\Node\WorkFL.bmp" />
+    <Content Include="Data\Node\StandardChecks.bmp" />
+    <Content Include="Data\Node\StartWork.bmp" />
+    <Content Include="Data\Node\WorkHL.bmp" />
+    <Content Include="Data\Img_CCS\log.gif" />
+    <Content Include="Data\Img_ML\log.gif" />
+    <Content Include="Data\Node\StartWorkFL.bmp" />
+    <Content Include="Data\Node\Work.bmp" />
+    <Content Include="Help\EditAction.htm" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Resources\New.gif" />
+    <None Include="Resources\Save.gif" />
+    <None Include="Resources\Delete.gif" />
+    <None Include="Resources\Start.GIF" />
+    <None Include="Resources\Confirm.gif" />
+    <None Include="Resources\Table.gif" />
+    <None Include="Resources\WorkFlowOp.gif" />
+    <None Include="Resources\Authorize.gif" />
+    <Content Include="Resources\Copy.GIF" />
+    <Content Include="Resources\lvbgcolor.gif" />
+    <Content Include="WF.ico" />
+    <Content Include="WF_Gener.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="Data\FlowDesc\" />
+    <Folder Include="Data\Log\" />
+    <Folder Include="Data\Xml\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Components\BP.En30\BP.En30.csproj">
+      <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
+      <Name>BP.En30</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Components\BP.WFV4\BP.WFV4.csproj">
+      <Project>{51C1DADA-1B9A-41CC-B731-FDE1196778F2}</Project>
+      <Name>BP.WFV4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Components\BP.Win32.Controls\BP.Win32.Controls.csproj">
+      <Project>{B50990CA-3405-4217-881B-F9DC17D263B2}</Project>
+      <Name>BP.Win32.Controls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
