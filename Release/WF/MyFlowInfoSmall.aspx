@@ -1,0 +1,17 @@
+﻿<%@ page title="" language="C#" masterpagefile="WinOpen.master" autoeventwireup="true" inherits="WF_MyFlowInfoSmall, App_Web_5dpdp204" %>
+<%@ Register src="UC/FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc1" %>
+<%@ Register src="UC/MyFlowInfo.ascx" tagname="MyFlowInfo" tagprefix="uc2" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
+<table width='80%' >
+<tr>
+<td width='80%'>
+    <uc2:MyFlowInfo ID="MyFlowInfo1" runat="server" />
+</td>
+</tr>
+</table>
+
+</asp:Content>
+

@@ -1,0 +1,1 @@
+﻿<%@ control language="C#" autoeventwireup="true" inherits="WF_UC_SMS, App_Web_h1ohljul" %>
