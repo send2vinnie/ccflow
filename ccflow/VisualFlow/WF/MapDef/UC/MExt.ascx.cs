@@ -163,7 +163,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.Title = "表单扩展设置";
-
         switch (this.DoType)
         {
             case "Del":

@@ -112,21 +112,20 @@ public partial class WF_MapDef_WFRpt : WebPage
             string sql = "SELECT COUNT(*) FROM Sys_MapDtl WHERE No LIKE 'ND" + int.Parse(this.FK_Flow) + "%'";
             if (BP.DA.DBAccess.RunSQLReturnValInt(sql) >= 1)
             {
-                this.Pub1.AddB("-<a href=\"javascript:AddDtl('" + md.No + "')\">插入明细表</a>");
-
-                sql = "SELECT No FROM Sys_MapData WHERE No LIKE '" + this.MyPK + "Dtl%'";
-                DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-                switch (dt.Rows.Count)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        this.Pub1.AddB("-<a href='WFRpt.aspx?MyPK=" + dt.Rows[0][0].ToString() + "'>明细报表设计</a>");
-                        break;
-                    default:
-                        this.Pub1.AddB("-<a href='WFRpt.aspx?DoType=DeDtl&MyPK=" + this.MyPK + "'>明细报表设计</a>");
-                        break;
-                }
+                // this.Pub1.AddB("-<a href=\"javascript:AddDtl('" + md.No + "')\">插入明细表</a>");
+                //sql = "SELECT No FROM Sys_MapData WHERE No LIKE '" + this.MyPK + "Dtl%'";
+                //DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+                //switch (dt.Rows.Count)
+                //{
+                //    case 0:
+                //        break;
+                //    case 1:
+                //        this.Pub1.AddB("-<a href='WFRpt.aspx?MyPK=" + dt.Rows[0][0].ToString() + "'>明细报表设计</a>");
+                //        break;
+                //    default:
+                //        this.Pub1.AddB("-<a href='WFRpt.aspx?DoType=DeDtl&MyPK=" + this.MyPK + "'>明细报表设计</a>");
+                //        break;
+                //}
             }
         }
         else

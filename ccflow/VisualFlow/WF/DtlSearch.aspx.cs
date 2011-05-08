@@ -15,11 +15,16 @@ using BP.Sys;
 
 public partial class WF_DtlSearch : BP.Web.WebPage 
 {
+    public string FK_Flow
+    {
+        get
+        {
+            return this.Request.QueryString["FK_Flow"];
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
-        //string rpt = "ND"+int.Parse(this.EnsName)+"Rpt";
-
-        MapDtls dtls = new MapDtls(this.EnsName);
+        MapDtls dtls = new MapDtls( "ND"+int.Parse(this.FK_Flow)+"Rpt" );
         if (dtls.Count == 0)
         {
             this.WinCloseWithMsg("该流程下没有明细表。");
@@ -31,7 +36,6 @@ public partial class WF_DtlSearch : BP.Web.WebPage
             this.Response.Redirect("./../Comm/PanelEns.aspx?EnsName=" + dtls[0].GetValStrByKey("No"), true);
             return;
         }
-
 
         this.Pub1.AddFieldSet("请选择您好查看的明细表。");
 

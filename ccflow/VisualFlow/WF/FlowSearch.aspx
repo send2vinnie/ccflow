@@ -3,10 +3,9 @@
 <%@ Register src="UC/FlowSearch.ascx" tagname="FlowSearch" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <script language=javascript>
-function Dtl(k)
-{
-  WinOpen('DtlSearch.aspx?EnsName=ND'+parseInt( k) +'Rpt' , 'ss');
-}
+    function Dtl(fk_flow) {
+        WinOpen('DtlSearch.aspx?FK_Flow=' + fk_flow, 'ss');
+    }
 </script>
     <script language="JavaScript" src="../Comm/JScript.js"></script>
 </asp:Content>
