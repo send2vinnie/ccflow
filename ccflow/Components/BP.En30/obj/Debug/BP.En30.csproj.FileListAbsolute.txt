@@ -1,6 +1,0 @@
-D:\VisualWorkFlow\Components\BP.En30\bin\BP.En30.dll
-D:\VisualWorkFlow\Components\BP.En30\bin\BP.En30.pdb
-D:\VisualWorkFlow\Components\BP.En30\bin\ChineseConverter.dll
-D:\VisualWorkFlow\Components\BP.En30\obj\Debug\ResolveAssemblyReference.cache
-D:\VisualWorkFlow\Components\BP.En30\obj\Debug\BP.En30.dll
-D:\VisualWorkFlow\Components\BP.En30\obj\Debug\BP.En30.pdb
