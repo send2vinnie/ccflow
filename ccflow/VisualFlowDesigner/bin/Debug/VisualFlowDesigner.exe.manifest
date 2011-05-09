@@ -70,7 +70,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>xgTPK8NS1JkmEdzrFkHgISfiY8E=</dsig:DigestValue>
+        <dsig:DigestValue>7KMIix2f0yXXuU5uW0WmCKIWipY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -82,19 +82,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>K2lW/fhBaDQZRr1U1Jh8XsX4UAI=</dsig:DigestValue>
+        <dsig:DigestValue>1zlY3wlf7QDY1vyTdaSPFSdfhLw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BP.Win32.Controls.dll" size="352256">
-      <assemblyIdentity name="BP.Win32.Controls" version="1.0.4142.38588" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="BP.Win32.Controls" version="1.0.4146.32800" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>+KTy4pmqOvqKgo7MpwZ5Zmhp6+M=</dsig:DigestValue>
+        <dsig:DigestValue>Ba6W+Q/sTQVBGn53GCxZwyTdx24=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -130,7 +130,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>oAXT0zUbB0eMVbAGkSNZI5hTvTg=</dsig:DigestValue>
+        <dsig:DigestValue>fpxltVC+Of+DC6z+0Fyn3ZopImk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -142,19 +142,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>GF0ACps23LZhEPoK0sCmHT86Wug=</dsig:DigestValue>
+        <dsig:DigestValue>80/Ff0+RhTNo7kQqXoeT0DZGuUA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VisualFlowDesigner.exe" size="642048">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VisualFlowDesigner.exe" size="147456">
       <assemblyIdentity name="VisualFlowDesigner" version="4.5.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>t/eboakT5iZmC8W+FcqUXYzpKfw=</dsig:DigestValue>
+        <dsig:DigestValue>1agJ8e0DxoPPokmdz3ovHJQjTVo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -165,42 +165,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>VyGMMWtpIeLNYQJ6I4ftwxotlHE=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Data\Img\log.jpg" size="12278">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>YtBHgzslMXBIKKIr98fjtDlzFg4=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Data\Img_CCS\log.gif" size="15985">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>H1L4JQ3U5yqFRfKzbS7aTjVYM0o=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Data\Img_Engg\log.gif" size="21728">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>PD2flhXzUKfvX9iKnl4w+da1OVc=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Data\Img_ML\log.gif" size="15985">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>H1L4JQ3U5yqFRfKzbS7aTjVYM0o=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Data\Node\LabNote.bmp" size="162">
@@ -318,15 +282,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>cpzNzlRjZspwKGLNlX6RAlU3880=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="WF.ico" size="11130">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>mPqI3kKjoUYJCKrL/vijoiXIeec=</dsig:DigestValue>
     </hash>
   </file>
   <file name="WF_Gener.ICO" size="2238">
