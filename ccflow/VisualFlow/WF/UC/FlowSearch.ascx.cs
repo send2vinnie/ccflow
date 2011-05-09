@@ -374,7 +374,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.Pub1.AddTREnd();
 
-
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle(this.ToE("Name", "节点步骤"));
         this.Pub1.AddTDTitle(this.ToE("Name", "节点"));
@@ -721,6 +720,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle( this.ToE("Bill", "单据"));
         this.Pub1.AddTDTitle(this.ToE("FlowSearch", "流程查询-分析") );
         this.Pub1.AddTDTitle(this.ToE("Node", "节点") );
+        this.Pub1.AddTDTitle(this.ToE("BPR", "成本分析"));
         this.Pub1.AddTREnd();
 
         string sql = ""; // "SELECT FK_Flow FROM WF_Node ";
@@ -738,6 +738,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         string nodeSearch = this.ToE("Node", "节点");
         string FX = this.ToE("FX", "分析");
         string myWork = this.ToE("MyWork", "我的工作");
+        string BPR = this.ToE("BPR", "成本分析");
 
       //  DataTable dt = DBAccess.RunSQLReturnTable("SELECT FK_Flow , count(FK_Flow) as Num FROM WF_GenerWorkflow GROUP BY FK_Flow");
         foreach (FlowSort fs in fss)
@@ -794,13 +795,20 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 this.Pub1.AddTDBegin();
                 string src1 = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";
                 this.Pub1.Add("<a href=\"javascript:WinOpen('" + src1 + "');\" >" + search + "</a>");
-                this.Pub1.Add("-<a href=\"javascript:Dtl('" + fl.No + "');\" >" + dtl + "</a>");
+
+                if (fl.NumOfDtl != 0)
+                    this.Pub1.Add("-<a href=\"javascript:Dtl('" + fl.No + "');\" >" + dtl + "</a>");
+
                 src1 = this.Request.ApplicationPath + "/Comm/GroupEnsMNum.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";
                 this.Pub1.Add("-<a href=\"javascript:WinOpen('" + src1 + "');\" >" + FX + "</a>");
                 string url2 = this.Request.ApplicationPath + "/WF/FlowSearchMyWork.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt&FK_Flow=" + fl.No;
                 this.Pub1.Add("-<a href=\"javascript:WinOpen('" + url2 + "');\" >" + myWork + "</a>");
                 this.Pub1.AddTDEnd();
                 this.Pub1.AddTD("<a href='FlowSearch" + this.PageSmall + ".aspx?FK_Flow=" + fl.No + "'>" + nodeSearch + "</a>");
+
+
+                this.Pub1.AddTD("<a href=\"javascript:WinOpen('BPR.aspx?FK_Flow="+fl.No+"');\"  >" + BPR + "</a>");
+
                 this.Pub1.AddTREnd();
             }
         }
