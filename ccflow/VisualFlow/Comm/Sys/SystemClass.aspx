@@ -28,7 +28,7 @@
 					</TR>
 					<TR>
 						<TD>
-							<cc1:BPToolBar id="BPToolBar1" Visible=false runat="server"></cc1:BPToolBar></TD>
+							<cc1:BPToolBar id="BPToolBar1" Visible=true runat="server"></cc1:BPToolBar></TD>
 					</TR>
 					<TR>
 						<TD valign="top" style="HEIGHT: 429px">
