@@ -190,7 +190,7 @@ namespace BP.Win32.Controls
             catch (Exception ex)
             {
                 BP.DA.Log.DebugWriteWarning(ex.Message);
-                MessageBox.Show(ex.Message, "@保存工作流图片失败！但是不影响其它功能进行。");
+                MessageBox.Show(ex.Message, "@保存工作流图片失败！但是不影响其它功能进行。" + flowImagePath);
             }
 
             gp.Dispose();
