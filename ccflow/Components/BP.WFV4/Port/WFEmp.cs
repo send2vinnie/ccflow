@@ -30,7 +30,11 @@ namespace BP.WF.Port
         /// <summary>
         /// 手机短信+邮件
         /// </summary>
-        SMSAndEmail
+        SMSAndEmail,
+        /// <summary>
+        /// 内部消息
+        /// </summary>
+        AppSystemMsg
     }
 	/// <summary>
 	/// 操作员
@@ -273,7 +277,7 @@ namespace BP.WF.Port
                // map.AddTBInt(WFEmpAttr.AlertWay, 0, "AlertWay", true, true);
 
                 map.AddDDLSysEnum(WFEmpAttr.AlertWay, 3, "收听方式", true, true,
-                    ListenAttr.AlertWay, "@0=不接收@2=手机短信@3=邮件@4=手机短信+邮件");
+                    ListenAttr.AlertWay, "@0=不接收@1=手机短信@2=邮件@3=手机短信+邮件@4=内部消息");
 
                 map.AddTBString(WFEmpAttr.Author, null, "授权人", true, true, 0, 50, 20);
 

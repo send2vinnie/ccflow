@@ -92,6 +92,17 @@ namespace BP.TA
             if (mailTitle == null)
                 mailTitle = telDoc;
 
+            if (at == AlertWay.AppSystemMsg)
+            {
+                Paras pss =new Paras();
+                pss.Add("Sender", BP.Web.WebUser.No);
+                pss.Add("Receivers", fk_emp);
+                pss.Add("Title", mailTitle);
+                pss.Add("Context", emailDoc);
+                BP.DA.DBAccess.RunSP("CCstaff", pss);
+                return;
+            }
+
             SMS sms = new SMS();
             sms.MyPK = pk;
             if (sms.IsExits)

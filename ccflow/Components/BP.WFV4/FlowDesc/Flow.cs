@@ -264,6 +264,10 @@ namespace BP.WF
         /// </summary>
         public const string NumOfBill = "NumOfBill";
         /// <summary>
+        /// 
+        /// </summary>
+        public const string NumOfDtl = "NumOfDtl";
+        /// <summary>
         /// 是否可以启动？
         /// </summary>
         public const string IsCanStart = "IsCanStart";
@@ -348,6 +352,8 @@ namespace BP.WF
         {
             DBAccess.RunSQL("UPDATE WF_Node SET FlowName = (SELECT Name FROM WF_Flow WHERE NO=WF_Node.FK_Flow)");
             this.NumOfBill = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM WF_BillTemplate WHERE NodeID IN (select NodeID from WF_Flow where no='" + this.No + "')");
+            this.NumOfDtl = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM Sys_MapDtl WHERE FK_MapData='ND" + int.Parse(this.No )+ "Rpt'");
+
             this.DirectUpdate();
 
             string msg = "<font color=blue>" + this.ToE("About", "关于") + "《" + this.Name + " 》 " + this.ToE("FlowCheckInfo", "流程检查信息") + "</font><hr>";
@@ -587,9 +593,9 @@ namespace BP.WF
         }
 
         #region 产生数据模板。
-        public void GenerHisHtmlRpt()
+        public void GenerHisHtmlDocRpt()
         {
-            string path = SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\" + this.No + "\\";
+            string path = SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\" + this.No + "." + this.Name + "\\";
             if (System.IO.Directory.Exists(path) == false)
                 System.IO.Directory.CreateDirectory(path);
 
@@ -609,7 +615,7 @@ namespace BP.WF
             msg += "\r\n<hr>";
 
             msg += "\r\n<h3><a href='" + this.Name + ".xml' target=_blank>ccflow可识别的(" + this.Name + ")流程模板(xml格式)</a> </h3>";
-        
+
             //  <a href='" + this.Name + "_设计报告.htm' target=_blank>" + this.Name + "设计报告</a> - 
             // DataType.SaveAsFile(path + this.Name + "_设计报告.htm", rpt);
 
@@ -617,9 +623,9 @@ namespace BP.WF
             foreach (Node nd in nds)
             {
                 msg += "\r\n<tr>";
-                msg += "\r\n<TD><img src='./../Images/Word.gif' /><a href='" + nd.FlowName + "_" + nd.Name + ".doc' target=_blank >" + nd.Name + "</a></TD>";
-                msg += "\r\n<TD><img src='./../Images/pdf.gif' /><a href='" + nd.FlowName + "_" + nd.Name + ".pdf' target=_blank >" + nd.Name + "</a></TD>";
-                msg += "\r\n<TD><img src='./../Images/html.gif' /><a href='" + nd.FlowName + "_" + nd.Name + ".htm' target=_blank >" + nd.Name + "</a></TD>";
+                msg += "\r\n<TD><a href='" + nd.FlowName + "_" + nd.Name + ".doc' target=_blank >" + nd.Name + "</a></TD>";
+                msg += "\r\n<TD><a href='" + nd.FlowName + "_" + nd.Name + ".pdf' target=_blank >" + nd.Name + "</a></TD>";
+                msg += "\r\n<TD><a href='" + nd.FlowName + "_" + nd.Name + ".htm' target=_blank >" + nd.Name + "</a></TD>";
                 msg += "\r\n</tr>";
             }
             msg += "\r\n</table>";
@@ -666,11 +672,11 @@ namespace BP.WF
                 msg += "\r\n</html>";
                 DataType.SaveAsFile(path + this.Name + "_" + nd.Name + ".htm", msg);
             }
-            this.GenerFlowXmlTemplete();
         }
+
         public string GenerFlowXmlTemplete()
         {
-            string path = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No + "\\";
+            string path = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No +"."+this.Name + "\\";
             if (System.IO.Directory.Exists(path) == false)
                 System.IO.Directory.CreateDirectory(path);
 
@@ -846,8 +852,6 @@ namespace BP.WF
             dt.TableName = "Sys_GroupField";
             ds.Tables.Add(dt);
             ds.WriteXml(path + this.Name + ".xml");
-
-            this.GenerHisHtmlRpt();
             return path;
         }
         
@@ -856,7 +860,7 @@ namespace BP.WF
         /// </summary>
         private void GenerWorkTempleteDoc(Entity en, string enName, Node nd)
         {
-            string tempFilePath = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No + "\\";
+            string tempFilePath = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No+"."+this.Name + "\\";
             if (System.IO.Directory.Exists(tempFilePath) == false)
                 System.IO.Directory.CreateDirectory(tempFilePath);
             tempFilePath = tempFilePath + nd.FlowName + "_" + nd.Name + ".doc";
@@ -936,14 +940,13 @@ namespace BP.WF
                     object SaveWithDocument = true;
                     object Anchor = WordDoc.Application.Selection.Range;
 
-
                     WordDoc.Application.ActiveDocument.InlineShapes.AddPicture(pict, ref  LinkToFile,
                         ref  SaveWithDocument, ref  Anchor);
                     //    WordDoc.Application.ActiveDocument.InlineShapes[1].Width = img.Width; // 图片宽度
                     //    WordDoc.Application.ActiveDocument.InlineShapes[1].Height = img.Height; // 图片高度
                 }
-                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("[驰骋业务流程管理系统 http://ccflow.cn ] - [" + nd.FlowName + "-" + nd.Name + "模板]");
-                WordApp.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft; // 设置右对齐
+                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("[驰骋业务流程管理系统 http://ccflow.org ] - [" + nd.FlowName + "-" + nd.Name + "模板]");
+                WordApp.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight; // 设置右对齐
                 WordApp.ActiveWindow.View.SeekView = Word.WdSeekView.wdSeekMainDocument; // 跳出页眉设置
                 WordApp.Selection.ParagraphFormat.LineSpacing = 15f; // 设置文档的行间距
                 #endregion
@@ -1136,7 +1139,7 @@ namespace BP.WF
 
                 #region 添加页脚
                 WordApp.ActiveWindow.View.SeekView = Word.WdSeekView.wdSeekPrimaryFooter;
-                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("模板由ccflow自动生成，严谨转载。此流程的详细内容请访问 http://doc.ccflow.cn。 建造流程管理系统请致电:18660153393 QQ:hiflow@qq.com");
+                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("模板由ccflow4.5自动生成，严谨转载。欢迎使用开源,免费的工作流程管理系统 http://ccflow.org.");
                 WordApp.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight;
                 #endregion
 
@@ -1444,6 +1447,15 @@ namespace BP.WF
         /// <param name="nds"></param>
         private void CheckRptDtl(Nodes nds)
         {
+            MapDtls dtlsDtl = new MapDtls();
+             dtlsDtl.Retrieve(MapDtlAttr.FK_MapData, "ND" + int.Parse(this.No) + "Rpt");
+             foreach (MapDtl dtl in dtlsDtl)
+             {
+                 dtl.Delete();
+             }
+
+          //  dtlsDtl.Delete(MapDtlAttr.FK_MapData, "ND" + int.Parse(this.No) + "Rpt");
+
             foreach (Node nd in nds)
             {
                 if (nd.IsEndNode == false)
@@ -1469,11 +1481,12 @@ namespace BP.WF
                         rtpDtl.No = rptDtlNo;
                         rtpDtl.FK_MapData = rpt;
                         rtpDtl.PTable = rptDtlNo;
+                        rtpDtl.GroupID = -1;
                         rtpDtl.Insert();
                     }
 
-                    MapAttrs attrsRptDtl = new MapAttrs(rptDtlNo);
 
+                    MapAttrs attrsRptDtl = new MapAttrs(rptDtlNo);
                     MapAttrs attrs = new MapAttrs(dtl.No);
                     foreach (MapAttr attr in attrs)
                     {
@@ -1483,6 +1496,27 @@ namespace BP.WF
                         MapAttr attrN = new MapAttr();
                         attrN.Copy(attr);
                         attrN.FK_MapData = rptDtlNo;
+                        switch (attr.KeyOfEn)
+                        {
+                            case "FK_NY":
+                                attrN.UIVisible = true;
+                                attrN.IDX = 100;
+                                attrN.UIWidth = 60;
+                                break;
+                            case "RDT":
+                                attrN.UIVisible = true;
+                                attrN.IDX = 100;
+                                attrN.UIWidth = 60;
+                                break;
+                            case "Rec":
+                                attrN.UIVisible = true;
+                                attrN.IDX = 100;
+                                attrN.UIWidth = 60;
+                                break;
+                            default:
+                                break;
+                        }
+                         
                         attrN.Save();
                     }
 
@@ -1876,6 +1910,17 @@ namespace BP.WF
                 this.SetValByKey(FlowAttr.NumOfBill, value);
             }
         }
+        public int NumOfDtl
+        {
+            get
+            {
+                return this.GetValIntByKey(FlowAttr.NumOfDtl);
+            }
+            set
+            {
+                this.SetValByKey(FlowAttr.NumOfDtl, value);
+            }
+        }
         public decimal AvgDay
         {
             get
@@ -2195,6 +2240,7 @@ namespace BP.WF
                 map.AddTBString(FlowAttr.RunSQL, null, "流程结束执行后执行的SQL", true, false, 0, 2000, 10);
 
                 map.AddTBInt(FlowAttr.NumOfBill, 0, "是否有单据", false, false);
+                map.AddTBInt(FlowAttr.NumOfDtl, 0, "NumOfDtl", false, false);
 
 
                 map.AddBoolean(FlowAttr.IsOK, true, this.ToE("IsEnable", "是否起用"), true, true);
@@ -2316,25 +2362,28 @@ namespace BP.WF
         }
         public string DoDelData()
         {
-            string sql = " where FK_Node in (SELECT NodeID FROM WF_Node WHERE fk_flow='" + this.No + "')";
+            string sql = "  where FK_Node in (SELECT NodeID FROM WF_Node WHERE fk_flow='" + this.No + "')";
             string sql1 = " where NodeID in (SELECT NodeID FROM WF_Node WHERE fk_flow='" + this.No + "')";
 
             DA.DBAccess.RunSQL("DELETE FROM WF_CHOfFlow WHERE FK_Flow='" + this.No + "'");
             DA.DBAccess.RunSQL("DELETE FROM WF_Bill WHERE FK_Flow='" + this.No + "'");
             DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE FK_Flow='" + this.No + "'");
-            DA.DBAccess.RunSQL("DELETE FROM WF_GENERWORKFLOW WHERE FK_Flow='" + this.No + "'");
+            DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE FK_Flow='" + this.No + "'");
 
-            DA.DBAccess.RunSQL("DELETE FROM WF_GENERWORKFLOW WHERE FK_Flow='" + this.No + "'");
+            DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE FK_Flow='" + this.No + "'");
             DA.DBAccess.RunSQL("DELETE FROM WF_ReturnWork " + sql1);
             DA.DBAccess.RunSQL("DELETE FROM WF_GenerFH WHERE FK_Flow='" + this.No + "'");
             DA.DBAccess.RunSQL("DELETE FROM WF_SelectAccper " + sql);
             DA.DBAccess.RunSQL("DELETE FROM WF_FileManager " + sql);
             DA.DBAccess.RunSQL("DELETE FROM WF_RememberMe " + sql);
 
+            DA.DBAccess.RunSQL("DELETE FROM ND" + int.Parse(this.No) + "Rpt ");
+
             //DA.DBAccess.RunSQL("DELETE FROM WF_WorkList WHERE FK_Flow='" + this.No + "'");
             //DA.DBAccess.RunSQL("DELETE Sys_MapExt WHERE FK_MapData LIKE 'ND"+int.Parse(this.No)+"%'" );
 
-            Nodes nds = new Nodes();
+            //删除节点数据。
+            Nodes nds = new Nodes(this.No);
             foreach (Node nd in nds)
             {
                 try
@@ -2345,24 +2394,24 @@ namespace BP.WF
                 catch
                 {
                 }
+
+                MapDtls dtls = new MapDtls("ND" + nd.NodeID);
+                foreach (MapDtl dtl in dtls)
+                {
+                    try
+                    {
+                        DA.DBAccess.RunSQL("DELETE FROM " + dtl.PTable);
+                    }
+                    catch
+                    {
+                    }
+                }
             }
 
-            MapDatas mds = new MapDatas();
-            mds.RetrieveAll();
-            foreach (MapData nd in mds)
-            {
-                try
-                {
-                    DA.DBAccess.RunSQL("DELETE FROM " + nd.PTable);
-                }
-                catch
-                {
-                }
-            }
 
-            MapDtls dtls = new MapDtls();
-            dtls.RetrieveAll();
-            foreach (MapDtl dtl in dtls)
+            DA.DBAccess.RunSQL("DELETE FROM ND" + int.Parse(this.No) + "Rpt ");
+            MapDtls mydtls = new MapDtls("ND" + int.Parse(this.No) + "Rpt");
+            foreach (MapDtl dtl in mydtls)
             {
                 try
                 {
@@ -2372,7 +2421,7 @@ namespace BP.WF
                 {
                 }
             }
-            return "删除成功。。。";
+            return "删除成功...";
         }
         /// <summary>
         /// 装载流程模板
@@ -3041,7 +3090,6 @@ namespace BP.WF
         /// </summary>
         public void DoNewFlow()
         {
-
             this.No = this.GenerNewNoByKey(FlowAttr.No);
             if (this.No.Substring(0, 1) == "1")
                 this.No = "100";
@@ -3132,14 +3180,14 @@ namespace BP.WF
             DBAccess.RunSQL(sql);
 
             // 删除岗位节点。
-            sql = "  DELETE  FROM  WF_NodeStation  WHERE   FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql = "  DELETE  FROM  WF_NodeStation WHERE FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
             DBAccess.RunSQL(sql);
 
             // 删除方向。
-            sql = "  DELETE FROM WF_Direction  WHERE   Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql = "  DELETE FROM WF_Direction  WHERE Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
             DBAccess.RunSQL(sql);
 
-            sql = "  DELETE FROM WF_Direction  WHERE   ToNode in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql = "  DELETE FROM WF_Direction  WHERE ToNode in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
             DBAccess.RunSQL(sql);
 
             //删除它。
@@ -3165,7 +3213,6 @@ namespace BP.WF
             // 删除配置.
             sql = "DELETE WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
             DBAccess.RunSQL(sql);
-
 
             //// 删除方向,条件.
             //sql = "  DELETE FROM WF_nodecompletecondition  WHERE   nodeid in (select nodeid from wf_node WHERE FK_Flow='" + this.No + "')";
@@ -3240,7 +3287,7 @@ namespace BP.WF
             foreach (Flow fl in fls)
             {
                 fl.DoCheck();
-                fl.GenerHisHtmlRpt();
+                fl.GenerHisHtmlDocRpt();
                 fl.GenerFlowXmlTemplete();
             }
 
