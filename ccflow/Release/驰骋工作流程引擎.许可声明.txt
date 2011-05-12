@@ -5,7 +5,7 @@
 开发历史: 2003-2010.
 性    质: 开源软件
 许可协议: Apache Licence 2.0. URL: http://www.apache.org/licenses/LICENSE-2.0
-官方网站: http://ccflow.cn
+官方网站: http://ccflow.org
 源 代 码: http://code.google.com/p/ccflow/source/checkout
 运行环境: bs 结构. windows xp, windows server. IIS6.0以上. .net4.0. Office2007 (如果需要单据打印.)
 开发语言: VS2010. .net4.0 c#.net.
