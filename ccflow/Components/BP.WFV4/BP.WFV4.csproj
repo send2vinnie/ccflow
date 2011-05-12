@@ -180,13 +180,13 @@
     <Compile Include="FlowDesc\NodeStation.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="db\NewFolder1\CHOfFlow.cs">
+    <Compile Include="CH\CHOfFlow.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="db\NewFolder1\CHOfFlowRpt.cs">
+    <Compile Include="CH\CHOfFlowRpt.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="db\NewFolder1\CHOfQL.cs">
+    <Compile Include="CH\CHOfQL.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dev2Interface\Dev2Interface.cs" />
@@ -293,11 +293,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\" />
-    <Folder Include="DemoData\" />
-    <Folder Include="DTS\dts\" />
+    <Folder Include="DTS\db\" />
     <Folder Include="FlowDesc\WorkBase\CheckWork\" />
-    <Folder Include="Interface\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

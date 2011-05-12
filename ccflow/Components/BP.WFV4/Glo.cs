@@ -138,7 +138,6 @@ namespace BP.WF
         /// </summary>
         public static void DoInstallDataBase(string lang,string yunXingHuanjing)
         {
-
             ArrayList al = null;
             string info = "BP.En.Entity";
             al = BP.DA.ClassFactory.GetObjects(info);
@@ -180,9 +179,7 @@ namespace BP.WF
             }
             #endregion 修复
 
-
             #region 2,  注册枚举类型 sql
-
             // 2, 注册枚举类型。
             BP.Sys.Xml.EnumInfoXmls xmls = new BP.Sys.Xml.EnumInfoXmls();
             xmls.RetrieveAll();
@@ -193,15 +190,14 @@ namespace BP.WF
             }
             #endregion 注册枚举类型
 
-
             #region 3, 执行基本的 sql
-            string sqlscript = BP.DA.DataType.ReadTextFile(SystemConfig.PathOfData + "\\SQLScript\\Port_" + yunXingHuanjing + "_" + lang + ".sql");
-            BP.DA.DBAccess.RunSQL(sqlscript);
+            string sqlscript = BP.DA.DataType.ReadTextFile(SystemConfig.PathOfData + "\\Install\\SQLScript\\Port_" + yunXingHuanjing + "_" + lang + ".sql");
+            BP.DA.DBAccess.RunSQLs(sqlscript);
             #endregion 修复
 
             #region 4, 创建视图与系统函数
-            sqlscript = BP.DA.DataType.ReadTextFile(SystemConfig.PathOfData + "\\SQLScript\\CreateViewSQL.sql");
-            BP.DA.DBAccess.RunSQL(sqlscript);
+            sqlscript = BP.DA.DataType.ReadTextFile(SystemConfig.PathOfData + "\\Install\\SQLScript\\CreateViewSQL.sql");
+            BP.DA.DBAccess.RunSQLs(sqlscript);
             #endregion 创建视图与系统函数
         }
         public static void KillProcess(string processName) //杀掉进程的方法
