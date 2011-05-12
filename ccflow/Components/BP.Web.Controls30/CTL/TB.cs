@@ -463,6 +463,17 @@ namespace BP.Web.Controls
                         this.Text = "@";
                     break;
                 case TBType.Moneny:
+                      this.MaxLength = 14;
+                    this.CssClass = "TBNum";
+                    this.Columns = 12;
+                    this.Attributes["OnKeyPress"] = "javascript:return VirtyNum(this);";
+                    this.Attributes["onblur"] = "this.value=VirtyMoney(this.value);";
+
+                    if (this.Text == null || this.Text == "" || this.Text == "&nbsp;" || this.Text == "0")
+                        this.Text = "0.00";
+                    if (this.Text.IndexOf(".") == -1)
+                        this.Text = this.Text + ".00";
+                    break;
                 case TBType.Decimal:
                 case TBType.Float:
                     this.MaxLength = 14;
