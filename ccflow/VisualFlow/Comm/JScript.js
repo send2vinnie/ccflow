@@ -65,12 +65,11 @@ function VirtyInt(ctrl) {
 }
 function VirtyNum(ctrl) {
 
-   // alert(event.keyCode);
+    // alert(event.keyCode);
 //    if (event.keyCode == 8) {
 //        // type del]
 //        alert(ctrl.value);
 //    }
-
     if (event.keyCode == 190) {
         if (ctrl.value.indexOf('.') == -1) {
             return true;
@@ -81,19 +80,15 @@ function VirtyNum(ctrl) {
     }
 
     // alert(event.keyCode);
-
-
     if (event.keyCode >= 37 && event.keyCode <= 40)
         return true;
 
     if (event.keyCode >= 96 && event.keyCode <= 105)
         return true;
-
     if (event.keyCode == 8)
         return true;
 
  //   alert(event.keyCode);
-
 
     var txtval = ctrl.value;
     var key = event.keyCode;
@@ -106,12 +101,19 @@ function VirtyNum(ctrl) {
                 event.keyCode = 0;
         }
     }
+
+    if ((key < 48 || key > 57) && key != 46) {
+        event.keyCode = 0;
+    }
+
+   if (event.keyCode >= 48 && event.keyCode <= 57)
+       return true;
      
     if (event.keyCode == 229)
         return true;
 
-    if (event.keyCode <= 105 && event.keyCode >= 96)
-        return true;
+//    if (event.keyCode <= 105 && event.keyCode >= 96)
+//        return true;
 
     if (event.keyCode == 8 || event.keyCode == 190)
         return true;
@@ -125,10 +127,8 @@ function VirtyNum(ctrl) {
     if (event.keyCode == 45)
         return true;
 
-    if (event.keyCode < 48 || event.keyCode > 57)
-        return false;
-    else
-        return true;
+
+    return false;
 }
 
 function VirtyMoney(number) {
