@@ -128,6 +128,16 @@ public partial class WF_BPR : WebPage
         this.Pub1.AddTDTitle("工作数");
         this.Pub1.AddTDTitle("平均用时(天)");
         this.Pub1.AddTDTitle("人员数");
+
+
+        this.Pub1.AddTDTitle("警告期限(0不警告)");
+        this.Pub1.AddTDTitle("限期(天)");
+
+
+        this.Pub1.AddTDTitle("逾期人次");
+        this.Pub1.AddTDTitle("逾期率");
+
+
         this.Pub1.AddTDTitle("岗位");
         this.Pub1.AddTREnd();
         Nodes nds = fl.HisNodes;
@@ -150,6 +160,14 @@ public partial class WF_BPR : WebPage
 
             val = DBAccess.RunSQLReturnValFloat("SELECT COUNT(DISTINCT Rec) FROM ND" + nd.NodeID + " ");
             this.Pub1.AddTDNum("<a href=\"javascript:WinOpen('BPR.aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + nd.NodeID + "&DoType=NodeEmp')\" >" + val + "</a>");
+
+
+            this.Pub1.AddTD(nd.WarningDays);
+            this.Pub1.AddTD(nd.DeductDays);
+
+            this.Pub1.AddTD(0);
+            this.Pub1.AddTD(0);
+
 
             this.Pub1.AddTDDoc(nd.HisStationsStr, nd.HisStationsStr);
             this.Pub1.AddTREnd();

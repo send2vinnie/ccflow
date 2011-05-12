@@ -5,7 +5,8 @@
 <head runat="server">
     <title runat=server />
                 <link href="../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
-		<script language="JavaScript" src="JS.js"></script>
+	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
+
     <script language=javascript>
     /* ESC Key Down  */
     function Esc()
@@ -17,7 +18,7 @@
     </script>
     <base target=_self /> 
 </head>
-<body topmargin="0" leftmargin="0" onkeypress="Esc()" >
+<body topmargin="0" leftmargin="0" onkeypress="Esc()"   onload="RSize()" >
 
  <form id="form1" runat="server">
 <uc2:Pub ID="Pub1" runat="server" />

@@ -7,7 +7,8 @@
 <head id="Head1" runat="server">
     <title>表单设计</title>
     <link href="../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
-	<script language="JavaScript" src="JS.js"></script>
+	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
+
 	<base target="_self" />
 	<script language=javascript>
 //	    function AutoFull(fullID) {

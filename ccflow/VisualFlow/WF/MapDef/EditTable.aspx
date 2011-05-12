@@ -4,8 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title>无标题页</title>
-		<script language="JavaScript" src="JS.js"></script>
-    
+	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
     <script language=javascript>
     /* ESC Key Down  */
     function Esc()

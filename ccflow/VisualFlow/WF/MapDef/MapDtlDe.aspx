@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head id="Head1" runat="server">
     <title>表单设计</title>
-	<script language="JavaScript" src="JS.js"></script>
+     
 	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
    <script language="JavaScript" src="./../../Comm/JS/Calendar/WdatePicker.js" ></script>
 	<base target="_self" />

@@ -281,6 +281,7 @@ public partial class WF_MapDef_MapDef : WebPage
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
                                 tb.ShowType = TBType.Moneny;
                                 tb.Text = attr.DefVal;
+                              //  tb.Attributes["OnKeyPress"]="return VirtyNum(this);";
                                 this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tb);
                                 break;
                             default:

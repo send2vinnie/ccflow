@@ -1,9 +1,8 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/WF/MapDef/WinOpen.master" AutoEventWireup="true" CodeFile="WFRpt.aspx.cs" Inherits="WF_MapDef_WFRpt" Title="无标题页" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-<script language="JavaScript" src="JS.js"></script>
+ 
     <script language="JavaScript" src="../../Comm/JScript.js"></script>
-    <script language="JavaScript" src="JS.js"></script>
     <script language="JavaScript" src="MapDef.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
     <script language="javascript" >

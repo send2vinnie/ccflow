@@ -83,7 +83,6 @@ public partial class Face_MasterPage : BP.Web.MasterPage
             script += "</script> ";
 
             this.Page.ClientScript.RegisterClientScriptBlock(typeof(string), "s", script);
-            //this.Page.RegisterClientScriptBlock("s", script);
         }
 
         string dotype = this.PageID;
@@ -101,23 +100,17 @@ public partial class Face_MasterPage : BP.Web.MasterPage
                     this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
                 else
                     this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
-
-                // this.Pub1.Add("<TD nowrap=true><img src='" + en.Img + "' border='0' class=ImgIcon ><b>" + en.Name + "</b></TD>"); <img src='" + en.Img + "' border='0' height='9px' width='9px' >
             }
             else
             {
-                //   this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
                 if (en.No == "EmpWorks")
                     this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
                 else
                     this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
             }
         }
-        this.Pub1.Add("</UL><DIV>");
-
-        //this.Pub1.Add("<TD width='20%' ></TD>");
-        //this.Pub1.Add("</TR>");
-        //this.Pub1.Add("</Table></div><hr width='80%'>");
+        this.Pub1.Add("</UL>");
+        this.Pub1.Add("</DIV>");
         return;
 
         //this.Pub1.Add("<div align=center ><Table width='500px' class=TTable ><TR>");
