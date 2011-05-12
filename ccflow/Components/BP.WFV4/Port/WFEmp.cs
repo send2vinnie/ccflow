@@ -71,6 +71,7 @@ namespace BP.WF.Port
         public const string Idx = "Idx";
         public const string FtpUrl = "FtpUrl";
         public const string Style = "Style";
+        public const string Msg = "Msg";
         #endregion
     }
 	/// <summary>
@@ -289,6 +290,10 @@ namespace BP.WF.Port
 
 
                 map.AddTBString(WFEmpAttr.FtpUrl, null, "FtpUrl", true, true, 0, 50, 20);
+
+
+                map.AddTBString(WFEmpAttr.Msg, null, "Msg", true, true, 0, 4000, 20);
+
 
 
                 map.AddTBInt(WFEmpAttr.Idx, 0, "Idx", false, false);
