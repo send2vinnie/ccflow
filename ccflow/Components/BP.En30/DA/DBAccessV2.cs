@@ -957,6 +957,24 @@ namespace BP.DA
                 return BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
         }
+
+        public static void RunSQLs(string sql)
+        {
+            sql = sql.Replace("GO","~");
+
+            string[] strs = sql.Split('~');
+            foreach (string str in strs)
+            {
+                if (string.IsNullOrEmpty(str))
+                    continue;
+
+                if (str.Contains("--"))
+                    continue;
+
+                RunSQL(str);
+            }
+        }
+
         public static int RunSQL(Paras ps)
         {
             return RunSQL(ps.SQL, ps);

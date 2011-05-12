@@ -73,7 +73,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>.\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -130,7 +130,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AtPara.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="DA\EnumDA.cs" />
     <Compile Include="DA\AppConfig.cs">
       <SubType>Code</SubType>
@@ -166,6 +165,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DA\EncodingBP.cs" />
+    <Compile Include="DA\Ext\chs2py.cs" />
+    <Compile Include="DA\Ext\JSON.cs" />
     <Compile Include="DA\Log.cs" />
     <Compile Include="DTS\App\Blank.cs">
       <SubType>Code</SubType>
@@ -205,7 +206,7 @@
     <Compile Include="DA\NamesOfCheckBtn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DA\Pub\Para.cs">
+    <Compile Include="DA\Para.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DA\RMB.cs">
@@ -270,7 +271,6 @@
     <Compile Include="En\Base\Map\Map.cs" />
     <Compile Include="En\Base\Map\Row.cs" />
     <Compile Include="En\XMLBase\XmlMenu.cs" />
-    <Compile Include="JSON.cs" />
     <Compile Include="PubLib\Port\Unit.cs" />
     <Compile Include="PubLib\Port\DeptStation.cs" />
     <Compile Include="PubLib\Pub\Week.cs" />
@@ -578,6 +578,7 @@
     <Compile Include="Sys\EnsAppCfg\EnsAppCfg.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DA\Pub\" />
     <Folder Include="En\Base\db\" />
     <Folder Include="Rpt\RptEn\RptEn\" />
   </ItemGroup>
