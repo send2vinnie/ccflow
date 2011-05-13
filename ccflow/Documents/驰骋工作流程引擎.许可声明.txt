@@ -1,18 +1,21 @@
 产品名称: 驰骋.net工作流程引擎.
 英文名称: chicheng workflow engine 
-简    称: ccflow
+简    称: ccflow    
 版    本: 4.5
-开发历史: 2003-2010.
+开发历史: 2003-2010年.
 性    质: 开源软件
 许可协议: Apache Licence 2.0. URL: http://www.apache.org/licenses/LICENSE-2.0
 官方网站: http://ccflow.org
-源 代 码: http://code.google.com/p/ccflow/source/checkout
+源 代 码: http://ccflow.googlecode.com/svn/ccflow/
 运行环境: bs 结构. windows xp, windows server. IIS6.0以上. .net4.0. Office2007 (如果需要单据打印.)
 开发语言: VS2010. .net4.0 c#.net.
-客 户 端: FireFox 4.0以上. E 6.0 以上,或者使用IE内核的浏览器.
-基本功能: 图形化设计,智能表单web定义定义免程序开发.级联下拉框,流程轨迹,单据自定义打印,邮件短信工作到达通知,
-自动任务分配.支持sdk模式开发,自定义表单.简洁集成.消息侦听.丰富事件接口.报表定义.工作量分析.绩效考核.手机访问
-应用范围: 有管理活动的地方就需要ccflow。
+客 户 端: FireFox 3.0以上. E 6.0 以上,或者使用IE内核的浏览器.
+组成部分: 流程图形设计器(有:cs版本与bs版本)/流程前台运行程序(BS结构)/流程服务(CS)/web的方式的表单设计器/BRP工具
+基本功能: 图形化流程设计/智能表单web定义定义免程序开发/级联下拉框/流程轨迹/单据自定义打印/邮件短信工作到达通知/自动任务分配/支持sdk模式开发/简洁集成/消息侦听/丰富事件接口/报表定义/工作量分析/绩效考核/手机访问/支持sqlserve,oracle,mysql,access数据库
+应用范围: 
+ 1,有管理活动的地方就需要ccflow.
+ 2,部，省，洲地市、区县行政与事业单位.
+ 3,集团公司,企业.
 
 
 程序运行组件清单. 
@@ -24,17 +27,47 @@
 5, vs2010 开发环境(不进行二次开发不必要安装)
 *****************************************************************
 
+ccflow 开源程序文件清单:
+*****************************************************************
+D:\ccflow\Components  组件目录.
+D:\ccflow\Components\BP.En30   -- 底层基类.
+D:\ccflow\Components\BP.Web.Controls30   --bs控件层.
+D:\ccflow\Components\BP.WFV4  --工作流程引擎层
+D:\ccflow\Components\BP.Win32.Controls --cs控件层.
+D:\ccflow\DataBase  -- 案例数据库备份文件.
+D:\ccflow\DLL  -- 第三方组件中需要调用dll.
+D:\ccflow\Documents - 文档
+D:\ccflow\Release  -发布的程序.
+D:\ccflow\VisualFlow  --bs工作流程引擎前台.
+D:\ccflow\VisualFlowDesigner -- cs 设计器(不过很快就不用了，换成sl的设计器.)
+D:\ccflow\VisualWorkFlowServices - 流程服务程序.
 
-请按如下步骤执行安装:
+
+关于: ccflow前台目录结构.
+============================
+D:\ccflow\VisualFlow\Comm  --通用功能层.
+D:\ccflow\VisualFlow\Data  -- 应用程序数据层. 包含一些xml,等等。
+D:\ccflow\VisualFlow\DataUser -- 用户数据层.
+D:\ccflow\VisualFlow\DocFlow -- 公文流程(目前还不是很完善)
+D:\ccflow\VisualFlow\OA -- 通用oa 组件(目前还不是很完善)
+D:\ccflow\VisualFlow\SDKFlows -- sdk开发模式的案例.
+D:\ccflow\VisualFlow\WAP -- 手机访问前台代码目录.
+D:\ccflow\VisualFlow\WF -- ccflow前台应用程序层(主要的功能都是在这个目录里面)
+D:\ccflow\VisualFlow\WF\Admin - 对ccflow的管理比如设计方向条件.报表定义...
+D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
+
+*****************************************************************
+
+
+ 如何安装并设置ccflow开发环境?
 ===================================================
 1，使用 svn下载源程序,请查看如下连接.   
-   http://code.google.com/p/ccflow/source/checkout 
-
+   http://ccflow.googlecode.com/svn/ccflow/
 
 2, 建立虚拟目录 Flow 在80 端口下  映射目录为 D:\ccflow\VisualFlow\
 
 
-3, 创建数据库WF, 恢复数据库文件 WF_SQL.bak
+3, 创建数据库WF, 恢复数据库文件 \Database\WF_SQL.bak
 
 
 4, 修改 D:\ccflow\VisualFlow\web.config Appsetting <Add> 节点中的数据库连接。
@@ -53,20 +86,23 @@
 
 
 6, 启动流程服务: 用来发短信与邮件的服务. 
-    D:\ccflow\VisualWorkFlowServices\bin\Release\VisualWorkFlowServices.exe 把他在做面上创建一个快捷方式.
+    D:\ccflow\VisualWorkFlowServices\bin\Release\VisualWorkFlowServices.exe 
+   把他在做面上创建一个快捷方式.
 
 
 =======================================================================
-= 如果您需要得到更好的服务，请按照如下方式联系我们.
+=  我们坚持,开源,共享协作.
+=  如果您需要得到更好的服务，请按照如下方式联系我们.
 =  济南驰骋信息技术有限公司
 =  qq: hiflow@qq.com
-=  Tel: 0531-88890059,18660153393.
+=  Tel: 13589028385,18660153393.
 =  msn:chichengsoft@hotmail.com
 =
-= 服务内容:
-=  1, 上门远程安装.
-=  2, 流程设计优化指导.
+=  服务内容:
+=  1, 上门或远程安装,实施，解决疑难问题.
+=  2, 流程设计优化指导,为您们出最佳的流程解决方案.
 =  3, 与您现有的系统集成耦合.
+=  4, 二次开发.
 
 =   服务报价: 根据项目报价,起价3万.
 =   感谢您下载使用 ccflow.
