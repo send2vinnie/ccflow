@@ -147,6 +147,10 @@ namespace BP.Web.Comm
         }
         protected void Page_Load(object sender, System.EventArgs e)
         {
+            this.Page.RegisterClientScriptBlock("s",
+       "<link href='./Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
+
+
             this.CB_IsShowPict.Text = this.ToE("IsShowPict", "ÏÔÊ¾Í¼ÐÎ");
             this.BPTabStrip1.Items[2].Text = this.ToE("Histogram", "Öù×´Í¼");
             this.BPTabStrip1.Items[4].Text = this.ToE("Pie", "±ýÍ¼");
@@ -304,6 +308,7 @@ namespace BP.Web.Comm
             // lab = this.HisEn.EnMap.EnDesc;
 
             this.Label1.Text = this.GenerCaption(this.HisEn.EnMap.EnDesc);
+
 
             //this.Title = this.HisEn.EnDesc;
             //this.la

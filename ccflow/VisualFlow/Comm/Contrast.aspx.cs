@@ -257,10 +257,10 @@ namespace BP.Web.Comm
                 return;
 
             srip = "javascript:HalperOfDDL('" + path + "/','" + attr.UIBindKey + "','" + attr.UIRefKeyValue + "','" + attr.UIRefKeyText + "','" + this.DDL_M1.ClientID.ToString() + "');";
-            this.UCBtn1.Add("<input type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M1.ID + "' class=Btn ></td>");
+            this.UCBtn1.Add("<input type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M1.ID + "'  ></td>");
 
             srip = "javascript:HalperOfDDL('" + path + "/','" + attr.UIBindKey + "','" + attr.UIRefKeyValue + "','" + attr.UIRefKeyText + "','" + this.DDL_M2.ClientID.ToString() + "');";
-            this.UCBtn2.Add("<input type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M2.ID + "' class=Btn ></td>");
+            this.UCBtn2.Add("<input type='button' value='...' onclick=\"" + srip + "\"  name='b" + this.DDL_M2.ID + "'  ></td>");
 
         }
 		public void BindContrastKey(Map map)

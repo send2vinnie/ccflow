@@ -6,14 +6,12 @@
 <!DocType HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>
-		<title>感谢您选择:<%=BP.SystemConfig.DeveloperShortName%>
-			-> 信息列表</title>
+		<title>感谢您选择:<%=BP.SystemConfig.DeveloperShortName%>信息列表</title>
 		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR"/>
 		<Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)">
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-		<LINK href="./Style/Table.css" type="text/css" rel="stylesheet">
 		<script language="JavaScript" src="JScript.js"></script>
 		<script language="JavaScript" src="ActiveX.js"></script>
 		<script language="JavaScript" src="Menu.js"></script>
@@ -25,11 +23,9 @@
            var  val=window.showModalDialog( url,null,s);
            window.location.href=window.location.href;
         }
-        
 		function ImgClick()
 		{
 		}
-		
 		function OpenAttrs(ensName)
 		{
 	       var url= './Sys/EnsAppCfg.aspx?EnsName='+ensName;
@@ -61,14 +57,12 @@
 	</HEAD>
 	<body   onkeypress="Esc()"   onkeydown='DoKeyDown();' topmargin="0" leftmargin="0" >
 		<form id="Form1" method="post" runat="server">
-			<TABLE id="Table" align="left" cellSpacing="1" cellPadding="1" border="0" width="100%">
-				<TR>
-					<TD height="0" >
+			<TABLE id="Table1" align="left" cellSpacing="1" cellPadding="1" border="0" width="100%">
+				 <caption>
 						<asp:Label id="Label1" runat="server">Label</asp:Label>
-					</TD>
-				</TR>
+                        </caption>
 				<TR>
-					<TD class="toolbar" >
+					<TD class="Toolbar" >
                         <uc2:ToolBar ID="ToolBar1" runat="server" />
                     </TD>
 				</TR>
@@ -78,7 +72,7 @@
 					</TD>
 				</TR>
 				<TR>
-					<TD Class="toolbar" ><FONT face="宋体" size=2>
+					<TD Class="Toolbar" ><FONT face="宋体" size=2>
 							<uc1:UCSys id="UCSys2" runat="server"></uc1:UCSys></FONT>
 					</TD>
 				</TR>

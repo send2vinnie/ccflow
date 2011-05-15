@@ -54,8 +54,6 @@ public partial class Comm_Batch : WebPage
         Entity en = ens.GetNewEntity;
         Map map = en.EnMap;
 
-        //this.Label1.Text = this.GenerCaption(this.HisEn.EnMap.EnDesc + "" + this.HisEn.EnMap.TitleExt);
-
         this.Title = this.HisEn.EnMap.EnDesc;
 
         // this.ToolBar1.AddLab("sd", this.GenerCaption(this.HisEn.EnMap.EnDesc + "" + this.HisEn.EnMap.TitleExt));
@@ -98,11 +96,11 @@ public partial class Comm_Batch : WebPage
         //   this.BPToolBar1.ButtonClick += new System.EventHandler(this.ButtonClick);
         if (en.HisUAC.IsInsert)
             this.ToolBar1.AddLab("inse",
-                "<input type=button id='ToolBar1$Btn_New' name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='" + this.ToE("New", "新建") + "(N)' class=Btn />");
+                "<input type=button id='ToolBar1$Btn_New' name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='" + this.ToE("New", "新建") + "(N)' />");
 
-        this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置") + "(P)' class=Btn />");
+        this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置") + "(P)'  />");
 
-        // this.ToolBar1.AddLab("s", "<input type=button onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='设置(S)' class=Btn />");
+        // this.ToolBar1.AddLab("s", "<input type=button onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='设置(S)'  />");
         this.SetDGData();
 
         //输出执行信息。
@@ -197,7 +195,6 @@ public partial class Comm_Batch : WebPage
             Button btn = new Button();
             btn.ID = "Btn_" + rm.Index;
             btn.Text = rm.Title;
-            btn.Attributes["Class"] = "Btn";
             if (rm.Warning == null)
                 btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗？") + "');";
             else
@@ -213,8 +210,8 @@ public partial class Comm_Batch : WebPage
             Button btn = new Button();
             btn.ID = "Btn_Del";
             btn.Text = this.ToE("Del", "删除");
-            btn.Attributes["Class"] = "Btn";
             btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
+            btn.Attributes["class"] = "Button";
             this.UCSys3.Add(btn);
             btn.Click += new EventHandler(btn_Click);
         }
@@ -239,7 +236,6 @@ public partial class Comm_Batch : WebPage
                 Button btnM = new Button();
                 btnM.ID = "Btn_Move";
                 btnM.Text = this.ToE("MoveTo", "移动到");
-                btnM.Attributes["Class"] = "Btn";
                 btnM.Attributes["onclick"] = "return confirm('" + this.ToE("AYS", "您确实要移动吗？") + "');";
                 this.UCSys3.Add("&nbsp;&nbsp;");
                 this.UCSys3.Add(btnM);
@@ -273,7 +269,6 @@ public partial class Comm_Batch : WebPage
                         Button btn = new Button();
                         btn.ID = "Btn_Move_" + se.IntKey;
                         btn.Text = this.ToE("Set", "设置") + ":" + se.Lab;
-                        btn.Attributes["Class"] = "Btn";
                         btn.Attributes["onclick"] = "return confirm('您确实要执行设置[" + se.Lab + "]吗？');";
                         btn.Click += new EventHandler(btn_Move_Click);
                         this.UCSys3.Add(btn);
@@ -289,7 +284,6 @@ public partial class Comm_Batch : WebPage
                         Button btn = new Button();
                         btn.ID = "Btn_Move_" + en1.No;
                         btn.Text = "设置:" + en1.Name;
-                        btn.Attributes["Class"] = "Btn";
                         btn.Attributes["onclick"] = "return confirm('您确实要设置[" + en1.Name + "]吗？');";
                         btn.Click += new EventHandler(btn_Move_Click);
                         this.UCSys3.Add(btn);

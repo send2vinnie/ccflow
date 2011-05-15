@@ -4,7 +4,6 @@
 <%@ Register Src="UC/UCSys.ascx" TagName="UCSys" TagPrefix="uc1" %>
 <%@ Register src="UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <LINK href="Table<%=BP.Web.WebUser.Style%>.css" type="text/css" rel="stylesheet">
 		<script language="JavaScript" src="JScript.js"></script>
 		<script language="JavaScript" src="ActiveX.js"></script>
 		<script language="JavaScript" src="Menu.js"></script>
@@ -59,25 +58,25 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 <div align=left>
-    <table id="Table1" align="left" class="Table"  width='100%'>
+    <table id="Table1" align="left"  border=0 width='100%'>
         <tr>
-            <td class='ToolBar' >
+            <td class='ToolBar'  border=0 >
                 <uc2:ToolBar ID="ToolBar1" runat="server" />
                 </td>
         </tr>
                 
                 <tr>
-         <td align=left>
+         <td align=left  border=0>
                 <uc1:UCSys ID="UCSys1" runat="server" />
             </td>
         </tr>
-        <tr class='TRSum'>
+        <tr class='TRSum'  border=0>
             <td>
                 <uc1:UCSys ID="UCSys3" runat="server" />
             </td>
         </tr>
         <tr>
-            <td  Class='ToolBar' >
+            <td  Class='ToolBar'  border=0 >
                     <uc1:UCSys ID="UCSys2" runat="server" />
             </td>
         </tr>

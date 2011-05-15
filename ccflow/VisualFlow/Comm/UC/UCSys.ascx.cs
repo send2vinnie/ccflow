@@ -1170,15 +1170,15 @@ namespace BP.Web.Comm.UC
             // 生成标题
             this.Add("<TABLE  style='border-collapse: collapse' bordercolor='#111111' >");
             this.Add("<TR >");
-            this.Add("<TD class='Title'   nowrap >序</TD>");
-            this.Add("<TD class='Title'   nowrap >" + colName + "</TD>");
+            this.Add("<TH  nowrap >序</TH>");
+            this.Add("<TH nowrap >" + colName + "</TH>");
 
             foreach (Attr attrT in selectedAttrs)
             {
                 if (attrT.UIVisible == false)
                     continue;
 
-                this.Add("<TD class='Title' nowrap >" + attrT.Desc + "</TD>");
+                this.Add("<TD  nowrap >" + attrT.Desc + "</TD>");
             }
             this.AddTREnd();
 
@@ -1278,11 +1278,11 @@ namespace BP.Web.Comm.UC
             if (ens.Count > 0)
             {
                 string str1 = "<INPUT id='checkedAll' onclick='selectAll()' type='checkbox' name='checkedAll'>";
-                this.AddTDGroupTitle(str1);
+                this.AddTDTitle(str1);
             }
             else
             {
-                this.AddTDGroupTitle();
+                this.AddTDTitle();
             }
 
             foreach (Attr attrT in selectedAttrs)
@@ -1294,11 +1294,11 @@ namespace BP.Web.Comm.UC
                     continue;
 
                 if (attrT.IsNum && attrT.IsEnum == false && attrT.MyDataType == DataType.AppBoolean == false)
-                    this.AddTDGroupTitle("<a href=\"javascript:WinOpen('GroupEnsMNum.aspx?EnsName=" + ens.ToString() + "&NumKey=" + attrT.Key + "','sd','800','700');\" >" + attrT.Desc + "</a>");
+                    this.AddTDTitle("<a href=\"javascript:WinOpen('GroupEnsMNum.aspx?EnsName=" + ens.ToString() + "&NumKey=" + attrT.Key + "','sd','800','700');\" >" + attrT.Desc + "</a>");
                 else
-                    this.AddTDGroupTitle(attrT.Desc);
+                    this.AddTDTitle(attrT.Desc);
             }
-            this.AddTDGroupTitle();
+            this.AddTDTitle();
             this.AddTREnd();
 
             #region 用户界面属性设置
@@ -1474,7 +1474,7 @@ namespace BP.Web.Comm.UC
             this.Add("<Table border='1' width='20%' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0'>");
            // this.AddTable("");
             this.AddTR();
-            this.AddTDGroupTitle("序");
+            this.AddTDTitle("序");
             foreach (Attr attrT in selectedAttrs)
             {
                 if (attrT.UIVisible == false)
@@ -1483,7 +1483,7 @@ namespace BP.Web.Comm.UC
                 if (attrT.Key == "MyNum")
                     continue;
 
-                this.AddTDGroupTitle(attrT.Desc);
+                this.AddTDTitle(attrT.Desc);
             }
 
             bool isRefFunc = false;
@@ -1538,7 +1538,7 @@ namespace BP.Web.Comm.UC
             #endregion 用户界面属性设置
 
             if (isAddTitle)
-                this.AddTDGroupTitle();
+                this.AddTDTitle();
 
             this.AddTREnd();
 

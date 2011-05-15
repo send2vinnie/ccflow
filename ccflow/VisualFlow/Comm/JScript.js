@@ -1,3 +1,24 @@
+
+/* Table 特效风格 */
+function TROver(ctrl) {
+    ctrl.style.backgroundColor = 'LightSteelBlue';
+}
+
+function TROut(ctrl) {
+    ctrl.style.backgroundColor = 'white';
+    ctrl.style.borderWidth = '0px';
+}
+
+function TBOnfocus(ctrl) {
+    //  background-color: #f4f4f4;
+    ctrl.style.borderColor = 'LightSteelBlue';
+    ctrl.style.borderWidth = '1px';
+}
+
+function TBOnblur(ctrl) {
+    ctrl.style.borderColor = 'white';
+}
+
 /* 默认植问题 */
 function OpenHelperTBNo(appPath, EnsName, ctl) {
     var url = appPath + '/Comm/DataHelp.htm?' + appPath + '/Comm/HelperOfTBNo.aspx?EnsName=' + EnsName;
@@ -278,15 +299,6 @@ function onkeydown() {
         event.keyCode = 9;
 }
 
-
-function TROver(ctrl)
-{
-   ctrl.style.backgroundColor='LightSteelBlue';
-}
-
-function TROut(ctrl) {
-    ctrl.style.backgroundColor = 'white';
-}
 
 function RSize() {
 

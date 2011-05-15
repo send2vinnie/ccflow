@@ -14,6 +14,7 @@ public partial class Comm_MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        this.Page.RegisterClientScriptBlock("s",
+          "<link href='./Style/Table"+BP.Web.WebUser.Style+".css' rel='stylesheet' type='text/css' />");
     }
 }

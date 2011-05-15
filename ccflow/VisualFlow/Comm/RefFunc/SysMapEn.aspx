@@ -1,9 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="SysMapEn.master" AutoEventWireup="true" CodeFile="SysMapEn.aspx.cs" Inherits="Comm_RefFunc_SysMapEn" Title="Untitled Page" %>
 <%@ Register src="SysMapEnUC.ascx" tagname="SysMapEnUC" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <link href="Style/TableWF.css" rel="stylesheet" type="text/css" />
-    <link href="Style/Style.css" rel="stylesheet" type="text/css" />
-    <link href="Style/Table.css" rel="stylesheet" type="text/css" />
     <script language="JavaScript" src="Style/JScript.js"></script>
     <script language="javascript">
     function GroupBarClick(rowIdx) {

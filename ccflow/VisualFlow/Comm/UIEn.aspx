@@ -3,7 +3,6 @@
 <%@ Page language="c#" Inherits="BP.Web.Comm.UIEn" CodeFile="UIEn.aspx.cs" ValidateRequest="false" %>
 <%@ Register TagPrefix="uc1" TagName="UCEn" Src="UC/UCEn.ascx" %>
 <%@ Register src="UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc2" %>
- 
 <!DocType HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD runat=server>
@@ -33,20 +32,14 @@
 	</HEAD>
 	<body onkeypress="Esc()" leftMargin="0" topMargin="0" onkeydown='DoKeyDown();'>
 		<form id="Form1" method="post" runat="server">
-			 
-				<TABLE  width="95%" id="Table" align="center" cellSpacing="1" cellPadding="1" border="0">
-					<TR>
-						<TD class="toolbar">
+			 <div class="Toolbar" >
+                            <uc2:ToolBar ID="ToolBar2" runat="server" />
                             <uc2:ToolBar ID="ToolBar1" runat="server" />
-                        </TD>
-					</TR>
-					
-					<TR valign="top">
-						<TD valign="top" height="0"><uc1:ucen id="UCEn1" runat="server"></uc1:ucen></TD>
-					</TR>
-				
-				</TABLE>
-				
+
+             </div>
+            <div >
+             <uc1:ucen id="UCEn1" runat="server"></uc1:ucen>
+             </div>
 		</form>
 	</body>
 </HTML>

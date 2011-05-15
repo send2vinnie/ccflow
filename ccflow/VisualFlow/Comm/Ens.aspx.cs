@@ -54,6 +54,9 @@ public partial class Comm_UIEnsV10 : WebPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Page.RegisterClientScriptBlock("s",
+        "<link href='./Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
+
         string info = this.Session["info1"] as string;
         if (info != null)
         {
@@ -72,8 +75,8 @@ public partial class Comm_UIEnsV10 : WebPage
         //   this.ToolBar1.GetBtnByID("Btn_New").Click += new EventHandler(ToolBar1_ButtonClick);
         this.ToolBar1.GetBtnByID("Btn_Delete").Click += new EventHandler(ToolBar1_ButtonClick);
 
-        // this.ToolBar1.Add("<input type=button value='设置' onclick=\"OpenAttrs('" + this.EnsName + "')\"  class=Btn>");
-        //this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='设置(P)' class=Btn />");
+        // this.ToolBar1.Add("<input type=button value='设置' onclick=\"OpenAttrs('" + this.EnsName + "')\"  >");
+        //this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='设置(P)'  />");
 
         this.Bind();
 

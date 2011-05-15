@@ -230,7 +230,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
     public void AddBtn(string id, string text)
     {
         Btn en = new Btn();
-        en.Attributes["class"] = "Btn";
         en.ID = id;
         en.Text = text;
         if (id == "Btn_Delete")
@@ -833,9 +832,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             this.AddTB(tb);
             keysNum++;
         }
-
-        //			BP.Sys.Operators ops = new BP.Sys.Operators();
-        //			ops.RetrieveAll();
 
         // 非外键属性。
         foreach (AttrOfSearch attr in attrsOfSearch)

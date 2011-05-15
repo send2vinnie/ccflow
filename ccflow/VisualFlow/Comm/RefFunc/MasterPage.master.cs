@@ -16,6 +16,8 @@ public partial class Comm_RefFunc_MasterPage : BP.Web.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Page.RegisterClientScriptBlock("s",
+     "<link href='./../Style/Table0.css' rel='stylesheet' type='text/css' />");
 
     }
 }

@@ -6,10 +6,8 @@
 <head runat="server">
     <title>无标题页</title>
     <asp:ContentPlaceHolder id="head" runat="server">
-    
     </asp:ContentPlaceHolder>
    <Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)">
-    <link href="Style/Table.css" rel="stylesheet" type="text/css" />
 </head>
 <body topmargin="0" leftmargin="0"   >
     <form id="aspnetForm" runat="server">

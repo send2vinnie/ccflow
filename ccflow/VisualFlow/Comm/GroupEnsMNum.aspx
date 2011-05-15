@@ -17,7 +17,6 @@
 		<META content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
 		<script language="JavaScript" src="JScript.js"></script>
 		<base target=_self />
-	    <link href="Style/Table.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript">
              //  ÊÂ¼þ.
             function DDL_mvals_OnChange(ctrl, ensName, attrKey) {
@@ -35,8 +34,6 @@
                 var url = 'SelectMVals.aspx?EnsName=' + ensName + '&AttrKey=' + attrKey;
                 var val = window.showModalDialog(url, 'dg', 'dialogHeight: 450px; dialogWidth: 450px; center: yes; help: no');
 
-                //alert(val);
-
                 if (val == '' || val == null) {
                     // if (idx_Old==ctrl.options.cont
                     ctrl.selectedIndex = 0;
@@ -48,9 +45,7 @@
 	<body  onkeypress=Esc() leftMargin=0 background=BJ1.gif topMargin=0>
 		<form id="Form1" method="post" runat="server">
 			<TABLE height="100%" style="background:none;"  cellPadding=0 width="100%" align=left border=0>
-				<TR>
-					<TD colSpan="2" height="0"><asp:label id="Label1" runat="server">Label</asp:label></TD>
-				</TR>
+					<caption ><asp:label id="Label1" runat="server">Label</asp:label>
 				<TR>
 					<TD colSpan="2" class=toolbar >
                         <uc2:ToolBar ID="ToolBar1" runat="server" />

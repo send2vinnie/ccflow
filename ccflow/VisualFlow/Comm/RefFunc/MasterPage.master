@@ -26,7 +26,6 @@
     <asp:ContentPlaceHolder id="head" runat="server">
 		<base target=_self />
     </asp:ContentPlaceHolder>
-    <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
     <Meta http-equiv="Page-Enter" Content="blendTrans(Duration=0.5)" />
 		<script language="JavaScript" src="../JScript.js"></script>
 		<script language="JavaScript" src="../JS/Calendar/WdatePicker.js" ></script>
