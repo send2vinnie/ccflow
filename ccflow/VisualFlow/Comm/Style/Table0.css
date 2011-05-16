@@ -53,6 +53,7 @@ caption
     font: bolder medium Arial, Helvetica, sans-serif;
     color: #33517A;
     text-align: left;
+	word-break: keep-all;
 }
 
 table input[type="textbox"]
