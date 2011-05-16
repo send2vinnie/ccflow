@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 using BP.Web;
 using BP.DA;
 using BP.En;
-using BP.Sys;
+using BP.Sys;  
 using BP.Web.Controls;
 
 public partial class Comm_Dtl : WebPage
