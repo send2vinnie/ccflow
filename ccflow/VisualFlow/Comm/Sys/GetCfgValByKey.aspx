@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>无标题页</title>
+		<LINK href="../Style/Table0.css" type="text/css" rel="stylesheet">
 </head>
 <body>
     <form id="form1" runat="server">

@@ -7,7 +7,8 @@
 		<meta name="CODE_LANGUAGE" Content="C#">
 		<meta name="vs_defaultClientScript" content="JavaScript">
 		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
-		<LINK href="../Table.css" type="text/css" rel="stylesheet">
+										<LINK href="../Style/Table0.css" type="text/css" rel="stylesheet">
+
 	</HEAD>
 	<body>
 		<form id="Form1" method="post" runat="server">

@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>属性设置</title>
-    <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/Table0.css" rel="stylesheet" type="text/css" />
     <base target=_self />
 </head>
 <body>

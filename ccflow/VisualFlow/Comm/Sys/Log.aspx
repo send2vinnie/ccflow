@@ -14,6 +14,7 @@
 		<LINK href="../Table.css" type="text/css" rel="stylesheet">
 		<LINK href="../CSS/Link.css" type="text/css" rel="stylesheet">
 		<script language="JavaScript" src="../JScript.js"></script>
+		<LINK href="../Style/Table0.css" type="text/css" rel="stylesheet">
 	</HEAD>
 	<body topmargin="0" leftmargin="0">
 		<form id="Form1" method="post" runat="server">
