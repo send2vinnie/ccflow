@@ -125,7 +125,7 @@ public partial class _Default : System.Web.UI.Page
       //  }
 
       //  this.Ucsys1.AddTableEndWithHR();
-      //  this.Ucsys1.Add("<a href=http://flow.ccflow.cn/ > http://flow.ccflow.cn/ 相关下载</a>");
+      //  this.Ucsys1.Add("<a href=http://flow.ccFlow.org/ > http://flow.ccFlow.org/ 相关下载</a>");
       //  this.Ucsys1.AddBR("<a href=./WF/Login.aspx > 直接登陆 (嵌入方式)</a>");
       //  this.Ucsys1.AddBR("<a href=./WF/Port/Signin.aspx > 直接登陆 (系统方式)</a>");
 
