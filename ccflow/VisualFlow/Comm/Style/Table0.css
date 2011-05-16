@@ -7,7 +7,7 @@ body
 /*  table 类型风格 */
 table
 {
- border: 1px solid #D6DDE6;
+   border: 1px solid #D6DDE6;
 	border-collapse: collapse;
 }
 
@@ -80,9 +80,8 @@ table textarea
     width: auto;
 }
 
-
 /*  input 类型风格 */
-input[type="button"]
+input[type="button"] , .Btn, input[type="submit"]
 {
     padding: 2px;
     margin: 3px;
@@ -97,22 +96,7 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
     color: black;
     border-bottom: #002D96 1px solid;
 }
-input[type="submit"]
-{
-    padding: 2px;
-    margin: 3px;
-    height: 35;
-    border-right: #002D96 1px solid;
-    border-top: #002D96 1px solid;
-    font-size: 12px;
-    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,
-StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
-    border-left: #002D96 1px solid;
-    cursor: hand;
-    color: black;
-    border-bottom: #002D96 1px solid;
-}
-
+ 
 /********** UL 菜单 ****************/
 #ULM LI
 {
@@ -181,12 +165,8 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 .ToolBar
 {
     background-color: #d8edff;
-    font-family: Verdana;
-    font-size: 14px;
-    height: 18px;
-    line-height: 20px;
-    padding: 0px 0px 12px 0px;
 }
+
 
 .GroupTitle
 {

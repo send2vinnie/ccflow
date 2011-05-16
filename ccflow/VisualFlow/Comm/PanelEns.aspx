@@ -10,6 +10,8 @@
 		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR"/>
 		<Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)">
 		<meta content="C#" name="CODE_LANGUAGE">
+        <link href='./Style/Table0.css' rel='stylesheet' type='text/css' />
+
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
 		<script language="JavaScript" src="JScript.js"></script>
@@ -62,11 +64,11 @@
 						<asp:Label id="Label1" runat="server">Label</asp:Label>
                         </caption>
 				<TR>
-					<TD class="Toolbar" >
+					<TD class="ToolBar" >
                         <uc2:ToolBar ID="ToolBar1" runat="server" />
                     </TD>
 				</TR>
-				<TR align="justify" height="0px">
+				<TR align="justify" height="0px" valign=top>
 					<TD>
 						<uc1:UCSys id="UCSys1" runat="server"></uc1:UCSys>
 					</TD>

@@ -35,6 +35,8 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
     public void AddBtn(string id)
     {
         Btn btn = new Btn();
+        btn.Attributes["class"] = "Btn";
+
         btn.ID = id;
         string text = "";
         switch (id)
@@ -232,6 +234,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         Btn en = new Btn();
         en.ID = id;
         en.Text = text;
+        en.Attributes["class"] = "Btn";
         if (id == "Btn_Delete")
             en.Attributes["onclick"] = "return confirm('您确定要执行删除吗？');";
         this.Add(en);

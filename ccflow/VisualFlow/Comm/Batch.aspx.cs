@@ -96,9 +96,9 @@ public partial class Comm_Batch : WebPage
         //   this.BPToolBar1.ButtonClick += new System.EventHandler(this.ButtonClick);
         if (en.HisUAC.IsInsert)
             this.ToolBar1.AddLab("inse",
-                "<input type=button id='ToolBar1$Btn_New' name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='" + this.ToE("New", "新建") + "(N)' />");
+                "<input type=button class=Btn id='ToolBar1$Btn_New' name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='" + this.ToE("New", "新建") + "(N)' />");
 
-        this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置") + "(P)'  />");
+        this.ToolBar1.AddLab("sw", "<input type=button class=Btn  id='ToolBar1$Btn_P' name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置") + "(P)'  />");
 
         // this.ToolBar1.AddLab("s", "<input type=button onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='设置(S)'  />");
         this.SetDGData();
@@ -124,7 +124,6 @@ public partial class Comm_Batch : WebPage
         //this.GenerLabel(this.Lab1, "<b>" + map.EnDesc + "</b>" + map.TitleExt);
         this.UCSys2.Add("<a href='./Sys/EnsDataIO.aspx?EnsName=" + this.EnsName + "' target=_blank><img src='../Images/Btn/Excel.gif' border=0 />" + this.ToE("ExpImp", "导入/导出") + "</a>");
     }
-
     private void ButtonClick(object sender, System.EventArgs e)
     {
         this.UCSys1.Clear();
