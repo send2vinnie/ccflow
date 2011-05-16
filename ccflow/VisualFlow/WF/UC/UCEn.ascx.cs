@@ -109,7 +109,6 @@ namespace BP.Web.Comm.UC.WF
                             mytbLine.Columns = 3;
                         }
 
-
                         mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
                         mytbLine.Enabled = attr.UIIsEnable;
@@ -376,7 +375,7 @@ namespace BP.Web.Comm.UC.WF
             frames = new MapFrames(enName);
             m2ms = new MapM2Ms(enName);
 
-            this.Add("<table id=tabForm >");
+            this.Add("<table id=tabForm width='500px' align=center >");
             string appPath = this.Page.Request.ApplicationPath;
             foreach (GroupField gf in gfs)
             {

@@ -81,36 +81,67 @@ public partial class Face_MasterPage : BP.Web.MasterPage
             script += " }";
             script += " setInterval('changeColor()',200);";
             script += "</script> ";
-
             this.Page.ClientScript.RegisterClientScriptBlock(typeof(string), "s", script);
         }
 
+        #region 菜单输出区域
         string dotype = this.PageID;
         if (BP.WF.Glo.IsShowTitle)
             this.Pub1.Add("<Img src='./../DataUser/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
 
-        this.Pub1.Add("<DIV align=center><UL id=main_nav align=center>");
-        this.Pub1.Add("<LI>Hi:" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "</LI>");
-
+        this.Pub1.Add("<DIV ID=MainDiv>");
+        this.Pub1.Add("<span>Hi:" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "</span>");
+        this.Pub1.Add("<UL id=MainUL>");
         foreach (BP.WF.XML.ToolBar en in ens)
         {
             if (en.No == dotype)
             {
                 if (en.No == "EmpWorks")
-                    this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
+                    this.Pub1.Add("<li class=Selected><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></li>");
                 else
-                    this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
+                    this.Pub1.Add("<li class=Selected><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></li>");
             }
             else
             {
                 if (en.No == "EmpWorks")
-                    this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
+                    this.Pub1.Add("<li ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></li>");
                 else
-                    this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
+                    this.Pub1.Add("<li ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></li>");
             }
         }
         this.Pub1.Add("</UL>");
         this.Pub1.Add("</DIV>");
+        #endregion 菜单输出区域
+
+
+        #region 菜单输出区域 bak
+        //string dotype = this.PageID;
+        //if (BP.WF.Glo.IsShowTitle)
+        //    this.Pub1.Add("<Img src='./../DataUser/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
+
+        //this.Pub1.Add("<DIV align=center><UL id=main_nav align=center>");
+        //this.Pub1.Add("<LI>Hi:" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "</LI>");
+        //foreach (BP.WF.XML.ToolBar en in ens)
+        //{
+        //    if (en.No == dotype)
+        //    {
+        //        if (en.No == "EmpWorks")
+        //            this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
+        //        else
+        //            this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
+        //    }
+        //    else
+        //    {
+        //        if (en.No == "EmpWorks")
+        //            this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
+        //        else
+        //            this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
+        //    }
+        //}
+        //this.Pub1.Add("</UL>");
+        //this.Pub1.Add("</DIV>");
+        #endregion 菜单输出区域 bak
+
         return;
 
         //this.Pub1.Add("<div align=center ><Table width='500px' class=TTable ><TR>");

@@ -49,9 +49,19 @@
         // WinOpen(url);
     }
 </script>
+<style type="text/css">
+.Bar
+{
+    width:500px;
+    text-align:center;
+}
+</style>
 
 <div align=left>
+
+<div >
 <uc4:ToolBar ID="ToolBar1" runat="server" />
+</div>
                     <uc5:Pub ID="FlowMsg" runat="server" />
                     <uc5:Pub ID="Pub1" runat="server" />
                     <uc6:UCEn ID="UCEn1" runat="server" />

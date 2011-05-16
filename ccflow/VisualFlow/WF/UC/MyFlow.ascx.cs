@@ -1476,8 +1476,16 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
             wk.WFState = 0;
             wk.NodeState = 0;
-            wk.OID = DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
-            wk.DirectInsert();
+
+            try
+            {
+                wk.OID = DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
+                wk.DirectInsert();
+            }
+            catch
+            {
+                wk.RetrieveFromDBSources();
+            }
         }
 
         wk.Rec = WebUser.No;
