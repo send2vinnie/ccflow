@@ -1,0 +1,86 @@
+
+.Table
+{
+	border-right: #ccccff thin solid;
+	border-top: #ccccff thin solid;
+	border-left: #ccccff thin solid;
+	width: 100%;
+	border-bottom: #ccccff thin solid;
+	height: 100%;
+	background-color: infobackground;
+}
+
+.TableTRTitle
+{
+	border-right: navy thin solid;
+	border-top: navy thin solid;
+	border-left: navy thin solid;
+	color: yellow;
+	border-bottom: navy thin solid;
+	background-color: background;
+}
+
+.CheckBoxList
+{
+	border-right: #ccccff 1px;
+	border-top: #ccccff 1px;
+	font: menu;
+	border-left: #ccccff 1px;
+	border-bottom: #ccccff 1px solid;
+	background-color: infobackground;
+}
+
+.TableTD
+{
+	border-right: navy thin;
+	border-top: navy thin;
+	font: statusbar;
+	border-left: navy thin;
+	color: black;
+	border-bottom: navy thin;
+	font-size:medium;
+}
+
+.TableWork
+{
+	width: 100%;
+	font: statusbar;
+	font-size:xx-large;
+}
+
+.TDTask
+{
+	border-right: gray thin solid;
+}
+
+.TableFlow
+{
+	border-right: #ccccff 1px;
+	border-top: #ccccff 1px;
+	border-left: #ccccff 1px;
+	width: 60%;
+	border-bottom: #ccccff 1px;
+	height: 1%;
+	background-color: infobackground;
+	font: statusbar;
+	
+}
+
+.TableFlowTR
+{
+	border-right: #ccccff 1px;
+	border-top: #ccccff 1px;
+	border-left: #ccccff 1px;
+	border-bottom: #ccccff 1px;
+	background-color: infobackground;
+}
+
+.TableFlowTD
+{
+	border-right: #ccccff 1px;
+	border-top: #ccccff 1px;
+	border-left: #ccccff 1px;
+	border-bottom: #ccccff 1px solid;
+	background-color: infobackground;
+}
+  
