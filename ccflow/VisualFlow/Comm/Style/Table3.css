@@ -13,22 +13,29 @@ table
 
 th, .Title
 {
-    background-color: #eee;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    text-align: center;
-    word-break: keep-all;
-    background-image: url('Skin/t1/titlebg.png');
+    background-color:#eee;
+	font-size:14px;
+	border:1px solid #ccc;
+	text-align: center;
+	word-break: keep-all;
+    background-image: url('Skin/t3/titlebg.png');
 }
 
 th .idx
 {
-    background-color: #eee;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    text-align: center;
-    background-image: url('Skin/t1/titlebg.png');
+	background-color:#eee;
+	font-size:14px;
+	border:1px solid #ccc;
+	text-align: center;
+    background-image: url('Skin/t3/titlebg.png');
 }
+.TBcalendar
+{
+    background-position: right center;
+    background-image: url('Img/calendar.gif');
+    background-repeat: no-repeat;
+}
+
 
 td 
 {
@@ -48,13 +55,6 @@ td input
     border:none;
     width:auto;
 }
-.TBcalendar
-{
-    background-position: right center;
-    background-image: url('Img/calendar.gif');
-    background-repeat: no-repeat;
-}
-
 
 caption
 {

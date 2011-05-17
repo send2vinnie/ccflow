@@ -18,7 +18,7 @@
 		<script language="JavaScript" src="JScript.js"></script>
 		<script language="JavaScript" src="Menu.js"></script>
 		<script language="JavaScript" src="ActiveX.js"></script>
-		<LINK href="./Style/Table.css" type="text/css" rel="stylesheet">
+		<LINK href="./Style/Table0.css" type="text/css" rel="stylesheet">
 	</HEAD>
 	<body  onkeypress=Esc() 
 onclick="HideMenu( 'WebMenu1' )" leftMargin=0 background=BJ1.gif topMargin=0  >

@@ -13,21 +13,21 @@ table
 
 th, .Title
 {
-    background-color: #eee;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    text-align: center;
-    word-break: keep-all;
-    background-image: url('Skin/t1/titlebg.png');
+    background-color:#eee;
+	font-size:14px;
+	border:1px solid #ccc;
+	text-align: center;
+	word-break: keep-all;
+    background-image: url('Skin/t4/titlebg.png');
 }
 
 th .idx
 {
-    background-color: #eee;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    text-align: center;
-    background-image: url('Skin/t1/titlebg.png');
+	background-color:#eee;
+	font-size:14px;
+	border:1px solid #ccc;
+	text-align: center;
+    background-image: url('Skin/t4/titlebg.png');
 }
 
 td 
@@ -54,6 +54,7 @@ td input
     background-image: url('Img/calendar.gif');
     background-repeat: no-repeat;
 }
+
 
 
 caption

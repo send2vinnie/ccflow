@@ -13,11 +13,11 @@ table
 
 th, .Title
 {
-    background-color:#eee;
-	font-size:14px;
-	border:1px solid #ccc;
-	text-align: center;
-	word-break: keep-all;
+    background-color: #eee;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    text-align: center;
+    word-break: keep-all;
 }
 
 th .idx
@@ -28,24 +28,49 @@ th .idx
 	text-align: center;
 }
 
-td 
+td
 {
-   border: 1px solid #D6DDE6;	
-  padding: 4px;
-  text-align:left;
+    border: 1px solid #D6DDE6;
+    padding: 4px;
+    text-align: left;
+    background-color: #FFFFFF;
+}
+
+td input[type="textbox"]
+{
+    margin: 0px;
+    border: 1px solid #D6DDE6;
+    padding: 0px;
+    text-align: left;
+}
+
+td input[type="textbox"]
+{
+    margin: 0px;
+    border: 1px solid #D6DDE6;
+    padding: 0px;
+    text-align: left;
 }
 
 td .TDNum
 {
   text-align:right;
 }
-
  
 td input
 {
     border:none;
     width:auto;
 }
+
+.TBcalendar
+{
+    background-position: right center;
+    background-image: url('Img/calendar.gif');
+    background-repeat: no-repeat;
+}
+
+
 
 caption
 {
@@ -185,6 +210,18 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
     font-size: 14px;
     border: 1px solid #ccc;
     text-align: left;
+    color: #006666;
+    font-weight: bold;
+}
+
+.GroupField a
+{
+    background-color: #eee;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    text-align: left;
+    color: #006666;
+    font-weight: bold;
 }
 
  
@@ -204,7 +241,7 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 .FDesc
 {
 	padding: 4px;
-    text-align: left;
+    text-align: right;
     font-size: 14px;
     margin: 4px;
     background-color: #f4f4f4;
@@ -247,14 +284,9 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 	text-align:right;
 }
 
-.TR
-{
-    
-}
-
 .TR1
 {
-background-color:AliceBlue
+ background-color:AliceBlue;
 }
 
 

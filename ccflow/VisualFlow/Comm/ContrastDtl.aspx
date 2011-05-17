@@ -13,7 +13,7 @@
 		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
 		<script language="JavaScript" src="Menu.js"></script>
 		<script language="JavaScript" src="JScript.js"></script>
-		<LINK href="./Style/Table.css" type="text/css" rel="stylesheet">
+		<LINK href="./Style/Table0.css" type="text/css" rel="stylesheet">
 		 <script language="javascript">
     function ShowEn(url, wName)
     {
@@ -27,10 +27,8 @@
 		<form id="Form1" method="post" runat="server">
 			<FONT face="ËÎÌו">
 				<TABLE id="Table1" class="Table"  bgcolor=Window cellSpacing="1" cellPadding="1" width="98%" border="1">
-					<TR>
-						<TD >
-							<asp:Label id="Label1" runat="server">Label</asp:Label></TD>
-					</TR>
+					 
+						<caption>	<asp:Label id="Label1" runat="server">Label</asp:Label></caption>
 					<TR>
 						<TD>
 							<uc1:UCSys id="UCSys1" runat="server"></uc1:UCSys></TD>
