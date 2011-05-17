@@ -133,7 +133,7 @@ namespace BP.OA
             {
                 Link lk = new Link();
                 lk.Name = "驰骋工作流引擎";
-                lk.Url = "http://ccflow.cn";
+                lk.Url = "http://ccFlow.org";
                 lk.Note = "转到驰骋工作流引擎主页，您可以获取流程帮助。";
                 lk.No = lk.GenerNewNo;
                 lk.Insert();

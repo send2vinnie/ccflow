@@ -1980,7 +1980,6 @@ namespace BP.WF
                             }
                             #endregion
 
-
                             #region ±£´æµ¥¾Ý
                             Bill bill = new Bill();
                             bill.MyPK = this.HisWork.FID + "_" + this.HisWork.OID + "_" + this.HisNode.NodeID + "_" + func.No;

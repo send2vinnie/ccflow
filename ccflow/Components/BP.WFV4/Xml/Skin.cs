@@ -19,6 +19,14 @@ namespace BP.WF.XML
             }
         }
 
+        public new string CSS
+        {
+            get
+            {
+                return this.GetValStringByKey("CSS");
+            }
+        }
+
 		#region 构造
 		/// <summary>
 		/// 节点扩展信息

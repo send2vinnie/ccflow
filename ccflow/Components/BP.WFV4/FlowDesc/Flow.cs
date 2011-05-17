@@ -352,7 +352,7 @@ namespace BP.WF
         {
             DBAccess.RunSQL("UPDATE WF_Node SET FlowName = (SELECT Name FROM WF_Flow WHERE NO=WF_Node.FK_Flow)");
             this.NumOfBill = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM WF_BillTemplate WHERE NodeID IN (select NodeID from WF_Flow where no='" + this.No + "')");
-            this.NumOfDtl = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM Sys_MapDtl WHERE FK_MapData='ND" + int.Parse(this.No )+ "Rpt'");
+            this.NumOfDtl = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM Sys_MapDtl WHERE FK_MapData='ND" + int.Parse(this.No) + "Rpt'");
 
             this.DirectUpdate();
 
@@ -583,7 +583,7 @@ namespace BP.WF
             DBAccess.RunSQL("DELETE FROM WF_Emp WHERE NO not in (select no from port_emp )");
             try
             {
-                 #warning 更新错误
+#warning 更新错误
                 DBAccess.RunSQL("UPDATE WF_Emp set Name=(select name from port_emp where port_emp.no=wf_emp.no),FK_Dept=(select fk_dept from port_emp where port_emp.no=wf_emp.no)");
             }
             catch
@@ -611,7 +611,7 @@ namespace BP.WF
             msg += "\r\n<body>";
             msg += "\r\n<h1>" + this.Name + "</h1>";
 
-            msg += "\r\n<h3>驰骋工作流引擎,工作流程管理系统自动生成，更多请到<a href='http://doc.ccflow.cn' target=_blank >流程模板交流网，免费下载。</a>联系:QQ:793719823,Tel:18660153393</h3>";
+            msg += "\r\n<h3>驰骋工作流引擎,工作流程管理系统自动生成，更多请到<a href='http://doc.ccFlow.org' target=_blank >流程模板交流网，免费下载。</a>联系:QQ:793719823,Tel:18660153393</h3>";
             msg += "\r\n<hr>";
 
             msg += "\r\n<h3><a href='" + this.Name + ".xml' target=_blank>ccflow可识别的(" + this.Name + ")流程模板(xml格式)</a> </h3>";
@@ -636,8 +636,8 @@ namespace BP.WF
             msg += "\r\n<h3>特别说明：本流程所有表单模板有ccflow及ccflow的客户设计者辛苦劳动所得，所有转载、引用、使用请注明出处，并且征得ccflow同意。</h3>";
 
             msg += "\r\n<ul>";
-            msg += "\r\n<li><a href='http://ccflow.cn' target=_blank >驰骋工作流引擎官方网站 http://ccflow.cn </a></li>";
-            msg += "\r\n<li><a href='http://doc.ccflow.cn' target=_blank >标准流程模板网 http://doc.ccflow.cn </a></li>";
+            msg += "\r\n<li><a href='http://ccFlow.org' target=_blank >驰骋工作流引擎官方网站 http://ccFlow.org </a></li>";
+            msg += "\r\n<li><a href='http://doc.ccFlow.org' target=_blank >标准流程模板网 http://doc.ccFlow.org </a></li>";
             msg += "\r\n</ul>";
 
             msg += "\r\n</body>";
@@ -657,7 +657,7 @@ namespace BP.WF
 
                 msg += "\r\n<h1>" + this.Name + " - " + nd.Name + "</h1>";
 
-                msg += "\r\n<h3>返回：<a href='Index.htm' >" + this.Name + "</a>，此模板有ccflow自动生成，更多的单据模板 <a href='http://doc.ccflow.cn' target=_blank >驰骋流程模板网免费下载</a>。</h3>";
+                msg += "\r\n<h3>返回：<a href='Index.htm' >" + this.Name + "</a>，此模板有ccflow自动生成，更多的单据模板 <a href='http://doc.ccFlow.org' target=_blank >驰骋流程模板网免费下载</a>。</h3>";
                 msg += "\r\n<hr>";
 
                 msg += this.GenerWorkTempleteHtml(nd.HisWork, "ND" + nd.NodeID);
@@ -665,8 +665,8 @@ namespace BP.WF
                 msg += "\r\n<hr>";
                 msg += "\r\n<h3>特别说明：本流程所有表单模板有ccflow及ccflow的客户设计者辛苦劳动所得，所有转载、引用、使用请注明出处，并且征得ccflow同意。</h3>";
                 msg += "\r\n<ul>";
-                msg += "\r\n<li><a href='http://ccflow.cn' target=_blank >驰骋工作流引擎官方网站 http://ccflow.cn </a></li>";
-                msg += "\r\n<li><a href='http://doc.ccflow.cn' target=_blank >标准流程模板网 http://doc.ccflow.cn </a></li>";
+                msg += "\r\n<li><a href='http://ccFlow.org' target=_blank >驰骋工作流引擎官方网站 http://ccFlow.org </a></li>";
+                msg += "\r\n<li><a href='http://doc.ccFlow.org' target=_blank >标准流程模板网 http://doc.ccFlow.org </a></li>";
                 msg += "\r\n</ul>";
                 msg += "\r\n</body>";
                 msg += "\r\n</html>";
@@ -676,7 +676,7 @@ namespace BP.WF
 
         public string GenerFlowXmlTemplete()
         {
-            string path = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No +"."+this.Name + "\\";
+            string path = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No + "." + this.Name + "\\";
             if (System.IO.Directory.Exists(path) == false)
                 System.IO.Directory.CreateDirectory(path);
 
@@ -854,13 +854,13 @@ namespace BP.WF
             ds.WriteXml(path + this.Name + ".xml");
             return path;
         }
-        
+
         /// <summary>
         /// 生成 word 文件
         /// </summary>
         private void GenerWorkTempleteDoc(Entity en, string enName, Node nd)
         {
-            string tempFilePath = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No+"."+this.Name + "\\";
+            string tempFilePath = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No + "." + this.Name + "\\";
             if (System.IO.Directory.Exists(tempFilePath) == false)
                 System.IO.Directory.CreateDirectory(tempFilePath);
             tempFilePath = tempFilePath + nd.FlowName + "_" + nd.Name + ".doc";
@@ -914,7 +914,7 @@ namespace BP.WF
             }
 
             rowNum = rowNum + 2 + dtls.Count;
-          
+
 
             // 创建Word文档
             string CheckedInfo = "";
@@ -945,7 +945,7 @@ namespace BP.WF
                     //    WordDoc.Application.ActiveDocument.InlineShapes[1].Width = img.Width; // 图片宽度
                     //    WordDoc.Application.ActiveDocument.InlineShapes[1].Height = img.Height; // 图片高度
                 }
-                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("[驰骋业务流程管理系统 http://ccflow.org ] - [" + nd.FlowName + "-" + nd.Name + "模板]");
+                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("[驰骋业务流程管理系统 http://ccFlow.org ] - [" + nd.FlowName + "-" + nd.Name + "模板]");
                 WordApp.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight; // 设置右对齐
                 WordApp.ActiveWindow.View.SeekView = Word.WdSeekView.wdSeekMainDocument; // 跳出页眉设置
                 WordApp.Selection.ParagraphFormat.LineSpacing = 15f; // 设置文档的行间距
@@ -1139,7 +1139,7 @@ namespace BP.WF
 
                 #region 添加页脚
                 WordApp.ActiveWindow.View.SeekView = Word.WdSeekView.wdSeekPrimaryFooter;
-                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("模板由ccflow4.5自动生成，严谨转载。欢迎使用开源,免费的工作流程管理系统 http://ccflow.org.");
+                WordApp.ActiveWindow.ActivePane.Selection.InsertAfter("模板由ccflow4.5自动生成，严谨转载。欢迎使用开源,免费的工作流程管理系统 http://ccFlow.org.");
                 WordApp.Selection.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphRight;
                 #endregion
 
@@ -1448,13 +1448,13 @@ namespace BP.WF
         private void CheckRptDtl(Nodes nds)
         {
             MapDtls dtlsDtl = new MapDtls();
-             dtlsDtl.Retrieve(MapDtlAttr.FK_MapData, "ND" + int.Parse(this.No) + "Rpt");
-             foreach (MapDtl dtl in dtlsDtl)
-             {
-                 dtl.Delete();
-             }
+            dtlsDtl.Retrieve(MapDtlAttr.FK_MapData, "ND" + int.Parse(this.No) + "Rpt");
+            foreach (MapDtl dtl in dtlsDtl)
+            {
+                dtl.Delete();
+            }
 
-          //  dtlsDtl.Delete(MapDtlAttr.FK_MapData, "ND" + int.Parse(this.No) + "Rpt");
+            //  dtlsDtl.Delete(MapDtlAttr.FK_MapData, "ND" + int.Parse(this.No) + "Rpt");
 
             foreach (Node nd in nds)
             {
@@ -1516,7 +1516,7 @@ namespace BP.WF
                             default:
                                 break;
                         }
-                         
+
                         attrN.Save();
                     }
 
@@ -1840,7 +1840,7 @@ namespace BP.WF
             }
 
             DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID=" + flowGF.OID + " WHERE  FK_MapData='" + fk_mapData + "'  AND KeyOfEn IN('" + GERptAttr.MyNum + "','" + GERptAttr.BillNo + "','" + GERptAttr.FK_Dept + "','" + GERptAttr.FK_NY + "','" + GERptAttr.FlowDaySpan + "','" + GERptAttr.FlowEmps + "','" + GERptAttr.FlowEnder + "','" + GERptAttr.FlowEnderRDT + "','" + GERptAttr.FlowStarter + "','" + GERptAttr.FlowStartRDT + "','" + GERptAttr.WFState + "')");
-           // DBAccess.RunSQL("UPDATE Sys_MapAttr SET  WHERE FK_MapData='" + fk_mapData + "' AND KeyOfEn='Title'");
+            // DBAccess.RunSQL("UPDATE Sys_MapAttr SET  WHERE FK_MapData='" + fk_mapData + "' AND KeyOfEn='Title'");
             #endregion 为流程字段设置分组。
 
 
@@ -1850,7 +1850,7 @@ namespace BP.WF
             DBAccess.RunSQL("DELETE FROM Sys_GroupField WHERE EnName='" + fk_mapData + "' AND OID NOT IN (SELECT GroupID FROM sys_mapattr where fk_mapdata like '" + fk_mapData + "')");
             DBAccess.RunSQL("UPDATE ND" + flowId + "Rpt SET MyNum=1");
         }
-        
+
         #region 基本属性
         public bool IsCCAll
         {
@@ -3269,6 +3269,33 @@ namespace BP.WF
 
             //删除分组信息
             DBAccess.RunSQL("DELETE FROM Sys_GroupField WHERE EnName NOT IN(SELECT NO FROM Sys_MapData)");
+
+            #region 删除流程报表。
+            string fk_map = "ND" + int.Parse(this.No) + "Rpt";
+            MapData md = new MapData();
+            md.No = fk_map;
+            md.Delete();
+
+            MapAttrs attrs = new MapAttrs();
+            attrs.Delete(MapAttrAttr.FK_MapData, fk_map);
+
+            // 删除明细表。
+            MapDtls dtl1s = new MapDtls(fk_map);
+            foreach (MapDtl dtl in dtl1s)
+            {
+                dtl.Delete();
+            }
+            //删除视图.
+            try
+            {
+                BP.DA.DBAccess.RunSQL("DROP VIEW V_" + this.No);
+            }
+            catch
+            {
+            }
+            #endregion 删除流程报表。
+
+            //  dtl1s.Delete(MapDtlAttr.FK_MapData, fk_map);
             this.Delete();
         }
         #endregion
@@ -3299,7 +3326,7 @@ namespace BP.WF
 
             msg += "\r\n<body>";
 
-            msg += "\r\n<h1>驰骋流程模板网</h1> <br><a href=index.htm >返回首页</a> - <a href='http://ccflow.cn' >访问驰骋工作流程管理系统，工作流引擎官方网站</a> 流程系统建设请联系:QQ:793719823,Tel:18660153393<hr>";
+            msg += "\r\n<h1>驰骋流程模板网</h1> <br><a href=index.htm >返回首页</a> - <a href='http://ccFlow.org' >访问驰骋工作流程管理系统，工作流引擎官方网站</a> 流程系统建设请联系:QQ:793719823,Tel:18660153393<hr>";
 
             foreach (Flow fl in fls)
             {

@@ -177,7 +177,7 @@ namespace BP.WF
         }
         public string DoHelp()
         {
-            BP.PubClass.WinOpen("www.ccflow.cn" , 500, 600);
+            BP.PubClass.WinOpen("ccFlow.org" , 500, 600);
             return null;
         }
        

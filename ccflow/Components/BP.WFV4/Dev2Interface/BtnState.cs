@@ -149,8 +149,6 @@ namespace BP.WF
             {
                 InitNodeIsNotCurr();
             }
-
-
         }
         /// <summary>
         /// 保存按钮

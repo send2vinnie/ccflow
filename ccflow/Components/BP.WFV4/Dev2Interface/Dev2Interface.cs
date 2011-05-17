@@ -14,6 +14,83 @@ namespace BP.WF
     /// </summary>
     public class Dev2Interface
     {
+        #region 数据接口
+
+        #region 获取当前操作员可以发起的流程集合
+        /// <summary>
+        /// 获取当前操作员可以发起的流程集合
+        /// </summary>
+        /// <returns>bp.wf.flows</returns>
+        public static Flows DB_GenerCanStartFlowsOfEntities()
+        {
+            string sql = "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_EMP='" + WebUser.No + "')) ";
+            string sql2 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + WebUser.No + "' ) ";
+            Flows fls = new Flows();
+            BP.En.QueryObject qo = new BP.En.QueryObject(fls);
+            qo.AddWhereInSQL("No", sql + sql2);
+            qo.addAnd();
+            qo.AddWhere(FlowAttr.IsOK, true);
+            qo.addAnd();
+            qo.AddWhere(FlowAttr.IsCanStart, true);
+            qo.addOrderBy("FK_FlowSort", "No");
+            qo.DoQuery();
+            return fls;
+        }
+        /// <summary>
+        /// 获取当前操作员可以发起的流程集合
+        /// </summary>
+        /// <returns>datatable</returns>
+        public static DataTable DB_GenerCanStartFlowsOfDataTable()
+        {
+            return DB_GenerCanStartFlowsOfEntities().ToDataTableField();
+        }
+        #endregion 获取当前操作员可以发起的流程集合
+
+
+        #region 获取当前操作员的待办工作
+        /// <summary>
+        /// 获取当前操作员的待办工作
+        /// </summary>
+        /// <param name="fk_flow">根据流程编号，如果流程编号为空则返回全部</param>
+        /// <returns>当前操作员待办工作</returns>
+        public static DataTable DB_GenerEmpWorksOfDataTable(string fk_flow)
+        {
+            string sql = null;
+
+            if (fk_flow == null)
+                sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  ORDER BY WorkID ";
+            else
+                sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + fk_flow + "' ORDER BY WorkID ";
+            return BP.DA.DBAccess.RunSQLReturnTable(sql);
+        }
+        #endregion 获取当前操作员的待办工作
+
+
+        #region 获取当前操作员的在途工作
+        /// <summary>
+        /// 获取当前操作员的在途工作
+        /// </summary>
+        /// <returns>在途工作</returns>
+        public static GenerWorkFlowExts DB_GenerRuningOfEntities()
+        {
+            string sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + BP.Web.WebUser.No + "' AND B.IsEnable=1 AND B.IsPass=1 ";
+            GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
+            gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
+            return gwfs;
+        }
+        /// <summary>
+        /// 获取当前操作员的在途工作
+        /// </summary>
+        /// <returns>在途工作</returns>
+        public static DataTable DB_GenerRuningOfDataTable()
+        {
+            return DB_GenerRuningOfEntities().ToDataTableField();
+        }
+        #endregion 获取当前操作员的待办工作
+
+
+        #endregion
+
         #region UI 接口
         /// <summary>
         /// 获取按钮状态
@@ -31,10 +108,8 @@ namespace BP.WF
         /// </summary>
         public static void UI_OpenReturnWindow(Int64 workid)
         {
-
         }
         #endregion UI 接口
-
 
         #region 登录接口
         /// <summary>
