@@ -21,7 +21,7 @@ div#nv
     width: auto;
     text-align: center;
     padding: 0px;
-    margin: 0px 3px 3px 3px;
+    margin: 0px 3px 0px 3px;
     background: #6293bb url(shadow.png) repeat-x left bottom;
 }
 
@@ -47,7 +47,6 @@ div#nv li
     margin: 0;
     padding: 0 10px;
     line-height: 1em;
-    background-image: url(line_white.gif);
     background-position: right center;
     background-repeat: no-repeat;
         margin: 3;

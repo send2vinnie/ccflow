@@ -9,6 +9,7 @@
 #MainUL A {
 	BORDER-RIGHT: #36a 1px solid; PADDING-RIGHT: 1em; BORDER-TOP: #36a 1px solid; DISPLAY: block; PADDING-LEFT: 1em; BACKGROUND: #ddd; PADDING-BOTTOM: 0.25em; BORDER-LEFT: #36a 1px solid; COLOR: black; PADDING-TOP: 0.25em; BORDER-BOTTOM: #36a 1px; TEXT-DECORATION: none
 }
+
 #MainUL LI.Selected A {
 	BACKGROUND: #fff; BORDER-BOTTOM: white 1px solid
 }
