@@ -59,6 +59,5 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         this.Left.AddTDEnd();
         this.Left.AddTREnd();
         this.Left.AddTableEnd();
-
     }
 }

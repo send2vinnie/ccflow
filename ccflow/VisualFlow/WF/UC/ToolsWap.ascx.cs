@@ -29,7 +29,6 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
             this.BindTools();
             return;
         }
-
         switch (this.RefNo)
         {
             case "Skin":
@@ -149,22 +148,40 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
     }
     public void Skin()
     {
+        string pageID=this.PageID;
+        string setNo = this.Request.QueryString["SetNo"];
+        if (setNo != null)
+        {
+            WebUser.Style = setNo;
+            this.Response.Redirect(pageID + ".aspx?RefNo=Skin", true);
+            return;
+        }
+
+
         this.AddFieldSet("风格设置(未完工)");
 
         BP.WF.XML.Skins sks = new BP.WF.XML.Skins();
         sks.RetrieveAll();
+
+        this.AddUL();
         foreach (BP.WF.XML.Skin item in sks)
         {
-            System.Web.UI.WebControls.RadioButton rb = new RadioButton();
-            rb.ID = "RB_" + item.No;
-            rb.Text = item.Name;
-            rb.GroupName = "s";
             if (WebUser.Style == item.No)
-                rb.Checked=true;
+                this.AddLi(item.Name + "&nbsp;&nbsp;<span style='background:" + item.CSS + "' ><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></span>");
+            else
+                this.AddLi(pageID + ".aspx?RefNo=Skin&SetNo=" + item.No, item.Name + "&nbsp;&nbsp;<span style='background:" + item.CSS + "' ><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></span>");
 
-            this.Add(rb);
-            this.AddBR();
+            //System.Web.UI.WebControls.RadioButton rb = new RadioButton();
+            //rb.ID = "RB_" + item.No;
+            //rb.Text = item.Name;
+            //rb.GroupName = "s";
+            //if (WebUser.Style == item.No)
+            //    rb.Checked=true;
+
+            //this.Add(rb);
+            //this.AddBR();
         }
+        this.AddULEnd();
 
         Button btn = new Button();
         btn.ID = "Btn_Save";

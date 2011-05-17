@@ -47,9 +47,15 @@ public partial class Face_MasterPage : BP.Web.MasterPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Page.RegisterClientScriptBlock("s", 
-            "<link href='"+this.Request.ApplicationPath+"/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
+        this.Page.RegisterClientScriptBlock("s",
+            "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
+        //this.Page.RegisterClientScriptBlock("a",
+        //   "<link href='" + this.Request.ApplicationPath + "/WF/Style/Menu" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
+
+         //this.Page.RegisterClientScriptBlock("d",
+         //"<link href='" + this.Request.ApplicationPath + "/Comm/Style/t1/style.css' rel='stylesheet' type='text/css' />");
+        
         if (this.Request.RawUrl.ToLower().Contains("login.aspx") == false)
         {
             if (BP.Web.WebUser.No == null)
@@ -87,29 +93,44 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         #region 菜单输出区域
         string dotype = this.PageID;
         if (BP.WF.Glo.IsShowTitle)
-            this.Pub1.Add("<Img src='./../DataUser/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
+        {
+            this.Pub1.Add("<div  id='Top' /></div>");
 
-        this.Pub1.Add("<DIV ID=MainDiv>");
-        this.Pub1.Add("<span>Hi:" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "</span>");
-        this.Pub1.Add("<UL id=MainUL>");
+            this.Page.RegisterClientScriptBlock("d",
+            "<link href='" + this.Request.ApplicationPath + "/WF/Style/Skin/t" + BP.Web.WebUser.Style + "/style.css' rel='stylesheet' type='text/css' />");
+            //    this.Pub1.Add("<Img src='./../DataUser/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
+        }
+
+       // this.Pub1.Add("<div style='float:left'>Hi:" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "</div>");
+        //this.Pub1.Add("<DIV ID=MainDiv>");
+        //this.Pub1.Add("<UL id=MainUL>");
+
+        this.Pub1.Add("<DIV ID=nv>");
+    //    this.Pub1.Add("<a href='Tools.aspx' id='qmenu'  >我的中心</a>");
+
+        this.Pub1.Add("<UL>");
         foreach (BP.WF.XML.ToolBar en in ens)
         {
             if (en.No == dotype)
             {
                 if (en.No == "EmpWorks")
-                    this.Pub1.Add("<li class=Selected><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></li>");
+                    this.Pub1.Add("<li class=S ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></li>");
                 else
-                    this.Pub1.Add("<li class=Selected><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></li>");
+                    this.Pub1.Add("<li class=S ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></li>");
             }
             else
             {
                 if (en.No == "EmpWorks")
-                    this.Pub1.Add("<li ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></li>");
+                    this.Pub1.Add("<li><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></li>");
                 else
-                    this.Pub1.Add("<li ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></li>");
+                    this.Pub1.Add("<li><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></li>");
             }
         }
         this.Pub1.Add("</UL>");
+
+       // this.Pub1.Add("<div style='float:right'>");
+
+        
         this.Pub1.Add("</DIV>");
         #endregion 菜单输出区域
 
