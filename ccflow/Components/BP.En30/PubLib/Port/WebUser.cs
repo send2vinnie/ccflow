@@ -661,7 +661,7 @@ namespace BP.Web
         {
             get
             {
-                return GetSessionByKey("Style", "0");
+               return GetSessionByKey("Style", "0");
             }
             set
             {

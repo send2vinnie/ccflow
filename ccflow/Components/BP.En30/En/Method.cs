@@ -26,7 +26,6 @@ namespace BP.En
 	/// </summary>
     abstract public class Method
     {
-
         /// <summary>
         /// 信息显示类型
         /// </summary>

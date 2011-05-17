@@ -142,8 +142,8 @@ namespace BP.Port
                 map.IsCheckNoLength = false;
 
                 map.AdjunctType = AdjunctType.None;
-                map.AddTBStringPK(EmpAttr.No, null, this.ToE("No", "±àºÅ"), true, false, 1, 20, 100);
-                map.AddTBString(EmpAttr.Name, null, this.ToE("Name", "Ãû³Æ"), true, false, 0, 100, 100);
+                map.AddTBStringPK(EmpAttr.No, null, this.ToE("No", "±àºÅ"), true, false, 1, 20, 20);
+                map.AddTBString(EmpAttr.Name, null, this.ToE("Name", "Ãû³Æ"), true, false, 0, 100, 30);
 
 
                 map.AttrsOfOneVSM.Add(new DeptStations(), new Stations(), DeptStationAttr.FK_Dept, EmpStationAttr.FK_Station,

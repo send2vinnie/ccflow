@@ -239,8 +239,8 @@ namespace BP.Port
 
                 #region 字段
                 /*关于字段属性的增加 */
-                map.AddTBStringPK(EmpAttr.No, null, this.ToE("No", "编号"), true, false, 1, 20, 100);
-                map.AddTBString(EmpAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 100, 100);
+                map.AddTBStringPK(EmpAttr.No, null, this.ToE("No", "编号"), true, false, 1, 20, 30);
+                map.AddTBString(EmpAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 100, 30);
                 map.AddTBString(EmpAttr.Pass, "pub", this.ToE("Pass", "密码"), false, false, 0, 20, 10);
                 map.AddDDLEntities(EmpAttr.FK_Dept, null, this.ToE("Dept", "部门"), new Port.Depts(), true);
                 // map.AddDDLSysEnum("Sex", 0, "性别", "@0=女@1=男");

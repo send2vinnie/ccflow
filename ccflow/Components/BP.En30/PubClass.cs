@@ -594,12 +594,8 @@ namespace BP
 		
 			string str="<Table id='tb' class=Table >";
 
-			// ±êÇ©
-			str+="<TR class=  >";
-			str+="<TD colspan='"+dt.Columns.Count+"' > "+GenerLabelStr( title )+"<TD>";
-			str+="</TD>";
-			str+="</TR>";
-
+            str += "<caption>" + title + "</caption>";
+           
 
 			// ±êÌâ
 			str+="<TR>";

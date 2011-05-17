@@ -235,6 +235,13 @@ namespace BP.Sys
         {
             MapAttrs attrs = new MapAttrs();
             attrs.Delete(MapAttrAttr.FK_MapData, this.No);
+            try
+            {
+                BP.DA.DBAccess.RunSQL("DROP TABLE " + this.PTable);
+            }
+            catch
+            {
+            }
             return base.beforeDelete();
         }
         /// <summary>

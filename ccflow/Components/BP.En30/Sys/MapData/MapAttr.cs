@@ -949,9 +949,25 @@ namespace BP.Sys
         {
             this.DoOrderDown(MapAttrAttr.GroupID, this.GroupID.ToString(), MapAttrAttr.IDX);
         }
-        public string DoJump(MapAttr attrTo)
+        public void DoJump(MapAttr attrTo)
         {
-            string sql = "UPDATE Sys_MapAttr SET IDX=IDX-1 WHERE IDX <=" + attrTo.IDX + " AND FK_MapData='" + this.FK_MapData + "' ";
+            if (attrTo.IDX <= this.IDX)
+                this.DoJumpUp(attrTo);
+            else
+                this.DoJumpDown(attrTo);
+        }
+        private string DoJumpUp(MapAttr attrTo)
+        {
+            string sql = "UPDATE Sys_MapAttr SET IDX=IDX+1 WHERE IDX <=" + attrTo.IDX + " AND FK_MapData='" + this.FK_MapData + "' AND GroupID="+this.GroupID;
+            DBAccess.RunSQL(sql);
+            this.IDX = attrTo.IDX - 1;
+            this.GroupID = attrTo.GroupID;
+            this.Update();
+            return null;
+        }
+        private string DoJumpDown(MapAttr attrTo)
+        {
+            string sql = "UPDATE Sys_MapAttr SET IDX=IDX-1 WHERE IDX <=" + attrTo.IDX + " AND FK_MapData='" + this.FK_MapData + "' AND GroupID=" + this.GroupID;
             DBAccess.RunSQL(sql);
             this.IDX = attrTo.IDX + 1;
             this.GroupID = attrTo.GroupID;

@@ -35,7 +35,7 @@ namespace BP.En
 
 				
 				map.AddTBStringPK(SimpleNoNaIEnoteAttr.No,null,"±àºÅ",true,true,1,20,10);
-				map.AddTBString(SimpleNoNaIEnoteAttr.Name,null,"Ãû³Æ",true,false,0,400,400);
+				map.AddTBString(SimpleNoNaIEnoteAttr.Name,null,"Ãû³Æ",true,false,0,400,100);
 				 
 				this._enMap=map;
 				return this._enMap;

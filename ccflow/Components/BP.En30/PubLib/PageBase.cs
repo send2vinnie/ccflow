@@ -171,7 +171,11 @@ namespace BP.Web
 			lab.Controls.Clear();
 			lab.Controls.Add( this.GenerLabel("<img src='"+en.EnMap.Icon+"' border=0 />"+msg)) ; 
 		}
-       
+        public void GenerLabel(Label lab,  string msg)
+        {
+            lab.Controls.Clear();
+            lab.Controls.Add(this.GenerLabel( msg));
+        }
         //public void GenerLabel(Label lab, Entity en)
         //{
         //    this.GenerLabel(lab, en.EnDesc + en.EnMap.TitleExt);
