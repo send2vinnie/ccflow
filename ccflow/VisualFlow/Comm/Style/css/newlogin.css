@@ -1,0 +1,92 @@
+BODY {
+	TEXT-ALIGN: center;
+	BACKGROUND-COLOR: #ffffff;
+	MARGIN-TOP: 0px;
+	WIDTH: 800px;
+	HEIGHT: auto;
+}
+.loginbottom {
+	BACKGROUND-COLOR: #ffffff;
+}
+.bottomt {
+	BACKGROUND-IMAGE: url(../Image/new_bottomt.gif); WIDTH: 600px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 30px
+}
+.bottomb {
+	TEXT-ALIGN: center;
+	LINE-HEIGHT: 35px;
+	WIDTH: 800px;
+	HEIGHT: 45px;
+	COLOR: #848585;
+	FONT-SIZE: 13px;
+}
+.container {
+	WIDTH: 800px;
+	position: absolute;
+	margin-top: -200px;
+	top: 50%;
+	left: 50%;
+	margin-left: -400px;
+}
+.instruction {
+	
+}
+.left {
+	WIDTH: 370px;
+	FLOAT: left;
+	HEIGHT: 400px
+}
+.right {
+	WIDTH: 430px;
+	FLOAT: right
+}
+.topl {
+	BACKGROUND-IMAGE: url(../Image/new_topl.gif);
+	WIDTH: 370px;
+	BACKGROUND-REPEAT: no-repeat;
+	BACKGROUND-POSITION: left 50%;
+	HEIGHT: 100px
+}
+.logintitle {
+	BACKGROUND-IMAGE: url(../Image/new_logintitle.gif); WIDTH: 370px; HEIGHT: 60px
+}
+.topr {
+	BACKGROUND-IMAGE: url(../Image/new_top.gif);
+	WIDTH: 430px;
+	HEIGHT: 32px
+}
+.rightcontent {
+	BACKGROUND-IMAGE: url(../Image/new_right_bg.gif);
+	WIDTH: 430px;
+	height: 390px;
+	background-repeat: no-repeat;
+}
+.bslink {
+	TEXT-ALIGN: left; MARGIN-TOP: 20px; WIDTH: 100%; HEIGHT: 100%; MARGIN-LEFT: 10px; FONT-SIZE: 12px; FONT-WEIGHT: bold
+}
+#button_submit {
+	WIDTH: 70px; HEIGHT: 30px; MARGIN-LEFT: 20px
+}
+#button_reset {
+	WIDTH: 70px; HEIGHT: 30px; MARGIN-LEFT: 10px
+}
+.login_table {
+	BACKGROUND-IMAGE: url(../Image/new_bg2.gif); WIDTH: 370px; BACKGROUND-REPEAT: repeat-x; BACKGROUND-POSITION: 50% bottom; HEIGHT: 290px
+}
+#prompt {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 10px; LINE-HEIGHT: 25px; MARGIN-TOP: -80px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 12px; PADDING-TOP: 10px
+}
+A {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #000000
+}
+A:hover {
+	COLOR: #ff0000
+}
+A:active {
+	COLOR: #000000
+}
+A:focus {
+	COLOR: #000000
+}
