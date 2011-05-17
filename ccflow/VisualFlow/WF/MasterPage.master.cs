@@ -95,7 +95,7 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         if (BP.WF.Glo.IsShowTitle)
         {
             this.Pub1.Add("<div  id='Top' /></div>");
-
+            // this.Pub1.Add("<div  style='float:right' />&nbsp;" + BP.SystemConfig.SysName + "&nbsp;</div>");
             this.Page.RegisterClientScriptBlock("d",
             "<link href='" + this.Request.ApplicationPath + "/WF/Style/Skin/t" + BP.Web.WebUser.Style + "/style.css' rel='stylesheet' type='text/css' />");
             //    this.Pub1.Add("<Img src='./../DataUser/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
@@ -126,6 +126,8 @@ public partial class Face_MasterPage : BP.Web.MasterPage
                     this.Pub1.Add("<li><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></li>");
             }
         }
+        this.Pub1.Add("<li ><a href='#'>您好:"+BP.Web.WebUser.Name+"</a></li>");
+
         this.Pub1.Add("</UL>");
 
        // this.Pub1.Add("<div style='float:right'>");

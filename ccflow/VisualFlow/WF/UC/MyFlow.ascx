@@ -56,8 +56,10 @@
     text-align:center;
 }
 </style>
-<div  style="float:left">
+<div  style="float:center">
 <uc4:ToolBar ID="ToolBar1" runat="server" />
+</div>
+
 </div style="float:left">
                     <uc5:Pub ID="FlowMsg" runat="server" />
                     <uc5:Pub ID="Pub1" runat="server" />

@@ -21,7 +21,6 @@ div#nv
     width: auto;
     text-align: center;
     padding: 0px;
-    margin: 0px 3px 3px 3px;
     background: #FE9500 url(shadow.png) repeat-x left bottom;
 }
 
@@ -50,7 +49,6 @@ div#nv li
     background-image: url(line_white.gif);
     background-position: right center;
     background-repeat: no-repeat;
-        margin: 3;
     padding: 3;
     text-align: center;
 }
@@ -80,7 +78,6 @@ div#nv a:hover, .S
     background-color: #3671a5;
     background-position: right center;
     background-repeat: no-repeat;
-      margin: 3;
     padding: 3;
 }
      

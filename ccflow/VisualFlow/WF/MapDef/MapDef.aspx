@@ -10,7 +10,6 @@ body
     padding: 0px;
     color: #696969;
 }
-
 </style>
  
  <script src="./../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
@@ -242,8 +241,75 @@ body
     }
 </script>
 	<base target="_self" />
-<link href="../../Comm/Style/Menu.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+div#nv
+{
+    top: 0;
+    left: 0;
+    width: auto;
+    text-align: center;
+    padding: 0px;
+}
 
+div.wrapper
+{
+    padding: 3px;
+    margin: 1px;
+}
+ 
+div#nv ul
+{
+    width: 100%;
+    margin: 3;
+    padding: 3;
+    text-align: center;
+}
+div#nv li
+{
+    float: left;
+    display: inline;
+    list-style: none;
+    margin: 0;
+    padding: 0 6px;
+    line-height: 1em;
+    background-position: right center;
+    background-repeat: no-repeat;
+    margin: 3;
+    padding: 3;
+    text-align: center;
+}
+
+div#nv li.last
+{
+    background: none;
+}
+
+div#nv a,
+div#nv a:link,
+div#nv a:active,
+div#nv a:visited {
+  display: inline-block;
+  /* hide from ie/mac \*/
+  display: block;
+  /* end hide */
+  font-weight: bold;
+  text-decoration: none;
+  margin: 0;
+}
+
+div#nv a:hover, .S
+{
+    background-position: right center;
+    background-repeat: no-repeat;
+    margin: 3;
+    padding: 3;
+}
+
+body
+{
+    font-size:small;
+}
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
                 <table width='80%'  align=center >

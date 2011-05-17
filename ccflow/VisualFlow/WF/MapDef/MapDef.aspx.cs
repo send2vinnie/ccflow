@@ -43,6 +43,9 @@ public partial class WF_MapDef_MapDef : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        //this.Page.RegisterClientScriptBlock("d",
+        //  "<link href='" + this.Request.ApplicationPath + "/WF/Style/Skin/t2/style.css' rel='stylesheet' type='text/css' />");
+
         MapData md = new MapData(this.MyPK);
         MapAttrs mattrs = new MapAttrs(md.No);
         int count = mattrs.Count;
@@ -59,15 +62,20 @@ public partial class WF_MapDef_MapDef : WebPage
         BP.WF.XML.MapMenus xmls = new BP.WF.XML.MapMenus();
         xmls.RetrieveAll();
 
-       this.Pub1.Add("<div align=center class=ToolBar >**");
-       foreach (BP.WF.XML.MapMenu item in xmls)
-       {
-           this.Pub1.Add("&nbsp;&nbsp;<a href=\"" + item.JS.Replace("@MyPK", "'" + this.MyPK + "'") + "\" ><img src='" + item.Img + "' border=0/>" + item.Name + "</a>");
-       }
+        this.Pub1.Add("\t\n<div id='tabsJ'  align='center'>");
+        this.Pub1.Add("\t\n<ul>");
+        foreach (BP.WF.XML.MapMenu item in xmls)
+        {
+            this.Pub1.AddLi("<a href=\"" + item.JS.Replace("@MyPK", "'" + this.MyPK + "'") + "\" ><span>" + item.Name + "</span></a>");
+            //           this.Pub1.AddLi("<a href=\"" + item.JS.Replace("@MyPK", "'" + this.MyPK + "'") + "\" ><img src='" + item.Img + "' border=0/>" + item.Name + "</a>");
+        }
+        this.Pub1.Add("\t\n</ul>");
+        this.Pub1.Add("\t\n</div>");
 
-        this.Pub1.Add(" **</div>");
 
-        this.Pub1.Add("<Table class=table >");
+        this.Pub1.AddFieldSet(md.Name);
+
+        this.Pub1.Add("\t\n<Table style=\"width:500px;\" >");
         /*
          * 根据 GroupField 循环出现菜单。
          */
@@ -228,12 +236,13 @@ public partial class WF_MapDef_MapDef : WebPage
                             case BP.DA.DataType.AppDate:
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
                                 tb.ShowType = TBType.Date;
-
                                 tb.Text = attr.DefVal;
-
                                 if (attr.UIIsEnable)
+                                {
                                     tb.Attributes["onfocus"] = "WdatePicker();";
-
+                                    tb.Attributes["class"] = "TBcalendar";
+                                }
+                                tb.Attributes["class"] = "TBcalendar";
                                 this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tb);
                                 break;
                             case BP.DA.DataType.AppDateTime:
@@ -241,8 +250,10 @@ public partial class WF_MapDef_MapDef : WebPage
                                 tb.ShowType = TBType.DateTime;
                                 tb.Text = attr.DefVal;
                                 if (attr.UIIsEnable)
+                                {
                                     tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
-
+                                }
+                                tb.Attributes["class"] = "TBcalendar";
                                 this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tb);
                                 break;
                             case BP.DA.DataType.AppBoolean:
@@ -270,7 +281,7 @@ public partial class WF_MapDef_MapDef : WebPage
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
                                 tb.ShowType = TBType.Moneny;
                                 tb.Text = attr.DefVal;
-                              //  tb.Attributes["OnKeyPress"]="return VirtyNum(this);";
+                                //  tb.Attributes["OnKeyPress"]="return VirtyNum(this);";
                                 this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tb);
                                 break;
                             default:
@@ -353,6 +364,9 @@ public partial class WF_MapDef_MapDef : WebPage
 
         }
         this.Pub1.AddTableEnd();
+
+        this.Pub1.AddFieldSetEnd();
+
 
         #region 处理异常情况。
         foreach (MapDtl dtl in dtls)
@@ -535,10 +549,7 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.AddFieldSetEnd();
         }
         #endregion 处理隐藏字段。
-
-       
     }
-
     public void InsertObjects(bool isJudgeRowIdx)
     {
         #region 增加明细表

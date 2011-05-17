@@ -158,7 +158,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         }
 
 
-        this.AddFieldSet("风格设置(未完工)");
+        this.AddFieldSet("风格设置");
 
         BP.WF.XML.Skins sks = new BP.WF.XML.Skins();
         sks.RetrieveAll();
