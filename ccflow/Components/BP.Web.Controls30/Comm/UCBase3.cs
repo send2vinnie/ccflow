@@ -16,20 +16,37 @@ namespace BP.Web.UC
         #region ÐÅÏ¢¿é- Ì×ÓÃ       
         public void DivInfoBlockBegin()
         {
-            string path = this.Request.ApplicationPath;
+            return;
 
-            this.Add("\n<table cellspacing='0' align=left>");
-            this.Add("\n<tr class='yj_style'>");
-            this.Add("\n<td style='text-align:right'><img src='" + path + "/Images/Div/tl_df.jpg'></td>");
-            this.Add("\n<td style='border-top:1px #ccc solid;background:#f9f9f9;'></td>");
-            this.Add("\n<td>");
-            this.Add("\n<img src='" + path + "/Images/Div/tr_df.jpg'>");
-            this.Add("\n</td></tr>");
-            this.Add("\n<tr><td width=4 class='line_l' style='border-left:1px #ccc solid;background:#f9f9f9;'></td><td width='100%' style='background:#f9f9f9;' align=left >");
+            this.Add("<style>");
+            this.Add(".xsnazzy span {width:20px; height:10px; w\\idth:0; hei\\ght:0;}");
+            this.Add(" .xb1, .xb2, .xb3, .xb4, .xb5, .xb6, .xb7 {display:block; overflow:hidden; font-size:0;}");
+            this.Add(".xb1, .xb2, .xb3, .xb4, .xb5, .xb6 {height:1px;}");
+            this.Add(".xb4, .xb5, .xb6, .xb7 {background:#ccc; border-left:1px solid #fff; border-right:1px solid #fff;}");
+            this.Add(".xb1 {margin:0 8px; background:#fff;}");
+            this.Add(".xb2 {margin:0 6px; background:#fff;}");
+            this.Add(".xb3 {margin:0 4px; background:#fff;}");
+            this.Add(".xb4 {margin:0 3px; background:#7f7f9c; border-width:0 5px;}");
+            this.Add(".xb5 {margin:0 2px; background:#7f7f9c; border-width:0 4px;}");
+            this.Add(".xb6 {margin:0 2px; background:#7f7f9c; border-width:0 3px;} ");
+            this.Add(".xb7 {margin:0 1px; background:#7f7f9c; border-width:0 3px; height:2px;} ");
+            this.Add(".xboxcontent {display:block; background:#7f7f9c; border:3px solid #fff; border-width:0 3px;}");
+            this.Add("</style>");
+
+            this.Add("<div class='container'>");
+            this.Add("<div class='xsnazzy' >");
+            this.Add("<b class='xb1'></b><b class=xb2></b><b class=xb3></b><b class=xb4></b><b class=xb5></b><b class=xb6></b><b class=xb7></b>");
+            this.Add("<div class='xboxcontent' >");
+            return;
         }
 
         public void DivInfoBlockEnd()
         {
+            return;
+            this.AddDivEnd();
+            this.Add("<b class=xb7></b><b class=xb6></b><b class=xb5></b><b class=xb4></b><b class=xb3></b><b class=xb2></b><b class=xb1></b></div>");
+            return;
+
             string path = this.Request.ApplicationPath;
 
             this.Add("\n</td><td width=4 class='line_l' style='border-right:1px #ccc solid;background:#f9f9f9;'></td>");
@@ -49,6 +66,11 @@ namespace BP.Web.UC
         #region AddMsgGreen
         public void AddMsgGreen(string title, string msg)
         {
+            this.AddFieldSet(title);
+            this.Add(msg);
+            this.AddFieldSetEnd();
+            return;
+
 
             this.DivInfoBlock(title, msg);
             //this.AddTableGreen();

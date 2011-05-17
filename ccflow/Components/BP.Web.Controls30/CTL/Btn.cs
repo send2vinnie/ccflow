@@ -44,7 +44,6 @@ namespace  BP.Web.Controls
 		/// <param name="btntype">btntype</param>
 		public Btn(BtnType btntype)
 		{
-            this.Attributes["class"] = "Btn";
 			this.ShowType =btntype; 
 			//this.PreRender += new System.EventHandler(this.BtnPreRender);
 		}
@@ -58,7 +57,6 @@ namespace  BP.Web.Controls
         }
 		private void BtnPreRender( object sender, System.EventArgs e )
 		{
-            this.Attributes["class"] = "Btn";
 			//this.Attributes["onclick"] +="javascript:showRuning();";
 //			if (this.Hit!=null)
 //				this.Attributes["onclick"] = "javascript: return confirm('ÊÇ·ñ¼ÌÐø£¿'); ";

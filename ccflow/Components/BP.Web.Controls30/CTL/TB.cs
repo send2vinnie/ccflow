@@ -161,18 +161,10 @@ namespace BP.Web.Controls
                         this.MaxLength = 20;
                         if (this.Text == null || this.Text == null)
                             this.Text = DataType.CurrentData;
-                        if (this.ReadOnly)
-                        {
-                            this.CssClass = "TBReadonly";
-                        }
-                        else
-                        {
-                            this.CssClass = "TB";
-                          //  this.Attributes["onfocus"] = "calendar();";
-                            // this.Attributes["onmousedown"] = "javascript:ShowDateTime('" + appPath + "', this );";
-                        }
+                        this.Attributes["class"] = "TBcalendar";
                         break;
                     case TBType.DateTime:
+                        this.Attributes["class"] = "TBcalendar";
                         this.Columns = 16;
                         if (this.Text == null || this.Text == null)
                             this.Text = DataType.CurrentDataTime;
@@ -181,16 +173,7 @@ namespace BP.Web.Controls
                             this.MaxLength = 20;
                             //this.Attributes["OnKeyPress"]="javascript:return VirtyDatetime(this);";
                         }
-                        if (this.ReadOnly)
-                        {
-                            this.CssClass = "TBReadonly";
-                        }
-                        else
-                        {
-                            this.CssClass = "TB";
-                           // this.Attributes["onfocus"] = "calendar();";
-                            // this.Attributes["onmousedown"] = "javascript:ShowDateTime('" + appPath + "',this);";
-                        }
+                        this.Attributes["class"] = "TBcalendar";
                         break;
                     case TBType.Email:
                         if (this.Text == null || this.Text == null)
@@ -291,7 +274,9 @@ namespace BP.Web.Controls
             {
                 this.Attributes["onkeydown"] = "javascript:if(event.keyCode == 13) event.keyCode = 9";
             }
-          //  this.PreRender += new System.EventHandler(this.TBPreRender);
+
+            this.Attributes["onmouseover"] = "TBOnfocus(this)";
+            this.Attributes["onmouseout"] = "TBOnblur(this)";
         }
         public void LoadMapAttr(Attr attr)
         {

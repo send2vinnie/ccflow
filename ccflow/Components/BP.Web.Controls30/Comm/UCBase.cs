@@ -876,7 +876,7 @@ namespace BP.Web.UC
             {
                 string srip = "javascript:HalperOfDDL('" + ddl.AppPath + "','" + ddl.SelfBindKey + "','" + ddl.SelfEnsRefKey + "','" + ddl.SelfEnsRefKeyText + "','" + ddl.ClientID.ToString() + "' ); ";
                 //this.Controls.Add( new LiteralControl("<a href=\"javascript:"+srip+"\" >aaaa</a></td>") ); 
-                this.Add("<input type='button' value='...' onclick=\"" + srip + "\"  name='b" + ddl.ID + "' class=Btn >");
+                this.Add("<input type='button' value='...' onclick=\"" + srip + "\"  name='b" + ddl.ID + "'  >");
             }
             this.Add("</TD>");
         }
@@ -899,7 +899,7 @@ namespace BP.Web.UC
                     if (isRefBtn && ddl.Items.Count > 15)
                     {
                         string srip = "javascript:HalperOfDDL('" + ddl.AppPath + "','" + ddl.SelfBindKey + "','" + ddl.SelfEnsRefKey + "','" + ddl.SelfEnsRefKeyText + "','" + ddl.ClientID.ToString() + "' ); ";
-                        this.Add("<input type='button' value='...' onclick=\"" + srip + "\" name='b" + ddl.ID + "' class=Btn></td>");
+                        this.Add("<input type='button' value='...' onclick=\"" + srip + "\" name='b" + ddl.ID + "' ></td>");
                     }
                     else
                     {
@@ -914,7 +914,7 @@ namespace BP.Web.UC
         }
         public void AddContral(string desc, DDL ddl, bool isRefBtn, int colspan)
         {
-            this.Add("<td class='FDesc' nowrap width=1% > " + desc + "</td><td class='TD' colspan=" + colspan + " nowrap>");
+            this.Add("<td class='FDesc' nowrap width=1% > " + desc + "</td><td  colspan=" + colspan + " nowrap>");
             this.Controls.Add(ddl);
             if (ddl.Enabled)
             {
@@ -927,7 +927,7 @@ namespace BP.Web.UC
                     if (isRefBtn && ddl.Items.Count > 4)
                     {
                         string srip = "javascript:HalperOfDDL('" + ddl.AppPath + "','" + ddl.SelfBindKey + "','" + ddl.SelfEnsRefKey + "','" + ddl.SelfEnsRefKeyText + "','" + ddl.ClientID.ToString() + "' ); ";
-                        this.Add("<input type='button' value='...' onclick=\"" + srip + "\" name='b" + ddl.ID + "' class=Btn></td>");
+                        this.Add("<input type='button' value='...' onclick=\"" + srip + "\" name='b" + ddl.ID + "' ></td>");
                     }
                     else
                     {
@@ -1291,17 +1291,17 @@ namespace BP.Web.UC
         public void AddTD(string str)
         {
             if (str == null || str == "")
-                this.Add("\n<TD class='TD' nowrap >&nbsp;</TD>");
+                this.Add("\n<TD  nowrap >&nbsp;</TD>");
             else
-                this.Add("\n<TD class='TD' nowrap >" + str + "</TD>");
+                this.Add("\n<TD  nowrap >" + str + "</TD>");
         }
         public void AddTDA(string href, string str)
         {
-            this.Add("\n<TD class='TD' nowrap ><a href=\"" + href + "\">" + str + "</a></TD>");
+            this.Add("\n<TD  nowrap ><a href=\"" + href + "\">" + str + "</a></TD>");
         }
         public void AddTDA(string href, string str, string target)
         {
-            this.Add("\n<TD class='TD' nowrap ><a href=\"" + href + "\" target=" + target + ">" + str + "</a></TD>");
+            this.Add("\n<TD  nowrap ><a href=\"" + href + "\" target=" + target + ">" + str + "</a></TD>");
         }
 
         public void Href(string href, string str, string target)
@@ -1338,17 +1338,17 @@ namespace BP.Web.UC
         public void AddTD(bool val)
         {
             if (val)
-                this.Add("\n<TD class='TD'>ÊÇ</TD>");
+                this.Add("\n<TD >ÊÇ</TD>");
             else
-                this.Add("\n<TD class='TD'>·ñ</TD>");
+                this.Add("\n<TD >·ñ</TD>");
         }
         public void AddTDBegin(string attr)
         {
-            this.Add("\n<TD class='TD' " + attr + " nowrap >");
+            this.Add("\n<TD  " + attr + " nowrap >");
         }
         public void AddTDBegin()
         {
-            this.Add("\n<TD class='TD' nowrap >");
+            this.Add("\n<TD  nowrap >");
         }
         public void AddTDEnd()
         {
@@ -1357,42 +1357,42 @@ namespace BP.Web.UC
 
         public void AddTDInfoBegin()
         {
-            this.Add("\n<TD class='TD' nowrap bgcolor=InfoBackground >");
+            this.Add("\n<TD  nowrap bgcolor=InfoBackground >");
         }
         public void AddTDInfo(string str)
         {
-            this.Add("\n<TD class='TD' nowrap bgcolor=InfoBackground >" + str + "</TD>");
+            this.Add("\n<TD  nowrap bgcolor=InfoBackground >" + str + "</TD>");
         }
         public void AddTDInfo()
         {
-            this.Add("\n<TD class='TD' nowrap bgcolor=InfoBackground >&nbsp;</TD>");
+            this.Add("\n<TD  nowrap bgcolor=InfoBackground >&nbsp;</TD>");
         }
         public void AddTDInfo(string attr, System.Web.UI.Control str)
         {
-            this.Add("\n<TD class='TD' " + attr + "  nowrap bgcolor=InfoBackground>");
+            this.Add("\n<TD  " + attr + "  nowrap bgcolor=InfoBackground>");
             this.Controls.Add(str);
             this.Add("</TD>");
         }
         public void AddTDInfo(System.Web.UI.Control str)
         {
-            this.Add("\n<TD class='TD'  nowrap bgcolor=InfoBackground>");
+            this.Add("\n<TD   nowrap bgcolor=InfoBackground>");
             this.Controls.Add(str);
             this.Add("</TD>");
         }
         public void AddTDCenter(System.Web.UI.Control ctl)
         {
-            this.Add("\n<TD class='TD'  nowrap >");
+            this.Add("\n<TD   nowrap >");
             this.Controls.Add(ctl);
             this.Add("</TD>");
         }
 
         public void AddTDCenter(string str)
         {
-            this.Add("\n<TD class='TDCenter'  nowrap >" + str + "</TD>");
+            this.Add("\n<TD align=center nowrap >" + str + "</TD>");
         }
         public void AddTD()
         {
-            this.Add("\n<TD class='TD' nowrap >&nbsp;</TD>");
+            this.Add("\n<TD >&nbsp;</TD>");
         }
         public void AddTDToolbar(string str)
         {
@@ -1486,51 +1486,51 @@ namespace BP.Web.UC
         }
         public void AddTDIdx(int idx)
         {
-            this.Add("\n<TD class='Idx' nowrap>" + idx + "</TD>");
+            this.Add("\n<TH class='Idx' nowrap>" + idx + "</TH>");
         }
         public void AddTDIdx(System.Web.UI.Control ctl)
         {
-            this.Add("\n<TD class='Idx' nowrap>");
+            this.Add("\n<TH class='Idx' nowrap>");
             this.Add(ctl);
-            this.Add("</TD>");
+            this.Add("</TH>");
         }
         public void AddTDIdx(int idx, System.Web.UI.Control ctl)
         {
-            this.Add("\n<TD class='Idx' nowrap >"+idx);
+            this.Add("\n<TH class='Idx' nowrap >" + idx);
             this.Add(ctl);
-            this.Add("</TD>");
+            this.Add("</TH>");
         }
         public void AddTDIdx(string idx)
         {
-            this.Add("\n<TD class='Idx' nowrap >" + idx + "</TD>");
+            this.Add("\n<TH class='Idx' nowrap >" + idx + "</TH>");
         }
         public void AddTDH(string url, string lab)
         {
-            this.Add("\n<TD class='TD' nowrap ><a href='" + url + "'>" + lab + "</a></TD>");
+            this.Add("\n<TD  nowrap ><a href='" + url + "'>" + lab + "</a></TD>");
         }
         public void AddTDH(string url, string lab, string target)
         {
-            this.Add("\n<TD class='TD' nowrap ><a href='" + url + "' target=" + target + ">" + lab + "</a></TD>");
+            this.Add("\n<TD  nowrap ><a href='" + url + "' target=" + target + ">" + lab + "</a></TD>");
         }
         public void AddTDH(string url, string lab, string target, string img)
         {
-            this.Add("\n<TD class='TD' nowrap ><a href='" + url + "' target=" + target + "><img src='" + img + "' border=0/>" + lab + "</a></TD>");
+            this.Add("\n<TD  nowrap ><a href='" + url + "' target=" + target + "><img src='" + img + "' border=0/>" + lab + "</a></TD>");
         }
         public void AddTD(CheckBox cb)
         {
-            this.Add("\n<TD class='TD'>");
+            this.Add("\n<TD >");
             this.Add(cb);
             this.Add("</TD>");
         }
         public void AddTD(System.Web.UI.Control ctl)
         {
-            this.Add("\n<TD class='TD'>");
+            this.Add("\n<TD >");
             this.Add(ctl);
             this.Add("</TD>");
         }
         public void AddTD(System.Web.UI.Control ctl, string note)
         {
-            this.Add("\n<TD class='TD' >");
+            this.Add("\n<TD  >");
             this.Add(ctl);
             this.Add(note + "</TD>");
         }
@@ -1558,7 +1558,7 @@ namespace BP.Web.UC
         }
         public void AddTD(string attr, System.Web.UI.WebControls.WebControl ctl)
         {
-            this.Add("\n<TD class='TD' nowrap " + attr + "  >");
+            this.Add("\n<TD  nowrap " + attr + "  >");
             this.Add(ctl);
             this.Add("</TD>");
         }
@@ -1640,40 +1640,31 @@ namespace BP.Web.UC
         }
         public void AddTDTitle(string attr, System.Web.UI.Control ctl)
         {
-            this.Add("\n<TD class='Title' "+attr+">");
+            this.Add("\n<TH " + attr + ">");
             this.Add(ctl);
-            this.Add("</TD>");
+            this.Add("</TH>");
         }
         public void AddTDTitle(System.Web.UI.Control ctl)
         {
-            this.Add("\n<TD class='Title' >");
+            this.Add("\n<TH>");
             this.Add(ctl);
-            this.Add("</TD>");
+            this.Add("</TH>");
         }
-        public void AddTDTitleTopLeft()
-        {
-            this.Add("\n<TD class='TitleTopLeft'></TD>");
-        }
-        public void AddTDTitleTopRight()
-        {
-            this.Add("\n<TD class='TitleTopRight'></TD>");
-        }
-
         public void AddTDTitle()
         {
-            this.Add("\n<TD class='Title' nowrap=true  >&nbsp;</TD>");
+            this.Add("\n<TH>&nbsp;</TH>");
         }
         public void AddTDTitleLeft(string attr, string str)
         {
-            this.Add("\n<TD class='TitleLeft' " + attr + " nowrap=true  >" + str + "</TD>");
+            this.Add("\n<TH align=left  nowrap=true  >" + str + "</TH>");
         }
         public void AddTDTitleLeft(string str)
         {
-            this.Add("\n<TD class='TitleLeft'   nowrap=true  >" + str + "</TD>");
+            this.Add("\n<TH align=left nowrap=true  >" + str + "</TH>");
         }
         public void AddTDDoc(string str)
         {
-            this.Add("\n<TD class='TD' >" + str + "</TD>");
+            this.Add("\n<TD  >" + str + "</TD>");
         }
         public void AddTDBigDoc(string attr, string str)
         {
@@ -1696,21 +1687,21 @@ namespace BP.Web.UC
         public void AddTDDoc(string str, int len, string title)
         {
             if (str.Length >= len)
-                this.Add("\n<TD class='TD' nowrap title=\"" + title.Replace("<BR>", "\n") + "\" >" + str.Substring(0, len) + "...</TD>");
+                this.Add("\n<TD  nowrap title=\"" + title.Replace("<BR>", "\n") + "\" >" + str.Substring(0, len) + "...</TD>");
             else
-                this.Add("\n<TD class='TD' nowrap  >" + str + "</TD>");
+                this.Add("\n<TD  nowrap  >" + str + "</TD>");
         }
         public void AddTDDoc(string str, string title)
         {
             if (str == null || str.Length == 0)
             {
-                this.Add("\n<TD class='TD' nowrap>...</TD>");
+                this.Add("\n<TD  nowrap>...</TD>");
             }
 
             if (str.Length > 20)
-                this.Add("\n<TD class='TD' nowrap title=\"" + title.Replace("<BR>", "\n") + "\" >" + str.Substring(0, 20) + "...</TD>");
+                this.Add("\n<TD  nowrap title=\"" + title.Replace("<BR>", "\n") + "\" >" + str.Substring(0, 20) + "...</TD>");
             else
-                this.Add("\n<TD class='TD' nowrap>" + str + "</TD>");
+                this.Add("\n<TD  nowrap>" + str + "</TD>");
         }
         public bool IsExit(string ctlID)
         {
@@ -1728,16 +1719,16 @@ namespace BP.Web.UC
 
         public void AddTDTitle(string attr, string str)
         {
-            this.Add("\n<TD class='Title' " + attr + " nowrap=true >" + str + "</TD>");
+            this.Add("\n<TH class='Title' " + attr + " nowrap=true >" + str + "</TH>");
         }
         public void AddTDB(string str)
         {
-            this.Add("\n<TD class='TD' nowrap=true ><b>" + str + "</b></TD>");
+            this.Add("\n<TD  nowrap=true ><b>" + str + "</b></TD>");
         }
 
         public void AddTDB(string attr, string str)
         {
-            this.Add("\n<TD class='TD' " + attr + " nowrap=true ><b>" + str + "</b></TD>");
+            this.Add("\n<TD  " + attr + " nowrap=true ><b>" + str + "</b></TD>");
         }
         public void AddTDGroupTitle()
         {
@@ -1756,7 +1747,7 @@ namespace BP.Web.UC
 
         public void AddTDTitle(string str)
         {
-            this.Add("\n<TD class='Title' >" + str + "</TD>");
+            this.Add("\n<TH >" + str + "</TH>");
         }
         public void AddTDDesc(string str)
         {
@@ -1769,7 +1760,7 @@ namespace BP.Web.UC
         public void AddTDTitleHelp(string str, string msg)
         {
             string path = this.Request.ApplicationPath;
-            this.Add("\n<TD class='Title' nowrap=true title=\"" + msg + "\" >" + str + "<img src='/Images/Btn/Help.gif' onclick=\"javascript:alert( '" + msg + "' )\"  border=0></TD>");
+            this.Add("\n<TH  nowrap=true title=\"" + msg + "\" >" + str + "<img src='./"+this.Request.ApplicationPath+"/Images/Btn/Help.gif' onclick=\"javascript:alert( '" + msg + "' )\"  border=0></TH>");
         }
         public void AddTD(int val)
         {
@@ -1816,30 +1807,16 @@ namespace BP.Web.UC
         #region AddMsg
         public void AddMsgOfWarning(string title, string doc)
         {
-            this.Add("<table border='1' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='Khaki' id='AutoNumber1'>");
-            this.Add("<tr>");
-            this.Add("<td width='100%' class=TD bgcolor='Khaki'><b>" + title + "<b></font></td>");
-            this.Add("</tr>");
-            this.Add("<tr>");
-            this.Add("<td class=BigDoc valign=top >" + doc);
-            this.Add("</td>");
-            this.Add("</tr>");
-            this.Add("</table>");
+            this.AddFieldSetYellow(title);
+            this.Add(doc.Replace("@", "<BR>@"));
+            this.AddFieldSetEnd();
         }
         public void AddMsgOfInfo(string title, string doc)
         {
-            this.Add("<table  border='1' bgcolor=InfoBackground cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='LightSteelBlue'   id='AutoNumber1' >");
-            this.Add("<tr>");
-            this.Add("<td width='100%' class=TD bgcolor='LightSteelBlue'>" + title + "</td>");
-            this.Add("</tr>");
+            this.AddFieldSet(title);
             if (doc != null)
-            {
-                this.Add("<tr>");
-                this.Add("<td class=BigDoc valign=top >" + doc.Replace("@", "<BR>@"));
-                this.Add("</td>");
-                this.Add("</tr>");
-            }
-            this.Add("</table>");
+                this.Add(doc.Replace("@", "<BR>@"));
+            this.AddFieldSetEnd();
         }
         #endregion
 
@@ -2058,21 +2035,21 @@ namespace BP.Web.UC
             {
                 Attr attr = map.GetAttrByKey(ad.Attr);
                 this.AddTR();
-                this.AddTD("valign=top  align=right class='TD'", attr.Desc + "£º");
+                this.AddTD("valign=top  align=right ", attr.Desc + "£º");
                 switch (attr.MyDataType)
                 {
                     case DataType.AppString:
                         if (attr.UIHeight != 0)
-                            this.AddTD("valign=top class='TD'", en.GetValHtmlStringByKey(ad.Attr));
+                            this.AddTD("valign=top ", en.GetValHtmlStringByKey(ad.Attr));
                         else
-                            this.AddTD("valign=top class='TD'", en.GetValStringByKey(ad.Attr));
+                            this.AddTD("valign=top ", en.GetValStringByKey(ad.Attr));
                         break;
                     case DataType.AppDateTime:
                     case DataType.AppDate:
-                        this.AddTD("valign=top class='TD'", en.GetValStringByKey(ad.Attr));
+                        this.AddTD("valign=top ", en.GetValStringByKey(ad.Attr));
                         break;
                     case DataType.AppBoolean:
-                        this.AddTD("valign=top class='TD'", en.GetValBoolStrByKey(ad.Attr));
+                        this.AddTD("valign=top ", en.GetValBoolStrByKey(ad.Attr));
                         break;
                     case DataType.AppFloat:
                     case DataType.AppInt:
@@ -2088,7 +2065,7 @@ namespace BP.Web.UC
                     default:
                         break;
                 }
-                this.AddTD("valign=right  class='TD'", ad.Desc);
+                this.AddTD("valign=right  ", ad.Desc);
                 this.AddTREnd();
             }
             this.AddTableEnd();
