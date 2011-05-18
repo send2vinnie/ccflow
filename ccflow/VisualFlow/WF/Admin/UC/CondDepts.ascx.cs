@@ -144,10 +144,10 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         BP.WF.Node tond = new BP.WF.Node(this.ToNodeID);
 
-        //this.Pub1.Add("要计算的节点:");
-       // this.Pub1.Add("节点从:<b>" + nd.Name + "</b> 节点到:<b>" + tond.Name + "</b> 要计算的节点:");
 
-        this.Pub1.Add( this.ToE("Node","节点") );
+        this.Pub1.AddFieldSet("部门类型:条件设置");
+
+        this.Pub1.Add( this.ToE("Node","选择节点") );
 
         Nodes nds = new Nodes(this.FK_Flow);
         Nodes ndsN = new Nodes();
@@ -163,7 +163,7 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
         this.Pub1.Add(ddl);
 
-        this.Pub1.AddTable(); 
+        this.Pub1.AddTable("width='500px;'"); 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("colspan=4", "部门选择");
         this.Pub1.AddTREnd();
@@ -223,6 +223,10 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         this.Pub1.Add(btn);
         this.Pub1.Add("</TD>");
         this.Pub1.AddTREnd();
+        this.Pub1.AddTableEnd();
+
+        this.Pub1.AddFieldSetEnd();// ("部门类型:条件设置");
+
     }
     public DDL DDL_Node
     {

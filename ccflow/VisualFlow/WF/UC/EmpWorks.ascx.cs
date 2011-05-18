@@ -51,10 +51,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
     }
     public void BindList()
     {
-        DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable(null);
-      
-
-       
+        DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
         int colspan = 9;
         this.Pub1.AddTable("border=1px align=center width='80%'");
         this.Pub1.AddCaption("<img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "待办工作") + "</b>");

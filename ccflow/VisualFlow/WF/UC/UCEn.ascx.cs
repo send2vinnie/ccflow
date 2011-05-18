@@ -100,7 +100,10 @@ namespace BP.Web.Comm.UC.WF
 
                         TB mytbLine = new TB();
                         if (attr.IsBigDoc)
+                        {
                             mytbLine.TextMode = TextBoxMode.MultiLine;
+                            mytbLine.Attributes["class"] = "TBDoc";
+                        }
 
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         if (attr.IsBigDoc)
@@ -109,9 +112,12 @@ namespace BP.Web.Comm.UC.WF
                             mytbLine.Columns = 3;
                         }
 
-                        mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
+                        //mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
+
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
                         mytbLine.Enabled = attr.UIIsEnable;
+
+
 
                         this.Add(mytbLine);
                         this.AddTDEnd();
@@ -437,7 +443,7 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         mytbLine.Rows = 8;
-                        mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
+                       // mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
 
                         // mytbLine.Attributes["onmousedown"] = script;
@@ -470,7 +476,9 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.Rows = 8;
-                        mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
+                        mytbLine.Attributes["class"] = "TBDoc";
+
+                       // mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
                         mytbLine.Enabled = attr.UIIsEnable;
                         if (mytbLine.Enabled == false)
@@ -1117,7 +1125,7 @@ namespace BP.Web.Comm.UC.WF
                     tb.Attributes["Class"] = "TBReadonly";
             }
 
-            tb.Attributes["style"] = "width=100%;height=100%";
+            tb.Attributes["style"] = "width=500px;height=100%";
             if (tb.TextMode == TextBoxMode.MultiLine)
             {
                 AddContralDoc(desc, tb);

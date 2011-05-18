@@ -25,6 +25,8 @@ namespace BP.Web.Comm
         #region attrs
         public Control GenerLabel(string title)
         {
+            return this.ParseControl(title);
+
             string path = this.Request.ApplicationPath;
             if (path == "/" || path == "")
                 path = "";

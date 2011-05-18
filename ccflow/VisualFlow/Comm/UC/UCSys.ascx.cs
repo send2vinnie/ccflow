@@ -2575,7 +2575,7 @@ namespace BP.Web.Comm.UC
         public void UIEn1ToM_OneLine(Entities ens, string showVal, string showText, Entities selectedEns, string selecteVal)
         {
             this.Controls.Clear();
-            this.AddTable("width='70%'");  
+            this.Add("<table border=0 width='500px'>");  
             bool is1 = false;
             foreach (Entity en in ens)
             {

@@ -177,14 +177,14 @@ namespace BP.Web.Comm.UC
             //if (tb.ReadOnly == false)
             //    desc += "<font color=red><b>*</b></font>";
 
-            tb.Attributes["style"] = "width=100%;height=100%";
+           // tb.Attributes["style"] = "width=100%;height=100%";
             if (tb.TextMode == TextBoxMode.MultiLine)
             {
                 AddContralDoc(desc, tb);
                 return;
             }
 
-            tb.Attributes["Width"] = "80%";
+            tb.Attributes["Width"] = "100%";
 
             this.Add("<td class='FDesc' nowrap width=1% >" + desc + "</td>");
             this.Add("<td class='TD' nowrap  >" + helpScript);
@@ -204,7 +204,7 @@ namespace BP.Web.Comm.UC
             //if (tb.ReadOnly == false)
             //    desc += "<font color=red><b>*</b></font>";
 
-            tb.Attributes["style"] = "width=100%;height=100%";
+          //  tb.Attributes["style"] = "width=100%;height=100%";
             if (tb.TextMode == TextBoxMode.MultiLine)
             {
                 AddContralDoc(desc, tb);
@@ -241,7 +241,7 @@ namespace BP.Web.Comm.UC
             //    desc += "<font color=red><b>*</b></font>";
 
 
-            tb.Attributes["style"] = "width=100%;height=100%";
+          //  tb.Attributes["style"] = "width=100%;height=100%";
             if (tb.TextMode == TextBoxMode.MultiLine)
             {
                 AddContralDoc(desc, tb, colSpanOfCtl);
@@ -273,9 +273,6 @@ namespace BP.Web.Comm.UC
                     tb.Attributes["Class"] = "TBReadonly";
             }
 
-            //if (tb.ReadOnly == false)
-            //    desc += "<font color=red><b>*</b></font>";
-
             tb.Attributes["style"] = "width=100%";
             if (tb.TextMode == TextBoxMode.MultiLine)
             {
@@ -289,11 +286,9 @@ namespace BP.Web.Comm.UC
             this.Add(tb);
             this.AddTDEnd(); // ("</td>");
         }
-        //		public void AddContralDoc(string desc, TB tb)
         public void AddContralDoc(string desc, TB tb)
         {
-            //if (desc.Length>
-            this.Add("<td class='FDesc'  colspan='2' width='50%' >" + desc + "<br>");
+            this.Add("<td colspan='2' width='500px' >" + desc + "<br>");
             if (tb.ReadOnly)
                 tb.Attributes["Class"] = "TBReadonly";
             this.Add(tb);
@@ -301,22 +296,13 @@ namespace BP.Web.Comm.UC
         }
         public void AddContralDoc(string desc, TB tb, int colspanOfctl)
         {
-            //if (desc.Length>
-            this.Add("<td class='FDesc'  colspan='" + colspanOfctl + "' width='50%' >" + desc + "<br>");
-            if (tb.ReadOnly)
-                tb.Attributes["Class"] = "TBReadonly";
+            this.Add("<td  colspan='" + colspanOfctl + "' width='100%'>" + desc + "<br>");
+            tb.Columns = 0;
+            tb.CssClass = "TBDoc";
             this.Add(tb);
             this.Add("</td>");
         }
-        //		public void AddContralDoc(string desc, int colspan, TB tb)
-        public void AddContralDoc(string desc, int colspan, TB tb)
-        {
-            this.Add("<td class='FDesc'  colspan='" + colspan + "' nowrap width=1%  height='200px'  >" + desc + "<br>");
-            if (tb.ReadOnly)
-                tb.EnsName = "TBReadonly";
-            this.Add(tb);
-            this.Add("</td>");
-        }
+
 
         #region ·½·¨
         public bool IsReadonly
@@ -1059,7 +1045,7 @@ namespace BP.Web.Comm.UC
             this.Controls.Clear();
 
            // this.Add("<table border=0 cellpadding='0'  style='border-collapse: collapse;width:30%' cellspacing='0'  >");
-            this.AddTable("border=1");
+            this.Add("<table border=1 width='300px;' >");
             bool isLeft = true;
             object val = null;
             Map map = en.EnMap;
@@ -1191,7 +1177,7 @@ namespace BP.Web.Comm.UC
                                 case DataType.AppDate:
                                     tb.Text = val.ToString();
                                     tb.ShowType = TBType.Date;
-                                    tb.Attributes["Class"] = "TB";
+                                    tb.Attributes["Class"] = "TBcalendar";
                                     tb.IsHelpKey = true;
                                     if (attr.UIIsReadonly==false)
                                         tb.Attributes["onfocus"] = "WdatePicker();";
@@ -1199,7 +1185,7 @@ namespace BP.Web.Comm.UC
                                 case DataType.AppDateTime:
                                     tb.Text = val.ToString();
                                     tb.ShowType = TBType.Date;
-                                    tb.Attributes["Class"] = "TB";
+                                    tb.Attributes["Class"] = "TBcalendar";
                                     tb.IsHelpKey = true;
                                     if (attr.UIIsReadonly==false)
                                         tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";

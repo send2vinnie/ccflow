@@ -2,12 +2,32 @@
 <NewDataSet>
 	<!-- 外部连接配置说明  No, 部门编号，URL 对方sqlserver 的连接。  -->
   <Item No="ActiveDDL"   CH="级联下拉框"  />
-  <Item No="InputCheck"   CH="脚本验证"  />
+  <Item No="InputCheck"   CH="字段输入脚本验证"  />
   <Item No="AutoFull"     CH="自动完成"  />
   <Item No="PopVal"       CH="Pop返回值"  />
 
 
   <TBEvent No="kepress"       CH="Pop返回值"  />
   <TBEvent No="PopVal"       CH="Pop返回值"  />
+
+  
+  
+  <InputCheck No="100" DFor="String" CH="文本框只能输入数字代码(小数点也不能输入)"  />
+  <InputCheck No="101" DFor="String" CH="座机号码"   />
+  <InputCheck No="102" DFor="String" CH="手机号码"  />
+  <InputCheck No="103" DFor="String" CH="E-mail"  />
+  <InputCheck No="104" DFor="String" CH="URL"  />
+  <InputCheck No="105" DFor="String" CH="手机号码"  />
+  <InputCheck No="106" DFor="String" CH="身份证号"  />
+  <InputCheck No="107" DFor="String" CH="必须是汉字"  />
+  <InputCheck No="108" DFor="String" CH="必须是英文"  />
+  <InputCheck No="109" DFor="String" CH="必须是数字"  />
+  <InputCheck No="110" DFor="String" CH="是否是英文数字下划线格式(例如:用户名)"  />
+
+  <InputCheck No="200" DFor="Int" CH="取值范围"
+                JS="this.value=this.value.replace(/\D/g,'')" />
+
+  <InputCheck No="300" DFor="Data" CH="日期输入不能为空"
+              JS="this.value=this.value.replace(/\D/g,'')" />
 
 </NewDataSet>

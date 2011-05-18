@@ -299,26 +299,11 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
 
             this.ToolBar1.Add("&nbsp;&nbsp;");
             this.ToolBar1.InitFuncEn(uac, this.CurrEn);
-
-            #region 解决Access 不刷新的问题。
-            //if (uac.IsUpdate == false)
-            //{
-            //    string rowUrl = this.Request.RawUrl;
-            //    if (rowUrl.IndexOf("rowUrl") > 1)
-            //    {
-            //    }
-            //    else
-            //    {
-            //        this.Response.Redirect(rowUrl + "&rowUrl=1", true);
-            //        return;
-            //    }
-            //}
-            #endregion
-
+ 
             this.UCEn1.IsReadonly = this.IsReadonly;
             this.UCEn1.IsShowDtl = true;
             this.UCEn1.HisEn = this.CurrEn;
-           this.UCEn1.Bind(this.CurrEn, this.CurrEn.ToString(), this.IsReadonly, true);
+            this.UCEn1.Bind(this.CurrEn, this.CurrEn.ToString(), this.IsReadonly, true);
         }
         catch (Exception ex)
         {
@@ -348,7 +333,6 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
 
         if (this.ToolBar1.IsExit(NamesOfBtn.Delete))
             this.ToolBar1.GetBtnByID(NamesOfBtn.Delete).Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-
 
         AttrFiles fls = this.CurrEn.EnMap.HisAttrFiles;
         foreach (AttrFile fl in fls)

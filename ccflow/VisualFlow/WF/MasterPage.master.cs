@@ -114,22 +114,22 @@ public partial class Face_MasterPage : BP.Web.MasterPage
             if (en.No == dotype)
             {
                 if (en.No == "EmpWorks")
-                    this.Pub1.Add("<li class=S ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></li>");
+                    this.Pub1.Add("<li class=S ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + msg + "</span></a></li>");
                 else
-                    this.Pub1.Add("<li class=S ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></li>");
+                    this.Pub1.Add("<li class=S ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + en.Name + "</span></a></li>");
             }
             else
             {
                 if (en.No == "EmpWorks")
-                    this.Pub1.Add("<li><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></li>");
+                    this.Pub1.Add("<li><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + msg + "</span></a></li>");
                 else
-                    this.Pub1.Add("<li><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></li>");
+                    this.Pub1.Add("<li><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + en.Name + "</span></a></li>");
             }
         }
-        this.Pub1.Add("<li ><a href='#'>您好:"+BP.Web.WebUser.Name+"</a></li>");
-
+       this.Pub1.AddLi("<a href=#  onmouseover='' >您好:" + BP.Web.WebUser.Name+"</a>" );
+    //   this.Pub1.Add("<span style='float:right'>您好:" + BP.Web.WebUser.Name + "</span>");
         this.Pub1.Add("</UL>");
-
+     //   this.Pub1.Add("<span style='float:right'>您好:" + BP.Web.WebUser.Name + "</span>");
        // this.Pub1.Add("<div style='float:right'>");
 
         

@@ -129,6 +129,7 @@ public partial class Comm_RefFunc_Left : BP.Web.UC.UCBase3
 
         this.AddFieldSet("<a href='UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PK + "' >" + desc + "-" + this.ToE("Home", "主页") + "</a>");
         this.AddUL();
+
         #region 加入一对多的实体编辑
         AttrsOfOneVSM oneVsM = en.EnMap.AttrsOfOneVSM;
         string sql = "";

@@ -6,17 +6,20 @@ function TROver(ctrl) {
 
 function TROut(ctrl) {
     ctrl.style.backgroundColor = 'white';
-    ctrl.style.borderWidth = '0px';
+    ctrl.style.borderWidth = '1px';
+    ctrl.style.borderstyle = 'none none dotted none';
 }
 
+var s = null;
 function TBOnfocus(ctrl) {
     //  background-color: #f4f4f4;
+    s = ctrl.className;
     ctrl.style.borderColor = 'LightSteelBlue';
-    ctrl.style.borderWidth = '1px';
 }
 
 function TBOnblur(ctrl) {
-    ctrl.style.borderColor = 'white';
+   // ctrl.style.borderColor = 'white';
+    ctrl.className=s;
 }
 
 /* ƒ¨»œ÷≤Œ Ã‚ */

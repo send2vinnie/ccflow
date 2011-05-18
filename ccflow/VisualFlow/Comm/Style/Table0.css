@@ -7,9 +7,10 @@ body
 /*  table 类型风格 */
 table
 {
-   border: 1px solid #D6DDE6;
-	border-collapse: collapse;
+    border: 1px solid #D6DDE6;
+    border-collapse: collapse;
 }
+
 
 th, .Title
 {
@@ -44,14 +45,6 @@ td input[type="textbox"]
     text-align: left;
 }
 
-td input[type="textbox"]
-{
-    margin: 0px;
-    border: 1px solid #D6DDE6;
-    padding: 0px;
-    text-align: left;
-}
-
 td .TDNum
 {
   text-align:right;
@@ -69,8 +62,6 @@ td input
     background-image: url('Img/calendar.gif');
     background-repeat: no-repeat;
 }
-
-
 
 caption
 {
@@ -91,22 +82,23 @@ table input[type="textbox"]
     border-right-style: none;
     border-bottom-style: none;
     border-left-style: none;
-    background-color: transparent;
+    background-color: #FF0000;
 }
 
-table textarea
+.TBDoc
 {
+    background-color: #003366;
+    border-style: dotted none dotted none;
     border-width: 1px;
     border-color: #CCCCCC;
-    border-top-style: none;
-    border-right-style: none;
-    border-bottom-style: none;
-    border-left-style: none;
-    width: auto;
+    overflow: visible;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
 }
 
 /*  input 类型风格 */
-input[type="button"] , .Btn, input[type="submit"]
+input[type="button"], .Btn, input[type="submit"]
 {
     padding: 2px;
     margin: 3px;
@@ -121,70 +113,6 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
     color: black;
     border-bottom: #002D96 1px solid;
 }
- 
-/********** UL 菜单 ****************/
-#ULM LI
-{
- list-style-type:square; 
- margin:0px;
- padding:0px;
- height:15px;
-}
-
-#ULM LI SPAN
-{
- color:black;
- cursor:hand;
- text-decoration:none;
- border:1px solid #F1F1F1;
- margin:0px;
- padding-left:1px;
- padding-right:0px;
- padding-top:0px;
- padding-bottom:0px;
- position:relative;
- top:0px;
- left:-1px;
-}
-
-#ULM .liOver
-{
-    background-color:#dddddd;
- border:1px solid #000000;
-}
-#ULM .liout
-{
-   background-color:#f1f1f1;
- border:1px solid #f1f1f1;
-
-}
-
-#ULM SPAN.lidown
-{
-   background-color:#00ff00;
- border:1px solid #999999;
-}
-
-
-#ULM a
-{
-    font-size:12px; color:#006699; line-height:160%; text-decoration:none
-}
-
-#ULM a:link
-{
-    font-size:12px; color:#006699; line-height:160%; text-decoration:none
-}
-
-#ULM a:active
-{
-    font-size:12px;color:#990000; line-height:160%;
-}
-
-#ULM a:hover
-{
-    font-size:12px; color:#3366ff; line-height:160%; text-decoration:none
-}
 
 /** 其它  */
 .ToolBar
@@ -192,51 +120,30 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
     background-color: #d8edff;
 }
 
-
 .GroupTitle
 {
-    background-color: #d8edff;
-    font-family: Verdana;
+    background-color: #eee;
     font-size: 14px;
-    height: 18px;
-    line-height: 20px;
-    padding: 2px;
-    font-weight: bolder;
+    border: 1px solid #ccc;
+    text-align: left;
+    word-break: keep-all;
 }
 
 .GroupField
 {
-    background-color: #eee;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    text-align: left;
-    color: #006666;
-    font-weight: bold;
+    border: thin none #669999;
+    padding: 2px;
+    margin: 3px;
+    height: 35;
+    font-size: 12px;
+    background-color:Menu;
 }
 
 .GroupField a
 {
-    background-color: #eee;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    text-align: left;
-    color: #006666;
     font-weight: bold;
 }
-
  
- /******  其它 *************/
-
-.MasterPage
-{
-    background-color: #FFFFFF;
-    font-family: 宋体;
-    font-size: 13px;
-    border-left-style: double;
-    border-right-style: double;
-}
-
-
 /* 在输入信息字段名称，单元格式的风格 */
 .FDesc
 {
@@ -251,12 +158,16 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 
 .TBNum
 {
+    border-style: none none dotted none;
+    padding: 1px;
+    margin: 1px;
     font-size: 14px;
     text-align: right;
     float: left;
     clear: left;
-    width:auto;
-    border-width:0px;
+    width: auto;
+    border-width: 1px;
+    width: 70px;
 }
  
 .TBReadonly
@@ -265,10 +176,9 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
     text-align: left;
     float: left;
     clear: left;
-    width:100%;
-    border-width:0px;
-	background-color: infobackground;
-	 
+    width: 100%;
+    border-width: 0px;
+    background-color: infobackground;
 }
 
 .TBNumReadonly
@@ -282,6 +192,7 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 	text-align: right;
 	vertical-align: bottom;
 	text-align:right;
+    width: 70px;
 }
 
 .TR1
@@ -313,9 +224,10 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 /* 内部标签风格 */
 fieldset
 {
+    margin: 5px;
     table-layout: auto;
-    padding: 9px;
-    text-align:left;
+    padding: 2px;
+    text-align: left;
 }
 
 legend
@@ -328,13 +240,13 @@ legend
 
 a:link, a:visited, a:active
 {
-	color: blue;
-	text-decoration: none;
+    color: blue;
+    text-decoration: none;
 }
 
 a:hover
 {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 ul
@@ -343,64 +255,4 @@ ul
 	border-left-style: 0;
 	left: 2px;
 	clip: rect(auto, auto, auto, 2px);
-}
-
-
-
-/* 提示筐 */
-#tip
-{
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    height: 0px;
-    width: 180px;
-    border: 1px solid #CCCCCC;
-    background-color: #eeeeee;
-    padding: 1px;
-    overflow: hidden;
-    display: none;
-    font-size: 12px;
-    z-index: 10;
-}
-#tip p {padding:6px;}
-#tip h1, #detail h1
-{
-    font-size: 14px;
-    height: 25px;
-    line-height: 25px;
-    background-color: #0066CC;
-    color: #FFFFFF;
-    padding: 0px 3px 0px 3px;
-}
-#tip h1 a, #detail h1 a
-{
-    float: right;
-    text-decoration: none;
-    color: #FFFFFF;
-}
-#shadow
-{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #CCCCCC;
-    -moz-opacity: 0.5;
-    filter: Alpha(Opacity=50);
-    opacity: 0.8;
-    z-index: 11;
-    display: none;
-    overflow: hidden;
-}
-#detail
-{
-    width: 500px;
-    height: 200px;
-    border: 3px double #ccc;
-    background-color: #FFFFFF;
-    position: absolute;
-    z-index: 30;
-    display: none;
-    left: 30%;
-    top: 30%;
 }

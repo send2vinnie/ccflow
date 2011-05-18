@@ -22,8 +22,9 @@ public partial class WF_Admin_Action : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Title = "设置:节点事件接口";
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX(this.ToE("NodeAction", "节点事件接口"));
+        this.Pub1.AddCaptionLeftTX(this.ToE("NodeAction", "节点事件接口") +" - <a href=http://ccflow.org target=_blank >Help</a>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle("事件");

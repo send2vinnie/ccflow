@@ -9,6 +9,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using BP.WF;
+using BP.WF.XML;
 using BP.Port;
 using BP.Sys;
 using BP.Web.Controls;
@@ -23,31 +24,23 @@ public partial class WF_Admin_UC_CondBar :BP.Web.UC.UCBase3
         if (this.Request.QueryString["CondType"] != "2")
             return;
 
+        BP.WF.XML.CondTypeXmls xmls = new CondTypeXmls();
+        xmls.RetrieveAll();
 
-        switch (this.PageID)
+        this.Add("<div id='tabsJ' style='height=30px;' >");
+        this.AddUL();
+        foreach (CondTypeXml item in xmls)
         {
-            case "Cond":
-                this.AddB("<a href='Cond.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>" + this.ToE("FormCond", "表单条件") + "</a>");
-                this.Add(" - <a href='CondStation.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=0&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>" + this.ToE("StaCond", "岗位条件") + "</a>");
-                this.Add(" - <a href='CondDept.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=0&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>" + this.ToE("DeptCond", "部门条件") + "</a>");
-                break;
-            case "CondStation":
-                this.Add("<a href='Cond.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>" + this.ToE("FormCond", "表单条件") + "</a>");
-                this.AddB(" - <a href='CondStation.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=0&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>" + this.ToE("StaCond", "岗位条件") + "</a>");
-                this.Add(" - <a href='CondDept.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=0&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>" + this.ToE("DeptCond", "部门条件") + "</a>");
-                break;
-            case "CondDept":
-                this.Add("<a href='Cond.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=" + this.Request["FK_Node"] + "&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>" + this.ToE("FormCond", "表单条件") + "</a>");
-                this.Add(" - <a href='CondStation.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=0&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>" + this.ToE("StaCond", "岗位条件") + "</a>");
-                this.AddB(" - <a href='CondDept.aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=0&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'>" + this.ToE("DeptCond", "部门条件") + "</a>");
-                break;
-            default:
-                break;
+            if (item.No == this.PageID)
+            {
+                this.Add("<li><a href=#><span><b>" + item.Name + "</b></span></a></li>");
+            }
+            else
+            {
+                this.AddLi("<a href='" + item.No + ".aspx?CondType=" + this.Request["CondType"] + "&FK_Flow=" + this.Request["FK_Flow"] + "&FK_MainNode=" + this.Request["FK_MainNode"] + "&FK_Node=0&FK_Attr=" + this.Request["FK_Attr"] + "&DirType=" + this.Request["DirType"] + "&ToNodeID=" + this.Request["ToNodeID"] + "'><span>" + item.Name + "</span></a>");
+            }
         }
-
-        this.AddHR();
-
-       
-
+        this.AddULEnd();
+        this.AddDivEnd();
     }
 }

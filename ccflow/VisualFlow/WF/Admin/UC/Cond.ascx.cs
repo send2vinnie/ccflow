@@ -137,7 +137,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Page.Title = "条件";
+        this.Page.Title = "表单类型条件设置";
 
         if (this.Request.QueryString["DoType"] == "Del")
         {
@@ -191,9 +191,9 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         //        break;
         //}
 
-        this.AddFieldSet("条件设置");
+        this.AddFieldSet("表单类型:条件设置");
 
-        this.AddTable("border=0");
+        this.AddTable("border=0 widht='500px'");
         this.AddTR();
         this.AddTDTitle(this.ToE("Item", "项目"));
         this.AddTDTitle(this.ToE("Input", "采集"));
@@ -445,13 +445,9 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         this.AddTableEnd();
 
 
-
-        //this.AddFieldSetEnd();
-
-
         #region 条件
 
-        this.AddTable("border=0");
+        this.AddTable("border=0 widht='500px'");
         this.AddTR();
         this.AddTDTitle("IDX");
         this.AddTDTitle(this.ToE("NodeFrom", "数据来源"));

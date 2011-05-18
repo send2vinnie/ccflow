@@ -7,6 +7,8 @@ body
 .Table_Title
 {
 	font-weight: bold;
+	 
+	  
 }
 
 .MasterPage
@@ -145,10 +147,7 @@ body
     
 }
 
-.TR1
-{
-background-color:AliceBlue
-}
+
 
 
 .TRSum

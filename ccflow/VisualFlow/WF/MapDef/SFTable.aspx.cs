@@ -43,9 +43,9 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
     {
         this.Ucsys1.AddTable();
         if (this.RefNo == null)
-            this.Ucsys1.AddCaptionLeftTX("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSFTable&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("FK","外键") + "</a> - " + this.ToE("NewTable", "新建表"));
+            this.Ucsys1.AddCaption("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSFTable&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("FK", "外键") + "</a> - " + this.ToE("NewTable", "新建表"));
         else
-            this.Ucsys1.AddCaptionLeftTX("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSFTable&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("FK","外键") + "</a> - " + this.ToE("EditTable","编辑表"));
+            this.Ucsys1.AddCaption("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSFTable&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("FK", "外键") + "</a> - " + this.ToE("EditTable", "编辑表"));
 
         if (this.RefNo == null)
             this.Title = this.ToE("NewTable", "新建表");   // "新建表";ble

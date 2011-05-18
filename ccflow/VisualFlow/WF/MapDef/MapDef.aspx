@@ -13,7 +13,6 @@ body
 </style>
  
  <script src="./../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
-
     <script language="JavaScript" src="../../Comm/JScript.js"></script>
     <script language="JavaScript" src="MapDef.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>

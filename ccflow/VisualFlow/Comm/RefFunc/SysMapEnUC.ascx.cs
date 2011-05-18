@@ -1030,7 +1030,7 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
             //if (tb.ReadOnly == false)
             //    desc += "<font color=red><b>*</b></font>";
 
-            tb.Attributes["style"] = "width=100%;height=100%";
+          //  tb.Attributes["style"] = "width=100%;height=100%";
             if (tb.TextMode == TextBoxMode.MultiLine)
             {
                 AddContralDoc(desc, tb);
@@ -1057,7 +1057,7 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
             //if (tb.ReadOnly == false)
             // desc += "<font color=red><b>*</b></font>";
 
-            tb.Attributes["style"] = "width=100%;height=100%";
+            //tb.Attributes["style"] = "width=100%;height=100%";
             if (tb.TextMode == TextBoxMode.MultiLine)
             {
                 AddContralDoc(desc, tb);
@@ -1094,7 +1094,7 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
             //    desc += "<font color=red><b>*</b></font>";
 
 
-            tb.Attributes["style"] = "width=100%;height=100%";
+           // tb.Attributes["style"] = "width=100%;height=100%";
             if (tb.TextMode == TextBoxMode.MultiLine)
             {
                 AddContralDoc(desc, tb, colSpanOfCtl);
@@ -1155,9 +1155,10 @@ public partial class Comm_RefFunc_SysMapEnUC : BP.Web.UC.UCBase3
         public void AddContralDoc(string desc, TB tb, int colspanOfctl)
         {
             //if (desc.Length>
-            this.Add("<td class='FDesc'  colspan='" + colspanOfctl + "' nowrap height='100px' width='50%' >" + desc + "<br>");
+            this.Add("<td class='FDesc'  colspan='" + colspanOfctl + "' nowrap height='100px' width='500px' >" + desc + "<br>");
             if (tb.ReadOnly)
                 tb.Attributes["Class"] = "TBReadonly";
+            tb.Attributes["style"] = "";
             this.Add(tb);
             this.Add("</td>");
         }
