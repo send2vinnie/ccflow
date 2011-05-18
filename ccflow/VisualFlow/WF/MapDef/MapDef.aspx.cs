@@ -73,7 +73,7 @@ public partial class WF_MapDef_MapDef : WebPage
         this.Pub1.Add("\t\n</div>");
 
 
-        this.Pub1.AddFieldSet(md.Name);
+        this.Pub1.AddFieldSet("设计表单:"+md.Name);
 
         this.Pub1.Add("\t\n<Table style=\"width:500px;\" >");
         /*
@@ -134,13 +134,14 @@ public partial class WF_MapDef_MapDef : WebPage
                     }
                     rowIdx++;
                     this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'  " + gfAttr);
-                    this.Pub1.Add("<TD class=FDesc colspan=4 width='100%' >");
-                    this.Pub1.Add(this.GenerLab(attr, idx, 0, count));
+                    this.Pub1.Add("<TD colspan=4 width='100%' >");
+                    this.Pub1.Add("<span >"+this.GenerLab(attr, idx, 0, count)+"</span>");
                     TextBox mytbLine = new TextBox();
                     mytbLine.ID = "TB_" + attr.KeyOfEn;
                     mytbLine.TextMode = TextBoxMode.MultiLine;
                     mytbLine.Rows = 8;
-                    mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
+                    mytbLine.Attributes["class"] = "TBDoc"; // "width:100%;padding: 0px;margin: 0px;";
+                   // mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                     mytbLine.Enabled = attr.UIIsEnable;
                     if (mytbLine.Enabled == false)
                         mytbLine.Attributes["class"] = "TBReadonly";
@@ -158,12 +159,14 @@ public partial class WF_MapDef_MapDef : WebPage
                         rowIdx++;
                         this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' " + gfAttr);
                     }
-                    this.Pub1.Add("<TD class=FDesc colspan=2 width='50%' >");
-                    this.Pub1.Add(this.GenerLab(attr, idx, 0, count));
+                    this.Pub1.Add("<TD  colspan=2 width='50%'>");
+               //     this.Pub1.Add(this.GenerLab(attr, idx, 0, count));
+                    this.Pub1.Add("<span >" + this.GenerLab(attr, idx, 0, count) + "</span>");
+
                     TextBox mytbLine = new TextBox();
                     mytbLine.TextMode = TextBoxMode.MultiLine;
                     mytbLine.Rows = 8;
-                    mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
+                    mytbLine.Attributes["class"] = "TBDoc"; // "width:100%;padding: 0px;margin: 0px;";
                     mytbLine.ID = "TB_" + attr.KeyOfEn;
 
                     mytbLine.Enabled = attr.UIIsEnable;
@@ -221,6 +224,7 @@ public partial class WF_MapDef_MapDef : WebPage
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
                                 tb.ShowType = TBType.TB;
                                 tb.Text = attr.DefVal;
+                                tb.Attributes["onblur"] = "check(this,'"+attr.MinLen+"','"+attr.MaxLen+"')";
                                 if (colspanOfCtl == 3)
                                 {
                                     this.Pub1.AddTD(" width=80% colspan=" + colspanOfCtl, tb);
@@ -235,26 +239,24 @@ public partial class WF_MapDef_MapDef : WebPage
                                 break;
                             case BP.DA.DataType.AppDate:
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                tb.ShowType = TBType.Date;
-                                tb.Text = attr.DefVal;
+                                TextBox tbD = new TextBox();
                                 if (attr.UIIsEnable)
                                 {
-                                    tb.Attributes["onfocus"] = "WdatePicker();";
-                                    tb.Attributes["class"] = "TBcalendar";
+                                    tbD.Attributes["onfocus"] = "WdatePicker();";
+                                    tbD.Attributes["class"] = "TBcalendar";
                                 }
-                                tb.Attributes["class"] = "TBcalendar";
-                                this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tb);
+                                this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tbD);
                                 break;
                             case BP.DA.DataType.AppDateTime:
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                tb.ShowType = TBType.DateTime;
-                                tb.Text = attr.DefVal;
+                                TextBox tbDT = new TextBox();
+                                tbDT.Text = attr.DefVal;
                                 if (attr.UIIsEnable)
                                 {
-                                    tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
+                                    tbDT.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
+                                    tbDT.Attributes["class"] = "TBcalendar";
                                 }
-                                tb.Attributes["class"] = "TBcalendar";
-                                this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tb);
+                                this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tbDT);
                                 break;
                             case BP.DA.DataType.AppBoolean:
                                 if (attr.UIIsLine)

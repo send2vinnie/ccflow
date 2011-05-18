@@ -6,6 +6,8 @@
 <head runat="server">
     <title>自动完成</title>
     <link href="../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
+	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
+
     <script language="javascript">
     /* ESC Key Down  */
     function Esc()

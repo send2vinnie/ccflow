@@ -6,6 +6,8 @@
     <asp:ContentPlaceHolder id="head" runat="server">
     <script language="JavaScript" src="../Comm/JScript.js"></script>
     <script language="JavaScript" src="../Comm/JS/Calendar/WdatePicker.js" ></script>
+   
+
 <base target=_self /> 
  <style type="text/css">
  body
@@ -21,7 +23,6 @@
 </style>
     </asp:ContentPlaceHolder>
 <base target=_self /> 
-    <script type="text/javascript" language="JavaScript" src="../Comm/JScript.js" ></script>
 </head>
 <body topmargin="0" leftmargin="0" >
     <form id="form1" runat="server">

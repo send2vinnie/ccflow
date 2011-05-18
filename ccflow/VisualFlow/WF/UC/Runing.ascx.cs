@@ -40,13 +40,6 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
     {
         GenerWorkFlowExts gwfs = BP.WF.Dev2Interface.DB_GenerRuningOfEntities();
 
-        if (gwfs.Count == 0)
-        {
-            this.AddFieldSet("提示");
-            this.Add("没有在途工作");
-            this.AddFieldSetEnd();
-            return;
-        }
 
         this.Page.Title = this.ToE("OnTheWayWork", "在途工作");
         if (WebUser.IsWap)
@@ -56,7 +49,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         }
 
         int colspan = 7;
-        this.Pub1.AddTable("border=1px");
+        this.Pub1.AddTable("border=1px align=center width='80%'");
         //this.Pub1.AddTR();
         //this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         //this.Pub1.AddTREnd();

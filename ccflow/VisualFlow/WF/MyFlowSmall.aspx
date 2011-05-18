@@ -3,7 +3,21 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <script language="JavaScript" src="../Comm/JScript.js"></script>
     <script language="JavaScript" src="../Comm/JS/Calendar/WdatePicker.js" ></script>
+    <style type="text/css">
+    
+    .D
+    {
+         text-align:center;
+         width:500px;
+         float:left;
+          margin-left:20px;
+    }
+    
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
+<div class=D >
     <uc1:MyFlowUC ID="MyFlowUC1" runat="server" />
+    </div>
     </asp:Content>

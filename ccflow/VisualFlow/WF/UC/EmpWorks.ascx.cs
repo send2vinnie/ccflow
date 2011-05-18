@@ -52,17 +52,11 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
     public void BindList()
     {
         DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable(null);
-        if (dt.Rows.Count == 0)
-        {
-            this.Pub1.AddFieldSet("提示");
-            this.Pub1.Add("您没有工作需要去做。");
-            this.Pub1.AddFieldSetEnd();
-            return;
-        }
+      
 
        
         int colspan = 9;
-        this.Pub1.AddTable("border=1px align=center");
+        this.Pub1.AddTable("border=1px align=center width='80%'");
         this.Pub1.AddCaption("<img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "待办工作") + "</b>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
@@ -83,7 +77,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         foreach (DataRow dr in dt.Rows)
         {
             string sdt = dr["SDT"] as string;
-            is1 = this.Pub1.AddTR(is1); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
+              this.Pub1.AddTRTX(); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
+            //is1 = this.Pub1.AddTR(is1); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
+
             i++;
             this.Pub1.AddTDIdx(i);
             this.Pub1.AddTD(dr["FlowName"].ToString());
@@ -108,6 +104,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         this.Pub1.AddTD("colspan=" + colspan, "&nbsp;");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
+        
         return;
     }
     protected void Page_Load(object sender, EventArgs e)

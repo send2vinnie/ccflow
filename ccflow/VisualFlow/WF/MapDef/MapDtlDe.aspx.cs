@@ -169,13 +169,18 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                             case BP.DA.DataType.AppDateTime:
                                 tb.Attributes["style"] = "width:"+attr.UIWidth+"px;border: none;";
                                 if (attr.UIIsEnable)
+                                {
                                     tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
-
+                                    //tb.Attributes["class"] = "TBcalendar";
+                                }
                                 break;
                             case BP.DA.DataType.AppDate:
                                 tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border: none;";
                                 if (attr.UIIsEnable)
+                                {
                                     tb.Attributes["onfocus"] = "WdatePicker();";
+                                  //  tb.Attributes["class"] = "TBcalendar";
+                                }
 
                                 break;
                             default:

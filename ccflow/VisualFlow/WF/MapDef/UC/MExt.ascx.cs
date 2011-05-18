@@ -58,7 +58,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         MapDtls dtls = new MapDtls(myme.FK_MapData);
         string[] strs = myme.Tag1.Split('$');
 
-        this.Pub2.AddTable("border=0");
+        this.Pub2.AddTable("border=0  width='300px' ");
         bool is1 = false;
         foreach (MapDtl dtl in dtls)
         {
@@ -110,7 +110,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         MapAttrs attrs = new MapAttrs(myme.FK_MapData);
         string[] strs = myme.Tag.Split('$');
 
-        this.Pub2.AddTable("border=0");
+        this.Pub2.AddTable("border=0 width='300px' ");
         bool is1 = false;
         foreach (MapAttr attr in attrs)
         {
@@ -410,7 +410,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         me.FK_MapData = this.FK_MapData;
 
-        this.Pub2.AddTable("border=0");
+        this.Pub2.AddTable("border=0  width='300px' ");
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("项目");
         this.Pub2.AddTDTitle("采集");
@@ -418,7 +418,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
-        this.Pub2.AddTD("输入文本框");
+        this.Pub2.AddTD("验证字段:");
         BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
         ddl.ID = "DDL_Oper";
         MapAttrs attrs = new MapAttrs(this.FK_MapData);
@@ -438,8 +438,28 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         ddl.SetSelectItem(me.AttrOfOper);
         this.Pub2.AddTD(ddl);
-        this.Pub2.AddTD("输入项");
+        this.Pub2.AddTD("");
         this.Pub2.AddTREnd();
+
+
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("验证方式:");
+        ddl = new BP.Web.Controls.DDL();
+        ddl.ID = "DDL_CheckWay";
+        InputCheckXmls xmls = new InputCheckXmls();
+        xmls.RetrieveAll();
+        foreach (InputCheckXml xml in xmls)
+        {
+            ddl.Items.Add(new ListItem(xml.Name, xml.No));
+        }
+
+        ddl.Items.Add(new ListItem("*****自己验证方式*******", "all"));
+
+        ddl.SetSelectItem(me.AttrOfOper);
+        this.Pub2.AddTD(ddl);
+        this.Pub2.AddTD("");
+        this.Pub2.AddTREnd();
+
 
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("colspan=3", "处理内容");
@@ -480,7 +500,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         me.FK_MapData = this.FK_MapData;
 
-        this.Pub2.AddTable("border=0");
+        this.Pub2.AddTable("border=0  width='300px' ");
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("项目");
         this.Pub2.AddTDTitle("采集");
@@ -558,7 +578,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         me.FK_MapData = this.FK_MapData;
 
-        this.Pub2.AddTable("border=0");
+        this.Pub2.AddTable("border=0  width='300px' ");
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("项目");
         this.Pub2.AddTDTitle("采集");

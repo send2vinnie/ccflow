@@ -77,9 +77,6 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
                 break;
         }
 
-        //FlowSorts fss = new FlowSorts();
-        //fss.RetrieveAll();
-        //DataSet = fss.ToDataSet();
 
         string s = this.Session["info"] as string;
         this.Session["info"] = null;
@@ -93,20 +90,16 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
         {
             s = s.Replace("@@", "@");
             s = s.Replace("@", "<BR>@");
+
+            this.AlertMsg_Info(this.ToE("Note", "操作提示"), s);
         }
-        this.AddFieldSet(this.ToE("Note", "操作提示"), s);
-
-
 
         string sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "' ORDER BY WorkID ";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-        if (dt.Rows.Count == 0)
-            return;
 
-        this.AddFieldSet("待办工作("+dt.Rows.Count+")");
 
         int colspan = 9;
-        this.AddTable("border=1px align=center");
+        this.AddTable("border=1px align=center width='80%'");
         this.AddTR();
         this.AddTDTitle("ID");
         this.AddTDTitle(this.ToE("Flow", "流程"));
@@ -151,7 +144,6 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
         this.AddTREnd();
         this.AddTableEnd();
 
-        this.AddFieldSetEnd(); // ; ("此流程待办工作");
+        
     }
-
 }

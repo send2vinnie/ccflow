@@ -20,14 +20,28 @@ public partial class WF_Msg_Write : WebPage
     {
         get
         {
+            try{
+
             return int.Parse(this.Request.QueryString["WorkID"]);
+
+            }catch
+            {
+                return 0;
+            }
         }
     }
     public int FK_Node
     {
         get
         {
+            try{
+
             return int.Parse(this.Request.QueryString["FK_Node"]);
+
+            }catch
+            {
+                return 0;
+            }
         }
     }
 
@@ -47,9 +61,29 @@ public partial class WF_Msg_Write : WebPage
                 msg.Accepter = msg.Sender;
                 break;
             default:
+                if (this.WorkID!= 0 && this.FK_Node!=0)
+                {
+                    Node nd =new Node(this.FK_Node);
+                    Work wk = nd.HisWork;
+                    wk.OID=this.WorkID;
+                    wk.Retrieve();
+
+                    string msgInfo="\t\n ************** workinfo **************";
+                    Attrs attrs =wk.EnMap.Attrs;
+                    foreach (Attr attr in attrs )
+	               {
+                        if (attr.UIVisible==false)
+                            continue;
+
+                        if (attr.IsFKorEnum)
+                            continue;
+
+                        msgInfo+="\t\n"+attr.Desc+": "+wk.GetValStrByKey(attr.Key);
+                    }
+                    msg.Doc = msgInfo;
+                }
                 break;
         }
-
         this.Pub1.AddTable("width='95%'");
         if (WebUser.IsWap)
             this.Pub1.AddCaptionLeft("<a href='./../Home.aspx' ><img src='./../Img/Home.gif' border=0>Home</a> - <a href='./../../WAP/Msg.aspx' >列表</a>");
@@ -96,6 +130,7 @@ public partial class WF_Msg_Write : WebPage
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }
+    public void 
 
     void btn_Click(object sender, EventArgs e)
     {

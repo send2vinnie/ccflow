@@ -54,27 +54,20 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         MapAttrs attrs = new MapAttrs(this.NodeOfSelect);
         MapAttrs attrsCopy = new MapAttrs(this.FK_Node);
 
-        //  this.Pub2.Add("<b>选择要复制的节点与分组:</b>");
-        BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
-        ddl.ID = "DDL1";
-        ddl.AutoPostBack = true;
 
-        //ddl.Attributes["onchange"] = "javascript:Go('" + this.FK_Node + "','" + ddl.ClientID + "', this.value );";
+        this.Pub1.AddFieldSet("选择节点");
+        this.Pub1.AddUL("Main");
         foreach (BP.WF.Node en in nds)
         {
-            if (en.No == this.FK_Node)
-                continue;
-            int nodeid = nd.NodeID;
-            ddl.Items.Add(new ListItem(en.Name, "ND" + en.NodeID.ToString()));
+            if (this.NodeOfSelect == en.NodeID.ToString())
+                this.Pub1.AddLiB("CopyFieldFromNode.aspx?FK_Node=" + this.FK_Node + "&NodeOfSelect=ND" + en.NodeID, "步骤:" + en.Step + ",名称:" + en.Name);
+            else
+                this.Pub1.AddLi("CopyFieldFromNode.aspx?FK_Node=" + this.FK_Node + "&NodeOfSelect=ND" + en.NodeID, "步骤:" + en.Step + ",名称:" + en.Name);
         }
-        ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
-        ddl.SetSelectItem(this.NodeOfSelect);
+        this.Pub1.AddULEnd();
+        this.Pub1.AddFieldSetEnd(); 
 
         this.Pub2.AddTable("width='400px'");
-        this.Pub2.AddTR();
-        this.Pub2.AddTDB(this.ToE("SelectNode", "选择节点"));
-        this.Pub2.AddTD("colspan=3", ddl);
-        this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle(this.ToE("Field", "字段"));
@@ -188,13 +181,11 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         Button btn = new Button();
         if (isHave == false)
         {
-            //this.Pub2.AddMsgInfo("提示：",
-            //    "该节点下没有您要复制的字段。");
             return;
         }
         this.Pub2.Add(this.ToE("Group", "到分组:"));
         gfs = new GroupFields(this.FK_Node);
-        ddl = new BP.Web.Controls.DDL();
+        BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
         ddl.ID = "DDL_GroupField";
         ddl.Bind(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab);
         ddl.SetSelectItem(this.GroupField);

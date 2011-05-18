@@ -177,7 +177,7 @@ public partial class Comm_Dtl : WebPage
 
             if (attr.UIIsEnable)
                 this.IsEnable = true;
-            this.Pub1.Add("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
+            this.Pub1.AddTDTitle( attr.Name );// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
         }
 
         if (mdtl.IsDelete)

@@ -22,10 +22,10 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    function CopyF(mypk)
-    {
+    function CopyF(mypk) {
+        alert(mypk);
         var url='CopyDtlField.aspx?MyPK='+mypk;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 600px; dialogWidth: 800px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
     function Edit(mypk,refNo, ftype)

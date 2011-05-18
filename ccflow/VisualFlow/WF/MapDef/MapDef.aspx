@@ -13,10 +13,16 @@ body
 </style>
  
  <script src="./../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+
     <script language="JavaScript" src="../../Comm/JScript.js"></script>
     <script language="JavaScript" src="MapDef.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
     <script language="javascript" >
+        function check(tb, min, max) {
+          //  alert(min);
+           // tb.Focus();
+            //tb.text.selected();
+        }
 	function HelpGroup()
 	{
 	   var msg='字段分组：就是把类似的字段放在一起，让用户操作更友好。\t\n比如：我们纳税人设计一个基础信息采集节点。';
@@ -48,25 +54,25 @@ body
     }
     function MapExt(mypk) {
         var url = 'MapExt.aspx?FK_MapData=' + mypk;
-        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 300px; dialogWidth: 700px;center: yes; help: no');
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 800px;center: yes; help: no');
         window.location.href = window.location.href;
     }
     function CopyFieldFromNode(mypk)
     {
         var url='CopyFieldFromNode.aspx?DoType=AddF&FK_Node='+mypk;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 700px; dialogWidth: 900px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
     function GroupFieldNew(mypk)
     {
         var url='GroupField.aspx?RefNo='+mypk+"&RefOID=0&DoType=FunList";
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 200px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
     function GroupField(mypk, OID )
     {
         var url='GroupField.aspx?RefNo='+mypk+"&RefOID="+OID ;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 200px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
     function GroupFieldDel(mypk,refoid)
@@ -193,13 +199,12 @@ body
     }
 
     var isInser = "";
-    
-  function CopyFieldFromNode( mypk )
-  {
-      var url='CopyFieldFromNode.aspx?FK_Node='+mypk ;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
+
+    function CopyFieldFromNode(mypk) {
+        var url = 'CopyFieldFromNode.aspx?FK_Node=' + mypk;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 700px; dialogWidth: 900px;center: yes; help: no');
         window.location.href = window.location.href;
-  }
+    }
 
   function EditDtl(mypk, dtlKey) {
       var url = 'MapDtl.aspx?DoType=Edit&FK_MapData=' + mypk + '&FK_MapDtl=' + dtlKey;

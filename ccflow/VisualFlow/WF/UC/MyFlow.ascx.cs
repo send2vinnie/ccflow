@@ -378,6 +378,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return;
         }
 
+        this.LoadPop();
+
         string appPath = this.Request.ApplicationPath;
         BP.WF.Node currND;
         currND = this.CurrentNode;
@@ -441,7 +443,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.ToolBar1.AddBtn("Btn_HandOver", this.ToE("HandOver", "移交"));
 
 
-            this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
+//            this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
+           // this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\" alert('ss'); ymPrompt.win({message:'" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "',width:500,height:300,title:'ccflow',handler:handler,maxBtn:true,minBtn:true,iframe:true}); \" />");
+
+          //  string url =  appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
+            this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"alert('sss');ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
+
+         //   this.AlertMsg_Info
 
             this.ToolBar1.AddSpt("ad");
 
@@ -471,11 +479,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             //        this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Attributes["onclick"] = " window.location.href='MyFlow.aspx?WorkID=" + rec.PreviouID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "';return false;";
             //}
             #endregion 增加上一条下一条。
-
-
             this.ToolBar1.AddSpt("Next4");
             if (this.WorkID > 0)
             {
+                 string url =  appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
+                 this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"alert('sss');ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
+
                 this.ToolBar1.Add("<input type=button value='" + this.ToE("WorkRpt", "报告") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
                 this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds'); \" />");
             }
@@ -718,11 +727,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         #endregion 设置默认值。
 
-        //if (wk.NodeState == NodeState.Back)
-        //{
-        //    ReturnWork rw = new ReturnWork();
-        //    this.FlowMsg.AddMsgInfo("", rw.NoteHtml);
-        //}
 
         #region 判断是否合流节点。。
         if (nd.HisNodeWorkType == NodeWorkType.WorkHL || nd.HisNodeWorkType == NodeWorkType.WorkFHL)
@@ -1061,19 +1065,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     break;
                 case NamesOfBtn.Save:
                     this.Send(true);
-                    // this.Response.Redirect(this.Request.RawUrl, true);
-                    //BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-                    //Work work = nd.HisWork;
-                    //work.OID = this.WorkID;
-                    //if (work.EnMap.Attrs.Contains(BP.WF.GECheckStandAttr.NodeID))
-                    //    work.SetValByKey(GECheckStandAttr.NodeID, this.FK_Node);
-                    //work.Retrieve();
-                    /* 说明有脚本存在，就要判断是否是需要关闭窗口。 */
-                    //if (this.IsClose)
-                    //{
-                    //    this.WinClose();
-                    //    return;
-                    //}
                     break;
                 case "Btn_ReturnWork":
                     this.BtnReturnWork();
@@ -1084,7 +1075,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 case "Btn_WorkerList":
                     if (WorkID == 0)
                         throw new Exception("没有指定当前的工作,不能查看工作者列表.");
-                    this.BtnWorkerList();
                     break;
                 case "Btn_PrintWorkRpt":
                     if (WorkID == 0)
@@ -1096,171 +1086,18 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     this.Send(false);
                     break;
                 default:
-                    this.DealNodeRefFunc(btn.ID);
                     break;
             }
         }
         catch (Exception ex)
         {
-            this.FlowMsg.AddMsgOfWarning("信息提示", ex.Message);
-            //this.ResponseWriteRedMsg(ex.Message);
+            this.FlowMsg.AlertMsg_Warning("信息提示", ex.Message);
         }
     }
-    /// <summary>
-    /// 处理相关功能
-    /// </summary>
-    public void DealNodeRefFunc(string btnId)
-    {
-        //int oid= int.Parse(btnId.Substring("Btn_NodeRef".Length) );
-        //   BillTemplate en = new BillTemplate(oid);
-        //if (en.RefFuncType==1)
-        //{
-        //	if (this.WorkID==0)
-        //			throw new Exception("@没有找到当前的工作ID.系统错误。");
-        ////		this.WinOpen("NodeRefFunc.aspx?NodeId="+this.FK_Node.ToString()+"&FlowNo="+this.FK_Flow+"&NodeRefFuncOID="+en.OID.ToString()+"&WorkFlowID="+this.WorkID.ToString(),en.Name,"rpt",en.Width,en.Height,60,60,true,true);
-        //	}
-        //	else
-        //		this.WinOpen(this.Request.ApplicationPath+en.URL+"?WorkFlowID="+this.WorkID.ToString(),en.Name,en.Width,en.Height);
-    }
+    
 
     #region 按钮事件
-    /// <summary>
-    /// 上一个工作
-    /// </summary>
-    public void BtnPreviousWork()
-    {
-        //			this.Btn_NextWork.Enabled=true;		
-        //			if (this.DG_Works.SelectedIndex < 0 )
-        //				throw new Exception("@没有选择当前的工作.");
-        //
-        //			WorkNode wn = new WorkNode(this.CurrentWorkEn,this.CurrentNode);
-        //			if (wn.HisNode.IsStatrNode)
-        //				this.Btn_PreviousWork.Enabled=false;
-        //			WorkNode toWn= wn.GetPreviousWorkNode();
-        //			if (toWn.HisWork.NodeState!=BP.WF.NodeState.Complete)
-        //			{
-        //				/* 如果是当前的工作 */
-        //				BtnCurrentWork();
-        //				return;
-        //			}
-        //
-        //			this.Btn_Send.Enabled=toWn.IsCanOpenCurrentWorkNode(WebUser.No);
-        //			this.Btn_Save.Enabled=this.Btn_Send.Enabled;
-        //
-        //			if (toWn.HisNode.IsStatrNode)
-        //				this.Btn_PreviousWork.Enabled=false;
-        //			else
-        //				this.Btn_PreviousWork.Enabled=true;
-        //
-        //			
-        //			this.FK_Node =toWn.HisNode.OID;	
-        //		 
-        //			this.UCEn1.Bind(toWn.HisWork,false,true);
-        //
-        //			this.ResetNodeName(toWn.HisNode);
-    }
-    //		/// <summary>
-    //		/// 转到当前工作
-    //		/// </summary>
-    //		public void BtnCurrentWork()
-    //		{
-    //			//this.Btn_NextWork.Enabled=false;
-    //			//this.Btn_PreviousWork.Enabled=true;
-    //			//if (this.DG_Works.SelectedIndex < 0)
-    //			//throw new Exception("@没有选择当前的工作.");
-    //			LoadWorkID( this.WorkID  );
-    //			this.BPTabStrip1.SelectedIndex=0;
-    //		}
-    /// <summary>
-    /// 下一个工作
-    /// </summary>
-    public void NextWork()
-    {
-        //			this.Btn_PreviousWork.Enabled=true;
-        //
-        //			if (this.DG_Works.SelectedIndex < 0)
-        //				throw new Exception("@没有选择当前的工作.");
-        //
-        //			Work work = this.CurrentWorkEn;
-        //			if (work.NodeState!=BP.WF.NodeState.Complete)
-        //			{
-        //				this.Btn_NextWork.Enabled=false;
-        //
-        //				//throw new Exception("@工作["+work.EnDesc+"]是正在进行的工作.");
-        //				/* 如果当前的工作状态不是完成状态, 就是工作进行状态. */
-        //				//BtnCurrentWork();
-        //				return;
-        //			}
-        //			 
-        //			WorkNode wn =  new WorkNode(work,this.CurrentNode);
-        //			WorkNode toWn= wn.GetNextWorkNode();
-        //			//			if (toWn.HisWork.NodeState!=0)
-        //			//			{
-        //			//				/* 如果是当前的工作 */
-        //			//				BtnCurrentWork();
-        //			//				return;
-        //			//			}
-        //
-        //			this.Btn_Send.Enabled=toWn.IsCanOpenCurrentWorkNode(WebUser.No) ; 
-        //			this.Btn_Save.Enabled=this.Btn_Send.Enabled;
-        //			this.FK_Node =toWn.HisNode.OID;
-        //			
-        //
-        //			this.UCEn1.Bind(toWn.HisWork,false,true);
-        //			//this.DG_WorkArea.DataBind(toWn.HisWork,true);
-        //			this.ResetNodeName(toWn.HisNode);
-
-    }
-    /// <summary>
-    /// 生成回执单据
-    /// </summary>
-    private string GenerHZ(Work wk, BP.WF.Node nd)
-    {
-        return null;
-        #region  适合机关
-        //if (nd.IsStartNode == false)
-        //    return null;
-
-        //Flow fl = new Flow(this.FK_Flow);
-        //if (fl.DateLit == 0)
-        //    return null;
-
-        //if (wk.EnMap.Attrs.Contains("FK_Taxpayer") == false)
-        //    return null;
-
-        //string msg1 = "<img src='../../" + SystemConfig.AppName + "/Images/Btn/Word.gif' /><a href=\"javascript:WinOpen('GenerHuiZhi.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + wk.OID + "','Hz') \"  >受理回执</a>";
-        //return msg1;
-
-
-        //BillTemplate func = new BillTemplate("SLHZ"); // 回执
-        //string year = DateTime.Now.Year.ToString();
-        //string file = year + "_" + WebUser.FK_Dept + "_" + func.No + "_" + wk.OID + ".doc";
-        //string msg = "<img src='../../" + SystemConfig.AppName + "/Images/Btn/Word.gif' /><a href=\"javascript:Run('C:\\\\ds2002\\\\OpenBill.EXE','" + file + "','0');\"  >" + func.Name + "</a>";
-
-
-        //BP.Rpt.RTF.RTFEngine rtf = new BP.Rpt.RTF.RTFEngine();
-        //CHOfFlow cf = new CHOfFlow();
-        //cf.FK_Flow = this.FK_Flow;
-        //cf.SetValByKey("FK_FlowText", fl.Name);
-        //cf.FK_Flow = this.FK_Flow;
-        //Dept Dept = new Dept(WebUser.FK_Dept);
-
-        //cf.SetValByKey("FK_DeptText", Dept.Name);
-        //cf.Copy(wk);
-
-        //cf.DateLitFrom = DateTime.Now.AddDays(fl.DateLit).ToString(DataType.SysDataFormat);
-        //cf.DateLitTo = DateTime.Now.AddDays(fl.DateLit + 10).ToString(DataType.SysDataFormat);
-        ////cf.Update();
-        //rtf.AddEn(cf);
-
-        //string path = BP.SystemConfig.AppSettings["FtpPath"].ToString() + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
-        //rtf.MakeDoc(func.Url + ".rtf",
-        //    path, file, false);
-
-        //return msg; // +"<a href='Do.aspx?ActionType=DeleteFlow&WorkID=" + wk.OID + "&FK_Flow=" + this.FK_Flow + "'  /><img src='../../Images/Btn/Delete.gif' border=0/>删除</a>";
-
-        #endregion
-    }
+   
     /// <summary>
     /// 保存工作
     /// </summary>
@@ -1271,8 +1108,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         System.Web.HttpContext.Current.Session["RunDT"] = DateTime.Now;
         if (this.FK_Node == 0)
             throw new Exception(this.ToE("NotCurrNode", "没有找到当前的节点"));
-
-
 
         BP.WF.Node currNd = this.CurrentNode;
         Work work = currNd.HisWork;
@@ -1340,7 +1175,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 throw new Exception("@保存错误:" + ex.Message + "@检查物理表错误：" + ex1.Message);
             }
             this.Btn_Send.Enabled = true;
-            this.Pub1.AddMsgOfWarning("错误", ex.Message + "@有可能此错误被系统自动修复,请您从新保存一次.");
+            this.Pub1.AlertMsg_Warning("错误", ex.Message + "@有可能此错误被系统自动修复,请您从新保存一次.");
             return;
         }
         this.WorkID = work.OID;
@@ -1378,12 +1213,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             msg = ex.Message.Replace("'", "’");
             msg = ex.Message.Replace("<br>", "\r\n");
-
-
             this.Btn_Send.Enabled = true;
-            this.Alert(msg);
+            this.Pub1.AlertMsg_Warning("错误", msg);
             return;
         }
+
 
         //bool isCanDoNextWork = true;
         ////能不能执行下一步工作
@@ -1455,16 +1289,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         Flow fl = new Flow(this.FK_Flow);
         this.FK_Node = fl.StartNodeID;
 
-        //try
-        //{
-        //    this.Btn_Send.Enabled = true;
-        //    this.Btn_Save.Enabled = true;
-        //}
-        //catch
-        //{
-        //}
-
-        // this.BPTabStrip1.SelectedIndex = 0;
+      
         this.FK_Node = nd.NodeID;
 
         StartWork wk = (StartWork)nd.HisWork;
@@ -1516,26 +1341,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         //        break;
         //}
     }
-    /// <summary>
-    /// show worker list.
-    /// </summary>
-    private void BtnWorkerList()
-    {
-        throw new Exception("不处理.");
-        //this.WinOpen(this.Request.ApplicationPath+"/Comm/UIEnDtl.aspx?Key=WorkID&WorkID="+this.WorkID.ToString()+"&EnsName=BP.WF.WorkerLists","工作者列表",800,600);
-    }
-    public void BtnOption()
-    {
-        if (this.FK_Node == 0 && this.WorkID <= 0)
-        {
-            this.Alert("@请选择要操作的工作。");
-            return;
-        }
-        this.WinOpenShowModalDialog("Option.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow, "选项", "WF" + WorkID, 500, 300, 200, 200);
-        //this.WinOpenShowModalDialog("OpWorkFlow.aspx?WorkID="+this.WorkID+"&FK_Flow="+this.FK_Flow,"选项","WF"+WorkID,600,400,150,160) ; 
-        //this.WinOpen("Option.aspx?NodeId="+this.FK_Node+"&WorkID="+this.WorkID+"&FlowNo="+this.CurrentFlow.No,"选项","Task",700,500,200,200);
-    }
-
+    
     public void BtnReturnWork()
     {
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
@@ -1606,9 +1412,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     rw.NodeId = wn.HisNode.NodeID;
                     if (rw.Retrieve(ReturnWorkAttr.NodeId, wn.HisNode.NodeID, ReturnWorkAttr.WorkID, rw.WorkID) != 0)
                     {
-                        // this.Alert(rw.NoteHtml);
-                        this.FlowMsg.AddFieldSet("流程退回提示", rw.NoteHtml);
-                        // rw.Delete();
+                        this.FlowMsg.AlertMsg_Info("流程退回提示", rw.NoteHtml);
+                        wn.HisWork.Update("NodeState", (int)NodeState.Init);
                     }
                     this.FK_Node = wn.HisNode.NodeID;
                     this.WorkID = wn.HisWork.OID;
@@ -1623,7 +1428,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         if (fw.IsTakeBack == false)
                         {
                             msg += "@" + this.ToE("Transfer", "转发人") + "[" + fw.FK_Emp + "]。@" + this.ToE("Accepter", "接受人") + "：" + fw.Emps + "。@" + this.ToE("FWNote", "转发原因") + "： @" + fw.NoteHtml;
-                            this.FlowMsg.DivInfoBlock("转发提示:", msg);
+                            this.FlowMsg.AlertMsg_Info("转发提示:", msg);
                         }
                     }
                     break;
@@ -1641,7 +1446,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         catch (Exception ex)
         {
-            this.FlowMsg.AddMsgOfWarning("提示:", this.ToE("WhenSeleWorkErr", "处理选择工作出现错误") + ex.Message);
+            this.FlowMsg.AlertMsg_Info("提示:", this.ToE("WhenSeleWorkErr", "处理选择工作出现错误") + ex.Message);
             return null;
         }
         return wn.HisWork;

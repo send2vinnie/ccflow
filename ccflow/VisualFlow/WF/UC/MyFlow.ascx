@@ -55,12 +55,18 @@
     width:500px;
     text-align:center;
 }
+
+#tabForm, D
+{
+    width:100%;
+    text-align:center;
+}
+ 
 </style>
-<div  style="float:center">
+<div  style="float:left;">
 <uc4:ToolBar ID="ToolBar1" runat="server" />
 </div>
-
-</div style="float:left">
+<div id="D" >
                     <uc5:Pub ID="FlowMsg" runat="server" />
                     <uc5:Pub ID="Pub1" runat="server" />
                     <uc6:UCEn ID="UCEn1" runat="server" />

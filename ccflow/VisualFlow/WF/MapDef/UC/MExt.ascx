@@ -10,7 +10,7 @@
 </script>
 <table border=0 width='700px' height='300px' >
 <tr>
-<td valign=top align=left width='30%'>
+<td valign=top align=left width='30%' >
     <uc1:Pub ID="Pub1" runat="server" />
     </td>
 <td valign=top align=left width='70%'>
