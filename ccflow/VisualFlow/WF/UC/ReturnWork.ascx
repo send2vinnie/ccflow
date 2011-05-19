@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ReturnWork.ascx.cs" Inherits="WF_UC_ReturnWork" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
-<%@ Register src="FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc2" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc3" %>
 <div align="center" width='50%'>
 

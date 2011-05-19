@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="WinOpen.master" AutoEventWireup="true" CodeFile="MyFlowInfoSmall.aspx.cs" Inherits="WF_MyFlowInfoSmall" %>
-<%@ Register src="UC/FlowInfoSimple.ascx" tagname="FlowInfoSimple" tagprefix="uc1" %>
 <%@ Register src="UC/MyFlowInfo.ascx" tagname="MyFlowInfo" tagprefix="uc2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
