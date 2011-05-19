@@ -65,6 +65,16 @@ namespace BP.Web
         }
         #endregion 
 
+        public void LoadPop()
+        {
+            this.Page.RegisterClientScriptBlock("sds",
+          "<link href='" + this.Request.ApplicationPath + "/Comm/JS/pop/skin/qq/ymPrompt.css' rel='stylesheet' type='text/css' />");
+
+            this.Page.RegisterClientScriptBlock("db7",
+         "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/JS/pop/ymPrompt.js'></script>");
+
+        }
+
         public string FK_Sort
         {
             get

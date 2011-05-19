@@ -1035,6 +1035,40 @@ namespace BP.Web.UC
 
             this.AddFieldSetEnd();
         }
+        public void LoadPop()
+        {
+              this.Page.RegisterClientScriptBlock("sds",
+            "<link href='" + this.Request.ApplicationPath + "/Comm/JS/pop/skin/qq/ymPrompt.css' rel='stylesheet' type='text/css' />");
+
+              this.Page.RegisterClientScriptBlock("db7",
+           "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/JS/pop/ymPrompt.js'></script>");
+
+        }
+        public void AlertMsg_Info(string title, string msg)
+        {
+            this.LoadPop();
+
+            this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
+            string js = "<script language=JavaScript >";
+            js += "\t\n ymPrompt.setDefaultCfg({btn:'ok'}) ; ";
+            js += "\t\n ymPrompt.alert({message: document.getElementById('myMsg').innerHTML,title:'" + title + "',height:380,width:400,fixPosition:true,dragOut:false,allowSelect:true});";
+            js += "</script>";
+            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
+        }
+        public void AlertMsg_Warning(string title, string msg)
+        {
+            this.LoadPop();
+
+    //         <script language="JavaScript" src="../Comm/JS/pop/ymPrompt.js" ></script>
+    //<link rel="stylesheet" type="text/css" href="../Comm/JS/pop/skin/qq/ymPrompt.css" /> 
+
+            this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
+            string js = "<script language=JavaScript >";
+            js += "\t\n ymPrompt.setDefaultCfg({btn:'ok'}) ; ";
+            js += "\t\n ymPrompt.errorInfo({message: document.getElementById('myMsg').innerHTML,title:'" + title + "',height:380,width:400,fixPosition:true,dragOut:false,allowSelect:true});";
+            js += "</script>";
+            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
+        }
 
 
         public void AddFieldSetNone(string title)
@@ -1460,7 +1494,7 @@ namespace BP.Web.UC
             if (item)
                 this.Add("\n<TR bgcolor=AliceBlue >");
             else
-                this.Add("\n<TR bgcolor=white class=TR>");
+                this.Add("\n<TR bgcolor=white >");
 
             item = !item;
             return item;
@@ -1627,6 +1661,10 @@ namespace BP.Web.UC
         }
         public void AddCaptionLeftTX(string str)
         {
+            this.Add("\n<Caption class='Caption' align=left >" + str + "</Caption>");
+            return;
+
+
             if (BP.Web.WebUser.Style == "2")
                 this.Add("\n<Caption class='Caption' align=left >" + PubClass.GenerLabelStr(str) + "</Caption>");
             else
