@@ -130,8 +130,6 @@ public partial class WF_Msg_Write : WebPage
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }
-    public void 
-
     void btn_Click(object sender, EventArgs e)
     {
         BP.Sys.Msg msg = new BP.Sys.Msg();
