@@ -100,6 +100,7 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
 
         int colspan = 9;
         this.AddTable("border=1px align=center width='80%'");
+        this.AddCaption("待办工作");
         this.AddTR();
         this.AddTDTitle("ID");
         this.AddTDTitle(this.ToE("Flow", "流程"));
