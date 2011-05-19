@@ -89,7 +89,6 @@ public partial class WF_Admin_StartFlow : WebPage
         Flow fl = new Flow(this.FK_Flow);
         fl.DoCheck();
 
-
         int nodeid = int.Parse(this.FK_Flow + "01");
         Emps emps = new Emps();
         emps.RetrieveInSQL_Order("select fk_emp from Port_Empstation WHERE fk_station in (select fk_station from WF_NodeStation WHERE FK_Node=" + nodeid + " )", "FK_Dept");
@@ -111,11 +110,11 @@ public partial class WF_Admin_StartFlow : WebPage
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle("Users");
         this.Pub1.AddTDTitle("独立模式");
-        this.Pub1.AddTDTitle("小窗口模式");
-        this.Pub1.AddTDTitle("特小窗口模式");
+        this.Pub1.AddTDTitle("调用模式");
+      //  this.Pub1.AddTDTitle("特小窗口模式");
         this.Pub1.AddTDTitle("手机模式");
-        this.Pub1.AddTDTitle("Dept");
-        this.Pub1.AddTDTitle("SDK");
+        this.Pub1.AddTDTitle("部门");
+        this.Pub1.AddTDTitle("调用SDK");
         this.Pub1.AddTREnd();
         bool is1 = false;
         int idx = 0;
@@ -125,11 +124,9 @@ public partial class WF_Admin_StartFlow : WebPage
 
             idx++;
             this.Pub1.AddTDIdx(idx);
-
             this.Pub1.AddTD(emp.No + "," + emp.Name);
-            this.Pub1.AddTD("<a href='./../Port.aspx?DoWhat=Start&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
-            this.Pub1.AddTD("<a href='./../Port.aspx?DoWhat=StartSmall&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
-            this.Pub1.AddTD("<a href='./../Port.aspx?DoWhat=StartSmallSingle&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />Internet Explorer</a>");
+            this.Pub1.AddTD("<a href='./../Port.aspx?DoWhat=Start&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />IE独立运行</a>");
+            this.Pub1.AddTD("<a href='./../Port.aspx?DoWhat=StartSmall&UserNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "'  ><img src='./../Img/IE.gif' border=0 />IE调用模式</a>");
             this.Pub1.AddTD("<a href='TestFlow.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  ><img src='./../Img/Mobile.gif' border=0 width=25px height=18px />Mobile</a> ");
             this.Pub1.AddTD(emp.FK_DeptText);
             this.Pub1.AddTD("<a href='TestSDK.aspx?RefNo=" + emp.No + "&FK_Flow=" + this.FK_Flow + "&Lang=" + BP.Web.WebUser.SysLang + "&Type=" + this.Request.QueryString["Type"] + "&IsWap=1'  >SDK</a> ");

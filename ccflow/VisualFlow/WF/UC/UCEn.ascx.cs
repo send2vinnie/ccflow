@@ -60,7 +60,7 @@ namespace BP.Web.Comm.UC.WF
                 if (gfs.Count == 1)
                     this.AddTD("colspan=2 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
                 else
-                    this.AddTD("colspan=2 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;<img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+                    this.AddTD("colspan=2 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;<img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
 
                 this.AddTREnd();
                 int idx = -1;
@@ -390,7 +390,7 @@ namespace BP.Web.Comm.UC.WF
                 if (gfs.Count == 1)
                     this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
                 else
-                    this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;<img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+                    this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;<img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
                 this.AddTREnd();
 
                 bool isHaveH = false;
@@ -451,10 +451,10 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.Enabled = attr.UIIsEnable;
                         if (mytbLine.Enabled == false)
                             mytbLine.Attributes["class"] = "TBReadonly";
-                        this.Add(mytbLine);
-                        //if (attr.UIIsEnable)
-                        //    this.Add("<a href=\"javascript:TBHelp('" + mytbLine.ClientID + "','" + appPath + "','" + enName + "','" + attr.KeyOfEn + "')\">....</a>");
+                        else
+                            mytbLine.Attributes["class"] = "TBDoc";
 
+                        this.Add(mytbLine);
                         this.AddTDEnd();
                         this.AddTREnd();
                         rowIdx++;

@@ -62,7 +62,6 @@ namespace BP.Web.WF.WF
         }
         protected void Button2_Click(object sender, EventArgs e)
         {
-            return;
             if (WebUser.No != "admin")
             {
                 this.ToErrorPage("非法用户。");
