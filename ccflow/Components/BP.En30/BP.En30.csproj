@@ -408,6 +408,7 @@
     <Compile Include="Sys\MapData\MapFrame.cs" />
     <Compile Include="Sys\MapData\MapExt.cs" />
     <Compile Include="Sys\MapData\MapM2M.cs" />
+    <Compile Include="Sys\MapData\InputCheckXml.cs" />
     <Compile Include="Sys\Message\Msg.cs" />
     <Compile Include="Sys\PTable\SFTable.cs" />
     <Compile Include="Sys\SysFileManager.cs">

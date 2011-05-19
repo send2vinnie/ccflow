@@ -1339,12 +1339,19 @@ namespace BP
         {
             get
             {
-                if (string.Compare(AppSettings["AppCenterDBType"], "MSSQL2000", true) == 0)
-                    return BP.DA.DBType.SQL2000;
-                else if (string.Compare(AppSettings["AppCenterDBType"], "Access", true) == 0)
-                    return BP.DA.DBType.Access;
-                else
-                    return BP.DA.DBType.Oracle9i;
+                switch (AppSettings["AppCenterDBType"])
+                {
+                    case "MSSQL2000":
+                    case "MSSQL":
+                        return BP.DA.DBType.SQL2000;
+                        break;
+                    case "Access":
+                        return BP.DA.DBType.Access;
+                        break;
+                    case "Oracle":
+                    default:
+                        return BP.DA.DBType.Oracle9i;
+                }
             }
         }
         /// <summary>
