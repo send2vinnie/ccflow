@@ -70,7 +70,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>FKt41VhDSdDDu8ecZMyWpJtsRiY=</dsig:DigestValue>
+        <dsig:DigestValue>uPJ7hwhl6aBNq1YPaMCKzMpV+RU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -82,19 +82,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>yTOgTs2mH/8FSWNuYSaIM5+uSPY=</dsig:DigestValue>
+        <dsig:DigestValue>h7O9NPKJ2LXy1X2oLwH1RiuaXss=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BP.Win32.Controls.dll" size="339968">
-      <assemblyIdentity name="BP.Win32.Controls" version="1.0.4141.19767" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="BP.Win32.Controls" version="1.0.4149.42444" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>raIMMVhmF6X50VE4kEK6FjQo11k=</dsig:DigestValue>
+        <dsig:DigestValue>OyoDj8ph0A9zPUrbEYEmy+smWJ8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -130,7 +130,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>wD8sPHndVdW11n4qNptw2jWZWJc=</dsig:DigestValue>
+        <dsig:DigestValue>irZMGkdds7+1YOhziH/TW01XfAI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -142,19 +142,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>kQ7rsSZcLCPMQThOn2Msi/HqmyA=</dsig:DigestValue>
+        <dsig:DigestValue>zxISsgXfZM9CEcqN83n/8TKoRtc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VisualFlowDesigner.exe" size="636416">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VisualFlowDesigner.exe" size="142336">
       <assemblyIdentity name="VisualFlowDesigner" version="4.5.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>HP90MMMrIKH6WUMY+CR09rd0P8A=</dsig:DigestValue>
+        <dsig:DigestValue>S9tz7iNHOzgQ1P0ENhaIqvMnjsA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -165,42 +165,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>VyGMMWtpIeLNYQJ6I4ftwxotlHE=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Data\Img\log.jpg" size="12278">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>YtBHgzslMXBIKKIr98fjtDlzFg4=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Data\Img_CCS\log.gif" size="15985">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>H1L4JQ3U5yqFRfKzbS7aTjVYM0o=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Data\Img_Engg\log.gif" size="21728">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>PD2flhXzUKfvX9iKnl4w+da1OVc=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Data\Img_ML\log.gif" size="15985">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>H1L4JQ3U5yqFRfKzbS7aTjVYM0o=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Data\Node\LabNote.bmp" size="162">
@@ -275,13 +239,13 @@
       <dsig:DigestValue>AWFqKOOuKJs+LXRlG5lt4SbVGsU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="DataUser\log.jpg" size="15985">
+  <file name="DataUser\log.jpg" size="8486">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>H1L4JQ3U5yqFRfKzbS7aTjVYM0o=</dsig:DigestValue>
+      <dsig:DigestValue>m4mr0/SxvTaVa4QEmLtLVrQZdI8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Help\EditAction.htm" size="3110">
@@ -318,15 +282,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>cpzNzlRjZspwKGLNlX6RAlU3880=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="WF.ico" size="11130">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>mPqI3kKjoUYJCKrL/vijoiXIeec=</dsig:DigestValue>
     </hash>
   </file>
   <file name="WF_Gener.ICO" size="2238">
