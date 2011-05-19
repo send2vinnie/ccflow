@@ -87,7 +87,6 @@ table input[type="textbox"]
 
 .TBDoc
 {
-    background-color: #003366;
     border-style: dotted none dotted none;
     border-width: 1px;
     border-color: #CCCCCC;
@@ -120,24 +119,32 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
     background-color: #d8edff;
 }
 
-.GroupTitle
+.GroupTitle  
 {
+    padding: 4px;
+    margin: 4px;
     background-color: #eee;
     font-size: 14px;
     border: 1px solid #ccc;
     text-align: left;
     word-break: keep-all;
+    font-weight: bold;
+    color: #006666;
 }
 
 .GroupField
 {
-    border: thin none #669999;
-    padding: 2px;
-    margin: 3px;
-    height: 35;
-    font-size: 12px;
-    background-color:Menu;
+   padding: 4px;
+    margin: 4px;
+    background-color: #eee;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    text-align: left;
+    word-break: keep-all;
+    font-weight: bold;
+    color: #006666;
 }
+
 
 .GroupField a
 {
