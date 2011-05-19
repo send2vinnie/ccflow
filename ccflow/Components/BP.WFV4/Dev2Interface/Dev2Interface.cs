@@ -53,14 +53,10 @@ namespace BP.WF
         /// </summary>
         /// <param name="fk_flow">根据流程编号，如果流程编号为空则返回全部</param>
         /// <returns>当前操作员待办工作</returns>
-        public static DataTable DB_GenerEmpWorksOfDataTable(string fk_flow)
+        public static DataTable DB_GenerEmpWorksOfDataTable()
         {
             string sql = null;
-
-            if (fk_flow == null)
-                sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  ORDER BY WorkID ";
-            else
-                sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + fk_flow + "' ORDER BY WorkID ";
+            sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  ORDER BY WorkID ";
             return BP.DA.DBAccess.RunSQLReturnTable(sql);
         }
         #endregion 获取当前操作员的待办工作

@@ -2089,7 +2089,7 @@ namespace BP.WF
         public string DoListen()
         {
             PubClass.WinOpen("./../WF/Admin/Listen.aspx?CondType=0&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.NodeID + "&FK_Attr=&DirType=&ToNodeID=", "ЕЅОн", "cdn",
-                800, 800, 100, 150);
+                600, 600, 100, 150);
             return null;
         }
         public string DoFeatureSet()

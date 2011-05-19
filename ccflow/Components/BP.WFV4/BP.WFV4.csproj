@@ -289,6 +289,7 @@
     <Compile Include="Xml\FeatureSet.cs" />
     <Compile Include="Xml\SDK.cs" />
     <Compile Include="Xml\Skin.cs" />
+    <Compile Include="Xml\CondTypeXml.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BP.En30\BP.En30.csproj">
