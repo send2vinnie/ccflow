@@ -22,7 +22,7 @@
 *****************************************************************
 1. .net 4.0
 2, owc11.exe 用于生成数据图形分析。
-3, SaveAsPDFandXPS.exe 生成pdf.
+3, SaveAsPDFandXPS.exe 生成pdf文件的组件.
 4, iewebcontrols.msi  控件.
 5, vs2010 开发环境(不进行二次开发不必要安装)
 *****************************************************************
@@ -66,8 +66,11 @@ D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
 
 2, 建立虚拟目录 Flow 在80 端口下  映射目录为 D:\ccflow\VisualFlow\
 
+3, 创建数据库WF, 恢复数据库文件.   
+    \Database\WF_SQL.bak  -- sqlserver2005的案例库.
 
-3, 创建数据库WF, 恢复数据库文件 \Database\WF_SQL.bak
+   如果您想创建一个没有流程案例环境的数据库,就可以. 在您安装完以后执行这个向导.
+   http://localhost/Flow/WF/Admin/DBInstall.aspx
 
 
 4, 修改 D:\ccflow\VisualFlow\web.config Appsetting <Add> 节点中的数据库连接。
@@ -79,7 +82,9 @@ D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
   <add key="SysName" value="驰骋工作流" />
   <add key="InitConnNum" value="10" />
   <add key="AppCenterDSN" value="Password=;Persist Security Info=True;User ID=sa;Initial Catalog=WF;Data Source=.;Timeout=2" />
-  <add key="AppCenterDBType" value="MSSQL2000" />
+
+  <!--MSSQL, Oracle, DB2,MYSQL -->
+  <add key="AppCenterDBType" value="MSSQL" />
 
 5, 启动流程设计器  D:\ccflow\VisualFlowDesigner\bin\Debug\VisualFlowDesigner.exe 把他在做面上创建一个快捷方式.
    启动不成功，就是你的数据库连接有问题.
@@ -95,8 +100,9 @@ D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
 =  如果您需要得到更好的服务，请按照如下方式联系我们.
 =  济南驰骋信息技术有限公司
 =  qq: hiflow@qq.com
-=  Tel: 13589028385,18660153393.
+=  Tel:13589028385,18660153393.
 =  msn:chichengsoft@hotmail.com
+=  URL: http://ccflow.org
 =
 =  服务内容:
 =  1, 上门或远程安装,实施，解决疑难问题.
