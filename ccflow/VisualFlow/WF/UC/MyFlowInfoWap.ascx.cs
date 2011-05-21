@@ -91,11 +91,16 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
             s = s.Replace("@@", "@");
             s = s.Replace("@", "<BR>@");
 
-            this.AlertMsg_Info(this.ToE("Note", "操作提示"), s);
+
+            this.Add("<div style='width:500px;align:center' >");
+            this.AddFieldSet(this.ToE("Note", "操作提示"), s);
+            this.Add("</div>");
+            return;
+            //this.AlertMsg_Info(this.ToE("Note", "操作提示"), s);
         }
 
-        string sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "' ORDER BY WorkID ";
-        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+      //  string sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "' ORDER BY WorkID ";
+        DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();// BP.DA.DBAccess.RunSQLReturnTable(sql);
 
 
         int colspan = 9;
