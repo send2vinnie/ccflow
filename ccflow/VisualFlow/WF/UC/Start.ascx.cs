@@ -92,7 +92,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
 
 
         int colspan = 5;
-        this.AddTable("width='60%' align=center");
+        this.AddTable("width='100%' align=center");
         this.AddTR();
         this.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b>" + this.ToE("Start", "发起") + "</b></TD>");
         this.AddTREnd();

@@ -3,3 +3,4 @@
 <div align=center>
     <uc2:Pub ID="Pub1" runat="server" />
     <uc2:Pub ID="Pub2" runat="server" />
+    </div>
