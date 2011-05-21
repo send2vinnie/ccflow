@@ -278,6 +278,31 @@ namespace BP.WF
 
         static bool Application_Start()
         {
+            try
+            {
+                #region 删除word 的转换注册。
+                Microsoft.Win32.RegistryKey hklm = Microsoft.Win32.Registry.LocalMachine;
+                Microsoft.Win32.RegistryKey software = hklm.OpenSubKey("SOFTWARE", true);
+
+                //打开"SOFTWARE"子键 
+                Microsoft.Win32.RegistryKey no1 = software.OpenSubKey("Microsoft", true);
+                //打开"aaa"子键 
+                Microsoft.Win32.RegistryKey no2 = no1.OpenSubKey("Shared Tools", true);
+
+                //打开"aaa"子键 
+                Microsoft.Win32.RegistryKey no3 = no1.OpenSubKey("Text Converters", true);
+
+                // Import
+                Microsoft.Win32.RegistryKey no4 = no1.OpenSubKey("Import", true);
+                no4.DeleteValue("MSWord6.wpc");
+                #endregion 删除word. 的转换注册。
+            }
+            catch
+            {
+
+            }
+
+
             if (BP.WF.Global.IsExitProcess("VisualFlowAutoUpdate.exe"))
             {
                 MessageBox.Show("驰骋工作流程设计器应用程序已经启动，您不能同时启动两个操作窗口。", "操作提示",

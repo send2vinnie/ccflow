@@ -234,11 +234,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BJ.gif" />
-    <None Include="BJ1.gif" />
     <Content Include="DataUser\log.jpg" />
-    <Content Include="Data\Img\log.jpg" />
-    <Content Include="Data\Img_Engg\log.gif" />
     <Content Include="Data\Cfg.txt" />
     <Content Include="Data\Node\LabNote.bmp" />
     <Content Include="Data\Node\MulChecks.bmp" />
@@ -246,8 +242,6 @@
     <Content Include="Data\Node\StandardChecks.bmp" />
     <Content Include="Data\Node\StartWork.bmp" />
     <Content Include="Data\Node\WorkHL.bmp" />
-    <Content Include="Data\Img_CCS\log.gif" />
-    <Content Include="Data\Img_ML\log.gif" />
     <Content Include="Data\Node\StartWorkFL.bmp" />
     <Content Include="Data\Node\Work.bmp" />
     <Content Include="Help\EditAction.htm" />
@@ -262,7 +256,6 @@
     <None Include="Resources\Authorize.gif" />
     <Content Include="Resources\Copy.GIF" />
     <Content Include="Resources\lvbgcolor.gif" />
-    <Content Include="WF.ico" />
     <Content Include="WF_Gener.ICO" />
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +306,7 @@
   <ItemGroup>
     <Folder Include="bin\Release\" />
     <Folder Include="Data\FlowDesc\" />
+    <Folder Include="Data\Img\" />
     <Folder Include="Data\Log\" />
     <Folder Include="Data\Xml\" />
   </ItemGroup>

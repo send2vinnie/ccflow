@@ -460,6 +460,9 @@ namespace BP.Win.WF
                 //    break;
                 case "导出流程模板":
                 case "GenerFlowTemplate":
+                    Flows.GenerHtmlRpts();
+                    return;
+
                     string msg = this.ToE("CheckAlertInfo",
                         "系统将会花一些时间处理如下事情。\r\n\r\n1，为每一个流程执行体检。\r\n2，生成html流程报表\r\n3，生成系统可识别的流程模板。\r\n==================\r\n请耐心等待，直到鼠标形状变化为止。");
 
@@ -468,17 +471,33 @@ namespace BP.Win.WF
                     {
                         return;
                     }
+
                     this.Cursor = Cursors.WaitCursor;
 
                     Flow expFlow = this.HisWinFlow.HisFlow;
-                    expFlow.GenerHisHtmlRpt();
+                    expFlow.GenerHisHtmlDocRpt();
+                    expFlow.GenerFlowXmlTemplete();
 
-                    //Flows.GenerHtmlRpts();
                     this.Cursor = Cursors.Default;
+                    System.Diagnostics.Process.Start(SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\" + expFlow.No + "." + expFlow.Name + "\\");
+                    break;
 
-                    System.Diagnostics.Process.Start(SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\" + expFlow.No + "\\");
-                    //      System.Diagnostics.
-                    //BP.WF.Global.DoGenerFlowTemplate(this.HisWinFlow.HisFlow);
+                case "导出全部流程模板":
+                    string msg1 = this.ToE("CheckAlertInfo",
+                        "系统将会花一些时间处理如下事情。\r\n\r\n1，为每一个流程执行体检。\r\n2，生成html流程报表\r\n3，生成系统可识别的流程模板。\r\n==================\r\n请耐心等待，直到鼠标形状变化为止。");
+
+                    if (MessageBox.Show(msg1,
+                         "Note", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
+                    {
+                        return;
+                    }
+
+                    this.Cursor = Cursors.WaitCursor;
+
+                    Flows.GenerHtmlRpts();
+
+                    this.Cursor = Cursors.Default;
+                    System.Diagnostics.Process.Start(SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\");
                     break;
                 default:
                     MessageBox.Show("未处理的命令。" + text);

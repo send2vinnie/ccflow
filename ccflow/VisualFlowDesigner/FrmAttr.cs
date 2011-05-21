@@ -4,7 +4,6 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 using BP.Win.Controls;
-
 using BP.WF;
 using BP.Sys;
 using BP.DA;

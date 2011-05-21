@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+
 namespace BP.WF.Frm
 {
     public partial class FrmAction : Form
@@ -13,6 +14,8 @@ namespace BP.WF.Frm
         public FrmAction()
         {
             InitializeComponent();
+          
+
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
