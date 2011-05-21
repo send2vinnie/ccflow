@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+	<!-- 参数列表  -->
+  <CondType No="Cond" CH="表单条件"    />
+  <CondType No="CondStation" CH="岗位条件"    />
+  <CondType No="CondDept" CH="部门条件"    />
+</NewDataSet>
