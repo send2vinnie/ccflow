@@ -89,11 +89,11 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
             if (cdt >= mysdt)
             {
-                this.Pub1.AddTD("<font color=red>逾期</font>");
+                this.Pub1.AddTDCenter("<font color=red>逾期</font>");
             }
             else
             {
-                this.Pub1.AddTD("正常");
+                this.Pub1.AddTDCenter("正常");
             }
             this.Pub1.AddTREnd();
         }

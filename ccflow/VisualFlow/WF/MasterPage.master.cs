@@ -50,12 +50,15 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         this.Page.RegisterClientScriptBlock("s",
             "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
+        this.Page.RegisterClientScriptBlock("df",
+       "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Skin/T" + BP.Web.WebUser.Style + "/menu.css' rel='stylesheet' type='text/css' />");
+
         //this.Page.RegisterClientScriptBlock("a",
         //   "<link href='" + this.Request.ApplicationPath + "/WF/Style/Menu" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
          //this.Page.RegisterClientScriptBlock("d",
          //"<link href='" + this.Request.ApplicationPath + "/Comm/Style/t1/style.css' rel='stylesheet' type='text/css' />");
-        
+
         if (this.Request.RawUrl.ToLower().Contains("login.aspx") == false)
         {
             if (BP.Web.WebUser.No == null)
@@ -64,6 +67,7 @@ public partial class Face_MasterPage : BP.Web.MasterPage
                 return;
             }
         }
+
         Response.AddHeader("P3P", "CP=CAO PSA OUR");
         Response.AddHeader("Cache-Control", "no-store");
         Response.AddHeader("Expires", "0");

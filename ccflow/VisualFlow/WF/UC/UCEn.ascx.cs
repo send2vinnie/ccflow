@@ -460,7 +460,12 @@ namespace BP.Web.Comm.UC.WF
 
                         this.Add(mytbLine);
 
-                        string ctlID = "_ctl0_ContentPlaceHolder1_MyFlowUC1_UCEn1_TB_" + attr.KeyOfEn;
+                        //string ctlID = "_ctl0_ContentPlaceHolder1_MyFlowUC1_UCEn1_TB_" + attr.KeyOfEn;
+
+                        Label mylab = this.GetLabelByID("Lab_"+attr.KeyOfEn);
+
+                        mylab.Text = "<a href>";
+
 
 
                         this.AddTDEnd();

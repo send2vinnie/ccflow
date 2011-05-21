@@ -699,7 +699,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         }
 
         int colspan = 8;
-        this.Pub1.AddTable("border=1px");
+        this.Pub1.AddTable("border=1px width='100%'");
 
         this.Pub1.AddTR();
         if (WebUser.IsWap)

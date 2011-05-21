@@ -83,7 +83,6 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddTDTitle("查询");
         this.AddTREnd();
 
-
         int idx = 0;
         foreach (Flow fl in fls)
         {
@@ -152,11 +151,13 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         string setNo = this.Request.QueryString["SetNo"];
         if (setNo != null)
         {
+            BP.WF.Port.WFEmp em = new BP.WF.Port.WFEmp(BP.Web.WebUser.No);
+            em.Style = setNo;
+            em.Update();
             WebUser.Style = setNo;
             this.Response.Redirect(pageID + ".aspx?RefNo=Skin", true);
             return;
         }
-
 
         this.AddFieldSet("风格设置");
 

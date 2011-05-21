@@ -58,12 +58,12 @@
 
 #tabForm, D
 {
-    width:100%;
+    width:70%;
     text-align:center;
 }
  
 </style>
-<div  style="float:left;">
+<div  style="float:left;" id=tabForm >
 <uc4:ToolBar ID="ToolBar1" runat="server" />
 </div>
 <div id="D" >
