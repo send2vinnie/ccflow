@@ -430,14 +430,18 @@ namespace BP.Web.Comm.UC.WF
                         rowIdx++;
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
 
-                        string ctlID = "_ctl0_ContentPlaceHolder1_MyFlowUC1_UCEn1_TB_" + attr.KeyOfEn;
 
                         if (attr.UIIsEnable)
                             this.Add("<TD  colspan=4 width='100%' valign=top align=left>" );
                         else
                             this.Add("<TD  colspan=4 width='100%' valign=top class=TBReadonly>");
 
-                        this.Add("<div>" + attr.Name + "</div>");
+                        this.Add("<div style='font-size:14px;color:black;' >");
+                        Label lab = new Label();
+                        lab.ID = "Lab"+attr.KeyOfEn;
+                        this.Add(lab);
+                        this.Add("</div>");
+
 
                         TB mytbLine = new TB();
                         mytbLine.TextMode = TextBoxMode.MultiLine;
@@ -455,6 +459,10 @@ namespace BP.Web.Comm.UC.WF
                             mytbLine.Attributes["class"] = "TBDoc";
 
                         this.Add(mytbLine);
+
+                        string ctlID = "_ctl0_ContentPlaceHolder1_MyFlowUC1_UCEn1_TB_" + attr.KeyOfEn;
+
+
                         this.AddTDEnd();
                         this.AddTREnd();
                         rowIdx++;
