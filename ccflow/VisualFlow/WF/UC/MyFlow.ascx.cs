@@ -447,7 +447,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
            // this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\" alert('ss'); ymPrompt.win({message:'" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "',width:500,height:300,title:'ccflow',handler:handler,maxBtn:true,minBtn:true,iframe:true}); \" />");
 
           //  string url =  appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
-            this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"alert('sss');ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
+          //  this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"javascript:ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
+
+          //  this.ToolBar1.Add("<a href=# onclick=\" ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \"  >sssss</a>");
+
+           // this.ToolBar1.Add("<input type=button value='iframe弹窗' onclick=\"ymPrompt.win('http://www.163.com',500,300,'网易官方网站',handler,null,null,true);\" />");
+
+          //  this.ToolBar1.Add("<input type=button value='iframe弹窗ddd' onclick=\" ymPrompt.win({message:'http://www.163.com',width:500,height:300,title:'网易官方网站',handler:handler,maxBtn:true,minBtn:true,iframe:true}) \" />");
+
+         //   this.ToolBar1.Add("<a href=\"javascript:ymPrompt.win({message:'http://www.163.com',width:500,height:300,title:'网易官方网站',handler:handler,maxBtn:true,minBtn:true,iframe:true})\"  >sssss</a>");
 
          //   this.AlertMsg_Info
 
