@@ -11,9 +11,17 @@
 
 div.wrapper
 {
-  padding: 3px;
-  margin: 12px;
-  background: #6293bb url(/Img/shadow.png) repeat-x bottom left;
+    padding: 3px;
+    margin: 12px;
+    background: #6293bb url(/Img/shadow.png) repeat-x bottom left;
+     
+}
+
+divddd
+{
+    border-style: none double double none;
+    border-width: 1px;
+    border-color: #333333;
 }
  
 div#MainDiv ul {

@@ -502,10 +502,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 else
                     this.ToolBar1.Add("<input type=button value='" + this.ToE("Adjunct", "附件") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/FileManager.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FJOpen=" + (int)currND.HisFJOpen + "&FID=" + this.FID + "','dds'); \" />");
             }
-            else
-            {
-                this.ToolBar1.Add("<input type=button value='" + this.ToE("Adjunct", "附件") + "' disabled='disabled'  />");
-            }
+            
 
             if (currND.HisFormType == FormType.SelfForm)
                 this.Btn_Save.Enabled = false;

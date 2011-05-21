@@ -381,9 +381,8 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
-        this.Pub2.AddTD("colspan=3", "请输入一个弹出窗口的url,当操作员关闭后返回值就会被放在里面.");
+        this.Pub2.AddTD("colspan=3", "请输入一个弹出窗口的url,当操作员关闭后返回值就会被设置在当前控件中<br>Test URL:http://localhost/Flow/SDKFlows/PopSelectVal.aspx.");
         this.Pub2.AddTREnd();
-
 
         this.Pub2.AddTRSum();
         Button btn = new Button();
@@ -655,7 +654,9 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         tb.ID = "TB_Doc";
         tb.Text = me.Doc;
         tb.Columns = 70;
+        tb.CssClass = "TH";
         this.Pub2.Add( tb);
+
         this.Pub2.AddFieldSetEnd();
 
         rb = new RadioButton();

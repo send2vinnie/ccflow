@@ -25,9 +25,7 @@
 
 function FullDtl(key, fk_mapExt) {
 
-
     var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDtlFullList" };
-
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -210,7 +208,8 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
     var autoNodes = $("#divinfo").children("div");
     if (myKeyCode == 38) {
         if (highlightindex != -1) {
-            autoNodes.eq(highlightindex).css("background-color", "white");
+            autoNodes.eq(highlightindex).css("background-color", "Silver");
+            autoNodes.eq(highlightindex).css("color", "Black");
             if (highlightindex == 0) {
                 highlightindex = autoNodes.length - 1;
             }
@@ -222,10 +221,13 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
             highlightindex = autoNodes.length - 1;
         }
         autoNodes.eq(highlightindex).css("background-color", "blue");
+        autoNodes.eq(highlightindex).css("color", "white");
+
     }
     else if (myKeyCode == 40) {
         if (highlightindex != -1) {
-            autoNodes.eq(highlightindex).css("background-color", "white");
+            autoNodes.eq(highlightindex).css("background-color", "Silver");
+            autoNodes.eq(highlightindex).css("color", "black");
             highlightindex++;
         }
         else {
@@ -233,10 +235,12 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
         }
 
         if (highlightindex == autoNodes.length) {
-            autoNodes.eq(autoNodes.length).css("background-color", "white");
+            autoNodes.eq(autoNodes.length).css("background-color", "Silver");
+            autoNodes.eq(autoNodes.length).css("color", "black");
             highlightindex = 0;
         }
         autoNodes.eq(highlightindex).css("background-color", "blue");
+        autoNodes.eq(highlightindex).css("color", "white");
     }
     else if (myKeyCode == 13) {
         if (highlightindex != -1) {
@@ -244,7 +248,7 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
             //获得选中的那个的文本值
             var textInputText = autoNodes.eq(highlightindex).text();
             var strs = textInputText.split('|');
-            autoNodes.eq(highlightindex).css("background-color", "white");
+            autoNodes.eq(highlightindex).css("background-color", "Silver");
             $("#" + tbid).val(strs[0]);
             $("#divinfo").hide();
             oldValue = strs[0];
@@ -281,8 +285,8 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
                     if (data != "") {
                         highlightindex = -1;
                         dataObj = eval("(" + data + ")"); // 转换为json对象 
-                        $.each(dataObj.Head, function (idx, item) { 
-                            $("#divinfo").append("<div class=TD width='100%' name='" + idx + "' onmouseover='MyOver(this)' onmouseout='MyOut(this)' onclick=\"ItemClick('" + sender.id + "','" + item.No + "','" + tbid + "','" + fk_mapExt + "');\" value='" + item.No + "'>" + item.No + '|' + item.Name + "</div>");
+                        $.each(dataObj.Head, function (idx, item) {
+                            $("#divinfo").append("<div style='" + itemStyle + "' name='" + idx + "' onmouseover='MyOver(this)' onmouseout='MyOut(this)' onclick=\"ItemClick('" + sender.id + "','" + item.No + "','" + tbid + "','" + fk_mapExt + "');\" value='" + item.No + "'>" + item.No + '|' + item.Name + "</div>");
                         });
                     }
                 },
@@ -300,6 +304,8 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
     }
 }
 
+var itemStyle = 'padding:2px;color: #000000;background-color:Silver;width:100%;border-style: none double double none;border-width: 1px;';
+var itemStyleOfS = 'padding:2px;color: #000000;background-color:green;width:100%';
 
 function ItemClick(sender, val, tbid, fk_mapExt) {
 
@@ -323,24 +329,17 @@ function ItemClick(sender, val, tbid, fk_mapExt) {
 
 function MyOver(sender) {
     if (highlightindex != -1) {
-        $("#divinfo").children("div").eq(highlightindex).css("background-color", "white");
+        $("#divinfo").children("div").eq(highlightindex).css("background-color", "Silver");
     }
 
     highlightindex = $(sender).attr("name");
-
     $(sender).css("background-color", "blue");
-    //$(sender).css("font-weight", "bold");
-
-   // font-weight: bold;
-   // $(sender).css("front-blu", "black");
-
+    $(sender).css("color", "white");
 }
 
 function MyOut(sender) {
-    $(sender).css("background-color", "blue");
-    $(sender).css("font-weight", "bold");
-
-   // $(sender).css("background-color", "White");
+    $(sender).css("background-color", "Silver");
+    $(sender).css("color", "black");
 }
 
 function hiddiv() {
