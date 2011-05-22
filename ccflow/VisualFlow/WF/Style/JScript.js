@@ -414,8 +414,8 @@ function outputCents(amount)
   amount = Math.round( ( (amount) - Math.floor(amount) ) *100); 
   return (amount<10 ? '.0' + amount : '.' + amount); 
 }
-function TBHelp(ctrl,appPath,enName,attrKey) 
-{ 
+function TBHelp(ctrl, appPath, enName, attrKey) {
+
   var url = appPath + "/Comm/DataHelp.htm?" + appPath + "/Comm/HelperOfTB.aspx?EnsName=" + enName + "&AttrKey=" + attrKey;
   var  str= window.showModalDialog(url ,'sd', 'dialogHeight: 500px; dialogWidth:850px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no');
   
@@ -423,4 +423,3 @@ function TBHelp(ctrl,appPath,enName,attrKey)
       return ;
     document.getElementById(  ctrl  ).value=str;
 }
-

@@ -496,11 +496,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.ToolBar1.Add("<input type=button value='" + this.ToE("WorkRpt", "报告") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
                 this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds'); \" />");
             }
-            else
-            {
-                this.ToolBar1.Add("<input type=button value='" + this.ToE("WorkRpt", "报告") + "' disabled='disabled'  />");
-                this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' disabled='disabled'  />");
-            }
+            //else
+            //{
+            //    this.ToolBar1.Add("<input type=button value='" + this.ToE("WorkRpt", "报告") + "' disabled='disabled'  />");
+            //    this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' disabled='disabled'  />");
+            //}
             #endregion
 
             if (currND.HisFJOpen != FJOpen.None)
