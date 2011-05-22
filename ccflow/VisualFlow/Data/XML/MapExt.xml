@@ -5,11 +5,18 @@
   <Item No="InputCheck"   CH="字段输入脚本验证"  />
   <Item No="AutoFull"     CH="自动完成"  />
   <Item No="PopVal"       CH="Pop返回值"  />
+  <Item No="Func"         CH="功能执行"  />
 
+  <ExpFunc No="Word"         CH="导出Word模板"  />
+  <ExpFunc No="PDF"         CH="导出PDF模板"  />
+  <ExpFunc No="Excel"         CH="导出Excel模板"  />
+  
+  <ExpFunc No="Aspx"         CH="导出aspx表单模板"  />
+  <ExpFunc No="php"         CH="导出php表单模板"  />
+  <ExpFunc No="jsp"         CH="导出jsp表单模板"  />
 
   <TBEvent No="kepress"       CH="Pop返回值"  />
   <TBEvent No="PopVal"       CH="Pop返回值"  />
-
   
   
   <InputCheck No="100" DFor="String" CH="文本框只能输入数字代码(小数点也不能输入)"  />
@@ -29,5 +36,4 @@
 
   <InputCheck No="300" DFor="Data" CH="日期输入不能为空"
               JS="this.value=this.value.replace(/\D/g,'')" />
-
 </NewDataSet>
