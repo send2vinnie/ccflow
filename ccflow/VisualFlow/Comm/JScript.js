@@ -378,4 +378,11 @@ function IsDigit(s) {
     }
     return true;
 }
- 
+
+function TBHelp(ctrl, appPath, enName, attrKey) {
+    var url = appPath + "/Comm/DataHelp.htm?" + appPath + "/Comm/HelperOfTB.aspx?EnsName=" + enName + "&AttrKey=" + attrKey;
+    var str = window.showModalDialog(url, 'sd', 'dialogHeight: 500px; dialogWidth:850px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no');
+    if (str == undefined)
+        return;
+    document.getElementById(ctrl).value = str;
+}

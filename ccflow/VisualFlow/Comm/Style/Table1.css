@@ -321,3 +321,14 @@ ul
 	left: 2px;
 	clip: rect(auto, auto, auto, 2px);
 }
+
+.TBDoc
+{
+    border-style: dotted none dotted none;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    overflow: visible;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
