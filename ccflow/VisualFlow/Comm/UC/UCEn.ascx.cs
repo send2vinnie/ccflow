@@ -1045,7 +1045,7 @@ namespace BP.Web.Comm.UC
             this.Controls.Clear();
 
            // this.Add("<table border=0 cellpadding='0'  style='border-collapse: collapse;width:30%' cellspacing='0'  >");
-            this.Add("<table border=1 width='300px;' >");
+            this.Add("<table border=1 width='400px;' >");
             bool isLeft = true;
             object val = null;
             Map map = en.EnMap;
@@ -1424,8 +1424,8 @@ namespace BP.Web.Comm.UC
                             cb.Enabled = attr.UIIsReadonly;
 
                         cb.ID = "CB_" + attr.Key;
-
-                        this.AddContral(attr.Desc, cb);
+                        cb.Text = attr.Desc;
+                        this.AddContral("", cb);
                         break;
                     default:
                         break;
