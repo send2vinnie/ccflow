@@ -141,7 +141,7 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
         try
         {
             Emp em = new Emp(user);
-            if (pass == "test" || SystemConfig.IsDebug || em.CheckPass(pass))
+            if ( em.CheckPass(pass))
             {
                 WebUser.SignInOfGenerLang(em, this.Lang);
 

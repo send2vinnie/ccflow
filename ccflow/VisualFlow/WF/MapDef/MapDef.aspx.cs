@@ -135,7 +135,16 @@ public partial class WF_MapDef_MapDef : WebPage
                     rowIdx++;
                     this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'  " + gfAttr);
                     this.Pub1.Add("<TD colspan=4 width='100%' >");
-                    this.Pub1.Add("<span >"+this.GenerLab(attr, idx, 0, count)+"</span>");
+
+                    this.Pub1.Add("<span style='float:left'>" + this.GenerLab(attr, idx, 0, count) + "</span>");
+                    this.Pub1.Add("<span style='float:right'>");
+                    Label lab = new Label();
+                    lab.ID = "Lab" + attr.KeyOfEn;
+                    lab.Text = "默认值";
+                    this.Pub1.Add(lab);
+                    this.Pub1.Add("</span>");
+
+
                     TextBox mytbLine = new TextBox();
                     mytbLine.ID = "TB_" + attr.KeyOfEn;
                     mytbLine.TextMode = TextBoxMode.MultiLine;
@@ -146,6 +155,12 @@ public partial class WF_MapDef_MapDef : WebPage
                     if (mytbLine.Enabled == false)
                         mytbLine.Attributes["class"] = "TBReadonly";
                     this.Pub1.Add(mytbLine);
+
+
+                    lab = this.Pub1.GetLabelByID("Lab" + attr.KeyOfEn);
+                    string ctlID = mytbLine.ClientID;
+                    lab.Text = "<a href=\"javascript:TBHelp('" + ctlID + "','" + this.Request.ApplicationPath + "','" + this.PK + "','" + attr.KeyOfEn + "')\">默认值</a>";
+
                     this.Pub1.AddTDEnd();
                     this.Pub1.AddTREnd();
                     isLeftNext = true;
@@ -161,20 +176,30 @@ public partial class WF_MapDef_MapDef : WebPage
                     }
                     this.Pub1.Add("<TD  colspan=2 width='50%'>");
                //     this.Pub1.Add(this.GenerLab(attr, idx, 0, count));
-                    this.Pub1.Add("<span >" + this.GenerLab(attr, idx, 0, count) + "</span>");
+                    this.Pub1.Add("<span style='float:left'>" + this.GenerLab(attr, idx, 0, count) + "</span>");
+                    this.Pub1.Add("<span style='float:right'>");
+                    Label lab = new Label();
+                    lab.ID = "Lab" + attr.KeyOfEn;
+                    lab.Text = "默认值";
+                    this.Pub1.Add(lab);
+                    this.Pub1.Add("</span>");
 
                     TextBox mytbLine = new TextBox();
                     mytbLine.TextMode = TextBoxMode.MultiLine;
                     mytbLine.Rows = 8;
                     mytbLine.Attributes["class"] = "TBDoc"; // "width:100%;padding: 0px;margin: 0px;";
                     mytbLine.ID = "TB_" + attr.KeyOfEn;
-
                     mytbLine.Enabled = attr.UIIsEnable;
                     if (mytbLine.Enabled == false)
                         mytbLine.Attributes["class"] = "TBReadonly";
 
-
                     this.Pub1.Add(mytbLine);
+
+                    lab = this.Pub1.GetLabelByID("Lab" + attr.KeyOfEn);
+                    string ctlID = mytbLine.ClientID;
+                    lab.Text = "<a href=\"javascript:TBHelp('" + ctlID + "','" + this.Request.ApplicationPath + "','" + this.PK + "','" + attr.KeyOfEn + "')\">默认值</a>";
+
+
                     this.Pub1.AddTDEnd();
                     if (isLeftNext == false)
                     {

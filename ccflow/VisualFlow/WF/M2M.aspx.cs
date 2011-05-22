@@ -42,14 +42,16 @@ public partial class Comm_M2M : WebPage
         this.Page.RegisterClientScriptBlock("s",
             "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
-
         MapM2M mapM2M = new MapM2M(this.FK_MapM2M);
         BP.WF.M2M m2m = new BP.WF.M2M();
         m2m.MyPK = mapM2M.FK_Node+"_"+this.WorkID+"_"+this.FK_MapM2M;
         m2m.RetrieveFromDBSources();
 
+        DataTable dtGroup = new DataTable();
         
-        DataTable dtGroup = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfGroups);
+        if (mapM2M.DBOfGroups.Length >5)
+            dtGroup=BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfGroups);
+
         DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjs);
 
         bool isInsert = mapM2M.IsInsert;
@@ -64,7 +66,7 @@ public partial class Comm_M2M : WebPage
             string ctlIDs = "";
             string groupNo = drGroup[0].ToString();
             this.Pub1.AddTR();
-          
+
             CheckBox cbx = new CheckBox();
             cbx.ID = "CBs_" + drGroup[0].ToString();
             cbx.Text = drGroup[1].ToString();

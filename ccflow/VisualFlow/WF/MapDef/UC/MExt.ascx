@@ -8,13 +8,5 @@
         window.location.href = 'MapExt.aspx?DoType=Del&FK_MapData=' + fk_mapdata + '&ExtType=' + extType + '&MyPK=' + mypk;
     }
 </script>
-<table border=0 width='700px' height='300px' >
-<tr>
-<td valign=top align=left width='30%' >
     <uc1:Pub ID="Pub1" runat="server" />
-    </td>
-<td valign=top align=left width='70%'>
     <uc1:Pub ID="Pub2" runat="server" />
-    </td>
-</tr>
-</table>

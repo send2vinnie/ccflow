@@ -33,23 +33,24 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     /// </summary>
     public void BindLeft()
     {
+        this.Pub1.Add("\t\n<div id='tabsJ'  align='center'>");
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
 
-        this.Pub1.AddFieldSet("表单扩展设置-<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "'>帮助</a>");
         this.Pub1.AddUL();
         foreach (MapExtXml fs in fss)
         {
             if (this.ExtType == fs.No)
             {
                 this.Lab = fs.Name;
-                this.Pub1.AddLiB("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No, fs.Name);
+                this.Pub1.AddLiB("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No, "<span>" + fs.Name + "</span>");
             }
             else
-                this.Pub1.AddLi("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No, fs.Name);
+                this.Pub1.AddLi("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No, "<span>" + fs.Name + "</span>");
         }
+        this.Pub1.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "'><span>帮助</span></a>");
         this.Pub1.AddULEnd();
-        this.Pub1.AddFieldSetEnd();  
+        this.Pub1.AddDivEnd();  
     }
     public void EditAutoFullDtl()
     {
@@ -210,7 +211,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                     this.EditAutoFullDtl();
                     return;
                 }
-                
+
 
                 if (this.MyPK != null || this.DoType == "New")
                 {
@@ -241,9 +242,30 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                     MapExtAttr.FK_MapData, this.FK_MapData);
                 this.MapExtList(mes);
                 break;
+            case MapExtXmlList.Func: //联动菜单.
+                this.BindExpFunc();
+                break;
             default:
                 break;
         }
+    }
+    /// <summary>
+    /// 功能执行
+    /// </summary>
+    public void BindExpFunc()
+    {
+        BP.Sys.ExpFucnXmls xmls = new ExpFucnXmls();
+        xmls.RetrieveAll();
+
+        this.Pub2.AddFieldSet("导出");
+        this.Pub2.AddUL();
+        foreach (ExpFucnXml item in xmls)
+        {
+            this.Pub2.AddLi("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&DoType=" + item.No,
+           item.Name);
+        }
+        this.Pub2.AddULEnd();
+        this.Pub2.AddFieldSetEnd();
     }
     void mybtn_SaveAutoFullDtl_Click(object sender, EventArgs e)
     {
