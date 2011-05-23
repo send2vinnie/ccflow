@@ -22,10 +22,8 @@
 
     <link href="../../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
     <link href="../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
-   <%-- <link href="../../../Comm/Style/Tabs.css" rel="stylesheet" type="text/css" />
+    <link href="../../../Comm/Style/Tabs.css" rel="stylesheet" type="text/css" />
     <link href="../../Comm/Style/Tabs.css" rel="stylesheet" type="text/css" />
---%>
-
 <base target="_self" />
 </head>
 <body   onkeypress="Esc();" >
