@@ -571,7 +571,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         {
             case CondType.Flow:
             case CondType.Node:
-            case CondType.FLRole:
+      //      case CondType.FLRole:
                 cond.MyPK = BP.DA.DBAccess.GenerOID().ToString();   //cond.NodeID + "_" + cond.FK_Node + "_" + cond.FK_Attr + "_" + cond.OperatorValue;
                 cond.Insert();
                 BP.DA.DBAccess.RunSQL(sql);

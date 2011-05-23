@@ -447,7 +447,6 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         mytbLine.Rows = 8;
-                       // mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
 
                         // mytbLine.Attributes["onmousedown"] = script;

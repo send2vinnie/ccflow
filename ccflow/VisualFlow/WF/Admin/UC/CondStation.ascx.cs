@@ -336,7 +336,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         {
             case CondType.Flow:
             case CondType.Node:
-            case CondType.FLRole:
+       //     case CondType.FLRole:
                 cond.Update();
                 this.Response.Redirect("CondStation.aspx?MyPK=" + cond.MyPK + "&FK_Flow=" + cond.FK_Flow + "&FK_Node=" + cond.FK_Node + "&FK_MainNode=" + cond.NodeID + "&CondType=" + (int)cond.HisCondType + "&FK_Attr=" + cond.FK_Attr, true);
                 return;
