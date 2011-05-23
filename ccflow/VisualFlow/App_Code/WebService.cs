@@ -94,6 +94,17 @@ public class WebService : System.Web.Services.WebService {
         en.FrontStyle = frontStyle;
         en.Save();
     }
+    /// <summary>
+    /// 更新字段.
+    /// </summary>
+    /// <param name="mypk"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    [WebMethod(EnableSession = true)]
+    public void DevEditMapAttr(string mypk,int x,int y)
+    {
+        BP.DA.DBAccess.RunSQL("UPDATE Sys_MapAttr Set x="+x+" ,Y="+y+" where mypk='"+mypk+"'");
+    }
     #endregion 设计器的方法
 
     /// <summary>
