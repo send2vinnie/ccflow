@@ -17,10 +17,17 @@
 
   <TBEvent No="kepress"       CH="Pop返回值"  />
   <TBEvent No="PopVal"       CH="Pop返回值"  />
+
+
   
-  
-  <InputCheck No="100" DFor="String" CH="文本框只能输入数字代码(小数点也不能输入)"  />
-  <InputCheck No="101" DFor="String" CH="座机号码"   />
+  <!--<InputCheck No="100" DFor="String" CH="文本框只能输入数字代码(小数点也不能输入)"
+              AlertCH="您必须输入只能输入数字代码" />
+  <TBEvent DFor="100" No="kepress"  CH="" />-->
+
+  <InputCheck No="103" DFor="String" CH="E-mail" />
+    <TBEvent DFor="103" EventName="onblur" Func="isEmail(this.value);" />
+
+  <!--<InputCheck No="101" DFor="String" CH="座机号码" />
   <InputCheck No="102" DFor="String" CH="手机号码"  />
   <InputCheck No="103" DFor="String" CH="E-mail"  />
   <InputCheck No="104" DFor="String" CH="URL"  />
@@ -30,10 +37,10 @@
   <InputCheck No="108" DFor="String" CH="必须是英文"  />
   <InputCheck No="109" DFor="String" CH="必须是数字"  />
   <InputCheck No="110" DFor="String" CH="是否是英文数字下划线格式(例如:用户名)"  />
-
   <InputCheck No="200" DFor="Int" CH="取值范围"
                 JS="this.value=this.value.replace(/\D/g,'')" />
 
   <InputCheck No="300" DFor="Data" CH="日期输入不能为空"
-              JS="this.value=this.value.replace(/\D/g,'')" />
+              JS="this.value=this.value.replace(/\D/g,'')" />-->
+  
 </NewDataSet>
