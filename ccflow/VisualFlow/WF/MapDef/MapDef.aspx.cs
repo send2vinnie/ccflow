@@ -62,6 +62,9 @@ public partial class WF_MapDef_MapDef : WebPage
         BP.WF.XML.MapMenus xmls = new BP.WF.XML.MapMenus();
         xmls.RetrieveAll();
 
+        this.Page.RegisterClientScriptBlock("d",
+          "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Tabs.css' rel='stylesheet' type='text/css' />");
+
         this.Pub1.Add("\t\n<div id='tabsJ'  align='center'>");
         this.Pub1.Add("\t\n<ul>");
         foreach (BP.WF.XML.MapMenu item in xmls)
