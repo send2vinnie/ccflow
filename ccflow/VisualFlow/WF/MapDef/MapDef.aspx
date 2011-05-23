@@ -15,7 +15,11 @@ body
  <script src="./../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
     <script language="JavaScript" src="../../Comm/JScript.js"></script>
     <script language="JavaScript" src="MapDef.js"></script>
+
+    <script language="JavaScript" src="./../Style/Verify.js"></script>
+
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
+
     <script language="javascript" >
         function check(tb, min, max) {
           //  alert(min);

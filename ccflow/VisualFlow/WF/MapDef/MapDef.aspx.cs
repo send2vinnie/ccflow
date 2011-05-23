@@ -75,9 +75,7 @@ public partial class WF_MapDef_MapDef : WebPage
         this.Pub1.Add("\t\n</ul>");
         this.Pub1.Add("\t\n</div>");
 
-
         this.Pub1.AddFieldSet("设计表单:"+md.Name);
-
         this.Pub1.Add("\t\n<Table style=\"width:500px;\" >");
         /*
          * 根据 GroupField 循环出现菜单。
@@ -146,7 +144,6 @@ public partial class WF_MapDef_MapDef : WebPage
                     lab.Text = "默认值";
                     this.Pub1.Add(lab);
                     this.Pub1.Add("</span>");
-
 
                     TextBox mytbLine = new TextBox();
                     mytbLine.ID = "TB_" + attr.KeyOfEn;
@@ -443,7 +440,13 @@ public partial class WF_MapDef_MapDef : WebPage
                     // tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value);";
                     //    tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                     break;
-                case MapExtXmlList.InputCheck:
+                case MapExtXmlList.InputCheck: /*js 检查 */
+                   // InputCheckXml checks = new InputCheckXml(me.Tag);
+                    TBEventXmls tbevents = new TBEventXmls(me.Tag);
+                    foreach (TBEventXml tbevent in tbevents)
+                    {
+                        this.Pub1.GetTBByID("TB_" + me.AttrOfOper).Attributes[tbevent.EventName] = tbevent.Func;
+                    }
                     break;
                 case MapExtXmlList.PopVal: //弹出窗.
                     TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper);

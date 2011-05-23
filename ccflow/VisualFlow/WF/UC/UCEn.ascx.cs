@@ -529,7 +529,7 @@ namespace BP.Web.Comm.UC.WF
                     }
 
                     TB tb = new TB();
-                    tb.Columns = 60;
+                   // tb.Columns = 60;
                     tb.ID = "TB_" + attr.KeyOfEn;
                     tb.Enabled = attr.UIIsEnable;
 
@@ -550,7 +550,13 @@ namespace BP.Web.Comm.UC.WF
                                     {
                                         tb.ShowType = TBType.TB;
                                         tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                        this.AddTD(" width='40%' colspan=" + colspanOfCtl, tb);
+                                        if (colspanOfCtl == 3)
+                                            this.AddTD(" width='80%' colspan=" + colspanOfCtl, tb);
+                                        else
+                                            this.AddTD(" width='40%' colspan=" + colspanOfCtl, tb);
+
+                                        //tb.Attributes["width"] = "100%";
+                                        //tb.Attributes["size"] = "190";
                                     }
                                     break;
                                 case BP.DA.DataType.AppDate:
@@ -612,7 +618,8 @@ namespace BP.Web.Comm.UC.WF
                                 case BP.DA.DataType.AppDate:
                                     if (tb.Enabled)
                                     {
-                                        tb.Columns = 30;
+                                       // tb.Columns = attr.UIWidth;
+                                        tb.MaxLength = attr.MaxLen;
                                         //tb.Attributes["class"] = "TB";
                                     }
                                     else

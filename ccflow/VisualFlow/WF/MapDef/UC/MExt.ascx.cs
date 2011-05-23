@@ -435,7 +435,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("项目");
         this.Pub2.AddTDTitle("采集");
-        this.Pub2.AddTDTitle("说明");
+        this.Pub2.AddTDTitle("采集");
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
@@ -476,11 +476,10 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         ddl.Items.Add(new ListItem("*****自己验证方式*******", "all"));
 
-        ddl.SetSelectItem(me.AttrOfOper);
+        ddl.SetSelectItem(me.Tag);
         this.Pub2.AddTD(ddl);
         this.Pub2.AddTD("");
         this.Pub2.AddTREnd();
-
 
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("colspan=3", "处理内容");
@@ -770,6 +769,8 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         me.ExtType = this.ExtType;
         me.Doc = this.Pub2.GetTextBoxByID("TB_Doc").Text;
         me.AttrOfOper = this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal;
+        me.Tag = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItemStringVal;
+        me.Tag1 = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItem.Text;
         me.FK_MapData = this.FK_MapData;
         me.MyPK = this.FK_MapData + "_" + me.ExtType + "_" + me.AttrOfOper;
         me.Save();

@@ -61,13 +61,9 @@ div#Top
 </head>
 <body topmargin="0" leftmargin="0" bgcolor=white >
     <form id="form1" runat="server">
-    <div  >
-
        <div class="Baner">
         <uc1:Pub ID="Pub1" runat="server" />
         </div>
-
-    <div >
       <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
         </div>
@@ -78,10 +74,8 @@ div#Top
 <a href='http://ccFlow.org:666/BugFree/'  target=_blank >Bug and advices Reg.</a> 
 <% } %>
              http://ccFlow.org @2003-2011
-     
         </div>
 --%>
-
      </div>
     </form>
 </body>

@@ -77,7 +77,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
             is1 = this.Pub1.AddTR(is1);
             this.Pub1.AddTDIdx(i);
             //   this.Pub1.AddTDA("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
-            this.Pub1.AddTD(gwf.Title);
+            this.Pub1.AddTDDoc(gwf.Title,50,gwf.Title);
             this.Pub1.AddTD(gwf.FK_NodeText);
             this.Pub1.AddTD(gwf.RDT);
             this.Pub1.AddTD(gwf.RecText);
