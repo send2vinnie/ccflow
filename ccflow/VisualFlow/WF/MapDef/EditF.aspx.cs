@@ -466,7 +466,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             btn = new Button();
             btn.ID = "Btn_AutoFull";
             btn.Text = this.ToE("AutoFull", "自动填写");
-            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFill.aspx?RefNo=" + this.RefNo + "',''); return false;";
+            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFull.aspx?RefNo=" + this.RefNo + "',''); return false;";
             this.Pub1.Add(btn);
 
             if (mapAttr.HisEditType == EditType.Edit)
