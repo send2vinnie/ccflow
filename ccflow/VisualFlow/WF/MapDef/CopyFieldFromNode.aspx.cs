@@ -67,14 +67,14 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
         this.Pub1.AddULEnd();
         this.Pub1.AddFieldSetEnd(); 
 
-        this.Pub2.AddTable("width='400px'");
+        this.Pub2.AddTable("width='500px'");
 
-        this.Pub2.AddTR();
-        this.Pub2.AddTDTitle(this.ToE("Field", "字段"));
-        this.Pub2.AddTDTitle(this.ToE("Desc", "描述"));
-        this.Pub2.AddTDTitle(this.ToE("Type", "类型"));
-        this.Pub2.AddTDTitle(this.ToE("Show", "显示"));
-        this.Pub2.AddTREnd();
+        //this.Pub2.AddTR();
+        //this.Pub2.AddTDTitle(this.ToE("Field", "字段"));
+        ////this.Pub2.AddTDTitle(this.ToE("Desc", "描述"));
+        ////this.Pub2.AddTDTitle(this.ToE("Type", "类型"));
+        ////this.Pub2.AddTDTitle(this.ToE("Show", "显示"));
+        //this.Pub2.AddTREnd();
 
         GroupFields gfs = new GroupFields(this.NodeOfSelect);
         MapDtls dtls = new MapDtls(this.NodeOfSelect);
@@ -87,8 +87,8 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
             this.Pub2.AddTRSum();
             CheckBox cb = new CheckBox();
             cb.ID = "CB" + gf.OID;
-            cb.Text = gf.Lab;
-            this.Pub2.AddTD("colspan=4", cb);
+            cb.Text = "<b>"+gf.Lab+"</b>";
+            this.Pub2.AddTD(cb);
             this.Pub2.AddTREnd();
 
             foreach (MapDtl dtl in dtls)
@@ -100,7 +100,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                 cb = new CheckBox();
                 cb.ID = "CB" + dtl.No + "_" + dtl.GroupID;
                 cb.Text = this.ToE("Dtl", "明细表") + ":" + dtl.Name;
-                this.Pub2.AddTD("colspan=4", cb);
+                this.Pub2.AddTD(cb);
                 this.Pub2.AddTREnd();
             }
 
@@ -112,7 +112,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                 cb = new CheckBox();
                 cb.ID = "CB" + m2m.No + "_" + m2m.GroupID;
                 cb.Text = this.ToE("M2M", "多选") + ":" + m2m.Name;
-                this.Pub2.AddTD("colspan=4", cb);
+                this.Pub2.AddTD(cb);
                 this.Pub2.AddTREnd();
             }
 
@@ -124,10 +124,13 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                 cb = new CheckBox();
                 cb.ID = "CB" + frm.No + "_" + frm.GroupID;
                 cb.Text = this.ToE("Frame", "框架") + ":" + frm.Name;
-                this.Pub2.AddTD("colspan=4", cb);
+                this.Pub2.AddTD(cb);
                 this.Pub2.AddTREnd();
             }
 
+
+            this.Pub2.AddTR();
+            this.Pub2.AddTDBigDocBegain();
             foreach (MapAttr attr in attrs)
             {
                 if (gf.OID != attr.GroupID)
@@ -161,7 +164,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
 
                 cb = new CheckBox();
                 cb.ID = attr.KeyOfEn;
-                cb.Text = attr.KeyOfEn;
+                cb.Text = attr.KeyOfEn + " " + attr.Name;
 
                 if (attrsCopy.Contains(MapAttrAttr.KeyOfEn, attr.KeyOfEn))
                     cb.Enabled = false;
@@ -169,14 +172,12 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     cb.Enabled = true;
 
                 isHave = true;
-                this.Pub2.AddTR();
-                this.Pub2.AddTD(cb);
-                this.Pub2.AddTD(attr.Name);
-                this.Pub2.AddTD(attr.MyDataTypeStr);
-                this.Pub2.AddTD(attr.UIContralType.ToString());
-                this.Pub2.AddTREnd();
+                this.Pub2.Add(cb);
             }
+            this.Pub2.AddTDEnd();
+            this.Pub2.AddTREnd();
         }
+
         this.Pub2.AddTableEndWithBR();
         Button btn = new Button();
         if (isHave == false)

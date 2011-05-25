@@ -38,10 +38,44 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
             return this.Request.QueryString["IDX"];
         }
     }
-#endregion
+    public string FK_MapData
+    {
+        get
+        {
+            return this.Request.QueryString["FK_MapData"];
+        }
+    }
+    #endregion
+
+    #region 属性
+    public void BindTop()
+    {
+        this.Pub1.Add("\t\n<div id='tabsJ'  align='center'>");
+        MapExtXmls fss = new MapExtXmls();
+        fss.RetrieveAll();
+
+        this.Pub1.AddUL();
+        foreach (MapExtXml fs in fss)
+        {
+            if (this.PageID == fs.No)
+            {
+                this.Pub1.AddLiB(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
+            }
+            else
+                this.Pub1.AddLi(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
+        }
+        this.Pub1.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'><span>帮助</span></a>");
+        // this.Pub1.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo = " + this.RefNo + "' ><span>帮助</span></a>");
+        this.Pub1.AddULEnd();
+        this.Pub1.AddDivEnd();
+    }
+    #endregion 属性
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.BindTop();
+
         MapAttr mattr = new MapAttr(this.RefNo);
         Attr attr = mattr.HisAttr;
         this.Title = "为[" + mattr.KeyOfEn + "][" + mattr.Name + "]设置自动完成"; // this.ToE("GuideNewField");

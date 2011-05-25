@@ -12,7 +12,6 @@ function Go(FK_Node, cid,  seleNd)
 }
 function GroupClick(groupID)
 {
-  
 }
 </script>
 
