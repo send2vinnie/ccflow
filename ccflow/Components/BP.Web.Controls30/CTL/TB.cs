@@ -275,8 +275,8 @@ namespace BP.Web.Controls
                 this.Attributes["onkeydown"] = "javascript:if(event.keyCode == 13) event.keyCode = 9";
             }
 
-            this.Attributes["onmouseover"] = "TBOnfocus(this)";
-            this.Attributes["onmouseout"] = "TBOnblur(this)";
+            //this.Attributes["onmouseover"] = "TBOnfocus(this)";
+            //this.Attributes["onmouseout"] = "TBOnblur(this)";
         }
         public void LoadMapAttr(Attr attr)
         {

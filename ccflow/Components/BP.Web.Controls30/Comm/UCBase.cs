@@ -1134,7 +1134,7 @@ namespace BP.Web.UC
         {
             this.Add("<li><a href=\"" + url + "\" target=" + target + ">" + lab + "</a></li>");
         }
-        public void AddDiv(string html)
+        public void AddDiv_del(string html)
         {
             this.Add("<div>" + html + "</div>");
         }
