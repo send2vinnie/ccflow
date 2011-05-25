@@ -176,7 +176,11 @@ namespace BP.WF
         /// <summary>
         /// system form.
         /// </summary>
-        SysForm,
+        FixForm,
+        /// <summary>
+        /// system form.
+        /// </summary>
+        FreeForm,
         /// <summary>
         /// self form.
         /// </summary>
@@ -1993,8 +1997,9 @@ namespace BP.WF
                 // 流程的节点分为干流支流. FNType  @0=平面节点@1=干流@2=支流.
                 map.AddTBInt(NodeAttr.FNType, (int)FNType.Plane, "流程节点类型", false, false);
 
-                map.AddDDLSysEnum(NodeAttr.FormType, 0, "表单类型", true, true, NodeAttr.FormType, "@0=系统表单@1=自定义表单@2=SDK表单");
-                map.AddTBString(NodeAttr.FormUrl, "http://", "自定义表单URL", true, false, 0, 500, 10);
+                map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true);
+
+                map.AddTBString(NodeAttr.FormUrl, "http://", "表单URL", true, false, 0, 500, 10);
 
 
 
@@ -2108,14 +2113,14 @@ namespace BP.WF
             PubClass.WinOpen("./../WF/Admin/Cond.aspx?CondType=" + (int)CondType.Flow + "&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + this.NodeID + "&FK_Node=" + this.NodeID + "&FK_Attr=&DirType=&ToNodeID=", "单据", "cdn", 400, 400, 200, 300);
             return null;
         }
-        public string DoCondFL()
-        {
-            //if (this.IsCheckNode)
-            //    return "审核节点不能设置 分流完成规则 。";
+        //public string DoCondFL()
+        //{
+        //    //if (this.IsCheckNode)
+        //    //    return "审核节点不能设置 分流完成规则 。";
 
-            PubClass.WinOpen("./../WF/Admin/Cond.aspx?CondType=" + (int)CondType.FLRole + "&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + this.NodeID + "&FK_Node=" + this.NodeID + "&FK_Attr=&DirType=", "分流完成规则", "cdn", 400, 400, 200, 300);
-            return null;
-        }
+        //    PubClass.WinOpen("./../WF/Admin/Cond.aspx?CondType=" + (int)CondType.FLRole + "&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + this.NodeID + "&FK_Node=" + this.NodeID + "&FK_Attr=&DirType=", "分流完成规则", "cdn", 400, 400, 200, 300);
+        //    return null;
+        //}
         public string DoMapData()
         {
             //if (this.IsCheckNode)

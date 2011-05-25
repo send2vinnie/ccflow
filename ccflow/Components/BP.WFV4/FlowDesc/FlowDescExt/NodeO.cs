@@ -138,17 +138,17 @@ namespace BP.WF.Ext
 
                 map.AddTBString(NodeAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 100, 10, true);
 
-                map.AddBoolean(NodeAttr.IsTask, true, this.ToE("IsTask", "允许分配工作否?"), true, true, true);
-                map.AddBoolean(NodeAttr.IsSelectEmp, false, this.ToE("IsSelectEmp", "可否选择接受人?"), true, true, true);
-                map.AddBoolean(NodeAttr.IsCanReturn, false, this.ToE("IsCanReturn", "是否可以退回?"), true, true, true);
-                map.AddBoolean(NodeAttr.IsCanCC, true, "是否可以抄送", false, false, true);
-                map.AddBoolean(NodeAttr.IsCanRpt, true, "是否可以查看工作报告?", true, true, true);
-                map.AddBoolean(NodeAttr.IsSecret, false, "是否是保密步骤?", true, true, true);
-                map.AddBoolean(NodeAttr.IsCanOver, false, "是否可以终止流程", true, true, true);
-                map.AddBoolean(NodeAttr.IsCanDelFlow, false, this.ToE("IsCanDelFlow", "是否可以删除流程?"), true, true, true);
-                map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true, true);
-                map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交(对开始点无效)", true, true, true);
-                map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除子流程(对合流点有效)", true, true, true);
+                map.AddBoolean(NodeAttr.IsTask, true, this.ToE("IsTask", "允许分配工作否?"), true, true, false);
+                map.AddBoolean(NodeAttr.IsSelectEmp, false, this.ToE("IsSelectEmp", "可否选择接受人?"), true, true, false);
+                map.AddBoolean(NodeAttr.IsCanReturn, false, this.ToE("IsCanReturn", "是否可以退回?"), true, true, false);
+                map.AddBoolean(NodeAttr.IsCanCC, true, "是否可以抄送", false, false, false);
+                map.AddBoolean(NodeAttr.IsCanRpt, true, "是否可以查看工作报告?", true, true, false);
+                map.AddBoolean(NodeAttr.IsSecret, false, "是否是保密步骤?", true, true, false);
+                map.AddBoolean(NodeAttr.IsCanOver, false, "是否可以终止流程", true, true, false);
+                map.AddBoolean(NodeAttr.IsCanDelFlow, false, this.ToE("IsCanDelFlow", "是否可以删除流程?"), true, true, false);
+                map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true, false);
+                map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交(对开始点无效)", true, true, false);
+                map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除子流程(对合流点有效)", true, true, false);
 
                 // map.AddTBInt(NodeAttr.PassRate, 100, "通过率(对于合流节点有效)", true, true);
                 map.AddTBDecimal(NodeAttr.PassRate, 0, "完成通过率", true, false);
@@ -162,13 +162,12 @@ namespace BP.WF.Ext
 
                 map.AddDDLSysEnum(NodeAttr.FJOpen, 0, this.ToE("FJOpen", "附件权限"), true, true, NodeAttr.FJOpen, "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");
 
-                map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true, NodeAttr.FormType, "@0=系统表单@1=自定义表单@2=SDK表单");
+                map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true);
 
                 map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 500, 10, true);
                 // map.AddTBString(NodeAttr.FrmAttr, null, this.ToE("FrmAttr", "框架属性"), true, false, 0, 500, 10, true);
 
                 map.AddTBString(NodeAttr.DoWhat, null, this.ToE("DoWhat", "完成后处理SQL"), false, false, 0, 500, 10, false);
-
 
                 //  map.AddBoolean("IsSkipReturn", false, "是否可以跨级撤销", true, true, true);
 
@@ -274,11 +273,11 @@ namespace BP.WF.Ext
             BP.WF.Node nd = new BP.WF.Node(this.NodeID);
             return nd.DoCond();
         }
-        public string DoCondFL()
-        {
-            BP.WF.Node nd = new BP.WF.Node(this.NodeID);
-            return nd.DoCondFL();
-        }
+        //public string DoCondFL()
+        //{
+        //    BP.WF.Node nd = new BP.WF.Node(this.NodeID);
+        //    return nd.DoCondFL();
+        //}
         public string DoMapData()
         {
             BP.WF.Node nd = new BP.WF.Node(this.NodeID);

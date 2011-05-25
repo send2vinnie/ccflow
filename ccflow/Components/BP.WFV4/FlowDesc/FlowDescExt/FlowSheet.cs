@@ -109,7 +109,7 @@ namespace BP.WF.Ext
 
 
                 rm = new RefMethod();
-                rm.Title = this.ToE("DesignCheckRpt", "设计检查报告"); // "设计检查报告";
+                rm.Title = this.ToE("DesignCheckRpt", "检查报告"); // "设计检查报告";
                 //rm.ToolTip = "检查流程设计的问题。";
                 rm.Icon = "/Images/Btn/Confirm.gif";
                 rm.ClassMethodName = this.ToString() + ".DoCheck";
@@ -122,7 +122,7 @@ namespace BP.WF.Ext
                 //map.AddRefMethod(rm);
 
                 rm = new RefMethod();
-                rm.Title = this.ToE("Rpt", "报表"); // "报表运行";
+                rm.Title = this.ToE("Rpt", "设计报表"); // "报表运行";
                 rm.Icon = "/Images/Btn/View.gif";
                 rm.ClassMethodName = this.ToString() + ".DoOpenRpt()";
                 //rm.Icon = "/Images/Btn/Table.gif";

@@ -104,11 +104,11 @@ namespace BP.WF
         /// <summary>
         /// 方向条件
         /// </summary>
-        Dir,
-        /// <summary>
-        /// 分流规则设置
-        /// </summary>
-        FLRole
+        Dir
+        ///// <summary>
+        ///// 分流规则设置 。 
+        ///// </summary>
+        //FLRole
     }
 	/// <summary>
 	/// 条件基类

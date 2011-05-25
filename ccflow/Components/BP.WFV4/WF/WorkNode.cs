@@ -1257,9 +1257,7 @@ namespace BP.WF
         /// <returns></returns>
         public string AfterNodeSave()
         {
-           
             DBAccess.DoTransactionBegin();
-
             DateTime dt = DateTime.Now;
             this.HisWork.Rec = Web.WebUser.No;
             this.WorkID = this.HisWork.OID;
@@ -1590,8 +1588,10 @@ namespace BP.WF
                 qo.AddWhere(CondAttr.NodeID, this.HisNode.NodeID);
                 qo.addAnd();
                 qo.AddWhere(CondAttr.ToNodeID, nd.NodeID);
-                qo.addAnd();
-                qo.AddWhere(CondAttr.CondType, (int)CondType.FLRole);
+
+#warning del those code 2011-05-22.
+                //qo.addAnd();
+                //qo.AddWhere(CondAttr.CondType, (int)CondType.FLRole);
                 qo.DoQuery();
                 foreach (Cond dc in dcs)
                 {
@@ -1791,28 +1791,37 @@ namespace BP.WF
                 }
                 else
                 {
-                    rptGe.Retrieve();
+                   int i= rptGe.RetrieveFromDBSources();
+                   if (i == 0)
+                   {
+                       /*没有查询到这条数据。
+                        * 有两种情况：
+                        * 1，报表的数据表没有创建，或者丢失。
+                        * 2，它在分合流节点上。
+                        */
+#warning 不处理分合流程的分支流程数据报表的情况。
+                   }
 
-                    foreach (Attr attr in rptGe.EnMap.Attrs)
-                    {
-                        switch (attr.Key)
-                        {
-                            case StartWorkAttr.FK_Dept:
-                            case StartWorkAttr.FID:
-                            case StartWorkAttr.CDT:
-                            case StartWorkAttr.RDT:
-                            case StartWorkAttr.Rec:
-                            case StartWorkAttr.Sender:
-                            case StartWorkAttr.NodeState:
-                                continue;
-                            default:
-                                break;
-                        }
-                        object obj = this.HisWork.GetValByKey(attr.Key);
-                        if (obj == null)
-                            continue;
-                        rptGe.SetValByKey(attr.Key, obj);
-                    }
+                   foreach (Attr attr in rptGe.EnMap.Attrs)
+                   {
+                       switch (attr.Key)
+                       {
+                           case StartWorkAttr.FK_Dept:
+                           case StartWorkAttr.FID:
+                           case StartWorkAttr.CDT:
+                           case StartWorkAttr.RDT:
+                           case StartWorkAttr.Rec:
+                           case StartWorkAttr.Sender:
+                           case StartWorkAttr.NodeState:
+                               continue;
+                           default:
+                               break;
+                       }
+                       object obj = this.HisWork.GetValByKey(attr.Key);
+                       if (obj == null)
+                           continue;
+                       rptGe.SetValByKey(attr.Key, obj);
+                   }
 
                     try
                     {

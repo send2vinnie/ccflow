@@ -134,6 +134,7 @@ namespace BP.WF.Port
         /// </summary>
         public Emp()
         {
+
         }
         /// <summary>
         /// 工作人员编号

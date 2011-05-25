@@ -23,8 +23,12 @@ namespace BP.WF
         /// <returns>bp.wf.flows</returns>
         public static Flows DB_GenerCanStartFlowsOfEntities()
         {
+            return DB_GenerCanStartFlowsOfEntities(WebUser.No);
+        }
+        public static Flows DB_GenerCanStartFlowsOfEntities(string userNo)
+        {
             string sql = "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_EMP='" + WebUser.No + "')) ";
-            string sql2 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + WebUser.No + "' ) ";
+            string sql2 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
             Flows fls = new Flows();
             BP.En.QueryObject qo = new BP.En.QueryObject(fls);
             qo.AddWhereInSQL("No", sql + sql2);
@@ -40,9 +44,9 @@ namespace BP.WF
         /// 获取当前操作员可以发起的流程集合
         /// </summary>
         /// <returns>datatable</returns>
-        public static DataTable DB_GenerCanStartFlowsOfDataTable()
+        public static DataTable DB_GenerCanStartFlowsOfDataTable(string userNo)
         {
-            return DB_GenerCanStartFlowsOfEntities().ToDataTableField();
+            return DB_GenerCanStartFlowsOfEntities(userNo).ToDataTableField();
         }
         #endregion 获取当前操作员可以发起的流程集合
 
@@ -55,8 +59,12 @@ namespace BP.WF
         /// <returns>当前操作员待办工作</returns>
         public static DataTable DB_GenerEmpWorksOfDataTable()
         {
+            return DB_GenerEmpWorksOfDataTable(WebUser.No);
+        }
+        public static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
+        {
             string sql = null;
-            sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  ORDER BY WorkID ";
+            sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY WorkID ";
             return BP.DA.DBAccess.RunSQLReturnTable(sql);
         }
         #endregion 获取当前操作员的待办工作
@@ -69,7 +77,11 @@ namespace BP.WF
         /// <returns>在途工作</returns>
         public static GenerWorkFlowExts DB_GenerRuningOfEntities()
         {
-            string sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + BP.Web.WebUser.No + "' AND B.IsEnable=1 AND B.IsPass=1 ";
+            return DB_GenerRuningOfEntities(WebUser.No);
+        }
+        public static GenerWorkFlowExts DB_GenerRuningOfEntities(string userNo)
+        {
+            string sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + userNo + "' AND B.IsEnable=1 AND B.IsPass=1 ";
             GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
             gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
             return gwfs;
@@ -81,6 +93,10 @@ namespace BP.WF
         public static DataTable DB_GenerRuningOfDataTable()
         {
             return DB_GenerRuningOfEntities().ToDataTableField();
+        }
+        public static DataTable DB_GenerRuningOfDataTable(string userNo)
+        {
+            return DB_GenerRuningOfEntities(userNo).ToDataTableField();
         }
         #endregion 获取当前操作员的待办工作
 

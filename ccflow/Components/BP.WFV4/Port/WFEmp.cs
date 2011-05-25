@@ -295,7 +295,6 @@ namespace BP.WF.Port
                 map.AddTBString(WFEmpAttr.Msg, null, "Msg", true, true, 0, 4000, 20);
 
 
-
                 map.AddTBInt(WFEmpAttr.Idx, 0, "Idx", false, false);
                 map.AddTBInt(WFEmpAttr.Style, 0, "Style", false, false);
 

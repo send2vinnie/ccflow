@@ -1,7 +1,0 @@
-D:\ccflow\Components\BP.WFV4\bin\Release\BP.WFV4.dll
-D:\ccflow\Components\BP.WFV4\bin\Release\BP.En30.dll
-D:\ccflow\Components\BP.WFV4\bin\Release\ChineseConverter.dll
-D:\ccflow\Components\BP.WFV4\bin\Release\BP.En30.pdb
-D:\ccflow\Components\BP.WFV4\obj\Release\ResolveAssemblyReference.cache
-D:\ccflow\Components\BP.WFV4\obj\Release\BP.WFV4.csproj.ResolveComReference.cache
-D:\ccflow\Components\BP.WFV4\obj\Release\BP.WFV4.dll
