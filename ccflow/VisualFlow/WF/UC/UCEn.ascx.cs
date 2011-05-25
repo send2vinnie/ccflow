@@ -291,7 +291,7 @@ namespace BP.Web.Comm.UC.WF
         }
 
 
-        public void InsertObjects2Col(bool isJudgeRowIdx, string pk,string fid)
+        public void InsertObjects2Col(bool isJudgeRowIdx, string pk, string fid)
         {
             #region 明细表
             foreach (MapDtl dtl in dtls)
@@ -330,7 +330,7 @@ namespace BP.Web.Comm.UC.WF
                 this.AddTREnd();
             }
             #endregion 明细表
-             
+
             #region 框架表
             foreach (MapFrame fram in frames)
             {
@@ -371,6 +371,7 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion 明细表
         }
+
         public void BindColumn4(Entity en, string enName)
         {
             this.HisEn = en;
@@ -719,44 +720,9 @@ namespace BP.Web.Comm.UC.WF
             this.Add(js);
             #endregion 处理iFrom 的自适应的问题。
 
-            #region 处理扩展设置
-            MapExts mes = new MapExts(enName);
-            if (mes.Count != 0)
-            {
-                this.Page.RegisterClientScriptBlock("s4",
-              "<script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' ></script>");
-
-                this.Page.RegisterClientScriptBlock("b7",
-             "<script language='JavaScript' src='./Scripts/MapExt.js' ></script>");
-
-                this.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
-            }
-
-            foreach (MapExt me in mes)
-            {
-                switch (me.ExtType)
-                {
-                    case MapExtXmlList.ActiveDDL:
-                        DDL ddlPerant = this.GetDDLByID("DDL_" + me.AttrOfOper);
-                        DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
-                        ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
-                        break;
-                    case MapExtXmlList.AutoFull: // 自动填充.
-                        TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
-                        tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
-                        tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
-                        break;
-                    case MapExtXmlList.InputCheck:
-                        break;
-                    case MapExtXmlList.PopVal: //弹出窗.
-                        TB tb = this.GetTBByID("TB_" + me.AttrOfOper);
-                        tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
-                        break;
-                    default:
-                        break;
-                }
-            }
-            #endregion 处理扩展设置
+            // 处理扩展。
+            this.AfterBindEn_DealMapExt(enName);
+          
 
             #region 处理iFrom SaveDtlData。
             js = "\t\n<script type='text/javascript' >";
@@ -828,6 +794,47 @@ namespace BP.Web.Comm.UC.WF
                 }
             }
             #endregion 处理iFrom 的自适应的问题。
+        }
+        private void AfterBindEn_DealMapExt(string enName)
+        {
+            #region 处理扩展设置
+            MapExts mes = new MapExts(enName);
+            if (mes.Count != 0)
+            {
+                this.Page.RegisterClientScriptBlock("s4",
+              "<script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' ></script>");
+
+                this.Page.RegisterClientScriptBlock("b7",
+             "<script language='JavaScript' src='./Scripts/MapExt.js' ></script>");
+
+                this.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
+            }
+
+            foreach (MapExt me in mes)
+            {
+                switch (me.ExtType)
+                {
+                    case MapExtXmlList.ActiveDDL:
+                        DDL ddlPerant = this.GetDDLByID("DDL_" + me.AttrOfOper);
+                        DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
+                        ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
+                        break;
+                    case MapExtXmlList.AutoFull: // 自动填充.
+                        TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
+                        tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                        tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
+                        break;
+                    case MapExtXmlList.InputCheck:
+                        break;
+                    case MapExtXmlList.PopVal: //弹出窗.
+                        TB tb = this.GetTBByID("TB_" + me.AttrOfOper);
+                        tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            #endregion 处理扩展设置
         }
 
         public void InsertObjects(bool isJudgeRowIdx)
@@ -996,7 +1003,189 @@ namespace BP.Web.Comm.UC.WF
             #endregion 框架
         }
         #endregion
+
+        #region 输出自由格式的表单.
+        public string FK_MapData
+        {
+            get
+            {
+                return "ND501";
+            }
+        }
+        public void BindFreeFrm(Entity en, string enName)
+        {
+            this.HisEn = en;
+
+            MapAttrs mattrs = new MapAttrs(this.FK_MapData);
+
+            #region 输出竖线与标签
+            FrmLabs labs = new FrmLabs(this.FK_MapData);
+            FrmLines lines = new FrmLines(this.FK_MapData);
+            foreach (FrmLab lab in labs)
+            {
+                this.Add("<DIV id=u2 style='position:absolute; left:" + lab.X + "px; top:" + lab.Y + "px; width:150px; height:16px;text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;' >");
+                this.Add("<span style=\" font-family:'" + lab.FrontName + "'; color:" + lab.FrontColor + "; font-size:" + lab.FrontSize + "px; font-weight:" + lab.FrontWeight + "\"> " + lab.Name + "</span>");
+                this.Add("</DIV>");
+            }
+            foreach (FrmLine line in lines)
+            {
+                if (line.X1 == line.X2)
+                {
+                    /* 一道竖线 */
+                    this.Add("<IMG id=u1  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + line.BorderWidth + "px; height:" + line.Y2 + "px\" />");
+                }
+                else
+                {
+                    /* 一道横线 */
+                    int w = line.X2 - line.X1;
+                    this.Add("<IMG id=u1  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px\" />");
+                }
+            }
+            #endregion 输出竖线与标签
+
+            #region 输出控件.
+            foreach (MapAttr attr in mattrs)
+            {
+                if (attr.UIVisible == false)
+                    continue;
+
+                this.Add("<DIV id=u2 style='position:absolute; left:" + attr.X + "px; top:" + attr.Y + "px; width:150px; height:16px;text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;' >");
+                this.Add("<span>");
+
+                #region add contrals.
+                TB tb = new TB();
+                tb.ID = "TB_" + attr.KeyOfEn;
+                tb.Enabled = attr.UIIsEnable;
+                switch (attr.LGType)
+                {
+                    case FieldTypeS.Normal:
+                        tb.Enabled = attr.UIIsEnable;
+                        switch (attr.MyDataType)
+                        {
+                            case BP.DA.DataType.AppString:
+                                if (attr.IsSigan)
+                                {
+                                    this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                }
+                                else
+                                {
+                                    tb.ShowType = TBType.TB;
+                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    tb.Columns = attr.UIWidth;
+                                    this.Add(tb);
+                                }
+                                break;
+                            case BP.DA.DataType.AppDate:
+                                tb.ShowType = TBType.Date;
+                                tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                if (attr.UIIsEnable)
+                                    tb.Attributes["onfocus"] = "WdatePicker();";
+                                tb.Columns = attr.UIWidth;
+                                this.Add(tb);
+                                break;
+                            case BP.DA.DataType.AppDateTime:
+                                this.AddTDDesc(attr.Name);
+                                tb.ShowType = TBType.DateTime;
+                                tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                if (attr.UIIsEnable)
+                                    tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
+                                tb.Columns = attr.UIWidth;
+                                this.Add(tb);
+                                break;
+                            case BP.DA.DataType.AppBoolean:
+                                CheckBox cb = new CheckBox();
+                                cb.Text = attr.Name;
+                                cb.ID = "CB_" + attr.KeyOfEn;
+                                cb.Checked = attr.DefValOfBool;
+                                cb.Enabled = attr.UIIsEnable;
+                                cb.Checked = en.GetValBooleanByKey(attr.KeyOfEn);
+                                this.Add(cb);
+                                break;
+                            case BP.DA.DataType.AppDouble:
+                            case BP.DA.DataType.AppFloat:
+                            case BP.DA.DataType.AppInt:
+                                tb.ShowType = TBType.Num;
+                                tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                this.Add(tb);
+                                break;
+                            case BP.DA.DataType.AppMoney:
+                                this.AddTDDesc(attr.Name);
+                                tb.ShowType = TBType.Moneny;
+                                tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
+                                this.Add(tb);
+                                break;
+                            case BP.DA.DataType.AppRate:
+                                this.AddTDDesc(attr.Name);
+                                tb.ShowType = TBType.Moneny;
+                                tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
+                                this.Add(tb);
+                                break;
+                            default:
+                                break;
+                        }
+                        switch (attr.MyDataType)
+                        {
+                            case BP.DA.DataType.AppString:
+                            case BP.DA.DataType.AppDateTime:
+                            case BP.DA.DataType.AppDate:
+                                if (tb.Enabled)
+                                {
+                                    tb.MaxLength = attr.MaxLen;
+                                }
+                                else
+                                {
+                                    tb.Attributes["class"] = "TBReadonly";
+                                }
+                                break;
+                            default:
+                                if (tb.Enabled)
+                                    tb.Attributes["class"] = "TBNum";
+                                else
+                                    tb.Attributes["class"] = "TBNumReadonly";
+                                break;
+                        }
+                        break;
+                    case FieldTypeS.Enum:
+                        DDL ddle = new DDL();
+                        ddle.ID = "DDL_" + attr.KeyOfEn;
+                        ddle.BindSysEnum(attr.KeyOfEn);
+                        ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
+                        ddle.Enabled = attr.UIIsEnable;
+                        this.Add(ddle);
+                        break;
+                    case FieldTypeS.FK:
+                        DDL ddl1 = new DDL();
+                        ddl1.ID = "DDL_" + attr.KeyOfEn;
+                        try
+                        {
+                            EntitiesNoName ens = attr.HisEntitiesNoName;
+                            ens.RetrieveAll();
+                            ddl1.BindEntities(ens);
+                            ddl1.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
+                        }
+                        catch
+                        {
+                        }
+                        ddl1.Enabled = attr.UIIsEnable;
+                        this.Add(ddl1);
+                        break;
+                    default:
+                        break;
+                }
+                #endregion add contrals.
+                this.Add("</span>");
+                this.Add("</DIV>");
+            }
+            #endregion 输出控件.
+
+            // 处理扩展.
+            this.AfterBindEn_DealMapExt(enName);
+            //this.Init();
+            return;
+        }
         
+        #endregion
+
         public static string GetRefstrs(string keys, Entity en, Entities hisens)
         {
             string refstrs = "";

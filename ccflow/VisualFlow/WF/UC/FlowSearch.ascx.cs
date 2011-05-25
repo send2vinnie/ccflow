@@ -389,8 +389,10 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             this.Pub1.AddTD(nd.Name);
 
             bool isCan = false;
-            if (nd.HisFormType != FormType.SysForm)
+            if (nd.HisFormType == FormType.SDKForm || nd.HisFormType == FormType.SelfForm)
+            {
                 isCan = false;
+            }
             else
             {
                 foreach (Station st in sts)
