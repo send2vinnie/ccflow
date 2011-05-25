@@ -215,14 +215,14 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 
 .TR1
 {
- background-color:AliceBlue;
+    background-color: AliceBlue;
 }
 
 
 .TRSum
 {
-	background-color: infobackground;
-	font-size: 14px;
+    background-color: #0000FF;
+    font-size: 14px;
 }
 
 
