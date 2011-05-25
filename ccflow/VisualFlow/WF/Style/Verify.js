@@ -1,12 +1,74 @@
 
-/* 是否是邮箱 */
-function isEmail(strEmail) {
-    if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1)
-        return true;
-    else
-        alert("email error.");
+
+/**
+* 检查最小长度最大长度。
+* 输入:str  字符串
+*  返回:true 或 flase; true表示格式正确
+*/
+function checkLength(tb, minLen, maxLen) {
+    if (tb.value.length < minLen || tb.value.length > maxLen) {
+        alert('错误：输入的长度必须在' + minLen + ' 到 ' + maxLen + '之间.');
+    }
 }
 
+/* 是否是邮箱 */
+function isEmail(tb) {
+    if (tb.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1)
+        return true;
+    alert('错误的邮件格式.');
+}
+
+/**
+* 检查输入的手机号码格式是否正确
+* 输入:str  字符串
+* 返回:true 或 flase; true表示格式正确
+*/
+function checkMobilePhone(str) {
+    if (str.match(/^(?:13\d|15[89])-?\d{5}(\d{3}|\*{3})$/) == null) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+/**
+* 检查输入的固定电话号码是否正确
+* 输入:str  字符串
+* 返回:true 或 flase; true表示格式正确
+*/
+function checkTelephone(str) {
+    if (str.match(/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/) == null) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+
+/**
+* 检查输入的身份证号是否正确
+* 输入:str  字符串
+*  返回:true 或 flase; true表示格式正确
+*/
+function checkCard(str) {
+    //15位数身份证正则表达式
+    var arg1 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
+    //18位数身份证正则表达式
+    var arg2 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[A-Z])$/;
+    if (str.match(arg1) == null && str.match(arg2) == null) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+
+
+
+/**************************** 未整理 **************************************/
 
 /**
 * 2009-10-01
@@ -91,34 +153,8 @@ function checkEmail(str) {
 }
 
 
-/**
-* 检查输入的手机号码格式是否正确
-* 输入:str  字符串
-* 返回:true 或 flase; true表示格式正确
-*/
-function checkMobilePhone(str) {
-    if (str.match(/^(?:13\d|15[89])-?\d{5}(\d{3}|\*{3})$/) == null) {
-        return false;
-    }
-    else {
-        return true;
-    }
-}
 
 
-/**
-* 检查输入的固定电话号码是否正确
-* 输入:str  字符串
-* 返回:true 或 flase; true表示格式正确
-*/
-function checkTelephone(str) {
-    if (str.match(/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/) == null) {
-        return false;
-    }
-    else {
-        return true;
-    }
-}
 
 /**
 * 检查QQ的格式是否正确
@@ -134,23 +170,6 @@ function checkQQ(str) {
     }
 }
 
-/**
-* 检查输入的身份证号是否正确
-* 输入:str  字符串
-*  返回:true 或 flase; true表示格式正确
-*/
-function checkCard(str) {
-    //15位数身份证正则表达式
-    var arg1 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
-    //18位数身份证正则表达式
-    var arg2 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[A-Z])$/;
-    if (str.match(arg1) == null && str.match(arg2) == null) {
-        return false;
-    }
-    else {
-        return true;
-    }
-}
 
 /**
 * 检查输入的IP地址是否正确

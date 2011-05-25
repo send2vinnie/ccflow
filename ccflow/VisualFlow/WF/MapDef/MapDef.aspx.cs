@@ -421,6 +421,8 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
         }
 
+
+        string jsStr = "";
         foreach (MapExt me in mes)
         {
             switch (me.ExtType)
@@ -441,11 +443,19 @@ public partial class WF_MapDef_MapDef : WebPage
                     //    tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                     break;
                 case MapExtXmlList.InputCheck: /*js 检查 */
-                   // InputCheckXml checks = new InputCheckXml(me.Tag);
+                    // InputCheckXml checks = new InputCheckXml(me.Tag);
                     TBEventXmls tbevents = new TBEventXmls(me.Tag);
                     foreach (TBEventXml tbevent in tbevents)
                     {
-                        this.Pub1.GetTBByID("TB_" + me.AttrOfOper).Attributes[tbevent.EventName] = tbevent.Func;
+                        try
+                        {
+                            this.Pub1.GetTBByID("TB_" + me.AttrOfOper).Attributes[tbevent.EventName] = tbevent.Func;
+                            jsStr += "@" + me.AttrOfOper + "@";
+                        }
+                        catch
+                        {
+                            me.Delete();
+                        }
                     }
                     break;
                 case MapExtXmlList.PopVal: //弹出窗.
@@ -457,6 +467,21 @@ public partial class WF_MapDef_MapDef : WebPage
             }
         }
         #endregion 处理扩展信息。
+
+
+        #region 处理输入最小，最大验证.
+        foreach (MapAttr attr in mattrs)
+        {
+            if (attr.MyDataType != DataType.AppString || attr.MinLen == 0)
+                continue;
+
+            if (attr.UIIsEnable == false || attr.UIVisible == false)
+                continue;
+
+            this.Pub1.GetTBByID("TB_" + attr.KeyOfEn).Attributes["onblur"] = "checkLength(this,'" + attr.MinLen + "','" + attr.MaxLen + "')";
+        }
+        #endregion 处理输入最小，最大验证.
+
 
         #region 处理iFrom 的自适应的问题。
         string js = "\t\n<script type='text/javascript' >";

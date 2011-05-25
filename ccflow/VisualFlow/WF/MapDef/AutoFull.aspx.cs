@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Data;
-using System.Configuration;
-using System.Collections;
+using System.Collections.Generic;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using BP.Web.Controls;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using BP.Web.Controls;
 using BP.Sys;
 using BP.En;
 using BP.Web;
 using BP.Web.UC;
 using BP.DA;
 
-public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
+public partial class WF_MapDef_AutoFull : BP.Web.WebPage
 {
+    #region 属性
     /// <summary>
     /// 执行类型
     /// </summary>
@@ -31,7 +28,7 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
     {
         get
         {
-            return  int.Parse( this.Request.QueryString["FType"]) ;
+            return int.Parse(this.Request.QueryString["FType"]);
         }
     }
     public string IDX
@@ -41,6 +38,8 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
             return this.Request.QueryString["IDX"];
         }
     }
+#endregion
+
     protected void Page_Load(object sender, EventArgs e)
     {
         MapAttr mattr = new MapAttr(this.RefNo);
@@ -62,6 +61,7 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
                 BindStringType(mattr);
                 break;
         }
+
     }
     public void BindStringType(MapAttr mattr)
     {
@@ -70,19 +70,16 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
     public void BindNumType(MapAttr mattr)
     {
         this.Pub1.AddTable();
-    //    this.Pub1.AddCaptionLeftTX(this.Title);
-
-
         this.Pub1.AddTR();
         this.Pub1.Add("<TD>");
         RadioBtn rb = new RadioBtn();
         rb.GroupName = "s";
-        rb.Text = this.ToE("Way0","方式0：不做任何设置。");
+        rb.Text = this.ToE("Way0", "方式0：不做任何设置。");
         rb.ID = "RB_Way_0";
         if (mattr.HisAutoFull == AutoFullWay.Way0)
             rb.Checked = true;
         this.Pub1.AddFieldSet(rb);
-        this.Pub1.Add( this.ToE("Way0D", "不做任何设置。"));
+        this.Pub1.Add(this.ToE("Way0D", "不做任何设置。"));
         this.Pub1.AddFieldSetEnd();
 
         this.Pub1.AddTDEnd();
@@ -121,13 +118,13 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
 
         rb = new RadioBtn();
         rb.GroupName = "s";
-        rb.Text = this.ToE("Way2", "方式2：利用SQL自动填充。");  
+        rb.Text = this.ToE("Way2", "方式2：利用SQL自动填充。");
         rb.ID = "RB_Way_2";
         if (mattr.HisAutoFull == AutoFullWay.Way2_SQL)
             rb.Checked = true;
 
         this.Pub1.AddFieldSet(rb);
-        this.Pub1.Add(this.ToE("Way2D", "比如:Select Addr From 商品表 WHERE No=@FK_Pro  FK_Pro是本表中的任意字段名")+"<BR>");
+        this.Pub1.Add(this.ToE("Way2D", "比如:Select Addr From 商品表 WHERE No=@FK_Pro  FK_Pro是本表中的任意字段名") + "<BR>");
 
         tb = new TextBox();
         tb.ID = "TB_SQL";
@@ -148,14 +145,14 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
         this.Pub1.Add("<TD>");
         rb = new RadioBtn();
         rb.GroupName = "s";
-        rb.Text = this.ToE("Way3", "方式3：本表单中外键列。");  
-       // rb.Text = "方式3：本表单中外键列</font></b>";
+        rb.Text = this.ToE("Way3", "方式3：本表单中外键列。");
+        // rb.Text = "方式3：本表单中外键列</font></b>";
         rb.ID = "RB_Way_3";
         if (mattr.HisAutoFull == AutoFullWay.Way3_FK)
             rb.Checked = true;
 
         this.Pub1.AddFieldSet(rb);
-        this.Pub1.Add(this.ToE("Way3D","比如:表单中有商品编号列,需要填充商品地址、供应商电话。"));
+        this.Pub1.Add(this.ToE("Way3D", "比如:表单中有商品编号列,需要填充商品地址、供应商电话。"));
         this.Pub1.AddBR();
 
 
@@ -259,7 +256,7 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
             rb.Enabled = false;
             if (rb.Checked)
                 rb.Checked = false;
-           // this.Pub1.Add("@没有明细表。");
+            // this.Pub1.Add("@没有明细表。");
         }
         foreach (MapDtl dtl in dtls)
         {
@@ -446,11 +443,9 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
         }
 
 
-         
+        this.Alert(this.ToE("SaveOK", "保存成功"));
 
-        this.Alert(this.ToE("SaveOK", "保存成功") );
-
-       this.Pub1.Clear();
+        this.Pub1.Clear();
 
         Button btn = sender as Button;
         if (btn.ID.Contains("Close"))
@@ -458,12 +453,11 @@ public partial class Comm_MapDef_AutoFill : BP.Web.WebPage
         else
             this.BindNumType(mattr);
 
-       // else
-         //   this.Response.Redirect("AutoFill.aspx?RefOID="+this.RefOID,true);
+        // else
+        //   this.Response.Redirect("AutoFill.aspx?RefOID="+this.RefOID,true);
     }
     public void BindStringType()
     {
-
     }
     public string GetCaption
     {

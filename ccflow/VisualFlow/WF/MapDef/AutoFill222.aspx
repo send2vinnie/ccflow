@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AutoFill.aspx.cs" Inherits="Comm_MapDef_AutoFill" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AutoFill222.aspx.cs" Inherits="Comm_MapDef_AutoFill" %>
 <%@ Register src="../UC/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -7,7 +7,6 @@
     <title>自动完成</title>
     <link href="../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
 	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
-
     <script language="javascript">
     /* ESC Key Down  */
     function Esc()

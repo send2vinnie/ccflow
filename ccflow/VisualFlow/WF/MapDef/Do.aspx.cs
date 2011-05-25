@@ -35,6 +35,24 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
     {
         switch (this.DoType)
         {
+            case "DobackToF":
+                MapAttr ma = new MapAttr(this.RefNo);
+                switch (ma.LGType)
+                {
+                    case  FieldTypeS.Normal:
+                        this.Response.Redirect("EditF.aspx?RefNo=" + this.RefNo, true);
+                        return;
+                    case FieldTypeS.FK:
+                        this.Response.Redirect("EditTable.aspx?RefNo=" + this.RefNo, true);
+                        return;
+                    case FieldTypeS.Enum:
+                        this.Response.Redirect("EditEnum.aspx?RefNo=" + this.RefNo, true);
+                        return;
+                    default:
+                        return;
+                }
+
+                break;
             case "AddEnum":
                 SysEnumMain sem1 = new SysEnumMain(this.Request.QueryString["EnumKey"]);
                 MapAttr attrAdd = new MapAttr();

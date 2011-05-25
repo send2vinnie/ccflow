@@ -12,20 +12,13 @@ body
 }
 </style>
  
- <script src="./../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script src="./../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
     <script language="JavaScript" src="../../Comm/JScript.js"></script>
     <script language="JavaScript" src="MapDef.js"></script>
-
     <script language="JavaScript" src="./../Style/Verify.js"></script>
-
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
 
-    <script language="javascript" >
-        function check(tb, min, max) {
-          //  alert(min);
-           // tb.Focus();
-            //tb.text.selected();
-        }
+    <script language="javascript"  >
 	function HelpGroup()
 	{
 	   var msg='字段分组：就是把类似的字段放在一起，让用户操作更友好。\t\n比如：我们纳税人设计一个基础信息采集节点。';
@@ -43,8 +36,8 @@ body
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-	function AddF(mypk)
-    {
+	function AddF(mypk) {
+
         var url='Do.aspx?DoType=AddF&MyPK='+mypk;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
@@ -234,14 +227,11 @@ body
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
-    
-
     function EditFrame(mypk, dtlKey) {
         var url = 'MapFrame.aspx?DoType=Edit&FK_MapData=' + mypk + '&FK_MapFrame=' + dtlKey;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
-
     function MapFrame(mypk) {
         var url = 'MapFrame.aspx?DoType=DtlList&FK_MapData=' + mypk;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');

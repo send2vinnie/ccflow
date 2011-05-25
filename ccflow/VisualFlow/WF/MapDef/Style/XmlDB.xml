@@ -8,6 +8,13 @@
   <MapMenu No="FGroup" CH="字段分组" JS="javascript:GroupFieldNew(@MyPK);" Img="../../Images/Btn/Apply.gif"  />
   <MapMenu No="Ext" CH="扩展设置"    JS="javascript:MapExt(@MyPK);" Img="../../Images/Btn/DTS.gif" />
 
+  <FExt No="Auto" CH="自动填充" DFor="TB,DDL,Checkbox" />
+  <FExt No="Auto" CH="自动填充" DFor="TB,DDL,Checkbox" />
+  <FExt No="Auto" CH="自动填充" DFor="TB,DDL,Checkbox" />
+  <FExt No="Auto" CH="自动填充" DFor="TB,DDL,Checkbox" />
+  <FExt No="Auto" CH="自动填充" DFor="TB,DDL,Checkbox" />
+
+
   <InputCheck No="01" CH="文本框只能输入数字代码(小数点也不能输入)"    JS="this.value=this.value.replace(/\D/g,'')" />
   <InputCheck No="02" CH="只能输入数字,能输小数点"    JS="this.value=this.value.replace(/\D/g,'')" />
 
