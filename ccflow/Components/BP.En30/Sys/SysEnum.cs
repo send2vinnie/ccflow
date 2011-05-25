@@ -266,11 +266,7 @@ namespace BP.Sys
             // Cash.AddObj("ESQL" + enName + key + "_" + enumKey, Depositary.Application, sql);
             return sql;
         }
-		/// <summary>
-		/// SysEnums
-		/// </summary>
-		/// <param name="EnumKey"></param>
-        public SysEnums(string enumKey)
+        public void LoadIt(string enumKey)
         {
             if (this.Full(enumKey) == false)
             {
@@ -288,31 +284,30 @@ namespace BP.Sys
                     BP.Sys.Xml.EnumInfoXml xml = new Xml.EnumInfoXml(enumKey);
                     this.RegIt(enumKey, xml.Vals);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    throw new Exception("@你没有预制[" + enumKey + "]枚举值。@在修复枚举值出现错误:"+ex.Message);
+                    throw new Exception("@你没有预制[" + enumKey + "]枚举值。@在修复枚举值出现错误:" + ex.Message);
                 }
             }
         }
-        public SysEnums(string EnumKey, string vals)
+		/// <summary>
+		/// SysEnums
+		/// </summary>
+		/// <param name="EnumKey"></param>
+        public SysEnums(string enumKey)
         {
-            if (this.Full(EnumKey) == false)
+            this.LoadIt(enumKey);
+        }
+        public SysEnums(string enumKey, string vals)
+        {
+            if (vals == null || vals == "")
             {
-                if (vals == null || vals == "")
-                {
-                    try
-                    {
-                        BP.DA.DBAccess.RunSQL("UPDATE Sys_Enum WHERE Lang='" + Web.WebUser.SysLang + "' WHERE LANG IS NULL ");
-                        BP.DA.DBAccess.RunSQL("UPDATE Sys_Enum set MyPK=EnumKey+'_'+Lang+'_'+cast(IntKey as varchar )");
-                    }
-                    catch
-                    {
-                    }
-                    throw new Exception("@你没有预制[" + EnumKey + "]枚举值。");
-                }
-                else
-                    this.RegIt(EnumKey, vals);
+                this.LoadIt(enumKey);
+                return;
             }
+
+            if (this.Full(enumKey) == false)
+                this.RegIt(enumKey, vals);
         }
         public void RegIt(string EnumKey, string vals)
         {
@@ -360,6 +355,9 @@ namespace BP.Sys
             qo.addOrderBy(SysEnumAttr.IntKey);
             if (qo.DoQuery() == 0)
             {
+                /* 看看xml配置里面是否有?*/
+
+
                 return false;
             }
 

@@ -75,10 +75,10 @@ namespace BP.Sys
                         dec += "输入项目： 联动项目：";
                         break;
                     case MapExtXmlList.InputCheck:
-                        dec += "输入项目： 检查内容：";
+                        dec += "输入项目："+this.AttrOfOper+" 检查内容："+this.Tag1;
                         break;
                     case MapExtXmlList.PopVal:
-                        dec += "输入项目： 弹出的url：";
+                        dec += "输入项目：" + this.AttrOfOper + " 弹出的Url：" + this.Tag;
                         break;
                     default:
                         break;

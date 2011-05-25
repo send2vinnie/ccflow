@@ -207,13 +207,27 @@ namespace BP.Web
                 else
                     cookie.Values.Add("IsRememberMe", "0");
 
-
                 cookie.Values.Add("FK_Dept", em.FK_Dept);
                 cookie.Values.Add("FK_DeptName", HttpUtility.UrlEncode(em.FK_DeptText));
 
                 cookie.Values.Add("Token", System.Web.HttpContext.Current.Session.SessionID);
                 cookie.Values.Add("Lang", lang);
-                cookie.Values.Add("Style", "0");
+
+                string  isEnableStyle=SystemConfig.AppSettings["IsEnableStyle"];
+                if (isEnableStyle == "1")
+                {
+                    try
+                    {
+                        string sql = "SELECT Style FROM WF_Emp WHERE No='" + WebUser.No + "' ";
+                        int val = DBAccess.RunSQLReturnValInt(sql, 0);
+                        cookie.Values.Add("Style", val.ToString());
+                        WebUser.Style = val.ToString();
+                    }
+                    catch
+                    {
+                    }
+                }
+
 
                 if (SystemConfig.IsUnit)
                 {

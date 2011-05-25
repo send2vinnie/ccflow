@@ -106,6 +106,14 @@ namespace BP.Sys
         /// 是否是签字
         /// </summary>
         public const string IsSigan = "IsSigan";
+        /// <summary>
+        /// x
+        /// </summary>
+        public const string X = "X";
+        /// <summary>
+        /// y
+        /// </summary>
+        public const string Y = "Y";
     }
     /// <summary>
     /// 实体属性
@@ -123,7 +131,6 @@ namespace BP.Sys
                     ens.RetrieveAll();
                     return ens;
                 }
-
                 GENoNames myens = new GENoNames(this.UIBindKey, this.Name);
                 myens.RetrieveAll();
                 return myens;
@@ -836,6 +843,28 @@ namespace BP.Sys
                 this.SetValByKey(MapAttrAttr.IDX, value);
             }
         }
+        public int X
+        {
+            get
+            {
+                return this.GetValIntByKey(MapAttrAttr.X);
+            }
+            set
+            {
+                this.SetValByKey(MapAttrAttr.X, value);
+            }
+        }
+        public int Y
+        {
+            get
+            {
+                return this.GetValIntByKey(MapAttrAttr.Y);
+            }
+            set
+            {
+                this.SetValByKey(MapAttrAttr.Y, value);
+            }
+        }
         #endregion
 
         #region 构造方法
@@ -910,6 +939,9 @@ namespace BP.Sys
 
                 // 是否是签字，操作员字段有效。2010-09-23 增加。
                 map.AddTBInt(MapAttrAttr.IsSigan, 0, "签字？", true, false);
+
+                map.AddTBInt(MapAttrAttr.X, 0, "X", true, false);
+                map.AddTBInt(MapAttrAttr.Y, 0, "Y", true, false);
 
                 this._enMap = map;
                 return this._enMap;

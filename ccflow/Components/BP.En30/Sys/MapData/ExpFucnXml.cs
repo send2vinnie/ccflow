@@ -8,7 +8,7 @@ using BP.XML;
 namespace BP.Sys
 {
 
-    public class MapExtXmlList
+    public class ExpFucnXmlList
     {
         /// <summary>
         /// 活动菜单
@@ -30,9 +30,8 @@ namespace BP.Sys
         /// Func
         /// </summary>
         public const string Func = "Func";
-
     }
-	public class MapExtXml:XmlEnNoName
+	public class ExpFucnXml:XmlEnNoName
 	{
 		#region 属性
         public new string Name
@@ -48,10 +47,10 @@ namespace BP.Sys
 		/// <summary>
 		/// 节点扩展信息
 		/// </summary>
-		public MapExtXml()
+		public ExpFucnXml()
 		{
 		}
-        public MapExtXml(string no)
+        public ExpFucnXml(string no)
         {
             
         }
@@ -62,7 +61,7 @@ namespace BP.Sys
 		{
 			get
 			{
-				return new MapExtXmls();
+				return new ExpFucnXmls();
 			}
 		}
 		#endregion
@@ -70,13 +69,13 @@ namespace BP.Sys
 	/// <summary>
 	/// 
 	/// </summary>
-	public class MapExtXmls:XmlEns
+	public class ExpFucnXmls:XmlEns
 	{
 		#region 构造
 		/// <summary>
 		/// 考核率的数据元素
 		/// </summary>
-        public MapExtXmls() { }
+        public ExpFucnXmls() { }
 		#endregion
 
 		#region 重写基类属性或方法。
@@ -87,16 +86,16 @@ namespace BP.Sys
 		{
 			get
 			{
-				return new MapExtXml();
+				return new ExpFucnXml();
 			}
 		}
-		public override string File
-		{
-			get
-			{
+        public override string File
+        {
+            get
+            {
                 return SystemConfig.PathOfXML + "MapExt.xml";
-			}
-		}
+            }
+        }
 		/// <summary>
 		/// 物理表名
 		/// </summary>
@@ -104,7 +103,7 @@ namespace BP.Sys
 		{
 			get
 			{
-				return "FieldExt";
+                return "ExpFunc";
 			}
 		}
 		public override Entities RefEns
