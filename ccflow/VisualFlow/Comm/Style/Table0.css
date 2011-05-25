@@ -98,7 +98,7 @@ table input[type="textbox"]
 
 .TB
 {
-    border-style: dotted none dotted none;
+    border-style: none none dotted none;
     border-width: 1px;
     border-color: #CCCCCC;
     overflow: visible;

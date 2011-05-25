@@ -255,6 +255,16 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 	vertical-align: bottom;
 	text-align:right;
 }
+.TB
+{
+    border-style: none none dotted none;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    overflow: visible;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
 
 .TR
 {
