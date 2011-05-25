@@ -81,7 +81,7 @@ public class WebService : System.Web.Services.WebService {
     }
     [WebMethod(EnableSession = true)]
     public void DevEditLab(int oid, string fk_mapdata, int x, int y, string frontColor,
-        string frontName, string frontStyle)
+        string frontName, string frontWeight)
     {
         BP.Sys.FrmLab en = new BP.Sys.FrmLab();
         en.OID = oid;
@@ -91,7 +91,7 @@ public class WebService : System.Web.Services.WebService {
 
         en.FrontColor = frontColor;
         en.FrontName = frontName;
-        en.FrontStyle = frontStyle;
+        en.FrontWeight = frontWeight;
         en.Save();
     }
     /// <summary>
