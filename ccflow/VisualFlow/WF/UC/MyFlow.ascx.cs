@@ -443,7 +443,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.ToolBar1.AddBtn("Btn_HandOver", this.ToE("HandOver", "移交"));
 
 
-           this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
+           //this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
 
            // this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\" alert('ss'); ymPrompt.win({message:'" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "',width:500,height:300,title:'ccflow',handler:handler,maxBtn:true,minBtn:true,iframe:true}); \" />");
 
@@ -804,14 +804,19 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
         switch (nd.HisFormType)
         {
-            case FormType.SysForm:
+            case FormType.FixForm:
                 this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID); //, false, false, null);
                 if (wk.WorkEndInfo.Length > 2)
                 {
                     this.UCEn1.Add(wk.WorkEndInfo);
                 }
-
-                //OutJSAuto(wk);
+                return;
+            case FormType.FreeForm:
+                this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID); //, false, false, null);
+                if (wk.WorkEndInfo.Length > 2)
+                {
+                    this.UCEn1.Add(wk.WorkEndInfo);
+                }
                 return;
             case FormType.SelfForm:
             case FormType.SDKForm:
@@ -1125,8 +1130,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 case FormType.SelfForm:
                     break;
-                case FormType.SysForm:
-                    // work = this.UCEn1.GetEnData(work) as Work;
+                case FormType.FixForm:
+                case FormType.FreeForm:
                     work = (Work)this.UCEn1.Copy(work);
                     break;
                 default:
@@ -1163,12 +1168,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 work.Insert();
             else
                 work.Update(); /* 如果是保存 */
-            //save data cells.
-            if (currNd.HisFormType == FormType.SysForm)
-            {
-                //MapData md = new MapData("ND" + currNd.NodeID);
-                //work.Update();
-            }
+           
         }
         catch (Exception ex)
         {
