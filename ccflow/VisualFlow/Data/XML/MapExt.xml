@@ -1,32 +1,50 @@
 ﻿<?xml version="1.0" standalone="yes" ?>
 <NewDataSet>
-	<!-- 外部连接配置说明  No, 部门编号，URL 对方sqlserver 的连接。  -->
-  <Item No="ActiveDDL"   CH="级联下拉框"  />
-  <Item No="InputCheck"   CH="字段输入脚本验证"  />
-  <Item No="AutoFull"     CH="自动完成"  />
-  <Item No="PopVal"       CH="Pop返回值"  />
-  <Item No="Func"         CH="功能执行"  />
+	<!-- 扩展  -->
+  <FieldExt111 No="Back"     CH="返回"   DFor="TB,DDL,Checkbox" URL="Do.aspx?DoType=DobackToF" />
+  <FieldExt No="AutoFull"     CH="数据获取"   DFor="TB,DDL,Checkbox" URL="AutoFull.aspx?s=3" />
+  <FieldExt No="ActiveDDL"    CH="级联下拉框" DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+  <FieldExt No="InputCheck"   CH="脚本验证"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+  <FieldExt No="FullCtrl"     CH="自动完成"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+  <FieldExt No="PopVal"       CH="Pop返回值" DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+  <FieldExt No="Func"         CH="功能执行"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
 
   <ExpFunc No="Word"         CH="导出Word模板"  />
   <ExpFunc No="PDF"         CH="导出PDF模板"  />
   <ExpFunc No="Excel"         CH="导出Excel模板"  />
-  
   <ExpFunc No="Aspx"         CH="导出aspx表单模板"  />
   <ExpFunc No="php"         CH="导出php表单模板"  />
   <ExpFunc No="jsp"         CH="导出jsp表单模板"  />
-
+  
   <TBEvent No="kepress"       CH="Pop返回值"  />
   <TBEvent No="PopVal"       CH="Pop返回值"  />
-
 
   
   <!--<InputCheck No="100" DFor="String" CH="文本框只能输入数字代码(小数点也不能输入)"
               AlertCH="您必须输入只能输入数字代码" />
   <TBEvent DFor="100" No="kepress"  CH="" />-->
 
-  <InputCheck No="103" DFor="String" CH="E-mail" />
-    <TBEvent DFor="103" EventName="onblur" Func="isEmail(this.value);" />
+ <![CDATA[
+ &lt; < 小于号 
+&gt; > 大于号 
+&amp; & 和 
+&apos; ' 单引号 
+&quot; " 双引号
+单引号是&apos;  ，双引号是&quot; 其实还有：&是&amp;，>是&gt; ， <是&lt; ，空格是&nbsp; 等。
+ ]]>
 
+  <InputCheck No="103" DFor="String" CH="E-mail"  />
+  <TBEvent DFor="103" EventName="onblur" Func="isEmail(this.value);" />
+
+  <InputCheck No="104" DFor="String" CH="检查输入的手机号码格式"  />
+  <TBEvent DFor="104" EventName="onblur" Func="checkMobilePhone(this.value);" />
+
+  <InputCheck No="105" DFor="String" CH="检查输入的固定电话号码是否正确"  />
+  <TBEvent DFor="105" EventName="onblur" Func="checkTelephone(this.value);" />
+
+  <InputCheck No="106" DFor="String" CH="检查输入的身份证号是否正确"  />
+  <TBEvent DFor="106" EventName="onblur" Func="checkCard(this.value);" />
+  
   <!--<InputCheck No="101" DFor="String" CH="座机号码" />
   <InputCheck No="102" DFor="String" CH="手机号码"  />
   <InputCheck No="103" DFor="String" CH="E-mail"  />

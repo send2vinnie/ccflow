@@ -127,6 +127,8 @@
   <Item No="IsDeleteR" CH="是否可以删除行" EN="Allow Delete" JP="IsDeleteR" RU="IsDeleteR" />
   <Item No="IsShowIdx" CH="是否显示序号列" EN="Display ID Column" JP="IsUpdate" RU="IsUpdate" />
   <Item No="IsShowSum" CH="是否合计行" EN="Display Subtotal Row" JP="IsUpdate" RU="IsUpdate" />
+  <Item No="IsEnablePass" CH="是否启用审核字段" EN="是否启用审核字段" JP="IsUpdate" RU="IsUpdate" />
+
   <Item No="RowsOfList" CH="初始化行数" EN="Initial Number of Rows" JP="Initialize the number of rows" RU="IsUpdate" />
   <Item No="WhenOverSize" CH="越出处理" EN="Oversize Treatment" JP="Beyond treatment" RU="IsUpdate" />
   <Item No="ShowInGroup" CH="显示在分组" EN="Display in Group" JP="IsUpdate" RU="IsUpdate" />

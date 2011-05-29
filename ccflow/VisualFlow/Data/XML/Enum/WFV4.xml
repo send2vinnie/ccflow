@@ -51,7 +51,7 @@
     
   <!-- 表单类型  -->
 <Item Key="FormType"
-     CH="@0=系统表单@1=自定义表单@2=SDK表单"
+     CH="@0=固定列表单@1=自由表单@2=自定义表单@3=SDK表单"
      EN="@0=System Form@1=Custom Form@2=SDK Form"
      JP="@0=System Form@1=Custom Form@2=SDK Form"
      RU="@0=System Form@1=Custom Form@2=SDK Form" />
