@@ -21,7 +21,7 @@ namespace BP.Sys
         /// <summary>
         /// 自动完成
         /// </summary>
-        public const string AutoFull = "AutoFull";
+        public const string FullCtrl = "FullCtrl";
         /// <summary>
         /// Pop返回值
         /// </summary>
@@ -30,6 +30,8 @@ namespace BP.Sys
         /// Func
         /// </summary>
         public const string Func = "Func";
+
+
 
     }
 	public class MapExtXml:XmlEnNoName
@@ -40,6 +42,13 @@ namespace BP.Sys
             get
             {
                 return this.GetValStringByKey(BP.Web.WebUser.SysLang);
+            }
+        }
+        public string URL
+        {
+            get
+            {
+                return this.GetValStringByKey("URL");
             }
         }
 		#endregion

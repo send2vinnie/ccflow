@@ -71,7 +71,7 @@ namespace BP.Sys
                     case MapExtXmlList.ActiveDDL:
                         dec += "输入项目："+this.AttrOfOper+" 联动项目："+this.AttrsOfActive;
                         break;
-                    case MapExtXmlList.AutoFull:
+                    case MapExtXmlList.FullCtrl:
                         dec += "输入项目： 联动项目：";
                         break;
                     case MapExtXmlList.InputCheck:

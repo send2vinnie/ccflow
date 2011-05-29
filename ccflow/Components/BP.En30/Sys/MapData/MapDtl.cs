@@ -72,6 +72,7 @@ namespace BP.Sys
         public const string IsDelete = "IsDelete";
         public const string IsInsert = "IsInsert";
         public const string IsUpdate = "IsUpdate";
+        public const string IsEnablePass = "IsEnablePass";
     }
     /// <summary>
     /// 明细
@@ -168,6 +169,20 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapDtlAttr.IsUpdate, value);
+            }
+        }
+        /// <summary>
+        /// 是否起用审核连接
+        /// </summary>
+        public bool IsEnablePass
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsEnablePass);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsEnablePass, value);
             }
         }
         public bool IsCopyNDData
@@ -334,6 +349,9 @@ namespace BP.Sys
                 map.AddBoolean(MapDtlAttr.IsInsert, true, "IsInsert", false, false);
                 map.AddBoolean(MapDtlAttr.IsDelete, true, "IsDelete", false, false);
                 map.AddBoolean(MapDtlAttr.IsUpdate, true, "IsUpdate", false, false);
+
+
+                map.AddBoolean(MapDtlAttr.IsEnablePass, false, "是否启用通过审核功能?", false, false);
 
 
                 map.AddDDLSysEnum(MapDtlAttr.WhenOverSize, 0, "WhenOverSize", true, true,
