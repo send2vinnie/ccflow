@@ -1,0 +1,40 @@
+﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="WF" EntryPointType="WF.App" RuntimeVersion="4.0.50826.0">
+  <Deployment.Parts>
+    <AssemblyPart x:Name="WF" Source="WF.dll" />
+    <AssemblyPart x:Name="Liquid.Menu" Source="Liquid.Menu.dll" />
+    <AssemblyPart x:Name="Liquid.TreeView" Source="Liquid.TreeView.dll" />
+    <AssemblyPart x:Name="Silverlight.Controls" Source="Silverlight.Controls.dll" />
+    <AssemblyPart x:Name="Silverlight.DataSet" Source="Silverlight.DataSet.dll" />
+    <AssemblyPart x:Name="System.ComponentModel.DataAnnotations" Source="System.ComponentModel.DataAnnotations.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Data.Input" Source="System.Windows.Controls.Data.Input.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls" Source="System.Windows.Controls.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Navigation" Source="System.Windows.Controls.Navigation.dll" />
+    <AssemblyPart x:Name="System.Xml.Linq" Source="System.Xml.Linq.dll" />
+    <AssemblyPart x:Name="System.Xml.Serialization" Source="System.Xml.Serialization.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Data" Source="System.Windows.Controls.Data.dll" />
+    <AssemblyPart x:Name="System.Windows.Data" Source="System.Windows.Data.dll" />
+    <AssemblyPart Source="en-us/WF.resources.dll" />
+    <AssemblyPart Source="ja-JP/WF.resources.dll" />
+    <AssemblyPart Source="ru-RU/WF.resources.dll" />
+    <AssemblyPart Source="zh-cn/WF.resources.dll" />
+    <AssemblyPart Source="zh-Hant/WF.resources.dll" />
+    <AssemblyPart Source="zh-Hant/System.ComponentModel.DataAnnotations.resources.dll" />
+    <AssemblyPart Source="ja/System.ComponentModel.DataAnnotations.resources.dll" />
+    <AssemblyPart Source="ru/System.ComponentModel.DataAnnotations.resources.dll" />
+    <AssemblyPart Source="zh-Hant/System.Windows.Controls.resources.dll" />
+    <AssemblyPart Source="ja/System.Windows.Controls.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Controls.resources.dll" />
+    <AssemblyPart Source="zh-Hant/System.Windows.Controls.Data.Input.resources.dll" />
+    <AssemblyPart Source="ja/System.Windows.Controls.Data.Input.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Controls.Data.Input.resources.dll" />
+    <AssemblyPart Source="zh-Hant/System.Windows.Controls.Navigation.resources.dll" />
+    <AssemblyPart Source="ja/System.Windows.Controls.Navigation.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Controls.Navigation.resources.dll" />
+    <AssemblyPart Source="zh-Hant/System.Xml.Linq.resources.dll" />
+    <AssemblyPart Source="ja/System.Xml.Linq.resources.dll" />
+    <AssemblyPart Source="ru/System.Xml.Linq.resources.dll" />
+    <AssemblyPart Source="zh-Hant/System.Xml.Serialization.resources.dll" />
+    <AssemblyPart Source="ja/System.Xml.Serialization.resources.dll" />
+    <AssemblyPart Source="ru/System.Xml.Serialization.resources.dll" />
+  </Deployment.Parts>
+</Deployment>
