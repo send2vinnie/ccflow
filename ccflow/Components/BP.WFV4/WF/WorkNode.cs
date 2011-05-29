@@ -563,11 +563,8 @@ namespace BP.WF
             //        wl.FK_Dept
             //    }
             //}
-
-
             //   DBAccess.RunSQL("DELETE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
             //   DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
-           
 
 
             // 记录退回轨迹。
@@ -579,6 +576,14 @@ namespace BP.WF
 
             // 删除退回时当前节点的工作信息
             this.HisWork.Delete();
+
+            // 删除明细表信息。
+            MapDtls dtls = new MapDtls("ND" + this.HisNode.NodeID);
+            foreach (MapDtl dtl in dtls)
+            {
+                BP.DA.DBAccess.RunSQL("DELETE "+dtl.PTable+" WHERE RefPK='"+this.WorkID+"'");
+            }
+
 
             // 删除当前工作者.
             WorkerLists wkls = new WorkerLists(this.HisWork.OID, this.HisNode.NodeID);
@@ -2626,11 +2631,20 @@ namespace BP.WF
                 }
                 #endregion
 
-                // 复制明细数据。
+                #region 复制明细数据。
                 Sys.MapDtls dtls = new BP.Sys.MapDtls("ND" + this.HisNode.NodeID);
                 if (dtls.Count >= 1)
                 {
                     Sys.MapDtls toDtls = new BP.Sys.MapDtls("ND" + nd.NodeID);
+                    Sys.MapDtls startDtls = null;
+                    foreach (MapDtl dtl in toDtls)
+                    {
+                        if (dtl.IsEnablePass)
+                        {
+                            startDtls = new BP.Sys.MapDtls("ND" + int.Parse(nd.FK_Flow)+"01");
+                        }
+                    }
+
                     int i = -1;
                     foreach (Sys.MapDtl dtl in dtls)
                     {
@@ -2639,9 +2653,15 @@ namespace BP.WF
                             continue;
 
                         Sys.MapDtl toDtl = (Sys.MapDtl)toDtls[i];
+
+                        if (dtl.IsEnablePass == true)
+                        {
+                            /*如果启用了是否明细表的审核通过机制,就允许copy节点数据。*/
+                            toDtl.IsCopyNDData = true;
+                        }
+
                         if (toDtl.IsCopyNDData == false)
                             continue;
-
 
                         //获取明细数据。
                         GEDtls gedtls = new GEDtls(dtl.No);
@@ -2662,13 +2682,27 @@ namespace BP.WF
                                 break;
                         }
                         qo.DoQuery();
-
+                        int unPass = 0;
+                        // 是否起用审核机制。
+                        bool isEnablePass = dtl.IsEnablePass;
+                        if (isEnablePass == true)
+                        {
+                            /*判断当前节点该明细表上是否有，isPass 审核字段，如果没有抛出异常信息。*/
+                        }
                         foreach (GEDtl gedtl in gedtls)
                         {
+                            if (isEnablePass)
+                            {
+                                if (gedtl.GetValBooleanByKey("IsPass") == false)
+                                {
+                                    /*没有审核通过的就 continue 它们，仅复制已经审批通过的.*/
+                                    continue;
+                                }
+                            }
+
                             BP.Sys.GEDtl dtCopy = new GEDtl(toDtl.No);
                             dtCopy.Copy(gedtl);
                             dtCopy.FK_MapDtl = toDtl.No;
-
                             dtCopy.RefPK = this.WorkID.ToString();
                             try
                             {
@@ -2678,8 +2712,43 @@ namespace BP.WF
                             {
                             }
                         }
+
+                        if (isEnablePass)
+                        {
+                            /* 如果启用了审核通过机制，就把未审核的数据copy到第一个节点上去 
+                             * 1, 找到对应的明细点.
+                             * 2, 把未审核通过的数据复制到开始明细表里.
+                             */
+
+                            string startTable = "ND" + int.Parse(nd.FK_Flow) + "01";
+                            string startUser = "SELECT Rec FROM " + startTable + " WHERE OID=" + this.WorkID;
+                            startUser = DBAccess.RunSQLReturnString(startUser);
+
+                            //this.HisWorkFlow.StartNodeID;
+
+                            MapDtl startDtl = (MapDtl)startDtls[i];
+                            foreach (GEDtl gedtl in gedtls)
+                            {
+                                if (gedtl.GetValBooleanByKey("IsPass"))
+                                    continue; /* 排除审核通过的 */
+
+                                BP.Sys.GEDtl dtCopy = new GEDtl(startDtl.No);
+                                dtCopy.Copy(gedtl);
+                                dtCopy.OID = 0;
+                                dtCopy.FK_MapDtl = startDtl.No;
+                                dtCopy.RefPK = gedtl.OID.ToString();// this.WorkID.ToString();
+
+                                dtCopy.SetValByKey("BatchID", this.WorkID);
+                                dtCopy.SetValByKey("IsPass", 0);
+                                dtCopy.SetValByKey("Rec", startUser);
+                                dtCopy.SetValByKey("Checker", BP.Web.WebUser.Name);
+                                dtCopy.Insert();
+                            }
+                            DBAccess.RunSQL("UPDATE " + startDtl.PTable + " SET Rec='" + startUser + "',Checker='"+WebUser.No+"' WHERE BatchID="+this.WorkID +" AND Rec='"+WebUser.No+"'" );
+                        }
                     }
                 }
+                #endregion 复制明细数据
                 //  wk.CopyCellsData("ND" + this.HisNode.NodeID + "_" + this.HisWork.OID);
                 #endregion
 

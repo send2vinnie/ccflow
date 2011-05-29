@@ -290,6 +290,8 @@
     <Compile Include="Xml\SDK.cs" />
     <Compile Include="Xml\Skin.cs" />
     <Compile Include="Xml\CondTypeXml.cs" />
+    <Compile Include="Xml\WorkOpt.cs" />
+    <Compile Include="Xml\WorkOptDtl.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BP.En30\BP.En30.csproj">
