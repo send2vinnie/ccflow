@@ -221,7 +221,7 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 
 .TRSum
 {
-    background-color: #0000FF;
+    background-color: InfoBackground;
     font-size: 14px;
 }
 
