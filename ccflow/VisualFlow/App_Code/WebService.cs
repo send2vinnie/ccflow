@@ -26,86 +26,8 @@ public class WebService : System.Web.Services.WebService {
         //如果使用设计的组件，请取消注释以下行 
         //InitializeComponent(); 
     }
-    #region 设计器的方法
-    /// <summary>
-    /// 运行sql返回dataset
-    /// </summary>
-    /// <param name="sql">要执行的sql</param>
-    /// <returns>ds</returns>
-    public string RunSQLReturnDS(string sql)
-    {
-        return Connector.ToXml(BP.DA.DBAccess.RunSQLReturnDataSet(sql));
-    }
-    public string DevLines(string fk_mapdata)
-    {
-        string sql = "SELECT * FROM Sys_FrmLine WHERE FK_MapData='"+fk_mapdata+"'";
-        return RunSQLReturnDS(sql);
-    }
-    public string DevLabs(string fk_mapdata)
-    {
-        string sql = "SELECT * FROM Sys_FrmLab WHERE FK_MapData='" + fk_mapdata + "'";
-        return RunSQLReturnDS(sql);
-    }
-    public string DevMapAttrs(string fk_mapdata)
-    {
-        string sql = "SELECT * FROM Sys_FrmAttr WHERE FK_MapData='" + fk_mapdata + "'";
-        return RunSQLReturnDS(sql);
-    }
-    /// <summary>
-    /// 编辑线
-    /// </summary>
-    /// <param name="oid"></param>
-    /// <param name="fk_mapdata"></param>
-    /// <param name="x1"></param>
-    /// <param name="y1"></param>
-    /// <param name="x2"></param>
-    /// <param name="y2"></param>
-    /// <param name="borderWidth"></param>
-    /// <param name="borderColor"></param>
-    /// <param name="borderStyle"></param>
-    [WebMethod(EnableSession = true)]
-    public void DevEditLine(int oid, string fk_mapdata, int x1, int y1, int x2, int y2, int borderWidth, string borderColor, string borderStyle)
-    {
-        BP.Sys.FrmLine line = new BP.Sys.FrmLine();
-        line.OID = oid;
-        line.FK_MapData = fk_mapdata;
-        line.X1 = x1;
-        line.Y1 = y1;
-        line.X2 = x2;
-        line.Y2 = y2;
 
-        line.BorderColor = borderColor;
-        line.BorderStyle = borderStyle;
-        line.BorderWidth = borderWidth;
-        line.Save();
-    }
-    [WebMethod(EnableSession = true)]
-    public void DevEditLab(int oid, string fk_mapdata, int x, int y, string frontColor,
-        string frontName, string frontWeight)
-    {
-        BP.Sys.FrmLab en = new BP.Sys.FrmLab();
-        en.OID = oid;
-        en.FK_MapData = fk_mapdata;
-        en.X = x;
-        en.Y = y;
-
-        en.FrontColor = frontColor;
-        en.FrontName = frontName;
-        en.FrontWeight = frontWeight;
-        en.Save();
-    }
-    /// <summary>
-    /// 更新字段.
-    /// </summary>
-    /// <param name="mypk"></param>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    [WebMethod(EnableSession = true)]
-    public void DevEditMapAttr(string mypk,int x,int y)
-    {
-        BP.DA.DBAccess.RunSQL("UPDATE Sys_MapAttr Set x="+x+" ,Y="+y+" where mypk='"+mypk+"'");
-    }
-    #endregion 设计器的方法
+    
 
     /// <summary>
     /// 根据workID获取工作列表
@@ -291,29 +213,19 @@ public class WebService : System.Web.Services.WebService {
     [WebMethod(EnableSession = true)]
     public string GetFlowSort()
     {
-     
         //FlowSorts fs = new FlowSorts();
         //fs.RetrieveAll();
         DataSet ds = new DataSet();
         ds = BP.DA.DBAccess.RunSQLReturnDataSet("select * from WF_FlowSort");
         return Connector.ToXml(ds);
-
     }
-
-
-
     [WebMethod(EnableSession = true)]
     public string GetFlowBySort(string sort)
     {
-     
-
         DataSet ds = new DataSet();
         ds = BP.DA.DBAccess.RunSQLReturnDataSet("select No,Name,FK_FlowSort from WF_Flow");
         return Connector.ToXml(ds);
-
-
     }
-
     [WebMethod(EnableSession = true)]
     public string GetFlows()
     {
@@ -321,7 +233,6 @@ public class WebService : System.Web.Services.WebService {
         ds = BP.DA.DBAccess.RunSQLReturnDataSet("select No,Name,FK_FlowSort from WF_Flow ");
         return Connector.ToXml(ds);
     }
-
 #endregion
 
     #region 部门
@@ -348,7 +259,6 @@ public class WebService : System.Web.Services.WebService {
     //    ds = BP.DA.DBAccess.RunSQLReturnDataSet(@"select  No,Name  from Port_Station");
     //    return Connector.ToXml(ds);
     //}
-
     ///// <summary>
     /////人员
     ///// </summary>
@@ -374,16 +284,13 @@ public class WebService : System.Web.Services.WebService {
     //    return Connector.ToXml(ds);
     //}
  
-     
     /// <summary>
     /// 岗位人员
     /// </summary>
     /// <returns></returns>
     [WebMethod(EnableSession = true)]
-   
     public string GetStationEmps()
     {
-      
         DataSet ds = new DataSet();
         ds = BP.DA.DBAccess.RunSQLReturnDataSet(@"select e.No as EmpNo, e.Name as EmpName,s.No,s.Name  from Port_Station s,Port_EmpStation es ,Port_Emp e 
 where s.No=es.FK_Station and e.No=es.FK_Emp");
@@ -395,7 +302,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string MaintainStation( string pk    )
     {
-
         string url = "http://localhost/Flow/Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Port.Stations&PK=" + pk + "&rowUrl=1";
         return url;
     }
@@ -405,8 +311,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string MaintainDept(string pk)
     {
-   
-
         string url = "http://localhost/Flow/Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Port.Depts&PK=" + pk + "&rowUrl=1";
         return url;
     }
@@ -422,7 +326,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         return url;
     }
     #endregion
-
 
     [WebMethod(EnableSession = true)]
     public int RunSQL(string sql)
