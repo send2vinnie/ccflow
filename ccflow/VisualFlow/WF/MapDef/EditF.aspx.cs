@@ -465,7 +465,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         {
             btn = new Button();
             btn.ID = "Btn_AutoFull";
-            btn.Text = this.ToE("AutoFull", "自动填写");
+            btn.Text = this.ToE("AutoFull", "扩展设置");
             btn.Attributes["onclick"] = "javascript:WinOpen('AutoFull.aspx?RefNo=" + this.RefNo + "&FK_MapData="+mapAttr.FK_MapData+"',''); return false;";
             this.Pub1.Add(btn);
 
@@ -582,9 +582,19 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         tb.ID = "TB_UIWidth";
         tb.CssClass = "TBNum";
         tb.Text = mapAttr.UIWidth.ToString();
-
         this.Pub1.AddTD(tb);
         this.Pub1.AddTDB(this.ToE("ForDtl", "对明细表有效"));
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("TBHeight", "行数"));
+        tb = new TB();
+        tb.ID = "TB_UIHeight";
+        tb.CssClass = "TBNum";
+        tb.Text = mapAttr.UIWidth.ToString();
+        this.Pub1.AddTD(tb);
+        this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
 
         this.EditBeforeEnd(mapAttr);
@@ -609,6 +619,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         {
             this.Pub1.GetTBByID("TB_MaxLen").Enabled = false;
             this.Pub1.GetTBByID("TB_MaxLen").Text = "4000";
+            this.Pub1.GetTBByID("TB_UIHeight").Text = "8";
         }
         else
         {

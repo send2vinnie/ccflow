@@ -26,7 +26,7 @@ public class Handler : IHttpHandler
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 context.Response.Write(JSONTODT(dt));
                 return;
-            case BP.Sys.MapExtXmlList.AutoFull: // 自动完成。
+            case BP.Sys.MapExtXmlList.FullCtrl: // 自动完成。
                 switch (context.Request.QueryString["DoType"])
                 {
                     case "ReqCtrl":

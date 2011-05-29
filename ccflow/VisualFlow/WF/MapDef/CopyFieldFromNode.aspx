@@ -14,7 +14,7 @@ function GroupClick(groupID)
 {
 }
 </script>
-
+    <link href="../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <table width='100%'>

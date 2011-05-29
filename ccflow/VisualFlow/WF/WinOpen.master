@@ -6,8 +6,6 @@
     <asp:ContentPlaceHolder id="head" runat="server">
     <script language="JavaScript" src="../Comm/JScript.js"></script>
     <script language="JavaScript" src="../Comm/JS/Calendar/WdatePicker.js" ></script>
-   
-
 <base target=_self /> 
  <style type="text/css">
  body

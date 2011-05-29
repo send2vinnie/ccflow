@@ -206,7 +206,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                     MapExtAttr.FK_MapData, this.FK_MapData);
                 this.MapExtList(mes);
                 break;
-            case MapExtXmlList.AutoFull: //自动完成.
+            case MapExtXmlList.FullCtrl: //自动完成.
                 if (this.DoType == "EditAutoJL")
                 {
                     this.EditAutoJL();

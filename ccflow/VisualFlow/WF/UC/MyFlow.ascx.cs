@@ -444,8 +444,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
 
            //this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
-
-           // this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\" alert('ss'); ymPrompt.win({message:'" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "',width:500,height:300,title:'ccflow',handler:handler,maxBtn:true,minBtn:true,iframe:true}); \" />");
+           //this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\" alert('ss'); ymPrompt.win({message:'" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "',width:500,height:300,title:'ccflow',handler:handler,maxBtn:true,minBtn:true,iframe:true}); \" />");
 
           //  string url =  appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
           //  this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"javascript:ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
@@ -488,15 +487,17 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             //        this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Attributes["onclick"] = " window.location.href='MyFlow.aspx?WorkID=" + rec.PreviouID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "';return false;";
             //}
             #endregion 增加上一条下一条。
+
             this.ToolBar1.AddSpt("Next4");
             if (this.WorkID > 0)
             {
-                 string url =  appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
-                 this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"alert('sss');ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
-
+                string url = appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
+                // this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"alert('sss');ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
+                //   this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
                 this.ToolBar1.Add("<input type=button value='" + this.ToE("WorkRpt", "报告") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
                 this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds'); \" />");
             }
+
             //else
             //{
             //    this.ToolBar1.Add("<input type=button value='" + this.ToE("WorkRpt", "报告") + "' disabled='disabled'  />");
@@ -511,12 +512,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 else
                     this.ToolBar1.Add("<input type=button value='" + this.ToE("Adjunct", "附件") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/FileManager.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FJOpen=" + (int)currND.HisFJOpen + "&FID=" + this.FID + "','dds'); \" />");
             }
-            
 
+            
             if (currND.HisFormType == FormType.SelfForm)
                 this.Btn_Save.Enabled = false;
             else
-                this.ToolBar1.Add("<input type=button value='" + this.ToE("Print", "打印") + "' onclick=\"WinOpen('" + appPath + "/WF/Do.aspx?DoType=DoPrint&WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \"  />");
+                this.ToolBar1.Add("<input type=button value='" + this.ToE("WorkOpt", "选项") + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \"  />");
 
             this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             this.Btn_Save.Click += new System.EventHandler(this.ToolBar1_ButtonClick);

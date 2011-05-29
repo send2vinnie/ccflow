@@ -372,8 +372,20 @@ public partial class Comm_MapDef_MapDtl : WebPage
         cb.ID = "CB_IsShowSum";
         cb.Text = this.ToE("IsShowSum", "是否合计行");// "是否合计行";
         cb.Checked = dtl.IsShowSum;
-        this.Pub1.AddTD("colspan=2",cb);
+        this.Pub1.AddTD("colspan=2", cb);
         this.Pub1.AddTREnd();
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD("");
+        cb = new CheckBox();
+        cb.ID = "CB_IsEnablePass";
+        cb.Text = this.ToE("IsEnablePass", "是否起用审核字段？");// "是否合计行";
+        cb.Checked = dtl.IsEnablePass;
+        this.Pub1.AddTD("colspan=2", cb);
+        this.Pub1.AddTREnd();
+
 
         this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);

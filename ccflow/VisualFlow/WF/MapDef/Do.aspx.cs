@@ -23,6 +23,13 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
             return this.Request.QueryString["DoType"];
         }
     }
+    public new string FK_MapData
+    {
+        get
+        {
+            return this.Request.QueryString["FK_MapData"];
+        }
+    }
     public string IDX
     {
         get
@@ -33,250 +40,342 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        switch (this.DoType)
+        try
         {
-            case "DobackToF":
-                MapAttr ma = new MapAttr(this.RefNo);
-                switch (ma.LGType)
-                {
-                    case  FieldTypeS.Normal:
-                        this.Response.Redirect("EditF.aspx?RefNo=" + this.RefNo, true);
-                        return;
-                    case FieldTypeS.FK:
-                        this.Response.Redirect("EditTable.aspx?RefNo=" + this.RefNo, true);
-                        return;
-                    case FieldTypeS.Enum:
-                        this.Response.Redirect("EditEnum.aspx?RefNo=" + this.RefNo, true);
-                        return;
-                    default:
-                        return;
-                }
+            switch (this.DoType)
+            {
+                case "DobackToF":
+                    MapAttr ma = new MapAttr(this.RefNo);
+                    switch (ma.LGType)
+                    {
+                        case FieldTypeS.Normal:
+                            this.Response.Redirect("EditF.aspx?RefNo=" + this.RefNo, true);
+                            return;
+                        case FieldTypeS.FK:
+                            this.Response.Redirect("EditTable.aspx?RefNo=" + this.RefNo, true);
+                            return;
+                        case FieldTypeS.Enum:
+                            this.Response.Redirect("EditEnum.aspx?RefNo=" + this.RefNo, true);
+                            return;
+                        default:
+                            return;
+                    }
 
-                break;
-            case "AddEnum":
-                SysEnumMain sem1 = new SysEnumMain(this.Request.QueryString["EnumKey"]);
-                MapAttr attrAdd = new MapAttr();
-                attrAdd.KeyOfEn = sem1.No;
-                if (attrAdd.IsExit(MapAttrAttr.FK_MapData, this.MyPK, MapAttrAttr.KeyOfEn, sem1.No))
-                {
-                    BP.PubClass.Alert(ToE("FExits", "字段已经存在") + " [" + sem1.No + "]。");
-                    BP.PubClass.WinClose();
-                    return;
-                }
+                    break;
+                case "AddEnum":
+                    SysEnumMain sem1 = new SysEnumMain(this.Request.QueryString["EnumKey"]);
+                    MapAttr attrAdd = new MapAttr();
+                    attrAdd.KeyOfEn = sem1.No;
+                    if (attrAdd.IsExit(MapAttrAttr.FK_MapData, this.MyPK, MapAttrAttr.KeyOfEn, sem1.No))
+                    {
+                        BP.PubClass.Alert(ToE("FExits", "字段已经存在") + " [" + sem1.No + "]。");
+                        BP.PubClass.WinClose();
+                        return;
+                    }
 
-                attrAdd.FK_MapData = this.MyPK;
-                attrAdd.Name = sem1.Name;
-                attrAdd.UIContralType = UIContralType.DDL;
-                attrAdd.UIBindKey = sem1.No;
-                attrAdd.MyDataType = BP.DA.DataType.AppInt;
-                attrAdd.LGType = FieldTypeS.Enum;
-                attrAdd.DefVal = "0";
-                attrAdd.UIIsEnable = true;
-                if (this.IDX == null || this.IDX == "")
-                {
-                    MapAttrs attrs1 = new MapAttrs(this.MyPK);
-                    attrAdd.IDX = 0;
-                }
-                else
-                {
-                    attrAdd.IDX = int.Parse(this.IDX);
-                }
-                attrAdd.Insert();
-                this.Response.Redirect("EditEnum.aspx?MyPK=" + this.MyPK + "&RefNo=" + attrAdd.MyPK, true);
-                this.WinClose();
-                return;
-            case "DelEnum":
-                string eKey = this.Request.QueryString["EnumKey"];
-                SysEnumMain sem = new SysEnumMain();
-                sem.No = eKey;
-                sem.Delete();
-                this.WinClose();
-                return;
-            case "AddSysEnum":
-                this.AddFEnum();
-                break;
-            case "AddSFTable":
-                this.AddSFTable();
-                break;
-            case "AddSFTableAttr":
-                SFTable sf = new SFTable(this.Request.QueryString["RefNo"]);
-                MapAttr attrAddFK = new MapAttr();
-                attrAddFK.KeyOfEn = sf.FK_Val;
-                //while (true)
-                //{
-                //    if (attrAddFK.IsExit(MapAttrAttr.FK_MapData, this.MyPK, MapAttrAttr.KeyOfEn, sf.FK_Val))
-                //    {
-                //        BP.PubClass.Alert(this.ToE("FExits", "字段已经存在") + " [" + sf.FK_Val + "]。");
-                //        BP.PubClass.WinClose();
-                //        return;
-                //    }
-                //}
-                attrAddFK.FK_MapData = this.MyPK;
-                attrAddFK.Name = sf.Name;
-                attrAddFK.UIContralType = UIContralType.DDL;
-                attrAddFK.UIBindKey = sf.No;
-                attrAddFK.MyDataType = BP.DA.DataType.AppString;
-                attrAddFK.LGType = FieldTypeS.FK;
-                attrAddFK.DefVal = "";
-                attrAddFK.UIIsEnable = true;
-                if (this.IDX == null || this.IDX == "")
-                {
-                    attrAddFK.IDX = 0;
-                }
-                else
-                {
-                    attrAddFK.IDX = int.Parse(this.IDX);
-                }
-                attrAddFK.HisEditType = EditType.Edit;
-                attrAddFK.Insert();
-                attrAddFK.HisEditType = EditType.Edit;
-                attrAddFK.Update();
-                this.Response.Redirect("EditTable.aspx?MyPK=" + this.MyPK + "&RefNo=" + attrAddFK.MyPK, true);
-                this.WinClose();
-                return;
-            case "AddF":
-            case "ChoseFType":
-                this.AddF();
-                break;
-            case "Up":
-                MapAttr attrU = new MapAttr(this.RefNo);
-                attrU.DoUp();
-                this.WinClose();
-                break;
-            case "Down":
-                MapAttr attrD = new MapAttr(this.RefNo);
-                attrD.DoDown();
-                this.WinClose();
-                break;
-            case "Jump":
-                MapAttr attrFrom = new MapAttr(   this.Request.QueryString["FromID"]   );
-                MapAttr attrTo = new MapAttr(  this.Request.QueryString["ToID"]  );
-                attrFrom.DoJump(attrTo);
-                this.WinClose();
-                break;
-            case "MoveTo":
-                string toID = this.Request.QueryString["ToID"];
-                int toGFID = int.Parse(this.Request.QueryString["ToGID"]);
-                int fromGID = int.Parse(this.Request.QueryString["FromGID"]);
-                string fromID = this.Request.QueryString["FromID"];
-                MapAttr fromAttr = new MapAttr();
-                fromAttr.MyPK = fromID;
-                fromAttr.Retrieve();
-                if (toGFID == fromAttr.GroupID && fromAttr.MyPK == toID)
-                {
-                    /* 如果没有移动. */
+                    attrAdd.FK_MapData = this.MyPK;
+                    attrAdd.Name = sem1.Name;
+                    attrAdd.UIContralType = UIContralType.DDL;
+                    attrAdd.UIBindKey = sem1.No;
+                    attrAdd.MyDataType = BP.DA.DataType.AppInt;
+                    attrAdd.LGType = FieldTypeS.Enum;
+                    attrAdd.DefVal = "0";
+                    attrAdd.UIIsEnable = true;
+                    if (this.IDX == null || this.IDX == "")
+                    {
+                        MapAttrs attrs1 = new MapAttrs(this.MyPK);
+                        attrAdd.IDX = 0;
+                    }
+                    else
+                    {
+                        attrAdd.IDX = int.Parse(this.IDX);
+                    }
+                    attrAdd.Insert();
+                    this.Response.Redirect("EditEnum.aspx?MyPK=" + this.MyPK + "&RefNo=" + attrAdd.MyPK, true);
                     this.WinClose();
                     return;
-                }
-                if (toGFID != fromAttr.GroupID && fromAttr.MyPK == toID)
-                {
-                    MapAttr toAttr = new MapAttr(toID);
-                    fromAttr.Update(MapAttrAttr.GroupID, toAttr.GroupID, MapAttrAttr.IDX, toAttr.IDX);
+                case "DelEnum":
+                    string eKey = this.Request.QueryString["EnumKey"];
+                    SysEnumMain sem = new SysEnumMain();
+                    sem.No = eKey;
+                    sem.Delete();
                     this.WinClose();
                     return;
-                }
-                this.Response.Redirect(this.Request.RawUrl.Replace("MoveTo", "Jump"), true);
-                return;
-            case "Edit":
-                Edit();
-                break;
-            case "Del":
-                MapAttr attr = new MapAttr();
-                attr.MyPK = this.RefNo;
-                attr.Delete();
-                this.WinClose();
-                break;
-            case "GFDoUp":
-                GroupField gf = new GroupField(this.RefOID);
-                gf.DoUp();
-                gf.Retrieve();
-                if (gf.Idx == 0)
-                {
+                case "AddSysEnum":
+                    this.AddFEnum();
+                    break;
+                case "AddSFTable":
+                    this.AddSFTable();
+                    break;
+                case "AddSFTableAttr":
+                    SFTable sf = new SFTable(this.Request.QueryString["RefNo"]);
+                    MapAttr attrAddFK = new MapAttr();
+                    attrAddFK.KeyOfEn = sf.FK_Val;
+                    //while (true)
+                    //{
+                    //    if (attrAddFK.IsExit(MapAttrAttr.FK_MapData, this.MyPK, MapAttrAttr.KeyOfEn, sf.FK_Val))
+                    //    {
+                    //        BP.PubClass.Alert(this.ToE("FExits", "字段已经存在") + " [" + sf.FK_Val + "]。");
+                    //        BP.PubClass.WinClose();
+                    //        return;
+                    //    }
+                    //}
+                    attrAddFK.FK_MapData = this.MyPK;
+                    attrAddFK.Name = sf.Name;
+                    attrAddFK.UIContralType = UIContralType.DDL;
+                    attrAddFK.UIBindKey = sf.No;
+                    attrAddFK.MyDataType = BP.DA.DataType.AppString;
+                    attrAddFK.LGType = FieldTypeS.FK;
+                    attrAddFK.DefVal = "";
+                    attrAddFK.UIIsEnable = true;
+                    if (this.IDX == null || this.IDX == "")
+                    {
+                        attrAddFK.IDX = 0;
+                    }
+                    else
+                    {
+                        attrAddFK.IDX = int.Parse(this.IDX);
+                    }
+                    attrAddFK.HisEditType = EditType.Edit;
+                    attrAddFK.Insert();
+                    attrAddFK.HisEditType = EditType.Edit;
+                    attrAddFK.Update();
+                    this.Response.Redirect("EditTable.aspx?MyPK=" + this.MyPK + "&RefNo=" + attrAddFK.MyPK, true);
                     this.WinClose();
                     return;
-                }
-                int oidIdx = gf.Idx;
-                gf.Idx = gf.Idx -1;
-                GroupField gfUp = new GroupField();
-                if (gfUp.Retrieve(GroupFieldAttr.EnName, gf.EnName, GroupFieldAttr.Idx, gf.Idx) == 1)
-                {
-                    gfUp.Idx = oidIdx;
-                    gfUp.Update();
-                }
-                gf.Update();
-                this.WinClose();
-                break;
-            case "GFDoDown":
-                GroupField mygf = new GroupField(this.RefOID);
-                mygf.DoDown();
-                mygf.Retrieve();
-                int oidIdx1 = mygf.Idx;
-                mygf.Idx = mygf.Idx + 1;
-                GroupField gfDown = new GroupField();
-                if (gfDown.Retrieve(GroupFieldAttr.EnName, mygf.EnName, GroupFieldAttr.Idx, mygf.Idx) == 1)
-                {
-                    gfDown.Idx = oidIdx1;
-                    gfDown.Update();
-                }
-                mygf.Update();
-                this.WinClose();
-                break;
-            case "DtlDoUp":
-                MapDtl dtl1 = new MapDtl(this.MyPK);
-                if (dtl1.RowIdx > 0)
-                {
-                    dtl1.RowIdx = dtl1.RowIdx - 1;
-                    dtl1.Update();
-                }
-                this.WinClose();
-                break;
-            case "DtlDoDown":
-                MapDtl dtl2 = new MapDtl(this.MyPK);
-                if (dtl2.RowIdx < 10)
-                {
-                    dtl2.RowIdx = dtl2.RowIdx + 1;
-                    dtl2.Update();
-                }
-                this.WinClose();
-                break;
-            case "M2MDoUp":
-                MapM2M ddtl1 = new MapM2M(this.MyPK);
-                if (ddtl1.RowIdx > 0)
-                {
-                    ddtl1.RowIdx = ddtl1.RowIdx - 1;
-                    ddtl1.Update();
-                }
-                this.WinClose();
-                break;
-            case "M2MDoDown":
-                MapM2M ddtl2 = new MapM2M(this.MyPK);
-                if (ddtl2.RowIdx < 10)
-                {
-                    ddtl2.RowIdx = ddtl2.RowIdx + 1;
-                    ddtl2.Update();
-                }
-                this.WinClose();
-                break;
-            case "FrameDoUp":
-                MapFrame frame1 = new MapFrame(this.MyPK);
-                if (frame1.RowIdx > 0)
-                {
-                    frame1.RowIdx = frame1.RowIdx - 1;
-                    frame1.Update();
-                }
-                this.WinClose();
-                break;
-            case "FrameDoDown":
-                MapFrame frame2 = new MapFrame(this.MyPK);
-                if (frame2.RowIdx < 10)
-                {
-                    frame2.RowIdx = frame2.RowIdx + 1;
-                    frame2.Update();
-                }
-                this.WinClose();
-                break;
-            default:
-                break;
+                case "AddFG": /*执行一个插入列组的命令.*/
+                    switch (this.RefNo)
+                    {
+                        case "IsPass":
+                            MapDtl dtl = new MapDtl(this.FK_MapData);
+                            dtl.IsEnablePass = true; /*更新是否启动审核分组字段.*/
+                            dtl.Update();
+                            MapAttr attr = new MapAttr();
+                            attr.FK_MapData = this.FK_MapData;
+                            attr.KeyOfEn = "Check_Note";
+                            attr.Name = this.ToE("CheckNote", "审核意见");
+                            attr.MyDataType = DataType.AppString;
+                            attr.UIContralType = UIContralType.TB;
+                            attr.UIIsEnable = true;
+                            attr.UIIsLine = true;
+                            attr.MaxLen = 4000;
+                            attr.IDX = 1;
+                            attr.Insert();
+
+                            attr = new MapAttr();
+                            attr.FK_MapData = this.FK_MapData;
+                            attr.KeyOfEn = "Checker";
+                            attr.Name = this.ToE("Checker", "审核人");// "审核人";
+                            attr.MyDataType = DataType.AppString;
+                            attr.UIContralType = UIContralType.TB;
+                            attr.MaxLen = 50;
+                            attr.MinLen = 0;
+                            attr.UIIsEnable = true;
+                            attr.UIIsLine = false;
+                            attr.DefVal = "@WebUser.Name";
+                            attr.UIIsEnable = false;
+                            attr.IsSigan = true;
+                            attr.IDX = 2;
+                            attr.Insert();
+
+                            attr = new MapAttr();
+                            attr.FK_MapData = this.FK_MapData;
+                            attr.KeyOfEn = "IsPass";
+                            attr.Name = this.ToE("IsPass", "通过否?");// "审核人";
+                            attr.MyDataType = DataType.AppBoolean;
+                            attr.UIContralType = UIContralType.CheckBok;
+                            attr.UIIsEnable = true;
+                            attr.UIIsLine = false;
+                            attr.UIIsEnable = false;
+                            attr.IsSigan = true;
+                            attr.IDX = 2;
+                            attr.DefVal = "0";
+                            attr.Insert();
+
+                            attr = new MapAttr();
+                            attr.FK_MapData = this.FK_MapData;
+                            attr.KeyOfEn = "Check_RDT";
+                            attr.Name = this.ToE("CheckDate", "审核日期"); // "审核日期";
+                            attr.MyDataType = DataType.AppDateTime;
+                            attr.UIContralType = UIContralType.TB;
+                            attr.UIIsEnable = true;
+                            attr.UIIsLine = false;
+                            attr.DefVal = "@RDT";
+                            attr.UIIsEnable = false;
+                            attr.IDX = 3;
+                            attr.Insert();
+
+                            /* 处理批次ID*/
+                            attr = new MapAttr();
+                            attr.FK_MapData = this.FK_MapData;
+                            attr.KeyOfEn = "BatchID";
+                            attr.Name = "BatchID";// this.ToE("IsPass", "是否通过");// "审核人";
+                            attr.MyDataType = DataType.AppInt;
+                            attr.UIIsEnable = false;
+                            attr.UIIsLine = false;
+                            attr.UIIsEnable = false;
+                            attr.UIVisible = false;
+                            attr.IDX = 2;
+                            attr.DefVal = "0";
+                            attr.Insert();
+
+                            this.WinClose();
+                            return;
+                        default:
+                            break;
+                    }
+                    break;
+                case "AddFGroup":
+                    this.AddFGroup();
+                    return;
+                case "AddF":
+                case "ChoseFType":
+                    this.AddF();
+                    break;
+                case "Up":
+                    MapAttr attrU = new MapAttr(this.RefNo);
+                    attrU.DoUp();
+                    this.WinClose();
+                    break;
+                case "Down":
+                    MapAttr attrD = new MapAttr(this.RefNo);
+                    attrD.DoDown();
+                    this.WinClose();
+                    break;
+                case "Jump":
+                    MapAttr attrFrom = new MapAttr(this.Request.QueryString["FromID"]);
+                    MapAttr attrTo = new MapAttr(this.Request.QueryString["ToID"]);
+                    attrFrom.DoJump(attrTo);
+                    this.WinClose();
+                    break;
+                case "MoveTo":
+                    string toID = this.Request.QueryString["ToID"];
+                    int toGFID = int.Parse(this.Request.QueryString["ToGID"]);
+                    int fromGID = int.Parse(this.Request.QueryString["FromGID"]);
+                    string fromID = this.Request.QueryString["FromID"];
+                    MapAttr fromAttr = new MapAttr();
+                    fromAttr.MyPK = fromID;
+                    fromAttr.Retrieve();
+                    if (toGFID == fromAttr.GroupID && fromAttr.MyPK == toID)
+                    {
+                        /* 如果没有移动. */
+                        this.WinClose();
+                        return;
+                    }
+                    if (toGFID != fromAttr.GroupID && fromAttr.MyPK == toID)
+                    {
+                        MapAttr toAttr = new MapAttr(toID);
+                        fromAttr.Update(MapAttrAttr.GroupID, toAttr.GroupID, MapAttrAttr.IDX, toAttr.IDX);
+                        this.WinClose();
+                        return;
+                    }
+                    this.Response.Redirect(this.Request.RawUrl.Replace("MoveTo", "Jump"), true);
+                    return;
+                case "Edit":
+                    Edit();
+                    break;
+                case "Del":
+                    MapAttr attrDel = new MapAttr();
+                    attrDel.MyPK = this.RefNo;
+                    attrDel.Delete();
+                    this.WinClose();
+                    break;
+                case "GFDoUp":
+                    GroupField gf = new GroupField(this.RefOID);
+                    gf.DoUp();
+                    gf.Retrieve();
+                    if (gf.Idx == 0)
+                    {
+                        this.WinClose();
+                        return;
+                    }
+                    int oidIdx = gf.Idx;
+                    gf.Idx = gf.Idx - 1;
+                    GroupField gfUp = new GroupField();
+                    if (gfUp.Retrieve(GroupFieldAttr.EnName, gf.EnName, GroupFieldAttr.Idx, gf.Idx) == 1)
+                    {
+                        gfUp.Idx = oidIdx;
+                        gfUp.Update();
+                    }
+                    gf.Update();
+                    this.WinClose();
+                    break;
+                case "GFDoDown":
+                    GroupField mygf = new GroupField(this.RefOID);
+                    mygf.DoDown();
+                    mygf.Retrieve();
+                    int oidIdx1 = mygf.Idx;
+                    mygf.Idx = mygf.Idx + 1;
+                    GroupField gfDown = new GroupField();
+                    if (gfDown.Retrieve(GroupFieldAttr.EnName, mygf.EnName, GroupFieldAttr.Idx, mygf.Idx) == 1)
+                    {
+                        gfDown.Idx = oidIdx1;
+                        gfDown.Update();
+                    }
+                    mygf.Update();
+                    this.WinClose();
+                    break;
+                case "DtlDoUp":
+                    MapDtl dtl1 = new MapDtl(this.MyPK);
+                    if (dtl1.RowIdx > 0)
+                    {
+                        dtl1.RowIdx = dtl1.RowIdx - 1;
+                        dtl1.Update();
+                    }
+                    this.WinClose();
+                    break;
+                case "DtlDoDown":
+                    MapDtl dtl2 = new MapDtl(this.MyPK);
+                    if (dtl2.RowIdx < 10)
+                    {
+                        dtl2.RowIdx = dtl2.RowIdx + 1;
+                        dtl2.Update();
+                    }
+                    this.WinClose();
+                    break;
+                case "M2MDoUp":
+                    MapM2M ddtl1 = new MapM2M(this.MyPK);
+                    if (ddtl1.RowIdx > 0)
+                    {
+                        ddtl1.RowIdx = ddtl1.RowIdx - 1;
+                        ddtl1.Update();
+                    }
+                    this.WinClose();
+                    break;
+                case "M2MDoDown":
+                    MapM2M ddtl2 = new MapM2M(this.MyPK);
+                    if (ddtl2.RowIdx < 10)
+                    {
+                        ddtl2.RowIdx = ddtl2.RowIdx + 1;
+                        ddtl2.Update();
+                    }
+                    this.WinClose();
+                    break;
+                case "FrameDoUp":
+                    MapFrame frame1 = new MapFrame(this.MyPK);
+                    if (frame1.RowIdx > 0)
+                    {
+                        frame1.RowIdx = frame1.RowIdx - 1;
+                        frame1.Update();
+                    }
+                    this.WinClose();
+                    break;
+                case "FrameDoDown":
+                    MapFrame frame2 = new MapFrame(this.MyPK);
+                    if (frame2.RowIdx < 10)
+                    {
+                        frame2.RowIdx = frame2.RowIdx + 1;
+                        frame2.Update();
+                    }
+                    this.WinClose();
+                    break;
+                default:
+                    break;
+            }
+        }
+        catch(Exception ex)
+        {
+            this.Pub1.AddMsgOfWarning("错误:", ex.Message);
         }
     }
     public void Edit()
@@ -380,6 +479,23 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
         this.Pub1.AddTableEnd();
 
 
+    }
+    /// <summary>
+    /// 增加分组.
+    /// </summary>
+    public void AddFGroup()
+    {
+        this.Pub1.AddFieldSet("插入列组");
+
+        this.Pub1.AddUL();
+        BP.Sys.FieldGroupXmls xmls =new FieldGroupXmls();
+        xmls.RetrieveAll();
+        foreach (FieldGroupXml en in xmls)
+        {
+            this.Pub1.AddLi("<a href='Do.aspx?DoType=AddFG&RefNo=" + en.No + "&FK_MapData="+this.FK_MapData+"' >" + en.Name + "</a><br>" + en.Desc);
+        }
+        this.Pub1.AddULEnd();
+        this.Pub1.AddFieldSetEnd();
     }
     int pageSize = 10;
     public void AddSFTable()

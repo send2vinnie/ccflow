@@ -22,6 +22,11 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
+    function AddFGroup(mypk) {
+        var url = 'Do.aspx?DoType=AddFGroup&FK_MapData=' + mypk;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
     function CopyF(mypk) {
         alert(mypk);
         var url='CopyDtlField.aspx?MyPK='+mypk;

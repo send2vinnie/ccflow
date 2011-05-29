@@ -88,16 +88,12 @@ namespace BP.Web.WF
                 //this.Response.Redirect(url + "&DTT=" + DateTime.Now.ToString("mmDDhhmmss"), true);
                 //return;
             }
-
             try
             {
                 string str = "";
                 switch (this.ActionType)
                 {
-                    case "DoPrint":
-                        WorkNode wnP = new WorkNode(this.WorkID, this.NodeID);
-                        wnP.DoPrint();
-                        return;
+                  
                     case "DelSubFlow": //É¾³ý½ø³Ì¡£
                         try
                         {

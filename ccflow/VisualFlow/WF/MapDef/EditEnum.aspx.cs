@@ -262,7 +262,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
         {
             btn = new Button();
             btn.ID = "Btn_AutoFull";
-            btn.Text = this.ToE("AutoFull", "自动填写");
+            btn.Text = this.ToE("AutoFull", "扩展设置");
             //  btn.Click += new EventHandler(btn_Save_Click);
             btn.Attributes["onclick"] = "javascript:WinOpen('AutoFull.aspx?RefNo=" + this.RefNo + "&FK_MapData="+mapAttr.FK_MapData+"',''); return false;";
             this.Pub1.Add(btn);

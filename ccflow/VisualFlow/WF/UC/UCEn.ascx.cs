@@ -819,7 +819,7 @@ namespace BP.Web.Comm.UC.WF
                         DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
                         ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
                         break;
-                    case MapExtXmlList.AutoFull: // 徭強野割.
+                    case MapExtXmlList.FullCtrl: // 徭強野割.
                         TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
                         tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                         tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";

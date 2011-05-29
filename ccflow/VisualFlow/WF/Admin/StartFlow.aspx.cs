@@ -103,7 +103,7 @@ public partial class WF_Admin_StartFlow : WebPage
             return;
         }
 
-        this.Pub1.AddFieldSet(this.ToE("ChoseStarter", "可发起(<font color=red>" + fl.Name + "</font>)流程的人员"));
+        this.Pub1.AddFieldSet(this.ToE("ChoseStarter", "可发起(<font color=red>" + fl.Name + "</font>)流程的人员，<a href=\"javascript:WinOpen('./../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&No=" + this.FK_Flow + "');\">流程属性</a>."));
 
         this.Pub1.AddTable("border=0");
         this.Pub1.AddTR();
@@ -111,7 +111,7 @@ public partial class WF_Admin_StartFlow : WebPage
         this.Pub1.AddTDTitle("Users");
         this.Pub1.AddTDTitle("独立模式");
         this.Pub1.AddTDTitle("调用模式");
-      //  this.Pub1.AddTDTitle("特小窗口模式");
+        //  this.Pub1.AddTDTitle("特小窗口模式");
         this.Pub1.AddTDTitle("手机模式");
         this.Pub1.AddTDTitle("部门");
         this.Pub1.AddTDTitle("调用SDK");
@@ -121,7 +121,6 @@ public partial class WF_Admin_StartFlow : WebPage
         foreach (Emp emp in emps)
         {
             is1 = this.Pub1.AddTR(is1);
-
             idx++;
             this.Pub1.AddTDIdx(idx);
             this.Pub1.AddTD(emp.No + "," + emp.Name);

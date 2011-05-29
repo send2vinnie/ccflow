@@ -83,7 +83,6 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
         this.Page.Title = this.ToE("StartWork", "工作发起");
 
         Flows fls = BP.WF.Dev2Interface.DB_GenerCanStartFlowsOfEntities();
-
         if (WebUser.IsWap)
         {
             BindWap(fls);

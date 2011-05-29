@@ -31,7 +31,12 @@ function Del(id, ens, refPk, pageIdx) {
     var url = 'Do.aspx?DoType=DelDtl&OID=' + id + '&EnsName=' + ens;
     var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
     window.location.href = 'Dtl.aspx?EnsName=' + ens + '&RefPKVal=' + refPk + '&PageIdx=' + pageIdx;
+}
 
+function DtlOpt(workId, fk_mapdtl) {
+    var url = 'DtlOpt.aspx?WorkID=' + workId + '&FK_MapDtl=' + fk_mapdtl;
+    var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
+   window.location.href = 'Dtl.aspx?EnsName=' + fk_mapdtl + '&RefPKVal=' + workId;
 }
     </script>
     <style type="text/css">

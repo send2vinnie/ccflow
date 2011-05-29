@@ -76,7 +76,6 @@ public partial class Comm_Dtl : WebPage
     {
         this.Page.RegisterClientScriptBlock("s",
          "<link href='../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
-
         this.Bind();
     }
     public int IsWap
@@ -134,6 +133,7 @@ public partial class Comm_Dtl : WebPage
                         mydtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
                     }
                 }
+
                 foreach (BP.Sys.GEDtl item in dtls)
                 {
                     item.OID = 0;
@@ -164,8 +164,7 @@ public partial class Comm_Dtl : WebPage
         MapAttrs attrs = new MapAttrs(this.EnsName);
         this.Pub1.Add("<Table border=1 style='padding:0px' >");
         this.Pub1.AddTR();
-        if (mdtl.IsShowIdx)
-            this.Pub1.Add("<TD class='FDesc'></TD>");
+        this.Pub1.Add("<TD class='FDesc'><img src='./../Images/Btn/Table.gif' onclick=\"return DtlOpt('" + this.RefPKVal + "','" + this.EnsName + "');\" border=0/></TD>");
 
         foreach (MapAttr attr in attrs)
         {
@@ -177,8 +176,9 @@ public partial class Comm_Dtl : WebPage
 
             if (attr.UIIsEnable)
                 this.IsEnable = true;
-            this.Pub1.AddTDTitle( attr.Name );// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
+            this.Pub1.AddTDTitle(attr.Name);// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
         }
+
 
         if (mdtl.IsDelete)
         {
@@ -474,7 +474,7 @@ public partial class Comm_Dtl : WebPage
                                 string ddlC = "Pub1_DDL_" + me.AttrsOfActive + "_" + mydtl.OID;
                                 ddlPerant.Attributes["onchange"] = " isChange=true; DDLAnsc(this.value, \'" + ddlC + "\', \'" + me.MyPK + "\')";
                                 break;
-                            case MapExtXmlList.AutoFull: // 自动填充.
+                            case MapExtXmlList.FullCtrl: // 自动填充.
                                 TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
                                 if (tbAuto == null)
                                     continue;

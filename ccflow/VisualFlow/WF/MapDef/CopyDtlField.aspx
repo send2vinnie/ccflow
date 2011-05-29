@@ -4,6 +4,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <link href="../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
+
 	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
 
 	<base target="_self" />

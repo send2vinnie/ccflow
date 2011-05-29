@@ -25,7 +25,6 @@ public partial class Face_MasterPage : BP.Web.MasterPage
                 {
                     url = url.Substring(i);
                     _pageID = url.Substring(0, url.IndexOf(".aspx"));
-
                 }
                 catch (Exception ex)
                 {
@@ -53,11 +52,12 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         this.Page.RegisterClientScriptBlock("df",
        "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Skin/T" + BP.Web.WebUser.Style + "/menu.css' rel='stylesheet' type='text/css' />");
 
+
         //this.Page.RegisterClientScriptBlock("a",
         //   "<link href='" + this.Request.ApplicationPath + "/WF/Style/Menu" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
-         //this.Page.RegisterClientScriptBlock("d",
-         //"<link href='" + this.Request.ApplicationPath + "/Comm/Style/t1/style.css' rel='stylesheet' type='text/css' />");
+        //this.Page.RegisterClientScriptBlock("d",
+        //"<link href='" + this.Request.ApplicationPath + "/Comm/Style/t1/style.css' rel='stylesheet' type='text/css' />");
 
         if (this.Request.RawUrl.ToLower().Contains("login.aspx") == false)
         {
@@ -98,19 +98,16 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         string dotype = this.PageID;
         if (BP.WF.Glo.IsShowTitle)
         {
-            this.Pub1.Add("<div  id='Top' /></div>");
-            // this.Pub1.Add("<div  style='float:right' />&nbsp;" + BP.SystemConfig.SysName + "&nbsp;</div>");
+            this.Pub1.Add("<div  id='Top' /> </div>");
             this.Page.RegisterClientScriptBlock("d",
-            "<link href='" + this.Request.ApplicationPath + "/WF/Style/Skin/t" + BP.Web.WebUser.Style + "/style.css' rel='stylesheet' type='text/css' />");
-            //    this.Pub1.Add("<Img src='./../DataUser/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
+            "<link href='" + this.Request.ApplicationPath + "/WF/Style/Skin/T" + BP.Web.WebUser.Style + "/Style.css' rel='stylesheet' type='text/css' />");
         }
 
-       // this.Pub1.Add("<div style='float:left'>Hi:" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "</div>");
+        // this.Pub1.Add("<div style='float:left'>Hi:" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "</div>");
         //this.Pub1.Add("<DIV ID=MainDiv>");
         //this.Pub1.Add("<UL id=MainUL>");
 
         this.Pub1.Add("<DIV ID=nv>");
-    //    this.Pub1.Add("<a href='Tools.aspx' id='qmenu'  >我的中心</a>");
 
         this.Pub1.Add("<UL>");
         foreach (BP.WF.XML.ToolBar en in ens)
@@ -130,13 +127,8 @@ public partial class Face_MasterPage : BP.Web.MasterPage
                     this.Pub1.Add("<li><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + en.Name + "</span></a></li>");
             }
         }
-       this.Pub1.AddLi("<a href=#  onmouseover='' >您好:" + BP.Web.WebUser.Name+"</a>" );
-    //   this.Pub1.Add("<span style='float:right'>您好:" + BP.Web.WebUser.Name + "</span>");
+        this.Pub1.AddLi("<a href=#  onmouseover='' >您好:" + BP.Web.WebUser.Name + "</a>");
         this.Pub1.Add("</UL>");
-     //   this.Pub1.Add("<span style='float:right'>您好:" + BP.Web.WebUser.Name + "</span>");
-       // this.Pub1.Add("<div style='float:right'>");
-
-        
         this.Pub1.Add("</DIV>");
         #endregion 菜单输出区域
 

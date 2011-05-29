@@ -26,4 +26,12 @@
   <Skin No="3" CSS="#9934B7" CH="紫" B5="绿色风格" EN="green sytle" RU="green sytle"  JP="green sytle" />
   <Skin No="4" CSS="#BA350F" CH="红" B5="绿色风格" EN="green sytle" RU="green sytle"  JP="green sytle" />
 
+  <WorkOpt No="Home" URL="Home.aspx?WorkID=@WorkID~FK_Node=@FK_Node" CH="主页" />
+  <WorkOpt No="ExpImp" URL="ExpImp.aspx?WorkID=@WorkID~FK_Node=@FK_Node" CH="导入导出"/>
+  <WorkOpt No="UnPass" URL="UnPassDtl.aspx?WorkID=@WorkID~FK_Node=@FK_Node" CH="未通过审核的明细"/>
+
+
+  <WorkOptDtl No="ExpImp" URL="DtlOpt.aspx" CH="导入导出"/>
+  <WorkOptDtl No="UnPass" URL="DtlOpt.aspx" CH="审核未通过"/>
+  
 </NewDataSet>

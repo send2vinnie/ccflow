@@ -39,7 +39,8 @@ body
 	function AddF(mypk) {
 
         var url='Do.aspx?DoType=AddF&MyPK='+mypk;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
+
         window.location.href = window.location.href;
     }
     function AddTable(mypk)

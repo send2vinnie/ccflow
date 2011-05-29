@@ -476,19 +476,18 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
             return;
         }
 
-
         this.Alert(this.ToE("SaveOK", "保存成功"));
-
         this.Pub1.Clear();
-
         Button btn = sender as Button;
         if (btn.ID.Contains("Close"))
+        {
             this.WinClose();
+            return;
+        }
         else
-            this.BindNumType(mattr);
-
-        // else
-        //   this.Response.Redirect("AutoFill.aspx?RefOID="+this.RefOID,true);
+        {
+            this.Response.Redirect(this.Request.RawUrl, true);
+        }
     }
     public void BindStringType()
     {

@@ -338,7 +338,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
 
                         ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
                         break;
-                    case MapExtXmlList.AutoFull: // 自动填充.
+                    case MapExtXmlList.FullCtrl: // 自动填充.
                         TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper   + "_" + i);
                         if (tbAuto == null)
                         {

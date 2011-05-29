@@ -259,6 +259,8 @@ public partial class WF_MapDef_GroupField : WebPage
         {
             if (attr.HisEditType != EditType.Edit)
                 continue;
+            if (attr.KeyOfEn == "FID")
+                continue;
 
             attr.Delete();
         }
