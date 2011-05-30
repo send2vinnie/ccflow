@@ -1,0 +1,16 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="DesignerSoap" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost/Flow/Designer.asmx" binding="basicHttpBinding"
+                bindingConfiguration="DesignerSoap" contract="BP.DA.DesignerSoap"
+                name="DesignerSoap" />
+        </client>
+    </system.serviceModel>
+</configuration>

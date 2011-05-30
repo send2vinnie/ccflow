@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="EditLine">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="oid" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="fk_mapdata" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="x1" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="y1" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="x2" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="y2" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="borderWidth" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="borderColor" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="borderStyle" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EditLineResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="EditLab">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="oid" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="fk_mapdata" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="x" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="y" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="frontColor" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="frontName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="frontWeight" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EditLabResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="EditMapAttr">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mypk" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="x" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="y" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EditMapAttrResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DelLine">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="oid" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DelLineResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DelLab">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="oid" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DelLabResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DelMapAttr">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mypk" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DelMapAttrResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="EditLineSoapIn">
+    <wsdl:part name="parameters" element="tns:EditLine" />
+  </wsdl:message>
+  <wsdl:message name="EditLineSoapOut">
+    <wsdl:part name="parameters" element="tns:EditLineResponse" />
+  </wsdl:message>
+  <wsdl:message name="EditLabSoapIn">
+    <wsdl:part name="parameters" element="tns:EditLab" />
+  </wsdl:message>
+  <wsdl:message name="EditLabSoapOut">
+    <wsdl:part name="parameters" element="tns:EditLabResponse" />
+  </wsdl:message>
+  <wsdl:message name="EditMapAttrSoapIn">
+    <wsdl:part name="parameters" element="tns:EditMapAttr" />
+  </wsdl:message>
+  <wsdl:message name="EditMapAttrSoapOut">
+    <wsdl:part name="parameters" element="tns:EditMapAttrResponse" />
+  </wsdl:message>
+  <wsdl:message name="DelLineSoapIn">
+    <wsdl:part name="parameters" element="tns:DelLine" />
+  </wsdl:message>
+  <wsdl:message name="DelLineSoapOut">
+    <wsdl:part name="parameters" element="tns:DelLineResponse" />
+  </wsdl:message>
+  <wsdl:message name="DelLabSoapIn">
+    <wsdl:part name="parameters" element="tns:DelLab" />
+  </wsdl:message>
+  <wsdl:message name="DelLabSoapOut">
+    <wsdl:part name="parameters" element="tns:DelLabResponse" />
+  </wsdl:message>
+  <wsdl:message name="DelMapAttrSoapIn">
+    <wsdl:part name="parameters" element="tns:DelMapAttr" />
+  </wsdl:message>
+  <wsdl:message name="DelMapAttrSoapOut">
+    <wsdl:part name="parameters" element="tns:DelMapAttrResponse" />
+  </wsdl:message>
+  <wsdl:portType name="DesignerSoap">
+    <wsdl:operation name="EditLine">
+      <wsdl:input message="tns:EditLineSoapIn" />
+      <wsdl:output message="tns:EditLineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EditLab">
+      <wsdl:input message="tns:EditLabSoapIn" />
+      <wsdl:output message="tns:EditLabSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EditMapAttr">
+      <wsdl:input message="tns:EditMapAttrSoapIn" />
+      <wsdl:output message="tns:EditMapAttrSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DelLine">
+      <wsdl:input message="tns:DelLineSoapIn" />
+      <wsdl:output message="tns:DelLineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DelLab">
+      <wsdl:input message="tns:DelLabSoapIn" />
+      <wsdl:output message="tns:DelLabSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DelMapAttr">
+      <wsdl:input message="tns:DelMapAttrSoapIn" />
+      <wsdl:output message="tns:DelMapAttrSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DesignerSoap" type="tns:DesignerSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="EditLine">
+      <soap:operation soapAction="http://tempuri.org/EditLine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditLab">
+      <soap:operation soapAction="http://tempuri.org/EditLab" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditMapAttr">
+      <soap:operation soapAction="http://tempuri.org/EditMapAttr" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelLine">
+      <soap:operation soapAction="http://tempuri.org/DelLine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelLab">
+      <soap:operation soapAction="http://tempuri.org/DelLab" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelMapAttr">
+      <soap:operation soapAction="http://tempuri.org/DelMapAttr" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DesignerSoap12" type="tns:DesignerSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="EditLine">
+      <soap12:operation soapAction="http://tempuri.org/EditLine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditLab">
+      <soap12:operation soapAction="http://tempuri.org/EditLab" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditMapAttr">
+      <soap12:operation soapAction="http://tempuri.org/EditMapAttr" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelLine">
+      <soap12:operation soapAction="http://tempuri.org/DelLine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelLab">
+      <soap12:operation soapAction="http://tempuri.org/DelLab" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelMapAttr">
+      <soap12:operation soapAction="http://tempuri.org/DelMapAttr" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Designer">
+    <wsdl:port name="DesignerSoap" binding="tns:DesignerSoap">
+      <soap:address location="http://localhost/Flow/Designer.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DesignerSoap12" binding="tns:DesignerSoap12">
+      <soap12:address location="http://localhost/Flow/Designer.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
