@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Browser;
 
 namespace Demo 
 {
@@ -22,10 +23,29 @@ namespace Demo
         public const string Dtl = "Dtl";
         public const string M2M = "M2M";
     }
+    public class Glo
+    {
+        public static void WinOpen(string url)
+        {
+            HtmlPage.Window.Eval( "window.showModalDialog('" + url + "',window,'dialogHeight:600px;dialogWidth:800px;center:Yes;help:No;scroll:auto;resizable:No;status:No;');");
+            
+        }
+        public static void IE_ShowAddFGuide()
+        {
+            Glo.WinOpen("http://127.0.0.1/Flow/WF/MapDef/Do.aspx?DoType=AddF&MyPK="+Glo.FK_MapData);
+        }
+        public static string FK_MapData
+        {
+            get
+            {
+                return "ND501";
+            }
+        }
+    }
 
     public partial class App : Application
     {
-
+       
         public App()
         {
             this.Startup += this.Application_Startup;

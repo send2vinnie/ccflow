@@ -10,6 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
+using System.Windows.Browser;
+
 using System.Text;
 using Demo.Controls;
 
@@ -22,7 +25,7 @@ namespace Demo
         bool be = false;//在绿点上判断当前鼠标的状态是否按下
         bool bl = false;//判断LABEL当前鼠标的状态是否按下
         bool btxt = false;
-        string selectType = "";//当前工具选择类型 hand line1 line2 label txt cannel
+        string selectType =  Tools.Mouse;//当前工具选择类型 hand line1 line2 label txt cannel
         Line l;//当前线
         TextBlock tb;//当前标签
         TextBox txt;//当前文本框
@@ -69,11 +72,12 @@ namespace Demo
             tbDel.MouseLeftButtonDown += new MouseButtonEventHandler(tbDelete_MouseLeftButtonDown);
             tbDelCannel.MouseLeftButtonDown += new MouseButtonEventHandler(tbDelete_MouseLeftButtonDown);
 
-            this.SetSelectedTool("hand");
+            this.SetSelectedTool( Tools.Mouse );
             e1 = new Ellipse();
             e1.Tag = "e1";
             e1.Cursor = Cursors.Hand;
             e1.MouseLeftButtonDown += new MouseButtonEventHandler(e_MouseLeftButtonDown);
+
             e2 = new Ellipse();
             e2.Tag = "e2";
             e2.Cursor = Cursors.Hand;
@@ -106,6 +110,8 @@ namespace Demo
 
             switch (selectType)
             {
+                case Tools.Mouse:
+                    return;
                 case Tools.Line:  // 线.
                     l = new Line();
                     l.Cursor = Cursors.Hand;
@@ -123,28 +129,105 @@ namespace Demo
                     tb.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
                     tb.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
                     this.canvasMain.Children.Add(tb);
-                    canvasWin.Visibility = Visibility.Visible;
-                    gVisable.Visibility = Visibility.Visible;
+
+                    //canvasWin.Visibility = Visibility.Visible;
+                    //gVisable.Visibility = Visibility.Visible;
+
                     txtLabel.Text = "Label";
                     cbSize.SelectedIndex = 4;
                     cbWight.IsChecked = false;
+                    tb.KeyDown += (s, a) =>
+                        {
+                            /*当按下键时发生*/
+                            #region lab 键盘事件.
+                            a.Handled = true;
+                            bl = true;
+                            tb = s as TextBlock;
+
+                            // 获取 textBox 对象的相对于 Canvas 的 x坐标 和 y坐标
+                            double x = (double)tb.GetValue(Canvas.LeftProperty);
+                            double y = (double)tb.GetValue(Canvas.TopProperty);
+
+                            // KeyEventArgs.Key - 与事件相关的键盘的按键 [System.Windows.Input.Key枚举]
+                            switch (a.Key)
+                            {
+                                // 按 Up 键后 textBox 对象向 上 移动 1 个像素
+                                // Up 键所对应的 e.PlatformKeyCode == 38 
+                                // 当获得的 e.Key == Key.Unknown 时，可以使用 e.PlatformKeyCode 来确定用户所按的键
+                                case Key.Up:
+                                    tb.SetValue(Canvas.TopProperty, y - 1);
+                                    break;
+
+                                // 按 Down 键后 textBox 对象向 下 移动 1 个像素
+                                // Down 键所对应的 e.PlatformKeyCode == 40
+                                case Key.Down:
+                                    tb.SetValue(Canvas.TopProperty, y + 1);
+                                    break;
+
+                                // 按 Left 键后 textBox 对象向 左 移动 1 个像素
+                                // Left 键所对应的 e.PlatformKeyCode == 37
+                                case Key.Left:
+                                    tb.SetValue(Canvas.LeftProperty, x - 1);
+                                    break;
+
+                                // 按 Right 键后 textBox 对象向 右 移动 1 个像素
+                                // Right 键所对应的 e.PlatformKeyCode == 39 
+                                case Key.Right:
+                                    tb.SetValue(Canvas.LeftProperty, x + 1);
+                                    break;
+
+                                default:
+                                    break;
+                            }
+
+                            // 同上：Key.W - 向上移动； Key.S - 向下移动； Key.A - 向左移动； Key.D - 向右移动
+                            switch (a.Key)
+                            {
+                                // KeyEventArgs.Handled - 是否处理过此事件
+
+                                // 如果在文本框内敲 W ，那么文本框会向上移动，而且文本框内也会被输入 W
+                                // 如果只想移动文本框，而不输入 W ，那么可以设置 KeyEventArgs.Handled = true 告知此事件已经被处理完毕
+                                case Key.W:
+                                    tb.SetValue(Canvas.TopProperty, y - 1);
+                                    e.Handled = true;
+                                    break;
+                                case Key.S:
+                                    tb.SetValue(Canvas.TopProperty, y + 1);
+                                    e.Handled = true;
+                                    break;
+                                case Key.A:
+                                    tb.SetValue(Canvas.LeftProperty, x - 1);
+                                    e.Handled = true;
+                                    break;
+                                case Key.D:
+                                    tb.SetValue(Canvas.LeftProperty, x + 1);
+                                    e.Handled = true;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            #endregion
+                        };
                     tb.MouseLeftButtonDown += (s, a) =>
                     {
                         a.Handled = true;
                         bl = true;
                         tb = s as TextBlock;
-
                         if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300)
                         {
+                            /* 双点事件 */
                             canvasWin.Visibility = Visibility.Visible;
                             gVisable.Visibility = Visibility.Visible;
+
                             txtLabel.Text = tb.Text;
+
                             foreach (ComboBoxItem cbi in cbSize.Items)
                             {
                                 if (cbi.Content.ToString() == tb.FontSize.ToString())
                                     cbi.IsSelected = true;
                             }
-                            if (tb.FontWeight == FontWeights.Bold)
+
+                            if (tb.FontWeight == FontWeights.Normal)
                             {
                                 cbWight.IsChecked = true;
                             }
@@ -171,6 +254,7 @@ namespace Demo
                                 }
                             }
                         };
+                    this.SetSelectedTool(Tools.Mouse);
                     break;
                 case Tools.MapAttr:  // 字段。
                     txt = new TextBox();
@@ -181,8 +265,11 @@ namespace Demo
                     txt.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
                     this.canvasMain.Children.Add(txt);
 
-                    canvasWinTxt.Visibility = Visibility.Visible;
-                    gVisable.Visibility = Visibility.Visible;
+                    //canvasWinTxt.Visibility = Visibility.Visible;
+                    //gVisable.Visibility = Visibility.Visible;
+
+                    Glo.IE_ShowAddFGuide();
+
                     txtWidth.Text = "100";
                     txtHeight.Text = "20";
 
@@ -234,7 +321,7 @@ namespace Demo
                     this.SetSelectedTool(Tools.Mouse);
                     break;
                 default:
-                    throw new Exception("no souch ctl " + selectType);
+                    throw new Exception("no souch ctl named '" + selectType + "'");
             }
 
             #region 线二
@@ -247,7 +334,7 @@ namespace Demo
             //    l.X1 = l.X2 = e.GetPosition(this.canvasMain).X;
             //    l.Y1 = l.Y2 = e.GetPosition(this.canvasMain).Y;
             //    this.canvasMain.Children.Add(l);
-                
+
             //    l.MouseLeftButtonDown += (s, a) =>
             //    {
             //        if (selectType == "hand")
@@ -281,13 +368,6 @@ namespace Demo
             //        };
             //}
             #endregion
-            #region 标签
-            if (selectType == "label")
-            {
-               
-            }
-            #endregion
-           
         }
 
         //鼠标松开主面板事件
@@ -297,7 +377,7 @@ namespace Demo
             be = false;
             bl = false;
             btxt = false;
-            this.SetSelectedTool("hand");
+            this.SetSelectedTool(Tools.Mouse);
             if (eCurrent != null)
                 eCurrent.Fill = new SolidColorBrush(Colors.Green);
         }
@@ -305,6 +385,8 @@ namespace Demo
         //鼠标在主面板上移动事件
         private void canvasMain_MouseMove(object sender, MouseEventArgs e)
         {
+
+
             #region 画线线
             if (b)
             {
@@ -315,6 +397,7 @@ namespace Demo
                     l.Y2 = e.GetPosition(this.canvasMain).Y;
                 }
                 #endregion
+
                 #region 线二
                 else if (selectType == "line2")
                 {
@@ -336,8 +419,7 @@ namespace Demo
             }
             #endregion
 
-
-            if (selectType == "hand")
+            if (selectType == Tools.Mouse )
             {
                 #region 改变线的长度
                 if (be)
@@ -380,7 +462,6 @@ namespace Demo
                             eCurrent.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y - 4);
                         }
                     }
-
                 }
                 #endregion
 
@@ -406,7 +487,7 @@ namespace Demo
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             TextBlock tb = sender as TextBlock;
-            string id = tb.Name.Replace("Btn_","");
+            string id = tb.Name.Replace("Btn_", "");
             selectType = id;
             this.Btn_Mouse.Foreground = new SolidColorBrush(Colors.White);
             this.Btn_Line.Foreground = new SolidColorBrush(Colors.White);
@@ -418,11 +499,15 @@ namespace Demo
 
             //设置按钮状态。
             this.SetSelectedTool(id);
-         
         }
+        /// <summary>
+        /// 设置选择的tools.
+        /// </summary>
+        /// <param name="id"></param>
         public void SetSelectedTool(string id)
         {
-               switch (id)
+            this.selectType = id;
+            switch (id)
             {
                 case Demo.Tools.Dtl:
                     this.Btn_Dtl.Foreground = new SolidColorBrush(Colors.White);
@@ -512,7 +597,7 @@ namespace Demo
         private void tbDelete_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             TextBlock tb = sender as TextBlock;
-            if (tb.Text == "   删除 ")
+            if (tb.Text.Trim() == "删除")
             {
                 if (this.canvasMain.Children.Contains(ui))
                     this.canvasMain.Children.Remove(ui);
@@ -532,12 +617,10 @@ namespace Demo
             if (canvasMain.Children.Contains(e2))
                 this.canvasMain.Children.Remove(e2);
         }
-
         #endregion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             int il = 0;
             int ll = 0;
             foreach (UIElement u in canvasMain.Children)
@@ -553,13 +636,11 @@ namespace Demo
             }
 
             MessageBox.Show(il.ToString() + "---------" + ll.ToString());
-
             //Test.SYN_ALTERFILER
         }
 
         private void tbHand_MouseMove(object sender, MouseEventArgs e)
         {
-
         }
 
         private void tbTool_MouseLeave(object sender, MouseEventArgs e)

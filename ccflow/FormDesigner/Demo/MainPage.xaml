@@ -73,8 +73,9 @@
             <Canvas.Effect>
                 <DropShadowEffect Color="Gray"></DropShadowEffect>
             </Canvas.Effect>
-            <TextBlock Text="长宽：" Canvas.Left="6" Canvas.Top="25"  Foreground="White" />
+            <TextBlock Text="长：" Canvas.Left="6" Canvas.Top="25"  Foreground="White" />
             <TextBox Width="50" Name="txtWidth" Canvas.Left="36" Text="100" Canvas.Top="20" />
+            <TextBlock Text="宽：" Canvas.Left="6" Canvas.Top="25"  Foreground="White" />
             <TextBox Width="40" Name="txtHeight" Canvas.Left="90" Text="20" Canvas.Top="20" />
             <TextBlock Text="像素" Canvas.Left="133" Canvas.Top="25" Foreground="White"  />
             <TextBlock Text="确定" Foreground="White" Cursor="Hand" Name="tbSureTxt" Canvas.Left="200" Canvas.Top="25" MouseLeftButtonDown="tbSureTxt_MouseLeftButtonDown" />
