@@ -9,7 +9,6 @@
     <Grid x:Name="LayoutRoot" Background="White">
         <Image Height="32" HorizontalAlignment="Stretch" Name="image1" Stretch="Fill" VerticalAlignment="Top" Source="/Demo;component/Img/menuBK.png" />
         <TextBlock Text="驰骋工作流-表单设计器" HorizontalAlignment="Center" Margin="0,6,0,0" Foreground="White" FontSize="12" />
-
         <Canvas VerticalAlignment="Top"  Margin="0,35,0,0" Background="Beige" HorizontalAlignment="Center" Width="800" Height="550"  Name="canvasMain" MouseLeftButtonDown="canvasMain_MouseLeftButtonDown" MouseLeftButtonUp="canvasMain_MouseLeftButtonUp" MouseMove="canvasMain_MouseMove">
             <Canvas.Effect>
                 <DropShadowEffect Color="Gray"></DropShadowEffect>

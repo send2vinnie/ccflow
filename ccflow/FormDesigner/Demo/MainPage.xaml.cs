@@ -321,7 +321,8 @@ namespace Demo
                     this.SetSelectedTool(Tools.Mouse);
                     break;
                 default:
-                    throw new Exception("no souch ctl named '" + selectType + "'");
+                    MessageBox.Show("功能未完成:"+selectType);
+                    break;
             }
 
             #region 线二
@@ -531,7 +532,9 @@ namespace Demo
                     this.Btn_Mouse.Foreground = new SolidColorBrush(Colors.White);
                     break;
                 default:
-                    throw new Exception(id + " no souch button.");
+                    MessageBox.Show("功能未完成:" + selectType);
+                    this.SetSelectedTool(Tools.Mouse);
+                    break;
             }
         }
 
