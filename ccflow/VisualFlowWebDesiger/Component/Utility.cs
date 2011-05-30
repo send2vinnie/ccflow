@@ -19,7 +19,6 @@ namespace Ccflow.Web.Component.Workflow
         {
             get
             {
-
                 if (currentCulture == null)
                 {
                     try
@@ -37,7 +36,6 @@ namespace Ccflow.Web.Component.Workflow
                 if (currentCulture == null)
                 {
                     currentCulture =new System.Globalization.CultureInfo("en-us");
-
                 }
                 return currentCulture;
             }
@@ -58,7 +56,6 @@ namespace Ccflow.Web.Component.Workflow
                     {
                         appSetting.Add("language", currentCulture.Name);
                     }
-
                 }
                 catch 
                 {

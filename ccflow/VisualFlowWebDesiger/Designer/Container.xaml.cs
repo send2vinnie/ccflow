@@ -628,6 +628,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             if (string.IsNullOrEmpty(xml))
                 return;
+
             FlowNodeType FlowNodeType;
             MergePictureRepeatDirection repeatDirection = MergePictureRepeatDirection.None;
             string FlowID = "";
@@ -638,26 +639,23 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             double temd = 0;
             Byte[] b = System.Text.UTF8Encoding.UTF8.GetBytes(xml);
             XElement xele = XElement.Load(System.Xml.XmlReader.Create(new MemoryStream(b)));
+
             //txtWorkFlowName.Text = xele.Attribute(XName.Get("Name")).Value;
+
             FlowID = xele.Attribute(XName.Get("FlowID")).Value;
 
             var partNos = from item in xele.Descendants("FlowNode") select item;
             foreach (XElement node in partNos)
             {
-
                 FlowNodeType = (FlowNodeType)Enum.Parse(typeof(FlowNodeType), node.Attribute(XName.Get("Type")).Value, true);
-                try
-                {
-                    repeatDirection = (MergePictureRepeatDirection)Enum.Parse(typeof(MergePictureRepeatDirection), node.Attribute(XName.Get("RepeatDirection")).Value, true);
-
-                }
-                catch { }
+                repeatDirection = (MergePictureRepeatDirection)Enum.Parse(typeof(MergePictureRepeatDirection), node.Attribute(XName.Get("RepeatDirection")).Value, true);
                 FlowID = node.Attribute(XName.Get("FlowID")).Value;
                 FlowNodeID = node.Attribute(XName.Get("FlowNodeID")).Value;
                 FlowNodeName = node.Attribute(XName.Get("FlowNodeName")).Value;
 
                 double.TryParse(node.Attribute(XName.Get("PositionX")).Value, out temd);
                 FlowNodePosition.X = temd;
+
                 double.TryParse(node.Attribute(XName.Get("PositionY")).Value, out temd);
                 FlowNodePosition.Y = temd;
                 int.TryParse(node.Attribute(XName.Get("ZIndex")).Value, out zIndex);
@@ -673,8 +671,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 a.FlowID = FlowID;
 
                 AddFlowNode(a);
-
-
             }
 
             string beginFlowNodeID = "";
@@ -825,7 +821,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             xml.Append(@" Height=""" + ContainerHeight.ToString() + @""">");
 
 
-
             System.Text.StringBuilder FlowNodeXml = new System.Text.StringBuilder("    <FlowNodes>");
             System.Text.StringBuilder ruleXml = new System.Text.StringBuilder("    <Directions>");
             System.Text.StringBuilder labelXml = new System.Text.StringBuilder("    <Labels>");
@@ -846,8 +841,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     }
                     else if (ele.ElementType == WorkFlowElementType.Direction)
                     {
-
-
                         ruleXml.Append(Environment.NewLine);
                         ruleXml.Append(ele.ToXmlString());
 
@@ -884,26 +877,21 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 cnsDesignerContainer.Children.Add(r);
                 r.Container = this;
-
                 r.DirectionChanged += new DirectionChangeDelegate(OnDirectionChanged);
             }
             if (!DirectionCollections.Contains(r))
             {
                 DirectionCollections.Add(r);
-
-
             }
-
         }
 
         public void AddLabel(NodeLabel l)
         {
-
             if (!cnsDesignerContainer.Children.Contains(l))
             {
                 cnsDesignerContainer.Children.Add(l);
-
             }
+
             if (!LableCollections.Contains(l))
             {
                 LableCollections.Add(l);
@@ -912,7 +900,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         public void RemoveDirection(Direction r)
         {
-
             if (cnsDesignerContainer.Children.Contains(r))
             {
                 cnsDesignerContainer.Children.Remove(r);
@@ -920,9 +907,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             if (DirectionCollections.Contains(r))
                 DirectionCollections.Remove(r);
         }
-
-
-
         void OnDirectionChanged(Direction a)
         {
             SaveChange(HistoryType.New);
@@ -931,9 +915,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public void OnFlowNodeChanged(FlowNode a)
         {
             SaveChange(HistoryType.New);
-
         }
-
 
         void display(string xml)
         {
@@ -1160,7 +1142,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         }
 
-
         void pushNextQueueToPreQueue()
         {
             if (WorkFlowXmlPreStack.Count > 0)
@@ -1175,13 +1156,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         public void SaveChange(HistoryType action)
         {
-
             if (action == HistoryType.New)
             {
                 WorkFlowXmlPreStack.Push(workflowXmlCurrent);
                 workflowXmlCurrent = ToXmlString();
                 WorkFlowXmlNextStack.Clear();
-
             }
             if (action == HistoryType.Next)
             {
@@ -1191,11 +1170,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     workflowXmlCurrent = WorkFlowXmlNextStack.Pop();
                     cleareContainer();
                     ClearSelectFlowElement(null);
-
                 }
 
                 LoadFromXmlString(workflowXmlCurrent);
             }
+
             if (action == HistoryType.Previous)
             {
                 if (WorkFlowXmlPreStack.Count > 0)
@@ -1206,15 +1185,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                     LoadFromXmlString(workflowXmlCurrent);
                     ClearSelectFlowElement(null);
-
                 }
             }
-
             //SetGridLines();
-
-
         }
-
         public void PreviousAction()
         {
             SaveChange(HistoryType.Previous);

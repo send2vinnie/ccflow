@@ -14,7 +14,6 @@ namespace Ccflow.Web.Component.Workflow
 {
     public class DirectionComponent
     {
-         
         public string LineType { get; set; }
 
         string flowID;

@@ -12,6 +12,12 @@
     <AssemblyPart Source="ru-RU/WF.resources.dll" />
     <AssemblyPart Source="zh-cn/WF.resources.dll" />
     <AssemblyPart Source="zh-Hant/WF.resources.dll" />
+    <AssemblyPart Source="ja/System.Windows.Controls.Data.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Controls.Data.resources.dll" />
+    <AssemblyPart Source="zh-Hant/System.Windows.Controls.Data.resources.dll" />
+    <AssemblyPart Source="ja/System.Windows.Data.resources.dll" />
+    <AssemblyPart Source="ru/System.Windows.Data.resources.dll" />
+    <AssemblyPart Source="zh-Hant/System.Windows.Data.resources.dll" />
   </Deployment.Parts>
   <Deployment.ExternalParts>
     <ExtensionPart Source="System.ComponentModel.DataAnnotations.zip" />

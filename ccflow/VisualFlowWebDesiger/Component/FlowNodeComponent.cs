@@ -11,6 +11,9 @@ using System.Windows.Shapes;
 
 namespace Ccflow.Web.Component.Workflow 
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FlowNodeComponent
     {
 

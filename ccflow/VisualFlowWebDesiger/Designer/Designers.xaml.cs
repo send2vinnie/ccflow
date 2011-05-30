@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
+
 using WF.DataServiceReference;
 using Silverlight;
 using WF.Controls;
@@ -17,7 +19,6 @@ using WF.Resources;
 using System.Windows.Browser;
 using WF.Designer;
 using System.IO;
-using System.Windows.Controls.Primitives;
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
     /// <summary>
@@ -309,9 +310,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     NewContainer.cleareContainer();
                     NewContainer.getFlows();
                    // te.DataContext = c;
-
-                  
-
                 }
                
             }
