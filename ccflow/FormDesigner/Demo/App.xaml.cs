@@ -10,8 +10,19 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Demo
+namespace Demo 
 {
+    public class Tools
+    {
+        public const string Mouse = "Mouse";
+        public const string Line = "Line";
+        public const string Label = "Label";
+        public const string MapAttr = "MapAttr";
+        public const string Img = "Img";
+        public const string Dtl = "Dtl";
+        public const string M2M = "M2M";
+    }
+
     public partial class App : Application
     {
 

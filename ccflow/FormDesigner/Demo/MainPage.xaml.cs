@@ -69,7 +69,7 @@ namespace Demo
             tbDel.MouseLeftButtonDown += new MouseButtonEventHandler(tbDelete_MouseLeftButtonDown);
             tbDelCannel.MouseLeftButtonDown += new MouseButtonEventHandler(tbDelete_MouseLeftButtonDown);
 
-            setTools("hand");
+            this.SetSelectedTool("hand");
             e1 = new Ellipse();
             e1.Tag = "e1";
             e1.Cursor = Cursors.Hand;
@@ -103,185 +103,191 @@ namespace Demo
         {
             b = true;
             delPoint();
-            #region 线一
-            if (selectType == "line1")
+
+            switch (selectType)
             {
-                l = new Line();
-                l.Cursor = Cursors.Hand;
-                l.StrokeThickness = 2;
-                l.Stroke = new SolidColorBrush(Colors.Black);
-                l.X1 = l.X2 = e.GetPosition(this.canvasMain).X;
-                l.Y1 = l.Y2 = e.GetPosition(this.canvasMain).Y;
-                this.canvasMain.Children.Add(l);
-                setTools("hand");
-            }
-            #endregion
-            #region 线二
-            if (selectType == "line2")
-            {
-                l = new Line();
-                l.Cursor = Cursors.Hand;
-                l.StrokeThickness = 2;
-                l.Stroke = new SolidColorBrush(Colors.Black);
-                l.X1 = l.X2 = e.GetPosition(this.canvasMain).X;
-                l.Y1 = l.Y2 = e.GetPosition(this.canvasMain).Y;
-                this.canvasMain.Children.Add(l);
-                
-                l.MouseLeftButtonDown += (s, a) =>
-                {
-                    if (selectType == "hand")
+                case Tools.Line:  // 线.
+                    l = new Line();
+                    l.Cursor = Cursors.Hand;
+                    l.StrokeThickness = 2;
+                    l.Stroke = new SolidColorBrush(Colors.Black);
+                    l.X1 = l.X2 = e.GetPosition(this.canvasMain).X;
+                    l.Y1 = l.Y2 = e.GetPosition(this.canvasMain).Y;
+                    this.canvasMain.Children.Add(l);
+                    this.SetSelectedTool(Tools.Mouse);
+                    break;
+                case Tools.Label: /* 标签。 */
+                    tb = new TextBlock();
+                    tb.Text = "Label";
+                    tb.Cursor = Cursors.Hand;
+                    tb.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
+                    tb.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
+                    this.canvasMain.Children.Add(tb);
+                    canvasWin.Visibility = Visibility.Visible;
+                    gVisable.Visibility = Visibility.Visible;
+                    txtLabel.Text = "Label";
+                    cbSize.SelectedIndex = 4;
+                    cbWight.IsChecked = false;
+                    tb.MouseLeftButtonDown += (s, a) =>
                     {
-                        l = s as Line;
                         a.Handled = true;
-                        if (!canvasMain.Children.Contains(e1) && !canvasMain.Children.Contains(e2))
+                        bl = true;
+                        tb = s as TextBlock;
+
+                        if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300)
                         {
-                            e1.SetValue(Canvas.LeftProperty, l.X1 - 4);
-                            e1.SetValue(Canvas.TopProperty, l.Y1 - 4);
-                            e2.SetValue(Canvas.LeftProperty, l.X2 - 4);
-                            e2.SetValue(Canvas.TopProperty, l.Y2 - 4);
-                            this.canvasMain.Children.Add(e1);
-                            this.canvasMain.Children.Add(e2);
+                            canvasWin.Visibility = Visibility.Visible;
+                            gVisable.Visibility = Visibility.Visible;
+                            txtLabel.Text = tb.Text;
+                            foreach (ComboBoxItem cbi in cbSize.Items)
+                            {
+                                if (cbi.Content.ToString() == tb.FontSize.ToString())
+                                    cbi.IsSelected = true;
+                            }
+                            if (tb.FontWeight == FontWeights.Bold)
+                            {
+                                cbWight.IsChecked = true;
+                            }
+                            else
+                            {
+                                cbWight.IsChecked = false;
+                            }
                         }
-                    }
-                };
-                l.MouseRightButtonDown += (s, a) =>
+                        // reset the time 
+                        _lastTime = DateTime.Now;
+
+                    };
+                    tb.MouseRightButtonDown += (s, a) =>
+                        {
+                            a.Handled = true;
+                            if (selectType == Tools.Mouse)
+                            {
+                                if (!this.canvasMain.Children.Contains(spDel))
+                                {
+                                    this.canvasMain.Children.Add(spDel);
+                                    spDel.SetValue(Canvas.LeftProperty, a.GetPosition(this.canvasMain).X);
+                                    spDel.SetValue(Canvas.TopProperty, a.GetPosition(this.canvasMain).Y);
+                                    ui = s as TextBlock;
+                                }
+                            }
+                        };
+                    break;
+                case Tools.MapAttr:  // 字段。
+                    txt = new TextBox();
+                    txt.Width = 100;
+                    txt.Height = 23;
+                    txt.Cursor = Cursors.Hand;
+                    txt.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
+                    txt.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
+                    this.canvasMain.Children.Add(txt);
+
+                    canvasWinTxt.Visibility = Visibility.Visible;
+                    gVisable.Visibility = Visibility.Visible;
+                    txtWidth.Text = "100";
+                    txtHeight.Text = "20";
+
+                    #region 左键点击
+                    txt.MouseLeftButtonDown += (s, a) =>
                     {
                         a.Handled = true;
-                        if (selectType == "hand")
+                        btxt = true;
+                        txt = s as TextBox;
+
+                        if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300)
+                        {
+                            canvasWinTxt.Visibility = Visibility.Visible;
+                            gVisable.Visibility = Visibility.Visible;
+                            txtWidth.Text = txt.Width.ToString();
+                            txtHeight.Text = txt.Height.ToString();
+                        }
+                        // reset the time 
+                        _lastTime = DateTime.Now;
+                    };
+                    #endregion
+
+                    #region 右键点击
+                    txt.MouseRightButtonDown += (s, a) =>
+                    {
+                        a.Handled = true;
+                        if (selectType == Tools.Mouse)
                         {
                             if (!this.canvasMain.Children.Contains(spDel))
                             {
                                 this.canvasMain.Children.Add(spDel);
                                 spDel.SetValue(Canvas.LeftProperty, a.GetPosition(this.canvasMain).X);
                                 spDel.SetValue(Canvas.TopProperty, a.GetPosition(this.canvasMain).Y);
-                                ui = s as Line;
+                                ui = s as TextBox;
                             }
                         }
                     };
+                    #endregion
+
+                    #region  键盘点击
+                    txt.KeyDown += (s, a) =>
+                        {
+                            if (a.Key == Key.Down)
+                            {
+
+                            }
+                        };
+                    #endregion
+                    this.SetSelectedTool(Tools.Mouse);
+                    break;
+                default:
+                    throw new Exception("no souch ctl " + selectType);
             }
+
+            #region 线二
+            //if (selectType == "line2")
+            //{
+            //    l = new Line();
+            //    l.Cursor = Cursors.Hand;
+            //    l.StrokeThickness = 2;
+            //    l.Stroke = new SolidColorBrush(Colors.Black);
+            //    l.X1 = l.X2 = e.GetPosition(this.canvasMain).X;
+            //    l.Y1 = l.Y2 = e.GetPosition(this.canvasMain).Y;
+            //    this.canvasMain.Children.Add(l);
+                
+            //    l.MouseLeftButtonDown += (s, a) =>
+            //    {
+            //        if (selectType == "hand")
+            //        {
+            //            l = s as Line;
+            //            a.Handled = true;
+            //            if (!canvasMain.Children.Contains(e1) && !canvasMain.Children.Contains(e2))
+            //            {
+            //                e1.SetValue(Canvas.LeftProperty, l.X1 - 4);
+            //                e1.SetValue(Canvas.TopProperty, l.Y1 - 4);
+            //                e2.SetValue(Canvas.LeftProperty, l.X2 - 4);
+            //                e2.SetValue(Canvas.TopProperty, l.Y2 - 4);
+            //                this.canvasMain.Children.Add(e1);
+            //                this.canvasMain.Children.Add(e2);
+            //            }
+            //        }
+            //    };
+            //    l.MouseRightButtonDown += (s, a) =>
+            //        {
+            //            a.Handled = true;
+            //            if (selectType == "hand")
+            //            {
+            //                if (!this.canvasMain.Children.Contains(spDel))
+            //                {
+            //                    this.canvasMain.Children.Add(spDel);
+            //                    spDel.SetValue(Canvas.LeftProperty, a.GetPosition(this.canvasMain).X);
+            //                    spDel.SetValue(Canvas.TopProperty, a.GetPosition(this.canvasMain).Y);
+            //                    ui = s as Line;
+            //                }
+            //            }
+            //        };
+            //}
             #endregion
             #region 标签
             if (selectType == "label")
             {
-                tb = new TextBlock();
-                tb.Text = "Label";
-                tb.Cursor = Cursors.Hand;
-                tb.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
-                tb.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
-                this.canvasMain.Children.Add(tb);
-                canvasWin.Visibility = Visibility.Visible;
-                gVisable.Visibility = Visibility.Visible;
-                txtLabel.Text = "Label";
-                cbSize.SelectedIndex = 4;
-                cbWight.IsChecked = false;
-                
-                tb.MouseLeftButtonDown += (s, a) =>
-                {
-                    a.Handled = true;
-                    bl = true;
-                    tb = s as TextBlock;
-
-                    if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300)
-                    {
-                        canvasWin.Visibility = Visibility.Visible;
-                        gVisable.Visibility = Visibility.Visible;
-                        txtLabel.Text = tb.Text;
-                        foreach (ComboBoxItem cbi in cbSize.Items)
-                        {
-                            if (cbi.Content.ToString() == tb.FontSize.ToString())
-                                cbi.IsSelected = true;
-                        }
-                        if (tb.FontWeight == FontWeights.Bold)
-                        {
-                            cbWight.IsChecked = true;
-                        }
-                        else
-                        {
-                            cbWight.IsChecked = false;
-                        }
-                    }
-                    // reset the time 
-                    _lastTime = DateTime.Now;
-
-                };
-                tb.MouseRightButtonDown += (s, a) =>
-                    {
-                        a.Handled = true;
-                        if (selectType == "hand")
-                        {
-                            if (!this.canvasMain.Children.Contains(spDel))
-                            {
-                                this.canvasMain.Children.Add(spDel);
-                                spDel.SetValue(Canvas.LeftProperty, a.GetPosition(this.canvasMain).X);
-                                spDel.SetValue(Canvas.TopProperty, a.GetPosition(this.canvasMain).Y);
-                                ui = s as TextBlock;
-                            }
-                        }
-                    };
+               
             }
             #endregion
-            #region 文本
-            if (selectType == "txt")
-            {
-                txt = new TextBox();
-                txt.Width = 100;
-                txt.Height = 23;
-                txt.Cursor = Cursors.Hand;
-                txt.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
-                txt.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
-                this.canvasMain.Children.Add(txt);
-
-                canvasWinTxt.Visibility = Visibility.Visible;
-                gVisable.Visibility = Visibility.Visible;
-                txtWidth.Text = "100";
-                txtHeight.Text = "20";
-                
-
-                #region 左键点击
-                txt.MouseLeftButtonDown += (s, a) =>
-                {
-                    a.Handled = true;
-                    btxt = true;
-                    txt = s as TextBox;
-
-                    if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300)
-                    {
-                        canvasWinTxt.Visibility = Visibility.Visible;
-                        gVisable.Visibility = Visibility.Visible;
-                        txtWidth.Text = txt.Width.ToString();
-                        txtHeight.Text = txt.Height.ToString();
-                    }
-                    // reset the time 
-                    _lastTime = DateTime.Now;
-                };
-                #endregion
-                #region 右键点击
-                txt.MouseRightButtonDown += (s, a) =>
-                {
-                    a.Handled = true;
-                    if (selectType == "hand")
-                    {
-                        if (!this.canvasMain.Children.Contains(spDel))
-                        {
-                            this.canvasMain.Children.Add(spDel);
-                            spDel.SetValue(Canvas.LeftProperty, a.GetPosition(this.canvasMain).X);
-                            spDel.SetValue(Canvas.TopProperty, a.GetPosition(this.canvasMain).Y);
-                            ui = s as TextBox;
-                        }
-                    }
-                };
-                #endregion
-                #region  键盘点击
-                txt.KeyDown += (s, a) =>
-                    {
-                        if (a.Key == Key.Down)
-                        {
-
-                        }
-                    };
-                #endregion
-            }
-            #endregion
+           
         }
 
         //鼠标松开主面板事件
@@ -291,7 +297,7 @@ namespace Demo
             be = false;
             bl = false;
             btxt = false;
-            setTools("hand");
+            this.SetSelectedTool("hand");
             if (eCurrent != null)
                 eCurrent.Fill = new SolidColorBrush(Colors.Green);
         }
@@ -329,6 +335,8 @@ namespace Demo
                 #endregion
             }
             #endregion
+
+
             if (selectType == "hand")
             {
                 #region 改变线的长度
@@ -375,6 +383,7 @@ namespace Demo
 
                 }
                 #endregion
+
                 #region 拖拉label
                 if (bl)
                 {
@@ -382,6 +391,7 @@ namespace Demo
                     tb.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
                 }
                 #endregion
+
                 #region 拖拉txt
                 if (btxt)
                 {
@@ -396,30 +406,47 @@ namespace Demo
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             TextBlock tb = sender as TextBlock;
-            if (tb.Name == "tbHand")
-            {
-                setTools("hand");
-            }
-            else if (tb.Name == "tbLine")
-            {
-                setTools("line1");
-            }
-            else if (tb.Name == "tbLine2")
-            {
-                setTools("line2");
-            }
-            else if (tb.Name == "tbLabel")
-            {
-                setTools("label");
-            }
-            else if (tb.Name == "tbTextBox")
-            {
-                setTools("txt");
-            }
-            else if (tb.Name == "tbCannel")
-            {
-                setTools("cannel");
+            string id = tb.Name.Replace("Btn_","");
+            selectType = id;
+            this.Btn_Mouse.Foreground = new SolidColorBrush(Colors.White);
+            this.Btn_Line.Foreground = new SolidColorBrush(Colors.White);
+            this.Btn_Dtl.Foreground = new SolidColorBrush(Colors.White);
+            this.Btn_Img.Foreground = new SolidColorBrush(Colors.White);
+            this.Btn_Label.Foreground = new SolidColorBrush(Colors.White);
+            this.Btn_M2M.Foreground = new SolidColorBrush(Colors.White);
+            this.Btn_MapAttr.Foreground = new SolidColorBrush(Colors.White);
 
+            //设置按钮状态。
+            this.SetSelectedTool(id);
+         
+        }
+        public void SetSelectedTool(string id)
+        {
+               switch (id)
+            {
+                case Demo.Tools.Dtl:
+                    this.Btn_Dtl.Foreground = new SolidColorBrush(Colors.White);
+                    break;
+                case Demo.Tools.Img:
+                    this.Btn_Img.Foreground = new SolidColorBrush(Colors.White);
+                    break;
+                case Demo.Tools.Label:
+                    this.Btn_Label.Foreground = new SolidColorBrush(Colors.White);
+                    break;
+                case Demo.Tools.Line:
+                    this.Btn_Line.Foreground = new SolidColorBrush(Colors.White);
+                    break;
+                case Demo.Tools.M2M:
+                    this.Btn_M2M.Foreground = new SolidColorBrush(Colors.White);
+                    break;
+                case Demo.Tools.MapAttr:
+                    this.Btn_MapAttr.Foreground = new SolidColorBrush(Colors.White);
+                    break;
+                case Demo.Tools.Mouse:
+                    this.Btn_Mouse.Foreground = new SolidColorBrush(Colors.White);
+                    break;
+                default:
+                    throw new Exception(id + " no souch button.");
             }
         }
 
@@ -496,30 +523,7 @@ namespace Demo
 
         #region 私有方法
 
-        private void setTools(string select)
-        {
-            selectType = select;
-            tbHand.Foreground = new SolidColorBrush(Colors.White);
-            tbLine.Foreground = new SolidColorBrush(Colors.White);
-            tbLabel.Foreground = new SolidColorBrush(Colors.White);
-            tbLine2.Foreground = new SolidColorBrush(Colors.White);
-            tbTextBox.Foreground = new SolidColorBrush(Colors.White);
-            tbCannel.Foreground = new SolidColorBrush(Colors.White);
-            if (select == "hand")
-                //tbHand.FontWeight = FontWeights.Bold;
-                tbHand.Foreground = new SolidColorBrush(Colors.Cyan); 
-            else if (select == "line1")
-                tbLine.Foreground = new SolidColorBrush(Colors.Cyan);
-            else if (select == "line2")
-                tbLine2.Foreground = new SolidColorBrush(Colors.Cyan);
-            else if (select == "label")
-                tbLabel.Foreground = new SolidColorBrush(Colors.Cyan);
-            else if (select == "txt")
-                tbTextBox.Foreground = new SolidColorBrush(Colors.Cyan);
-            else if (select == "cannel")
-                tbCannel.Foreground = new SolidColorBrush(Colors.Cyan);
-
-        }
+     
         //删除主面板上线上的点
         private void delPoint()
         {

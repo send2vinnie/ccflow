@@ -20,17 +20,19 @@
                 <DropShadowEffect Color="Gray"></DropShadowEffect>
             </my:DockPanel.Effect>
 
-            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="鼠标" Name="tbHand" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0" />
-            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="直线" Name="tbLine2" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
-            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="标签" Name="tbLabel" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
-            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="字段" Name="tbTextBox" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="鼠标" Name="Btn_Mouse" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0" />
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="直线" Name="Btn_Line" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="标签" Name="Btn_Label" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="字段" Name="Btn_MapAttr" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
 
-            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="图片" Name="tbImg" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
-            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="明细表" Name="tbDtl" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
-            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="多选" Name="tbM2M" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="图片" Name="Btn_Img" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="明细表" Name="Btn_Dtl" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="多选" Name="Btn_M2M" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
 
+            <!--
             <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="取消" Visibility="Collapsed" Foreground="White" Name="tbCannel" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
             <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="线-1" Foreground="White" Name="tbLine" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,5,0,0" Visibility="Collapsed" />
+            -->
 
         </my:DockPanel>
 
