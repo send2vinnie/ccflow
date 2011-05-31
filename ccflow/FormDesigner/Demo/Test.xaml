@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Demo.Test"    
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"    
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"    
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+             mc:Ignorable="d"    d:DesignHeight="800" d:DesignWidth="600">
+    <Canvas>
+        <Button MouseLeftButtonDown="Button_MouseLeftButtonDown"           
+                MouseLeftButtonUp="Button_MouseLeftButtonUp"        
+                MouseMove="Button_MouseMove"         
+                Canvas.Left="50"          
+                Canvas.Top="50"         
+                Background="Red"          
+                FontSize="25"                 Width="200"  
+                Height="100"                 Name="button1"       
+                Content="drag me">
+            
+        </Button>
+        <Button Canvas.Left="350"            
+                Canvas.Top="50"                 Content="enter me"       
+                Height="100"                 Name="button2"                 Width="200"    
+                Background="Blue"                 FontSize="25"               
+                MouseEnter="button2_MouseEnter"        
+                MouseLeave="button2_MouseLeave"/>
+    </Canvas>
+</UserControl>
+     
