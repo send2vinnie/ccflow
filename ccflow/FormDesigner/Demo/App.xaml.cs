@@ -17,8 +17,29 @@ namespace Demo
     {
         public const string Mouse = "Mouse";
         public const string Line = "Line";
+        /// <summary>
+        /// 标签
+        /// </summary>
         public const string Label = "Label";
-        public const string MapAttr = "MapAttr";
+        /// <summary>
+        /// 文本框
+        /// </summary>
+        public const string TextBox = "TextBox";
+        /// <summary>
+        /// 下拉框
+        /// </summary>
+        public const string DDL = "DDL";
+        /// <summary>
+        /// 单选按钮
+        /// </summary>
+        public const string RBS = "RBS";
+        /// <summary>
+        /// 选择框
+        /// </summary>
+        public const string CheckBox = "CheckBox";
+        /// <summary>
+        /// 图片
+        /// </summary>
         public const string Img = "Img";
         public const string Dtl = "Dtl";
         public const string M2M = "M2M";
@@ -58,6 +79,8 @@ namespace Demo
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             this.RootVisual = new MainPage();
+          //  this.RootVisual = new Test();
+
         }
 
         private void Application_Exit(object sender, EventArgs e)

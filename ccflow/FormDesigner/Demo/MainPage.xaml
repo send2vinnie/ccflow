@@ -9,7 +9,7 @@
     <Grid x:Name="LayoutRoot" Background="White">
         <Image Height="32" HorizontalAlignment="Stretch" Name="image1" Stretch="Fill" VerticalAlignment="Top" Source="/Demo;component/Img/menuBK.png" />
         <TextBlock Name="Title" Text="驰骋工作流-表单设计器" HorizontalAlignment="Center" Margin="0,6,0,0" Foreground="White" FontSize="12" />
-        <Canvas VerticalAlignment="Top"  Margin="0,35,0,0" Background="Beige" HorizontalAlignment="Center" Width="800" Height="550"  Name="canvasMain" MouseLeftButtonDown="canvasMain_MouseLeftButtonDown" MouseLeftButtonUp="canvasMain_MouseLeftButtonUp" MouseMove="canvasMain_MouseMove">
+        <Canvas VerticalAlignment="Top"  Margin="0,35,0,0" Background="Beige" HorizontalAlignment="Center" Width="800" Height="550"  Name="canvasMain" MouseLeftButtonDown="canvasMain_MouseLeftButtonDown" MouseLeftButtonUp="canvasMain_MouseLeftButtonUp" MouseMove="canvasMain_MouseMove" KeyDown="gVisable_KeyDown">
             <Canvas.Effect>
                 <DropShadowEffect Color="Gray"></DropShadowEffect>
             </Canvas.Effect>
@@ -22,12 +22,16 @@
             <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="鼠标" Name="Btn_Mouse" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0" />
             <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="直线" Name="Btn_Line" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
             <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="标签" Name="Btn_Label" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
-            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="字段" Name="Btn_MapAttr" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="文本框" Name="Btn_TextBox" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="下拉框" Name="Btn_DDL" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="单选按钮" Name="Btn_RBS" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
+            <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="选择框" Name="Btn_CheckBox" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
 
             <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="图片" Name="Btn_Img" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
             <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="明细表" Name="Btn_Dtl" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
             <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="多选" Name="Btn_M2M" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
 
+            
             <!--
             <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="取消" Visibility="Collapsed" Foreground="White" Name="tbCannel" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,10,0,0"/>
             <TextBlock MouseMove="tbTool_MouseMove" MouseLeave="tbTool_MouseLeave" HorizontalAlignment="Center" Text="线-1" Foreground="White" Name="tbLine" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Margin="3,5,0,0" Visibility="Collapsed" />
@@ -39,10 +43,9 @@
             <my:Accordion.Effect>
                 <DropShadowEffect Color="Gray"></DropShadowEffect>
             </my:Accordion.Effect>
-            
         </my:Accordion>
 
-        <Grid Name="gVisable" Background="#003366" Opacity="0.5" Visibility="Collapsed" KeyDown="gVisable_KeyDown"></Grid>
+        <Grid Name="gVisable" KeyDown="gVisable_KeyDown" Background="#003366" Opacity="0.5" Visibility="Collapsed" ></Grid>
         <Canvas Name="canvasWin" Visibility="Collapsed" Width="350" Height="68" Opacity="0.8" Background="#003366" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="125,125,125,107">
             <Canvas.Effect>
                 <DropShadowEffect Color="Gray"></DropShadowEffect>

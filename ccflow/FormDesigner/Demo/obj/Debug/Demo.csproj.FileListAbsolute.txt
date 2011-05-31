@@ -100,6 +100,7 @@ D:\ccflow\FormDesigner\Demo\Bin\Debug\vi\System.Windows.Controls.resources.dll
 D:\ccflow\FormDesigner\Demo\obj\Debug\ResolveAssemblyReference.cache
 D:\ccflow\FormDesigner\Demo\obj\Debug\App.g.i.cs
 D:\ccflow\FormDesigner\Demo\obj\Debug\MainPage.g.i.cs
+D:\ccflow\FormDesigner\Demo\obj\Debug\Test.g.i.cs
 D:\ccflow\FormDesigner\Demo\obj\Debug\Demo.g.resources
 D:\ccflow\FormDesigner\Demo\obj\Debug\Demo.dll
 D:\ccflow\FormDesigner\Demo\obj\Debug\Demo.pdb

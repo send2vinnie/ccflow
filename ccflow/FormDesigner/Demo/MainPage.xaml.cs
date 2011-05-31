@@ -12,7 +12,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Windows.Browser;
-
 using System.Text;
 using Demo.Controls;
 
@@ -25,6 +24,7 @@ namespace Demo
         bool be = false;//在绿点上判断当前鼠标的状态是否按下
         bool bl = false;//判断LABEL当前鼠标的状态是否按下
         bool btxt = false;
+        public string FK_MapData = "ND501"; // 
         string selectType =  Tools.Mouse;//当前工具选择类型 hand line1 line2 label txt cannel
         Line l;//当前线
         TextBlock tb;//当前标签
@@ -141,74 +141,7 @@ namespace Demo
                     tb.KeyDown += (s, a) =>
                         {
                             /*当按下键时发生*/
-                            #region lab 键盘事件.
-                            a.Handled = true;
-                            bl = true;
-                            tb = s as TextBlock;
 
-                            // 获取 textBox 对象的相对于 Canvas 的 x坐标 和 y坐标
-                            double x = (double)tb.GetValue(Canvas.LeftProperty);
-                            double y = (double)tb.GetValue(Canvas.TopProperty);
-
-                            // KeyEventArgs.Key - 与事件相关的键盘的按键 [System.Windows.Input.Key枚举]
-                            switch (a.Key)
-                            {
-                                // 按 Up 键后 textBox 对象向 上 移动 1 个像素
-                                // Up 键所对应的 e.PlatformKeyCode == 38 
-                                // 当获得的 e.Key == Key.Unknown 时，可以使用 e.PlatformKeyCode 来确定用户所按的键
-                                case Key.Up:
-                                    tb.SetValue(Canvas.TopProperty, y - 1);
-                                    break;
-
-                                // 按 Down 键后 textBox 对象向 下 移动 1 个像素
-                                // Down 键所对应的 e.PlatformKeyCode == 40
-                                case Key.Down:
-                                    tb.SetValue(Canvas.TopProperty, y + 1);
-                                    break;
-
-                                // 按 Left 键后 textBox 对象向 左 移动 1 个像素
-                                // Left 键所对应的 e.PlatformKeyCode == 37
-                                case Key.Left:
-                                    tb.SetValue(Canvas.LeftProperty, x - 1);
-                                    break;
-
-                                // 按 Right 键后 textBox 对象向 右 移动 1 个像素
-                                // Right 键所对应的 e.PlatformKeyCode == 39 
-                                case Key.Right:
-                                    tb.SetValue(Canvas.LeftProperty, x + 1);
-                                    break;
-
-                                default:
-                                    break;
-                            }
-
-                            // 同上：Key.W - 向上移动； Key.S - 向下移动； Key.A - 向左移动； Key.D - 向右移动
-                            switch (a.Key)
-                            {
-                                // KeyEventArgs.Handled - 是否处理过此事件
-
-                                // 如果在文本框内敲 W ，那么文本框会向上移动，而且文本框内也会被输入 W
-                                // 如果只想移动文本框，而不输入 W ，那么可以设置 KeyEventArgs.Handled = true 告知此事件已经被处理完毕
-                                case Key.W:
-                                    tb.SetValue(Canvas.TopProperty, y - 1);
-                                    e.Handled = true;
-                                    break;
-                                case Key.S:
-                                    tb.SetValue(Canvas.TopProperty, y + 1);
-                                    e.Handled = true;
-                                    break;
-                                case Key.A:
-                                    tb.SetValue(Canvas.LeftProperty, x - 1);
-                                    e.Handled = true;
-                                    break;
-                                case Key.D:
-                                    tb.SetValue(Canvas.LeftProperty, x + 1);
-                                    e.Handled = true;
-                                    break;
-                                default:
-                                    break;
-                            }
-                            #endregion
                         };
                     tb.MouseLeftButtonDown += (s, a) =>
                     {
@@ -258,72 +191,31 @@ namespace Demo
                         };
                     this.SetSelectedTool(Tools.Mouse);
                     break;
-                case Tools.MapAttr:  // 字段。
-                    txt = new TextBox();
-                    txt.Width = 100;
-                    txt.Height = 23;
-                    txt.Cursor = Cursors.Hand;
-                    txt.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
-                    txt.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
-                    this.canvasMain.Children.Add(txt);
-
-                    //canvasWinTxt.Visibility = Visibility.Visible;
-                    //gVisable.Visibility = Visibility.Visible;
-
-                    Glo.IE_ShowAddFGuide();
-
-                    txtWidth.Text = "100";
-                    txtHeight.Text = "20";
-
-                    #region 左键点击
-                    txt.MouseLeftButtonDown += (s, a) =>
-                    {
-                        a.Handled = true;
-                        btxt = true;
-                        txt = s as TextBox;
-
-                        if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300)
-                        {
-                            canvasWinTxt.Visibility = Visibility.Visible;
-                            gVisable.Visibility = Visibility.Visible;
-                            txtWidth.Text = txt.Width.ToString();
-                            txtHeight.Text = txt.Height.ToString();
-                        }
-                        // reset the time 
-                        _lastTime = DateTime.Now;
-                    };
-                    #endregion
-
-                    #region 右键点击
-                    txt.MouseRightButtonDown += (s, a) =>
-                    {
-                        a.Handled = true;
-                        if (selectType == Tools.Mouse)
-                        {
-                            if (!this.canvasMain.Children.Contains(spDel))
-                            {
-                                this.canvasMain.Children.Add(spDel);
-                                spDel.SetValue(Canvas.LeftProperty, a.GetPosition(this.canvasMain).X);
-                                spDel.SetValue(Canvas.TopProperty, a.GetPosition(this.canvasMain).Y);
-                                ui = s as TextBox;
-                            }
-                        }
-                    };
-                    #endregion
-
-                    #region  键盘点击
-                    txt.KeyDown += (s, a) =>
-                        {
-                            if (a.Key == Key.Down)
-                            {
-
-                            }
-                        };
-                    #endregion
+                case Tools.TextBox:  // 文本框。
+                    BPTextBox mytb = new BPTextBox();
+                    mytb.FK_MapData = this.FK_MapData;
+                    mytb.Width = 100;
+                    mytb.Height = 23;
+                    mytb.Cursor = Cursors.Hand;
+                    mytb.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
+                    mytb.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
+                    this.canvasMain.Children.Add(mytb);
+                    this.SetSelectedTool(Tools.Mouse);
+                    break;
+                case Tools.CheckBox:
+                    BPCheckBox cb = new BPCheckBox();
+                    cb.FK_MapData = this.FK_MapData;
+                    //cb.Width = 100;
+                    //cb.Height = 23;
+                    cb.Cursor = Cursors.Hand;
+                    cb.Content = "New CheckBox";
+                    cb.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
+                    cb.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
+                    this.canvasMain.Children.Add(cb);
                     this.SetSelectedTool(Tools.Mouse);
                     break;
                 default:
-                    MessageBox.Show("功能未完成:"+selectType);
+                    MessageBox.Show("功能未完成:" + selectType, "请期待", MessageBoxButton.OK);
                     break;
             }
 
@@ -388,7 +280,6 @@ namespace Demo
         //鼠标在主面板上移动事件
         private void canvasMain_MouseMove(object sender, MouseEventArgs e)
         {
-
             #region 画线线
             if (b)
             {
@@ -421,7 +312,7 @@ namespace Demo
             }
             #endregion
 
-            if (selectType == Tools.Mouse )
+            if (selectType == Tools.Mouse)
             {
                 #region 改变线的长度
                 if (be)
@@ -491,13 +382,18 @@ namespace Demo
             TextBlock tb = sender as TextBlock;
             string id = tb.Name.Replace("Btn_", "");
             selectType = id;
+
             this.Btn_Mouse.Foreground = new SolidColorBrush(Colors.White);
             this.Btn_Line.Foreground = new SolidColorBrush(Colors.White);
             this.Btn_Dtl.Foreground = new SolidColorBrush(Colors.White);
             this.Btn_Img.Foreground = new SolidColorBrush(Colors.White);
+
             this.Btn_Label.Foreground = new SolidColorBrush(Colors.White);
+            this.Btn_CheckBox.Foreground = new SolidColorBrush(Colors.White);
+            this.Btn_DDL.Foreground = new SolidColorBrush(Colors.White);
+            this.Btn_RBS.Foreground = new SolidColorBrush(Colors.White);
+            this.Btn_TextBox.Foreground = new SolidColorBrush(Colors.White);
             this.Btn_M2M.Foreground = new SolidColorBrush(Colors.White);
-            this.Btn_MapAttr.Foreground = new SolidColorBrush(Colors.White);
 
             //设置按钮状态。
             this.SetSelectedTool(id);
@@ -511,6 +407,9 @@ namespace Demo
             this.selectType = id;
             switch (id)
             {
+                case Demo.Tools.Mouse:
+                    this.Btn_Mouse.Foreground = new SolidColorBrush(Colors.Orange);
+                    break;
                 case Demo.Tools.Dtl:
                     this.Btn_Dtl.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
@@ -523,17 +422,23 @@ namespace Demo
                 case Demo.Tools.Line:
                     this.Btn_Line.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
+                case Demo.Tools.RBS: 
+                    this.Btn_RBS.Foreground = new SolidColorBrush(Colors.Orange);
+                    break;
+                case Demo.Tools.DDL:
+                    this.Btn_DDL.Foreground = new SolidColorBrush(Colors.Orange);
+                    break;
+                case Demo.Tools.CheckBox:
+                    this.Btn_CheckBox.Foreground = new SolidColorBrush(Colors.Orange);
+                    break;
                 case Demo.Tools.M2M:
                     this.Btn_M2M.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
-                case Demo.Tools.MapAttr:
-                    this.Btn_MapAttr.Foreground = new SolidColorBrush(Colors.Orange);
-                    break;
-                case Demo.Tools.Mouse:
-                    this.Btn_Mouse.Foreground = new SolidColorBrush(Colors.Orange);
+                case Demo.Tools.TextBox:
+                    this.Btn_TextBox.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
                 default:
-                    MessageBox.Show("功能未完成:" + selectType);
+                    MessageBox.Show("****** 功能未完成:" + selectType);
                     this.SetSelectedTool(Tools.Mouse);
                     break;
             }
@@ -567,6 +472,7 @@ namespace Demo
                 MessageBox.Show("请输入要设置的长度！");
                 return;
             }
+
             double i = 0;
             double j = 0;
             if (!double.TryParse(txtWidth.Text, out i))
@@ -663,7 +569,76 @@ namespace Demo
 
         private void gVisable_KeyDown(object sender, KeyEventArgs e)
         {
+            #region lab 键盘事件.
+            e.Handled = true;
+            bl = true;
+            tb = sender as TextBlock;
+            if (tb == null)
+                return;
 
+            // 获取 textBox 对象的相对于 Canvas 的 x坐标 和 y坐标
+            double x = (double)tb.GetValue(Canvas.LeftProperty);
+            double y = (double)tb.GetValue(Canvas.TopProperty);
+
+            // KeyEventArgs.Key - 与事件相关的键盘的按键 [System.Windows.Input.Key枚举]
+            switch (e.Key)
+            {
+                // 按 Up 键后 textBox 对象向 上 移动 1 个像素
+                // Up 键所对应的 e.PlatformKeyCode == 38 
+                // 当获得的 e.Key == Key.Unknown 时，可以使用 e.PlatformKeyCode 来确定用户所按的键
+                case Key.Up:
+                    tb.SetValue(Canvas.TopProperty, y - 1);
+                    break;
+
+                // 按 Down 键后 textBox 对象向 下 移动 1 个像素
+                // Down 键所对应的 e.PlatformKeyCode == 40
+                case Key.Down:
+                    tb.SetValue(Canvas.TopProperty, y + 1);
+                    break;
+
+                // 按 Left 键后 textBox 对象向 左 移动 1 个像素
+                // Left 键所对应的 e.PlatformKeyCode == 37
+                case Key.Left:
+                    tb.SetValue(Canvas.LeftProperty, x - 1);
+                    break;
+
+                // 按 Right 键后 textBox 对象向 右 移动 1 个像素
+                // Right 键所对应的 e.PlatformKeyCode == 39 
+                case Key.Right:
+                    tb.SetValue(Canvas.LeftProperty, x + 1);
+                    break;
+
+                default:
+                    break;
+            }
+
+            // 同上：Key.W - 向上移动； Key.S - 向下移动； Key.A - 向左移动； Key.D - 向右移动
+            switch (e.Key)
+            {
+                // KeyEventArgs.Handled - 是否处理过此事件
+
+                // 如果在文本框内敲 W ，那么文本框会向上移动，而且文本框内也会被输入 W
+                // 如果只想移动文本框，而不输入 W ，那么可以设置 KeyEventArgs.Handled = true 告知此事件已经被处理完毕
+                case Key.W:
+                    tb.SetValue(Canvas.TopProperty, y - 1);
+                    e.Handled = true;
+                    break;
+                case Key.S:
+                    tb.SetValue(Canvas.TopProperty, y + 1);
+                    e.Handled = true;
+                    break;
+                case Key.A:
+                    tb.SetValue(Canvas.LeftProperty, x - 1);
+                    e.Handled = true;
+                    break;
+                case Key.D:
+                    tb.SetValue(Canvas.LeftProperty, x + 1);
+                    e.Handled = true;
+                    break;
+                default:
+                    break;
+            }
+            #endregion
         }
     }
 }
