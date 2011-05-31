@@ -34,6 +34,7 @@ namespace Demo
         Ellipse eCurrent;//选中的绿点
         Grid g = new Grid();//遮罩图层
         private DateTime _lastTime;//获取双击label的时间间隔
+
         //删除框
         StackPanel spDel = new StackPanel();
         DropShadowEffect dse = new DropShadowEffect();
@@ -66,9 +67,11 @@ namespace Demo
             tbDelLine.Text = "|";
             tbDelCannel.Text = " 取消 ";
             tbDelCannel.Cursor = Cursors.Hand;
+
             spDel.Children.Add(tbDel);
             spDel.Children.Add(tbDelLine);
             spDel.Children.Add(tbDelCannel);
+
             tbDel.MouseLeftButtonDown += new MouseButtonEventHandler(tbDelete_MouseLeftButtonDown);
             tbDelCannel.MouseLeftButtonDown += new MouseButtonEventHandler(tbDelete_MouseLeftButtonDown);
 
@@ -77,14 +80,14 @@ namespace Demo
             e1.Tag = "e1";
             e1.Cursor = Cursors.Hand;
             e1.MouseLeftButtonDown += new MouseButtonEventHandler(e_MouseLeftButtonDown);
+            e1.Width = 9;
+            e1.Height = 9;
+            e1.Fill = new SolidColorBrush(Colors.Green);
 
             e2 = new Ellipse();
             e2.Tag = "e2";
             e2.Cursor = Cursors.Hand;
             e2.MouseLeftButtonDown += new MouseButtonEventHandler(e_MouseLeftButtonDown);
-            e1.Width = 9;
-            e1.Height = 9;
-            e1.Fill = new SolidColorBrush(Colors.Green);
             e2.Width = 9;
             e2.Height = 9;
             e2.Fill = new SolidColorBrush(Colors.Green);
@@ -100,7 +103,6 @@ namespace Demo
             eCurrent.Fill = new SolidColorBrush(Colors.Red);
         }
         #endregion
-
 
         //鼠标单击主面板事件
         private void canvasMain_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -387,7 +389,6 @@ namespace Demo
         private void canvasMain_MouseMove(object sender, MouseEventArgs e)
         {
 
-
             #region 画线线
             if (b)
             {
@@ -511,25 +512,25 @@ namespace Demo
             switch (id)
             {
                 case Demo.Tools.Dtl:
-                    this.Btn_Dtl.Foreground = new SolidColorBrush(Colors.White);
+                    this.Btn_Dtl.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
                 case Demo.Tools.Img:
-                    this.Btn_Img.Foreground = new SolidColorBrush(Colors.White);
+                    this.Btn_Img.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
                 case Demo.Tools.Label:
-                    this.Btn_Label.Foreground = new SolidColorBrush(Colors.White);
+                    this.Btn_Label.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
                 case Demo.Tools.Line:
-                    this.Btn_Line.Foreground = new SolidColorBrush(Colors.White);
+                    this.Btn_Line.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
                 case Demo.Tools.M2M:
-                    this.Btn_M2M.Foreground = new SolidColorBrush(Colors.White);
+                    this.Btn_M2M.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
                 case Demo.Tools.MapAttr:
-                    this.Btn_MapAttr.Foreground = new SolidColorBrush(Colors.White);
+                    this.Btn_MapAttr.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
                 case Demo.Tools.Mouse:
-                    this.Btn_Mouse.Foreground = new SolidColorBrush(Colors.White);
+                    this.Btn_Mouse.Foreground = new SolidColorBrush(Colors.Orange);
                     break;
                 default:
                     MessageBox.Show("功能未完成:" + selectType);
@@ -617,6 +618,8 @@ namespace Demo
         {
             if (canvasMain.Children.Contains(e1))
                 this.canvasMain.Children.Remove(e1);
+
+
             if (canvasMain.Children.Contains(e2))
                 this.canvasMain.Children.Remove(e2);
         }
@@ -656,6 +659,11 @@ namespace Demo
         {
             TextBlock tb = sender as TextBlock;
             tb.Opacity = 0.6;
+        }
+
+        private void gVisable_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
     }
 }
