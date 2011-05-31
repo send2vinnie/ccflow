@@ -14,6 +14,11 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Browser;
 using System.Text;
 using Demo.Controls;
+using System.Windows.Interactivity;
+using System.Windows.Media;
+using Microsoft.Expression.Interactivity;
+using Microsoft.Expression.Interactivity.Layout;
+using System.Windows.Media.Imaging; 
 
 namespace Demo
 {
@@ -125,70 +130,18 @@ namespace Demo
                     this.SetSelectedTool(Tools.Mouse);
                     break;
                 case Tools.Label: /* 标签。 */
-                    tb = new TextBlock();
-                    tb.Text = "Label";
-                    tb.Cursor = Cursors.Hand;
-                    tb.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
-                    tb.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
-                    this.canvasMain.Children.Add(tb);
+                    BPLabel lab = new BPLabel();
+                      lab.FK_MapData = this.FK_MapData;
+                      lab.Width = 100;
+                      lab.Height = 23;
+                      lab.Cursor = Cursors.Hand;
+                      lab.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
+                      lab.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
+                      this.canvasMain.Children.Add(lab);
 
-                    //canvasWin.Visibility = Visibility.Visible;
-                    //gVisable.Visibility = Visibility.Visible;
+                     MouseDragElementBehavior DragBehavior = new MouseDragElementBehavior();
+                     Interaction.GetBehaviors(lab).Add(DragBehavior);
 
-                    txtLabel.Text = "Label";
-                    cbSize.SelectedIndex = 4;
-                    cbWight.IsChecked = false;
-                    tb.KeyDown += (s, a) =>
-                        {
-                            /*当按下键时发生*/
-
-                        };
-                    tb.MouseLeftButtonDown += (s, a) =>
-                    {
-                        a.Handled = true;
-                        bl = true;
-                        tb = s as TextBlock;
-                        if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300)
-                        {
-                            /* 双点事件 */
-                            canvasWin.Visibility = Visibility.Visible;
-                            gVisable.Visibility = Visibility.Visible;
-
-                            txtLabel.Text = tb.Text;
-
-                            foreach (ComboBoxItem cbi in cbSize.Items)
-                            {
-                                if (cbi.Content.ToString() == tb.FontSize.ToString())
-                                    cbi.IsSelected = true;
-                            }
-
-                            if (tb.FontWeight == FontWeights.Normal)
-                            {
-                                cbWight.IsChecked = true;
-                            }
-                            else
-                            {
-                                cbWight.IsChecked = false;
-                            }
-                        }
-                        // reset the time 
-                        _lastTime = DateTime.Now;
-
-                    };
-                    tb.MouseRightButtonDown += (s, a) =>
-                        {
-                            a.Handled = true;
-                            if (selectType == Tools.Mouse)
-                            {
-                                if (!this.canvasMain.Children.Contains(spDel))
-                                {
-                                    this.canvasMain.Children.Add(spDel);
-                                    spDel.SetValue(Canvas.LeftProperty, a.GetPosition(this.canvasMain).X);
-                                    spDel.SetValue(Canvas.TopProperty, a.GetPosition(this.canvasMain).Y);
-                                    ui = s as TextBlock;
-                                }
-                            }
-                        };
                     this.SetSelectedTool(Tools.Mouse);
                     break;
                 case Tools.TextBox:  // 文本框。
@@ -202,16 +155,82 @@ namespace Demo
                     this.canvasMain.Children.Add(mytb);
                     this.SetSelectedTool(Tools.Mouse);
                     break;
+                case Tools.DDL:  // 文本框。
+                    BPDDL myddl = new BPDDL();
+                    myddl.FK_MapData = this.FK_MapData;
+                    myddl.Width = 100;
+                    myddl.Height = 23;
+                    myddl.Cursor = Cursors.Hand;
+                    myddl.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
+                    myddl.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
+                    myddl.Items.Add("ComboBox");
+                    myddl.SelectedIndex = 0;
+                      MouseDragElementBehavior mymde = new MouseDragElementBehavior();
+                     Interaction.GetBehaviors(myddl).Add(mymde);
+                    this.canvasMain.Children.Add(myddl);
+
+                    this.SetSelectedTool(Tools.Mouse);
+                    break;
                 case Tools.CheckBox:
                     BPCheckBox cb = new BPCheckBox();
                     cb.FK_MapData = this.FK_MapData;
-                    //cb.Width = 100;
-                    //cb.Height = 23;
                     cb.Cursor = Cursors.Hand;
-                    cb.Content = "New CheckBox";
+                    cb.Content = "new checkbox";
                     cb.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
                     cb.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
                     this.canvasMain.Children.Add(cb);
+
+                     //MouseDragElementBehavior add = new MouseDragElementBehavior();
+                     //Interaction.GetBehaviors(cb).Add(add);
+
+                    this.SetSelectedTool(Tools.Mouse);
+                    break;
+                case Tools.RBS:  // 复选框。
+                    AddEnumGuide ae = new AddEnumGuide();
+                    ae.Visibility = System.Windows.Visibility.Visible;
+                    this.LayoutRoot.Children.Add(ae);
+                    int addX = 0;
+                    int addY = 0;
+                    string gName ="s"+ DateTime.Now.ToString("hhmmss");
+                    for (int i = 0; i < 3; i++)
+                    {
+                        BPRadioBtn rb = new BPRadioBtn();
+                        rb.Content = "New RB " + i;
+                        rb.Name = "RB_" + i + gName;
+                        rb.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X + addX);
+                        rb.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y + addY);
+                        rb.Cursor = Cursors.Hand;
+                        rb.GroupName = gName; ;
+                        this.canvasMain.Children.Add(rb);
+                        addX += 15;
+                        addY += 15;
+                        //MouseDragElementBehavior addd = new MouseDragElementBehavior();
+                        //Interaction.GetBehaviors(rb).Add(addd);
+                    }
+                    this.SetSelectedTool(Tools.Mouse);
+                   // this.caEnum.Visibility = System.Windows.Visibility.Visible;
+                    //this.gVisable.Visibility = Visibility.Visible;
+                    break;
+                case Tools.Img: 
+                    Image img = new Image();
+                    //img.Source =new BitmapImage(new Uri("D:\\ccflow\\VisualFlow\\DataUser\\LogBig.png", UriKind.Relative));  //= @"\\Img\\LogBig.png";
+                    BitmapImage png =new BitmapImage(new Uri("/Demo;component/Img/LogBig.png", UriKind.Relative));  //= @"\\Img\\LogBig.png";
+                    img.Source =png; //=new BitmapImage(new Uri("/Demo;component/Img/LogBig.png", UriKind.Relative));  //= @"\\Img\\LogBig.png";
+
+                    //img.Width = png.PixelWidth;
+                    //img.Height = png.PixelHeight;
+
+                    img.Width = 200;
+                    img.Height = 200;
+
+                    img.Cursor = Cursors.Hand;
+                    img.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
+                    img.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
+
+                    MouseDragElementBehavior mde = new MouseDragElementBehavior();
+                    Interaction.GetBehaviors(img).Add(mde);
+
+                    this.canvasMain.Children.Add(img);
                     this.SetSelectedTool(Tools.Mouse);
                     break;
                 default:
@@ -383,6 +402,16 @@ namespace Demo
             string id = tb.Name.Replace("Btn_", "");
             selectType = id;
 
+            switch (id)
+            {
+                case Tools.RBS:
+                    break;
+                default:
+                    break;
+            }
+
+ 
+
             this.Btn_Mouse.Foreground = new SolidColorBrush(Colors.White);
             this.Btn_Line.Foreground = new SolidColorBrush(Colors.White);
             this.Btn_Dtl.Foreground = new SolidColorBrush(Colors.White);
@@ -492,6 +521,7 @@ namespace Demo
             }
             txt.Width = double.Parse(txtWidth.Text);
             txt.Height = double.Parse(txtHeight.Text);
+
             canvasWinTxt.Visibility = Visibility.Collapsed;
             gVisable.Visibility = Visibility.Collapsed;
 
@@ -531,29 +561,26 @@ namespace Demo
         }
         #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            int il = 0;
-            int ll = 0;
-            foreach (UIElement u in canvasMain.Children)
-            {
-                if (u is Line)
-                {
-                    il++;
-                }
-                else if (u is TextBlock)
-                {
-                    ll++;
-                }
-            }
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int il = 0;
+        //    int ll = 0;
+        //    foreach (UIElement u in canvasMain.Children)
+        //    {
+        //        if (u is Line)
+        //        {
+        //            il++;
+        //        }
+        //        else if (u is TextBlock)
+        //        {
+        //            ll++;
+        //        }
+        //    }
 
-            MessageBox.Show(il.ToString() + "---------" + ll.ToString());
-            //Test.SYN_ALTERFILER
-        }
+        //    MessageBox.Show(il.ToString() + "---------" + ll.ToString());
+        //    //Test.SYN_ALTERFILER
+        //}
 
-        private void tbHand_MouseMove(object sender, MouseEventArgs e)
-        {
-        }
 
         private void tbTool_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -566,79 +593,23 @@ namespace Demo
             TextBlock tb = sender as TextBlock;
             tb.Opacity = 0.6;
         }
-
-        private void gVisable_KeyDown(object sender, KeyEventArgs e)
+       
+        private void Btn_Enum_Cancel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            #region lab 键盘事件.
-            e.Handled = true;
-            bl = true;
-            tb = sender as TextBlock;
-            if (tb == null)
-                return;
+            canvasWinTxt.Visibility = Visibility.Collapsed;
+            gVisable.Visibility = Visibility.Collapsed;
+        }
 
-            // 获取 textBox 对象的相对于 Canvas 的 x坐标 和 y坐标
-            double x = (double)tb.GetValue(Canvas.LeftProperty);
-            double y = (double)tb.GetValue(Canvas.TopProperty);
+        private void Btn_Enum_OK_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //canvasWinTxt.Visibility = Visibility.Collapsed;
+            //gVisable.Visibility = Visibility.Collapsed;
+            AddEnum ae = new AddEnum();
+            ae.Visibility= System.Windows.Visibility.Visible;
+            this.LayoutRoot.Children.Add(ae);
+            ae.Visibility = System.Windows.Visibility.Collapsed;
+            MessageBox.Show("ddd here.");
 
-            // KeyEventArgs.Key - 与事件相关的键盘的按键 [System.Windows.Input.Key枚举]
-            switch (e.Key)
-            {
-                // 按 Up 键后 textBox 对象向 上 移动 1 个像素
-                // Up 键所对应的 e.PlatformKeyCode == 38 
-                // 当获得的 e.Key == Key.Unknown 时，可以使用 e.PlatformKeyCode 来确定用户所按的键
-                case Key.Up:
-                    tb.SetValue(Canvas.TopProperty, y - 1);
-                    break;
-
-                // 按 Down 键后 textBox 对象向 下 移动 1 个像素
-                // Down 键所对应的 e.PlatformKeyCode == 40
-                case Key.Down:
-                    tb.SetValue(Canvas.TopProperty, y + 1);
-                    break;
-
-                // 按 Left 键后 textBox 对象向 左 移动 1 个像素
-                // Left 键所对应的 e.PlatformKeyCode == 37
-                case Key.Left:
-                    tb.SetValue(Canvas.LeftProperty, x - 1);
-                    break;
-
-                // 按 Right 键后 textBox 对象向 右 移动 1 个像素
-                // Right 键所对应的 e.PlatformKeyCode == 39 
-                case Key.Right:
-                    tb.SetValue(Canvas.LeftProperty, x + 1);
-                    break;
-
-                default:
-                    break;
-            }
-
-            // 同上：Key.W - 向上移动； Key.S - 向下移动； Key.A - 向左移动； Key.D - 向右移动
-            switch (e.Key)
-            {
-                // KeyEventArgs.Handled - 是否处理过此事件
-
-                // 如果在文本框内敲 W ，那么文本框会向上移动，而且文本框内也会被输入 W
-                // 如果只想移动文本框，而不输入 W ，那么可以设置 KeyEventArgs.Handled = true 告知此事件已经被处理完毕
-                case Key.W:
-                    tb.SetValue(Canvas.TopProperty, y - 1);
-                    e.Handled = true;
-                    break;
-                case Key.S:
-                    tb.SetValue(Canvas.TopProperty, y + 1);
-                    e.Handled = true;
-                    break;
-                case Key.A:
-                    tb.SetValue(Canvas.LeftProperty, x - 1);
-                    e.Handled = true;
-                    break;
-                case Key.D:
-                    tb.SetValue(Canvas.LeftProperty, x + 1);
-                    e.Handled = true;
-                    break;
-                default:
-                    break;
-            }
-            #endregion
         }
     }
 }

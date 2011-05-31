@@ -24,9 +24,8 @@ namespace Demo
         /// </summary>
         public BPCheckBox()
         {
-            this.Name = "_blank_CB_" + DateTime.Now.ToString("ddhhmmss");
+            this.Name = "_blank_CB_" + DateTime.Now.ToString();  
         }
-
 
         #region 焦点事件
         protected override void OnGotFocus(RoutedEventArgs e)
@@ -85,14 +84,11 @@ namespace Demo
                 // Up 键所对应的 e.PlatformKeyCode == 38 
                 // 当获得的 e.Key == Key.Unknown 时，可以使用 e.PlatformKeyCode 来确定用户所按的键
                 case Key.Delete:
-
                     if (this.Name.Contains("_blank_") == false)
                     {
                         if (MessageBox.Show("您确定要删除吗？",
                             "删除提示", MessageBoxButton.OKCancel) == MessageBoxResult.No)
                             return;
-
-
                     }
                     Canvas c = this.Parent as Canvas;
                     c.Children.Remove(this);
@@ -118,33 +114,28 @@ namespace Demo
                 case Key.Right:
                     this.SetValue(Canvas.LeftProperty, x + 1);
                     break;
+                case Key.C:
+                    break;
+                case Key.V:
+                    if (Keyboard.Modifiers == ModifierKeys.Control)
+                    {
+                        BPCheckBox tb = new BPCheckBox();
+                        tb.FK_MapData = this.FK_MapData;
+                        tb.Cursor = Cursors.Hand;
+                        tb.Content = "New Checkbox";
 
-                default:
-                    break;
-            }
-
-            // 同上：Key.W - 向上移动； Key.S - 向下移动； Key.A - 向左移动； Key.D - 向右移动
-            switch (e.Key)
-            {
-                // KeyEventArgs.Handled - 是否处理过此事件
-
-                // 如果在文本框内敲 W ，那么文本框会向上移动，而且文本框内也会被输入 W
-                // 如果只想移动文本框，而不输入 W ，那么可以设置 KeyEventArgs.Handled = true 告知此事件已经被处理完毕
-                case Key.W:
-                    this.SetValue(Canvas.TopProperty, y - 1);
-                    e.Handled = true;
-                    break;
-                case Key.S:
-                    this.SetValue(Canvas.TopProperty, y + 1);
-                    e.Handled = true;
-                    break;
-                case Key.A:
-                    this.SetValue(Canvas.LeftProperty, x - 1);
-                    e.Handled = true;
-                    break;
-                case Key.D:
-                    this.SetValue(Canvas.LeftProperty, x + 1);
-                    e.Handled = true;
+                        tb.SetValue(Canvas.LeftProperty, (double)this.GetValue(Canvas.LeftProperty) + 15);
+                        tb.SetValue(Canvas.TopProperty, (double)this.GetValue(Canvas.TopProperty) + 15);
+                        Canvas s1c = this.Parent as Canvas;
+                        try
+                        {
+                            s1c.Children.Add(tb);
+                        }
+                        catch
+                        {
+                            s1c.Children.Remove(tb);
+                        }
+                    }
                     break;
                 default:
                     break;

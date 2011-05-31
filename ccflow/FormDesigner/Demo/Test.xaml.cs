@@ -58,5 +58,20 @@ namespace Demo
             Image img = new Image();
 
         }
+
+        private void label1_DragEnter(object sender, DragEventArgs e)
+        {
+            
+        }
+
+        private void image1_ImageFailed_1(object sender, ExceptionRoutedEventArgs e)
+        {
+            
+        }
+
+        private void image1_ImageOpened(object sender, RoutedEventArgs e)
+        {
+           
+        }
     }
 }

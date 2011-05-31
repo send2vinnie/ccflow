@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"    
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
-             mc:Ignorable="d"    d:DesignHeight="800" d:DesignWidth="600">
+             mc:Ignorable="d"    d:DesignHeight="800" d:DesignWidth="600" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     <Canvas>
         <Button MouseLeftButtonDown="Button_MouseLeftButtonDown"           
                 MouseLeftButtonUp="Button_MouseLeftButtonUp"        
@@ -22,6 +22,10 @@
                 Background="Blue"                 FontSize="25"               
                 MouseEnter="button2_MouseEnter"        
                 MouseLeave="button2_MouseLeave"/>
+        <sdk:Label Canvas.Left="104" Canvas.Top="222" Height="28" Name="label1" Width="120" DragEnter="label1_DragEnter" />
+        <RadioButton Canvas.Left="230" Canvas.Top="222" Content="RadioButton" Height="16" Name="radioButton1" />
+        <RadioButton Canvas.Left="332" Canvas.Top="222" Content="RadioButton" Height="16" Name="radioButton2" />
+        <Image Canvas.Left="87" Canvas.Top="179" Height="162" Name="image1" Stretch="Fill" Width="200" DataContext="{Binding}" ImageFailed="image1_ImageFailed_1" ImageOpened="image1_ImageOpened" Source="/Demo;component/Img/LogBig.png" />
     </Canvas>
 </UserControl>
      
