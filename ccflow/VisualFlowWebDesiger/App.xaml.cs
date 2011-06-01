@@ -35,8 +35,8 @@ namespace WF
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.RootVisual = new Dtl();
-          //  this.RootVisual = new MainPage();
+            //this.RootVisual = new Dtl();
+           this.RootVisual = new MainPage();
 
         }
 
