@@ -12,7 +12,6 @@ using System.Windows.Shapes;
 using Ccflow.Web.UI.Control.Workflow.Designer;
 using WF.Designer;
 //using WF.Designer;
-
 namespace WF
 {
     public partial class MainPage : UserControl
@@ -20,26 +19,15 @@ namespace WF
         public MainPage()
         {
             InitializeComponent();
-            Designers ce = new Designers();
-            this.Content = ce;
 
+            //Designers ce = new Designers();
+            //this.Content = ce;
 
-            if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID") || System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
+            if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID")
+                || System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
             {
-                string workid = "";
-                string fk_flow = "";
-                try
-                {
-                    workid = System.Windows.Browser.HtmlPage.Document.QueryString["WorkID"].ToString();
-                }
-                catch { }
-                try
-                {
-                    fk_flow = System.Windows.Browser.HtmlPage.Document.QueryString["FK_Flow"].ToString();
-
-                }
-                catch { }
-
+                string workid = System.Windows.Browser.HtmlPage.Document.QueryString["WorkID"].ToString();
+                string fk_flow = System.Windows.Browser.HtmlPage.Document.QueryString["FK_Flow"].ToString();
                 SelContainer sc = new SelContainer(fk_flow, workid);
                 this.Content = sc;
             }

@@ -24,9 +24,9 @@
     <TestPageFileName>WFTestPage.html</TestPageFileName>
     <CreateTestPage>true</CreateTestPage>
     <ValidateXaml>true</ValidateXaml>
-    <EnableOutOfBrowser>false</EnableOutOfBrowser>
+    <EnableOutOfBrowser>true</EnableOutOfBrowser>
     <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
-    <UsePlatformExtensions>true</UsePlatformExtensions>
+    <UsePlatformExtensions>false</UsePlatformExtensions>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <LinkedServerProject>
     </LinkedServerProject>
@@ -66,12 +66,8 @@
     <Reference Include="Liquid.Menu, Version=5.3.3.34048, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
     <Reference Include="Liquid.TreeView, Version=5.3.3.34047, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
-    <Reference Include="Silverlight.Controls">
-      <HintPath>..\VisualFlowWebDesiger\Bin\Debug\Silverlight.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="Silverlight.DataSet">
-      <HintPath>Bin\Debug\Silverlight.DataSet.dll</HintPath>
-    </Reference>
+    <Reference Include="Silverlight.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Silverlight.DataSet, Version=1.2.1.0, Culture=en-US, processorArchitecture=MSIL" />
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -168,6 +164,9 @@
       <DependentUpon>SelContainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Designer\Triangle.cs" />
+    <Compile Include="Dtl.xaml.cs">
+      <DependentUpon>Dtl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -208,37 +207,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\DataServiceReference\WebService.wsdl" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
-    <None Include="Service References\DataServiceReference\WebService.disco" />
-    <None Include="Service References\DataServiceReference\configuration91.svcinfo" />
-    <None Include="Service References\DataServiceReference\configuration.svcinfo">
-      <SubType>Designer</SubType>
+    <None Include="Service References\DataServiceReference\WebService.wsdl" />
+    <None Include="Service References\DataServiceReference\WF.DataServiceReference.RunSQLReturnTablePengResponseRunSQLReturnTablePengResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\DataServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <Content Include="Bin\Debug\Divelements.SilverlightTools.dll" />
-    <Content Include="Bin\Debug\en-us\WF.resources.dll" />
-    <Content Include="Bin\Debug\it\System.ComponentModel.DataAnnotations.resources.dll" />
-    <Content Include="Bin\Debug\it\System.Windows.Controls.Data.Input.resources.dll" />
-    <Content Include="Bin\Debug\it\System.Windows.Controls.Data.resources.dll" />
-    <Content Include="Bin\Debug\it\System.Windows.Controls.Navigation.resources.dll" />
-    <Content Include="Bin\Debug\it\System.Windows.Controls.resources.dll" />
-    <Content Include="Bin\Debug\it\System.Windows.Data.resources.dll" />
-    <Content Include="Bin\Debug\it\System.Xml.Linq.resources.dll" />
-    <Content Include="Bin\Debug\it\System.Xml.Serialization.resources.dll" />
-    <Content Include="Bin\Debug\ja-JP\WF.resources.dll" />
-    <Content Include="Bin\Debug\Liquid.Menu.dll" />
-    <Content Include="Bin\Debug\Liquid.TreeView.dll" />
-    <Content Include="Bin\Debug\ru-RU\WF.resources.dll" />
-    <Content Include="Bin\Debug\Silverlight.Controls.dll" />
-    <Content Include="Bin\Debug\Silverlight.DataSet.dll" />
-    <Content Include="Bin\Debug\zh-cn\WF.resources.dll" />
-    <Content Include="Bin\Debug\zh-Hant\WF.resources.dll" />
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.RunSQLReturnTablePengResponseRunSQLReturnTablePengResult1.datasource">
+    <None Include="Service References\DataServiceReference\WF.DataServiceReference.UploadfileResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\DA\DA.disco" />
@@ -248,79 +223,14 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\DataServiceReference\WebService.disco" />
+    <None Include="Service References\DataServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\DataServiceReference\configuration.svcinfo" />
+    <None Include="Service References\DataServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig" />
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.DoNewLabelResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.DoNewNodeResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.DoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.DoSaveFlowNodeResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.DoSaveFlowResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.FlowTemplete_GenerResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.FlowTemplete_LoadResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.GetDirectionResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.GetDTOfWorkListResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.GetFlowBySortResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.GetFlowSortResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.GetFlowsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.GetLablesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.GetStationEmpsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.HelloWorldResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.LetAdminLoginResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.MaintainDeptResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.MaintainEmpResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.MaintainStationResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.RunSQLResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.RunSQLReturnTableResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.UploadfileResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.WinOpenEnsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DataServiceReference\WF.DataServiceReference.WinOpenResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\DA\DA.wsdl" />
     <None Include="Service References\DA\WF.DA.RunSQLReturnTableResponseRunSQLReturnTableResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -426,6 +336,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dtl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -485,47 +399,7 @@
     </Content>
     <Resource Include="Themes\img2.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Bin\Debug\ar\" />
-    <Folder Include="Bin\Debug\bg\" />
-    <Folder Include="Bin\Debug\ca\" />
-    <Folder Include="Bin\Debug\cs\" />
-    <Folder Include="Bin\Debug\da\" />
-    <Folder Include="Bin\Debug\de\" />
-    <Folder Include="Bin\Debug\el\" />
-    <Folder Include="Bin\Debug\es\" />
-    <Folder Include="Bin\Debug\et\" />
-    <Folder Include="Bin\Debug\eu\" />
-    <Folder Include="Bin\Debug\fi\" />
-    <Folder Include="Bin\Debug\fr\" />
-    <Folder Include="Bin\Debug\he\" />
-    <Folder Include="Bin\Debug\hr\" />
-    <Folder Include="Bin\Debug\hu\" />
-    <Folder Include="Bin\Debug\id\" />
-    <Folder Include="Bin\Debug\ja\" />
-    <Folder Include="Bin\Debug\ko\" />
-    <Folder Include="Bin\Debug\lt\" />
-    <Folder Include="Bin\Debug\lv\" />
-    <Folder Include="Bin\Debug\ms\" />
-    <Folder Include="Bin\Debug\nl\" />
-    <Folder Include="Bin\Debug\no\" />
-    <Folder Include="Bin\Debug\pl\" />
-    <Folder Include="Bin\Debug\pt-BR\" />
-    <Folder Include="Bin\Debug\pt\" />
-    <Folder Include="Bin\Debug\ro\" />
-    <Folder Include="Bin\Debug\ru\" />
-    <Folder Include="Bin\Debug\sk\" />
-    <Folder Include="Bin\Debug\sl\" />
-    <Folder Include="Bin\Debug\sr-Cyrl-CS\" />
-    <Folder Include="Bin\Debug\sr-Latn-CS\" />
-    <Folder Include="Bin\Debug\sv\" />
-    <Folder Include="Bin\Debug\th\" />
-    <Folder Include="Bin\Debug\tr\" />
-    <Folder Include="Bin\Debug\uk\" />
-    <Folder Include="Bin\Debug\vi\" />
-    <Folder Include="Bin\Debug\zh-Hans\" />
-    <Folder Include="Bin\Release\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

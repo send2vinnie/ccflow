@@ -13,30 +13,35 @@ using System.Windows.Shapes;
 
 namespace WF
 {
+    public class Glo
+    {
+        public static string FK_MapData
+        {
+            get
+            {
+                return "ND501";
+            }
+        }
+    }
     public partial class App : Application
     {
-
         public App()
         {
             this.Startup += this.Application_Startup;
             this.Exit += this.Application_Exit;
             this.UnhandledException += this.Application_UnhandledException;
-
             InitializeComponent();
-
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-          
-            this.RootVisual = new MainPage();
-           
+            this.RootVisual = new Dtl();
+          //  this.RootVisual = new MainPage();
 
         }
 
         private void Application_Exit(object sender, EventArgs e)
         {
-
         }
 
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
@@ -58,16 +63,11 @@ namespace WF
 
         private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)
         {
-            try
-            {
-                string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
-                errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
-
-                System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
-            }
-            catch (Exception)
-            {
-            }
+            string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
+            errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
+            throw new Exception(errorMsg);
+            //MessageBox.Show(errorMsg);
+            System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
         }
     }
 }
