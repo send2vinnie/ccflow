@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
-
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -19,13 +17,10 @@ using Ccflow.Web.Component.Workflow;
 using WF.Resources;
 using WF.DataServiceReference;
 using Liquid;
-
 using System.ServiceModel;
 using Silverlight;
 using WF.Controls;
 using System.Windows.Browser;
-
-
 using WF.Designer;
 
 namespace WF.Designer
@@ -240,7 +235,7 @@ namespace WF.Designer
 
         void _Service_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
         {
-            //DataSet ds = new DataSet();
+            DataSet ds = new DataSet();
             //ds.FromXml(e.Result);
             //foreach (DataRow dr in ds.Tables[0].Rows)
             //{
@@ -333,18 +328,13 @@ namespace WF.Designer
                 a.CenterPoint = new Point(x, y);
              //   a.CenterPoint = new Point(double.Parse(dr["X"]), double.Parse(dr["Y"]));
                 AddFlowNode(a);
-
-               
-
-
-
             }
             _Service.GetLablesAsync(FlowID);
             _Service.GetLablesCompleted += new EventHandler<GetLablesCompletedEventArgs>(_service_GetLablesCompleted);
+
             _Service.GetDirectionAsync(FlowID);
             _Service.GetDirectionCompleted += new EventHandler<GetDirectionCompletedEventArgs>(_service_GetDirectionCompleted);
         
-           
           
          
             SaveChange(HistoryType.New);

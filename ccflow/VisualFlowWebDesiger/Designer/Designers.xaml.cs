@@ -10,7 +10,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
-
 using WF.DataServiceReference;
 using Silverlight;
 using WF.Controls;
@@ -40,6 +39,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// </summary>
         string title;
         #endregion
+
         #region 属性
         WebServiceSoapClient _service = new WebServiceSoapClient();//new BasicHttpBinding(), address);
 
@@ -73,22 +73,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public Designers()
         {
             InitializeComponent();
-            try
-            {
-                this.deptTree.Designer = this;
-                this.stationTree.Designer = this;
-                _Service.GetFlowSortAsync();
-                _Service.GetFlowSortCompleted += new EventHandler<GetFlowSortCompletedEventArgs>(_service_GetFlowSortCompleted);
+            this.deptTree.Designer = this;
+            this.stationTree.Designer = this;
 
-                _Service.GetFlowsCompleted += new EventHandler<GetFlowsCompletedEventArgs>(_Service_GetFlowsCompleted);
-
-            }
-            catch { }
-
-      
-           
+            _Service.GetFlowSortAsync();
+            _Service.GetFlowSortCompleted += new EventHandler<GetFlowSortCompletedEventArgs>(_service_GetFlowSortCompleted);
+            _Service.GetFlowsCompleted += new EventHandler<GetFlowsCompletedEventArgs>(_Service_GetFlowsCompleted);
         }
-
         #region 方法
         /// <summary>
         /// 语言设置
