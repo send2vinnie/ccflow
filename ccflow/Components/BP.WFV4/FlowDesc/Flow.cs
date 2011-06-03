@@ -1594,7 +1594,14 @@ namespace BP.WF
                 ma.FK_MapData = "ND" + flowId + "Rpt";
                 ma.UIIsEnable = false;
                 ma.DefVal = "";
-                ma.Insert();
+
+                try
+                {
+                    ma.Insert();
+                }
+                catch
+                {
+                }
             }
 
             BP.Sys.MapData md = new BP.Sys.MapData();
