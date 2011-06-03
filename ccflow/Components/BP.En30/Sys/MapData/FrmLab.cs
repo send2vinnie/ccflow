@@ -50,6 +50,10 @@ namespace BP.Sys
         /// 字体风格
         /// </summary>
         public const string FontStyle = "FontStyle";
+
+        public const string FontWeight = "FontWeight";
+
+        
     }
     /// <summary>
     /// 标签
@@ -85,6 +89,18 @@ namespace BP.Sys
                 this.SetValByKey(FrmLabAttr.FontColor, value);
             }
         }
+        public string FontWeight
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmLabAttr.FontWeight);
+            }
+            set
+            {
+                this.SetValByKey(FrmLabAttr.FontWeight, value);
+            }
+        }
+        
         /// <summary>
         /// FontName
         /// </summary>
@@ -213,6 +229,7 @@ namespace BP.Sys
                 map.AddTBString(FrmLabAttr.FontColor, "black", "FontColor", true, false, 0, 50, 20);
                 map.AddTBString(FrmLabAttr.FontName, null, "FontName", true, false, 0, 50, 20);
                 map.AddTBString(FrmLabAttr.FontStyle, "normal", "FontStyle", true, false, 0, 50, 20);
+                map.AddTBString(FrmLabAttr.FontWeight, "normal", "FontWeight", true, false, 0, 50, 20);
 
                 this._enMap = map;
                 return this._enMap;
