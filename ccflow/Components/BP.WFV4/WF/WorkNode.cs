@@ -6,7 +6,6 @@ using System.Data;
 using BP.Port;
 using BP.Web;
 using BP.Sys;
-//using Word;
 namespace BP.WF
 {
     /// <summary>
