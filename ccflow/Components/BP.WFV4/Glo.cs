@@ -15,6 +15,31 @@ namespace BP.WF
 {
     public class Glo
     {
+        public static void ResetFlowView()
+        {
+            string sql = "DROP VIEW V_WF_Data";
+            try
+            {
+                BP.DA.DBAccess.RunSQL(sql);
+            }
+            catch
+            {
+            }
+
+            Flows fls = new Flows();
+            fls.RetrieveAll();
+            sql = "CREATE VIEW V_WF_Data AS ";
+            foreach (Flow fl in fls)
+            {
+                sql += "\t\n SELECT BillNo,CDT,Emps,FID,FK_Dept,FK_NY,";
+                sql += "MyNum,OID,RDT,Rec,Title,WFLog,WFState,FlowEmps,";
+                sql += "FlowStarter,NodeState,FlowStartRDT,FlowEnder,FlowEnderRDT,FlowDaySpan FROM ND" + int.Parse(fl.No) + "Rpt";
+                sql += "\t\n  UNION";
+            }
+            sql = sql.Substring(0, sql.Length - 6);
+            sql += "\t\n GO";
+            BP.DA.DBAccess.RunSQL(sql);
+        }
         public static void Rtf2PDF(object pathOfRtf, object pathOfPDF)
         {
             Object Nothing = System.Reflection.Missing.Value;
