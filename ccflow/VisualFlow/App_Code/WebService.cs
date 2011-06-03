@@ -12,6 +12,7 @@ using Silverlight.DataSetConnector;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+
 /// <summary>
 ///WebService 的摘要说明
 /// </summary>
@@ -42,25 +43,21 @@ public class WebService : System.Web.Services.WebService {
     [WebMethod(EnableSession = true)]
     public string GetDTOfWorkList(string fk_flow, string workid)
     {
-        try
-        {
-            string sql = " SELECT A.FK_Node, A.RDT,A.SDT,A.FK_Emp,b.Name as EmpName";
-            sql += " FROM WF_GenerWorkerList A, WF_Emp B WHERE A.FK_Emp=b.No AND A.IsEnable=1 AND A.WorkID=" + workid;
 
-            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-            if (dt.Rows.Count == 0)
-            {
-                sql = "SELECT A.FK_Node, A.RDT,A.CDT, A.CDT as SDT, A.Rec AS FK_Emp ,b.Name as EmpName";
-                sql += " FROM V" + fk_flow + " A, WF_Emp B WHERE A.Rec=b.No AND A.OID=" + workid;
-                dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-            }
-            DataSet ds = new DataSet();
-            ds.Tables.Add(dt);
-            return Connector.ToXml(ds);
+        string sql = " SELECT A.FK_Node, A.RDT,A.SDT,A.FK_Emp,b.Name as EmpName";
+        sql += " FROM WF_GenerWorkerList A, WF_Emp B WHERE A.FK_Emp=b.No AND A.IsEnable=1 AND A.WorkID=" + workid;
+
+        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+        if (dt.Rows.Count == 0)
+        {
+            sql = "SELECT A.FK_Node, A.RDT,A.CDT, A.CDT as SDT, A.Rec AS FK_Emp ,b.Name as EmpName";
+            sql += " FROM V" + fk_flow + " A, WF_Emp B WHERE A.Rec=b.No AND A.OID=" + workid;
+            dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         }
-        catch { return null; }
+        DataSet ds = new DataSet();
+        ds.Tables.Add(dt);
+        return Connector.ToXml(ds);
     }
-   
     /// <summary>
     /// 让admin 登录
     /// </summary>
@@ -72,10 +69,8 @@ public class WebService : System.Web.Services.WebService {
         {
             Emp emp = new Emp("admin");
             BP.Web.WebUser.SignInOfGener(emp, lang, "admin", true);
-
         }
     }
-  
 
     #region 执行功能的方法
     [WebMethod(EnableSession = true)]
@@ -184,28 +179,19 @@ public class WebService : System.Web.Services.WebService {
         //return Connector.ToXml(ds);
         // return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }
+    [WebMethod(EnableSession = true)]
+    public string  GetName(string sql)
+    {
+        return "zhou";
+    }
 
     [WebMethod(EnableSession = true)]
     public string RunSQLReturnTable(string sql,bool isLogin)
     {
         LetAdminLogin("CH", isLogin);
         DataSet ds = new DataSet();
-        //             SqlConnection conn = new SqlConnection("server=WIN-GN6AD3IFTIV\\SQLEXPRESS;database=WF;uid=sa;pwd=hechen");
-        //            using (SqlCommand comm = new SqlCommand(@"select fw.No,fs.Name as fsName,fw.Name as fwName,FK_FlowSort from WF_FlowSort fs
-        //,WF_flow fw where fs.No=fw.fk_FlowSort order by FK_FlowSort",conn))
-        //            {
-        //                conn.Open();
-
-        //                SqlDataAdapter data = new SqlDataAdapter(comm);
-
-        //                data.Fill(ds);
-        //               // return dt;
-        //            }
-
         ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
-
         return Connector.ToXml(ds);
-        // return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }
 
     #region 工作流
@@ -374,13 +360,8 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 return null;
             case "DelLable":
                 BP.WF.LabNote ln = new BP.WF.LabNote(para1);
-                try
-                {
-                    ln.Delete();
-                }
-                catch { }
+                ln.Delete();
                 return null;
-                
             case "DelFlowSort":
                 FlowSort delfs = new FlowSort(para1);
                 delfs.Delete();
@@ -411,12 +392,10 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 dellab.MyPK = para1;
                 dellab.Delete();
                 return null;
-
             default:
                 throw null;
         }
     }
-  
     /// <summary>
     /// 创建一个节点
     /// </summary>
@@ -430,18 +409,12 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         LetAdminLogin("CH", isLogin);
         if (string.IsNullOrEmpty(fk_flow))
             return 0;
+
         Flow fl = new Flow(fk_flow);
-     
-        try
-        {
-            BP.WF.Node nf = new BP.WF.Node(fl.DoNewNode(x, y).NodeID);
-
-            nf.Name = nodeName;
-            nf.Save();
-            return nf.NodeID ;
-        }
-        catch { return 0; }
-
+        BP.WF.Node nf = new BP.WF.Node(fl.DoNewNode(x, y).NodeID);
+        nf.Name = nodeName;
+        nf.Save();
+        return nf.NodeID;
     }
 
     /// <summary>
@@ -459,7 +432,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         try
         {
             dir.Insert();
-
             return true;
         }
         catch
@@ -493,7 +465,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string DoNewLabel(string fk_flow, int x, int y, string name, string lableId)
     {
-      
+
         LabNote lab = new LabNote();
 
         lab.FK_Flow = fk_flow;
@@ -506,11 +478,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
             lab.MyPK = lableId;
         }
         lab.Name = name;
-        try
-        {
-            lab.Save();
-        }
-        catch { }
+        lab.Save();
         return lab.MyPK;
     }
     /// <summary>
@@ -588,11 +556,11 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     /// <param name="y"></param>
     /// <param name="nodeName"></param>
     [WebMethod(EnableSession = true)]
-    public void DoSaveFlowNode(int nodeID, int x, int y, string nodeName,bool islogin)
+    public void DoSaveFlowNode(int nodeID, int x, int y, string nodeName, bool islogin)
     {
         LetAdminLogin("CH", islogin);
         BP.WF.Node n;
-        if (!string.IsNullOrEmpty( nodeID.ToString()) )
+        if (!string.IsNullOrEmpty(nodeID.ToString()))
         {
             n = new BP.WF.Node(nodeID);
 
@@ -603,29 +571,16 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
             {
                 n.Save();
             }
-            catch { }
-
-        }
-        else
-        {
-            n = new BP.WF.Node();
-
-            n.Name = nodeName;
-            n.X = x;
-            n.Y = y;
-            try
+            catch
             {
-                n.Insert();
             }
-            catch { }
-
         }
     }
     [WebMethod]
     public string Uploadfile(byte[] FileByte, string fileName)
     {
         //文件存放路径
-        string filepath =@"D:\VisualWorkFlow\VisualFlow\Temp\"+ fileName ;
+        string filepath =@"D:\ccflow\VisualFlow\Temp\"+ fileName ;
         //如果文件已经存在则删除
         if (File.Exists(filepath))
             File.Delete(filepath);

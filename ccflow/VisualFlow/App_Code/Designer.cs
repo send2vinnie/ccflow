@@ -20,7 +20,24 @@ using System.IO;
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 //若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消对下行的注释。 
 // [System.Web.Script.Services.ScriptService]
-public class Designer : System.Web.Services.WebService {
+public class Designer : System.Web.Services.WebService
+{
+    #region 数据库访问
+    /// <summary>
+    /// 运行sql返回table.
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <param name="isLogin"></param>
+    /// <returns></returns>
+    [WebMethod(EnableSession = true)]
+    public string RunSQLReturnTable(string sql)
+    {
+        DataSet ds = new DataSet();
+        ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
+        return Connector.ToXml(ds);
+    }
+    #endregion 数据库访问
+
 
     public Designer()
     {
@@ -57,48 +74,20 @@ public class Designer : System.Web.Services.WebService {
         string sql = "SELECT * FROM Sys_FrmAttr WHERE FK_MapData='" + fk_mapdata + "'";
         return RunSQLReturnDS(sql);
     }
-    /// <summary>
-    /// 编辑线
-    /// </summary>
-    /// <param name="oid"></param>
-    /// <param name="fk_mapdata"></param>
-    /// <param name="x1"></param>
-    /// <param name="y1"></param>
-    /// <param name="x2"></param>
-    /// <param name="y2"></param>
-    /// <param name="borderWidth"></param>
-    /// <param name="borderColor"></param>
-    /// <param name="borderStyle"></param>
-    [WebMethod(EnableSession = true)]
-    public void EditLine(int oid, string fk_mapdata, int x1, int y1, int x2, int y2, int borderWidth, string borderColor, string borderStyle)
-    {
-        BP.Sys.FrmLine line = new BP.Sys.FrmLine();
-        line.OID = oid;
-        line.FK_MapData = fk_mapdata;
-        line.X1 = x1;
-        line.Y1 = y1;
-        line.X2 = x2;
-        line.Y2 = y2;
-
-        line.BorderColor = borderColor;
-        line.BorderStyle = borderStyle;
-        line.BorderWidth = borderWidth;
-        line.Save();
-    }
     [WebMethod(EnableSession = true)]
     public void EditLab(int oid, string fk_mapdata, int x, int y, string frontColor,
         string frontName, string frontWeight)
     {
-        BP.Sys.FrmLab en = new BP.Sys.FrmLab();
-        en.OID = oid;
-        en.FK_MapData = fk_mapdata;
-        en.X = x;
-        en.Y = y;
+        //BP.Sys.FrmLab en = new BP.Sys.FrmLab();
+        //en.OID = oid;
+        //en.FK_MapData = fk_mapdata;
+        //en.X = x;
+        //en.Y = y;
 
-        en.FrontColor = frontColor;
-        en.FrontName = frontName;
-        en.FrontWeight = frontWeight;
-        en.Save();
+        //en.FrontColor = frontColor;
+        //en.FrontName = frontName;
+        //en.FrontWeight = frontWeight;
+        //en.Save();
     }
     /// <summary>
     /// 更新字段.
