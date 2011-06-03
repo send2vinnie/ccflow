@@ -46,7 +46,7 @@ namespace BP.Sys
     /// <summary>
     /// 线
     /// </summary>
-    public class FrmLine : EntityOID
+    public class FrmLine : EntityMyPK
     {
         #region 属性
         public string BorderColor
@@ -149,11 +149,6 @@ namespace BP.Sys
         public FrmLine()
         {
         }
-        public FrmLine(int oid)
-        {
-            this.OID = oid;
-            this.Retrieve();
-        }
         /// <summary>
         /// EnMap
         /// </summary>
@@ -191,7 +186,7 @@ namespace BP.Sys
     /// <summary>
     /// 线s
     /// </summary>
-    public class FrmLines : EntitiesNoName
+    public class FrmLines : Entities
     {
         #region 构造
         /// <summary>

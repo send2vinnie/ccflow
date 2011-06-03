@@ -6,9 +6,9 @@ namespace BP.Sys
 {
       
     /// <summary>
-    /// 标签
+    /// 超连接
     /// </summary>
-    public class FrmLabAttr : EntityMyPKAttr
+    public class FrmLinkAttr : EntityMyPKAttr
     {
         /// <summary>
         /// Text
@@ -18,6 +18,11 @@ namespace BP.Sys
         /// 主表
         /// </summary>
         public const string FK_MapData = "FK_MapData";
+        /// <summary>
+        /// Target
+        /// </summary>
+        public const string Target = "Target";
+        public const string URL = "URL";
         /// <summary>
         /// X
         /// </summary>
@@ -43,7 +48,7 @@ namespace BP.Sys
         /// </summary>
         public const string FontColor = "FontColor";
         /// <summary>
-        /// 风格
+        /// FontName
         /// </summary>
         public const string FontName = "FontName";
         /// <summary>
@@ -52,9 +57,9 @@ namespace BP.Sys
         public const string FontStyle = "FontStyle";
     }
     /// <summary>
-    /// 标签
+    /// 超连接
     /// </summary>
-    public class FrmLab : EntityMyPK
+    public class FrmLink : EntityMyPK
     {
         #region 属性
         /// <summary>
@@ -64,11 +69,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStringByKey(FrmLabAttr.FontStyle);
+                return this.GetValStringByKey(FrmLinkAttr.FontStyle);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.FontStyle, value);
+                this.SetValByKey(FrmLinkAttr.FontStyle, value);
             }
         }
         /// <summary>
@@ -78,25 +83,25 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStringByKey(FrmLabAttr.FontColor);
+                return this.GetValStringByKey(FrmLinkAttr.FontColor);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.FontColor, value);
+                this.SetValByKey(FrmLinkAttr.FontColor, value);
             }
         }
         /// <summary>
-        /// FontName
+        /// Font
         /// </summary>
         public string FontName
         {
             get
             {
-                return this.GetValStringByKey(FrmLabAttr.FontName);
+                return this.GetValStringByKey(FrmLinkAttr.FontName);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.FontName, value);
+                this.SetValByKey(FrmLinkAttr.FontName, value);
             }
         }
         /// <summary>
@@ -106,11 +111,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValFloatByKey(FrmLabAttr.Y);
+                return this.GetValFloatByKey(FrmLinkAttr.Y);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.Y, value);
+                this.SetValByKey(FrmLinkAttr.Y, value);
             }
         }
         /// <summary>
@@ -120,11 +125,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValFloatByKey(FrmLabAttr.X);
+                return this.GetValFloatByKey(FrmLinkAttr.X);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.X, value);
+                this.SetValByKey(FrmLinkAttr.X, value);
             }
         }
         /// <summary>
@@ -134,11 +139,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValIntByKey(FrmLabAttr.FontSize);
+                return this.GetValIntByKey(FrmLinkAttr.FontSize);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.FontSize, value);
+                this.SetValByKey(FrmLinkAttr.FontSize, value);
             }
         }
         /// <summary>
@@ -148,11 +153,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStrByKey(FrmLabAttr.FK_MapData);
+                return this.GetValStrByKey(FrmLinkAttr.FK_MapData);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.FK_MapData, value);
+                this.SetValByKey(FrmLinkAttr.FK_MapData, value);
             }
         }
         /// <summary>
@@ -162,27 +167,38 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStrByKey(FrmLabAttr.Text);
+                return this.GetValStrByKey(FrmLinkAttr.Text);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.Text, value);
+                this.SetValByKey(FrmLinkAttr.Text, value);
+            }
+        }
+        public string Target
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmLinkAttr.Target);
+            }
+            set
+            {
+                this.SetValByKey(FrmLinkAttr.Target, value);
             }
         }
         #endregion
 
         #region 构造方法
         /// <summary>
-        /// 标签
+        /// 超连接
         /// </summary>
-        public FrmLab()
+        public FrmLink()
         {
         }
         /// <summary>
-        /// 标签
+        /// 超连接
         /// </summary>
         /// <param name="mypk"></param>
-        public FrmLab(string mypk)
+        public FrmLink(string mypk)
         {
             this.MyPK = mypk;
             this.Retrieve();
@@ -196,23 +212,27 @@ namespace BP.Sys
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("Sys_FrmLab");
+                Map map = new Map("Sys_FrmLink");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
-                map.EnDesc = "标签";
+                map.EnDesc = "超连接";
                 map.EnType = EnType.Sys;
 
                 map.AddMyPK();
-                map.AddTBString(FrmLabAttr.FK_MapData, null, "FK_MapData", true, false, 1, 30, 20);
-                map.AddTBString(FrmLabAttr.Text, "New Label", "Label", true, false, 0, 3900, 20);
+                map.AddTBString(FrmLinkAttr.FK_MapData, null, "FK_MapData", true, false, 1, 30, 20);
+                map.AddTBString(FrmLinkAttr.Text, "New Link", "Label", true, false, 0, 500, 20);
 
-                map.AddTBFloat(FrmLabAttr.X, 5, "X", true, false);
-                map.AddTBFloat(FrmLabAttr.Y, 5, "Y", false, false);
+                map.AddTBString(FrmLinkAttr.URL, null, "URL", true, false, 0, 500, 20);
 
-                map.AddTBInt(FrmLabAttr.FontSize, 12, "FontSize", false, false);
-                map.AddTBString(FrmLabAttr.FontColor, "black", "FontColor", true, false, 0, 50, 20);
-                map.AddTBString(FrmLabAttr.FontName, null, "FontName", true, false, 0, 50, 20);
-                map.AddTBString(FrmLabAttr.FontStyle, "normal", "FontStyle", true, false, 0, 50, 20);
+                map.AddTBString(FrmLinkAttr.Target, "_blank", "Target", true, false, 0, 20, 20);
+
+                map.AddTBFloat(FrmLinkAttr.X, 5, "X", true, false);
+                map.AddTBFloat(FrmLinkAttr.Y, 5, "Y", false, false);
+
+                map.AddTBInt(FrmLinkAttr.FontSize, 12, "FontSize", false, false);
+                map.AddTBString(FrmLinkAttr.FontColor, "black", "FontColor", true, false, 0, 50, 20);
+                map.AddTBString(FrmLinkAttr.FontName, null, "FontName", true, false, 0, 50, 20);
+                map.AddTBString(FrmLinkAttr.FontStyle, "normal", "FontStyle", true, false, 0, 50, 20);
 
                 this._enMap = map;
                 return this._enMap;
@@ -221,24 +241,24 @@ namespace BP.Sys
         #endregion
     }
     /// <summary>
-    /// 标签s
+    /// 超连接s
     /// </summary>
-    public class FrmLabs : EntitiesMyPK
+    public class FrmLinks : EntitiesMyPK
     {
         #region 构造
         /// <summary>
-        /// 标签s
+        /// 超连接s
         /// </summary>
-        public FrmLabs()
+        public FrmLinks()
         {
         }
         /// <summary>
-        /// 标签s
+        /// 超连接s
         /// </summary>
         /// <param name="fk_mapdata">s</param>
-        public FrmLabs(string fk_mapdata)
+        public FrmLinks(string fk_mapdata)
         {
-            this.Retrieve(FrmLabAttr.FK_MapData, fk_mapdata);
+            this.Retrieve(FrmLinkAttr.FK_MapData, fk_mapdata);
         }
         /// <summary>
         /// 得到它的 Entity
@@ -247,7 +267,7 @@ namespace BP.Sys
         {
             get
             {
-                return new FrmLab();
+                return new FrmLink();
             }
         }
         #endregion
