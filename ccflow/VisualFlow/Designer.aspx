@@ -53,7 +53,8 @@
                 errMsg += "方法名称: " + args.methodName + "     \n";
             }
 
-            引发新错误(errMsg);
+            alert(errMsg);
+            //引发新错误(errMsg);
         }
     </script>
     <script language="JavaScript" type="text/JavaScript">
