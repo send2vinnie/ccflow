@@ -168,6 +168,7 @@
     <Compile Include="FlowTemplate\Flow.cs" />
     <Compile Include="FlowTemplate\FlowSort.cs" />
     <Compile Include="FlowTemplate\Tool.cs" />
+    <Compile Include="FlowData.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="FlowDesc\Direction.cs">
       <SubType>Code</SubType>
