@@ -414,6 +414,9 @@
     <Compile Include="Sys\MapData\TBEventXml.cs" />
     <Compile Include="Sys\MapData\FrmLine.cs" />
     <Compile Include="Sys\MapData\FrmLab.cs" />
+    <Compile Include="Sys\MapData\FrmLink.cs" />
+    <Compile Include="Sys\MapData\FrmRB.cs" />
+    <Compile Include="Sys\MapData\FrmImg.cs" />
     <Compile Include="Sys\Message\Msg.cs" />
     <Compile Include="Sys\PTable\SFTable.cs" />
     <Compile Include="Sys\SysFileManager.cs">

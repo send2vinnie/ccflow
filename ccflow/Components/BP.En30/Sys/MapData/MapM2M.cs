@@ -221,6 +221,14 @@ namespace BP.Sys
                 map.AddBoolean(MapM2MAttr.IsDelete, true, "ø……æ≥˝∑Ò", false, false);
                 map.AddBoolean(MapM2MAttr.IsInsert, true, "ø…≤Â»Î∑Ò", false, false);
 
+
+
+                map.AddTBFloat(FrmImgAttr.X, 5, "X", true, false);
+                map.AddTBFloat(FrmImgAttr.Y, 5, "Y", false, false);
+                map.AddTBFloat(FrmImgAttr.H, 5, "H", true, false);
+                map.AddTBFloat(FrmImgAttr.W, 5, "W", false, false);
+
+
                 this._enMap = map;
                 return this._enMap;
             }

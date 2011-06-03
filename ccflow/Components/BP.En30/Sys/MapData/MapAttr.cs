@@ -843,22 +843,22 @@ namespace BP.Sys
                 this.SetValByKey(MapAttrAttr.IDX, value);
             }
         }
-        public int X
+        public float X
         {
             get
             {
-                return this.GetValIntByKey(MapAttrAttr.X);
+                return this.GetValFloatByKey(MapAttrAttr.X);
             }
             set
             {
                 this.SetValByKey(MapAttrAttr.X, value);
             }
         }
-        public int Y
+        public float Y
         {
             get
             {
-                return this.GetValIntByKey(MapAttrAttr.Y);
+                return this.GetValFloatByKey(MapAttrAttr.Y);
             }
             set
             {
@@ -940,8 +940,8 @@ namespace BP.Sys
                 // 是否是签字，操作员字段有效。2010-09-23 增加。
                 map.AddTBInt(MapAttrAttr.IsSigan, 0, "签字？", true, false);
 
-                map.AddTBInt(MapAttrAttr.X, 0, "X", true, false);
-                map.AddTBInt(MapAttrAttr.Y, 0, "Y", true, false);
+                map.AddTBFloat(MapAttrAttr.X, 5, "X", true, false);
+                map.AddTBFloat(MapAttrAttr.Y, 5, "Y", false, false);
 
                 this._enMap = map;
                 return this._enMap;

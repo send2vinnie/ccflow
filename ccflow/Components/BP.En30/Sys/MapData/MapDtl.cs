@@ -360,6 +360,12 @@ namespace BP.Sys
                 map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true,
                     MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
 
+
+                map.AddTBFloat(FrmImgAttr.X, 5, "X", true, false);
+                map.AddTBFloat(FrmImgAttr.Y, 5, "Y", false, false);
+                map.AddTBFloat(FrmImgAttr.H, 5, "H", true, false);
+                map.AddTBFloat(FrmImgAttr.W, 5, "W", false, false);
+
                 
                 this._enMap = map;
                 return this._enMap;

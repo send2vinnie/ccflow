@@ -8,8 +8,12 @@ namespace BP.Sys
     /// <summary>
     /// 标签
     /// </summary>
-    public class FrmLabAttr : EntityOIDNameAttr
+    public class FrmLabAttr : EntityMyPKAttr
     {
+        /// <summary>
+        /// Text
+        /// </summary>
+        public const string Text = "Text";
         /// <summary>
         /// 主表
         /// </summary>
@@ -33,97 +37,113 @@ namespace BP.Sys
         /// <summary>
         /// 宽度
         /// </summary>
-        public const string FrontSize = "FrontSize";
+        public const string FontSize = "FontSize";
         /// <summary>
         /// 颜色
         /// </summary>
-        public const string FrontColor = "FrontColor";
+        public const string FontColor = "FontColor";
         /// <summary>
         /// 风格
         /// </summary>
-        public const string FrontName = "FrontName";
+        public const string FontName = "FontName";
         /// <summary>
         /// 字体风格
         /// </summary>
-        public const string FrontWeight = "FrontWeight";
+        public const string FontStyle = "FontStyle";
     }
     /// <summary>
     /// 标签
     /// </summary>
-    public class FrmLab : EntityOIDName
+    public class FrmLab : EntityMyPK
     {
         #region 属性
-        public string FrontWeight
+        /// <summary>
+        /// FontStyle
+        /// </summary>
+        public string FontStyle
         {
             get
             {
-                return this.GetValStringByKey(FrmLabAttr.FrontWeight);
+                return this.GetValStringByKey(FrmLabAttr.FontStyle);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.FrontWeight, value);
-            }
-        }
-        public string FrontColor
-        {
-            get
-            {
-                return this.GetValStringByKey(FrmLabAttr.FrontColor);
-            }
-            set
-            {
-                this.SetValByKey(FrmLabAttr.FrontColor, value);
-            }
-        }
- 
-       
-        public string FrontName
-        {
-            get
-            {
-                return this.GetValStringByKey(FrmLabAttr.FrontName);
-            }
-            set
-            {
-                this.SetValByKey(FrmLabAttr.FrontName, value);
+                this.SetValByKey(FrmLabAttr.FontStyle, value);
             }
         }
         /// <summary>
-        /// 是否检查人员的权限
+        /// FontColor
         /// </summary>
-        public int Y
+        public string FontColor
         {
             get
             {
-                return this.GetValIntByKey(FrmLabAttr.Y);
+                return this.GetValStringByKey(FrmLabAttr.FontColor);
+            }
+            set
+            {
+                this.SetValByKey(FrmLabAttr.FontColor, value);
+            }
+        }
+        /// <summary>
+        /// FontName
+        /// </summary>
+        public string FontName
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmLabAttr.FontName);
+            }
+            set
+            {
+                this.SetValByKey(FrmLabAttr.FontName, value);
+            }
+        }
+        /// <summary>
+        /// Y
+        /// </summary>
+        public float Y
+        {
+            get
+            {
+                return this.GetValFloatByKey(FrmLabAttr.Y);
             }
             set
             {
                 this.SetValByKey(FrmLabAttr.Y, value);
             }
         }
-        public int X
+        /// <summary>
+        /// X
+        /// </summary>
+        public float X
         {
             get
             {
-                return this.GetValIntByKey(FrmLabAttr.X);
+                return this.GetValFloatByKey(FrmLabAttr.X);
             }
             set
             {
                 this.SetValByKey(FrmLabAttr.X, value);
             }
         }
-        public int FrontSize
+        /// <summary>
+        /// FontSize
+        /// </summary>
+        public int FontSize
         {
             get
             {
-                return this.GetValIntByKey(FrmLabAttr.FrontSize);
+                return this.GetValIntByKey(FrmLabAttr.FontSize);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.FrontSize, value);
+                this.SetValByKey(FrmLabAttr.FontSize, value);
             }
         }
+        /// <summary>
+        /// FK_MapData
+        /// </summary>
         public string FK_MapData
         {
             get
@@ -135,6 +155,20 @@ namespace BP.Sys
                 this.SetValByKey(FrmLabAttr.FK_MapData, value);
             }
         }
+        /// <summary>
+        /// Text
+        /// </summary>
+        public string Text
+        {
+            get
+            {
+                return this.GetValStrByKey(FrmLabAttr.Text);
+            }
+            set
+            {
+                this.SetValByKey(FrmLabAttr.Text, value);
+            }
+        }
         #endregion
 
         #region 构造方法
@@ -144,9 +178,13 @@ namespace BP.Sys
         public FrmLab()
         {
         }
-        public FrmLab(int oid)
+        /// <summary>
+        /// 标签
+        /// </summary>
+        /// <param name="mypk"></param>
+        public FrmLab(string mypk)
         {
-            this.OID = oid;
+            this.MyPK = mypk;
             this.Retrieve();
         }
         /// <summary>
@@ -164,17 +202,17 @@ namespace BP.Sys
                 map.EnDesc = "标签";
                 map.EnType = EnType.Sys;
 
-                map.AddTBIntPKOID();
-                map.AddTBString(FrmLabAttr.FK_MapData, null, "主表", true, false, 1, 30, 20);
-                map.AddTBString(FrmLabAttr.Name, "新建标签", "名称", true, false, 0, 3900, 20);
+                map.AddMyPK();
+                map.AddTBString(FrmLabAttr.FK_MapData, null, "FK_MapData", true, false, 1, 30, 20);
+                map.AddTBString(FrmLabAttr.Text, "New Label", "Label", true, false, 0, 3900, 20);
 
-                map.AddTBInt(FrmLabAttr.X, 5, "X", true, false);
-                map.AddTBInt(FrmLabAttr.Y, 5, "Y", false, false);
+                map.AddTBFloat(FrmLabAttr.X, 5, "X", true, false);
+                map.AddTBFloat(FrmLabAttr.Y, 5, "Y", false, false);
 
-                map.AddTBInt(FrmLabAttr.FrontSize, 12, "大小", false, false);
-                map.AddTBString(FrmLabAttr.FrontColor, "black", "颜色", true, false, 0, 30, 20);
-                map.AddTBString(FrmLabAttr.FrontName, "宋体", "字体名称", true, false, 0, 30, 20);
-                map.AddTBString(FrmLabAttr.FrontWeight, "normal", "字体风格", true, false, 0, 30, 20);
+                map.AddTBInt(FrmLabAttr.FontSize, 12, "FontSize", false, false);
+                map.AddTBString(FrmLabAttr.FontColor, "black", "FontColor", true, false, 0, 15, 20);
+                map.AddTBString(FrmLabAttr.FontName, null, "FontName", true, false, 0, 15, 20);
+                map.AddTBString(FrmLabAttr.FontStyle, "normal", "FontStyle", true, false, 0, 15, 20);
 
                 this._enMap = map;
                 return this._enMap;
@@ -185,7 +223,7 @@ namespace BP.Sys
     /// <summary>
     /// 标签s
     /// </summary>
-    public class FrmLabs : EntitiesNoName
+    public class FrmLabs : EntitiesMyPK
     {
         #region 构造
         /// <summary>

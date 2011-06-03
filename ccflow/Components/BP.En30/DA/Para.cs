@@ -152,7 +152,6 @@ namespace BP.DA
                 }
             }
 
-
             if (obj.GetType() == typeof(string))
             {
                 this.Add(_name, obj.ToString());
@@ -166,7 +165,6 @@ namespace BP.DA
                 this.Add(_name, Int32.Parse(obj.ToString()));
                 return;
             }
-
 
             if (obj.GetType() == typeof(Int64))
             {
@@ -186,9 +184,10 @@ namespace BP.DA
                 return;
             }
 
-            throw new Exception("@没有涉及到的类型。typeof(obj)=");
-        }
+            this.Add(_name, obj.ToString());
 
+            //throw new Exception("@没有涉及到的类型。typeof(obj)=" + obj);
+        }
 		private void Add(string _name, string _val )
 		{
 			Para en = new Para();

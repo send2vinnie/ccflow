@@ -847,7 +847,7 @@ namespace BP.DA
 		/// <summary>
 		/// 当前的季度的前一个季度.
 		/// </summary>
-		public static string CurrentAPOfJDOfFront
+		public static string CurrentAPOfJDOfFrontFamily
 		{
 			get
 			{
