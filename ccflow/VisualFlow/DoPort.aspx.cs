@@ -114,16 +114,21 @@ public partial class DoPort : System.Web.UI.Page
                 this.Response.Redirect("./WF/MapDef/WFRpt.aspx?PK=" + this.PK, true);
                 break;
             case "MapDef": //表单定义.
-                this.Response.Redirect("./WF/MapDef/MapDef.aspx?PK=" + this.PK, true);
+                int nodeid = int.Parse(this.PK.Replace("ND", ""));
+                Node nd1 = new Node(nodeid);
+                if (nd1.HisFormType == FormType.FreeForm)
+                {
+                    this.Response.Redirect("./WF/MapDef/FreeFrm/Frm.aspx?FK_MapData=" + this.PK, true);
+                }
+                else
+                {
+                    this.Response.Redirect("./WF/MapDef/MapDef.aspx?PK=" + this.PK, true);
+                }
                 break;
             case "Dir": // 方向。
                 this.Response.Redirect("./WF/Admin/Cond.aspx?CondType=" + this.Request.QueryString["CondType"] + "&FK_Flow=" + this.Request.QueryString["FK_Flow"] + "&FK_MainNode=" + this.Request.QueryString["FK_MainNode"] + "&FK_Node=" + this.Request.QueryString["FK_Node"] + "&FK_Attr=" + this.Request.QueryString["FK_Attr"] + "&DirType=" + this.Request.QueryString["DirType"] + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);
                 break;
             case "RunFlow": //运行流程。
-                //BP.WF.Flow fl = new BP.WF.Flow(fk_flow);
-                //if (fl.HisFlowSheetType== BP.WF.FlowSheetType.DocFlow)
-                //   this.Response.Redirect("./WF/Admin/TestFlow.aspx?FK_Flow=" + fk_flow+ "&Lang=" + BP.Web.WebUser.SysLang, true);
-                // else
                 this.Response.Redirect("./WF/Admin/StartFlow.aspx?FK_Flow=" + fk_flow + "&Lang=" + BP.Web.WebUser.SysLang, true);
                 break;
             case "FlowCheck": // 流程设计。
