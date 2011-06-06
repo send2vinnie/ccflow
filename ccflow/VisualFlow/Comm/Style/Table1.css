@@ -258,7 +258,7 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 .TB
 {
     border-style: none none dotted none;
-    border-width: 1px;
+    border-width: 0px 0px 1px 0px;
     border-color: #CCCCCC;
     overflow: visible;
     width: 100%;
