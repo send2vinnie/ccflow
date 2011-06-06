@@ -132,9 +132,8 @@ namespace BP.WF
                 map.EnDesc = "流程数据";
                 map.EnType = EnType.Admin;
 
-                map.AddTBIntPKOID(FlowDataAttr.OID,  "WorkID");
+                map.AddTBIntPKOID(FlowDataAttr.OID, "WorkID");
                 map.AddTBInt(FlowDataAttr.FID, 0, "FID", true, true);
-
                 map.AddTBString(FlowDataAttr.Title, null, "标题", true, true, 0, 100, 100);
                 map.AddTBString(FlowDataAttr.BillNo, null, "单据号", true, true, 0, 100, 100);
                 map.AddDDLEntities(FlowDataAttr.FlowStarter, null, "发起人", new WF.Port.WFEmps(), false);
@@ -142,7 +141,7 @@ namespace BP.WF
                 map.AddDDLSysEnum(FlowDataAttr.WFState, 0, "流程状态", true, true);
                 map.AddTBString(FlowDataAttr.FlowEmps, null, "参与人", true, true, 0, 100, 100);
                 map.AddDDLEntities(FlowDataAttr.FK_NY, null, "年月", new BP.Pub.NYs(), false);
-                map.AddDDLEntities(FlowDataAttr.FK_Dept, null, "部门", new Port.Depts(),false);
+                map.AddDDLEntities(FlowDataAttr.FK_Dept, null, "部门", new Port.Depts(), false);
                 map.AddDDLEntities(FlowDataAttr.FK_Flow, null, "流程", new Flows(), false);
                 map.AddTBDateTime(FlowDataAttr.FlowEnderRDT, null, "结束日期", true, true);
                 map.AddTBInt(FlowDataAttr.FlowDaySpan, 0, "跨度(天)", true, true);
