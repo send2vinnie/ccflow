@@ -44,6 +44,46 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
         {
             switch (this.DoType)
             {
+                case "FreeFrm":
+                    MapAttr mattr = new MapAttr();
+                    mattr.MyPK = this.Request.QueryString["MyPK"];
+                    int i =mattr.RetrieveFromDBSources();
+                    mattr.KeyOfEn = this.Request.QueryString["KeyOfEn"];
+                    mattr.FK_MapData = this.Request.QueryString["FK_MapData"];
+                    mattr.MyDataType = int.Parse( this.Request.QueryString["DataType"]);
+                    mattr.UIBindKey = this.Request.QueryString["UIBindKey"];
+                    mattr.UIContralType = (UIContralType) int.Parse(this.Request.QueryString["UIContralType"]);
+                    mattr.LGType =(BP.En.FieldTypeS)int.Parse(this.Request.QueryString["LGType"]);
+
+                    if (i == 0)
+                    {
+                     //   UIContralType.CheckBok
+                        mattr.UIIsEnable = true;
+                        if (mattr.LGType == FieldTypeS.Enum)
+                            mattr.DefVal = "0";
+                        mattr.Name = mattr.KeyOfEn;
+                        mattr.Insert();
+                    }
+                    else
+                    {
+                        mattr.Update();
+                    }
+
+                    switch (mattr.LGType)
+                    {
+                        case BP.En.FieldTypeS.Enum:
+                            this.Response.Redirect("EditEnum.aspx?MyPK=" + mattr.FK_MapData + "&RefNo=" + mattr.MyPK , true);
+                            return;
+                        case BP.En.FieldTypeS.Normal:
+                            this.Response.Redirect("EditF.aspx?DoType=Edit&MyPK=" + mattr.FK_MapData + "&RefNo=" + mattr.MyPK + "&FType=" + mattr.MyDataType + "&GroupField=0", true);
+                            return;
+                        case BP.En.FieldTypeS.FK:
+                            this.Response.Redirect("EditTable.aspx?DoType=Edit&MyPK=" + mattr.FK_MapData + "&RefNo=" + mattr.MyPK + "&FType=" + mattr.MyDataType + "&GroupField=0", true);
+                            return;
+                        default:
+                            break;
+                    }
+                    break;
                 case "DobackToF":
                     MapAttr ma = new MapAttr(this.RefNo);
                     switch (ma.LGType)
@@ -375,7 +415,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
         }
         catch(Exception ex)
         {
-            this.Pub1.AddMsgOfWarning("错误:", ex.Message);
+            this.Pub1.AddMsgOfWarning("错误:", ex.Message+" <br>"+this.Request.RawUrl);
         }
     }
     public void Edit()

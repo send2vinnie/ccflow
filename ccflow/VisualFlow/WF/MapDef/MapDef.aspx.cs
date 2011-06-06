@@ -270,6 +270,12 @@ public partial class WF_MapDef_MapDef : WebPage
                                     tbD.Attributes["onfocus"] = "WdatePicker();";
                                     tbD.Attributes["class"] = "TBcalendar";
                                 }
+                                else
+                                {
+                                    tbD.Enabled = false;
+                                    tbD.ReadOnly = true;
+                                    tbD.Attributes["class"] = "TBcalendar";
+                                }
                                 this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tbD);
                                 break;
                             case BP.DA.DataType.AppDateTime:
@@ -279,6 +285,12 @@ public partial class WF_MapDef_MapDef : WebPage
                                 if (attr.UIIsEnable)
                                 {
                                     tbDT.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
+                                    tbDT.Attributes["class"] = "TBcalendar";
+                                }
+                                else
+                                {
+                                    tbDT.Enabled = false;
+                                    tbDT.ReadOnly = true;
                                     tbDT.Attributes["class"] = "TBcalendar";
                                 }
                                 this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tbDT);

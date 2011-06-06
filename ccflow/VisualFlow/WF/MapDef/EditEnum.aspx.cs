@@ -54,6 +54,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        //this.Response.Write(this.Request.RawUrl);
         this.Title = this.ToE("EditEnum", "编辑枚举类型"); // "编辑枚举类型";
         MapAttr attr = new MapAttr(this.RefNo);
         BindEnum(attr);
@@ -89,14 +90,13 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
         //this.Pub1.AddTD("不要以数字开头、不要中文。");
         this.Pub1.AddTREnd();
 
-
         this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("DefaultVal", "默认值"));
 
         DDL ddl = new DDL();
         ddl.ID = "DDL";
-        ddl.BindSysEnum(mapAttr.KeyOfEn);
+        ddl.BindSysEnum(mapAttr.UIBindKey);
         ddl.SetSelectItem(mapAttr.DefVal);
 
         this.Pub1.AddTD(ddl);

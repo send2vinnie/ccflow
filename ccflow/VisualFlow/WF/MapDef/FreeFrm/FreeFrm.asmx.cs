@@ -71,6 +71,9 @@ namespace FreeFrm.Web
             if (ensName.Contains("."))
             {
                 Entities ens = BP.DA.ClassFactory.GetEns(ensName);
+                if (ens==null)
+                    ens = BP.DA.ClassFactory.GetEns(ensName);
+
                 ens.RetrieveAll();
                 dt = ens.ToDataTableField();
                 ds.Tables.Add(dt);
@@ -176,6 +179,10 @@ namespace FreeFrm.Web
                 }
             }
             this.RunSQLs(sqls);
+
+            if (string.IsNullOrEmpty(str))
+                str = "保存成功.";
+
             return str;
         }
         public string SaveDT(DataTable dt)
