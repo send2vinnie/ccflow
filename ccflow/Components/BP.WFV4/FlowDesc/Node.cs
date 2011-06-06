@@ -2123,10 +2123,16 @@ namespace BP.WF
         //}
         public string DoMapData()
         {
-            //if (this.IsCheckNode)
-            //    return "审核节点上不能设计表单。";
-
-            PubClass.WinOpen("./../WF/MapDef/MapDef.aspx?PK=ND" + this.NodeID, "设计单", "sheet", 800, 500, 210, 300);
+            switch (this.HisFormType)
+            {
+                case FormType.FreeForm:
+                    PubClass.WinOpen("./../WF/MapDef/FreeFrm/Frm.aspx?FK_MapData=ND" + this.NodeID, "设计表单", "sheet", 1024, 768, 0, 0);
+                    break;
+                default:
+                case FormType.FixForm:
+                    PubClass.WinOpen("./../WF/MapDef/MapDef.aspx?PK=ND" + this.NodeID, "设计表单", "sheet", 800, 500, 210, 300);
+                    break;
+            }
             return null;
         }
         public string DoAction()
