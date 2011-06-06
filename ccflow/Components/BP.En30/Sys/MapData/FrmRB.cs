@@ -26,6 +26,11 @@ namespace BP.Sys
         /// </summary>
         public const string KeyOfEn = "KeyOfEn";
         public const string IntKey = "IntKey";
+        /// <summary>
+        /// EnumKey
+        /// </summary>
+        public const string EnumKey = "EnumKey";
+        public const string Lab = "Lab";
     }
     /// <summary>
     /// 单选框
@@ -91,6 +96,17 @@ namespace BP.Sys
                 this.SetValByKey(FrmRBAttr.FK_MapData, value);
             }
         }
+        public string EnumKey
+        {
+            get
+            {
+                return this.GetValStrByKey(FrmRBAttr.EnumKey);
+            }
+            set
+            {
+                this.SetValByKey(FrmRBAttr.EnumKey, value);
+            }
+        }
         #endregion
 
         #region 构造方法
@@ -123,6 +139,8 @@ namespace BP.Sys
                 map.AddMyPK();
                 map.AddTBString(FrmRBAttr.FK_MapData, null, "FK_MapData", true, false, 0, 30, 20);
                 map.AddTBString(FrmRBAttr.KeyOfEn, null, "KeyOfEn", true, false, 0, 30, 20);
+                map.AddTBString(FrmRBAttr.EnumKey, null, "EnumKey", true, false, 0, 30, 20);
+                map.AddTBString(FrmRBAttr.Lab, null, "Lab", true, false, 0, 90, 20);
                 map.AddTBInt(FrmRBAttr.IntKey, 0, "IntKey", true, false);
 
                 map.AddTBFloat(FrmRBAttr.X, 5, "X", true, false);

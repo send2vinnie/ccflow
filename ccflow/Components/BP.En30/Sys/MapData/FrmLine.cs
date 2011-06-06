@@ -71,11 +71,11 @@ namespace BP.Sys
                 this.SetValByKey(FrmLineAttr.BorderStyle, value);
             }
         }
-        public int BorderWidth
+        public float BorderWidth
         {
             get
             {
-                return this.GetValIntByKey(FrmLineAttr.BorderWidth);
+                return this.GetValFloatByKey(FrmLineAttr.BorderWidth);
             }
             set
             {
@@ -85,22 +85,22 @@ namespace BP.Sys
         /// <summary>
         /// 是否检查人员的权限
         /// </summary>
-        public int Y1
+        public float Y1
         {
             get
             {
-                return this.GetValIntByKey(FrmLineAttr.Y1);
+                return this.GetValFloatByKey(FrmLineAttr.Y1);
             }
             set
             {
                 this.SetValByKey(FrmLineAttr.Y1, value);
             }
         }
-        public int X1
+        public float X1
         {
             get
             {
-                return this.GetValIntByKey(FrmLineAttr.X1);
+                return this.GetValFloatByKey(FrmLineAttr.X1);
             }
             set
             {
@@ -118,22 +118,22 @@ namespace BP.Sys
                 this.SetValByKey(FrmLineAttr.FK_MapData, value);
             }
         }
-        public int Y2
+        public float Y2
         {
             get
             {
-                return this.GetValIntByKey(FrmLineAttr.Y2);
+                return this.GetValFloatByKey(FrmLineAttr.Y2);
             }
             set
             {
                 this.SetValByKey(FrmLineAttr.Y2, value);
             }
         }
-        public int X2
+        public float X2
         {
             get
             {
-                return this.GetValIntByKey(FrmLineAttr.X2);
+                return this.GetValFloatByKey(FrmLineAttr.X2);
             }
             set
             {
@@ -164,16 +164,16 @@ namespace BP.Sys
                 map.EnDesc = "线";
                 map.EnType = EnType.Sys;
 
-                map.AddTBIntPKOID();
+                map.AddMyPK();
                 map.AddTBString(FrmLineAttr.FK_MapData, null, "主表", true, false, 0, 30, 20);
 
-                map.AddTBInt(FrmLineAttr.X1, 5, "X1", true, false);
-                map.AddTBInt(FrmLineAttr.Y1, 5, "Y1", false, false);
+                map.AddTBFloat(FrmLineAttr.X1, 5, "X1", true, false);
+                map.AddTBFloat(FrmLineAttr.Y1, 5, "Y1", false, false);
 
-                map.AddTBInt(FrmLineAttr.X2, 9, "X2", false, false);
-                map.AddTBInt(FrmLineAttr.Y2, 9, "Y2", false, false);
+                map.AddTBFloat(FrmLineAttr.X2, 9, "X2", false, false);
+                map.AddTBFloat(FrmLineAttr.Y2, 9, "Y2", false, false);
 
-                map.AddTBInt(FrmLineAttr.BorderWidth, 1, "宽度", false, false);
+                map.AddTBFloat(FrmLineAttr.BorderWidth, 1, "宽度", false, false);
                 map.AddTBString(FrmLineAttr.BorderColor, "black", "颜色", true, false, 0, 30, 20);
                 map.AddTBString(FrmLineAttr.BorderStyle, "dot", "边框风格", true, false, 0, 30, 20);
 

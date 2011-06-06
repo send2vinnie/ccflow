@@ -1118,7 +1118,6 @@ namespace BP.Sys
             qo.addOrderBy(MapAttrAttr.GroupID, MapAttrAttr.IDX);
            // qo.addOrderBy(MapAttrAttr.IDX);
             return qo.DoQuery();
-
         }
         /// <summary>
         /// 得到它的 Entity
