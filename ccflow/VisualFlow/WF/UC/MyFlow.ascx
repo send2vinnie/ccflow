@@ -61,7 +61,13 @@
     width:70%;
     text-align:center;
 }
- 
+
+#divFreeFrm {
+ position:relative;
+ top:20px;
+ left:40px;
+}
+    </style>
 </style>
 <div  style="float:left;" id=tabForm >
 <uc4:ToolBar ID="ToolBar1" runat="server" />

@@ -24,7 +24,7 @@ public partial class WF_FreeFrm : BP.Web.UC.UCBase3
 
         BP.WF.Node nd = new BP.WF.Node("501");
         Entity en = nd.HisWork;
-        en.SetValByKey("OID", 5484);
+        en.SetValByKey("OID", 5501);
         en.Retrieve();
         this.UCEn1.BindFreeFrm(en, "ND501");
     }
@@ -50,12 +50,12 @@ public partial class WF_FreeFrm : BP.Web.UC.UCBase3
         int currX = 0;
         int currY = 0;
         FrmLab lab = new FrmLab();
-        lab.Name = md.Name;
+        lab.Text = md.Name;
         lab.X = 200;
         currY += 30;
         lab.Y = currY;
         lab.FK_MapData = this.FK_MapData;
-        lab.FrontWeight = "bold";
+        lab.FontWeight = "bold";
         lab.Insert();
 
         // 表格头部的横线.
@@ -76,9 +76,9 @@ public partial class WF_FreeFrm : BP.Web.UC.UCBase3
             lab = new FrmLab();
             lab.X = 0;
             lab.Y = currY;
-            lab.Name = gf.Lab;
+            lab.Text = gf.Lab;
             lab.FK_MapData = this.FK_MapData;
-            lab.FrontWeight = "bold";
+            lab.FontWeight = "bold";
             lab.Insert();
 
             currY += 15;
@@ -111,7 +111,7 @@ public partial class WF_FreeFrm : BP.Web.UC.UCBase3
                     lab = new FrmLab();
                     lab.X = lin.X1 + padingLeft;
                     lab.Y = currY;
-                    lab.Name = attr.Name;
+                    lab.Text = attr.Name;
                     lab.FK_MapData = this.FK_MapData;
                     lab.Insert();
 
@@ -135,7 +135,7 @@ public partial class WF_FreeFrm : BP.Web.UC.UCBase3
                     lab = new FrmLab();
                     lab.X = tableW / 2+padingLeft;
                     lab.Y = currY;
-                    lab.Name = attr.Name;
+                    lab.Text = attr.Name;
                     lab.FK_MapData = this.FK_MapData;
                     lab.Insert();
 

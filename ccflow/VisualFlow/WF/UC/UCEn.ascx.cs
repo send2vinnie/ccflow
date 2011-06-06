@@ -1024,7 +1024,7 @@ namespace BP.Web.Comm.UC.WF
             foreach (FrmLab lab in labs)
             {
                 this.Add("<DIV id=u2 style='position:absolute; left:" + lab.X + "px; top:" + lab.Y + "px; width:150px; height:16px;text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;' >");
-                this.Add("<span style=\" font-family:'" + lab.FrontName + "'; color:" + lab.FrontColor + "; font-size:" + lab.FrontSize + "px; font-weight:" + lab.FrontWeight + "\"> " + lab.Name + "</span>");
+                this.Add("<span style=\" font-family:'" + lab.FontName + "'; color:" + lab.FontColor + "; font-size:" + lab.FontSize + "px; font-weight:" + lab.FontWeight + "\"> " + lab.Text + "</span>");
                 this.Add("</DIV>");
             }
             foreach (FrmLine line in lines)
@@ -1037,7 +1037,7 @@ namespace BP.Web.Comm.UC.WF
                 else
                 {
                     /* “ªµ¿∫·œﬂ */
-                    int w = line.X2 - line.X1;
+                    float w = line.X2 - line.X1;
                     this.Add("<IMG id=u1  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px\" />");
                 }
             }

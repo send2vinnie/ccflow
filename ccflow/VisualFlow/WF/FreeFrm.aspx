@@ -3,9 +3,17 @@
 <%@ Register src="FreeFrm.ascx" tagname="FreeFrm" tagprefix="uc3" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <link href="FreeFrm.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+    #div-1 {
+ position:relative;
+top:20px;
+left:40px;
+}
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-  <div style="float:right" >
+  <div  id="div-1" >
     <uc3:FreeFrm ID="FreeFrm1" runat="server" />
     </div>
 </asp:Content>

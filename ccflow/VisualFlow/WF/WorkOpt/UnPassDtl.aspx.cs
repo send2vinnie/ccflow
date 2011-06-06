@@ -26,6 +26,11 @@ public partial class WF_WorkOpt_UnPassDtl : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-      
+
+        this.Pub2.AddFieldSet("未审核的数据");
+
+        this.Pub2.Add("无");
+
+        this.Pub2.AddFieldSetEnd();
     }
 }
