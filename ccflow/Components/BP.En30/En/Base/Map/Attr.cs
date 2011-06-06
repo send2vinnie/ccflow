@@ -62,19 +62,19 @@ namespace BP.En
 		/// <summary>
 		/// 文本框
 		/// </summary>
-		TB,
+		TB=0,
 		/// <summary>
 		/// 下拉框
 		/// </summary>
-		DDL,
+		DDL=1,
 		/// <summary>
 		/// CheckBok
 		/// </summary>
-		CheckBok,
+		CheckBok=2,
 		/// <summary>
 		/// 单选择按钮
 		/// </summary>
-		RadioBtn
+		RadioBtn=3
 	}
     /// <summary>
     /// 逻辑类型
