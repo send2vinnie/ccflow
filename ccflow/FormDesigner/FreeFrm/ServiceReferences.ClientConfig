@@ -1,0 +1,16 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="FreeFrmSoap" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:8352/WF/MapDef/FreeFrm/FreeFrm.asmx"
+                binding="basicHttpBinding" bindingConfiguration="FreeFrmSoap"
+                contract="FF.FreeFrmSoap" name="FreeFrmSoap" />
+        </client>
+    </system.serviceModel>
+</configuration>
