@@ -23,19 +23,19 @@
         function onSilverlightError(sender, args) {
             var appSource = "";
             if (sender != null && sender != 0) {
-              appSource = sender.getHost().Source;
+                appSource = sender.getHost().Source;
             }
-            
+
             var errorType = args.ErrorType;
             var iErrorCode = args.ErrorCode;
 
             if (errorType == "ImageError" || errorType == "MediaError") {
-              return;
+                return;
             }
 
-            var errMsg = "Silverlight 应用程序中未处理的错误 " +  appSource + "\n" ;
+            var errMsg = "Silverlight 应用程序中未处理的错误 " + appSource + "\n";
 
-            errMsg += "代码: "+ iErrorCode + "    \n";
+            errMsg += "代码: " + iErrorCode + "    \n";
             errMsg += "类别: " + errorType + "       \n";
             errMsg += "消息: " + args.ErrorMessage + "     \n";
 
@@ -44,14 +44,13 @@
                 errMsg += "行: " + args.lineNumber + "     \n";
                 errMsg += "位置: " + args.charPosition + "     \n";
             }
-            else if (errorType == "RuntimeError") {           
+            else if (errorType == "RuntimeError") {
                 if (args.lineNumber != 0) {
                     errMsg += "行: " + args.lineNumber + "     \n";
-                    errMsg += "位置: " +  args.charPosition + "     \n";
+                    errMsg += "位置: " + args.charPosition + "     \n";
                 }
                 errMsg += "方法名称: " + args.methodName + "     \n";
             }
-
             alert(errMsg);
         }
     </script>
