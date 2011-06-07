@@ -1,0 +1,9 @@
+﻿<UserControl x:Class="Ccflow.Web.UI.Control.Workflow.Designer.Picture.InitialAcitivity"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+    <Grid x:Name="LayoutRoot"  >
+        <!--<Rectangle  Name="eliBorder"  Width="102" Height="62"   Stroke="Black"   StrokeThickness="2" ></Rectangle>-->
+        <Rectangle   Name="picBegin"  Width="100" Height="40" Fill="Green" Stretch="Fill" Stroke="White"  StrokeThickness="2"  RadiusX="10" RadiusY="10"  ></Rectangle>
+        <!--<TextBlock Height="23" HorizontalAlignment="Center"  Name="textBlock1" Text="开始结点" Foreground="Black"  VerticalAlignment="Center" />-->
+    </Grid>
+</UserControl>

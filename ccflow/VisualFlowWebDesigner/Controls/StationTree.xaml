@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="WF.Controls.StationTree"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"             
+    xmlns:contentMenu="clr-namespace:Ccflow.Web.UI.Control.Workflow.Designer"
+    xmlns:liquidTreeView="clr-namespace:Liquid;assembly=Liquid.TreeView"
+    xmlns:liquidMenu="clr-namespace:Liquid;assembly=Liquid.Menu"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+   Width="Auto" Height="Auto" >
+
+    <Canvas MouseLeftButtonDown="Canvas_MouseLeftButtonDown"  Name="CvStation" Width="Auto" Height="Auto"   >
+
+        <liquidTreeView:Tree x:Name="TvwStation"     Width="210"     BorderThickness="0"    HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+                EnableLines="True"   SelectionChanged="TvwStation_SelectionChanged"
+                MouseRightButtonDown="TvwStation_MouseRightButtonDown"  MouseLeftButtonDown="TvwStation_MouseLeftButtonDown" >
+
+        </liquidTreeView:Tree>
+        <liquidMenu:Menu x:Name="MuStation" Visibility="Collapsed" ItemSelected="MuStation_ItemSelected">
+            <liquidMenu:MenuDivider />
+            <liquidMenu:MenuItem ID="Delete" Text="删除" />
+            <liquidMenu:MenuDivider />
+            <liquidMenu:MenuItem ID="Add" Text="增加" />
+            <liquidMenu:MenuDivider />
+            <liquidMenu:MenuItem ID="Modify" Text="维护" />
+            <liquidMenu:MenuDivider />
+            <liquidMenu:MenuItem ID="Refresh" Text="刷新" />
+
+        </liquidMenu:Menu>
+    </Canvas>
+</UserControl>
