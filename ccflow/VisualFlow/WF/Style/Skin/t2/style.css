@@ -58,19 +58,16 @@ div#nv li.last
     background: none;
 }
 
-div#nv a,
-div#nv a:link,
-div#nv a:active,
-div#nv a:visited {
-  display: inline-block;
-  /* hide from ie/mac \*/
-  display: block;
-  /* end hide */
-  font-weight: bold;
-  text-decoration: none;
-  margin: 0;
-  padding: 7px 15px;
-  color: white;
+div#nv a, div#nv a:link, div#nv a:active, div#nv a:visited
+{
+    display: inline-block; /* hide from ie/mac \*/
+    display: block; /* end hide */
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0;
+    padding: 7px 15px;
+    color: white;
+    background: #6293bb url(shadow.png) repeat-x left bottom;
 }
 
 div#nv a:hover, .S

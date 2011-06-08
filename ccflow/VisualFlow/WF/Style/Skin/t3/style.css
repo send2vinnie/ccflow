@@ -73,6 +73,7 @@ div#nv a:visited {
   margin: 0;
   padding: 7px 15px;
   color: white;
+    background: #6293bb url(shadow.png) repeat-x left bottom;
 }
 
 div#nv a:hover, .S
