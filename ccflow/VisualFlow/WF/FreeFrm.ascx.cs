@@ -20,13 +20,13 @@ public partial class WF_FreeFrm : BP.Web.UC.UCBase3
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Init();
+       // this.Init();
 
-        BP.WF.Node nd = new BP.WF.Node("501");
-        Entity en = nd.HisWork;
-        en.SetValByKey("OID", 5501);
-        en.Retrieve();
-        this.UCEn1.BindFreeFrm(en, "ND501");
+        //BP.WF.Node nd = new BP.WF.Node("501");
+        //Entity en = nd.HisWork;
+        //en.SetValByKey("OID", 5501);
+        //en.Retrieve();
+        //this.UCEn1.BindFreeFrm(en, "ND501");
     }
 
     public void Init()

@@ -813,7 +813,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 }
                 return;
             case FormType.FreeForm:
-
                 this.UCEn1.Add("<div id=divFreeFrm >");
                 this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID); //, false, false, null);
                 if (wk.WorkEndInfo.Length > 2)

@@ -1005,15 +1005,10 @@ namespace BP.Web.Comm.UC.WF
         #endregion
 
         #region 输出自由格式的表单.
-        public string FK_MapData
-        {
-            get
-            {
-                return "ND501";
-            }
-        }
+        public string FK_MapData = null;
         public void BindFreeFrm(Entity en, string enName)
         {
+            this.FK_MapData = enName;
             this.HisEn = en;
 
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
