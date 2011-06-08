@@ -34,7 +34,7 @@ namespace FreeFrm.Web
         /// </summary>
         /// <param name="sqls"></param>
         /// <returns></returns>
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public int RunSQLs(string sqls)
         {
             if (string.IsNullOrEmpty(sqls))
@@ -55,7 +55,7 @@ namespace FreeFrm.Web
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public string RunSQLReturnTable(string sql)
         {
             DataSet ds = new DataSet();
@@ -65,7 +65,7 @@ namespace FreeFrm.Web
             //ds.Tables.Add( BP.DA.DBAccess.RunSQLReturnTable(sql));
             //return Connector.ToXml(ds);
         }
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public string RequestSFTable(string ensName)
         {
             DataTable dt = new DataTable();
@@ -87,14 +87,12 @@ namespace FreeFrm.Web
             }
             return Connector.ToXml(ds);
         }
-
-       
         /// <summary>
         /// 获取一个Frm
         /// </summary>
         /// <param name="xml"></param>
         /// <returns></returns>
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public string GenerFrm(string fk_mapdata)
         {
             DataSet ds = new DataSet();
@@ -134,7 +132,7 @@ namespace FreeFrm.Web
             qo.AddWhere(BP.Sys.MapAttrAttr.FK_MapData, fk_mapdata);
             qo.addAnd();
             qo.AddWhereNotIn(BP.Sys.MapAttrAttr.KeyOfEn,
-                "'BillNo','CDT','Emps','FID','FK_Dept','FK_NY','MyNum','NodeState','OID','RDT','Rec','Title','WFLog','WFState'");
+                "'BillNo','CDT','Emps','FID','FK_Dept','FK_NY','MyNum','NodeState','OID','RDT','Rec','WFLog','WFState'");
             qo.DoQuery();
 
             DataTable dtattrs = attrs.ToDataTableField();
@@ -161,8 +159,7 @@ namespace FreeFrm.Web
             else
                 return pk + "@" + toMapdata;
         }
-
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public string CopyFrm(string fromMapData, string fk_mapdata)
         {
             #region 删除现有的当前节点数据, 并查询出来from节点数据.
@@ -309,8 +306,6 @@ namespace FreeFrm.Web
                 mym2m.Insert();
             }
             #endregion 删除现有的当前节点数据. 并查询出来from节点数据.
-
-
             return "copy ok.";
         }
         /// <summary>
@@ -318,7 +313,7 @@ namespace FreeFrm.Web
         /// </summary>
         /// <param name="ds">frm 数据</param>
         /// <returns>保存的结果</returns>
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public string SaveFrm(string xml, string sqls)
         {
             StringReader sr = new StringReader(xml);
