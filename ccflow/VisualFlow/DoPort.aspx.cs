@@ -118,11 +118,11 @@ public partial class DoPort : System.Web.UI.Page
                 Node nd1 = new Node(nodeid);
                 if (nd1.HisFormType == FormType.FreeForm)
                 {
-                    this.Response.Redirect("./WF/MapDef/FreeFrm/Frm.aspx?FK_MapData=" + this.PK, true);
+                    this.Response.Redirect("./WF/MapDef/FreeFrm/Frm.aspx?FK_MapData=" + this.PK+"&FK_Flow="+nd1.FK_Flow, true);
                 }
                 else
                 {
-                    this.Response.Redirect("./WF/MapDef/MapDef.aspx?PK=" + this.PK, true);
+                    this.Response.Redirect("./WF/MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
                 }
                 break;
             case "Dir": // 方向。
