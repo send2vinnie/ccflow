@@ -1342,7 +1342,7 @@ namespace BP
             string clientscript = "<script language='javascript'> window.returnValue = '" + reVal + "'; window.close(); </script>";
             System.Web.HttpContext.Current.Response.Write(clientscript);
         }
-
+        
         public static void WinClose()
         {
             System.Web.HttpContext.Current.Response.Write("<script language='JavaScript'>  window.close(); </script> ");

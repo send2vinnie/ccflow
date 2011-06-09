@@ -483,7 +483,7 @@ namespace BP.En
 							return "";
 						break;
 					default:
-						throw new Exception("@bulider insert sql error: 没有这个数据类型");
+						throw new Exception("@bulider insert sql error: 没有这个数据类型，字段名称:"+this.Desc+" 英文:"+this.Key);
 				}
 				return this._defaultVal;
 			}

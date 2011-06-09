@@ -86,6 +86,14 @@ namespace BP.Sys
             }
             set
             {
+                switch (value)
+                {
+                    case "#FF000000":
+                        this.SetValByKey(FrmLabAttr.FontColor, "Red");
+                        return;
+                    default:
+                        break;
+                }
                 this.SetValByKey(FrmLabAttr.FontColor, value);
             }
         }

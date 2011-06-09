@@ -90,6 +90,17 @@ namespace BP.Sys
                 this.SetValByKey(FrmLinkAttr.FontColor, value);
             }
         }
+        public string URL
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmLinkAttr.URL);
+            }
+            set
+            {
+                this.SetValByKey(FrmLinkAttr.URL, value);
+            }
+        }
         /// <summary>
         /// Font
         /// </summary>

@@ -38,6 +38,17 @@ namespace BP.Sys
     public class FrmRB : EntityMyPK
     {
         #region  Ù–‘
+        public string Lab
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmRBAttr.Lab);
+            }
+            set
+            {
+                this.SetValByKey(FrmRBAttr.Lab, value);
+            }
+        }
         public string KeyOfEn
         {
             get
