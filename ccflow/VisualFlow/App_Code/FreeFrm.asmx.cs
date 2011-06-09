@@ -61,9 +61,33 @@ namespace FreeFrm.Web
             DataSet ds = new DataSet();
             ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
             return Connector.ToXml(ds);
-            //Silverlight.DataSet ds = new DataSet();
-            //ds.Tables.Add( BP.DA.DBAccess.RunSQLReturnTable(sql));
-            //return Connector.ToXml(ds);
+        }
+        [WebMethod]
+        public string NewFields(string keyOfEn, string name, string fk_mapdata)
+        {
+            return null;
+            try
+            {
+                string sql = "INSERT INTO Sys_MapAttr (MyPK,FK_MapData,KeyOfEn,Name,GroupID) VALUES ('" + fk_mapdata + "_" + keyOfEn + "','" + fk_mapdata + "','" + keyOfEn + "','" + name + "',-999)";
+                DBAccess.RunSQL(sql);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                return "字段已存在，请用其它的字段名。"+ex.Message;
+            }
+        }
+        [WebMethod]
+        public string ParseStringToPinyin(string name)
+        {
+            try
+            {
+                return BP.DA.DataType.ParseStringToPinyin(name);
+            }
+            catch
+            {
+                return null;
+            }
         }
         [WebMethod]
         public string RequestSFTable(string ensName)
@@ -76,7 +100,7 @@ namespace FreeFrm.Web
                 if (ens==null)
                     ens = BP.DA.ClassFactory.GetEns(ensName);
 
-                ens.RetrieveAll();
+                ens.RetrieveAllFromDBSource();
                 dt = ens.ToDataTableField();
                 ds.Tables.Add(dt);
             }
