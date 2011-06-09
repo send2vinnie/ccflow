@@ -1105,7 +1105,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         catch (Exception ex)
         {
-            this.FlowMsg.AlertMsg_Warning("信息提示", ex.Message);
+            this.FlowMsg.AlertMsg_Warning("信息提示", "ssss");
         }
     }
     

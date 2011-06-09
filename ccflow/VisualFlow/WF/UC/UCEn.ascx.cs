@@ -1013,28 +1013,36 @@ namespace BP.Web.Comm.UC.WF
 
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
 
-            #region 输出竖线与标签
+            #region 输出竖线与标签 & 超连接。
             FrmLabs labs = new FrmLabs(this.FK_MapData);
-            FrmLines lines = new FrmLines(this.FK_MapData);
             foreach (FrmLab lab in labs)
             {
-                this.Add("<DIV id=u2 style='position:absolute; left:" + lab.X + "px; top:" + lab.Y + "px; width:150px; height:16px;text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;' >");
-                this.Add("<span style=\" font-family:'" + lab.FontName + "'; color:" + lab.FontColor + "; font-size:" + lab.FontSize + "px; font-weight:" + lab.FontWeight + "\"> " + lab.Text + "</span>");
-                this.Add("</DIV>");
+                this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + lab.X + "px;top:" + lab.Y + "px;text-align:left;' >");
+                this.Add("\t\n<span style='color:" + lab.FontColor + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' > " + lab.Text + "</span>");
+                this.Add("\t\n</DIV>");
             }
+
+            FrmLines lines = new FrmLines(this.FK_MapData);
             foreach (FrmLine line in lines)
             {
                 if (line.X1 == line.X2)
                 {
                     /* 一道竖线 */
-                    this.Add("<IMG id=u1  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + line.BorderWidth + "px; height:" + line.Y2 + "px\" />");
+                    this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + line.BorderWidth + "px; height:" + line.Y2 + "px;background-color:" + line.BorderColor + "\" />");
                 }
                 else
                 {
                     /* 一道横线 */
                     float w = line.X2 - line.X1;
-                    this.Add("<IMG id=u1  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px\" />");
+                    this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px;background-color:" + line.BorderColor + "\" />");
                 }
+            }
+            FrmLinks links = new FrmLinks(this.FK_MapData);
+            foreach (FrmLink link in links)
+            {
+                this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + link.X + "px;top:" + link.Y + "px;text-align:left;' >");
+                this.Add("\t\n<span style='color:" + link.FontColor + ";font-family: " + link.FontName + ";font-size: " + link.FontSize + "px;' > <a href='" + link.URL + "' target='" + link.Target + "'> " + link.Text + "</span>");
+                this.Add("\t\n</DIV>");
             }
             #endregion 输出竖线与标签
 
@@ -1044,9 +1052,8 @@ namespace BP.Web.Comm.UC.WF
                 if (attr.UIVisible == false)
                     continue;
 
-                this.Add("<DIV id=u2 style='position:absolute; left:" + attr.X + "px; top:" + attr.Y + "px; width:150px; height:16px;text-align: left ; font-family:Arial; text-align:left; word-wrap:break-word;' >");
+                this.Add("<DIV id='F" + attr.KeyOfEn + "' style='position:absolute; left:" + attr.X + "px; top:" + attr.Y + "px; width:" + attr.UIWidth + "px; height:16px;text-align: left;' >");
                 this.Add("<span>");
-
                 #region add contrals.
                 TB tb = new TB();
                 tb.ID = "TB_" + attr.KeyOfEn;
@@ -1064,9 +1071,11 @@ namespace BP.Web.Comm.UC.WF
                                 }
                                 else
                                 {
-                                    tb.ShowType = TBType.TB;
+                                    //tb.ShowType = TBType.TB;
                                     tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                    tb.Columns = attr.UIWidth;
+                                    //      tb.Attributes["Width"] = attr.UIWidth + "px";
+                                    tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
+                                    tb.CssClass = "";
                                     this.Add(tb);
                                 }
                                 break;
@@ -1075,16 +1084,18 @@ namespace BP.Web.Comm.UC.WF
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker();";
-                                tb.Columns = attr.UIWidth;
+                                // tb.Columns = attr.UIWidth;
+                                tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppDateTime:
                                 this.AddTDDesc(attr.Name);
                                 tb.ShowType = TBType.DateTime;
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
-                                tb.Columns = attr.UIWidth;
+                                tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppBoolean:
@@ -1100,6 +1111,7 @@ namespace BP.Web.Comm.UC.WF
                             case BP.DA.DataType.AppFloat:
                             case BP.DA.DataType.AppInt:
                                 tb.ShowType = TBType.Num;
+                                tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: right; height: 19px;";
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
                                 this.Add(tb);
                                 break;
@@ -1107,46 +1119,57 @@ namespace BP.Web.Comm.UC.WF
                                 this.AddTDDesc(attr.Name);
                                 tb.ShowType = TBType.Moneny;
                                 tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
+                                tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: right; height: 19px;";
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppRate:
                                 this.AddTDDesc(attr.Name);
                                 tb.ShowType = TBType.Moneny;
                                 tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
+                                tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: right; height: 19px;";
                                 this.Add(tb);
                                 break;
                             default:
                                 break;
                         }
-                        switch (attr.MyDataType)
-                        {
-                            case BP.DA.DataType.AppString:
-                            case BP.DA.DataType.AppDateTime:
-                            case BP.DA.DataType.AppDate:
-                                if (tb.Enabled)
-                                {
-                                    tb.MaxLength = attr.MaxLen;
-                                }
-                                else
-                                {
-                                    tb.Attributes["class"] = "TBReadonly";
-                                }
-                                break;
-                            default:
-                                if (tb.Enabled)
-                                    tb.Attributes["class"] = "TBNum";
-                                else
-                                    tb.Attributes["class"] = "TBNumReadonly";
-                                break;
-                        }
+                        //switch (attr.MyDataType)
+                        //{
+                        //    case BP.DA.DataType.AppString:
+                        //    case BP.DA.DataType.AppDateTime:
+                        //    case BP.DA.DataType.AppDate:
+                        //        if (tb.Enabled)
+                        //        {
+                        //            tb.MaxLength = attr.MaxLen;
+                        //        }
+                        //        else
+                        //        {
+                        //            tb.Attributes["class"] = "TBReadonly";
+                        //        }
+                        //        break;
+                        //    default:
+                        //        if (tb.Enabled)
+                        //            tb.Attributes["class"] = "TBNum";
+                        //        else
+                        //            tb.Attributes["class"] = "TBNumReadonly";
+                        //        break;
+                        //}
                         break;
                     case FieldTypeS.Enum:
-                        DDL ddle = new DDL();
-                        ddle.ID = "DDL_" + attr.KeyOfEn;
-                        ddle.BindSysEnum(attr.KeyOfEn);
-                        ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
-                        ddle.Enabled = attr.UIIsEnable;
-                        this.Add(ddle);
+                        if (attr.UIContralType == UIContralType.DDL)
+                        {
+                            DDL ddle = new DDL();
+                            ddle.ID = "DDL_" + attr.KeyOfEn;
+                            ddle.BindSysEnum(attr.KeyOfEn);
+                            ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
+                            ddle.Enabled = attr.UIIsEnable;
+                            this.Add(ddle);
+                        }
+                        else
+                        {
+                            BP.Sys.FrmRBs rbs = new FrmRBs();
+                            rbs.Retrieve(FrmRBAttr.FK_MapData, enName,
+                                FrmRBAttr.KeyOfEn, attr.KeyOfEn);
+                        }
                         break;
                     case FieldTypeS.FK:
                         DDL ddl1 = new DDL();
@@ -1162,6 +1185,7 @@ namespace BP.Web.Comm.UC.WF
                         {
                         }
                         ddl1.Enabled = attr.UIIsEnable;
+                        ddl1.Attributes["style"] = "width: " + attr.UIWidth + "px;height: 19px;";
                         this.Add(ddl1);
                         break;
                     default:
@@ -1173,6 +1197,23 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion 输出控件.
 
+
+            BP.Sys.FrmRBs myrbs = new FrmRBs();
+            myrbs.Retrieve(FrmRBAttr.FK_MapData, enName);
+            foreach (BP.Sys.FrmRB rb in myrbs)
+            {
+                this.Add("<DIV id='F" + rb.MyPK + "' style='position:absolute; left:" + rb.X + "px; top:" + rb.Y + "px; width:100%; height:16px;text-align: left;' >");
+                this.Add("<span>");
+
+                System.Web.UI.WebControls.RadioButton rbCtl = new RadioButton();
+                rbCtl.ID = rb.MyPK;
+                rbCtl.GroupName = rb.KeyOfEn;
+                rbCtl.Text = rb.Lab;
+                this.Add(rbCtl);
+
+                this.Add("</span>");
+                this.Add("</DIV>");
+            }
             // 处理扩展.
             this.AfterBindEn_DealMapExt(enName);
             //this.Init();
@@ -2271,7 +2312,6 @@ namespace BP.Web.Comm.UC.WF
             }
         }
         public Entity HisEn = null;
-
         public static string GetRefstrs1(string keys, Entity en, Entities hisens)
         {
             string refstrs = "";

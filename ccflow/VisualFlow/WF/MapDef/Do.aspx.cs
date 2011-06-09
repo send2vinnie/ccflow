@@ -37,7 +37,6 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
             return this.Request.QueryString["IDX"];
         }
     }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -49,6 +48,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                     mattr.MyPK = this.Request.QueryString["MyPK"];
                     int i =mattr.RetrieveFromDBSources();
                     mattr.KeyOfEn = this.Request.QueryString["KeyOfEn"];
+
                     mattr.FK_MapData = this.Request.QueryString["FK_MapData"];
                     mattr.MyDataType = int.Parse( this.Request.QueryString["DataType"]);
                     mattr.UIBindKey = this.Request.QueryString["UIBindKey"];
@@ -57,11 +57,10 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
 
                     if (i == 0)
                     {
-                     //   UIContralType.CheckBok
+                        mattr.Name = Server.UrlDecode(this.Request.QueryString["KeyName"]);
                         mattr.UIIsEnable = true;
                         if (mattr.LGType == FieldTypeS.Enum)
                             mattr.DefVal = "0";
-                        mattr.Name = mattr.KeyOfEn;
                         mattr.Insert();
                     }
                     else
