@@ -419,5 +419,41 @@ namespace FreeFrm.Web
             #endregion save to data.
             return null;
         }
+
+        [WebMethod]
+        public string SaveEnum(string enumKey, string enumLab, string cfg)
+        {
+            SysEnumMain sem = new SysEnumMain();
+            sem.No = enumKey;
+            if (sem.RetrieveFromDBSources() == 0)
+            {
+                sem.Name = enumLab;
+                sem.CfgVal = cfg;
+                sem.Lang = WebUser.SysLang;
+                sem.Insert();
+            }
+            else
+            {
+                sem.Name = enumLab;
+                sem.CfgVal = cfg;
+                sem.Lang = WebUser.SysLang;
+                sem.Update();
+            }
+
+            string[] strs = cfg.Split('@');
+            foreach (string str in strs)
+            {
+                if (string.IsNullOrEmpty(str))
+                    continue;
+                string[] kvs = str.Split('=');
+                SysEnum se = new SysEnum();
+                se.EnumKey = enumKey;
+                se.Lang = WebUser.SysLang;
+                se.IntKey = int.Parse(kvs[0]);
+                se.Lab = kvs[1];
+                se.Insert();
+            }
+            return "save ok.";
+        }
     }
 }
