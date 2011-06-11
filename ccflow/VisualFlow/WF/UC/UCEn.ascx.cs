@@ -1028,12 +1028,15 @@ namespace BP.Web.Comm.UC.WF
                 if (line.X1 == line.X2)
                 {
                     /* 一道竖线 */
-                    this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + line.BorderWidth + "px; height:" + line.Y2 + "px;background-color:" + line.BorderColor + "\" />");
+                    float h = line.Y1 - line.Y2;
+                    h = Math.Abs(h);
+                    this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + line.BorderWidth + "px; height:" + h + "px;background-color:" + line.BorderColor + "\" />");
                 }
                 else
                 {
                     /* 一道横线 */
                     float w = line.X2 - line.X1;
+                    w = Math.Abs(w);
                     this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px;background-color:" + line.BorderColor + "\" />");
                 }
             }
