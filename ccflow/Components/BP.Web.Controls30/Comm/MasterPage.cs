@@ -67,12 +67,20 @@ namespace BP.Web
 
         public void LoadPop()
         {
-            this.Page.RegisterClientScriptBlock("sds",
-          "<link href='" + this.Request.ApplicationPath + "/Comm/JS/pop/skin/qq/ymPrompt.css' rel='stylesheet' type='text/css' />");
+
+            this.Page.RegisterClientScriptBlock("sdds",
+  "<link href='" + this.Request.ApplicationPath + "/Comm/JS/jquery-easyui/themes/default/easyui.css' rel='stylesheet' type='text/css' />");
 
             this.Page.RegisterClientScriptBlock("db7",
-         "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/JS/pop/ymPrompt.js'></script>");
+         "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/JS/jquery-easyui/jquery-1.4.4.min.js'></script>");
 
+            this.Page.RegisterClientScriptBlock("db8",
+        "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/JS/jquery-easyui/query.easyui.min.js'></script>");
+
+            //   this.Page.RegisterClientScriptBlock("sds",
+            // "<link href='" + this.Request.ApplicationPath + "/Comm/JS/pop/skin/qq/ymPrompt.css' rel='stylesheet' type='text/css' />");
+            //   this.Page.RegisterClientScriptBlock("db7",
+            //"<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/JS/pop/ymPrompt.js'></script>");
         }
 
         public string FK_Sort

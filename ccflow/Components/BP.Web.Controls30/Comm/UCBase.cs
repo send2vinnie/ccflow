@@ -1037,37 +1037,75 @@ namespace BP.Web.UC
         }
         public void LoadPop()
         {
-              this.Page.RegisterClientScriptBlock("sds",
-            "<link href='" + this.Request.ApplicationPath + "/Comm/JS/pop/skin/qq/ymPrompt.css' rel='stylesheet' type='text/css' />");
 
-              this.Page.RegisterClientScriptBlock("db7",
-           "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/JS/pop/ymPrompt.js'></script>");
+            this.Page.RegisterClientScriptBlock("sdds",
+  "<link href='" + this.Request.ApplicationPath + "/Comm/JS/jquery-easyui/themes/default/easyui.css' rel='stylesheet' type='text/css' />");
+
+            this.Page.RegisterClientScriptBlock("db7",
+         "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/JS/jquery-easyui/jquery-1.4.4.min.js'></script>");
+
+            this.Page.RegisterClientScriptBlock("db8",
+        "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/JS/jquery-easyui/query.easyui.min.js'></script>");
+
+
+           //   this.Page.RegisterClientScriptBlock("sds",
+           // "<link href='" + this.Request.ApplicationPath + "/Comm/JS/pop/skin/qq/ymPrompt.css' rel='stylesheet' type='text/css' />");
+
+           //   this.Page.RegisterClientScriptBlock("db7",
+           //"<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/JS/pop/ymPrompt.js'></script>");
 
         }
         public void AlertMsg_Info(string title, string msg)
         {
+            this.Alert(msg, false);
+            return;
+
             this.LoadPop();
+
+          
 
             this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
             string js = "<script language=JavaScript >";
-            js += "\t\n ymPrompt.setDefaultCfg({btn:'ok'}) ; ";
-            js += "\t\n ymPrompt.alert({message: document.getElementById('myMsg').innerHTML,title:'" + title + "',height:380,width:400,fixPosition:true,dragOut:false,allowSelect:true});";
+            js += "\t\n $.messager.alert('" + title + "', document.getElementById('myMsg').innerHTML ,'info'); ";
             js += "</script>";
             this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
+
+            //this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
+            //string js = "<script language=JavaScript >";
+            //js += "\t\n ymPrompt.setDefaultCfg({btn:'ok'}) ; ";
+            //js += "\t\n ymPrompt.alert({message: document.getElementById('myMsg').innerHTML,title:'" + title + "',height:380,width:400,fixPosition:true,dragOut:false,allowSelect:true});";
+            //js += "</script>";
+            //this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
         }
         public void AlertMsg_Warning(string title, string msg)
         {
-            this.LoadPop();
+            this.Alert(msg, false);
+            return;
 
-    //         <script language="JavaScript" src="../Comm/JS/pop/ymPrompt.js" ></script>
-    //<link rel="stylesheet" type="text/css" href="../Comm/JS/pop/skin/qq/ymPrompt.css" /> 
+            this.LoadPop();
 
             this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
             string js = "<script language=JavaScript >";
-            js += "\t\n ymPrompt.setDefaultCfg({btn:'ok'}) ; ";
-            js += "\t\n ymPrompt.errorInfo({message: document.getElementById('myMsg').innerHTML,title:'" + title + "',height:380,width:400,fixPosition:true,dragOut:false,allowSelect:true});";
+           // js += "\t\n $.messager.alert('" + title + "', document.getElementById('myMsg').innerHTML ,'warning'); ";
+            //js += "";
+
+            js += "\t\n  alert('sdsds') ";
+
+            js += "\t\n $.messager.alert('" + title + "', 'sss','warning'); ";
+
             js += "</script>";
+
             this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
+
+            //         <script language="JavaScript" src="../Comm/JS/pop/ymPrompt.js" ></script>
+            //<link rel="stylesheet" type="text/css" href="../Comm/JS/pop/skin/qq/ymPrompt.css" /> 
+
+            //this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
+            //string js = "<script language=JavaScript >";
+            //js += "\t\n ymPrompt.setDefaultCfg({btn:'ok'}) ; ";
+            //js += "\t\n ymPrompt.errorInfo({message: document.getElementById('myMsg').innerHTML,title:'" + title + "',height:380,width:400,fixPosition:true,dragOut:false,allowSelect:true});";
+            //js += "</script>";
+            //this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
         }
 
 
@@ -1085,8 +1123,6 @@ namespace BP.Web.UC
         {
             this.Add("<fieldset class=FieldSetBlue ><legend>&nbsp;" + title + "&nbsp;</legend>");
         }
-     
-
 
         public void AddFieldSetEnd()
         {
