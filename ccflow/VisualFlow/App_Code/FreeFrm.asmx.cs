@@ -24,6 +24,20 @@ namespace FreeFrm.Web
     public class FreeFrm : System.Web.Services.WebService
     {
         [WebMethod]
+        public void NewDtl(string dtlNo, string fk_mapdata)
+        {
+            MapDtl dtl = new MapDtl();
+            dtl.No = dtlNo;
+            if (dtl.RetrieveFromDBSources() != 0)
+                return;
+
+            dtl.Name = dtlNo;
+            dtl.FK_MapData = fk_mapdata;
+            dtl.PTable = dtlNo;
+            dtl.Insert();
+            dtl.IntMapAttrs();
+        }
+        [WebMethod]
         public string HelloWorld()
         {
            // return this.GenerFrm("ND501");
@@ -155,8 +169,10 @@ namespace FreeFrm.Web
             QueryObject qo = new QueryObject(attrs);
             qo.AddWhere(BP.Sys.MapAttrAttr.FK_MapData, fk_mapdata);
             qo.addAnd();
+            qo.AddWhere(BP.Sys.MapAttrAttr.UIVisible, 1);
+            qo.addAnd();
             qo.AddWhereNotIn(BP.Sys.MapAttrAttr.KeyOfEn,
-                "'BillNo','CDT','Emps','FID','FK_Dept','FK_NY','MyNum','NodeState','OID','RDT','Rec','WFLog','WFState'");
+                "'BillNo','CDT','Emps','FID','FK_NY','MyNum','NodeState','OID','RDT','Rec','WFLog','WFState'");
             qo.DoQuery();
 
             DataTable dtattrs = attrs.ToDataTableField();
@@ -178,14 +194,21 @@ namespace FreeFrm.Web
         }
         private string DealPK(string pk, string fromMapdata, string toMapdata)
         {
-            if (pk.Contains("@" + fromMapdata))
-                return pk.Replace("@" + toMapdata, "@" + toMapdata);
+            if (pk.Contains("*" + fromMapdata))
+                return pk.Replace("*" + toMapdata, "*" + toMapdata);
             else
-                return pk + "@" + toMapdata;
+                return pk + "*" + toMapdata;
         }
-        [WebMethod]
+        public void LetAdminLogin()
+        {
+            BP.Port.Emp emp = new BP.Port.Emp("admin");
+            BP.Web.WebUser.SignInOfGener(emp);
+        }
+        [WebMethod(EnableSession = true)]
         public string CopyFrm(string fromMapData, string fk_mapdata)
         {
+            this.LetAdminLogin();
+
             #region 删除现有的当前节点数据, 并查询出来from节点数据.
             // line
             BP.Sys.FrmLines lins = new BP.Sys.FrmLines();
@@ -196,6 +219,7 @@ namespace FreeFrm.Web
                 BP.Sys.FrmLine toItem = new BP.Sys.FrmLine();
                 toItem.Copy(item);
                 toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
+                toItem.FK_MapData = fk_mapdata;
                 toItem.DirectInsert();
             }
 
@@ -208,6 +232,7 @@ namespace FreeFrm.Web
                 BP.Sys.FrmLink toItem = new BP.Sys.FrmLink();
                 toItem.Copy(item);
                 toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
+                toItem.FK_MapData = fk_mapdata;
                 toItem.DirectInsert();
             }
 
@@ -220,6 +245,7 @@ namespace FreeFrm.Web
                 BP.Sys.FrmImg toItem = new BP.Sys.FrmImg();
                 toItem.Copy(item);
                 toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
+                toItem.FK_MapData = fk_mapdata;
                 toItem.DirectInsert();
             }
 
@@ -229,9 +255,10 @@ namespace FreeFrm.Web
             labs.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             foreach (BP.Sys.FrmLab item in labs)
             {
-                BP.Sys.FrmImg toItem = new BP.Sys.FrmImg();
+                BP.Sys.FrmLab toItem = new BP.Sys.FrmLab();
                 toItem.Copy(item);
                 toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
+                toItem.FK_MapData = fk_mapdata;
                 toItem.DirectInsert();
             }
 
@@ -244,6 +271,7 @@ namespace FreeFrm.Web
                 BP.Sys.FrmRB toItem = new BP.Sys.FrmRB();
                 toItem.Copy(item);
                 toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
+                toItem.FK_MapData = fk_mapdata;
                 toItem.DirectInsert();
             }
 
@@ -269,8 +297,8 @@ namespace FreeFrm.Web
                 attrNew.Copy(attr);
                 attrNew.FK_MapData = fk_mapdata;
                 attrNew.UIIsEnable = false;
-                if (attrNew.DefVal.Contains("@"))
-                    attrNew.DefVal = "";
+                if (attrNew.DefValReal.Contains("@"))
+                    attrNew.DefValReal = "";
                 attrNew.HisEditType = EditType.Edit;
                 attrNew.Insert();
             }
@@ -303,8 +331,8 @@ namespace FreeFrm.Web
                     attrNew.Copy(attr);
                     attrNew.FK_MapData = dtlNew.No;
                     attrNew.UIIsEnable = false;
-                    if (attrNew.DefVal.Contains("@"))
-                        attrNew.DefVal = "";
+                    if (attrNew.DefValReal.Contains("@"))
+                        attrNew.DefValReal = "";
 
                     dtlNew.RowIdx = idx;
                     attrNew.HisEditType = EditType.Edit;
@@ -356,11 +384,10 @@ namespace FreeFrm.Web
                     str += ex.Message;
                 }
             }
+
             this.RunSQLs(sqls);
-
             if (string.IsNullOrEmpty(str))
-                str = "保存成功.";
-
+                return null;
             return str;
         }
         public string SaveDT(DataTable dt)
@@ -420,24 +447,17 @@ namespace FreeFrm.Web
                 foreach (DataColumn dc in dt.Columns)
                 {
                     ps.Add(dc.ColumnName, dr[dc.ColumnName]);
+                    if (dc.ColumnName == "UIHeight")
+                    {
+                        int s = 0;
+                    }
                 }
                 ps.SQL = updataSQL;
-                try
+
+                if (BP.DA.DBAccess.RunSQL(ps) == 0)
                 {
-                    if (BP.DA.DBAccess.RunSQL(ps) == 0)
-                    {
-                        ps.SQL = insertSQL;
-                        BP.DA.DBAccess.RunSQL(ps);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    string msg = ex.Message;
-                    foreach (BP.DA.Para p in ps)
-                    {
-                        msg += "\r\n@" + p.ParaName + " = " + p.val;
-                    }
-                    return msg;
+                    ps.SQL = insertSQL;
+                    BP.DA.DBAccess.RunSQL(ps);
                 }
             }
             #endregion save to data.
