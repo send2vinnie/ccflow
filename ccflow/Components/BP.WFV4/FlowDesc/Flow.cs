@@ -3160,6 +3160,88 @@ namespace BP.WF
             md.Name = this.Name;
             md.Save();
 
+            #region 生成freeFrm 的装饰.
+            FrmLab lab = new FrmLab();
+            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss")+WebUser.No;
+            lab.Text = this.ToE("Title","流程标题");
+            lab.FK_MapData = "ND" + int.Parse(this.No + "01");
+            lab.X = (float)107.4;
+            lab.Y = (float)71.4;
+            lab.FontSize = 11;
+            lab.FontColor = "black";
+            lab.FontName = "Portable User Interface";
+            lab.FontStyle = "Normal";
+            lab.FontWeight = "normal";
+            lab.Insert();
+
+            lab = new FrmLab();
+            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No+2;
+            lab.Text ="发起人" ;
+            lab.FK_MapData = "ND" + int.Parse(this.No + "01");
+            lab.X = (float)114.6;
+            lab.Y = (float)105;
+            lab.FontSize = 11;
+            lab.FontColor = "black";
+            lab.FontName = "Portable User Interface";
+            lab.FontStyle = "Normal";
+            lab.FontWeight = "normal";
+            lab.Insert();
+
+            lab = new FrmLab();
+            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 3;
+            lab.Text = "发起时间";
+            lab.FK_MapData = "ND" + int.Parse(this.No + "01");
+            lab.X = (float)253.8;
+            lab.Y = (float)104.2;
+            	
+            lab.FontSize = 11;
+            lab.FontColor = "black";
+            lab.FontName = "Portable User Interface";
+            lab.FontStyle = "Normal";
+            lab.FontWeight = "normal";
+            lab.Insert();
+
+            lab = new FrmLab();
+            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 4;
+            lab.Text = "新建节点(请修改标题)";
+            lab.FK_MapData = "ND" + int.Parse(this.No + "01");
+
+            lab.X = (float)207.4;
+            lab.Y = (float)5;
+
+            lab.FontSize = 23;
+            lab.FontColor = "Blue";
+            lab.FontName = "Portable User Interface";
+            lab.FontStyle = "Normal";
+            lab.FontWeight = "normal";
+            lab.Insert();
+
+            lab = new FrmLab();
+            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 5;
+            lab.Text = "说明:以上内容是ccflow自动产生的，您可以修改/删除它，为了更方便您的设计您可以到ccflow官网下载表单模板.";
+            lab.X = (float)94.6;
+            lab.Y = (float)218.6;
+            lab.FK_MapData = "ND" + int.Parse(this.No + "01");
+            lab.FontSize = 11;
+            lab.FontColor = "Red";
+            lab.FontName = "Portable User Interface";
+            lab.FontStyle = "Normal";
+            lab.FontWeight = "normal";
+            lab.Insert();
+
+            FrmLine line = new FrmLine();
+            line.MyPK = "L" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
+            line.FK_MapData = "ND" + int.Parse(this.No + "01");
+            line.X1 = (float)106.6;
+            line.Y1 = (float)49.8;
+
+            line.X2 = (float)475.4;
+            line.Y2 = (float)49.8;
+            line.BorderWidth = (float)2;
+            line.BorderColor = "Red";
+            line.Insert();
+            #endregion
+
             //try
             //{
             this.CheckRpt();
@@ -3177,121 +3259,108 @@ namespace BP.WF
         public void DoDelete()
         {
             string sql = "";
-            sql = " DELETE FROM WF_chofflow WHERE FK_Flow='" + this.No + "'";
-            DBAccess.RunSQL(sql);
 
-            sql = " DELETE  FROM WF_GenerWorkerlist WHERE FK_Flow='" + this.No + "'";
-            DBAccess.RunSQL(sql);
+            sql = "DELETE FROM WF_chofflow WHERE FK_Flow='" + this.No + "'";
 
-            sql = " DELETE FROM  WF_GenerWorkFlow WHERE FK_Flow='" + this.No + "'";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE  FROM WF_GenerWorkerlist WHERE FK_Flow='" + this.No + "'";
+
+            sql += "@GO DELETE FROM  WF_GenerWorkFlow WHERE FK_Flow='" + this.No + "'";
 
             // 删除岗位节点。
-            sql = "  DELETE  FROM  WF_NodeStation WHERE FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE  FROM  WF_NodeStation WHERE FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             // 删除方向。
-            sql = "  DELETE FROM WF_Direction  WHERE Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE FROM WF_Direction  WHERE Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
-            sql = "  DELETE FROM WF_Direction  WHERE ToNode in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE FROM WF_Direction  WHERE ToNode in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             //删除它。
-            sql = "  DELETE FROM WF_NodeEmp  WHERE   FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE FROM WF_NodeEmp  WHERE   FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+
 
             //删除侦听.
-            sql = " DELETE WF_Listen WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE WF_Listen WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             // 删除事件.
-            sql = "DELETE WF_Event WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE WF_Event WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             // 删除d2d数据.
-            sql = "DELETE WF_M2M WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE WF_M2M WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             // 删除配置.
-            sql = "DELETE WF_FAppSet WHERE NodeID IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE WF_FAppSet WHERE NodeID IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+
 
             // 删除配置.
-            sql = "DELETE WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
 
-            //// 删除方向,条件.
-            //sql = "  DELETE FROM WF_nodecompletecondition  WHERE   nodeid in (select nodeid from wf_node WHERE FK_Flow='" + this.No + "')";
-            //DBAccess.RunSQL(sql);
-            //sql = "  DELETE FROM WF_globalcompletecondition  WHERE   FK_Flow='" + this.No + "'";
-            //DBAccess.RunSQL(sql);
-            //sql = "  DELETE FROM WF_directioncondition  WHERE   nodeid in (select nodeid from wf_node WHERE FK_Flow='" + this.No + "')";
-            //DBAccess.RunSQL(sql);
+
 
             // 删除报表
             WFRpts rpts = new WFRpts(this.No);
             rpts.Delete();
 
             // 外部程序设置
-            sql = " DELETE  FROM  WF_FAppSet WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE  FROM  WF_FAppSet WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+
 
             // 删除单据
-            sql = " DELETE FROM WF_BillTemplate WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE FROM WF_BillTemplate WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+
 
             Nodes nds = new Nodes(this.No);
             foreach (Node nd in nds)
             {
                 string ndNo = "ND" + nd.NodeID;
-                //del his dtls.
+
                 Sys.MapDtls dtls = new BP.Sys.MapDtls(ndNo);
-                dtls.Delete();
-
-                sql = " DELETE  FROM  Sys_MapAttr WHERE FK_MapData='ND" + nd.NodeID + "'";
-                DBAccess.RunSQL(sql);
-
-                sql = " DELETE  FROM  Sys_GroupField WHERE EnName='ND" + nd.NodeID + "' OR EnName='' ";
-                DBAccess.RunSQL(sql);
-
-                try
+                foreach (MapDtl dtl in dtls)
                 {
-                    sql = " DROP TABLE ND" + nd.NodeID;
-                    DBAccess.RunSQL(sql);
+                    sql += "@GO DELETE FROM Sys_MapAttr WHERE FK_MapData='" + dtl.No + "'";
+                    try
+                    {
+                        DBAccess.RunSQL("DROP TABLE " + dtl.PTable);
+                    }
+                    catch
+                    {
+                    }
                 }
-                catch
-                {
-                }
-
-                sql = " DELETE  FROM Sys_MapData WHERE No='ND" + nd.NodeID + "'";
-                DBAccess.RunSQL(sql);
+                sql += "@GO DELETE  FROM  Sys_MapDtl WHERE FK_MapData='ND" + nd.NodeID + "'";
+                sql += "@GO DELETE  FROM  Sys_FrmLine WHERE FK_MapData='ND" + nd.NodeID + "'";
+                sql += "@GO DELETE  FROM  Sys_FrmLab WHERE FK_MapData='ND" + nd.NodeID + "'";
+                sql += "@GO DELETE  FROM  Sys_FrmImg WHERE FK_MapData='ND" + nd.NodeID + "'";
+                sql += "@GO DELETE  FROM  Sys_MapAttr WHERE FK_MapData='ND" + nd.NodeID + "'";
+                sql += "@GO DELETE  FROM  Sys_GroupField WHERE EnName='ND" + nd.NodeID + "' OR EnName='' ";
+                sql += "@GO DELETE  FROM Sys_MapData WHERE No='ND" + nd.NodeID + "'";
             }
 
-            sql = " DELETE  FROM WF_Node WHERE FK_Flow='" + this.No + "'";
-            DBAccess.RunSQL(sql);
-
-            sql = " DELETE  FROM  WF_LabNote WHERE FK_Flow='" + this.No + "'";
-            DBAccess.RunSQL(sql);
+            sql += "@GO DELETE  FROM WF_Node WHERE FK_Flow='" + this.No + "'";
+            sql += "@GO DELETE  FROM  WF_LabNote WHERE FK_Flow='" + this.No + "'";
 
             //删除分组信息
-            DBAccess.RunSQL("DELETE FROM Sys_GroupField WHERE EnName NOT IN(SELECT NO FROM Sys_MapData)");
+            sql += "@GO DELETE FROM Sys_GroupField WHERE EnName NOT IN(SELECT NO FROM Sys_MapData)";
 
             #region 删除流程报表。
             string fk_map = "ND" + int.Parse(this.No) + "Rpt";
-            MapData md = new MapData();
-            md.No = fk_map;
-            md.Delete();
+            sql += "@GO DELETE  FROM  Sys_MapData WHERE No='" + fk_map + "'";
+            sql += "@GO DELETE  FROM  Sys_MapAttr WHERE FK_MapData='" + fk_map + "'";
+            try
+            {
+                BP.DA.DBAccess.RunSQL("DROP TABLE " + fk_map);
+            }
+            catch
+            {
 
-            MapAttrs attrs = new MapAttrs();
-            attrs.Delete(MapAttrAttr.FK_MapData, fk_map);
+            }
 
             // 删除明细表。
             MapDtls dtl1s = new MapDtls(fk_map);
             foreach (MapDtl dtl in dtl1s)
             {
-                dtl.Delete();
+                sql += "@GO DELETE  FROM  Sys_MapAttr WHERE FK_MapData='" + dtl.No + "'";
+                BP.DA.DBAccess.RunSQL("DROP TABLE " + dtl.PTable);
             }
+            sql += "@GO DELETE  FROM  Sys_MapDtl WHERE FK_MapData='" + fk_map + "'";
             //删除视图.
             try
             {
@@ -3302,7 +3371,8 @@ namespace BP.WF
             }
             #endregion 删除流程报表。
 
-            //  dtl1s.Delete(MapDtlAttr.FK_MapData, fk_map);
+            // 执行录制的sql scripts.
+            BP.DA.DBAccess.RunSQLs(sql);
             this.Delete();
         }
         #endregion

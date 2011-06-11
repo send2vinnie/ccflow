@@ -1323,8 +1323,6 @@ namespace BP.WF
             {
                 if (_Work == null)
                 {
-                     
-
                     if (this.IsStartNode)
                     {
                         _Work = new BP.WF.GEStartWork(this.NodeID);
@@ -1347,7 +1345,6 @@ namespace BP.WF
             {
                 if (_HisWorks == null)
                     _HisWorks = (Works)this.HisWork.GetNewEntities;
-
                 return _HisWorks;
             }
         }
@@ -2126,7 +2123,7 @@ namespace BP.WF
             switch (this.HisFormType)
             {
                 case FormType.FreeForm:
-                    PubClass.WinOpen("./../WF/MapDef/FreeFrm/Frm.aspx?FK_MapData=ND" + this.NodeID, "设计表单", "sheet", 1024, 768, 0, 0);
+                    PubClass.WinOpen("./../WF/MapDef/FreeFrm/Frm.aspx?FK_MapData=ND" + this.NodeID + "&FK_Flow="+this.FK_Flow, "设计表单", "sheet", 1024, 768, 0, 0);
                     break;
                 default:
                 case FormType.FixForm:
@@ -2614,9 +2611,13 @@ namespace BP.WF
                 attr.UIVisible = true;
                 attr.UIIsEnable = true;
                 attr.UIIsLine = true;
+                attr.UIWidth = 251;
+
                 attr.MinLen = 0;
                 attr.MaxLen = 200;
                 attr.IDX = -100;
+                attr.X = (float)171.2;
+                attr.Y = (float)68.4;
                 attr.Insert();
 
                 attr = new BP.Sys.MapAttr();
@@ -2634,6 +2635,8 @@ namespace BP.WF
                 attr.MaxLen = 200;
                 attr.IDX = -100;
                 attr.DefVal = "@WebUser.No";
+                attr.X = (float)159.2;
+                attr.Y = (float)102.8;
                 attr.Insert();
 
                 attr = new BP.Sys.MapAttr();
@@ -2648,6 +2651,8 @@ namespace BP.WF
                 attr.UIIsEnable = false;
                 attr.DefVal = "@RDT";
                 attr.Tag = "1";
+                attr.X = (float)324;
+                attr.Y = (float)102.8;
                 attr.Insert();
 
 
