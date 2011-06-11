@@ -70,7 +70,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>DnyqTEpCyTCyZnSBlt0jULw6lbE=</dsig:DigestValue>
+        <dsig:DigestValue>VUT9KKgU4i2AjPNrw3NjBiQg7qA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -82,19 +82,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>7kF294I9HV1giaWE7lOxD0hZmg0=</dsig:DigestValue>
+        <dsig:DigestValue>iTwl6UA34SZh/jP8igpKSR3EMow=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BP.Win32.Controls.dll" size="352256">
-      <assemblyIdentity name="BP.Win32.Controls" version="1.0.4174.26206" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="BP.Win32.Controls" version="1.0.4178.18081" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>eUx+gAyT0O1dhfB2/jdcBh4hItg=</dsig:DigestValue>
+        <dsig:DigestValue>mwe2ZhBSlhXPDz/hqzEA47UBrzQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -130,7 +130,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>DDLUY73ma8rVQzZVqWC5RDqDG5U=</dsig:DigestValue>
+        <dsig:DigestValue>F6opQf0YqffG62h4gMEqF7P8pGc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -142,7 +142,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>ZXUameMesZD2Z4ZWBBhNnQMhzK4=</dsig:DigestValue>
+        <dsig:DigestValue>d1ubBXwv6FsasV+5l3ZWd8W4BrQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -154,7 +154,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>QQFINsxqQd9waICEbQCK9HwQVxY=</dsig:DigestValue>
+        <dsig:DigestValue>aEjsDW5D+aLL93hDf4DinndFmZs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
