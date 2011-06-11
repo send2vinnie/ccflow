@@ -64,7 +64,7 @@
 
 #divFreeFrm {
  position:relative;
- top:20px;
+ top:50px;
  left:40px;
 }
     </style>

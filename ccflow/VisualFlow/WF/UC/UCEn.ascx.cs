@@ -278,7 +278,7 @@ namespace BP.Web.Comm.UC.WF
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
-            #endregion 处理iFrom 的自适应的问题。
+            #endregion 处理iFrom Save。
 
             #region 处理iFrom Save。
             js = "\t\n<script type='text/javascript' >";
@@ -1013,7 +1013,7 @@ namespace BP.Web.Comm.UC.WF
 
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
 
-            #region 输出竖线与标签 & 超连接。
+            #region 输出竖线与标签 & 超连接 Img.
             FrmLabs labs = new FrmLabs(this.FK_MapData);
             foreach (FrmLab lab in labs)
             {
@@ -1037,12 +1037,23 @@ namespace BP.Web.Comm.UC.WF
                     this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px;background-color:" + line.BorderColor + "\" />");
                 }
             }
+
             FrmLinks links = new FrmLinks(this.FK_MapData);
             foreach (FrmLink link in links)
             {
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + link.X + "px;top:" + link.Y + "px;text-align:left;' >");
                 this.Add("\t\n<span style='color:" + link.FontColor + ";font-family: " + link.FontName + ";font-size: " + link.FontSize + "px;' > <a href='" + link.URL + "' target='" + link.Target + "'> " + link.Text + "</span>");
                 this.Add("\t\n</DIV>");
+            }
+
+            FrmImgs imgs = new FrmImgs(this.FK_MapData);
+            foreach (FrmImg img in imgs)
+            {
+                float y = img.Y + (float)70;
+                this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
+                this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;' />");
+                this.Add("\t\n</DIV>");
+                //style="position:absolute; left:170px; top:-20px; width:413px; height:478px"  position:absolute;left:" + img.X + "px;top:" + img.Y + "px;
             }
             #endregion 输出竖线与标签
 
@@ -1052,7 +1063,7 @@ namespace BP.Web.Comm.UC.WF
                 if (attr.UIVisible == false)
                     continue;
 
-                this.Add("<DIV id='F" + attr.KeyOfEn + "' style='position:absolute; left:" + attr.X + "px; top:" + attr.Y + "px; width:" + attr.UIWidth + "px; height:16px;text-align: left;' >");
+                this.Add("<DIV id='F" + attr.KeyOfEn + "' style='position:absolute; left:" + attr.X + "px; top:" + attr.Y + "px; width:" + attr.UIWidth + "px; height:16px;text-align: left;word-break: keep-all;' >");
                 this.Add("<span>");
                 #region add contrals.
                 TB tb = new TB();
@@ -1071,9 +1082,7 @@ namespace BP.Web.Comm.UC.WF
                                 }
                                 else
                                 {
-                                    //tb.ShowType = TBType.TB;
                                     tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                    //      tb.Attributes["Width"] = attr.UIWidth + "px";
                                     tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
                                     tb.CssClass = "";
                                     this.Add(tb);
@@ -1081,15 +1090,17 @@ namespace BP.Web.Comm.UC.WF
                                 break;
                             case BP.DA.DataType.AppDate:
                                 tb.ShowType = TBType.Date;
+
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker();";
-                                // tb.Columns = attr.UIWidth;
-                                tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
+                                //tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
+                                //tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
+
+                                tb.Attributes["class"] = "TBcalendar";
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppDateTime:
-                                this.AddTDDesc(attr.Name);
                                 tb.ShowType = TBType.DateTime;
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
 
@@ -1110,23 +1121,21 @@ namespace BP.Web.Comm.UC.WF
                             case BP.DA.DataType.AppDouble:
                             case BP.DA.DataType.AppFloat:
                             case BP.DA.DataType.AppInt:
-                                tb.ShowType = TBType.Num;
-                                tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: right; height: 19px;";
+                                // tb.ShowType = TBType.Num;
+                                tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;word-break: keep-all;";
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppMoney:
-                                this.AddTDDesc(attr.Name);
-                                tb.ShowType = TBType.Moneny;
+                                //  tb.ShowType = TBType.Moneny;
                                 tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
-                                tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: right; height: 19px;";
+                                tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;";
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppRate:
-                                this.AddTDDesc(attr.Name);
                                 tb.ShowType = TBType.Moneny;
                                 tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
-                                tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: right; height: 19px;";
+                                tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;";
                                 this.Add(tb);
                                 break;
                             default:
@@ -1195,15 +1204,14 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
-            #endregion 输出控件.
 
-
+            // 输出 rb.
             BP.Sys.FrmRBs myrbs = new FrmRBs();
             myrbs.Retrieve(FrmRBAttr.FK_MapData, enName);
             foreach (BP.Sys.FrmRB rb in myrbs)
             {
-                this.Add("<DIV id='F" + rb.MyPK + "' style='position:absolute; left:" + rb.X + "px; top:" + rb.Y + "px; width:100%; height:16px;text-align: left;' >");
-                this.Add("<span>");
+                this.Add("<DIV id='F" + rb.MyPK + "' style='position:absolute; left:" + rb.X + "px; top:" + rb.Y + "px; width:100%; height:16px;text-align: left;word-break: keep-all;' >");
+                this.Add("<span style='word-break: keep-all;'>");
 
                 System.Web.UI.WebControls.RadioButton rbCtl = new RadioButton();
                 rbCtl.ID = rb.MyPK;
@@ -1214,6 +1222,41 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
+            #endregion 输出控件.
+         
+
+
+            #region 输出明细.
+            MapDtls dtls = new MapDtls(enName);
+            foreach (MapDtl dtl in dtls)
+            {
+                float x = dtl.X;
+                float y = dtl.Y;
+
+                this.Add("<DIV id='Fd" + dtl.No + "' style='position:absolute; left:" + x + "px; top:" + y + "px; width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;' >");
+                this.Add("<span>");
+                string src = "";
+                //if (this.Request.QueryString["IsTest"] != null)
+                //    src = this.Request.ApplicationPath + "/WF/MapDef/MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.Request.QueryString["FK_MapData"] + "&FK_MapDtl=" + dtl.No;
+                //else
+                    src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal;
+                this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
+                this.Add("</span>");
+                this.Add("</DIV>");
+            }
+            #endregion 输出明细.
+
+            #region 处理iFrom Save。
+            string js = "\t\n<script type='text/javascript' >";
+              js += "\t\n function SaveDtl(dtl) { ";
+              js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
+            js += "\t\n } ";
+            js += "\t\n</script>";
+            this.Add(js);
+            #endregion 处理iFrom Save。
+
+
+
             // 处理扩展.
             this.AfterBindEn_DealMapExt(enName);
             //this.Init();

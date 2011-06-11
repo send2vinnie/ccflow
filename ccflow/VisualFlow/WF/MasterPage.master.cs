@@ -49,8 +49,8 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         this.Page.RegisterClientScriptBlock("s",
             "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
-        this.Page.RegisterClientScriptBlock("df",
-       "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Skin/T" + BP.Web.WebUser.Style + "/menu.css' rel='stylesheet' type='text/css' />");
+       // this.Page.RegisterClientScriptBlock("df",
+       //"<link href='" + this.Request.ApplicationPath + "/Comm/Style/Skin/T" + BP.Web.WebUser.Style + "/menu.css' rel='stylesheet' type='text/css' />");
 
 
         //this.Page.RegisterClientScriptBlock("a",

@@ -9,6 +9,5 @@ public partial class WF_MapDef_FreeFrm_Frm : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
 }

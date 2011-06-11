@@ -676,7 +676,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         this.Pub2.AddFieldSet(rb);
         this.Pub2.Add("在下面文本框中输入一个SQL,具有编号，标签列，用来绑定下从动下拉框。");
-        this.Pub2.Add("比如: SELECT No,Name FROM CN_City WHERE No LIKE '@FK_SF%' ");
+        this.Pub2.Add("比如:SELECT No, Name FROM CN_City WHERE FK_PQ LIKE '@Key%' ");
         this.Pub2.AddBR();
         TextBox tb = new TextBox();
         tb.ID = "TB_Doc";

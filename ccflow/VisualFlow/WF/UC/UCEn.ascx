@@ -13,6 +13,4 @@
             document.getElementById('RptTable').style.display = "none";
         }
     }
-     
-   
 </script>

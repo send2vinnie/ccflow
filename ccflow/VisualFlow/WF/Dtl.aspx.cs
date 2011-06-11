@@ -106,6 +106,9 @@ public partial class Comm_Dtl : WebPage
     }
     public void Bind()
     {
+        if (this.Request.QueryString["IsTest"] != null)
+            BP.DA.Cash.SetMap(this.EnsName, null);
+
         GEDtls dtls = new GEDtls(this.EnsName);
 
         #region 处理设计时自动填充明细表.

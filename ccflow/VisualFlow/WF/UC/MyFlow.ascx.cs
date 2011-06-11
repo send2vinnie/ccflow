@@ -292,9 +292,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
             i++;
             this.Pub1.AddTD(i);
-
             this.Pub1.AddTD(dr["NodeName"].ToString());
-
             this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "&FID=" + dr["FID"] + "\" >" + dr["Title"].ToString());
             this.Pub1.AddTD(dr["Starter"].ToString());
             this.Pub1.AddTD(dr["RDT"].ToString());
@@ -464,7 +462,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.ToolBar1.AddBtn(NamesOfBtn.Delete, this.ToE("Delete", "删除"));
             this.Btn_Delete.OnClientClick = "return confirm('" + this.ToE("AYS", "您确认吗？") + "')";
 
-            #region 增加上一条下一条。
+            #region 增加上一条 下一条。
             //this.ToolBar1.AddSpt("ss");
             //this.ToolBar1.AddBtn(NamesOfBtn.Previous, this.ToE("Previous", "<<-"));
             //this.ToolBar1.AddBtn(NamesOfBtn.Next, this.ToE("Next", "->>"));

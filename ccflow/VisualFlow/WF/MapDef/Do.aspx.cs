@@ -44,21 +44,27 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
             switch (this.DoType)
             {
                 case "FreeFrm":
+                    this.Application.Clear();
+                    if (WebUser.NoOfRel != "admin")
+                    {
+                        BP.Port.Emp emp = new BP.Port.Emp("admin");
+                        BP.Web.WebUser.SignInOfGener(emp);
+                    }
+
                     MapAttr mattr = new MapAttr();
                     mattr.MyPK = this.Request.QueryString["MyPK"];
-                    int i =mattr.RetrieveFromDBSources();
+                    int i = mattr.RetrieveFromDBSources();
                     mattr.KeyOfEn = this.Request.QueryString["KeyOfEn"];
-
                     mattr.FK_MapData = this.Request.QueryString["FK_MapData"];
-                    mattr.MyDataType = int.Parse( this.Request.QueryString["DataType"]);
+                    mattr.MyDataType = int.Parse(this.Request.QueryString["DataType"]);
                     mattr.UIBindKey = this.Request.QueryString["UIBindKey"];
-                    mattr.UIContralType = (UIContralType) int.Parse(this.Request.QueryString["UIContralType"]);
-                    mattr.LGType =(BP.En.FieldTypeS)int.Parse(this.Request.QueryString["LGType"]);
-
+                    mattr.UIContralType = (UIContralType)int.Parse(this.Request.QueryString["UIContralType"]);
+                    mattr.LGType = (BP.En.FieldTypeS)int.Parse(this.Request.QueryString["LGType"]);
                     if (i == 0)
                     {
                         mattr.Name = Server.UrlDecode(this.Request.QueryString["KeyName"]);
                         mattr.UIIsEnable = true;
+                        mattr.UIVisible = true;
                         if (mattr.LGType == FieldTypeS.Enum)
                             mattr.DefVal = "0";
                         mattr.Insert();
@@ -71,7 +77,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                     switch (mattr.LGType)
                     {
                         case BP.En.FieldTypeS.Enum:
-                            this.Response.Redirect("EditEnum.aspx?MyPK=" + mattr.FK_MapData + "&RefNo=" + mattr.MyPK , true);
+                            this.Response.Redirect("EditEnum.aspx?MyPK=" + mattr.FK_MapData + "&RefNo=" + mattr.MyPK, true);
                             return;
                         case BP.En.FieldTypeS.Normal:
                             this.Response.Redirect("EditF.aspx?DoType=Edit&MyPK=" + mattr.FK_MapData + "&RefNo=" + mattr.MyPK + "&FType=" + mattr.MyDataType + "&GroupField=0", true);
@@ -412,9 +418,9 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                     break;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            this.Pub1.AddMsgOfWarning("错误:", ex.Message+" <br>"+this.Request.RawUrl);
+            this.Pub1.AddMsgOfWarning("错误:", ex.Message + " <br>" + this.Request.RawUrl);
         }
     }
     public void Edit()
