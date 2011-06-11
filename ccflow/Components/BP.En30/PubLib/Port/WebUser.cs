@@ -169,8 +169,10 @@ namespace BP.Web
             else
                 SystemConfig.IsBSsystem = true;
 
-            if (BP.SystemConfig.IsBSsystem)
+            if (BP.SystemConfig.IsBSsystem && System.Web.HttpContext.Current.Session != null)
+            {
                 System.Web.HttpContext.Current.Session.Clear();
+            }
 
             //WebUser.FontSize = "12px";
 

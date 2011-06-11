@@ -332,14 +332,17 @@ namespace BP.DA
                 return null;
             }
         }
-
         public static void SetMap(string clName, BP.En.Map map)
         {
-            if (clName == null || map == null)
-                throw new Exception("clName.  Map 参数有一个为空。");
+            if (clName == null )
+                throw new Exception("clName.不能为空。");
+            if (map == null)
+            {
+                Map_Cash.Remove(clName);
+                return;
+            }
             Map_Cash[clName] = map;
         }
-         
         #endregion
 
 

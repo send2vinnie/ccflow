@@ -960,7 +960,7 @@ namespace BP.DA
 
         public static void RunSQLs(string sql)
         {
-            sql = sql.Replace("GO","~");
+            sql = sql.Replace("@GO","~");
 
             string[] strs = sql.Split('~');
             foreach (string str in strs)
@@ -968,7 +968,7 @@ namespace BP.DA
                 if (string.IsNullOrEmpty(str))
                     continue;
 
-                if (str.Contains("--"))
+                if (str.Contains("--") || str.Contains("/*"))
                     continue;
 
                 RunSQL(str);
@@ -1061,7 +1061,6 @@ namespace BP.DA
 
                 if (conn.State != System.Data.ConnectionState.Open)
                 {
-                    // conn.ConnectionString = SystemConfig.AppCenterDSN;
                     conn.Open();
                 }
 

@@ -51,6 +51,10 @@ namespace BP.Sys
         /// </summary>
         public const string UIWidth = "UIWidth";
         /// <summary>
+        /// UIHeight
+        /// </summary>
+        public const string UIHeight = "UIHeight";
+        /// <summary>
         /// 是否只读
         /// </summary>
         public const string UIIsEnable = "UIIsEnable";
@@ -624,6 +628,20 @@ namespace BP.Sys
             }
         }
         /// <summary>
+        /// 高度
+        /// </summary>
+        public int UIHeight
+        {
+            get
+            {
+                return this.GetValIntByKey(MapAttrAttr.UIHeight);
+            }
+            set
+            {
+                this.SetValByKey(MapAttrAttr.UIHeight, value);
+            }
+        }
+        /// <summary>
         /// 宽度
         /// </summary>
         public int UIWidth
@@ -641,9 +659,9 @@ namespace BP.Sys
                     case DataType.AppDouble:
                         return 80;
                     case DataType.AppDate:
-                        return 70;
+                        return 75;
                     case DataType.AppDateTime:
-                        return 100;
+                        return 105;
                     default:
                         return 70;
                 }
@@ -916,6 +934,8 @@ namespace BP.Sys
                 map.AddDDLSysEnum(MapAttrAttr.LGType, 0, "逻辑类型", true, false, MapAttrAttr.LGType, "@0=普通@1=枚举@2=外键");
 
                 map.AddTBInt(MapAttrAttr.UIWidth, 100, "宽度", true, false);
+                map.AddTBInt(MapAttrAttr.UIHeight, 23, "高度", true, false);
+
                 map.AddTBInt(MapAttrAttr.MinLen, 0, "最小长度", true, false);
                 map.AddTBInt(MapAttrAttr.MaxLen, 500, "最大长度", true, false);
 

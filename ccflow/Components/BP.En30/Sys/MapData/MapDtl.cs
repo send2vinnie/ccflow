@@ -363,12 +363,40 @@ namespace BP.Sys
 
                 map.AddTBFloat(FrmImgAttr.X, 5, "X", true, false);
                 map.AddTBFloat(FrmImgAttr.Y, 5, "Y", false, false);
-                map.AddTBFloat(FrmImgAttr.H, 5, "H", true, false);
-                map.AddTBFloat(FrmImgAttr.W, 5, "W", false, false);
+                map.AddTBFloat(FrmImgAttr.H, 150, "H", true, false);
+                map.AddTBFloat(FrmImgAttr.W, 200, "W", false, false);
 
                 
                 this._enMap = map;
                 return this._enMap;
+            }
+        }
+        public float X
+        {
+            get
+            {
+                return this.GetValFloatByKey(FrmImgAttr.X);
+            }
+        }
+        public float Y
+        {
+            get
+            {
+                return this.GetValFloatByKey(FrmImgAttr.Y);
+            }
+        }
+        public float W
+        {
+            get
+            {
+                return this.GetValFloatByKey(FrmImgAttr.W);
+            }
+        }
+        public float H
+        {
+            get
+            {
+                return this.GetValFloatByKey(FrmImgAttr.H);
             }
         }
         /// <summary>
@@ -502,10 +530,9 @@ namespace BP.Sys
         }
         protected override bool beforeDelete()
         {
-            MapAttrs attrs = new MapAttrs(this.No);
-            attrs.Delete();
             try
             {
+                BP.DA.DBAccess.RunSQL("DELETE Sys_MapAttr WHERE FK_MapData='" + this.No + "'");
                 BP.DA.DBAccess.RunSQL("DELETE Sys_MapExt WHERE FK_MapData='" + this.No + "'");
                 BP.DA.DBAccess.RunSQL("DROP TABLE " + this.PTable);
             }
