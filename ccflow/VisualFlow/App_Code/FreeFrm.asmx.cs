@@ -386,7 +386,7 @@ namespace FreeFrm.Web
                 }
                 catch (Exception ex)
                 {
-                    str += ex.Message;
+                    str += "@保存"+dt.TableName+"失败:"+ex.Message;
                 }
             }
 
@@ -459,10 +459,17 @@ namespace FreeFrm.Web
                 }
                 ps.SQL = updataSQL;
 
-                if (BP.DA.DBAccess.RunSQL(ps) == 0)
+                try
                 {
-                    ps.SQL = insertSQL;
-                    BP.DA.DBAccess.RunSQL(ps);
+                    if (BP.DA.DBAccess.RunSQL(ps) == 0)
+                    {
+                        ps.SQL = insertSQL;
+                        BP.DA.DBAccess.RunSQL(ps);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("@执行sql=" + ps.SQL + "失败." + ex.Message);
                 }
             }
             #endregion save to data.
