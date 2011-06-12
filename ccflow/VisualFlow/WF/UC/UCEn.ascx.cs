@@ -1085,10 +1085,22 @@ namespace BP.Web.Comm.UC.WF
                                 }
                                 else
                                 {
-                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                    tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
-                                    tb.CssClass = "";
-                                    this.Add(tb);
+                                    if (attr.UIRows == 1)
+                                    {
+                                        tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                        tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
+                                        tb.CssClass = "";
+                                        this.Add(tb);
+                                    }
+                                    else
+                                    {
+                                        tb.TextMode = TextBoxMode.MultiLine;
+                                        tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                        tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left;";
+                                        tb.CssClass = "";
+                                        tb.Rows = attr.UIRows;
+                                        this.Add(tb);
+                                    }
                                 }
                                 break;
                             case BP.DA.DataType.AppDate:
