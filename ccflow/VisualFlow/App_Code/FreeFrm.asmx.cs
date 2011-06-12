@@ -452,10 +452,6 @@ namespace FreeFrm.Web
                 foreach (DataColumn dc in dt.Columns)
                 {
                     ps.Add(dc.ColumnName, dr[dc.ColumnName]);
-                    if (dc.ColumnName == "UIHeight")
-                    {
-                        int s = 0;
-                    }
                 }
                 ps.SQL = updataSQL;
 
@@ -469,7 +465,12 @@ namespace FreeFrm.Web
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("@执行sql=" + ps.SQL + "失败." + ex.Message);
+                    string pastrs = "";
+                    foreach (Para p in ps)
+                    {
+                        pastrs += "\t\n@" + p.ParaName + "=" + p.val;
+                    }
+                    throw new Exception("@执行sql=" + ps.SQL + "失败." + ex.Message + "\t\n@paras=" + pastrs);
                 }
             }
             #endregion save to data.
