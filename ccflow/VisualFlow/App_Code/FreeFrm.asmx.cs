@@ -30,7 +30,6 @@ namespace FreeFrm.Web
             dtl.No = dtlNo;
             if (dtl.RetrieveFromDBSources() != 0)
                 return;
-
             dtl.Name = dtlNo;
             dtl.FK_MapData = fk_mapdata;
             dtl.PTable = dtlNo;
@@ -360,13 +359,19 @@ namespace FreeFrm.Web
             #endregion 删除现有的当前节点数据. 并查询出来from节点数据.
             return "copy ok.";
         }
-        /// <summary>
-        /// 保存frm
-        /// </summary>
-        /// <param name="ds">frm 数据</param>
-        /// <returns>保存的结果</returns>
         [WebMethod]
         public string SaveFrm(string xml, string sqls)
+        {
+            try
+            {
+                return SaveFrm_Pri(xml, sqls);
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        public string SaveFrm_Pri(string xml, string sqls)
         {
             StringReader sr = new StringReader(xml);
             DataSet ds = new DataSet();
