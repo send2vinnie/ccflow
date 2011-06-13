@@ -467,11 +467,6 @@ namespace BP.Sys
             get
             {
                 return this.KeyOfEn;
-                //string s= this.GetValStrByKey(MapAttrAttr.Field);
-                //if (s == null || s == "" || s.Trim()=="" )
-                //    return this.Key;
-                //else
-                //    return s;
             }
         }
         public BP.Web.Controls.TBType HisTBType
@@ -625,6 +620,17 @@ namespace BP.Sys
                 if (this.MaxLen > 3000)
                     return true;
                 return false;
+            }
+        }
+        public int UIRows
+        {
+            get
+            {
+                if (this.UIHeight < 40)
+                    return 1;
+
+                decimal d = decimal.Parse(this.UIHeight.ToString()) / 25;
+                return (int)Math.Round(d, 0);
             }
         }
         /// <summary>

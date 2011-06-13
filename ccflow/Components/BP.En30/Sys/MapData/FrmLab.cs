@@ -52,8 +52,10 @@ namespace BP.Sys
         public const string FontStyle = "FontStyle";
 
         public const string FontWeight = "FontWeight";
-
-        
+        /// <summary>
+        /// 是否竖排
+        /// </summary>
+        public const string IsBlud = "IsBlud";
     }
     /// <summary>
     /// 标签
@@ -108,7 +110,17 @@ namespace BP.Sys
                 this.SetValByKey(FrmLabAttr.FontWeight, value);
             }
         }
-        
+        public bool IsBlud
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FrmLabAttr.IsBlud);
+            }
+            set
+            {
+                this.SetValByKey(FrmLabAttr.IsBlud, value);
+            }
+        }
         /// <summary>
         /// FontName
         /// </summary>
@@ -193,6 +205,16 @@ namespace BP.Sys
                 this.SetValByKey(FrmLabAttr.Text, value);
             }
         }
+        public string TextHtml
+        {
+            get
+            {
+                if (this.IsBlud)
+                    return "<b>" + this.GetValStrByKey(FrmLabAttr.Text).Replace("@","<br>") + "</b>";
+                else
+                    return this.GetValStrByKey(FrmLabAttr.Text).Replace("@", "<br>");
+            }
+        }
         #endregion
 
         #region 构造方法
@@ -238,6 +260,8 @@ namespace BP.Sys
                 map.AddTBString(FrmLabAttr.FontName, null, "FontName", true, false, 0, 50, 20);
                 map.AddTBString(FrmLabAttr.FontStyle, "normal", "FontStyle", true, false, 0, 50, 20);
                 map.AddTBString(FrmLabAttr.FontWeight, "normal", "FontWeight", true, false, 0, 50, 20);
+
+                map.AddTBFloat(FrmLabAttr.IsBlud, 0, "IsBlud", false, false);
 
                 this._enMap = map;
                 return this._enMap;
