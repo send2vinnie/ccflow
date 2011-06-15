@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using BP;
 using BP.WF;
 using BP.En;
 using BP.Port;
@@ -12,7 +14,6 @@ using Silverlight.DataSetConnector;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-
 /// <summary>
 ///WebService 的摘要说明
 /// </summary>
@@ -43,21 +44,25 @@ public class WebService : System.Web.Services.WebService {
     [WebMethod(EnableSession = true)]
     public string GetDTOfWorkList(string fk_flow, string workid)
     {
-
-        string sql = " SELECT A.FK_Node, A.RDT,A.SDT,A.FK_Emp,b.Name as EmpName";
-        sql += " FROM WF_GenerWorkerList A, WF_Emp B WHERE A.FK_Emp=b.No AND A.IsEnable=1 AND A.WorkID=" + workid;
-
-        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-        if (dt.Rows.Count == 0)
+        try
         {
-            sql = "SELECT A.FK_Node, A.RDT,A.CDT, A.CDT as SDT, A.Rec AS FK_Emp ,b.Name as EmpName";
-            sql += " FROM V" + fk_flow + " A, WF_Emp B WHERE A.Rec=b.No AND A.OID=" + workid;
-            dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            string sql = " SELECT A.FK_Node, A.RDT,A.SDT,A.FK_Emp,b.Name as EmpName";
+            sql += " FROM WF_GenerWorkerList A, WF_Emp B WHERE A.FK_Emp=b.No AND A.IsEnable=1 AND A.WorkID=" + workid;
+
+            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            if (dt.Rows.Count == 0)
+            {
+                sql = "SELECT A.FK_Node, A.RDT,A.CDT, A.CDT as SDT, A.Rec AS FK_Emp ,b.Name as EmpName";
+                sql += " FROM V" + fk_flow + " A, WF_Emp B WHERE A.Rec=b.No AND A.OID=" + workid;
+                dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            }
+            DataSet ds = new DataSet();
+            ds.Tables.Add(dt);
+            return Connector.ToXml(ds);
         }
-        DataSet ds = new DataSet();
-        ds.Tables.Add(dt);
-        return Connector.ToXml(ds);
+        catch { return null; }
     }
+   
     /// <summary>
     /// 让admin 登录
     /// </summary>
@@ -69,8 +74,10 @@ public class WebService : System.Web.Services.WebService {
         {
             Emp emp = new Emp("admin");
             BP.Web.WebUser.SignInOfGener(emp, lang, "admin", true);
+
         }
     }
+  
 
     #region 执行功能的方法
     [WebMethod(EnableSession = true)]
@@ -179,18 +186,12 @@ public class WebService : System.Web.Services.WebService {
         //return Connector.ToXml(ds);
         // return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }
-    [WebMethod(EnableSession = true)]
-    public string  GetName(string sql)
-    {
-        return "zhou";
-    }
 
     [WebMethod(EnableSession = true)]
     public string RunSQLReturnTable(string sql,bool isLogin)
     {
         LetAdminLogin("CH", isLogin);
-        DataSet ds = new DataSet();
-        ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
+        DataSet ds =  BP.DA.DBAccess.RunSQLReturnDataSet(sql);
         return Connector.ToXml(ds);
     }
 
@@ -199,8 +200,6 @@ public class WebService : System.Web.Services.WebService {
     [WebMethod(EnableSession = true)]
     public string GetFlowSort()
     {
-        //FlowSorts fs = new FlowSorts();
-        //fs.RetrieveAll();
         DataSet ds = new DataSet();
         ds = BP.DA.DBAccess.RunSQLReturnDataSet("select * from WF_FlowSort");
         return Connector.ToXml(ds);
@@ -329,15 +328,27 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 Flow temp = new BP.WF.Flow(para1);
                 return null;
             case "NewFlowSort":
-                BP.WF.FlowSort fs = new FlowSort();
+                BP.WF.FlowSort fs = null;
                 try
                 {
+                    fs = new FlowSort();
                     fs.Name = para1;
                     fs.No = fs.GenerNewNo;
                     fs.Insert();
                     return fs.No;
                 }
                 catch { try { return fs.No; } catch { return null; } }
+
+            case "EditFlowSort":
+                try
+                {
+                    var para = para1.Split(',');
+                    fs = new FlowSort(para[0]);
+                    fs.Name = para[1];
+                    fs.Save();
+                    return fs.No;
+                }
+                catch {  return null;  }
             case "NewFlow":
                 Flow fl = new Flow();
 
@@ -350,6 +361,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     return fl.No + ";" + fl.Name;
                 }
                 catch { try { return fl.No; } catch { return null; } }
+                
             case "DelFlow":
                 BP.WF.Flow fl1 = new BP.WF.Flow(para1);
                 try
@@ -360,8 +372,13 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 return null;
             case "DelLable":
                 BP.WF.LabNote ln = new BP.WF.LabNote(para1);
-                ln.Delete();
+                try
+                {
+                    ln.Delete();
+                }
+                catch { }
                 return null;
+                
             case "DelFlowSort":
                 FlowSort delfs = new FlowSort(para1);
                 delfs.Delete();
@@ -392,10 +409,14 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 dellab.MyPK = para1;
                 dellab.Delete();
                 return null;
+            case "GetSettings":
+                return SystemConfig.AppSettings[para1];
+                break;
             default:
                 throw null;
         }
     }
+  
     /// <summary>
     /// 创建一个节点
     /// </summary>
@@ -409,12 +430,18 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         LetAdminLogin("CH", isLogin);
         if (string.IsNullOrEmpty(fk_flow))
             return 0;
-
         Flow fl = new Flow(fk_flow);
-        BP.WF.Node nf = new BP.WF.Node(fl.DoNewNode(x, y).NodeID);
-        nf.Name = nodeName;
-        nf.Save();
-        return nf.NodeID;
+     
+        try
+        {
+            BP.WF.Node nf = new BP.WF.Node(fl.DoNewNode(x, y).NodeID);
+
+            nf.Name = nodeName;
+            nf.Save();
+            return nf.NodeID ;
+        }
+        catch { return 0; }
+
     }
 
     /// <summary>
@@ -432,6 +459,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         try
         {
             dir.Insert();
+
             return true;
         }
         catch
@@ -465,7 +493,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string DoNewLabel(string fk_flow, int x, int y, string name, string lableId)
     {
-
+      
         LabNote lab = new LabNote();
 
         lab.FK_Flow = fk_flow;
@@ -478,7 +506,11 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
             lab.MyPK = lableId;
         }
         lab.Name = name;
-        lab.Save();
+        try
+        {
+            lab.Save();
+        }
+        catch { }
         return lab.MyPK;
     }
     /// <summary>
@@ -556,11 +588,11 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     /// <param name="y"></param>
     /// <param name="nodeName"></param>
     [WebMethod(EnableSession = true)]
-    public void DoSaveFlowNode(int nodeID, int x, int y, string nodeName, bool islogin)
+    public void DoSaveFlowNode(int nodeID, int x, int y, string nodeName,bool islogin)
     {
         LetAdminLogin("CH", islogin);
         BP.WF.Node n;
-        if (!string.IsNullOrEmpty(nodeID.ToString()))
+        if (!string.IsNullOrEmpty( nodeID.ToString()) )
         {
             n = new BP.WF.Node(nodeID);
 
@@ -571,16 +603,29 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
             {
                 n.Save();
             }
-            catch
+            catch { }
+
+        }
+        else
+        {
+            n = new BP.WF.Node();
+
+            n.Name = nodeName;
+            n.X = x;
+            n.Y = y;
+            try
             {
+                n.Insert();
             }
+            catch { }
+
         }
     }
     [WebMethod]
     public string Uploadfile(byte[] FileByte, string fileName)
     {
         //文件存放路径
-        string filepath =@"D:\ccflow\VisualFlow\Temp\"+ fileName ;
+        string filepath = Server.MapPath(@".\Temp") + "\\" + fileName;
         //如果文件已经存在则删除
         if (File.Exists(filepath))
             File.Delete(filepath);
