@@ -37,7 +37,52 @@ namespace FreeFrm.Web
             dtl.IntMapAttrs();
         }
         [WebMethod]
-        public string HelloWorld()
+        public string BackUpFrm(string fk_mapdata)
+        {
+            try
+            {
+             //   string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\Temp\\" + fk_mapdata + ".xml";
+                string path =@"D:\ccflow\VisualFlow\Temp\" + fk_mapdata + ".xml";
+                this.GenerFrm(fk_mapdata);
+                ds.WriteXml(path);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        /// <summary>
+        /// 上传文件.
+        /// </summary>
+        /// <param name="FileByte"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string UploadFile(byte[] FileByte, String fileName)
+        {
+            string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath;
+
+            string filePath = path + "\\" + fileName;
+            if (System.IO.File.Exists(filePath))
+                System.IO.File.Delete(filePath);
+
+            //这里使用绝对路径来索引
+            FileStream stream = new FileStream(filePath, FileMode.CreateNew);
+            stream.Write(FileByte, 0, FileByte.Length);
+            stream.Close();
+
+            DataSet ds = new DataSet();
+            ds.ReadXml(filePath);
+
+            return Connector.ToXml(ds);
+        }
+        /// <summary>
+        /// HelloWorld
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod]
+        public string HelloWorldddd()
         {
            // return this.GenerFrm("ND501");
             return "Hello World";
@@ -124,6 +169,7 @@ namespace FreeFrm.Web
             }
             return Connector.ToXml(ds);
         }
+        private DataSet ds = null;
         /// <summary>
         /// 获取一个Frm
         /// </summary>
@@ -132,7 +178,7 @@ namespace FreeFrm.Web
         [WebMethod]
         public string GenerFrm(string fk_mapdata)
         {
-            DataSet ds = new DataSet();
+            ds = new DataSet();
             // line.
             BP.Sys.FrmLines lins = new BP.Sys.FrmLines(fk_mapdata);
             DataTable dt = lins.ToDataTableField();
@@ -376,7 +422,6 @@ namespace FreeFrm.Web
             StringReader sr = new StringReader(xml);
             DataSet ds = new DataSet();
             ds.ReadXml(sr);
-
             string str = "";
             foreach (DataTable dt in ds.Tables)
             {
@@ -404,7 +449,6 @@ namespace FreeFrm.Web
             }
 
             string tableName = dt.TableName.Replace("CopyOf", "");
-
             #region gener sql.
             //生成updataSQL.
             string updataSQL = "UPDATE " + tableName + " SET ";
