@@ -547,8 +547,10 @@ public partial class WF_MapDef_MapDef : WebPage
 
                         string tbID = "TB_" + mattr.KeyOfEn;
                         TB mytb = this.Pub1.GetTBByID(tbID);
-                        this.Pub1.GetTBByID(tbID).Attributes["onkeyup"] = "javascript:Auto" + attr.KeyOfEn + "();";
+                        if (mytb == null)
+                            continue;
 
+                        this.Pub1.GetTBByID(tbID).Attributes["onkeyup"] = "javascript:Auto" + attr.KeyOfEn + "();";
                         right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + mytb.ClientID + ".value.replace( ',' ,  '' ) ) ");
                         right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + mytb.ClientID + ".value.replace( ',' ,  '' ) ) ");
                     }

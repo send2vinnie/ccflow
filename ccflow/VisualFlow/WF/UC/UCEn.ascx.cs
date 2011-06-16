@@ -721,7 +721,7 @@ namespace BP.Web.Comm.UC.WF
             #endregion 处理iFrom 的自适应的问题。
 
             // 处理扩展。
-            this.AfterBindEn_DealMapExt(enName);
+            this.AfterBindEn_DealMapExt(enName, mattrs);
           
 
             #region 处理iFrom SaveDtlData。
@@ -746,56 +746,9 @@ namespace BP.Web.Comm.UC.WF
             this.Add(js);
             #endregion 处理iFrom  SaveM2M Save。
 
-            #region 处理 JS 自动计算.
-            for (int i = 0; i < mattrs.Count; i++)
-            {
-                MapAttr attr = mattrs[i] as MapAttr;
-                if (attr.UIContralType != UIContralType.TB)
-                    continue;
-
-                switch (attr.HisAutoFull)
-                {
-                    case AutoFullWay.Way1_JS:
-                        js = "\t\n <script type='text/javascript' >";
-                        TB tb = this.GetTBByID("TB_" + attr.KeyOfEn);
-                        string left = "\n  document.forms[0]." + tb.ClientID + ".value = ";
-                        string right = attr.AutoFullDoc;
-                        foreach (MapAttr mattr in mattrs)
-                        {
-                            if (mattr.IsNum == false)
-                                continue;
-
-                            if (attr.AutoFullDoc.Contains("@" + mattr.KeyOfEn)
-                                || attr.AutoFullDoc.Contains("@" + mattr.Name))
-                            {
-                            }
-                            else
-                            {
-                                continue;
-                            }
-
-                            string tbID = "TB_" + mattr.KeyOfEn;
-                            TB mytb = this.GetTBByID(tbID);
-                            this.GetTBByID(tbID).Attributes["onkeyup"] = "javascript:Auto" + attr.KeyOfEn + "();";
-
-                            right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + mytb.ClientID + ".value.replace( ',' ,  '' ) ) ");
-                            right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + mytb.ClientID + ".value.replace( ',' ,  '' ) ) ");
-                        }
-
-                        js += "\t\n function Auto" + attr.KeyOfEn + "() { ";
-                        js += left + right +";";
-                        js += " \t\n  document.forms[0]." + tb.ClientID + ".value= VirtyMoney(document.forms[0]." + tb.ClientID + ".value ) ;";
-                        js += "\t\n } ";
-                        js += "\t\n</script>";
-                        this.Add(js);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            #endregion 处理iFrom 的自适应的问题。
+            
         }
-        private void AfterBindEn_DealMapExt(string enName)
+        private void AfterBindEn_DealMapExt(string enName, MapAttrs mattrs)
         {
             #region 处理扩展设置
             MapExts mes = new MapExts(enName);
@@ -835,8 +788,58 @@ namespace BP.Web.Comm.UC.WF
                 }
             }
             #endregion 处理扩展设置
-        }
 
+            #region 处理 JS 自动计算.
+            string js = "";
+            for (int i = 0; i < mattrs.Count; i++)
+            {
+                MapAttr attr = mattrs[i] as MapAttr;
+                if (attr.UIContralType != UIContralType.TB)
+                    continue;
+
+                switch (attr.HisAutoFull)
+                {
+                    case AutoFullWay.Way1_JS:
+                        js = "\t\n <script type='text/javascript' >";
+                        TB tb = this.GetTBByID("TB_" + attr.KeyOfEn);
+                        string left = "\n  document.forms[0]." + tb.ClientID + ".value = ";
+                        string right = attr.AutoFullDoc;
+                        foreach (MapAttr mattr in mattrs)
+                        {
+                            if (mattr.IsNum == false)
+                                continue;
+
+                            if (attr.AutoFullDoc.Contains("@" + mattr.KeyOfEn)
+                                || attr.AutoFullDoc.Contains("@" + mattr.Name))
+                            {
+                            }
+                            else
+                            {
+                                continue;
+                            }
+
+                            string tbID = "TB_" + mattr.KeyOfEn;
+                            TB mytb = this.GetTBByID(tbID);
+                            this.GetTBByID(tbID).Attributes["onkeyup"] = "javascript:Auto" + attr.KeyOfEn + "();";
+
+                            right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + mytb.ClientID + ".value.replace( ',' ,  '' ) ) ");
+                            right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + mytb.ClientID + ".value.replace( ',' ,  '' ) ) ");
+                        }
+
+                        js += "\t\n function Auto" + attr.KeyOfEn + "() { ";
+                        js += left + right + ";";
+                        js += " \t\n  document.forms[0]." + tb.ClientID + ".value= VirtyMoney(document.forms[0]." + tb.ClientID + ".value ) ;";
+                        js += "\t\n } ";
+                        js += "\t\n</script>";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            this.Add(js);
+            #endregion 处理 JS 自动计算.
+
+        }
         public void InsertObjects(bool isJudgeRowIdx)
         {
             #region 明细表
@@ -1018,7 +1021,7 @@ namespace BP.Web.Comm.UC.WF
             foreach (FrmLab lab in labs)
             {
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + lab.X + "px;top:" + lab.Y + "px;text-align:left;' >");
-                this.Add("\t\n<span style='color:" + lab.FontColor + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' > " + lab.Text + "</span>");
+                this.Add("\t\n<span style='color:" + lab.FontColor + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' > " + lab.TextHtml + "</span>");
                 this.Add("\t\n</DIV>");
             }
 
@@ -1088,7 +1091,7 @@ namespace BP.Web.Comm.UC.WF
                                     if (attr.UIRows == 1)
                                     {
                                         tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                        tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
+                                        tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 15px;padding: 0px;margin: 0px;";
                                         tb.CssClass = "";
                                         this.Add(tb);
                                     }
@@ -1096,7 +1099,7 @@ namespace BP.Web.Comm.UC.WF
                                     {
                                         tb.TextMode = TextBoxMode.MultiLine;
                                         tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                        tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left;";
+                                        tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left;padding: 0px;margin: 0px;";
                                         tb.CssClass = "";
                                         tb.Rows = attr.UIRows;
                                         this.Add(tb);
@@ -1109,6 +1112,7 @@ namespace BP.Web.Comm.UC.WF
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker();";
+
                                 //tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
                                 //tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
 
@@ -1226,7 +1230,7 @@ namespace BP.Web.Comm.UC.WF
             foreach (BP.Sys.FrmRB rb in myrbs)
             {
                 this.Add("<DIV id='F" + rb.MyPK + "' style='position:absolute; left:" + rb.X + "px; top:" + rb.Y + "px; width:100%; height:16px;text-align: left;word-break: keep-all;' >");
-                this.Add("<span style='word-break: keep-all;'>");
+                this.Add("<span style='word-break: keep-all;font-size:12px;'>");
 
                 System.Web.UI.WebControls.RadioButton rbCtl = new RadioButton();
                 rbCtl.ID = rb.MyPK;
@@ -1238,7 +1242,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("</DIV>");
             }
             #endregion 输出控件.
-         
+
 
 
             #region 输出明细.
@@ -1254,7 +1258,7 @@ namespace BP.Web.Comm.UC.WF
                 //if (this.Request.QueryString["IsTest"] != null)
                 //    src = this.Request.ApplicationPath + "/WF/MapDef/MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.Request.QueryString["FK_MapData"] + "&FK_MapDtl=" + dtl.No;
                 //else
-                    src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal;
+                src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal;
                 this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
                 this.Add("</span>");
                 this.Add("</DIV>");
@@ -1263,21 +1267,17 @@ namespace BP.Web.Comm.UC.WF
 
             #region 处理iFrom Save。
             string js = "\t\n<script type='text/javascript' >";
-              js += "\t\n function SaveDtl(dtl) { ";
-              js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
+            js += "\t\n function SaveDtl(dtl) { ";
+            js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
             #endregion 处理iFrom Save。
 
-
-
             // 处理扩展.
-            this.AfterBindEn_DealMapExt(enName);
-            //this.Init();
+            this.AfterBindEn_DealMapExt(enName, mattrs);
             return;
         }
-        
         #endregion
 
         public static string GetRefstrs(string keys, Entity en, Entities hisens)

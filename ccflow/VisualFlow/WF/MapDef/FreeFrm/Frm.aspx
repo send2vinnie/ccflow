@@ -55,7 +55,7 @@
         }
     </script>
 </head>
-<body>
+<body oncontextmenu="window.event.returnValue=false">
     <form id="form1" runat="server" style="height:100%">
     <div id="silverlightControlHost">
         <object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="100%" height="100%">
