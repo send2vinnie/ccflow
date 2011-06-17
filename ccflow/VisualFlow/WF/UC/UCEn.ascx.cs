@@ -1008,6 +1008,19 @@ namespace BP.Web.Comm.UC.WF
         #endregion
 
         #region 输出自由格式的表单.
+
+        public string ToHtmlColor(string color)
+        {
+            Color col = ColorTranslator.FromHtml(color);
+            int alpha = col.A;
+            int red = col.R;
+            int green = col.G;
+            int blue = col.B;
+            //Color bColor = Color.FromArgb(alpha, red, green, blue);
+            return alpha + "" + red + "" + green + "" + blue;
+
+            //return color.Substring(1,6);
+        }
         public string FK_MapData = null;
         public void BindFreeFrm(Entity en, string enName)
         {
@@ -1020,9 +1033,12 @@ namespace BP.Web.Comm.UC.WF
             FrmLabs labs = new FrmLabs(this.FK_MapData);
             foreach (FrmLab lab in labs)
             {
+                Color col = ColorTranslator.FromHtml(lab.FontColor);
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + lab.X + "px;top:" + lab.Y + "px;text-align:left;' >");
-                this.Add("\t\n<span style='color:" + lab.FontColor + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' > " + lab.TextHtml + "</span>");
+                this.Add("\t\n<span style='color:" + ToHtmlColor(lab.FontColor) + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' >" + lab.TextHtml + "</span>");
                 this.Add("\t\n</DIV>");
+
+               // Color.FromArgb(
             }
 
             FrmLines lines = new FrmLines(this.FK_MapData);

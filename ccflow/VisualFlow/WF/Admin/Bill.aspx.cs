@@ -96,6 +96,18 @@ public partial class WF_Admin_BillSet : WebPage
         this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
 
+
+
+        this.Ucsys1.AddTR();
+        this.Ucsys1.AddTD(this.ToE("Name", "生成的文件类型")); // 单据/单据名称
+        ddl = new DDL();
+        ddl.ID = "DDL_BillFileType";
+        ddl.BindSysEnum("BillFileType");
+        ddl.SetSelectItem(bill.BillFileType);
+        this.Ucsys1.AddTD(ddl);
+        this.Ucsys1.AddTD("目前不支持excel.");
+        this.Ucsys1.AddTREnd();
+
         //this.Ucsys1.AddTR();
         //this.Ucsys1.AddTD(this.ToE("ReplaceVal", "要替换<br>特殊字段")); // 单据/单据名称
         //tb = new TB();
