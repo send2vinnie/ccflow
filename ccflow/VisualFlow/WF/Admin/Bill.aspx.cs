@@ -186,7 +186,7 @@ public partial class WF_Admin_BillSet : WebPage
             if (file.Value == null || file.Value.Trim() == "")
             {
                 bt.Update();
-                this.Alert( this.ToE("SaveOK","保存成功"));
+                this.Alert(this.ToE("SaveOK", "保存成功"));
                 return;
             }
 
@@ -218,7 +218,7 @@ public partial class WF_Admin_BillSet : WebPage
         if (file.Value == null || file.Value.ToLower().Contains(".rtf") == false)
         {
             this.Alert(this.ToE("Bill1", "@错误，非法的 rtf 格式文件。"));
-           // this.Alert("@错误，非法的 rtf 格式文件。");
+            // this.Alert("@错误，非法的 rtf 格式文件。");
             return;
         }
 
@@ -238,7 +238,6 @@ public partial class WF_Admin_BillSet : WebPage
         {
             bt.No = BP.DA.DBAccess.GenerOID().ToString();
         }
-
 
         string tmp = BP.SystemConfig.PathOfCyclostyleFile + "\\Temp.rtf";
         file.PostedFile.SaveAs(tmp);
