@@ -2602,7 +2602,6 @@ namespace BP.WF
                                 }
                                 dir.Insert();
                             }
-
                             break;
                         case "WF_FAppSet": //FAppSets.xml¡£
                             foreach (DataRow dr in dt.Rows)

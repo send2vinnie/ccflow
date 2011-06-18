@@ -6,6 +6,12 @@ using BP.WF;
 
 namespace BP.WF
 {
+    public enum BillFileType
+    {
+        Word,
+        PDF,
+        Excel
+    }
     public class BillTemplateAttr
     {
         public const string Url = "Url";
@@ -33,6 +39,11 @@ namespace BP.WF
         /// 单据类型
         /// </summary>
         public const string FK_BillType = "FK_BillType";
+        /// <summary>
+        /// 是否生成PDF
+        /// </summary>
+        public const string BillFileType = "BillFileType";
+
     }
 	/// <summary>
 	/// 单据模板
@@ -87,6 +98,28 @@ namespace BP.WF
             {
                 this.SetValByKey("No", value);
                 this.SetValByKey(BillTemplateAttr.Url, value);
+            }
+        }
+        public BillFileType HisBillFileType
+        {
+            get
+            {
+                return (BillFileType)this.GetValIntByKey(BillTemplateAttr.BillFileType);
+            }
+            set
+            {
+                this.SetValByKey(BillTemplateAttr.BillFileType, (int)value);
+            }
+        }
+        public int BillFileType
+        {
+            get
+            {
+                return this.GetValIntByKey(BillTemplateAttr.BillFileType);
+            }
+            set
+            {
+                this.SetValByKey(BillTemplateAttr.BillFileType, value);
             }
         }
         public string IDX
@@ -176,6 +209,10 @@ namespace BP.WF
                 map.AddTBString("Url", null, null, true, false, 0, 200, 20);
 
                 map.AddTBInt("NodeID", 0, "NodeID", true, false);
+
+
+                map.AddDDLSysEnum("BillFileType", 0, "生成的文件类型", true, false, "BillFileType","@0=Word@1=PDF@2=Excel");
+
 
                 map.AddTBString("FK_BillType", null, "单据类型", true, false, 0, 4, 4);
 

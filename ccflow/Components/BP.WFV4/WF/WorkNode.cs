@@ -1964,10 +1964,16 @@ namespace BP.WF
                             path = paths[0] + "/" + paths[1] + "/" + paths[2] + "/";
 
                             string billUrl = this.VirPath + "/DataUser/Bill/" + path + file;
-                            billUrl = billUrl.Replace(".doc", ".pdf");
 
-
-                            billInfo += "<img src='" + this.VirPath + "/Images/FileType/PDF.gif' /><a href='" + billUrl + "' target=_blank >" + func.Name + "</a>";
+                            if (func.HisBillFileType == BillFileType.PDF)
+                            {
+                                billUrl = billUrl.Replace(".doc", ".pdf");
+                                billInfo += "<img src='" + this.VirPath + "/Images/FileType/PDF.gif' /><a href='" + billUrl + "' target=_blank >" + func.Name + "</a>";
+                            }
+                            else
+                            {
+                                billInfo += "<img src='" + this.VirPath + "/Images/FileType/Word.gif' /><a href='" + billUrl + "' target=_blank >" + func.Name + "</a>";
+                            }
 
                             //  string  = BP.SystemConfig.GetConfig("FtpPath") + file;
                             path = BP.WF.Glo.FlowFileBill + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
@@ -1980,16 +1986,19 @@ namespace BP.WF
                             #endregion
 
                             #region ×ª»¯³Épdf.
-                            string rtfPath = path + file;
-                            string pdfPath = rtfPath.Replace(".doc", ".pdf");
-                          //  string pdfPath = path + func.Url + ".pdf";
-                            try
+                            if (func.HisBillFileType == BillFileType.PDF)
                             {
-                                Glo.Rtf2PDF(rtfPath, pdfPath);
-                            }
-                            catch(Exception ex)
-                            {
-                                msg += ex.Message;
+                                string rtfPath = path + file;
+                                string pdfPath = rtfPath.Replace(".doc", ".pdf");
+                                //  string pdfPath = path + func.Url + ".pdf";
+                                try
+                                {
+                                    Glo.Rtf2PDF(rtfPath, pdfPath);
+                                }
+                                catch (Exception ex)
+                                {
+                                    msg += ex.Message;
+                                }
                             }
                             #endregion
 
