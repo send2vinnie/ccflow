@@ -27,14 +27,6 @@ namespace BP.Sys
         /// </summary>
         public const string Y = "Y";
         /// <summary>
-        /// X2
-        /// </summary>
-        public const string X2 = "X2";
-        /// <summary>
-        /// Y2
-        /// </summary>
-        public const string Y2 = "Y2";
-        /// <summary>
         /// 宽度
         /// </summary>
         public const string FontSize = "FontSize";
@@ -50,12 +42,18 @@ namespace BP.Sys
         /// 字体风格
         /// </summary>
         public const string FontStyle = "FontStyle";
-
+        /// <summary>
+        /// 字体
+        /// </summary>
         public const string FontWeight = "FontWeight";
         /// <summary>
-        /// 是否竖排
+        /// 是否粗体
         /// </summary>
-        public const string IsBlud = "IsBlud";
+        public const string IsBold = "IsBold";
+        /// <summary>
+        /// 斜体
+        /// </summary>
+        public const string IsItalic = "IsItalic";
     }
     /// <summary>
     /// 标签
@@ -110,15 +108,26 @@ namespace BP.Sys
                 this.SetValByKey(FrmLabAttr.FontWeight, value);
             }
         }
-        public bool IsBlud
+        public bool IsBold
         {
             get
             {
-                return this.GetValBooleanByKey(FrmLabAttr.IsBlud);
+                return this.GetValBooleanByKey(FrmLabAttr.IsBold);
             }
             set
             {
-                this.SetValByKey(FrmLabAttr.IsBlud, value);
+                this.SetValByKey(FrmLabAttr.IsBold, value);
+            }
+        }
+        public bool IsItalic
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FrmLabAttr.IsItalic);
+            }
+            set
+            {
+                this.SetValByKey(FrmLabAttr.IsItalic, value);
             }
         }
         /// <summary>
@@ -209,7 +218,7 @@ namespace BP.Sys
         {
             get
             {
-                if (this.IsBlud)
+                if (this.IsBold)
                     return "<b>" + this.GetValStrByKey(FrmLabAttr.Text).Replace("@","<br>") + "</b>";
                 else
                     return this.GetValStrByKey(FrmLabAttr.Text).Replace("@", "<br>");
@@ -261,7 +270,8 @@ namespace BP.Sys
                 map.AddTBString(FrmLabAttr.FontStyle, "normal", "FontStyle", true, false, 0, 50, 20);
                 map.AddTBString(FrmLabAttr.FontWeight, "normal", "FontWeight", true, false, 0, 50, 20);
 
-                map.AddTBFloat(FrmLabAttr.IsBlud, 0, "IsBlud", false, false);
+                map.AddTBInt(FrmLabAttr.IsBold, 0, "IsBold", false, false);
+                map.AddTBInt(FrmLabAttr.IsItalic, 0, "IsItalic", false, false);
 
                 this._enMap = map;
                 return this._enMap;

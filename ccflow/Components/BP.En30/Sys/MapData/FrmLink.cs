@@ -4,7 +4,6 @@ using BP.DA;
 using BP.En;
 namespace BP.Sys
 {
-      
     /// <summary>
     /// 超连接
     /// </summary>
@@ -196,6 +195,28 @@ namespace BP.Sys
                 this.SetValByKey(FrmLinkAttr.Target, value);
             }
         }
+        public bool IsBold
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FrmLabAttr.IsBold);
+            }
+            set
+            {
+                this.SetValByKey(FrmLabAttr.IsBold, value);
+            }
+        }
+        public bool IsItalic
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FrmLabAttr.IsItalic);
+            }
+            set
+            {
+                this.SetValByKey(FrmLabAttr.IsItalic, value);
+            }
+        }
         #endregion
 
         #region 构造方法
@@ -244,6 +265,9 @@ namespace BP.Sys
                 map.AddTBString(FrmLinkAttr.FontColor, "black", "FontColor", true, false, 0, 50, 20);
                 map.AddTBString(FrmLinkAttr.FontName, null, "FontName", true, false, 0, 50, 20);
                 map.AddTBString(FrmLinkAttr.FontStyle, "normal", "FontStyle", true, false, 0, 50, 20);
+
+                map.AddTBInt(FrmLabAttr.IsBold, 0, "IsBold", false, false);
+                map.AddTBInt(FrmLabAttr.IsItalic, 0, "IsItalic", false, false);
 
                 this._enMap = map;
                 return this._enMap;

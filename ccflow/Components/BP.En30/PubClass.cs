@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
@@ -433,6 +434,19 @@ namespace BP
 	/// </summary>
 	public class PubClass 
 	{
+        public static String ColorToStr(System.Drawing.Color color)
+        {
+            try
+            {
+                string color_s = System.Drawing.ColorTranslator.ToHtml(color);
+                color_s = color_s.Substring(1, color_s.Length - 1);
+                return "#" + Convert.ToString(Convert.ToInt32(color_s, 16) + 40000, 16);
+            }
+            catch
+            {
+                return "black";
+            }
+        }
         private static string _KeyFields = null;
         public static string KeyFields
         {

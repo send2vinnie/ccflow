@@ -25,11 +25,17 @@ namespace BP.Sys
         /// KeyOfEn
         /// </summary>
         public const string KeyOfEn = "KeyOfEn";
+        /// <summary>
+        /// IntKey
+        /// </summary>
         public const string IntKey = "IntKey";
         /// <summary>
         /// EnumKey
         /// </summary>
         public const string EnumKey = "EnumKey";
+        /// <summary>
+        /// ±Í«©
+        /// </summary>
         public const string Lab = "Lab";
     }
     /// <summary>
