@@ -52,21 +52,20 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
         if (this.IsPostBack == false)
             this.BindLB();
 
-        //if (this.CheckBoxList1.Items.Count == 1)
-        //{
-        //    this.CheckBoxList1. = false;
-        //}
-
-        this.TextBox1.Text = "";
+        TextBox tb = new TextBox();
+        tb.TextMode = TextBoxMode.MultiLine;
+        tb.Rows = 15;
+        tb.Columns = 30;
+        tb.ID = "TB_Doc";
+        this.Pub1.Add(tb);
     }
-
     void WF_UC_Forward_Click(object sender, EventArgs e)
     {
         Button btn = sender as Button;
         switch (btn.ID)
         {
             case NamesOfBtn.Cancel:
-                this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID, true);
+                this.Response.Redirect("MyFlow"+Glo.FromPageType+".aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID, true);
                 return;
             default:
                 break;
@@ -74,7 +73,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
 
         try
         {
-            if (this.TextBox1.Text == "请输入转发原因...")
+            if (this.Pub1.GetTextBoxByID("TB_Doc").Text == "请输入转发原因..." )
                 throw new Exception("@您必须输入转发原因。");
 
             ArrayList al = new ArrayList();
@@ -133,7 +132,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             fw.WorkID = this.WorkID;
             fw.NodeId = nodeId;
             fw.Emps = emps;
-            fw.Note = this.TextBox1.Text;
+            fw.Note = this.Pub1.GetTextBoxByID("TB_Doc").Text;
             fw.FK_Emp = BP.Web.WebUser.No;
             try
             {
@@ -146,7 +145,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
 
 
             this.Session["info"] = "@工作转发成功。";
-            this.Response.Redirect("MyFlowInfo.aspx?DoType=Msg&FK_Flow=" + this.FK_Flow, true);
+            this.Response.Redirect("MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=Msg&FK_Flow=" + this.FK_Flow, true);
             return;
         }
         catch (Exception ex)

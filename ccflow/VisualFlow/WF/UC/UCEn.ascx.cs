@@ -440,6 +440,7 @@ namespace BP.Web.Comm.UC.WF
                         this.Add("<div style='font-size:14px;color:black;' >");
                         Label lab = new Label();
                         lab.ID = "Lab"+attr.KeyOfEn;
+                        lab.Text = attr.Name;
                         this.Add(lab);
                         this.Add("</div>");
 
@@ -458,11 +459,16 @@ namespace BP.Web.Comm.UC.WF
                         else
                             mytbLine.Attributes["class"] = "TBDoc";
 
+                        mytbLine.Attributes["style"] = "width:98%;padding: 0px;margin: 0px;";
+
                         this.Add(mytbLine);
 
-                        string ctlID = mytbLine.ClientID;
-                        Label mylab = this.GetLabelByID("Lab"+attr.KeyOfEn);
-                        mylab.Text = "<a href=\"javascript:TBHelp('" + ctlID + "','" + appPath + "','" + enName + "','" + attr.KeyOfEn + "')\">" + attr.Name + "</a>";
+                        if (mytbLine.Enabled)
+                        {
+                            string ctlID = mytbLine.ClientID;
+                            Label mylab = this.GetLabelByID("Lab" + attr.KeyOfEn);
+                            mylab.Text = "<a href=\"javascript:TBHelp('" + ctlID + "','" + appPath + "','" + enName + "','" + attr.KeyOfEn + "')\">" + attr.Name + "</a>";
+                        }
                         
                         this.AddTDEnd();
                         this.AddTREnd();

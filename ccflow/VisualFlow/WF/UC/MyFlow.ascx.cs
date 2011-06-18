@@ -1373,7 +1373,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     }
     public void DoHandOver()
     {
-        string url = "Forward.aspx?NodeId=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.CurrentFlow.No;
+        string url = "Forward" + Glo.FromPageType + ".aspx?NodeId=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.CurrentFlow.No;
         this.Response.Redirect(url, true);
     }
     #endregion

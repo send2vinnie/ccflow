@@ -43,8 +43,6 @@ public partial class WF_MapDef_MapDef : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        //this.Page.RegisterClientScriptBlock("d",
-        //  "<link href='" + this.Request.ApplicationPath + "/WF/Style/Skin/t2/style.css' rel='stylesheet' type='text/css' />");
 
         MapData md = new MapData(this.MyPK);
         MapAttrs mattrs = new MapAttrs(md.No);
@@ -143,19 +141,22 @@ public partial class WF_MapDef_MapDef : WebPage
                     lab.ID = "Lab" + attr.KeyOfEn;
                     lab.Text = "默认值";
                     this.Pub1.Add(lab);
-                    this.Pub1.Add("</span>");
+                    this.Pub1.Add("</span><br>");
 
                     TextBox mytbLine = new TextBox();
                     mytbLine.ID = "TB_" + attr.KeyOfEn;
                     mytbLine.TextMode = TextBoxMode.MultiLine;
                     mytbLine.Rows = 8;
-                    mytbLine.Attributes["class"] = "TBDoc"; // "width:100%;padding: 0px;margin: 0px;";
-                   // mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
+                 //   mytbLine.Columns = 50;
+                  //  mytbLine.Attributes["class"] = "TBDoc"; // "width:100%;padding: 0px;margin: 0px;";
+
+                    mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;";
                     mytbLine.Enabled = attr.UIIsEnable;
-                    if (mytbLine.Enabled == false)
-                        mytbLine.Attributes["class"] = "TBReadonly";
+                    //if (mytbLine.Enabled == false)
+                    //    mytbLine.Attributes["class"] = "TBReadonly";
                     this.Pub1.Add(mytbLine);
 
+                    mytbLine.Attributes["width"] = "100%";
 
                     lab = this.Pub1.GetLabelByID("Lab" + attr.KeyOfEn);
                     string ctlID = mytbLine.ClientID;
