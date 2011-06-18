@@ -51,12 +51,6 @@ public partial class WF_UC_Forward : BP.Web.UC.UCBase3
 
         if (this.IsPostBack == false)
             this.BindLB();
-
-        //if (this.CheckBoxList1.Items.Count == 1)
-        //{
-        //    this.CheckBoxList1. = false;
-        //}
-
         this.TextBox1.Text = "";
     }
 
@@ -144,17 +138,14 @@ public partial class WF_UC_Forward : BP.Web.UC.UCBase3
                 fw.Insert();
             }
 
-
             this.Session["info"] = "@工作转发成功。";
             this.Response.Redirect("MyFlowInfo.aspx?DoType=Msg&FK_Flow=" + this.FK_Flow, true);
             return;
         }
         catch (Exception ex)
         {
-            //this.Alert(ex.Message);
-            //this.Response.Write(ex.Message);
             Log.DebugWriteWarning(ex.Message);
-            this.Alert("工作转发出错：" + ex.Message);
+            this.AddMsgOfWarning("工作转发出错：", ex.Message);
         }
     }
     public void BindLB()
