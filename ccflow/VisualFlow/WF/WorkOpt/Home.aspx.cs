@@ -49,7 +49,7 @@ public partial class WF_WorkOpt_Home : System.Web.UI.Page
                 {
                     this.Pub2.Add("<font color=green>Step:" + nd.Step + nd.Name);
                     //this.Pub2.Add("<BR>执行人:" + wl.FK_EmpText);
-                    this.Pub2.Add("<BR>: <img src='../DataUser/Siganture/" + wl.FK_Emp + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                    this.Pub2.Add("<BR>: <img src='./../../DataUser/Siganture/" + wl.FK_Emp + ".jpg' border=0 onerror=\"this.src='./../../DataUser/Siganture/UnName.jpg'\"/>");
 
                     this.Pub2.Add("<br>" + wl.RDT + "</font><hr>");
                     //this.Pub2.Add("<a href='WFRpt.aspx?WorkID=" + wl.WorkID + "&FID=0&FK_Flow=" + this.FK_Flow + "' target=_blank >详细..</a><hr>");

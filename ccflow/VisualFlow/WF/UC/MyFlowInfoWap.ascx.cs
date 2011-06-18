@@ -90,9 +90,7 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
         {
             s = s.Replace("@@", "@");
             s = s.Replace("@", "<BR>@");
-
-
-            this.Add("<div style='width:500px;align:center' >");
+            this.Add("<div style='width:500px;text-align:center'>");
             this.AddFieldSet(this.ToE("Note", "操作提示"), s);
             this.Add("</div>");
             return;

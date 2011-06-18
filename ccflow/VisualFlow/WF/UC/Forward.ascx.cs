@@ -111,10 +111,10 @@ public partial class WF_UC_Forward : BP.Web.UC.UCBase3
             }
             BP.WF.Node nd = new BP.WF.Node(nodeId);
             Work wk = nd.HisWork;
-           
-                wk.OID = this.WorkID;
-                wk.Retrieve();
-             
+
+            wk.OID = this.WorkID;
+            wk.Retrieve();
+
             wk.Emps = emps;
             wk.Update();
 
@@ -139,7 +139,10 @@ public partial class WF_UC_Forward : BP.Web.UC.UCBase3
             }
 
             this.Session["info"] = "@工作转发成功。";
-            this.Response.Redirect("MyFlowInfo.aspx?DoType=Msg&FK_Flow=" + this.FK_Flow, true);
+
+          //  this.AddMsgOfWarning("工作转发成功：", ex.Message);
+
+           this.Response.Redirect("MyFlowInfo.aspx?DoType=Msg&FK_Flow=" + this.FK_Flow, true);
             return;
         }
         catch (Exception ex)
@@ -180,4 +183,3 @@ public partial class WF_UC_Forward : BP.Web.UC.UCBase3
         }
     }
 }
-
