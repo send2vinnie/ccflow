@@ -10,9 +10,9 @@ namespace BP.Sys
     public class FrmAttachmentAttr : EntityMyPKAttr
     {
         /// <summary>
-        /// Text
+        /// Name
         /// </summary>
-        public const string Text = "Text";
+        public const string Name = "Name";
         /// <summary>
         /// 主表
         /// </summary>
@@ -30,13 +30,9 @@ namespace BP.Sys
         /// </summary>
         public const string W = "W";
         /// <summary>
-        /// H
+        /// Exts
         /// </summary>
-        public const string H = "H";
-        /// <summary>
-        /// URL
-        /// </summary>
-        public const string URL = "URL";
+        public const string Exts = "Exts";
     }
     /// <summary>
     /// 附件
@@ -44,18 +40,29 @@ namespace BP.Sys
     public class FrmAttachment : EntityMyPK
     {
         #region 属性
-        /// <summary>
-        /// URL
-        /// </summary>
-        public string URL
+        public string Name
         {
             get
             {
-                return this.GetValStringByKey(FrmAttachmentAttr.URL);
+                return this.GetValStringByKey(FrmAttachmentAttr.Name);
             }
             set
             {
-                this.SetValByKey(FrmAttachmentAttr.URL, value);
+                this.SetValByKey(FrmAttachmentAttr.Name, value);
+            }
+        }
+        /// <summary>
+        /// Exts
+        /// </summary>
+        public string Exts
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttachmentAttr.Exts);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.Exts, value);
             }
         }
         /// <summary>
@@ -84,20 +91,6 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(FrmAttachmentAttr.X, value);
-            }
-        }
-        /// <summary>
-        /// H
-        /// </summary>
-        public float H
-        {
-            get
-            {
-                return this.GetValFloatByKey(FrmAttachmentAttr.H);
-            }
-            set
-            {
-                this.SetValByKey(FrmAttachmentAttr.H, value);
             }
         }
         /// <summary>
@@ -162,15 +155,18 @@ namespace BP.Sys
                 map.EnDesc = "附件";
                 map.EnType = EnType.Sys;
                 map.AddMyPK();
-                map.AddTBString(FrmAttachmentAttr.FK_MapData, null, "FK_MapData", true, false, 1, 30, 20);
+
+                map.AddTBString(FrmAttachmentAttr.FK_MapData, null, 
+                    "FK_MapData", true, false, 1, 30, 20);
+
+                map.AddTBString(FrmAttachmentAttr.Name, null,"Name", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentAttr.Exts, null, "Exts", true, false, 0, 50, 20);
                 
                 map.AddTBFloat(FrmAttachmentAttr.X, 5, "X", true, false);
                 map.AddTBFloat(FrmAttachmentAttr.Y, 5, "Y", false, false);
 
-                map.AddTBFloat(FrmAttachmentAttr.H, 5, "H", true, false);
-                map.AddTBFloat(FrmAttachmentAttr.W, 5, "W", false, false);
+                map.AddTBFloat(FrmAttachmentAttr.W, 5, "TBWidth", false, false);
 
-                map.AddTBString(FrmAttachmentAttr.URL, "black", "URL", true, false, 0, 200, 20);
                 this._enMap = map;
                 return this._enMap;
             }

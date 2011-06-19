@@ -42,6 +42,15 @@ namespace BP.Sys
         /// 风格
         /// </summary>
         public const string BorderStyle = "BorderStyle";
+
+        /// <summary>
+        /// X
+        /// </summary>
+        public const string X = "X";
+        /// <summary>
+        /// Y
+        /// </summary>
+        public const string Y = "Y";
     }
     /// <summary>
     /// 线
@@ -166,6 +175,9 @@ namespace BP.Sys
 
                 map.AddMyPK();
                 map.AddTBString(FrmLineAttr.FK_MapData, null, "主表", true, false, 0, 30, 20);
+
+                map.AddTBFloat(FrmLineAttr.X, 5, "X", true, false);
+                map.AddTBFloat(FrmLineAttr.Y, 5, "Y", false, false);
 
                 map.AddTBFloat(FrmLineAttr.X1, 5, "X1", true, false);
                 map.AddTBFloat(FrmLineAttr.Y1, 5, "Y1", false, false);
