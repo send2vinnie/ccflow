@@ -45,7 +45,7 @@ namespace BP.WF
 	/// <summary>
 	/// 转发记录
 	/// </summary>
-	public class ForwardWork : Entity
+	public class ForwardWork : EntityMyPK
 	{		
 		#region 基本属性
         /// <summary>
@@ -168,15 +168,22 @@ namespace BP.WF
                 map.EnDesc = "转发记录";
                 map.EnType = EnType.App;
 
-                map.AddTBIntPK(ForwardWorkAttr.WorkID, 0, "工作ID", true, true);
-                map.AddTBIntPK(ForwardWorkAttr.NodeId, 0, "NodeId", true, true);
-                map.AddTBString(ForwardWorkAttr.Note, "", "Note", true, true, 0, 4000, 10);
-                map.AddTBString(ForwardWorkAttr.Emps, "", "Emps", true, true, 0, 4000, 10);
-                map.AddTBString(ForwardWorkAttr.FK_Emp, "", "FK_Emp", true, true, 0, 4000, 10);
+                map.AddMyPK();
+                map.AddTBInt(ForwardWorkAttr.WorkID, 0, "工作ID", true, true);
+                map.AddTBInt(ForwardWorkAttr.NodeId, 0, "NodeId", true, true);
+                map.AddTBString(ForwardWorkAttr.FK_Emp, null, "处理人", true, true, 0, 4000, 10);
+
+                map.AddTBString(ForwardWorkAttr.Note, null, "Note", true, true, 0, 4000, 10);
+                map.AddTBString(ForwardWorkAttr.Emps, null, "Emps", true, true, 0, 4000, 10);
                 map.AddBoolean(ForwardWorkAttr.IsTakeBack, false, "是否是收回", true, true);
                 this._enMap = map;
                 return this._enMap;
             }
+        }
+        protected override bool beforeUpdateInsertAction()
+        {
+            this.MyPK = this.WorkID + "_" + this.NodeId + "_" + this.FK_Emp;
+            return base.beforeUpdateInsertAction();
         }
 		#endregion	 
 	}

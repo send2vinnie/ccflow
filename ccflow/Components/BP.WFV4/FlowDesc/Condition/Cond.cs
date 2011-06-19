@@ -585,7 +585,7 @@ namespace BP.WF
                         if (en.IsPassed == false)
                             return false;
                 }
-                return true;
+                return false;
             }
         }
         public string MsgOfDesc
