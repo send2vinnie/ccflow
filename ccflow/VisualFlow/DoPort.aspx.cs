@@ -94,16 +94,16 @@ public partial class DoPort : System.Web.UI.Page
                     case "BP.WF.Flow":
                         Flow fl = new Flow(this.PK);
                         if (fl.HisFlowSheetType == FlowSheetType.DocFlow)
-                            this.Response.Redirect("./Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowDoc&PK=" + this.PK, true);
+                            this.Response.Redirect("./Comm/RefFunc/UIEn.aspx?EnName=BP.WF.Ext.FlowDoc&PK=" + this.PK, true);
                         else
-                            this.Response.Redirect("./Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + this.PK, true);
+                            this.Response.Redirect("./Comm/RefFunc/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + this.PK, true);
                         break;
                     case "BP.WF.Node":
                         Node nd = new Node(this.PK);
-                        this.Response.Redirect("./Comm/UIEn.aspx?EnName=BP.WF.Ext.NodeO&PK=" + this.PK, true);
+                        this.Response.Redirect("./Comm/RefFunc/UIEn.aspx?EnName=BP.WF.Ext.NodeO&PK=" + this.PK, true);
                         break;
                     default:
-                        this.Response.Redirect("./Comm/UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PK, true);
+                        this.Response.Redirect("./Comm/RefFunc/UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PK, true);
                         break;
                 }
                 break;
