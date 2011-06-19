@@ -1982,14 +1982,21 @@ namespace BP.WF
                 map.AddTBInt(NodeAttr.PassRate, 100, "通过率", true, true);
 
 
+                map.AddDDLSysEnum(NodeAttr.SignType, 0, "审核模式(对审核节点有效)", true, true, 
+                    NodeAttr.SignType, "@0=单签@1=汇签");
 
-                map.AddDDLSysEnum(NodeAttr.SignType, 0, "审核模式(对审核节点有效)", true, true, NodeAttr.SignType, "@0=单签@1=汇签");
-                map.AddDDLSysEnum(NodeAttr.RunModel, 0, "运行模式(对普通节点有效)", true, true, NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流");
+                map.AddDDLSysEnum(NodeAttr.RunModel, 0, "运行模式(对普通节点有效)", true, true,
+                    NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流");
 
 
-                map.AddDDLSysEnum(NodeAttr.FLRole, 0, "分流规则", true, true, NodeAttr.FLRole, "@0=按接受人@1=按部门@2=按岗位");
+                //map.AddDDLSysEnum(NodeAttr.FLRole, 0, "分流规则", true, true, 
+                //    NodeAttr.FLRole, "@0=按接受人@1=按部门@2=按岗位");
 
-                map.AddDDLSysEnum(NodeAttr.FJOpen, 0, "附件权限", true, true, NodeAttr.FJOpen, "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");
+                map.AddTBInt(NodeAttr.FLRole, 0, "分流规则", true, true);
+                map.AddTBInt(NodeAttr.FJOpen, 0, "附件权限", true, true);
+
+                //map.AddDDLSysEnum(NodeAttr.FJOpen, 0, "附件权限", true, true, NodeAttr.FJOpen,
+                //    "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");
 
                 // 流程的节点分为干流支流. FNType  @0=平面节点@1=干流@2=支流.
                 map.AddTBInt(NodeAttr.FNType, (int)FNType.Plane, "流程节点类型", false, false);
