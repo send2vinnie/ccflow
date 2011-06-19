@@ -27,8 +27,6 @@ namespace BP.Win32
         {
             return BP.Sys.Language.GetValByUserLang(no, chVal);
         }
-        //D:\市场\南京税通软件产品手册 
-
         public void ShowIt(System.Windows.Forms.Form parentFrm)
         {
             if (parentFrm == null)
