@@ -1057,8 +1057,11 @@ namespace BP.Web.UC
         }
         public void AlertMsg_Info(string title, string msg)
         {
-            this.Alert(msg, false);
+            this.AddMsgOfInfo(title, msg);
             return;
+
+            //this.Alert(msg, false);
+         //   return;
 
             this.LoadPop();
 
@@ -1079,6 +1082,9 @@ namespace BP.Web.UC
         }
         public void AlertMsg_Warning(string title, string msg)
         {
+            this.AddMsgOfWarning(title, msg);
+            return;
+
             this.Alert(msg, false);
             return;
 
