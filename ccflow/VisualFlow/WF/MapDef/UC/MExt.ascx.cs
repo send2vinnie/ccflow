@@ -417,7 +417,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         Button btn = new Button();
         btn.ID = "BtnSave";
         btn.Text = "Save";
-        btn.Click += new EventHandler(btn_SaveInputCheck_Click);
+        btn.Click += new EventHandler(btn_SavePopVal_Click);
         this.Pub2.AddTD("colspan=3", btn);
         this.Pub2.AddTREnd();
         this.Pub2.AddTableEnd();
@@ -776,14 +776,34 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         me.ExtType = this.ExtType;
         me.Doc = this.Pub2.GetTextBoxByID("TB_Doc").Text;
         me.AttrOfOper = this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal;
+
         me.Tag = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItemStringVal;
         me.Tag1 = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItem.Text;
+
         me.FK_MapData = this.FK_MapData;
         me.MyPK = this.FK_MapData + "_" + me.ExtType + "_" + me.AttrOfOper;
         me.Save();
         this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType +"&RefNo = "+this.RefNo, true);
     }
-    
+    void btn_SavePopVal_Click(object sender, EventArgs e)
+    {
+        MapExt me = new MapExt();
+        me.MyPK = this.MyPK;
+        if (me.MyPK.Length > 2)
+            me.RetrieveFromDBSources();
+        me = (MapExt)this.Pub2.Copy(me);
+        me.ExtType = this.ExtType;
+        me.Doc = this.Pub2.GetTextBoxByID("TB_Doc").Text;
+        me.AttrOfOper = this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal;
+
+        //me.Tag = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItemStringVal;
+        //me.Tag1 = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItem.Text;
+
+        me.FK_MapData = this.FK_MapData;
+        me.MyPK = this.FK_MapData + "_" + me.ExtType + "_" + me.AttrOfOper;
+        me.Save();
+        this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo = " + this.RefNo, true);
+    }
     void btn_SaveAutoFull_Click(object sender, EventArgs e)
     {
         MapExt me = new MapExt();

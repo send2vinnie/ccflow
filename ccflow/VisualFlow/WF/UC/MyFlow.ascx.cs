@@ -441,21 +441,21 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.ToolBar1.AddBtn("Btn_HandOver", this.ToE("HandOver", "移交"));
 
 
-           //this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
-           //this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\" alert('ss'); ymPrompt.win({message:'" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "',width:500,height:300,title:'ccflow',handler:handler,maxBtn:true,minBtn:true,iframe:true}); \" />");
+            //this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
+            //this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\" alert('ss'); ymPrompt.win({message:'" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "',width:500,height:300,title:'ccflow',handler:handler,maxBtn:true,minBtn:true,iframe:true}); \" />");
 
-          //  string url =  appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
-          //  this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"javascript:ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
+            //  string url =  appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
+            //  this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"javascript:ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
 
-          //  this.ToolBar1.Add("<a href=# onclick=\" ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \"  >sssss</a>");
+            //  this.ToolBar1.Add("<a href=# onclick=\" ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \"  >sssss</a>");
 
-           // this.ToolBar1.Add("<input type=button value='iframe弹窗' onclick=\"ymPrompt.win('http://www.163.com',500,300,'网易官方网站',handler,null,null,true);\" />");
+            // this.ToolBar1.Add("<input type=button value='iframe弹窗' onclick=\"ymPrompt.win('http://www.163.com',500,300,'网易官方网站',handler,null,null,true);\" />");
 
-          //  this.ToolBar1.Add("<input type=button value='iframe弹窗ddd' onclick=\" ymPrompt.win({message:'http://www.163.com',width:500,height:300,title:'网易官方网站',handler:handler,maxBtn:true,minBtn:true,iframe:true}) \" />");
+            //  this.ToolBar1.Add("<input type=button value='iframe弹窗ddd' onclick=\" ymPrompt.win({message:'http://www.163.com',width:500,height:300,title:'网易官方网站',handler:handler,maxBtn:true,minBtn:true,iframe:true}) \" />");
 
-         //   this.ToolBar1.Add("<a href=\"javascript:ymPrompt.win({message:'http://www.163.com',width:500,height:300,title:'网易官方网站',handler:handler,maxBtn:true,minBtn:true,iframe:true})\"  >sssss</a>");
+            //   this.ToolBar1.Add("<a href=\"javascript:ymPrompt.win({message:'http://www.163.com',width:500,height:300,title:'网易官方网站',handler:handler,maxBtn:true,minBtn:true,iframe:true})\"  >sssss</a>");
 
-         //   this.AlertMsg_Info
+            //   this.AlertMsg_Info
 
             this.ToolBar1.AddSpt("ad");
 
@@ -511,7 +511,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     this.ToolBar1.Add("<input type=button value='" + this.ToE("Adjunct", "附件") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/FileManager.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FJOpen=" + (int)currND.HisFJOpen + "&FID=" + this.FID + "','dds'); \" />");
             }
 
-            
             if (currND.HisFormType == FormType.SelfForm)
                 this.Btn_Save.Enabled = false;
             else

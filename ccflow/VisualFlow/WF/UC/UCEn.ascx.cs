@@ -1265,8 +1265,6 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion 输出控件.
 
-
-
             #region 输出明细.
             MapDtls dtls = new MapDtls(enName);
             foreach (MapDtl dtl in dtls)
@@ -1285,16 +1283,33 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
-            #endregion 输出明细.
-
-            #region 处理iFrom Save。
             string js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveDtl(dtl) { ";
             js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
-            #endregion 处理iFrom Save。
+            #endregion 输出明细.
+           
+
+            #region 输出附件
+            FrmAttachments aths = new FrmAttachments(enName);
+            foreach (FrmAttachment ath in aths)
+            {
+                float x = ath.X;
+                float y = ath.Y;
+                this.Add("<DIV id='FR" + ath.MyPK + "' style='position:absolute; left:" + x + "px; top:" + y + "px; width:" + ath.W + "px;text-align: left;' >");
+                this.Add("<span>");
+                FileUpload fu = new FileUpload();
+                fu.ID = "FU_" + ath.MyPK;
+                fu.Attributes["Width"] = ath.W.ToString()+"px";
+                fu.Attributes["ondbclick"] = "javascript:WinOpen('sina.com.cn');";
+                this.Add(fu);
+                this.Add("</span>");
+                this.Add("</DIV>");
+            }
+            #endregion 输出附件.
+          
 
             // 处理扩展.
             this.AfterBindEn_DealMapExt(enName, mattrs);
