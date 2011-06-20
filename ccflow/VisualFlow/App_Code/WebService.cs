@@ -431,19 +431,17 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         if (string.IsNullOrEmpty(fk_flow))
             return 0;
         Flow fl = new Flow(fk_flow);
-     
+
         try
         {
             BP.WF.Node nf = new BP.WF.Node(fl.DoNewNode(x, y).NodeID);
 
             nf.Name = nodeName;
             nf.Save();
-            return nf.NodeID ;
+            return nf.NodeID;
         }
         catch { return 0; }
-
     }
-
     /// <summary>
     /// 创建一个连接线
     /// </summary>
@@ -459,7 +457,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         try
         {
             dir.Insert();
-
             return true;
         }
         catch
@@ -493,9 +490,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string DoNewLabel(string fk_flow, int x, int y, string name, string lableId)
     {
-      
         LabNote lab = new LabNote();
-
         lab.FK_Flow = fk_flow;
         lab.X = x;
         lab.Y = y;
