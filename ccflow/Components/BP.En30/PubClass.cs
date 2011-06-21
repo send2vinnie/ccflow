@@ -24,7 +24,6 @@ namespace BP
 	/// </summary>
     public class EnExt
     {
-     
         ///   <summary>
         ///   判断一个字符串是否全部为英语字母组成的，如是返回true，否则返回false   
         ///   </summary>   
@@ -42,9 +41,9 @@ namespace BP
                 if (!(cQYMC[i] >= 97 && cQYMC[i] <= 122))
                     return false;
             }
-
             return true;
         }
+
 
         #region 用到ddl 的方法。
         public static string GetTextByValue(Entities ens, string no, string isNullAsVal)
@@ -434,6 +433,195 @@ namespace BP
 	/// </summary>
 	public class PubClass 
 	{
+        public static void InitFrm(string fk_mapdata)
+        {
+            // 删除数据.
+            FrmLabs labs = new FrmLabs();
+            labs.Delete(FrmLabAttr.FK_MapData, fk_mapdata);
+
+            FrmLines lines = new FrmLines();
+            lines.Delete(FrmLabAttr.FK_MapData, fk_mapdata);
+
+            MapData md = new MapData(fk_mapdata);
+            MapAttrs mattrs = new MapAttrs(fk_mapdata);
+            GroupFields gfs = new GroupFields(fk_mapdata);
+
+            int tableW = 700;
+            int padingLeft = 3;
+            int leftCtrlX = 700 / 100 * 20;
+            int rightCtrlX = 700 / 100 * 60;
+
+            string keyID = DateTime.Now.ToString("yyMMddhhmmss");
+            // table 标题。
+            int currX = 0;
+            int currY = 0;
+            FrmLab lab = new FrmLab();
+            lab.Text = md.Name;
+            lab.FontSize = 20;
+            lab.X = 200;
+            currY += 30;
+            lab.Y = currY;
+            lab.FK_MapData = fk_mapdata;
+            lab.FontWeight = "Bold";
+            lab.MyPK = "Lab"+keyID + "1";
+            lab.Insert();
+
+            // 表格头部的横线.
+            currY += 20;
+            FrmLine lin = new FrmLine();
+            lin.X1 = 0;
+            lin.X2 = tableW;
+            lin.Y1 = currY;
+            lin.Y2 = currY;
+            lin.BorderWidth = 2;
+            lin.FK_MapData = fk_mapdata;
+            lin.MyPK = "Lin"+keyID + "1";
+            lin.Insert();
+            currY += 5;
+
+            bool isLeft = false;
+            int i = 2;
+            foreach (GroupField gf in gfs)
+            {
+                i++;
+                lab = new FrmLab();
+                lab.X = 0;
+                lab.Y = currY;
+                lab.Text = gf.Lab;
+                lab.FK_MapData = fk_mapdata;
+                lab.FontWeight = "Bold";
+                lab.MyPK = "Lab" + keyID + i.ToString();
+                lab.Insert();
+
+                currY += 15;
+                lin = new FrmLine();
+                lin.X1 = padingLeft;
+                lin.X2 = tableW;
+                lin.Y1 = currY;
+                lin.Y2 = currY;
+                lin.FK_MapData = fk_mapdata;
+                lin.BorderWidth = 3;
+                lin.MyPK = "Lin" + keyID + i.ToString();
+                lin.Insert();
+
+                isLeft = true;
+                int idx = 0;
+                foreach (MapAttr attr in mattrs)
+                {
+                    if (gf.OID != attr.GroupID || attr.UIVisible == false)
+                        continue;
+
+                    idx++;
+                    if (isLeft)
+                    {
+                        lin = new FrmLine();
+                        lin.X1 = 0;
+                        lin.X2 = tableW;
+                        lin.Y1 = currY;
+                        lin.Y2 = currY;
+                        lin.FK_MapData = fk_mapdata;
+                        lin.MyPK = "Lin" + keyID + i.ToString() + idx;
+                        lin.Insert();
+                        currY += 14; /* 画一横线 .*/
+
+                        lab = new FrmLab();
+                        lab.X = lin.X1 + padingLeft;
+                        lab.Y = currY;
+                        lab.Text = attr.Name;
+                        lab.FK_MapData = fk_mapdata;
+                        lab.MyPK = "Lab" + keyID + i.ToString() + idx;
+                        lab.Insert();
+
+                        lin = new FrmLine();
+                        lin.X1 = leftCtrlX;
+                        lin.Y1 = currY - 14;
+
+                        lin.X2 = leftCtrlX;
+                        lin.Y2 = currY;
+                        lin.FK_MapData = fk_mapdata;
+                        lin.MyPK = "Lin" + keyID + i.ToString() + idx + "R";
+                        lin.Insert(); /*画一 竖线 */
+
+                        attr.X = leftCtrlX + padingLeft;
+                        attr.Y = currY - 3;
+                        attr.UIWidth = 150;
+                        attr.Update();
+                        currY += 14;
+                    }
+                    else
+                    {
+                        currY = currY - 14;
+                        lab = new FrmLab();
+                        lab.X = tableW / 2 + padingLeft;
+                        lab.Y = currY;
+                        lab.Text = attr.Name;
+                        lab.FK_MapData = fk_mapdata;
+                        lab.MyPK = "Lab" + keyID + i.ToString() + idx;
+                        lab.Insert();
+
+                        lin = new FrmLine();
+                        lin.X1 = tableW / 2;
+                        lin.Y1 = currY - 14;
+
+                        lin.X2 = tableW / 2;
+                        lin.Y2 = currY;
+                        lin.FK_MapData = fk_mapdata;
+                        lin.MyPK = "Lin" + keyID + i.ToString() + idx;
+                        lin.Insert(); /*画一 竖线 */
+
+                        lin = new FrmLine();
+                        lin.X1 = rightCtrlX;
+                        lin.Y1 = currY - 14;
+                        lin.X2 = rightCtrlX;
+                        lin.Y2 = currY;
+                        lin.FK_MapData = fk_mapdata;
+                        lin.MyPK = "Lin" + keyID + i.ToString() + idx + "R";
+                        lin.Insert(); /*画一 竖线 */
+
+                        attr.X = rightCtrlX + padingLeft;
+                        attr.Y = currY - 3;
+                        attr.UIWidth = 150;
+                        attr.Update();
+                        currY += 14;
+                    }
+                    isLeft = !isLeft;
+                }
+            }
+            // table bottom line.
+            lin = new FrmLine();
+            lin.X1 = 0;
+            lin.Y1 = currY;
+
+            lin.X2 = tableW;
+            lin.Y2 = currY;
+            lin.FK_MapData = fk_mapdata;
+            lin.BorderWidth = 3;
+            lin.MyPK = "Lin" + keyID + "eR";
+            lin.Insert();
+
+            currY = currY - 28 - 18;
+            // 处理结尾. table left line
+            lin = new FrmLine();
+            lin.X1 = 0;
+            lin.Y1 = 50;
+            lin.X2 = 0;
+            lin.Y2 = currY;
+            lin.FK_MapData = fk_mapdata;
+            lin.BorderWidth = 3;
+            lin.MyPK = "Lin" + keyID + "eRr";
+            lin.Insert();
+
+            // table right line.
+            lin = new FrmLine();
+            lin.X1 = tableW;
+            lin.Y1 = 50;
+            lin.X2 = tableW;
+            lin.Y2 = currY;
+            lin.FK_MapData = fk_mapdata;
+            lin.BorderWidth = 3;
+            lin.MyPK = "Lin" + keyID + "eRr4";
+            lin.Insert();
+        }
         public static String ColorToStr(System.Drawing.Color color)
         {
             try
