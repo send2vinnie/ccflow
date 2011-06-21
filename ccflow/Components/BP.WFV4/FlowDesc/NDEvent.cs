@@ -333,17 +333,19 @@ namespace BP.WF
             //doc = doc.Replace("@UserName", BP.Web.WebUser.Name);
             //doc = doc.Replace("@SID", BP.Web.WebUser.SID);
             //doc = doc.Replace("@UserDept", BP.Web.WebUser.FK_Dept);
-
             // doc += "&FK_Flow=" + nev.FK_Node.ToString();
-            doc += "&FK_Flow=" + nev.FK_Flow.ToString();
-            doc += "&FK_Node=" + nev.FK_Node.ToString();
-            doc += "&WorkID=" + wk.OID.ToString();
-            doc += "&FID=" + wk.FID.ToString();
-            doc += "&UserNo=" + WebUser.No;
-            doc += "&SID=" + WebUser.SID;
-            doc += "&FK_Dept=" + WebUser.FK_Dept;
-            doc += "&FK_Unit=" + WebUser.FK_Unit;
 
+            if (nev.HisDoType != EventDoType.SQL)
+            {
+                doc += "&FK_Flow=" + nev.FK_Flow.ToString();
+                doc += "&FK_Node=" + nev.FK_Node.ToString();
+                doc += "&WorkID=" + wk.OID.ToString();
+                doc += "&FID=" + wk.FID.ToString();
+                doc += "&UserNo=" + WebUser.No;
+                doc += "&SID=" + WebUser.SID;
+                doc += "&FK_Dept=" + WebUser.FK_Dept;
+                doc += "&FK_Unit=" + WebUser.FK_Unit;
+            }
             #endregion 处理执行内容
 
             switch (nev.HisDoType)
