@@ -59,7 +59,7 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(this.ToE("TableName", "表中文名称"));
+        this.Ucsys1.AddTD(this.ToE("TableEName", "表英文名称"));
         BP.Web.Controls.TB tb = new BP.Web.Controls.TB();
         tb.ID = "TB_No";
         tb.Text = en.No;
