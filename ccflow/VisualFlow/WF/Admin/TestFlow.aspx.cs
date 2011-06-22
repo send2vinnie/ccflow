@@ -41,11 +41,11 @@ public partial class WF_Admin_TestFlow : WebPage
         if (this.FK_Flow == null)
         {
             BP.WF.Flows fls = new BP.WF.Flows();
-            fls.RetrieveAll();
+            fls.RetrieveAllFromDBSource();
 
             this.Left.AddFieldSet("List");
             FlowSorts fss = new FlowSorts();
-            fss.RetrieveAll();
+            fss.RetrieveAllFromDBSource();
 
             string FlowChart = this.ToE("FlowChart", "流程图");
             string FlowProperty = this.ToE("FlowProperty", "流程属性");
