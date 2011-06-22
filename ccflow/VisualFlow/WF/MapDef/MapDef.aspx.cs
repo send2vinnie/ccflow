@@ -43,7 +43,6 @@ public partial class WF_MapDef_MapDef : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-
         MapData md = new MapData(this.MyPK);
         MapAttrs mattrs = new MapAttrs(md.No);
         int count = mattrs.Count;
@@ -827,10 +826,56 @@ public partial class WF_MapDef_MapDef : WebPage
 
     public string GenerLab(MapAttr attr, int idx, int i, int count)
     {
+        string divAttr = " onmouseover=FieldOnMouseOver('" + attr.MyPK + "') onmouseout=FieldOnMouseOut('" + attr.MyPK + "') ";
+        string lab = attr.Name;
+        if (attr.MyDataType == DataType.AppBoolean && attr.UIIsLine)
+            lab = "编辑";
+
+        bool isLeft = true;
+        if (i == 1)
+            isLeft = false;
+
+        if (attr.HisEditType == EditType.Edit || attr.HisEditType == EditType.UnDel)
+        {
+            switch (attr.LGType)
+            {
+                case FieldTypeS.Normal:
+                    lab = "<a  href=\"javascript:Edit('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
+                    break;
+                case FieldTypeS.FK:
+                    lab = "<a  href=\"javascript:EditTable('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
+                    break;
+                case FieldTypeS.Enum:
+                    lab = "<a  href=\"javascript:EditEnum('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            lab = attr.Name;
+        }
+
+        if (idx == 0)
+        {
+            /*第一个。*/
+            return "<div " + divAttr + " >" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Right.gif' class='Arrow' alt='向右动顺序' border=0/></a></div>";
+        }
+
+        if (idx == count - 1)
+        {
+            /*到数第一个。*/
+            return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动顺序' class='Arrow' border=0/></a>" + lab + "</div>";
+        }
+        return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向下移动顺序' class='Arrow' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动顺序' class='Arrow' border=0/></a></div>";
+    }
+
+    public string GenerLab_Mover(MapAttr attr, int idx, int i, int count)
+    {
         string divAttr = " onDragEnd=onDragEndF('" + attr.MyPK + "','" + attr.GroupID + "');  onDrag=onDragF('" + attr.MyPK + "','" + attr.GroupID + "'); ";
        
         divAttr +=" onDragOver=FieldOnMouseOver('" + attr.MyPK + "','" + attr.GroupID + "');  onDragEnter=FieldOnMouseOver('" + attr.MyPK + "','" + attr.GroupID + "'); ";
-
         divAttr += " onDragLeave=FieldOnMouseOut();";
 
         //divAttr += " onDragLeave=FieldOnMouseOut('" + attr.MyPK + "','" + attr.GroupID + "');";
