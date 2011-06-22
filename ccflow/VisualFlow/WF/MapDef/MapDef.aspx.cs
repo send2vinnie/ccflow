@@ -824,7 +824,7 @@ public partial class WF_MapDef_MapDef : WebPage
     public bool isLeftNext = true;
     #endregion varable.
 
-    public string GenerLab(MapAttr attr, int idx, int i, int count)
+    public string GenerLab_arr(MapAttr attr, int idx, int i, int count)
     {
         string divAttr = " onmouseover=FieldOnMouseOver('" + attr.MyPK + "') onmouseout=FieldOnMouseOut('" + attr.MyPK + "') ";
         string lab = attr.Name;
@@ -871,10 +871,9 @@ public partial class WF_MapDef_MapDef : WebPage
         return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向下移动顺序' class='Arrow' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动顺序' class='Arrow' border=0/></a></div>";
     }
 
-    public string GenerLab_Mover(MapAttr attr, int idx, int i, int count)
+    public string GenerLab(MapAttr attr, int idx, int i, int count)
     {
         string divAttr = " onDragEnd=onDragEndF('" + attr.MyPK + "','" + attr.GroupID + "');  onDrag=onDragF('" + attr.MyPK + "','" + attr.GroupID + "'); ";
-       
         divAttr +=" onDragOver=FieldOnMouseOver('" + attr.MyPK + "','" + attr.GroupID + "');  onDragEnter=FieldOnMouseOver('" + attr.MyPK + "','" + attr.GroupID + "'); ";
         divAttr += " onDragLeave=FieldOnMouseOut();";
 
@@ -910,18 +909,32 @@ public partial class WF_MapDef_MapDef : WebPage
             lab = attr.Name;
         }
 
+
         if (idx == 0)
         {
             /*第一个。*/
-            return "<div " + divAttr + " >" + lab + "</div>";
+            return "<div " + divAttr + " >" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Right.gif' class='Arrow' alt='向右动顺序' border=0/></a></div>";
         }
 
         if (idx == count - 1)
         {
             /*到数第一个。*/
-            return "<div " + divAttr + " >" + lab + "</div>";
+            return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动顺序' class='Arrow' border=0/></a>" + lab + "</div>";
         }
-        return "<div " + divAttr + " >" + lab + "</div>";
+        return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向下移动顺序' class='Arrow' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动顺序' class='Arrow' border=0/></a></div>";
+
+        //if (idx == 0)
+        //{
+        //    /*第一个。*/
+        //    return "<div " + divAttr + " >" + lab + "</div>";
+        //}
+
+        //if (idx == count - 1)
+        //{
+        //    /*到数第一个。*/
+        //    return "<div " + divAttr + " >" + lab + "</div>";
+        //}
+        //return "<div " + divAttr + " >" + lab + "</div>";
     }
     public string GenerLab_bak(MapAttr attr, int idx, int i, int count)
     {
