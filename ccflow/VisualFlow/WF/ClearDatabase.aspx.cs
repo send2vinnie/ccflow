@@ -56,7 +56,6 @@ namespace BP.Web.WF.WF
                 this.ToErrorPage("非法用户。");
                 return;
             }
-
             Button2.Attributes["onclick"] = "return window.confirm('您确定要删除吗？');";
             Button3.Attributes["onclick"] = "return window.confirm('您确定要删除吗？');";
         }
@@ -160,6 +159,7 @@ namespace BP.Web.WF.WF
             DA.DBAccess.RunSQL("DELETE FROM WF_FlowNode");
 
             //   DA.DBAccess.RunSQL("DELETE FROM WF_FlowCompleteCondition");
+
             DA.DBAccess.RunSQL("DELETE FROM WF_FAppSet");
             DA.DBAccess.RunSQL("DELETE FROM WF_ExpDtl");
             DA.DBAccess.RunSQL("DELETE FROM WF_Exp");
@@ -177,7 +177,6 @@ namespace BP.Web.WF.WF
             //DA.DBAccess.RunSQL("DELETE FROM WF_FlowNode");
             //DA.DBAccess.RunSQL("DELETE FROM WF_FlowNode");
 
-
             MapDatas mds = new MapDatas();
             mds.RetrieveAll();
             foreach (MapData md in mds)
@@ -190,8 +189,6 @@ namespace BP.Web.WF.WF
                 {
                 }
             }
-
-
             MapDtls dtls = new MapDtls();
             dtls.RetrieveAll();
             foreach (MapDtl dtl in dtls)
@@ -204,11 +201,11 @@ namespace BP.Web.WF.WF
                 {
                 }
             }
-
             DA.DBAccess.RunSQL("DELETE FROM Sys_MapDtl");
             DA.DBAccess.RunSQL("DELETE FROM Sys_MapData");
             DA.DBAccess.RunSQL("DELETE FROM Sys_MapAttr");
             DA.DBAccess.RunSQL("DELETE FROM Sys_GroupField");
+            this.Alert("你需要手工的执行 iisreset 命令!!!, 清除缓存数据，退出设计器，重新进入。");
         }
     }
 }
