@@ -1014,11 +1014,11 @@ namespace BP.DA
             ens.Add(paraKey2, val2);
             return RunSQL(sql, ens);
         }
-        public static int RunSQL(string sql,Paras paras)
+        public static int RunSQL(string sql, Paras paras)
         {
             RunSQLReturnTableCount++;
 
-         //   Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "===RunSQLReturnTable sql=" + sql);
+            //   Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "===RunSQLReturnTable sql=" + sql);
 
             if (sql == null || sql.Trim() == "")
                 return 1;
@@ -1032,22 +1032,22 @@ namespace BP.DA
                     case DBType.Oracle9i:
                         return RunSQL_200705_Ora(sql, paras);
                     case DBType.Access:
-                        return RunSQL_200705_OLE(sql,paras);
+                        return RunSQL_200705_OLE(sql, paras);
                     default:
                         throw new Exception("发现未知的数据库连接类型！");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string msg = "";
 
                 string mysql = sql.Clone() as string;
                 foreach (Para p in paras)
                 {
-                    msg += "@"+p.ParaName+"  val=" +p.val+" type="+p.DAType.ToString() ;
-                    mysql = mysql.Replace(":" + p.ParaName+",", "'"+p.val+"'");
+                    msg += "@" + p.ParaName + "  val=" + p.val + " type=" + p.DAType.ToString();
+                    mysql = mysql.Replace(":" + p.ParaName + ",", "'" + p.val + "'");
                 }
-                throw new Exception(ex.Message + " Paras="+msg +"<hr>"+mysql );
+                throw new Exception(ex.Message + " Paras=" + msg + "<hr>" + mysql);
             }
         }
         private static int RunSQL_200705_SQL(string sql)
