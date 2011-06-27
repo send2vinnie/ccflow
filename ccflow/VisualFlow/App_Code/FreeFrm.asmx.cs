@@ -43,7 +43,7 @@ namespace FreeFrm.Web
             {
              //   string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\Temp\\" + fk_mapdata + ".xml";
                 string path =@"D:\ccflow\VisualFlow\Temp\" + fk_mapdata + ".xml";
-                this.GenerFrm(fk_mapdata);
+                this.GenerFrm(fk_mapdata,0);
                 ds.WriteXml(path);
                 return null;
             }
@@ -169,14 +169,35 @@ namespace FreeFrm.Web
             }
             return Connector.ToXml(ds);
         }
+
+        #region 产生 page 菜单
+        public void InitFrm(string fk_mapdata)
+        {
+            try
+            {
+                BP.PubClass.InitFrm(fk_mapdata);
+            }
+            catch (Exception ex)
+            {
+                FrmLines lines = new FrmLines();
+                lines.Delete(FrmLabAttr.FK_MapData, fk_mapdata);
+                throw ex;
+            }
+        }
         private DataSet ds = null;
+       
         /// <summary>
         /// 获取一个Frm
         /// </summary>
-        /// <param name="xml"></param>
+        /// <param name="fk_mapdata"></param>
+        /// <param name="workID"></param>
         /// <returns></returns>
         [WebMethod]
-        public string GenerFrm(string fk_mapdata)
+        public string GenerFrm(string fk_mapdata,int workID)
+        {
+            return _GenerFrm(fk_mapdata, workID);
+        }
+        private string _GenerFrm(string fk_mapdata,int workID)
         {
             ds = new DataSet();
             // line.
@@ -184,6 +205,11 @@ namespace FreeFrm.Web
             DataTable dt = lins.ToDataTableField();
             dt.TableName = "Sys_FrmLine";
             ds.Tables.Add(dt);
+            if (lins.Count == 0)
+            {
+                this.InitFrm(fk_mapdata);
+                return _GenerFrm(fk_mapdata,workID);
+            }
 
             // link.
             BP.Sys.FrmLinks liks = new BP.Sys.FrmLinks(fk_mapdata);
@@ -219,24 +245,41 @@ namespace FreeFrm.Web
             qo.AddWhereNotIn(BP.Sys.MapAttrAttr.KeyOfEn,
                 "'BillNo','CDT','Emps','FID','FK_NY','MyNum','NodeState','OID','RDT','Rec','WFLog','WFState'");
             qo.DoQuery();
-
-            DataTable dtattrs = attrs.ToDataTableField();
-            dtattrs.TableName = "Sys_MapAttr";
-            ds.Tables.Add(dtattrs);
+            ds.Tables.Add(attrs.ToDataTableField("Sys_MapAttr"));
 
             // MapDtl
             BP.Sys.MapDtls dtls = new BP.Sys.MapDtls(fk_mapdata);
-            DataTable dtDtl = dtls.ToDataTableField();
-            dtDtl.TableName = "Sys_MapDtl";
-            ds.Tables.Add(dtDtl);
+            ds.Tables.Add(dtls.ToDataTableField("Sys_MapDtl"));
+             
 
             // Map2m
             BP.Sys.MapM2Ms m2ms = new BP.Sys.MapM2Ms(fk_mapdata);
-            DataTable dtM2m = m2ms.ToDataTableField();
-            dtM2m.TableName = "Sys_MapM2M";
-            ds.Tables.Add(dtM2m);
+            ds.Tables.Add(m2ms.ToDataTableField("Sys_MapM2M"));
+             
+
+            // Map2m
+            BP.Sys.FrmAttachments fjs = new BP.Sys.FrmAttachments(fk_mapdata);
+            ds.Tables.Add(fjs.ToDataTableField("Sys_FrmAttachment"));
+             
+
+            // MapExt
+            BP.Sys.MapExts exts = new BP.Sys.MapExts(fk_mapdata);
+            ds.Tables.Add(exts.ToDataTableField("Sys_MapExt"));
+
+            // MapData
+            BP.Sys.MapDatas mdatas = new BP.Sys.MapDatas();
+            mdatas.Retrieve(MapDataAttr.No, fk_mapdata);
+            DataTable DTmdatas = mdatas.ToDataTableField("Sys_MapData");
+            ds.Tables.Add(DTmdatas);
+
+            //// MapData
+            //BP.Sys.MapDatas enData = new BP.Sys.MapDatas();
+            //mdatas.Retrieve(MapDataAttr.No, fk_mapdata);
+            //ds.Tables.Add(mdatas.ToDataTableField("Sys_MapData"));
             return Connector.ToXml(ds);
         }
+        #endregion 产生 frm
+
         private string DealPK(string pk, string fromMapdata, string toMapdata)
         {
             if (pk.Contains("*" + fromMapdata))
@@ -403,8 +446,10 @@ namespace FreeFrm.Web
                 mym2m.Insert();
             }
             #endregion 删除现有的当前节点数据. 并查询出来from节点数据.
+
             return "copy ok.";
         }
+
         [WebMethod]
         public string SaveFrm(string xml, string sqls)
         {
@@ -449,6 +494,12 @@ namespace FreeFrm.Web
             }
 
             string tableName = dt.TableName.Replace("CopyOf", "");
+
+            if (tableName == "Sys_MapData")
+            {
+                int i = 0;
+            }
+
             #region gener sql.
             //生成updataSQL.
             string updataSQL = "UPDATE " + tableName + " SET ";

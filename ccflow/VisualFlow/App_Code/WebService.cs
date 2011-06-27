@@ -14,6 +14,8 @@ using Silverlight.DataSetConnector;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using Node = BP.WF.Node;
+
 /// <summary>
 ///WebService 的摘要说明
 /// </summary>
@@ -146,7 +148,7 @@ public class WebService : System.Web.Services.WebService {
                 url = "/WF/MapDef/WFRpt.aspx?PK=ND" + int.Parse(fk_flow) + "Rpt";
                 break;
             case "MapDef": //定义表单.
-                url = "/WF/MapDef/MapDef.aspx?PK=ND" + node1;
+                url = "/WF/MapDef/MapDef.aspx?PK=ND" + node1 + "&FK_Node=" + node1;
                 break;
             case "Dir": // 方向。
                 url = "/WF/Admin/Cond.aspx?FK_Flow=" + fk_flow + "&FK_MainNode=" + node1 + "&FK_Node=" + node1 + "&ToNodeID=" + node2 + "&CondType=2";
@@ -431,17 +433,19 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         if (string.IsNullOrEmpty(fk_flow))
             return 0;
         Flow fl = new Flow(fk_flow);
-
+     
         try
         {
             BP.WF.Node nf = new BP.WF.Node(fl.DoNewNode(x, y).NodeID);
 
             nf.Name = nodeName;
             nf.Save();
-            return nf.NodeID;
+            return nf.NodeID ;
         }
         catch { return 0; }
+
     }
+
     /// <summary>
     /// 创建一个连接线
     /// </summary>
@@ -457,6 +461,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         try
         {
             dir.Insert();
+
             return true;
         }
         catch
@@ -490,7 +495,9 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string DoNewLabel(string fk_flow, int x, int y, string name, string lableId)
     {
+      
         LabNote lab = new LabNote();
+
         lab.FK_Flow = fk_flow;
         lab.X = x;
         lab.Y = y;
@@ -526,10 +533,21 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     /// <param name="fk_flowSort">流程类别编号</param>
     /// <param name="path">模板文件路径</param>
     [WebMethod(EnableSession = true)]
-    public void FlowTemplete_Load(string fk_flowSort, string path, bool islogin)
+    public string FlowTemplete_Load(string fk_flowSort, string path, bool islogin)
     {
-        LetAdminLogin("CH", islogin);
-        Flow.DoLoadFlowTemplate(fk_flowSort,path); 
+        try
+        {
+            LetAdminLogin("CH", islogin);
+            var result = Flow.DoLoadFlowTemplate(fk_flowSort, path);
+
+            return string.Format("{0},{1},{2}", fk_flowSort, result.No, result.Name);
+        }
+        catch (Exception ex)
+        {
+
+            return ex.Message;
+        }
+     
     }
     /// <summary>
     /// 根据工作流取连线
@@ -575,6 +593,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
             BP.DA.DBAccess.RunSQL(sql);
         }
     }
+
     /// <summary>
     /// 保存结点
     /// </summary>
@@ -582,40 +601,69 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <param name="nodeName"></param>
+    /// <param name="nodeType"></param>
     [WebMethod(EnableSession = true)]
-    public void DoSaveFlowNode(int nodeID, int x, int y, string nodeName,bool islogin)
+    public void DoSaveFlowNode(int nodeID, int x, int y, string nodeName, int nodeType, bool islogin)
     {
         LetAdminLogin("CH", islogin);
         BP.WF.Node n;
+
         if (!string.IsNullOrEmpty( nodeID.ToString()) )
         {
             n = new BP.WF.Node(nodeID);
 
-            n.Name = nodeName;
-            n.X = x;
-            n.Y = y;
-            try
-            {
-                n.Save();
-            }
-            catch { }
+            setNodeProperties(n, nodeName, x, y, nodeType);
 
+            n.Save();
         }
         else
         {
             n = new BP.WF.Node();
 
-            n.Name = nodeName;
-            n.X = x;
-            n.Y = y;
-            try
-            {
-                n.Insert();
-            }
-            catch { }
-
+            setNodeProperties(n, nodeName, x, y, nodeType);
+             
+            n.Insert();
         }
     }
+
+    private void setNodeProperties(Node n, string nodeName, int x, int y, int nodeType)
+    {
+        n.Name = nodeName;
+        n.X = x;
+        n.Y = y;
+
+        if(0 == nodeType)
+        {
+            n.NodePosType = NodePosType.Start;
+        }
+        else if( 2 == nodeType)
+        {
+            n.NodePosType = NodePosType.End;
+        }
+        else if( 1 == nodeType)
+        {
+            n.NodePosType = NodePosType.Mid;
+            n.HisNodeWorkType = NodeWorkType.Work;
+        }
+        else if( 3 == nodeType)
+        {
+            n.NodePosType = NodePosType.Mid;
+            n.HisNodeWorkType = NodeWorkType.WorkHL;
+        }
+
+        else if (4 == nodeType)
+        {
+            n.NodePosType = NodePosType.Mid;
+            n.HisNodeWorkType = NodeWorkType.WorkFL;
+        }
+
+        else if (5 == nodeType)
+        {
+            n.NodePosType = NodePosType.Mid;
+            n.HisNodeWorkType = NodeWorkType.WorkFHL;
+        }
+    }
+
     [WebMethod]
     public string Uploadfile(byte[] FileByte, string fileName)
     {
