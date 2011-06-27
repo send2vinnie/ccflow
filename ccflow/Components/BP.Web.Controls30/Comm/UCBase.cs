@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using BP.WF;
+using BP.Sys;
 using BP.En;
 using BP.Web.Controls;
 using BP.DA;
@@ -397,6 +398,36 @@ namespace BP.Web.UC
                                 en.SetValByKey(attr.Key, 1);
                             else
                                 en.SetValByKey(attr.Key, 0);
+                        }
+                        break;
+                    case UIContralType.RadioBtn:
+                        if (attr.IsEnum)
+                        {
+                            SysEnums ses = new SysEnums(attr.UIBindKey);
+                            foreach (SysEnum se in ses)
+                            {
+                                string id = "RB_" + attr.Key + "_" + se.IntKey;
+                                RadioButton rb = this.GetRBLByID(id);
+                                if (rb != null && rb.Checked)
+                                {
+                                    en.SetValByKey(attr.Key, se.IntKey);
+                                    break;
+                                }
+                            }
+                        }
+                        if (attr.MyFieldType == FieldType.FK)
+                        {
+                            Entities ens = BP.DA.ClassFactory.GetEns(attr.UIBindKey);
+                            ens.RetrieveAll();
+                            foreach (Entity enNoName in ens)
+                            {
+                                RadioButton rb = this.GetRBLByID(attr.Key + "_" + enNoName.GetValStringByKey(attr.UIRefKeyValue));
+                                if (rb != null && rb.Checked)
+                                {
+                                    en.SetValByKey(attr.Key, enNoName.GetValStrByKey(attr.UIRefKeyValue));
+                                    break;
+                                }
+                            }
                         }
                         break;
                     default:
@@ -839,9 +870,9 @@ namespace BP.Web.UC
         {
             return (TextBox)this.FindControl(key);
         }
-        public BP.Web.Controls.BPRadioButtonList GetRBLByID(string id)
+        public RadioButton GetRBLByID(string id)
         {
-            return (BP.Web.Controls.BPRadioButtonList)this.FindControl(id);
+            return this.FindControl(id) as RadioButton;
         }
         public RadioButtonList GetRadioButtonListByID(string id)
         {
