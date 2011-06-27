@@ -505,7 +505,9 @@ namespace BP.WF
                 map.AddTBString(CondAttr.FK_Flow, null, "流程", true, true, 0, 60, 20);
 
                 map.AddTBInt(CondAttr.NodeID, 0, "发生的事件", true, true);
+
                 map.AddTBInt(CondAttr.FK_Node, 0, "节点ID", true, true);
+
 
               //  map.AddTBInt(CondAttr.FK_Attr, 0, "属性ID", true, true);
 

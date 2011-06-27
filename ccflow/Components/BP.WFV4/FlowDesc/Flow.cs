@@ -461,9 +461,7 @@ namespace BP.WF
                         }
                     }
                 }
-
                 msg += "<br>";
-
                 //对单据进行检查。
                 BillTemplates Bills = nd.HisBillTemplates;
                 if (Bills.Count == 0)
@@ -537,6 +535,20 @@ namespace BP.WF
                     }
                 }
                 msg += "<br>";
+
+                #region 检查是否有方向条件
+                if (nd.HisToNodes.Count >= 2)
+                {
+                    foreach (Node cND in nd.HisToNodes)
+                    {
+                        string sql = "SELECT COUNT(*) FROM WF_Cond WHERE NodeID='"+nd.NodeID+"' AND ToNodeID='"+cND.NodeID+"'";
+                        if (DBAccess.RunSQLReturnValInt(sql) == 0)
+                        {
+                            msg += "<br><font color=red>@从节点{"+nd.Name+"}到节点{"+cND.Name+"},没有设置方向条件，请在方向线上点右键设置方向条件。</font>";
+                        }
+                    }
+                }
+                #endregion 检查是否有方向条件
             }
             #endregion
 

@@ -599,6 +599,15 @@ namespace BP.WF
                     else
                         this.HisNodeWorkType = NodeWorkType.WorkHL;
                     break;
+                case RunModel.FHL:
+                    if (this.IsStartNode)
+                        throw new Exception("@您不能设置开始节点为分合流节点。");
+                    else
+                        this.HisNodeWorkType = NodeWorkType.WorkFHL;
+                    break;
+                default:
+                    throw new Exception("eeeee");
+                    break;
             }
 
 

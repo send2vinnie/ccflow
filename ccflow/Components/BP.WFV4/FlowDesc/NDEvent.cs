@@ -166,11 +166,12 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(NDEventAttr.DoDoc);
+                return this.GetValStringByKey(NDEventAttr.DoDoc).Replace("~","'");
             }
             set
             {
-                this.SetValByKey(NDEventAttr.DoDoc, value);
+                string doc = value.Replace("'","~");
+                this.SetValByKey(NDEventAttr.DoDoc, doc);
             }
         }
         /// <summary>
@@ -259,9 +260,9 @@ namespace BP.WF
 
                 map.AddTBInt(NDEventAttr.DoType, 0, "程序类型(Disable/SQL/URL)", true, true);
                 map.AddTBString(NDEventAttr.DoDoc, null, "执行内容", true, true, 0, 400, 10);
+
                 map.AddTBString(NDEventAttr.MsgOK, null, "提示", true, true, 0, 400, 10);
                 map.AddTBString(NDEventAttr.MsgErr, null, "提示", true, true, 0, 400, 10);
-
 
                 //map.AddTBString(NDEventAttr.SaveBefore, null, "当节点保存前", true, false, 0, 400, 10,true);
                 //map.AddTBString(NDEventAttr.SaveAfter, null, "当节点保存后", true, false, 0, 400, 10, true);
