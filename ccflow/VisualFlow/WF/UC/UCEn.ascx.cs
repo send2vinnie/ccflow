@@ -27,8 +27,7 @@ namespace BP.Web.Comm.UC.WF
     /// </summary>
     public partial class UCEn : BP.Web.UC.UCBase3
     {
-
-        #region add 2010-07-24 处理实体绑定的第二个算法。
+        #region add 2010-07-24 处理实体绑定的第二个算法
 
         #region add varable.
         public GroupField currGF = new GroupField();
@@ -1015,17 +1014,28 @@ namespace BP.Web.Comm.UC.WF
 
         #region 输出自由格式的表单.
 
-        public string ToHtmlColor(string color)
+        public string ToHtmlColor(string colorName)
         {
-            Color col = ColorTranslator.FromHtml(color);
-            int alpha = col.A;
-            int red = col.R;
-            int green = col.G;
-            int blue = col.B;
-            //Color bColor = Color.FromArgb(alpha, red, green, blue);
-            return alpha + "" + red + "" + green + "" + blue;
+             
+            if (colorName.StartsWith("#"))
+                colorName = colorName.Replace("#", string.Empty);
+            int v = int.Parse(colorName, System.Globalization.NumberStyles.HexNumber);
 
-            //return color.Substring(1,6);
+            Color col=  Color.FromArgb        
+           (
+                 Convert.ToByte((v >> 24) & 255),
+                 Convert.ToByte((v >> 16) & 255),
+                 Convert.ToByte((v >> 8) & 255),
+                 Convert.ToByte((v >> 0) & 255)
+            );
+       
+            int alpha = col.A;
+            var red = Convert.ToString(col.R, 16); ;
+            var green = Convert.ToString(col.G, 16);
+            var blue = Convert.ToString(col.B, 16); 
+            return string.Format("#{0}{1}{2}", red, green, blue);  
+
+
         }
         public string FK_MapData = null;
         public void BindFreeFrm(Entity en, string enName)
@@ -1151,7 +1161,9 @@ namespace BP.Web.Comm.UC.WF
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppBoolean:
+                                
                                 CheckBox cb = new CheckBox();
+                                cb.Width = 350;
                                 cb.Text = attr.Name;
                                 cb.ID = "CB_" + attr.KeyOfEn;
                                 cb.Checked = attr.DefValOfBool;
@@ -1255,13 +1267,26 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("<span style='word-break: keep-all;font-size:12px;'>");
 
                 System.Web.UI.WebControls.RadioButton rbCtl = new RadioButton();
-                rbCtl.ID = rb.MyPK;
+                rbCtl.ID = "RB_"+ rb.MyPK.Substring( rb.MyPK.IndexOf('_')+1);
                 rbCtl.GroupName = rb.KeyOfEn;
                 rbCtl.Text = rb.Lab;
                 this.Add(rbCtl);
 
                 this.Add("</span>");
                 this.Add("</DIV>");
+            }
+
+            foreach (MapAttr attr in mattrs)
+            {
+                if (attr.UIContralType == UIContralType.RadioBtn)
+                {
+                    string id =  "RB_" + attr.KeyOfEn + "_" + en.GetValStrByKey(attr.KeyOfEn);
+                    RadioButton rb = this.GetRBLByID(id);
+                    if (rb != null)
+                        rb.Checked = true;
+                    else
+                        throw new Exception("sssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+                }
             }
             #endregion 输出控件.
 
@@ -1290,7 +1315,6 @@ namespace BP.Web.Comm.UC.WF
             js += "\t\n</script>";
             this.Add(js);
             #endregion 输出明细.
-           
 
             #region 输出附件
             FrmAttachments aths = new FrmAttachments(enName);
@@ -2328,7 +2352,10 @@ namespace BP.Web.Comm.UC.WF
                         continue;
 
                     if (attr.Key == "MyNum")
+                    {
+                        en.SetValByKey(attr.Key, 1);
                         continue;
+                    }
 
                     switch (attr.UIContralType)
                     {
@@ -2375,6 +2402,34 @@ namespace BP.Web.Comm.UC.WF
                             en.SetValByKey(attr.Key, this.GetCBByKey("CB_" + attr.Key).Checked);
                             break;
                         case UIContralType.RadioBtn:
+                            if (attr.IsEnum)
+                            {
+                                SysEnums ses = new SysEnums(attr.UIBindKey);
+                                foreach (SysEnum se in ses)
+                                {
+                                    string id = "RB_" + attr.Key + "_" + se.IntKey;
+                                    RadioButton rb = this.GetRBLByID(id);
+                                    if (rb != null && rb.Checked)
+                                    {
+                                        en.SetValByKey(attr.Key, se.IntKey);
+                                        break;
+                                    }
+                                }
+                            }
+                            if (attr.MyFieldType == FieldType.FK)
+                            {
+                                Entities ens = BP.DA.ClassFactory.GetEns(attr.UIBindKey);
+                                ens.RetrieveAll();
+                                foreach (Entity enNoName in ens)
+                                {
+                                    RadioButton rb = this.GetRBLByID( attr.Key + "_" + enNoName.GetValStringByKey(attr.UIRefKeyValue));
+                                    if (rb != null && rb.Checked)
+                                    {
+                                        en.SetValByKey(attr.Key, enNoName.GetValStrByKey(attr.UIRefKeyValue));
+                                        break;
+                                    }
+                                }
+                            }
                             break;
                         default:
                             break;
@@ -2403,7 +2458,7 @@ namespace BP.Web.Comm.UC.WF
         {
             if (this.IsPostBack)
             {
-                //	this.Bind(this.HisEn,this.IsReadonly,this.IsShowDtl ) ; 	
+                //	this.Bind(this.HisEn,this.IsReadonly,this.IsShowDtl ) ;
             }
         }
         public Entity HisEn = null;
