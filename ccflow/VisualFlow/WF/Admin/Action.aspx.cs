@@ -59,17 +59,19 @@ public partial class WF_Admin_Action : WebPage
             DDL ddl = new DDL();
             ddl.BindSysEnum("EventDoType");
             ddl.ID = "DDL_EventDoType_" + xml.No;
-            ddl.SetSelectItem( (int)nde.HisDoType );
+            ddl.SetSelectItem((int)nde.HisDoType);
             this.Pub1.AddTD(ddl);
 
             tb = new TextBox();
             tb.ID = "TB_MsgOK_" + xml.No;
             tb.Columns = 20;
+            tb.Text = nde.MsgOK;
             this.Pub1.AddTD(tb);
 
             tb = new TextBox();
             tb.ID = "TB_MsgErr_" + xml.No;
             tb.Columns = 20;
+            tb.Text = nde.MsgError;
             this.Pub1.AddTD(tb);
             this.Pub1.AddTREnd();
         }
