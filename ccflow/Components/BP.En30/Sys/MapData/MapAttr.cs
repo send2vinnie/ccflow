@@ -177,13 +177,13 @@ namespace BP.Sys
                 switch (this.LGType)
                 {
                     case FieldTypeS.Enum:
-                        attr.UIContralType = UIContralType.DDL;
+                        attr.UIContralType = this.UIContralType;
                         attr.MyFieldType = FieldType.Enum;
                         attr.UIDDLShowType = BP.Web.Controls.DDLShowType.SysEnum;
                         attr.UIIsReadonly = this.UIIsEnable;
                         break;
                     case FieldTypeS.FK:
-                        attr.UIContralType = UIContralType.DDL;
+                        attr.UIContralType = this.UIContralType;
                         attr.MyFieldType = FieldType.FK;
                         attr.UIDDLShowType = BP.Web.Controls.DDLShowType.Ens;
                         attr.UIRefKeyValue = "No";

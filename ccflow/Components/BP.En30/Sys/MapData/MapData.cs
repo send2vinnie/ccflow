@@ -14,8 +14,8 @@ namespace BP.Sys
         public const string EnPK = "EnPK";
         public const string SearchKeys = "SearchKeys";
         //public const string CellsFrom = "CellsFrom";
-        //public const string CellsX = "CellsX";
-        //public const string CellsY = "CellsY";
+        public const string FrmW = "FrmW";
+        public const string FrmH = "FrmH";
     }
 	/// <summary>
 	/// 映射基础
@@ -89,6 +89,28 @@ namespace BP.Sys
                 this.SetValByKey(MapDataAttr.SearchKeys, value);
             }
         }
+        public float FrmW
+        {
+            get
+            {
+                return this.GetValFloatByKey(MapDataAttr.FrmW);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.FrmW, value);
+            }
+        }
+        public float FrmH
+        {
+            get
+            {
+                return this.GetValFloatByKey(MapDataAttr.FrmH);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.FrmH, value);
+            }
+        }
         #endregion
 
         #region 构造方法
@@ -98,7 +120,6 @@ namespace BP.Sys
             {
                 //if ( this.CellsFrom == null)
                 //    return null;
-
                 MapAttrs mapAttrs = new MapAttrs(this.No+"T");
                 if (mapAttrs.Count == 0)
                 {
@@ -122,12 +143,9 @@ namespace BP.Sys
                     }
                     mapAttrs = new MapAttrs(this.No + "T");
                 }
-
                 return mapAttrs;
-
             }
         }
-
         public Map GenerHisMap()
         {
             MapAttrs mapAttrs = new MapAttrs(this.No);
@@ -220,11 +238,8 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.Dtls, null, "明细表", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.Name, null, "描述", true, false, 0, 500, 20);
 
-                // from which filed to show the cells data. if is null or "" then unenable it..
-                //map.AddTBString(MapDataAttr.CellsFrom, null, "CellsFromField", true, false, 0, 500, 20);
-                //map.AddTBInt(MapDataAttr.CellsX, 4, "X", true, true);
-                //map.AddTBInt(MapDataAttr.CellsY, 5, "Y", true, true);
-
+                map.AddTBFloat(MapDataAttr.FrmW, 900, "FrmW", true, true);
+                map.AddTBFloat(MapDataAttr.FrmH, 1200, "FrmH", true, true);
                 this._enMap = map;
                 return this._enMap;
             }
