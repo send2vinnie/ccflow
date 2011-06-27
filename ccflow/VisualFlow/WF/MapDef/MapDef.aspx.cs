@@ -43,6 +43,17 @@ public partial class WF_MapDef_MapDef : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        string fk_node = this.Request.QueryString["FK_Node"];
+        if (fk_node != null)
+        {
+            BP.WF.Node nd = new BP.WF.Node(int.Parse(fk_node));
+            if (nd.HisFormType == BP.WF.FormType.FreeForm)
+            {
+                this.Response.Redirect("./FreeFrm/Frm.aspx?FK_MapData=" + this.MyPK + "&FK_Flow=" + nd.FK_Flow, true);
+                return;
+            }
+        }
+
         MapData md = new MapData(this.MyPK);
         MapAttrs mattrs = new MapAttrs(md.No);
         int count = mattrs.Count;

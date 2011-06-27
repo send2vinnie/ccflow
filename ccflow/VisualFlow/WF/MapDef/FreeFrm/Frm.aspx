@@ -8,14 +8,18 @@
     html, body {
 	    height: 100%;
 	    overflow: auto;
+	    text-align:center;
     }
     body {
 	    padding: 0;
 	    margin: 0;
-    }
+	    text-align:center;
+            font-weight: 700;
+        }
     #silverlightControlHost {
 	    height: 100%;
 	    text-align:center;
+	    
     }
     </style>
     <script type="text/javascript" src="Silverlight.js"></script>
@@ -23,19 +27,19 @@
         function onSilverlightError(sender, args) {
             var appSource = "";
             if (sender != null && sender != 0) {
-                appSource = sender.getHost().Source;
+              appSource = sender.getHost().Source;
             }
-
+            
             var errorType = args.ErrorType;
             var iErrorCode = args.ErrorCode;
 
             if (errorType == "ImageError" || errorType == "MediaError") {
-                return;
+              return;
             }
 
-            var errMsg = "Silverlight 应用程序中未处理的错误 " + appSource + "\n";
+            var errMsg = "Silverlight 应用程序中未处理的错误 " +  appSource + "\n" ;
 
-            errMsg += "代码: " + iErrorCode + "    \n";
+            errMsg += "代码: "+ iErrorCode + "    \n";
             errMsg += "类别: " + errorType + "       \n";
             errMsg += "消息: " + args.ErrorMessage + "     \n";
 
@@ -44,20 +48,21 @@
                 errMsg += "行: " + args.lineNumber + "     \n";
                 errMsg += "位置: " + args.charPosition + "     \n";
             }
-            else if (errorType == "RuntimeError") {
+            else if (errorType == "RuntimeError") {           
                 if (args.lineNumber != 0) {
                     errMsg += "行: " + args.lineNumber + "     \n";
-                    errMsg += "位置: " + args.charPosition + "     \n";
+                    errMsg += "位置: " +  args.charPosition + "     \n";
                 }
                 errMsg += "方法名称: " + args.methodName + "     \n";
             }
+
             alert(errMsg);
         }
     </script>
 </head>
-<body oncontextmenu="window.event.returnValue=false">
+<body>
     <form id="form1" runat="server" style="height:100%">
-    <div id="silverlightControlHost">
+    <div id="silverlightControlHost" >
         <object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="100%" height="100%">
 		  <param name="source" value="../../../ClientBin/FreeFrm.xap"/>
 		  <param name="onError" value="onSilverlightError" />
