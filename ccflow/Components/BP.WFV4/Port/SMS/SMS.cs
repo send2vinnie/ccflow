@@ -253,8 +253,7 @@ namespace BP.TA
                 map.AddTBString(SMSAttr.FK_Emp, null, "发送给", false, false, 0, 90, 150);
                 map.AddDDLSysEnum(SMSAttr.SMSSta, (int)SMSSta.UnRun, "状态", true, true, SMSAttr.SMSSta, "@0=未开始@1=执行完成");
 
-                map.AddDDLSysEnum(SMSAttr.AlertType, 0, "提示信息类型", true, true, SMSAttr.AlertType,
-                    "@0=短信@1=邮件@2=邮件与短信");
+                map.AddDDLSysEnum(SMSAttr.AlertType, 0, "提示信息类型", true, true);
 
                 map.AddTBString(SMSAttr.Email, null, "Email", false, true, 0, 200, 20);
                 map.AddTBString(SMSAttr.EmailTitle, null, "邮件标题", false, true, 0, 3000, 20);
