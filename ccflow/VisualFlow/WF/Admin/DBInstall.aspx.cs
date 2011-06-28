@@ -8,6 +8,14 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (this.Request.QueryString["DoType"] == "OK")
+        {
+            this.Pub1.AddFieldSet("提示");
+            this.Pub1.Add("ccflow数据库初始化成功.");
+            this.Pub1.AddFieldSetEnd();
+            return;
+        }
+
         try
         {
             if (BP.DA.DBAccess.IsExitsObject("WF_Flow") == true)
@@ -17,13 +25,12 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                 this.Pub1.AddFieldSetEnd();
 
                 this.Pub1.AddFieldSet("修复数据表");
-                this.Pub1.Add("把最新的版本的与当前的数据表结构，做一个自动修复, <a href='DBInstall.aspx?DoType=FixDB' >执行...</a>。");
+                this.Pub1.Add("把最新的版本的与当前的数据表结构，做一个自动修复, 修复内容：缺少列，缺少列注释，列注释不完整或者有变化。 <br> <a href='DBInstall.aspx?DoType=FixDB' >执行...</a>。");
                 this.Pub1.AddFieldSetEnd();
-
                 if (this.Request.QueryString["DoType"] == "FixDB")
                 {
                     string rpt = BP.PubClass.DBRpt(BP.DBLevel.High);
-                    this.Pub1.AddMsgGreen("同步数据表结构成功.", rpt);
+                    this.Pub1.AddMsgGreen("同步数据表结构成功, 部分错误不会影响系统运行.", rpt);
                 }
                 return;
             }
@@ -33,6 +40,9 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
             this.Pub1.AddFieldSet("提示:数据库连接没有配置好");
             this.Pub1.Add("1, 请打开web.config文件配置 appSettings - AppCenterDSN 节点中的数据库连接信息。");
             this.Pub1.AddBR("2, 支持的数据库类型在，AppCenterDBType中配置，分别是MSSQL2000,Oracle,DB2,Access. ");
+
+            this.Pub1.AddBR("<hr>错误信息:" + ex.Message);
+
             this.Pub1.AddFieldSetEnd();
             return;
         }
@@ -146,5 +156,10 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
 
         //运行。
         BP.WF.Glo.DoInstallDataBase(lang, hj);
+
+        //加注释.
+        BP.PubClass.AddComment();
+
+        this.Response.Redirect("DBInstall.aspx?DoType=OK", true);
     }
 }

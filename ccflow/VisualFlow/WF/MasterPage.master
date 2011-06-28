@@ -59,11 +59,10 @@ div#Top
 </head>
 <body topmargin="0" leftmargin="0" bgcolor=white >
     <form id="form1" runat="server">
-
        <div class="Baner">
         <uc1:Pub ID="Pub1" runat="server" />
         </div>
-
+        <br>
       <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
 

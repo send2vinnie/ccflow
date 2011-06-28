@@ -382,10 +382,16 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         BP.WF.Node currND;
         currND = this.CurrentNode;
         BP.WF.Work currWK = null;
+
         if (this.WorkID == 0)
         {
             currWK = this.New(true, currND);
-            string u = this.Request.RawUrl + "&WorkID=" + currWK.OID;
+            if (currWK.OID == 0)
+            {
+                currWK.OID = BP.DA.DBAccess.GenerOID();
+                currWK.Update();
+            }
+            string u = this.Request.RawUrl.Replace("WorkID", "df") + "&WorkID=" + currWK.OID;
             this.Response.Redirect(u, true);
             return;
         }

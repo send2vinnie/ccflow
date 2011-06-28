@@ -1,83 +1,53 @@
 /*
-[name]蓝[/name]
-[iconbgcolor]#0053B9[/iconbgcolor]
+[name]紫[/name]
+[iconbgcolor]#9934B7[/iconbgcolor]
 Powered by Discuz! X
 */
 
-body
-{
-    background: #FFF url(bgimg.jpg) no-repeat 50% 0;
-}
+body { background: #FFF url(bgimg.jpg) no-repeat 50% 0; }
+#nv { background-color: #9934B7; background-image: url(nv.png); }
+	#nv li, #nv li a:hover, #nv li.hover a, #nv li.hover a:hover { background-image: url(nv_a.png) !important; }
+	#nv li.a { background-color: #6C1992; }
 
-div#Top
-{
-    height:95px;
-}
+.bm_h, .tl th, .tl td { border-bottom-color: #CDCDCD; }
+.fl .bm_h { border-color: #DFCDDE; background: #F8EFF8 url(titlebg.png) repeat-x 0 0; }
 
-div#nv
-{
-    top: 0;
-    left: 0;
-    width: auto;
-    text-align: center;
-    padding: 0px;
-    margin: 0px 3px 3px 3px;
-    background: #BA350F url(shadow.png) repeat-x left bottom;
-}
+/* 重定义 {SPECIALBG} */
+.bmn, .bm_h, td.pls, .ad td.plc, div.exfm, .tb a, .tb_h, .ttp li.a a, div.uo a, input#addsubmit_btn, #gh .bm .bm_h, .appnew, .apphot { background-color: #F8EFF8; }
 
-div.wrapper
-{
-    padding: 3px;
-    margin: 12px;
-    background: #BA350F url(shadow.png) repeat-x bottom left;
-}
- 
-div#nv ul
-{
-    width: 100%;
-    margin: 3;
-    padding: 3;
-    text-align: center;
-}
-div#nv li
-{
-    float: left;
-    display: inline;
-    list-style: none;
-    margin: 0;
-    padding: 0 10px;
-    line-height: 1em;
-    background-image: url(line_white.gif);
-    background-position: right center;
-    background-repeat: no-repeat;
-        margin: 3;
-    padding: 3;
-    text-align: center;
-}
+.ct2_a, .ct3_a { background-image: url(vlineb.png); }
+.tbn li.a { background: #FFF; }
+	#nv_portal.pg_portalcp .ct2_a_r, #nv_forum.pg_post .ct2_a_r { background-image: none; }
 
-div#nv li.last
-{
-    background: none;
-}
+/* 重定义 {SPECIALBORDER} */
+.bmn, .pg a, .pgb a, .pg strong, .card, .card .o, div.exfm  { border-color: #DFCDDE; }
+.pg strong { background-color: #DFCDDE; }
+.pn, .tb .o, .tb .o a { background-image: url(pn.png); }
+	.pnc, a.pnc, .tb .o { border-color: #609; }
 
-div#nv a, div#nv a:link, div#nv a:active, div#nv a:visited
-{
-    display: inline-block; /* hide from ie/mac \*/
-    display: block; /* end hide */
-    font-weight: bold;
-    text-decoration: none;
-    margin: 0;
-    padding: 7px 15px;
-    color: white;
-    background: #6293bb url(shadow.png) repeat-x left bottom;
-}
+.ad td.pls { background-color: #DFCDDE; }
 
-div#nv a:hover, .S
-{
-    background-color: #3671a5;
-    background-position: right center;
-    background-repeat: no-repeat;
-      margin: 3;
-    padding: 3;
-}
-     
+/* 重定义字体 */
+#qmenu, .fl .bm_h h2 a, .xi1, #um .new, .topnav .new, .sch .new, .el .ec .hot em, .pll .s a.joins { color: #6F099E; }
+.pll .s a.go { color: #FFF; }
+.xi2, .xi2 a { color: #000; }
+
+/* 重定义按钮 */
+.pgs #newspecial, .pgs #newspecialtmp { float: left; background: url(pn_post.png) no-repeat 0 0; }
+#post_reply, #post_replytmp { float: left; background: url(pn_reply.png) no-repeat 0 0; }
+	#newspecial img, #newspecialtmp img, #post_reply img, #post_replytmp img { opacity: 0; filter: alpha(opacity=0); }
+.moodfm_btn { background-image: url(mood_input_btn.png) !important; }
+#create_group_btn { display: block; background: url(create_group.png) no-repeat 0 0; }
+	#create_group_btn img { opacity: 0; filter: alpha(opacity=0); }
+.el .ec .hot { background-image: url(hotspot.gif); }
+.pll .s { background-image:url(polljoins.gif); }
+
+/* 重定义侧边导航 */
+.bdl, .bdl dt, .bdl dd.bdl_a a { border-color: #DFCDDE; background-color: #FCF8FC; }
+	.bdl dt { background-image: url(titlebg_sd.png); }
+.bdl dd.bdl_a a { color: #6F099E; }
+
+/* 重定义下拉菜单 */
+.p_pop a { border-bottom-color: #F8EFF8; }
+	.p_pop a:hover, .p_pop a.a, #sctype_menu .sca { background-color: #F8EFF8; color: #6F099E; }
+	.blk a:hover { background-color: transparent; }

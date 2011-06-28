@@ -541,12 +541,23 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddTD(tb);
         this.AddTREnd();
 
+        this.AddTR();
+        this.AddTD("QQ/RTX/MSN");
+        tb = new TextBox();
+        tb.TextMode = TextBoxMode.SingleLine;
+        tb.ID = "TB_TM";
+        tb.Text = emp.Email;
+        this.AddTD(tb);
+        this.AddTREnd();
+
+
 
         this.AddTR();
         this.AddTD("信息接收方式");
         DDL ddl = new DDL();
         ddl.ID = "DDL_Way";
         ddl.BindSysEnum("AlertWay");
+
         //ddl.Items.Add(new ListItem("不接收", "0"));
         //ddl.Items.Add(new ListItem("手机短信", "1"));
         //ddl.Items.Add(new ListItem("邮件", "2"));
