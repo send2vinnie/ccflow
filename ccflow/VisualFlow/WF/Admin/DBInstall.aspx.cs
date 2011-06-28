@@ -12,6 +12,9 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         {
             this.Pub1.AddFieldSet("提示");
             this.Pub1.Add("ccflow数据库初始化成功.");
+
+            this.Pub1.AddBR("<a href='./../../Designer.aspx' >进入流程设计器.</a>");
+
             this.Pub1.AddFieldSetEnd();
             return;
         }
