@@ -66,11 +66,15 @@ D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
 
 2, 建立虚拟目录 Flow 在80 端口下  映射目录为 D:\ccflow\VisualFlow\
 
-3, 创建数据库WF, 恢复数据库文件.   
-    \Database\WF_SQL.bak  -- sqlserver2005的案例库.
 
-   如果您想创建一个没有流程案例环境的数据库,就可以. 在您安装完以后执行这个向导.
-   http://localhost/Flow/WF/Admin/DBInstall.aspx
+3, 创建数据库WF, 恢复数据库文件.   
+    \Database\WF_SQL.bak  -- sqlserver2005的案例库.  
+
+   如果您是sqlserver2005 以外的数据库, 请按照如下步骤执行.
+
+   1, 按照步骤4,配置好数据库连接.
+   2, 执行: http://localhost/Flow/WF/Admin/DBInstall.aspx 
+      数据库初始化向导. 
 
 
 4, 修改 D:\ccflow\VisualFlow\web.config Appsetting <Add> 节点中的数据库连接。
@@ -100,7 +104,7 @@ D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
 =  如果您需要得到更好的服务，请按照如下方式联系我们.
 =  济南驰骋信息技术有限公司
 =  qq: hiflow@qq.com
-=  Tel:13589028385,18660153393.
+=  Tel:18660153393,13589028385.
 =  msn:chichengsoft@hotmail.com
 =  URL: http://ccflow.org
 =
@@ -109,5 +113,5 @@ D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
 =  2, 流程设计优化指导,为您们出最佳的流程解决方案.
 =  3, 与您现有的系统集成耦合.
 =  4, 二次开发.
-=   感谢您下载使用 ccflow.
+=   感谢您下载使用 ccflow,  服务报价: 3万起. 
 =======================================================================
