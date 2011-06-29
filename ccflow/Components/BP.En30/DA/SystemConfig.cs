@@ -1370,6 +1370,20 @@ namespace BP
                 }
             }
         }
+
+        public static string AppCenterDBAddStringStr
+        {
+            get
+            {
+                switch (SystemConfig.AppCenterDBType)
+                {
+                    case BP.DA.DBType.Oracle9i:
+                        return "||";
+                    default:
+                        return "+";
+                }
+            }
+        }
         public static readonly Hashtable CS_DBConnctionDic;
     }
 }

@@ -127,6 +127,7 @@ namespace BP.DA
         /// </summary>
         public static void DoTransactionBegin()
         {
+            return;
             DBAccess.RunSQL("begin transaction");
         }
         /// <summary>
@@ -134,6 +135,7 @@ namespace BP.DA
         /// </summary>
         public static void DoTransactionRollback()
         {
+            return;
             try
             {
                 DBAccess.RunSQL("rollback transaction");
@@ -147,6 +149,7 @@ namespace BP.DA
         /// </summary>
         public static void DoTransactionCommit()
         {
+            return;
             try
             {
                 DBAccess.RunSQL("commit transaction");
