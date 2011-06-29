@@ -1194,8 +1194,11 @@ namespace BP.En
                     case DBType.Access:
                         this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
                         break;
-                    default:
+                    case DBType.SQL2000:
                         this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
+                        break;
+                    default:
+                        this.RunSQL(this.SQLCash.Insert.Replace("[","").Replace("]",""), SqlBuilder.GenerParas(this, null));
                         break;
                 }
             }
@@ -2160,7 +2163,7 @@ namespace BP.En
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("@自动增加枚举时出现错误，请确定您的格式是否正确。template[@0=ABCD预警@1=是否预警]" + ex.Message + "attr.UIBindKey=" + attr.UIBindKey);
+                    throw new Exception("@自动增加枚举时出现错误，请确定您的格式是否正确。" + ex.Message + "attr.UIBindKey=" + attr.UIBindKey);
                 }
 
             }

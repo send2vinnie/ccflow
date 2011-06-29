@@ -102,7 +102,7 @@ namespace BP.Port
                 switch (BP.SystemConfig.SysNo)
                 {
                     case BP.SysNoList.WF:
-                        map.AddDDLSysEnum(StationAttr.StaGrade, 0, "类型", true, false, StationAttr.StaGrade, "@1=总部@2=区域@3=中心");
+                        map.AddDDLSysEnum(StationAttr.StaGrade, 0, "类型", true, false, StationAttr.StaGrade, "@1=高层岗@2=中层岗@3=执行岗");
                         break;
                     default:
                         break;
