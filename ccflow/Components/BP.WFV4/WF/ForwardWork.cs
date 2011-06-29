@@ -65,11 +65,11 @@ namespace BP.WF
 		/// <summary>
 		/// ¹¤×÷ID
 		/// </summary>
-		public int  WorkID
+        public Int64 WorkID
 		{
 			get
 			{
-				return this.GetValIntByKey(ForwardWorkAttr.WorkID);
+				return this.GetValInt64ByKey(ForwardWorkAttr.WorkID);
 			}
 			set
 			{

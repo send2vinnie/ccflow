@@ -27,10 +27,10 @@ namespace BP.WF
             Web.WebUser.SignInOfGener(emp);
             Node nd = new Node(FK_Node);
             Work wk = nd.HisWork;
-            Int32 workid = 0;
+            Int64 workid = 0;
             if (ht.ContainsKey("WorkID"))
             {
-                workid = Int32.Parse(ht["WorkID"].ToString());
+                workid = Int64.Parse(ht["WorkID"].ToString());
             }
             wk.OID = workid;
             wk.Retrieve();

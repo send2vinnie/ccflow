@@ -413,7 +413,7 @@ namespace BP.WF
         /// <param name="workId"></param>
         /// <param name="nodeId"></param>
         /// <param name="isWithEmpExts">是否要包含记忆中的人员</param>
-        public WorkerLists(int workId, int nodeId, bool isWithEmpExts)
+        public WorkerLists(Int64 workId, int nodeId, bool isWithEmpExts)
         {
             QueryObject qo = new QueryObject(this);
             qo.addLeftBracket();
