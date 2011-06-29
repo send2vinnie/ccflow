@@ -1871,7 +1871,7 @@ namespace BP.En
                 return;
 
             #region 建立主键
-            if ( DBAccess.IsExitsTabPK(this.EnMap.PhysicsTable) == false   )
+            if (DBAccess.IsExitsTabPK(this.EnMap.PhysicsTable) == false)
             {
                 try
                 {
@@ -1986,10 +1986,10 @@ namespace BP.En
             #endregion
 
             #region 检查字段是否存在
-            string sql = "SELECT * from "+ this.EnMap.PhysicsTable+" where 1=2";
+            string sql = "SELECT * from " + this.EnMap.PhysicsTable + " where 1=2";
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-           
-                // 如果不存在。
+
+            // 如果不存在。
             foreach (Attr attr in this.EnMap.Attrs)
             {
                 if (attr.MyFieldType == FieldType.RefText)
@@ -2034,9 +2034,9 @@ namespace BP.En
                     }
 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                   // throw new Exception("@修复字段期间出现错误："+ex.Message+" Table="+this.EnMap.PhysicsTable );
+                    // throw new Exception("@修复字段期间出现错误："+ex.Message+" Table="+this.EnMap.PhysicsTable );
                 }
             }
             #endregion
@@ -2085,7 +2085,6 @@ namespace BP.En
             }
             #endregion
 
-
             #region 检查枚举类型字段是否是INT 类型
             Attrs attrs = this._enMap.HisEnumAttrs;
             foreach (Attr attr in attrs)
@@ -2121,7 +2120,6 @@ namespace BP.En
 
             }
             #endregion
-
 
             #region 检查枚举类型是否存在.
             attrs = this._enMap.HisEnumAttrs;
@@ -2167,6 +2165,10 @@ namespace BP.En
 
             }
             #endregion
+
+
+            // 增加注释.
+            PubClass.AddComment(this);
         }
         #endregion
 
