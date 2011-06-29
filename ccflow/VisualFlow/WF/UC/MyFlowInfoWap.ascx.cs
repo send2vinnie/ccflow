@@ -56,7 +56,7 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
         {
             case "DeleteFlow":
                 string fk_flow = this.Request.QueryString["FK_Flow"];
-                int workid = int.Parse(this.Request.QueryString["WorkID"]);
+                Int64 workid = Int64.Parse(this.Request.QueryString["WorkID"]);
                 WorkFlow wf = new WorkFlow(new Flow(fk_flow), workid);
                 wf.DoDeleteWorkFlowByReal();
                 this.Session["info"] = this.ToE("FlowDelOK", "流程删除成功");

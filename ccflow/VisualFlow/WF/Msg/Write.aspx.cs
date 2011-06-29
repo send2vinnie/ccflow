@@ -16,13 +16,13 @@ using BP.Sys;
 
 public partial class WF_Msg_Write : WebPage
 {
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
             try{
 
-            return int.Parse(this.Request.QueryString["WorkID"]);
+                return Int64.Parse(this.Request.QueryString["WorkID"]);
 
             }catch
             {

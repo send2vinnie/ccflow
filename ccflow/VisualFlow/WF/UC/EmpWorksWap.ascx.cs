@@ -32,14 +32,14 @@ public partial class WF_UC_EmpWorksWap : BP.Web.UC.UCBase3
             this.ViewState["FK_Flow"] = value;
         }
     }
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
             if (this.Request.QueryString["WorkID"] == null)
                 return 0;
 
-            return int.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
     protected void Page_Load(object sender, EventArgs e)

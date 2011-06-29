@@ -58,11 +58,11 @@ namespace BP.Web.WF
                 return this.Request.QueryString["FK_Emp"];
             }
         }
-        public int WorkID
+        public Int64 WorkID
         {
             get
             {
-                return int.Parse(this.Request.QueryString["WorkID"]);
+                return Int64.Parse(this.Request.QueryString["WorkID"]);
             }
         }
         public int NodeID
@@ -209,7 +209,7 @@ namespace BP.Web.WF
                     //删除流程中第一个节点的数据，包括待办工作
                     case "DeleteFlow":
                         string fk_flow = this.Request.QueryString["FK_Flow"];
-                        int workid = int.Parse(this.Request.QueryString["WorkID"]);
+                        Int64 workid = Int64.Parse(this.Request.QueryString["WorkID"]);
 
                         //调用DoDeleteWorkFlowByReal方法
                         WorkFlow wf = new WorkFlow(new Flow(fk_flow), workid);

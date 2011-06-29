@@ -23,11 +23,11 @@ public partial class Face_WhySendToThem : System.Web.UI.Page
             return int.Parse(this.Request.QueryString["NodeID"]);
         }
     }
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
-            return int.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
     public int ToNodeID

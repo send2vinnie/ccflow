@@ -21,11 +21,11 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
     /// <summary>
     /// WorkID
     /// </summary>
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
-            return int.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
     /// <summary>
@@ -295,7 +295,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
         // 已经非配或者自动分配的任务。
         GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
         int NodeID = gwf.FK_Node;
-        int workId = this.WorkID;
+        Int64 workId = this.WorkID;
         //WorkerLists wls = new WorkerLists(this.WorkID,NodeID);
         DBAccess.RunSQL("UPDATE  WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + NodeID);
         //  string vals = "";

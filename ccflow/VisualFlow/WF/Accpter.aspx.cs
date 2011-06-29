@@ -24,11 +24,11 @@ public partial class WF_Accpter : WebPage
             return int.Parse(this.Request["FK_Node"].ToString());
         }
     }
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
-            return int.Parse(this.Request["WorkID"].ToString());
+            return Int64.Parse(this.Request["WorkID"].ToString());
         }
     }
     public string FK_Dept

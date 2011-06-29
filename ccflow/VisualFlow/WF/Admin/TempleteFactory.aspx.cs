@@ -25,11 +25,11 @@ public partial class WF_Admin_TempleteFactory : WebPage
             return int.Parse(this.Request.QueryString["NodeID"]);
         }
     }
-    int WorkID
+    Int64 WorkID
     {
         get
         {
-            return int.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
     #endregion 属性

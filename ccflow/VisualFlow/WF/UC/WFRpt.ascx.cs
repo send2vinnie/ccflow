@@ -55,11 +55,11 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             }
         }
     }
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
-            return int.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
     public int NodeID

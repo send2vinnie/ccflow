@@ -16,11 +16,11 @@ using BP.Web.Controls;
 
 public partial class Comm_M2M : WebPage
 {
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
-            return int.Parse( this.Request.QueryString["WorkID"] );
+            return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
     public string FK_MapData

@@ -10,11 +10,11 @@ using BP.Sys;
 
 public partial class WF_Opt_ExpImp : WebPage
 {
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
-            return int.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
     public int FK_Node

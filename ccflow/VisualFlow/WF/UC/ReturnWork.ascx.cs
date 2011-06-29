@@ -55,13 +55,13 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             }
         }
     }
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
             try
             {
-                return int.Parse(this.Request.QueryString["WorkID"]);
+                return Int64.Parse(this.Request.QueryString["WorkID"]);
             }
             catch
             {

@@ -25,11 +25,11 @@ namespace BP.Web.WF
 		/// <summary>
 		/// ¹¤×÷ID
 		/// </summary>
-		public int  WorkID
+        public Int64 WorkID
 		{
 			get
 			{
-				return int.Parse( this.Request.QueryString["WorkID"]) ; 
+                return Int64.Parse(this.Request.QueryString["WorkID"]); 
 			}
 		}
 		/// <summary>
@@ -94,7 +94,7 @@ namespace BP.Web.WF
                 this.Btn_DeleteFlowByFlag.Enabled = false;
                 this.Btn_DeleteWFByRealReal.Enabled = false;
                 this.Btn_StopWorkFlow.Enabled = false;
-                int workId = int.Parse(this.Request.QueryString["WorkID"]);
+                Int64 workId = Int64.Parse(this.Request.QueryString["WorkID"]);
                 //int nodeId=int.Parse(this.Request.QueryString["WorkID"]);
                 string flowNo = this.Request.QueryString["FK_Flow"];
                 if (workId == 0)
@@ -234,8 +234,8 @@ namespace BP.Web.WF
 		{
 			string msg="" ; 
 			try
-			{				 
-				int workId=int.Parse(this.Request.QueryString["WorkID"]);
+			{
+                Int64 workId = Int64.Parse(this.Request.QueryString["WorkID"]);
 				GenerWorkFlow gwf = new GenerWorkFlow(workId);
 				WorkFlow wf = new WorkFlow(new Flow(gwf.FK_Flow), workId);
 				BP.Web.Controls.ToolbarBtn  btn = (BP.Web.Controls.ToolbarBtn)sender;

@@ -18,11 +18,11 @@ using BP.En;
 public partial class WF_PrintWorkNode : BP.Web.WebPage
 {
     #region attrs
-    int WorkID
+    Int64 WorkID
     {
         get
         {
-            return int.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
     int FK_Node

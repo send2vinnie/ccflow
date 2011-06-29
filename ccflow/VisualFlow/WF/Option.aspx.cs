@@ -108,7 +108,7 @@ namespace BP.Web.WF.WF
 		{
 			string id=this.ToolbarCheckBtnGroup1.SelectedCheckButton.ID;
 			string help="";
-			int WorkID = int.Parse(this.Request.QueryString["WorkID"]);
+            Int64 WorkID = Int64.Parse(this.Request.QueryString["WorkID"]);
 			string fk_flow=  this.Request.QueryString["FK_Flow"] ;
 			Flow fl = new Flow(fk_flow);
 			WorkFlow wf = new WorkFlow(fl, WorkID);

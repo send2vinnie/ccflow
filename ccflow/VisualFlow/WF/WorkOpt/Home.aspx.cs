@@ -8,11 +8,11 @@ using BP.WF;
 
 public partial class WF_WorkOpt_Home : System.Web.UI.Page
 {
-    public int WorkID
+    public Int64 WorkID
     {
         get
         {
-            return int.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
     public int FK_Node
