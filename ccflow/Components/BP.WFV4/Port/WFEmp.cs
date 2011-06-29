@@ -72,6 +72,7 @@ namespace BP.WF.Port
         public const string FtpUrl = "FtpUrl";
         public const string Style = "Style";
         public const string Msg = "Msg";
+        public const string TM = "TM";
         #endregion
     }
 	/// <summary>
@@ -118,6 +119,17 @@ namespace BP.WF.Port
             set
             {
                 this.SetValByKey(WFEmpAttr.Style, value);
+            }
+        }
+        public string TM
+        {
+            get
+            {
+                return this.GetValStringByKey(WFEmpAttr.TM);
+            }
+            set
+            {
+                this.SetValByKey(WFEmpAttr.TM, value);
             }
         }
         public string Tel
@@ -275,16 +287,15 @@ namespace BP.WF.Port
                 map.AddTBString(WFEmpAttr.FK_Dept, null, "FK_Dept", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.Email, null, "Email", true, true, 0, 50, 20);
 
+                map.AddTBString(WFEmpAttr.TM, null, "即时通讯号", true, true, 0, 50, 20);
+
                // map.AddTBInt(WFEmpAttr.AlertWay, 0, "AlertWay", true, true);
 
-                map.AddDDLSysEnum(WFEmpAttr.AlertWay, 3, "收听方式", true, true,
-                    ListenAttr.AlertWay, "@0=不接收@1=手机短信@2=邮件@3=手机短信+邮件@4=内部消息");
-
+                map.AddDDLSysEnum(WFEmpAttr.AlertWay, 3, "收听方式", true, true, WFEmpAttr.AlertWay);
                 map.AddTBString(WFEmpAttr.Author, null, "授权人", true, true, 0, 50, 20);
 
                 map.AddTBString(WFEmpAttr.AuthorDate, null, "授权日期", true, true, 0, 50, 20);
                 map.AddTBInt(WFEmpAttr.AuthorIsOK, 0, "是否授权成功", true, true);
-
 
                 map.AddTBString(WFEmpAttr.Stas, null, "岗位s", true, true, 0, 3000, 20);
 
