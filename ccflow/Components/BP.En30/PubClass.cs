@@ -1073,42 +1073,48 @@ namespace BP
             // 取出全部的实体
             ArrayList als = ClassFactory.GetObjects("BP.En.Entities");
             string msg = "";
+            Entity en = null;
+            Entities ens = null;
             foreach (object obj in als)
             {
-                Entities ens = (Entities)obj;
-                Entity  en = ens.GetNewEntity;
                 try
                 {
-                    switch (en.EnMap.EnDBUrl.DBType)
-                    {
-                        case DBType.Oracle9i:
-                             AddCommentForTable_Ora(en);
-                            break;
-                        default:
-                            AddCommentForTable_MS(en);
-                            break;
-                    }
+                    ens = (Entities)obj;
+                    en = ens.GetNewEntity;
+                    if (en.EnMap.EnType == EnType.View || en.EnMap.EnType == EnType.ThirdPartApp)
+                        continue;
                 }
-                catch (Exception ex)
+                catch
                 {
-                    msg += "<hr>" + ens.ToString() + "体检失败:" + ex.Message;
+                    continue;
                 }
+               msg+= AddComment(en);
             }
-            //DA.Log.DefaultLogWriteLine(LogType.Error,msg.Replace("<br>@","\n") ); // 
             return msg;
-
+        }
+        public static string AddComment(Entity en)
+        {
+            try
+            {
+                switch (en.EnMap.EnDBUrl.DBType)
+                {
+                    case DBType.Oracle9i:
+                        AddCommentForTable_Ora(en);
+                        break;
+                    default:
+                        AddCommentForTable_MS(en);
+                        break;
+                }
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return "<hr>" + en.ToString() + "体检失败:" + ex.Message;
+            }
         }
         public static void AddCommentForTable_Ora(Entity en)
         {
-            if (en.EnMap.EnType == EnType.View
-            || en.EnMap.EnType == EnType.ThirdPartApp)
-            {
-                return;
-            }
-
             en.RunSQL("comment on table " + en.EnMap.PhysicsTable + " IS '" + en.EnDesc + "'");
-
-
             SysEnums ses = new SysEnums();
             foreach (Attr attr in en.EnMap.Attrs)
             {
@@ -1140,68 +1146,91 @@ namespace BP
                 }
             }
         }
+        private static void AddColNote(Entity en, string table, string col, string note)
+        {
+            try
+            {
+                string sql = "execute  sp_dropextendedproperty 'MS_Description','user',dbo,'table','" + table + "','column'," + col;
+                en.RunSQL(sql);
+            }
+            catch(Exception ex)
+            {
+            }
+
+            try
+            {
+                string sql = "execute  sp_addextendedproperty 'MS_Description', '" + note + "', 'user', dbo, 'table', '" + table + "', 'column', '" + col + "'";
+                en.RunSQL(sql);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 		/// <summary>
 		/// 为表增加解释
 		/// </summary>
 		/// <param name="en"></param>
         public static void AddCommentForTable_MS(Entity en)
-		{
+        {
+            if (en.EnMap.EnType == EnType.View || en.EnMap.EnType == EnType.ThirdPartApp )
+            {
+                return;
+            }
 
-		//	 comment on table emp is 'Employee'
+            try
+            {
+                en.RunSQL("comment on table " + en.EnMap.PhysicsTable + " IS '" + en.EnDesc + "'");
+            }
+            catch
+            {
+            }
 
-			en.RunSQL("comment on table "+ en.EnMap.PhysicsTable +" IS '"+en.EnDesc+"'");
+            SysEnums ses = new SysEnums();
+            foreach (Attr attr in en.EnMap.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+                if (attr.Key == attr.Desc)
+                    continue;
 
- 
-			SysEnums  ses = new SysEnums();
-			foreach(Attr attr in en.EnMap.Attrs)
-			{
-				if (attr.MyFieldType==FieldType.RefText)
-					continue;
-				switch(attr.MyFieldType)
-				{
-					case FieldType.Normal:
-						en.RunSQL("comment on table "+ en.EnMap.PhysicsTable+"."+attr.Field +" IS '"+en.EnDesc+"'");
-						break;
-					case FieldType.Enum:
+                switch (attr.MyFieldType)
+                {
+                    case FieldType.Normal:
+                        AddColNote(en, en.EnMap.PhysicsTable, attr.Field, attr.Desc);
+                        //en.RunSQL("comment on table "+ en.EnMap.PhysicsTable+"."+attr.Field +" IS '"+en.EnDesc+"'");
+                        break;
+                    case FieldType.Enum:
                         ses = new SysEnums(attr.Key, attr.UITag);
-						en.RunSQL("comment on table "+ en.EnMap.PhysicsTable+"."+attr.Field +" IS '"+en.EnDesc+",枚举类型:"+ses.ToDesc()+"'" );
-						break;
-					case FieldType.PKEnum:
+                        //	en.RunSQL("comment on table "+ en.EnMap.PhysicsTable+"."+attr.Field +" IS '"++"'" );
+                        AddColNote(en, en.EnMap.PhysicsTable, attr.Field, attr.Desc + ",枚举类型:" + ses.ToDesc());
+                        break;
+                    case FieldType.PKEnum:
                         ses = new SysEnums(attr.Key, attr.UITag);
-						en.RunSQL("comment on table "+ en.EnMap.PhysicsTable+"."+attr.Field +" IS '"+en.EnDesc+", 主键:枚举类型:"+ses.ToDesc()+"'" );
-						break;
-					case FieldType.FK:
+                        AddColNote(en, en.EnMap.PhysicsTable, attr.Field, attr.Desc + ",主键:枚举类型:" + ses.ToDesc());
+                        //en.RunSQL("comment on table "+ en.EnMap.PhysicsTable+"."+attr.Field +" IS '"+en.EnDesc+", 主键:枚举类型:"+ses.ToDesc()+"'" );
+                        break;
+                    case FieldType.FK:
                         Entity myen = attr.HisFKEn; // ClassFactory.GetEns(attr.UIBindKey).GetNewEntity;
-						en.RunSQL("comment on table "+ en.EnMap.PhysicsTable+"."+attr.Field +" IS "+en.EnDesc+", 外键:对应物理表:"+myen.EnMap.PhysicsTable+",表描述:"+myen.EnDesc  );
-						break;
-					case FieldType.PKFK:
+                        AddColNote(en, en.EnMap.PhysicsTable, attr.Field, attr.Desc + ", 外键:对应物理表:" + myen.EnMap.PhysicsTable + ",表描述:" + myen.EnDesc);
+                        //en.RunSQL("comment on table "+ en.EnMap.PhysicsTable+"."+attr.Field +" IS "+  );
+                        break;
+                    case FieldType.PKFK:
                         Entity myen1 = attr.HisFKEn; // ClassFactory.GetEns(attr.UIBindKey).GetNewEntity;
-						en.RunSQL("comment on table "+ en.EnMap.PhysicsTable+"."+attr.Field +" IS '"+en.EnDesc+", 主外键:对应物理表:"+myen1.EnMap.PhysicsTable+",表描述:"+myen1.EnDesc+"'"  );
-						break;
-					default:
-						break;
-				}
-			}
-			 
-		}
+                        AddColNote(en, en.EnMap.PhysicsTable, attr.Field, attr.Desc + ", 主外键:对应物理表:" + myen1.EnMap.PhysicsTable + ",表描述:" + myen1.EnDesc);
+                        //en.RunSQL("comment on table "+ en.EnMap.PhysicsTable+"."+attr.Field +" IS '"+  );
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 		/// <summary>
 		/// 产程系统报表，如果出现问题，就写入日志里面。
 		/// </summary>
 		/// <returns></returns>
         public static string DBRpt1(DBLevel level, Entities ens)
         {
-
-            //
-            //			try
-            //			{
-            //			 
-            //				PubClass.AddExpForTable(ens.GetNewEntity);
-            //			}
-            //			catch(Exception ex)
-            //			{
-            //				return ex.Message;
-            //			}
-            //return "";
 
             Entity en = ens.GetNewEntity;
             if (en.EnMap.EnDBUrl.DBUrlType != DBUrlType.AppCenterDSN)
@@ -1449,10 +1478,6 @@ namespace BP
 			{
 				throw ex;
 			}
-
-
-			
-
 		}
 		#endregion
 
