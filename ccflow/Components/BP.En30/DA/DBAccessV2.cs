@@ -541,7 +541,7 @@ namespace BP.DA
             sql = "SELECT  IntVal FROM " + table + " WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
             int val = DBAccess.RunSQLReturnValInt(sql,ps);
 
-            return int.Parse(intKey + val.ToString());
+            return Int64.Parse(intKey + val.ToString());
         }
         #endregion
 
