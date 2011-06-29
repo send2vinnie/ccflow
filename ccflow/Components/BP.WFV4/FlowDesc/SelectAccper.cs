@@ -34,11 +34,11 @@ namespace BP.WF
         /// <summary>
         ///¹¤×÷ID
         /// </summary>
-        public int WorkID
+        public Int64 WorkID
         {
             get
             {
-                return this.GetValIntByKey(SelectAccperAttr.WorkID);
+                return this.GetValInt64ByKey(SelectAccperAttr.WorkID);
             }
             set
             {
