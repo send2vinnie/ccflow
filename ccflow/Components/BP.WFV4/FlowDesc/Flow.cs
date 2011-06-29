@@ -1578,13 +1578,15 @@ namespace BP.WF
             string fk_mapData = "ND" + int.Parse(this.No) + "Rpt";
             string flowId = int.Parse(this.No).ToString();
 
+            
+
             #region ²åÈë×Ö¶Î¡£
-            string sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' +cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            string sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " +SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
             string sql2 = "DELETE FROM Sys_MapAttr WHERE KeyOfEn NOT IN (" + sql + ") AND FK_MapData='ND" + flowId + "Rpt' ";
             DBAccess.RunSQL(sql2); // É¾³ý²»´æÔÚµÄ×Ö¶Î.
 
             // ²¹³äÉÏÃ»ÓÐ×Ö¶Î¡£
-            sql = "SELECT MyPK, KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' +cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql = "SELECT MyPK, KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
 
             sql = "SELECT KeyOfEn FROM Sys_MapAttr WHERE FK_MapData='ND" + flowId + "Rpt'";
