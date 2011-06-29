@@ -193,11 +193,11 @@ namespace FreeFrm.Web
         /// <param name="workID"></param>
         /// <returns></returns>
         [WebMethod]
-        public string GenerFrm(string fk_mapdata,int workID)
+        public string GenerFrm(string fk_mapdata,Int64 workID)
         {
             return _GenerFrm(fk_mapdata, workID);
         }
-        private string _GenerFrm(string fk_mapdata,int workID)
+        private string _GenerFrm(string fk_mapdata, Int64 workID)
         {
             ds = new DataSet();
             // line.
