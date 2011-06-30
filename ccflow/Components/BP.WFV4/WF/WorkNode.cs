@@ -814,7 +814,8 @@ namespace BP.WF
                 case NodeWorkType.WorkHL:
                     break;
                 default:
-                    this.HisGenerWorkFlow.Update(GenerWorkFlowAttr.FK_Node, town.HisNode.NodeID,
+                    this.HisGenerWorkFlow.Update(GenerWorkFlowAttr.FK_Node,
+                        town.HisNode.NodeID,
                "SDT", dtOfShould.ToString("yyyy-MM-dd"));
                     break;
             }
@@ -2614,6 +2615,7 @@ namespace BP.WF
                 }
                 catch
                 {
+                    wk.Update();
                 }
 
                 #region 复制多选数据
@@ -2790,8 +2792,6 @@ namespace BP.WF
 
                 // 启动一个工作节点.
                 string msg = this.beforeStartNode(wk, nd);
-
-
 
                 return "@" + string.Format(this.ToE("NStep", "@第{0}步"), nd.Step.ToString()) + "<font color=blue>" + nd.Name + "</font>" + this.ToE("WorkStartOK", "工作成功启动") + "." + msg;
             }
