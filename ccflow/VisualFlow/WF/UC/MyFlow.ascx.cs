@@ -1300,8 +1300,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     {
         Flow fl = new Flow(this.FK_Flow);
         this.FK_Node = fl.StartNodeID;
-
-      
         this.FK_Node = nd.NodeID;
 
         StartWork wk = (StartWork)nd.HisWork;
@@ -1313,16 +1311,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
             wk.WFState = 0;
             wk.NodeState = 0;
-
-            try
-            {
-                wk.OID = DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
-                wk.DirectInsert();
-            }
-            catch
-            {
-                wk.RetrieveFromDBSources();
-            }
+            wk.OID = DBAccess.GenerOID("WID");
+            // DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
+            //  wk.OID = DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
+            wk.DirectInsert();
         }
 
         wk.Rec = WebUser.No;
@@ -1333,25 +1325,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         wk.FK_Dept = WebUser.FK_Dept;
         wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
         wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
-        Dept Dept = new Dept(WebUser.FK_Dept);
+    //    Dept dept = new Dept(WebUser.FK_Dept);
         wk.FID = 0;
         wk.SetValByKey("RecText", WebUser.Name);
         this.WorkID = wk.OID;
         return wk;
 
-        //switch (nd.HisFormType)
-        //{
-        //    case FormType.SysForm:
-        //        this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID);
-        //        this.UCEn1.Add(wk.WorkEndInfo);
-        //        this.OutJSAuto(wk);
-        //        return;
-        //    case FormType.SelfForm:
-        //        this.Pub1.Clear();
-        //        this.UCEn1.Clear();
-        //        this.Pub1.AddIframeWithOnload(nd.FormUrl + "?WorkID=" + wk.OID);
-        //        break;
-        //}
+       
     }
     
     public void BtnReturnWork()
