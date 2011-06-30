@@ -78,16 +78,6 @@ namespace FreeFrm.Web
             return Connector.ToXml(ds);
         }
         /// <summary>
-        /// HelloWorld
-        /// </summary>
-        /// <returns></returns>
-        [WebMethod]
-        public string HelloWorldddd()
-        {
-           // return this.GenerFrm("ND501");
-            return "Hello World";
-        }
-        /// <summary>
         /// 运行sqls
         /// </summary>
         /// <param name="sqls"></param>
@@ -118,6 +108,27 @@ namespace FreeFrm.Web
         {
             DataSet ds = new DataSet();
             ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
+            return Connector.ToXml(ds);
+        }
+        /// <summary>
+        /// 运行sql返回table.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string RunSQLReturnTableS(string[] sqls)
+        {
+            DataSet ds = new DataSet();
+            int i = 0;
+            foreach (string sql in sqls)
+            {
+                if (string.IsNullOrEmpty(sql))
+                    continue;
+                DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+                dt.TableName = "DT" + i;
+                ds.Tables.Add(dt);
+                i++;
+            }
             return Connector.ToXml(ds);
         }
         [WebMethod]
@@ -193,11 +204,11 @@ namespace FreeFrm.Web
         /// <param name="workID"></param>
         /// <returns></returns>
         [WebMethod]
-        public string GenerFrm(string fk_mapdata,Int64 workID)
+        public string GenerFrm(string fk_mapdata,int workID)
         {
             return _GenerFrm(fk_mapdata, workID);
         }
-        private string _GenerFrm(string fk_mapdata, Int64 workID)
+        private string _GenerFrm(string fk_mapdata,int workID)
         {
             ds = new DataSet();
             // line.
@@ -508,7 +519,7 @@ namespace FreeFrm.Web
                 if (igF.Contains("@" + dc.ColumnName + "@"))
                     continue;
 
-                updataSQL += dc.ColumnName + "=@" + dc.ColumnName + ",";
+                updataSQL += dc.ColumnName + "="+BP.SystemConfig.AppCenterDBVarStr + dc.ColumnName + ",";
             }
             updataSQL = updataSQL.Substring(0, updataSQL.Length - 1);
             string pk = "";
@@ -518,7 +529,7 @@ namespace FreeFrm.Web
                 pk = "OID";
             if (dt.Columns.Contains("No"))
                 pk = "No";
-            updataSQL += " WHERE " + pk + "=@" + pk;
+            updataSQL += " WHERE " + pk + "=" + BP.SystemConfig.AppCenterDBVarStr + pk;
 
             //生成INSERT SQL.
             string insertSQL = "INSERT INTO " + tableName + " ( ";
@@ -534,7 +545,7 @@ namespace FreeFrm.Web
             {
                 if (igF.Contains("@" + dc.ColumnName + "@"))
                     continue;
-                insertSQL += "@" + dc.ColumnName + ",";
+                insertSQL += BP.SystemConfig.AppCenterDBVarStr + dc.ColumnName + ",";
             }
             insertSQL = insertSQL.Substring(0, insertSQL.Length - 1);
             insertSQL += ")";
@@ -546,7 +557,8 @@ namespace FreeFrm.Web
                 BP.DA.Paras ps = new BP.DA.Paras();
                 foreach (DataColumn dc in dt.Columns)
                 {
-                    ps.Add(dc.ColumnName, dr[dc.ColumnName]);
+                    if (updataSQL.Contains(BP.SystemConfig.AppCenterDBVarStr + dc.ColumnName))
+                        ps.Add(dc.ColumnName, dr[dc.ColumnName]);
                 }
                 ps.SQL = updataSQL;
 
@@ -554,6 +566,12 @@ namespace FreeFrm.Web
                 {
                     if (BP.DA.DBAccess.RunSQL(ps) == 0)
                     {
+                        ps.Clear();
+                        foreach (DataColumn dc in dt.Columns)
+                        {
+                            if (updataSQL.Contains(BP.SystemConfig.AppCenterDBVarStr + dc.ColumnName))
+                                ps.Add(dc.ColumnName, dr[dc.ColumnName]);
+                        }
                         ps.SQL = insertSQL;
                         BP.DA.DBAccess.RunSQL(ps);
                     }
