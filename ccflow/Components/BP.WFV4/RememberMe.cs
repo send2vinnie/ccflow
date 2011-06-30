@@ -171,13 +171,13 @@ namespace BP.WF
                 map.AddTBIntPK(RememberMeAttr.FK_Node, 0, "节点", false, false);
                 map.AddTBStringPK(RememberMeAttr.FK_Emp, "", "人员", true, false, 1, 30, 10);
 
-                map.AddTBString(RememberMeAttr.Objs, "", "分配人员", true, false, 0, 200, 10);
-                map.AddTBString(RememberMeAttr.ObjsExt, "", "分配人员", true, false, 0, 200, 10);
+                map.AddTBString(RememberMeAttr.Objs, "", "分配人员", true, false, 0, 4000, 10);
+                map.AddTBString(RememberMeAttr.ObjsExt, "", "分配人员", true, false, 0, 4000, 10);
 
                 //map.AddTBInt(RememberMeAttr.NumOfObjs, 0, "分配人员数", true, false);
 
-                map.AddTBString(RememberMeAttr.Emps, "", "工作人员", true, false, 0, 200, 10);
-                map.AddTBString(RememberMeAttr.EmpsExt, "", "工作人员Ext", true, false, 0, 200, 10);
+                map.AddTBString(RememberMeAttr.Emps, "", "工作人员", true, false, 0, 4000, 10);
+                map.AddTBString(RememberMeAttr.EmpsExt, "", "工作人员Ext", true, false, 0, 4000, 10);
                 // map.AddTBInt(RememberMeAttr.NumOfEmps, 0, "执行人员数", true, false);
                 this._enMap = map;
                 return this._enMap;
