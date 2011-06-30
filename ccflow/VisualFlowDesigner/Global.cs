@@ -121,8 +121,22 @@ namespace BP.WF
         /// <param name="url"></param>
         public static void DoUrl(string url)
         {
+            //  BP.Win32.FrmIE ie = new BP.Win32.FrmIE();
+
             BP.Win32.FrmIE ie = new BP.Win32.FrmIE();
-            ie.ShowIE("http://" + Global.Host + "/" + url + "&Lang=" + BP.Web.WebUser.SysLang);
+            //修改部分 by David 2011-06-29
+            if (url.StartsWith("/"))
+            {
+                ie.ShowIE("http://" + Global.Host + url + "&Lang=" + BP.Web.WebUser.SysLang);
+            }
+            else
+            {
+                ie.ShowIE("http://" + Global.Host + "/" + url + "&Lang=" + BP.Web.WebUser.SysLang);
+            }
+            //原来代码
+            // ie.ShowIE("http://" + Global.Host + "/" + url + "&Lang=" + BP.Web.WebUser.SysLang);
+            //修改结束
+            //   ie.ShowIE("http://" + Global.Host + "/" + url + "&Lang=" + BP.Web.WebUser.SysLang);
             // ie.ShowIE("http://localhost/Front/DoPort.aspx?En=" + en.ToString() + "&DoType=En&PK=" + en.PKVal);
         }
         public static void DoUrlByType(string type, string refNo)
