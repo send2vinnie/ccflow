@@ -1719,11 +1719,11 @@ namespace BP.En
         }
         public static Paras GenerParas(Entity en, string[] keys)
         {
-            string mykeys = "";
+            string mykeys = "@";
             if (keys != null)
                 foreach (string key in keys)
-                    mykeys += "@" + key;
-          
+                    mykeys += key + "@";
+
             Map map = en.EnMap;
             Paras ps = new Paras();
             foreach (Attr attr in map.Attrs)
@@ -1732,11 +1732,13 @@ namespace BP.En
                     continue;
 
                 if (keys != null)
-                    if (mykeys.Contains("@" + attr.Key) == false)
+                {
+                    if (mykeys.Contains("@" + attr.Key + "@") == false)
                     {
-                        //if (attr.IsPK == false)
-                        //    continue;
+                        if (attr.IsPK == false)
+                            continue;
                     }
+                }
 
                 switch (attr.MyDataType)
                 {
@@ -1783,6 +1785,11 @@ namespace BP.En
                     default:
                         throw new Exception("@SqlBulider.update, 没有这个数据类型");
                 }
+            }
+
+            if (keys != null)
+            {
+                ps.Add(en.PK, en.GetValIntByKey(en.PK));
             }
             return ps;
         }

@@ -89,14 +89,43 @@ namespace BP.DA
                     case DBUrlType.AppCenterDSN:
                         switch (SystemConfig.AppCenterDBType)
                         {
+                            case DBType.SQL2000:
+                            case DBType.Oracle9i:
+                                return DBAccess.RunSQL(en.SQLCash.GetUpdateSQL(en, keys), SqlBuilder.GenerParas(en, keys));
                             case DBType.Access:
                                 return DBAccess.RunSQL(SqlBuilder.UpdateOfMSAccess(en, keys));
                             default:
-                                return DBAccess.RunSQL(en.SQLCash.GetUpdateSQL(en,keys), SqlBuilder.GenerParas(en, keys));
+                                //return DBAccess.RunSQL(en.SQLCash.GetUpdateSQL(en, keys),
+                                //    SqlBuilder.GenerParas(en, keys));
+                                if (keys != null)
+                                {
+                                    Paras ps = new Paras();
+                                    Paras myps = SqlBuilder.GenerParas(en, keys);
+                                    foreach (Para p in myps)
+                                    {
+                                        foreach (string s in keys)
+                                        {
+                                            if (s == p.ParaName)
+                                            {
+                                                ps.Add(p);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    return DBAccess.RunSQL(en.SQLCash.GetUpdateSQL(en, keys), ps);
+                                }
+                                else
+                                {
+                                    return DBAccess.RunSQL(en.SQLCash.GetUpdateSQL(en, keys), 
+                                        SqlBuilder.GenerParas(en, keys));
+                                }
+                                break;
+
                         }
                     case DBUrlType.DBAccessOfMSSQL2000:
                         return DBAccessOfMSSQL2000.RunSQL(SqlBuilder.Update(en, keys));
                     case DBUrlType.DBAccessOfOracle9i:
+
                         return DBAccessOfOracle9i.RunSQL(SqlBuilder.Update(en, keys));
                     default:
                         throw new Exception("@没有设置类型。");

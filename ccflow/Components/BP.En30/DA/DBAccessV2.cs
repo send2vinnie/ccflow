@@ -487,13 +487,11 @@ namespace BP.DA
         {
             return DBAccess.RunSPReturnInt("GenerOID");
         }
-        public static int GenerOIDByKey(string cfgKey)
+        public static Int64 GenerOID(string cfgKey)
         {
             Paras ps = new Paras();
             ps.Add("CfgKey", cfgKey);
-
             string sql="UPDATE Sys_Serial SET IntVal=IntVal+1 WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
-
             int num = DBAccess.RunSQL(sql, ps);
             if (num == 0)
             {
@@ -509,7 +507,24 @@ namespace BP.DA
         /// </summary>
         /// <param name="intKey"></param>
         /// <returns></returns>
-        public static int GenerOID(string intKey)
+        public static Int64 GenerOIDByKey64(string intKey)
+        {
+            Paras ps = new Paras();
+            ps.Add("CfgKey", intKey);
+            string sql = "";
+            sql = "UPDATE Sys_Serial SET IntVal=IntVal+1 WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
+            int num = DBAccess.RunSQL(sql, ps);
+            if (num == 0)
+            {
+                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES (" + SystemConfig.AppCenterDBVarStr + "CfgKey,'1')";
+                DBAccess.RunSQL(sql,ps);
+                return Int64.Parse(intKey + "1");
+            }
+            sql = "SELECT IntVal FROM Sys_Serial WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
+            int val = DBAccess.RunSQLReturnValInt(sql,ps);
+            return Int64.Parse(intKey + val.ToString());
+        }
+        public static Int32 GenerOIDByKey32(string intKey)
         {
             Paras ps = new Paras();
             ps.Add("CfgKey", intKey);
@@ -520,11 +535,11 @@ namespace BP.DA
             if (num == 0)
             {
                 sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES (" + SystemConfig.AppCenterDBVarStr + "CfgKey,'1')";
-                DBAccess.RunSQL(sql,ps);
+                DBAccess.RunSQL(sql, ps);
                 return int.Parse(intKey + "1");
             }
-            sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
-            int val = DBAccess.RunSQLReturnValInt(sql,ps);
+            sql = "SELECT IntVal FROM Sys_Serial WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
+            int val = DBAccess.RunSQLReturnValInt(sql, ps);
             return int.Parse(intKey + val.ToString());
         }
         public static Int64 GenerOID(string table, string intKey)
@@ -1033,7 +1048,7 @@ namespace BP.DA
                     case DBType.SQL2000:
                         return RunSQL_200705_SQL(sql, paras);
                     case DBType.Oracle9i:
-                        return RunSQL_200705_Ora(sql, paras);
+                        return RunSQL_200705_Ora(sql.Replace("]","").Replace("[",""), paras);
                     case DBType.Access:
                         return RunSQL_200705_OLE(sql, paras);
                     default:
