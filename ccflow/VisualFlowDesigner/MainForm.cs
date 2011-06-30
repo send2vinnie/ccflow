@@ -1011,13 +1011,13 @@ namespace BP.WF.Design
                 //if(fotm.ShowAttr( "工作流属性 ["+fs.Name +"]",  fs ,false )==DialogResult.OK)
                 //    this.tree1.SelectedNode.Text = fs.Name;
 			}
-			else if( this.tree1.SelectedNodeLevel ==1)
-			{
-				FlowSort fs = new FlowSort( this.tree1.SelectedNode.Tag.ToString() );
-				FrmAttr fotm = new FrmAttr();
-				if(fotm.ShowAttr( "工作流类别属性 ["+fs.Name +"]",  fs ,false )==DialogResult.OK)
-					this.tree1.SelectedNode.Text = fs.Name;
-			}
+            else if (this.tree1.SelectedNodeLevel == 1)
+            {
+                FlowSort fs = new FlowSort(this.tree1.SelectedNode.Tag.ToString());
+                BP.Win.WF.FrmAttr fotm = new BP.Win.WF.FrmAttr();
+                if (fotm.ShowAttr("工作流类别属性 [" + fs.Name + "]", fs, false) == DialogResult.OK)
+                    this.tree1.SelectedNode.Text = fs.Name;
+            }
 		}
 		#endregion 事件处理
 	
@@ -1104,7 +1104,7 @@ namespace BP.WF.Design
             fs.Name = this.ToE("FlowSort", "流程类别") + fs.No;
             fs.Insert();
 
-            FrmAttr fotm = new FrmAttr();
+            BP.Win.WF.FrmAttr fotm = new BP.Win.WF.FrmAttr();
             if (fotm.ShowAttr("编辑", fs, false) == DialogResult.OK)
             {
             }

@@ -811,20 +811,29 @@ namespace BP.Win.WF
         }
         private void LabNote_Click(object sender, System.EventArgs e)
         {
-            //WinWFLab lab = sender as WinWFLab;
-            //if (lab != null)
-            //{
-            //    VisualFlowDesigner.FrmNodeLabel frm = new VisualFlowDesigner.FrmNodeLabel();
-            //    frm.Tag = lab.HisNode;
-            //    frm.ShowDialog();
-            //    lab.HisNode = frm.Tag as LabNote;
-            //    return;
-            //}
-
             MenuItem mi = sender as MenuItem;
+            if (mi == null)
+            {
+                WinWFLab labNd = sender as WinWFLab;
+                if (labNd != null)
+                {
+                    VisualFlowDesigner.FrmNodeLabel frm = new VisualFlowDesigner.FrmNodeLabel();
+                    frm.LabName = labNd.HisNode.Name;
+                    frm.ShowDialog();
+                    labNd.HisNode.Name = frm.LabName;
+                    labNd.HisNode.Update("Name", frm.LabName);
+                    this.SaveHisLabNotes();
+                    labNd.BindWFNode();
+                    return;
+                }
+                return;
+            }
+
             ContextMenu menu = mi.Parent as ContextMenu;
             WinWFLab nd = menu.SourceControl as WinWFLab;
 
+           // WinWFLab nd =sender as WinWFLab; 
+           // menu.SourceControl as WinWFLab;
         //    MessageBox.Show( nd.Name );
 
             switch (mi.Name)
