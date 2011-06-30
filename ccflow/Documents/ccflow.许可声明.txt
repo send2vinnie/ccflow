@@ -1,15 +1,13 @@
 产品名称: 驰骋.net工作流程引擎.
 英文名称: chicheng workflow engine 
-简    称: ccflow    
-版    本: 4.5
-开发历史: 2003-2010年.
-性    质: 开源软件
+简    称: ccflow    版本: 4.5
+开发历史: 2003-2011年. 性    质: 开源软件
 许可协议: LGPL URL: http://www.gnu.org/licenses/lgpl.html
 官方网站: http://ccflow.org
 源 代 码: http://ccflow.googlecode.com/svn/ccflow/
 运行环境: bs 结构. windows xp, windows server. IIS6.0以上. .net4.0. Office2007 (如果需要单据打印.)
 开发语言: VS2010. .net4.0 c#.net.
-客 户 端: FireFox 3.0以上. E 6.0 以上,或者使用IE内核的浏览器.
+客 户 端: FireFox 3.0以上. IE7+,或者使用IE内核的浏览器.
 组成部分: 流程图形设计器(有:cs版本与bs版本)/流程前台运行程序(BS结构)/流程服务(CS)/web的方式的表单设计器/BRP工具
 基本功能: 图形化流程设计/智能表单web定义定义免程序开发/级联下拉框/流程轨迹/单据自定义打印/邮件短信工作到达通知/自动任务分配/支持sdk模式开发/简洁集成/消息侦听/丰富事件接口/报表定义/工作量分析/绩效考核/手机访问/支持sqlserve,oracle,mysql,access数据库
 应用范围: 
@@ -43,6 +41,11 @@ D:\ccflow\VisualFlowDesigner -- cs 设计器(不过很快就不用了，换成sl的设计器.)
 D:\ccflow\VisualWorkFlowServices - 流程服务程序.
 
 
+ D:\ccflow\VisualFlowWebDesigner - silverlight流程设计器.
+ D:\ccflow\SLPrj\FreeFrm - silverlight 自由表单设计器.
+ D:\ccflow\SLPrj\Flow\Flow - silverlight 版本前台应用源程序.
+
+
 关于: ccflow前台目录结构.
 ============================
 D:\ccflow\VisualFlow\Comm  --通用功能层.
@@ -56,6 +59,8 @@ D:\ccflow\VisualFlow\WF -- ccflow前台应用程序层(主要的功能都是在这个目录里面)
 D:\ccflow\VisualFlow\WF\Admin - 对ccflow的管理比如设计方向条件.报表定义...
 D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
 
+D:\ccflow\VisualFlow\ClientBin - silverlight 程序. 
+Flow.xap silverlight版本的前台执行程序, WF.xap流程设计器,FreeFrm.xap自由表单设计器.                             
 *****************************************************************
 
 
