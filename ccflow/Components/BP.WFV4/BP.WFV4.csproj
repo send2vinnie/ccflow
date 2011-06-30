@@ -170,7 +170,7 @@
     <Compile Include="FlowDesc\NDEvent.cs" />
     <Compile Include="FlowDesc\M2M.cs" />
     <Compile Include="FlowData.cs" />
-    <Compile Include="FlowDesc\NodeFrm.cs" />
+    <Compile Include="FlowDesc\Frm.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="FlowDesc\Direction.cs">
       <SubType>Code</SubType>
