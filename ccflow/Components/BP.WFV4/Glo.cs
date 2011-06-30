@@ -79,7 +79,7 @@ namespace BP.WF
             set
             {
                 Paras p = new Paras();
-                p.SQL = "UPDATE WF_Emp SET Msg=@v WHERE No=@FK_Emp";
+                p.SQL = "UPDATE WF_Emp SET Msg=" + SystemConfig.AppCenterDBVarStr + "v WHERE No=" + SystemConfig.AppCenterDBVarStr + "FK_Emp";
                 p.AddFK_Emp();
                 p.Add("v", value);
                 DBAccess.RunSQL(p);
