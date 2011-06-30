@@ -97,7 +97,6 @@ namespace BP.WF
             }
 		}
 		#endregion
-
 	}
 	/// <summary>
 	/// 节点到人员

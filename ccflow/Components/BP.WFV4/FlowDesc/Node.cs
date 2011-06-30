@@ -1289,6 +1289,19 @@ namespace BP.WF
                 return _HisStations;
             }
         }
+        private Frms _HisFrms = null;
+        /// <summary>
+        /// HisFrms
+        /// </summary>
+        public Frms HisFrms
+        {
+            get
+            {
+                if (this._HisFrms == null)
+                    _HisFrms = new Frms(this.NodeID);
+                return _HisFrms;
+            }
+        }
         private Depts _HisDepts = null;
         /// <summary>
         /// 此节点所在的工作岗位

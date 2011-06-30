@@ -2241,6 +2241,7 @@ namespace BP.WF
 
                 map.AddTBStringPK(FlowAttr.No, null, null, true, true, 1, 10, 3);
                 map.AddTBString(FlowAttr.Name, null, null, true, false, 0, 50, 10);
+
                 map.AddDDLEntities(FlowAttr.FK_FlowSort, "01", this.ToE("FlowSort", "流程类别"), new FlowSorts(), false);
                 map.AddTBInt(FlowAttr.FlowType, (int)FlowType.Panel, "流程类型", false, false);
 
