@@ -49,7 +49,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         }
 
         int colspan = 7;
-        this.Pub1.AddTable("border=1px align=center width='100%'");
+        this.Pub1.AddTable("border=1px align=center width='960px'");
         //this.Pub1.AddTR();
         //this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         //this.Pub1.AddTREnd();

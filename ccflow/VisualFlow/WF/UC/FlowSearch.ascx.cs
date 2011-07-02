@@ -108,7 +108,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         else
             qo.AddWhere("substring(RDT,1,10) >='" + this.DT_F + "' AND substring(RDT,1,10) <='" + this.DT_T + "' ");
 
-        this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch"+this.PageSmall+".aspx?FK_Node=" + this.FK_Node);
+        this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
         qo.DoQuery("OID", 10, this.PageIdx);
 
         // 生成页面数据。
@@ -120,11 +120,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 continue;
             colspan++;
         }
-        this.Pub1.AddTable("width='100%' align=center ");
-        //this.Pub1.AddTR();
-        //this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
-        //this.Pub1.AddTREnd();
-
+        this.Pub1.AddTable("width='960px' align=center ");
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleMsg  align=left colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b><a href=FlowSearch" + this.PageSmall + ".aspx >" + this.ToE("FlowSearch", "流程查询") + "</a>-<a href='FlowSearch" + this.PageSmall + ".aspx?FK_Flow=" + nd.FK_Flow + "'>" + nd.FlowName + "</a>-" + nd.Name + "</b></TD>");
         this.Pub1.AddTREnd();
@@ -165,7 +161,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         {
             if (attr.UIVisible == false)
                 continue;
-          
+
             this.Pub1.AddTDTitle(attr.Desc);
         }
         this.Pub1.AddTDTitle("操作");
@@ -238,7 +234,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }
-
     void btn_Click(object sender, EventArgs e)
     {
         Button btn = (Button)sender;
@@ -349,7 +344,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
     {
         Flow fl = new Flow(this.FK_Flow);
         int colspan = 4;
-        this.Pub1.AddTable("width=100%");
+        this.Pub1.AddTable("width=960px");
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.Pub1.AddTREnd();
@@ -701,7 +696,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         }
 
         int colspan = 8;
-        this.Pub1.AddTable("border=1px width='100%'");
+        this.Pub1.AddTable("border=1px width='960px'");
 
         this.Pub1.AddTR();
         if (WebUser.IsWap)

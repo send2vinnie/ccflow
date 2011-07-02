@@ -95,29 +95,28 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         }
 
         #region 菜单输出区域
+
+
         string dotype = this.PageID;
         if (BP.WF.Glo.IsShowTitle)
         {
-            this.Pub1.Add("<div  id='Top' /> </div>");
-            this.Page.RegisterClientScriptBlock("d",
-            "<link href='" + this.Request.ApplicationPath + "/WF/Style/Skin/T" + BP.Web.WebUser.Style + "/Style.css' rel='stylesheet' type='text/css' />");
+            this.Pub1.Add("<DIV class='wp' >");
+            this.Pub1.Add("<div  id='Top' class='top' /><h2><img src='./../DataUser/LogBiger.png'  border=0 /></h2></div>");
         }
+        this.Page.RegisterClientScriptBlock("d",
+           "<link href='" + this.Request.ApplicationPath + "/WF/Style/Skin/T" + BP.Web.WebUser.Style + "/Style.css' rel='stylesheet' type='text/css' />");
+         
 
-        // this.Pub1.Add("<div style='float:left'>Hi:" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "</div>");
-        //this.Pub1.Add("<DIV ID=MainDiv>");
-        //this.Pub1.Add("<UL id=MainUL>");
-
-        this.Pub1.Add("<DIV ID=nv>");
-
+        this.Pub1.Add("<DIV ID=nv class='nv' >");
         this.Pub1.Add("<UL>");
         foreach (BP.WF.XML.ToolBar en in ens)
         {
             if (en.No == dotype)
             {
                 if (en.No == "EmpWorks")
-                    this.Pub1.Add("<li class=S ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + msg + "</span></a></li>");
+                    this.Pub1.Add("<li class=current ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + msg + "</span></a></li>");
                 else
-                    this.Pub1.Add("<li class=S ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + en.Name + "</span></a></li>");
+                    this.Pub1.Add("<li class=current ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + en.Name + "</span></a></li>");
             }
             else
             {
@@ -127,9 +126,14 @@ public partial class Face_MasterPage : BP.Web.MasterPage
                     this.Pub1.Add("<li><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + en.Name + "</span></a></li>");
             }
         }
-        this.Pub1.AddLi("<a href=#  onmouseover='' >您好:" + BP.Web.WebUser.Name + "</a>");
+     //   this.Pub1.AddLi("<a href=#  onmouseover='' >您好:" + BP.Web.WebUser.Name + "</a>");
         this.Pub1.Add("</UL>");
         this.Pub1.Add("</DIV>");
+
+        if (BP.WF.Glo.IsShowTitle)
+        {
+            this.Pub1.Add("</DIV>");
+        }
         #endregion 菜单输出区域
 
 

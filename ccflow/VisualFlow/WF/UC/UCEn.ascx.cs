@@ -1016,26 +1016,31 @@ namespace BP.Web.Comm.UC.WF
 
         public string ToHtmlColor(string colorName)
         {
-             
-            if (colorName.StartsWith("#"))
-                colorName = colorName.Replace("#", string.Empty);
-            int v = int.Parse(colorName, System.Globalization.NumberStyles.HexNumber);
 
-            Color col=  Color.FromArgb        
-           (
-                 Convert.ToByte((v >> 24) & 255),
-                 Convert.ToByte((v >> 16) & 255),
-                 Convert.ToByte((v >> 8) & 255),
-                 Convert.ToByte((v >> 0) & 255)
-            );
-       
-            int alpha = col.A;
-            var red = Convert.ToString(col.R, 16); ;
-            var green = Convert.ToString(col.G, 16);
-            var blue = Convert.ToString(col.B, 16); 
-            return string.Format("#{0}{1}{2}", red, green, blue);  
+            try
+            {
+                if (colorName.StartsWith("#"))
+                    colorName = colorName.Replace("#", string.Empty);
+                int v = int.Parse(colorName, System.Globalization.NumberStyles.HexNumber);
 
+                Color col = Color.FromArgb
+               (
+                     Convert.ToByte((v >> 24) & 255),
+                     Convert.ToByte((v >> 16) & 255),
+                     Convert.ToByte((v >> 8) & 255),
+                     Convert.ToByte((v >> 0) & 255)
+                );
 
+                int alpha = col.A;
+                var red = Convert.ToString(col.R, 16); ;
+                var green = Convert.ToString(col.G, 16);
+                var blue = Convert.ToString(col.B, 16);
+                return string.Format("#{0}{1}{2}", red, green, blue);
+            }
+            catch
+            {
+                return "black";
+            }
         }
         public string FK_MapData = null;
         public void BindFreeFrm(Entity en, string enName)

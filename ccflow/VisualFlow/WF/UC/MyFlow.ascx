@@ -66,6 +66,7 @@
  position:relative;
  top:50px;
  left:40px;
+ width:960px;
 }
     </style>
 </style>

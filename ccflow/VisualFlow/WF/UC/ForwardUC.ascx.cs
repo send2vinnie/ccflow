@@ -161,7 +161,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
         this.CheckBoxList1.Items.Clear();
         // 当前用的员工权限。
         string sql = "";
-        sql = " SELECT [No],Name FROM Port_Emp WHERE NO IN (SELECT FK_EMP FROM Port_EmpDept WHERE FK_Dept IN (  SELECT FK_Dept FROM Port_EmpDept WHERE fk_emp='" + BP.Web.WebUser.No + "') ) or FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%'";
+        sql = " SELECT No,Name FROM Port_Emp WHERE NO IN (SELECT FK_EMP FROM Port_EmpDept WHERE FK_Dept IN (  SELECT FK_Dept FROM Port_EmpDept WHERE fk_emp='" + BP.Web.WebUser.No + "') ) or FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%'";
 
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
         foreach (DataRow dr in dt.Rows)

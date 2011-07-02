@@ -77,11 +77,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
         else
             emps.RetrieveAllFromDBSource();
 
-
-        this.AddTable("width=80% align=center border=1");
-        if (WebUser.IsWap)
-            this.AddCaptionLeft("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>");
-
+        this.AddTable("width=960px align=center border=1");
         this.AddTR();
         this.AddTDTitle("IDX");
         this.AddTDTitle(this.ToE("Dept", "部门"));
@@ -92,7 +88,6 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
         this.AddTDTitle(this.ToE("Dept", "签名"));
         if (WebUser.No == "admin")
             this.AddTDTitle(this.ToE("Order", "顺序"));
-
         if (this.DoType != null)
         {
             BP.WF.Port.WFEmp.DTSData();
@@ -101,7 +96,6 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
         this.AddTREnd();
 
         string keys = DateTime.Now.ToString("MMddhhmmss");
-
         string deptName = null;
         int idx = 0;
         foreach (DataRow dr in dt.Rows)
@@ -158,7 +152,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
 
     public void BindWap()
     {
-        this.AddTable("width=100% align=center");
+        this.AddTable("align=center");
         this.AddTR();
         this.AddTD("colspan=4 align=left class=FDesc", "<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a> - " + this.ToE("Emp","成员") );
         this.AddTREnd();

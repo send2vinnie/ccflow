@@ -140,7 +140,7 @@ namespace BP.Web.WF.WF
             // 删除流程设计数据。
             DA.DBAccess.RunSQL("DELETE FROM WF_Node");
             DA.DBAccess.RunSQL("DELETE FROM WF_Flow");
-            DA.DBAccess.RunSQL("DELETE FROM WF_FlowSort WHERE [No] Not in ('01','02') ");
+            DA.DBAccess.RunSQL("DELETE FROM WF_FlowSort WHERE No Not in ('01','02') ");
             DA.DBAccess.RunSQL("DELETE FROM WF_FAppSet");
             DA.DBAccess.RunSQL("DELETE FROM WF_FileManager");
             DA.DBAccess.RunSQL("DELETE FROM WF_RptStation");
