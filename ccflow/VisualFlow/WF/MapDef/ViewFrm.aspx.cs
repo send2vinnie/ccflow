@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BP.Sys;
+using BP.En;
 
 public partial class WF_MapDef_FreeFrm_ViewFrm :BP.Web.WebPage
 {
@@ -30,9 +31,16 @@ public partial class WF_MapDef_FreeFrm_ViewFrm :BP.Web.WebPage
 
         this.UCEn1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
 
-        int nodeid = int.Parse(this.FK_MapData.Replace("ND", ""));
-        BP.WF.Node nd = new BP.WF.Node(nodeid);
-        BP.WF.Work work = new BP.WF.GEStartWork(nd.NodeID);
-        this.UCEn1.BindFreeFrm(work, this.FK_MapData);
+        if (this.FK_MapData.Contains("ND"))
+        {
+            int nodeid = int.Parse(this.FK_MapData.Replace("ND", ""));
+            BP.WF.Node nd = new BP.WF.Node(nodeid);
+            BP.WF.Work work = new BP.WF.GEStartWork(nd.NodeID);
+            this.UCEn1.BindFreeFrm(work, this.FK_MapData);
+            return;
+        }
+
+        MapData md = new MapData(this.FK_MapData);
+        this.UCEn1.BindFreeFrm(md.HisGEEn, this.FK_MapData);
     }
 }

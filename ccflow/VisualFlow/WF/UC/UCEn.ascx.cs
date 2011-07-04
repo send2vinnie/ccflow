@@ -1014,34 +1014,7 @@ namespace BP.Web.Comm.UC.WF
 
         #region 输出自由格式的表单.
 
-        public string ToHtmlColor(string colorName)
-        {
-
-            try
-            {
-                if (colorName.StartsWith("#"))
-                    colorName = colorName.Replace("#", string.Empty);
-                int v = int.Parse(colorName, System.Globalization.NumberStyles.HexNumber);
-
-                Color col = Color.FromArgb
-               (
-                     Convert.ToByte((v >> 24) & 255),
-                     Convert.ToByte((v >> 16) & 255),
-                     Convert.ToByte((v >> 8) & 255),
-                     Convert.ToByte((v >> 0) & 255)
-                );
-
-                int alpha = col.A;
-                var red = Convert.ToString(col.R, 16); ;
-                var green = Convert.ToString(col.G, 16);
-                var blue = Convert.ToString(col.B, 16);
-                return string.Format("#{0}{1}{2}", red, green, blue);
-            }
-            catch
-            {
-                return "black";
-            }
-        }
+    
         public string FK_MapData = null;
         public void BindFreeFrm(Entity en, string enName)
         {
@@ -1056,7 +1029,7 @@ namespace BP.Web.Comm.UC.WF
             {
                 Color col = ColorTranslator.FromHtml(lab.FontColor);
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + lab.X + "px;top:" + lab.Y + "px;text-align:left;' >");
-                this.Add("\t\n<span style='color:" + ToHtmlColor(lab.FontColor) + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' >" + lab.TextHtml + "</span>");
+                this.Add("\t\n<span style='color:" +  lab.FontColorHtml + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' >" + lab.TextHtml + "</span>");
                 this.Add("\t\n</DIV>");
 
                // Color.FromArgb(
@@ -1070,14 +1043,14 @@ namespace BP.Web.Comm.UC.WF
                     /* 一道竖线 */
                     float h = line.Y1 - line.Y2;
                     h = Math.Abs(h);
-                    this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + line.BorderWidth + "px; height:" + h + "px;background-color:" + line.BorderColor + "\" />");
+                    this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + line.BorderWidth + "px; height:" + h + "px;background-color:" + line.BorderColorHtml + "\" />");
                 }
                 else
                 {
                     /* 一道横线 */
                     float w = line.X2 - line.X1;
                     w = Math.Abs(w);
-                    this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px;background-color:" + line.BorderColor + "\" />");
+                    this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px;background-color:" + line.BorderColorHtml + "\" />");
                 }
             }
 
@@ -1085,7 +1058,7 @@ namespace BP.Web.Comm.UC.WF
             foreach (FrmLink link in links)
             {
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + link.X + "px;top:" + link.Y + "px;text-align:left;' >");
-                this.Add("\t\n<span style='color:" + link.FontColor + ";font-family: " + link.FontName + ";font-size: " + link.FontSize + "px;' > <a href='" + link.URL + "' target='" + link.Target + "'> " + link.Text + "</span>");
+                this.Add("\t\n<span style='color:" + link.FontColorHtml + ";font-family: " + link.FontName + ";font-size: " + link.FontSize + "px;' > <a href='" + link.URL + "' target='" + link.Target + "'> " + link.Text + "</span>");
                 this.Add("\t\n</DIV>");
             }
 
