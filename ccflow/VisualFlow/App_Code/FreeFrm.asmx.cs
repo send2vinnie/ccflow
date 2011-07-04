@@ -98,6 +98,140 @@ namespace FreeFrm.Web
             }
             return i;
         }
+        [WebMethod]
+        public string DoType(string dotype, string v1, string v2, string v3, string v4)
+        {
+            try
+            {
+                switch (dotype)
+                {
+                    case "FrmUp":
+                    case "FrmDown":
+                        FrmNode myfn = new FrmNode();
+                        myfn.Retrieve(FrmNodeAttr.FK_Node, v1, FrmNodeAttr.FK_Frm, v2);
+                        if (dotype == "FrmUp")
+                            myfn.DoUp();
+                        else
+                            myfn.DoDown();
+                        return null;
+                    case "SaveFlowFrm":
+                        // 转化参数意义.
+                        string vals = v1;
+                        string fk_Node = v2;
+                        string fk_flow = v3;
+                        bool isReadonly=false;
+                        if (v4 == "1")
+                            isReadonly = true;
+                        string msg = this.SaveEn(vals);
+                        if (msg.Contains("Error"))
+                            return msg;
+
+                        string fk_frm = msg;
+                        Frm fm = new Frm();
+                        fm.No = fk_frm;
+                        fm.Retrieve();
+
+                        FrmNode fn = new FrmNode();
+                        if (fn.Retrieve(FrmNodeAttr.FK_Frm, fk_frm,
+                            FrmNodeAttr.FK_Node, fk_Node) == 1)
+                        {
+                            fn.IsReadonly = isReadonly;
+                            fn.Update();
+                            return fk_frm;
+                        }
+
+                        fn.FK_Frm = fk_frm;
+                        fn.FK_Flow = fk_flow;
+                        fn.FK_Node = int.Parse(fk_Node);
+                        fn.IsReadonly = isReadonly;
+                        fn.Idx = 100;
+                        fn.Insert();
+
+                        MapData md = new MapData();
+                        md.No = fm.No;
+                        md.Name = fm.Name;
+                        md.PTable = "T" + md.No;
+                        md.EnPK = "OID";
+                        md.Insert();
+
+                        MapAttr attr = new MapAttr();
+                        attr.FK_MapData = md.No;
+                        attr.KeyOfEn = "OID";
+                        attr.Name = "WorkID";
+                        attr.MyDataType = BP.DA.DataType.AppInt;
+                        attr.UIContralType = UIContralType.TB;
+                        attr.LGType = FieldTypeS.Normal;
+                        attr.UIVisible = false;
+                        attr.UIIsEnable = false;
+                        attr.DefVal = "0";
+                        attr.HisEditType = BP.En.EditType.Readonly;
+                        attr.Insert();
+
+                        attr = new MapAttr();
+                        attr.FK_MapData = md.No;
+                        attr.KeyOfEn = "FID";
+                        attr.Name = "FID";
+                        attr.MyDataType = BP.DA.DataType.AppInt;
+                        attr.UIContralType = UIContralType.TB;
+                        attr.LGType = FieldTypeS.Normal;
+                        attr.UIVisible = false;
+                        attr.UIIsEnable = false;
+                        attr.DefVal = "0";
+                        attr.HisEditType = BP.En.EditType.Readonly;
+                        attr.Insert();
+                        return fk_frm;
+                    default:
+                        return "Error:";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Error:" + ex.Message;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string SaveEn(string vals)
+        {
+            Entity en = null;
+            try
+            {
+                AtPara ap = new AtPara(vals);
+                string enName = ap.GetValStrByKey("EnName");
+                string pk = ap.GetValStrByKey("PKVal");
+                  en = ClassFactory.GetEn(enName);
+                en.ResetDefaultVal();
+
+                if (en == null)
+                    throw new Exception("无效的类名:" + enName);
+
+                if (string.IsNullOrEmpty(pk) == false)
+                {
+                    en.PKVal = pk;
+                    en.RetrieveFromDBSources();
+                }
+
+                foreach (string key in ap.HisHT.Keys)
+                {
+                    if (key == "PKVal")
+                        continue;
+                    en.SetValByKey(key, ap.HisHT[key]);
+                }
+                en.Save();
+                return en.PKVal as string;
+            }
+            catch (Exception ex)
+            {
+                if (en != null)
+                    en.CheckPhysicsTable();
+
+                return "Error:" + ex.Message;
+            }
+        }
         /// <summary>
         /// 运行sql返回table.
         /// </summary>
@@ -196,7 +330,6 @@ namespace FreeFrm.Web
             }
         }
         private DataSet ds = null;
-       
         /// <summary>
         /// 获取一个Frm
         /// </summary>
