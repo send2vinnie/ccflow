@@ -52,7 +52,6 @@ public partial class Face_MasterPage : BP.Web.MasterPage
        // this.Page.RegisterClientScriptBlock("df",
        //"<link href='" + this.Request.ApplicationPath + "/Comm/Style/Skin/T" + BP.Web.WebUser.Style + "/menu.css' rel='stylesheet' type='text/css' />");
 
-
         //this.Page.RegisterClientScriptBlock("a",
         //   "<link href='" + this.Request.ApplicationPath + "/WF/Style/Menu" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
@@ -126,7 +125,6 @@ public partial class Face_MasterPage : BP.Web.MasterPage
                     this.Pub1.Add("<li><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><span>" + en.Name + "</span></a></li>");
             }
         }
-     //   this.Pub1.AddLi("<a href=#  onmouseover='' >您好:" + BP.Web.WebUser.Name + "</a>");
         this.Pub1.Add("</UL>");
         this.Pub1.Add("</DIV>");
 

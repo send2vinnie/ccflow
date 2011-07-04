@@ -279,12 +279,20 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                     break;
                 case "Up":
                     MapAttr attrU = new MapAttr(this.RefNo);
+                    if (this.Request.QueryString["IsDtl"]==null)
                     attrU.DoUp();
+                    else
+                        attrU.DoDtlUp();
+
+
                     this.WinClose();
                     break;
                 case "Down":
                     MapAttr attrD = new MapAttr(this.RefNo);
-                    attrD.DoDown();
+                    if (this.Request.QueryString["IsDtl"] == null)
+                        attrD.DoDown();
+                    else
+                        attrD.DoDtlDown();
                     this.WinClose();
                     break;
                 case "Jump":

@@ -142,7 +142,7 @@ public partial class WF_FileManager : WebPage
                 this.Pub1.AddTD(fm.FK_Emp + "," + fm.FK_EmpText);
 
 
-            this.Pub1.AddTD("<a href='../DataUser/FlowFile/" + fm.FK_Dept + "/" + fm.OID + "." + fm.Ext + "' target=_bl ><img src='../Images/FileType/" + fm.Ext + ".gif' border=0/>" + fm.Name + "</a>");
+            this.Pub1.AddTD("<a href='../DataUser/" + fm.FK_Dept + "/" + fm.OID + "." + fm.Ext + "' target=_bl ><img src='../Images/FileType/" + fm.Ext + ".gif' border=0/>" + fm.Name + "</a>");
 
             this.Pub1.AddTD(fm.RDT);
             this.Pub1.AddTD(fm.FileSize);
@@ -211,7 +211,7 @@ public partial class WF_FileManager : WebPage
 
         //  System.IO.File.Copy(ffile, toFile, true);
         System.IO.File.Copy(tempDir + zipFile, httpDir + zipFile, true);
-        this.WinOpen("./../DataUser/FlowFile/Tmp/" + zipFile);
+        this.WinOpen("./../DataUser/Tmp/" + zipFile);
     }
     private void btn_Upload_Click(object sender, EventArgs e)
     {

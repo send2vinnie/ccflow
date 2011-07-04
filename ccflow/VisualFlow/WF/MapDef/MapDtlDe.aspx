@@ -54,14 +54,14 @@
     
 	function Up(mypk,refNo)
     {
-        var url='Do.aspx?DoType=Up&MyPK='+mypk+'&RefNo='+refNo;
+        var url='Do.aspx?DoType=Up&MyPK='+mypk+'&RefNo='+refNo+"&IsDtl=1";
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         //window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
         window.location.href = window.location.href ;
     }
     function Down(mypk,refNo)
     {
-        var url='Do.aspx?DoType=Down&MyPK='+mypk+'&RefNo='+refNo;
+        var url = 'Do.aspx?DoType=Down&MyPK=' + mypk + '&RefNo=' + refNo + "&IsDtl=1";
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }

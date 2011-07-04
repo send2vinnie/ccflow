@@ -366,7 +366,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                 this.AddTD(fm.FK_NodeText);
                 this.AddTD(fm.RDT);
                 this.AddTD(fm.FK_EmpText);
-                this.AddTD("<a href='/DataUser/FlowFile/" + BP.Web.WebUser.FK_Dept + "/" + fm.OID + "." + fm.Ext + "' target=_bl ><img src='../Images/FileType/" + fm.Ext + ".gif' border=0/>" + fm.Name + "</a>");
+                this.AddTD("<a href='/DataUser/" + BP.Web.WebUser.FK_Dept + "/" + fm.OID + "." + fm.Ext + "' target=_bl ><img src='../Images/FileType/" + fm.Ext + ".gif' border=0/>" + fm.Name + "</a>");
                 this.AddTD(fm.FileSize);
                 this.AddTREnd();
             }
@@ -475,7 +475,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                         string file = year + "_" + WebUser.FK_Dept + "_" + func.No + "_" + workid + ".doc";
                         string[] paths = file.Split('_');
                         string path = paths[0] + "/" + paths[1] + "/" + paths[2] + "/";
-                        string BillInfo = "<img src='./../Images/Btn/Word.gif' /><a href='./../DataUser/FlowFile/Bill/" + path + file + "' target=_blank >" + func.Name + "</a>";
+                        string BillInfo = "<img src='./../Images/Btn/Word.gif' /><a href='./../DataUser/Bill/" + path + file + "' target=_blank >" + func.Name + "</a>";
                         this.Add(BillInfo);
                         //  string  = BP.SystemConfig.GetConfig("FtpPath") + file;
                         // path = BP.SystemConfig.AppSettings["FtpPath"].ToString() + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
