@@ -40,6 +40,17 @@ namespace BP.WF
 	public class Frm :EntityNoName
 	{
 		#region »ù±¾ÊôÐÔ
+        public string PTable
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttr.PTable);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttr.PTable, value);
+            }
+        }
         public string FK_Flow
         {
             get
@@ -106,6 +117,11 @@ namespace BP.WF
                 this._enMap = map;
                 return this._enMap;
             }
+        }
+        protected override bool beforeUpdate()
+        {
+            DBAccess.RunSQL("UPDATE Sys_MapAttr SET PTable='"+this.PTable+"' WHERE No='"+this.No+"'");
+            return base.beforeUpdate();
         }
 		#endregion
 	}
