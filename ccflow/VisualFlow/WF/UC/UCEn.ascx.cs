@@ -1029,10 +1029,9 @@ namespace BP.Web.Comm.UC.WF
             {
                 Color col = ColorTranslator.FromHtml(lab.FontColor);
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + lab.X + "px;top:" + lab.Y + "px;text-align:left;' >");
-                this.Add("\t\n<span style='color:" +  lab.FontColorHtml + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' >" + lab.TextHtml + "</span>");
+                this.Add("\t\n<span style='color:" + lab.FontColorHtml + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' >" + lab.TextHtml + "</span>");
                 this.Add("\t\n</DIV>");
-
-               // Color.FromArgb(
+                // Color.FromArgb(
             }
 
             FrmLines lines = new FrmLines(this.FK_MapData);

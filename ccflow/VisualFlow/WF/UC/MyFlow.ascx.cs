@@ -618,7 +618,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// </summary>
     public void BindWork(BP.WF.Node nd, Work wk)
     {
-
         switch (nd.HisNodeWorkType)
         {
             case NodeWorkType.StartWorkFL:
@@ -627,7 +626,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             case NodeWorkType.WorkHL:
                 if (this.FID != 0)
                 {
-
                     /* 这种情况是分流节点向退回到了分河流。*/
                     this.Btn_Send.Enabled = false;
                     this.Btn_Save.Enabled = false;
@@ -662,11 +660,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     btn.Text = "终止工作";
                     btn.Click += new EventHandler(ToolBar1_ButtonClick);
                     this.UCEn1.Add(btn);
-
                     this.UCEn1.AddFieldSetEnd(); // ("分流节点退回信息");
 
-                    //   this.ToolBar1.Controls.Clear();//.Clear();
-
+                    //this.ToolBar1.Controls.Clear();//.Clear();
                     //this.Response.Write("<script language='JavaScript'> DoSubFlowReturn('" + this.FID + "','" + wk.OID + "','" + nd.NodeID + "');</script>");
                     //this.Response.Write("<javascript ></javascript>");
                     return;
@@ -736,7 +732,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             wk.SetValByKey(attr.KeyOfEn, attr.DefVal);
         }
         #endregion 设置默认值。
-
 
         #region 判断是否合流节点。。
         if (nd.HisNodeWorkType == NodeWorkType.WorkHL || nd.HisNodeWorkType == NodeWorkType.WorkFHL)
@@ -816,13 +811,23 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 }
                 return;
             case FormType.FreeForm:
-                this.UCEn1.Add("<div id=divFreeFrm >");
-                this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID); //, false, false, null);
-                if (wk.WorkEndInfo.Length > 2)
+                Frms frms = nd.HisFrms;
+                if (frms.Count == 0)
                 {
-                    this.UCEn1.Add(wk.WorkEndInfo);
+                    this.UCEn1.Add("<div id=divFreeFrm >");
+                    this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID); //, false, false, null);
+                    if (wk.WorkEndInfo.Length > 2)
+                    {
+                        this.UCEn1.Add(wk.WorkEndInfo);
+                    }
+                    this.UCEn1.Add("</div>");
                 }
-                this.UCEn1.Add("</div>");
+                else
+                {
+                    foreach(Frm frn in frms)
+                    {
+                    }
+                }
                 return;
             case FormType.SelfForm:
             case FormType.SDKForm:
