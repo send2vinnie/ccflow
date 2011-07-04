@@ -990,23 +990,23 @@ namespace BP.WF
             {
                 //ccmsg += "@按照岗位抄送如下人员：";
                 ///* 如果设置了抄送人员的岗位。*/
-                //string sql = "SELECT [No],Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
+                //string sql = "SELECT No,Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
                 //DataTable dt = DBAccess.RunSQLReturnTable(sql);
                 //if (dt.Rows.Count == 0 || Web.WebUser.FK_Dept.Length > 3)
                 //{
-                //    sql = "SELECT [No],Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept.Substring(0, Web.WebUser.FK_Dept.Length - 2) + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
+                //    sql = "SELECT No,Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept.Substring(0, Web.WebUser.FK_Dept.Length - 2) + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
                 //    dt = DBAccess.RunSQLReturnTable(sql);
                 //}
 
                 //if (dt.Rows.Count == 0 || Web.WebUser.FK_Dept.Length > 5)
                 //{
-                //    sql = "SELECT [No],Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept.Substring(0, Web.WebUser.FK_Dept.Length - 4) + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
+                //    sql = "SELECT No,Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept.Substring(0, Web.WebUser.FK_Dept.Length - 4) + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
                 //    dt = DBAccess.RunSQLReturnTable(sql);
                 //}
 
                 //if (dt.Rows.Count == 0 || Web.WebUser.FK_Dept.Length > 7)
                 //{
-                //    sql = "SELECT [No],Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept.Substring(0, Web.WebUser.FK_Dept.Length - 6) + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
+                //    sql = "SELECT No,Name FROM Port_Emp WHERE FK_Dept Like '" + BP.Web.WebUser.FK_Dept.Substring(0, Web.WebUser.FK_Dept.Length - 6) + "%' AND NO IN (SELECT FK_EMP FROM Port_EmpStation WHERE FK_STATION IN(SELECT FK_Station FROM WF_FlowStation WHERE FK_FLOW='" + this.HisFlow.No + "' ) )";
                 //    dt = DBAccess.RunSQLReturnTable(sql);
                 //}
 

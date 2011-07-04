@@ -169,7 +169,7 @@ namespace BP.WF
             {
 #warning edit 2008 - 05-28 .
                 // sql = "SELECT No,Name FROM Port_Emp WHERE NO IN (SELECT FK_Dept FROM Port_EmpDept WHERE FK_EMP='" + WebUser.No + "') AND NO IN (SELECT FK_Emp FROM Port_EmpSTATION WHERE FK_Station='" + toSt.No + "')";
-                sql = "SELECT [No],Name FROM Port_Emp WHERE NO='" + WebUser.No + "'";  // IN (SELECT FK_Dept FROM Port_EmpDept WHERE FK_EMP='" + WebUser.No + "') AND NO IN (SELECT FK_Emp FROM Port_EmpSTATION WHERE FK_Station='" + toSt.No + "')";
+                sql = "SELECT No,Name FROM Port_Emp WHERE NO='" + WebUser.No + "'";  // IN (SELECT FK_Dept FROM Port_EmpDept WHERE FK_EMP='" + WebUser.No + "') AND NO IN (SELECT FK_Emp FROM Port_EmpSTATION WHERE FK_Station='" + toSt.No + "')";
                 dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)
                 {
@@ -341,9 +341,9 @@ namespace BP.WF
                 //throw new Exception(this.ToEP1("WF2", "@工作流程{0}已经完成。", town.HisNode.Name));
                 else
                 {
-                    sql = "SELECT [No] FROM Port_Emp WHERE NO IN ";
+                    sql = "SELECT No FROM Port_Emp WHERE NO IN ";
                     sql += "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + " ) )";
-                    sql += " AND  [No] IN ";
+                    sql += " AND  No IN ";
                     if (WebUser.FK_Dept.Length == 2)
                         sql += "(SELECT  FK_Emp  FROM Port_EmpDept )";
                     else
@@ -352,7 +352,7 @@ namespace BP.WF
                     dt = DBAccess.RunSQLReturnTable(sql);
                     if (dt.Rows.Count == 0)
                     {
-                        sql = "SELECT [No] FROM Port_Emp WHERE [No] IN ";
+                        sql = "SELECT No FROM Port_Emp WHERE No IN ";
                         sql += "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + " ) )";
                         dt = DBAccess.RunSQLReturnTable(sql);
                         if (dt.Rows.Count == 0)
