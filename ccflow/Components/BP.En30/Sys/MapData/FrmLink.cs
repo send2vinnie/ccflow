@@ -75,6 +75,13 @@ namespace BP.Sys
                 this.SetValByKey(FrmLinkAttr.FontStyle, value);
             }
         }
+        public string FontColorHtml
+        {
+            get
+            {
+                return PubClass.ToHtmlColor(this.FontColor);
+            }
+        }
         /// <summary>
         /// FontColor
         /// </summary>

@@ -79,7 +79,12 @@ namespace BP.En
         protected override bool beforeInsert()
         {
             if (this.No.Trim().Length == 0)
+            {
+                if (this.EnMap.IsAutoGenerNo)
+                    this.No = this.GenerNewNo;
+
                 throw new Exception("@没有给[" + this.EnDesc + " , " + this.Name + "]设置主键.");
+            }
 
             if (this.EnMap.IsAllowRepeatName == false)
             {

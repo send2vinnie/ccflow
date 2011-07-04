@@ -433,6 +433,33 @@ namespace BP
 	/// </summary>
 	public class PubClass 
 	{
+        public static string ToHtmlColor(string colorName)
+        {
+            try
+            {
+                if (colorName.StartsWith("#"))
+                    colorName = colorName.Replace("#", string.Empty);
+                int v = int.Parse(colorName, System.Globalization.NumberStyles.HexNumber);
+
+                Color col = Color.FromArgb
+               (
+                     Convert.ToByte((v >> 24) & 255),
+                     Convert.ToByte((v >> 16) & 255),
+                     Convert.ToByte((v >> 8) & 255),
+                     Convert.ToByte((v >> 0) & 255)
+                );
+
+                int alpha = col.A;
+                var red = Convert.ToString(col.R, 16); ;
+                var green = Convert.ToString(col.G, 16);
+                var blue = Convert.ToString(col.B, 16);
+                return string.Format("#{0}{1}{2}", red, green, blue);
+            }
+            catch
+            {
+                return "black";
+            }
+        }
         public static void InitFrm(string fk_mapdata)
         {
             // É¾³ýÊý¾Ý.

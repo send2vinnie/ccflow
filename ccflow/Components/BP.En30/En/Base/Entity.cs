@@ -7,7 +7,6 @@ using BP.Sys;
 using BP.En;
 using System.Reflection;
 
-
 namespace BP.En
 {
     /// <summary>
@@ -303,7 +302,7 @@ namespace BP.En
                         sql = "SELECT CONVERT(INT, MAX(" + field + ") )+1 AS No FROM " + this.EnMap.PhysicsTable;
                         break;
                     case DBType.Access:
-                        sql = "SELECT MAX( [" + field + "]) +1 AS  [No] FROM " + this.EnMap.PhysicsTable;
+                        sql = "SELECT MAX( [" + field + "]) +1 AS  No FROM " + this.EnMap.PhysicsTable;
                         break;
                     case DBType.Oracle9i:
                         //sql = "SELECT MAX("+field+") +1 AS No FROM "+this.EnMap.PhysicsTable+" WHERE  "+ field +" LIKE '%0%'";

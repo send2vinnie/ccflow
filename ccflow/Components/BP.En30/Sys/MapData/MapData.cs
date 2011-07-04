@@ -185,6 +185,16 @@ namespace BP.Sys
             }
             return map;
         }
+        private GEEntity _HisEn = null;
+        public GEEntity HisGEEn
+        {
+            get
+            {
+                if (this._HisEn == null)
+                    _HisEn = new GEEntity(this.No);
+                return _HisEn;
+            }
+        }
         public static Map GenerHisMap(string no)
         {
             if (SystemConfig.IsDebug)

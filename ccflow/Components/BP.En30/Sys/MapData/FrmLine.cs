@@ -58,6 +58,13 @@ namespace BP.Sys
     public class FrmLine : EntityMyPK
     {
         #region  Ù–‘
+        public string BorderColorHtml
+        {
+            get
+            {
+                return PubClass.ToHtmlColor(this.BorderColor);
+            }
+        }
         public string BorderColor
         {
             get
