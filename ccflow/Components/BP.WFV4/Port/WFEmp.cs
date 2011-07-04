@@ -350,7 +350,7 @@ namespace BP.WF.Port
 
         public static void DTSData()
         {
-            string sql = "select [No] from port_emp where [No] not in (select no from wf_emp ) ";
+            string sql = "select No from port_emp where No not in (select no from wf_emp ) ";
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
             foreach (DataRow dr in dt.Rows)
             {

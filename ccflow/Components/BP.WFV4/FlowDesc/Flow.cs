@@ -1556,8 +1556,15 @@ namespace BP.WF
                 else
                     sql += "\r\n UNION ";
 
-                sql += "\r\n SELECT '" + nd.NodeID + "'+'_'+CAST(OID AS varchar(10)) +'_'+CAST(FID AS VARCHAR(10)) AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT,SUBSTRING(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
-                // sql += "\r\n SELECT  '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT,SUBSTRING(RDT,0,6) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
+                switch (SystemConfig.AppCenterDBType)
+                {
+                    case DBType.Oracle9i:
+                        sql += "\r\n SELECT '" + nd.NodeID + "' || '_'|| OID||'_'|| FID  AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT,SUBSTR(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
+                        break;
+                    default:
+                        sql += "\r\n SELECT '" + nd.NodeID + "'+'_'+CAST(OID AS varchar(10)) +'_'+CAST(FID AS VARCHAR(10)) AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT,SUBSTRING(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
+                        break;
+                }
             }
             sql += "\r\n GO ";
 
@@ -1577,7 +1584,6 @@ namespace BP.WF
         {
             string fk_mapData = "ND" + int.Parse(this.No) + "Rpt";
             string flowId = int.Parse(this.No).ToString();
-
             
 
             #region 插入字段。
@@ -1862,8 +1868,7 @@ namespace BP.WF
 
             DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID=" + flowGF.OID + " WHERE  FK_MapData='" + fk_mapData + "'  AND KeyOfEn IN('" + GERptAttr.MyNum + "','" + GERptAttr.BillNo + "','" + GERptAttr.FK_Dept + "','" + GERptAttr.FK_NY + "','" + GERptAttr.FlowDaySpan + "','" + GERptAttr.FlowEmps + "','" + GERptAttr.FlowEnder + "','" + GERptAttr.FlowEnderRDT + "','" + GERptAttr.FlowStarter + "','" + GERptAttr.FlowStartRDT + "','" + GERptAttr.WFState + "')");
             // DBAccess.RunSQL("UPDATE Sys_MapAttr SET  WHERE FK_MapData='" + fk_mapData + "' AND KeyOfEn='Title'");
-            #endregion 为流程字段设置分组。
-
+            #endregion 为流程字段设置分组
 
             BP.Sys.GEEntity sw = this.HisFlowData;
             sw.CheckPhysicsTable();

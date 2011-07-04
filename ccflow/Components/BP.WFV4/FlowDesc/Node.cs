@@ -1289,6 +1289,16 @@ namespace BP.WF
                 return _HisStations;
             }
         }
+        /// <summary>
+        /// 他的工作描述
+        /// </summary>
+        public string HisWorksDesc
+        {
+            get
+            {
+                return this.Name;
+            }
+        }
         private Frms _HisFrms = null;
         /// <summary>
         /// HisFrms
@@ -1298,7 +1308,9 @@ namespace BP.WF
             get
             {
                 if (this._HisFrms == null)
+                {
                     _HisFrms = new Frms(this.NodeID);
+                }
                 return _HisFrms;
             }
         }
@@ -1370,24 +1382,9 @@ namespace BP.WF
                 return _HisWorks;
             }
         }
-        //public GEStartWork HisStartWork
-        //{
-        //    get
-        //    {
-        //        return new GEStartWork(this.NodeID);
-        //    }
-        //}
         #endregion
-        /// <summary>
-        /// 他的工作描述
-        /// </summary>
-        public string HisWorksDesc
-        {
-            get
-            {
-                return this.Name;
-            }
-        }
+
+        
         #endregion
 
         #region 公共方法
@@ -2452,11 +2449,12 @@ namespace BP.WF
             BP.Sys.MapData md = new BP.Sys.MapData();
             md.No = "ND" + this.NodeID;
 
-            BP.DA.DBAccess.RunSQL("DELETE Sys_MapData WHERE No='" + md.No + "'");
-            BP.DA.DBAccess.RunSQL("DELETE Sys_MapAttr WHERE FK_MapData='" + md.No + "'");
-            BP.DA.DBAccess.RunSQL("DELETE Sys_MapFrame WHERE FK_MapData='" + md.No + "'");
-            BP.DA.DBAccess.RunSQL("DELETE Sys_MapExt WHERE FK_MapData='" + md.No + "'");
-            BP.DA.DBAccess.RunSQL("DELETE Sys_MapDtl WHERE FK_MapData='" + md.No + "'");
+            string sqls = "DELETE Sys_MapData WHERE No='" + md.No + "'";
+            sqls += "@DELETE Sys_MapAttr WHERE FK_MapData='" + md.No + "'";
+            sqls += "@DELETE Sys_MapFrame WHERE FK_MapData='" + md.No + "'";
+            sqls += "@DELETE Sys_MapExt WHERE FK_MapData='" + md.No + "'";
+            sqls += "@DELETE Sys_MapDtl WHERE FK_MapData='" + md.No + "'";
+            BP.DA.DBAccess.RunSQLs(sqls);
             
             md.Name = this.Name;
             md.Insert();

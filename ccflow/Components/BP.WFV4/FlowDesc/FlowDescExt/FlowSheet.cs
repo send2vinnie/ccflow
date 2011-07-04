@@ -83,6 +83,9 @@ namespace BP.WF.Ext
 
                 map.AddTBStringDoc(BP.WF.FlowAttr.RunSQL, null, this.ToE("EndFlowRunSQL", "流程结束执行后执行的SQL"), true, false, true);
 
+                //map.AddTBStringDoc("ABC", null,"ABC", true, false, true);
+
+
 
                // map.AddTBString(BP.WF.FlowAttr.RunSQL, null, this.ToE("Note", "备注"), true, false, 0, 100, 10, true);
 
@@ -97,7 +100,10 @@ namespace BP.WF.Ext
                 //FlowEmpAttr.FK_Emp, DeptAttr.Name, DeptAttr.No, "干预人员");
 
                 map.AddSearchAttr(BP.WF.FlowAttr.FK_FlowSort);
-                map.AddSearchAttr(BP.WF.FlowAttr.FlowRunWay);
+
+                //map.AddSearchAttr(BP.WF.FlowAttr.FlowRunWay);
+                //map.AddSearchAttr(BP.WF.FlowAttr.FlowRunWay);
+
 
 
                 RefMethod rm = new RefMethod();

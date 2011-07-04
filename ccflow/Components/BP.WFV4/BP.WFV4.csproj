@@ -171,6 +171,7 @@
     <Compile Include="FlowDesc\M2M.cs" />
     <Compile Include="FlowData.cs" />
     <Compile Include="FlowDesc\Frm.cs" />
+    <Compile Include="FlowDesc\FrmNode.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="FlowDesc\Direction.cs">
       <SubType>Code</SubType>
