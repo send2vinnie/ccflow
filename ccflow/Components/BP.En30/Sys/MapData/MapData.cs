@@ -266,6 +266,23 @@ namespace BP.Sys
             }
             catch
             {
+
+            }
+
+            string sql = "";
+            sql += "@DELETE Sys_FrmLine WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_FrmLab WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_FrmLink WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_FrmImg WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_FrmRB WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_FrmAttachment WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_MapExt WHERE FK_MapData='" + this.No + "'";
+            DBAccess.RunSQLs(sql);
+
+            MapDtls dtls = new MapDtls(this.No);
+            foreach (MapDtl dtl in dtls)
+            {
+                dtl.Delete();
             }
             return base.beforeDelete();
         }
@@ -316,7 +333,6 @@ namespace BP.Sys
             //scriptRight = "  rightval = parseFloat( " + scriptRight + " );  ";
             //scriptRight += "   document.forms[0]." + tbPer + attr.Key + ".value = rightval";
             //script += scriptRight;
-
             //script += " } </script>";
             //return script;
         }

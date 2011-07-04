@@ -1007,6 +1007,18 @@ namespace BP.Sys
         {
             this.DoOrderDown(MapAttrAttr.GroupID, this.GroupID.ToString(), MapAttrAttr.IDX);
         }
+        public void DoDtlDown()
+        {
+            string sql = "UPDATE Sys_MapAttr SET GroupID=( SELECT OID FROM Sys_GroupField WHERE EnName='"+this.FK_MapData+"') WHERE FK_MapData='"+this.FK_MapData+"'";
+            DBAccess.RunSQL(sql);
+            this.DoDown();
+        }
+        public void DoDtlUp()
+        {
+            string sql = "UPDATE Sys_MapAttr SET GroupID=( SELECT OID FROM Sys_GroupField WHERE EnName='" + this.FK_MapData + "') WHERE FK_MapData='" + this.FK_MapData + "'";
+            DBAccess.RunSQL(sql);
+            this.DoUp();
+        }
         public void DoJump(MapAttr attrTo)
         {
             if (attrTo.IDX <= this.IDX)
