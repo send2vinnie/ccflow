@@ -1261,7 +1261,7 @@ namespace BP.Web.Comm.UC.WF
                 //    src = this.Request.ApplicationPath + "/WF/MapDef/MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.Request.QueryString["FK_MapData"] + "&FK_MapDtl=" + dtl.No;
                 //else
                 src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal;
-                this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
+                this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' /></iframe>");
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
