@@ -880,6 +880,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' width='100%'  >");
                 string src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal;
                 this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+
                 this.AddTDEnd();
                 this.AddTREnd();
             }
@@ -1171,27 +1172,6 @@ namespace BP.Web.Comm.UC.WF
                             default:
                                 break;
                         }
-                        //switch (attr.MyDataType)
-                        //{
-                        //    case BP.DA.DataType.AppString:
-                        //    case BP.DA.DataType.AppDateTime:
-                        //    case BP.DA.DataType.AppDate:
-                        //        if (tb.Enabled)
-                        //        {
-                        //            tb.MaxLength = attr.MaxLen;
-                        //        }
-                        //        else
-                        //        {
-                        //            tb.Attributes["class"] = "TBReadonly";
-                        //        }
-                        //        break;
-                        //    default:
-                        //        if (tb.Enabled)
-                        //            tb.Attributes["class"] = "TBNum";
-                        //        else
-                        //            tb.Attributes["class"] = "TBNumReadonly";
-                        //        break;
-                        //}
                         break;
                     case FieldTypeS.Enum:
                         if (attr.UIContralType == UIContralType.DDL)

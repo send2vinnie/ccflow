@@ -5,7 +5,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <script language=javascript>
 
-    <script language="javascript"  >
 	function HelpGroup()
 	{
 	   var msg='字段分组：就是把类似的字段放在一起，让用户操作更友好。\t\n比如：我们纳税人设计一个基础信息采集节点。';
@@ -181,9 +180,7 @@
             document.getElementById(rowIdx + '_' + i).style.display = sta;
         }
     }
-
     var isInser = "";
-
     function CopyFieldFromNode(mypk) {
         var url = 'CopyFieldFromNode.aspx?FK_Node=' + mypk;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 700px; dialogWidth: 900px;center: yes; help: no');

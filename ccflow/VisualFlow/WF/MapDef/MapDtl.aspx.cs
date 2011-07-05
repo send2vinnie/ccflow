@@ -175,9 +175,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
                     {
                         dtlN.GroupID = this.Pub1.GetDDLByID("DDL_GroupField").SelectedItemIntVal;
                     }
-
                     dtlN.Insert();
-
                     if (btn.ID.Contains("AndClose"))
                     {
                         this.WinClose();
@@ -197,7 +195,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
                         }
                     }
                     dtl.FK_MapData = this.FK_MapData;
-
                     GroupFields gfs = new GroupFields(dtl.FK_MapData);
                     if (gfs.Count > 1)
                         dtl.GroupID = this.Pub1.GetDDLByID("DDL_GroupField").SelectedItemIntVal;
@@ -212,7 +209,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
                         this.WinClose();
                         return;
                     }
-
                     this.Response.Redirect("MapDtl.aspx?DoType=Edit&FK_MapDtl=" + dtl.No + "&FK_MapData=" + this.FK_MapData, true);
                     break;
                 default:
@@ -300,12 +296,10 @@ public partial class Comm_MapDef_MapDtl : WebPage
         tb.Text = dtl.PTable;
 
         this.Pub1.AddTD(tb);
-
         this.Pub1.AddTD();
         //this.Pub1.AddTD("存储数据的物理表名称");
       //  this.Pub1.AddTD("存储数据的物理表名称");
         this.Pub1.AddTREnd();
-
 
 
         this.Pub1.AddTR1();

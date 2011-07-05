@@ -824,36 +824,62 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 }
                 else
                 {
-                    #region init.
+                    Frm myfrm = new Frm();
+                    myfrm.No = "ND" + nd.NodeID;
+                    myfrm.Name = wk.EnDesc;
+                    frms.AddEntity(myfrm);
 
-                    this.Page.RegisterClientScriptBlock("s",
+
+                    #region 载入相关文件.
+                    this.Page.RegisterClientScriptBlock("sg",
        "<link href='./Style/Frm/Tab.css' rel='stylesheet' type='text/css' />");
-                    this.Page.RegisterClientScriptBlock("s24",
-             "<script language='JavaScript' src='./Style/Frm/jquery.min.js' ></script>");
-                    this.Page.RegisterClientScriptBlock("sd24j",
-            "<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
-                    #endregion 增加
 
-                    this.UCEn1.Add("\t\n<div id='usual2' class='usual'>"); //begain.
+                    this.Page.RegisterClientScriptBlock("s2g4",
+             "<script language='JavaScript' src='./Style/Frm/jquery.min.js' ></script>");
+
+                    this.Page.RegisterClientScriptBlock("sdf24j",
+            "<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
+                    #endregion 载入相关文件.
+
+
+                    this.UCEn1.Clear();
+                    this.UCEn1.Add("\t\n<div id='usual2' class='usual'>");  //begain.
+
+                    #region 输出标签.
                     this.UCEn1.AddUL();
                     foreach (Frm frm in frms)
                     {
-                        this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\" >" + frm.Name + "</a></li>");
+                        this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\">" + frm.Name + "</a></li>");
                     }
                     this.UCEn1.AddULEnd();
+                    #endregion 输出标签.
 
-
+                    #region 输出从表单内容.
                     foreach (Frm frm in frms)
                     {
-                        this.UCEn1.Add("\t\n<div id='#" + frm.No + "'>“" + frm.Name + "”</div>");
+                        MapData md = new MapData(frm.No);
+                        this.UCEn1.Add("<DIV id='" + frm.No + "' style='width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;' >");
+                        string src = "";
+                        src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID;
+                        this.UCEn1.Add("<iframe ID='F" + frm.No + "'  Onblur=\"SaveDtl('" + frm.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
+                        this.UCEn1.Add("</DIV>");
                     }
+                    #endregion 输出从表单内容.
 
-
-                    this.UCEn1.Add("\t\n</div>"); // end add.
-
+                    this.UCEn1.Add("\t\n</div>");
                     this.UCEn1.Add("\t\n<script type='text/javascript'>");
-                    this.UCEn1.Add("\t\n  $(\"#usual2 ul\").idTabs(\""+frms[0].GetValByKey("No")+"\");");
+                    this.UCEn1.Add("\t\n  $(\"#usual2 ul\").idTabs(\"ND" + nd.NodeID + "\");");
                     this.UCEn1.Add("\t\n</script>");
+
+                    #region 处理iFrom SaveDtlData。
+                    string js = "";
+                    js = "\t\n<script type='text/javascript' >";
+                    js += "\t\n function SaveDtl(dtl) { ";
+                    js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData();";
+                    js += "\t\n } ";
+                    js += "\t\n</script>";
+                    this.UCEn1.Add(js);
+                    #endregion 处理iFrom SaveDtlData。
                 }
                 return;
             case FormType.SelfForm:
