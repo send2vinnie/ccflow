@@ -1081,6 +1081,7 @@ namespace BP.Web.Comm.UC.WF
 
                 this.Add("<DIV id='F" + attr.KeyOfEn + "' style='position:absolute; left:" + attr.X + "px; top:" + attr.Y + "px; width:" + attr.UIWidth + "px; height:16px;text-align: left;word-break: keep-all;' >");
                 this.Add("<span>");
+
                 #region add contrals.
                 TB tb = new TB();
                 tb.ID = "TB_" + attr.KeyOfEn;
@@ -1211,6 +1212,7 @@ namespace BP.Web.Comm.UC.WF
                         break;
                 }
                 #endregion add contrals.
+
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
@@ -1297,7 +1299,7 @@ namespace BP.Web.Comm.UC.WF
 
                 string url = "ImgAth.aspx?W="+ath.W+"&H="+ath.H+"&MyPK="+en.PKVal+"&AthName="+ath.MyPK;
                 this.AddFieldSet("<a href=\"javascript:var v=window.showModalDialog('"+url+"', 'ddf', 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no'); if ( v!=null ){ alert(v); "+ath.MyPK+".src=v }\" >±à¼­:" + ath.Name + "</a>");
-                this.Add("\t\n<img src='/Flow/DataUser/Data/"+this.MyPK+".png' onerror=\"this.src='./../../Data/Img/LogH.PNG'\" name="+ath.MyPK+" style='padding: 0px;margin: 0px;border-width: 0px;' width="+ath.W+" height="+ath.H+" />");
+                this.Add("\t\n<img src='/Flow/DataUser/Data/"+this.MyPK+".png' onerror=\"this.src='./../Data/Img/LogH.PNG'\" name="+ath.MyPK+" style='padding: 0px;margin: 0px;border-width: 0px;' width="+ath.W+" height="+ath.H+" />");
                 this.AddFieldSetEnd();
 
                 this.Add("\t\n</DIV>");
