@@ -262,8 +262,24 @@ namespace BP.Sys
             {
                 string s = this.GetValStrByKey(MapDtlAttr.PTable);
                 if (s == "" || s == null)
-                    return this.No;
-                return s;
+                {
+                    s = this.No;
+                    if (s.Substring(0, 1) == "0")
+                    {
+                        return "T" + this.No;
+                    }
+                    else
+                        return s;
+                }
+                else
+                {
+                    if (s.Substring(0, 1) == "0")
+                    {
+                        return "T" + this.No;
+                    }
+                    else
+                        return s;
+                }
             }
             set
             {

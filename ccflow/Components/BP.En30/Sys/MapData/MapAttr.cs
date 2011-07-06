@@ -629,7 +629,7 @@ namespace BP.Sys
                 if (this.UIHeight < 40)
                     return 1;
 
-                decimal d = decimal.Parse(this.UIHeight.ToString()) / 25;
+                decimal d = decimal.Parse(this.UIHeight.ToString()) / 15;
                 return (int)Math.Round(d, 0);
             }
         }
@@ -1120,7 +1120,7 @@ namespace BP.Sys
             //    i++;
             //}
 
-            this.IDX = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapAttr WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
+            this.IDX = 999; // BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapAttr WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
             this.MyPK = this.FK_MapData + "_" + this.KeyOfEn;
             return base.beforeInsert();
         }

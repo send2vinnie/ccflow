@@ -5,9 +5,9 @@ using BP.En;
 namespace BP.Sys
 {
     /// <summary>
-    /// Í¼Æ¬
+    /// Í¼Æ¬¸½¼þ
     /// </summary>
-    public class FrmImgAttr : EntityMyPKAttr
+    public class FrmImgAthAttr : EntityMyPKAttr
     {
         /// <summary>
         /// Text
@@ -34,28 +34,28 @@ namespace BP.Sys
         /// </summary>
         public const string H = "H";
         /// <summary>
-        /// URL
+        /// Name
         /// </summary>
-        public const string URL = "URL";
+        public const string Name = "Name";
     }
     /// <summary>
-    /// Í¼Æ¬
+    /// Í¼Æ¬¸½¼þ
     /// </summary>
-    public class FrmImg : EntityMyPK
+    public class FrmImgAth : EntityMyPK
     {
         #region ÊôÐÔ
         /// <summary>
-        /// URL
+        /// Name
         /// </summary>
-        public string URL
+        public string Name
         {
             get
             {
-                return this.GetValStringByKey(FrmImgAttr.URL);
+                return this.GetValStringByKey(FrmImgAthAttr.Name);
             }
             set
             {
-                this.SetValByKey(FrmImgAttr.URL, value);
+                this.SetValByKey(FrmImgAthAttr.Name, value);
             }
         }
         /// <summary>
@@ -65,11 +65,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValFloatByKey(FrmImgAttr.Y);
+                return this.GetValFloatByKey(FrmImgAthAttr.Y);
             }
             set
             {
-                this.SetValByKey(FrmImgAttr.Y, value);
+                this.SetValByKey(FrmImgAthAttr.Y, value);
             }
         }
         /// <summary>
@@ -79,11 +79,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValFloatByKey(FrmImgAttr.X);
+                return this.GetValFloatByKey(FrmImgAthAttr.X);
             }
             set
             {
-                this.SetValByKey(FrmImgAttr.X, value);
+                this.SetValByKey(FrmImgAthAttr.X, value);
             }
         }
         /// <summary>
@@ -93,11 +93,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValFloatByKey(FrmImgAttr.H);
+                return this.GetValFloatByKey(FrmImgAthAttr.H);
             }
             set
             {
-                this.SetValByKey(FrmImgAttr.H, value);
+                this.SetValByKey(FrmImgAthAttr.H, value);
             }
         }
         /// <summary>
@@ -107,11 +107,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValFloatByKey(FrmImgAttr.W);
+                return this.GetValFloatByKey(FrmImgAthAttr.W);
             }
             set
             {
-                this.SetValByKey(FrmImgAttr.W, value);
+                this.SetValByKey(FrmImgAthAttr.W, value);
             }
         }
         /// <summary>
@@ -121,27 +121,27 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStrByKey(FrmImgAttr.FK_MapData);
+                return this.GetValStrByKey(FrmImgAthAttr.FK_MapData);
             }
             set
             {
-                this.SetValByKey(FrmImgAttr.FK_MapData, value);
+                this.SetValByKey(FrmImgAthAttr.FK_MapData, value);
             }
         }
         #endregion
 
         #region ¹¹Ôì·½·¨
         /// <summary>
-        /// Í¼Æ¬
+        /// Í¼Æ¬¸½¼þ
         /// </summary>
-        public FrmImg()
+        public FrmImgAth()
         {
         }
         /// <summary>
-        /// Í¼Æ¬
+        /// Í¼Æ¬¸½¼þ
         /// </summary>
         /// <param name="mypk"></param>
-        public FrmImg(string mypk)
+        public FrmImgAth(string mypk)
         {
             this.MyPK = mypk;
             this.Retrieve();
@@ -155,21 +155,21 @@ namespace BP.Sys
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("Sys_FrmImg");
+                Map map = new Map("Sys_FrmImgAth");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
-                map.EnDesc = "Í¼Æ¬";
+                map.EnDesc = "Í¼Æ¬¸½¼þ";
                 map.EnType = EnType.Sys;
                 map.AddMyPK();
-                map.AddTBString(FrmImgAttr.FK_MapData, null, "FK_MapData", true, false, 1, 30, 20);
+                map.AddTBString(FrmImgAthAttr.Name, null, "Name", true, false, 0, 200, 20);
+                map.AddTBString(FrmImgAthAttr.FK_MapData, null, "FK_MapData", true, false, 1, 30, 20);
                 
-                map.AddTBFloat(FrmImgAttr.X, 5, "X", true, false);
-                map.AddTBFloat(FrmImgAttr.Y, 5, "Y", false, false);
+                map.AddTBFloat(FrmImgAthAttr.X, 5, "X", true, false);
+                map.AddTBFloat(FrmImgAthAttr.Y, 5, "Y", false, false);
 
-                map.AddTBFloat(FrmImgAttr.H, 200, "H", true, false);
-                map.AddTBFloat(FrmImgAttr.W, 160, "W", false, false);
+                map.AddTBFloat(FrmImgAthAttr.H, 200, "H", true, false);
+                map.AddTBFloat(FrmImgAthAttr.W, 160, "W", false, false);
 
-                map.AddTBString(FrmImgAttr.URL, "black", "URL", true, false, 0, 200, 20);
                 this._enMap = map;
                 return this._enMap;
             }
@@ -177,24 +177,24 @@ namespace BP.Sys
         #endregion
     }
     /// <summary>
-    /// Í¼Æ¬s
+    /// Í¼Æ¬¸½¼þs
     /// </summary>
-    public class FrmImgs : EntitiesMyPK
+    public class FrmImgAths : EntitiesMyPK
     {
         #region ¹¹Ôì
         /// <summary>
-        /// Í¼Æ¬s
+        /// Í¼Æ¬¸½¼þs
         /// </summary>
-        public FrmImgs()
+        public FrmImgAths()
         {
         }
         /// <summary>
-        /// Í¼Æ¬s
+        /// Í¼Æ¬¸½¼þs
         /// </summary>
         /// <param name="fk_mapdata">s</param>
-        public FrmImgs(string fk_mapdata)
+        public FrmImgAths(string fk_mapdata)
         {
-            this.Retrieve(FrmImgAttr.FK_MapData, fk_mapdata);
+            this.Retrieve(FrmImgAthAttr.FK_MapData, fk_mapdata);
         }
         /// <summary>
         /// µÃµ½ËüµÄ Entity
@@ -203,7 +203,7 @@ namespace BP.Sys
         {
             get
             {
-                return new FrmImg();
+                return new FrmImgAth();
             }
         }
         #endregion
