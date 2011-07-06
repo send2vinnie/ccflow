@@ -1237,12 +1237,10 @@ namespace BP.Web.Comm.UC.WF
             {
                 if (attr.UIContralType == UIContralType.RadioBtn)
                 {
-                    string id =  "RB_" + attr.KeyOfEn + "_" + en.GetValStrByKey(attr.KeyOfEn);
+                    string id = "RB_" + attr.KeyOfEn + "_" + en.GetValStrByKey(attr.KeyOfEn);
                     RadioButton rb = this.GetRBLByID(id);
                     if (rb != null)
                         rb.Checked = true;
-                    else
-                        throw new Exception("sssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
                 }
             }
             #endregion Êä³ö¿Ø¼þ.
@@ -1299,7 +1297,7 @@ namespace BP.Web.Comm.UC.WF
 
                 string url = "ImgAth.aspx?W="+ath.W+"&H="+ath.H+"&MyPK="+en.PKVal+"&AthName="+ath.MyPK;
                 this.AddFieldSet("<a href=\"javascript:var v=window.showModalDialog('"+url+"', 'ddf', 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no'); if ( v!=null ){ alert(v); "+ath.MyPK+".src=v }\" >±à¼­:" + ath.Name + "</a>");
-                this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' name="+ath.MyPK+" style='padding: 0px;margin: 0px;border-width: 0px;' width="+ath.W+" height="+ath.H+" />");
+                this.Add("\t\n<img src='/Flow/DataUser/Data/"+this.MyPK+".png' onerror=\"this.src='./../../Data/Img/LogH.PNG'\" name="+ath.MyPK+" style='padding: 0px;margin: 0px;border-width: 0px;' width="+ath.W+" height="+ath.H+" />");
                 this.AddFieldSetEnd();
 
                 this.Add("\t\n</DIV>");

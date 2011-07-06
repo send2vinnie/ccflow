@@ -166,27 +166,31 @@ public partial class Comm_Dtl : WebPage
 
         MapAttrs attrs = new MapAttrs(this.EnsName);
         this.Pub1.Add("<Table border=1 style='padding:0px' >");
-        this.Pub1.AddTR();
-        this.Pub1.Add("<TD class='FDesc'><img src='./../Images/Btn/Table.gif' onclick=\"return DtlOpt('" + this.RefPKVal + "','" + this.EnsName + "');\" border=0/></TD>");
 
-        foreach (MapAttr attr in attrs)
+        if (mdtl.IsShowTitle)
         {
-            if (attr.UIVisible == false)
-                continue;
+            this.Pub1.AddTR();
+            this.Pub1.Add("<TD class='FDesc'><img src='./../Images/Btn/Table.gif' onclick=\"return DtlOpt('" + this.RefPKVal + "','" + this.EnsName + "');\" border=0/></TD>");
 
-            if (attr.IsPK)
-                continue;
+            foreach (MapAttr attr in attrs)
+            {
+                if (attr.UIVisible == false)
+                    continue;
 
-            if (attr.UIIsEnable)
-                this.IsEnable = true;
-            this.Pub1.AddTDTitle(attr.Name);// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
+                if (attr.IsPK)
+                    continue;
+
+                if (attr.UIIsEnable)
+                    this.IsEnable = true;
+                this.Pub1.AddTDTitle(attr.Name);// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
+            }
+
+            if (mdtl.IsDelete)
+            {
+                this.Pub1.Add("<TD class='FDesc' nowarp=true ><img src='./../Images/Btn/Save.gif' border=0 onclick='SaveDtlData();' ></TD>");
+            }
+            this.Pub1.AddTREnd();
         }
-
-        if (mdtl.IsDelete)
-        {
-            this.Pub1.Add("<TD class='FDesc' nowarp=true ></TD>");
-        }
-        this.Pub1.AddTREnd();
         #endregion 生成标题
 
         QueryObject qo = null;

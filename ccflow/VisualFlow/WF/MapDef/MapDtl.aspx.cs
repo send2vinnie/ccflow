@@ -368,7 +368,16 @@ public partial class Comm_MapDef_MapDtl : WebPage
         cb.Checked = dtl.IsShowSum;
         this.Pub1.AddTD("colspan=2", cb);
         this.Pub1.AddTREnd();
-
+        
+        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD("");
+        cb = new CheckBox();
+        cb.ID = "CB_IsShowTitle";
+        cb.Text = this.ToE("IsShowTitle", "是否显示标头");// "是否显示标头";
+        cb.Checked = dtl.IsShowTitle;
+        this.Pub1.AddTD("colspan=2", cb);
+        this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
