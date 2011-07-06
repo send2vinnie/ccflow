@@ -408,12 +408,15 @@ namespace FreeFrm.Web
             // Map2m
             BP.Sys.MapM2Ms m2ms = new BP.Sys.MapM2Ms(fk_mapdata);
             ds.Tables.Add(m2ms.ToDataTableField("Sys_MapM2M"));
-             
 
-            // Map2m
+
+            // FrmAttachments
             BP.Sys.FrmAttachments fjs = new BP.Sys.FrmAttachments(fk_mapdata);
             ds.Tables.Add(fjs.ToDataTableField("Sys_FrmAttachment"));
-             
+
+            // FrmImgAth
+            BP.Sys.FrmImgAths imgaths = new BP.Sys.FrmImgAths(fk_mapdata);
+            ds.Tables.Add(imgaths.ToDataTableField("Sys_FrmImgAth"));
 
             // MapExt
             BP.Sys.MapExts exts = new BP.Sys.MapExts(fk_mapdata);
@@ -450,34 +453,42 @@ namespace FreeFrm.Web
         {
             this.LetAdminLogin();
 
+            string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
+
             #region 删除现有的当前节点数据, 并查询出来from节点数据.
             // line
             BP.Sys.FrmLines lins = new BP.Sys.FrmLines();
             lins.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             lins.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
+            int i = 0;
             foreach (BP.Sys.FrmLine item in lins)
             {
                 BP.Sys.FrmLine toItem = new BP.Sys.FrmLine();
                 toItem.Copy(item);
-                toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
+                toItem.MyPK = "Line" + timeKey + i;
                 toItem.FK_MapData = fk_mapdata;
                 toItem.DirectInsert();
+                i++;
             }
 
             // link.
             BP.Sys.FrmLinks liks = new BP.Sys.FrmLinks();
             liks.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             liks.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
+            i = 0;
             foreach (BP.Sys.FrmLink item in liks)
             {
                 BP.Sys.FrmLink toItem = new BP.Sys.FrmLink();
                 toItem.Copy(item);
-                toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
+                toItem.MyPK = "Lik" + timeKey + i;
+                //this.DealPK(item.MyPK, fromMapData, fk_mapdata);
                 toItem.FK_MapData = fk_mapdata;
                 toItem.DirectInsert();
+                i++;
             }
 
             // Img
+            i = 0;
             BP.Sys.FrmImgs imgs = new BP.Sys.FrmImgs();
             imgs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             imgs.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
@@ -485,22 +496,27 @@ namespace FreeFrm.Web
             {
                 BP.Sys.FrmImg toItem = new BP.Sys.FrmImg();
                 toItem.Copy(item);
-                toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
+                toItem.MyPK = "Img" + timeKey + i;
+                //this.DealPK(item.MyPK, fromMapData, fk_mapdata);
                 toItem.FK_MapData = fk_mapdata;
                 toItem.DirectInsert();
+                i++;
             }
 
             // Sys_FrmLab
             BP.Sys.FrmLabs labs = new BP.Sys.FrmLabs();
             labs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             labs.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
+            i = 0;
             foreach (BP.Sys.FrmLab item in labs)
             {
                 BP.Sys.FrmLab toItem = new BP.Sys.FrmLab();
                 toItem.Copy(item);
-                toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
+                toItem.MyPK = "Lab" + timeKey + i;
+                //this.DealPK(item.MyPK, fromMapData, fk_mapdata);
                 toItem.FK_MapData = fk_mapdata;
                 toItem.DirectInsert();
+                i++;
             }
 
             // Sys_FrmRB
@@ -566,6 +582,7 @@ namespace FreeFrm.Web
                 // 复制明细表里面的明细。
                 int idx = 0;
                 MapAttrs mattrs = new MapAttrs(dtl.No);
+                mattrs.Delete(MapAttrAttr.FK_MapData, dtlNew.No);
                 foreach (MapAttr attr in mattrs)
                 {
                     MapAttr attrNew = new MapAttr();
@@ -597,6 +614,35 @@ namespace FreeFrm.Web
                 mym2m.GroupID = 0;
                 mym2m.No = m2m.No.Replace(fromMapData, fk_mapdata);
                 mym2m.Insert();
+            }
+
+
+            // FrmAttachments
+            BP.Sys.FrmAttachments aths = new BP.Sys.FrmAttachments();
+            aths.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            aths.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
+            i = 0;
+            foreach (FrmAttachment ath in aths)
+            {
+                FrmAttachment myath = new FrmAttachment();
+                myath.Copy(ath);
+                myath.FK_MapData = fk_mapdata;
+                myath.MyPK = "Ath" + timeKey + i;
+                myath.Insert();
+            }
+
+            // FrmImgAth
+            BP.Sys.FrmImgAths imgAths = new BP.Sys.FrmImgAths();
+            imgAths.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
+            imgAths.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            i = 0;
+            foreach (FrmImgAth ath in imgAths)
+            {
+                FrmImgAth myath = new FrmImgAth();
+                myath.Copy(ath);
+                myath.FK_MapData = fk_mapdata;
+                myath.MyPK = "ImgAth" + timeKey + i;
+                myath.Insert();
             }
             #endregion 删除现有的当前节点数据. 并查询出来from节点数据.
 
