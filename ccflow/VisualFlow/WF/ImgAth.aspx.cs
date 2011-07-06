@@ -12,14 +12,28 @@ public partial class WF_ImgAth : BP.Web.WebPage
     {
         get
         {
-            return int.Parse(this.Request.QueryString["H"]);
+            try
+            {
+                return int.Parse(this.Request.QueryString["H"]);
+            }
+            catch
+            {
+                return 120;
+            }
         }
     }
     public int W
     {
         get
         {
-            return int.Parse(this.Request.QueryString["W"]);
+            try
+            {
+                return int.Parse(this.Request.QueryString["W"]);
+            }
+            catch
+            {
+                return 100;
+            }
         }
     }
     public string ImgAth
@@ -55,7 +69,7 @@ public partial class WF_ImgAth : BP.Web.WebPage
         this.Pub1.Add("\t\n <script type='text/javascript'>");
         this.Pub1.Add("\t\n $().ready(function() {");
         this.Pub1.Add("\t\n $.fn.bitmapCutter({");
-        this.Pub1.Add("\t\n src: 'images/c.c.jpg',");
+        this.Pub1.Add("\t\n src: './../DataUser/ImgAth/Def.jpg',");
 
         this.Pub1.Add("\t\n renderTo: '#container',");
         this.Pub1.Add("\t\n cutterSize: { width: "+this.W+", height: "+this.H+" },");
@@ -66,8 +80,6 @@ public partial class WF_ImgAth : BP.Web.WebPage
         this.Pub1.Add("\t\n });");
         this.Pub1.Add("\t\n })");
         this.Pub1.Add("\t\n </script>");
-
-
 
     }
     public void v()

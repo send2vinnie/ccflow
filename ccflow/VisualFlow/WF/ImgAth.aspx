@@ -8,8 +8,8 @@
     <link rel="Stylesheet" type="text/css" href="./Style/ImgAth/jquery.bitmapcutter.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
     <uc1:Pub ID="Pub1" runat="server" />
-
+     <div id="container">
+    </div>
 </asp:Content>
 
