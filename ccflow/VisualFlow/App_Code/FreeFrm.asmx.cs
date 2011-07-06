@@ -101,10 +101,19 @@ namespace FreeFrm.Web
         [WebMethod]
         public string DoType(string dotype, string v1, string v2, string v3, string v4)
         {
+            string sql = "";
             try
             {
                 switch (dotype)
                 {
+                    case "DeleteFrm":
+                        string delFK_Frm = v1;
+                        MapData mdDel = new MapData(delFK_Frm);
+                        mdDel.Delete();
+                        sql = "@DELETE WF_Frm WHERE No='" + delFK_Frm + "'";
+                        sql = "@DELETE WF_FrmNode WHERE FK_Frm='" + delFK_Frm + "'";
+                        DBAccess.RunSQLs(sql);
+                        return null;
                     case "FrmUp":
                     case "FrmDown":
                         FrmNode myfn = new FrmNode();
