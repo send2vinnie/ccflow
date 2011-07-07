@@ -9,7 +9,7 @@ using BP.Port;
 namespace BP.WF
 {
     /// <summary>
-    /// 流程岗位属性属性	  
+    /// 节点表单属性	  
     /// </summary>
     public class FrmNodeAttr
     {
@@ -35,7 +35,7 @@ namespace BP.WF
         public const string FK_Flow = "FK_Flow";
     }
     /// <summary>
-    /// 流程岗位属性
+    /// 节点表单
     /// 节点的工作节点有两部分组成.	 
     /// 记录了从一个节点到其他的多个节点.
     /// 也记录了到这个节点的其他的节点.
@@ -120,9 +120,20 @@ namespace BP.WF
 
         #region 构造方法
         /// <summary>
-        /// 流程岗位属性
+        /// 节点表单
         /// </summary>
         public FrmNode() { }
+        /// <summary>
+        /// 节点表单
+        /// </summary>
+        /// <param name="fk_node">节点</param>
+        /// <param name="fk_frm">表单</param>
+        public FrmNode(int fk_node, string fk_frm)
+        {
+            int i = this.Retrieve(FrmNodeAttr.FK_Node, fk_node, FrmNodeAttr.FK_Frm, fk_frm);
+            if (i == 0)
+                throw new Exception("@表单关联信息已被删除");
+        }
         /// <summary>
         /// 重写基类方法
         /// </summary>
