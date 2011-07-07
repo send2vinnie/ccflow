@@ -149,7 +149,7 @@ namespace BP.Sys
         public Map GenerHisMap()
         {
             MapAttrs mapAttrs = new MapAttrs(this.No);
-            Map map = new Map(this.No);
+            Map map = new Map(this.PTable);
             map.EnDesc = this.Name;
             map.EnType = EnType.App;
             map.DepositaryOfEntity = Depositary.None;
