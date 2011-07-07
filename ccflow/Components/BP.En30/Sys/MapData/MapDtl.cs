@@ -73,6 +73,8 @@ namespace BP.Sys
         public const string IsInsert = "IsInsert";
         public const string IsUpdate = "IsUpdate";
         public const string IsEnablePass = "IsEnablePass";
+
+        public const string IsShowTitle = "IsShowTitle";
     }
     /// <summary>
     /// 明细
@@ -136,6 +138,17 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapDtlAttr.IsReadonly, value);
+            }
+        }
+        public bool IsShowTitle
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsShowTitle);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsShowTitle, value);
             }
         }
         public bool IsDelete
@@ -360,11 +373,16 @@ namespace BP.Sys
                 map.AddBoolean(MapDtlAttr.IsShowIdx, true, "IsShowIdx", false, false);
                 map.AddBoolean(MapDtlAttr.IsCopyNDData, true, "IsCopyNDData", false, false);
                 map.AddBoolean(MapDtlAttr.IsReadonly, false, "IsReadonly", false, false);
+                map.AddBoolean(MapDtlAttr.IsShowTitle, true, "IsShowTitle", false, false);
 
 
                 map.AddBoolean(MapDtlAttr.IsInsert, true, "IsInsert", false, false);
                 map.AddBoolean(MapDtlAttr.IsDelete, true, "IsDelete", false, false);
                 map.AddBoolean(MapDtlAttr.IsUpdate, true, "IsUpdate", false, false);
+
+
+
+
 
 
                 map.AddBoolean(MapDtlAttr.IsEnablePass, false, "是否启用通过审核功能?", false, false);
