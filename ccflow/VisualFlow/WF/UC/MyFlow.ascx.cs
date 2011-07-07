@@ -815,7 +815,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 if (frms.Count == 0)
                 {
                     this.UCEn1.Add("<div id=divFreeFrm >");
-                    this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID); //, false, false, null);
+                    this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID,false); //, false, false, null);
                     if (wk.WorkEndInfo.Length > 2)
                     {
                         this.UCEn1.Add(wk.WorkEndInfo);
@@ -841,32 +841,41 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             "<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
                     #endregion 载入相关文件.
 
-
                     this.UCEn1.Clear();
-                    this.UCEn1.Add("\t\n<div id='usual2' class='usual'>");  //begain.
+                    this.UCEn1.Add("<div  style='clear:both' ></div>");
+                    this.UCEn1.Add("\t\n<div  id='usual2' class='usual'>");  //begain.
 
                     #region 输出标签.
-                    this.UCEn1.AddUL();
+                    this.UCEn1.Add("\t\n <ul  style='background:red;border-color: #800000;border-width: 10px;' >");
                     foreach (Frm frm in frms)
                     {
                         this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\">" + frm.Name + "</a></li>");
                     }
-                    this.UCEn1.AddULEnd();
+                    this.UCEn1.Add("\t\n </ul>");
                     #endregion 输出标签.
 
                     #region 输出从表单内容.
                     foreach (Frm frm in frms)
                     {
                         MapData md = new MapData(frm.No);
-                        this.UCEn1.Add("<DIV id='" + frm.No + "' style='width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;' >");
+
+                       //FrmNode fn = new FrmNode(nd.NodeID, frm.No);
+
+                        this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;' >");
                         string src = "";
-                        src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID;
-                        this.UCEn1.Add("<iframe ID='F" + frm.No + "'  Onblur=\"SaveDtl('" + frm.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
-                        this.UCEn1.Add("</DIV>");
+                        if (true)
+                            src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=1";
+                        else
+                            src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=0";
+
+                        this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "'  Onblur=\"SaveDtl('" + frm.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
+                        this.UCEn1.Add("\t\n </DIV>");
                     }
                     #endregion 输出从表单内容.
 
-                    this.UCEn1.Add("\t\n</div>");
+                    this.UCEn1.Add("\t\n</div>"); // end  usual2
+
+
                     this.UCEn1.Add("\t\n<script type='text/javascript'>");
                     this.UCEn1.Add("\t\n  $(\"#usual2 ul\").idTabs(\"ND" + nd.NodeID + "\");");
                     this.UCEn1.Add("\t\n</script>");

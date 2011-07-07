@@ -3,12 +3,23 @@ a{text-decoration:none;color:#000;}
 margin:0;
 padding:0;
 }
-.usual {
-  color:#111;
-  width:100%;
-  margin:0px;
+
+.usual
+{
+    
+    border-width: 10px;
+    color: #111;
+    width: 100%;
+    margin: 0px;
 }
-.usual li { list-style:none; float:left; }
+
+
+.usual li 
+{
+     list-style:none; 
+     float:left; 
+}
+            
 
 .usual ul a {
   display:block;
@@ -20,6 +31,7 @@ padding:0;
   background:#F4F8FF;
   border:solid 1px #BDBDC5;clear:both;  border-bottom:none;  background:#FFFFFF;  
 }
+
 .usual ul a:hover {
   background:#E4F1FF;
 }
@@ -38,6 +50,6 @@ padding:0;
   *padding-top:3px;
   *margin-top:-15px;
   clear:left;
-  
   font:10pt Georgia;
+  margin:0 auto;
 }

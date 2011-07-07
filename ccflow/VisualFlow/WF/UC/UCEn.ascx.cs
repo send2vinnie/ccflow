@@ -843,7 +843,6 @@ namespace BP.Web.Comm.UC.WF
             }
             this.Add(js);
             #endregion 处理 JS 自动计算.
-
         }
         public void InsertObjects(bool isJudgeRowIdx)
         {
@@ -1014,10 +1013,9 @@ namespace BP.Web.Comm.UC.WF
         #endregion
 
         #region 输出自由格式的表单.
-
     
         public string FK_MapData = null;
-        public void BindFreeFrm(Entity en, string enName)
+        public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
             this.FK_MapData = enName;
             this.HisEn = en;
@@ -1113,6 +1111,7 @@ namespace BP.Web.Comm.UC.WF
                                         tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left;padding: 0px;margin: 0px;";
                                         tb.CssClass = "";
                                         tb.Rows = attr.UIRows;
+                                        tb.ReadOnly = isReadonly;
                                         this.Add(tb);
                                     }
                                 }
@@ -1128,6 +1127,8 @@ namespace BP.Web.Comm.UC.WF
                                 //tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
 
                                 tb.Attributes["class"] = "TBcalendar";
+                                tb.ReadOnly = isReadonly;
+
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppDateTime:
@@ -1137,10 +1138,12 @@ namespace BP.Web.Comm.UC.WF
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
                                 tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
+                                tb.ReadOnly = isReadonly;
+
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppBoolean:
-                                
+
                                 CheckBox cb = new CheckBox();
                                 cb.Width = 350;
                                 cb.Text = attr.Name;
@@ -1148,6 +1151,9 @@ namespace BP.Web.Comm.UC.WF
                                 cb.Checked = attr.DefValOfBool;
                                 cb.Enabled = attr.UIIsEnable;
                                 cb.Checked = en.GetValBooleanByKey(attr.KeyOfEn);
+                                if (cb.Enabled == true && isReadonly == true)
+                                    cb.Enabled = false;
+
                                 this.Add(cb);
                                 break;
                             case BP.DA.DataType.AppDouble:
@@ -1156,18 +1162,23 @@ namespace BP.Web.Comm.UC.WF
                                 // tb.ShowType = TBType.Num;
                                 tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;word-break: keep-all;";
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                tb.ReadOnly = isReadonly;
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppMoney:
                                 //  tb.ShowType = TBType.Moneny;
                                 tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
                                 tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;";
+                                tb.ReadOnly = isReadonly;
+
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppRate:
                                 tb.ShowType = TBType.Moneny;
                                 tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
                                 tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;";
+                                tb.ReadOnly = isReadonly;
+
                                 this.Add(tb);
                                 break;
                             default:
@@ -1182,6 +1193,9 @@ namespace BP.Web.Comm.UC.WF
                             ddle.BindSysEnum(attr.KeyOfEn);
                             ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
                             ddle.Enabled = attr.UIIsEnable;
+
+                            if (ddle.Enabled == true && isReadonly == true)
+                                ddle.Enabled = false;
                             this.Add(ddle);
                         }
                         else
@@ -1200,12 +1214,19 @@ namespace BP.Web.Comm.UC.WF
                             ens.RetrieveAll();
                             ddl1.BindEntities(ens);
                             ddl1.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
+
+
+
                         }
                         catch
                         {
                         }
                         ddl1.Enabled = attr.UIIsEnable;
                         ddl1.Attributes["style"] = "width: " + attr.UIWidth + "px;height: 19px;";
+
+                        if (ddl1.Enabled == true && isReadonly == true)
+                            ddl1.Enabled = false;
+
                         this.Add(ddl1);
                         break;
                     default:
@@ -1226,10 +1247,13 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("<span style='word-break: keep-all;font-size:12px;'>");
 
                 System.Web.UI.WebControls.RadioButton rbCtl = new RadioButton();
-                rbCtl.ID = "RB_"+ rb.MyPK.Substring( rb.MyPK.IndexOf('_')+1);
+                rbCtl.ID = "RB_" + rb.MyPK.Substring(rb.MyPK.IndexOf('_') + 1);
                 rbCtl.GroupName = rb.KeyOfEn;
                 rbCtl.Text = rb.Lab;
                 this.Add(rbCtl);
+
+                if (isReadonly == true)
+                    rbCtl.Enabled = false;
 
                 this.Add("</span>");
                 this.Add("</DIV>");
@@ -1256,11 +1280,13 @@ namespace BP.Web.Comm.UC.WF
 
                 this.Add("<DIV id='Fd" + dtl.No + "' style='position:absolute; left:" + x + "px; top:" + y + "px; width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;' >");
                 this.Add("<span>");
+
                 string src = "";
-                //if (this.Request.QueryString["IsTest"] != null)
-                //    src = this.Request.ApplicationPath + "/WF/MapDef/MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.Request.QueryString["FK_MapData"] + "&FK_MapDtl=" + dtl.No;
-                //else
-                src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal;
+                if (isReadonly == true)
+                    src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1";
+                else
+                    src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0";
+
                 this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' /></iframe>");
                 this.Add("</span>");
                 this.Add("</DIV>");
@@ -1275,19 +1301,22 @@ namespace BP.Web.Comm.UC.WF
 
             #region 输出附件
             FrmAttachments aths = new FrmAttachments(enName);
-            foreach (FrmAttachment ath in aths)
+            if (isReadonly == false)
             {
-                float x = ath.X;
-                float y = ath.Y;
-                this.Add("<DIV id='FR" + ath.MyPK + "' style='position:absolute; left:" + x + "px; top:" + y + "px; width:" + ath.W + "px;text-align: left;' >");
-                this.Add("<span>");
-                FileUpload fu = new FileUpload();
-                fu.ID = "FU_" + ath.MyPK;
-                fu.Attributes["Width"] = ath.W.ToString()+"px";
-                fu.Attributes["ondbclick"] = "javascript:WinOpen('sina.com.cn');";
-                this.Add(fu);
-                this.Add("</span>");
-                this.Add("</DIV>");
+                foreach (FrmAttachment ath in aths)
+                {
+                    float x = ath.X;
+                    float y = ath.Y;
+                    this.Add("<DIV id='FR" + ath.MyPK + "' style='position:absolute; left:" + x + "px; top:" + y + "px; width:" + ath.W + "px;text-align: left;' >");
+                    this.Add("<span>");
+                    FileUpload fu = new FileUpload();
+                    fu.ID = "FU_" + ath.MyPK;
+                    fu.Attributes["Width"] = ath.W.ToString() + "px";
+                    fu.Attributes["ondbclick"] = "javascript:WinOpen('sina.com.cn');";
+                    this.Add(fu);
+                    this.Add("</span>");
+                    this.Add("</DIV>");
+                }
             }
             #endregion 输出附件.
 
@@ -1295,19 +1324,27 @@ namespace BP.Web.Comm.UC.WF
             FrmImgAths imgAths = new FrmImgAths(enName);
             foreach (FrmImgAth ath in imgAths)
             {
+                continue;
+
                 this.Add("\t\n<DIV id=" + ath.MyPK + " style='position:absolute;left:" + ath.X + "px;top:" + ath.Y + "px;text-align:left;vertical-align:top' >");
 
-                string url = "ImgAth.aspx?W="+ath.W+"&H="+ath.H+"&MyPK="+en.PKVal+"&AthName="+ath.MyPK;
-                this.AddFieldSet("<a href=\"javascript:var v=window.showModalDialog('"+url+"', 'ddf', 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no'); if ( v!=null ){ alert(v); "+ath.MyPK+".src=v }\" >编辑:" + ath.Name + "</a>");
-                this.Add("\t\n<img src='/Flow/DataUser/Data/"+this.MyPK+".png' onerror=\"this.src='./../Data/Img/LogH.PNG'\" name="+ath.MyPK+" style='padding: 0px;margin: 0px;border-width: 0px;' width="+ath.W+" height="+ath.H+" />");
-                this.AddFieldSetEnd();
+                string url = "ImgAth.aspx?W=" + ath.W + "&H=" + ath.H + "&MyPK=" + en.PKVal + "&AthName=" + ath.MyPK;
+
+                if (isReadonly == false)
+                    this.AddFieldSet("<a href=\"javascript: var v=window.showModalDialog('" + url + "', 'ddf', 'dialogHeight: 650px; dialogWidth: 950px;center: yes; help: no'); alert(v); alert ( document.getElementById('Img" + ath.MyPK + "') );  document.getElementById('Img" + ath.MyPK + "').src=v ; \" >编辑:" + ath.Name + "</a>");
+
+                this.Add("\t\n<img src='/Flow/DataUser/Data/" + this.MyPK + ".png' onerror=\"this.src='./../Data/Img/LogH.PNG'\" name='Img" + ath.MyPK + "' style='padding: 0px;margin: 0px;border-width: 0px;' width=" + ath.W + " height=" + ath.H + " />");
+
+                if (isReadonly == false)
+                    this.AddFieldSetEnd();
 
                 this.Add("\t\n</DIV>");
             }
             #endregion 输出附件.
-          
+
             // 处理扩展.
-            this.AfterBindEn_DealMapExt(enName, mattrs);
+            if (isReadonly == false)
+                this.AfterBindEn_DealMapExt(enName, mattrs);
             return;
         }
         #endregion

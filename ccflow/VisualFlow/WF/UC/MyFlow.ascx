@@ -68,11 +68,12 @@
  left:40px;
  width:960px;
 }
-    </style>
 </style>
-<div  style="float:left;" id=tabForm >
+
+<div id=tabForm >
 <uc4:ToolBar ID="ToolBar1" runat="server" />
 </div>
+
 <div id="D" >
                     <uc5:Pub ID="FlowMsg" runat="server" />
                     <uc5:Pub ID="Pub1" runat="server" />

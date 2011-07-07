@@ -35,7 +35,7 @@ public partial class WF_FreeFrm : BP.Web.UC.UCBase3
         Entity en = nd.HisWork;
         en.SetValByKey("OID", 100);
         en.RetrieveFromDBSources();
-        this.UCEn1.BindFreeFrm(en, FK_MapData);
+        this.UCEn1.BindFreeFrm(en, FK_MapData,true);
 
     }
 

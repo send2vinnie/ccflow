@@ -36,11 +36,11 @@ public partial class WF_MapDef_FreeFrm_ViewFrm :BP.Web.WebPage
             int nodeid = int.Parse(this.FK_MapData.Replace("ND", ""));
             BP.WF.Node nd = new BP.WF.Node(nodeid);
             BP.WF.Work work = new BP.WF.GEStartWork(nd.NodeID);
-            this.UCEn1.BindFreeFrm(work, this.FK_MapData);
+            this.UCEn1.BindFreeFrm(work, this.FK_MapData,false);
             return;
         }
 
         MapData md = new MapData(this.FK_MapData);
-        this.UCEn1.BindFreeFrm(md.HisGEEn, this.FK_MapData);
+        this.UCEn1.BindFreeFrm(md.HisGEEn, this.FK_MapData, false);
     }
 }

@@ -34,15 +34,25 @@ public partial class WF_Frm : System.Web.UI.Page
             }
         }
     }
+    public bool IsReadonly
+    {
+        get
+        {
+            if (this.Request.QueryString["IsReadonly"] == "1")
+                return true;
+            return false;
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         MapData md = new MapData(this.FK_MapData);
         GEEntity en = md.HisGEEn;
         en.SetValByKey("OID", this.WorkID);
-        this.UCEn1.BindFreeFrm(en, this.FK_MapData);
+        this.UCEn1.BindFreeFrm(en, this.FK_MapData,this.IsReadonly);
+        this.Button1.Enabled = !this.IsReadonly;
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-        //this.Save();
+
     }
 }
