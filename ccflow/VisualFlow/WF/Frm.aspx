@@ -43,9 +43,7 @@
    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" ></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<asp:Button ID="Button1" runat="server" Text="Save"  CssClass="HBtn" Visible=true
-         onclick="Button1_Click" />
-         <hr>
+<asp:Button ID="Button1" runat="server" Text="Save"  CssClass="HBtn" Visible=true onclick="Button1_Click" />
     <uc1:UCEn ID="UCEn1" runat="server" />
 </asp:Content>
 
