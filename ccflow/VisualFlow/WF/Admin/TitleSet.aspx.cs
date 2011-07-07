@@ -72,14 +72,12 @@ public partial class WF_Admin_TitleSet : BP.Web.WebPage
     {
         FileUpload f = (FileUpload)this.Pub1.FindControl("F");
 
-        if (f.HasFile == false)
-            return;
+        throw new Exception("@ddddddd");
 
-        f.SaveAs(BP.SystemConfig.PathOfWebApp + "/DataUser/Title.gif");
+        //if (f.HasFile == false)
+        //    return;
+        //f.SaveAs(BP.SystemConfig.PathOfWebApp + "/DataUser/Title.gif");
 
         this.Response.Redirect(this.Request.RawUrl, true);
-
-        //this.Alert("保存成功。");
     }
-
 }

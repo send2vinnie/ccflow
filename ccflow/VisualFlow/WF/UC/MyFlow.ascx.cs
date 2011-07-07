@@ -858,12 +858,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     foreach (Frm frm in frms)
                     {
                         MapData md = new MapData(frm.No);
-
-                       //FrmNode fn = new FrmNode(nd.NodeID, frm.No);
-
                         this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;' >");
                         string src = "";
-                        if (true)
+                        if (false)
                             src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=1";
                         else
                             src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=0";
@@ -1228,6 +1225,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.Btn_Send.Enabled = true;
             throw new Exception("@在保存前执行逻辑检查错误。@技术信息:" + ex.Message);
         }
+
         work.NodeState = NodeState.Init;
         work.Rec = WebUser.No;
         work.SetValByKey("FK_Dept", WebUser.FK_Dept);

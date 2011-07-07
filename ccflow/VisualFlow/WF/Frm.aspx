@@ -35,17 +35,17 @@
     <style type="text/css">
         .HBtn
         {
-        	 width:1px;
-        	 height:1px;
-        	 display:none;
+        	/* display:none; */
+        	visibility:visible;
         }
     </style>
 	<script language="JavaScript" src="./../Comm/JScript.js"></script>
    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" ></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<asp:Button ID="Button1" runat="server" Text=""  CssClass="HBtn" Visible=true
+<asp:Button ID="Button1" runat="server" Text="Save"  CssClass="HBtn" Visible=true
          onclick="Button1_Click" />
+         <hr>
     <uc1:UCEn ID="UCEn1" runat="server" />
 </asp:Content>
 

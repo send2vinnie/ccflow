@@ -32,7 +32,6 @@ public partial class FileUpload : BP.Web.WebPage
             string result = "{ error:'" + error + "', msg:'" + msg + "',msgWidth:'" + GetImage( msg , 120) + "'}";
             Response.Write(result);
             Response.End();
-
         }
     }
 
