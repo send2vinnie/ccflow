@@ -36,7 +36,7 @@ EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}		 
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}		\u0020
 		SccProjectUniqueName0 = ..\\Components\\BP.En30\\BP.En30.csproj
 		SccProjectName0 = ../Components/BP.En30
 		SccLocalPath0 = ..\\Components\\BP.En30
