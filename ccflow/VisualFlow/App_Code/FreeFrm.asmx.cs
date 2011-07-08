@@ -106,6 +106,10 @@ namespace FreeFrm.Web
             {
                 switch (dotype)
                 {
+                    case "DelDtl":
+                        MapDtl dtl = new MapDtl(v1);
+                        dtl.Delete();
+                        return null;
                     case "DeleteFrm":
                         string delFK_Frm = v1;
                         MapData mdDel = new MapData(delFK_Frm);
