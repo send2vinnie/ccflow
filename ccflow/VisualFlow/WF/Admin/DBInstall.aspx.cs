@@ -8,6 +8,9 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Pub1.AddH3("ccflow 数据库修复与安装工具");
+        this.Pub1.AddHR();
+
         if (this.Request.QueryString["DoType"] == "OK")
         {
             this.Pub1.AddFieldSet("提示");

@@ -9,6 +9,14 @@ using System.Configuration;
 
 public class Handler : IHttpHandler
 {
+    public string DealSQL(string sql, string key)
+    {
+        sql = sql.Replace("@Key", key);
+        sql = sql.Replace("@key", key);
+        sql = sql.Replace("@Val", key);
+        sql = sql.Replace("@val", key);
+        return sql;
+    }
     public void ProcessRequest(HttpContext context)
     {
         string fk_mapExt = context.Request.QueryString["FK_MapExt"].ToString();
@@ -22,9 +30,7 @@ public class Handler : IHttpHandler
         switch (me.ExtType)
         {
             case BP.Sys.MapExtXmlList.ActiveDDL: // 级连菜单。
-                sql = me.Doc.Replace("@Key", key);
-                sql = me.Doc.Replace("@key", key);
-                
+                sql = this.DealSQL(me.Doc, key);
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 context.Response.Write(JSONTODT(dt));
                 return;
@@ -33,9 +39,7 @@ public class Handler : IHttpHandler
                 {
                     case "ReqCtrl":
                         // 获取填充 ctrl 值的信息.
-                        sql = me.Doc.Replace("@Key", key);
-                        sql = me.Doc.Replace("@key", key);
-                        
+                        sql = this.DealSQL(me.Doc, key);
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;
@@ -90,9 +94,7 @@ public class Handler : IHttpHandler
                             if (ss[0] == myDDL)
                             {
                                 sql = ss[1];
-                                sql = sql.Replace("@Key", key);
-                                sql = sql.Replace("@key", key);
-                                
+                                sql = this.DealSQL(sql, key);
                                 break;
                             }
                         }
@@ -100,9 +102,7 @@ public class Handler : IHttpHandler
                         context.Response.Write(JSONTODT(dt));
                         break;
                     default:
-                        sql = me.Doc.Replace("@Key", key);
-                        sql = me.Doc.Replace("@key", key);
-                        
+                        sql = this.DealSQL(me.Doc, key);
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;
@@ -139,8 +139,16 @@ public class Handler : IHttpHandler
     
     public string JSONTODT(DataTable dt)
     {
+        
+        foreach (DataColumn dc in dt.Columns)
+        {
+            if (dc.ColumnName.ToLower() == "no")
+                dc.ColumnName = "No";
+            if (dc.ColumnName.ToLower() == "name")
+                dc.ColumnName = "Name";
+        }
+        
         StringBuilder JsonString = new StringBuilder();
-        //Exception Handling        
         if (dt != null && dt.Rows.Count > 0)
         {
             JsonString.Append("{ ");

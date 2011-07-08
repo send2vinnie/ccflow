@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WF/WinOpen.master" AutoEventWireup="true" CodeFile="DBInstall.aspx.cs" Inherits="WF_Admin_DBInstall" %>
+﻿<%@ Page Title="ccflow数据库修复与安装" Language="C#" MasterPageFile="~/WF/WinOpen.master" AutoEventWireup="true" 
+CodeFile="DBInstall.aspx.cs" Inherits="WF_Admin_DBInstall" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
