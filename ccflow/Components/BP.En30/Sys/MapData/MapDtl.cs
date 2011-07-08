@@ -5,6 +5,20 @@ using BP.En;
 namespace BP.Sys
 {
     /// <summary>
+    /// 明细表显示方式
+    /// </summary>
+    public enum DtlShowModel
+    {
+        /// <summary>
+        /// 表格方式
+        /// </summary>
+        Table,
+        /// <summary>
+        /// 卡片方式
+        /// </summary>
+        Card
+    }
+    /// <summary>
     /// 棫行处理
     /// </summary>
     public enum WhenOverSize
@@ -75,6 +89,10 @@ namespace BP.Sys
         public const string IsEnablePass = "IsEnablePass";
 
         public const string IsShowTitle = "IsShowTitle";
+        /// <summary>
+        /// 显示格式
+        /// </summary>
+        public const string DtlShowModel = "DtlShowModel";
     }
     /// <summary>
     /// 明细
@@ -82,20 +100,18 @@ namespace BP.Sys
     public class MapDtl : EntityNoName
     {
         #region 属性
-        //public new string Name
-        //{
-        //    get
-        //    {
-        //        string n = this.GetValStrByKey("Name");
-        //        if (n.Length == 0)
-        //            return "明细表";
-        //        return n;
-        //    }
-        //    set
-        //    {
-        //        this.SetValByKey("Name", value);
-        //    }
-        //}
+        public DtlShowModel HisDtlShowModel
+        {
+            get
+            {
+                return (DtlShowModel)this.GetValIntByKey(MapDtlAttr.DtlShowModel);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.DtlShowModel, (int)value);
+            }
+        }
+       
         public WhenOverSize HisWhenOverSize
         {
             get
@@ -104,7 +120,7 @@ namespace BP.Sys
             }
             set
             {
-                this.SetValByKey(MapDtlAttr.WhenOverSize, value);
+                this.SetValByKey(MapDtlAttr.WhenOverSize, (int)value);
             }
         }
         public bool IsShowSum
@@ -381,10 +397,6 @@ namespace BP.Sys
                 map.AddBoolean(MapDtlAttr.IsUpdate, true, "IsUpdate", false, false);
 
 
-
-
-
-
                 map.AddBoolean(MapDtlAttr.IsEnablePass, false, "是否启用通过审核功能?", false, false);
 
 
@@ -393,6 +405,9 @@ namespace BP.Sys
 
                 map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true,
                     MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
+
+                map.AddTBInt(MapDtlAttr.DtlShowModel, 0, "DtlShowModel", false, false);
+
 
 
                 map.AddTBFloat(FrmImgAttr.X, 5, "X", true, false);
