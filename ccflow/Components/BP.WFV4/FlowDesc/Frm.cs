@@ -120,7 +120,7 @@ namespace BP.WF
         }
         protected override bool beforeUpdate()
         {
-            DBAccess.RunSQL("UPDATE Sys_MapAttr SET PTable='"+this.PTable+"' WHERE No='"+this.No+"'");
+            DBAccess.RunSQL("UPDATE Sys_MapData SET PTable='"+this.PTable+"' WHERE No='"+this.No+"'");
             return base.beforeUpdate();
         }
 		#endregion
