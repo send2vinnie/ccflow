@@ -1324,16 +1324,19 @@ namespace BP.Web.Comm.UC.WF
             FrmImgAths imgAths = new FrmImgAths(enName);
             foreach (FrmImgAth ath in imgAths)
             {
-                continue;
-
                 this.Add("\t\n<DIV id=" + ath.MyPK + " style='position:absolute;left:" + ath.X + "px;top:" + ath.Y + "px;text-align:left;vertical-align:top' >");
 
                 string url = "ImgAth.aspx?W=" + ath.W + "&H=" + ath.H + "&MyPK=" + en.PKVal + "&AthName=" + ath.MyPK;
-
                 if (isReadonly == false)
-                    this.AddFieldSet("<a href=\"javascript: var v=window.showModalDialog('" + url + "', 'ddf', 'dialogHeight: 650px; dialogWidth: 950px;center: yes; help: no'); alert(v); alert ( document.getElementById('Img" + ath.MyPK + "') );  document.getElementById('Img" + ath.MyPK + "').src=v ; \" >±à¼­:" + ath.Name + "</a>");
+                    this.AddFieldSet("<a href=\"javascript: var v=window.showModalDialog('" + url + "', 'ddf', 'dialogHeight: 650px; dialogWidth: 950px;center: yes; help: no'); if (v==null) return; document.getElementById('Img" + ath.MyPK + "').setAttribute('src', v ); \" >±à¼­:" + ath.Name + "</a>");
 
-                this.Add("\t\n<img src='/Flow/DataUser/Data/" + this.MyPK + ".png' onerror=\"this.src='./../Data/Img/LogH.PNG'\" name='Img" + ath.MyPK + "' style='padding: 0px;margin: 0px;border-width: 0px;' width=" + ath.W + " height=" + ath.H + " />");
+                this.Add("\t\n<img src='/Flow/DataUser/Data/" + this.MyPK + ".png' onerror=\"this.src='./../Data/Img/LogH.PNG'\" name='Img" + ath.MyPK + "' id='Img" + ath.MyPK + "' style='padding: 0px;margin: 0px;border-width: 0px;' width=" + ath.W + " height=" + ath.H + " />");
+              
+
+                //this.Add("<script type=js >");
+                //this.Add(" function ");
+                //this.Add("</script>");
+
 
                 if (isReadonly == false)
                     this.AddFieldSetEnd();

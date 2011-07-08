@@ -121,7 +121,7 @@ public partial class WF_ImgAth : BP.Web.WebPage
 
         string newName = ImgAth + MyPK;
         newName = "11";
-        if(string.IsNullOrEmpty(newName))
+        if (string.IsNullOrEmpty(newName))
         {
             newName = System.Guid.NewGuid().ToString();
         }
@@ -130,10 +130,7 @@ public partial class WF_ImgAth : BP.Web.WebPage
 
         CopyFile(str, "../DataUser/ImgAth/Data/" + newName + "." + type);
 
-
-
-        this.WinClose("../DataUser/ImgAth/Data/" + newName +"."+ type);
-        
+        this.WinClose("/DataUser/ImgAth/Data/" + newName + "." + type);
     }
 
     //复制文件
