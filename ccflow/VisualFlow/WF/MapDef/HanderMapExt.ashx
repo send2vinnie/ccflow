@@ -139,8 +139,16 @@ public class Handler : IHttpHandler
     
     public string JSONTODT(DataTable dt)
     {
+        
+        foreach (DataColumn dc in dt.Columns)
+        {
+            if (dc.ColumnName.ToLower() == "no")
+                dc.ColumnName = "No";
+            if (dc.ColumnName.ToLower() == "name")
+                dc.ColumnName = "Name";
+        }
+        
         StringBuilder JsonString = new StringBuilder();
-        //Exception Handling        
         if (dt != null && dt.Rows.Count > 0)
         {
             JsonString.Append("{ ");
