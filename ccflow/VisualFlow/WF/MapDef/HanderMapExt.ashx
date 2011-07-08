@@ -9,6 +9,14 @@ using System.Configuration;
 
 public class Handler : IHttpHandler
 {
+    public string DealSQL(string sql, string key)
+    {
+        sql = sql.Replace("@Key", key);
+        sql = sql.Replace("@key", key);
+        sql = sql.Replace("@Val", key);
+        sql = sql.Replace("@val", key);
+        return sql;
+    }
     public void ProcessRequest(HttpContext context)
     {
         string fk_mapExt = context.Request.QueryString["FK_MapExt"].ToString();
@@ -22,7 +30,7 @@ public class Handler : IHttpHandler
         switch (me.ExtType)
         {
             case BP.Sys.MapExtXmlList.ActiveDDL: // 级连菜单。
-                sql = me.Doc.Replace("@Key", key);
+                sql = this.DealSQL(me.Doc, key);
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 context.Response.Write(JSONTODT(dt));
                 return;
@@ -31,7 +39,7 @@ public class Handler : IHttpHandler
                 {
                     case "ReqCtrl":
                         // 获取填充 ctrl 值的信息.
-                        sql = me.Doc.Replace("@Key", key);
+                        sql = this.DealSQL(me.Doc, key);
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;
@@ -86,7 +94,7 @@ public class Handler : IHttpHandler
                             if (ss[0] == myDDL)
                             {
                                 sql = ss[1];
-                                sql = sql.Replace("@Key", key);
+                                sql = this.DealSQL(sql, key);
                                 break;
                             }
                         }
@@ -94,7 +102,7 @@ public class Handler : IHttpHandler
                         context.Response.Write(JSONTODT(dt));
                         break;
                     default:
-                        sql = me.Doc.Replace("@Key", key);
+                        sql = this.DealSQL(me.Doc, key);
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;

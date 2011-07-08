@@ -123,6 +123,8 @@ public partial class Comm_Dtl : WebPage
                 string[] ss = str.Split(':');
                 string sql = ss[1];
                 sql = sql.Replace("@Key", this.Key);
+                sql = sql.Replace("@key", this.Key);
+
                 DataTable dt = DBAccess.RunSQLReturnTable(sql);
                 BP.DA.DBAccess.RunSQL("DELETE " + this.EnsName + " WHERE RefPK=" + this.RefPKVal);
                 foreach (DataRow dr in dt.Rows)
@@ -149,7 +151,6 @@ public partial class Comm_Dtl : WebPage
             return;
         }
         #endregion 处理设计时自动填充明细表.
-
 
         MapDtl mdtl = new MapDtl(this.EnsName);
 

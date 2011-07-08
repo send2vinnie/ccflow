@@ -289,6 +289,11 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
 
                 string sql = ss[1];
                 sql = sql.Replace("@Key", this.Key);
+                sql = sql.Replace("@key", this.Key);
+                sql = sql.Replace("@val", this.Key);
+                sql = sql.Replace("@Val", this.Key);
+
+
                 DataTable dt = DBAccess.RunSQLReturnTable(sql);
                 int idx = 0;
                 foreach (DataRow dr in dt.Rows)
@@ -335,7 +340,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         }
 
                         DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + i);
-
                         ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
                         break;
                     case MapExtXmlList.FullCtrl: // 自动填充.

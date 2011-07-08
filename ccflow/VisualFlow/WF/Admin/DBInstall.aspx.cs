@@ -31,7 +31,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                 if (this.Request.QueryString["DoType"] == "FixDB")
                 {
                     string rpt = BP.PubClass.DBRpt(BP.DBLevel.High);
-                    this.Pub1.AddMsgGreen("同步数据表结构成功, 部分错误不会影响系统运行.", 
+                    this.Pub1.AddMsgGreen("同步数据表结构成功, 部分错误不会影响系统运行.",
                         "执行成功，希望在系统每次升级后执行此功能，不会对你的数据库数据产生影响。");
                 }
                 return;

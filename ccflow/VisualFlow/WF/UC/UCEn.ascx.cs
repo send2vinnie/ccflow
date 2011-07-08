@@ -1118,7 +1118,6 @@ namespace BP.Web.Comm.UC.WF
                                 break;
                             case BP.DA.DataType.AppDate:
                                 tb.ShowType = TBType.Date;
-
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker();";
@@ -1128,6 +1127,7 @@ namespace BP.Web.Comm.UC.WF
 
                                 tb.Attributes["class"] = "TBcalendar";
                                 tb.ReadOnly = isReadonly;
+                                tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
 
                                 this.Add(tb);
                                 break;

@@ -401,6 +401,17 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
 
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("DtlShowModel", "显示格式"));
+        ddl = new DDL();
+        ddl.ID = "DDL_DtlShowModel";
+        ddl.BindSysEnum(MapDtlAttr.DtlShowModel, (int)dtl.HisDtlShowModel);
+        this.Pub1.AddTD(ddl);
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("WhenOverSize", "越出处理"));
@@ -408,9 +419,9 @@ public partial class Comm_MapDef_MapDtl : WebPage
         ddl.ID = "DDL_WhenOverSize";
         ddl.BindSysEnum(MapDtlAttr.WhenOverSize, (int)dtl.HisWhenOverSize);
         this.Pub1.AddTD(ddl);
-       // this.Pub1.AddTD("行数显示方式");
-        this.Pub1.AddTD(); // ("行数显示方式");
+        this.Pub1.AddTD();
         this.Pub1.AddTREnd();
+
 
         GroupFields gfs = new GroupFields(md.No);
         if (gfs.Count > 1)
