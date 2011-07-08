@@ -2168,9 +2168,7 @@ namespace BP.En
             }
             #endregion
 
-
             // Ôö¼Ó×¢ÊÍ.
-            PubClass.AddComment(this);
         }
         #endregion
 
