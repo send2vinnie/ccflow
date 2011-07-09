@@ -826,7 +826,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             MapAttrs attrs = new MapAttrs(this.FK_MapData);
             foreach (DataColumn dc in dt.Columns)
             {
-                if (dc.ColumnName == "No" || dc.ColumnName == "Name")
+                if (dc.ColumnName.ToLower() == "no" || dc.ColumnName.ToLower() == "name")
                     continue;
 
                 if (attrs.Contains(MapAttrAttr.KeyOfEn, dc.ColumnName) == false)
