@@ -41,6 +41,24 @@ public partial class Comm_Dtl : WebPage
             return str;
         }
     }
+    public int BlankNum
+    {
+        get
+        {
+            try
+            {
+                return int.Parse( ViewState["BlankNum"].ToString() );
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        set
+        {
+            ViewState["BlankNum"] = value;
+        }
+    }
     public new string RefPK
     {
         get
@@ -84,7 +102,11 @@ public partial class Comm_Dtl : WebPage
         {
             try
             {
-                return int.Parse(this.Request.QueryString["addRowNum"]);
+                int i= int.Parse(this.Request.QueryString["addRowNum"]);
+                if (this.Request.QueryString["IsCut"] == null)
+                    return i;
+                else
+                    return i;
             }
             catch
             {
@@ -257,6 +279,7 @@ public partial class Comm_Dtl : WebPage
             this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap);
             int num = qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
 
+            mdtl.RowsOfList = mdtl.RowsOfList + this.addRowNum;
             if (mdtl.IsInsert)
             {
                 int dtlCount = dtls.Count;
@@ -309,20 +332,30 @@ public partial class Comm_Dtl : WebPage
         {
             if (ids.Contains("," + dtl.OID + ","))
                 continue;
+
             ids += dtl.OID + ",";
             this.Pub1.AddTR();
 
             if (dtlsNum == idx && mdtl.IsShowIdx && mdtl.IsInsert)
             {
                 DDL myAdd = new DDL();
+                myAdd.AutoPostBack = true;
+
+                //for (int i = 1; i < 5; i++)
+                //{
+                //    myAdd.Items.Add(new ListItem("-"+i.ToString(), "-" + i.ToString()));
+                //}
+
                 myAdd.Items.Add(new ListItem("+", "+"));
                 for (int i = 1; i < 10; i++)
                 {
-                    myAdd.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                    myAdd.Items.Add(new ListItem( i.ToString(), i.ToString()));
                 }
+
+               // myAdd.SetSelectItem("+");
+
                 myAdd.SelectedIndexChanged += new EventHandler(myAdd_SelectedIndexChanged);
                 this.Pub1.AddTD(myAdd);
-
             }
             else
             {
@@ -645,10 +678,20 @@ public partial class Comm_Dtl : WebPage
         }
         #endregion
     }
+    bool isAddDDLSelectIdxChange = false;
     void myAdd_SelectedIndexChanged(object sender, EventArgs e)
     {
         DDL ddl = sender as DDL;
-        string url = "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx+"&AddRowNum="+ddl.SelectedItemStringVal;
+        string val = ddl.SelectedItemStringVal;
+        string url = "";
+        isAddDDLSelectIdxChange = true;
+        this.Save();
+        
+        if (val.Contains("+"))
+            url = "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx + "&AddRowNum=" + ddl.SelectedItemStringVal.Replace("+", "").Replace("-", "") + "&IsCut=0";
+        else
+            url = "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx + "&AddRowNum=" + ddl.SelectedItemStringVal.Replace("+", "").Replace("-", "");
+
         this.Response.Redirect(url, true);
     }
 
@@ -679,7 +722,10 @@ public partial class Comm_Dtl : WebPage
 
         int num = qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
         int dtlCount = dtls.Count;
-        for (int i = 0; i < mdtl.RowsOfList - dtlCount; i++)
+
+        mdtl.RowsOfList = mdtl.RowsOfList + this.addRowNum;
+
+        for (int i = 0; i < mdtl.RowsOfList  - dtlCount; i++)
         {
             BP.Sys.GEDtl dt = new GEDtl(this.EnsName);
             dt.ResetDefaultVal();
@@ -731,6 +777,9 @@ public partial class Comm_Dtl : WebPage
         if (err != "")
             this.Alert(err);
 
+        if (isAddDDLSelectIdxChange==true)
+            return;
+        
         if (isTurnPage)
         {
             int pageNum = 0;
