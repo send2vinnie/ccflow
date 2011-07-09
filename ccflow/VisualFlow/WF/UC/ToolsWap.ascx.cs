@@ -776,7 +776,19 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
     }
     public void BindAutoLog()
     {
-        string sql = "SELECT a.No + a.Name as Empstr,AuthorDate, a.No FROM WF_Emp a WHERE Author='" + WebUser.No + "' AND AuthorIsOK=1";
+        string sql = "";
+
+        switch (BP.SystemConfig.AppCenterDBType)
+        {
+            case DBType.Oracle9i:
+                sql = "SELECT a.No || a.Name as Empstr,AuthorDate, a.No FROM WF_Emp a WHERE Author='" + WebUser.No + "' AND AuthorIsOK=1";
+                break;
+            default:
+                sql = "SELECT a.No + a.Name as Empstr,AuthorDate, a.No FROM WF_Emp a WHERE Author='" + WebUser.No + "' AND AuthorIsOK=1";
+                break;
+        }
+
+
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
         if (dt.Rows.Count == 0)
