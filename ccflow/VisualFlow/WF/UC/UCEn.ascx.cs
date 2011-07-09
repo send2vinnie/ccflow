@@ -244,7 +244,6 @@ namespace BP.Web.Comm.UC.WF
             }
             this.AddTableEnd();
 
-
             #region 处理iFrom 的自适应的问题。
             string js = "\t\n<script type='text/javascript' >";
             foreach (MapDtl dtl in dtls)
@@ -268,7 +267,6 @@ namespace BP.Web.Comm.UC.WF
             js += "\t\n</script>";
             this.Add(js);
             #endregion 处理iFrom 的自适应的问题。
-
 
             #region 处理iFrom Save。
             js = "\t\n<script type='text/javascript' >";
@@ -1326,17 +1324,11 @@ namespace BP.Web.Comm.UC.WF
             {
                 this.Add("\t\n<DIV id=" + ath.MyPK + " style='position:absolute;left:" + ath.X + "px;top:" + ath.Y + "px;text-align:left;vertical-align:top' >");
 
-                string url = "ImgAth.aspx?W=" + ath.W + "&H=" + ath.H + "&MyPK=" + en.PKVal + "&AthName=" + ath.MyPK;
+                string url = "ImgAth.aspx?W=" + ath.W + "&H=" + ath.H + "&MyPK=" + en.PKVal + "&ImgAth=" + ath.MyPK;
                 if (isReadonly == false)
-                    this.AddFieldSet("<a href=\"javascript: var v=window.showModalDialog('" + url + "', 'ddf', 'dialogHeight: 650px; dialogWidth: 950px;center: yes; help: no'); if (v==null) return; document.getElementById('Img" + ath.MyPK + "').setAttribute('src', v ); \" >编辑:" + ath.Name + "</a>");
+                    this.AddFieldSet("<a href=\"javascript: var v=window.showModalDialog('" + url + "', 'ddf', 'dialogHeight: 650px; dialogWidth: 950px;center: yes; help: no'); alert(v);  document.getElementById('Img" + ath.MyPK + "').setAttribute('src', '../Temp/'+v+'.png' ); \" >编辑:" + ath.Name + "</a>");
 
-                this.Add("\t\n<img src='/Flow/DataUser/Data/" + this.MyPK + ".png' onerror=\"this.src='./../Data/Img/LogH.PNG'\" name='Img" + ath.MyPK + "' id='Img" + ath.MyPK + "' style='padding: 0px;margin: 0px;border-width: 0px;' width=" + ath.W + " height=" + ath.H + " />");
-              
-
-                //this.Add("<script type=js >");
-                //this.Add(" function ");
-                //this.Add("</script>");
-
+                this.Add("\t\n<img src='/Flow/DataUser/ImgAth/Data/" + ath.MyPK + "_" + en.PKVal + ".png' onerror=\"this.src='./../Data/Img/LogH.PNG'\" name='Img" + ath.MyPK + "' id='Img" + ath.MyPK + "' style='padding: 0px;margin: 0px;border-width: 0px;' width=" + ath.W + " height=" + ath.H + " />");
 
                 if (isReadonly == false)
                     this.AddFieldSetEnd();

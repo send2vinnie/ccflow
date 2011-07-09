@@ -29,7 +29,7 @@ public partial class WF_Admin_Action : WebPage
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle("事件");
         this.Pub1.AddTDTitle("执行内容");
-        this.Pub1.AddTDTitle("内容");
+        this.Pub1.AddTDTitle("事件类型");
         this.Pub1.AddTDTitle("成功提示");
         this.Pub1.AddTDTitle("错误提示");
         this.Pub1.AddTREnd();

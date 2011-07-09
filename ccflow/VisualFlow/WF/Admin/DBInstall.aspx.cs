@@ -31,11 +31,19 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                 this.Pub1.AddFieldSet("修复数据表");
                 this.Pub1.Add("把最新的版本的与当前的数据表结构，做一个自动修复, 修复内容：缺少列，缺少列注释，列注释不完整或者有变化。 <br> <a href='DBInstall.aspx?DoType=FixDB' >执行...</a>。");
                 this.Pub1.AddFieldSetEnd();
+
                 if (this.Request.QueryString["DoType"] == "FixDB")
                 {
-                    string rpt = BP.PubClass.DBRpt(BP.DBLevel.High);
+                    string rpt = BP.PubClass.DBRpt(BP.DBLevel.High);                
                     this.Pub1.AddMsgGreen("同步数据表结构成功, 部分错误不会影响系统运行.",
                         "执行成功，希望在系统每次升级后执行此功能，不会对你的数据库数据产生影响。");
+
+                    // 手动升级. 2011-07-08 补充节点字段分组.
+                    string sqls = "@DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
+                    sqls+="@INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性')";
+                    BP.DA.DBAccess.RunSQLs(sqls);
+
+
                 }
                 return;
             }
