@@ -78,6 +78,20 @@ public partial class Comm_Dtl : WebPage
          "<link href='../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
         this.Bind();
     }
+    public int addRowNum
+    {
+        get
+        {
+            try
+            {
+                return int.Parse(this.Request.QueryString["addRowNum"]);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+    }
     public int IsWap
     {
         get
@@ -282,26 +296,43 @@ public partial class Comm_Dtl : WebPage
         }
         #endregion 生成翻页
 
-        
-
 
         DDL ddl = new DDL();
         CheckBox cb = new CheckBox();
 
         #region 生成数据
         int idx = 1;
-      //  bool is1 = false;
+        //  bool is1 = false;
         string ids = ",";
+        int dtlsNum = dtls.Count;
         foreach (BP.Sys.GEDtl dtl in dtls)
         {
             if (ids.Contains("," + dtl.OID + ","))
                 continue;
-            ids += dtl.OID+",";
+            ids += dtl.OID + ",";
             this.Pub1.AddTR();
-            if (mdtl.IsShowIdx)
+
+            if (dtlsNum == idx && mdtl.IsShowIdx && mdtl.IsInsert)
             {
-                this.Pub1.AddTDIdx(idx++);
+                DDL myAdd = new DDL();
+                myAdd.Items.Add(new ListItem("+", "+"));
+                for (int i = 1; i < 10; i++)
+                {
+                    myAdd.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                }
+                myAdd.SelectedIndexChanged += new EventHandler(myAdd_SelectedIndexChanged);
+                this.Pub1.AddTD(myAdd);
+
             }
+            else
+            {
+                if (mdtl.IsShowIdx)
+                {
+                    this.Pub1.AddTDIdx(idx++);
+                }
+            }
+
+            #region 增加rows
             foreach (MapAttr attr in attrs)
             {
                 if (attr.UIVisible == false)
@@ -315,7 +346,6 @@ public partial class Comm_Dtl : WebPage
                 {
                     case UIContralType.TB:
                         TextBox tb = new TextBox();
-                        //tb.LoadMapAttr(attr);
                         tb.ID = "TB_" + attr.KeyOfEn + "_" + dtl.OID;
                         //  tb.Enabled = attr.UIIsEnable;
                         if (attr.UIIsEnable == false)
@@ -442,10 +472,12 @@ public partial class Comm_Dtl : WebPage
                         break;
                 }
             }
+            #endregion 增加rows
 
-            if (mdtl.IsDelete && dtl.OID >= 100 )
+
+            if (mdtl.IsDelete && dtl.OID >= 100)
             {
-                this.Pub1.Add("<TD border=0><img src='../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','" + this.EnsName + "','"+this.RefPKVal+"','"+this.PageIdx+"')\" /></TD>");
+                this.Pub1.Add("<TD border=0><img src='../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','" + this.EnsName + "','" + this.RefPKVal + "','" + this.PageIdx + "')\" /></TD>");
             }
             else if (mdtl.IsDelete)
             {
@@ -476,7 +508,7 @@ public partial class Comm_Dtl : WebPage
                                 if (ddlPerant == null)
                                     continue;
 
-                              //  DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
+                                //  DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
                                 //string ddlP = "Pub1_DDL_"+me.AttrOfOper+"_"+mydtl.OID;
                                 string ddlC = "Pub1_DDL_" + me.AttrsOfActive + "_" + mydtl.OID;
                                 ddlPerant.Attributes["onchange"] = " isChange=true; DDLAnsc(this.value, \'" + ddlC + "\', \'" + me.MyPK + "\')";
@@ -503,7 +535,6 @@ public partial class Comm_Dtl : WebPage
             }
             #endregion 拓展属性
         }
-     
 
 
         #region 生成合计
@@ -523,7 +554,7 @@ public partial class Comm_Dtl : WebPage
                     TextBox tb = new TextBox();
                     tb.ID = "TB_" + attr.KeyOfEn;
                     tb.Text = attr.DefVal;
-                   // tb.ShowType = attr.HisTBType;
+                    // tb.ShowType = attr.HisTBType;
                     tb.ReadOnly = true;
                     tb.Font.Bold = true;
                     tb.BackColor = System.Drawing.Color.FromName("infobackground");
@@ -547,7 +578,7 @@ public partial class Comm_Dtl : WebPage
                         default:
                             break;
                     }
-                    this.Pub1.AddTD("align=right",tb);
+                    this.Pub1.AddTD("align=right", tb);
                 }
                 else
                 {
@@ -613,6 +644,12 @@ public partial class Comm_Dtl : WebPage
             this.Response.Write(top + this.GenerSum(attr, dtls) + " ; \t\n" + end);
         }
         #endregion
+    }
+    void myAdd_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DDL ddl = sender as DDL;
+        string url = "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx+"&AddRowNum="+ddl.SelectedItemStringVal;
+        this.Response.Redirect(url, true);
     }
 
     public void Delete()

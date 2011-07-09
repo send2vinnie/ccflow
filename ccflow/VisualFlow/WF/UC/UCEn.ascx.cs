@@ -1326,7 +1326,7 @@ namespace BP.Web.Comm.UC.WF
 
                 string url = "ImgAth.aspx?W=" + ath.W + "&H=" + ath.H + "&MyPK=" + en.PKVal + "&ImgAth=" + ath.MyPK;
                 if (isReadonly == false)
-                    this.AddFieldSet("<a href=\"javascript: var v=window.showModalDialog('" + url + "', 'ddf', 'dialogHeight: 650px; dialogWidth: 950px;center: yes; help: no'); alert(v);  document.getElementById('Img" + ath.MyPK + "').setAttribute('src', '../Temp/'+v+'.png' ); \" >±à¼­:" + ath.Name + "</a>");
+                    this.AddFieldSet("<a href=\"javascript: var v=window.showModalDialog('" + url + "', 'ddf', 'dialogHeight: 650px; dialogWidth: 950px;center: yes; help: no'); document.getElementById('Img" + ath.MyPK + "').setAttribute('src', '../DataUser/ImgAth/Temp/'+v+'.png' ); \" >±à¼­:" + ath.Name + "</a>");
 
                 this.Add("\t\n<img src='/Flow/DataUser/ImgAth/Data/" + ath.MyPK + "_" + en.PKVal + ".png' onerror=\"this.src='./../Data/Img/LogH.PNG'\" name='Img" + ath.MyPK + "' id='Img" + ath.MyPK + "' style='padding: 0px;margin: 0px;border-width: 0px;' width=" + ath.W + " height=" + ath.H + " />");
 

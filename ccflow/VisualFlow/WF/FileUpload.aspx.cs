@@ -25,7 +25,10 @@ public partial class FileUpload : BP.Web.WebPage
                 //fileUpload.Path = "~/UploadFiles";
                 fileUpload.Path = "../DataUser/ImgAth/Upload";
                 fileUpload.PostedFile = file;
-                string picName = fileUpload.Upload();
+
+                string newName = this.Request.QueryString["ImgAth"] + "_" + this.MyPK + ".png";
+
+                string picName = fileUpload.Upload(newName);
                 msg = "../DataUser/ImgAth/Upload/" + picName;
             }
             //    ToLog("上传了一个名称为" + msg + "的图片!");

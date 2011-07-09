@@ -58,16 +58,19 @@ public partial class WF_ImgAth : BP.Web.WebPage
 
         if (!IsPostBack)
         {
+
             string url = "../DataUser/ImgAth/Def.jpg";
-            string newName = this.ImgAth + "_" + this.MyPK;
-            if (!string.IsNullOrEmpty(newName))
+            string newName = this.ImgAth + "_" + this.MyPK+".png";
+            string sourceFile = Server.MapPath("../DataUser/ImgAth/Upload/" + newName);
+            if (System.IO.File.Exists(sourceFile))
             {
-                string sourceFile = Server.MapPath("../DataUser/ImgAth/Data/" + newName);
-                if (System.IO.File.Exists(sourceFile))
-                {
-                    url = newName;
-                }
+                url = "../DataUser/ImgAth/Upload/" + newName;
             }
+            else
+            {
+                url = "../DataUser/ImgAth/Def.jpg";
+            }
+            
 
             txtPhotoUrl.Text = url;
             Page.ClientScript.RegisterStartupScript(this.GetType(),
@@ -84,8 +87,11 @@ public partial class WF_ImgAth : BP.Web.WebPage
 
         CopyFile(str, "../DataUser/ImgAth/Data/" + myName + ".png");
 
-        string temp = "Temp" + BP.Web.WebUser.No + "_" + DateTime.Now.ToString("yyMMddhhmmss");
-        CopyFile(str, "../Temp/" + temp + ".png");
+        //string temp = "Temp" + BP.Web.WebUser.No + "_" + DateTime.Now.ToString("yyMMddhhmmss");
+        //CopyFile(str, "../Temp/" + temp + ".png");
+
+        string temp = txtPhotoUrl.Text.Substring(str.LastIndexOf('/')+1);
+        temp = temp.Replace(".png", "");
         this.WinClose(temp);
     }
 

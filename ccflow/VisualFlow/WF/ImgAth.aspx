@@ -13,8 +13,7 @@
 <style type="text/css">
         #container
         {
-        	width:800px;
-        	height:590px;
+        	
         	margin:0px auto;
         	background-color:#fff;
         	border:solid 1px #7d9edb;
@@ -38,11 +37,16 @@
 </script>
 
 <script type="text/javascript">
+
+ var ImgAth= '<%=ImgAth%>';
+ var MyPK= '<%=MyPK%>';
+
     function ajaxFileUpload() {
         jQuery.ajaxFileUpload
 	    (
 	          {
-	              url: 'FileUpload.aspx',
+                   
+	              url: 'FileUpload.aspx?ImgAth=' + ImgAth+ '&MyPK='+ MyPK,
 	              secureuri: false,
 	              fileElementId: 'fileToUpload',
 	              dataType: 'json',
