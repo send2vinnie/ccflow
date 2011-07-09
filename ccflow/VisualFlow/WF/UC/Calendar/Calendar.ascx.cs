@@ -518,8 +518,10 @@ namespace BP.Web.Comm.UC
 
             string dtFormat = "yyyyƒÍMM‘¬dd»’";
 
-            string sql = "SELECT  FlowName, substring(RDT,0,11) as RDT, COUNT(*) as Num FROM WF_EmpWorks ";
-            sql += "WHERE FK_Emp='" + WebUser.No + "' and  RDT LIKE '" + ny + "%' GROUP BY FlowName, substring(RDT,0,11)";
+            string sql = "";
+            sql = "SELECT  FlowName, " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,0,11) as RDT, COUNT(*) as Num FROM WF_EmpWorks ";
+                    sql += "WHERE FK_Emp='" + WebUser.No + "' and  RDT LIKE '" + ny + "%' GROUP BY FlowName, "+SystemConfig.AppCenterDBSubstringStr+"(RDT,0,11)";
+
             DataTable dtWork = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
             string currDate = DataType.CurrentData;

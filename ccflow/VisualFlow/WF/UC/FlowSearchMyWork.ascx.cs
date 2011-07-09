@@ -61,7 +61,7 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
         {
             qo.AddWhere(GERptAttr.FlowEmps, " LIKE ", "'%@" + WebUser.No + "%'");
             qo.addAnd();
-            qo.AddWhere("substring(RDT,1,10) >='" + this.DT_F + "' AND substring(RDT,1,10) <='" + this.DT_T + "' ");
+            qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
             this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearchMyWork.aspx?EnsName=" + this.EnsName + "&FK_Flow=" + this.FK_Flow);
             qo.DoQuery("OID", 10, this.PageIdx);
@@ -256,7 +256,7 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
             if (BP.SystemConfig.AppCenterDBType == DBType.Access)
                 qo.AddWhere("Mid(RDT,1,10) >='" + this.DT_F + "' AND Mid(RDT,1,10) <='" + this.DT_T + "' ");
             else
-                qo.AddWhere("substring(RDT,1,10) >='" + this.DT_F + "' AND substring(RDT,1,10) <='" + this.DT_T + "' ");
+                qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
             this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName);
             qo.DoQuery();

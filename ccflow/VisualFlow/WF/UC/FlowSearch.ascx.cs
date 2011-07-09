@@ -106,7 +106,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         if (BP.SystemConfig.AppCenterDBType == DBType.Access)
             qo.AddWhere("Mid(RDT,1,10) >='" + this.DT_F + "' AND Mid(RDT,1,10) <='" + this.DT_T + "' ");
         else
-            qo.AddWhere("substring(RDT,1,10) >='" + this.DT_F + "' AND substring(RDT,1,10) <='" + this.DT_T + "' ");
+            qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
         this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
         qo.DoQuery("OID", 10, this.PageIdx);
@@ -248,7 +248,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             if (BP.SystemConfig.AppCenterDBType == DBType.Access)
                 qo.AddWhere("Mid(RDT,1,10) >='" + this.DT_F + "' AND Mid(RDT,1,10) <='" + this.DT_T + "' ");
             else
-                qo.AddWhere("substring(RDT,1,10) >='" + this.DT_F + "' AND substring(RDT,1,10) <='" + this.DT_T + "' ");
+                qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
             this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch"+this.PageSmall+".aspx?FK_Node=" + this.FK_Node);
             qo.DoQuery();
@@ -428,7 +428,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         if (BP.SystemConfig.AppCenterDBType == DBType.Access)
             qo.AddWhere("Mid(RDT,1,10) >='" + this.DT_F + "' AND Mid(RDT,1,10) <='" + this.DT_T + "' ");
         else
-            qo.AddWhere("substring(RDT,1,10) >='" + this.DT_F + "' AND substring(RDT,1,10) <='" + this.DT_T + "' ");
+            qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
         this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
         qo.DoQuery("OID", 10, this.PageIdx);
