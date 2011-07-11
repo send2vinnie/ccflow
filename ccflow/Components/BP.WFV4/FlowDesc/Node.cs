@@ -241,6 +241,11 @@ namespace BP.WF
         /// 是否可以强制删除线程
         /// </summary>
         public const string IsForceKill = "IsForceKill";
+
+        /// <summary>
+        /// 接受人sql
+        /// </summary>
+        public const string RecipientSQL = "RecipientSQL";
         #endregion
 
         #region 基本属性
@@ -1792,6 +1797,20 @@ namespace BP.WF
             }
         }
         /// <summary>
+        /// 接受人sql
+        /// </summary>
+        public string RecipientSQL
+        {
+            get
+            {
+                return this.GetValStringByKey(NodeAttr.RecipientSQL);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.RecipientSQL, value);
+            }
+        }
+        /// <summary>
         /// 是不是PC工作节点
         /// </summary>
         public bool IsPCNode
@@ -1976,6 +1995,9 @@ namespace BP.WF
                 //map.AddDDLSysEnum(NodeAttr.RunType, 0, "执行类型", true, true);
                 //map.AddTBStringDoc(NodeAttr.DoWhat, null, "工作完成后处理什么", true, false);
                 //map.AddTBStringDoc(NodeAttr.DoWhatMsg, null, "提示执行信息", true, false);
+
+
+                map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10);
 
 
                 map.AddTBString(NodeAttr.DoWhat, null, "完成后处理SQL", true, false, 0, 500, 10);
