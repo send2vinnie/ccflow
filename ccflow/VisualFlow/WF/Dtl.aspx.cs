@@ -94,7 +94,14 @@ public partial class Comm_Dtl : WebPage
     {
         this.Page.RegisterClientScriptBlock("s",
          "<link href='../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
-        this.Bind();
+
+        MapDtl mdtl = new MapDtl(this.EnsName);
+        if (mdtl.HisDtlShowModel == DtlShowModel.Card)
+        {
+            Response.Redirect("DtlFrm.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal, true);
+            return;
+        }
+        this.Bind(mdtl);
     }
     public int addRowNum
     {
@@ -140,7 +147,7 @@ public partial class Comm_Dtl : WebPage
                 this.ViewState["R"] = "0";
         }
     }
-    public void Bind()
+    public void Bind(MapDtl mdtl)
     {
         if (this.Request.QueryString["IsTest"] != null)
             BP.DA.Cash.SetMap(this.EnsName, null);
@@ -188,7 +195,6 @@ public partial class Comm_Dtl : WebPage
         }
         #endregion 处理设计时自动填充明细表.
 
-        MapDtl mdtl = new MapDtl(this.EnsName);
 
         #region 生成标题
         if (this.IsWap == 1)
@@ -340,20 +346,11 @@ public partial class Comm_Dtl : WebPage
             {
                 DDL myAdd = new DDL();
                 myAdd.AutoPostBack = true;
-
-                //for (int i = 1; i < 5; i++)
-                //{
-                //    myAdd.Items.Add(new ListItem("-"+i.ToString(), "-" + i.ToString()));
-                //}
-
                 myAdd.Items.Add(new ListItem("+", "+"));
                 for (int i = 1; i < 10; i++)
                 {
                     myAdd.Items.Add(new ListItem( i.ToString(), i.ToString()));
                 }
-
-               // myAdd.SetSelectItem("+");
-
                 myAdd.SelectedIndexChanged += new EventHandler(myAdd_SelectedIndexChanged);
                 this.Pub1.AddTD(myAdd);
             }
@@ -507,7 +504,6 @@ public partial class Comm_Dtl : WebPage
             }
             #endregion 增加rows
 
-
             if (mdtl.IsDelete && dtl.OID >= 100)
             {
                 this.Pub1.Add("<TD border=0><img src='../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','" + this.EnsName + "','" + this.RefPKVal + "','" + this.PageIdx + "')\" /></TD>");
@@ -540,7 +536,6 @@ public partial class Comm_Dtl : WebPage
                                 DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + mydtl.OID);
                                 if (ddlPerant == null)
                                     continue;
-
                                 //  DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
                                 //string ddlP = "Pub1_DDL_"+me.AttrOfOper+"_"+mydtl.OID;
                                 string ddlC = "Pub1_DDL_" + me.AttrsOfActive + "_" + mydtl.OID;
@@ -624,6 +619,7 @@ public partial class Comm_Dtl : WebPage
 
 
         #endregion 生成数据
+
         this.Pub1.AddTableEnd();
 
         //Button btn = new Button();
@@ -858,7 +854,8 @@ public partial class Comm_Dtl : WebPage
                         dtl.Delete();
                 }
                 this.Pub1.Clear();
-                this.Bind();
+                MapDtl md = new MapDtl(this.EnsName);
+                this.Bind(md);
                 break;
             case NamesOfBtn.Excel:
                 this.ExpExcel();

@@ -158,26 +158,23 @@ public partial class WF_BPR : WebPage
             switch (BP.SystemConfig.AppCenterDBType)
             {
                 case DBType.Oracle9i:
-                    val = DBAccess.RunSQLReturnValFloat("SELECT NVL( Avg( GetSpdays(RDT,CDT)),0) FROM ND" + nd.NodeID + " ");
+                    val = DBAccess.RunSQLReturnValFloat("SELECT NVL(AVG(to_date(substr(RDT,1,10),'yyyy-mm-dd')- to_date(substr(CDT,1,10),'yyyy-mm-dd')),0) FROM ND" + nd.NodeID);
                     break;
                 default:
                     val = DBAccess.RunSQLReturnValFloat("SELECT IsNULL( Avg(dbo.GetSpdays(RDT,CDT)),0) FROM ND" + nd.NodeID + " ");
                     break;
             }
 
-
             this.Pub1.AddTD(val);
 
             val = DBAccess.RunSQLReturnValFloat("SELECT COUNT(DISTINCT Rec) FROM ND" + nd.NodeID + " ");
             this.Pub1.AddTDNum("<a href=\"javascript:WinOpen('BPR.aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + nd.NodeID + "&DoType=NodeEmp')\" >" + val + "</a>");
-
 
             this.Pub1.AddTD(nd.WarningDays);
             this.Pub1.AddTD(nd.DeductDays);
 
             this.Pub1.AddTD(0);
             this.Pub1.AddTD(0);
-
 
             this.Pub1.AddTDDoc(nd.HisStationsStr, nd.HisStationsStr);
             this.Pub1.AddTREnd();

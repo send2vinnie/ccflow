@@ -1280,15 +1280,26 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("<span>");
 
                 string src = "";
-                if (isReadonly == true)
-                    src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1";
+                if (dtl.HisDtlShowModel == DtlShowModel.Table)
+                {
+                    if (isReadonly == true)
+                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1";
+                    else
+                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0";
+                }
                 else
-                    src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0";
+                {
+                    if (isReadonly == true)
+                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1";
+                    else
+                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0";
+                }
 
                 this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' /></iframe>");
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
+
             string js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveDtl(dtl) { ";
             js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";

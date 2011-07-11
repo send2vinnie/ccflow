@@ -63,11 +63,24 @@ public partial class WF_Frm : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        MapData md = new MapData(this.FK_MapData);
-        GEEntity en = md.HisGEEn;
-        en.SetValByKey("OID", this.WorkID);
-        en.RetrieveFromDBSources();
-        this.UCEn1.BindFreeFrm(en, this.FK_MapData,this.IsReadonly);
+        MapData md = new MapData();
+        md.No = this.FK_MapData;
+        if (md.RetrieveFromDBSources() == 0 && md.Name.Length>3)
+        {
+            MapDtl dtl = new MapDtl(this.FK_MapData);
+            GEDtl dtlEn = dtl.HisGEDtl;
+            dtlEn.SetValByKey("OID", this.WorkID);
+            dtlEn.RetrieveFromDBSources();
+            this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
+        }
+        else
+        {
+            GEEntity en = md.HisGEEn;
+            en.SetValByKey("OID", this.WorkID);
+            en.RetrieveFromDBSources();
+            this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
+        }
+
      //   this.Button1.Enabled = this.IsReadonly;
     }
     protected void Button1_Click(object sender, EventArgs e)
