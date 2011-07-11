@@ -99,7 +99,7 @@ namespace FreeFrm.Web
             return i;
         }
         [WebMethod]
-        public string DoType(string dotype, string v1, string v2, string v3, string v4)
+        public string DoType(string dotype, string v1, string v2, string v3, string v4,string v5)
         {
             string sql = "";
             try
@@ -132,6 +132,10 @@ namespace FreeFrm.Web
                         string vals = v1;
                         string fk_Node = v2;
                         string fk_flow = v3;
+                        bool isPrint = false;
+                        if (v5 == "1")
+                            isPrint = true;
+
                         bool isReadonly=false;
                         if (v4 == "1")
                             isReadonly = true;
@@ -149,6 +153,7 @@ namespace FreeFrm.Web
                             FrmNodeAttr.FK_Node, fk_Node) == 1)
                         {
                             fn.IsReadonly = isReadonly;
+                            fn.IsPrint = isPrint;
                             fn.Update();
                             return fk_frm;
                         }
@@ -157,6 +162,7 @@ namespace FreeFrm.Web
                         fn.FK_Flow = fk_flow;
                         fn.FK_Node = int.Parse(fk_Node);
                         fn.IsReadonly = isReadonly;
+                        fn.IsPrint = isPrint;
                         fn.Idx = 100;
                         fn.Insert();
 
