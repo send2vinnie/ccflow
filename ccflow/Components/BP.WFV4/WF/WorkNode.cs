@@ -207,6 +207,23 @@ namespace BP.WF
             // 如果执行了两次发送，那前一次的轨迹就需要被删除。这里是为了避免错误。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node =" + town.HisNode.NodeID);
 
+            //首先判断是否配置了获取下一步接受人员的sql.
+            if (this.HisNode.RecipientSQL.Length > 4)
+            {
+                Attrs attrs = this.HisWork.EnMap.Attrs;
+                sql = this.HisNode.RecipientSQL;
+                foreach (Attr attr in attrs)
+                {
+                    if (attr.MyDataType == DataType.AppString)
+                        sql = sql.Replace("@" + attr.Key, "'" + this.HisWork.GetValStrByKey(attr.Key) + "'");
+                    else
+                        sql = sql.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
+                }
+
+                dt = DBAccess.RunSQLReturnTable(sql);
+                return WorkerListWayOfDept(town, dt);
+            }
+
             if (this.HisNode.IsSelectEmp)
             {
                 sql = "SELECT  FK_Emp  FROM WF_SelectAccper WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID;
@@ -1644,6 +1661,7 @@ namespace BP.WF
         #endregion
 
         public GEEntity rptGe = null;
+       
         /// <summary>
         /// 
         /// </summary>
@@ -1790,7 +1808,7 @@ namespace BP.WF
                     rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
                     rptGe.SetValByKey(GERptAttr.WFState, 0);
                     rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
-                    rptGe.SetValByKey(GERptAttr.Title, this.WorkID);
+                   // rptGe.SetValByKey(GERptAttr.Title, this.WorkID);
                     rptGe.Copy(this.HisWork);
                     rptGe.Insert();
                 }
@@ -2570,9 +2588,7 @@ namespace BP.WF
 
             /* 
              * 为了解决 大连需求
-             * 
              *  河流点需要等待各个分流点全部处理完后才能看到它。
-             * 
              */
             string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
             decimal numAll1 = (decimal)DBAccess.RunSQLReturnValInt(sql1);
@@ -2583,6 +2599,7 @@ namespace BP.WF
             }
             else
             {
+
 #warning 为了不让其显示在途的工作需要， =3 不是正常的处理模式。
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=3,WorkID=" + this.HisWork.FID + ",FID=0 WHERE FK_Node=" + nd.NodeID + " AND WorkID=" + this.HisWork.OID);
             }
@@ -2619,7 +2636,7 @@ namespace BP.WF
                 }
 
                 #region 复制多选数据
-                 M2Ms m2ms = new M2Ms(this.HisNode.NodeID, this.WorkID);
+                M2Ms m2ms = new M2Ms(this.HisNode.NodeID, this.WorkID);
                 if (m2ms.Count >= 1)
                 {
                     foreach (M2M item in m2ms)
@@ -2651,7 +2668,7 @@ namespace BP.WF
                     {
                         if (dtl.IsEnablePass)
                         {
-                            startDtls = new BP.Sys.MapDtls("ND" + int.Parse(nd.FK_Flow)+"01");
+                            startDtls = new BP.Sys.MapDtls("ND" + int.Parse(nd.FK_Flow) + "01");
                         }
                     }
 
@@ -2754,14 +2771,15 @@ namespace BP.WF
                                 dtCopy.SetValByKey("Checker", BP.Web.WebUser.Name);
                                 dtCopy.Insert();
                             }
-                            DBAccess.RunSQL("UPDATE " + startDtl.PTable + " SET Rec='" + startUser + "',Checker='"+WebUser.No+"' WHERE BatchID="+this.WorkID +" AND Rec='"+WebUser.No+"'" );
+                            DBAccess.RunSQL("UPDATE " + startDtl.PTable + " SET Rec='" + startUser + "',Checker='" + WebUser.No + "' WHERE BatchID=" + this.WorkID + " AND Rec='" + WebUser.No + "'");
                         }
                     }
                 }
                 #endregion 复制明细数据
                 //  wk.CopyCellsData("ND" + this.HisNode.NodeID + "_" + this.HisWork.OID);
-                #endregion
 
+
+                #endregion
                 try
                 {
                     wk.BeforeSave();
@@ -2789,10 +2807,8 @@ namespace BP.WF
                     }
                     #endregion 解决字段修复问题
                 }
-
                 // 启动一个工作节点.
                 string msg = this.beforeStartNode(wk, nd);
-
                 return "@" + string.Format(this.ToE("NStep", "@第{0}步"), nd.Step.ToString()) + "<font color=blue>" + nd.Name + "</font>" + this.ToE("WorkStartOK", "工作成功启动") + "." + msg;
             }
             catch (Exception ex)

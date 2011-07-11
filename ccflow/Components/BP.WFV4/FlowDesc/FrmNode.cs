@@ -26,6 +26,10 @@ namespace BP.WF
         /// </summary>
         public const string IsReadonly = "IsReadonly";
         /// <summary>
+        /// IsPrint
+        /// </summary>
+        public const string IsPrint = "IsPrint";
+        /// <summary>
         /// Idx
         /// </summary>
         public const string Idx = "Idx";
@@ -116,6 +120,31 @@ namespace BP.WF
                 this.SetValByKey(FrmNodeAttr.IsReadonly, value);
             }
         }
+        public bool IsPrint
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FrmNodeAttr.IsPrint);
+            }
+            set
+            {
+                this.SetValByKey(FrmNodeAttr.IsPrint, value);
+            }
+        }
+        public int IsReadonlyInt
+        {
+            get
+            {
+                return this.GetValIntByKey(FrmNodeAttr.IsReadonly);
+            }
+        }
+        public int IsPrintInt
+        {
+            get
+            {
+                return this.GetValIntByKey(FrmNodeAttr.IsPrint);
+            }
+        }
         #endregion
 
         #region 构造方法
@@ -155,8 +184,9 @@ namespace BP.WF
                 map.AddTBInt(FrmNodeAttr.FK_Node, 0, "节点编号", true, false);
                 map.AddTBString(FrmNodeAttr.FK_Flow, null, "流程", true, true, 1, 20, 20);
 
-
                 map.AddTBInt(FrmNodeAttr.IsReadonly, 1, "是否可以更新", true, false);
+                map.AddTBInt(FrmNodeAttr.IsPrint, 0, "IsPrint", true, false);
+
                 map.AddTBInt(FrmNodeAttr.Idx, 0, "顺序号", true, false);
                 this._enMap = map;
                 return this._enMap;

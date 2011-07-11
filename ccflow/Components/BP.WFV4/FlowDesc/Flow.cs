@@ -3124,7 +3124,6 @@ namespace BP.WF
             if (string.IsNullOrWhiteSpace(this.Name))
                 this.Name = BP.Sys.Language.GetValByUserLang("NewFlow", "新建流程") + this.No; //新建流程
 
-
             this.Save();
 
             #region 删除有可能存在的历史数据.
