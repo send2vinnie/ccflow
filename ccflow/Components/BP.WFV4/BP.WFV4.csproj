@@ -304,6 +304,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\" />
     <Folder Include="DTS\db\" />
     <Folder Include="FlowDesc\WorkBase\CheckWork\" />
   </ItemGroup>
