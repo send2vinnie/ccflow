@@ -81,7 +81,21 @@ public partial class WF_FrmDtl : System.Web.UI.Page
         GEDtl dtlEn = dtl.HisGEDtl;
         dtlEn.SetValByKey("OID", this.OID);
         dtlEn.RetrieveFromDBSources();
+
         this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
 
+        if (this.IsReadonly)
+        {
+            this.Btn_Save.Visible = false;
+            this.Btn_Save.Enabled = false;
+
+            //this.Btn_Print.Visible = false;
+            //this.Btn_Print.Enabled = false;
+        }
     }
+    protected void Btn_Save_Click(object sender, EventArgs e)
+    {
+
+    }
+     
 }

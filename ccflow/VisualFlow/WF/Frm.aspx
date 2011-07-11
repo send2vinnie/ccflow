@@ -43,7 +43,11 @@
    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" ></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<asp:Button ID="Button1" runat="server" Text="Save"  CssClass="HBtn" Visible=true onclick="Button1_Click" />
+<asp:Button ID="Btn_Save" runat="server" Text="保存"  CssClass="HBtn" Visible=true 
+        onclick="Btn_Save_Click"  />
+<asp:Button ID="Btn_Print" runat="server" Text="打印"  CssClass="HBtn" Visible=true 
+        onclick="Btn_Print_Click"   />
+
     <uc1:UCEn ID="UCEn1" runat="server" />
 </asp:Content>
 

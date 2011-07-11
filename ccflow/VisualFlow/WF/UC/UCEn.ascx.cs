@@ -1028,7 +1028,6 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + lab.X + "px;top:" + lab.Y + "px;text-align:left;' >");
                 this.Add("\t\n<span style='color:" + lab.FontColorHtml + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' >" + lab.TextHtml + "</span>");
                 this.Add("\t\n</DIV>");
-                // Color.FromArgb(
             }
 
             FrmLines lines = new FrmLines(this.FK_MapData);
@@ -1306,6 +1305,7 @@ namespace BP.Web.Comm.UC.WF
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
+
             #endregion 输出明细.
 
             #region 输出附件

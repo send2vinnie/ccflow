@@ -59,6 +59,15 @@ public partial class WF_Frm : System.Web.UI.Page
             return false;
         }
     }
+    public bool IsPrint
+    {
+        get
+        {
+            if (this.Request.QueryString["IsPrint"] == "1")
+                return true;
+            return false;
+        }
+    }
     #endregion 属性
 
     protected void Page_Load(object sender, EventArgs e)
@@ -81,26 +90,15 @@ public partial class WF_Frm : System.Web.UI.Page
             this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
         }
 
+        this.Btn_Save.Visible = !this.IsReadonly;
+        this.Btn_Save.Enabled = !this.IsReadonly;
+
+        this.Btn_Print.Visible = this.IsPrint;
+
+
      //   this.Button1.Enabled = this.IsReadonly;
     }
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        if (this.FK_MapData.Replace("ND", "") == this.FK_Node.ToString())
-        {
-            this.SaveNode();
-            return;
-        }
-
-        MapData md = new MapData(this.FK_MapData);
-        GEEntity en = md.HisGEEn;
-        en.SetValByKey("OID", this.WorkID);
-        int i = en.RetrieveFromDBSources();
-        en = this.UCEn1.Copy(en) as GEEntity;
-        if (i == 0)
-            en.Insert();
-        else
-            en.Update();
-    }
+   
     public void SaveNode()
     {
         Node nd = new Node(this.FK_Node);
@@ -146,5 +144,27 @@ public partial class WF_Frm : System.Web.UI.Page
         wk.RetrieveFromDBSources();
         this.UCEn1.ResetEnVal(wk);
         return;
+    }
+    protected void Btn_Save_Click(object sender, EventArgs e)
+    {
+        if (this.FK_MapData.Replace("ND", "") == this.FK_Node.ToString())
+        {
+            this.SaveNode();
+            return;
+        }
+
+        MapData md = new MapData(this.FK_MapData);
+        GEEntity en = md.HisGEEn;
+        en.SetValByKey("OID", this.WorkID);
+        int i = en.RetrieveFromDBSources();
+        en = this.UCEn1.Copy(en) as GEEntity;
+        if (i == 0)
+            en.Insert();
+        else
+            en.Update();
+    }
+    protected void Btn_Print_Click(object sender, EventArgs e)
+    {
+
     }
 }

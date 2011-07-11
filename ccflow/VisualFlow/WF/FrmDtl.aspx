@@ -3,8 +3,21 @@
 <%@ Register src="UC/UCEn.ascx" tagname="UCEn" tagprefix="uc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+
+  <style type="text/css">
+        .HBtn
+        {
+        	/* display:none; */
+        	visibility:visible;
+        }
+    </style>
+	<script language="JavaScript" src="./../Comm/JScript.js"></script>
+    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" ></script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Button ID="Btn_Save" runat="server" Text="保存"  CssClass="HBtn" Visible=true 
+        onclick="Btn_Save_Click"  />
     <uc1:UCEn ID="UCEn1" runat="server" />
 </asp:Content>
 

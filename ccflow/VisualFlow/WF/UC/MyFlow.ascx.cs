@@ -853,17 +853,17 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     }
                     this.UCEn1.Add("\t\n </ul>");
                     #endregion 输出标签.
-
+                   
                     #region 输出从表单内容.
+
                     foreach (Frm frm in frms)
                     {
+                        FrmNode fn = new FrmNode(nd.NodeID, frm.No);
                         MapData md = new MapData(frm.No);
+
                         this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;' >");
                         string src = "";
-                        if (false)
-                            src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=1";
-                        else
-                            src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=0";
+                        src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt;
 
                         this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "'  Onblur=\"SaveDtl('" + frm.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
                         this.UCEn1.Add("\t\n </DIV>");

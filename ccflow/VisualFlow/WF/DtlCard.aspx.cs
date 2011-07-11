@@ -130,8 +130,6 @@ public partial class WF_DtlFrm : WebPage
         }
         #endregion 初始化空白行
 
-
-
         this.UCEn1.Clear();
         this.UCEn1.Add("<div  style='clear:both' ></div>");
         this.UCEn1.Add("\t\n<div  id='usual2' class='usual'>");  //begain.
@@ -139,10 +137,21 @@ public partial class WF_DtlFrm : WebPage
         #region 输出标签.
         this.UCEn1.Add("\t\n <ul  style='background:red;border-color: #800000;border-width: 10px;' >");
         int idx = 0;
+        int dtlsNum = dtls.Count;
         foreach (GEDtl dtl in dtls)
         {
             idx++;
             this.UCEn1.Add("\t\n<li><a href=\"#" + dtl.OID + "\">第" + idx + "条</a></li>");
+        }
+        if (this.IsReadonly == false && mdtl.IsInsert)
+        {
+            int addNum = addRowNum + 1;
+            int cutNum = addRowNum - 1;
+
+            if (cutNum >= 0)
+                this.UCEn1.Add("\t\n<li><a href='DtlCard.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&addRowNum=" + cutNum + "' >移除</a>|<a href='DtlCard.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&addRowNum=" + addNum + "' >插入</a></li>");
+            else
+                this.UCEn1.Add("\t\n<li><a href='DtlCard.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&addRowNum=" + addNum + "' >插入</a></li>");
         }
         this.UCEn1.Add("\t\n </ul>");
         #endregion 输出标签.
@@ -155,26 +164,27 @@ public partial class WF_DtlFrm : WebPage
             string src = "";
             src = "FrmDtl.aspx?FK_MapData=" + this.EnsName + "&WorkID=" + this.RefPKVal + "&OID=" + dtl.OID + "&IsReadonly=" + this.IsReadonly;
 
-            this.UCEn1.Add("\t\n <iframe ID='F" + dtl.OID + "'  Onblur=\"SaveDtl('" + dtl.OID + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + mdtl.FrmW + "px; height:" + mdtl.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
+            this.UCEn1.Add("\t\n <iframe ID='F" + dtl.OID + "' src='" + src + "' frameborder=0  style='position:absolute;width:" + mdtl.FrmW + "px; height:" + mdtl.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
             this.UCEn1.Add("\t\n </DIV>");
         }
         #endregion 输出从表单内容.
 
         this.UCEn1.Add("\t\n</div>"); // end  usual2
-
         this.UCEn1.Add("\t\n<script type='text/javascript'>");
         this.UCEn1.Add("\t\n  $(\"#usual2 ul\").idTabs(\"" + dtls[0].GetValStrByKey("OID") + "\");");
         this.UCEn1.Add("\t\n</script>");
-
+        if (this.IsReadonly == false)
+        {
+        }
 
         #region 处理iFrom SaveDtlData。
-        string js = "";
-        js = "\t\n<script type='text/javascript' >";
-        js += "\t\n function SaveDtl(dtl) { ";
-        js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData();";
-        js += "\t\n } ";
-        js += "\t\n</script>";
-        this.UCEn1.Add(js);
+        //string js = "";
+        //js = "\t\n<script type='text/javascript' >";
+        //js += "\t\n function SaveDtl(dtl) { ";
+        //js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData();";
+        //js += "\t\n } ";
+        //js += "\t\n</script>";
+        //this.UCEn1.Add(js);
         #endregion 处理iFrom SaveDtlData。
     }
 }
