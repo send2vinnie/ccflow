@@ -68,6 +68,21 @@ namespace BP.WF.Ext
                 this.SetValByKey(NodeAttr.FlowName, value);
             }
         }
+        /// <summary>
+        /// 接受人sql
+        /// </summary>
+        public string RecipientSQL
+        {
+            get
+            {
+                return this.GetValStringByKey(NodeAttr.RecipientSQL);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.RecipientSQL, value);
+            }
+        }
+        
         public override string PK
         {
             get
@@ -172,6 +187,10 @@ namespace BP.WF.Ext
 
                 map.AddTBDateTime("DTFrom", "生命周期从", true, true);
                 map.AddTBDateTime("DTTo", "生命周期到", true, true);
+
+                map.AddTBString(NodeAttr.RecipientSQL, null, this.ToE("FormUrl", "接受人SQL"), true, false, 0, 500, 10, true);
+
+
 
 
                 // 考核属性
