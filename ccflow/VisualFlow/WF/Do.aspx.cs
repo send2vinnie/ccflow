@@ -160,9 +160,11 @@ namespace BP.Web.WF
                         this.WinClose();
                         return;
                     case "TakeBack": // 取消授权。
-                        BP.WF.Port.WFEmp myau = new BP.WF.Port.WFEmp();
-                        myau.No = WebUser.No;
-                        myau.Update(BP.WF.Port.WFEmpAttr.AuthorIsOK, 0);
+                        BP.WF.Port.WFEmp myau = new BP.WF.Port.WFEmp(WebUser.No);
+                        myau.Author ="";
+                        myau.AuthorIsOK = false;
+                        myau.Update();
+                        //myau.Update(BP.WF.Port.WFEmpAttr.Author, "",BP.WF.Port.WFEmpAttr.AuthorIsOK, 0);
                         this.WinClose();
                         return;
                     case "AutoTo": // 执行授权。

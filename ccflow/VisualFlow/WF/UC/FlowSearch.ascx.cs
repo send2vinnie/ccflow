@@ -130,7 +130,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
         TextBox tb = new TextBox();
         tb.ID = "TB_F";
-        tb.Columns = 7;
+        tb.Columns = 10;
         tb.Text = this.DT_F;
         this.Pub1.Add(tb);
 
@@ -138,7 +138,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         tb = new TextBox();
         tb.ID = "TB_T";
         tb.Text = this.DT_T;
-        tb.Columns = 7;
+        tb.Columns = 10;
         this.Pub1.Add(tb);
 
         Button btn = new Button();
@@ -245,12 +245,9 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             QueryObject qo = new QueryObject(wks);
             qo.AddWhere(WorkAttr.Rec, WebUser.No);
             qo.addAnd();
-            if (BP.SystemConfig.AppCenterDBType == DBType.Access)
-                qo.AddWhere("Mid(RDT,1,10) >='" + this.DT_F + "' AND Mid(RDT,1,10) <='" + this.DT_T + "' ");
-            else
-                qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
+            qo.AddWhere(BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
-            this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch"+this.PageSmall+".aspx?FK_Node=" + this.FK_Node);
+            this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
             qo.DoQuery();
 
 
@@ -265,7 +262,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 {
                     this.ExportDGToExcel(wks.ToDataTableDescField(), nd.Name);
                 }
-                catch(Exception ex1)
+                catch (Exception ex1)
                 {
                     this.ToErrorPage("数据没有正确导出可能的原因之一是:系统管理员没正确的安装Excel组件，请通知他，参考安装说明书解决。@系统异常信息：" + ex.Message);
                 }

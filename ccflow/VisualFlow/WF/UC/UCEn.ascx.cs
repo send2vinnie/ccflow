@@ -1082,6 +1082,7 @@ namespace BP.Web.Comm.UC.WF
                 TB tb = new TB();
                 tb.ID = "TB_" + attr.KeyOfEn;
                 tb.Enabled = attr.UIIsEnable;
+                tb.Attributes["tabindex"] = attr.IDX.ToString();
                 switch (attr.LGType)
                 {
                     case FieldTypeS.Normal:
@@ -1191,6 +1192,8 @@ namespace BP.Web.Comm.UC.WF
                             ddle.BindSysEnum(attr.KeyOfEn);
                             ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
                             ddle.Enabled = attr.UIIsEnable;
+                            ddle.Attributes["tabindex"] = attr.IDX.ToString();
+
 
                             if (ddle.Enabled == true && isReadonly == true)
                                 ddle.Enabled = false;
@@ -1206,15 +1209,13 @@ namespace BP.Web.Comm.UC.WF
                     case FieldTypeS.FK:
                         DDL ddl1 = new DDL();
                         ddl1.ID = "DDL_" + attr.KeyOfEn;
+                        ddl1.Attributes["tabindex"] = attr.IDX.ToString();
                         try
                         {
                             EntitiesNoName ens = attr.HisEntitiesNoName;
                             ens.RetrieveAll();
                             ddl1.BindEntities(ens);
                             ddl1.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
-
-
-
                         }
                         catch
                         {
@@ -1256,7 +1257,6 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
-
             foreach (MapAttr attr in mattrs)
             {
                 if (attr.UIContralType == UIContralType.RadioBtn)
@@ -1320,13 +1320,26 @@ namespace BP.Web.Comm.UC.WF
 
             #region 输出 img 附件
             FrmImgAths imgAths = new FrmImgAths(enName);
+            if (imgAths.Count != 0)
+            {
+                js = "\t\n<script type='text/javascript' >";
+                js += "\t\n function ImgAth(url,athMyPK)";
+                js += "\t\n {";
+                js += "\t\n  var v= window.showModalDialog(url, 'ddf', 'dialogHeight: 650px; dialogWidth: 950px;center: yes; help: no'); ";
+                js += "\t\n  if (v==null )  ";
+                js += "\t\n     return ;";
+                js += "\t\n  document.getElementById('Img'+athMyPK ).setAttribute('src', '../DataUser/ImgAth/Temp/'+v+'.png' ); ";
+                js += "\t\n }";
+                js += "\t\n</script>";
+                this.Add(js);
+            }
             foreach (FrmImgAth ath in imgAths)
             {
                 this.Add("\t\n<DIV id=" + ath.MyPK + " style='position:absolute;left:" + ath.X + "px;top:" + ath.Y + "px;text-align:left;vertical-align:top' >");
 
                 string url = "ImgAth.aspx?W=" + ath.W + "&H=" + ath.H + "&MyPK=" + en.PKVal + "&ImgAth=" + ath.MyPK;
                 if (isReadonly == false)
-                    this.AddFieldSet("<a href=\"javascript: var v=window.showModalDialog('" + url + "', 'ddf', 'dialogHeight: 650px; dialogWidth: 950px;center: yes; help: no'); document.getElementById('Img" + ath.MyPK + "').setAttribute('src', '../DataUser/ImgAth/Temp/'+v+'.png' ); \" >编辑:" + ath.Name + "</a>");
+                    this.AddFieldSet("<a href=\"javascript:ImgAth('" + url + "','" + ath.MyPK + "');\" >编辑:" + ath.Name + "</a>");
 
                 this.Add("\t\n<img src='/Flow/DataUser/ImgAth/Data/" + ath.MyPK + "_" + en.PKVal + ".png' onerror=\"this.src='./../Data/Img/LogH.PNG'\" name='Img" + ath.MyPK + "' id='Img" + ath.MyPK + "' style='padding: 0px;margin: 0px;border-width: 0px;' width=" + ath.W + " height=" + ath.H + " />");
 
@@ -1335,6 +1348,8 @@ namespace BP.Web.Comm.UC.WF
 
                 this.Add("\t\n</DIV>");
             }
+
+           
             #endregion 输出附件.
 
             // 处理扩展.

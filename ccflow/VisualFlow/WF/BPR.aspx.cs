@@ -155,7 +155,17 @@ public partial class WF_BPR : WebPage
             val = DBAccess.RunSQLReturnValFloat("SELECT COUNT(*) FROM ND" + nd.NodeID + " ");
             this.Pub1.AddTD(val);
 
-            val = DBAccess.RunSQLReturnValFloat("SELECT IsNULL( Avg(dbo.GetSpdays(RDT,CDT)),0) FROM ND" + nd.NodeID + " ");
+            switch (BP.SystemConfig.AppCenterDBType)
+            {
+                case DBType.Oracle9i:
+                    val = DBAccess.RunSQLReturnValFloat("SELECT ISNVL( Avg( GetSpdays(RDT,CDT)),0) FROM ND" + nd.NodeID + " ");
+                    break;
+                default:
+                    val = DBAccess.RunSQLReturnValFloat("SELECT IsNULL( Avg(dbo.GetSpdays(RDT,CDT)),0) FROM ND" + nd.NodeID + " ");
+                    break;
+            }
+
+
             this.Pub1.AddTD(val);
 
             val = DBAccess.RunSQLReturnValFloat("SELECT COUNT(DISTINCT Rec) FROM ND" + nd.NodeID + " ");
