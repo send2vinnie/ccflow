@@ -3728,7 +3728,7 @@ namespace BP.En
             DataTable dt = this.ToEmptyTableField();
             Entity en = this.GetNewEntity;
 
-            dt.TableName = en.EnMap.PhysicsTable;
+            dt.TableName = tableName;
             foreach (Entity myen in this)
             {
                 DataRow dr = dt.NewRow();

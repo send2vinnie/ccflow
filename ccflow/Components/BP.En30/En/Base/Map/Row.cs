@@ -23,7 +23,24 @@ namespace BP.En
             this.Clear();
             foreach (Attr attr in attrs)
             {
-                this.Add(attr.Key, attr.DefaultVal);
+                switch (attr.MyDataType)
+                {
+                    case BP.DA.DataType.AppInt:
+                        this.Add(attr.Key, int.Parse(attr.DefaultVal.ToString()));
+                        break;
+                    case BP.DA.DataType.AppFloat:
+                        this.Add(attr.Key, float.Parse(attr.DefaultVal.ToString()));
+                        break;
+                    case BP.DA.DataType.AppMoney:
+                        this.Add(attr.Key, decimal.Parse(attr.DefaultVal.ToString()));
+                        break;
+                    case BP.DA.DataType.AppDouble:
+                        this.Add(attr.Key, double.Parse(attr.DefaultVal.ToString()));
+                        break;
+                    default:
+                        this.Add(attr.Key, attr.DefaultVal);
+                        break;
+                }
             }
         }
 		/// <summary>

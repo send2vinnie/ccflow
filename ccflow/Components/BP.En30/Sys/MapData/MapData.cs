@@ -250,6 +250,7 @@ namespace BP.Sys
 
                 map.AddTBFloat(MapDataAttr.FrmW, 900, "FrmW", true, true);
                 map.AddTBFloat(MapDataAttr.FrmH, 1200, "FrmH", true, true);
+
                 this._enMap = map;
                 return this._enMap;
             }

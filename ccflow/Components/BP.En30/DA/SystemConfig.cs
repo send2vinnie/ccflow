@@ -1371,6 +1371,25 @@ namespace BP
             }
         }
 
+        public static string AppCenterDBSubstringStr
+        {
+            get
+            {
+                switch (SystemConfig.AppCenterDBType)
+                {
+                    case BP.DA.DBType.Oracle9i:
+                        return "substr";
+                    case BP.DA.DBType.SQL2000:
+                        return "substring";
+                    case BP.DA.DBType.Access:
+                        return "Mid";
+                    default:
+                        return "substring";
+                }
+            }
+        }
+
+
         public static string AppCenterDBAddStringStr
         {
             get

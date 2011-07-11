@@ -93,6 +93,13 @@ namespace BP.Sys
         /// 显示格式
         /// </summary>
         public const string DtlShowModel = "DtlShowModel";
+
+        public const string X = "X";
+        public const string Y = "Y";
+        public const string H = "H";
+        public const string W = "W";
+        public const string FrmW = "FrmW";
+        public const string FrmH = "FrmH";
     }
     /// <summary>
     /// 明细
@@ -321,6 +328,7 @@ namespace BP.Sys
         public Map GenerMap()
         {
             bool isdebug = SystemConfig.IsDebug;
+
             if (isdebug == false)
             {
                 Map m = BP.DA.Cash.GetMap(this.No);
@@ -396,7 +404,6 @@ namespace BP.Sys
                 map.AddBoolean(MapDtlAttr.IsDelete, true, "IsDelete", false, false);
                 map.AddBoolean(MapDtlAttr.IsUpdate, true, "IsUpdate", false, false);
 
-
                 map.AddBoolean(MapDtlAttr.IsEnablePass, false, "是否启用通过审核功能?", false, false);
 
 
@@ -406,15 +413,17 @@ namespace BP.Sys
                 map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true,
                     MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
 
-                map.AddTBInt(MapDtlAttr.DtlShowModel, 0, "DtlShowModel", false, false);
+                map.AddDDLSysEnum(MapDtlAttr.DtlShowModel, 0, "显示格式", true, true,
+               MapDtlAttr.DtlShowModel, "@0=表格@1=卡片");
 
+                map.AddTBFloat(MapDtlAttr.X, 5, "X", true, false);
+                map.AddTBFloat(MapDtlAttr.Y, 5, "Y", false, false);
 
+                map.AddTBFloat(MapDtlAttr.H, 150, "H", true, false);
+                map.AddTBFloat(MapDtlAttr.W, 200, "W", false, false);
 
-                map.AddTBFloat(FrmImgAttr.X, 5, "X", true, false);
-                map.AddTBFloat(FrmImgAttr.Y, 5, "Y", false, false);
-                map.AddTBFloat(FrmImgAttr.H, 150, "H", true, false);
-                map.AddTBFloat(FrmImgAttr.W, 200, "W", false, false);
-
+                map.AddTBFloat(MapDtlAttr.FrmW, 900, "FrmW", true, true);
+                map.AddTBFloat(MapDtlAttr.FrmH, 1200, "FrmH", true, true);
                 
                 this._enMap = map;
                 return this._enMap;
@@ -446,6 +455,20 @@ namespace BP.Sys
             get
             {
                 return this.GetValFloatByKey(FrmImgAttr.H);
+            }
+        }
+        public float FrmW
+        {
+            get
+            {
+                return this.GetValFloatByKey(MapDtlAttr.FrmW);
+            }
+        }
+        public float FrmH
+        {
+            get
+            {
+                return this.GetValFloatByKey(MapDtlAttr.FrmH);
             }
         }
         /// <summary>

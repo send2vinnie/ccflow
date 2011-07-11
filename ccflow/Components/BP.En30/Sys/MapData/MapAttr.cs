@@ -118,6 +118,11 @@ namespace BP.Sys
         /// y
         /// </summary>
         public const string Y = "Y";
+        /// <summary>
+        /// TabIdx
+        /// </summary>
+        public const string TabIdx = "TabIdx";
+
     }
     /// <summary>
     /// 实体属性
@@ -854,6 +859,20 @@ namespace BP.Sys
             }
         }
         /// <summary>
+        /// TabIdx
+        /// </summary>
+        public int TabIdx
+        {
+            get
+            {
+                return this.GetValIntByKey(MapAttrAttr.TabIdx);
+            }
+            set
+            {
+                this.SetValByKey(MapAttrAttr.TabIdx, value);
+            }
+        }
+        /// <summary>
         /// 序号
         /// </summary>
         public int IDX
@@ -963,6 +982,8 @@ namespace BP.Sys
                 map.AddTBInt(MapAttrAttr.IDX, 0, "序号", true, false);
                 map.AddTBInt(MapAttrAttr.GroupID, 0, "GroupID", true, false);
 
+          //      map.AddTBInt(MapAttrAttr.TabIdx, 0, "Tab顺序键", true, false);
+
                 // 是否是签字，操作员字段有效。2010-09-23 增加。
                 map.AddTBInt(MapAttrAttr.IsSigan, 0, "签字？", true, false);
 
@@ -999,6 +1020,17 @@ namespace BP.Sys
             }
             return "检查成功！！！";
         }
+
+        public void DoDownTabIdx()
+        {
+            this.DoOrderDown(MapAttrAttr.FK_MapData, this.FK_MapData, MapAttrAttr.IDX);
+        }
+        public void DoUpTabIdx()
+        {
+            this.DoOrderUp(MapAttrAttr.FK_MapData, this.FK_MapData, MapAttrAttr.IDX);
+        }
+      
+
         public void DoUp()
         {
             this.DoOrderUp(MapAttrAttr.GroupID, this.GroupID.ToString(), MapAttrAttr.IDX);
@@ -1144,7 +1176,7 @@ namespace BP.Sys
         {
             QueryObject qo = new QueryObject(this);
             qo.AddWhere(MapAttrAttr.FK_MapData, fk_map);
-            qo.addOrderBy(MapAttrAttr.GroupID,MapAttrAttr.IDX);
+            qo.addOrderBy(MapAttrAttr.IDX);
             qo.DoQuery();
         }
         public int SearchMapAttrsYesVisable(string fk_map)

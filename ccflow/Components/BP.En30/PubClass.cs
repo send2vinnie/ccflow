@@ -469,7 +469,14 @@ namespace BP
             FrmLines lines = new FrmLines();
             lines.Delete(FrmLabAttr.FK_MapData, fk_mapdata);
 
-            MapData md = new MapData(fk_mapdata);
+            MapData md = new MapData();
+            md.No = fk_mapdata;
+            if (md.RetrieveFromDBSources() == 0)
+            {
+                MapDtl mdtl = new MapDtl(fk_mapdata);
+                md.Copy(mdtl);
+            }
+
             MapAttrs mattrs = new MapAttrs(fk_mapdata);
             GroupFields gfs = new GroupFields(fk_mapdata);
 
@@ -1057,26 +1064,56 @@ namespace BP
             //DA.Log.DefaultLogWriteLine(LogType.Error,msg.Replace("<br>@","\n") ); // 
             return sql;
         }
-		public static string DBRpt(DBLevel level)
-		{
-			// 取出全部的实体
-			ArrayList als = ClassFactory.GetObjects("BP.En.Entities");
-			string msg="";
-			foreach(object obj in als)
-			{
-				Entities ens = (Entities)obj;
+        public static string DBRpt(DBLevel level)
+        {
+            // 取出全部的实体
+            ArrayList als = ClassFactory.GetObjects("BP.En.Entities");
+            string msg = "";
+            foreach (object obj in als)
+            {
+                Entities ens = (Entities)obj;
                 try
                 {
                     msg += DBRpt1(level, ens);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     msg += "<hr>" + ens.ToString() + "体检失败:" + ex.Message;
                 }
-			}
-			//DA.Log.DefaultLogWriteLine(LogType.Error,msg.Replace("<br>@","\n") ); // 
-			return msg;
-		}
+            }
+
+            MapDatas mds = new MapDatas();
+            mds.RetrieveAllFromDBSource();
+            foreach (MapData md in mds)
+            {
+                try
+                {
+                    md.HisGEEn.CheckPhysicsTable();
+                    PubClass.AddComment(md.HisGEEn);
+                }
+                catch (Exception ex)
+                {
+                    msg += "<hr>" + md.No + "体检失败:" + ex.Message;
+                }
+            }
+
+            MapDtls dtls = new MapDtls();
+            dtls.RetrieveAllFromDBSource();
+            foreach (MapDtl dtl in dtls)
+            {
+                try
+                {
+                    dtl.HisGEDtl.CheckPhysicsTable();
+                    PubClass.AddComment(dtl.HisGEDtl);
+                }
+                catch (Exception ex)
+                {
+                    msg += "<hr>" + dtl.No + "体检失败:" + ex.Message;
+                }
+            }
+
+            return msg;
+        }
         private static void RepleaceFieldDesc(Entity en)
         {
             string tableId = DBAccess.RunSQLReturnVal("select ID from sysobjects WHERE name='" + en.EnMap.PhysicsTable + "' AND xtype='U'").ToString();
@@ -1149,24 +1186,27 @@ namespace BP
                     continue;
                 switch (attr.MyFieldType)
                 {
+                    case FieldType.PK:
+                        en.RunSQL("comment on column  " + en.EnMap.PhysicsTable + "." + attr.Field + " IS '" + attr.Desc + " - 主键'");
+                        break;
                     case FieldType.Normal:
-                        en.RunSQL("comment on table " + en.EnMap.PhysicsTable + "." + attr.Field + " IS '" + en.EnDesc + "'");
+                        en.RunSQL("comment on column  " + en.EnMap.PhysicsTable + "." + attr.Field + " IS '" + attr.Desc + "'");
                         break;
                     case FieldType.Enum:
                         ses = new SysEnums(attr.Key, attr.UITag);
-                        en.RunSQL("comment on table " + en.EnMap.PhysicsTable + "." + attr.Field + " IS '" + en.EnDesc + ",枚举类型:" + ses.ToDesc() + "'");
+                        en.RunSQL("comment on column  " + en.EnMap.PhysicsTable + "." + attr.Field + " IS '" + attr.Desc + ",枚举类型:" + ses.ToDesc() + "'");
                         break;
                     case FieldType.PKEnum:
                         ses = new SysEnums(attr.Key, attr.UITag);
-                        en.RunSQL("comment on table " + en.EnMap.PhysicsTable + "." + attr.Field + " IS '" + en.EnDesc + ", 主键:枚举类型:" + ses.ToDesc() + "'");
+                        en.RunSQL("comment on column  " + en.EnMap.PhysicsTable + "." + attr.Field + " IS '" + attr.Desc + ", 主键:枚举类型:" + ses.ToDesc() + "'");
                         break;
                     case FieldType.FK:
                         Entity myen = attr.HisFKEn; // ClassFactory.GetEns(attr.UIBindKey).GetNewEntity;
-                        en.RunSQL("comment on table " + en.EnMap.PhysicsTable + "." + attr.Field + " IS " + en.EnDesc + ", 外键:对应物理表:" + myen.EnMap.PhysicsTable + ",表描述:" + myen.EnDesc);
+                        en.RunSQL("comment on column  " + en.EnMap.PhysicsTable + "." + attr.Field + " IS " + attr.Desc + ", 外键:对应物理表:" + myen.EnMap.PhysicsTable + ",表描述:" + myen.EnDesc);
                         break;
                     case FieldType.PKFK:
                         Entity myen1 = attr.HisFKEn; // ClassFactory.GetEns(attr.UIBindKey).GetNewEntity;
-                        en.RunSQL("comment on table " + en.EnMap.PhysicsTable + "." + attr.Field + " IS '" + en.EnDesc + ", 主外键:对应物理表:" + myen1.EnMap.PhysicsTable + ",表描述:" + myen1.EnDesc + "'");
+                        en.RunSQL("comment on column  " + en.EnMap.PhysicsTable + "." + attr.Field + " IS '" + attr.Desc + ", 主外键:对应物理表:" + myen1.EnMap.PhysicsTable + ",表描述:" + myen1.EnDesc + "'");
                         break;
                     default:
                         break;
@@ -1274,17 +1314,20 @@ namespace BP
 
             // 检测物理表的字段。
             en.CheckPhysicsTable();
+            
+            PubClass.AddComment(en);
+
             string msg = "";
-            if (level == DBLevel.High)
-            {
-                try
-                {
-                    DBAccess.RunSQL("update pub_emp set AuthorizedAgent='1' WHERE AuthorizedAgent='0' ");
-                }
-                catch
-                {
-                }
-            }
+            //if (level == DBLevel.High)
+            //{
+            //    try
+            //    {
+            //        DBAccess.RunSQL("update pub_emp set AuthorizedAgent='1' WHERE AuthorizedAgent='0' ");
+            //    }
+            //    catch
+            //    {
+            //    }
+            //}
             string table = en.EnMap.PhysicsTable;
             Attrs fkAttrs = en.EnMap.HisFKAttrs;
             if (fkAttrs.Count == 0)
