@@ -279,7 +279,7 @@ namespace FreeFrm.Web
             return Connector.ToXml(ds);
         }
         [WebMethod]
-        public string NewFields(string keyOfEn, string name, string fk_mapdata)
+        public string NewFields_del(string keyOfEn, string name, string fk_mapdata)
         {
             return null;
             try
@@ -288,9 +288,9 @@ namespace FreeFrm.Web
                 DBAccess.RunSQL(sql);
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return "字段已存在，请用其它的字段名。"+ex.Message;
+                return "字段已存在，请用其它的字段名。" + ex.Message;
             }
         }
         [WebMethod]
@@ -407,7 +407,6 @@ namespace FreeFrm.Web
             // MapDtl
             BP.Sys.MapDtls dtls = new BP.Sys.MapDtls(fk_mapdata);
             ds.Tables.Add(dtls.ToDataTableField("Sys_MapDtl"));
-             
 
             // Map2m
             BP.Sys.MapM2Ms m2ms = new BP.Sys.MapM2Ms(fk_mapdata);
@@ -428,9 +427,20 @@ namespace FreeFrm.Web
 
             // MapData
             BP.Sys.MapDatas mdatas = new BP.Sys.MapDatas();
-            mdatas.Retrieve(MapDataAttr.No, fk_mapdata);
-            DataTable DTmdatas = mdatas.ToDataTableField("Sys_MapData");
-            ds.Tables.Add(DTmdatas);
+            int i=mdatas.Retrieve(MapDataAttr.No, fk_mapdata);
+            if (i != 0)
+            {
+                DataTable DTmdatas = mdatas.ToDataTableField("Sys_MapData");
+                ds.Tables.Add(DTmdatas);
+            }
+            else
+            {
+                BP.Sys.MapDtls mdtls = new BP.Sys.MapDtls();
+                mdtls.Retrieve(MapDtlAttr.No, fk_mapdata);
+
+                DataTable DTmdtls = mdtls.ToDataTableField("Sys_MapDataDtl");
+                ds.Tables.Add(DTmdtls);
+            }
 
             //// MapData
             //BP.Sys.MapDatas enData = new BP.Sys.MapDatas();
@@ -637,8 +647,8 @@ namespace FreeFrm.Web
 
             // FrmImgAth
             BP.Sys.FrmImgAths imgAths = new BP.Sys.FrmImgAths();
-            imgAths.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             imgAths.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            imgAths.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             i = 0;
             foreach (FrmImgAth ath in imgAths)
             {
