@@ -55,12 +55,10 @@ namespace BP.DA
             {
                 if (str == null || str == "")
                     continue;
-
                 string[] mystr = str.Split('=');
                 this.SetVal(mystr[0], mystr[1]);
             }
         }
-
 
         public void SetVal(string key, string val)
         {
