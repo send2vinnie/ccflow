@@ -697,16 +697,16 @@ namespace BP.Web.UC
             if (recNum <= pageSize)
                 return 1;
 
+            string appPath = this.Request.ApplicationPath;
             int myidx = 0;
             if (PageIdx <= 1)
             {
-                this.Add("||- |-");
-                //  this.Add("&nbsp;<img src='../Images/Page_Up.gif' border=1 />");
+                this.Add("<img src='" + appPath + "/Images/Arr/LeftEnd.png" + "' border=0/><img src='" + appPath + "/Images/Arr/Left.png" + "' border=0/>");
             }
             else
             {
                 myidx = PageIdx - 1;
-                this.Add("<a href='" + url + "&PageIdx=1' >||-</a> <a href='" + url + "&PageIdx=" + myidx + "'>|-</a>");
+                this.Add("<a href='" + url + "&PageIdx=1' ><img src='" + appPath + "/Images/Arr/LeftEnd.png" + "' border=0/></a> <a href='" + url + "&PageIdx=" + myidx + "'><img src='" + appPath + "/Images/Arr/Left.png" + "' border=0/></a>");
             }
 
             int pageNum = 0;
@@ -744,11 +744,11 @@ namespace BP.Web.UC
             if (PageIdx != pageNum)
             {
                 myidx = PageIdx + 1;
-                this.Add("&nbsp;<a href='" + url + "&PageIdx=" + myidx + "'>-|</a>&nbsp;<a href='" + url + "&PageIdx=" + pageNum + "'>-||</a>&nbsp;&nbsp;Page:" + PageIdx + "/" + pageNum + " Total:" + recNum + ".");
+                this.Add("&nbsp;<a href='" + url + "&PageIdx=" + myidx + "'><img src='" + appPath + "/Images/Arr/Right.png" + "' border=0/></a>&nbsp;<a href='" + url + "&PageIdx=" + pageNum + "'><img src='" + appPath + "/Images/Arr/RightEnd.png" + "' border=0/></a>&nbsp;&nbsp;Page:" + PageIdx + "/" + pageNum + " Total:" + recNum + ".");
             }
             else
             {
-                this.Add("&nbsp;<a href='" + url + "&PageIdx=" + pageNum + "'>-||</a>&nbsp;&nbsp;Page:" + PageIdx + "/" + pageNum + " Totlal:" + recNum + ".");
+                this.Add("&nbsp;<a href='" + url + "&PageIdx=" + pageNum + "'><img src='" + appPath + "/Images/Arr/RightEnd.png" + "' border=0/></a>&nbsp;&nbsp;Page:" + PageIdx + "/" + pageNum + " Totlal:" + recNum + ".");
                 // this.Add("<img src='../Images/Page_Down.gif' border=1 />");
             }
 
