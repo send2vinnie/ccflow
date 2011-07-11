@@ -1562,7 +1562,7 @@ namespace BP.WF
                         sql += "\r\n SELECT '" + nd.NodeID + "' || '_'|| OID||'_'|| FID  AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT,SUBSTR(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
                         break;
                     default:
-                        sql += "\r\n SELECT '" + nd.NodeID + "'+'_'+CAST(OID AS varchar(10)) +'_'+CAST(FID AS VARCHAR(10)) AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT,SUBSTRING(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
+                        sql += "\r\n SELECT '" + nd.NodeID + "'+'_'+CAST(OID AS varchar(10)) +'_'+CAST(FID AS VARCHAR(10)) AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT," + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
                         break;
                 }
             }
@@ -3120,7 +3120,11 @@ namespace BP.WF
             if (this.No.Substring(0, 1) == "1")
                 this.No = "100";
 
-            this.Name = BP.Sys.Language.GetValByUserLang("NewFlow", "新建流程") + this.No; //新建流程
+         //   this.Name = BP.Sys.Language.GetValByUserLang("NewFlow", "新建流程") + this.No; //新建流程
+            if (string.IsNullOrWhiteSpace(this.Name))
+                this.Name = BP.Sys.Language.GetValByUserLang("NewFlow", "新建流程") + this.No; //新建流程
+
+
             this.Save();
 
             #region 删除有可能存在的历史数据.
