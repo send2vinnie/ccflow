@@ -170,6 +170,7 @@ namespace BP.Web.WF
                     case "AutoTo": // Ö´ÐÐÊÚÈ¨¡£
                         BP.WF.Port.WFEmp au = new BP.WF.Port.WFEmp();
                         au.No = WebUser.No;
+                        au.RetrieveFromDBSources();
                         au.AuthorDate = BP.DA.DataType.CurrentData;
                         au.Author = this.FK_Emp;
                         au.AuthorIsOK = true;

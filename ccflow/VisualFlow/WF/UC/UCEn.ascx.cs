@@ -1011,6 +1011,8 @@ namespace BP.Web.Comm.UC.WF
         #endregion
 
         #region 输出自由格式的表单.
+
+         
     
         public string FK_MapData = null;
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
@@ -1100,7 +1102,7 @@ namespace BP.Web.Comm.UC.WF
                                 {
                                     if (attr.UIRows == 1)
                                     {
-                                        tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                        tb.Text = en.GetValStringByKey(attr.KeyOfEn);
                                         tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 15px;padding: 0px;margin: 0px;";
                                         tb.CssClass = "";
                                         this.Add(tb);
