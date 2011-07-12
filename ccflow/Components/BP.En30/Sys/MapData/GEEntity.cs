@@ -40,10 +40,11 @@ namespace BP.Sys
         /// </summary>
         /// <param name="nodeid">½ÚµãID</param>
         /// <param name="_oid">OID</param>
-        public GEEntity(string fk_mapdtl, string pk)
+        public GEEntity(string fk_mapdata, object pk)
         {
-            this.FK_MapData = fk_mapdtl;
+            this.FK_MapData = fk_mapdata;
             this.PKVal = pk;
+            this.Retrieve();
         }
         #endregion
 
@@ -74,7 +75,6 @@ namespace BP.Sys
             {
                 if (this.FK_MapData == null)
                     return new GEEntitys();
-
                 return new GEEntitys(this.FK_MapData);
             }
         }

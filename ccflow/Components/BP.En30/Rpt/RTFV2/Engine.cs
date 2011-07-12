@@ -415,7 +415,7 @@ namespace BP.Rpt.RTF
         public void MakeDoc(string cfile, string replaceVal)
         {
             string file = PubClass.GenerTempFileName("doc");
-            this.MakeDoc(cfile, SystemConfig.PathOfTemp, file,replaceVal, true);
+            this.MakeDoc(cfile, SystemConfig.PathOfTemp, file, replaceVal, true);
         }
         public string ensStrs = "";
         /// <summary>
@@ -429,12 +429,29 @@ namespace BP.Rpt.RTF
         {
             string str = Cash.GetBillStr(cfile, false).Substring(0);
 
-            //string ensStrs = "";
-            //foreach (Entity en in this.HisEns)
-            //ensStrs += en.ToString.ToString(); 
+            if (this.HisEns.Count == 0)
+                if (this.HisGEEntity == null)
+                    throw new Exception("@您没有为报表设置数据源...");
+
+            this.ensStrs = "";
+            if (this.HisEns.Count != 0)
+            {
+                foreach (Entity en in this.HisEns)
+                    ensStrs += en.ToString();
+            }
+            else
+            {
+                ensStrs = this.HisGEEntity.ToString();
+            }
+
 
             string error = "";
-            string[] paras = Cash.GetBillParas(cfile, ensStrs, this.HisGEEntity);
+            string[] paras = null;
+
+            if (this.HisGEEntity != null)
+                Cash.GetBillParas(cfile, ensStrs, this.HisGEEntity);
+            else
+                Cash.GetBillParas(cfile, ensStrs, this.HisEns);
 
             this.TempFilePath = path + file;
             try

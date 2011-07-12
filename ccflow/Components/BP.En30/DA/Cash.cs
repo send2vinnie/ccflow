@@ -55,25 +55,50 @@ namespace BP.DA
                     throw new Exception("@读取单据模板时出现错误。cfile=" + cfile + " @Ex=" + ex.Message);
                 }
                 _Bill_Cash[cfile] = val;
-
             }
             return val.Substring(0);
         }
-        public static string[] GetBillParas(string cfile, string ensStrs,Entity en)
+        public static string[] GetBillParas(string cfile, string ensStrs, Entities ens)
+        {
+            string[] paras = Bill_Cash[cfile + "Para"] as string[];
+            if (paras != null)
+                return paras;
+
+            Attrs attrs = new Attrs();
+            foreach (Entity en in ens)
+            {
+                string perKey = en.ToString();
+
+                Attrs enAttrs = en.EnMap.Attrs;
+                foreach (Attr attr in  enAttrs)
+                {
+                    Attr attrN = new Attr();
+                    attrN.Key = perKey + "." + attr.Key;
+                    attrN.MyDataType = attr.MyDataType;
+                    attrN.MyFieldType = attr.MyFieldType;
+                    attrN.UIBindKey = attr.UIBindKey;
+                    attrN.Field = attr.Field;
+                    attrs.Add(attrN);
+                }
+            }
+
+            paras = Cash.GetBillParas_Gener(cfile, attrs);
+            _Bill_Cash[cfile + "Para"] = paras;
+            return paras;
+        }
+        public static string[] GetBillParas(string cfile, string ensStrs, Entity en)
         {
             string[] paras = Bill_Cash[cfile + "Para"] as string[];
             if (paras != null)
                 return paras;
 
             paras = Cash.GetBillParas_Gener(cfile, en.EnMap.Attrs);
-
             _Bill_Cash[cfile + "Para"] = paras;
             return paras;
         }
         public static string[] GetBillParas_Gener(string cfile, Attrs attrs)
         {
           //  Attrs attrs = en.EnMap.Attrs;
-
             string[] paras = new string[300];
             string Billstr = Cash.GetBillStr(cfile, true);
             char[] chars = Billstr.ToCharArray();
