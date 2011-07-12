@@ -159,9 +159,16 @@ namespace BP.WF
         /// <param name="fk_frm">表单</param>
         public FrmNode(int fk_node, string fk_frm)
         {
+            
             int i = this.Retrieve(FrmNodeAttr.FK_Node, fk_node, FrmNodeAttr.FK_Frm, fk_frm);
             if (i == 0)
-                throw new Exception("@表单关联信息已被删除");
+            {
+                this.IsPrint = false;
+                this.IsReadonly = false;
+                return;
+
+                throw new Exception("@表单关联信息已被删除。");
+            }
         }
         /// <summary>
         /// 重写基类方法

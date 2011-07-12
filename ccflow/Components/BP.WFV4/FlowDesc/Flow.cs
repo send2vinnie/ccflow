@@ -541,10 +541,10 @@ namespace BP.WF
                 {
                     foreach (Node cND in nd.HisToNodes)
                     {
-                        string sql = "SELECT COUNT(*) FROM WF_Cond WHERE NodeID='"+nd.NodeID+"' AND ToNodeID='"+cND.NodeID+"'";
+                        string sql = "SELECT COUNT(*) FROM WF_Cond WHERE NodeID='" + nd.NodeID + "' AND ToNodeID='" + cND.NodeID + "'";
                         if (DBAccess.RunSQLReturnValInt(sql) == 0)
                         {
-                            msg += "<br><font color=red>@从节点{"+nd.Name+"}到节点{"+cND.Name+"},没有设置方向条件，请在方向线上点右键设置方向条件。</font>";
+                            msg += "<br><font color=red>@从节点{" + nd.Name + "}到节点{" + cND.Name + "},没有设置方向条件，请在方向线上点右键设置方向条件。</font>";
                         }
                     }
                 }
@@ -601,6 +601,8 @@ namespace BP.WF
             catch
             {
             }
+
+            Node.CheckFlow(this);
             return msg;
         }
 

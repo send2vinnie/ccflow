@@ -502,6 +502,7 @@ namespace BP.WF
                 Directions dirs = new Directions(nd.NodeID);
                 foreach (Direction dir in dirs)
                     strs += "@" + dir.ToNode;
+
                 nd.HisToNDs = strs;
 
                 // ЕЅОн
