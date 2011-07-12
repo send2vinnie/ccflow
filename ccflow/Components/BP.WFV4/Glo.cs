@@ -223,6 +223,7 @@ namespace BP.WF
 
             #region 4, 创建视图与系统函数
             sqlscript = BP.DA.DataType.ReadTextFile(SystemConfig.PathOfData + "\\Install\\SQLScript\\CreateViewSQL.sql");
+
             BP.DA.DBAccess.RunSQLs(sqlscript);
             #endregion 创建视图与系统函数
         }
