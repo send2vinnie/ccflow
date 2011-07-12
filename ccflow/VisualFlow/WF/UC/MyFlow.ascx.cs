@@ -829,7 +829,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     myfrm.Name = wk.EnDesc;
                     frms.AddEntity(myfrm);
 
-
                     #region 载入相关文件.
                     this.Page.RegisterClientScriptBlock("sg",
        "<link href='./Style/Frm/Tab.css' rel='stylesheet' type='text/css' />");
@@ -858,7 +857,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
                     foreach (Frm frm in frms)
                     {
+                     
                         FrmNode fn = new FrmNode(nd.NodeID, frm.No);
+
                         MapData md = new MapData(frm.No);
 
                         this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;' >");

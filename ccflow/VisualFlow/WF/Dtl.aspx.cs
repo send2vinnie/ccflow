@@ -90,6 +90,20 @@ public partial class Comm_Dtl : WebPage
             ViewState["DtlCount"] = value;
         }
     }
+    public int IsReadonly
+    {
+        get
+        {
+            try
+            {
+                return int.Parse(this.Request.QueryString["IsReadonly"]);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.RegisterClientScriptBlock("s",
@@ -155,7 +169,7 @@ public partial class Comm_Dtl : WebPage
         GEDtls dtls = new GEDtls(this.EnsName);
 
         #region 处理设计时自动填充明细表.
-        if (this.Key != null)
+        if (this.Key != null && this.IsReadonly==0)
         {
             MapExt me = new MapExt(this.FK_MapExt);
             string[] strs = me.Tag1.Split('$');
@@ -195,9 +209,8 @@ public partial class Comm_Dtl : WebPage
         }
         #endregion 处理设计时自动填充明细表.
 
-
         #region 生成标题
-        if (this.IsWap == 1)
+        if (this.IsWap == 1 && this.IsReadonly == 0)
         {
             this.Pub1.AddTable();
             this.Pub1.AddTR();
@@ -213,7 +226,11 @@ public partial class Comm_Dtl : WebPage
         if (mdtl.IsShowTitle)
         {
             this.Pub1.AddTR();
+            if (this.IsReadonly==0 && mdtl.IsDelete==true)
             this.Pub1.Add("<TD class='FDesc'><img src='./../Images/Btn/Table.gif' onclick=\"return DtlOpt('" + this.RefPKVal + "','" + this.EnsName + "');\" border=0/></TD>");
+            else
+                this.Pub1.Add("<TD class='FDesc'></TD>");
+
 
             foreach (MapAttr attr in attrs)
             {
@@ -228,7 +245,7 @@ public partial class Comm_Dtl : WebPage
                 this.Pub1.AddTDTitle(attr.Name);// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
             }
 
-            if (mdtl.IsDelete)
+            if (mdtl.IsDelete && this.IsReadonly==0)
             {
                 this.Pub1.Add("<TD class='FDesc' nowarp=true ><img src='./../Images/Btn/Save.gif' border=0 onclick='SaveDtlData();' ></TD>");
             }
@@ -282,11 +299,11 @@ public partial class Comm_Dtl : WebPage
             int count = qo.GetCount();
             this.DtlCount = count;
             this.Pub2.Clear();
-            this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap);
+            this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap+"&IsReadonly="+this.IsReadonly);
             int num = qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
 
             mdtl.RowsOfList = mdtl.RowsOfList + this.addRowNum;
-            if (mdtl.IsInsert)
+            if (mdtl.IsInsert && this.IsReadonly==0 )
             {
                 int dtlCount = dtls.Count;
                 for (int i = 0; i < mdtl.RowsOfList - dtlCount; i++)
@@ -342,7 +359,7 @@ public partial class Comm_Dtl : WebPage
             ids += dtl.OID + ",";
             this.Pub1.AddTR();
 
-            if (dtlsNum == idx && mdtl.IsShowIdx && mdtl.IsInsert)
+            if (dtlsNum == idx && mdtl.IsShowIdx && mdtl.IsInsert &&  this.IsReadonly==0 )
             {
                 DDL myAdd = new DDL();
                 myAdd.AutoPostBack = true;
@@ -469,7 +486,6 @@ public partial class Comm_Dtl : WebPage
                                 DDL ddl1 = new DDL();
                                 ddl1.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
                                 cb.Attributes["onchange"] = "isChange= true;";
-
                                 try
                                 {
                                     EntitiesNoName ens = attr.HisEntitiesNoName;
@@ -504,7 +520,7 @@ public partial class Comm_Dtl : WebPage
             }
             #endregion 增加rows
 
-            if (mdtl.IsDelete && dtl.OID >= 100)
+            if (mdtl.IsDelete && dtl.OID >= 100 && this.IsReadonly==0)
             {
                 this.Pub1.Add("<TD border=0><img src='../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','" + this.EnsName + "','" + this.RefPKVal + "','" + this.PageIdx + "')\" /></TD>");
             }
@@ -515,49 +531,52 @@ public partial class Comm_Dtl : WebPage
             this.Pub1.AddTREnd();
 
             #region 拓展属性
-            MapExts mes = new MapExts(this.EnsName);
-            if (mes.Count != 0)
+            if (this.IsReadonly == 0)
             {
-                this.Page.RegisterClientScriptBlock("s81",
-              "<script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' ></script>");
-
-                this.Page.RegisterClientScriptBlock("b81",
-             "<script language='JavaScript' src='./Scripts/MapExt.js' ></script>");
-                this.Pub1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
-
-                foreach (BP.Sys.GEDtl mydtl in dtls)
+                MapExts mes = new MapExts(this.EnsName);
+                if (mes.Count != 0)
                 {
-                    //ddl.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
-                    foreach (MapExt me in mes)
-                    {
-                        switch (me.ExtType)
-                        {
-                            case MapExtXmlList.ActiveDDL:
-                                DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + mydtl.OID);
-                                if (ddlPerant == null)
-                                    continue;
-                                //  DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
-                                //string ddlP = "Pub1_DDL_"+me.AttrOfOper+"_"+mydtl.OID;
-                                string ddlC = "Pub1_DDL_" + me.AttrsOfActive + "_" + mydtl.OID;
-                                ddlPerant.Attributes["onchange"] = " isChange=true; DDLAnsc(this.value, \'" + ddlC + "\', \'" + me.MyPK + "\')";
-                                break;
-                            case MapExtXmlList.FullCtrl: // 自动填充.
-                                TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
-                                if (tbAuto == null)
-                                    continue;
-                                tbAuto.Attributes["onkeyup"] = " isChange=true; DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
-                                tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
-                                break;
-                            case MapExtXmlList.InputCheck:
-                                break;
-                            case MapExtXmlList.PopVal: //弹出窗.
-                                TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
-                                tb.Attributes["ondblclick"] = " isChange=true; ReturnVal(this,'" + me.Doc + "','sd');";
-                                break;
-                            default:
-                                break;
-                        }
+                    this.Page.RegisterClientScriptBlock("s81",
+                  "<script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' ></script>");
 
+                    this.Page.RegisterClientScriptBlock("b81",
+                 "<script language='JavaScript' src='./Scripts/MapExt.js' ></script>");
+                    this.Pub1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
+
+                    foreach (BP.Sys.GEDtl mydtl in dtls)
+                    {
+                        //ddl.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
+                        foreach (MapExt me in mes)
+                        {
+                            switch (me.ExtType)
+                            {
+                                case MapExtXmlList.ActiveDDL:
+                                    DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + mydtl.OID);
+                                    if (ddlPerant == null)
+                                        continue;
+                                    //  DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
+                                    //string ddlP = "Pub1_DDL_"+me.AttrOfOper+"_"+mydtl.OID;
+                                    string ddlC = "Pub1_DDL_" + me.AttrsOfActive + "_" + mydtl.OID;
+                                    ddlPerant.Attributes["onchange"] = " isChange=true; DDLAnsc(this.value, \'" + ddlC + "\', \'" + me.MyPK + "\')";
+                                    break;
+                                case MapExtXmlList.FullCtrl: // 自动填充.
+                                    TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
+                                    if (tbAuto == null)
+                                        continue;
+                                    tbAuto.Attributes["onkeyup"] = " isChange=true; DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                                    tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
+                                    break;
+                                case MapExtXmlList.InputCheck:
+                                    break;
+                                case MapExtXmlList.PopVal: //弹出窗.
+                                    TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
+                                    tb.Attributes["ondblclick"] = " isChange=true; ReturnVal(this,'" + me.Doc + "','sd');";
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                        }
                     }
                 }
             }
@@ -628,49 +647,52 @@ public partial class Comm_Dtl : WebPage
         //this.Pub2.Add(btn);
 
         #region 生成 自动计算行
-        // 输出自动计算公式
-        this.Response.Write("\n<script language='JavaScript' >");
-        foreach (GEDtl dtl in dtls)
+        if (this.IsReadonly == 0)
         {
-            string top = "\n function C" + dtl.OID + "() { \n ";
+            // 输出自动计算公式
+            this.Response.Write("\n<script language='JavaScript' >");
+            foreach (GEDtl dtl in dtls)
+            {
+                string top = "\n function C" + dtl.OID + "() { \n ";
 
-            string script = "";
+                string script = "";
+                foreach (MapAttr attr in attrs)
+                {
+                    if (attr.UIVisible == false)
+                        continue;
+
+                    if (attr.IsNum == false)
+                        continue;
+
+                    if (attr.LGType != FieldTypeS.Normal)
+                        continue;
+
+                    if (attr.AutoFullDoc != "")
+                    {
+                        script += this.GenerAutoFull(dtl.OID.ToString(), attrs, attr);
+                    }
+                }
+                string end = " \n  } ";
+                this.Response.Write(top + script + end);
+            }
+            this.Response.Write("\n</script>");
+
+            // 输出合计算计公式
             foreach (MapAttr attr in attrs)
             {
                 if (attr.UIVisible == false)
                     continue;
 
-                if (attr.IsNum == false)
-                    continue;
-
                 if (attr.LGType != FieldTypeS.Normal)
                     continue;
 
-                if (attr.AutoFullDoc != "")
-                {
-                    script += this.GenerAutoFull(dtl.OID.ToString(), attrs, attr);
-                }
+                if (attr.IsNum == false)
+                    continue;
+
+                string top = "\n<script language='JavaScript'> function C" + attr.KeyOfEn + "() { \n ";
+                string end = "\n  isChange =true ;  } </script>";
+                this.Response.Write(top + this.GenerSum(attr, dtls) + " ; \t\n" + end);
             }
-            string end = " \n  } ";
-            this.Response.Write(top + script + end);
-        }
-        this.Response.Write("\n</script>");
-
-        // 输出合计算计公式
-        foreach (MapAttr attr in attrs)
-        {
-            if (attr.UIVisible == false)
-                continue;
-
-            if (attr.LGType != FieldTypeS.Normal)
-                continue;
-
-            if (attr.IsNum == false)
-                continue;
-
-            string top = "\n<script language='JavaScript'> function C" + attr.KeyOfEn + "() { \n ";
-            string end = "\n  isChange =true ;  } </script>";
-            this.Response.Write(top + this.GenerSum(attr, dtls) + " ; \t\n" + end);
         }
         #endregion
     }

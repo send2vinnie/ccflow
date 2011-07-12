@@ -91,6 +91,7 @@ public partial class WF_Frm : System.Web.UI.Page
         }
 
         this.Btn_Save.Visible = !this.IsReadonly;
+
         this.Btn_Save.Enabled = !this.IsReadonly;
 
         this.Btn_Print.Visible = this.IsPrint;

@@ -49,7 +49,7 @@ public partial class WF_DtlFrm : WebPage
             return false;
         }
     }
-     
+
     protected void Page_Load(object sender, EventArgs e)
     {
         #region 载入相关文件.
@@ -171,10 +171,15 @@ public partial class WF_DtlFrm : WebPage
 
         this.UCEn1.Add("\t\n</div>"); // end  usual2
         this.UCEn1.Add("\t\n<script type='text/javascript'>");
-        this.UCEn1.Add("\t\n  $(\"#usual2 ul\").idTabs(\"" + dtls[0].GetValStrByKey("OID") + "\");");
+
+        if (dtls.Count >= 1)
+            this.UCEn1.Add("\t\n  $(\"#usual2 ul\").idTabs(\"" + dtls[0].GetValStrByKey("OID") + "\");");
+
         this.UCEn1.Add("\t\n</script>");
+
         if (this.IsReadonly == false)
         {
+
         }
 
         #region 处理iFrom SaveDtlData。

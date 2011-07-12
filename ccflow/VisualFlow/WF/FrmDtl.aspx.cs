@@ -88,9 +88,11 @@ public partial class WF_FrmDtl : System.Web.UI.Page
         {
             this.Btn_Save.Visible = false;
             this.Btn_Save.Enabled = false;
-
-            //this.Btn_Print.Visible = false;
-            //this.Btn_Print.Enabled = false;
+        }
+        else
+        {
+            this.Btn_Save.Visible = true;
+            this.Btn_Save.Enabled = true;
         }
     }
     protected void Btn_Save_Click(object sender, EventArgs e)

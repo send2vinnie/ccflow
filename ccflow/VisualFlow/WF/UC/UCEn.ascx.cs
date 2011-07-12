@@ -1015,6 +1015,7 @@ namespace BP.Web.Comm.UC.WF
         public string FK_MapData = null;
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
+            this.IsReadonly = isReadonly;
             this.FK_MapData = enName;
             this.HisEn = en;
 
@@ -1082,6 +1083,8 @@ namespace BP.Web.Comm.UC.WF
                 tb.ID = "TB_" + attr.KeyOfEn;
                 tb.Enabled = attr.UIIsEnable;
                 tb.Attributes["tabindex"] = attr.IDX.ToString();
+                if (this.IsReadonly)
+                    tb.ReadOnly = true;
                 switch (attr.LGType)
                 {
                     case FieldTypeS.Normal:
@@ -1109,7 +1112,6 @@ namespace BP.Web.Comm.UC.WF
                                         tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left;padding: 0px;margin: 0px;";
                                         tb.CssClass = "";
                                         tb.Rows = attr.UIRows;
-                                        tb.ReadOnly = isReadonly;
                                         this.Add(tb);
                                     }
                                 }
@@ -1120,13 +1122,8 @@ namespace BP.Web.Comm.UC.WF
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker();";
 
-                                //tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
-                                //tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
-
                                 tb.Attributes["class"] = "TBcalendar";
-                                tb.ReadOnly = isReadonly;
                                 tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
-
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppDateTime:
@@ -1136,7 +1133,6 @@ namespace BP.Web.Comm.UC.WF
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
                                 tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
-                                tb.ReadOnly = isReadonly;
 
                                 this.Add(tb);
                                 break;
@@ -1151,7 +1147,6 @@ namespace BP.Web.Comm.UC.WF
                                 cb.Checked = en.GetValBooleanByKey(attr.KeyOfEn);
                                 if (cb.Enabled == true && isReadonly == true)
                                     cb.Enabled = false;
-
                                 this.Add(cb);
                                 break;
                             case BP.DA.DataType.AppDouble:
@@ -1160,23 +1155,18 @@ namespace BP.Web.Comm.UC.WF
                                 // tb.ShowType = TBType.Num;
                                 tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;word-break: keep-all;";
                                 tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                tb.ReadOnly = isReadonly;
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppMoney:
                                 //  tb.ShowType = TBType.Moneny;
                                 tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
                                 tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;";
-                                tb.ReadOnly = isReadonly;
-
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppRate:
                                 tb.ShowType = TBType.Moneny;
                                 tb.Text = en.GetValMoneyByKey(attr.KeyOfEn).ToString("0.00");
                                 tb.Attributes["style"] = "width: " + attr.GetValStrByKey("UIWidth") + "px; text-align: right; height: 19px;";
-                                tb.ReadOnly = isReadonly;
-
                                 this.Add(tb);
                                 break;
                             default:
@@ -1192,7 +1182,6 @@ namespace BP.Web.Comm.UC.WF
                             ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
                             ddle.Enabled = attr.UIIsEnable;
                             ddle.Attributes["tabindex"] = attr.IDX.ToString();
-
 
                             if (ddle.Enabled == true && isReadonly == true)
                                 ddle.Enabled = false;
@@ -1294,18 +1283,25 @@ namespace BP.Web.Comm.UC.WF
                         src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0";
                 }
 
-                this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' /></iframe>");
+                if (this.IsReadonly == true)
+                    this.Add("<iframe ID='F" + dtl.No + "'    src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' /></iframe>");
+                else
+                    this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' /></iframe>");
+
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
 
-            string js = "\t\n<script type='text/javascript' >";
-            js += "\t\n function SaveDtl(dtl) { ";
-            js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
-            js += "\t\n } ";
-            js += "\t\n</script>";
-            this.Add(js);
-
+            string js = "";
+            if (this.IsReadonly == false)
+            {
+                  js = "\t\n<script type='text/javascript' >";
+                js += "\t\n function SaveDtl(dtl) { ";
+                js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
+                js += "\t\n } ";
+                js += "\t\n</script>";
+                this.Add(js);
+            }
             #endregion 输出明细.
 
             #region 输出附件
@@ -1331,7 +1327,7 @@ namespace BP.Web.Comm.UC.WF
 
             #region 输出 img 附件
             FrmImgAths imgAths = new FrmImgAths(enName);
-            if (imgAths.Count != 0)
+            if (imgAths.Count != 0 && this.IsReadonly==false)
             {
                 js = "\t\n<script type='text/javascript' >";
                 js += "\t\n function ImgAth(url,athMyPK)";
@@ -1359,8 +1355,6 @@ namespace BP.Web.Comm.UC.WF
 
                 this.Add("\t\n</DIV>");
             }
-
-           
             #endregion 输出附件.
 
             // 处理扩展.
