@@ -9,7 +9,7 @@
 2, 增加节点退回规则.
 
   /// <summary>
-    /// 退回规则
+    /// 节点工作退回规则
     /// </summary>
     public enum ReturnRole
     {
@@ -18,15 +18,15 @@
         /// </summary>
         CanNotReturn,
         /// <summary>
-        /// 上一个节点
+        /// 只能退回上一个节点
         /// </summary>
         ReturnPreviousNode,
         /// <summary>
-        /// 以前的任意节点(默认)
+        /// 可退回以前任意节点(默认)
         /// </summary>
         ReturnPreviousAnyNodes,
         /// <summary>
-        /// 指定的节点
+        /// 可退回指定的节点
         /// </summary>
         ReturnSpecifiedNodes
     }
@@ -34,4 +34,5 @@
 3, 系统将会自动在节点上扩充列 ReturnRole. 
 
 4, 关于退回规则的描述,详细见 ReturnRole 枚举值的描述.
+   @0=不能退回@1=只能退回上一个节点@2=可退回以前任意节点@3=可退回指定的节点
   
