@@ -259,12 +259,12 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
         this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_Click);
 
-        if (nd.IsCanHidReturn)
-        {
-            this.ToolBar1.AddBtn("Btn_ReturnHid", "隐形退回");
-            this.ToolBar1.GetBtnByID("Btn_ReturnHid").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
-            this.ToolBar1.GetBtnByID("Btn_ReturnHid").Click += new EventHandler(WF_UC_ReturnWork_Click);
-        }
+        //if (nd.IsCanHidReturn)
+        //{
+        //    this.ToolBar1.AddBtn("Btn_ReturnHid", "隐形退回");
+        //    this.ToolBar1.GetBtnByID("Btn_ReturnHid").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
+        //    this.ToolBar1.GetBtnByID("Btn_ReturnHid").Click += new EventHandler(WF_UC_ReturnWork_Click);
+        //}
 
         this.ToolBar1.AddBtn("Btn_Cancel", this.ToE("Cancel", "取消"));
         this.ToolBar1.GetBtnByID("Btn_Cancel").Click += new EventHandler(WF_UC_ReturnWork_Click);
@@ -313,13 +313,48 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 if (wns.Count==0)
                     wns.GenerByWorkID(wn.HisNode.HisFlow, this.WorkID);
 
-                foreach (WorkNode mywn in wns)
-                {
-                    if (mywn.HisNode.NodeID == this.FK_Node)
-                        continue;
 
-                    this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
+                switch (nd.HisReturnRole)
+                {
+                    case ReturnRole.CanNotReturn:
+                        return;
+                    case ReturnRole.ReturnPreviousAnyNodes:
+                        int nodeId = wn.GetPreviousWorkNode().HisNode.NodeID;
+                        foreach (WorkNode mywn in wns)
+                        {
+                            if (mywn.HisNode.NodeID == nodeId)
+                                continue;
+
+                            this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
+                        }
+                        return;
+                    case ReturnRole.ReturnPreviousNode:
+                        foreach (WorkNode mywn in wns)
+                        {
+                            if (mywn.HisNode.NodeID == this.FK_Node)
+                                continue;
+                            this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
+                        }
+                        return;
+                    case ReturnRole.ReturnSpecifiedNodes:
+                        NodeReturns rnds = new NodeReturns();
+                        rnds.Retrieve(NodeReturnAttr.FK_Node, nd.NodeID);
+                        foreach (WorkNode mywn in wns)
+                        {
+                            if (mywn.HisNode.NodeID == this.FK_Node)
+                                continue;
+
+                            if (rnds.Contains(NodeReturnAttr.ReturnNode, mywn.HisNode.NodeID) == false)
+                                continue;
+
+                            this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
+                        }
+                        return;
+                    default:
+                        throw new Exception("@没有判断的退回类型。");
+
                 }
+              
 
                 this.DDL1.SetSelectItem(pwn.HisNode.NodeID);
                 this.DDL1.Enabled = true;
