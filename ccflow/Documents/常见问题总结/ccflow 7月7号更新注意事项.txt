@@ -16,6 +16,9 @@
 
 3, D:\ccflow\Documents
 
+4, 执行修复数据库:
+   http://localhost/Flow/WF/Admin/DBInstall.aspx
+
 
 其它:
 --------------------------------------------
