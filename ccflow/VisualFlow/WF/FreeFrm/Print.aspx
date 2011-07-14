@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="WinOpen.master" AutoEventWireup="true" CodeFile="Print.aspx.cs" Inherits="WF_FreeFrm_Print" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="WinOpen.master" AutoEventWireup="true"
+ CodeFile="Print.aspx.cs" Inherits="WF_FreeFrm_Print" %>
 
 <%@ Register src="../Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 

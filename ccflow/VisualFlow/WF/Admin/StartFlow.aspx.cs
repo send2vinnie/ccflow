@@ -87,7 +87,7 @@ public partial class WF_Admin_StartFlow : WebPage
         BP.Web.WebUser.SysLang = this.Lang;
 
         Flow fl = new Flow(this.FK_Flow);
-        fl.DoCheck();
+        //fl.DoCheck();
 
         int nodeid = int.Parse(this.FK_Flow + "01");
         Emps emps = new Emps();

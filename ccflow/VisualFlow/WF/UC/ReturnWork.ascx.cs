@@ -130,12 +130,12 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         this.ToolBar1.AddBtn("Btn_OK", this.ToE("OK", "确定"));
         this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
         this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_FL_Click);
-        if (nd.IsCanHidReturn)
-        {
-            this.ToolBar1.AddBtn("Btn_ReturnHid", "隐形退回");
-            this.ToolBar1.GetBtnByID("Btn_ReturnHid").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
-            this.ToolBar1.GetBtnByID("Btn_ReturnHid").Click += new EventHandler(WF_UC_ReturnWork_FL_Click);
-        }
+        //if (nd.IsCanHidReturn)
+        //{
+        //    this.ToolBar1.AddBtn("Btn_ReturnHid", "隐形退回");
+        //    this.ToolBar1.GetBtnByID("Btn_ReturnHid").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
+        //    this.ToolBar1.GetBtnByID("Btn_ReturnHid").Click += new EventHandler(WF_UC_ReturnWork_FL_Click);
+        //}
 
         WorkNodes wns = new WorkNodes();
         if (wns.Count == 0)
@@ -344,7 +344,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                             if (mywn.HisNode.NodeID == this.FK_Node)
                                 continue;
 
-                            if (rnds.Contains(NodeReturnAttr.ReturnNode, mywn.HisNode.NodeID) == false)
+                            if (rnds.Contains(NodeReturnAttr.ReturnN, mywn.HisNode.NodeID) == false)
                                 continue;
 
                             this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));

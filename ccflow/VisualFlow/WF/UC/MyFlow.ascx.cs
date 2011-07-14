@@ -67,11 +67,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return this.ToolBar1.GetBtnByID("Btn_ReturnWork");
         }
     }
-    protected Btn Btn_HandOver
+    protected Btn Btn_Shift
     {
         get
         {
-            return this.ToolBar1.GetBtnByID(BP.Web.Controls.NamesOfBtn.HandOver);
+            return this.ToolBar1.GetBtnByID(BP.Web.Controls.NamesOfBtn.Shift);
         }
     }
     #endregion
@@ -376,13 +376,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return;
         }
 
-        this.LoadPop();
-
+        #region 判断是否有workid
         string appPath = this.Request.ApplicationPath;
         BP.WF.Node currND;
         currND = this.CurrentNode;
         BP.WF.Work currWK = null;
-
         if (this.WorkID == 0)
         {
             currWK = this.New(true, currND);
@@ -395,7 +393,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.Response.Redirect(u, true);
             return;
         }
+        #endregion 判断是否有workid
 
+        #region 判断权限
         if (this.IsPostBack == false)
         {
             if (currND.IsStartNode == false && WorkerLists.CheckUserPower(this.WorkID, WebUser.No) == false)
@@ -417,97 +417,64 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.FlowMsg.AddLi("<a href='Runing" + this.PageSmall + ".aspx'><img src='./Img/Runing.gif' border=0/>" + this.ToE("OnTheWayWork", "在途工作") + "</a>");
                 this.FlowMsg.AddULEnd();
 
-                // this.UCEn1.Add("@当前的工作已经被处理，或者您没有执行此工作的权限。<br>@您可以执行如下操作。<ul><li><a href='Start.aspx'>发起新流程。</a></li><li><a href='Runing.aspx'>返回在途工作列表。</a></li></ul>");
                 this.FlowMsg.DivInfoBlockEnd();
                 return;
             }
         }
+        this.LoadPop();
+        #endregion 判断权限
+
 
         try
         {
 
-            #region 先初试化表单信息。
             if (currND == null)
                 currND = this.CurrentNode;
 
-            #endregion 先初试化表单信息。
-
             #region 增加按钮
-            this.ToolBar1.AddBtn(NamesOfBtn.Send, this.ToE("Send", "发送"));
-            this.ToolBar1.AddBtn(NamesOfBtn.Save, this.ToE("Save", "保存"));
-
-            this.Btn_Send.UseSubmitBehavior = false;
-            this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
-
-            this.Btn_Save.UseSubmitBehavior = false;
-            this.Btn_Save.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
-
-            this.ToolBar1.AddSpt("ss");
-            this.ToolBar1.AddBtn("Btn_ReturnWork", this.ToE("Return", "退回"));
-            this.ToolBar1.AddBtn("Btn_HandOver", this.ToE("HandOver", "移交"));
-
-
-            //this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
-            //this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\" alert('ss'); ymPrompt.win({message:'" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "',width:500,height:300,title:'ccflow',handler:handler,maxBtn:true,minBtn:true,iframe:true}); \" />");
-
-            //  string url =  appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
-            //  this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"javascript:ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
-
-            //  this.ToolBar1.Add("<a href=# onclick=\" ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \"  >sssss</a>");
-
-            // this.ToolBar1.Add("<input type=button value='iframe弹窗' onclick=\"ymPrompt.win('http://www.163.com',500,300,'网易官方网站',handler,null,null,true);\" />");
-
-            //  this.ToolBar1.Add("<input type=button value='iframe弹窗ddd' onclick=\" ymPrompt.win({message:'http://www.163.com',width:500,height:300,title:'网易官方网站',handler:handler,maxBtn:true,minBtn:true,iframe:true}) \" />");
-
-            //   this.ToolBar1.Add("<a href=\"javascript:ymPrompt.win({message:'http://www.163.com',width:500,height:300,title:'网易官方网站',handler:handler,maxBtn:true,minBtn:true,iframe:true})\"  >sssss</a>");
-
-            //   this.AlertMsg_Info
-
-            this.ToolBar1.AddSpt("ad");
-
-            this.ToolBar1.AddBtn(NamesOfBtn.Delete, this.ToE("Delete", "删除"));
-            this.Btn_Delete.OnClientClick = "return confirm('" + this.ToE("AYS", "您确认吗？") + "')";
-
-            #region 增加上一条 下一条。
-            //this.ToolBar1.AddSpt("ss");
-            //this.ToolBar1.AddBtn(NamesOfBtn.Previous, this.ToE("Previous", "<<-"));
-            //this.ToolBar1.AddBtn(NamesOfBtn.Next, this.ToE("Next", "->>"));
-            //if (this.WorkID == 0)
-            //{
-            //    this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Enabled = false;
-            //    this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Enabled = false;
-            //}
-            //else
-            //{
-            //    NextPreviouRec rec = new NextPreviouRec("WF_EmpWorks", "WorkID", this.WorkID, " FK_Emp='" + WebUser.No + "' AND FK_Flow='" + this.FK_Flow + "' ");
-            //    if (rec.NextID == null)
-            //        this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Enabled = false;
-            //    else
-            //        this.ToolBar1.GetBtnByID(NamesOfBtn.Next).Attributes["onclick"] = " window.location.href='MyFlow.aspx?WorkID=" + rec.NextID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "';return false;";
-
-            //    if (rec.PreviouID == null)
-            //        this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Enabled = false;
-            //    else
-            //        this.ToolBar1.GetBtnByID(NamesOfBtn.Previous).Attributes["onclick"] = " window.location.href='MyFlow.aspx?WorkID=" + rec.PreviouID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "';return false;";
-            //}
-            #endregion 增加上一条下一条。
-
-            this.ToolBar1.AddSpt("Next4");
-            if (this.WorkID > 0)
+            BtnLab btnLab = new BtnLab(this.FK_Node);
+            if (btnLab.SendEnable)
             {
-                string url = appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
-                // this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"alert('sss');ymPrompt.win({title:'cc info',fixPosition:true,maxBtn:true,minBtn:true,iframe:{id:'myefId',name:'mwyNadme',src:'http://ccflow.org' } }) \" />");
-                //   this.ToolBar1.Add("<input type=button value='" + this.ToE("CC", "抄送") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
-                this.ToolBar1.Add("<input type=button value='" + this.ToE("WorkRpt", "报告") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
-                this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds'); \" />");
+                this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
+                this.Btn_Send.UseSubmitBehavior = false;
+                this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
-            //else
-            //{
-            //    this.ToolBar1.Add("<input type=button value='" + this.ToE("WorkRpt", "报告") + "' disabled='disabled'  />");
-            //    this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' disabled='disabled'  />");
-            //}
-            #endregion
+            if (btnLab.SaveEnable)
+            {
+                this.ToolBar1.AddBtn(NamesOfBtn.Save, btnLab.SaveLab);
+                this.Btn_Save.UseSubmitBehavior = false;
+                this.Btn_Save.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                this.Btn_Save.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            }
+
+            if (btnLab.ReturnEnable)
+            {
+                this.ToolBar1.AddBtn("Btn_ReturnWork", btnLab.ReturnLab);
+                this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            }
+
+            if (btnLab.ShiftEnable)
+            {
+                this.ToolBar1.AddBtn("Btn_Shift", btnLab.ShiftLab);
+                this.Btn_Shift.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            }
+
+            if (btnLab.CCEnable)
+                this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
+
+            if (btnLab.DelEnable)
+            {
+                this.ToolBar1.AddBtn("Btn_Delete", btnLab.DelLab);
+                this.Btn_Delete.OnClientClick = "return confirm('" + this.ToE("AYS", "您确认吗？") + "')";
+            }
+
+            if (btnLab.RptEnable)
+                this.ToolBar1.Add("<input type=button value='" + btnLab.RptLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
+
+            if (btnLab.TrackEnable)
+                this.ToolBar1.Add("<input type=button value='" + btnLab.TrackLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds'); \" />");
 
             if (currND.HisFJOpen != FJOpen.None)
             {
@@ -517,54 +484,26 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     this.ToolBar1.Add("<input type=button value='" + this.ToE("Adjunct", "附件") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/FileManager.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FJOpen=" + (int)currND.HisFJOpen + "&FID=" + this.FID + "','dds'); \" />");
             }
 
-            if (currND.HisFormType == FormType.SelfForm)
-                this.Btn_Save.Enabled = false;
-            else
-                this.ToolBar1.Add("<input type=button value='" + this.ToE("WorkOpt", "选项") + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \"  />");
+            if (btnLab.OptEnable)
+                this.ToolBar1.Add("<input type=button value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \"  />");
 
-            this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-            this.Btn_Save.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-
-            if (this.ToolBar1.IsExit(NamesOfBtn.HandOver))
-                this.Btn_HandOver.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-
-            if (this.ToolBar1.IsExit(NamesOfBtn.Delete))
-                this.Btn_Delete.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-
-            if (currND.IsStartNode || currND.IsFLHL)
-            {
-                /* 是开始节点并且是分流合流节点。*/
-                this.Btn_HandOver.Enabled = false;
-            }
-
+            #endregion
 
             currWK = this.GenerCurrWork(this.WorkID);
             currND = this.CurrentNode;
             this.BindWork(currND, currWK);
             this.Session["Ect"] = null;
 
-            if (this.WorkID == 0)
-                this.Btn_HandOver.Enabled = false;
-
-            if (currND.IsStartNode || this.WorkID == 0)
-                this.Btn_Delete.Enabled = false;
-
-            this.Btn_Delete.Enabled = currND.IsCanDelFlow;
             if (currND.IsStartNode)
             {
                 GenerWorkFlow gwf = new GenerWorkFlow();
                 gwf.WorkID = this.WorkID;
-                if (gwf.IsExits)
-                    this.Btn_Delete.Enabled = true;
             }
 
-            if (currND.HisFormType == FormType.SelfForm) // || this.WorkID == 0)
-                this.Btn_Save.Enabled = false;
-
-            this.Btn_HandOver.Enabled = currND.IsHandOver;
-            this.Btn_ReturnWork.Enabled = currND.IsCanReturn;
-            if (currND.IsCanReturn)
-                this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            //if (currND.HisFormType == FormType.SelfForm) // || this.WorkID == 0)
+            //    this.Btn_Save.Enabled = false;
+            //if (currND.IsCanReturn)
+            //    this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
 
             if (currND.IsSelectEmp && currND.IsEndNode == false)
             {
@@ -596,8 +535,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
             return;
         }
-        //  this.Btn_Send.Enabled = false;
-        //  this.UCSys1.Add(this.ToE("Flow", "流程") + "：" + currND.FlowName + " &nbsp;&nbsp;" + this.ToE("Node", "节点") + "：" + currND.Name);
     }
     #endregion
 
@@ -672,7 +609,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 break;
         }
 
-        this.Btn_Delete.Enabled = nd.IsCanDelFlow;
         if (nd.IsStartNode)
         {
             /*判断是否来与子流程.*/
@@ -855,11 +791,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                    
                     #region 输出从表单内容.
 
+                   
                     foreach (Frm frm in frms)
                     {
-                     
                         FrmNode fn = new FrmNode(nd.NodeID, frm.No);
-
                         MapData md = new MapData(frm.No);
 
                         this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;' >");
@@ -1151,8 +1086,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 case "Btn_ReturnWork":
                     this.BtnReturnWork();
                     break;
-                case BP.Web.Controls.NamesOfBtn.HandOver:
-                    this.DoHandOver();
+                case BP.Web.Controls.NamesOfBtn.Shift:
+                    this.DoShift();
                     break;
                 case "Btn_WorkerList":
                     if (WorkID == 0)
@@ -1422,7 +1357,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         return;
     }
-    public void DoHandOver()
+    public void DoShift()
     {
         string url = "Forward" + Glo.FromPageType + ".aspx?NodeId=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.CurrentFlow.No;
         this.Response.Redirect(url, true);

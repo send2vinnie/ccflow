@@ -79,14 +79,20 @@ public partial class WF_Frm : System.Web.UI.Page
             MapDtl dtl = new MapDtl(this.FK_MapData);
             GEDtl dtlEn = dtl.HisGEDtl;
             dtlEn.SetValByKey("OID", this.WorkID);
-            dtlEn.RetrieveFromDBSources();
+            int i= dtlEn.RetrieveFromDBSources();
+            if (i == 0)
+            {
+            }
             this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
         }
         else
         {
             GEEntity en = md.HisGEEn;
             en.SetValByKey("OID", this.WorkID);
-            en.RetrieveFromDBSources();
+            int i=en.RetrieveFromDBSources();
+            if (i == 0)
+                en.DirectInsert();
+            
             this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
         }
 
@@ -95,7 +101,7 @@ public partial class WF_Frm : System.Web.UI.Page
         this.Btn_Save.Enabled = !this.IsReadonly;
 
         this.Btn_Print.Visible = true;
-        this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=107&WorkID=" + this.WorkID + "', '', 'dialogHeight: 550px; dialogWidth:950px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no'); return false;";
+        this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=107&WorkID=" + this.WorkID + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
         //this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "', '', 'dialogHeight: 550px; dialogWidth:950px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no'); return false;";
         //this.IsPrint;
         //   this.Button1.Enabled = this.IsReadonly;

@@ -94,6 +94,8 @@ public partial class WF_FreeFrm_Print : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Title = "单据打印";
+
         if (this.BillIdx != null)
         {
             this.PrintBill();
@@ -102,7 +104,7 @@ public partial class WF_FreeFrm_Print : WebPage
 
         this.Pub1.AddTable();
         this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("Idx");
+        this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle("表单编号");
         this.Pub1.AddTDTitle("表单名");
         this.Pub1.AddTDTitle("下载");
