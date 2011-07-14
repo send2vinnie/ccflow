@@ -1064,8 +1064,9 @@ namespace BP.DA
                 foreach (Para p in paras)
                 {
                     msg += "@" + p.ParaName + "  val=" + p.val + " type=" + p.DAType.ToString();
-                    mysql = mysql.Replace(":" + p.ParaName + ",", "'" + p.val + "'");
+                    mysql = mysql.Replace(":" + p.ParaName + ",", "'" + p.val + "',");
                 }
+
                 throw new Exception(ex.Message + " Paras=" + msg + "<hr>" + mysql);
             }
         }
@@ -1233,8 +1234,6 @@ namespace BP.DA
                     oraP.Value = para.val;
                     cmd.Parameters.Add(oraP);
                 }
-
-               
                 int i = cmd.ExecuteNonQuery();
                 cmd.Dispose();
                 HisConnOfOras.PutPool(connofora);
@@ -1252,7 +1251,7 @@ namespace BP.DA
                 else
                 {
                     Log.DebugWriteError(ex.Message);
-                    throw ex;
+                    throw new Exception(ex.Message + sql);
                 }
             }
             finally
