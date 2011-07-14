@@ -90,7 +90,7 @@ public partial class WF_Frm : System.Web.UI.Page
             GEEntity en = md.HisGEEn;
             en.SetValByKey("OID", this.WorkID);
             int i=en.RetrieveFromDBSources();
-            if (i == 0)
+            if (i == 0 && this.WorkID!=0)
                 en.DirectInsert();
             
             this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);

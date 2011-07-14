@@ -1198,6 +1198,7 @@ namespace BP.Web.Comm.UC.WF
                         break;
                     case FieldTypeS.FK:
                         DDL ddl1 = new DDL();
+                     //   ddl1.Width = attr.UIWidth;
                         ddl1.ID = "DDL_" + attr.KeyOfEn;
                         ddl1.Attributes["tabindex"] = attr.IDX.ToString();
                         try
@@ -1215,6 +1216,8 @@ namespace BP.Web.Comm.UC.WF
 
                         if (ddl1.Enabled == true && isReadonly == true)
                             ddl1.Enabled = false;
+
+                        ddl1.Attributes["Width"] = attr.UIWidth.ToString();
 
                         this.Add(ddl1);
                         break;
