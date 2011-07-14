@@ -31,7 +31,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
 
             i++;
             fk_sort = fl.FK_FlowSort;
-            this.AddLi("<a href='MyFlow.aspx?FK_Flow=" + fl.No + "' >" + fl.Name + "</a>&nbsp;<font style=\"color:#77c;font-size=4px\" >" + fl.FK_FlowSortText + "</font>");
+            this.AddLi("<a href='MyFlow.aspx?FK_Flow=" + fl.No + "&FK_Node="+int.Parse(fl.No)+"01' >" + fl.Name + "</a>&nbsp;<font style=\"color:#77c;font-size=4px\" >" + fl.FK_FlowSortText + "</font>");
         }
         this.AddULEnd();
         this.AddFieldSetEnd();

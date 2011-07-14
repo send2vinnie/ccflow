@@ -57,14 +57,20 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     {
         get
         {
-            return this.ToolBar1.GetBtnByID(NamesOfBtn.Save);
+            Btn btn= this.ToolBar1.GetBtnByID(NamesOfBtn.Save);
+            if (btn == null)
+                btn = new Btn();
+            return btn;
         }
     }
     protected Btn Btn_ReturnWork
     {
         get
         {
-            return this.ToolBar1.GetBtnByID("Btn_ReturnWork");
+            Btn btn = this.ToolBar1.GetBtnByID("Btn_ReturnWork");
+            if (btn == null)
+                btn = new Btn();
+            return btn;
         }
     }
     protected Btn Btn_Shift
@@ -140,9 +146,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     {
         get
         {
+            if (this.Request.QueryString["FK_Node"] != null)
+                return int.Parse(this.Request.QueryString["FK_Node"]);
+
             if (ViewState["FK_Node"] == null)
             {
-                this.FK_Node = this.CurrentFlow.HisStartNode.NodeID;
+                ViewState["FK_Node"] = int.Parse(this.FK_Flow + "01");
+                this.FK_Node = int.Parse(this.FK_Flow + "01");
             }
             return (int)ViewState["FK_Node"];
         }
@@ -432,7 +442,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 currND = this.CurrentNode;
 
             #region 增加按钮
-            BtnLab btnLab = new BtnLab(this.FK_Node);
+            BtnLab btnLab = new BtnLab(currND.NodeID);
             if (btnLab.SendEnable)
             {
                 this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
@@ -727,7 +737,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             if (isHaveRuing)
             {
                 if (nd.IsForceKill == false)
-                    this.Btn_Send.Enabled = false; /*如果不允许强制删除子流程。*/
+                    this.Btn_Send.Enabled = false; 
+                
+                /*如果不允许强制删除子流程。*/
                 //this.Btn_Send.Attributes["onclick"] = "return confirm('当前工作还有其它的同事没有完成，您确定要终止它们的工作进行下一步骤吗？');";
                 // this.Btn_Send.OnClientClick  = "return confirm('当前工作还有其它的同事没有完成，您确定要终止它们的工作进行下一步骤吗？');";
                 //this.Btn_Send.Enabled = false;
@@ -763,7 +775,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     Frm myfrm = new Frm();
                     myfrm.No = "ND" + nd.NodeID;
                     myfrm.Name = wk.EnDesc;
-                    frms.AddEntity(myfrm);
+                    
+                    FrmNode fnNode = new FrmNode();
+                    fnNode.FK_Frm = myfrm.No;
+                    fnNode.IsReadonly = false;
+                    fnNode.IsPrint = false;
+                    myfrm.HisFrmNode = fnNode;
+                    frms.AddEntity(myfrm,0);
 
                     #region 载入相关文件.
                     this.Page.RegisterClientScriptBlock("sg",
@@ -790,18 +808,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     #endregion 输出标签.
                    
                     #region 输出从表单内容.
-
-                   
                     foreach (Frm frm in frms)
                     {
-                        FrmNode fn = new FrmNode(nd.NodeID, frm.No);
-                        MapData md = new MapData(frm.No);
+                        FrmNode fn = frm.HisFrmNode;
 
-                        this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;' >");
+                        this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;' >");
                         string src = "";
                         src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt;
 
-                        this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "'  Onblur=\"SaveDtl('" + frm.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
+                        this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "'  Onblur=\"SaveDtl('" + frm.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
                         this.UCEn1.Add("\t\n </DIV>");
                     }
                     #endregion 输出从表单内容.

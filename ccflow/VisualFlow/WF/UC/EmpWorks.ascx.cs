@@ -81,7 +81,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             this.Pub1.AddTDIdx(i);
             this.Pub1.AddTD(dr["FlowName"].ToString());
             this.Pub1.AddTD(dr["NodeName"].ToString());
-            this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+            this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node="+dr["NodeID"]+"&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
             this.Pub1.AddTD(dr["Starter"].ToString());
             this.Pub1.AddTD(dr["RDT"].ToString());
             this.Pub1.AddTD(dr["ADT"].ToString());

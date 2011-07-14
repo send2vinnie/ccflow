@@ -135,13 +135,15 @@ namespace BP.Web.Port
                 this.IsCanLogin();
                 BP.Port.Emp emp = new BP.Port.Emp(this.UserNo);
                 BP.Web.WebUser.SignInOfGener(emp); //开始执行登陆。
+
+                string nodeID = int.Parse(this.FK_Flow + "01").ToString();
                 switch (this.DoWhat)
                 {
                     case DoWhatList.Start: // 发起工作
                         if (this.FK_Flow == null)
                             this.Response.Redirect("Start.aspx", true);
                         else
-                            this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + paras, true);
+                            this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + paras + "&FK_Node=" + nodeID, true);
                         break;
                     case DoWhatList.StartSmall: // 发起工作　小窗口
                         if (this.FK_Flow == null)
@@ -151,9 +153,9 @@ namespace BP.Web.Port
                         break;
                     case DoWhatList.StartSmallSingle: // 发起工作单独小窗口
                         if (this.FK_Flow == null)
-                            this.Response.Redirect("StartSmall.aspx?FK_Flow=" + this.FK_Flow + paras + "&IsSingle=1", true);
+                            this.Response.Redirect("StartSmall.aspx?FK_Flow=" + this.FK_Flow + paras + "&IsSingle=1" + "&FK_Node=" + nodeID, true);
                         else
-                            this.Response.Redirect("MyFlowSmallSingle.aspx?FK_Flow=" + this.FK_Flow + paras, true);
+                            this.Response.Redirect("MyFlowSmallSingle.aspx?FK_Flow=" + this.FK_Flow + paras + "&FK_Node=" + nodeID, true);
                         break;
                     case DoWhatList.RuningSmall: // 在途中工作
                         this.Response.Redirect("RuningSmall.aspx?FK_Flow=" + this.FK_Flow, true);
@@ -213,12 +215,12 @@ namespace BP.Web.Port
                     case DoWhatList.DealWork:
                         if (this.FK_Flow == null || this.WorkID == null)
                             throw new Exception("@参数 FK_Flow 或者 WorkID 为Null 。");
-                        this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras, true);
+                        this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras + "&FK_Node=" + nodeID, true);
                         break;
                     case DoWhatList.DealWorkInSmall:
                         if (this.FK_Flow == null || this.WorkID == null)
                             throw new Exception("@参数 FK_Flow 或者 WorkID 为Null 。");
-                        this.Response.Redirect("MyFlowSmall.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras, true);
+                        this.Response.Redirect("MyFlowSmall.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras + "&FK_Node=" + nodeID, true);
                         break;
                     default:
                         this.ToErrorPage("没有约定的标记:DoWhat=" + this.DoWhat);
