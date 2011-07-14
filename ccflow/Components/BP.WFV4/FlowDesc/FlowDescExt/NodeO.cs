@@ -7,7 +7,8 @@ using BP.Port;
 
 namespace BP.WF.Ext
 {
-
+     
+     
     /// <summary>
     /// 这里存放每个节点的信息.	 
     /// </summary>
@@ -155,21 +156,30 @@ namespace BP.WF.Ext
 
                 map.AddBoolean(NodeAttr.IsTask, true, this.ToE("IsTask", "允许分配工作否?"), true, true, false);
                 map.AddBoolean(NodeAttr.IsSelectEmp, false, this.ToE("IsSelectEmp", "可否选择接受人?"), true, true, false);
-                map.AddBoolean(NodeAttr.IsCanReturn, false, this.ToE("IsCanReturn", "是否可以退回?"), true, true, false);
-                map.AddBoolean(NodeAttr.IsCanCC, true, "是否可以抄送", false, false, false);
-                map.AddBoolean(NodeAttr.IsCanRpt, true, "是否可以查看工作报告?", true, true, false);
-                map.AddBoolean(NodeAttr.IsSecret, false, "是否是保密步骤?", true, true, false);
-                map.AddBoolean(NodeAttr.IsCanOver, false, "是否可以终止流程", true, true, false);
-                map.AddBoolean(NodeAttr.IsCanDelFlow, false, this.ToE("IsCanDelFlow", "是否可以删除流程?"), true, true, false);
-                map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true, false);
-                map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交(对开始点无效)", true, true, false);
+
+
+                //map.AddBoolean(NodeAttr.IsCanCC, true, "是否可以抄送", false, false, false);
+                //map.AddBoolean(NodeAttr.IsCanRpt, true, "是否可以查看工作报告?", true, true, false);
+                //map.AddBoolean(NodeAttr.IsSecret, false, "是否是保密步骤?", true, true, false);
+                //map.AddBoolean(NodeAttr.IsCanOver, false, "是否可以终止流程", true, true, false);
+                //map.AddBoolean(NodeAttr.IsCanDelFlow, false, this.ToE("IsCanDelFlow", "是否可以删除流程?"), true, true, false);
+                //map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true, false);
+                //map.AddBoolean(NodeAttr.IsCanReturn, false, this.ToE("IsCanReturn", "是否可以退回?"), true, true, false);
+                //map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交(对开始点无效)", true, true, false);
+
+
+
                 map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除子流程(对合流点有效)", true, true, false);
+
+                map.AddDDLSysEnum(NodeAttr.ReturnRole, 0, this.ToE("ReturnRole", "退回规则"),
+             true, true, NodeAttr.ReturnRole);
 
                 // map.AddTBInt(NodeAttr.PassRate, 100, "通过率(对于合流节点有效)", true, true);
                 map.AddTBDecimal(NodeAttr.PassRate, 0, "完成通过率", true, false);
 
                 map.AddDDLSysEnum(NodeAttr.RunModel, 0, this.ToE("RunModel", "运行模式"),
                     true, true, NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流");
+
 
                 //map.AddDDLSysEnum(NodeAttr.FLRole, 0, this.ToE("FLRole", "分流规则"), true, true, NodeAttr.FLRole,
                 //    "@0=按接受人@1=按部门@2=按岗位");
@@ -179,16 +189,50 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true);
 
                 map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 500, 10, true);
-                // map.AddTBString(NodeAttr.FrmAttr, null, this.ToE("FrmAttr", "框架属性"), true, false, 0, 500, 10, true);
-
                 map.AddTBString(NodeAttr.DoWhat, null, this.ToE("DoWhat", "完成后处理SQL"), false, false, 0, 500, 10, false);
 
-                //  map.AddBoolean("IsSkipReturn", false, "是否可以跨级撤销", true, true, true);
+                map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10, true);
+                map.AddTBString(NodeAttr.MsgSend, null, "发送成功后提示信息", true, false, 0, 2000, 10, true);
+
+                //map.AddBoolean("IsSkipReturn", false, "是否可以跨级撤销", true, true, true);
 
                 map.AddTBDateTime("DTFrom", "生命周期从", true, true);
                 map.AddTBDateTime("DTTo", "生命周期到", true, true);
 
-                map.AddTBString(NodeAttr.RecipientSQL, null, this.ToE("FormUrl", "接受人SQL"), true, false, 0, 500, 10, true);
+
+                #region  功能按钮状态
+
+                map.AddTBString(BtnAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.SaveLab, "保存", "保存按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.SaveEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.ReturnLab, "退回", "退回按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.ReturnEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.CCEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.ShiftLab, "移交", "移交按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.ShiftEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.DelLab, "删除", "删除按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.DelEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.RptLab, "报告", "报告按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.RptEnable, true, "是否启用", true, false);
+
+                map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.AthEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.TrackEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.OptLab, "选项", "选项按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.OptEnable, true, "是否启用", true, true);
+                 
+                #endregion  功能按钮状态
 
 
 
@@ -205,12 +249,12 @@ namespace BP.WF.Ext
                 true, true, NodeAttr.OutTimeDeal, "@0=不处理@1=自动转入下一步@2=自动转到指定的人员@3=向指定的人员发送消息@4=删除流程@5=执行SQL");
 
                 map.AddTBString(NodeAttr.DoOutTime, null, "处理内容", true, false, 0, 500, 10, true);
-
                 map.AddTBString(NodeAttr.FK_Flow, null, "flow", false, false, 0, 100, 10);
 
 
-                // 相关功能。
 
+
+                // 相关功能。
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeStations(), new BP.WF.Port.Stations(), NodeStationAttr.FK_Node, NodeStationAttr.FK_Station,
                     DeptAttr.Name, DeptAttr.No, this.ToE("NodeSta", "节点岗位"));
 
@@ -220,9 +264,11 @@ namespace BP.WF.Ext
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeEmps(), new BP.WF.Port.Emps(), NodeEmpAttr.FK_Node, EmpDeptAttr.FK_Emp, DeptAttr.Name,
                     DeptAttr.No, this.ToE("Accpter", "接受人员"));
 
+                map.AttrsOfOneVSM.Add(new BP.WF.NodeReturns(), new BP.WF.Port.Emps(), NodeEmpAttr.FK_Node, EmpDeptAttr.FK_Emp, DeptAttr.Name,
+                  DeptAttr.No, this.ToE("Accpter", "可退回的节点"));
+
                 //map.AttrsOfOneVSM.Add(new BP.WF.NodeDepts(), new BP.WF.Port.Depts(), NodeDeptAttr.FK_Node, NodeDeptAttr.FK_Dept, DeptAttr.Name, 
                 //    DeptAttr.No,this.ToE("AccptDept","接受部门")  );
-
 
                 RefMethod rm = new RefMethod();
                 rm.Title = this.ToE("DesignSheet", "设计表单"); // "设计表单";

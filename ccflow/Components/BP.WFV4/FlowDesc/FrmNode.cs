@@ -47,6 +47,19 @@ namespace BP.WF
     public class FrmNode : EntityMyPK
     {
         #region »ù±¾ÊôÐÔ
+        private Frm _hisFrm = null;
+        public Frm HisFrm
+        {
+            get
+            {
+                if (this._hisFrm == null)
+                {
+                    this._hisFrm = new Frm(this.FK_Frm);
+                    this._hisFrm.HisFrmNode = this;
+                }
+                return this._hisFrm;
+            }
+        }
         /// <summary>
         /// HisUAC
         /// </summary>
@@ -247,7 +260,8 @@ namespace BP.WF
         public FrmNodes(int NodeID)
         {
             QueryObject qo = new QueryObject(this);
-            qo.AddWhere(FrmNodeAttr.FK_Frm, NodeID);
+            qo.AddWhere(FrmNodeAttr.FK_Node, NodeID);
+            qo.addOrderBy(FrmNodeAttr.Idx);
             qo.DoQuery();
         }
         /// <summary>
@@ -258,6 +272,7 @@ namespace BP.WF
         {
             QueryObject qo = new QueryObject(this);
             qo.AddWhere(FrmNodeAttr.FK_Node, NodeNo);
+            qo.addOrderBy(FrmNodeAttr.Idx);
             qo.DoQuery();
         }
         /// <summary>

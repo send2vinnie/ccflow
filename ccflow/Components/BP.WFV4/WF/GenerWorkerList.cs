@@ -498,7 +498,9 @@ namespace BP.WF
             if (dt.Rows.Count == 0)
                 return false;
 
-            switch ((RunModel)dt.Rows[0][0])
+            int i = int.Parse(dt.Rows[0][0].ToString());
+            RunModel rm = (RunModel)i;
+            switch (rm)
             {
                 case RunModel.Ordinary:
                     return true;
@@ -511,6 +513,7 @@ namespace BP.WF
                 default:
                     break;
             }
+
             if (DBAccess.RunSQLReturnValInt(sql) == 0)
                 return false;
             return true;

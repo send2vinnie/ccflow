@@ -37,9 +37,10 @@ namespace BP.WF
 	/// <summary>
 	/// Frm
 	/// </summary>
-	public class Frm :EntityNoName
-	{
-		#region 基本属性
+    public class Frm : EntityNoName
+    {
+        #region 基本属性
+        public FrmNode HisFrmNode = null;
         public string PTable
         {
             get
@@ -84,16 +85,27 @@ namespace BP.WF
                 this.SetValByKey(FrmAttr.FormType, (int)value);
             }
         }
-		#endregion 
+        #endregion
 
-		#region 构造方法
-		/// <summary>
-		/// Frm
-		/// </summary>
-		public Frm(){}
-		/// <summary>
-		/// 重写基类方法
-		/// </summary>
+        #region 构造方法
+        /// <summary>
+        /// Frm
+        /// </summary>
+        public Frm()
+        {
+        }
+        /// <summary>
+        /// Frm
+        /// </summary>
+        /// <param name="no"></param>
+        public Frm(string no)
+            : base(no)
+        {
+
+        }
+        /// <summary>
+        /// 重写基类方法
+        /// </summary>
         public override Map EnMap
         {
             get
@@ -101,7 +113,10 @@ namespace BP.WF
                 if (this._enMap != null)
                     return this._enMap;
 
+                //Map map = new Map("Sys_MapData");
+
                 Map map = new Map("WF_Frm");
+
                 map.EnDesc = "节点表单";
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
@@ -110,21 +125,39 @@ namespace BP.WF
 
                 map.AddTBStringPK(FrmAttr.No, null, null, true, true, 5, 5, 5);
                 map.AddTBString(FrmAttr.Name, null, null, true, false, 0, 50, 10);
-                map.AddTBString(FrmAttr.FK_Flow, null, "FK_Flow", true, false, 0, 50, 10);
-                map.AddDDLSysEnum(FrmAttr.FormType, 0, "FormType", true, false, FrmAttr.FormType);
+                map.AddTBString(FrmAttr.FK_Flow, null, "流程表单属性:FK_Flow", true, false, 0, 50, 10);
+                map.AddDDLSysEnum(FrmAttr.FormType, 0, "流程表单属性:表单类型", true, false, FrmAttr.FormType);
                 map.AddTBString(FrmAttr.PTable, null, "PTable", true, false, 0, 50, 10);
-                map.AddTBString(FrmAttr.URL, null, "URL", true, false, 0, 50, 10);
+                map.AddTBString(FrmAttr.URL, null, "流程表单属性:Url", true, false, 0, 50, 10);
+
+                map.AddTBInt(Sys.MapDataAttr.FrmW, 900, "表单宽度", true, false);
+                map.AddTBInt(Sys.MapDataAttr.FrmH, 1200, "表单高度", true, false);
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
+        public int FrmW
+        {
+            get
+            {
+                return this.GetValIntByKey(Sys.MapDataAttr.FrmW);
+            }
+        }
+        public int FrmH
+        {
+            get
+            {
+                return this.GetValIntByKey(Sys.MapDataAttr.FrmH);
+            }
+        }
         protected override bool beforeUpdate()
         {
-            DBAccess.RunSQL("UPDATE Sys_MapData SET PTable='"+this.PTable+"' WHERE No='"+this.No+"'");
+            DBAccess.RunSQL("UPDATE Sys_MapData SET PTable='" + this.PTable + "' WHERE No='" + this.No + "'");
             return base.beforeUpdate();
         }
-		#endregion
-	}
+        #endregion
+    }
 	/// <summary>
 	/// Frm
 	/// </summary>

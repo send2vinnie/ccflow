@@ -8,6 +8,28 @@ using BP.Port;
 namespace BP.WF
 {
     /// <summary>
+    /// 节点工作退回规则
+    /// </summary>
+    public enum ReturnRole
+    {
+        /// <summary>
+        /// 不能退回
+        /// </summary>
+        CanNotReturn,
+        /// <summary>
+        /// 只能退回上一个节点
+        /// </summary>
+        ReturnPreviousNode,
+        /// <summary>
+        /// 可退回以前任意节点(默认)
+        /// </summary>
+        ReturnPreviousAnyNodes,
+        /// <summary>
+        /// 可退回指定的节点
+        /// </summary>
+        ReturnSpecifiedNodes
+    }
+    /// <summary>
     /// 附件开放类型
     /// </summary>
     public enum FJOpen
@@ -246,6 +268,11 @@ namespace BP.WF
         /// 接受人sql
         /// </summary>
         public const string RecipientSQL = "RecipientSQL";
+
+        /// <summary>
+        /// 退回规则
+        /// </summary>
+        public const string ReturnRole = "ReturnRole";
         #endregion
 
         #region 基本属性
@@ -370,6 +397,10 @@ namespace BP.WF
         /// 属性
         /// </summary>
         public const string FrmAttr = "FrmAttr";
+        /// <summary>
+        /// 个性化发送信息
+        /// </summary>
+        public const string MsgSend = "MsgSend";
         #endregion
     }
     /// <summary>
@@ -435,8 +466,6 @@ namespace BP.WF
 
             if (nds.Count == 0)
                 return "流程[" + fl.No + fl.Name + "]中没有节点数据，您需要注册一下这个流程。";
-
-       
 
             // 更新是否是有完成条件的节点。
             DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0  WHERE FK_Flow='"+fl.No+"'");
@@ -1066,6 +1095,17 @@ namespace BP.WF
                 SetValByKey(NodeAttr.DoWhat, value);
             }
         }
+        public string MsgSend
+        {
+            get
+            {
+                return this.GetValStrByKey(NodeAttr.MsgSend);
+            }
+            set
+            {
+                SetValByKey(NodeAttr.MsgSend, value);
+            }
+        }
         public string FlowName
         {
             get
@@ -1315,11 +1355,32 @@ namespace BP.WF
             {
                 if (this._HisFrms == null)
                 {
-                    _HisFrms = new Frms(this.NodeID);
+                    _HisFrms = new Frms();
+                    foreach (FrmNode fn in this.HisFrmNodes)
+                    {
+                        _HisFrms.AddEntity(fn.HisFrm);
+                    }
                 }
                 return _HisFrms;
             }
         }
+
+        private FrmNodes _HisFrmNodes = null;
+        /// <summary>
+        /// HisFrms
+        /// </summary>
+        public FrmNodes HisFrmNodes
+        {
+            get
+            {
+                if (this._HisFrmNodes == null)
+                {
+                    _HisFrmNodes = new FrmNodes(this.NodeID);
+                }
+                return _HisFrmNodes;
+            }
+        }
+
         private Depts _HisDepts = null;
         /// <summary>
         /// 此节点所在的工作岗位
@@ -1613,7 +1674,7 @@ namespace BP.WF
                 this.SetValByKey(NodeAttr.IsCanCC, value);
             }
         }
-        public bool IsCanHidReturn
+        public bool IsCanHidReturn_del
         {
             get
             {
@@ -1628,24 +1689,25 @@ namespace BP.WF
         {
             get
             {
-                switch (this.HisNodeWorkType)
-                {
-                    case NodeWorkType.StartWork:
-                    case NodeWorkType.StartWorkFL:
-                        //case NodeWorkType.WorkHL:
-                        //case NodeWorkType.WorkFHL:
-                        return false;
-                    default:
-                        break;
-                }
-                return this.GetValBooleanByKey(NodeAttr.IsCanReturn);
+                if (this.HisReturnRole == ReturnRole.CanNotReturn)
+                    return false;
+                return true;
+            }
+        }
+        /// <summary>
+        /// 退回规则
+        /// </summary>
+        public ReturnRole HisReturnRole
+        {
+            get
+            {
+                return (ReturnRole)this.GetValIntByKey(NodeAttr.ReturnRole);
             }
             set
             {
-                this.SetValByKey(NodeAttr.IsCanReturn, value);
+                this.SetValByKey(NodeAttr.ReturnRole, (int)value);
             }
         }
-        
         /// <summary>
         /// 是不是中间节点
         /// </summary>
@@ -1999,24 +2061,20 @@ namespace BP.WF
 
 
                 map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10);
-
-
                 map.AddTBString(NodeAttr.DoWhat, null, "完成后处理SQL", true, false, 0, 500, 10);
-
                 map.AddTBString(NodeAttr.Doc, null, BP.Sys.Language.GetValByUserLang("Desc", "描述"), true, false, 0, 100, 10);
-
                 map.AddBoolean(NodeAttr.IsTask, true, "允许分配工作否?", true, true);
                 map.AddBoolean(NodeAttr.IsSelectEmp, false, "可否选择接受人?", true, true);
+                map.AddTBInt(NodeAttr.ReturnRole, 2, "退回规则", true, true);
 
-                map.AddBoolean(NodeAttr.IsCanReturn, true, "是否可以退回", true, true);
-                map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true);
+                //map.AddBoolean(NodeAttr.IsCanReturn, true, "是否可以退回", true, true);
+                //map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true);
 
                 map.AddBoolean(NodeAttr.IsCanCC, true, "是否可以抄送", true, true);
                 map.AddBoolean(NodeAttr.IsCanRpt, true, "是否可以查看工作报告?", true, true, true);
                 map.AddBoolean(NodeAttr.IsCanOver, false, "是否可以终止流程", true, true);
                 map.AddBoolean(NodeAttr.IsSecret, false, "是否是保密步骤", true, true);
                 map.AddBoolean(NodeAttr.IsCanDelFlow, false, "是否可以删除流程", true, true);
-
                 map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除了流程(对河流点有效)", true, true);
 
 
@@ -2047,12 +2105,9 @@ namespace BP.WF
 
                 map.AddTBString(NodeAttr.FormUrl, "http://", "表单URL", true, false, 0, 500, 10);
 
+                map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10, true);
 
-
-                //map.AddBoolean(NodeAttr.IsFL, false, "是否是分流节点(普通节点有效)", true, true);
-                //  map.AddDDLSysEnum(NodeAttr.NodePosType, 1, "位置", true, false);
-
-
+                map.AddTBString(NodeAttr.MsgSend, null, "发送后提示信息", true, false, 0, 2000, 10, true);
                 map.AddTBInt(NodeAttr.NodePosType, 0, "位置", false, false);
 
 
