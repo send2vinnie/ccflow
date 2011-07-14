@@ -215,12 +215,12 @@ namespace BP.Web.Port
                     case DoWhatList.DealWork:
                         if (this.FK_Flow == null || this.WorkID == null)
                             throw new Exception("@参数 FK_Flow 或者 WorkID 为Null 。");
-                        this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras + "&FK_Node=" + nodeID, true);
+                        this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras  , true);
                         break;
                     case DoWhatList.DealWorkInSmall:
                         if (this.FK_Flow == null || this.WorkID == null)
                             throw new Exception("@参数 FK_Flow 或者 WorkID 为Null 。");
-                        this.Response.Redirect("MyFlowSmall.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras + "&FK_Node=" + nodeID, true);
+                        this.Response.Redirect("MyFlowSmall.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras , true);
                         break;
                     default:
                         this.ToErrorPage("没有约定的标记:DoWhat=" + this.DoWhat);
