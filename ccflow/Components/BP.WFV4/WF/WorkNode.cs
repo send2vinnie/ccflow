@@ -1326,6 +1326,21 @@ namespace BP.WF
                 catch
                 {
                 }
+
+
+                string msgOfSend = this.HisNode.MsgSend;
+                if (msgOfSend.Length > 3)
+                {
+                    if (msgOfSend.Contains("@"))
+                    {
+                        Attrs attrs = this.HisWork.EnMap.Attrs;
+                        foreach (Attr attr in attrs)
+                        {
+                            msgOfSend = msgOfSend.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
+                        }
+                    }
+                    return msgOfSend;
+                }
                 return msg;
             }
             catch (Exception ex)
@@ -2074,19 +2089,7 @@ namespace BP.WF
                 this.HisWork.DoCopy(); // copy 本地的数据到指定的系统.
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=1 WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID);
 
-                string msgOfSend = this.HisNode.MsgSend;
-                if (msgOfSend.Length > 3)
-                {
-                    if (msgOfSend.Contains("@"))
-                    {
-                        Attrs attrs = this.HisWork.EnMap.Attrs;
-                        foreach (Attr attr in attrs)
-                        {
-                            msgOfSend = msgOfSend.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
-                        }
-                    }
-                    return msg;
-                }
+                
                 return msg;
             }
             catch (Exception ex)  // 如果抛出异常，说明没有正确的执行。当前的工作，不能完成。工作流程不能完成。
