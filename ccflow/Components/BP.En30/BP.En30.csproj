@@ -527,7 +527,7 @@
     <Compile Include="Rpt\Rpt\WebRtfReport.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Rpt\RTFV2\Engine.cs">
+    <Compile Include="Rpt\Engine.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Rpt\Self\Rpt.cs">

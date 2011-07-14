@@ -449,9 +449,9 @@ namespace BP.Rpt.RTF
             string[] paras = null;
 
             if (this.HisGEEntity != null)
-                Cash.GetBillParas(cfile, ensStrs, this.HisGEEntity);
+                paras = Cash.GetBillParas(cfile, ensStrs, this.HisGEEntity);
             else
-                Cash.GetBillParas(cfile, ensStrs, this.HisEns);
+                paras= Cash.GetBillParas(cfile, ensStrs, this.HisEns);
 
             this.TempFilePath = path + file;
             try

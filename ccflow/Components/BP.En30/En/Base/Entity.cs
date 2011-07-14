@@ -2642,11 +2642,15 @@ namespace BP.En
         {
             return this.InnerList.Add(entity);
         }
+        public virtual int AddEntity(Entity entity, int idx)
+        {
+            this.InnerList.Insert(idx,entity);
+            return idx;
+        }
         public virtual void AddEntities(Entities ens)
         {
             foreach (Entity en in ens)
                 this.AddEntity(en);
-
             // this.InnerList.AddRange(ens);
         }
         /// <summary>
