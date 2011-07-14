@@ -141,7 +141,7 @@ public partial class WF_FreeFrm_Print : WebPage
             this.Pub1.AddTDIdx(idx);
             this.Pub1.AddTD(strs[0]);
             this.Pub1.AddTD(strs[1]);
-            this.Pub1.AddTD("<a href='Print.aspx?FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&BillIdx=" + fileIdx + "' >打印</a>");
+            this.Pub1.AddTD("<a href='Print.aspx?FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&BillIdx=" + fileIdx + "' target=_blank >打印</a>");
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();
