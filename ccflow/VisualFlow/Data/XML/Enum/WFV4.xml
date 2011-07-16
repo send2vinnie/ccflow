@@ -1,5 +1,13 @@
 <?xml version="1.0" standalone="yes"?>
 <NewDataSet>
+
+    <Item Key="DeliveryWay"
+    CH="@0=按岗位@1=按部门@2=按SQL@3=按指定的人员@4=由发送人选择@5=按表单人员"
+    EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+    JP="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+    RU="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+        />
+    
     <Item Key="ReturnRole"
     CH="@0=不能退回@1=只能退回上一个节点@2=可退回以前任意节点@3=可退回指定的节点"
     EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
