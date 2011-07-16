@@ -828,13 +828,14 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         // 关键字。
         if (isShowKey)
         {
-            this.AddLab("Lab_Key", BP.Sys.Language.GetValByUserLang("Key", "关键字"));
+            this.AddLab("Lab_Key", BP.Sys.Language.GetValByUserLang("Key", "关键字:&nbsp;"));
             TB tb = new TB();
             tb.ID = "TB_Key";
-            tb.Columns = 9;
+            tb.Columns = 13;
             this.AddTB(tb);
             keysNum++;
         }
+        this.Add("&nbsp;");
 
         // 非外键属性。
         foreach (AttrOfSearch attr in attrsOfSearch)

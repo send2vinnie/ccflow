@@ -469,7 +469,7 @@ namespace BP.Web.Comm.UC
                             {
                                 enumKey = int.Parse(val.ToString());
                             }
-                            catch (Exception ex)
+                            catch
                             {
                                 throw new Exception("默认值错误：" + attr.Key + " = " + val.ToString());
                             }
@@ -1059,7 +1059,6 @@ namespace BP.Web.Comm.UC
                   if (attr.MyFieldType == FieldType.RefText)
                             continue;
 
-
                   val = en.GetValByKey(attr.Key);
 
                   if (attr.UIVisible == false)
@@ -1087,7 +1086,6 @@ namespace BP.Web.Comm.UC
                         break;
                     }
                 }
-
 
                 #region 判断是否单列显示
                 if (attr.UIIsLine)
@@ -1212,7 +1210,6 @@ namespace BP.Web.Comm.UC
                             {
                                 this.AddContral(attr.Desc, tb, 3);
                             }
-
                             break;
                         case UIContralType.DDL:
                             if (isReadonly || !attr.UIIsReadonly)
