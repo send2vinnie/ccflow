@@ -60,16 +60,22 @@
 	<body   onkeypress="Esc()"   onkeydown='DoKeyDown();' topmargin="0" leftmargin="0" >
 		<form id="Form1" method="post" runat="server">
 			<TABLE id="Table1" align="left" cellSpacing="1" cellPadding="1" border="0" width="100%">
-				 <caption>
+
+				<TR>
+                <td>
+				 <caption style="background:url('./Style/BG_Title.png') repeat-x ; height:30px ; line-height:30px"   >
 						<asp:Label id="Label1" runat="server">Label</asp:Label>
                         </caption>
+                        </td>
+				</TR>
+
 				<TR>
-					<TD class="ToolBar" >
+					<TD class="ToolBar"   >
                         <uc2:ToolBar ID="ToolBar1" runat="server" />
                     </TD>
 				</TR>
-				<TR align="justify" height="0px" valign=top>
-					<TD>
+				<TR align="justify" height="0px" valign=top >
+					<TD  width='100%'  >
 						<uc1:UCSys id="UCSys1" runat="server"></uc1:UCSys>
 					</TD>
 				</TR>

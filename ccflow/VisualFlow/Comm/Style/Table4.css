@@ -141,12 +141,13 @@ table input[type="textbox"]
 /*  input 类型风格 */
 input[type="button"], .Btn, input[type="submit"]
 {
-    padding: 2px;
+     padding:0 8px;
     margin: 3px;
-    height: 35;
+    height: 25px;
     border-right: #002D96 1px solid;
     border-top: #002D96 1px solid;
-    font-size: 12px;
+    font-size: 14px;
+    line-height:25px;
     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,
 StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
     border-left: #002D96 1px solid;

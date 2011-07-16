@@ -22,6 +22,8 @@ th, .Title
 	height:25px;
 	line-height:25px;
 	color:#336699;
+	white-space:nowrap;
+	 padding: 0 2px;
 }
 
 th .idx
@@ -141,12 +143,13 @@ table input[type="textbox"]
 /*  input 类型风格 */
 input[type="button"], .Btn, input[type="submit"]
 {
-    padding: 2px;
-    margin: 3px;
-    height: 35;
+    padding:0 8px;
+    margin: 0 3px;
+    height: 25px;
     border-right: #002D96 1px solid;
     border-top: #002D96 1px solid;
-    font-size: 12px;
+    font-size: 14px;
+    line-height:25px;
     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,
 StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
     border-left: #002D96 1px solid;
@@ -292,7 +295,7 @@ legend
 
 a:link, a:visited, a:active
 {
-    color: blue;
+    color: black;
     text-decoration: none;
 }
 
@@ -307,6 +310,15 @@ ul
     border-left-style: 0;
     left: 2px;
     clip: rect(auto, auto, auto, 2px);
+    list-style:none;
+    padding-left:0px;
+    
+}
+
+li
+{
+    background-image: url('nav_list.gif');
+    
 }
  
 

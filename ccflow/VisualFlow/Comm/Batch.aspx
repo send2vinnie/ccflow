@@ -13,7 +13,8 @@
            var s = "dialogWidth=" + parseInt(w) + "px;dialogHeight=" + parseInt(h) + "px;resizable:yes";
            var  val=window.showModalDialog( url,null,s);
            window.location.href=window.location.href;
-        }
+       }
+
         function selectAll() {
             var arrObj = document.all;
             if (document.forms[0].checkedAll.checked) {

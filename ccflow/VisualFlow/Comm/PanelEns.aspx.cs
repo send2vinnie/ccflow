@@ -206,6 +206,7 @@ namespace BP.Web.Comm
                 #region 设置toolbar2 的 contral  设置查寻功能.
 
                 this.ToolBar1.InitByMapV2(map, 1);
+
                 //if (map.IsShowSearchKey)
                 //    this.TB_Key.Text = .Key;
                 //this.ToolBar1.AddSpt("spt1");
@@ -261,9 +262,7 @@ namespace BP.Web.Comm
 
             this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             this.ToolBar1.GetBtnByID("Btn_Excel").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-
             this.Label1.Text = this.GenerCaption(this.HisEn.EnMap.EnDesc + "" + this.HisEn.EnMap.TitleExt);
-
             //this.GenerLabel(this.Label1, this.HisEn);
             //this.ResponseWriteBlueMsg(this.DDL_GroupKey.AutoPostBack.ToString() +this.BPToolBar1.Enabled.ToString()+ this.BPToolBar1.AutoPostBack.ToString() );
         }
@@ -287,6 +286,7 @@ namespace BP.Web.Comm
                 this.UCSys2.Add("翻页键:← → PageUp PageDown");
 
             qo.DoQuery(en.PK, SystemConfig.PageSize, pageIdx);
+
             if (en.EnMap.IsShowSearchKey)
             {
                 string keyVal = this.ToolBar1.GetTBByID("TB_Key").Text.Trim();
