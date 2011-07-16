@@ -275,7 +275,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         TextBox tb = new TextBox();
         tb.TextMode = TextBoxMode.MultiLine;
         tb.ID = "TB_Doc";
-        tb.Rows = 20;
+        tb.Rows = 15;
         tb.Columns = 50;
         this.Pub1.Add(tb);
         if (this.IsPostBack == false)

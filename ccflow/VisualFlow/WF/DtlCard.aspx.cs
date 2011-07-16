@@ -63,7 +63,6 @@ public partial class WF_DtlFrm : WebPage
 "<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
         #endregion 载入相关文件.
 
-
         #region 查询出来明细表.
         MapDtl mdtl = new MapDtl(this.EnsName);
         GEDtls dtls = new GEDtls(this.EnsName);
@@ -87,19 +86,20 @@ public partial class WF_DtlFrm : WebPage
         catch (Exception ex)
         {
             dtls.GetNewEntity.CheckPhysicsTable();
+            throw ex;
 
-            #region 解决Access 不刷新的问题。
-            string rowUrl = this.Request.RawUrl;
-            if (rowUrl.IndexOf("rowUrl") > 1)
-            {
-                throw ex;
-            }
-            else
-            {
-                //this.Response.Redirect(rowUrl + "&rowUrl=1&IsWap=" + this.IsWap, true);
-                return;
-            }
-            #endregion
+            //#region 解决Access 不刷新的问题。
+            //string rowUrl = this.Request.RawUrl;
+            //if (rowUrl.IndexOf("rowUrl") > 1)
+            //{
+            //    throw ex;
+            //}
+            //else
+            //{
+            //    //this.Response.Redirect(rowUrl + "&rowUrl=1&IsWap=" + this.IsWap, true);
+            //    return;
+            //}
+            //#endregion
         }
         #endregion 查询出来明细表.
 

@@ -46,7 +46,6 @@ public partial class Comm_M2M : WebPage
         BP.WF.M2M m2m = new BP.WF.M2M();
         m2m.MyPK = mapM2M.FK_Node+"_"+this.WorkID+"_"+this.FK_MapM2M;
         m2m.RetrieveFromDBSources();
-
         DataTable dtGroup = new DataTable();
         
         if (mapM2M.DBOfGroups.Length >5)
@@ -60,7 +59,7 @@ public partial class Comm_M2M : WebPage
         if (isDelete == false && isInsert == false)
             this.Button1.Enabled = false;
 
-        this.Pub1.AddTable();
+        this.Pub1.AddTable("width=100% border=0");
         foreach (DataRow drGroup in dtGroup.Rows)
         {
             string ctlIDs = "";

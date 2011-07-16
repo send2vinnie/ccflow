@@ -90,28 +90,33 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
         }
 
         this.Pub1.AddTable("width='100%' align=left ");
+        
         this.Pub1.AddCaptionLeft("流程查询:" + fl.Name);
  
 
         this.Pub1.AddTRSum();
-        this.Pub1.Add("<TD colspan=" + colspan + " class=TD><b>发生日期从:</b>");
+        this.Pub1.Add("<TD colspan=" + colspan + " class=ToolBar><b>发生日期&nbsp;从:</b>");
 
         TextBox tb = new TextBox();
         tb.ID = "TB_F";
-        tb.Columns = 7;
+        tb.Columns = 10;
         tb.Text = this.DT_F;
         tb.Attributes["onfocus"] = "WdatePicker();";
         this.Pub1.Add(tb);
 
-        this.Pub1.AddB("到:");
+        this.Pub1.AddB("&nbsp;到:");
         tb = new TextBox();
         tb.ID = "TB_T";
         tb.Text = this.DT_T;
-        tb.Columns = 7;
+        tb.Columns = 10;
         this.Pub1.Add(tb);
 
+
+        this.Pub1.AddB("&nbsp;");
+
+
         Button btn = new Button();
-        btn.Text = " 查询 ";
+        btn.Text = "查询";
         btn.ID = "Btn_Search";
         btn.Click += new EventHandler(btn_Click);
         tb.Attributes["onfocus"] = "WdatePicker();";
@@ -122,7 +127,7 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
         btn.ID = "Btn_Excel";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
-        this.Pub1.Add("</TD>");
+        this.Pub1.Add("&nbsp;</TD>");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();

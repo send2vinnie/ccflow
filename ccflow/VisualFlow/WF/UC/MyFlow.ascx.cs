@@ -515,7 +515,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             //if (currND.IsCanReturn)
             //    this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
 
-            if (currND.IsSelectEmp && currND.IsEndNode == false)
+            if (currND.HisDeliveryWay == DeliveryWay.BySelected && currND.IsEndNode == false)
             {
                 this.ToolBar1.Add("<input type=button value='" + this.ToE("JSRen", "接受人") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
             }
@@ -1086,6 +1086,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     }
                     break;
                 case NamesOfBtn.Delete:
+                case "Btn_Del":
                     WorkFlow wf = null;
                     if (this.FID == 0)
                         wf = new WorkFlow(this.FK_Flow, this.WorkID);

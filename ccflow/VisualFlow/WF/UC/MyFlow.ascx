@@ -58,10 +58,11 @@
 
 #tabForm, D
 {
-    width:70%;
-    text-align:center;
+    width:960px;
+    text-align:left;
+    margin:0 auto;
+    margin-bottom:5px;
 }
-
 #divFreeFrm {
  position:relative;
  top:50px;
@@ -69,11 +70,9 @@
  width:960px;
 }
 </style>
-
 <div id=tabForm >
 <uc4:ToolBar ID="ToolBar1" runat="server" />
 </div>
-
 <div id="D" >
                     <uc5:Pub ID="FlowMsg" runat="server" />
                     <uc5:Pub ID="Pub1" runat="server" />
