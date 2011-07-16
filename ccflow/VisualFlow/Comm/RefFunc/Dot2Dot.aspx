@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Comm/RefFunc/MasterPage.master" AutoEventWireup="true" CodeFile="Dot2Dot.aspx.cs" Inherits="Comm_RefFunc_Dot2Dot" Title="Untitled Page" %>
 <%@ Register src="Dot2Dot.ascx" tagname="Dot2Dot" tagprefix="uc1" %>
 <%@ Register src="Left.ascx" tagname="Left" tagprefix="uc2" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <base target=_self />
 </asp:Content>
