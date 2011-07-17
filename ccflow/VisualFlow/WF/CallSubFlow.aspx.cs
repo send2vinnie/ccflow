@@ -39,8 +39,8 @@ public partial class WF_CallSubFlow : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        Flow fl = new Flow(this.FK_Flow);
 
+        Flow fl = new Flow(this.FK_Flow);
         Node nd = new Node( int.Parse(this.FK_Flow+"01" ) );
         Works wks = nd.HisWorks;
         QueryObject qo = new QueryObject(wks);
@@ -48,12 +48,13 @@ public partial class WF_CallSubFlow : WebPage
         qo.DoQuery();
 
         Flow from = new Flow(this.FK_FlowFrom);
-        string currNode = BP.DA.DBAccess.RunSQLReturnVal("SELECT FK_Node from WF_GenerWorkFlow where workid=" + this.FID)  as string;
+        string currNode = BP.DA.DBAccess.RunSQLReturnVal("SELECT FK_Node FROM WF_GenerWorkFlow WHERE WorkID=" + this.FID)  as string;
         if (wks.Count == 0)
         {
-            this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_Node_From=" + currNode);
+            this.Response.Redirect("MyFlow"+Glo.FromPageType+".aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_Node_From=" + this.Request.QueryString["FK_Node_From"]);
             return;
         }
+
 
         //this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "CallSubFlow.aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_FlowFrom=" + this.FK_FlowFrom);
         //qo.DoQuery("OID", 10, this.PageIdx);
@@ -129,8 +130,6 @@ public partial class WF_CallSubFlow : WebPage
             if (attr.UIVisible == false)
                 continue;
 
-          
-
             switch (attr.MyDataType)
             {
                 case DataType.AppFloat:
@@ -147,7 +146,7 @@ public partial class WF_CallSubFlow : WebPage
             }
         }
         this.Pub1.AddTD();
-        this.Pub1.AddTREnd();
+        this.Pub1.AddTREnd(); 
         this.Pub1.AddTableEnd();
     }
 }

@@ -386,6 +386,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return;
         }
 
+
         #region 判断是否有workid
         string appPath = this.Request.ApplicationPath;
         BP.WF.Node currND;
@@ -394,14 +395,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         if (this.WorkID == 0)
         {
             currWK = this.New(true, currND);
-            if (currWK.OID == 0)
-            {
-                currWK.OID = BP.DA.DBAccess.GenerOID();
-                currWK.Update();
-            }
-            string u = this.Request.RawUrl.Replace("WorkID", "df") + "&WorkID=" + currWK.OID;
-            this.Response.Redirect(u, true);
-            return;
+
+            //if (currWK.OID == 0)
+            //{
+            //    currWK.OID = BP.DA.DBAccess.GenerOID();
+            //    currWK.Update();
+            //}
+            //string u = this.Request.RawUrl.Replace("WorkID", "df") + "&WorkID=" + currWK.OID;
+            //this.Response.Redirect(u, true);
+            //return;
         }
         #endregion 判断是否有workid
 
@@ -434,10 +436,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         this.LoadPop();
         #endregion 判断权限
 
-
         try
         {
-
             if (currND == null)
                 currND = this.CurrentNode;
 
@@ -478,7 +478,16 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 this.ToolBar1.AddBtn("Btn_Delete", btnLab.DelLab);
                 this.Btn_Delete.OnClientClick = "return confirm('" + this.ToE("AYS", "您确认吗？") + "')";
+                this.Btn_Delete.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
+
+            if (btnLab.EndFlowEnable)
+            {
+                this.ToolBar1.AddBtn("Btn_EndFlow", btnLab.EndFlowLab);
+                this.ToolBar1.GetBtnByID("Btn_EndFlow").OnClientClick = "return confirm('" + this.ToE("AYS", "您确认吗？") + "')";
+                this.ToolBar1.GetBtnByID("Btn_EndFlow").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            }
+
 
             if (btnLab.RptEnable)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.RptLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
@@ -622,8 +631,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         if (nd.IsStartNode)
         {
             /*判断是否来与子流程.*/
-            if (this.Request.QueryString["FK_Node_From"] != null)
+            if ( string.IsNullOrEmpty( this.Request.QueryString["FK_Node_From"]) ==false )
             {
+                /* 如果来自于主流程 */
                 int fk_node_From = int.Parse(this.Request.QueryString["FK_Node_From"]);
                 BP.WF.Node fk_node_From_nd = new BP.WF.Node(fk_node_From);
                 Work fromWk = fk_node_From_nd.HisWork;
@@ -1085,6 +1095,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         return;
                     }
                     break;
+                case "Btn_EndFlow": //结束流程。
+                     WorkFlow mywf = null;
+                    if (this.FID == 0)
+                        mywf = new WorkFlow(this.FK_Flow, this.WorkID);
+                    else
+                        mywf = new WorkFlow(this.FK_Flow, this.FID);
+
+                    this.ToMsg("结束流程提示:<hr>" + mywf.DoFlowOver(), "info");
+                    break;
                 case NamesOfBtn.Delete:
                 case "Btn_Del":
                     WorkFlow wf = null;
@@ -1310,6 +1329,20 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         //else
         //    this.Response.Redirect("MyFlowInfo.aspx?FK_Flow=" + this.FK_Flow + "&FK_Type=" + type + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID, false);
     }
+    //public int WorkID_New
+    //{
+    //    get
+    //    {
+    //        if (this.ViewState["WorkID_New"] == null)
+    //            return 0;
+
+    //        return int.Parse(this.ViewState["WorkID_New"].ToString());
+    //    }
+    //    set
+    //    {
+    //        this.ViewState["WorkID_New"] = value;
+    //    }
+    //}
     /// <summary>
     /// 新建一个工作
     /// </summary>
@@ -1329,6 +1362,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             wk.WFState = 0;
             wk.NodeState = 0;
             wk.OID = DBAccess.GenerOID("WID");
+          //  wk.OID = DBAccess.GenerOID("WID");
+
+
+            this.WorkID = wk.OID;
+
             // DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
             //  wk.OID = DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
             wk.DirectInsert();
@@ -1347,8 +1385,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         wk.SetValByKey("RecText", WebUser.Name);
         this.WorkID = wk.OID;
         return wk;
-
-       
     }
     
     public void BtnReturnWork()

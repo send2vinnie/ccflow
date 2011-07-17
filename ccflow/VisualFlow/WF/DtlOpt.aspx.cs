@@ -130,9 +130,12 @@ public partial class WF_DtlOpt : WebPage
         Button btn = sender as Button;
 
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
-        FileUpload fu = (FileUpload)this.Pub1.FindControl("fu" + dtl.No);
-    //    fu.SaveAs(this.Request.PhysicalApplicationPath + "\\ss.xls");
+        FileUpload fuit = (FileUpload)this.Pub1.FindControl("fu" + dtl.No);
+         
 
+      
+
+           // fu.SaveAs(this.Request.PhysicalApplicationPath + "\\ss.xls");
         string id = btn.ID.Replace("Btn_", "");
     }
     private void BindUnPass()
