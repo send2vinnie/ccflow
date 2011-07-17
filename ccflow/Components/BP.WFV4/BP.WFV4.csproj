@@ -216,29 +216,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Port\SMS\SMS.cs" />
-    <Compile Include="TA\Class.cs" />
-    <Compile Include="TA\Link.cs" />
-    <Compile Include="TA\CycleEvent.cs" />
-    <Compile Include="TA\CycleEventDo.cs" />
-    <Compile Include="TA\CycleEventDtl.cs" />
-    <Compile Include="TA\Notepad.cs" />
-    <Compile Include="TA\NotepadFolder.cs" />
-    <Compile Include="TA\PubClass.cs" />
-    <Compile Include="TA\TaLog.cs" />
-    <Compile Include="TA\Task.cs" />
-    <Compile Include="TA\TaskGroup.cs" />
-    <Compile Include="TA\TAUser.cs" />
-    <Compile Include="TA\TimeScope.cs" />
-    <Compile Include="TA\WorkExt.cs" />
-    <Compile Include="TA\Work\ReturnWork.cs" />
-    <Compile Include="TA\Work\ReWork.cs" />
-    <Compile Include="TA\Work\TADay.cs" />
-    <Compile Include="TA\Work\TAWeek.cs" />
-    <Compile Include="TA\Work\Work.cs" />
-    <Compile Include="TA\Work\WorkDtl.cs" />
-    <Compile Include="TA\Work\WorkDtlBase.cs" />
-    <Compile Include="TA\Work\WorkTemplate.cs" />
-    <Compile Include="TA\Work\WorkTemplateType.cs" />
     <Compile Include="WF.cs" />
     <Compile Include="WF\GERpt.cs" />
     <Compile Include="WF\DataApply.cs" />
