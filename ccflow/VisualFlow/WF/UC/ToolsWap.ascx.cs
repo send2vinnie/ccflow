@@ -321,7 +321,6 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
             fu.ID = "F";
             this.Add(fu);
 
-
             Btn btn = new Btn();
             btn.Text = this.ToE("OK",  "确定");
             btn.Click += new EventHandler(btn_Siganture_Click);

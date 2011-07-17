@@ -45,7 +45,6 @@ public partial class WF_DtlOpt : WebPage
                 default:
                     break;
             }
-
             string url = item.URL + "?DoType=" + item.No + "&WorkID=" + this.WorkID + "&FK_MapDtl=" + this.FK_MapDtl;
             this.Pub1.AddLi("<a href=\"" + url + "\" ><span>" + item.Name + "</span></a>");
         }
@@ -65,24 +64,19 @@ public partial class WF_DtlOpt : WebPage
     }
     private void BindExpImp()
     {
-        
-
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
         if (this.Request.QueryString["Flag"] != null)
         {
             GEDtls dtls = new GEDtls(this.FK_MapDtl);
-            this.ExportDGToExcelV2(dtls, dtl.Name + ".xls");
+            this.ExportDGToExcelDtl(dtls, dtl.Name + ".xls");
             this.WinClose();
         }
 
+
         this.Pub1.AddFieldSet("数据模板导出");
-
         this.Pub1.AddP("利用数据模板导出一个数据模板，您可以在此基础上进行数据编辑，把编辑好的信息<br>在通过下面的功能导入进来，以提高工作效率。");
-
         string url = "DtlOpt.aspx?DoType=" + this.DoType + "&WorkID=" + this.WorkID + "&FK_MapDtl=" + this.FK_MapDtl + "&Flag=1";
-
-        this.Pub1.Add("<p align=center><a href='" + url + "' target=_blank >导出数据模板到Excel</a></p>");
-
+        this.Pub1.Add("<p align=center><a href='" + url + "' target=_blank ><img src='../Images/FileType/xls.gif' border=0 />导出数据模板到Excel</a></p>");
         this.Pub1.AddFieldSetEnd();
 
         this.Pub1.AddFieldSet("导入:" + dtl.Name);
@@ -93,21 +87,32 @@ public partial class WF_DtlOpt : WebPage
 
         FileUpload fu = new FileUpload();
         fu.ID = "F" + dtl.No;
+        fu.Attributes["Width"] = "100px";
         this.Pub1.Add(fu);
+
         this.Pub1.Add("<br>");
+        this.Pub1.Add("<br>");
+
+        BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
+        ddl.Items.Add(new ListItem("选择导入方式","all"));
+        ddl.Items.Add(new ListItem("清空方式", "0"));
+        ddl.Items.Add(new ListItem("追加方式", "1"));
+        ddl.ID = "DDL_ImpWay";
+        this.Pub1.Add(ddl);
 
         Button btn = new Button();
         btn.Text = "导入";
         btn.ID = "Btn_" + dtl.No;
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
-        btn = new Button();
-        btn.Text = "下载数据模板";
-        btn.ID = "Btn_Exp" + dtl.No;
-        btn.Click += new EventHandler(btn_Exp_Click);
-        this.Pub1.Add(btn);
-        this.Pub1.Add("<br>");
-        this.Pub1.Add("<br>");
+
+        //btn = new Button();
+        //btn.Text = "下载数据模板";
+        //btn.ID = "Btn_Exp" + dtl.No;
+        //btn.Click += new EventHandler(btn_Exp_Click);
+        //this.Pub1.Add(btn);
+        //this.Pub1.Add("<br>");
+        //this.Pub1.Add("<br>");
         this.Pub1.AddFieldSetEnd();
     }
     void btn_Exp_Click(object sender, EventArgs e)
@@ -123,9 +128,14 @@ public partial class WF_DtlOpt : WebPage
     void btn_Click(object sender, EventArgs e)
     {
         Button btn = sender as Button;
+
+        MapDtl dtl = new MapDtl(this.FK_MapDtl);
+        FileUpload fu = (FileUpload)this.Pub1.FindControl("fu" + dtl.No);
+        fu.SaveAs(this.Request.PhysicalApplicationPath + "\\ss.xls");
+         
+
         string id = btn.ID.Replace("Btn_", "");
     }
-
     private void BindUnPass()
     {
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
