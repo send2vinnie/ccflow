@@ -175,10 +175,10 @@ namespace BP.Web.Controls
                         }
                         this.Attributes["class"] = "TBcalendar";
                         break;
-                    case TBType.Email:
-                        if (this.Text == null || this.Text == null)
-                            this.Text = "@";
-                        break;
+                    //case TBType.Email:
+                    //    if (this.Text == null || this.Text == null)
+                    //        this.Text = "@";
+                    //    break;
                     case TBType.Moneny:
                     case TBType.Decimal:
                     case TBType.Float:

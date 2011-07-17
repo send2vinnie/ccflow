@@ -78,8 +78,8 @@ namespace BP.Web
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (this.Request.Browser.Cookies == false)
-                throw new Exception("您的浏览器不支持cookies功能，无法使用改系统。");
+            //if (this.Request.Browser.Cookies == false)
+            //    throw new Exception("您的浏览器不支持cookies功能，无法使用改系统。");
 
         }
         public string FK_Sort
@@ -673,6 +673,56 @@ namespace BP.Web
             this.Response.End();
 
             // 总结：本例程在Microsoft Visual Studio .NET 2003平台下测试通过，适用于C#和VB，当采用VB的时候将 this 关键字改成 me 。 
+        }
+
+        protected void ExportDGToExcelDtl(Entities ens, string outFileName)
+        {
+            System.Web.HttpResponse resp;
+            resp = Page.Response;
+            resp.ContentEncoding = System.Text.Encoding.GetEncoding("GB2312");
+            resp.AppendHeader("Content-Disposition", "attachment;filename=" + outFileName);
+            resp.ContentType = "application/ms-excel";
+
+            string colHeaders = "", ls_item = "";
+
+            //定义表对象与行对象，同时用DataSet对其值进行初始化 
+            System.Data.DataTable dt = ens.ToDataTableDesc();
+            dt.Columns.Remove("FID");
+            dt.Columns.Remove("关联ID");
+            dt.Columns.Remove("主键");
+
+            //  dt.Columns.Remove("BatchID");
+
+            DataRow[] myRow = dt.Select();//可以类似dt.Select("id>10")之形式达到数据筛选目的
+            int i = 0;
+            int cl = dt.Columns.Count;
+
+            //取得数据表各列标题，各标题之间以t分割，最后一个列标题后加回车符 
+            for (i = 0; i < cl; i++)
+            {
+                if (i == (cl - 1))//最后一列，加n
+                    colHeaders += dt.Columns[i].Caption.ToString() + "\n";
+                else
+                    colHeaders += dt.Columns[i].Caption.ToString() + "\t";
+            }
+            resp.Write(colHeaders);
+
+            ////逐行处理数据   
+            foreach (DataRow row in myRow)
+            {
+                //当前行数据写入HTTP输出流，并且置空ls_item以便下行数据     
+                for (i = 0; i < cl; i++)
+                {
+                    if (i == (cl - 1))//最后一列，加n
+                        ls_item += row[i].ToString() + "\n";
+                    else
+                        ls_item += row[i].ToString() + "\t";
+                }
+                resp.Write(ls_item);
+                ls_item = "";
+            }
+            resp.End();
+            return;
         }
 
         protected void ExportDGToExcelV2(Entities ens, string outFileName)

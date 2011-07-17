@@ -1726,7 +1726,7 @@ namespace BP.Web.UC
         }
         public void AddCaptionLeft(string str)
         {
-            this.Add("\n<Caption class='Caption' align=left >" + str + "</Caption>");
+            this.Add("\n<Caption class='Caption' align=left style=\"background:url('"+this.Request.ApplicationPath+"/Comm/Style/BG_Title.png') repeat-x ; height:30px ; line-height:30px\" >" + str + "</Caption>");
         }
         public void AddCaptionRight(string str)
         {
