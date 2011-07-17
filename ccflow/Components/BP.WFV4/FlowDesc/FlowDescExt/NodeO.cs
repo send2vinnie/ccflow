@@ -7,8 +7,6 @@ using BP.Port;
 
 namespace BP.WF.Ext
 {
-     
-     
     /// <summary>
     /// 这里存放每个节点的信息.	 
     /// </summary>
@@ -122,15 +120,14 @@ namespace BP.WF.Ext
                 this.SetValByKey(NodeAttr.RecipientSQL, value);
             }
         }
+        /// <summary>
+        /// 是否可以退回
+        /// </summary>
         public bool ReturnEnable
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.ReturnEnable);
-            }
-            set
-            {
-                this.SetValByKey(BtnAttr.ReturnEnable, value);
+                return this.GetValBooleanByKey(BtnAttr.ReturnRole);
             }
         }
         public bool AthEnable
@@ -224,8 +221,7 @@ namespace BP.WF.Ext
                 //map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交(对开始点无效)", true, true, false);
 
                 map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除子流程(对合流点有效)", true, true, false);
-                map.AddDDLSysEnum(NodeAttr.ReturnRole, 0, this.ToE("ReturnRole", "退回规则"),
-             true, true, NodeAttr.ReturnRole);
+               
 
                 // map.AddTBInt(NodeAttr.PassRate, 100, "通过率(对于合流节点有效)", true, true);
                 map.AddTBDecimal(NodeAttr.PassRate, 0, "完成通过率", true, false);
@@ -254,7 +250,6 @@ namespace BP.WF.Ext
 
 
                 #region  功能按钮状态
-
                 map.AddTBString(BtnAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, false);
 
@@ -262,7 +257,8 @@ namespace BP.WF.Ext
                 map.AddBoolean(BtnAttr.SaveEnable, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.ReturnLab, "退回", "退回按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.ReturnEnable, true, "是否启用", true, false);
+                map.AddDDLSysEnum(NodeAttr.ReturnRole, 0, this.ToE("ReturnRole", "退回规则"),
+           true, true, NodeAttr.ReturnRole);
 
                 map.AddTBString(BtnAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.CCEnable, true, "是否启用", true, true);
@@ -273,11 +269,15 @@ namespace BP.WF.Ext
                 map.AddTBString(BtnAttr.DelLab, "删除", "删除按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.DelEnable, true, "是否启用", true, true);
 
+                map.AddTBString(BtnAttr.EndFlowLab, "结束流程", "结束流程按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.EndFlowEnable, false, "是否启用", true, true);
+
                 map.AddTBString(BtnAttr.RptLab, "报告", "报告按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.RptEnable, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
-                map.AddDDLSysEnum(NodeAttr.FJOpen, 0, this.ToE("FJOpen", "附件权限"), true, true, NodeAttr.FJOpen, "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");
+                map.AddDDLSysEnum(NodeAttr.FJOpen, 0, this.ToE("FJOpen", "附件权限"), true, true, 
+                    NodeAttr.FJOpen, "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");
 
                 map.AddTBString(BtnAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.TrackEnable, true, "是否启用", true, true);
@@ -312,8 +312,8 @@ namespace BP.WF.Ext
                     NodeStationAttr.FK_Node, NodeStationAttr.FK_Station,
                     DeptAttr.Name, DeptAttr.No, this.ToE("NodeSta", "节点岗位"));
 
-                //map.AttrsOfOneVSM.Add(new BP.WF.NodeFlows(), new Flows(), NodeFlowAttr.FK_Node, NodeFlowAttr.FK_Flow, DeptAttr.Name, DeptAttr.No,
-                //    this.ToE("CallSubFlow","可调用的子流程") );
+                map.AttrsOfOneVSM.Add(new BP.WF.NodeFlows(), new Flows(), NodeFlowAttr.FK_Node, NodeFlowAttr.FK_Flow, DeptAttr.Name, DeptAttr.No,
+                    this.ToE("CallSubFlow", "可调用的子流程"));
 
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeEmps(), new BP.WF.Port.Emps(), NodeEmpAttr.FK_Node, EmpDeptAttr.FK_Emp, DeptAttr.Name,
                     DeptAttr.No, this.ToE("Accpter", "接受人员"));
@@ -322,7 +322,7 @@ namespace BP.WF.Ext
                   DeptAttr.No, this.ToE("Accpter", "可退回的节点"));
 
                 //map.AttrsOfOneVSM.Add(new BP.WF.NodeDepts(), new BP.WF.Port.Depts(), NodeDeptAttr.FK_Node, NodeDeptAttr.FK_Dept, DeptAttr.Name, 
-                //    DeptAttr.No,this.ToE("AccptDept","接受部门")  );
+                //DeptAttr.No,this.ToE("AccptDept","接受部门")  );
 
                 RefMethod rm = new RefMethod();
                 rm.Title = this.ToE("DesignSheet", "设计表单"); // "设计表单";

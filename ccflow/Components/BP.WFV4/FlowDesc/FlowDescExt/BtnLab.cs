@@ -37,7 +37,7 @@ namespace BP.WF
         /// <summary>
         /// 退回是否启用
         /// </summary>
-        public const string ReturnEnable = "ReturnEnable";
+        public const string ReturnRole = "ReturnRole";
         /// <summary>
         /// 退回标签
         /// </summary>
@@ -69,8 +69,23 @@ namespace BP.WF
         public const string DelLab = "DelLab";
         public const string DelEnable = "DelEnable";
 
+        /// <summary>
+        /// 结束流程
+        /// </summary>
+        public const string EndFlowLab = "EndFlowLab";
+        /// <summary>
+        /// 结束流程
+        /// </summary>
+        public const string EndFlowEnable = "EndFlowEnable";
+
+        /// <summary>
+        /// AthLab
+        /// </summary>
         public const string AthLab = "AthLab";
-        public const string AthEnable = "AthEnable";
+        /// <summary>
+        /// FJOpen
+        /// </summary>
+        public const string FJOpen = "FJOpen";
     }
     /// <summary>
     /// Btn
@@ -81,7 +96,7 @@ namespace BP.WF
         {
             get
             {
-                return "Send,Save,Return,CC,Shift,Del,Rpt,Ath,Track,Opt";
+                return "Send,Save,Return,CC,Shift,Del,Rpt,Ath,Track,Opt,EndFLow";
             }
         }
         #region 基本属性
@@ -158,7 +173,22 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.ReturnEnable);
+                return  this.GetValBooleanByKey(BtnAttr.ReturnRole);
+            }
+        }
+
+        public string AthLab
+        {
+            get
+            {
+                return this.GetValStringByKey(BtnAttr.AthLab);
+            }
+        }
+        public bool AthEnable
+        {
+            get
+            {
+                return this.GetValBooleanByKey(BtnAttr.FJOpen);
             }
         }
 
@@ -218,10 +248,7 @@ namespace BP.WF
             {
                 return this.GetValBooleanByKey(BtnAttr.CCEnable);
             }
-           
         }
-
-
         public string DelLab
         {
             get
@@ -235,9 +262,27 @@ namespace BP.WF
             {
                 return this.GetValBooleanByKey(BtnAttr.DelEnable);
             }
-
         }
-
+        /// <summary>
+        /// 结束流程
+        /// </summary>
+        public string EndFlowLab
+        {
+            get
+            {
+                return this.GetValStringByKey(BtnAttr.EndFlowLab);
+            }
+        }
+        /// <summary>
+        /// 是否启用结束流程
+        /// </summary>
+        public bool EndFlowEnable
+        {
+            get
+            {
+                return this.GetValBooleanByKey(BtnAttr.EndFlowEnable);
+            }
+        }
         #endregion
 
         #region 构造方法
@@ -245,7 +290,10 @@ namespace BP.WF
         /// Btn
         /// </summary>
         public BtnLab() { }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeid"></param>
         public BtnLab(int nodeid)
         {
             this.NodeID = nodeid;
@@ -278,7 +326,7 @@ namespace BP.WF
 
 
                 map.AddTBString(BtnAttr.ReturnLab, "退回", "退回按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.ReturnEnable, true, "是否启用", true, true);
+                map.AddBoolean(BtnAttr.ReturnRole, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.CCEnable, true, "是否启用", true, true);
@@ -286,15 +334,17 @@ namespace BP.WF
                 map.AddTBString(BtnAttr.ShiftLab, "移交", "移交按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.ShiftEnable, true, "是否启用", true, true);
 
+                map.AddTBString(BtnAttr.DelLab, "删除流程", "删除流程按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.DelEnable, false, "是否启用", true, true);
 
-                map.AddTBString(BtnAttr.DelLab, "删除", "删除按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.DelEnable, true, "是否启用", true, true);
+                map.AddTBString(BtnAttr.EndFlowLab, "结束流程", "结束流程按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.EndFlowEnable, false, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.RptLab, "报告", "报告按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.RptEnable, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.AthEnable, true, "是否启用", true, true);
+                map.AddBoolean(BtnAttr.FJOpen, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.TrackEnable, true, "是否启用", true, true);
