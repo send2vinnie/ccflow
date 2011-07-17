@@ -27,7 +27,6 @@ public partial class _Default : System.Web.UI.Page
 
         //Flows fls = new Flows();
         //fls.RetrieveAll();
-
         //foreach (Flow fl in fls)
         //{
         //   // this.Response.Write(fl.Name+"<br>");
@@ -43,7 +42,6 @@ public partial class _Default : System.Web.UI.Page
         //fl.Delete();
         //this.Response.Write(fl.Name);
         
-
       //  //Flow fl = new Flow();
       //  //fl.No = "0123";
       //  //fl.Name = "abc";
@@ -57,10 +55,7 @@ public partial class _Default : System.Web.UI.Page
       //  //fl.Name = "sssss";
       //  //fl.Update();
       //  //this.Response.Write(fl.Name);
-
       //  //fl.Delete();
-         
-
       //  if (this.Request.RawUrl.ToLower().Contains("wap"))
       //  {
       //      this.Response.Redirect("./WAP/", true);
