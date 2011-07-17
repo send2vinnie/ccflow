@@ -432,6 +432,7 @@ namespace BP.WF
             string url = System.Web.HttpContext.Current.Request.ApplicationPath + this.Url;
             string path = System.Web.HttpContext.Current.Request.MapPath(url);
             path = path.Replace("Flow\\DataUser", "DataUser");
+            path = path.Replace("Flow\\", "");
 
             PubClass.OpenWordDocV2(path, this.FK_EmpT + "打印的" + this.FK_BillTypeT + ".doc");
             return null;
@@ -441,6 +442,7 @@ namespace BP.WF
             string url = System.Web.HttpContext.Current.Request.ApplicationPath + this.Url;
             string path = System.Web.HttpContext.Current.Request.MapPath(url);
             path = path.Replace("Flow\\DataUser", "DataUser");
+            path = path.Replace("Flow\\", "");
 
             PubClass.OpenWordDocV2(path, this.FK_EmpT + "打印的" + this.FK_BillTypeT + ".pdf");
             return null;
