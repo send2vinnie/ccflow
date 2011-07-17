@@ -145,6 +145,7 @@ namespace BP.WF
         {
             string info = "";
             WorkNode wn = this.GetCurrentWorkNode();
+
             #region 正常的删除信息.
             BP.DA.Log.DefaultLogWriteLineInfo("@[" + this.HisFlow.Name + "]流程被[" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "]删除，WorkID[" + this.WorkID + "]。");
             string msg = "";
@@ -271,7 +272,6 @@ namespace BP.WF
                 }
             }
             #endregion
-
 
             return info;
         }

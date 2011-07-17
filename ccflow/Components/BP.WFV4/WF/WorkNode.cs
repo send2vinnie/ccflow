@@ -221,10 +221,17 @@ namespace BP.WF
                 }
 
                 dt = DBAccess.RunSQLReturnTable(sql);
+                if (dt.Rows.Count == 0)
+                {
+                    if (SystemConfig.IsDebug)
+                        throw new Exception("@没有找到可接受的工作人员。@技术信息：执行的sql没有发现人员:" + sql);
+                    else
+                        throw new Exception("@没有找到可接受的工作人员。");
+                }
                 return WorkerListWayOfDept(town, dt);
             }
 
-            if (this.HisNode.IsSelectEmp)
+            if (this.HisNode.HisDeliveryWay== DeliveryWay.BySelected)
             {
                 sql = "SELECT  FK_Emp  FROM WF_SelectAccper WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID;
                 dt = DBAccess.RunSQLReturnTable(sql);
