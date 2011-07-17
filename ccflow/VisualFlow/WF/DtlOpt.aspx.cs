@@ -87,7 +87,7 @@ public partial class WF_DtlOpt : WebPage
 
         FileUpload fu = new FileUpload();
         fu.ID = "F" + dtl.No;
-        fu.Attributes["Width"] = "100px";
+      //  fu.Attributes["Width"] = "100px";
         this.Pub1.Add(fu);
 
         this.Pub1.Add("<br>");
@@ -131,8 +131,7 @@ public partial class WF_DtlOpt : WebPage
 
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
         FileUpload fu = (FileUpload)this.Pub1.FindControl("fu" + dtl.No);
-        fu.SaveAs(this.Request.PhysicalApplicationPath + "\\ss.xls");
-         
+    //    fu.SaveAs(this.Request.PhysicalApplicationPath + "\\ss.xls");
 
         string id = btn.ID.Replace("Btn_", "");
     }

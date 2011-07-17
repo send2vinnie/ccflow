@@ -11,7 +11,6 @@ using System.Web.UI.WebControls.WebParts;
 using BP.Web;
 using BP.En;
 using BP.DA;
-using BP.OA;
 using BP.WF;
 using BP.Sys;
 using BP.Port;
@@ -21,18 +20,18 @@ public partial class WF_UC_Link : BP.Web.UC.UCBase3
 {
     public void BindWap()
     {
-        Links ens = new Links();
-        ens.RetrieveAll();
-        this.AddFieldSet("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>");
-        this.AddUL();
-        foreach (Link en in ens)
-        {
-            this.AddLi(en.Url, "<b>" + en.Name + "</b>", en.Target);
-            this.Add("<font color=green>" + en.Url + "</font><br>" + en.Note);
+        //Links ens = new Links();
+        //ens.RetrieveAll();
+        //this.AddFieldSet("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>");
+        //this.AddUL();
+        //foreach (Link en in ens)
+        //{
+        //    this.AddLi(en.Url, "<b>" + en.Name + "</b>", en.Target);
+        //    this.Add("<font color=green>" + en.Url + "</font><br>" + en.Note);
 
-        }
-        this.AddULEnd();
-        this.AddFieldSetEnd();
+        //}
+        //this.AddULEnd();
+        //this.AddFieldSetEnd();
     }
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -42,23 +41,23 @@ public partial class WF_UC_Link : BP.Web.UC.UCBase3
             return;
         }
 
-        Links ens = new Links();
-        ens.RetrieveAll();
+        //Links ens = new Links();
+        //ens.RetrieveAll();
 
-        this.DivInfoBlockBegin();
+        //this.DivInfoBlockBegin();
          
-        this.AddUL();
-        foreach (Link en in ens)
-        {
-            this.AddLi(en.Url, "<b>" + en.Name + "</b>", en.Target);
-            this.Add("<font color=green>" + en.Url + "</font><br>" + en.Note);
-        }
-        this.AddULEnd();
-        this.AddBR();
-        this.AddBR();
-        this.AddBR();
-        this.AddBR();
-        this.AddBR();
-        this.DivInfoBlockEnd();
+        //this.AddUL();
+        //foreach (Link en in ens)
+        //{
+        //    this.AddLi(en.Url, "<b>" + en.Name + "</b>", en.Target);
+        //    this.Add("<font color=green>" + en.Url + "</font><br>" + en.Note);
+        //}
+        //this.AddULEnd();
+        //this.AddBR();
+        //this.AddBR();
+        //this.AddBR();
+        //this.AddBR();
+        //this.AddBR();
+        //this.DivInfoBlockEnd();
     }
 }
