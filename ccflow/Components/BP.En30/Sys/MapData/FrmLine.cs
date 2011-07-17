@@ -69,7 +69,9 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStringByKey(FrmLineAttr.BorderColor);
+            //    return this.GetValStringByKey(FrmLineAttr.BorderColor);
+                return this.GetValStringByKey("BorderColor");
+
             }
             set
             {

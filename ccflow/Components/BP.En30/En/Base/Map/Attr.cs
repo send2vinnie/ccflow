@@ -872,7 +872,8 @@ namespace BP.En
 	public class Attrs: CollectionBase
 	{
 		#region 关于属性的增加 String
-		protected void AddTBString(string key , string field,  object defaultVal, FieldType _FieldType, TBType tbType, string desc, bool uiVisable, bool isReadonly ,int minLength, int maxLength, int tbWith )
+		protected void AddTBString(string key , string field,  object defaultVal, 
+            FieldType _FieldType, TBType tbType, string desc, bool uiVisable, bool isReadonly ,int minLength, int maxLength, int tbWith )
 		{
 			Attr attr = new Attr();
 			attr.Key=key;

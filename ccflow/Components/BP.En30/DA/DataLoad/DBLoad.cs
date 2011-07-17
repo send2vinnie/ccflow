@@ -182,7 +182,6 @@ namespace BP
                 if (fileName.ToLower().Contains(".xlsx"))
                 {
                    // strConn = "Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties=\"Excel 12.0 Xml;HDR=YES\"";
-
                     strConn = "Microsoft.Jet.OLEDB.4.0;Data Source=" + fileName + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
                 }
                 OleDbConnection con = new OleDbConnection(strConn);

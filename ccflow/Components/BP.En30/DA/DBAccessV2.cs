@@ -1080,9 +1080,7 @@ namespace BP.DA
                     conn = new SqlConnection(SystemConfig.AppCenterDSN);
 
                 if (conn.State != System.Data.ConnectionState.Open)
-                {
                     conn.Open();
-                }
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.CommandType = CommandType.Text;

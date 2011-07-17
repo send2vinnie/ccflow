@@ -1857,15 +1857,12 @@ namespace BP.En
         public static string InsertForPara(Entity en)
         {
             string dbstr = en.HisDBVarStr;
-
             bool isInnkey = false;
             if (en.IsOIDEntity)
             {
                 EntityOID myen = en as EntityOID;
-#warning edit
                 isInnkey = false; // myen.IsInnKey;
             }
-
 
             string key = "", field = "", val = "";
             foreach (Attr attr in en.EnMap.Attrs)
