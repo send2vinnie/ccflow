@@ -65,7 +65,8 @@ namespace BP.WF.Ext
                 map.CodeStruct = "3";
 
                 map.AddTBStringPK(FlowAttr.No, null, this.ToE("No", "编号"), true, true, 1, 10, 3);
-                map.AddDDLEntities(FlowAttr.FK_FlowSort, "01", this.ToE("FlowSort", "流程类别"), new FlowSorts(), true);
+                map.AddDDLEntities(FlowAttr.FK_FlowSort, "01", this.ToE("FlowSort", "流程类别"),
+                    new FlowSorts(), true);
                 map.AddTBString(FlowAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 50, 10, true);
                 map.AddBoolean(FlowAttr.IsOK, true, this.ToE("IsEnable", "是否起用"), true, true);
 

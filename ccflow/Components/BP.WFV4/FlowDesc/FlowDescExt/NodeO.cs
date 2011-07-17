@@ -14,6 +14,45 @@ namespace BP.WF.Ext
     /// </summary>
     public class NodeO : Entity, IDTS
     {
+        /// <summary>
+        /// 投递规则
+        /// </summary>
+        public ReturnRole HisReturnRole
+        {
+            get
+            {
+                return (ReturnRole)this.GetValIntByKey(NodeAttr.ReturnRole);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.ReturnRole, (int)value);
+            }
+        }
+        public FJOpen HisFJOpen
+        {
+            get
+            {
+                return (FJOpen)this.GetValIntByKey(NodeAttr.FJOpen);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.FJOpen, (int)value);
+            }
+        }
+        /// <summary>
+        /// 投递规则
+        /// </summary>
+        public DeliveryWay HisDeliveryWay
+        {
+            get
+            {
+                return (DeliveryWay)this.GetValIntByKey(NodeAttr.DeliveryWay);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.DeliveryWay, (int)value);
+            }
+        }
         public int Step
         {
             get
@@ -83,7 +122,26 @@ namespace BP.WF.Ext
                 this.SetValByKey(NodeAttr.RecipientSQL, value);
             }
         }
-        
+        public bool ReturnEnable
+        {
+            get
+            {
+                return this.GetValBooleanByKey(BtnAttr.ReturnEnable);
+            }
+            set
+            {
+                this.SetValByKey(BtnAttr.ReturnEnable, value);
+            }
+        }
+        public bool AthEnable
+        {
+            get
+            {
+                if (HisFJOpen == FJOpen.None)
+                    return false;
+                return true;
+            }
+        }
         public override string PK
         {
             get
@@ -93,7 +151,13 @@ namespace BP.WF.Ext
         }
         protected override bool beforeUpdate()
         {
-            #region 更新流程判断条件的标记。
+            //if (this.HisReturnRole == ReturnRole.CanNotReturn)
+            //    this.ReturnEnable = false;
+            //else
+            //    this.ReturnEnable = true;
+
+
+            #region 更新流程判断条件的标记
             DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0  WHERE FK_Flow='" + this.FK_Flow + "'");
             DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=1 WHERE NodeID IN (SELECT NodeID FROM WF_Cond WHERE CondType=0) AND FK_Flow='" + this.FK_Flow + "'");
             DBAccess.RunSQL("UPDATE WF_Node SET IsCCFlow=1 WHERE NodeID IN (SELECT NodeID FROM WF_Cond WHERE CondType=1) AND FK_Flow='" + this.FK_Flow + "'");
@@ -109,7 +173,8 @@ namespace BP.WF.Ext
             return base.beforeUpdate();
         }
 
-        #region 初试化全局的 Nod
+
+        #region 初试化全局的 Node
         public override UAC HisUAC
         {
             get
@@ -138,24 +203,15 @@ namespace BP.WF.Ext
                     return this._enMap;
 
                 Map map = new Map("WF_Node");
-
                 map.EnDesc = this.ToE("Node", "节点");
-
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
 
                 // 基础属性
                 map.AddTBIntPK(NodeAttr.NodeID, 0, this.ToE("NodeID", "节点ID"), true, true);
-
                 map.AddTBInt(NodeAttr.Step, (int)NodeWorkType.Work, this.ToE("FlowStep", "流程步骤"), true, false);
-
-                //map.AddTBString(NodeAttr.FK_Flow, null, "流程编号", true, true, 0, 100, 10);
-                //map.AddTBString(NodeAttr.FlowName, null, "流程名", true, true, 0, 100, 10);
-
                 map.AddTBString(NodeAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 100, 10, true);
-
                 map.AddBoolean(NodeAttr.IsTask, true, this.ToE("IsTask", "允许分配工作否?"), true, true, false);
-                map.AddBoolean(NodeAttr.IsSelectEmp, false, this.ToE("IsSelectEmp", "可否选择接受人?"), true, true, false);
 
 
                 //map.AddBoolean(NodeAttr.IsCanCC, true, "是否可以抄送", false, false, false);
@@ -167,10 +223,7 @@ namespace BP.WF.Ext
                 //map.AddBoolean(NodeAttr.IsCanReturn, false, this.ToE("IsCanReturn", "是否可以退回?"), true, true, false);
                 //map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交(对开始点无效)", true, true, false);
 
-
-
                 map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除子流程(对合流点有效)", true, true, false);
-
                 map.AddDDLSysEnum(NodeAttr.ReturnRole, 0, this.ToE("ReturnRole", "退回规则"),
              true, true, NodeAttr.ReturnRole);
 
@@ -180,18 +233,18 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(NodeAttr.RunModel, 0, this.ToE("RunModel", "运行模式"),
                     true, true, NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流");
 
-
                 //map.AddDDLSysEnum(NodeAttr.FLRole, 0, this.ToE("FLRole", "分流规则"), true, true, NodeAttr.FLRole,
                 //    "@0=按接受人@1=按部门@2=按岗位");
 
-                map.AddDDLSysEnum(NodeAttr.FJOpen, 0, this.ToE("FJOpen", "附件权限"), true, true, NodeAttr.FJOpen, "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");
+
+                map.AddDDLSysEnum(NodeAttr.DeliveryWay, 0, "投递规则", true, true);
+                map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10, true);
 
                 map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true);
 
                 map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 500, 10, true);
                 map.AddTBString(NodeAttr.DoWhat, null, this.ToE("DoWhat", "完成后处理SQL"), false, false, 0, 500, 10, false);
 
-                map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10, true);
                 map.AddTBString(NodeAttr.MsgSend, null, "发送成功后提示信息", true, false, 0, 2000, 10, true);
 
                 //map.AddBoolean("IsSkipReturn", false, "是否可以跨级撤销", true, true, true);
@@ -203,13 +256,13 @@ namespace BP.WF.Ext
                 #region  功能按钮状态
 
                 map.AddTBString(BtnAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, true);
+                map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, false);
 
                 map.AddTBString(BtnAttr.SaveLab, "保存", "保存按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.SaveEnable, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.ReturnLab, "退回", "退回按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.ReturnEnable, true, "是否启用", true, true);
+                map.AddBoolean(BtnAttr.ReturnEnable, true, "是否启用", true, false);
 
                 map.AddTBString(BtnAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.CCEnable, true, "是否启用", true, true);
@@ -221,10 +274,10 @@ namespace BP.WF.Ext
                 map.AddBoolean(BtnAttr.DelEnable, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.RptLab, "报告", "报告按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.RptEnable, true, "是否启用", true, false);
+                map.AddBoolean(BtnAttr.RptEnable, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.AthEnable, true, "是否启用", true, true);
+                map.AddDDLSysEnum(NodeAttr.FJOpen, 0, this.ToE("FJOpen", "附件权限"), true, true, NodeAttr.FJOpen, "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");
 
                 map.AddTBString(BtnAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.TrackEnable, true, "是否启用", true, true);
@@ -255,7 +308,8 @@ namespace BP.WF.Ext
 
 
                 // 相关功能。
-                map.AttrsOfOneVSM.Add(new BP.WF.NodeStations(), new BP.WF.Port.Stations(), NodeStationAttr.FK_Node, NodeStationAttr.FK_Station,
+                map.AttrsOfOneVSM.Add(new BP.WF.NodeStations(), new BP.WF.Port.Stations(),
+                    NodeStationAttr.FK_Node, NodeStationAttr.FK_Station,
                     DeptAttr.Name, DeptAttr.No, this.ToE("NodeSta", "节点岗位"));
 
                 //map.AttrsOfOneVSM.Add(new BP.WF.NodeFlows(), new Flows(), NodeFlowAttr.FK_Node, NodeFlowAttr.FK_Flow, DeptAttr.Name, DeptAttr.No,

@@ -414,7 +414,7 @@ namespace BP.WF
                 if (nd.HisStations.Count == 0)
                 {
                     string infoAccept = "";
-                    if (nd.IsSelectEmp == true)
+                    if (nd.HisDeliveryWay == DeliveryWay.BySelected)
                     {
                         if (nd.HisToNodes.Count == 0)
                             infoAccept = "<font color=red>@可执行的人员是用户在表单里的,人员选择器中选择出来的.但是当前节点有多个分支，流程设计错误。</font>";
@@ -449,7 +449,6 @@ namespace BP.WF
                     emps.RetrieveInSQL("select fk_emp from Port_Empstation WHERE fk_station in (select fk_station from WF_NodeStation WHERE FK_Node=" + nd.NodeID + " )");
                     if (emps.Count == 0)
                     {
-
                         msg += "<font color=red>" + this.ToE("F0", "岗位人员设置错误：虽然您设置了岗位，但是岗位上没有相关人员执行，流程到此步骤不能正常运行，请在用户维护里维护岗位。") + "</font>";
                     }
                     else

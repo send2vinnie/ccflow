@@ -668,7 +668,7 @@ namespace BP.WF
                 //}
 
 
-                if (this.HisNode.IsSelectEmp && this.HisNode.IsEndNode == false)
+                if (this.HisNode.HisDeliveryWay== DeliveryWay.BySelected && this.HisNode.IsEndNode == false)
                 {
                     if (this.OID == 0)
                         tp += "[<a href=\"javascript:alert('" + this.ToE("JSRen", "保存后才能执行") + "');\" ><img src='../images/Btn/Search.gif' border=0/>" + this.ToE("JSRen", "接受人") + "</a>]";
@@ -747,7 +747,7 @@ namespace BP.WF
         /// <returns></returns>
         public virtual string BeforeSend()
         {
-            if (this.HisNode.IsSelectEmp)
+            if (this.HisNode.HisDeliveryWay == DeliveryWay.BySelected)
             {
                 SelectAccpers accps = new SelectAccpers();
                 int i = accps.Retrieve(SelectAccperAttr.FK_Node, this.NodeID,

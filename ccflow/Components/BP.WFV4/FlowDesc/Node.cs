@@ -8,6 +8,36 @@ using BP.Port;
 namespace BP.WF
 {
     /// <summary>
+    /// 投递方式
+    /// </summary>
+    public enum DeliveryWay
+    {
+        /// <summary>
+        /// 按岗位
+        /// </summary>
+        ByStation,
+        /// <summary>
+        /// 按部门
+        /// </summary>
+        ByDept,
+        /// <summary>
+        /// 按指定的人员
+        /// </summary>
+        BySpcEmp,
+        /// <summary>
+        /// 按SQL
+        /// </summary>
+        BySQL,
+        /// <summary>
+        /// 由发送人选择
+        /// </summary>
+        BySelected,
+        /// <summary>
+        /// 按人员
+        /// </summary>
+        ByEmp
+    }
+    /// <summary>
     /// 节点工作退回规则
     /// </summary>
     public enum ReturnRole
@@ -361,10 +391,6 @@ namespace BP.WF
         /// </summary>
         public const string SignType = "SignType";
         /// <summary>
-        /// 是否可以选择接受人员
-        /// </summary>
-        public const string IsSelectEmp = "IsSelectEmp";
-        /// <summary>
         /// 
         /// </summary>
         public const string DoWhat = "DoWhat";
@@ -401,6 +427,10 @@ namespace BP.WF
         /// 个性化发送信息
         /// </summary>
         public const string MsgSend = "MsgSend";
+        /// <summary>
+        /// 投递规则
+        /// </summary>
+        public const string DeliveryWay = "DeliveryWay";
         #endregion
     }
     /// <summary>
@@ -1476,6 +1506,20 @@ namespace BP.WF
 
         #region 节点的工作类型
         /// <summary>
+        /// 投递规则
+        /// </summary>
+        public DeliveryWay HisDeliveryWay
+        {
+            get
+            {
+                return (DeliveryWay)this.GetValIntByKey(NodeAttr.DeliveryWay);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.DeliveryWay, (int)value);
+            }
+        }
+        /// <summary>
         /// 附件开放类型
         /// </summary>
         public FJOpen HisFJOpen
@@ -1734,17 +1778,6 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(NodeAttr.IsCCNode, value);
-            }
-        }
-        public bool IsSelectEmp
-        {
-            get
-            {
-                return this.GetValBooleanByKey(NodeAttr.IsSelectEmp);
-            }
-            set
-            {
-                this.SetValByKey(NodeAttr.IsSelectEmp, value);
             }
         }
         public string HisSubFlows
@@ -2064,8 +2097,10 @@ namespace BP.WF
                 map.AddTBString(NodeAttr.DoWhat, null, "完成后处理SQL", true, false, 0, 500, 10);
                 map.AddTBString(NodeAttr.Doc, null, BP.Sys.Language.GetValByUserLang("Desc", "描述"), true, false, 0, 100, 10);
                 map.AddBoolean(NodeAttr.IsTask, true, "允许分配工作否?", true, true);
-                map.AddBoolean(NodeAttr.IsSelectEmp, false, "可否选择接受人?", true, true);
+
                 map.AddTBInt(NodeAttr.ReturnRole, 2, "退回规则", true, true);
+                map.AddTBInt(NodeAttr.DeliveryWay, 0, "投递规则", true, true);
+
 
                 //map.AddBoolean(NodeAttr.IsCanReturn, true, "是否可以退回", true, true);
                 //map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true);

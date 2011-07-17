@@ -38,7 +38,7 @@ namespace BP.WF
                 map.EnDesc =  this.ToE("FlowSort", "流程类别") ;
                 map.CodeStruct = "2";
 
-                map.DepositaryOfEntity = Depositary.None;
+                map.DepositaryOfEntity = Depositary.Application;
                 map.DepositaryOfMap = Depositary.Application;
 
                 map.IsAllowRepeatNo = false;
@@ -46,6 +46,7 @@ namespace BP.WF
                 map.AddTBStringPK(SimpleNoNameAttr.No, null, "编号", true, true, 2, 2, 2);
                 map.AddTBString(SimpleNoNameAttr.Name, null, "名称", true, false, 2, 50, 50);
                 map.AddTBInt("IDX", 0, "IDX", false, false);
+
                 this._enMap = map;
                 return this._enMap;
             }
