@@ -142,7 +142,7 @@ public partial class WF_FileManager : WebPage
                 this.Pub1.AddTD(fm.FK_Emp + "," + fm.FK_EmpText);
 
 
-            this.Pub1.AddTD("<a href='../DataUser/" + fm.FK_Dept + "/" + fm.OID + "." + fm.Ext + "' target=_bl ><img src='../Images/FileType/" + fm.Ext + ".gif' border=0/>" + fm.Name + "</a>");
+            this.Pub1.AddTD("<a href='../DataUser/FlowFile/" + fm.FK_Dept + "/" + fm.OID + "." + fm.Ext + "' target=_bl ><img src='../Images/FileType/" + fm.Ext + ".gif' border=0/>" + fm.Name + "</a>");
 
             this.Pub1.AddTD(fm.RDT);
             this.Pub1.AddTD(fm.FileSize);
