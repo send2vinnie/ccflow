@@ -380,7 +380,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// <param name="e"></param>
     protected void Page_Load(object sender, System.EventArgs e)
     {
-        if (this.DoType != null)
+       if (this.DoType != null)
         {
             DoDoType();
             return;
