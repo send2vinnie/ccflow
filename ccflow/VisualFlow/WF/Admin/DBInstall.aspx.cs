@@ -39,7 +39,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                         "执行成功，希望在系统每次升级后执行此功能，不会对你的数据库数据产生影响。");
 
                     // 手动升级. 2011-07-08 补充节点字段分组.
-                    string sql = "@DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
+                    string sql = "DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
                     BP.DA.DBAccess.RunSQL(sql);
 
                     sql += "INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态')";

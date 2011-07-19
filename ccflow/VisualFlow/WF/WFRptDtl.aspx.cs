@@ -41,6 +41,9 @@ public partial class WF_WFDtl : WebPage
     {
         this.Page.RegisterClientScriptBlock("s",
           "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
+        this.Page.RegisterClientScriptBlock("sd",
+        "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table.css' rel='stylesheet' type='text/css' />");
+
 
 
         BP.Sys.GEDtls dtls = new BP.Sys.GEDtls(this.EnName);
@@ -48,17 +51,21 @@ public partial class WF_WFDtl : WebPage
         qo.AddWhere(BP.Sys.GEDtlAttr.RefPK, this.RefPK);
         qo.DoQuery();
 
+        if (this.Request.QueryString["DoType"] == "Exp")
+        {
+            //  BP.PubClass.
+        }
+
         //  throw new Exception(qo.SQL);
 
         Map map = dtls.GetNewEntity.EnMap;
-
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX(map.EnDesc + " - <a href='WFRptDtl.aspx?RefPK="+this.RefPK+"&EnName="+this.EnName+"&DoType=Exp' ><img src='../Images/Btn/Excel.gif' border=0>输出到Excel</a>");
+        this.Ucsys1.AddCaptionLeft(map.EnDesc + " - <a href='WFRptDtl.aspx?RefPK="+this.RefPK+"&EnName="+this.EnName+"&DoType=Exp' ><img src='../Images/Btn/Excel.gif' border=0>输出到Excel</a>");
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("序");
         foreach (Attr attr in map.Attrs)
         {
-            if (attr.Key == "RefPK" || attr.Key == "OID")
+            if (attr.UIVisible == false)
                 continue;
 
             this.Ucsys1.AddTDTitle(attr.Desc);
@@ -74,10 +81,25 @@ public partial class WF_WFDtl : WebPage
             this.Ucsys1.AddTDIdx(i++);
             foreach (Attr attr in map.Attrs)
             {
-                if (attr.Key == "RefPK" || attr.Key == "OID")
+                if (attr.UIVisible == false)
                     continue;
 
-                this.Ucsys1.AddTD(dtl.GetValStrByKey(attr.Key));
+                switch (attr.MyDataType)
+                {
+                    case DataType.AppInt:
+                        this.Ucsys1.AddTD(dtl.GetValIntByKey(attr.Key));
+                        break;
+                    case DataType.AppMoney:
+                    case DataType.AppRate:
+                        this.Ucsys1.AddTD(dtl.GetValIntByKey(attr.Key).ToString("0.00"));
+                        break;
+                    case DataType.AppFloat:
+                        this.Ucsys1.AddTD(dtl.GetValFloatByKey(attr.Key));
+                        break;
+                    default:
+                        this.Ucsys1.AddTD(dtl.GetValStrByKey(attr.Key));
+                        break;
+                }
             }
             this.Ucsys1.AddTREnd();
         }
@@ -85,18 +107,16 @@ public partial class WF_WFDtl : WebPage
 
         this.Ucsys1.AddTRSum();
         this.Ucsys1.AddTD();
-
-
         foreach (Attr attr in map.Attrs)
         {
-            if (attr.Key == "RefPK" || attr.Key == "OID")
+            if (attr.UIVisible == false)
                 continue;
 
-            if (attr.IsNum == false || attr.Key=="FID")
+            if (attr.IsNum == false )
                 this.Ucsys1.AddTD();
             else
             {
-                this.Ucsys1.AddTD(dtls.GetSumFloatByKey(attr.Key));
+                this.Ucsys1.AddTDNum( dtls.GetSumFloatByKey(attr.Key).ToString());
             }
         }
         this.Ucsys1.AddTREnd();

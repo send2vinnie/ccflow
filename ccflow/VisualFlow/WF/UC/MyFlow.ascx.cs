@@ -386,7 +386,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return;
         }
 
-
         #region 判断是否有workid
         string appPath = this.Request.ApplicationPath;
         BP.WF.Node currND;
@@ -474,17 +473,17 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             if (btnLab.CCEnable)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
 
-            if (btnLab.DelEnable)
+            if (btnLab.DeleteEnable)
             {
-                this.ToolBar1.AddBtn("Btn_Delete", btnLab.DelLab);
-                this.Btn_Delete.OnClientClick = "return confirm('" + this.ToE("AYS", "您确认吗？") + "')";
+                this.ToolBar1.AddBtn("Btn_Delete", btnLab.DeleteLab);
+                this.Btn_Delete.OnClientClick = "return confirm('" + this.ToE("AYS", "将要执行删除流程，您确认吗？") + "')";
                 this.Btn_Delete.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
             if (btnLab.EndFlowEnable)
             {
                 this.ToolBar1.AddBtn("Btn_EndFlow", btnLab.EndFlowLab);
-                this.ToolBar1.GetBtnByID("Btn_EndFlow").OnClientClick = "return confirm('" + this.ToE("AYS", "您确认吗？") + "')";
+                this.ToolBar1.GetBtnByID("Btn_EndFlow").OnClientClick = "return confirm('" + this.ToE("AYS", "将要执行终止流程，您确认吗？") + "')";
                 this.ToolBar1.GetBtnByID("Btn_EndFlow").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
@@ -769,11 +768,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 }
                 return;
             case FormType.FreeForm:
+            case FormType.DisableIt:
                 Frms frms = nd.HisFrms;
                 if (frms.Count == 0)
                 {
                     this.UCEn1.Add("<div id=divFreeFrm >");
-                    this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID,false); //, false, false, null);
+                    this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID, false); //, false, false, null);
                     if (wk.WorkEndInfo.Length > 2)
                     {
                         this.UCEn1.Add(wk.WorkEndInfo);
@@ -782,16 +782,19 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 }
                 else
                 {
-                    Frm myfrm = new Frm();
-                    myfrm.No = "ND" + nd.NodeID;
-                    myfrm.Name = wk.EnDesc;
-                    
-                    FrmNode fnNode = new FrmNode();
-                    fnNode.FK_Frm = myfrm.No;
-                    fnNode.IsReadonly = false;
-                    fnNode.IsPrint = false;
-                    myfrm.HisFrmNode = fnNode;
-                    frms.AddEntity(myfrm,0);
+                    if (nd.HisFormType != FormType.DisableIt)
+                    {
+                        Frm myfrm = new Frm();
+                        myfrm.No = "ND" + nd.NodeID;
+                        myfrm.Name = wk.EnDesc;
+
+                        FrmNode fnNode = new FrmNode();
+                        fnNode.FK_Frm = myfrm.No;
+                        fnNode.IsReadonly = false;
+                        fnNode.IsPrint = false;
+                        myfrm.HisFrmNode = fnNode;
+                        frms.AddEntity(myfrm, 0);
+                    }
 
                     #region 载入相关文件.
                     this.Page.RegisterClientScriptBlock("sg",
@@ -816,16 +819,14 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     }
                     this.UCEn1.Add("\t\n </ul>");
                     #endregion 输出标签.
-                   
+
                     #region 输出从表单内容.
                     foreach (Frm frm in frms)
                     {
                         FrmNode fn = frm.HisFrmNode;
-
                         this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;' >");
                         string src = "";
                         src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt;
-
                         this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "'  Onblur=\"SaveDtl('" + frm.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
                         this.UCEn1.Add("\t\n </DIV>");
                     }
@@ -833,19 +834,20 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
                     this.UCEn1.Add("\t\n</div>"); // end  usual2
 
-
                     this.UCEn1.Add("\t\n<script type='text/javascript'>");
-                    this.UCEn1.Add("\t\n  $(\"#usual2 ul\").idTabs(\"ND" + nd.NodeID + "\");");
+                    if (nd.HisFormType != FormType.DisableIt)
+                        this.UCEn1.Add("\t\n  $(\"#usual2 ul\").idTabs(\"ND" + nd.NodeID + "\");");
+
                     this.UCEn1.Add("\t\n</script>");
 
-                    #region 处理iFrom SaveDtlData。
-                    string js = "";
-                    js = "\t\n<script type='text/javascript' >";
-                    js += "\t\n function SaveDtl(dtl) { ";
-                    js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData();";
-                    js += "\t\n } ";
-                    js += "\t\n</script>";
-                    this.UCEn1.Add(js);
+                    #region 处理iFrom SaveDtlData。删除自动保存功能.
+                    //string js = "";
+                    //js = "\t\n<script type='text/javascript' >";
+                    //js += "\t\n function SaveDtl(dtl) { ";
+                    //js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData();";
+                    //js += "\t\n } ";
+                    //js += "\t\n</script>";
+                    //this.UCEn1.Add(js);
                     #endregion 处理iFrom SaveDtlData。
                 }
                 return;

@@ -72,7 +72,6 @@ public partial class WF_DtlOpt : WebPage
             this.WinClose();
         }
 
-
         this.Pub1.AddFieldSet("数据模板导出");
         this.Pub1.AddP("利用数据模板导出一个数据模板，您可以在此基础上进行数据编辑，把编辑好的信息<br>在通过下面的功能导入进来，以提高工作效率。");
         string url = "DtlOpt.aspx?DoType=" + this.DoType + "&WorkID=" + this.WorkID + "&FK_MapDtl=" + this.FK_MapDtl + "&Flag=1";
@@ -87,7 +86,6 @@ public partial class WF_DtlOpt : WebPage
 
         FileUpload fu = new FileUpload();
         fu.ID = "F" + dtl.No;
-      //  fu.Attributes["Width"] = "100px";
         this.Pub1.Add(fu);
 
         this.Pub1.Add("<br>");

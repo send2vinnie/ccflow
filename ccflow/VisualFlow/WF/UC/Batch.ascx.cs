@@ -33,7 +33,7 @@ public partial class WF_UC_Batch : BP.Web.UC.UCBase3
         string sql = "SELECT Title,RDT,ADT,SDT,FID,WorkID,Starter FROM WF_EmpWorks WHERE FK_Emp='" + WebUser.No + "'";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-
+        BtnLab btnLab = new BtnLab(this.FK_Node);
         this.AddTable("width=80%");
         this.AddCaption("批处理:" + nd.Name);
         this.AddTR();
@@ -44,6 +44,13 @@ public partial class WF_UC_Batch : BP.Web.UC.UCBase3
         this.AddTDTitle("发起日期");
         this.AddTDTitle("接受日期");
         this.AddTDTitle("应完成日期");
+
+        if (btnLab.ReturnEnable == true)
+        {
+            this.AddTD("<a href=>退回意见</a>");
+        }
+
+
         this.AddTREnd();
         bool is1 = false;
         int idx = 0;
@@ -65,17 +72,31 @@ public partial class WF_UC_Batch : BP.Web.UC.UCBase3
         this.AddTableEndWithHR();
 
         Button btn = new Button();
-        btn.ID = "Btn_Do";
-        btn.Text = "批量处理";
+        btn.ID = "Btn_Send";
+        btn.Text = "批量处理:" + btnLab.SendLab;
         btn.Click += new EventHandler(btn_Click);
         btn.Attributes["onclick"] = " return confirm('您确定要执行吗？');";
-        this.Add(btn);
 
-        //btn = new Button();
-        //btn.ID = "Btn_Del";
-        //btn.Text = "批量删除";
-        //btn.Click += new EventHandler(btn_Click);
-        //this.Add(btn);
+        if (btnLab.DeleteEnable)
+        {
+            btn = new Button();
+            btn.ID = "Btn_Del";
+            btn.Text = "批量处理:" + btnLab.DeleteLab;
+            btn.Click += new EventHandler(btn_Click);
+            btn.Attributes["onclick"] = " return confirm('您确定要执行吗？');";
+        }
+
+        if (btnLab.ReturnEnable)
+        {
+            btn = new Button();
+            btn.ID = "Btn_Return";
+            btn.Text = "批量处理:" + btnLab.ReturnLab;
+            btn.Click += new EventHandler(btn_Click);
+            btn.Attributes["onclick"] = " return confirm('您确定要执行吗？');";
+        }
+
+        this.Add(btn);
+       
     }
 
     void btn_Click(object sender, EventArgs e)
