@@ -228,19 +228,23 @@ namespace BP.WF
         /// <summary>
         /// system form.
         /// </summary>
-        FixForm,
+        FixForm = 0,
         /// <summary>
         /// system form.
         /// </summary>
-        FreeForm,
+        FreeForm = 1,
         /// <summary>
         /// self form.
         /// </summary>
-        SelfForm,
+        SelfForm = 2,
         /// <summary>
         /// SDKForm
         /// </summary>
-        SDKForm
+        SDKForm = 3,
+        /// <summary>
+        /// 禁用(对多表单流程有效)
+        /// </summary>
+        DisableIt = 9
     }
     /// <summary>
     /// 节点属性
@@ -2183,7 +2187,7 @@ namespace BP.WF
                 rm = new RefMethod();
                 rm.Title = this.ToE("BillBill", "单据&单据"); //"单据&单据";
                 rm.ClassMethodName = this.ToString() + ".DoBill";
-                rm.Icon = "/Images/Btn/Word.gif";
+                rm.Icon = "/Images/FileType/doc.gif";
 
 
                 map.AddRefMethod(rm);

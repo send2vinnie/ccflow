@@ -332,7 +332,7 @@ namespace BP.WF.Ext
                 rm = new RefMethod();
                 rm.Title = this.ToE("BillBill", "单据"); //"单据&单据";
                 rm.ClassMethodName = this.ToString() + ".DoBill";
-                rm.Icon = "/Images/Btn/Word.gif";
+                rm.Icon = "/Images/FileType/doc.gif";
                 map.AddRefMethod(rm);
 
                 rm = new RefMethod();

@@ -2013,7 +2013,7 @@ namespace BP.WF
                             }
                             else
                             {
-                                billInfo += "<img src='" + this.VirPath + "/Images/FileType/Word.gif' /><a href='" + billUrl + "' target=_blank >" + func.Name + "</a>";
+                                billInfo += "<img src='" + this.VirPath + "/Images/FileType/doc.gif' /><a href='" + billUrl + "' target=_blank >" + func.Name + "</a>";
                             }
 
                             //  string  = BP.SystemConfig.GetConfig("FtpPath") + file;

@@ -249,20 +249,21 @@ namespace BP.WF
                 return this.GetValBooleanByKey(BtnAttr.CCEnable);
             }
         }
-        public string DelLab
+        public string DeleteLab
         {
             get
             {
                 return this.GetValStringByKey(BtnAttr.DelLab);
             }
         }
-        public bool DelEnable
+        public bool DeleteEnable
         {
             get
             {
                 return this.GetValBooleanByKey(BtnAttr.DelEnable);
             }
         }
+
         /// <summary>
         /// 结束流程
         /// </summary>

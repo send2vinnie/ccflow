@@ -350,7 +350,7 @@ namespace BP.WF
                 RefMethod rm = new RefMethod();
                 rm.Title = this.ToE("WorkRpt", "工作报告");  // "工作报告";
                 rm.ClassMethodName = this.ToString() + ".DoRpt";
-                rm.Icon = "../Images/Btn/Word.gif";
+                rm.Icon = "../Images/FileType/doc.gif";
                 map.AddRefMethod(rm);
 
                 rm = new RefMethod();
