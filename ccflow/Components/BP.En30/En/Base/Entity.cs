@@ -2199,14 +2199,17 @@ namespace BP.En
                         break;
                     case AutoFullWay.Way2_SQL:
                         string sql = attr.AutoFullDoc;
+                        sql = sql.Replace("~", "'");
                         Attrs attrs1 = this.EnMap.Attrs;
                         foreach (Attr a1 in attrs1)
                         {
                             if (a1.IsNum)
-                                sql = sql.Replace("@" + a1.Key, this.GetValStringByKey(a1.Key));
+                                sql = sql.Replace("@" + a1.Key, this.GetValStrByKey(a1.Key));
                             else
-                                sql = sql.Replace("@" + a1.Key, "'" + this.GetValStringByKey(a1.Key) + "'");
+                                sql = sql.Replace("@" + a1.Key, "'" + this.GetValStrByKey(a1.Key) + "'");
                         }
+                        sql = sql.Replace("''", "'");
+
                         string val="";
                         try
                         {

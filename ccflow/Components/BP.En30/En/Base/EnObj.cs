@@ -386,7 +386,6 @@ namespace BP.En
         {
             if (val == null)
                 throw new Exception("@不能设置属性[" + attrDesc + "]null 值。");
-
             this.Row.SetValByKey(this.EnMap.GetAttrByDesc(attrDesc).Key, val);
         }
 	 

@@ -351,7 +351,6 @@ namespace BP.En
 		#region  Ù–‘
         public AutoFullWay AutoFullWay = AutoFullWay.Way0;
         public string  AutoFullDoc =null;
-
 		/// <summary>
 		///  Ù–‘√˚≥∆
 		/// </summary>
