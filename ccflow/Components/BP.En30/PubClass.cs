@@ -473,8 +473,16 @@ namespace BP
             md.No = fk_mapdata;
             if (md.RetrieveFromDBSources() == 0)
             {
-                MapDtl mdtl = new MapDtl(fk_mapdata);
-                md.Copy(mdtl);
+                MapDtl mdtl = new MapDtl();
+                mdtl.No = fk_mapdata;
+                if (mdtl.RetrieveFromDBSources() == 0)
+                {
+                    throw new Exception("@对:" + fk_mapdata+"的映射信息不存在.");
+                }
+                else
+                {
+                    md.Copy(mdtl);
+                }
             }
 
             MapAttrs mattrs = new MapAttrs(fk_mapdata);
@@ -1591,11 +1599,23 @@ namespace BP
 			//HttpContext.Current.Response.End();
 		}
 
+
+        public static void OpenExcel(string filepath, string tempName)
+        {
+            HttpContext.Current.Response.Charset = "GB2312";
+            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=" + tempName);
+            HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.GetEncoding("GB2312");
+            HttpContext.Current.Response.ContentType = "application/ms-excel"; 
+            //image/JPEG;text/HTML;image/GIF;application/ms-excel
+            //HttpContext.Current.EnableViewState =false;
+
+            HttpContext.Current.Response.WriteFile(filepath);
+            HttpContext.Current.Response.End();
+            HttpContext.Current.Response.Close();
+        }
+
         public static void OpenWordDoc(string filepath, string tempName)
         {
-            //PubClass.WinOpen(filepath);
-            //return;
-
             HttpContext.Current.Response.Charset = "GB2312";
             HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=" + tempName);
             HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.GetEncoding("GB2312");

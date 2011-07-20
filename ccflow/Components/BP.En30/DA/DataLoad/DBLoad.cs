@@ -203,6 +203,10 @@ namespace BP
             //Label9.Text = "第一个工作表名称是：" + dt.Rows[0][2].ToString().Trim() + "，第二个工作表的名称是：" + dt.Rows[1][2].ToString().Trim() + "，第三个工作表的名称是：" + dt.Rows[2][2].ToString().Trim();
             //Label9.Font.Size = 10;
         }
+        public static DataTable GetTableByExt(string filePath)
+        {
+            return GetTableByExt(filePath,null);
+        }
 		/// <summary>
 		/// 通过文件，sql ,取出Table.
 		/// </summary>
@@ -219,6 +223,7 @@ namespace BP
             switch (typ.ToLower() )
             {
                 case ".xls":
+                    if (sql==null)
                     sql = "SELECT * FROM [" + GenerFirstTableName(filePath) + "]";
                     strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source =" + filePath + ";Extended Properties=Excel 8.0";
                     System.Data.OleDb.OleDbConnection conn = new OleDbConnection(strConn);
@@ -237,6 +242,7 @@ namespace BP
                     conn.Close();
                     break;
                 case ".xlsx":
+                    if (sql == null)
                     sql = "SELECT * FROM [" + GenerFirstTableName(filePath)+"]";
                     try
                     {

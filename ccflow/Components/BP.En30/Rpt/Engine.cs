@@ -199,15 +199,15 @@ namespace BP.Rpt.RTF
 		{
 			foreach(Entity en in this.HisEns)
 			{
-				if (en.ToString()=="BP.WF.NumCheck" || en.ToString()=="BP.WF.GECheckStand" || en.ToString()=="BP.WF.NoteWork"  )
-				{
-					if (en.GetValStringByKey("NodeID")!=strs[1])
-						continue;
-				}
-				else
-				{
-					continue;
-				}
+                //if (en.ToString()=="BP.WF.NumCheck" || en.ToString()=="BP.WF.GECheckStand" || en.ToString()=="BP.WF.NoteWork"  )
+                //{
+                //    if (en.GetValStringByKey("NodeID")!=strs[1])
+                //        continue;
+                //}
+                //else
+                //{
+                //    continue;
+                //}
 
 				string val=en.GetValStringByKey(strs[2]);
 				switch(strs.Length)
@@ -225,6 +225,11 @@ namespace BP.Rpt.RTF
 								return "·ñ";
 							else
 								return "ÊÇ";
+                        case "YesNo":
+                            if (val == "1")
+                                return "[¡Ì]";
+                            else
+                                return "[¡Á]";
 						case "Year":
 							return val.Substring(0,4);
 						case "Month":

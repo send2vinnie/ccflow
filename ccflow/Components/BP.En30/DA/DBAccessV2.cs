@@ -495,12 +495,36 @@ namespace BP.DA
             int num = DBAccess.RunSQL(sql, ps);
             if (num == 0)
             {
-                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES (" + SystemConfig.AppCenterDBVarStr + "CfgKey,'1')";
+                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES (" + SystemConfig.AppCenterDBVarStr + "CfgKey,100)";
                 DBAccess.RunSQL(sql, ps);
-                return 1;
+                return 100;
             }
             sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
             return DBAccess.RunSQLReturnValInt(sql, ps);
+        }
+        /// <summary>
+        /// 获取一个从OID, 更新到OID.
+        /// 用例: 我已经明确知道要用到260个OID, 
+        /// 但是为了避免多次取出造成效率浪费，就可以一次性取出 260个OID.
+        /// </summary>
+        /// <param name="cfgKey"></param>
+        /// <param name="getOIDNum">要获取的OID数量.</param>
+        /// <returns>从OID</returns>
+        public static Int64 GenerOID(string cfgKey, int getOIDNum)
+        {
+            Paras ps = new Paras();
+            ps.Add("CfgKey", cfgKey);
+            string sql = "UPDATE Sys_Serial SET IntVal=IntVal+" + getOIDNum + " WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
+            int num = DBAccess.RunSQL(sql, ps);
+            if (num == 0)
+            {
+                getOIDNum = getOIDNum + 100;
+                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES (" + SystemConfig.AppCenterDBVarStr + "CfgKey," + getOIDNum + ")";
+                DBAccess.RunSQL(sql, ps);
+                return 100;
+            }
+            sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
+            return DBAccess.RunSQLReturnValInt(sql, ps) - getOIDNum;
         }
         /// <summary>
         /// 
@@ -534,9 +558,9 @@ namespace BP.DA
             int num = DBAccess.RunSQL(sql, ps);
             if (num == 0)
             {
-                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES (" + SystemConfig.AppCenterDBVarStr + "CfgKey,'1')";
+                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES (" + SystemConfig.AppCenterDBVarStr + "CfgKey,'100')";
                 DBAccess.RunSQL(sql, ps);
-                return int.Parse(intKey + "1");
+                return int.Parse(intKey + "100");
             }
             sql = "SELECT IntVal FROM Sys_Serial WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
             int val = DBAccess.RunSQLReturnValInt(sql, ps);
@@ -552,9 +576,9 @@ namespace BP.DA
             int num = DBAccess.RunSQL(sql,ps);
             if (num == 0)
             {
-                sql = "INSERT INTO " + table + " (CFGKEY,INTVAL) VALUES (" + SystemConfig.AppCenterDBVarStr + "CfgKey,'1')";
+                sql = "INSERT INTO " + table + " (CFGKEY,INTVAL) VALUES (" + SystemConfig.AppCenterDBVarStr + "CfgKey,100)";
                 DBAccess.RunSQL(sql,ps);
-                return int.Parse(intKey + "1");
+                return int.Parse(intKey + "100");
             }
             sql = "SELECT  IntVal FROM " + table + " WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
             int val = DBAccess.RunSQLReturnValInt(sql,ps);

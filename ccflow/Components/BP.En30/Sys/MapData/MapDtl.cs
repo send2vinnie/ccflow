@@ -100,6 +100,15 @@ namespace BP.Sys
         public const string W = "W";
         public const string FrmW = "FrmW";
         public const string FrmH = "FrmH";
+
+        /// <summary>
+        /// 是否可以导出
+        /// </summary>
+        public const string IsExp = "IsExp";
+        /// <summary>
+        /// 是否可以导入？
+        /// </summary>
+        public const string IsImp = "IsImp";
     }
     /// <summary>
     /// 明细
@@ -128,6 +137,28 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapDtlAttr.WhenOverSize, (int)value);
+            }
+        }
+        public bool IsExp
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsExp);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsExp, value);
+            }
+        }
+        public bool IsImp
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsImp);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsImp, value);
             }
         }
         public bool IsShowSum
@@ -398,6 +429,10 @@ namespace BP.Sys
                 map.AddBoolean(MapDtlAttr.IsCopyNDData, true, "IsCopyNDData", false, false);
                 map.AddBoolean(MapDtlAttr.IsReadonly, false, "IsReadonly", false, false);
                 map.AddBoolean(MapDtlAttr.IsShowTitle, true, "IsShowTitle", false, false);
+
+
+                map.AddBoolean(MapDtlAttr.IsExp, true, "IsExp", false, false);
+                map.AddBoolean(MapDtlAttr.IsImp, true, "IsImp", false, false);
 
 
                 map.AddBoolean(MapDtlAttr.IsInsert, true, "IsInsert", false, false);
