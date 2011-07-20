@@ -383,6 +383,31 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD("");
         cb = new CheckBox();
+        cb.ID = "CB_IsExp";
+        cb.Text = this.ToE("IsExp", "是否可以导出？");// "是否可以导出";
+        cb.Checked = dtl.IsShowTitle;
+        this.Pub1.AddTD("colspan=2", cb);
+        this.Pub1.AddTREnd();
+
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD("");
+        cb = new CheckBox();
+        cb.ID = "CB_IsImp";
+        cb.Text = this.ToE("IsImp", "是否可以导入？");// "是否可以导出";
+        cb.Checked = dtl.IsShowTitle;
+        this.Pub1.AddTD("colspan=2", cb);
+        this.Pub1.AddTREnd();
+
+
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD("");
+        cb = new CheckBox();
         cb.ID = "CB_IsEnablePass";
         cb.Text = this.ToE("IsEnablePass", "是否起用审核字段？");// "是否合计行";
         cb.Checked = dtl.IsEnablePass;

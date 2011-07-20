@@ -316,8 +316,8 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.Add("<p align=center><img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/> </p>");
 
         this.Add( this.ToE("Upload" ,"上传") );
-        
-            FileUpload fu = new FileUpload();
+
+        System.Web.UI.WebControls.FileUpload fu = new System.Web.UI.WebControls.FileUpload();
             fu.ID = "F";
             this.Add(fu);
 
@@ -325,7 +325,6 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
             btn.Text = this.ToE("OK",  "确定");
             btn.Click += new EventHandler(btn_Siganture_Click);
             this.Add(btn);
-
 
             this.AddHR();
 

@@ -218,8 +218,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                     this.EditAutoFullDtl();
                     return;
                 }
-
-
                 if (this.MyPK != null || this.DoType == "New")
                 {
                     Edit_AutoFull();

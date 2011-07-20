@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.WF;
+using BP.En;
 using BP.WF.XML;
 using BP.Web;
 using BP.Sys;
@@ -65,53 +67,72 @@ public partial class WF_DtlOpt : WebPage
     private void BindExpImp()
     {
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
-        if (this.Request.QueryString["Flag"] != null)
+
+        if (this.Request.QueryString["Flag"] == "ExpTemplete")
         {
-            GEDtls dtls = new GEDtls(this.FK_MapDtl);
-            this.ExportDGToExcelDtl(dtls, dtl.Name + ".xls");
+            string file = this.Request.PhysicalApplicationPath + @"\DataUser\DtlTemplete\" + this.FK_MapDtl + ".xls";
+            BP.PubClass.OpenExcel(file, dtl.Name + ".xls");
             this.WinClose();
         }
 
-        this.Pub1.AddFieldSet("数据模板导出");
-        this.Pub1.AddP("利用数据模板导出一个数据模板，您可以在此基础上进行数据编辑，把编辑好的信息<br>在通过下面的功能导入进来，以提高工作效率。");
-        string url = "DtlOpt.aspx?DoType=" + this.DoType + "&WorkID=" + this.WorkID + "&FK_MapDtl=" + this.FK_MapDtl + "&Flag=1";
-        this.Pub1.Add("<p align=center><a href='" + url + "' target=_blank ><img src='../Images/FileType/xls.gif' border=0 />导出数据模板到Excel</a></p>");
-        this.Pub1.AddFieldSetEnd();
 
-        this.Pub1.AddFieldSet("导入:" + dtl.Name);
+        if (this.Request.QueryString["Flag"] == "ExpTemplete")
+        {
+            string file = this.Request.PhysicalApplicationPath + @"\DataUser\DtlTemplete\" + this.FK_MapDtl + ".xls";
+            BP.PubClass.OpenExcel(file, dtl.Name + ".xls");
+            this.WinClose();
+            return;
+        }
 
-        this.Pub1.Add("<br>");
+        if (this.Request.QueryString["Flag"] == "ExpData")
+        {
+            GEDtls dtls = new GEDtls(this.FK_MapDtl);
+            dtls.Retrieve(GEDtlAttr.RefPK, this.WorkID);
+            this.ExportDGToExcelV2(dtls, dtl.Name + ".xls");
+            this.WinClose();
+            return;
+        }
 
-        this.Pub1.Add("格式数据文件:");
 
-        FileUpload fu = new FileUpload();
-        fu.ID = "F" + dtl.No;
-        this.Pub1.Add(fu);
 
-        this.Pub1.Add("<br>");
-        this.Pub1.Add("<br>");
+        if (dtl.IsExp)
+        {
+            this.Pub1.AddFieldSet("数据导出");
+            this.Pub1.AddP("点下面的连接进行本明细表的导出，您可以根据列的需要增减列。");
+            string urlExp = "DtlOpt.aspx?DoType=" + this.DoType + "&WorkID=" + this.WorkID + "&FK_MapDtl=" + this.FK_MapDtl + "&Flag=ExpData";
+            this.Pub1.Add("<p align=center><a href='" + urlExp + "' target=_blank ><img src='../Images/FileType/xls.gif' border=0 /><b>导出数据</b></a></p>");
+            this.Pub1.AddFieldSetEnd();
+        }
 
-        BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
-        ddl.Items.Add(new ListItem("选择导入方式","all"));
-        ddl.Items.Add(new ListItem("清空方式", "0"));
-        ddl.Items.Add(new ListItem("追加方式", "1"));
-        ddl.ID = "DDL_ImpWay";
-        this.Pub1.Add(ddl);
+        if (dtl.IsImp)
+        {
+            this.Pub1.AddFieldSet("导入:" + dtl.Name);
+            this.Pub1.AddP("下载数据模版:利用数据模板导出一个数据模板，您可以在此基础上进行数据编辑，把编辑好的信息<br>在通过下面的功能导入进来，以提高工作效率。");
+            string url = "DtlOpt.aspx?DoType=" + this.DoType + "&WorkID=" + this.WorkID + "&FK_MapDtl=" + this.FK_MapDtl + "&Flag=ExpTemplete";
+            this.Pub1.Add("<p align=center><a href='" + url + "' target=_blank ><img src='../Images/FileType/xls.gif' border=0 />数据模版</a></p>");
+            this.Pub1.Add("<br>");
 
-        Button btn = new Button();
-        btn.Text = "导入";
-        btn.ID = "Btn_" + dtl.No;
-        btn.Click += new EventHandler(btn_Click);
-        this.Pub1.Add(btn);
+            this.Pub1.Add("格式数据文件:");
+            System.Web.UI.WebControls.FileUpload fu = new System.Web.UI.WebControls.FileUpload();
+            fu.ID = "fup";
+            this.Pub1.Add(fu);
 
-        //btn = new Button();
-        //btn.Text = "下载数据模板";
-        //btn.ID = "Btn_Exp" + dtl.No;
-        //btn.Click += new EventHandler(btn_Exp_Click);
-        //this.Pub1.Add(btn);
-        //this.Pub1.Add("<br>");
-        //this.Pub1.Add("<br>");
-        this.Pub1.AddFieldSetEnd();
+            this.Pub1.Add("<br>");
+
+            BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
+            ddl.Items.Add(new ListItem("选择导入方式", "all"));
+            ddl.Items.Add(new ListItem("清空方式", "0"));
+            ddl.Items.Add(new ListItem("追加方式", "1"));
+            ddl.ID = "DDL_ImpWay";
+            this.Pub1.Add(ddl);
+
+            Button btn = new Button();
+            btn.Text = "导入";
+            btn.ID = "Btn_" + dtl.No;
+            btn.Click += new EventHandler(btn_Click);
+            this.Pub1.Add(btn);
+            this.Pub1.AddFieldSetEnd();
+        }
     }
     void btn_Exp_Click(object sender, EventArgs e)
     {
@@ -126,15 +147,128 @@ public partial class WF_DtlOpt : WebPage
     void btn_Click(object sender, EventArgs e)
     {
         Button btn = sender as Button;
+        try
+        {
+            BP.Web.Controls.DDL DDL_ImpWay = (BP.Web.Controls.DDL)this.Pub1.FindControl("DDL_ImpWay");
+            System.Web.UI.WebControls.FileUpload fuit = (System.Web.UI.WebControls.FileUpload)this.Pub1.FindControl("fup");
+            if (DDL_ImpWay.SelectedIndex == 0)
+            {
+                this.Alert("请选择导入方式.");
+                return;
+            }
 
-        MapDtl dtl = new MapDtl(this.FK_MapDtl);
-        FileUpload fuit = (FileUpload)this.Pub1.FindControl("fu" + dtl.No);
-         
+            MapDtl dtl = new MapDtl(this.FK_MapDtl);
+            string file = this.Request.PhysicalApplicationPath + "\\Temp\\" + WebUser.No + ".xls";
+            fuit.SaveAs(file);
 
-      
+            GEDtls dtls = new GEDtls(this.FK_MapDtl);
+            System.Data.DataTable dt = BP.DBLoad.GetTableByExt(file);
 
-           // fu.SaveAs(this.Request.PhysicalApplicationPath + "\\ss.xls");
-        string id = btn.ID.Replace("Btn_", "");
+            file = this.Request.PhysicalApplicationPath + "\\DataUser\\DtlTemplete\\" + this.FK_MapDtl + ".xls";
+            System.Data.DataTable dtTemplete = BP.DBLoad.GetTableByExt(file);
+
+            #region 检查两个文件是否一致。
+            foreach (DataColumn dc in dtTemplete.Columns)
+            {
+                bool isHave = false;
+                foreach (DataColumn mydc in dt.Columns)
+                {
+                    if (dc.ColumnName == mydc.ColumnName)
+                    {
+                        isHave = true;
+                        break;
+                    }
+                }
+                if (isHave == false)
+                    throw new Exception("@您导入的excel文件不符合系统要求的格式。");
+            }
+            #endregion 检查两个文件是否一致。
+
+
+            #region 生成要导入的属性.
+             
+            BP.En.Attrs attrs = dtls.GetNewEntity.EnMap.Attrs;
+            BP.En.Attrs attrsExp = new BP.En.Attrs();
+            foreach (DataColumn dc in dtTemplete.Columns)
+            {
+                foreach (Attr attr in attrs)
+                {
+                    if (attr.UIVisible == false)
+                        continue;
+
+                    if (attr.IsRefAttr)
+                        continue;
+
+                    if (attr.Desc == dc.ColumnName.Trim())
+                    {
+                        attrsExp.Add(attr);
+                        break;
+                    }
+                }
+            }
+            #endregion 生成要导入的属性.
+
+
+            #region 执行导入数据.
+            if (DDL_ImpWay.SelectedIndex == 1)
+                BP.DA.DBAccess.RunSQL("DELETE "+dtl.PTable+" WHERE RefPK='"+this.WorkID+"'");
+
+            int i = 0;
+            Int64 oid =  BP.DA.DBAccess.GenerOID(this.FK_MapDtl, dt.Rows.Count);
+            string rdt = BP.DA.DataType.CurrentData;
+            foreach (DataRow dr in dt.Rows)
+            {
+                GEDtl dtlEn = dtls.GetNewEntity as GEDtl;
+                dtlEn.ResetDefaultVal();
+
+                foreach (BP.En.Attr attr in attrsExp)
+                {
+                    if (attr.UIVisible == false || dr[attr.Desc]==DBNull.Value)
+                        continue;
+
+                    string val = dr[attr.Desc].ToString() ;
+                    if (val == null)
+                        continue;
+                    val = val.Trim();
+                    switch (attr.MyFieldType)
+                    {
+                        case FieldType.Enum:
+                        case FieldType.PKEnum:
+                            SysEnums ses = new SysEnums(attr.UIBindKey);
+                            foreach (SysEnum se in ses)
+                            {
+                                if (val == se.Lab)
+                                {
+                                    val = se.IntKey.ToString();
+                                    break;
+                                }
+                            }
+                            break;
+                        case FieldType.FK:
+                        case FieldType.PKFK:
+                            break;
+                        default:
+                            break;
+                    }
+
+                    dtlEn.SetValByKey(attr.Key, val);
+                }
+                dtlEn.RefPKInt = (int)this.WorkID;
+                dtlEn.SetValByKey("RDT", rdt);
+                dtlEn.SetValByKey("Rec", WebUser.No);
+                i++;
+                dtlEn.InsertAsOID(oid);
+                oid++;
+            }
+            #endregion 执行导入数据.
+
+            this.Alert("共有(" + i + ")条数据导入成功。");
+        }
+        catch (Exception ex)
+        {
+            string msg = ex.Message.Replace("'", "‘");
+            this.Alert(msg);
+        }
     }
     private void BindUnPass()
     {
