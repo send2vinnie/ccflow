@@ -366,7 +366,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                 this.AddTD(fm.FK_NodeText);
                 this.AddTD(fm.RDT);
                 this.AddTD(fm.FK_EmpText);
-                this.AddTD("<a href='/DataUser/" + BP.Web.WebUser.FK_Dept + "/" + fm.OID + "." + fm.Ext + "' target=_bl ><img src='../Images/FileType/" + fm.Ext + ".gif' border=0/>" + fm.Name + "</a>");
+                this.AddTD("<a href='/Flow/DataUser/FlowFile/" + BP.Web.WebUser.FK_Dept + "/" + fm.OID + "." + fm.Ext + "' target=_bl ><img src='../Images/FileType/" + fm.Ext + ".gif' border=0/>" + fm.Name + "</a>");
                 this.AddTD(fm.FileSize);
                 this.AddTREnd();
             }
