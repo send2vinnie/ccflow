@@ -408,6 +408,25 @@ namespace BP.Web.UC
                             {
                                 string id = "RB_" + attr.Key + "_" + se.IntKey;
                                 RadioButton rb = this.GetRBLByID(id);
+                                #region 如果是空的,有可能是标记它是 rb 但是它用的ddl 显示的.
+                                if (rb == null)
+                                {
+                                    ctlid = "DDL_" + attr.Key + pk;
+                                    System.Web.UI.Control ctl_ddl_rb = this.FindControl(ctlid);
+                                    DDL myddlrb = ctl_ddl_rb as DDL;
+                                    if (myddlrb != null)
+                                    {
+                                        en.SetValByKey(attr.Key, myddlrb.SelectedValue);
+                                        break;
+                                    }
+
+                                    DropDownList myddl22 = ctl_ddl_rb as DropDownList;
+                                    if (myddl22 != null)
+                                        en.SetValByKey(attr.Key, myddl22.SelectedValue);
+                                    break;
+                                }
+                                #endregion 如果是空的
+
                                 if (rb != null && rb.Checked)
                                 {
                                     en.SetValByKey(attr.Key, se.IntKey);
