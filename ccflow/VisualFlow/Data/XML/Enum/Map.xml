@@ -1,7 +1,11 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
-	<Item Key="DtlShowModel" 
-        CH="@0=表格@1=卡片"   />
+  <Item Key="DtlShowModel"
+    CH="@0=表格@1=卡片"
+    EN=""
+    JP=""
+    RU=""    />
+ 
  
   
 </NewDataSet>
