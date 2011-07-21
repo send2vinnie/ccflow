@@ -42,7 +42,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     string sql = "DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
                     BP.DA.DBAccess.RunSQL(sql);
 
-                    sql += "INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态')";
+                    sql = "INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态')";
                     BP.DA.DBAccess.RunSQL(sql);
                 }
                 return;
