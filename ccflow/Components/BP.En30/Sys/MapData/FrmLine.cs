@@ -222,7 +222,10 @@ namespace BP.Sys
         /// <param name="fk_mapdata">s</param>
         public FrmLines(string fk_mapdata)
         {
-            this.Retrieve(FrmLineAttr.FK_MapData, fk_mapdata);
+            if (SystemConfig.IsDebug)
+                this.Retrieve(FrmLineAttr.FK_MapData, fk_mapdata);
+            else
+                this.RetrieveFromCash(FrmLineAttr.FK_MapData, (object)fk_mapdata);
         }
         /// <summary>
         /// 得到它的 Entity

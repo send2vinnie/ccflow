@@ -294,15 +294,39 @@ namespace BP.Rpt.RTF
             // 如果不包含 . 就说明他是从Rpt中取数据。
             if (this.HisGEEntity != null && key.Contains("ND") == false)
             {
-
                 if (strs.Length == 1)
                     return this.HisGEEntity.GetValStringByKey(key);
+
+                if (strs[1].Trim() == "ImgAth")
+                {
+                    string path1 = BP.SystemConfig.PathOfDataUser + "\\ImgAth\\Data\\" + strs[0].Trim() + "_" + this.HisGEEntity.PKVal + ".png";
+
+                    //定义rtf中图片字符串.
+                    StringBuilder mypict = new StringBuilder();
+                    //获取要插入的图片
+                    System.Drawing.Image imgAth = System.Drawing.Image.FromFile(path1);
+
+                    //将要插入的图片转换为16进制字符串
+                    string imgHexStringImgAth = GetImgHexString(imgAth);
+                    //生成rtf中图片字符串
+                    mypict.AppendLine();
+                    mypict.Append(@"{\pict");
+                    mypict.Append(@"\jpegblip");
+                    mypict.Append(@"\picscalex100");
+                    mypict.Append(@"\picscaley100");
+                    mypict.Append(@"\picwgoal" + imgAth.Size.Width * 15);
+                    mypict.Append(@"\pichgoal" + imgAth.Size.Height * 15);
+                    mypict.Append(imgHexStringImgAth + "}");
+                    mypict.AppendLine();
+                    return mypict.ToString();
+                }
 
                 if (strs.Length == 2)
                 {
                     string val = this.HisGEEntity.GetValStringByKey(strs[0].Trim());
                     switch (strs[1].Trim())
                     {
+                      
                         case "Text":
                             if (val == "0")
                                 return "否";
@@ -321,7 +345,7 @@ namespace BP.Rpt.RTF
                         case "RMBDX":
                             return DA.DataType.ParseFloatToCash(float.Parse(val));
                         case "Siganture":
-                            string path= BP.SystemConfig.PathOfDataUser+"\\Siganture\\"+ val +".jpg" ;
+                            string path = BP.SystemConfig.PathOfDataUser + "\\Siganture\\" + val + ".jpg";
                             //定义rtf中图片字符串
                             StringBuilder pict = new StringBuilder();
                             //获取要插入的图片
@@ -340,8 +364,18 @@ namespace BP.Rpt.RTF
                             pict.Append(imgHexString + "}");
                             pict.AppendLine();
                             return pict.ToString();
-                            //替换rtf模板文件中的签名图片标识为图片字符串
-                           // str = str.Replace(imgMark, pict.ToString());
+                        //替换rtf模板文件中的签名图片标识为图片字符串
+                        // str = str.Replace(imgMark, pict.ToString());
+                        case "Yes":
+                            if (val == "0")
+                                return "[X]";
+                            else
+                                return "[V]";
+                        case "No":
+                            if (val == "0")
+                                return "[V]";
+                            else
+                                return "[X]";
                         default:
                             throw new Exception("参数设置错误，特殊方式取值错误：" + key);
                     }
@@ -352,28 +386,16 @@ namespace BP.Rpt.RTF
                 }
             }
 
+
 			foreach(Entity en in this.HisEns)
 			{
-                if (key.IndexOf(en.GetType().Name + ".") < 0)
-                {
-                    string enName = en.GetType().Name;
-                    switch (enName)
-                    {
-                        case "Work":
-                        case "GEWork":
-                        case "GEStartWork":
-                            if (key.IndexOf(en.EnMap.PhysicsTable + ".") < 0)
-                                continue;
-                            break;
-                        case "GECheckStand":
-                            if (key.IndexOf(en.GetValStrByKey("NodeID") + ".") < 0)
-                                continue;
-                            break;                      
-                        default:
-                            continue;
-                    }
-                }
-				 
+
+                string enKey = en.ToString();
+                if (enKey.Contains("."))
+                    enKey = en.GetType().Name;
+                if (key.Contains(en.ToString() + ".") == false)
+                    continue;
+               
 				/*说明就在这个字段内*/
 				if (strs.Length==1)
 					throw new Exception("参数设置错误，strs.length=1 。"+key);
@@ -383,6 +405,30 @@ namespace BP.Rpt.RTF
 
 				if (strs.Length==3)
 				{
+                    if (strs[2].Trim() == "ImgAth")
+                    {
+                        string path1 = BP.SystemConfig.PathOfDataUser + "\\ImgAth\\Data\\" + strs[1].Trim() + "_" + en.PKVal + ".png";
+                        //定义rtf中图片字符串.
+                        StringBuilder mypict = new StringBuilder();
+                        //获取要插入的图片
+                        System.Drawing.Image imgAth = System.Drawing.Image.FromFile(path1);
+
+                        //将要插入的图片转换为16进制字符串
+                        string imgHexStringImgAth = GetImgHexString(imgAth);
+                        //生成rtf中图片字符串
+                        mypict.AppendLine();
+                        mypict.Append(@"{\pict");
+                        mypict.Append(@"\jpegblip");
+                        mypict.Append(@"\picscalex100");
+                        mypict.Append(@"\picscaley100");
+                        mypict.Append(@"\picwgoal" + imgAth.Size.Width * 15);
+                        mypict.Append(@"\pichgoal" + imgAth.Size.Height * 15);
+                        mypict.Append(imgHexStringImgAth + "}");
+                        mypict.AppendLine();
+                        return mypict.ToString();
+                    }
+
+
 					string val=en.GetValStringByKey(strs[1].Trim() );
 					switch( strs[2].Trim() )
 					{
@@ -403,6 +449,49 @@ namespace BP.Rpt.RTF
 							return float.Parse(val).ToString("0.00");
 						case "RMBDX":
 							return DA.DataType.ParseFloatToCash( float.Parse(val)) ;
+                        case "ImgAth":
+                            string path1 = BP.SystemConfig.PathOfDataUser + "\\ImgAth\\Data\\" + strs[0].Trim() + "_" + this.HisGEEntity.PKVal + ".png";
+                        
+                           //定义rtf中图片字符串.
+                            StringBuilder mypict = new StringBuilder();
+                            //获取要插入的图片
+                            System.Drawing.Image imgAth = System.Drawing.Image.FromFile(path1);
+
+                            //将要插入的图片转换为16进制字符串
+                            string imgHexStringImgAth = GetImgHexString(imgAth);
+                            //生成rtf中图片字符串
+                            mypict.AppendLine();
+                            mypict.Append(@"{\pict");
+                            mypict.Append(@"\jpegblip");
+                            mypict.Append(@"\picscalex100");
+                            mypict.Append(@"\picscaley100");
+                            mypict.Append(@"\picwgoal" + imgAth.Size.Width * 15);
+                            mypict.Append(@"\pichgoal" + imgAth.Size.Height * 15);
+                            mypict.Append(imgHexStringImgAth + "}");
+                            mypict.AppendLine();
+                            return mypict.ToString();
+                        case "Siganture":
+                            string path = BP.SystemConfig.PathOfDataUser + "\\Siganture\\" + val + ".jpg";
+                            //定义rtf中图片字符串.
+                            StringBuilder pict = new StringBuilder();
+                            //获取要插入的图片
+                            System.Drawing.Image img = System.Drawing.Image.FromFile(path);
+
+                            //将要插入的图片转换为16进制字符串
+                            string imgHexString = GetImgHexString(img);
+                            //生成rtf中图片字符串
+                            pict.AppendLine();
+                            pict.Append(@"{\pict");
+                            pict.Append(@"\jpegblip");
+                            pict.Append(@"\picscalex100");
+                            pict.Append(@"\picscaley100");
+                            pict.Append(@"\picwgoal" + img.Size.Width * 15);
+                            pict.Append(@"\pichgoal" + img.Size.Height * 15);
+                            pict.Append(imgHexString + "}");
+                            pict.AppendLine();
+                            return pict.ToString();
+                        //替换rtf模板文件中的签名图片标识为图片字符串
+                        // str = str.Replace(imgMark, pict.ToString());
 						default:
 							throw new Exception("参数设置错误，特殊方式取值错误："+key);
 					}
@@ -472,7 +561,9 @@ namespace BP.Rpt.RTF
 
                     try
                     {
-                        if (para.Contains("Siganture"))
+                        if (para.Contains("ImgAth"))
+                            str = str.Replace("<" + para + ">", this.GetValueByKey(para));
+                        else if (para.Contains("Siganture"))
                             str = str.Replace("<" + para + ">", this.GetValueByKey(para));
                         else
                             str = str.Replace("<" + para + ">", this.GetCode(this.GetValueByKey(para)));

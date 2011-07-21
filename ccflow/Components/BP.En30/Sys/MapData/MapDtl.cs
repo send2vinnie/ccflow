@@ -115,6 +115,71 @@ namespace BP.Sys
     /// </summary>
     public class MapDtl : EntityNoName
     {
+        #region –ﬁ Œ Ù–‘
+        private FrmLines _HisFrmLines = null;
+        public FrmLines FrmLines
+        {
+            get
+            {
+                if (_HisFrmLines == null)
+                    _HisFrmLines = new FrmLines(this.No);
+                return _HisFrmLines;
+            }
+        }
+        private FrmLabs _FrmLabs = null;
+        public FrmLabs FrmLabs
+        {
+            get
+            {
+                if (_FrmLabs == null)
+                    _FrmLabs = new FrmLabs(this.No);
+                return _FrmLabs;
+            }
+        }
+        private FrmImgs _FrmImgs = null;
+        public FrmImgs FrmImgs
+        {
+            get
+            {
+                if (_FrmImgs == null)
+                    _FrmImgs = new FrmImgs(this.No);
+                return _FrmImgs;
+            }
+        }
+        private FrmAttachments _FrmAttachments = null;
+        public FrmAttachments FrmAttachments
+        {
+            get
+            {
+                if (_FrmAttachments == null)
+                    _FrmAttachments = new FrmAttachments(this.No);
+                return _FrmAttachments;
+            }
+        }
+
+        private FrmImgAths _FrmImgAths = null;
+        public FrmImgAths FrmImgAths
+        {
+            get
+            {
+                if (_FrmImgAths == null)
+                    _FrmImgAths = new FrmImgAths(this.No);
+                return _FrmImgAths;
+            }
+        }
+
+        private FrmRBs _FrmRBs = null;
+        public FrmRBs FrmRBs
+        {
+            get
+            {
+                if (_FrmRBs == null)
+                    _FrmRBs = new FrmRBs(this.No);
+                return _FrmRBs;
+            }
+        }
+        #endregion
+
         #region  Ù–‘
         public DtlShowModel HisDtlShowModel
         {
