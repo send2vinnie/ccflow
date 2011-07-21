@@ -1021,6 +1021,8 @@ namespace BP.Web.Comm.UC.WF
             this.FK_MapData = enName;
             this.HisEn = en;
 
+            MapData md = new MapData();
+
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
 
             #region 输出竖线与标签 & 超连接 Img.
