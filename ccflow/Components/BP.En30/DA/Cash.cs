@@ -74,6 +74,10 @@ namespace BP.DA
                 {
                     Attr attrN = new Attr();
                     attrN.Key = perKey + "." + attr.Key;
+                    if (attr.IsRefAttr)
+                    {
+                        attrN.Field = perKey + "." + attr.Key+"Text";
+                    }
                     attrN.MyDataType = attr.MyDataType;
                     attrN.MyFieldType = attr.MyFieldType;
                     attrN.UIBindKey = attr.UIBindKey;
@@ -120,7 +124,6 @@ namespace BP.DA
                         haveError = true;
                     }
                     #endregion 首先解决空格的问题.
-
 
                     #region 解决特殊符号
                     if ( attrs!=null && real.Contains("\\") && real.Contains("ND") == false)
@@ -196,7 +199,7 @@ namespace BP.DA
             if (msg != "")
             {
                 string s = "@帮助信息:用记事本打开它模板,找到红色的字体. 把尖括号内部的非法字符去了,例如:《|f0|fs20RDT.NYR|lang1033|kerning2》，修改后事例：《RDT.NYR》。@注意把双引号代替单引号，竖线代替反斜线。";
-                throw new Exception("@单据模板（"+cfile+"）如下标记出现错误，系统无法修复它，需要您手工的删除标记或者用记事本打开查找到这写标记修复他们.@" + msg + s);
+                //throw new Exception("@单据模板（"+cfile+"）如下标记出现错误，系统无法修复它，需要您手工的删除标记或者用记事本打开查找到这写标记修复他们.@" + msg + s);
             }
             return paras;
         }
