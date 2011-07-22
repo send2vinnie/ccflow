@@ -22,7 +22,9 @@ public partial class _Default : System.Web.UI.Page
             this.Response.Redirect("./WAP/", true);
             return;
         }
-        this.Response.Redirect("./WF/Admin/TestFlow.aspx", true);
+
+        this.Response.Redirect("Designer.aspx", true);
+        //this.Response.Redirect("./WF/Admin/TestFlow.aspx", true);
         return;
 
         //Flows fls = new Flows();
