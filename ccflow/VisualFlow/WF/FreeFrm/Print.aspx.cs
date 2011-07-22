@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Web;
 using System.IO;
 using System.Web.UI;
@@ -64,7 +65,6 @@ public partial class WF_FreeFrm_Print : WebPage
         string tempName = finfo.Name.Split('.')[0];
         string tempNameChinese = finfo.Name.Split('.')[1];
 
-
         string toPath = @"D:\ccflow\VisualFlow\DataUser\Bill\FlowFrm\" + DateTime.Now.ToString("yyyyMMdd") + "\\";
         if (System.IO.Directory.Exists(toPath) == false)
             System.IO.Directory.CreateDirectory(toPath);
@@ -72,16 +72,14 @@ public partial class WF_FreeFrm_Print : WebPage
         string billFile = toPath + "\\" + tempName + "." + this.WorkID + ".doc";
 
         BP.Rpt.RTF.RTFEngine engine = new BP.Rpt.RTF.RTFEngine();
-        if (tempName.ToLower() == "all" )
+        if (tempName.ToLower() == "all")
         {
             FrmNodes fns = new FrmNodes(this.FK_Node);
             foreach (FrmNode fn in fns)
             {
                 GEEntity ge = new GEEntity(fn.FK_Frm, this.WorkID);
                 engine.AddEn(ge);
-
                 MapDtls mdtls = new MapDtls(tempName);
-                
                 foreach (MapDtl dtl in mdtls)
                 {
                     GEDtls enDtls = dtl.HisGEDtl.GetNewEntities as GEDtls;
@@ -89,26 +87,37 @@ public partial class WF_FreeFrm_Print : WebPage
                     engine.EnsDataDtls.Add(enDtls);
                 }
             }
+
+            // 增加主表.
+            GEEntity myge = new GEEntity("ND"+nd.NodeID, this.WorkID);
+            engine.HisGEEntity = myge;
+            engine.AddEn(myge);
+
+            MapDtls mymdtls = new MapDtls("ND" + nd.NodeID);
+            foreach (MapDtl dtl in mymdtls)
+            {
+                GEDtls enDtls = dtl.HisGEDtl.GetNewEntities as GEDtls;
+                enDtls.Retrieve(GEDtlAttr.RefPK, this.WorkID);
+                engine.EnsDataDtls.Add(enDtls);
+            }
             engine.MakeDoc(file, toPath, tempName + "." + this.WorkID + ".doc", null, false);
         }
         else
         {
-            GEEntity ge = new GEEntity(tempName, this.WorkID);
-            // 主表.
-            engine.HisGEEntity = ge;
-            engine.AddEn(ge);
+            // 增加主表.
+            GEEntity myge = new GEEntity(tempName, this.WorkID);
+            engine.HisGEEntity = myge;
+            engine.AddEn(myge);
 
-            MapDtls mdtls = new MapDtls(tempName);
-            foreach (MapDtl dtl in mdtls)
+            MapDtls mymdtls = new MapDtls(tempName);
+            foreach (MapDtl dtl in mymdtls)
             {
                 GEDtls enDtls = dtl.HisGEDtl.GetNewEntities as GEDtls;
-                enDtls.Retrieve(GEDtlAttr.RefPK,27);
-           //     enDtls.Retrieve(GEDtlAttr.RefPK, this.WorkID);
-
+                enDtls.Retrieve(GEDtlAttr.RefPK, this.WorkID);
                 engine.EnsDataDtls.Add(enDtls);
             }
-
             engine.MakeDoc(file, toPath, tempName + "." + this.WorkID + ".doc", null, false);
+
         }
 
         BP.PubClass.OpenWordDocV2(billFile, tempNameChinese + ".doc");
