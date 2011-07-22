@@ -104,6 +104,7 @@ public partial class WF_Admin_TestFlow : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Response.Redirect("../Designer.aspx",true);
         if (this.Request.Browser.Cookies == false)
         {
             this.Response.Write("您的浏览器不支持cookies功能，无法使用改系统。");
