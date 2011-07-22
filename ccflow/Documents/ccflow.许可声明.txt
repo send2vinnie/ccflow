@@ -40,10 +40,9 @@ D:\ccflow\VisualFlow  --bs工作流程引擎前台.
 D:\ccflow\VisualFlowDesigner -- cs 设计器(不过很快就不用了，换成sl的设计器.)
 D:\ccflow\VisualWorkFlowServices - 流程服务程序.
 
-
- D:\ccflow\VisualFlowWebDesigner - silverlight流程设计器.
- D:\ccflow\SLPrj\FreeFrm - silverlight 自由表单设计器.
- D:\ccflow\SLPrj\Flow\Flow - silverlight 版本前台应用源程序.
+D:\ccflow\VisualFlowWebDesigner - silverlight流程设计器.
+D:\ccflow\SLPrj\FreeFrm - silverlight 自由表单设计器.
+D:\ccflow\SLPrj\Flow\Flow - silverlight 版本前台应用源程序.
 
 
 关于: ccflow前台目录结构.
@@ -76,14 +75,14 @@ Flow.xap silverlight版本的前台执行程序, WF.xap流程设计器,FreeFrm.xap自由表单设计
 2, 建立虚拟目录 Flow 在80 端口下  映射目录为 D:\ccflow\VisualFlow\
 
 
-3, 创建数据库WF, 恢复数据库文件.   
-    \Database\WF_SQL.bak  -- sqlserver2005的案例库.  
+3, 创建数据库WF.
 
-   如果您是sqlserver2005 以外的数据库, 请按照如下步骤执行.
+    1, 建立数据库(不管你用的什么数据库)比如: WF
 
-   1, 按照步骤4,配置好数据库连接.
-   2, 执行: http://localhost/Flow/WF/Admin/DBInstall.aspx 
-      数据库初始化向导. 
+    2, 请看第4步骤, 为数据库配置链接.
+
+    2, 执行修复数据库工具: http://localhost/Flow/WF/Admin/DBInstall.aspx
+ 
 
 
 4, 修改 D:\ccflow\VisualFlow\web.config Appsetting <Add> 节点中的数据库连接。
@@ -96,7 +95,7 @@ Flow.xap silverlight版本的前台执行程序, WF.xap流程设计器,FreeFrm.xap自由表单设计
   <add key="InitConnNum" value="10" />
   <add key="AppCenterDSN" value="Password=;Persist Security Info=True;User ID=sa;Initial Catalog=WF;Data Source=.;Timeout=2" />
 
-  <!--MSSQL, Oracle, DB2,MYSQL -->
+  <!--ccflow 支持的数据库类型, MSSQL, Oracle, DB2,MYSQL -->
   <add key="AppCenterDBType" value="MSSQL" />
 
 5, 启动流程设计器  D:\ccflow\VisualFlowDesigner\bin\Debug\VisualFlowDesigner.exe 把他在做面上创建一个快捷方式.
