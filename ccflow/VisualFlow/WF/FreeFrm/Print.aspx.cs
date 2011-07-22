@@ -90,9 +90,7 @@ public partial class WF_FreeFrm_Print : WebPage
 
             // 增加主表.
             GEEntity myge = new GEEntity("ND"+nd.NodeID, this.WorkID);
-            engine.HisGEEntity = myge;
             engine.AddEn(myge);
-
             MapDtls mymdtls = new MapDtls("ND" + nd.NodeID);
             foreach (MapDtl dtl in mymdtls)
             {
