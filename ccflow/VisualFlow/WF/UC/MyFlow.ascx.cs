@@ -828,7 +828,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
                         //  string src = "";
                         //  src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt;
-                        this.UCEn1.Add("\t\n<li><a href=\"javascript:TabClick('" + frm.No + "','" + src + "')\" >" + frm.Name + "</a></li>");
+                        this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\" onclick=\"TabClick('" + frm.No + "','" + src + "');\" >" + frm.Name + "</a></li>");
                     }
                     this.UCEn1.Add("\t\n </ul>");
                     #endregion 输出标签.
