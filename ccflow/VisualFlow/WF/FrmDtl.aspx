@@ -18,7 +18,7 @@
     <script language=javascript>
 
         function ss() {
-        
+        document.getElementById()
         }
     </script>
 
