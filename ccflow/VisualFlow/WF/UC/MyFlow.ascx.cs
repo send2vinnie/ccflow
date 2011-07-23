@@ -805,17 +805,30 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
                     this.Page.RegisterClientScriptBlock("sdf24j",
             "<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
+
+
+                    this.Page.RegisterClientScriptBlock("sdsdf24j",
+            "<script language='JavaScript' src='./Style/Frm/TabClick.js' ></script>");
                     #endregion 载入相关文件.
 
                     this.UCEn1.Clear();
+
+                  
+
                     this.UCEn1.Add("<div  style='clear:both' ></div>");
-                    this.UCEn1.Add("\t\n<div  id='usual2' class='usual'>");  //begain.
+                    this.UCEn1.Add("\t\n<div  id='usual2' class='usual' >");  //begain.
 
                     #region 输出标签.
-                    this.UCEn1.Add("\t\n <ul  style='background:red;border-color: #800000;border-width: 10px;' >");
+                    this.UCEn1.Add("\t\n <ul  class='abc' style='background:red;border-color: #800000;border-width: 10px;' >");
                     foreach (Frm frm in frms)
                     {
-                        this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\">" + frm.Name + "</a></li>");
+                        FrmNode fn = frm.HisFrmNode;
+                        string src = "";
+                        src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt;
+
+                        //  string src = "";
+                        //  src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt;
+                        this.UCEn1.Add("\t\n<li><a href=\"javascript:TabClick('" + frm.No + "','" + src + "')\" >" + frm.Name + "</a></li>");
                     }
                     this.UCEn1.Add("\t\n </ul>");
                     #endregion 输出标签.
@@ -825,8 +838,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     {
                         FrmNode fn = frm.HisFrmNode;
                         this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;' >");
-                        string src = "";
-                        src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt;
+                        string src = "loading.htm";
                         this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "'  Onblur=\"SaveDtl('" + frm.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
                         this.UCEn1.Add("\t\n </DIV>");
                     }
