@@ -11,7 +11,7 @@ namespace BP.Win.WF
 	public class Global
 	{
         static Global()
-		{
+		{  
 		}
 		private static BP.Port.Emp _loademp= null;		
 		public  static BP.Port.Emp LoadEmp

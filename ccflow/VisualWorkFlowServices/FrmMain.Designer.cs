@@ -156,7 +156,7 @@
             this.Name = "FrmMain";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "驰骋工作流程服务";
+            this.Text = "驰骋工作流程引擎服务";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.SizeChanged += new System.EventHandler(this.FrmMain_SizeChanged);
             this.groupBox1.ResumeLayout(false);
