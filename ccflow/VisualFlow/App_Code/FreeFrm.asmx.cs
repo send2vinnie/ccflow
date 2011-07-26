@@ -23,6 +23,16 @@ namespace FreeFrm.Web
     // [System.Web.Script.Services.ScriptService]
     public class FreeFrm : System.Web.Services.WebService
     {
+        /// <summary>
+        /// 获取值
+        /// </summary>
+        /// <param name="kev"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string CfgKey(string kev)
+        {
+            return BP.SystemConfig.AppSettings[kev];
+        }
         [WebMethod]
         public void NewDtl(string dtlNo, string fk_mapdata)
         {
@@ -106,6 +116,27 @@ namespace FreeFrm.Web
             {
                 switch (dotype)
                 {
+                    case "NewHidF":
+                        string fk_mapdata = v1;
+                        string key = v2;
+                        string name = v3;
+                        int dataType  =int.Parse(v4);
+
+                        MapAttr mdHid = new MapAttr();
+                        mdHid.MyPK = fk_mapdata + "_" + key;
+                        mdHid.FK_MapData = fk_mapdata;
+                        mdHid.KeyOfEn = key;
+                        mdHid.Name = name;
+                        mdHid.MyDataType = dataType;
+                        mdHid.HisEditType = EditType.Edit;
+                        mdHid.MaxLen = 100;
+                        mdHid.MinLen = 0;
+                        mdHid.LGType = FieldTypeS.Normal;
+                        mdHid.UIVisible = false;
+                        mdHid.UIIsEnable=false; 
+                        mdHid.Insert();
+
+                        return null;
                     case "DelDtl":
                         MapDtl dtl = new MapDtl(v1);
                         dtl.Delete();

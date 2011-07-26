@@ -23,15 +23,8 @@ using Node = BP.WF.Node;
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 //若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消对下行的注释。 
 // [System.Web.Script.Services.ScriptService]
-public class WebService : System.Web.Services.WebService {
-
-    public WebService () {
-
-        //如果使用设计的组件，请取消注释以下行 
-        //InitializeComponent(); 
-    }
-
-    
+public class WebService : System.Web.Services.WebService 
+{
 
     /// <summary>
     /// 根据workID获取工作列表
@@ -203,7 +196,7 @@ public class WebService : System.Web.Services.WebService {
     public string GetFlowSort()
     {
         DataSet ds = new DataSet();
-        ds = BP.DA.DBAccess.RunSQLReturnDataSet("select * from WF_FlowSort");
+        ds = BP.DA.DBAccess.RunSQLReturnDataSet("select NO,NAME from WF_FlowSort");
         return Connector.ToXml(ds);
     }
     [WebMethod(EnableSession = true)]
@@ -356,13 +349,29 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
 
                 try
                 {
-                    if (para1 != null)
+                    if (null == para1)
+                    {
+                        fl.Name = "新建流程";
+                    }
+                    else if (para1.IndexOf(',') < 0)
+                    {
                         fl.FK_FlowSort = para1;
-                    fl.Name = "新建流程";
+                        fl.Name = "新建流程";
+                    }
+                    else
+                    {
+                        fl.FK_FlowSort = para1.Split(',')[0];
+                        fl.Name = para1.Split(',')[1];
+                    }
+
                     fl.DoNewFlow();
                     return fl.No + ";" + fl.Name;
                 }
-                catch { try { return fl.No; } catch { return null; } }
+                catch(Exception ex)
+                {
+                    
+                    try { return ex.Message; } catch { return null; }
+                }
                 
             case "DelFlow":
                 BP.WF.Flow fl1 = new BP.WF.Flow(para1);
