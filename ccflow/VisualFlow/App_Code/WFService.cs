@@ -21,7 +21,6 @@ using System.IO;
 // [System.Web.Script.Services.ScriptService]
 public class WFService : System.Web.Services.WebService 
 {
-
     public WFService()
     {
         //如果使用设计的组件，请取消注释以下行 
