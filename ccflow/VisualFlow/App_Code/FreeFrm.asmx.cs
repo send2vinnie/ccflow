@@ -758,7 +758,13 @@ namespace FreeFrm.Web
                 if (igF.Contains("@" + dc.ColumnName + "@"))
                     continue;
 
-                updataSQL += dc.ColumnName + "="+BP.SystemConfig.AppCenterDBVarStr + dc.ColumnName + ",";
+                try
+                {
+                    updataSQL += dc.ColumnName + "=" + BP.SystemConfig.AppCenterDBVarStr + dc.ColumnName + ",";
+                }
+                catch(Exception ex)
+                {
+                }
             }
             updataSQL = updataSQL.Substring(0, updataSQL.Length - 1);
             string pk = "";
