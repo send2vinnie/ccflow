@@ -76,7 +76,9 @@ namespace BP.Web.WF.WF
             DA.DBAccess.RunSQL("DELETE FROM WF_SelectAccper");
             DA.DBAccess.RunSQL("DELETE FROM WF_FileManager");
             DA.DBAccess.RunSQL("DELETE FROM WF_RememberMe");
-            DA.DBAccess.RunSQL("DELETE FROM WF_WorkList");
+
+           // DA.DBAccess.RunSQL("DELETE FROM WF_WorkList");
+
             DA.DBAccess.RunSQL("DELETE FROM WF_RunRecord");
             Nodes nds = new Nodes();
             foreach (Node nd in nds)

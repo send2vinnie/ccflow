@@ -82,8 +82,8 @@ namespace BP.Web.Comm.UC.WF
                         continue;
 
                     if (isLeftNext == true)
-                        this.InsertObjects2Col(true,en.PKVal.ToString(),en.GetValStrByKey("FID"));
-                   
+                        this.InsertObjects2Col(true, en.PKVal.ToString(), en.GetValStrByKey("FID"));
+
                     rowIdx++;
                     this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
 
@@ -107,16 +107,14 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         if (attr.IsBigDoc)
                         {
-                            //mytbLine.Rows = 5;
-                            mytbLine.Columns = 3;
+                            mytbLine.Rows = 5;
+                            // mytbLine.Columns = 30;
                         }
 
-                        //mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
-
+                        mytbLine.Attributes["width"] = "100%";
+                        mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
                         mytbLine.Enabled = attr.UIIsEnable;
-
-
 
                         this.Add(mytbLine);
                         this.AddTDEnd();
@@ -146,10 +144,15 @@ namespace BP.Web.Comm.UC.WF
                                 case BP.DA.DataType.AppDate:
                                     tb.ShowType = TBType.Date;
                                     tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    if (attr.UIIsEnable)
+                                        tb.Attributes["onfocus"] = "WdatePicker();";
                                     break;
                                 case BP.DA.DataType.AppDateTime:
                                     tb.ShowType = TBType.DateTime;
                                     tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    if (attr.UIIsEnable)
+                                        tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
+
                                     break;
                                 case BP.DA.DataType.AppBoolean:
                                     CheckBox cb = new CheckBox();
@@ -160,7 +163,6 @@ namespace BP.Web.Comm.UC.WF
                                     cb.Checked = en.GetValBooleanByKey(attr.KeyOfEn);
                                     this.AddTD("colspan=2", cb);
                                     continue;
-                                    break;
                                 case BP.DA.DataType.AppDouble:
                                 case BP.DA.DataType.AppFloat:
                                 case BP.DA.DataType.AppInt:
@@ -175,7 +177,6 @@ namespace BP.Web.Comm.UC.WF
                                 default:
                                     break;
                             }
-                       //     tb.Attributes["width"] = "100%";
                             switch (attr.MyDataType)
                             {
                                 case BP.DA.DataType.AppString:
@@ -222,6 +223,7 @@ namespace BP.Web.Comm.UC.WF
                             break;
                     }
                     #endregion add contrals.
+
                     string desc = attr.Name.Replace("：", "");
                     desc = desc.Replace(":", "");
                     desc = desc.Replace(" ", "");
@@ -240,9 +242,11 @@ namespace BP.Web.Comm.UC.WF
                     }
                     #endregion 加入字段
                 }
-              //  this.InsertObjects(false);
+                //  this.InsertObjects(false);
             }
             this.AddTableEnd();
+
+            this.AfterBindEn_DealMapExt(enName, mattrs);
 
             #region 处理iFrom 的自适应的问题。
             string js = "\t\n<script type='text/javascript' >";
@@ -258,7 +262,7 @@ namespace BP.Web.Comm.UC.WF
             }
             js += "\t\n</script>";
             this.Add(js);
-            
+
             foreach (MapFrame fr in frames)
             {
                 js += "\t\n window.setInterval(\"ReinitIframe(\"ReinitIframe('F" + fr.No + "','TD" + fr.No + "')\", 200);";
@@ -277,7 +281,7 @@ namespace BP.Web.Comm.UC.WF
             this.Add(js);
             #endregion 处理iFrom Save。
 
-            #region 处理iFrom Save。
+            #region 处理iFrom Save M2M。
             js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveM2M(dtl) { ";
             js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveM2M(); ";
@@ -285,6 +289,8 @@ namespace BP.Web.Comm.UC.WF
             js += "\t\n</script>";
             this.Add(js);
             #endregion 处理iFrom 的自适应的问题。
+
+            //处理扩展.
         }
 
 
@@ -310,7 +316,6 @@ namespace BP.Web.Comm.UC.WF
                 }
                 else if (dtl.GroupID == currGF.OID)
                 {
-
                 }
                 else
                 {
@@ -320,7 +325,7 @@ namespace BP.Web.Comm.UC.WF
                 rowIdx++;
                 // myidx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                string src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal + "&IsWap=1";
+                string src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal + "&IsWap=1&FK_Node="+dtl.FK_MapData.Replace("ND","");
                 this.Add("<TD colspan=2 class=FDesc ID='TD" + dtl.No + "'><a href='" + src + "'>" + dtl.Name + "</a></TD>");
                 // this.Add("<iframe ID='F" + dtl.No + "' frameborder=0 Onblur=\"SaveDtl('" + dtl.No + "');\" style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' height='10px' scrolling=no  /></iframe>");
                 //this.AddTDEnd();

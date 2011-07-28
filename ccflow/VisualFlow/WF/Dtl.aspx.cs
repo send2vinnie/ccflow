@@ -17,6 +17,16 @@ using BP.Web.Controls;
 public partial class Comm_Dtl : WebPage
 {
     #region 属性
+    public int FK_Node
+    {
+        get
+        {
+            if (string.IsNullOrEmpty( this.Request.QueryString["FK_Node"] ) )
+                return 0;
+
+            return int.Parse( this.Request.QueryString["FK_Node"]);
+        }
+    }
     public string FK_MapExt
     {
         get
@@ -112,7 +122,7 @@ public partial class Comm_Dtl : WebPage
         MapDtl mdtl = new MapDtl(this.EnsName);
         if (mdtl.HisDtlShowModel == DtlShowModel.Card)
         {
-            Response.Redirect("DtlFrm.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal, true);
+            Response.Redirect("DtlFrm.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal+"&IsWap="+this.IsWap+"&FK_Node="+this.FK_Node, true);
             return;
         }
         this.Bind(mdtl);
@@ -169,7 +179,7 @@ public partial class Comm_Dtl : WebPage
         GEDtls dtls = new GEDtls(this.EnsName);
 
         #region 处理设计时自动填充明细表.
-        if (this.Key != null && this.IsReadonly==0)
+        if (this.Key != null && this.IsReadonly == 0)
         {
             MapExt me = new MapExt(this.FK_MapExt);
             string[] strs = me.Tag1.Split('$');
@@ -226,8 +236,8 @@ public partial class Comm_Dtl : WebPage
         if (mdtl.IsShowTitle)
         {
             this.Pub1.AddTR();
-            if (this.IsReadonly==0 && mdtl.IsDelete==true)
-            this.Pub1.Add("<TD class='FDesc'><img src='./../Images/Btn/Table.gif' onclick=\"return DtlOpt('" + this.RefPKVal + "','" + this.EnsName + "');\" border=0/></TD>");
+            if (this.IsReadonly == 0 && mdtl.IsDelete == true)
+                this.Pub1.Add("<TD class='FDesc'><img src='./../Images/Btn/Table.gif' onclick=\"return DtlOpt('" + this.RefPKVal + "','" + this.EnsName + "');\" border=0/></TD>");
             else
                 this.Pub1.Add("<TD class='FDesc'></TD>");
 
@@ -245,7 +255,7 @@ public partial class Comm_Dtl : WebPage
                 this.Pub1.AddTDTitle(attr.Name);// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
             }
 
-            if (mdtl.IsDelete && this.IsReadonly==0)
+            if (mdtl.IsDelete && this.IsReadonly == 0)
             {
                 this.Pub1.Add("<TD class='FDesc' nowarp=true ><img src='./../Images/Btn/Save.gif' border=0 onclick='SaveDtlData();' ></TD>");
             }
@@ -299,11 +309,11 @@ public partial class Comm_Dtl : WebPage
             int count = qo.GetCount();
             this.DtlCount = count;
             this.Pub2.Clear();
-            this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap+"&IsReadonly="+this.IsReadonly);
+            this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap + "&IsReadonly=" + this.IsReadonly);
             int num = qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
 
             mdtl.RowsOfList = mdtl.RowsOfList + this.addRowNum;
-            if (mdtl.IsInsert && this.IsReadonly==0 )
+            if (mdtl.IsInsert && this.IsReadonly == 0)
             {
                 int dtlCount = dtls.Count;
                 for (int i = 0; i < mdtl.RowsOfList - dtlCount; i++)
@@ -359,14 +369,14 @@ public partial class Comm_Dtl : WebPage
             ids += dtl.OID + ",";
             this.Pub1.AddTR();
 
-            if (dtlsNum == idx && mdtl.IsShowIdx && mdtl.IsInsert &&  this.IsReadonly==0 )
+            if (dtlsNum == idx && mdtl.IsShowIdx && mdtl.IsInsert && this.IsReadonly == 0)
             {
                 DDL myAdd = new DDL();
                 myAdd.AutoPostBack = true;
                 myAdd.Items.Add(new ListItem("+", "+"));
                 for (int i = 1; i < 10; i++)
                 {
-                    myAdd.Items.Add(new ListItem( i.ToString(), i.ToString()));
+                    myAdd.Items.Add(new ListItem(i.ToString(), i.ToString()));
                 }
                 myAdd.SelectedIndexChanged += new EventHandler(myAdd_SelectedIndexChanged);
                 this.Pub1.AddTD(myAdd);
@@ -520,7 +530,7 @@ public partial class Comm_Dtl : WebPage
             }
             #endregion 增加rows
 
-            if (mdtl.IsDelete && dtl.OID >= 100 && this.IsReadonly==0)
+            if (mdtl.IsDelete && dtl.OID >= 100 && this.IsReadonly == 0)
             {
                 this.Pub1.Add("<TD border=0><img src='../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','" + this.EnsName + "','" + this.RefPKVal + "','" + this.PageIdx + "')\" /></TD>");
             }
@@ -583,7 +593,6 @@ public partial class Comm_Dtl : WebPage
             #endregion 拓展属性
         }
 
-
         #region 生成合计
         if (mdtl.IsShowSum && dtls.Count > 1)
         {
@@ -635,7 +644,6 @@ public partial class Comm_Dtl : WebPage
             this.Pub1.AddTREnd();
         }
         #endregion 生成合计
-
 
         #endregion 生成数据
 
@@ -706,9 +714,9 @@ public partial class Comm_Dtl : WebPage
         this.Save();
         
         if (val.Contains("+"))
-            url = "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx + "&AddRowNum=" + ddl.SelectedItemStringVal.Replace("+", "").Replace("-", "") + "&IsCut=0";
+            url = "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx + "&AddRowNum=" + ddl.SelectedItemStringVal.Replace("+", "").Replace("-", "") + "&IsCut=0&IsWap="+this.IsWap+"&FK_Node="+this.FK_Node;
         else
-            url = "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx + "&AddRowNum=" + ddl.SelectedItemStringVal.Replace("+", "").Replace("-", "");
+            url = "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx + "&AddRowNum=" + ddl.SelectedItemStringVal.Replace("+", "").Replace("-", "")+"&IsWap="+this.IsWap+"&FK_Node="+this.FK_Node;
 
         this.Response.Redirect(url, true);
     }
@@ -808,10 +816,10 @@ public partial class Comm_Dtl : WebPage
                 pageNum = int.Parse(strs[0]) + 1;
             else
                 pageNum = int.Parse(strs[0]);
-            this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + pageNum, true);
+            this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + pageNum+"&IsWap="+this.IsWap+"&FK_Node="+this.FK_Node, true);
         }
         else
-            this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx, true);
+            this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx + "&IsWap=" + this.IsWap + "&FK_Node=" + this.FK_Node, true);
     }
     public void ExpExcel()
     {
@@ -940,7 +948,6 @@ public partial class Comm_Dtl : WebPage
                 right += " parseFloat( document.forms[0]." + tb.ClientID + ".value.replace( ',' ,  '' ) )  ";
             else
                 right += " +parseFloat( document.forms[0]." + tb.ClientID + ".value.replace( ',' ,  '' ) )  ";
-
             i++;
         }
         string s = left + right + " ;";
@@ -953,7 +960,6 @@ public partial class Comm_Dtl : WebPage
                 return s;
         }
     }
-   
     protected void Button1_Click(object sender, EventArgs e)
     {
         this.Save();

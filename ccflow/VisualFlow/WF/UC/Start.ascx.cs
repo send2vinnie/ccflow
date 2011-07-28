@@ -81,13 +81,13 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.Title = this.ToE("StartWork", "工作发起");
-
         Flows fls = BP.WF.Dev2Interface.DB_GenerCanStartFlowsOfEntities();
         if (WebUser.IsWap)
         {
             BindWap(fls);
             return;
         }
+
         int colspan = 5;
         this.AddTable("width='960px' align=center");
         this.AddTR();

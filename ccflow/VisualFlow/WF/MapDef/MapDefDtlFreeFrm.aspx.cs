@@ -31,6 +31,8 @@ public partial class WF_MapDef_MapDefDtlFreeFrm :BP.Web.WebPage
         if (dtl.RetrieveFromDBSources() == 0)
         {
             dtl.FK_MapData = this.FK_MapData;
+            dtl.Name = this.FK_MapData;
+
             dtl.Insert();
             dtl.IntMapAttrs();
         }
