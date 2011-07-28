@@ -72,6 +72,11 @@ public partial class WF_Frm : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (this.Request.QueryString["IsTest"]=="1")
+        {
+            BP.SystemConfig.DoClearCash();
+        }
+
         MapData md = new MapData();
         md.No = this.FK_MapData;
         if (md.RetrieveFromDBSources() == 0 && md.Name.Length > 3)
