@@ -16,16 +16,12 @@ using System.Data.SqlClient;
 using System.IO;
 using Node = BP.WF.Node;
 
-/// <summary>
-///WebService 的摘要说明
-/// </summary>
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 //若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消对下行的注释。 
 // [System.Web.Script.Services.ScriptService]
 public class WebService : System.Web.Services.WebService 
 {
-
     /// <summary>
     /// 根据workID获取工作列表
     /// FK_Node 节点ID
@@ -72,9 +68,7 @@ public class WebService : System.Web.Services.WebService
 
         }
     }
-  
 
-    #region 执行功能的方法
     [WebMethod(EnableSession = true)]
     public string WinOpenEns(string lang, string dotype, string fk_dept, string fk_emp, string enName,bool isLogin)
     {
@@ -94,14 +88,14 @@ public class WebService : System.Web.Services.WebService
        return url;
 
     }
+    
     [WebMethod(EnableSession = true)]
-    public string WinOpen(string lang, string dotype, string fk_flow, string node1, string node2, bool isLogin)
+    public string GetRelativeUrl(string lang, string dotype, string fk_flow, string node1, string node2, bool isLogin)
     {
         LetAdminLogin("CH", isLogin);
         string url = "";
         switch (dotype)
         {
-            
             case "NodeP":
                 url = "/Comm/UIEn.aspx?EnName=BP.WF.Ext.NodeO&PK=" + node1;
                 break;
@@ -112,28 +106,6 @@ public class WebService : System.Web.Services.WebService
                 else
                     url = "/Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fk_flow;
                 break;
-            //case "Ens": // 实体编辑.
-            //    this.Response.Redirect("./Comm/Batch.aspx?EnsName=" + this.EnsName, true);
-            //    break;
-            //case "En": // 单个实体编辑.
-            //    //switch (this.EnName)
-            //    //{
-            //    //    case "BP.WF.Flow":
-            //    //        Flow fl = new Flow(this.PK);
-            //    //        if (fl.HisFlowSheetType == FlowSheetType.DocFlow)
-            //    //            this.Response.Redirect("./Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowDoc&PK=" + this.PK, true);
-            //    //        else
-            //    //            this.Response.Redirect("./Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + this.PK, true);
-            //    //        break;
-            //    //    case "BP.WF.Node":
-            //    //        Node nd = new Node(this.PK);
-            //    //        this.Response.Redirect("./Comm/UIEn.aspx?EnName=BP.WF.Ext.NodeO&PK=" + this.PK, true);
-            //    //        break;
-            //    //    default:
-            //    //        this.Response.Redirect("./Comm/UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PK, true);
-            //    //        break;
-            //    //}
-            //    //break;
             case "StaDef": // 节点岗位.
                 url = "/Comm/UIEn1ToM.aspx?EnName=BP.WF.Ext.NodeO&AttrKey=BP.WF.NodeStations&PK=" + node1 + "&NodeID=" + node1 + "&RunModel=0&FLRole=0&FJOpen=0&r=" + node1;
                 break;
@@ -158,28 +130,34 @@ public class WebService : System.Web.Services.WebService
             case "EditFlowSort":
                 url = "/WF/Admin/SetFlowSort.aspx?Fk_FlowSort="+fk_flow;
                 break;
+            case "GlobalSetting": // 全局设置
+                url = "/Comm/Sys/EditWebConfig.aspx";
+                break;
+            case "SystemEnumSetting": // 系统枚举设置
+                url = string.Empty;// //
+                break;
+            case "DepartmentMaintain": // 部门管理
+                url = @"/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Depts";
+                break;
+            case "PostMaintain": // 岗位管理
+                url = @"/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Stations";
+                break;
+            case "EmplyeeMaintain": // 人员管理
+                url = @"/Comm/PanelEns.aspx?EnsName=BP.Port.Emps";
+                break;
+            case "FileUpload": //模板上传用到
+                url = @"/WebClientDownloadHandler.ashx";
+                break;
             default:
                 break;
         }
         return url;
     }
-    #endregion 执行功能的方法
-
-
-    [WebMethod(EnableSession = true)]
-    public string HelloWorld()
-    {
-        return "Hello World";
-    }
-
+    
     [WebMethod(EnableSession = true)]
     public DataTable RunSQLReturnTablePeng(string sql)
     {
         return BP.DA.DBAccess.RunSQLReturnTable(sql);
-        //DataSet ds = new DataSet();
-        //ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
-        //return Connector.ToXml(ds);
-        // return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }
 
     [WebMethod(EnableSession = true)]
@@ -190,7 +168,6 @@ public class WebService : System.Web.Services.WebService
         return Connector.ToXml(ds);
     }
 
-    #region 工作流
     //select nodeID,x,y,NodeWorkType,HisToNDs from wf_node
     [WebMethod(EnableSession = true)]
     public string GetFlowSort()
@@ -199,6 +176,7 @@ public class WebService : System.Web.Services.WebService
         ds = BP.DA.DBAccess.RunSQLReturnDataSet("select NO,NAME from WF_FlowSort");
         return Connector.ToXml(ds);
     }
+
     [WebMethod(EnableSession = true)]
     public string GetFlowBySort(string sort)
     {
@@ -206,6 +184,7 @@ public class WebService : System.Web.Services.WebService
         ds = BP.DA.DBAccess.RunSQLReturnDataSet("select No,Name,FK_FlowSort from WF_Flow");
         return Connector.ToXml(ds);
     }
+
     [WebMethod(EnableSession = true)]
     public string GetFlows()
     {
@@ -213,57 +192,7 @@ public class WebService : System.Web.Services.WebService
         ds = BP.DA.DBAccess.RunSQLReturnDataSet("select No,Name,FK_FlowSort from WF_Flow ");
         return Connector.ToXml(ds);
     }
-#endregion
 
-    #region 部门
-    ///// <summary>
-    ///// 获取部门
-    ///// </summary>
-    ///// <returns></returns>
-    //[WebMethod(EnableSession = true)]
-    //public string GetDepts()
-    //{
-    //    DataSet ds = new DataSet();
-    //    ds = BP.DA.DBAccess.RunSQLReturnDataSet("select No,Name from Port_Dept");
-    //    return Connector.ToXml(ds);
-    //}
-    ///// <summary>
-    /////岗位
-    ///// </summary>
-    ///// <returns></returns>
-    //[WebMethod(EnableSession = true)]
-    //public string GetStations() 
-    //{
-      
-    //    DataSet ds = new DataSet();
-    //    ds = BP.DA.DBAccess.RunSQLReturnDataSet(@"select  No,Name  from Port_Station");
-    //    return Connector.ToXml(ds);
-    //}
-    ///// <summary>
-    /////人员
-    ///// </summary>
-    ///// <returns></returns>
-    //[WebMethod(EnableSession = true)]
-    //public string GetEmps()
-    //{
-       
-    //    DataSet ds = new DataSet();
-    //    ds = BP.DA.DBAccess.RunSQLReturnDataSet("select * from Port_Emp");
-    //    return Connector.ToXml(ds);
-    //}
-    ///// <summary>
-    ///// 部门人员
-    ///// </summary>
-    ///// <returns></returns>
-    //[WebMethod(EnableSession = true)]
-    //public string GetDeptEmps() 
-    //{
-      
-    //    DataSet ds = new DataSet();
-    //    ds = BP.DA.DBAccess.RunSQLReturnDataSet("select * from Port_Emp");
-    //    return Connector.ToXml(ds);
-    //}
- 
     /// <summary>
     /// 岗位人员
     /// </summary>
@@ -276,6 +205,7 @@ public class WebService : System.Web.Services.WebService
 where s.No=es.FK_Station and e.No=es.FK_Emp");
         return Connector.ToXml(ds);
     }
+
     /// <summary>
     /// 岗位维护
     /// </summary>
@@ -285,6 +215,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         string url = "http://localhost/Flow/Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Port.Stations&PK=" + pk + "&rowUrl=1";
         return url;
     }
+
     /// <summary>
     /// 部门维护
     /// </summary>
@@ -294,6 +225,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         string url = "http://localhost/Flow/Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Port.Depts&PK=" + pk + "&rowUrl=1";
         return url;
     }
+
     /// <summary>
     /// 人员维护
     /// </summary>
@@ -305,13 +237,13 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         string url = "http://localhost/Flow/Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Port.Emps&PK="+pk;
         return url;
     }
-    #endregion
 
     [WebMethod(EnableSession = true)]
     public int RunSQL(string sql)
     {
         return BP.DA.DBAccess.RunSQL(sql);
     }
+
     [WebMethod(EnableSession = true)]
     public string Do(string doWhat, string para1, bool isLogin)
     {
@@ -478,6 +410,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
             return false;
         }
     }
+
     /// <summary>
     /// 删除一个连接线
     /// </summary>
@@ -524,6 +457,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         catch { }
         return lab.MyPK;
     }
+
     /// <summary>
     /// 产生流程模板
     /// </summary>
@@ -536,6 +470,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         Flow fl = new Flow(fk_flow);
         return fl.GenerFlowXmlTemplete();
     }
+
     /// <summary>
     /// load flow templete.
     /// </summary>
@@ -558,6 +493,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         }
      
     }
+
     /// <summary>
     /// 根据工作流取连线
     /// </summary>
@@ -573,6 +509,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         ds.Tables.Add(dt);
         return Connector.ToXml(ds);
     }
+
     /// <summary>
     /// 根据工作流取标签
     /// </summary>
@@ -586,6 +523,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         DataSet ds = lns.ToDataSet();
         return Connector.ToXml(ds);
     }
+
     /// <summary>
     /// 保存流程
     /// </summary>
