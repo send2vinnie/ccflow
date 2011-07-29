@@ -102,6 +102,24 @@ namespace BP.WF
                 return _VirPath;
             }
         }
+        private string _AppType = null;
+        /// <summary>
+        /// 虚拟目录的路径
+        /// </summary>
+        public string AppType
+        {
+            get
+            {
+                if (_AppType == null)
+                {
+                    if (BP.Web.WebUser.IsWap)
+                        _AppType = "/WAP/";
+                    else
+                        _AppType = "/WF/";
+                }
+                return _AppType;
+            }
+        }
         private string nextStationName = "";
         /// <summary>
         /// 产生下一步的工作者
@@ -1548,9 +1566,9 @@ namespace BP.WF
             }
 
             if (this.HisNode.IsStartNode)
-                msg += "@<a href='" + this.VirPath + "/WF/MyFlowInfo"+Glo.FromPageType+".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/WF/MyFlow"+Glo.FromPageType+".aspx?FK_Flow=" + toNode.FK_Flow + "'><img src=./Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。";
+                msg += "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + toNode.FK_Flow + "'><img src=./Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。";
             else
-                msg += "@<a href='" + this.VirPath + "/WF/MyFlowInfo"+Glo.FromPageType+".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
+                msg += "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
 
             msg += this.GenerWhySendToThem(this.HisNode.NodeID, toNode.NodeID);
 
@@ -1995,7 +2013,7 @@ namespace BP.WF
                                     rtf.ensStrs += ".ND" + wk.NodeID;
                                     ArrayList al = wk.GetDtlsDatasOfArrayList();
                                     foreach (Entities ens in al)
-                                        rtf.AddEns(ens);
+                                        rtf.AddDtlEns(ens);
                                 }
                                 //    w = new BP.Port.WordNo(WebUser.FK_DeptOfXJ);
                                 // rtf.AddEn(w);
@@ -2466,9 +2484,9 @@ namespace BP.WF
             if (this.HisNode.HisFormType != FormType.SDKForm)
             {
                 if (this.HisNode.IsStartNode)
-                    msg += "@<a href='" + this.VirPath + "/WF/MyFlowInfo"+Glo.FromPageType+".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + nd.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/WF/MyFlow"+Glo.FromPageType+".aspx?FK_Flow=" + nd.FK_Flow + "'><img src=" + this.VirPath + "/WF/Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。";
+                    msg += "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + nd.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>， <a href='" + this.VirPath + "/" + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + nd.FK_Flow + "'><img src=" + this.VirPath + "/WF/Img/New.gif border=0/>" + this.ToE("NewFlow", "新建流程") + "</a>。";
                 else
-                    msg += "@<a href='" + this.VirPath + "/WF/MyFlowInfo"+Glo.FromPageType+".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + nd.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
+                    msg += "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + nd.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
             }
 
             /* 形成消息通知他们 */
@@ -2476,8 +2494,6 @@ namespace BP.WF
             {
                 MsgsManager.AddMsgs(gwls, town.HisNode.FlowName, nd.Name, "Test");
             }
-
-
             string str = "";
             //if (this._RememberMe.NumOfEmps > 1)
             //    str = "<a href='" + appPath + "/WF/AllotTask.aspx?NodeId=" + nd.NodeID + "&WorkID=" + wk.OID + "&FlowNo=" + nd.FK_Flow + "&dt='" + DateTime.Now.ToString("MMddhhmmss") + " target='_self' >" + this.ToE("AllotWork", "分配工作") + "</a>";
