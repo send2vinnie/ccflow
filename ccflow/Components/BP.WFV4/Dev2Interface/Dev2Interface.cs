@@ -29,9 +29,11 @@ namespace BP.WF
         {
             string sql = "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_EMP='" + WebUser.No + "')) ";
             string sql2 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
+         //   string sql3 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
+           // System.Web.cont
             Flows fls = new Flows();
             BP.En.QueryObject qo = new BP.En.QueryObject(fls);
-            qo.AddWhereInSQL("No", sql + sql2);
+            qo.AddWhereInSQL("No", sql + sql2 );
             qo.addAnd();
             qo.AddWhere(FlowAttr.IsOK, true);
             qo.addAnd();
