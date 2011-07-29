@@ -19,8 +19,6 @@ namespace BP.WF
     /// </summary>
     public class GEWork : Work
     {
-
-         
         #region 与_SQLCash 操作有关
         private SQLCash _SQLCash = null;
         public override SQLCash SQLCash
@@ -44,7 +42,6 @@ namespace BP.WF
             }
         }
         #endregion
-
 
         #region 构造函数        
         /// <summary>

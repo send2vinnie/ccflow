@@ -362,10 +362,10 @@ namespace BP.WF.Ext
                 rm.ClassMethodName = this.ToString() + ".DoListen";
                 map.AddRefMethod(rm);
 
-                rm = new RefMethod();
-                rm.Title = this.ToE("DoFeatureSet", "特性集"); // "调用事件接口";
-                rm.ClassMethodName = this.ToString() + ".DoFeatureSet";
-                map.AddRefMethod(rm);
+                //rm = new RefMethod();
+                //rm.Title = this.ToE("DoFeatureSet", "特性集"); // "调用事件接口";
+                //rm.ClassMethodName = this.ToString() + ".DoFeatureSet";
+                //map.AddRefMethod(rm);
 
                 this._enMap = map;
                 return this._enMap;
