@@ -135,6 +135,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bill\BillType.cs" />
+    <Compile Include="CH\CHOfFlow.cs" />
+    <Compile Include="CH\CHOfFlowRpt.cs" />
+    <Compile Include="CH\CHOfQL.cs" />
     <Compile Include="Dev2Interface\BtnState.cs" />
     <Compile Include="DTS\DTSLog.cs">
       <SubType>Code</SubType>
@@ -190,15 +193,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FlowDesc\NodeStation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CH\CHOfFlow.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CH\CHOfFlowRpt.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CH\CHOfQL.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dev2Interface\Dev2Interface.cs" />
