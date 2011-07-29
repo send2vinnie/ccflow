@@ -17,7 +17,7 @@ public partial class Comm_Sys_EditWebconfig : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         this.UCSys1.AddTable();
-        this.UCSys1.AddCaption("站点全局信息配置:(您也可以打开web.config中直接修改它)");
+        this.UCSys1.AddCaptionLeft("站点全局信息配置:(您也可以打开web.config中直接修改它)");
         this.UCSys1.AddTR();
         this.UCSys1.AddTDTitle("IDX");
         this.UCSys1.AddTDTitle("项目Key");
@@ -94,7 +94,9 @@ public partial class Comm_Sys_EditWebconfig : WebPage
                     this.UCSys1.AddTD(tb);
                     break;
             }
-            this.UCSys1.AddTDBigDoc(en.Note);
+            this.UCSys1.AddTD(en.Note);
+        //    this.UCSys1.AddTDBigDoc(en.Note);
+
             this.UCSys1.AddTREnd();
         }
         this.UCSys1.AddTRSum();
