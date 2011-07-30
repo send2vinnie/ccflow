@@ -2203,12 +2203,18 @@ namespace BP.En
                         Attrs attrs1 = this.EnMap.Attrs;
                         foreach (Attr a1 in attrs1)
                         {
+                            if (sql.Contains("@" + a1.Key) == false)
+                                continue;
+
                             if (a1.IsNum)
                                 sql = sql.Replace("@" + a1.Key, this.GetValStrByKey(a1.Key));
                             else
                                 sql = sql.Replace("@" + a1.Key, "'" + this.GetValStrByKey(a1.Key) + "'");
                         }
-                        sql = sql.Replace("''", "'");
+
+                        //sql = sql.Replace("''", "'");
+                      //  sql = sql.Replace("'''", "''");
+
 
                         string val="";
                         try
@@ -2217,7 +2223,7 @@ namespace BP.En
                         }
                         catch(Exception ex)
                         {
-                            throw new Exception("@自动获取数据期间错误:" + sql.Replace("'", "“") + " @Tech Info:" + ex.Message.Replace("'", "“"));
+                            throw new Exception("@自动获取数据期间错误:" + sql.Replace("'", "“") + " @Tech Info:" + ex.Message.Replace("'", "“")+"@"+ sql);
                         }
 
                         if (attr.IsNum)

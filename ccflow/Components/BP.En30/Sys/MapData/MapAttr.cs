@@ -672,7 +672,7 @@ namespace BP.Sys
                     case DataType.AppDate:
                         return 75;
                     case DataType.AppDateTime:
-                        return 110;
+                        return 112;
                     default:
                         return 70;
                 }

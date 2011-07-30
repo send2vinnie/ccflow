@@ -4,6 +4,21 @@ using BP.DA;
 using BP.En;
 namespace BP.Sys
 {
+    public enum SFTableType
+    {
+        /// <summary>
+        /// 自定义表
+        /// </summary>
+        SFTable,
+        /// <summary>
+        /// 类库
+        /// </summary>
+        ClsLab,
+        /// <summary>
+        /// 系统表
+        /// </summary>
+        SysTable
+    }
 	/// <summary>
 	/// 用户自定义表
 	/// </summary>
@@ -111,22 +126,22 @@ namespace BP.Sys
                 return this.GetValRefTextByKey(SFTableAttr.SFTableType);
             }
         }
-        public int SFTableType
+        public SFTableType HisSFTableType
         {
             get
             {
-                return this.GetValIntByKey(SFTableAttr.SFTableType);
+                return (SFTableType)this.GetValIntByKey(SFTableAttr.SFTableType);
             }
             set
             {
-                this.SetValByKey(SFTableAttr.SFTableType, value);
+                this.SetValByKey(SFTableAttr.SFTableType, (int)value);
             }
         }
         public bool IsDel
         {
             get
             {
-                if (this.SFTableType == 0)
+                if (this.HisSFTableType== SFTableType.SFTable )
                     return true;
                 else
                     return false;
@@ -171,28 +186,28 @@ namespace BP.Sys
                 {
                     case "BP.Pub.NYs":
                         this.Name = "年月";
-                        this.SFTableType = 0;
+                        this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_NY";
                         this.IsEdit = true;
                         this.Insert();
                         break;
                     case "BP.Pub.YFs":
                         this.Name = "月";
-                        this.SFTableType = 0;
+                        this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_YF";
                         this.IsEdit = true;
                         this.Insert();
                         break;
                     case "BP.Pub.Days":
                         this.Name = "天";
-                        this.SFTableType = 0;
+                        this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_Day";
                         this.IsEdit = true;
                         this.Insert();
                         break;
                     case "BP.Pub.NDs":
                         this.Name = "年";
-                        this.SFTableType = 0;
+                        this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_ND";
                         this.IsEdit = true;
                         this.Insert();

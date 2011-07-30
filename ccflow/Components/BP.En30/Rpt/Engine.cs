@@ -187,9 +187,9 @@ namespace BP.Rpt.RTF
 		/// 增加一个Ens
 		/// </summary>
 		/// <param name="ens"></param>
-		public void AddEns(Entities DtlEns)
+		public void AddDtlEns(Entities dtlEns)
 		{
-			this.EnsDataDtls.Add(DtlEns);
+            this.EnsDataDtls.Add(dtlEns);
 		}
 		public string CyclostyleFilePath="";
 		public string TempFilePath="";
@@ -389,7 +389,6 @@ namespace BP.Rpt.RTF
 
 			foreach(Entity en in this.HisEns)
 			{
-
                 string enKey = en.ToString();
                 if (enKey.Contains("."))
                     enKey = en.GetType().Name;
@@ -558,7 +557,6 @@ namespace BP.Rpt.RTF
                 {
                     if (para == null || para == "")
                         continue;
-
                     try
                     {
                         if (para.Contains("ImgAth"))
