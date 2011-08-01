@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Collections;
 using BP.DA;
 using BP.En;
@@ -86,7 +87,6 @@ namespace BP.Sys
             }
         }
         #endregion
-
         public static Boolean IsEditDtlModel
         {
             get
@@ -179,38 +179,38 @@ namespace BP.Sys
         #endregion
 
         #region 构造方法
-        public MapAttrs GenerHisTableCells
-        {
-            get
-            {
-                //if ( this.CellsFrom == null)
-                //    return null;
-                MapAttrs mapAttrs = new MapAttrs(this.No+"T");
-                if (mapAttrs.Count == 0)
-                {
-                    for (int i = 1; i < 4; i++)
-                    {
-                        MapAttr attr = new MapAttr();
-                        attr.FK_MapData = this.No + "T";
-                        attr.KeyOfEn = "F" + i.ToString();
-                        attr.Name = "Lab" + i;
-                        attr.MyDataType = BP.DA.DataType.AppString;
-                        attr.UIContralType = UIContralType.TB;
-                        attr.LGType = FieldTypeS.Normal;
-                        attr.UIVisible = true;
-                        attr.UIIsEnable = true;
-                        attr.UIWidth = 30;
-                        attr.UIIsLine = true;
-                        attr.MinLen = 0;
-                        attr.MaxLen = 600;
-                        attr.IDX = i;
-                        attr.Insert();
-                    }
-                    mapAttrs = new MapAttrs(this.No + "T");
-                }
-                return mapAttrs;
-            }
-        }
+        //public MapAttrs GenerHisTableCells
+        //{
+        //    get
+        //    {
+        //        //if ( this.CellsFrom == null)
+        //        //    return null;
+        //        MapAttrs mapAttrs = new MapAttrs(this.No+"T");
+        //        if (mapAttrs.Count == 0)
+        //        {
+        //            for (int i = 1; i < 4; i++)
+        //            {
+        //                MapAttr attr = new MapAttr();
+        //                attr.FK_MapData = this.No + "T";
+        //                attr.KeyOfEn = "F" + i.ToString();
+        //                attr.Name = "Lab" + i;
+        //                attr.MyDataType = BP.DA.DataType.AppString;
+        //                attr.UIContralType = UIContralType.TB;
+        //                attr.LGType = FieldTypeS.Normal;
+        //                attr.UIVisible = true;
+        //                attr.UIIsEnable = true;
+        //                attr.UIWidth = 30;
+        //                attr.UIIsLine = true;
+        //                attr.MinLen = 0;
+        //                attr.MaxLen = 600;
+        //                attr.IDX = i;
+        //                attr.Insert();
+        //            }
+        //            mapAttrs = new MapAttrs(this.No + "T");
+        //        }
+        //        return mapAttrs;
+        //    }
+        //}
         public Map GenerHisMap()
         {
             MapAttrs mapAttrs = new MapAttrs(this.No);
@@ -322,6 +322,209 @@ namespace BP.Sys
         }
         #endregion
 
+        public static void ImpMapData(string fk_mapdata, DataSet ds)
+        {
+            MapData md = new MapData();
+            md.No = fk_mapdata;
+            md.Delete();
+
+            string timeKey = DateTime.Now.ToString("yyyyMMddhhmmss");
+            foreach (DataTable dt in ds.Tables)
+            {
+                int idx = 0;
+                switch (dt.TableName)
+                {
+                    case "Sys_FrmLine":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmLine en = new FrmLine();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.MyPK = "LE" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_FrmLab":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmLab en = new FrmLab();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.MyPK = "LB" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_FrmLink":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmLink en = new FrmLink();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.MyPK = "LK" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_FrmImg":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmImg en = new FrmImg();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.MyPK = "Img" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_FrmImgAth":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmImgAth en = new FrmImgAth();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.MyPK = "ImgA" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_FrmRB":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmRB en = new FrmRB();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            try
+                            {
+                                en.Save();
+                            }
+                            catch
+                            {
+
+                            }
+                        }
+                        break;
+                    case "Sys_FrmAttachment":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmAttachment en = new FrmAttachment();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.MyPK = "Ath" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_MapM2M":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            MapM2M en = new MapM2M();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.No = "D" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_MapFrame":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            MapFrame en = new MapFrame();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.No = "Fra" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_MapExt":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            MapExt en = new MapExt();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.MyPK = "Ext" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_MapAttr":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            MapAttr en = new MapAttr();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.Insert();
+                        }
+                        break;
+                    case "Sys_GroupField":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            GroupField en = new GroupField();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.EnName  = fk_mapdata;
+                            en.OID = 0;
+                            en.Insert();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
         protected override bool beforeDelete()
         {
             MapAttrs attrs = new MapAttrs();
@@ -332,7 +535,6 @@ namespace BP.Sys
             }
             catch
             {
-
             }
 
             string sql = "";
@@ -340,9 +542,14 @@ namespace BP.Sys
             sql += "@DELETE Sys_FrmLab WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_FrmLink WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_FrmImg WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_FrmImgAth WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_FrmRB WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_FrmAttachment WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_MapM2M WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_MapFrame WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_MapExt WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_MapAttr WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE Sys_GroupField WHERE EnName='" + this.No + "'";
             DBAccess.RunSQLs(sql);
 
             MapDtls dtls = new MapDtls(this.No);
@@ -351,6 +558,52 @@ namespace BP.Sys
                 dtl.Delete();
             }
             return base.beforeDelete();
+        }
+        public System.Data.DataSet GenerHisDataSet()
+        {
+            DataSet ds = new DataSet();
+            ds.Namespace = "ccflowFrm";
+
+            FrmLines lins = new FrmLines(this.No);
+            ds.Tables.Add(lins.ToDataTableField("Sys_FrmLine"));
+
+            FrmLabs labs = new FrmLabs(this.No);
+            ds.Tables.Add(labs.ToDataTableField("Sys_FrmLab"));
+
+            FrmLinks links = new FrmLinks(this.No);
+            ds.Tables.Add(links.ToDataTableField("Sys_FrmLink"));
+
+            MapAttrs attrs = new MapAttrs(this.No);
+            ds.Tables.Add(attrs.ToDataTableField("Sys_MapAttr"));
+
+            MapDtls dtls = new MapDtls(this.No);
+            ds.Tables.Add(dtls.ToDataTableField("Sys_MapDtl"));
+
+            MapExts exts = new MapExts(this.No);
+            ds.Tables.Add(exts.ToDataTableField("Sys_MapExt"));
+
+            MapFrames frms = new MapFrames(this.No);
+            ds.Tables.Add(frms.ToDataTableField("Sys_MapFrame"));
+
+            MapM2Ms m2ms = new MapM2Ms(this.No);
+            ds.Tables.Add(m2ms.ToDataTableField("Sys_MapM2M"));
+
+            MapDatas mds = new MapDatas();
+            mds.AddEntity(this);
+            ds.Tables.Add(mds.ToDataTableField("Sys_MapData"));
+
+            FrmAttachments aths = new FrmAttachments(this.No);
+            ds.Tables.Add(aths.ToDataTableField("Sys_FrmAttachment"));
+
+            FrmImgs imgs = new FrmImgs(this.No);
+            ds.Tables.Add(imgs.ToDataTableField("Sys_FrmImg"));
+
+            FrmRBs rbs = new FrmRBs(this.No);
+            ds.Tables.Add(rbs.ToDataTableField("Sys_FrmRB"));
+
+            GroupFields gfs = new GroupFields(this.No);
+            ds.Tables.Add(gfs.ToDataTableField("Sys_GroupField"));
+            return ds;
         }
         /// <summary>
         /// 生成自动的ｊｓ程序。

@@ -168,6 +168,12 @@ namespace BP.Sys
             }
         }
         #endregion
+
+        protected override bool beforeInsert()
+        {
+            this.MyPK = this.FK_MapData + "_" + this.KeyOfEn + "_" + this.IntKey;
+            return base.beforeInsert();
+        }
     }
     /// <summary>
     /// µ¥Ñ¡¿òs

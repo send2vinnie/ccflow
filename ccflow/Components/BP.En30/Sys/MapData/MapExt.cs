@@ -271,7 +271,6 @@ namespace BP.Sys
 
                 map.AddTBInt(MapExtAttr.DoWay, 0, "ִ�з�ʽ", true, false);
 
-
                 map.AddTBStringDoc();
 
                 map.AddTBString(MapExtAttr.Tag, null, "Tag", true, false, 0, 900, 20);

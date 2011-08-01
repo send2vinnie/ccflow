@@ -4057,7 +4057,7 @@ namespace BP.En
         /// <param name="cashKey">指定的缓存Key，全局变量不要重复。</param>
         /// <param name="inSQL">sql 语句</param>
         /// <returns>返回放在缓存里面的结果集合</returns>
-        public int RetrieveFromCash(string cashKey, string inSQL)
+        public int RetrieveFromCashInSQL(string cashKey, string inSQL)
         {
             this.Clear();
             Entities ens = Cash.GetEnsDataExt(cashKey) as Entities;
