@@ -145,6 +145,7 @@
     <Compile Include="DTS\WFDTS.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DTS\ClearDB.cs" />
     <Compile Include="FlowDesc\Condition\Cond.cs" />
     <Compile Include="FlowDesc\FlowDescExt\BtnLab.cs">
       <SubType>Code</SubType>
@@ -228,7 +229,7 @@
     <Compile Include="WF\GenerWorkFlowExt.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WF\DTS\MDCheck.cs" />
+    <Compile Include="DTS\RepariDB.cs" />
     <Compile Include="WF\ReturnWork.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -282,6 +283,7 @@
     <Folder Include="App\" />
     <Folder Include="DTS\db\" />
     <Folder Include="FlowDesc\WorkBase\CheckWork\" />
+    <Folder Include="WF\DTS\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

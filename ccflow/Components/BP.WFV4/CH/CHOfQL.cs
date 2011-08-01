@@ -26,17 +26,10 @@ namespace BP.WF
         /// 记录人
         /// </summary>
         public const string Rec = "Rec";
-
-
         public const string FK_NY = "FK_NY";
         public const string FK_Dept = "FK_Dept";
-
-
         public const string Note1 = "Note1";
         public const string Note2 = "Note2";
-
-
-
     }
 	/// <summary>
 	/// 质量考核

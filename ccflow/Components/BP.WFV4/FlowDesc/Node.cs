@@ -2344,7 +2344,6 @@ namespace BP.WF
                 md.Insert();
             }
 
-
             Map map = md.GenerHisMap();
             if (md.No == "ND101")
             {

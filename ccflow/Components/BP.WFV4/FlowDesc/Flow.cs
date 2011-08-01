@@ -536,7 +536,7 @@ namespace BP.WF
                 msg += "<br>";
 
                 #region 检查是否有方向条件
-                if (nd.HisToNodes.Count >= 2)
+                if (nd.HisToNodes.Count >= 2 && nd.HisRunModel== RunModel.Ordinary)
                 {
                     foreach (Node cND in nd.HisToNodes)
                     {
@@ -752,7 +752,6 @@ namespace BP.WF
             // fstas.SaveToXml(path + "FlowStations.xml");
             ds.Tables.Add(fstas.ToDataTableField("FlowStations"));
 
-
             // 流程标签.
             LabNotes labs = new LabNotes(this.No);
             //  labs.SaveToXml(path + "LabNotes.xml");
@@ -764,20 +763,19 @@ namespace BP.WF
 
 
             // 节点与部门。
-            sql = "SELECT * from WF_NodeDept where FK_Node IN (" + sqlin + ")";
+            sql = "SELECT * FROM WF_NodeDept where FK_Node IN (" + sqlin + ")";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "NodeDept";
             ds.Tables.Add(dt);
 
-
             // 节点与岗位权限。
-            sql = "select * from WF_NodeStation where FK_Node IN (" + sqlin + ")";
+            sql = "SELECT * FROM WF_NodeStation where FK_Node IN (" + sqlin + ")";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "NodeStations";
             ds.Tables.Add(dt);
 
             // 节点与人员。
-            sql = "select * from WF_NodeEmp where FK_Node IN (" + sqlin + ")";
+            sql = "SELECT * FROM WF_NodeEmp where FK_Node IN (" + sqlin + ")";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "WF_NodeEmps";
             ds.Tables.Add(dt);
@@ -789,7 +787,6 @@ namespace BP.WF
             WFRpts rpts = new WFRpts(this.No);
             // rpts.SaveToXml(path + "WFRpts.xml");
             ds.Tables.Add(rpts.ToDataTableField("WFRpts"));
-
 
             // 流程报表属性
             RptAttrs rptAttrs = new RptAttrs();
@@ -812,7 +809,6 @@ namespace BP.WF
 
 
             int flowID = int.Parse(this.No);
-
             // Sys_MapData
             sql = "SELECT * FROM Sys_MapData WHERE No LIKE 'ND" + flowID + "%'";
             dt = DBAccess.RunSQLReturnTable(sql);
@@ -822,8 +818,7 @@ namespace BP.WF
             //ds = DBAccess.RunSQLReturnDataSet(sql);
             //ds.WriteXml(path + "Sys_MapData.xml");
 
-
-            // Sys_MapAttr
+            // Sys_MapAttr.
             sql = "SELECT * FROM Sys_MapAttr WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_MapAttr";
@@ -835,8 +830,6 @@ namespace BP.WF
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_EnumMain";
             ds.Tables.Add(dt);
-
-
 
             // Sys_MapDtl
             sql = "SELECT * FROM Sys_MapDtl WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
@@ -864,10 +857,65 @@ namespace BP.WF
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_GroupField";
             ds.Tables.Add(dt);
+
+            // Sys_MapFrame
+            sql = "SELECT * FROM Sys_MapFrame WHERE FK_MapData LIKE 'ND" + flowID + "%' ";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_MapFrame";
+            ds.Tables.Add(dt);
+
+            // Sys_MapM2M
+            sql = "SELECT * FROM Sys_MapM2M WHERE FK_MapData LIKE 'ND" + flowID + "%' ";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_MapM2M";
+            ds.Tables.Add(dt);
+
+            // Sys_FrmLine.
+            sql = "SELECT * FROM Sys_FrmLine WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_FrmLine";
+            ds.Tables.Add(dt);
+
+            // Sys_FrmLab.
+            sql = "SELECT * FROM Sys_FrmLab WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_FrmLab";
+            ds.Tables.Add(dt);
+
+            // Sys_FrmLink.
+            sql = "SELECT * FROM Sys_FrmLink WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_FrmLink";
+            ds.Tables.Add(dt);
+
+            // Sys_FrmRB.
+            sql = "SELECT * FROM Sys_FrmRB WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_FrmRB";
+            ds.Tables.Add(dt);
+
+            // Sys_FrmImgAth.
+            sql = "SELECT * FROM Sys_FrmImgAth WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_FrmImgAth";
+            ds.Tables.Add(dt);
+
+            // Sys_FrmImg.
+            sql = "SELECT * FROM Sys_FrmImg WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_FrmImg";
+            ds.Tables.Add(dt);
+
+            // Sys_FrmAttachment.
+            sql = "SELECT * FROM Sys_FrmAttachment WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_FrmAttachment";
+            ds.Tables.Add(dt);
+
+
             ds.WriteXml(path + this.Name + ".xml");
             return path;
         }
-
         /// <summary>
         /// 生成 word 文件
         /// </summary>

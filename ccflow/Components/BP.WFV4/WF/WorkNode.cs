@@ -85,6 +85,7 @@ namespace BP.WF
                 }
                 catch
                 {
+
                 }
             }
             return str;
@@ -225,6 +226,7 @@ namespace BP.WF
             // 如果执行了两次发送，那前一次的轨迹就需要被删除。这里是为了避免错误。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node =" + town.HisNode.NodeID);
 
+
             //首先判断是否配置了获取下一步接受人员的sql.
             if (this.HisNode.RecipientSQL.Length > 4)
             {
@@ -249,7 +251,7 @@ namespace BP.WF
                 return WorkerListWayOfDept(town, dt);
             }
 
-            if (this.HisNode.HisDeliveryWay== DeliveryWay.BySelected)
+            if (this.HisNode.HisDeliveryWay == DeliveryWay.BySelected)
             {
                 sql = "SELECT  FK_Emp  FROM WF_SelectAccper WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID;
                 dt = DBAccess.RunSQLReturnTable(sql);
@@ -280,7 +282,6 @@ namespace BP.WF
                 }
                 return WorkerListWayOfDept(town, dt);
             }
-
 
             // 判断节点部门里面是否设置了部门，如果设置了，就按照它的部门处理。
             if (town.HisNode.IsSetDept)
@@ -314,7 +315,7 @@ namespace BP.WF
                 // 如果当前的节点不是开始节点， 从轨迹里面查询。
                 sql = "SELECT DISTINCT FK_Emp  FROM Port_EmpStation WHERE FK_Station IN "
                    + "(SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") "
-                   + "AND FK_Emp IN (SELECT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node IN (" + DataType.PraseAtToInSql(town.HisNode.GroupStaNDs,true) + ") )";
+                   + "AND FK_Emp IN (SELECT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node IN (" + DataType.PraseAtToInSql(town.HisNode.GroupStaNDs, true) + ") )";
                 dt = DBAccess.RunSQLReturnTable(sql);
 
                 // 如果能够找到.
@@ -1514,7 +1515,7 @@ namespace BP.WF
                         mywk.Rec = wl.FK_Emp;
                         mywk.Emps = wl.FK_Emp;
                         mywk.BeforeSave();
-                        mywk.OID = DBAccess.GenerOID(BP.Web.WebUser.FK_Dept);  //BP.DA.DBAccess.GenerOID();
+                        mywk.OID = DBAccess.GenerOID("ND"+toNode.NodeID);  //BP.DA.DBAccess.GenerOID();
                         mywk.BeforeSave();
                         // 跳过特殊的规则约束。
                         mywk.InsertAsOID(mywk.OID);
@@ -1582,6 +1583,7 @@ namespace BP.WF
         }
         public string FeiLiuStartUp()
         {
+            #region GenerFH
             GenerFH fh = new GenerFH();
             fh.FID = this.WorkID;
             if (this.HisNode.IsStartNode || fh.IsExits == false)
@@ -1633,6 +1635,8 @@ namespace BP.WF
                     fh.DirectUpdate();
                 }
             }
+            #endregion GenerFH
+
 
             string msg = "";
             Nodes toNodes = this.HisNode.HisToNodes;
@@ -1641,61 +1645,73 @@ namespace BP.WF
             if (toNodes.Count == 1)
                 return FeiLiuStartUp((Node)toNodes[0]);
 
+            Conds dcsAll = new Conds();
+            dcsAll.Retrieve(CondAttr.NodeID, this.HisNode.NodeID);
+            if (dcsAll.Count == 0)
+            {
+                /*如果没有设置方向条件就全部通过*/
+                return msg + StartNextNode(toNodes);
+            }
+
+            #region 获取能够通过的节点集合，如果没有设置方向条件就默认通过.
+            Nodes myNodes = new Nodes();
             int toNodeId = 0;
             int numOfWay = 0;
             foreach (Node nd in toNodes)
             {
                 Conds dcs = new Conds();
-                QueryObject qo = new QueryObject(dcs);
-                qo.AddWhere(CondAttr.NodeID, this.HisNode.NodeID);
-                qo.addAnd();
-                qo.AddWhere(CondAttr.ToNodeID, nd.NodeID);
-
-#warning del those code 2011-05-22.
-                //qo.addAnd();
-                //qo.AddWhere(CondAttr.CondType, (int)CondType.FLRole);
-                qo.DoQuery();
-                foreach (Cond dc in dcs)
+                foreach (Cond dc in dcsAll)
                 {
+                    if (dc.ToNodeID != nd.NodeID)
+                        continue;
+
                     dc.WorkID = this.HisWork.OID;
+                    dcs.AddEntity(dc);
                 }
 
                 if (dcs.Count == 0)
                 {
-                    throw new Exception(string.Format(this.ToE("WN10", "@定义节点的方向条件错误:没有给从{0}节点到{1},定义转向条件."), this.HisNode.NodeID + this.HisNode.Name, nd.NodeID + nd.Name));
-                    //throw new Exception("@定义节点的方向条件错误:没有给从[" + this.HisNode.NodeID + this.HisNode.Name + "]节点到[" + nd.NodeID + nd.Name + "],定义转向条件");
+                    // 如果没有设置方向条件，就默认通过的.
+                    myNodes.AddEntity(nd);
+                    continue;
+                    // throw new Exception(string.Format(this.ToE("WN10", "@定义节点的方向条件错误:没有给从{0}节点到{1},定义转向条件."), this.HisNode.NodeID + this.HisNode.Name, nd.NodeID + nd.Name));
                 }
 
                 if (dcs.IsPass) // 如果多个转向条件中有一个成立.
                 {
-                    numOfWay++;
-                    toNodeId = nd.NodeID;
-                    msg = FeiLiuStartUp(nd);
+                    myNodes.AddEntity(nd);
+                    continue;
+                    //numOfWay++;
+                    //toNodeId = nd.NodeID;
+                    //msg = FeiLiuStartUp(nd);
                 }
             }
+            #endregion 获取能够通过的节点集合，如果没有设置方向条件就默认通过.
 
+            if (myNodes.Count==0)
+                 throw new Exception(string.Format(this.ToE("WN10_1",
+                     "@定义节点的方向条件错误:没有给从{0}节点到其它节点,定义转向条件."), this.HisNode.NodeID + this.HisNode.Name));
 
-            if (toNodeId == 0)
-            {
-                //throw new Exception("转向条件设置错误:节点名称" + this.HisNode.Name +" , 工作流程引擎无法投递。");
-                throw new Exception(string.Format(this.ToE("WN11", "@转向条件设置错误:节点名称{0}, 系统无法投递。"), this.HisNode.Name));  // 转向条件设置错误:节点名称" + this.HisNode.Name + " , 工作流程引擎无法投递。"
-            }
-            else
-            {
-                /* 删除曾经在这个步骤上的流程运行数据。
-                 * 比如说：方向条件，发生了变化后可能产生两个工作上的数据。是为了工作报告上面体现了两个步骤。 */
-                foreach (Node nd in toNodes)
-                {
-                    if (nd.NodeID == toNodeId)
-                        continue;
+            //if (toNodeId == 0)
+            //{
+            //    //throw new Exception("转向条件设置错误:节点名称" + this.HisNode.Name +" , 工作流程引擎无法投递。");
+            //    throw new Exception(string.Format(this.ToE("WN11", "@转向条件设置错误:节点名称{0}, 系统无法投递。"), this.HisNode.Name));  // 转向条件设置错误:节点名称" + this.HisNode.Name + " , 工作流程引擎无法投递。"
+            //}
+            //else
+            //{
+            //    /* 删除曾经在这个步骤上的流程运行数据。
+            //     * 比如说：方向条件，发生了变化后可能产生两个工作上的数据。是为了工作报告上面体现了两个步骤。 */
+            //    foreach (Node nd in toNodes)
+            //    {
+            //        if (nd.NodeID == toNodeId)
+            //            continue;
 
-                    // 删除这个工作，因为这个工作的数据不在有用了。
-                    Work wk = nd.HisWork;
-                    wk.OID = this.HisWork.OID;
-                    wk.Delete();
-                   
-                }
-            }
+            //        // 删除这个工作，因为这个工作的数据不在有用了。
+            //        Work wk = nd.HisWork;
+            //        wk.OID = this.HisWork.OID;
+            //        wk.Delete();
+            //    }
+            //}
             return msg;
         }
         #endregion
@@ -2339,6 +2355,8 @@ namespace BP.WF
             if (toNodes.Count == 1)
                 return msg + StartNextNode((Node)toNodes[0]);
 
+         
+
             Node toNode = null;
             int numOfWay = 0;
             string condMsg = "";
@@ -2350,12 +2368,11 @@ namespace BP.WF
                 qo.addAnd();
                 qo.AddWhere(CondAttr.ToNodeID, nd.NodeID);
                 qo.DoQuery();
+
                 foreach (Cond dc in dcs)
                 {
                     dc.WorkID = this.HisWork.OID;
                 }
-
-
                 if (dcs.Count == 0)
                 {
                     throw new Exception(string.Format(this.ToE("WN10",
@@ -2372,7 +2389,6 @@ namespace BP.WF
                 condMsg += "<b>@检查方向条件：到节点：" + nd.Name + "</b>";
                 condMsg += dcs.MsgOfDesc;
             }
-
             if (toNode == null)
                 throw new Exception(string.Format(this.ToE("WN11", "@转向条件设置错误:节点名称{0}, 系统无法投递。"),
                     this.HisNode.Name));
@@ -2395,6 +2411,62 @@ namespace BP.WF
             return msg;
         }
         #region 启动审核节点
+        /// <summary>
+        /// 启动多个节点.
+        /// </summary>
+        /// <param name="nds"></param>
+        /// <returns></returns>
+        public string StartNextNode(Nodes nds)
+        {
+            /*分别启动每个节点的信息.*/
+            string msg = "";
+            foreach (Node nd in nds)
+            {
+                msg += "@"+nd.Name+"工作已经启动，处理工作者：";
+                //产生一个工作信息。
+                Work wk = nd.HisWork;
+                wk.Copy(this.HisWork);
+                wk.FID = this.HisWork.OID;
+                wk.OID = BP.DA.DBAccess.GenerOID( WebUser.FK_Dept);
+                wk.NodeState = NodeState.Init;
+                wk.BeforeSave();
+                wk.DirectInsert();
+
+                //获得它的工作者。
+                WorkNode town = new WorkNode(wk, nd);
+                WorkerLists gwls = this.GenerWorkerLists(town);
+                foreach (WorkerList wl in gwls)
+                {
+                    msg += wl.FK_Emp+"，"+ wl.FK_EmpText + "、";
+                    // 产生工作的信息。
+                    GenerWorkFlow gwf = new GenerWorkFlow();
+                    gwf.FID = this.WorkID;
+                    gwf.WorkID = wk.OID;
+
+                    if (BP.WF.Glo.IsShowUserNoOnly)
+                        gwf.Title = WebUser.No + "," + WebUser.Name + " 发起：" + nd.Name + "(分流节点)";
+                    else
+                        gwf.Title = WebUser.No + " 发起：" + nd.Name + "(分流节点)";
+
+                    gwf.WFState = 0;
+                    gwf.RDT = DataType.CurrentDataTime;
+                    gwf.Rec = Web.WebUser.No;
+                    gwf.FK_Flow = nd.FK_Flow;
+                    gwf.FK_Node = nd.NodeID;
+                    gwf.FK_Dept = wl.FK_Dept;
+                    try
+                    {
+                        gwf.DirectInsert();
+                    }
+                    catch
+                    {
+                        gwf.DirectUpdate();
+                    }
+                    DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET WorkID=" + wk.OID + ",FID=" + this.WorkID + " WHERE FK_Emp='" + wl.FK_Emp + "' AND WorkID=" + this.WorkID + " AND FK_Node=" + nd.NodeID);
+                }
+            }
+            return msg;
+        }
         /// <summary>
         /// 启动指定的下一个节点 .
         /// </summary>
@@ -2638,7 +2710,6 @@ namespace BP.WF
             }
             else
             {
-
 #warning 为了不让其显示在途的工作需要， =3 不是正常的处理模式。
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=3,WorkID=" + this.HisWork.FID + ",FID=0 WHERE FK_Node=" + nd.NodeID + " AND WorkID=" + this.HisWork.OID);
             }
@@ -2817,8 +2888,8 @@ namespace BP.WF
                 #endregion 复制明细数据
                 //  wk.CopyCellsData("ND" + this.HisNode.NodeID + "_" + this.HisWork.OID);
 
-
                 #endregion
+
                 try
                 {
                     wk.BeforeSave();

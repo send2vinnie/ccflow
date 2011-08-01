@@ -26,8 +26,8 @@ namespace BP.WF.DTS
         public override void Do()
         {
 
-            MDCheck md = new MDCheck();
-            md.Do();
+            //MDCheck md = new MDCheck();
+            //md.Do();
 
             //执行调度部门。
             //BP.Port.DTS.GenerDept gd = new BP.Port.DTS.GenerDept();
