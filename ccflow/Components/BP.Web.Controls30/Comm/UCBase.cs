@@ -1110,48 +1110,48 @@ namespace BP.Web.UC
             this.AddMsgOfInfo(title, msg);
             return;
 
-            //this.Alert(msg, false);
-         //   return;
+         //   //this.Alert(msg, false);
+         ////   return;
 
-            this.LoadPop();
+         //   this.LoadPop();
 
           
 
-            this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
-            string js = "<script language=JavaScript >";
-            js += "\t\n $.messager.alert('" + title + "', document.getElementById('myMsg').innerHTML ,'info'); ";
-            js += "</script>";
-            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
+         //   this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
+         //   string js = "<script language=JavaScript >";
+         //   js += "\t\n $.messager.alert('" + title + "', document.getElementById('myMsg').innerHTML ,'info'); ";
+         //   js += "</script>";
+         //   this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
 
-            //this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
-            //string js = "<script language=JavaScript >";
-            //js += "\t\n ymPrompt.setDefaultCfg({btn:'ok'}) ; ";
-            //js += "\t\n ymPrompt.alert({message: document.getElementById('myMsg').innerHTML,title:'" + title + "',height:380,width:400,fixPosition:true,dragOut:false,allowSelect:true});";
-            //js += "</script>";
-            //this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
+         //   //this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
+         //   //string js = "<script language=JavaScript >";
+         //   //js += "\t\n ymPrompt.setDefaultCfg({btn:'ok'}) ; ";
+         //   //js += "\t\n ymPrompt.alert({message: document.getElementById('myMsg').innerHTML,title:'" + title + "',height:380,width:400,fixPosition:true,dragOut:false,allowSelect:true});";
+         //   //js += "</script>";
+         //   //this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
         }
         public void AlertMsg_Warning(string title, string msg)
         {
             this.AddMsgOfWarning(title, msg);
             return;
 
-            this.Alert(msg, false);
-            return;
+           // this.Alert(msg, false);
+           // return;
 
-            this.LoadPop();
+           // this.LoadPop();
 
-            this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
-            string js = "<script language=JavaScript >";
-           // js += "\t\n $.messager.alert('" + title + "', document.getElementById('myMsg').innerHTML ,'warning'); ";
-            //js += "";
+           // this.Add("<div id=myMsg style='display:none;'><div style='text-align:left' >" + msg + "</div></div>");
+           // string js = "<script language=JavaScript >";
+           //// js += "\t\n $.messager.alert('" + title + "', document.getElementById('myMsg').innerHTML ,'warning'); ";
+           // //js += "";
 
-            js += "\t\n  alert('sdsds') ";
+           // js += "\t\n  alert('sdsds') ";
 
-            js += "\t\n $.messager.alert('" + title + "', 'sss','warning'); ";
+           // js += "\t\n $.messager.alert('" + title + "', 'sss','warning'); ";
 
-            js += "</script>";
+           // js += "</script>";
 
-            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
+           // this.Page.ClientScript.RegisterStartupScript(this.GetType(), "kesy", js);
 
             //         <script language="JavaScript" src="../Comm/JS/pop/ymPrompt.js" ></script>
             //<link rel="stylesheet" type="text/css" href="../Comm/JS/pop/skin/qq/ymPrompt.css" /> 
@@ -1755,12 +1755,6 @@ namespace BP.Web.UC
         {
             this.Add("\n<Caption class='Caption' align=left >" + str + "</Caption>");
             return;
-
-
-            if (BP.Web.WebUser.Style == "2")
-                this.Add("\n<Caption class='Caption' align=left >" + PubClass.GenerLabelStr(str) + "</Caption>");
-            else
-                this.Add("\n<Caption class='Caption' align=left >" + PubClass.GenerLabelStr(str) + "</Caption>");
         }
         public void AddCaptionLeftTX2(string str)
         {

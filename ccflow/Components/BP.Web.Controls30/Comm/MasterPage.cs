@@ -67,7 +67,6 @@ namespace BP.Web
 
         public void LoadPop()
         {
-
             this.Page.RegisterClientScriptBlock("sdds",
   "<link href='" + this.Request.ApplicationPath + "/Comm/JS/jquery-easyui/themes/default/easyui.css' rel='stylesheet' type='text/css' />");
 

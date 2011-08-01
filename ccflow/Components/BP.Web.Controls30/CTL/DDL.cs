@@ -1426,39 +1426,39 @@ namespace BP.Web.Controls
 
             return;
            
-                Entity en = attr.HisFKEn; // ClassFactory.GetEn(attr.UIBindKey);
-                en.PKVal = val;
-                en.Retrieve();
+//                Entity en = attr.HisFKEn; // ClassFactory.GetEn(attr.UIBindKey);
+//                en.PKVal = val;
+//                en.Retrieve();
           
 
-#warning edit: 2008-06-01  en.RetrieveFromDBSources();
+//#warning edit: 2008-06-01  en.RetrieveFromDBSources();
 
 
-            ListItem li = new ListItem();
-            li.Text = en.GetValStrByKey(attr.UIRefKeyText);
-            li.Value = en.GetValStrByKey(attr.UIRefKeyValue);
+//            ListItem li = new ListItem();
+//            li.Text = en.GetValStrByKey(attr.UIRefKeyText);
+//            li.Value = en.GetValStrByKey(attr.UIRefKeyValue);
 
-            if (this.Items.Contains(li))
-            {
-                this.SetSelectItem(val);
-                return;
-            }
+//            if (this.Items.Contains(li))
+//            {
+//                this.SetSelectItem(val);
+//                return;
+//            }
 
 
 
-            ListItem liall = this.GetItemByText("请用更多...");
-            ListItem myall = this.GetItemByVal("all");
-            if (myall != null)
-            {
-                this.Items.Clear();
-                this.Items.Add(li);
-                this.Items.Add(myall);
+//            ListItem liall = this.GetItemByText("请用更多...");
+//            ListItem myall = this.GetItemByVal("all");
+//            if (myall != null)
+//            {
+//                this.Items.Clear();
+//                this.Items.Add(li);
+//                this.Items.Add(myall);
 
-                // this.Items.Remove(liall);
-            }
+//                // this.Items.Remove(liall);
+//            }
 
-            //  this.Items.Add(li);
-            this.SetSelectItem(val);
+//            //  this.Items.Add(li);
+//            this.SetSelectItem(val);
         }
 		/// <summary>
 		/// 设置选择的值
