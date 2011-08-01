@@ -213,33 +213,6 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
 
             this.Pub1.AddTD();
             continue;
-
-            switch (attr.Key)
-            {
-                case "OID":
-                case "FID":
-                    this.Pub1.AddTD();
-                    continue;
-                default:
-                    break;
-            }
-
-
-
-            switch (attr.MyDataType)
-            {
-                case DataType.AppFloat:
-                case DataType.AppInt:
-                case DataType.AppDouble:
-                    this.Pub1.AddTDB(rpts.GetSumDecimalByKey(attr.Key).ToString());
-                    break;
-                case DataType.AppMoney:
-                    this.Pub1.AddTDB(rpts.GetSumDecimalByKey(attr.Key).ToString("0.00"));
-                    break;
-                default:
-                    this.Pub1.AddTD();
-                    break;
-            }
         }
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
@@ -277,7 +250,7 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
                 {
                     this.ExportDGToExcel(rpts.ToDataTableDescField(), fl.Name);
                 }
-                catch (Exception ex1)
+                catch
                 {
                     this.ToErrorPage("数据没有正确导出可能的原因之一是:系统管理员没正确的安装Excel组件，请通知他，参考安装说明书解决。@系统异常信息：" + ex.Message);
                 }

@@ -513,7 +513,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                 ddl = new BP.Web.Controls.DDL();
                 ddl.BindSysEnum(sem.No);
             }
-            catch(Exception ex)
+            catch 
             {
                 sem.Delete();
 

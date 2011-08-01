@@ -133,13 +133,12 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
     }
     public void BindCond()
     {
-        string msg = "";
-        string note = "";
+        //string msg = "";
+        //string note = "";
 
         Cond cond = new Cond();
         cond.MyPK = this.GenerMyPK;
         cond.RetrieveFromDBSources();
-
 
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         BP.WF.Node tond = new BP.WF.Node(this.ToNodeID);

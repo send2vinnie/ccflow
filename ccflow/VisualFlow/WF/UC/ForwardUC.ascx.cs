@@ -98,7 +98,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             Int64 workId = this.WorkID;
             //WorkerLists wls = new WorkerLists(this.WorkID,nodeId);
             DBAccess.RunSQL("update WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId);
-            string vals = "";
+         //   string vals = "";
             string emps = "";
             foreach (Object obj in al)
             {

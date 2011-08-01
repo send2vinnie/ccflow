@@ -3,7 +3,7 @@
 // 类名已更改，且类已修改为从文件“App_Code\Migrated\comm\uc\Stub_ucen_ascx_cs.cs”的抽象基类 
 // 继承。
 // 在运行时，此项允许您的 Web 应用程序中的其他类使用该抽象基类绑定和访问 
-// 代码隐藏页。
+// 代码隐藏页。 
 // 关联的内容页“comm\uc\ucen.ascx”也已修改，以引用新的类名。
 // 有关此代码模式的更多信息，请参考 http://go.microsoft.com/fwlink/?LinkId=46995 
 //===========================================================================
@@ -1239,7 +1239,7 @@ namespace BP.Web.Comm.UC.WF
 
             // 输出 rb.
             BP.Sys.FrmRBs myrbs = new FrmRBs();
-            myrbs.Retrieve(FrmRBAttr.FK_MapData, enName);
+            myrbs.RetrieveFromCash(FrmRBAttr.FK_MapData, enName);
             foreach (BP.Sys.FrmRB rb in myrbs)
             {
                 this.Add("<DIV id='F" + rb.MyPK + "' style='position:absolute; left:" + rb.X + "px; top:" + rb.Y + "px; width:100%; height:16px;text-align: left;word-break: keep-all;' >");
@@ -1816,7 +1816,7 @@ namespace BP.Web.Comm.UC.WF
                             {
                                 enumKey = int.Parse(val.ToString());
                             }
-                            catch (Exception ex)
+                            catch 
                             {
                                 throw new Exception("默认值错误：" + attr.Key + " = " + val.ToString());
                             }

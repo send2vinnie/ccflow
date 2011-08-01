@@ -195,7 +195,7 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
                     {
                         BP.DA.DBAccess.RunSQLReturnTable(sql);
                     }
-                    catch (Exception ex)
+                    catch  
                     {
                         this.Alert(ToE("TVErr", "错误:表或视图不存在No,Name列不符合约定规则.") + " Key=" + main.No);
                         return;

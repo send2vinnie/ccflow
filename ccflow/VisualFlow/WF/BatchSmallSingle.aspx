@@ -7,4 +7,3 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <uc1:Batch ID="Batch1" runat="server" />
 </asp:Content>
-

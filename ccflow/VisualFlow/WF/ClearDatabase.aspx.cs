@@ -67,57 +67,6 @@ namespace BP.Web.WF.WF
                 return;
             }
 
-            DA.DBAccess.RunSQL("DELETE FROM WF_CHOfFlow");
-            DA.DBAccess.RunSQL("DELETE FROM WF_Bill");
-            DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist");
-            DA.DBAccess.RunSQL("DELETE FROM WF_GENERWORKFLOW");
-            DA.DBAccess.RunSQL("DELETE FROM WF_ReturnWork");
-            DA.DBAccess.RunSQL("DELETE FROM WF_GenerFH");
-            DA.DBAccess.RunSQL("DELETE FROM WF_SelectAccper");
-            DA.DBAccess.RunSQL("DELETE FROM WF_FileManager");
-            DA.DBAccess.RunSQL("DELETE FROM WF_RememberMe");
-
-           // DA.DBAccess.RunSQL("DELETE FROM WF_WorkList");
-
-            DA.DBAccess.RunSQL("DELETE FROM WF_RunRecord");
-            Nodes nds = new Nodes();
-            foreach (Node nd in nds)
-            {
-                try
-                {
-                    Work wk = nd.HisWork;
-                    DA.DBAccess.RunSQL("DELETE FROM " + wk.EnMap.PhysicsTable);
-                }
-                catch
-                {
-                }
-            }
-
-            MapDatas mds = new MapDatas();
-            mds.RetrieveAll();
-            foreach (MapData nd in mds)
-            {
-                try
-                {
-                    DA.DBAccess.RunSQL("DELETE FROM " + nd.PTable);
-                }
-                catch
-                {
-                }
-            }
-
-            MapDtls dtls = new MapDtls();
-            dtls.RetrieveAll();
-            foreach (MapDtl dtl in dtls)
-            {
-                try
-                {
-                    DA.DBAccess.RunSQL("DELETE FROM " + dtl.PTable);
-                }
-                catch
-                {
-                }
-            }
             this.WinCloseWithMsg("clear ok.");
         }
         protected void Button3_Click(object sender, EventArgs e)

@@ -394,7 +394,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         if (this.WorkID == 0)
         {
             currWK = this.New(true, currND);
-
             //if (currWK.OID == 0)
             //{
             //    currWK.OID = BP.DA.DBAccess.GenerOID();
@@ -1108,7 +1107,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         this.ToMsg(ex.Message, "info");
                         return;
                     }
-                    break;
                 case "Btn_EndFlow": //结束流程。
                      WorkFlow mywf = null;
                     if (this.FID == 0)
@@ -1376,13 +1374,18 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             wk.WFState = 0;
             wk.NodeState = 0;
             wk.OID = DBAccess.GenerOID("WID");
-          //  wk.OID = DBAccess.GenerOID("WID");
-
-
             this.WorkID = wk.OID;
-
-            // DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
-            //  wk.OID = DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
+            wk.DirectInsert();
+        }
+        else if (nd.HisRunModel != RunModel.Ordinary)
+        {
+            wk.Rec = WebUser.No;
+            wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+            wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+            wk.WFState = 0;
+            wk.NodeState = 0;
+            wk.OID = DBAccess.GenerOID("WID");
+            this.WorkID = wk.OID;
             wk.DirectInsert();
         }
 
@@ -1508,7 +1511,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.FlowMsg.AlertMsg_Info("提示:", this.ToE("WhenSeleWorkErr", "处理选择工作出现错误") + ex.Message);
             return null;
         }
-        return wn.HisWork;
     }
     #endregion
 }

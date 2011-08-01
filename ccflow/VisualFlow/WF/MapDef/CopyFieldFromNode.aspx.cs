@@ -382,22 +382,21 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                 //md2.CellsY = md1.CellsY;
                 md2.Update();
 
-                MapAttrs ma1 = md1.GenerHisTableCells;
-
+                //MapAttrs ma1 = md1.GenerHisTableCells;
                 // 删除历史数据。
 
-                ma1.Delete(MapAttrAttr.FK_MapData, this.FK_Node + "T");
-                foreach (MapAttr attr in ma1)
-                {
-                    MapAttr attr2 = new MapAttr();
-                    attr2.Copy(attr);
-                    // attr2.OID = 0;
-                    attr2.GroupID = 0;
-                    attr2.IDX = 0;
-                    attr2.FK_MapData = this.FK_Node + "T";
-                    attr2.UIIsEnable = false;
-                    attr2.Insert();
-                }
+                //ma1.Delete(MapAttrAttr.FK_MapData, this.FK_Node + "T");
+                //foreach (MapAttr attr in ma1)
+                //{
+                //    MapAttr attr2 = new MapAttr();
+                //    attr2.Copy(attr);
+                //    // attr2.OID = 0;
+                //    attr2.GroupID = 0;
+                //    attr2.IDX = 0;
+                //    attr2.FK_MapData = this.FK_Node + "T";
+                //    attr2.UIIsEnable = false;
+                //    attr2.Insert();
+                //}
             }
         }
 
