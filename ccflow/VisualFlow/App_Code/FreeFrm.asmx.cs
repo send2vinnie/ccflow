@@ -62,30 +62,59 @@ namespace FreeFrm.Web
                 return ex.Message;
             }
         }
+      
         /// <summary>
-        /// 上传文件.
+        /// 装载表单模板
         /// </summary>
-        /// <param name="FileByte"></param>
-        /// <param name="fileName"></param>
+        /// <param name="fileByte">字节数</param>
+        /// <param name="fk_mapData"></param>
         /// <returns></returns>
+        [WebMethod]
+        public string LoadFrmTemplete(byte[] fileByte, string fk_mapData)
+        {
+            try
+            {
+                string file = "\\Temp\\" + fk_mapData + ".xml";
+                UploadFile(fileByte, file);
+                string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + file;
+                DataSet ds = new DataSet();
+                ds.ReadXml(path);
+                MapData.ImpMapData(fk_mapData, ds);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        /// <summary>
+        /// 上传文件
+        /// </summary>
+        /// <param name="FileByte">文件字节</param>
+        /// <param name="fileName">存储的文件名</param>
+        /// <returns>null or exception</returns>
         [WebMethod]
         public string UploadFile(byte[] FileByte, String fileName)
         {
-            string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath;
+            try
+            {
+                string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath;
+                string filePath = path + "\\" + fileName;
+                if (System.IO.File.Exists(filePath))
+                    System.IO.File.Delete(filePath);
 
-            string filePath = path + "\\" + fileName;
-            if (System.IO.File.Exists(filePath))
-                System.IO.File.Delete(filePath);
-
-            //这里使用绝对路径来索引
-            FileStream stream = new FileStream(filePath, FileMode.CreateNew);
-            stream.Write(FileByte, 0, FileByte.Length);
-            stream.Close();
-
-            DataSet ds = new DataSet();
-            ds.ReadXml(filePath);
-
-            return Connector.ToXml(ds);
+                //这里使用绝对路径来索引
+                FileStream stream = new FileStream(filePath, FileMode.CreateNew);
+                stream.Write(FileByte, 0, FileByte.Length);
+                stream.Close();
+                DataSet ds = new DataSet();
+                ds.ReadXml(filePath);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
         }
         /// <summary>
         /// 运行sqls
@@ -116,12 +145,25 @@ namespace FreeFrm.Web
             {
                 switch (dotype)
                 {
+                    case "FrmTempleteExp":  //导出表单.
+                        MapData mdfrmtem = new MapData(v1);
+                        DataSet ds = mdfrmtem.GenerHisDataSet();
+                        string  file = System.Web.HttpContext.Current.Request.PhysicalApplicationPath+"\\Temp\\" + v1 + ".xml";
+                        if (System.IO.File.Exists(file))
+                            System.IO.File.Delete(file);
+                        ds.WriteXml(file);
+                        return null;
+                    case "FrmTempleteImp": //导入表单.
+                        DataSet dsImp = new DataSet();
+                        string fileImp = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\Temp\\" + v1 + ".xml";
+                        dsImp.ReadXml(fileImp); //读取文件.
+                        MapData.ImpMapData(v1, dsImp);
+                        return null;
                     case "NewHidF":
                         string fk_mapdata = v1;
                         string key = v2;
                         string name = v3;
                         int dataType  =int.Parse(v4);
-
                         MapAttr mdHid = new MapAttr();
                         mdHid.MyPK = fk_mapdata + "_" + key;
                         mdHid.FK_MapData = fk_mapdata;
@@ -395,36 +437,45 @@ namespace FreeFrm.Web
         {
             ds = new DataSet();
             // line.
-            BP.Sys.FrmLines lins = new BP.Sys.FrmLines(fk_mapdata);
+            BP.Sys.FrmLines lins = new BP.Sys.FrmLines();
+            lins.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             DataTable dt = lins.ToDataTableField();
             dt.TableName = "Sys_FrmLine";
             ds.Tables.Add(dt);
-            if (lins.Count == 0)
-            {
-                this.InitFrm(fk_mapdata);
-                return _GenerFrm(fk_mapdata,workID);
-            }
+
+            //if (lins.Count == 0)
+            //{
+            //    this.InitFrm(fk_mapdata);
+            //    return _GenerFrm(fk_mapdata,workID);
+            //}
+
+           // MapData md = new MapData(fk_mapdata);
+           // ds= md.GenerHisDataSet();
 
             // link.
-            BP.Sys.FrmLinks liks = new BP.Sys.FrmLinks(fk_mapdata);
+            BP.Sys.FrmLinks liks = new BP.Sys.FrmLinks();
+            liks.Retrieve(FrmLinkAttr.FK_MapData, fk_mapdata);
             DataTable dtLink = liks.ToDataTableField();
             dtLink.TableName = "Sys_FrmLink";
             ds.Tables.Add(dtLink);
 
             // Img
-            BP.Sys.FrmImgs imgs = new BP.Sys.FrmImgs(fk_mapdata);
+            BP.Sys.FrmImgs imgs = new BP.Sys.FrmImgs();
+            imgs.Retrieve(FrmImgAttr.FK_MapData, fk_mapdata);
             DataTable imgDt = imgs.ToDataTableField();
             imgDt.TableName = "Sys_FrmImg";
             ds.Tables.Add(imgDt);
 
             // Sys_FrmLab
             BP.Sys.FrmLabs labs = new BP.Sys.FrmLabs(fk_mapdata);
+            labs.Retrieve(FrmLabAttr.FK_MapData, fk_mapdata);
             DataTable dtlabs = labs.ToDataTableField();
             dtlabs.TableName = "Sys_FrmLab";
             ds.Tables.Add(dtlabs);
 
             // Sys_FrmRB
             BP.Sys.FrmRBs rbs = new BP.Sys.FrmRBs(fk_mapdata);
+            rbs.Retrieve(FrmRBAttr.FK_MapData, fk_mapdata);
             DataTable dtRB = rbs.ToDataTableField();
             dtRB.TableName = "Sys_FrmRB";
             ds.Tables.Add(dtRB);
@@ -442,24 +493,28 @@ namespace FreeFrm.Web
             ds.Tables.Add(attrs.ToDataTableField("Sys_MapAttr"));
 
             // MapDtl
-            BP.Sys.MapDtls dtls = new BP.Sys.MapDtls(fk_mapdata);
+            BP.Sys.MapDtls dtls = new BP.Sys.MapDtls();
+            dtls.Retrieve(MapDtlAttr.FK_MapData, fk_mapdata);
             ds.Tables.Add(dtls.ToDataTableField("Sys_MapDtl"));
 
             // Map2m
-            BP.Sys.MapM2Ms m2ms = new BP.Sys.MapM2Ms(fk_mapdata);
+            BP.Sys.MapM2Ms m2ms = new BP.Sys.MapM2Ms();
+            m2ms.Retrieve(MapM2MAttr.FK_MapData, fk_mapdata);
             ds.Tables.Add(m2ms.ToDataTableField("Sys_MapM2M"));
 
-
             // FrmAttachments
-            BP.Sys.FrmAttachments fjs = new BP.Sys.FrmAttachments(fk_mapdata);
+            BP.Sys.FrmAttachments fjs = new BP.Sys.FrmAttachments();
+            fjs.Retrieve(MapM2MAttr.FK_MapData, fk_mapdata);
             ds.Tables.Add(fjs.ToDataTableField("Sys_FrmAttachment"));
 
             // FrmImgAth
-            BP.Sys.FrmImgAths imgaths = new BP.Sys.FrmImgAths(fk_mapdata);
+            BP.Sys.FrmImgAths imgaths = new BP.Sys.FrmImgAths();
+            imgaths.Retrieve(MapM2MAttr.FK_MapData, fk_mapdata);
             ds.Tables.Add(imgaths.ToDataTableField("Sys_FrmImgAth"));
 
             // MapExt
-            BP.Sys.MapExts exts = new BP.Sys.MapExts(fk_mapdata);
+            BP.Sys.MapExts exts = new BP.Sys.MapExts();
+            exts.Retrieve(MapM2MAttr.FK_MapData, fk_mapdata);
             ds.Tables.Add(exts.ToDataTableField("Sys_MapExt"));
 
             // MapData
