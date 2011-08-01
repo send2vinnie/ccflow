@@ -66,6 +66,8 @@
   <Item No="WN9" CH="@判断流程{0}完成条件出现错误." EN="@Error occurred while determining the completion conditions for flow {0}" JP="@ {0}は、プロセスのエラー条件の完了を確認してください。" RU="@ Поток {0}, чтобы определить завершения ошибку состоянии." />
   <Item No="WN0" CH="此工作流程运行到最后一个环节，工作成功结束！" EN="The worflow ran through the last node, the work is completed successfully!" JP="このワークフローは、作品の成功の結論の最後のリンクを実行している！" RU="Этот рабочий работает до последнего звена в успешное завершение работы!" />
   <Item No="WN10" CH="@定义节点的方向条件错误:没有给从{0}节点到{1},定义转向条件." EN="@Error setting connection condition. The connection condition is not defined from node {0} to node {1}" JP="ノードエラーの定義の条件の方向@ ： {0} {1}からのノード、シフト条件の定義。&#xD;&#xA;" RU="@ Направление условия определения узла ошибка: нет узла с {0} {1}, определение смены условий." />
+  <Item No="WN10_1" CH="@定义节点的方向条件错误:没有给从{0}节点到{1},定义转向条件." EN="@Error setting connection condition. The connection condition is not defined from node {0} to node {1}" JP="ノードエラーの定義の条件の方向@ ： {0} {1}からのノード、シフト条件の定義。&#xD;&#xA;" RU="@ Направление условия определения узла ошибка: нет узла с {0} {1}, определение смены условий." />
+
   <Item No="WN11" CH="@转向条件设置错误:节点名称{0}, 系统无法投递。" EN="@Connection condition error. Node name: {0}. System cannot deliver." JP="@シフト条件エラー設定：ノード名{0} 、システムを配信することはできません。&#xD;&#xA;" RU="@ Shift условия, ошибка: имя узла {0}, система не может быть доставлено." />
   <Item No="WN12" CH="审核工作成功启动" EN="Audit work was launched successfully." JP="監査の打ち上げ成功&#xD;&#xA;" RU="Успешный запуск аудит" />
   <Item No="WN13" CH="启动审核节点任务失败" EN="Audit work launch failed." JP="監査の仕事のノードの障害を開始する" RU="Узел невыполнение задач, аудит, чтобы начать" />
