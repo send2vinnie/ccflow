@@ -23,7 +23,7 @@
 
   <Item No="InitConnNum" Name="系统连接数"  Note="初始化系统的连接数据" DBType="String"  IsEnable="1"  />
   <Item No="AppCenterDSN" Name="应用程序连接"  Note="连接到的数据库密码与用户" DBType="String" />
-  <Item No="AppCenterDBType" Name="数据库类型"  Note=" " DBType="String"  IsEnable="1" IsShow="0" />
+  <Item No="AppCenterDBType" Name="数据库类型"  Note="支持类型:MSSQL,Oracle, DB2,Access,MySQL" DBType="String"  IsEnable="1" IsShow="0" />
   <Item No="DBAccessOfMSSQL2000" Name=" 辅应用数据MSSQL2000连接"  Note="本系统的名称" DBType="String" IsEnable="0" />
 
   <Item No="DBAccessOfOLE" Name="辅应用数据Ole连接"  Note="辅应用数据Ole连接  " DBType="String" />
@@ -84,4 +84,11 @@
 
   <Item No="IsShowTitle" Name="是否显示标题图片？" Note="是否显示标题图片" DBType="Boolen"  IsShow="1" />
 
+  <Item No="IsShowFlowNum" Name="是否显示待办工作数量？" Note="独立运行模式下提示待办工作数量"
+        DBType="Boolen"  IsShow="1" />
+  <Item No="IsEnableStyle" Name="是否启用系统风格？" Note="是否允许用户设置系统风格" DBType="Boolen"  IsShow="1" />
+
+  <Item No="BPMHost" Name="流程设计服务器地址" Note="" DBType="String"  IsShow="1" />
+ 
+  
 </NewDataSet>
