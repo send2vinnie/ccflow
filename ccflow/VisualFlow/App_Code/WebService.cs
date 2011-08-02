@@ -115,6 +115,12 @@ public class WebService : System.Web.Services.WebService
             case "MapDef": //定义表单.
                 url = "/WF/MapDef/MapDef.aspx?PK=ND" + node1 + "&FK_Node=" + node1;
                 break;
+            case "MapDefF4": //定义表单.
+                url = "/WF/MapDef/MapDef.aspx?PK=ND" + node1 + "&FK_Node=" + node1+"&FormType=F4";
+                break;
+            case "MapDefFreeFrm": //定义表单.
+                url = "/WF/MapDef/MapDef.aspx?PK=ND" + node1 + "&FK_Node=" + node1 + "&FormType=FreeFrm";
+                break;
             case "Dir": // 方向。
                 url = "/WF/Admin/Cond.aspx?FK_Flow=" + fk_flow + "&FK_MainNode=" + node1 + "&FK_Node=" + node1 + "&ToNodeID=" + node2 + "&CondType=2";
                 break;
