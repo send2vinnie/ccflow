@@ -51,18 +51,17 @@ namespace FreeFrm.Web
         {
             try
             {
-             //   string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\Temp\\" + fk_mapdata + ".xml";
-                string path =@"D:\ccflow\VisualFlow\Temp\" + fk_mapdata + ".xml";
-                this.GenerFrm(fk_mapdata,0);
+                //   string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\Temp\\" + fk_mapdata + ".xml";
+                string path = @"D:\ccflow\VisualFlow\Temp\" + fk_mapdata + ".xml";
+                this.GenerFrm(fk_mapdata, 0);
                 ds.WriteXml(path);
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex.Message;
             }
         }
-      
         /// <summary>
         /// 装载表单模板
         /// </summary>
@@ -147,6 +146,20 @@ namespace FreeFrm.Web
                 {
                     case "FrmTempleteExp":  //导出表单.
                         MapData mdfrmtem = new MapData(v1);
+                        mdfrmtem.No = v1;
+                        if (mdfrmtem.RetrieveFromDBSources() == 0)
+                        {
+                            if (v1.Contains("ND"))
+                            {
+                                int nodeId = int.Parse(v1.Replace("ND", ""));
+                                Node nd = new Node(nodeId);
+                                mdfrmtem.Name = nd.Name;
+                                mdfrmtem.PTable = v1;
+                                mdfrmtem.EnPK = "OID";
+                                mdfrmtem.Insert();
+                            }
+                        }
+
                         DataSet ds = mdfrmtem.GenerHisDataSet();
                         string  file = System.Web.HttpContext.Current.Request.PhysicalApplicationPath+"\\Temp\\" + v1 + ".xml";
                         if (System.IO.File.Exists(file))
@@ -216,6 +229,8 @@ namespace FreeFrm.Web
                         if (msg.Contains("Error"))
                             return msg;
 
+                        BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
+
                         string fk_frm = msg;
                         Frm fm = new Frm();
                         fm.No = fk_frm;
@@ -228,6 +243,7 @@ namespace FreeFrm.Web
                             fn.IsReadonly = isReadonly;
                             fn.IsPrint = isPrint;
                             fn.Update();
+                            BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
                             return fk_frm;
                         }
 
@@ -271,6 +287,7 @@ namespace FreeFrm.Web
                         attr.DefVal = "0";
                         attr.HisEditType = BP.En.EditType.Readonly;
                         attr.Insert();
+                        BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
                         return fk_frm;
                     default:
                         return "Error:";
@@ -358,21 +375,6 @@ namespace FreeFrm.Web
             return Connector.ToXml(ds);
         }
         [WebMethod]
-        public string NewFields_del(string keyOfEn, string name, string fk_mapdata)
-        {
-            return null;
-            try
-            {
-                string sql = "INSERT INTO Sys_MapAttr (MyPK,FK_MapData,KeyOfEn,Name,GroupID) VALUES ('" + fk_mapdata + "_" + keyOfEn + "','" + fk_mapdata + "','" + keyOfEn + "','" + name + "',-999)";
-                DBAccess.RunSQL(sql);
-                return null;
-            }
-            catch (Exception ex)
-            {
-                return "字段已存在，请用其它的字段名。" + ex.Message;
-            }
-        }
-        [WebMethod]
         public string ParseStringToPinyin(string name)
         {
             try
@@ -448,7 +450,6 @@ namespace FreeFrm.Web
             //    this.InitFrm(fk_mapdata);
             //    return _GenerFrm(fk_mapdata,workID);
             //}
-
            // MapData md = new MapData(fk_mapdata);
            // ds= md.GenerHisDataSet();
 
@@ -520,19 +521,42 @@ namespace FreeFrm.Web
             // MapData
             BP.Sys.MapDatas mdatas = new BP.Sys.MapDatas();
             int i=mdatas.Retrieve(MapDataAttr.No, fk_mapdata);
-            if (i != 0)
+            if (i == 0)
             {
-                DataTable DTmdatas = mdatas.ToDataTableField("Sys_MapData");
-                ds.Tables.Add(DTmdatas);
+                Pack pk = new Pack();
+                pk.Do();
+                i = mdatas.Retrieve(MapDataAttr.No, fk_mapdata);
+                //                throw new Exception("请调用省级包进行更新.");
             }
-            else
-            {
-                BP.Sys.MapDtls mdtls = new BP.Sys.MapDtls();
-                mdtls.Retrieve(MapDtlAttr.No, fk_mapdata);
 
-                DataTable DTmdtls = mdtls.ToDataTableField("Sys_MapDataDtl");
-                ds.Tables.Add(DTmdtls);
-            }
+            DataTable DTmdatas = mdatas.ToDataTableField("Sys_MapData");
+            ds.Tables.Add(DTmdatas);
+
+            //if (fk_mapdata.Contains("ND") && fk_mapdata.Contains("Dtl") && i == 0)
+            //{
+            //    BP.Sys.MapDtls mdtls = new BP.Sys.MapDtls();
+            //    i = mdtls.Retrieve(MapDtlAttr.No, fk_mapdata);
+            //    if (i != 0)
+            //    {
+            //        DataTable DTmdtls = mdtls.ToDataTableField("Sys_MapDataDtl");
+            //        ds.Tables.Add(DTmdtls);
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("异常信息:");
+            //    }
+            //}
+            //if (i != 0)
+            //{
+            //    DataTable DTmdatas = mdatas.ToDataTableField("Sys_MapData");
+            //    ds.Tables.Add(DTmdatas);
+            //}
+            //else
+            //{
+            //    //else
+            //    //{
+            //    //}
+            //}
 
             //// MapData
             //BP.Sys.MapDatas enData = new BP.Sys.MapDatas();
