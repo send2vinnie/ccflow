@@ -43,6 +43,13 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
         {
             switch (this.DoType)
             {
+                case "DownTempFrm":
+                    MapData md =new MapData(this.FK_MapData);
+                    string name="ccflow表单模板."+md.Name+"."+md.No+".xml";
+                    string file = this.Request.PhysicalApplicationPath + "\\Temp\\" + this.FK_MapData + ".xml";
+                    BP.PubClass.OpenWordDocV2(file, name);
+                    this.WinClose();
+                    break;
                 case "FreeFrm":
                     this.Application.Clear();
                     if (WebUser.NoOfRel != "admin")
