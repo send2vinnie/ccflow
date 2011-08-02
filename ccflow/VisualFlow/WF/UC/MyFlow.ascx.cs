@@ -1187,6 +1187,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 case FormType.FreeForm:
                     work = (Work)this.UCEn1.Copy(work);
                     break;
+                case FormType.DisableIt:
+                    break;
                 default:
                     throw new Exception("@未涉及到的情况。");
             }
@@ -1222,7 +1224,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 work.Insert();
             else
                 work.Update(); /* 如果是保存 */
-           
         }
         catch (Exception ex)
         {
