@@ -1,18 +1,31 @@
 ﻿<?xml version="1.0" standalone="yes" ?>
 <NewDataSet>
 	<!-- 系统设置菜单树  -->
-  <Menu No="01" Name="" CH="系统设置"  W="500" H="600" Url=""   />
-  <Menu No="0101" Name="" CH="全局设置"  W="500" H="600" Url="Comm/Sys/EditWebConfig.aspx"   />
-  <Menu No="0102" Name="" CH="系统枚举值"  W="500" H="600" Url="Comm/Sys/EnumList.aspx"   />
-  <Menu No="0103" Name="" CH="编码表"  W="500" H="600" Url="Comm/Sys/SFTableList.aspx"   />
-  <Menu No="0103" Name="" CH="JS校验库"  W="500" H="600" Url="Comm/Sys/FuncLib.aspx"   />
-  <Menu No="0103" Name="" CH="全局变量"  W="500" H="600" Url="Comm/PanelEns.aspx?EnsName=BP.Sys.GloVers"   />
-  <Menu No="0103" Name="" CH="功能执行"  W="500" H="600" Url="Comm/MethodLink.aspx"   />
-  
-  
-  <Menu No="02" Name="" CH="组织结构"  W="500" H="600" Url=""   />
-  <Menu No="0201" Name="" CH="部门维护"  W="500" H="600" Url="Comm/PanelEns.aspx?EnsName=BP.WF.Port.Depts"   />
-  <Menu No="0202" Name="" CH="岗位维护"  W="500" H="600" Url="Comm/PanelEns.aspx?EnsName=BP.WF.Port.Stations"   />
-  <Menu No="0203" Name="" CH="操作员维护"  W="500" H="600" Url="Comm/PanelEns.aspx?EnsName=BP.Port.Emps"   />
+  <Menu No="01" Name="" CH="系统设置"  W="700" H="800" Url=""  Icon="" />
+  <Menu No="0101" Name="" CH="全局设置"  W="700" H="800" Url="/Comm/Sys/EditWebConfig.aspx" Icon=""  />
+  <Menu No="0102" Name="" CH="系统枚举值"  W="700" H="800" Url="/Comm/Sys/EnumList.aspx" Icon=""  />
+  <Menu No="0103" Name="" CH="编码表"  W="700" H="800" Url="/Comm/Sys/SFTableList.aspx" Icon=""  />
+  <Menu No="0103" Name="" CH="JS校验库"  W="700" H="800" Url="/Comm/Sys/FuncLib.aspx"  Icon="" />
+  <Menu No="0103" Name="" CH="全局变量"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.Sys.GloVers" Icon=""  />
+  <Menu No="0103" Name="" CH="功能执行"  W="700" H="800" Url="/Comm/MethodLink.aspx"  Icon="" />
+   
+  <Menu No="02" Name="" CH="组织结构"  W="700" H="800" Url=""  Icon="" />
+  <Menu No="0201" Name="" CH="部门维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Depts"  Icon="" />
+  <Menu No="0202" Name="" CH="岗位维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Stations" Icon=""  />
+  <Menu No="0203" Name="" CH="操作员维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.Port.Emps" Icon=""  />
+
+  <!-- 流程数据  -->
+  <FlowData No="01" Name="" CH="流程优化"  W="700" H="800" Url="" Icon=""  />
+  <FlowData No="0101" Name="" CH="全局设置"  W="700" H="800" Url="/Comm/Sys/EditWebConfig.aspx" Icon=""  />
+  <FlowData No="0102" Name="" CH="系统枚举值"  W="700" H="800" Url="/Comm/Sys/EnumList.aspx" Icon=""  />
+  <FlowData No="0103" Name="" CH="编码表"  W="700" H="800" Url="/Comm/Sys/SFTableList.aspx" Icon=""  />
+  <FlowData No="0103" Name="" CH="JS校验库"  W="700" H="800" Url="/Comm/Sys/FuncLib.aspx" Icon=""   />
+  <FlowData No="0103" Name="" CH="全局变量"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.Sys.GloVers" Icon=""  />
+  <FlowData No="0103" Name="" CH="功能执行"  W="700" H="800" Url="/Comm/MethodLink.aspx" Icon=""  />
+
+  <FlowData No="02" Name="" CH="组织结构"  W="700" H="800" Url=""  Icon="" />
+  <FlowData No="0201" Name="" CH="部门维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Depts" Icon=""  />
+  <FlowData No="0202" Name="" CH="岗位维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Stations" Icon=""  />
+  <FlowData No="0203" Name="" CH="操作员维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.Port.Emps" Icon=""  />
 
 </NewDataSet>
