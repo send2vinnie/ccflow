@@ -23,6 +23,30 @@ namespace BP.Web
     // [System.Web.Script.Services.ScriptService]
     public class WSBase : System.Web.Services.WebService
     {
+        public DataSet TurnXmlDataSet2SLDataSet(DataSet ds)
+        {
+            DataSet myds = new DataSet();
+            foreach (DataTable dtXml in ds.Tables)
+            {
+                DataTable dt = new DataTable(dtXml.TableName);
+                foreach (DataColumn dc in dtXml.Columns)
+                {
+                    DataColumn mydc = new DataColumn(dc.ColumnName, typeof(string));
+                    dt.Columns.Add(mydc);
+                }
+                foreach (DataRow dr in dtXml.Rows)
+                {
+                    DataRow drNew = dt.NewRow();
+                    foreach (DataColumn dc in dtXml.Columns)
+                    {
+                        drNew[dc.ColumnName] = dr[dc.ColumnName];
+                    }
+                    dt.Rows.Add(drNew);
+                }
+                myds.Tables.Add(dt);
+            }
+            return myds;
+        }
         /// <summary>
         /// 获取值
         /// </summary>
@@ -122,18 +146,18 @@ namespace BP.Web
                 return "Error:" + ex.Message;
             }
         }
-        /// <summary>
-        /// 运行sql返回table.
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        [WebMethod]
-        public string RunSQLReturnTable(string sql)
-        {
-            DataSet ds = new DataSet();
-            ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
-            return Connector.ToXml(ds);
-        }
+        ///// <summary>
+        ///// 运行sql返回table.
+        ///// </summary>
+        ///// <param name="sql"></param>
+        ///// <returns></returns>
+        //[WebMethod]
+        //public string RunSQLReturnTable(string sql)
+        //{
+        //    DataSet ds = new DataSet();
+        //    ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
+        //    return Connector.ToXml(ds);
+        //}
         /// <summary>
         /// 运行sql返回table.
         /// </summary>

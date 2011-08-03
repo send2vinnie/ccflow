@@ -20,8 +20,40 @@ using Node = BP.WF.Node;
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 //若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消对下行的注释。 
 // [System.Web.Script.Services.ScriptService]
-public class WebService : System.Web.Services.WebService 
+public class WSDesigner : WSBase
 {
+    /// <summary>
+    /// 执行功能返回信息
+    /// </summary>
+    /// <param name="doType"></param>
+    /// <param name="v1"></param>
+    /// <param name="v2"></param>
+    /// <param name="v3"></param>
+    /// <param name="v4"></param>
+    /// <param name="v5"></param>
+    /// <returns></returns>
+    [WebMethod(EnableSession = false)]
+    public string DoType(string doType, string v1, string v2, string v3, string v4, string v5)
+    {
+        try
+        {
+            switch (doType)
+            {
+                case "InitDesignerXml":
+                    string path=System.Web.HttpContext.Current.Request.PhysicalApplicationPath+"\\Data\\Xml\\Designer.xml";
+                    DataSet ds = new DataSet();
+                    ds.ReadXml(path);
+                    ds = this.TurnXmlDataSet2SLDataSet(ds);
+                   return Connector.ToXml(ds);
+                default:
+                    throw new Exception("没有判断的，功能编号" + doType);
+            }
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("执行错误，功能编号"+doType+" error:"+ex.Message);
+        }
+    }
     /// <summary>
     /// 根据workID获取工作列表
     /// FK_Node 节点ID
