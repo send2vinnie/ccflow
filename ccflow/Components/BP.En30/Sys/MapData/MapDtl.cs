@@ -597,6 +597,14 @@ namespace BP.Sys
 
         public void IntMapAttrs()
         {
+            BP.Sys.MapData md = new BP.Sys.MapData();
+            md.No = this.No;
+            if (md.RetrieveFromDBSources() == 0)
+            {
+                md.Name = this.Name;
+                md.Insert();
+            }
+
             MapAttrs attrs = new MapAttrs(this.No);
             BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
             if (attrs.Contains(MapAttrAttr.KeyOfEn, "OID") == false)
@@ -621,7 +629,7 @@ namespace BP.Sys
                 attr = new BP.Sys.MapAttr();
                 attr.FK_MapData = this.No;
                 attr.HisEditType = EditType.Readonly;
-            
+
                 attr.KeyOfEn = "RefPK";
                 attr.Name = "¹ØÁªID";
                 attr.MyDataType = BP.DA.DataType.AppString;

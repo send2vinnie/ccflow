@@ -5,6 +5,15 @@ using BP.DA;
 using BP.En;
 namespace BP.Sys
 {
+    public enum FrmFrom
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        Flow,
+        Node,
+        Dtl
+    }
 	/// <summary>
 	/// 映射基础
 	/// </summary>
@@ -17,6 +26,10 @@ namespace BP.Sys
         //public const string CellsFrom = "CellsFrom";
         public const string FrmW = "FrmW";
         public const string FrmH = "FrmH";
+        /// <summary>
+        /// 来源
+        /// </summary>
+        public const string FrmFrom = "FrmFrom";
     }
 	/// <summary>
 	/// 映射基础
@@ -311,10 +324,12 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.SearchKeys, null, "查询键", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.PTable, null, "物理表", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.Dtls, null, "明细表", true, false, 0, 500, 20);
-                map.AddTBString(MapDataAttr.Name, null, "描述", true, false, 0, 500, 20);
 
                 map.AddTBFloat(MapDataAttr.FrmW, 900, "FrmW", true, true);
                 map.AddTBFloat(MapDataAttr.FrmH, 1200, "FrmH", true, true);
+
+               //  map.AddTBInt(MapDataAttr.FrmFrom, 0, "来源", true, true);
+
 
                 this._enMap = map;
                 return this._enMap;
