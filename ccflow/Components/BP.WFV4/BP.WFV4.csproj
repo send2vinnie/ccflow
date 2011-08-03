@@ -146,6 +146,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DTS\ClearDB.cs" />
+    <Compile Include="DTS\Pack.cs" />
     <Compile Include="FlowDesc\Condition\Cond.cs" />
     <Compile Include="FlowDesc\FlowDescExt\BtnLab.cs">
       <SubType>Code</SubType>

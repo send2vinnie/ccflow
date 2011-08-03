@@ -2141,7 +2141,8 @@ namespace BP.WF
                 // 流程的节点分为干流支流. FNType  @0=平面节点@1=干流@2=支流.
                 map.AddTBInt(NodeAttr.FNType, (int)FNType.Plane, "流程节点类型", false, false);
 
-                map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true);
+                //默认为自由表单.
+                map.AddDDLSysEnum(NodeAttr.FormType, 1, this.ToE("FormType", "表单类型"), true, true);
 
                 map.AddTBString(NodeAttr.FormUrl, "http://", "表单URL", true, false, 0, 500, 10);
 
