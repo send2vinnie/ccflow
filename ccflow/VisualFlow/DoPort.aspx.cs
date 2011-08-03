@@ -125,6 +125,16 @@ public partial class DoPort : System.Web.UI.Page
                     this.Response.Redirect("./WF/MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
                 }
                 break;
+            case "MapDefFree": //表单定义.
+                int nodeidFree = int.Parse(this.PK.Replace("ND", ""));
+                Node ndFree = new Node(nodeidFree);
+                this.Response.Redirect("./WF/MapDef/FreeFrm/Frm.aspx?FK_MapData=" + this.PK + "&FK_Flow=" + ndFree.FK_Flow, true);
+                break;
+            case "MapDefF4": //表单定义.
+                int nodeidF4 = int.Parse(this.PK.Replace("ND", ""));
+                Node ndF4 = new Node(nodeidF4);
+                this.Response.Redirect("./WF/MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + ndF4.FK_Flow, true);
+                break;
             case "Dir": // 方向。
                 this.Response.Redirect("./WF/Admin/Cond.aspx?CondType=" + this.Request.QueryString["CondType"] + "&FK_Flow=" + this.Request.QueryString["FK_Flow"] + "&FK_MainNode=" + this.Request.QueryString["FK_MainNode"] + "&FK_Node=" + this.Request.QueryString["FK_Node"] + "&FK_Attr=" + this.Request.QueryString["FK_Attr"] + "&DirType=" + this.Request.QueryString["DirType"] + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);
                 break;
