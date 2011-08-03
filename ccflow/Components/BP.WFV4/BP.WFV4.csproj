@@ -285,6 +285,7 @@
     <Folder Include="DTS\db\" />
     <Folder Include="FlowDesc\WorkBase\CheckWork\" />
     <Folder Include="WF\DTS\" />
+    <Folder Include="Xml\db\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
