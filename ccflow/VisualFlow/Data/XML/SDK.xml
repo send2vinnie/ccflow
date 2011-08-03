@@ -11,7 +11,6 @@
     CH="工作发起(特小窗口)" DESCCH="发起一个工作没有参数"
         />
 
-
   <Item DoWhat="Runing" Url="/WF/Port.aspx?DoWhat=RuningSmall:UserNo=@UserNo:SID=@SID"
 CH="在途工作" DESCCH="在途工作"
         />
@@ -22,8 +21,6 @@ CH="在途工作" DESCCH="在途工作"
   <Item DoWhat="RuningSmallSingle" Url="/WF/Port.aspx?DoWhat=RuningSmallSingle:UserNo=@UserNo:SID=@SID"
 CH="在途工作(特小窗口)" DESCCH="在途工作"
         />
-
-
 
   <Item DoWhat="EmpWorks" Url="/WF/Port.aspx?DoWhat=EmpWorks:UserNo=@UserNo:SID=@SID"
   CH="待办工作" DESCCH="待办工作"
