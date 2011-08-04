@@ -16,8 +16,7 @@
 
   <!-- 流程数据  -->
   <FlowData No="01" Name="" CH="流程优化"  W="700" H="800" Url="" Icon="../Images/TreeMenu/FlowOrg.png"  />
-  <FlowData No="0101" Name="" CH="流程查询"  W="700" H="800" Url="/Comm/Sys/EditWebConfig.aspx" Icon=""  />
-  <FlowData No="0102" Name="" CH="节点查询"  W="700" H="800" Url="/Comm/Sys/EnumList.aspx" Icon=""  />
-  <FlowData No="0103" Name="" CH="成本分析"  W="700" H="800" Url="/Comm/Sys/SFTableList.aspx" Icon=""  />
-
+  <FlowData No="0101" Name="" CH="流程查询"  W="700" H="800" Url="/WF/FlowSearch.aspx" Icon=""  />
+  <FlowData No="0102" Name="" CH="节点查询"  W="700" H="800" Url="/WF/FlowSearch.aspx" Icon=""  />
+  <FlowData No="0103" Name="" CH="成本分析"  W="700" H="800" Url="/WF/FlowSearch.aspx" Icon=""  />
 </NewDataSet>
