@@ -504,11 +504,10 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string FlowTemplete_Gener(string fk_flow, bool islogin)
     {
-        LetAdminLogin("CH",islogin);
+        LetAdminLogin("CH", islogin);
         Flow fl = new Flow(fk_flow);
         return fl.GenerFlowXmlTemplete();
     }
-
     /// <summary>
     /// load flow templete.
     /// </summary>
