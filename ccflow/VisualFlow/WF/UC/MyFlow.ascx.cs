@@ -805,61 +805,62 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     this.Page.RegisterClientScriptBlock("sdf24j",
             "<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
 
-
                     this.Page.RegisterClientScriptBlock("sdsdf24j",
             "<script language='JavaScript' src='./Style/Frm/TabClick.js' ></script>");
                     #endregion 载入相关文件.
 
                     this.UCEn1.Clear();
 
-                  
-
                     this.UCEn1.Add("<div  style='clear:both' ></div>");
                     this.UCEn1.Add("\t\n<div  id='usual2' class='usual' >");  //begain.
 
                     #region 输出标签.
-                    this.UCEn1.Add("\t\n <ul  class='abc' style='background:red;border-color: #800000;border-width: 10px;' >");
-                    foreach (Frm frm in frms)
+                    if (frms.Count == 1)
                     {
+                        Frm frm = (Frm)frms[0];
                         FrmNode fn = frm.HisFrmNode;
                         string src = "";
                         src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt;
-
-                        //  string src = "";
-                        //  src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt;
-                        this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\" onclick=\"TabClick('" + frm.No + "','" + src + "');\" >" + frm.Name + "</a></li>");
+                        //    this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\" onclick=\"TabClick('" + frm.No + "','" + src + "');\" >" + frm.Name + "</a></li>");
+                        this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;' >");
+                        this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "' src='" + src + "' frameborder=0  style='position:absolute;width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
+                        this.UCEn1.Add("\t\n </DIV>");
                     }
-                    this.UCEn1.Add("\t\n </ul>");
+                    else
+                    {
+                        this.UCEn1.Add("\t\n <ul  class='abc' style='background:red;border-color: #800000;border-width: 10px;' >");
+                        foreach (Frm frm in frms)
+                        {
+                            FrmNode fn = frm.HisFrmNode;
+                            string src = "";
+                            src = "Frm.aspx?FK_MapData=" + frm.No + "&WorkID=" + this.WorkID + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt;
+                            this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\" onclick=\"TabClick('" + frm.No + "','" + src + "');\" >" + frm.Name + "</a></li>");
+                        }
+                        this.UCEn1.Add("\t\n </ul>");
+                    }
                     #endregion 输出标签.
 
                     #region 输出从表单内容.
-                    foreach (Frm frm in frms)
+                    if (frms.Count != 1)
                     {
-                        FrmNode fn = frm.HisFrmNode;
-                        this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;' >");
-                        string src = "loading.htm";
-                        this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "'  Onblur=\"SaveDtl('" + frm.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
-                        this.UCEn1.Add("\t\n </DIV>");
+                        foreach (Frm frm in frms)
+                        {
+                            FrmNode fn = frm.HisFrmNode;
+                            this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;' >");
+                            string src = "loading.htm";
+                            this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "'  Onblur=\"SaveDtl('" + frm.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
+                            this.UCEn1.Add("\t\n </DIV>");
+                        }
+                        this.UCEn1.Add("\t\n</div>"); // end  usual2
+
+
+                        this.UCEn1.Add("\t\n<script type='text/javascript'>");
+                        if (nd.HisFormType != FormType.DisableIt)
+                            this.UCEn1.Add("\t\n  $(\"#usual2 ul\").idTabs(\"ND" + nd.NodeID + "\");");
+
+                        this.UCEn1.Add("\t\n</script>");
                     }
                     #endregion 输出从表单内容.
-
-                    this.UCEn1.Add("\t\n</div>"); // end  usual2
-
-                    this.UCEn1.Add("\t\n<script type='text/javascript'>");
-                    if (nd.HisFormType != FormType.DisableIt)
-                        this.UCEn1.Add("\t\n  $(\"#usual2 ul\").idTabs(\"ND" + nd.NodeID + "\");");
-
-                    this.UCEn1.Add("\t\n</script>");
-
-                    #region 处理iFrom SaveDtlData。删除自动保存功能.
-                    //string js = "";
-                    //js = "\t\n<script type='text/javascript' >";
-                    //js += "\t\n function SaveDtl(dtl) { ";
-                    //js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData();";
-                    //js += "\t\n } ";
-                    //js += "\t\n</script>";
-                    //this.UCEn1.Add(js);
-                    #endregion 处理iFrom SaveDtlData。
                 }
                 return;
             case FormType.SelfForm:
