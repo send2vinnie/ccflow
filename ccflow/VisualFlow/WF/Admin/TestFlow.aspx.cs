@@ -36,65 +36,65 @@ public partial class WF_Admin_TestFlow : WebPage
     {
         this.Title = this.ToE("TestTitle", "感谢您选择驰骋工作流程引擎-流程设计&测试界面");
 
-        this.Pub1.Add("<h3>" + this.Title + "</h3>");
+        //this.Pub1.Add("<h3>" + this.Title + "</h3>");
 
-        if (this.FK_Flow == null)
-        {
-            BP.WF.Flows fls = new BP.WF.Flows();
-            fls.RetrieveAllFromDBSource();
+        //if (this.FK_Flow == null)
+        //{
+        //    BP.WF.Flows fls = new BP.WF.Flows();
+        //    fls.RetrieveAllFromDBSource();
 
-            this.Left.AddFieldSet("List");
-            FlowSorts fss = new FlowSorts();
-            fss.RetrieveAllFromDBSource();
+        //    this.Left.AddFieldSet("List");
+        //    FlowSorts fss = new FlowSorts();
+        //    fss.RetrieveAllFromDBSource();
 
-            string FlowChart = this.ToE("FlowChart", "流程图");
-            string FlowProperty = this.ToE("FlowProperty", "流程属性");
+        //    string FlowChart = this.ToE("FlowChart", "流程图");
+        //    string FlowProperty = this.ToE("FlowProperty", "流程属性");
 
-            this.Left.AddUL();
-            foreach (FlowSort fs in fss)
-            {
-                this.Left.Add("<li><b>" + fs.Name + "</b></li>");
-                foreach (BP.WF.Flow fl in fls)
-                {
-                    if (fs.No != fl.FK_FlowSort)
-                        continue;
+        //    this.Left.AddUL();
+        //    foreach (FlowSort fs in fss)
+        //    {
+        //        this.Left.Add("<li><b>" + fs.Name + "</b></li>");
+        //        foreach (BP.WF.Flow fl in fls)
+        //        {
+        //            if (fs.No != fl.FK_FlowSort)
+        //                continue;
 
-                    if (fl.No == this.FK_Flow)
-                        this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New&Lang=" + WebUser.SysLang + "'><b><font color=green>" + fl.Name + "</b></font></a> - <a href='./../WF/Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart' >" + FlowChart + "</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >" + FlowProperty + "</a>");
-                    else
-                        this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New&Lang=" + WebUser.SysLang + "'>" + fl.Name + "</a>");
-                }
-            }
-            this.Left.AddULEnd();
-            this.Left.AddFieldSetEnd();
-        }
-        else
-        {
-            Flow fl = new Flow(this.FK_Flow);
-            this.Left.AddFieldSet(fl.Name);
-            this.Left.AddH3("<a href='./../Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart'  >" + this.ToE("FlowChart", "流程图") + "</a>");
-            this.Left.AddH3("<a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >" + this.ToE("FlowProperty", "流程属性") + "</a>");
-            this.Left.AddH3("<a href='TestFlow.aspx?Lang=" + this.Lang + "'>" + this.ToE("AllFlow", "全部流程") + "....</a>");
-            this.Left.AddFieldSetEnd();
-        }
+        //            if (fl.No == this.FK_Flow)
+        //                this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New&Lang=" + WebUser.SysLang + "'><b><font color=green>" + fl.Name + "</b></font></a> - <a href='./../WF/Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart' >" + FlowChart + "</a> - <a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >" + FlowProperty + "</a>");
+        //            else
+        //                this.Left.AddLi("<a href='TestFlow.aspx?FK_Flow=" + fl.No + "&Type=New&Lang=" + WebUser.SysLang + "'>" + fl.Name + "</a>");
+        //        }
+        //    }
+        //    this.Left.AddULEnd();
+        //    this.Left.AddFieldSetEnd();
+        //}
+        //else
+        //{
+        //    Flow fl = new Flow(this.FK_Flow);
+        //    this.Left.AddFieldSet(fl.Name);
+        //    this.Left.AddH3("<a href='./../Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart'  >" + this.ToE("FlowChart", "流程图") + "</a>");
+        //    this.Left.AddH3("<a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + fl.No + "','s')\" >" + this.ToE("FlowProperty", "流程属性") + "</a>");
+        //    this.Left.AddH3("<a href='TestFlow.aspx?Lang=" + this.Lang + "'>" + this.ToE("AllFlow", "全部流程") + "....</a>");
+        //    this.Left.AddFieldSetEnd();
+        //}
 
 
-        this.Left.AddFieldSet(this.ToE("PortData", "组织结构管理"));
-        this.Left.AddUL();
-        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.WF.Port.Stations')\">" + this.ToE("Station", "岗位维护") + "</a>");
-        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.WF.Port.Depts')\">" + this.ToE("Dept", "部门维护") + "</a>");
-        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.WF.Port.Emps')\">" + this.ToE("Emp", "人员维护") + "</a>");
-        this.Left.AddULEnd();
-        this.Left.AddFieldSetEnd();
+        //this.Left.AddFieldSet(this.ToE("PortData", "组织结构管理"));
+        //this.Left.AddUL();
+        //this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.WF.Port.Stations')\">" + this.ToE("Station", "岗位维护") + "</a>");
+        //this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.WF.Port.Depts')\">" + this.ToE("Dept", "部门维护") + "</a>");
+        //this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Ens.aspx?EnsName=BP.WF.Port.Emps')\">" + this.ToE("Emp", "人员维护") + "</a>");
+        //this.Left.AddULEnd();
+        //this.Left.AddFieldSetEnd();
 
-        this.Left.AddFieldSet(this.ToE("Tools", "系统管理"));
-        //this.Left.AddFieldSet("系统工具");
-        this.Left.AddUL();
-        this.Left.AddLi("<a href=\"javascript:WinOpen('../../WF/ClearDatabase.aspx')\">" + this.ToE("ClearDatabase", "清除流程数据") + "</a>");
-        this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Sys/EditWebConfig.aspx')\">" + this.ToE("WebConfig", "系统设置") + "</a>");
-        this.Left.AddLi("<a href=\"javascript:WinOpen('TitleSet.aspx')\">" + this.ToE("TitleImg", "标题图片设置") + "</a>");
-        this.Left.AddULEnd();
-        this.Left.AddFieldSetEnd();
+        //this.Left.AddFieldSet(this.ToE("Tools", "系统管理"));
+        ////this.Left.AddFieldSet("系统工具");
+        //this.Left.AddUL();
+        //this.Left.AddLi("<a href=\"javascript:WinOpen('../../WF/ClearDatabase.aspx')\">" + this.ToE("ClearDatabase", "清除流程数据") + "</a>");
+        //this.Left.AddLi("<a href=\"javascript:WinOpen('../../Comm/Sys/EditWebConfig.aspx')\">" + this.ToE("WebConfig", "系统设置") + "</a>");
+        //this.Left.AddLi("<a href=\"javascript:WinOpen('TitleSet.aspx')\">" + this.ToE("TitleImg", "标题图片设置") + "</a>");
+        //this.Left.AddULEnd();
+        //this.Left.AddFieldSetEnd();
 
         //this.Left.AddFieldSet("相关下载");
         //this.Left.Add("<a href=http://flow.ccFlow.org/ > http://flow.ccFlow.org/ 相关下载</a>");
@@ -111,10 +111,11 @@ public partial class WF_Admin_TestFlow : WebPage
             return;
         }
 
+
         Emp emp1 = new Emp("admin");
         WebUser.SignInOfGenerLang(emp1, this.Lang);
 
-        this.BindFlowList();
+        // this.BindFlowList();
         if (this.FK_Flow == null)
         {
             this.Ucsys1.AddFieldSet("关于流程测试");
@@ -153,18 +154,15 @@ public partial class WF_Admin_TestFlow : WebPage
         }
 
         BP.Web.WebUser.SysLang = this.Lang;
-        
         Flow fl = new Flow(this.FK_Flow);
         fl.DoCheck();
-
 
         int nodeid = int.Parse(this.FK_Flow + "01");
         Emps emps = new Emps();
         emps.RetrieveInSQL_Order("select fk_emp from Port_Empstation WHERE fk_station in (select fk_station from WF_NodeStation WHERE FK_Node=" + nodeid + " )", "FK_Dept");
 
-        if (emps.Count==0)
-            emps.RetrieveInSQL("select fk_emp from wf_NodeEmp WHERE fk_node="+int.Parse(this.FK_Flow+"01")+" ");
-
+        if (emps.Count == 0)
+            emps.RetrieveInSQL("select fk_emp from wf_NodeEmp WHERE fk_node=" + int.Parse(this.FK_Flow + "01") + " ");
 
         if (emps.Count == 0)
         {
@@ -174,7 +172,6 @@ public partial class WF_Admin_TestFlow : WebPage
         }
 
         this.Ucsys1.AddFieldSet(this.ToE("ChoseStarter", "可发起(<font color=red>" + fl.Name + "</font>)流程的人员"));
-
         this.Ucsys1.AddTable("border=0");
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("Users");
@@ -201,15 +198,15 @@ public partial class WF_Admin_TestFlow : WebPage
         this.Ucsys1.AddTableEnd();
         this.Ucsys1.AddFieldSetEnd();
 
-        this.Ucsys1.AddFieldSet(fl.Name);
-        this.Ucsys1.AddUL();
-        Nodes nds = new Nodes(this.FK_Flow);
-        foreach (BP.WF.Node nd in nds)
-        {
-            this.Ucsys1.AddLi("Step " + nd.Step + " :<a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.NodeO&PK=" + nd.NodeID + "')\">" + nd.Name + "</a>, <a href=\"javascript:WinOpen('../MapDef/MapDef.aspx?PK=ND" + nd.NodeID + "')\">" + this.ToE("DNode", "设计表单") + "</a>");
-        }
-        this.Ucsys1.AddULEnd();
-        this.Ucsys1.AddFieldSetEnd();
+        //this.Ucsys1.AddFieldSet(fl.Name);
+        //this.Ucsys1.AddUL();
+        //Nodes nds = new Nodes(this.FK_Flow);
+        //foreach (BP.WF.Node nd in nds)
+        //{
+        //    this.Ucsys1.AddLi("Step " + nd.Step + " :<a href=\"javascript:WinOpen('../../Comm/UIEn.aspx?EnName=BP.WF.Ext.NodeO&PK=" + nd.NodeID + "')\">" + nd.Name + "</a>, <a href=\"javascript:WinOpen('../MapDef/MapDef.aspx?PK=ND" + nd.NodeID + "')\">" + this.ToE("DNode", "设计表单") + "</a>");
+        //}
+        //this.Ucsys1.AddULEnd();
+        //this.Ucsys1.AddFieldSetEnd();
         // this.Ucsys1.Add("<a href='../../DataUser/FlowDesc/" + this.FK_Flow + ".gif' target=_blank><img border=0 src='../../DataUser/FlowDesc/" + this.FK_Flow + ".gif' width=300px height=300px ></a>");
     }
 }

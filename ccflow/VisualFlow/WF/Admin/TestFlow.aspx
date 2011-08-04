@@ -33,7 +33,9 @@
     </head>
 <body    leftMargin=0  topMargin=0 bgcolor=white >
     <form id="form1" runat="server">
-        <table border="0" cellpadding="0" align=center cellspacing="0"  bgcolor=white width='90%'  class=Table >
+                   <uc2:ucsys ID="Ucsys1" runat="server" />
+
+      <%--  <table border="0" cellpadding="0" align=center cellspacing="0"  bgcolor=white width='90%'  class=Table >
            <tr>
                 <td  colspan=2    bgcolor="Silver"   >
                 
@@ -48,9 +50,8 @@
                 <td valign=top align=left  align=left height=200%>
                    <uc2:ucsys ID="Left" runat="server" />
                 </td>
-                  <td valign=top  align=left>
-                   <uc2:ucsys ID="Ucsys1" runat="server" />
-                </td>
+                  <td valign=top  align=left>--%>
+              <%--  </td>
             </tr>
             
             
@@ -62,7 +63,7 @@
                     </td>
 </tr>        
 
-        </table>
+        </table>--%>
     </form>
 </body>
 </html>
