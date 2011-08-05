@@ -26,13 +26,13 @@ public partial class WF_Frm : System.Web.UI.Page
             }
         }
     }
-    public int WorkID
+    public int FID
     {
         get
         {
             try
             {
-                return int.Parse(this.Request.QueryString["WorkID"]);
+                return int.Parse(this.Request.QueryString["FID"]);
             }
             catch
             {
@@ -72,7 +72,7 @@ public partial class WF_Frm : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (this.Request.QueryString["IsTest"]=="1")
+        if (this.Request.QueryString["IsTest"] == "1")
         {
             BP.SystemConfig.DoClearCash();
         }
@@ -83,8 +83,8 @@ public partial class WF_Frm : System.Web.UI.Page
         {
             MapDtl dtl = new MapDtl(this.FK_MapData);
             GEDtl dtlEn = dtl.HisGEDtl;
-            dtlEn.SetValByKey("OID", this.WorkID);
-            int i= dtlEn.RetrieveFromDBSources();
+            dtlEn.SetValByKey("OID", this.FID);
+            int i = dtlEn.RetrieveFromDBSources();
             if (i == 0)
             {
             }
@@ -93,30 +93,27 @@ public partial class WF_Frm : System.Web.UI.Page
         else
         {
             GEEntity en = md.HisGEEn;
-            en.SetValByKey("OID", this.WorkID);
-            int i=en.RetrieveFromDBSources();
-            if (i == 0 && this.WorkID!=0)
+            en.SetValByKey("OID", this.FID);
+            int i = en.RetrieveFromDBSources();
+            if (i == 0 && this.FID != 0)
                 en.DirectInsert();
-            
+
             this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
         }
 
         this.Btn_Save.Visible = !this.IsReadonly;
-
         this.Btn_Save.Enabled = !this.IsReadonly;
-
         this.Btn_Print.Visible = true;
-        this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=107&WorkID=" + this.WorkID + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
-        //this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "', '', 'dialogHeight: 550px; dialogWidth:950px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no'); return false;";
+        this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
+        //this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "', '', 'dialogHeight: 550px; dialogWidth:950px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no'); return false;";
         //this.IsPrint;
         //   this.Button1.Enabled = this.IsReadonly;
     }
-   
     public void SaveNode()
     {
         Node nd = new Node(this.FK_Node);
         Work wk = nd.HisWork;
-        wk.OID = this.WorkID;
+        wk.OID = this.FID;
         wk.RetrieveFromDBSources();
         wk = this.UCEn1.Copy(wk) as Work;
         try
@@ -153,7 +150,6 @@ public partial class WF_Frm : System.Web.UI.Page
             this.UCEn1.AlertMsg_Warning("错误", ex.Message + "@有可能此错误被系统自动修复,请您从新保存一次.");
             return;
         }
-
         wk.RetrieveFromDBSources();
         this.UCEn1.ResetEnVal(wk);
         return;
@@ -168,7 +164,7 @@ public partial class WF_Frm : System.Web.UI.Page
 
         MapData md = new MapData(this.FK_MapData);
         GEEntity en = md.HisGEEn;
-        en.SetValByKey("OID", this.WorkID);
+        en.SetValByKey("OID", this.FID);
         int i = en.RetrieveFromDBSources();
         en = this.UCEn1.Copy(en) as GEEntity;
         if (i == 0)
@@ -176,8 +172,5 @@ public partial class WF_Frm : System.Web.UI.Page
         else
             en.Update();
     }
-    protected void Btn_Print_Click(object sender, EventArgs e)
-    {
-
-    }
+    
 }

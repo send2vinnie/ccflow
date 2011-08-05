@@ -53,19 +53,25 @@ public partial class WF_FreeFrm_Print : WebPage
     }
     #endregion 属性
 
+    string ApplicationPath = null;
     public void PrintBill()
     {
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-        string path = @"D:\ccflow\VisualFlow\DataUser\CyclostyleFile\FlowFrm\" + nd.FK_Flow + "\\" + nd.NodeID + "\\";
+        string path = ApplicationPath +"\\DataUser\\CyclostyleFile\\FlowFrm\\" + nd.FK_Flow + "\\" + nd.NodeID + "\\";
+
+        if (System.IO.Directory.Exists(path)==false)
+        {
+        }
+
         string[] fls = System.IO.Directory.GetFiles(path);
         string file = fls[int.Parse(this.BillIdx)];
-        file = file.Replace(@"D:\ccflow\VisualFlow\DataUser\CyclostyleFile", "");
+        file = file.Replace( ApplicationPath+@"DataUser\CyclostyleFile", "");
 
         FileInfo finfo = new FileInfo(file);
         string tempName = finfo.Name.Split('.')[0];
         string tempNameChinese = finfo.Name.Split('.')[1];
 
-        string toPath = @"D:\ccflow\VisualFlow\DataUser\Bill\FlowFrm\" + DateTime.Now.ToString("yyyyMMdd") + "\\";
+        string toPath = ApplicationPath+@"DataUser\Bill\FlowFrm\" + DateTime.Now.ToString("yyyyMMdd") + "\\";
         if (System.IO.Directory.Exists(toPath) == false)
             System.IO.Directory.CreateDirectory(toPath);
 
@@ -122,6 +128,8 @@ public partial class WF_FreeFrm_Print : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        ApplicationPath = this.Request.PhysicalApplicationPath;
+
         this.Title = "单据打印";
 
         if (this.BillIdx != null)
@@ -139,8 +147,7 @@ public partial class WF_FreeFrm_Print : WebPage
         this.Pub1.AddTREnd();
 
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-        string path = @"D:\ccflow\VisualFlow\DataUser\CyclostyleFile\FlowFrm\" + nd.FK_Flow + "\\" + nd.NodeID + "\\";
-
+        string path = ApplicationPath+@"DataUser\CyclostyleFile\FlowFrm\" + nd.FK_Flow + "\\" + nd.NodeID + "\\";
         string[] fls = null;
         try
         {
@@ -149,7 +156,7 @@ public partial class WF_FreeFrm_Print : WebPage
         catch
         {
             this.Pub1.AddTableEnd();
-            this.Pub1.AddMsgOfWarning("获取模版错误", "模版文件没有找到。"+path);
+            this.Pub1.AddMsgOfWarning("获取模版错误", "模版文件没有找到。" + path);
             return;
         }
 
