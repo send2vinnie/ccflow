@@ -1,6 +1,6 @@
 ﻿document.onMouseDown = mouseDown;
 document.onMouseUp = mouseUp;
-document.onmousemove = mouseMove;
+//document.onmousemove = mouseMove;
 // document.onDrag = mouseonDrag;
 var currFieldID = null;
 var moveToFieldID = null;
@@ -8,6 +8,9 @@ var isMove = false;
 var currGID = null;
 var moveToGID = null;
 var DrgType = "";
+
+function mouseMove() {
+}
 
 function CallState(ev) {
     return;
