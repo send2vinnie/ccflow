@@ -324,22 +324,22 @@ namespace BP.Sys
                 // html += "</td>";
                 continue;
 
-                html += " <a href='" + dtl.URLOfDtl + "' target=_blank >";
+                //html += " <a href='" + dtl.URLOfDtl + "' target=_blank >";
 
-                if (dtl.IsImg)
-                {
-                    html += "<img src='" + dtl.URLOfFile + "'  width='" + this.ImgW + "' height='" + this.ImgH + "' border='0' style='border:1px solid #666' />";
-                }
-                else
-                {
-                    if (dtl.MyFileExt.Length == 0)
-                        html += dtl.DocHtmlS3;
-                    else
-                        html += dtl.MyFileName + "<img src='/Images/Sys/File/" + dtl.MyFileExt + ".gif' border='0' />";
-                }
+                //if (dtl.IsImg)
+                //{
+                //    html += "<img src='" + dtl.URLOfFile + "'  width='" + this.ImgW + "' height='" + this.ImgH + "' border='0' style='border:1px solid #666' />";
+                //}
+                //else
+                //{
+                //    if (dtl.MyFileExt.Length == 0)
+                //        html += dtl.DocHtmlS3;
+                //    else
+                //        html += dtl.MyFileName + "<img src='/Images/Sys/File/" + dtl.MyFileExt + ".gif' border='0' />";
+                //}
 
-                html += "<br > " + dtl.Title + "</A>";
-                html += "</td>";
+                //html += "<br > " + dtl.Title + "</A>";
+                //html += "</td>";
             }
 
            // html += "</tr>";

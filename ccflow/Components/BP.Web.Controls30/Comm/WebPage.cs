@@ -80,7 +80,6 @@ namespace BP.Web
             base.OnLoad(e);
             //if (this.Request.Browser.Cookies == false)
             //    throw new Exception("您的浏览器不支持cookies功能，无法使用改系统。");
-
         }
         public string FK_Sort
         {
