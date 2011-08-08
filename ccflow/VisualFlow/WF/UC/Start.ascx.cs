@@ -132,9 +132,9 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             fk_sort = fl.FK_FlowSort;
 
             if (fl.StartListUrl == "")
-                this.AddTD("<a href='MyFlow" + pageid + ".aspx?FK_Flow=" + fl.No + "' >" + fl.Name + "</a>");
+                this.AddTD("<a href='MyFlow" + pageid + ".aspx?FK_Flow=" + fl.No + "&FK_Node="+int.Parse(fl.No)+"01' >" + fl.Name + "</a>");
             else
-                this.AddTD("<a href=\"javascript:StartListUrl('" + fl.StartListUrl + "?FK_Flow=" + fl.No + "','" + fl.No + "','" + pageid + "')\" >" + fl.Name + "</a>");
+                this.AddTD("<a href=\"javascript:StartListUrl('" + fl.StartListUrl + "?FK_Flow=" + fl.No + "&FK_Node="+int.Parse(fl.No)+"01','" + fl.No + "','" + pageid + "')\" >" + fl.Name + "</a>");
 
             this.AddTD("<a href=\"javascript:WinOpen('Chart.aspx?FK_Flow=" + fl.No + "&DoType=Chart','sd');\"  >打开</a>");
             this.AddTD(fl.Note);

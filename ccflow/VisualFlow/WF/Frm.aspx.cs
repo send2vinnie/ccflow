@@ -9,7 +9,7 @@ using BP.DA;
 using BP.Sys;
 using BP.Web;
 
-public partial class WF_Frm : System.Web.UI.Page
+public partial class WF_Frm : WebPage
 {
     #region 属性
     public int FK_Node
@@ -72,6 +72,8 @@ public partial class WF_Frm : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+         
+
         if (this.Request.QueryString["IsTest"] == "1")
         {
             BP.SystemConfig.DoClearCash();

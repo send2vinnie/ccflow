@@ -96,6 +96,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return s;
         }
     }
+    public string FK_Node_From
+    {
+        get
+        {
+            return  this.Request.QueryString["FK_Node_From"];
+        }
+    }
     /// <summary>
     /// 当前的工作流
     /// </summary>
@@ -388,20 +395,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
         #region 判断是否有workid
         string appPath = this.Request.ApplicationPath;
-        BP.WF.Node currND;
-        currND = this.CurrentNode;
         BP.WF.Work currWK = null;
+        BP.WF.Node currND = this.CurrentNode;
         if (this.WorkID == 0)
         {
             currWK = this.New(true, currND);
-            //if (currWK.OID == 0)
-            //{
-            //    currWK.OID = BP.DA.DBAccess.GenerOID();
-            //    currWK.Update();
-            //}
-            //string u = this.Request.RawUrl.Replace("WorkID", "df") + "&WorkID=" + currWK.OID;
-            //this.Response.Redirect(u, true);
-            //return;
+        }
+        else
+        {
+            currWK = this.GenerCurrWork(this.WorkID);
         }
         #endregion 判断是否有workid
 
@@ -506,21 +508,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             #endregion
 
-            currWK = this.GenerCurrWork(this.WorkID);
-            currND = this.CurrentNode;
             this.BindWork(currND, currWK);
             this.Session["Ect"] = null;
-
-            if (currND.IsStartNode)
-            {
-                GenerWorkFlow gwf = new GenerWorkFlow();
-                gwf.WorkID = this.WorkID;
-            }
-
-            //if (currND.HisFormType == FormType.SelfForm) // || this.WorkID == 0)
-            //    this.Btn_Save.Enabled = false;
-            //if (currND.IsCanReturn)
-            //    this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
 
             if (currND.HisDeliveryWay == DeliveryWay.BySelected && currND.IsEndNode == false)
             {
@@ -655,7 +644,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         #region 设置默认值。
         if (nd.IsStartNode)
         {
-            StartWork swk = (StartWork)wk;
+            StartWork swk = wk as StartWork;
+            if (swk == null)
+            {
+                throw new Exception(nd.Name + " - 不是开始节点，系统错误，请执行流程体检，解决此问题。");
+            }
+
             string msg = "";
             if (WebUser.SysLang == "CH")
                 msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
@@ -1113,7 +1107,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         return;
                     }
                 case "Btn_EndFlow": //结束流程。
-                     WorkFlow mywf = null;
+                    WorkFlow mywf = null;
                     if (this.FID == 0)
                         mywf = new WorkFlow(this.FK_Flow, this.WorkID);
                     else
@@ -1134,6 +1128,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     break;
                 case NamesOfBtn.Save:
                     this.Send(true);
+                    if (string.IsNullOrEmpty(this.Request.QueryString["WorkID"]))
+                    {
+                        this.Response.Redirect(this.PageID + ".aspx?FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "&FK_Node_From=" + this.FK_Node_From, true);
+                        return;
+                    }
                     break;
                 case "Btn_ReturnWork":
                     this.BtnReturnWork();
@@ -1153,6 +1152,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     break;
                 case NamesOfBtn.Send:
                     this.Send(false);
+                   
                     break;
                 default:
                     break;
@@ -1163,10 +1163,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.FlowMsg.AlertMsg_Warning("信息提示", ex.Message);
         }
     }
-    
-
     #region 按钮事件
-   
     /// <summary>
     /// 保存工作
     /// </summary>
@@ -1249,6 +1246,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         // 调用工作流程，处理节点信息采集后保存后的工作。
         if (isSave)
         {
+            if (string.IsNullOrEmpty(this.Request.QueryString["WorkID"]))
+            {
+            //    this.Response.Redirect(this.PageID + ".aspx?FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "&FK_Node_From=" + this.FK_Node_From, true);
+                return;
+            }
             this.WorkID = work.OID;
             work.RetrieveFromDBSources();
             this.UCEn1.ResetEnVal(work);
@@ -1508,8 +1510,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             wn.HisWork.Rec = WebUser.No;
             wn.HisWork.RecText = WebUser.Name;
             this.Btn_Save.Enabled = true;
-            if (wn.HisNode.IsEndNode)
-                this.Btn_Send.Text = this.ToE("Complete", "完成") + "(G)";
+            //if (wn.HisNode.IsEndNode)
+            //    this.Btn_Send.Text = this.ToE("Complete", "完成") + "(G)";
             return wn.HisWork;
         }
         catch (Exception ex)
