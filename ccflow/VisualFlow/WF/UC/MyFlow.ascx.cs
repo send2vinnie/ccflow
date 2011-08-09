@@ -818,7 +818,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         Frm frm = (Frm)frms[0];
                         FrmNode fn = frm.HisFrmNode;
                         string src = "";
-                        src = "Frm.aspx?FK_MapData=" + frm.No + "&FID=" + fid + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt+"&FK_Node="+nd.NodeID;
+                        src = "Frm.aspx?FK_MapData=" + frm.No + "&FID=" + fid + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt+"&FK_Node="+nd.NodeID+"&WorkID="+this.WorkID;
                         //    this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\" onclick=\"TabClick('" + frm.No + "','" + src + "');\" >" + frm.Name + "</a></li>");
                         this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;' >");
                         this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "' src='" + src + "' frameborder=0  style='position:absolute;width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
@@ -831,7 +831,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         {
                             FrmNode fn = frm.HisFrmNode;
                             string src = "";
-                            src = "Frm.aspx?FK_MapData=" + frm.No + "&FID=" + fid + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt + "&FK_Node=" + nd.NodeID;
+                            src = "Frm.aspx?FK_MapData=" + frm.No + "&FID=" + fid + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt + "&FK_Node=" + nd.NodeID + "&WorkID=" + this.WorkID;
                             this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\" onclick=\"TabClick('" + frm.No + "','" + src + "');\" >" + frm.Name + "</a></li>");
                         }
                         this.UCEn1.Add("\t\n </ul>");

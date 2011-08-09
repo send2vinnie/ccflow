@@ -40,7 +40,21 @@ public partial class WF_FreeFrm_Print : WebPage
             }
             catch
             {
-                return 39;
+                return 0;
+            }
+        }
+    }
+    public Int64 FID
+    {
+        get
+        {
+            try
+            {
+                return Int64.Parse(this.Request.QueryString["FID"]);
+            }
+            catch
+            {
+                return 0;
             }
         }
     }
@@ -75,7 +89,7 @@ public partial class WF_FreeFrm_Print : WebPage
         if (System.IO.Directory.Exists(toPath) == false)
             System.IO.Directory.CreateDirectory(toPath);
 
-        string billFile = toPath + "\\" + tempName + "." + this.WorkID + ".doc";
+        string billFile = toPath + "\\" + tempName + "." + this.FID + ".doc";
 
         BP.Rpt.RTF.RTFEngine engine = new BP.Rpt.RTF.RTFEngine();
         if (tempName.ToLower() == "all")
@@ -109,7 +123,7 @@ public partial class WF_FreeFrm_Print : WebPage
         else
         {
             // 增加主表.
-            GEEntity myge = new GEEntity(tempName, this.WorkID);
+            GEEntity myge = new GEEntity(tempName, this.FID);
             engine.HisGEEntity = myge;
             engine.AddEn(myge);
 
@@ -120,7 +134,7 @@ public partial class WF_FreeFrm_Print : WebPage
                 enDtls.Retrieve(GEDtlAttr.RefPK, this.WorkID);
                 engine.EnsDataDtls.Add(enDtls);
             }
-            engine.MakeDoc(file, toPath, tempName + "." + this.WorkID + ".doc", null, false);
+            engine.MakeDoc(file, toPath, tempName + "." + this.FID + ".doc", null, false);
 
         }
 
@@ -176,7 +190,7 @@ public partial class WF_FreeFrm_Print : WebPage
             this.Pub1.AddTDIdx(idx);
             this.Pub1.AddTD(strs[0]);
             this.Pub1.AddTD(strs[1]);
-            this.Pub1.AddTD("<a href='Print.aspx?FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&BillIdx=" + fileIdx + "' target=_blank >打印</a>");
+            this.Pub1.AddTD("<a href='Print.aspx?FK_Node=" + this.FK_Node + "&FID="+this.FID+"&WorkID=" + this.WorkID + "&BillIdx=" + fileIdx + "' target=_blank >打印</a>");
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();

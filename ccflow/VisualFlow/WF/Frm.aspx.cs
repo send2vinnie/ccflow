@@ -26,6 +26,20 @@ public partial class WF_Frm : WebPage
             }
         }
     }
+    public int WorkID
+    {
+        get
+        {
+            try
+            {
+                return int.Parse(this.Request.QueryString["WorkID"]);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+    }
     public int FID
     {
         get
@@ -106,7 +120,7 @@ public partial class WF_Frm : WebPage
         this.Btn_Save.Visible = !this.IsReadonly;
         this.Btn_Save.Enabled = !this.IsReadonly;
         this.Btn_Print.Visible = true;
-        this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
+        this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData + "&WorkID="+this.WorkID+"', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
         //this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "', '', 'dialogHeight: 550px; dialogWidth:950px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no'); return false;";
         //this.IsPrint;
         //   this.Button1.Enabled = this.IsReadonly;
