@@ -79,6 +79,7 @@ public partial class DoPort : System.Web.UI.Page
             throw new Exception("语言编号错误。");
 
         BP.SystemConfig.DoClearCash();
+
         BP.Port.Emp emp = new BP.Port.Emp("admin");
         BP.Web.WebUser.SignInOfGenerLang(emp, this.Lang);
 
