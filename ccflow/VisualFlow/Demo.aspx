@@ -203,7 +203,7 @@
         }
     </script>
 </head>
-<body>
+<body bgcolor=silver >
     <form id="form1" runat="server">
     <div>
         <input type="button" onclick="DoAnscPro()" value="Test" />
@@ -217,7 +217,7 @@
     <br />
     <br />
     <br />
-    <br />
+    <br /> 
     <br />
     <br />
     <div id="divinfo" style="width: 155px; position: absolute; color: Lime; display: none;
