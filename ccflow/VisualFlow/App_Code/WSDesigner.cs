@@ -183,7 +183,7 @@ public class WSDesigner : WSBase
             case "EmplyeeMaintain": // 人员管理
                 url = @"/Comm/PanelEns.aspx?EnsName=BP.Port.Emps";
                 break;
-            case "FileUpload": //模板上传用到
+            case "FileHandler": //模板导出用到
                 url = @"/WebClientDownloadHandler.ashx";
                 break;
             default:
