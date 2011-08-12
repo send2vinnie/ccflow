@@ -501,7 +501,7 @@ public partial class WF_MapDef_MapDef : WebPage
             if (attr.UIIsEnable == false || attr.UIVisible == false)
                 continue;
 
-            this.Pub1.GetTBByID("TB_" + attr.KeyOfEn).Attributes["onblur"] = "checkLength(this,'" + attr.MinLen + "','" + attr.MaxLen + "')";
+            this.Pub1.GetTextBoxByID("TB_" + attr.KeyOfEn).Attributes["onblur"] = "checkLength(this,'" + attr.MinLen + "','" + attr.MaxLen + "')";
         }
         #endregion 处理输入最小，最大验证.
 
