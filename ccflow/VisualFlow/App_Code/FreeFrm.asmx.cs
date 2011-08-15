@@ -460,6 +460,13 @@ namespace FreeFrm.Web
             dtLink.TableName = "Sys_FrmLink";
             ds.Tables.Add(dtLink);
 
+            // btn.
+            BP.Sys.FrmBtns btns = new BP.Sys.FrmBtns();
+            btns.Retrieve(BP.Sys.FrmBtnAttr.FK_MapData, fk_mapdata);
+            DataTable btnDT = btns.ToDataTableField();
+            btnDT.TableName = "Sys_FrmBtn";
+            ds.Tables.Add(btnDT);
+
             // Img
             BP.Sys.FrmImgs imgs = new BP.Sys.FrmImgs();
             imgs.Retrieve(FrmImgAttr.FK_MapData, fk_mapdata);
@@ -659,9 +666,9 @@ namespace FreeFrm.Web
                 toItem.Copy(item);
                 toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
                 toItem.FK_MapData = fk_mapdata;
+                toItem.IntKey = item.IntKey;
                 toItem.DirectInsert();
             }
-
 
             // MapAttrs
             BP.Sys.MapAttrs attrs = new BP.Sys.MapAttrs();
