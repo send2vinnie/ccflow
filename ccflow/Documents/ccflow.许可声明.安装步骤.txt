@@ -32,12 +32,12 @@ D:\ccflow\DataBase  -- 案例数据库备份文件.
 D:\ccflow\DLL  -- 第三方组件中需要调用dll.
 D:\ccflow\Documents - 文档
 D:\ccflow\Release  -发布的程序.
-D:\ccflow\VisualFlow  --bs工作流程引擎前台.
-D:\ccflow\VisualFlowDesigner -- cs 设计器(不过很快就不用了，换成sl的设计器.)
+D:\ccflow\VisualFlow  --bs工作流程引擎前台.  
 D:\ccflow\VisualWorkFlowServices - 流程服务程序.
 D:\ccflow\VisualFlowWebDesigner - silverlight流程设计器.
-D:\ccflow\SLPrj\FreeFrm - silverlight 自由表单设计器.
-D:\ccflow\SLPrj\Flow\Flow - silverlight 版本前台应用源程序.
+
+D:\ccflow\SLPrj\FreeFrm - silverlight 自由表单设计器. (说明:对A级用户有效)
+D:\ccflow\SLPrj\Flow\Flow - silverlight 版本前台应用源程序. (说明:对B级用户有效)
 
 
 关于: ccflow前台目录结构.
@@ -48,7 +48,7 @@ D:\ccflow\VisualFlow\DataUser -- 用户数据层.
 D:\ccflow\VisualFlow\DocFlow -- 公文流程(目前还不是很完善)
 D:\ccflow\VisualFlow\OA -- 通用oa 组件(目前还不是很完善)
 D:\ccflow\VisualFlow\SDKFlows -- sdk开发模式的案例.
-D:\ccflow\VisualFlow\WAP -- 手机访问前台代码目录.
+D:\ccflow\VisualFlow\WAP -- 手机访问前台代码目录. (说明:对C级用户有效)
 D:\ccflow\VisualFlow\WF -- ccflow前台应用程序层(主要的功能都是在这个目录里面)
 D:\ccflow\VisualFlow\WF\Admin - 对ccflow的管理比如设计方向条件.报表定义...
 D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
@@ -75,7 +75,7 @@ Flow.xap silverlight版本的前台执行程序, WF.xap流程设计器,FreeFrm.xap自由表单设计
 
     2, 请看第4步骤, 为数据库配置链接.
 
-    3, 执行修复数据库工具: http://localhost/Flow/WF/Admin/DBInstall.aspx 
+    3, 执行修复数据库工具: http://localhost/Flow/WF/Admin/DBInstall.aspx
 
 
 4, 修改 D:\ccflow\VisualFlow\web.config Appsetting <Add> 节点中的数据库连接。
@@ -125,7 +125,7 @@ Flow.xap silverlight版本的前台执行程序, WF.xap流程设计器,FreeFrm.xap自由表单设计
 =  如果您需要得到更好的服务，请按照如下方式联系我们.
 =  济南驰骋信息技术有限公司
 =  qq: hiflow@qq.com
-=  Tel:18660153393,13589028385.
+=  Tel:18660153393.
 =  msn:chichengsoft@hotmail.com
 =  URL: http://ccflow.org
 =
