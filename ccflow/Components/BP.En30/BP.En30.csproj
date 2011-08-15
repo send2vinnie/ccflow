@@ -423,6 +423,7 @@
     <Compile Include="Sys\MapData\FrmImg.cs" />
     <Compile Include="Sys\MapData\FrmAttachment.cs" />
     <Compile Include="Sys\MapData\FrmImgAth.cs" />
+    <Compile Include="Sys\MapData\FrmBtn.cs" />
     <Compile Include="Sys\Sys\GloVer.cs" />
     <Compile Include="Sys\Message\Msg.cs" />
     <Compile Include="Sys\PTable\SFTable.cs" />

@@ -40,13 +40,20 @@ namespace BP.DA
 
             if (val == null )
             {
+                string file = null;
+                if (cfile.Contains(":"))
+                    file = cfile;
+                else
+                    file = SystemConfig.PathOfDataUser + "\\CyclostyleFile\\" + cfile;
+
+
                 if (SystemConfig.IsDebug)
                 {
-                    BP.Rpt.RTF.RepBill.RepairBill(SystemConfig.PathOfDataUser + "\\CyclostyleFile\\" + cfile);
+                    BP.Rpt.RTF.RepBill.RepairBill(file);
                 }
                 try
                 {
-                    StreamReader read = new StreamReader(SystemConfig.PathOfDataUser + "\\CyclostyleFile\\" + cfile, System.Text.Encoding.ASCII); // 文件流.
+                    StreamReader read = new StreamReader(file, System.Text.Encoding.ASCII); // 文件流.
                     val = read.ReadToEnd();  //读取完毕。
                     read.Close(); // 关闭。
                 }
@@ -195,7 +202,13 @@ namespace BP.DA
 
             if (haveError)
             {
-                StreamWriter wr = new StreamWriter(SystemConfig.PathOfDataUser + "\\CyclostyleFile\\" + cfile,
+                string myfile = SystemConfig.PathOfDataUser + "\\CyclostyleFile\\" + cfile;
+                if (System.IO.File.Exists(myfile) == false)
+                    myfile = cfile;
+
+                // throw new Exception("@没有文件:"+myfile);
+
+                StreamWriter wr = new StreamWriter(myfile,
                     false, Encoding.ASCII);
                 wr.Write(Billstr);
                 wr.Close();

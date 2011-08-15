@@ -82,7 +82,6 @@ namespace BP.Sys
                 return PubClass.ToHtmlColor(this.FontColor);
             }
         }
-
         /// <summary>
         /// FontColor
         /// </summary>

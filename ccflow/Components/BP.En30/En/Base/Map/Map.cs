@@ -1364,6 +1364,9 @@ namespace BP.En
                     case DBType.SQL2000:
                         sql = "select xtype from sysobjects WHERE name =@v";
                         DataTable dt1 = DBAccess.RunSQLReturnTable(sql, "v", this.PhysicsTableExt);
+                        if (dt1.Rows.Count==0)
+                            throw new Exception("@±í²»´æÔÚ[" + this.PhysicsTableExt + "]");
+                           
                         if (dt1.Rows[0][0].ToString() == "V")
                             return true;
                         else

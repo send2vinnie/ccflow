@@ -557,7 +557,6 @@ namespace BP
             {
                 if (BP.SystemConfig.IsBSsystem)
                 {
-
                     string path1 = HttpContext.Current.Request.PhysicalApplicationPath + "\\..\\";
                     System.IO.DirectoryInfo info1 = new DirectoryInfo(path1);
                     return info1.FullName;
