@@ -82,7 +82,7 @@
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()"  >
     <form id="form1" runat="server">
-    <div align=center>
+    <div align=left>
       <uc1:Pub ID="Pub1" runat="server" />
       </div>
     </form>

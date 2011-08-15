@@ -1016,9 +1016,6 @@ namespace BP.Web.Comm.UC.WF
         #endregion
 
         #region 输出自由格式的表单.
-
-         
-    
         public string FK_MapData = null;
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
@@ -1027,7 +1024,6 @@ namespace BP.Web.Comm.UC.WF
             this.HisEn = en;
 
             MapData md = new MapData();
-
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
 
             #region 输出竖线与标签 & 超连接 Img.
@@ -1037,6 +1033,19 @@ namespace BP.Web.Comm.UC.WF
                 Color col = ColorTranslator.FromHtml(lab.FontColor);
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + lab.X + "px;top:" + lab.Y + "px;text-align:left;' >");
                 this.Add("\t\n<span style='color:" + lab.FontColorHtml + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' >" + lab.TextHtml + "</span>");
+                this.Add("\t\n</DIV>");
+            }
+
+            FrmBtns btns = new FrmBtns(this.FK_MapData);
+            foreach (FrmBtn btn in btns)
+            {
+                this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + btn.X + "px;top:" + btn.Y + "px;text-align:left;' >");
+                this.Add("\t\n<span >");
+                Button myBtn = new Button();
+                myBtn.ID = btn.MyPK;
+                myBtn.Text = btn.Text;
+                this.Add(myBtn);
+                this.Add("\t\n</span>");
                 this.Add("\t\n</DIV>");
             }
 
@@ -1246,7 +1255,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("<span style='word-break: keep-all;font-size:12px;'>");
 
                 System.Web.UI.WebControls.RadioButton rbCtl = new RadioButton();
-                rbCtl.ID = "RB_" + rb.MyPK.Substring(rb.MyPK.IndexOf('_') + 1);
+                rbCtl.ID = "RB_" + rb.EnumKey+"_" +rb.IntKey.ToString() ;
                 rbCtl.GroupName = rb.KeyOfEn;
                 rbCtl.Text = rb.Lab;
                 this.Add(rbCtl);

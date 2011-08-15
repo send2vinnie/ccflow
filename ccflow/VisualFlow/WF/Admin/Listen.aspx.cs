@@ -76,7 +76,7 @@ public partial class WF_Admin_listen : WebPage
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("设置标题(最大长度不超过250个字符，可以包含字段变量变量以@开头)");
+        this.Pub1.AddTDTitle("设置标题(最大长度不超过250个字符，可以包含字段变量变量以@开头)<br>例如：您发起的工作@Title已经被@WebUser.Name处理。");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
@@ -85,7 +85,7 @@ public partial class WF_Admin_listen : WebPage
         tb.Columns = 55;
         tb.Text = li.Title;
 
-        this.Pub1.AddTD(tb, "<br>例如：您发起的工作@Title已经被@WebUser.Name处理。");
+        this.Pub1.AddTD(tb);
         this.Pub1.AddTREnd();
 
 

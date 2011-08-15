@@ -260,7 +260,7 @@ public partial class WF_MapDef_MapDef : WebPage
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
                                 tb.ShowType = TBType.TB;
                                 tb.Text = attr.DefVal;
-                                tb.Attributes["onblur"] = "check(this,'"+attr.MinLen+"','"+attr.MaxLen+"')";
+                                //   tb.Attributes["onblur"] = "check(this,'"+attr.MinLen+"','"+attr.MaxLen+"')";
                                 if (colspanOfCtl == 3)
                                 {
                                     this.Pub1.AddTD(" width=80% colspan=" + colspanOfCtl, tb);
@@ -337,6 +337,7 @@ public partial class WF_MapDef_MapDef : WebPage
                             default:
                                 break;
                         }
+
 
                         tb.Attributes["width"] = "100%";
                         switch (attr.MyDataType)
