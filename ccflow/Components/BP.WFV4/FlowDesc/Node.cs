@@ -164,7 +164,11 @@ namespace BP.WF
         /// <summary>
         /// 退回
         /// </summary>
-        Back
+        Back,
+        /// <summary>
+        /// 转发
+        /// </summary>
+        Forward
     }
     /// <summary>
     /// 节点工作类型
@@ -503,10 +507,10 @@ namespace BP.WF
                 return "流程[" + fl.No + fl.Name + "]中没有节点数据，您需要注册一下这个流程。";
 
             // 更新是否是有完成条件的节点。
-            DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0  WHERE FK_Flow='"+fl.No+"'");
+            DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0  WHERE FK_Flow='" + fl.No + "'");
 
             //DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=1 WHERE NodeID IN (SELECT NodeID FROM WF_NodeCompleteCondition)");
-         //   DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCFlow=1 WHERE NodeID IN (SELECT NodeID FROM WF_FlowCompleteCondition) ");
+            //   DA.DBAccess.RunSQL("UPDATE WF_Node SET IsCCFlow=1 WHERE NodeID IN (SELECT NodeID FROM WF_FlowCompleteCondition) ");
 
             DA.DBAccess.RunSQL("DELETE FROM WF_Direction WHERE Node=0 OR ToNode=0");
             DA.DBAccess.RunSQL("DELETE FROM WF_Direction WHERE Node  NOT IN (SELECT NODEID FROM WF_NODE )");
@@ -633,6 +637,16 @@ namespace BP.WF
         }
         protected override bool beforeUpdate()
         {
+            if (this.IsStartNode)
+            {
+                this.SetValByKey(BtnAttr.ReturnRole, (int)ReturnRole.CanNotReturn);
+                this.SetValByKey(BtnAttr.ShiftEnable, 0);
+                this.SetValByKey(BtnAttr.CCEnable, 0);
+                this.SetValByKey(BtnAttr.EndFlowEnable, 0);
+                this.SetValByKey(BtnAttr.RptEnable, 0);
+                this.SetValByKey(BtnAttr.EndFlowEnable, 0);
+                this.SetValByKey(BtnAttr.EndFlowEnable, 0);
+            }
 
             #region 更新流程判断条件的标记。
             DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0  WHERE FK_Flow='" + this.FK_Flow + "'");

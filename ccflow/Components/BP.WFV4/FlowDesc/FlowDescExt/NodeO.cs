@@ -8,7 +8,7 @@ using BP.Port;
 namespace BP.WF.Ext
 {
     /// <summary>
-    /// 这里存放每个节点的信息.	 
+    /// 这里存放每个节点的信息.
     /// </summary>
     public class NodeO : Entity, IDTS
     {
@@ -153,7 +153,6 @@ namespace BP.WF.Ext
             //else
             //    this.ReturnEnable = true;
 
-
             #region 更新流程判断条件的标记
             DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0  WHERE FK_Flow='" + this.FK_Flow + "'");
             DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=1 WHERE NodeID IN (SELECT NodeID FROM WF_Cond WHERE CondType=0) AND FK_Flow='" + this.FK_Flow + "'");
@@ -206,20 +205,12 @@ namespace BP.WF.Ext
 
                 // 基础属性
                 map.AddTBIntPK(NodeAttr.NodeID, 0, this.ToE("NodeID", "节点ID"), true, true);
-                map.AddTBInt(NodeAttr.Step, (int)NodeWorkType.Work, this.ToE("FlowStep", "流程步骤"), true, false);
+                map.AddTBInt(NodeAttr.Step, (int)NodeWorkType.Work, "步骤", true, false);
+
                 map.AddTBString(NodeAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 100, 10, true);
                 map.AddBoolean(NodeAttr.IsTask, true, this.ToE("IsTask", "允许分配工作否?"), true, true, false);
 
-
-                //map.AddBoolean(NodeAttr.IsCanCC, true, "是否可以抄送", false, false, false);
-                //map.AddBoolean(NodeAttr.IsCanRpt, true, "是否可以查看工作报告?", true, true, false);
-                //map.AddBoolean(NodeAttr.IsSecret, false, "是否是保密步骤?", true, true, false);
-                //map.AddBoolean(NodeAttr.IsCanOver, false, "是否可以终止流程", true, true, false);
-                //map.AddBoolean(NodeAttr.IsCanDelFlow, false, this.ToE("IsCanDelFlow", "是否可以删除流程?"), true, true, false);
-                //map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true, false);
-                //map.AddBoolean(NodeAttr.IsCanReturn, false, this.ToE("IsCanReturn", "是否可以退回?"), true, true, false);
-                //map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交(对开始点无效)", true, true, false);
-
+                 
                 map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除子流程(对合流点有效)", true, true, false);
                
 
@@ -288,8 +279,6 @@ namespace BP.WF.Ext
                 #endregion  功能按钮状态
 
 
-
-
                 // 考核属性
                 map.AddTBInt(NodeAttr.WarningDays, 0, this.ToE(NodeAttr.WarningDays, "警告期限(0不警告)"), true, false); // "警告期限(0不警告)"
                 map.AddTBInt(NodeAttr.DeductDays, 1, this.ToE(NodeAttr.DeductDays, "限期(天)"), true, false); //"限期(天)"
@@ -305,24 +294,24 @@ namespace BP.WF.Ext
                 map.AddTBString(NodeAttr.FK_Flow, null, "flow", false, false, 0, 100, 10);
 
 
-
-
                 // 相关功能。
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeStations(), new BP.WF.Port.Stations(),
                     NodeStationAttr.FK_Node, NodeStationAttr.FK_Station,
                     DeptAttr.Name, DeptAttr.No, this.ToE("NodeSta", "节点岗位"));
 
-                map.AttrsOfOneVSM.Add(new BP.WF.NodeFlows(), new Flows(), NodeFlowAttr.FK_Node, NodeFlowAttr.FK_Flow, DeptAttr.Name, DeptAttr.No,
-                    this.ToE("CallSubFlow", "可调用的子流程"));
+                map.AttrsOfOneVSM.Add(new BP.WF.NodeDepts(), new BP.WF.Port.Depts(), NodeDeptAttr.FK_Node, NodeDeptAttr.FK_Dept, DeptAttr.Name,
+                DeptAttr.No, this.ToE("AccptDept", "节点部门"));
+
 
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeEmps(), new BP.WF.Port.Emps(), NodeEmpAttr.FK_Node, EmpDeptAttr.FK_Emp, DeptAttr.Name,
                     DeptAttr.No, this.ToE("Accpter", "接受人员"));
 
+
+                map.AttrsOfOneVSM.Add(new BP.WF.NodeFlows(), new Flows(), NodeFlowAttr.FK_Node, NodeFlowAttr.FK_Flow, DeptAttr.Name, DeptAttr.No,
+                    this.ToE("CallSubFlow", "可调用的子流程"));
+
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeReturns(), new BP.WF.Port.Emps(), NodeEmpAttr.FK_Node, EmpDeptAttr.FK_Emp, DeptAttr.Name,
                   DeptAttr.No, this.ToE("Accpter", "可退回的节点"));
-
-                //map.AttrsOfOneVSM.Add(new BP.WF.NodeDepts(), new BP.WF.Port.Depts(), NodeDeptAttr.FK_Node, NodeDeptAttr.FK_Dept, DeptAttr.Name, 
-                //DeptAttr.No,this.ToE("AccptDept","接受部门")  );
 
                 RefMethod rm = new RefMethod();
                 rm.Title = this.ToE("DesignSheet", "设计表单"); // "设计表单";
@@ -330,7 +319,7 @@ namespace BP.WF.Ext
                 map.AddRefMethod(rm);
 
                 rm = new RefMethod();
-                rm.Title = this.ToE("BillBill", "单据"); //"单据&单据";
+                rm.Title = this.ToE("Bill", "单据打印"); //"单据&单据";
                 rm.ClassMethodName = this.ToString() + ".DoBill";
                 rm.Icon = "/Images/FileType/doc.gif";
                 map.AddRefMethod(rm);

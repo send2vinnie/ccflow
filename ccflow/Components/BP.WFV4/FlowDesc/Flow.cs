@@ -280,6 +280,97 @@ namespace BP.WF
     /// </summary>
     public class Flow : EntityNoName
     {
+        #region 业务处理
+        /// <summary>
+        /// 产生一个新工作
+        /// </summary>
+        /// <returns></returns>
+        public Work NewWork()
+        {
+            BP.WF.Node nd = new BP.WF.Node(this.StartNodeID);
+
+            //从草稿里看看是否有新工作？
+            StartWork wk = (StartWork)nd.HisWork;
+            int num = wk.Retrieve(StartWorkAttr.NodeState, 0,
+                StartWorkAttr.Rec, WebUser.No);
+            if (num == 0)
+            {
+                wk.Rec = WebUser.No;
+                wk.SetValByKey("RecText", WebUser.Name);
+                wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+                wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+                wk.WFState = 0;
+                wk.NodeState = 0;
+                wk.OID = DBAccess.GenerOID("WID");
+                wk.DirectInsert();
+            }
+
+            wk.Rec = WebUser.No;
+            wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+            wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+            wk.WFState = 0;
+            wk.NodeState = 0;
+            wk.FK_Dept = WebUser.FK_Dept;
+            wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
+            wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
+            wk.FID = 0;
+            wk.SetValByKey("RecText", WebUser.Name);
+
+
+            string msg = "";
+            if (WebUser.SysLang == "CH")
+                msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
+            else
+                msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
+
+            string title = wk.GetValStringByKey("Title");
+            if (string.IsNullOrEmpty(title))
+                wk.Title = msg;
+            else if (title.Contains("在") == true)
+                wk.Title = msg;
+
+            return wk;
+        }
+        /// <summary>
+        /// 创建工作
+        /// </summary>
+        /// <param name="workid"></param>
+        /// <param name="fk_node"></param>
+        /// <returns></returns>
+        public Work GenerWork(Int64 workid, Node nd)
+        {
+            Work wk = nd.HisWork;
+            wk.OID = workid;
+            if (wk.RetrieveFromDBSources() == 0)
+                throw new Exception("@工作[" + wk.EnDesc + "],数据WorkID="+workid+"丢失,请联系管理员。");
+
+            // 设置当前的人员把记录人。
+            wk.Rec = WebUser.No;
+            wk.RecText = WebUser.Name;
+            wk.Rec = WebUser.No;
+            wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+            wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+            wk.NodeState = 0;
+            wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
+            wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
+            wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
+            wk.FID = 0;
+            wk.SetValByKey("RecText", WebUser.Name);
+
+            if (nd.IsStartNode)
+            {
+                string msg = "";
+                if (WebUser.SysLang == "CH")
+                    msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
+                else
+                    msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
+
+                wk.SetValByKey("Title", msg);
+            }
+            return wk;
+        }
+        #endregion 业务处理
+
         public string Tag = null;
         /// <summary>
         /// 运行类型
@@ -707,7 +798,6 @@ namespace BP.WF
             //   nds.SaveToXml(path + "Nodes.xml");
             ds.Tables.Add(nds.ToDataTableField("Nodes"));
 
-
             // 文书信息
             BillTemplates tmps = new BillTemplates(this.No);
             //tmps.SaveToXml(path + "BillTemplates.xml");
@@ -921,7 +1011,7 @@ namespace BP.WF
         /// </summary>
         private void GenerWorkTempleteDoc(Entity en, string enName, Node nd)
         {
-            string tempFilePath = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No + "." + this.Name + "\\";
+            string tempFilePath =  SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No + "." + this.Name + "\\";
             if (System.IO.Directory.Exists(tempFilePath) == false)
                 System.IO.Directory.CreateDirectory(tempFilePath);
             tempFilePath = tempFilePath + nd.FlowName + "_" + nd.Name + ".doc";
@@ -2332,7 +2422,7 @@ namespace BP.WF
 
 
                 map.AddSearchAttr(FlowAttr.FK_FlowSort);
-                //   map.AddSearchAttr(FlowAttr.FlowRunWay);
+                   map.AddSearchAttr(FlowAttr.FlowRunWay);
 
 
                 RefMethod rm = new RefMethod();
