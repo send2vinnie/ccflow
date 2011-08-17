@@ -19,7 +19,6 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
             this.Pub1.AddFieldSetEnd();
             return;
         }
-
         try
         {
             if (BP.DA.DBAccess.IsExitsObject("WF_Flow") == true)
@@ -50,6 +49,9 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     BP.DA.DBAccess.RunSQLs(sql);
 
 
+                    //删除公文类.
+                    sql = "DELETE WF_FlowSort WHERE No='01'";
+                    BP.DA.DBAccess.RunSQLs(sql);
                 }
                 return;
             }
