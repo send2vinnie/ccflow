@@ -7,7 +7,7 @@
   所有的控件都支持 wasd, 做为方向键， 部分控件支持方向键.
 
 
-2, 增加textbox 的宽度 ctrl+ -> 方向键增加宽度 ctrl + <- 减小宽度.
+2, 增加textbox, 从表, dropdownlistbox, 的宽度 shift+ -> 方向键增加宽度 shift + <- 减小宽度.
 
 
 3, 保存 windows键 + s.  删除 delete.  复制 ctrl+c   粘帖: ctrl+v.
