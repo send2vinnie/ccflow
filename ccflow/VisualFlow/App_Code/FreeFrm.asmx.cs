@@ -666,9 +666,9 @@ namespace FreeFrm.Web
                 toItem.Copy(item);
                 toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
                 toItem.FK_MapData = fk_mapdata;
-                toItem.IntKey = item.IntKey;
                 toItem.DirectInsert();
             }
+
 
             // MapAttrs
             BP.Sys.MapAttrs attrs = new BP.Sys.MapAttrs();
