@@ -1249,18 +1249,30 @@ namespace BP.Web.Comm.UC.WF
             // Êä³ö rb.
             BP.Sys.FrmRBs myrbs = new FrmRBs();
             myrbs.RetrieveFromCash(FrmRBAttr.FK_MapData, enName);
+            MapAttr attrRB=new MapAttr();
             foreach (BP.Sys.FrmRB rb in myrbs)
             {
                 this.Add("<DIV id='F" + rb.MyPK + "' style='position:absolute; left:" + rb.X + "px; top:" + rb.Y + "px; width:100%; height:16px;text-align: left;word-break: keep-all;' >");
                 this.Add("<span style='word-break: keep-all;font-size:12px;'>");
 
                 System.Web.UI.WebControls.RadioButton rbCtl = new RadioButton();
-                rbCtl.ID = "RB_" + rb.EnumKey+"_" +rb.IntKey.ToString() ;
+                rbCtl.ID = "RB_" + rb.KeyOfEn+"_" +rb.IntKey.ToString() ;
                 rbCtl.GroupName = rb.KeyOfEn;
                 rbCtl.Text = rb.Lab;
                 this.Add(rbCtl);
 
-                if (isReadonly == true)
+                if (attrRB.KeyOfEn != rb.KeyOfEn)
+                {
+                    foreach (MapAttr ma in mattrs)
+                    {
+                        if (ma.KeyOfEn == rb.KeyOfEn)
+                        {
+                            attrRB = ma;
+                            break;
+                        }
+                    }
+                }
+                if (isReadonly == true || attrRB.UIIsEnable==false)
                     rbCtl.Enabled = false;
 
                 this.Add("</span>");
