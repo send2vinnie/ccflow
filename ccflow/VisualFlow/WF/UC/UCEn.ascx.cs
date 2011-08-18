@@ -1163,8 +1163,9 @@ namespace BP.Web.Comm.UC.WF
                                 cb.Checked = attr.DefValOfBool;
                                 cb.Enabled = attr.UIIsEnable;
                                 cb.Checked = en.GetValBooleanByKey(attr.KeyOfEn);
-                                if (cb.Enabled == true && isReadonly == true)
+                                if (cb.Enabled == true || isReadonly == true)
                                     cb.Enabled = false;
+
                                 this.Add(cb);
                                 break;
                             case BP.DA.DataType.AppDouble:
