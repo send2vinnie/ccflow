@@ -142,8 +142,7 @@ public partial class WF_Frm : WebPage
         catch (Exception ex)
         {
             if (BP.SystemConfig.IsDebug)
-                wk.CheckPhysicsTable(); 
-
+                wk.CheckPhysicsTable();
             throw new Exception("@在保存前执行逻辑检查错误。@技术信息:" + ex.Message);
         }
 

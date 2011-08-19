@@ -436,11 +436,11 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         me.FK_MapData = this.FK_MapData;
 
-        this.Pub2.AddTable("border=0  width='300px' ");
+        this.Pub2.AddTable("border=0  width='700px' ");
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("项目");
         this.Pub2.AddTDTitle("采集");
-        this.Pub2.AddTDTitle("采集");
+        this.Pub2.AddTDTitle("");
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
@@ -469,35 +469,47 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
 
         this.Pub2.AddTR();
-        this.Pub2.AddTD("验证方式:");
-        ddl = new BP.Web.Controls.DDL();
-        ddl.ID = "DDL_CheckWay";
-        InputCheckXmls xmls = new InputCheckXmls();
-        xmls.RetrieveAll();
-        foreach (InputCheckXml xml in xmls)
-        {
-            ddl.Items.Add(new ListItem(xml.Name, xml.No));
-        }
+        this.Pub2.AddTD("函数库来源:");
 
-        ddl.Items.Add(new ListItem("*****自己验证方式*******", "all"));
+        System.Web.UI.WebControls.RadioButton rb = new System.Web.UI.WebControls.RadioButton();
+        rb.Text = "ccflow系统js函数库.";
+        rb.ID = "RB_0";
+        rb.AutoPostBack = true;
+        if (me.DoWay == 0)
+            rb.Checked = true;
+        else
+            rb.Checked = false;
 
-        ddl.SetSelectItem(me.Tag);
-        this.Pub2.AddTD(ddl);
-        this.Pub2.AddTD("");
+        rb.GroupName = "s";
+        rb.Checked = true;
+        rb.CheckedChanged += new EventHandler(rb_CheckedChanged);
+        this.Pub2.AddTD(rb);
+
+        rb = new System.Web.UI.WebControls.RadioButton();
+        rb.Text = "我自定义的函数库.";
+        rb.AutoPostBack = true;
+        rb.CheckedChanged += new EventHandler(rb_CheckedChanged);
+        rb.GroupName = "s";
+        rb.ID = "RB_1";
+        rb.AutoPostBack = true;
+
+        if (me.DoWay == 1)
+            rb.Checked = true;
+        else
+            rb.Checked = false;
+
+        this.Pub2.AddTD(rb);
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("colspan=3", "处理内容");
         this.Pub2.AddTREnd();
-
         this.Pub2.AddTR();
-        TextBox tb = new TextBox();
-        tb.ID = "TB_Doc";
-        tb.Text = me.Doc;
-        tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 5;
-        tb.Columns = 40;
-        this.Pub2.AddTD("colspan=3", tb);
+        ListBox lb = new ListBox();
+        lb.Attributes["width"] = "100%";
+        lb.Rows = 20;
+        lb.ID = "LB1";
+        this.Pub2.AddTD("colspan=3", lb);
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTRSum();
@@ -509,7 +521,26 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTREnd();
         this.Pub2.AddTableEnd();
         this.Pub2.AddFieldSetEnd();
+          rb_CheckedChanged(null,null);
     }
+    void rb_CheckedChanged(object sender, EventArgs e)
+    {
+        string path = BP.SystemConfig.PathOfData + "\\JSLib\\";
+        System.Web.UI.WebControls.RadioButton rb = this.Pub2.GetRadioButtonByID("RB_0"); // sender as System.Web.UI.WebControls.RadioButton;
+        if (rb.Checked ==false )
+            path = BP.SystemConfig.PathOfDataUser + "\\JSLib\\";
+
+        string[] strs = System.IO.Directory.GetFiles(path);
+        ListBox lb = this.Pub2.FindControl("LB1") as ListBox;
+        lb.Items.Clear();
+        int idx = 0;
+        foreach (string s in strs)
+        {
+            lb.Items.Add(new ListItem(s.Replace(path, "").Replace(".js", ""), idx.ToString()));
+            idx++;
+        }
+    }
+
     public void Edit_AutoFull()
     {
         MapExt me = null;
@@ -772,11 +803,20 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             me.RetrieveFromDBSources();
         me = (MapExt)this.Pub2.Copy(me);
         me.ExtType = this.ExtType;
-        me.Doc = this.Pub2.GetTextBoxByID("TB_Doc").Text;
-        me.AttrOfOper = this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal;
 
+        // 操作的属性.
+        me.AttrOfOper = this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal; 
+
+        int doWay = 0;
+        if (this.GetRadioButtonByID("RB_0").Checked == false)
+            doWay = 1;
+
+        me.DoWay = doWay;
         me.Tag = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItemStringVal;
-        me.Tag1 = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItem.Text;
+        me.Doc = this.Pub2.GetTextBoxByID("TB_Doc").Text;
+
+
+    //   me.Tag1 = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItem.Text;
 
         me.FK_MapData = this.FK_MapData;
         me.MyPK = this.FK_MapData + "_" + me.ExtType + "_" + me.AttrOfOper;

@@ -1155,7 +1155,6 @@ namespace BP.Web.Comm.UC.WF
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppBoolean:
-
                                 CheckBox cb = new CheckBox();
                                 cb.Width = 350;
                                 cb.Text = attr.Name;
@@ -1163,9 +1162,10 @@ namespace BP.Web.Comm.UC.WF
                                 cb.Checked = attr.DefValOfBool;
                                 cb.Enabled = attr.UIIsEnable;
                                 cb.Checked = en.GetValBooleanByKey(attr.KeyOfEn);
-                                if (cb.Enabled == true || isReadonly == true)
+                                if (cb.Enabled == false || isReadonly == true)
                                     cb.Enabled = false;
-
+                                else
+                                    cb.Enabled = true;
                                 this.Add(cb);
                                 break;
                             case BP.DA.DataType.AppDouble:
