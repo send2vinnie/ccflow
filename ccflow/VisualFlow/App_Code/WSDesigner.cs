@@ -183,7 +183,7 @@ public class WSDesigner : WSBase
             case "EmplyeeMaintain": // 人员管理
                 url = @"/Comm/PanelEns.aspx?EnsName=BP.Port.Emps";
                 break;
-            case "FileHandler": //模板导出用到
+            case "FileUpload": //模板上传用到
                 url = @"/WebClientDownloadHandler.ashx";
                 break;
             default:
@@ -206,28 +206,15 @@ public class WSDesigner : WSBase
         return Connector.ToXml(ds);
     }
 
-    /// <summary>
-    /// 运行sql返回table.
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <returns></returns>
-    [WebMethod]
-    public string RunSQLReturnTableS(string[] sqls)
+    //select nodeID,x,y,NodeWorkType,HisToNDs from wf_node
+    [WebMethod(EnableSession = true)]
+    public string GetFlowSort()
     {
         DataSet ds = new DataSet();
-        int i = 0;
-        foreach (string sql in sqls)
-        {
-            if (string.IsNullOrEmpty(sql))
-                continue;
-            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-            dt.TableName = "DT" + i;
-            ds.Tables.Add(dt);
-            i++;
-        }
+        ds = BP.DA.DBAccess.RunSQLReturnDataSet("select NO,NAME from WF_FlowSort");
         return Connector.ToXml(ds);
     }
-    
+
     [WebMethod(EnableSession = true)]
     public string GetFlowBySort(string sort)
     {
@@ -236,7 +223,14 @@ public class WSDesigner : WSBase
         return Connector.ToXml(ds);
     }
 
-   
+    [WebMethod(EnableSession = true)]
+    public string GetFlows()
+    {
+        DataSet ds = new DataSet();
+        ds = BP.DA.DBAccess.RunSQLReturnDataSet("select No,Name,FK_FlowSort from WF_Flow ");
+        return Connector.ToXml(ds);
+    }
+
     /// <summary>
     /// 岗位人员
     /// </summary>
@@ -399,12 +393,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
             case "GetSettings":
                 return SystemConfig.AppSettings[para1];
                 break;
-
-            case "GetFlows":
-                var sqls = new string[] { "select NO,NAME from WF_FlowSort" , "select No,Name,FK_FlowSort from WF_Flow "};
-                return RunSQLReturnTableS(sqls);
-                break;
-
             default:
                 throw null;
         }
@@ -674,11 +662,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         stream.Write(FileByte, 0, FileByte.Length);
         stream.Close();
         return filepath;
-    }
-
-    private void getFlows()
-    {
-        
     }
 
 }
