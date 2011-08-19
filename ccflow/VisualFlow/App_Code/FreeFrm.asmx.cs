@@ -624,6 +624,21 @@ namespace FreeFrm.Web
                 i++;
             }
 
+            // Btn
+            i = 0;
+            BP.Sys.FrmBtns btns = new BP.Sys.FrmBtns();
+            btns.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            btns.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
+            foreach (BP.Sys.FrmBtn item in btns)
+            {
+                BP.Sys.FrmBtn toItem = new BP.Sys.FrmBtn();
+                toItem.Copy(item);
+                toItem.MyPK = "Btn" + timeKey + i;
+                toItem.FK_MapData = fk_mapdata;
+                toItem.DirectInsert();
+                i++;
+            }
+
             // Img
             i = 0;
             BP.Sys.FrmImgs imgs = new BP.Sys.FrmImgs();
@@ -814,6 +829,11 @@ namespace FreeFrm.Web
                 {
                     str += "@保存"+dt.TableName+"失败:"+ex.Message;
                 }
+            }
+
+            if (BP.SystemConfig.AppCenterDBType == DBType.Oracle9i)
+            {
+                sqls = sqls.Replace("LEN(", "LENGTH(");
             }
 
             this.RunSQLs(sqls);
