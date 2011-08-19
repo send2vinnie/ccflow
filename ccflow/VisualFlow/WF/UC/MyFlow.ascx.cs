@@ -334,46 +334,47 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
        this.currND = new BP.WF.Node(this.FK_Node);
 
         #region 判断是否有 workid
-        if (this.WorkID == 0)
-        {
-            currWK = this.currFlow.NewWork();
-        }
-        else
-        {
-            currWK = this.currFlow.GenerWork(this.WorkID,this.currND);
+       if (this.WorkID == 0)
+       {
+           currWK = this.currFlow.NewWork();
+           this.WorkID = currWK.OID;
+       }
+       else
+       {
+           currWK = this.currFlow.GenerWork(this.WorkID, this.currND);
 
-            string msg = "";
-            switch (currWK.NodeState)
-            {
-                case NodeState.Back:
-                    /* 如果工作节点退回了*/
-                    ReturnWork rw = new ReturnWork();
-                    rw.WorkID = this.WorkID;
-                    rw.NodeId = this.FK_Node;
-                    if (rw.Retrieve(ReturnWorkAttr.NodeId, this.FK_Node, ReturnWorkAttr.WorkID, rw.WorkID) != 0)
-                    {
-                        this.FlowMsg.AlertMsg_Info("流程退回提示", rw.NoteHtml);
-                        currWK.Update("NodeState", (int)NodeState.Init);
-                    }
-                    break;
-                case NodeState.Forward:
-                    /* 如果不是退回来的，就判断是否是转发过来的。 */
-                    ForwardWork fw = new ForwardWork();
-                    int i = fw.Retrieve(ForwardWorkAttr.WorkID, this.WorkID,
-                        ForwardWorkAttr.NodeId, this.FK_Node);
-                    if (i == 1)
-                    {
-                        if (fw.IsTakeBack == false)
-                        {
-                            msg += "@" + this.ToE("Transfer", "转发人") + "[" + fw.FK_Emp + "]。@" + this.ToE("Accepter", "接受人") + "：" + fw.Emps + "。@" + this.ToE("FWNote", "转发原因") + "： @" + fw.NoteHtml;
-                            this.FlowMsg.AlertMsg_Info("转发提示:", msg);
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+           string msg = "";
+           switch (currWK.NodeState)
+           {
+               case NodeState.Back:
+                   /* 如果工作节点退回了*/
+                   ReturnWork rw = new ReturnWork();
+                   rw.WorkID = this.WorkID;
+                   rw.NodeId = this.FK_Node;
+                   if (rw.Retrieve(ReturnWorkAttr.NodeId, this.FK_Node, ReturnWorkAttr.WorkID, rw.WorkID) != 0)
+                   {
+                       this.FlowMsg.AlertMsg_Info("流程退回提示", rw.NoteHtml);
+                       currWK.Update("NodeState", (int)NodeState.Init);
+                   }
+                   break;
+               case NodeState.Forward:
+                   /* 如果不是退回来的，就判断是否是转发过来的。 */
+                   ForwardWork fw = new ForwardWork();
+                   int i = fw.Retrieve(ForwardWorkAttr.WorkID, this.WorkID,
+                       ForwardWorkAttr.NodeId, this.FK_Node);
+                   if (i == 1)
+                   {
+                       if (fw.IsTakeBack == false)
+                       {
+                           msg += "@" + this.ToE("Transfer", "转发人") + "[" + fw.FK_Emp + "]。@" + this.ToE("Accepter", "接受人") + "：" + fw.Emps + "。@" + this.ToE("FWNote", "转发原因") + "： @" + fw.NoteHtml;
+                           this.FlowMsg.AlertMsg_Info("转发提示:", msg);
+                       }
+                   }
+                   break;
+               default:
+                   break;
+           }
+       }
         #endregion 判断是否有workid
 
         #region 判断权限
@@ -407,6 +408,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
         try
         {
+
+
             #region 增加按钮
             BtnLab btnLab = new BtnLab(currND.NodeID);
             if (btnLab.SendEnable)
@@ -475,6 +478,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             #endregion
 
             this.BindWork(currND, currWK);
+
+
             this.Session["Ect"] = null;
             if (currND.HisDeliveryWay == DeliveryWay.BySelected && currND.IsEndNode == false)
             {

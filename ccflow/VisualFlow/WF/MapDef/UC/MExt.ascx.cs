@@ -24,6 +24,13 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             return this.Request.QueryString["RefNo"];
         }
     }
+    public string OperAttrKey
+    {
+        get
+        {
+            return this.Request.QueryString["OperAttrKey"];
+        }
+    }
     public string ExtType
     {
         get
@@ -440,36 +447,31 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("项目");
         this.Pub2.AddTDTitle("采集");
-        this.Pub2.AddTDTitle("");
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
-        this.Pub2.AddTD("验证字段:");
-        BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
-        ddl.ID = "DDL_Oper";
-        MapAttrs attrs = new MapAttrs(this.FK_MapData);
-        foreach (MapAttr attr in attrs)
-        {
-            if (attr.UIVisible == false)
-                continue;
+        this.Pub2.AddTD("要验证字段:");
 
-            if (attr.UIIsEnable == false)
-                continue;
-
-            if (attr.UIContralType == UIContralType.TB)
-            {
-                ddl.Items.Add(new ListItem(attr.KeyOfEn + " - " + attr.Name, attr.KeyOfEn));
-                continue;
-            }
-        }
-        ddl.SetSelectItem(me.AttrOfOper);
-        this.Pub2.AddTD(ddl);
-        this.Pub2.AddTD("");
         this.Pub2.AddTREnd();
 
+        if (string.IsNullOrEmpty(this.MyPK) == false)
+        {
+            this.Pub2.AddTR();
+            this.Pub2.AddTDBegin("colspan=2");
+            this.Pub2.Add("现有设置<br>");
+            TextBox tb = new TextBox();
+            tb.TextMode = TextBoxMode.MultiLine;
+            tb.Rows = 6;
+            tb.Columns = 70;
+            tb.ID = "sds";
+            tb.Text = me.Doc;
+            this.Pub2.Add(tb);
+            this.Pub2.AddTREnd();
+        }
 
         this.Pub2.AddTR();
         this.Pub2.AddTD("函数库来源:");
+        this.Pub2.AddTDBegin();
 
         System.Web.UI.WebControls.RadioButton rb = new System.Web.UI.WebControls.RadioButton();
         rb.Text = "ccflow系统js函数库.";
@@ -479,35 +481,32 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             rb.Checked = true;
         else
             rb.Checked = false;
-
         rb.GroupName = "s";
-        rb.Checked = true;
         rb.CheckedChanged += new EventHandler(rb_CheckedChanged);
-        this.Pub2.AddTD(rb);
+        this.Pub2.Add(rb);
 
         rb = new System.Web.UI.WebControls.RadioButton();
-        rb.Text = "我自定义的函数库.";
         rb.AutoPostBack = true;
+        rb.Text = "我自定义的函数库.";
         rb.CheckedChanged += new EventHandler(rb_CheckedChanged);
         rb.GroupName = "s";
         rb.ID = "RB_1";
         rb.AutoPostBack = true;
-
         if (me.DoWay == 1)
             rb.Checked = true;
         else
             rb.Checked = false;
-
-        this.Pub2.AddTD(rb);
+        this.Pub2.Add(rb);
+        this.Pub2.AddTDEnd();
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
-        this.Pub2.AddTDTitle("colspan=3", "处理内容");
+        this.Pub2.AddTDTitle("colspan=2", "处理内容");
         this.Pub2.AddTREnd();
         this.Pub2.AddTR();
         ListBox lb = new ListBox();
         lb.Attributes["width"] = "100%";
-        lb.Rows = 20;
+        lb.Rows = 14;
         lb.ID = "LB1";
         this.Pub2.AddTD("colspan=3", lb);
         this.Pub2.AddTREnd();
@@ -521,7 +520,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTREnd();
         this.Pub2.AddTableEnd();
         this.Pub2.AddFieldSetEnd();
-          rb_CheckedChanged(null,null);
+        rb_CheckedChanged(null, null);
     }
     void rb_CheckedChanged(object sender, EventArgs e)
     {
@@ -533,14 +532,16 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         string[] strs = System.IO.Directory.GetFiles(path);
         ListBox lb = this.Pub2.FindControl("LB1") as ListBox;
         lb.Items.Clear();
+        lb.AutoPostBack = true;
         int idx = 0;
         foreach (string s in strs)
         {
-            lb.Items.Add(new ListItem(s.Replace(path, "").Replace(".js", ""), idx.ToString()));
+            ListItem li = new ListItem(s.Replace(path, "").Replace(".js", ""), idx.ToString());
+            li.Value = s;
+            lb.Items.Add(li);
             idx++;
         }
     }
-
     public void Edit_AutoFull()
     {
         MapExt me = null;
@@ -797,6 +798,13 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     }
     void btn_SaveInputCheck_Click(object sender, EventArgs e)
     {
+        ListBox lb = this.Pub2.FindControl("LB1") as ListBox;
+        if (lb.SelectedIndex == -1)
+        {
+            this.Alert("请选择函数.");
+            return;
+        }
+
         MapExt me = new MapExt();
         me.MyPK = this.MyPK;
         if (me.MyPK.Length > 2)
@@ -805,23 +813,21 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         me.ExtType = this.ExtType;
 
         // 操作的属性.
-        me.AttrOfOper = this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal; 
+        me.AttrOfOper = this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal;
 
         int doWay = 0;
-        if (this.GetRadioButtonByID("RB_0").Checked == false)
+        if (this.Pub2.GetRadioButtonByID("RB_0").Checked == false)
             doWay = 1;
 
         me.DoWay = doWay;
-        me.Tag = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItemStringVal;
-        me.Doc = this.Pub2.GetTextBoxByID("TB_Doc").Text;
-
-
-    //   me.Tag1 = this.Pub2.GetDDLByID("DDL_CheckWay").SelectedItem.Text;
+        ListItem li = lb.SelectedItem;
+        me.Tag = li.Value;
+        me.Doc = BP.DA.DataType.ReadTextFile(li.Value);
 
         me.FK_MapData = this.FK_MapData;
         me.MyPK = this.FK_MapData + "_" + me.ExtType + "_" + me.AttrOfOper;
         me.Save();
-        this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType +"&RefNo = "+this.RefNo, true);
+        this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo = " + this.RefNo, true);
     }
     void btn_SavePopVal_Click(object sender, EventArgs e)
     {

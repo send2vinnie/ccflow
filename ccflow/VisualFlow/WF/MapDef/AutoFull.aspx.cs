@@ -71,10 +71,30 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
     }
     #endregion 属性
 
-
     protected void Page_Load(object sender, EventArgs e)
     {
         this.BindTop();
+
+        if (this.RefNo == null)
+        {
+            /*请选择要设置的字段*/
+            MapAttrs mattrs = new MapAttrs();
+            mattrs.Retrieve(MapAttrAttr.FK_MapData, this.FK_MapData);
+
+            this.Pub1.AddFieldSet("请选择要设置的字段");
+            this.Pub1.AddUL("class=''");
+            foreach (MapAttr en in mattrs)
+            {
+                if (en.UIVisible == false)
+                    continue;
+
+                this.Pub1.AddLi("?FK_MapData=" + this.FK_MapData + "&RefNo=" +  en.MyPK + "&ExtType=AutoFull", en.KeyOfEn + " - " + en.Name);
+            }
+            this.Pub1.AddULEnd();
+            this.Pub1.AddFieldSetEnd();
+            return;
+        }
+
 
         MapAttr mattr = new MapAttr(this.RefNo);
         Attr attr = mattr.HisAttr;
