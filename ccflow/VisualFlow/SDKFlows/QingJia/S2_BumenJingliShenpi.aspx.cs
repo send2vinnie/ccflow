@@ -9,8 +9,6 @@ using BP.En;
 
 public partial class Demo_QingJia_S2_BumenJingliShenpi : FlowPage
 {
-   
-
     protected void Page_Load(object sender, EventArgs e)
     {
         this.AddBtn(ButtonList.Btn_DelFlow, this.Btn_DelFlow);

@@ -19,6 +19,7 @@ public partial class Demo_QingJiaTiao_S1_TianxieShenqingDan : FlowPage
         this.AddBtn(ButtonList.Btn_Send, this.Btn_Send);
         this.AddBtn(ButtonList.Btn_Track, this.Btn_Track);
         this.AddBtn(ButtonList.Btn_UnSend, this.Btn_UnSend);
+
         this.InitButtonState();
     }
     public Hashtable GenerWorkInfo()
@@ -62,7 +63,6 @@ public partial class Demo_QingJiaTiao_S1_TianxieShenqingDan : FlowPage
     protected void Btn_Return_Click(object sender, EventArgs e)
     {
         // 退回前的业务处理
-
         this.DoOpenReturn();
 
         // 退回后的业务处理
