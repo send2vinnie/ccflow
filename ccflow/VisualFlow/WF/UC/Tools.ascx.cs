@@ -24,10 +24,12 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
     {
         BP.WF.XML.Tools tools = new BP.WF.XML.Tools();
         tools.RetrieveAll();
+        if (tools.Count == 0)
+            return;
+
         string refno = this.RefNo;
         if (refno == null)
             refno = "Per";
-
 
         this.Left.AddTable("border=0");
         this.Left.AddTR();
