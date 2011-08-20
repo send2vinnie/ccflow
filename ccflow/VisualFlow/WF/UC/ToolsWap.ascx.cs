@@ -142,7 +142,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddUL();
         foreach (BP.WF.XML.Tool tool in tools)
         {
-            this.AddLi("Tools.aspx?RefNo=" + tool.No, tool.Name, "_self");
+            this.AddLi(""+this.PageID+".aspx?RefNo=" + tool.No, tool.Name, "_self");
         }
         this.AddULEnd();
         this.AddFieldSetEnd();
@@ -309,7 +309,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         }
 
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='Tools.aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To4", "电子签名设置") + WebUser.Auth);
+            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To4", "电子签名设置") + WebUser.Auth);
         else
             this.AddFieldSet(this.ToE("To4", "电子签名设置") + WebUser.Auth);
 
@@ -346,8 +346,8 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
         this.AddB("让系统自动为您创建（请选择字体）:");
         this.AddUL();
-        this.AddLi("<a href='Tools.aspx?RefNo=Siganture&DoType=ST'>宋体</a>");
-        this.AddLi("<a href='Tools.aspx?RefNo=Siganture&DoType=LS'>隶书</a>");
+        this.AddLi("<a href='"+this.PageID+".aspx?RefNo=Siganture&DoType=ST'>宋体</a>");
+        this.AddLi("<a href='"+this.PageID+".aspx?RefNo=Siganture&DoType=LS'>隶书</a>");
         this.AddULEnd();
 
         this.AddFieldSetEnd();
@@ -462,7 +462,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
     {
 
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='Tools.aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("ChangPass", "密码修改"));
+            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("ChangPass", "密码修改"));
         else
             this.AddFieldSet(this.ToE("ChangPass", "密码修改"));
 
@@ -518,7 +518,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(WebUser.No);
 
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='Tools.aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
+            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
         else
             this.AddFieldSet(this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
 
@@ -690,7 +690,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
                 this.AddTRSum();
                 this.AddTD();
                 this.AddTDB(fl.Name);
-                //  this.AddTD("<a href='Tools.aspx?DoType=Times&FK_Flow=" + fl.No + "'>分析</a>");
+                //  this.AddTD("<a href='"+this.PageID+".aspx?DoType=Times&FK_Flow=" + fl.No + "'>分析</a>");
                 this.AddTD("工作数");
                 this.AddTD("平均天" + fl.AvgDay.ToString("0.00"));
 
@@ -708,7 +708,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
                     this.AddTR();
                     this.AddTD();
                     this.AddTD(nd.Name);
-                    //  this.AddTD("<a href='Tools.aspx?DoType=Times&FK_Node=" + nd.NodeID + "'>分析</a>");
+                    //  this.AddTD("<a href='"+this.PageID+".aspx?DoType=Times&FK_Node=" + nd.NodeID + "'>分析</a>");
                     string sql = "";
 
                     sql = "SELECT  COUNT(*) FROM ND" + nd.NodeID;
@@ -765,7 +765,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         int nodeid = int.Parse(this.Request.QueryString["FK_Node"]);
         BP.WF.Node nd = new BP.WF.Node(nodeid);
         this.AddTable();
-        this.AddCaptionLeft("<a href='Tools.aspx?DoType=Times&FK_Flow=" + nd.FK_Flow + "'>" + nd.FlowName + "</a> => " + nd.Name);
+        this.AddCaptionLeft("<a href='"+this.PageID+".aspx?DoType=Times&FK_Flow=" + nd.FK_Flow + "'>" + nd.FlowName + "</a> => " + nd.Name);
         this.AddTR();
         this.AddTDTitle("IDX");
         this.AddTDTitle(this.ToE("Emp", "人员"));
@@ -795,7 +795,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         {
             if (WebUser.IsWap)
             {
-                this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='Tools.aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("ChangPass", "密码修改"));
+                this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("ChangPass", "密码修改"));
 
                 this.AddBR();
 
@@ -812,7 +812,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         }
 
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='Tools.aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To7", "下列同事授权给您"));
+            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To7", "下列同事授权给您"));
         else
             this.AddFieldSet(this.ToE("To7", "下列同事授权给您"));
 
@@ -832,7 +832,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
 
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='Tools.aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To5", "请选择您要授权的人员"));
+            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To5", "请选择您要授权的人员"));
         else
             this.AddFieldSet(this.ToE("To5", "请选择您要授权的人员")  );
 
@@ -895,7 +895,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
             this.Add(this.ToE("To8", "您的登陆是授权模式，您不能查看个人信息。"));
             this.AddUL();
             this.AddLi("<a href=\"javascript:ExitAuth('" + WebUser.Auth + "')\">" + this.ToE("ExitLiM", "退出授权模式") + "</a>");
-            this.AddLi("<a href=Tools.aspx >" + this.ToE("Set", "设置") + "</a>");
+            this.AddLi("<a href="+this.PageID+".aspx >" + this.ToE("Set", "设置") + "</a>");
             if (WebUser.IsWap)
                 this.AddLi("<a href='Home.aspx'>" + this.ToE("Home", "返回主页") + "</a>");
 
@@ -906,7 +906,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
 
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='Tools.aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
+            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
         else
             this.AddFieldSet(this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
 
@@ -914,7 +914,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.Add(this.ToE("UserName", "用户名") + ":" + WebUser.Name);
         this.AddHR();
 
-        this.AddB(this.ToE("ESign", "电子签字") + ":<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/> ，<a href='Tools.aspx?RefNo=Siganture' >" + this.ToE("Edit", "设置/修改") + "</a>。");
+        this.AddB(this.ToE("ESign", "电子签字") + ":<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/> ，<a href='"+this.PageID+".aspx?RefNo=Siganture' >" + this.ToE("Edit", "设置/修改") + "</a>。");
 
         this.AddBR();
 
