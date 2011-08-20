@@ -6,13 +6,10 @@
         function Do(warning, url) {
             if (window.confirm(warning) == false)
                 return;
-
             window.location.href = url;
-            // WinOpen(url);
         }
 		</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <uc1:Runing ID="Runing1" runat="server" />
 </asp:Content>
-

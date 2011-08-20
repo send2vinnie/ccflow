@@ -125,6 +125,8 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
                 this.AddTD("<a href=\"javascript:WinOpen('FlowSearchSmallSingle.aspx?FK_Node=" + mynd.NodeID + "');\">工作查询</a>");
                 this.AddTREnd();
 
+                
+
                 idx++;
                 isFirst = false;
             }
@@ -923,7 +925,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         BP.WF.Port.WFEmp au = new BP.WF.Port.WFEmp(WebUser.No);
         if (au.RetrieveFromDBSources() == 0 || au.AuthorIsOK == false)
         {
-            this.Add(this.ToE("To1", "授权情况：未授权") + " - <a href='Tools.aspx?RefNo=Auto' >" + this.ToE("To2", "执行授权") + "</a>。");
+            this.Add(this.ToE("To1", "授权情况：未授权") + " - <a href='"+this.PageID+".aspx?RefNo=Auto' >" + this.ToE("To2", "执行授权") + "</a>。");
         }
         else
         {
@@ -932,10 +934,10 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
         this.AddBR();
 
-        this.Add("<a href='Tools.aspx?RefNo=Pass'>" + this.ToE("ChangePass", "修改密码") + "</a>");
+        this.Add("<a href='" + this.PageID + ".aspx?RefNo=Pass'>" + this.ToE("ChangePass", "修改密码") + "</a>");
 
 
-        this.AddBR("<hr><b>" + this.ToE("InfoAlert", "信息提示") + "：</b><a href='Tools.aspx?RefNo=Profile'>" + this.ToE("Edit", "设置/修改") + "</a>");
+        this.AddBR("<hr><b>" + this.ToE("InfoAlert", "信息提示") + "：</b><a href='" + this.PageID + ".aspx?RefNo=Profile'>" + this.ToE("Edit", "设置/修改") + "</a>");
         this.Add("<br>" + this.ToE("ToAlert1", "接受短消息提醒手机号") + " : <font color=green>" + au.TelHtml + "</font>");
         this.Add("<br>" + this.ToE("ToAlert2", "接受E-mail提醒") + " : <font color=green>" + au.EmailHtml + "</font>");
 
