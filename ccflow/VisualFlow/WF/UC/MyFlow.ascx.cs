@@ -408,8 +408,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
         try
         {
-
-
             #region 增加按钮
             BtnLab btnLab = new BtnLab(currND.NodeID);
             if (btnLab.SendEnable)

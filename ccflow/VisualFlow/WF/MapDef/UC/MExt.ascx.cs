@@ -204,7 +204,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         switch (this.ExtType)
         {
             case MapExtXmlList.ActiveDDL: //联动菜单.
-                if (this.MyPK != null || this.DoType == "New")
+                if (this.MyPK != null || this.OperAttrKey != null)
                 {
                     Edit_ActiveDDL();
                     return;
@@ -451,6 +451,9 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         this.Pub2.AddTR();
         this.Pub2.AddTD("要验证字段:");
+
+        MapAttr attr = new MapAttr(this.OperAttrKey);
+        this.Pub2.AddTD(attr.KeyOfEn+" - "+attr.Name);
 
         this.Pub2.AddTREnd();
 
@@ -905,5 +908,55 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTableEnd();
         this.Pub2.AddFieldSetEnd();
     }
+
+    public void MapJS(MapExts ens)
+    {
+        this.Pub2.AddFieldSet("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&DoType=New&RefNo=" + this.RefNo + "' >新建:" + this.Lab + "</a>");
+        this.Pub2.AddTable("border=0 width=90%");
+        this.Pub2.AddTR();
+        this.Pub2.AddTDTitle(this.ToE("Sort", "类型"));
+        this.Pub2.AddTDTitle(this.ToE("Desc", "描述"));
+        this.Pub2.AddTDTitle(this.ToE("Oper", "操作"));
+        this.Pub2.AddTREnd();
+
+        MapAttrs attrs = new MapAttrs(this.FK_MapData);
+        foreach (MapAttr attr in attrs)
+        {
+            if (attr.UIVisible == false)
+                continue;
+
+            MapExt myEn = null;
+            foreach (MapExt en in ens)
+            {
+                if (en.AttrOfOper == attr.KeyOfEn)
+                {
+                    myEn = en;
+                    break;
+                }
+            }
+
+            //if (myEn == null)
+            //{
+            //    this.Pub2.AddTR();
+            //    this.Pub2.AddTD("ssss");
+            //    this.Pub2.AddTDA("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + en.MyPK + "&RefNo=" + this.RefNo, en.ExtDesc);
+            //    this.Pub2.AddTD("<a href=\"javascript:DoDel('" + en.MyPK + "','" + this.FK_MapData + "','" + this.ExtType + "');\" >修改</a>");
+            //    this.Pub2.AddTREnd();
+            //}
+            //else
+            //{
+            //    this.Pub2.AddTR();
+            //    this.Pub2.AddTD(myEn.MyPK);
+            //    this.Pub2.AddTDA("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + en.MyPK + "&RefNo=" + this.RefNo, en.ExtDesc);
+            //    this.Pub2.AddTD("<a href=\"javascript:DoDel('" + en.MyPK + "','" + this.FK_MapData + "','" + this.ExtType + "');\" >删除</a>");
+            //    this.Pub2.AddTREnd();
+            //}
+
+        }
+       
+        this.Pub2.AddTableEnd();
+        this.Pub2.AddFieldSetEnd();
+    }
+
 
 }
