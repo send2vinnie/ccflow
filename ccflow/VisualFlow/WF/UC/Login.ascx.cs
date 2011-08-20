@@ -16,7 +16,7 @@ using BP.Sys;
 using BP.Port;
 using BP;
 
-public partial class WF_UC_Login :BP.Web.UC.UCBase3
+public partial class WF_UC_Login : BP.Web.UC.UCBase3
 {
     public string Lang
     {
@@ -80,7 +80,7 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
         tb.ID = "TB_User";
         tb.Text = BP.Web.WebUser.No;
         tb.Columns = 20;
-     //   tb.Attributes["class"] = "TB";
+        //   tb.Attributes["class"] = "TB";
 
         this.AddTD(tb);
         this.AddTREnd();
@@ -91,7 +91,7 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
         tb = new TextBox();
         tb.ID = "TB_Pass";
         tb.TextMode = TextBoxMode.Password;
-       // tb.Attributes["class"] = "TB";
+        // tb.Attributes["class"] = "TB";
         tb.Columns = 22;
         this.AddTD(tb);
         this.AddTREnd();
@@ -141,7 +141,7 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
         try
         {
             Emp em = new Emp(user);
-            if ( em.CheckPass(pass))
+            if (em.CheckPass(pass))
             {
                 WebUser.SignInOfGenerLang(em, this.Lang);
 
@@ -154,10 +154,13 @@ public partial class WF_UC_Login :BP.Web.UC.UCBase3
                 if (WebUser.IsWap)
                     ToWhere = "Home.aspx";
 
-                //if (WebUser.No == "admin")
-                //    Response.Redirect("./../WF/Admin/TestFlow.aspx?Lang=" + this.Lang, false);
-                //else
-                    Response.Redirect(this.ToWhere, false);
+
+
+                if (this.Request.RawUrl.ToLower().Contains("small"))
+                    Response.Redirect("EmpWorksSmall.aspx", false);
+                else
+                    Response.Redirect("EmpWorks.aspx", false);
+
                 return;
             }
             this.Alert("用户名密码错误，注意密码区分大小写，请检查是否按下了CapsLock.。");
