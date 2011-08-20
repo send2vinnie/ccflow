@@ -724,10 +724,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
                         this.AddTD("无效");
                     }
 
-
-
                     sql = "SELECT AVG( DateDiff(d, cast(RDT as datetime),  cast(CDT as datetime) ) ) FROM ND" + nd.NodeID;
-
                     try
                     {
                         decimal day = DBAccess.RunSQLReturnValDecimal(sql, 0, 2);

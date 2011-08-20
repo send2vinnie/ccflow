@@ -55,7 +55,6 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         {
             this.Left.AddLi("Tools.aspx?RefNo=AdminSet", this.ToE("SiteSet", "网站设置"), "_self");
         }
-
         this.Left.AddULEnd();
 
         this.Left.AddTDEnd();
