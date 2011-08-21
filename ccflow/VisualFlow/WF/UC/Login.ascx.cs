@@ -132,8 +132,23 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         this.AddTREnd();
         this.AddTableEnd();
     }
-
-    public string ToWhere = "EmpWorks.aspx";
+    public string ToWhere
+    {
+        get
+        {
+            if (this.Request.QueryString["ToWhere"] == null)
+            {
+                if (this.Request.RawUrl.ToLower().Contains("small"))
+                    return "EmpWorksSmall.aspx";
+                else
+                    return "EmpWorks.aspx";
+            }
+            else
+            {
+                return this.Request.QueryString["ToWhere"];
+            }
+        }
+    }
     void btn_Click(object sender, EventArgs e)
     {
         string user = this.GetTextBoxByID("TB_User").Text;
@@ -152,15 +167,11 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
 
                 WebUser.Token = this.Session.SessionID;
                 if (WebUser.IsWap)
-                    ToWhere = "Home.aspx";
-
-
-
-                if (this.Request.RawUrl.ToLower().Contains("small"))
-                    Response.Redirect("EmpWorksSmall.aspx", false);
-                else
-                    Response.Redirect("EmpWorks.aspx", false);
-
+                {
+                    Response.Redirect("Home.aspx", true);
+                    return;
+                }
+                Response.Redirect(this.ToWhere, false);
                 return;
             }
             this.Alert("用户名密码错误，注意密码区分大小写，请检查是否按下了CapsLock.。");
