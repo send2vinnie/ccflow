@@ -51,6 +51,7 @@ public class WSDesigner : WSBase
         }
         catch(Exception ex)
         {
+            AppLog.LogError("执行错误，功能编号" + doType + " error:" + ex.Message, ex);
             throw new Exception("执行错误，功能编号"+doType+" error:"+ex.Message);
         }
     }
@@ -83,7 +84,11 @@ public class WSDesigner : WSBase
             ds.Tables.Add(dt);
             return Connector.ToXml(ds);
         }
-        catch { return null; }
+        catch (Exception ex)
+        {
+            AppLog.LogError(string.Concat("GetDTOfWorkList发生了错误 paras:",fk_flow, "\t" + workid ), ex);
+            return null;
+        }
     }
    
     /// <summary>
@@ -187,6 +192,7 @@ public class WSDesigner : WSBase
                 url = @"/WebClientDownloadHandler.ashx";
                 break;
             default:
+                AppLog.LogError("Wrong GetRelativeUrl Parameter" + dotype, new Exception());
                 break;
         }
         return url;
@@ -201,9 +207,18 @@ public class WSDesigner : WSBase
     [WebMethod(EnableSession = true)]
     public string RunSQLReturnTable(string sql,bool isLogin)
     {
-        LetAdminLogin("CH", isLogin);
-        DataSet ds =  BP.DA.DBAccess.RunSQLReturnDataSet(sql);
-        return Connector.ToXml(ds);
+        try
+        {
+            LetAdminLogin("CH", isLogin);
+            DataSet ds =  BP.DA.DBAccess.RunSQLReturnDataSet(sql);
+            return Connector.ToXml(ds);
+
+        }
+        catch (Exception ex)
+        {
+            AppLog.LogError("RunSQLReturnTable返回了错误, para:\t" + sql.ToString(), ex);
+        }
+        return string.Empty;
     }
 
     /// <summary>
@@ -214,21 +229,31 @@ public class WSDesigner : WSBase
     [WebMethod]
     public string RunSQLReturnTableS(string[] sqls)
     {
-        DataSet ds = new DataSet();
-        int i = 0;
-        foreach (string sql in sqls)
+        try
         {
-            if (string.IsNullOrEmpty(sql))
-                continue;
-            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-            dt.TableName = "DT" + i;
-            ds.Tables.Add(dt);
-            i++;
+            DataSet ds = new DataSet();
+            int i = 0;
+            foreach (string sql in sqls)
+            {
+                if (string.IsNullOrEmpty(sql))
+                    continue;
+                DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+                dt.TableName = "DT" + i;
+                ds.Tables.Add(dt);
+                i++;
+            }
+            return Connector.ToXml(ds);
         }
-        return Connector.ToXml(ds);
+        catch (Exception ex)
+        {
+            AppLog.LogError("RunSqlReturnTableS返回了错误, para:\t" + sqls.ToString(),ex);
+        }
+        return string.Empty;
+
     }
     
     [WebMethod(EnableSession = true)]
+    [Obsolete]
     public string GetFlowBySort(string sort)
     {
         DataSet ds = new DataSet();
@@ -308,7 +333,12 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     fs.Insert();
                     return fs.No;
                 }
-                catch { try { return fs.No; } catch { return null; } }
+                catch(Exception ex)
+                {
+                    AppLog.LogError("Do Method NewFlowSort Branch has a error , para:\t" + para1, ex);
+                   
+                    return null;
+                }
 
             case "EditFlowSort":
                 try
@@ -319,7 +349,11 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     fs.Save();
                     return fs.No;
                 }
-                catch {  return null;  }
+                catch(Exception ex)
+                {
+                    AppLog.LogError("Do Method EditFlowSort Branch has a error , para:\t" + para1, ex);
+                    return null;
+                }
             case "NewFlow":
                 Flow fl = new Flow();
 
@@ -345,8 +379,9 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch(Exception ex)
                 {
-                    
-                    try { return ex.Message; } catch { return null; }
+                    AppLog.LogError("Do Method NewFlow Branch has a error , para:\t" + para1, ex);
+                    return ex.Message;
+
                 }
                 
             case "DelFlow":
@@ -355,7 +390,10 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 {
                     fl1.DoDelete();
                 }
-                catch { }
+                catch(Exception ex)
+                {
+                    AppLog.LogError("Do Method DelFlow Branch has a error , para:\t" + para1, ex);
+                }
                 return null;
             case "DelLable":
                 BP.WF.LabNote ln = new BP.WF.LabNote(para1);
@@ -363,47 +401,107 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 {
                     ln.Delete();
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    AppLog.LogError("Do Method DelLable Branch has a error , para:\t" + para1, ex);
+                }
                 return null;
                 
             case "DelFlowSort":
-                FlowSort delfs = new FlowSort(para1);
-                delfs.Delete();
+                try
+                {
+                    FlowSort delfs = new FlowSort(para1);
+                    delfs.Delete();
+                }
+                catch (Exception ex)
+                {
+                    AppLog.LogError("Do Method DelFlowSort Branch has a error , para:\t" + para1, ex);
+                }
+               
                 return null;
             case "NewNode":
-                BP.WF.Flow fl11 = new BP.WF.Flow(para1);
-                BP.WF.Node node = new BP.WF.Node();
-                node.FK_Flow = "";
-                node.X = 0;
-                node.Y = 0;
-                node.Insert();
+                try
+                {
+                    BP.WF.Flow fl11 = new BP.WF.Flow(para1);
+                    BP.WF.Node node = new BP.WF.Node();
+                    node.FK_Flow = "";
+                    node.X = 0;
+                    node.Y = 0;
+                    node.Insert();
+                }
+                catch (Exception ex)
+                {
+                    AppLog.LogError("Do Method NewNode Branch has a error , para:\t" + para1, ex);
+                }
+               
                 return null;
             case "DelNode":
-                if (!string.IsNullOrEmpty(para1))
+                try
                 {
-                    BP.WF.Node delNode = new BP.WF.Node(int.Parse(para1));
-                    delNode.Delete();
+                    if (!string.IsNullOrEmpty(para1))
+                    {
+                        BP.WF.Node delNode = new BP.WF.Node(int.Parse(para1));
+                        delNode.Delete();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    AppLog.LogError("Do Method DelNode Branch has a error , para:\t" + para1, ex);
+                }
+                
                 return null;
             case "NewLab":
-                BP.WF.LabNote lab = new BP.WF.LabNote();
-                lab.FK_Flow = para1;
-                lab.MyPK = BP.DA.DBAccess.GenerOID().ToString();
-                lab.Insert();
+                BP.WF.LabNote lab = new BP.WF.LabNote();;
+                try
+                {
+                    lab.FK_Flow = para1;
+                    lab.MyPK = BP.DA.DBAccess.GenerOID().ToString();
+                    lab.Insert();
+                    
+                }
+                catch (Exception ex)
+                {
+                    AppLog.LogError("Do Method NewLab Branch has a error , para:\t" + para1, ex);
+                }
                 return lab.MyPK;
             case "DelLab":
-                BP.WF.LabNote dellab = new BP.WF.LabNote();
-                dellab.MyPK = para1;
-                dellab.Delete();
+                try
+                {
+                    BP.WF.LabNote dellab = new BP.WF.LabNote();
+                    dellab.MyPK = para1;
+                    dellab.Delete();
+                }
+                catch (Exception ex)
+                {
+                    AppLog.LogError("Do Method DelLab Branch has a error , para:\t" + para1, ex);
+                }
+               
                 return null;
             case "GetSettings":
-                return SystemConfig.AppSettings[para1];
-                break;
+                try
+                {
+                    return SystemConfig.AppSettings[para1];
+                }
+                catch (Exception ex)
+                {
 
+                    AppLog.LogError("Do Method GetSettings Branch has a error , para:\t" + para1, ex); ;
+                }
+                return string.Empty;
             case "GetFlows":
-                var sqls = new string[] { "select NO,NAME from WF_FlowSort" , "select No,Name,FK_FlowSort from WF_Flow "};
-                return RunSQLReturnTableS(sqls);
-                break;
+                try
+                {
+                    var sqls = new string[] { "select NO,NAME from WF_FlowSort", "select No,Name,FK_FlowSort from WF_Flow " };
+                    return RunSQLReturnTableS(sqls);
+                    break;
+
+                }
+                catch (Exception ex)
+                {
+
+                    AppLog.LogError("Do Method GetFlows Branch has a error :\t" , ex); ;
+                }
+                return string.Empty;
 
             default:
                 throw null;
@@ -675,4 +773,5 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         stream.Close();
         return filepath;
     }
+
 }
