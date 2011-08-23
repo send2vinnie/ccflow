@@ -25,6 +25,9 @@ SELECT * FROM Port_EmpStation WHERE FK_Emp NOT IN (SELECT No FROM PORT_Emp)
 --检查人员与部门对应关系表中的部门，是否有问题.
 SELECT * FROM Port_EmpDept WHERE FK_Dept NOT IN (SELECT No FROM Port_Dept)
 
+ 
+
+
 
  
 
