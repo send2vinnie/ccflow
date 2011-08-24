@@ -16,13 +16,16 @@
                 
                 var designerWindow = window.opener.document;
                 var slPlugin = designerWindow.getElementById('silverlightControlHost').childNodes[0];
+                if(slPlugin.content == null || slPlugin.content == undefined) {
+                    slPlugin = designerWindow.getElementById('silverlightControlHost').childNodes[1];
+                }
                 var paras;
                 if("BP.WF.Ext.NodeO" == "<%= Request["EnName"] %>")
                 {
                     paras = "<%= Request["PK"] %>," + window.document.getElementById("ContentPlaceHolder2_UIEn1_UCEn1_TB_Name").value;
                     slPlugin.content.Designer.OnAspNetPageClosed("FlowNodeProperty", paras);
                 }
-                if("BP.WF.Ext.FlowDoc" == "<%= Request["EnName"] %>")
+                if("BP.WF.Ext.FlowDoc" == "<%= Request["EnName"] %>" || "BP.WF.Ext.FlowSheet" == "<%= Request["EnName"] %>")
                 {
                     paras = "<%= Request["PK"] %>," + window.document.getElementById("ContentPlaceHolder2_UIEn1_UCEn1_TB_Name").value;
                     slPlugin.content.Designer.OnAspNetPageClosed("FlowProperty", paras);
@@ -32,14 +35,14 @@
                 return true;
 
             };
-//            debugger;
-//            var btn = document.getElementById("ContentPlaceHolder2_UIEn1_ToolBar1_Btn_Save");
-//            if(window.addEventListener){
-//                btn.addEventListener('click', btnClientClick, false);
-//           } 
-//           else {
-//                btn.attachEvent('onclick',  btnClientClick);
-//            }           
+            
+            var btn = document.getElementById("ContentPlaceHolder2_UIEn1_ToolBar1_Btn_Save");
+            if(window.addEventListener){
+                btn.addEventListener('click', btnClientClick, false);
+           } 
+           else {
+                btn.attachEvent('onclick',  btnClientClick);
+            }           
            
         </script>
 </asp:Content>

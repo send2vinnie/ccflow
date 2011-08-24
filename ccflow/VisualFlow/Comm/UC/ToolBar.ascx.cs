@@ -599,7 +599,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         {
             this.AddBtn(NamesOfBtn.Save, this.ToE("Save", "保存(S)"));
             this.GetBtnByID(NamesOfBtn.Save).UseSubmitBehavior = false;
-            this.GetBtnByID(NamesOfBtn.Save).OnClientClick = "btnClientClick();"; //this.disabled='disabled'; return true;";
+            this.GetBtnByID(NamesOfBtn.Save).OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
 
             // this.AddBtn(NamesOfBtn.SaveAndClose, this.ToE("SaveAndClose", "保存并关闭(C)")   );
         }
