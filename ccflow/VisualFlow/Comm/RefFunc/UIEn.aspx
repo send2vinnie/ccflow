@@ -15,10 +15,7 @@
             function btnClientClick() {
                 
                 var designerWindow = window.opener.document;
-                var slPlugin = designerWindow.getElementById('silverlightControlHost').childNodes[0];
-                if(slPlugin.content == null || slPlugin.content == undefined) {
-                    slPlugin = designerWindow.getElementById('silverlightControlHost').childNodes[1];
-                }
+                var slPlugin = designerWindow.getElementById("slObject");
                 var paras;
                 if("BP.WF.Ext.NodeO" == "<%= Request["EnName"] %>")
                 {
