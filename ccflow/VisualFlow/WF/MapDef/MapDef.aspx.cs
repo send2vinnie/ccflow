@@ -415,9 +415,7 @@ public partial class WF_MapDef_MapDef : WebPage
 
         }
         this.Pub1.AddTableEnd();
-
         this.Pub1.AddFieldSetEnd();
-
 
         #region 处理异常情况。
         foreach (MapDtl dtl in dtls)
@@ -442,9 +440,11 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Page.RegisterClientScriptBlock("b",
          "<script language='JavaScript' src='./../Scripts/MapExt.js' ></script>");
 
+            this.Page.RegisterClientScriptBlock("dC",
+     "<script language='JavaScript' src='./../../DataUser/JSLibData/" + this.MyPK + ".js' ></script>");
+
             this.Pub1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
         }
-
 
         string jsStr = "";
         foreach (MapExt me in mes)
@@ -467,19 +467,14 @@ public partial class WF_MapDef_MapDef : WebPage
                     //    tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                     break;
                 case MapExtXmlList.InputCheck: /*js 检查 */
-                    // InputCheckXml checks = new InputCheckXml(me.Tag);
-                    TBEventXmls tbevents = new TBEventXmls(me.Tag);
-                    foreach (TBEventXml tbevent in tbevents)
+                    TB tbJS = this.Pub1.GetTBByID("TB_" + me.AttrOfOper);
+                    if (tbJS != null)
                     {
-                        try
-                        {
-                            this.Pub1.GetTBByID("TB_" + me.AttrOfOper).Attributes[tbevent.EventName] = tbevent.Func;
-                            jsStr += "@" + me.AttrOfOper + "@";
-                        }
-                        catch
-                        {
-                            me.Delete();
-                        }
+                        tbJS.Attributes[me.Tag2] += me.Tag1 + "(this);";
+                    }
+                    else
+                    {
+                        me.Delete();
                     }
                     break;
                 case MapExtXmlList.PopVal: //弹出窗.
@@ -491,7 +486,6 @@ public partial class WF_MapDef_MapDef : WebPage
             }
         }
         #endregion 处理扩展信息。
-
 
         #region 处理输入最小，最大验证.
         foreach (MapAttr attr in mattrs)
@@ -505,7 +499,6 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.GetTextBoxByID("TB_" + attr.KeyOfEn).Attributes["onblur"] = "checkLength(this,'" + attr.MinLen + "','" + attr.MaxLen + "')";
         }
         #endregion 处理输入最小，最大验证.
-
 
         #region 处理iFrom 的自适应的问题。
         string js = "\t\n<script type='text/javascript' >";
@@ -634,6 +627,7 @@ public partial class WF_MapDef_MapDef : WebPage
         }
         #endregion 处理隐藏字段。
     }
+
     public void InsertObjects(bool isJudgeRowIdx)
     {
         #region 增加明细表
@@ -642,7 +636,7 @@ public partial class WF_MapDef_MapDef : WebPage
             if (dtl.IsUse)
                 continue;
 
-            if (isJudgeRowIdx )
+            if (isJudgeRowIdx)
             {
                 if (dtl.RowIdx != rowIdx)
                     continue;
@@ -654,7 +648,7 @@ public partial class WF_MapDef_MapDef : WebPage
                 dtl.RowIdx = 0;
                 dtl.Update();
             }
-            else if (dtl.GroupID == currGF.OID )
+            else if (dtl.GroupID == currGF.OID)
             {
             }
             else
@@ -726,7 +720,6 @@ public partial class WF_MapDef_MapDef : WebPage
         }
         #endregion 增加M2M
 
-
         #region 增加框架
         foreach (MapFrame fram in frams)
         {
@@ -757,7 +750,7 @@ public partial class WF_MapDef_MapDef : WebPage
             fram.IsUse = true;
             int myidx = rowIdx + 20;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-           // this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("Insert", "插入列") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("Copy", "复制列") + "</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            // this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("Insert", "插入列") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("Copy", "复制列") + "</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
             this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditFrame('" + this.MyPK + "','" + fram.No + "')\" >" + fram.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:FrameDoUp('" + fram.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:FrameDoDown('" + fram.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
             this.Pub1.AddTREnd();
 
@@ -778,15 +771,14 @@ public partial class WF_MapDef_MapDef : WebPage
             if (fram.IsAutoSize)
                 this.Pub1.Add("<iframe ID='F" + fram.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='100%' scrolling=no  /></iframe>");
             else
-                this.Pub1.Add("<iframe ID='F" + fram.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + fram.Width+ "' height='"+fram.Height+"' scrolling=no  /></iframe>");
+                this.Pub1.Add("<iframe ID='F" + fram.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + fram.Width + "' height='" + fram.Height + "' scrolling=no  /></iframe>");
 
-              //  this.Pub1.Add("<iframe ID='F" + fram.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + fram.W + "px' height='" + fram.H + "px' scrolling=no /></iframe>");
+            //  this.Pub1.Add("<iframe ID='F" + fram.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + fram.W + "px' height='" + fram.H + "px' scrolling=no /></iframe>");
 
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();
         }
         #endregion 增加明细表
-
     }
 
     #region varable.

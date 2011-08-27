@@ -435,13 +435,13 @@ namespace BP.Web.Comm.UC.WF
 
 
                         if (attr.UIIsEnable)
-                            this.Add("<TD  colspan=4 width='100%' valign=top align=left>" );
+                            this.Add("<TD  colspan=4 width='100%' valign=top align=left>");
                         else
                             this.Add("<TD  colspan=4 width='100%' valign=top class=TBReadonly>");
 
                         this.Add("<div style='font-size:14px;color:black;' >");
                         Label lab = new Label();
-                        lab.ID = "Lab"+attr.KeyOfEn;
+                        lab.ID = "Lab" + attr.KeyOfEn;
                         lab.Text = attr.Name;
                         this.Add(lab);
                         this.Add("</div>");
@@ -471,7 +471,7 @@ namespace BP.Web.Comm.UC.WF
                             Label mylab = this.GetLabelByID("Lab" + attr.KeyOfEn);
                             mylab.Text = "<a href=\"javascript:TBHelp('" + ctlID + "','" + appPath + "','" + enName + "','" + attr.KeyOfEn + "')\">" + attr.Name + "</a>";
                         }
-                        
+
                         this.AddTDEnd();
                         this.AddTREnd();
                         rowIdx++;
@@ -488,14 +488,14 @@ namespace BP.Web.Comm.UC.WF
                         }
 
                         this.Add("<TD class=FDesc colspan=2>");
-                        this.Add( attr.Name );
+                        this.Add(attr.Name);
                         TB mytbLine = new TB();
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.Rows = 8;
                         mytbLine.Attributes["class"] = "TBDoc";
 
-                       // mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
+                        // mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
                         mytbLine.Enabled = attr.UIIsEnable;
                         if (mytbLine.Enabled == false)
@@ -538,7 +538,7 @@ namespace BP.Web.Comm.UC.WF
                     }
 
                     TB tb = new TB();
-                   // tb.Columns = 60;
+                    // tb.Columns = 60;
                     tb.ID = "TB_" + attr.KeyOfEn;
                     tb.Enabled = attr.UIIsEnable;
 
@@ -627,7 +627,7 @@ namespace BP.Web.Comm.UC.WF
                                 case BP.DA.DataType.AppDate:
                                     if (tb.Enabled)
                                     {
-                                       // tb.Columns = attr.UIWidth;
+                                        // tb.Columns = attr.UIWidth;
                                         tb.MaxLength = attr.MaxLen;
                                         //tb.Attributes["class"] = "TB";
                                     }
@@ -730,14 +730,11 @@ namespace BP.Web.Comm.UC.WF
 
             // 处理扩展。
             this.AfterBindEn_DealMapExt(enName, mattrs);
-          
+
 
             #region 处理iFrom SaveDtlData。
             js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveDtl(dtl) { ";
-
-            // js+=" alert(window.event.srcElement.tagName) ";
-            //  if (window.event.srcElement.tagName = "TEXTAREA")
 
             js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
             js += "\t\n } ";
@@ -748,13 +745,11 @@ namespace BP.Web.Comm.UC.WF
             #region 处理iFrom  SaveM2M Save。
             js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveM2M(dtl) { ";
-            js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveM2M(); ";
+            js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveM2M();";
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
             #endregion 处理iFrom  SaveM2M Save。
-
-            
         }
         private void AfterBindEn_DealMapExt(string enName, MapAttrs mattrs)
         {
@@ -767,6 +762,9 @@ namespace BP.Web.Comm.UC.WF
 
                 this.Page.RegisterClientScriptBlock("b7",
              "<script language='JavaScript' src='./Scripts/MapExt.js' ></script>");
+
+                this.Page.RegisterClientScriptBlock("y7",
+            "<script language='JavaScript' src='./../DataUser/JSLibData/" + enName + ".js' ></script>");
 
                 this.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
             }
@@ -786,8 +784,10 @@ namespace BP.Web.Comm.UC.WF
                         tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
                         break;
                     case MapExtXmlList.InputCheck:
+                        TextBox tbJS = this.GetTextBoxByID("TB_" + me.AttrOfOper);
+                        tbJS.Attributes[me.Tag2] = me.Tag1 + "(this);";
                         break;
-                    case MapExtXmlList.PopVal: //弹出窗.
+                    case MapExtXmlList.PopVal: // 弹出窗.
                         TB tb = this.GetTBByID("TB_" + me.AttrOfOper);
                         tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
                         break;

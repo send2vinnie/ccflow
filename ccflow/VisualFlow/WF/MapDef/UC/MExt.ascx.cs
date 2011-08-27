@@ -2,6 +2,7 @@
 using System.Data;
 using System.Collections.Generic;
 using System.Web;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.WF;
@@ -64,7 +65,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         this.Pub1.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo="+this.RefNo+"'><span>帮助</span></a>");
         this.Pub1.AddULEnd();
-        this.Pub1.AddDivEnd();  
+        this.Pub1.AddDivEnd();
     }
     public void EditAutoFullDtl()
     {
@@ -183,8 +184,12 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             case "Del":
                 MapExt mm = new MapExt();
                 mm.MyPK = this.MyPK;
+                if (this.ExtType == MapExtXmlList.InputCheck)
+                {
+                    mm.Retrieve();
+                }
                 mm.Delete();
-                this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType+"&RefNo="+this.RefNo, true);
+                this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo, true);
                 return;
             case "EditAutoJL":
             default:
@@ -194,8 +199,9 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.BindLeft();
         if (this.ExtType == null)
         {
-            this.Pub2.AddFieldSet("帮助");
-            this.Pub2.Add(BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfData + "\\HelpDesc\\MapExt_" + BP.Web.WebUser.SysLang + ".txt"));
+            this.Pub2.AddFieldSet("Help");
+            this.Pub2.Add("<a href='http://ccflow.org/Help.aspx' target=_blank>官网帮助..</a>");
+            //this.Pub2.Add(BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfData + "\\HelpDesc\\MapExt_" + BP.Web.WebUser.SysLang + ".txt"));
             this.Pub2.AddFieldSetEnd();
             return;
         }
@@ -242,7 +248,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 }
                 mes.Retrieve(MapExtAttr.ExtType, this.ExtType,
                     MapExtAttr.FK_MapData, this.FK_MapData);
-                this.MapExtList(mes);
+                this.MapJS(mes);
                 break;
             case MapExtXmlList.PopVal: //联动菜单.
                 if (this.MyPK != null || this.DoType == "New")
@@ -322,7 +328,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK+"&RefNo="+this.RefNo, true);
             return;
         }
-
 
         MapExt myme = new MapExt(this.MyPK);
 
@@ -404,7 +409,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTD("处理pop窗体的字段.");
         this.Pub2.AddTREnd();
 
-
         this.Pub2.AddTR();
         this.Pub2.AddTD("URL");
         TextBox tb = new TextBox();
@@ -428,6 +432,15 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTableEnd();
         this.Pub2.AddFieldSetEnd();
     }
+    public string EventName
+    {
+        get
+        {
+            string s= this.Request.QueryString["EventName"];
+            return s;
+        }
+    }
+    string temFile = "s@xa";
     public void Edit_InputCheck()
     {
         MapExt me = null;
@@ -442,36 +455,11 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Pub2.AddFieldSet("编辑:" + this.Lab);
         }
         me.FK_MapData = this.FK_MapData;
+        temFile = me.Tag;
 
         this.Pub2.AddTable("border=0  width='700px' ");
-        this.Pub2.AddTR();
-        this.Pub2.AddTDTitle("项目");
-        this.Pub2.AddTDTitle("采集");
-        this.Pub2.AddTREnd();
-
-        this.Pub2.AddTR();
-        this.Pub2.AddTD("要验证字段:");
-
-        MapAttr attr = new MapAttr(this.OperAttrKey);
-        this.Pub2.AddTD(attr.KeyOfEn+" - "+attr.Name);
-
-        this.Pub2.AddTREnd();
-
-        if (string.IsNullOrEmpty(this.MyPK) == false)
-        {
-            this.Pub2.AddTR();
-            this.Pub2.AddTDBegin("colspan=2");
-            this.Pub2.Add("现有设置<br>");
-            TextBox tb = new TextBox();
-            tb.TextMode = TextBoxMode.MultiLine;
-            tb.Rows = 6;
-            tb.Columns = 70;
-            tb.ID = "sds";
-            tb.Text = me.Doc;
-            this.Pub2.Add(tb);
-            this.Pub2.AddTREnd();
-        }
-
+        MapAttr attr = new MapAttr(this.RefNo);
+        this.Pub2.AddCaptionLeftTX(attr.KeyOfEn + " - " + attr.Name);
         this.Pub2.AddTR();
         this.Pub2.AddTD("函数库来源:");
         this.Pub2.AddTDBegin();
@@ -504,14 +492,15 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
-        this.Pub2.AddTDTitle("colspan=2", "处理内容");
+        this.Pub2.AddTDTitle("colspan=2", "函数列表");
         this.Pub2.AddTREnd();
         this.Pub2.AddTR();
+
         ListBox lb = new ListBox();
         lb.Attributes["width"] = "100%";
-        lb.Rows = 14;
+        lb.AutoPostBack = false;
         lb.ID = "LB1";
-        this.Pub2.AddTD("colspan=3", lb);
+        this.Pub2.AddTD("colspan=2", lb);
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTRSum();
@@ -519,7 +508,9 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         btn.ID = "BtnSave";
         btn.Text = "Save";
         btn.Click += new EventHandler(btn_SaveInputCheck_Click);
-        this.Pub2.AddTD("colspan=3", btn);
+
+        this.Pub2.AddTD("colspan=1", btn);
+        this.Pub2.AddTD("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "'>返回</a>");
         this.Pub2.AddTREnd();
         this.Pub2.AddTableEnd();
         this.Pub2.AddFieldSetEnd();
@@ -529,20 +520,46 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     {
         string path = BP.SystemConfig.PathOfData + "\\JSLib\\";
         System.Web.UI.WebControls.RadioButton rb = this.Pub2.GetRadioButtonByID("RB_0"); // sender as System.Web.UI.WebControls.RadioButton;
-        if (rb.Checked ==false )
+        if (rb.Checked == false)
             path = BP.SystemConfig.PathOfDataUser + "\\JSLib\\";
 
-        string[] strs = System.IO.Directory.GetFiles(path);
         ListBox lb = this.Pub2.FindControl("LB1") as ListBox;
         lb.Items.Clear();
-        lb.AutoPostBack = true;
-        int idx = 0;
-        foreach (string s in strs)
+        lb.AutoPostBack = false;
+        lb.SelectionMode = ListSelectionMode.Multiple;
+        lb.Rows = 10;
+        //lb.SelectedIndexChanged += new EventHandler(lb_SelectedIndexChanged);
+        string file = temFile;
+        if (string.IsNullOrEmpty(temFile) == false)
         {
-            ListItem li = new ListItem(s.Replace(path, "").Replace(".js", ""), idx.ToString());
-            li.Value = s;
-            lb.Items.Add(li);
-            idx++;
+            file = file.Substring(file.LastIndexOf('\\') + 4);
+            file = file.Replace(".js", "");
+        }
+        else
+        {
+            file = "!!!";
+        }
+
+        MapExts mes = new MapExts();
+        mes.Retrieve(MapExtAttr.FK_MapData, this.FK_MapData,
+            MapExtAttr.AttrOfOper,this.OperAttrKey,
+            MapExtAttr.ExtType, this.ExtType);
+
+        string[] dirs = System.IO.Directory.GetDirectories(path);
+        foreach (string dir in dirs)
+        {
+            string[] strs = Directory.GetFiles(dir);
+            foreach (string s in strs)
+            {
+                if (s.Contains(".js") == false)
+                    continue;
+
+                ListItem li = new ListItem(s.Replace(path, "").Replace(".js", ""), s);
+                if (s.Contains(file))
+                    li.Selected = true;
+
+                lb.Items.Add(li);
+            }
         }
     }
     public void Edit_AutoFull()
@@ -586,11 +603,11 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 continue;
             }
         }
+
         ddl.SetSelectItem(me.AttrOfOper);
         this.Pub2.AddTD(ddl);
         this.Pub2.AddTD("输入项");
         this.Pub2.AddTREnd();
-
 
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("colspan=3", "处理内容");
@@ -735,20 +752,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.Add("</TD>");
         this.Pub2.AddTREnd();
 
-        //this.Pub2.AddTR();
-        //this.Pub2.AddTDTitle("colspan=3", "处理内容");
-        //this.Pub2.AddTREnd();
-
-        //this.Pub2.AddTR();
-        //TextBox tb = new TextBox();
-        //tb.ID = "TB_Doc";
-        //tb.Text = me.Doc;
-        //tb.TextMode = TextBoxMode.MultiLine;
-        //tb.Rows = 5;
-        //tb.Columns = 40;
-        //this.Pub2.AddTD("colspan=3", tb);
-        //this.Pub2.AddTREnd();
-
+      
 
         this.Pub2.AddTRSum();
         Button btn = new Button();
@@ -802,34 +806,79 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     void btn_SaveInputCheck_Click(object sender, EventArgs e)
     {
         ListBox lb = this.Pub2.FindControl("LB1") as ListBox;
-        if (lb.SelectedIndex == -1)
+
+        // 检查路径. 没有就创建它。
+        string pathDir = BP.SystemConfig.PathOfDataUser + "\\JSLibData\\";
+        if (Directory.Exists(pathDir) == false)
+            Directory.CreateDirectory(pathDir);
+
+        // 删除已经存在的数据.
+        MapExt me = new MapExt();
+        me.Retrieve(MapExtAttr.FK_MapData, this.FK_MapData,
+            MapExtAttr.ExtType, this.ExtType,
+            MapExtAttr.AttrOfOper, this.OperAttrKey);
+
+        foreach (ListItem li in lb.Items)
         {
-            this.Alert("请选择函数.");
-            return;
+            if (li.Selected == false)
+                continue;
+
+            me = (MapExt)this.Pub2.Copy(me);
+            me.ExtType = this.ExtType;
+
+            // 操作的属性.
+            me.AttrOfOper = this.OperAttrKey;
+            //this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal;
+
+            int doWay = 0;
+            if (this.Pub2.GetRadioButtonByID("RB_0").Checked == false)
+                doWay = 1;
+
+            me.DoWay = doWay;
+            me.Doc = BP.DA.DataType.ReadTextFile(li.Value);
+            FileInfo info = new FileInfo(li.Value);
+            me.Tag2 = info.Directory.Name;
+
+            //获取函数的名称.
+            string func = me.Doc;
+            func = me.Doc.Substring(func.IndexOf("function") + 8);
+            func = func.Substring(0, func.IndexOf("("));
+            me.Tag1 = func.Trim();
+
+            // 检查路径,没有就创建它.
+            FileInfo fi = new FileInfo(li.Value);
+            me.Tag = li.Value;
+            me.FK_MapData = this.FK_MapData;
+            me.ExtType = this.ExtType;
+            me.MyPK = this.FK_MapData + "_" + me.ExtType + "_" + me.AttrOfOper + "_" + me.Tag1;
+            try
+            {
+                me.Insert();
+            }
+            catch
+            {
+                me.Update();
+            }
         }
 
-        MapExt me = new MapExt();
-        me.MyPK = this.MyPK;
-        if (me.MyPK.Length > 2)
-            me.RetrieveFromDBSources();
-        me = (MapExt)this.Pub2.Copy(me);
-        me.ExtType = this.ExtType;
+        #region 把所有的js 文件放在一个文件里面。
+        MapExts mes = new MapExts();
+        mes.Retrieve(MapExtAttr.FK_MapData, this.FK_MapData,
+            MapExtAttr.ExtType, this.ExtType);
 
-        // 操作的属性.
-        me.AttrOfOper = this.Pub2.GetDDLByID("DDL_Oper").SelectedItemStringVal;
+        string js = "";
+        foreach (MapExt me1 in mes)
+        {
+            js += "\r\n" + BP.DA.DataType.ReadTextFile(me1.Tag);
+        }
 
-        int doWay = 0;
-        if (this.Pub2.GetRadioButtonByID("RB_0").Checked == false)
-            doWay = 1;
+        if (File.Exists(pathDir + "\\"+this.FK_MapData+".js"))
+            File.Delete(pathDir + "\\"+this.FK_MapData+".js");
 
-        me.DoWay = doWay;
-        ListItem li = lb.SelectedItem;
-        me.Tag = li.Value;
-        me.Doc = BP.DA.DataType.ReadTextFile(li.Value);
+        BP.DA.DataType.WriteFile(pathDir + "\\"+this.FK_MapData+".js", js);
+        #endregion 把所有的js 文件放在一个文件里面。
 
-        me.FK_MapData = this.FK_MapData;
-        me.MyPK = this.FK_MapData + "_" + me.ExtType + "_" + me.AttrOfOper;
-        me.Save();
+
         this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo = " + this.RefNo, true);
     }
     void btn_SavePopVal_Click(object sender, EventArgs e)
@@ -914,8 +963,10 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddFieldSet("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&DoType=New&RefNo=" + this.RefNo + "' >新建:" + this.Lab + "</a>");
         this.Pub2.AddTable("border=0 width=90%");
         this.Pub2.AddTR();
-        this.Pub2.AddTDTitle(this.ToE("Sort", "类型"));
-        this.Pub2.AddTDTitle(this.ToE("Desc", "描述"));
+        this.Pub2.AddTDTitle(this.ToE("Sort", "字段"));
+        this.Pub2.AddTDTitle(this.ToE("Type", "类型"));
+        this.Pub2.AddTDTitle(this.ToE("Desc", "验证函数中文名"));
+        this.Pub2.AddTDTitle(this.ToE("Desc", "显示"));
         this.Pub2.AddTDTitle(this.ToE("Oper", "操作"));
         this.Pub2.AddTREnd();
 
@@ -935,25 +986,38 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 }
             }
 
-            //if (myEn == null)
-            //{
-            //    this.Pub2.AddTR();
-            //    this.Pub2.AddTD("ssss");
-            //    this.Pub2.AddTDA("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + en.MyPK + "&RefNo=" + this.RefNo, en.ExtDesc);
-            //    this.Pub2.AddTD("<a href=\"javascript:DoDel('" + en.MyPK + "','" + this.FK_MapData + "','" + this.ExtType + "');\" >修改</a>");
-            //    this.Pub2.AddTREnd();
-            //}
-            //else
-            //{
-            //    this.Pub2.AddTR();
-            //    this.Pub2.AddTD(myEn.MyPK);
-            //    this.Pub2.AddTDA("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + en.MyPK + "&RefNo=" + this.RefNo, en.ExtDesc);
-            //    this.Pub2.AddTD("<a href=\"javascript:DoDel('" + en.MyPK + "','" + this.FK_MapData + "','" + this.ExtType + "');\" >删除</a>");
-            //    this.Pub2.AddTREnd();
-            //}
+            if (myEn == null)
+            {
+                this.Pub2.AddTRTX();
+                this.Pub2.AddTD(attr.KeyOfEn+"-"+attr.Name);
+                this.Pub2.AddTD("无");
+                this.Pub2.AddTD("无");
+                this.Pub2.AddTD("无");
+                this.Pub2.AddTDA("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType +   "&RefNo=" + attr.MyPK + "&OperAttrKey=" + attr.KeyOfEn+"&DoType=New", "<img src='../../Images/Btn/Edit.gif' border=0/>编辑");
+                this.Pub2.AddTREnd();
+            }
+            else
+            {
+                this.Pub2.AddTRTX();
+                this.Pub2.AddTD(attr.KeyOfEn + "-" + attr.Name);
 
+                if (myEn.DoWay == 0)
+                    this.Pub2.AddTD("系统函数");
+                else
+                    this.Pub2.AddTD("自定义函数");
+
+                string file = myEn.Tag;
+                file=file.Substring(file.LastIndexOf('\\')+4);
+                file = file.Replace(".js","");
+
+                this.Pub2.AddTDA("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + myEn.MyPK + "&RefNo=" + attr.MyPK + "&OperAttrKey="+attr.KeyOfEn, file);
+
+                this.Pub2.AddTD( myEn.Tag2+"="+myEn.Tag1+"(this);");
+
+                this.Pub2.AddTD("<a href=\"javascript:DoDel('" + myEn.MyPK + "','" + this.FK_MapData + "','" + this.ExtType + "');\" ><img src='../../Images/Btn/Delete.gif' border=0/>删除</a>");
+                this.Pub2.AddTREnd();
+            }
         }
-       
         this.Pub2.AddTableEnd();
         this.Pub2.AddFieldSetEnd();
     }
