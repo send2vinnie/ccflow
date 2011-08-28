@@ -146,13 +146,12 @@ body
 }
 
 
-
-
 .TRSum
 {
 	background-color: infobackground;
 	font-size: 14px;
 }
+
 .TD
 {
 	border: lightgrey 1px solid;
@@ -200,7 +199,6 @@ legend
     font-style: inherit;
     font-weight: bold;
 }
-
 
 .ToolBar,Toolbar,GroupTitle
 {
@@ -260,7 +258,6 @@ legend
 	vertical-align: middle;
 	padding: 1px;
 }
-
 
 a:link, a:visited, a:active
 {
