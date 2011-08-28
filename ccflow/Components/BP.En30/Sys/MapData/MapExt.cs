@@ -54,6 +54,10 @@ namespace BP.Sys
         /// </summary>
         public const string Tag = "Tag";
         public const string Tag1 = "Tag1";
+        /// <summary>
+        /// Tag2
+        /// </summary>
+        public const string Tag2 = "Tag2";
     }
     /// <summary>
     /// 扩展
@@ -199,6 +203,17 @@ namespace BP.Sys
                 this.SetValByKey("Tag1", value);
             }
         }
+        public string Tag2
+        {
+            get
+            {
+                return this.GetValStrByKey("Tag2").Replace("~", "'");
+            }
+            set
+            {
+                this.SetValByKey("Tag2", value);
+            }
+        }
         public int H
         {
             get
@@ -265,16 +280,18 @@ namespace BP.Sys
                 map.AddMyPK();
                 map.AddTBString(MapExtAttr.FK_MapData, null, "主表", true, false, 0, 30, 20);
                 map.AddTBString(MapExtAttr.ExtType, null, "类型", true, false, 0, 30, 20);
+                map.AddTBInt(MapExtAttr.DoWay, 0, "执行方式", true, false);
 
                 map.AddTBString(MapExtAttr.AttrOfOper, null, "操作的Attr", true, false, 0, 30, 20);
                 map.AddTBString(MapExtAttr.AttrsOfActive, null, "激活的字段", true, false, 0, 900, 20);
 
-                map.AddTBInt(MapExtAttr.DoWay, 0, "执行方式", true, false);
 
                 map.AddTBStringDoc();
 
                 map.AddTBString(MapExtAttr.Tag, null, "Tag", true, false, 0, 900, 20);
                 map.AddTBString(MapExtAttr.Tag1, null, "Tag1", true, false, 0, 900, 20);
+                map.AddTBString(MapExtAttr.Tag2, null, "Tag1", true, false, 0, 900, 20);
+
 
                 map.AddTBInt(MapExtAttr.H, 500, "高度", false, false);
                 map.AddTBInt(MapExtAttr.W, 400, "宽度", false, false);
@@ -284,6 +301,16 @@ namespace BP.Sys
             }
         }
         #endregion
+
+        protected override bool beforeDelete()
+        {
+
+
+
+
+            return base.beforeDelete();
+        }
+        
     }
     /// <summary>
     /// 扩展s

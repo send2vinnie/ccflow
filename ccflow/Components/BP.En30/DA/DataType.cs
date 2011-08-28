@@ -111,13 +111,11 @@ namespace BP.DA
         public static void WriteFile(string file, string Doc)
         {
             System.IO.StreamWriter sr;
-            // string report;
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
 
             //sr = new System.IO.StreamWriter(file, false, System.Text.Encoding.GetEncoding("GB2312"));
-            sr = new System.IO.StreamWriter(file, false, System.Text.Encoding.UTF8 );
-
+            sr = new System.IO.StreamWriter(file, false, System.Text.Encoding.UTF8);
             sr.Write(Doc);
             sr.Close();
         }
