@@ -888,7 +888,6 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion 明细表
 
-
             #region 多对多的关系
             foreach (MapM2M M2M in m2ms)
             {
@@ -949,7 +948,6 @@ namespace BP.Web.Comm.UC.WF
                 this.AddTREnd();
             }
             #endregion 多对多的关系
-
 
             #region 框架
             foreach (MapFrame fram in frames)
@@ -1043,7 +1041,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n<span >");
                 Button myBtn = new Button();
                 myBtn.ID = btn.MyPK;
-                myBtn.Text = btn.Text;
+                myBtn.Text = btn.Text.Replace("&nbsp;", " ");
                 this.Add(myBtn);
                 this.Add("\t\n</span>");
                 this.Add("\t\n</DIV>");
@@ -1120,7 +1118,11 @@ namespace BP.Web.Comm.UC.WF
                                     {
                                         tb.Text = en.GetValStringByKey(attr.KeyOfEn);
                                         tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 15px;padding: 0px;margin: 0px;";
-                                        tb.CssClass = "";
+                                        if (attr.UIIsEnable)
+                                            tb.CssClass = "TB";
+                                        else
+                                            tb.CssClass = "TBReadonly";
+
                                         this.Add(tb);
                                     }
                                     else
@@ -1128,8 +1130,13 @@ namespace BP.Web.Comm.UC.WF
                                         tb.TextMode = TextBoxMode.MultiLine;
                                         tb.Text = en.GetValStrByKey(attr.KeyOfEn);
                                         tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left;padding: 0px;margin: 0px;";
-                                        tb.CssClass = "";
                                         tb.Rows = attr.UIRows;
+
+                                        if (attr.UIIsEnable)
+                                            tb.CssClass = "TBDoc";
+                                        else
+                                            tb.CssClass = "TBReadonly";
+
                                         this.Add(tb);
                                     }
                                 }

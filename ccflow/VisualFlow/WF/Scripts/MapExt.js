@@ -24,7 +24,6 @@
 }
 
 function FullDtl(key, fk_mapExt) {
-
     var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDtlFullList" };
     $.ajax({
         type: "get",
@@ -34,6 +33,9 @@ function FullDtl(key, fk_mapExt) {
             //ShowLoading();
         },
         success: function (data, textStatus) {
+            if (data == "")
+                return;
+
             var dataObj = eval("(" + data + ")"); //转换为json对象.
 
             for (var i in dataObj.Head) {
@@ -73,6 +75,8 @@ function FullCtrlDDL(key, ctrlIdBefore, fk_mapExt) {
             //ShowLoading();
         },
         success: function (data, textStatus) {
+            if (data == "")
+                return;
             var dataObj = eval("(" + data + ")"); //转换为json对象 
             var beforeID = ctrlIdBefore.substring(0, ctrlIdBefore.indexOf('TB_'));
             var endId = ctrlIdBefore.substring(ctrlIdBefore.lastIndexOf('_'));
@@ -107,7 +111,8 @@ function FullCtrlDDLDB(e, ddlID, ctrlIdBefore, endID, fk_mapExt) {
             //ShowLoading();
         },
         success: function (data, textStatus) {
-
+            if (data == "")
+                return;
             endID = endID.replace('_', '');
             if (endID != parseInt(endID)) {
                 endID = "";
@@ -144,6 +149,8 @@ function FullCtrl(e, ctrlIdBefore, fk_mapExt) {
             //ShowLoading();
         },
         success: function (data, textStatus) {
+            if (data == "")
+                return;
             var dataObj = eval("(" + data + ")"); //转换为json对象 
             var beforeID = ctrlIdBefore.substring(0, ctrlIdBefore.indexOf('TB_'));
             var endId = ctrlIdBefore.substring(ctrlIdBefore.lastIndexOf('_'));
