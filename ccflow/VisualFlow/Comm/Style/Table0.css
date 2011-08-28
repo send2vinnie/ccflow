@@ -116,30 +116,6 @@ table input[type="textbox"]
     word-break: keep-all;
 }
 
-.TBDoc
-{
-    border-style: dotted none dotted none;
-    border-width: 1px;
-    border-color: #CCCCCC;
-    overflow: visible;
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
-}
-
-.TB
-{
-    border-style: none none dotted none;
-    border-width: 1px;
-    border-color: #CCCCCC;
-    overflow: visible;
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
-    word-break: keep-all;
-    
-}
-
 /*  input 类型风格 */
 input[type="button"], .Btn, input[type="submit"]
 {
@@ -208,6 +184,25 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 	border-top:none;
 }
 
+
+
+.TBDoc
+{
+    border-style: dotted none dotted none;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    overflow: visible;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.TB
+{
+   
+}
+
+
 .TBNum
 {
     border-style: none none dotted none;
@@ -225,14 +220,7 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
  
 .TBReadonly
 {
-    font-size: 14px;
-    text-align: left;
-    float: left;
-    clear: left;
-    width: 100%;
-    border-width: 0px;
-    background-color: infobackground;
-    word-break: keep-all;
+    background-color: #E1E1E1;
 }
 
 .TBNumReadonly
