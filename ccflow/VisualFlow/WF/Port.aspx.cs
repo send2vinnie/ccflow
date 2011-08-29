@@ -167,6 +167,9 @@ namespace BP.Web.Port
                     case DoWhatList.Tools: // 工具栏目。
                         this.Response.Redirect("Tools.aspx", true);
                         break;
+                    case DoWhatList.ToolsSmall: // 小工具栏目。
+                        this.Response.Redirect("ToolsSmall.aspx&RefNo=" + this.Request["RefNo"], true);
+                        break;
                     case DoWhatList.EmpWorksSmall: // 我的工作小窗口
                         if (this.FK_Flow == null || this.FK_Flow == "")
                             this.Response.Redirect("EmpWorksSmall.aspx", true);
@@ -216,12 +219,12 @@ namespace BP.Web.Port
                     case DoWhatList.DealWork:
                         if (this.FK_Flow == null || this.WorkID == null)
                             throw new Exception("@参数 FK_Flow 或者 WorkID 为Null 。");
-                        this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras  , true);
+                        this.Response.Redirect("MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras, true);
                         break;
                     case DoWhatList.DealWorkInSmall:
                         if (this.FK_Flow == null || this.WorkID == null)
                             throw new Exception("@参数 FK_Flow 或者 WorkID 为Null 。");
-                        this.Response.Redirect("MyFlowSmall.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras , true);
+                        this.Response.Redirect("MyFlowSmall.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&o2=1" + paras, true);
                         break;
                     default:
                         this.ToErrorPage("没有约定的标记:DoWhat=" + this.DoWhat);
