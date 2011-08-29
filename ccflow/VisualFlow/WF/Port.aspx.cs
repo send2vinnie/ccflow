@@ -134,7 +134,11 @@ namespace BP.Web.Port
 
             if (this.IsPostBack == false)
             {
-                this.IsCanLogin();
+                if (this.IsCanLogin() == false)
+                {
+                    this.ShowMsg("系统无法执行您的请求，可能是您的登陆时间太长，请重新登陆。");
+                    return;
+                }
 
                 BP.Port.Emp emp = new BP.Port.Emp(this.UserNo);
                 BP.Web.WebUser.SignInOfGener(emp); //开始执行登陆。
@@ -246,7 +250,7 @@ namespace BP.Web.Port
                 if (SystemConfig.IsDebug)
                     return true;
                 else
-                    throw new Exception("钥匙无效，不能执行您你请求。");
+                return false;
             }
             return true;
         }
