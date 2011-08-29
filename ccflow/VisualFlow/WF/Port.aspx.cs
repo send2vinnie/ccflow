@@ -92,7 +92,8 @@ namespace BP.Web.Port
             //    //  return;
             //}
 
-            BP.SystemConfig.DoClearCash();
+            // BP.SystemConfig.DoClearCash();
+
             Emp em = new Emp(this.UserNo);
             WebUser.Token = this.Session.SessionID;
             WebUser.SignInOfGenerLang(em, SystemConfig.SysLanguage);
