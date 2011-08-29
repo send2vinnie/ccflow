@@ -134,6 +134,7 @@ namespace BP.Web.Port
             if (this.IsPostBack == false)
             {
                 this.IsCanLogin();
+
                 BP.Port.Emp emp = new BP.Port.Emp(this.UserNo);
                 BP.Web.WebUser.SignInOfGener(emp); //开始执行登陆。
 
@@ -239,16 +240,18 @@ namespace BP.Web.Port
         }
         public bool IsCanLogin()
         {
+            if (this.SID != this.GetKey())
+            {
+                if (SystemConfig.IsDebug)
+                    return true;
+                else
+                    throw new Exception("钥匙无效，不能执行您你请求。");
+            }
             return true;
-            //if (this.RequestKey != this.GetKey())
-            //{
-            //    if (SystemConfig.IsDebug)
-            //        return true;
-            //    //throw new Exception("钥匙无效，不能执行您你请求。key="+this.GetKey() );
-            //    else
-            //        throw new Exception("钥匙无效，不能执行您你请求。");
-            //}
-            //return true;
+        }
+        public string GetKey()
+        {
+            return BP.DA.DBAccess.RunSQLReturnString("SELECT SID From Port_Emp where no='" + this.UserNo + "'");
         }
 
         #region Web 窗体设计器生成的代码
