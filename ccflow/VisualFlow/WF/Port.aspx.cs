@@ -137,6 +137,7 @@ namespace BP.Web.Port
                 BP.Port.Emp emp = new BP.Port.Emp(this.UserNo);
                 BP.Web.WebUser.SignInOfGener(emp); //开始执行登陆。
 
+
                 string nodeID = int.Parse(this.FK_Flow + "01").ToString();
                 switch (this.DoWhat)
                 {
@@ -168,7 +169,7 @@ namespace BP.Web.Port
                         this.Response.Redirect("Tools.aspx", true);
                         break;
                     case DoWhatList.ToolsSmall: // 小工具栏目。
-                        this.Response.Redirect("ToolsSmall.aspx&RefNo=" + this.Request["RefNo"], true);
+                        this.Response.Redirect("ToolsSmall.aspx?RefNo=" + this.Request["RefNo"], true);
                         break;
                     case DoWhatList.EmpWorksSmall: // 我的工作小窗口
                         if (this.FK_Flow == null || this.FK_Flow == "")
@@ -239,14 +240,14 @@ namespace BP.Web.Port
         public bool IsCanLogin()
         {
             return true;
-            ////if (this.RequestKey != this.GetKey())
-            ////{
-            ////    if (SystemConfig.IsDebug)
-            ////        return true;
-            ////    //throw new Exception("钥匙无效，不能执行您你请求。key="+this.GetKey() );
-            ////    else
-            ////        throw new Exception("钥匙无效，不能执行您你请求。");
-            ////}
+            //if (this.RequestKey != this.GetKey())
+            //{
+            //    if (SystemConfig.IsDebug)
+            //        return true;
+            //    //throw new Exception("钥匙无效，不能执行您你请求。key="+this.GetKey() );
+            //    else
+            //        throw new Exception("钥匙无效，不能执行您你请求。");
+            //}
             //return true;
         }
 
