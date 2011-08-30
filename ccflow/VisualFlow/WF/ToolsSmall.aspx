@@ -17,7 +17,7 @@
         var url = 'Do.aspx?DoType=AutoTo&FK_Emp=' + fk_emp;
         WinShowModalDialog(url, '');
         alert('授权成功，请别忘记收回。');
-        window.location.href = 'Tools.aspx';
+        window.location.href = 'ToolsSmall.aspx';
     }
 
     function ExitAuth(fk_emp) {
@@ -26,7 +26,7 @@
 
         var url = 'Do.aspx?DoType=ExitAuth&FK_Emp=' + fk_emp;
         WinShowModalDialog(url, '');
-        window.location.href = 'Tools.aspx';
+        window.location.href = 'ToolsSmall.aspx';
     }
 
     function TakeBack(fk_emp) {
@@ -46,7 +46,7 @@
         var url = 'Do.aspx?DoType=LogAs&FK_Emp=' + fk_emp;
         WinShowModalDialog(url, '');
         alert('登陆成功，现在您可以以[' + fk_emp + ']处理工作。');
-        window.location.href = 'EmpWorks.aspx';
+        window.location.href = 'EmpWorksSmall.aspx';
     }
 
     function CHPass() {
