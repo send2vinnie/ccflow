@@ -24,6 +24,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
     {
         BP.WF.XML.Tools tools = new BP.WF.XML.Tools();
         tools.RetrieveAll();
+
         if (tools.Count == 0)
             return;
 
