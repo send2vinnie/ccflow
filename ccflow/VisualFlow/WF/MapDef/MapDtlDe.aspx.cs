@@ -80,6 +80,9 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             this.Page.RegisterClientScriptBlock("b8",
          "<script language='JavaScript' src='./../Scripts/MapExt.js' ></script>");
 
+            this.Page.RegisterClientScriptBlock("dCd",
+   "<script language='JavaScript' src='./../../DataUser/JSLibData/" + this.FK_MapDtl + ".js' ></script>");
+
             this.Pub1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
         }
 
