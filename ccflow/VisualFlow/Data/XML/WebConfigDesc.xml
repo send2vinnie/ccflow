@@ -10,7 +10,9 @@
     <identity impersonate="true"  userName="administrator" password="" /> 
     -->
     <Item No="IsDebug" Name="是否测试状态" Note="是否测试状态" DBType="Boolen"  IsShow="1" />
-    <Item No="SysLanguage" Name="系统语言" Note="系统语言" DBType="String"   IsEnable="0" />
+  <Item No="IsAuth" Name="是否需要安全验证" Note="在嵌入方式工作时,是否要检查访问者的安全性" DBType="Boolen"  IsShow="1" />
+  
+  <Item No="SysLanguage" Name="系统语言" Note="系统语言" DBType="String"   IsEnable="0" />
     <Item No="SysNo" Name="系统编号" Note="系统编号" DBType="String"  IsEnable="0" />
     <Item No="SysName" Name="系统名称"  Note="系统名称" DBType="String"  IsEnable=""  />
     <Item No="CopyRight" Name="版权所有"  Note="显示在系统的底部" DBType="String"  IsEnable="1"  />
