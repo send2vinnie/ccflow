@@ -136,7 +136,7 @@ namespace BP.Web.Port
             {
                 if (this.IsCanLogin() == false)
                 {
-                    this.ShowMsg("系统无法执行您的请求，可能是您的登陆时间太长，请重新登陆。");
+                    this.ShowMsg("<fieldset><legend>安全验证错误</legend> 系统无法执行您的请求，可能是您的登陆时间太长，请重新登陆。<br>如果您要取消安全验证请修改web.config 中IsDebug 中的值设置成1。</fieldset>");
                     return;
                 }
 

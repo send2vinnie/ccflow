@@ -21,6 +21,9 @@
 	</head>
 	<body onload="toHome()">
 		<form id="Form1" method="post" runat="server">
+        <fieldset>
+        <legend></legend>
+        </fieldset>
 		</form>
 	</body>
 </html>
