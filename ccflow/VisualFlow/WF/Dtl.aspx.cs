@@ -352,15 +352,14 @@ public partial class Comm_Dtl : WebPage
         }
         #endregion 生成翻页
 
-
         DDL ddl = new DDL();
         CheckBox cb = new CheckBox();
 
         #region 生成数据
         int idx = 1;
-        //  bool is1 = false;
         string ids = ",";
         int dtlsNum = dtls.Count;
+        MapExts mes = new MapExts(this.EnsName);
         foreach (BP.Sys.GEDtl dtl in dtls)
         {
             if (ids.Contains("," + dtl.OID + ","))
@@ -541,51 +540,54 @@ public partial class Comm_Dtl : WebPage
             this.Pub1.AddTREnd();
 
             #region 拓展属性
-            if (this.IsReadonly == 0)
+            if (this.IsReadonly == 0 && mes.Count != 0)
             {
-                MapExts mes = new MapExts(this.EnsName);
-                if (mes.Count != 0)
+                this.Page.RegisterClientScriptBlock("s81",
+              "<script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' ></script>");
+
+                this.Page.RegisterClientScriptBlock("b81",
+             "<script language='JavaScript' src='./Scripts/MapExt.js' ></script>");
+                this.Pub1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
+
+                this.Page.RegisterClientScriptBlock("dCd",
+"<script language='JavaScript' src='./../DataUser/JSLibData/" + mdtl.No + ".js' ></script>");
+
+                foreach (BP.Sys.GEDtl mydtl in dtls)
                 {
-                    this.Page.RegisterClientScriptBlock("s81",
-                  "<script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' ></script>");
-
-                    this.Page.RegisterClientScriptBlock("b81",
-                 "<script language='JavaScript' src='./Scripts/MapExt.js' ></script>");
-                    this.Pub1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
-
-                    foreach (BP.Sys.GEDtl mydtl in dtls)
+                    //ddl.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
+                    foreach (MapExt me in mes)
                     {
-                        //ddl.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
-                        foreach (MapExt me in mes)
+                        switch (me.ExtType)
                         {
-                            switch (me.ExtType)
-                            {
-                                case MapExtXmlList.ActiveDDL:
-                                    DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + mydtl.OID);
-                                    if (ddlPerant == null)
-                                        continue;
-                                    //  DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
-                                    //string ddlP = "Pub1_DDL_"+me.AttrOfOper+"_"+mydtl.OID;
-                                    string ddlC = "Pub1_DDL_" + me.AttrsOfActive + "_" + mydtl.OID;
-                                    ddlPerant.Attributes["onchange"] = " isChange=true; DDLAnsc(this.value, \'" + ddlC + "\', \'" + me.MyPK + "\')";
-                                    break;
-                                case MapExtXmlList.FullCtrl: // 自动填充.
-                                    TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
-                                    if (tbAuto == null)
-                                        continue;
-                                    tbAuto.Attributes["onkeyup"] = " isChange=true; DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
-                                    tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
-                                    break;
-                                case MapExtXmlList.InputCheck:
-                                    break;
-                                case MapExtXmlList.PopVal: //弹出窗.
-                                    TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
-                                    tb.Attributes["ondblclick"] = " isChange=true; ReturnVal(this,'" + me.Doc + "','sd');";
-                                    break;
-                                default:
-                                    break;
-                            }
-
+                            case MapExtXmlList.ActiveDDL:
+                                DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + mydtl.OID);
+                                if (ddlPerant == null)
+                                    continue;
+                                //  DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
+                                //string ddlP = "Pub1_DDL_"+me.AttrOfOper+"_"+mydtl.OID;
+                                string ddlC = "Pub1_DDL_" + me.AttrsOfActive + "_" + mydtl.OID;
+                                ddlPerant.Attributes["onchange"] = " isChange=true; DDLAnsc(this.value, \'" + ddlC + "\', \'" + me.MyPK + "\')";
+                                break;
+                            case MapExtXmlList.FullCtrl: // 自动填充.
+                                TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
+                                if (tbAuto == null)
+                                    continue;
+                                tbAuto.Attributes["onkeyup"] = " isChange=true; DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                                tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
+                                break;
+                            case MapExtXmlList.InputCheck:
+                                TextBox tbCheck = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
+                                if (tbCheck != null)
+                                {
+                                    tbCheck.Attributes[me.Tag2] += me.Tag1 + "(this);";
+                                }
+                                break;
+                            case MapExtXmlList.PopVal: //弹出窗.
+                                TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
+                                tb.Attributes["ondblclick"] = " isChange=true; ReturnVal(this,'" + me.Doc + "','sd');";
+                                break;
+                            default:
+                                break;
                         }
                     }
                 }

@@ -298,7 +298,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                 sql = sql.Replace("@val", this.Key);
                 sql = sql.Replace("@Val", this.Key);
 
-
                 DataTable dt = DBAccess.RunSQLReturnTable(sql);
                 int idx = 0;
                 foreach (DataRow dr in dt.Rows)
@@ -327,7 +326,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             }
         }
         #endregion 处理设计时自动填充明细表.
-
 
         #region 处理拓展属性.
         for (int i = 1; i <= dtl.RowsOfList; i++)
@@ -360,6 +358,15 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         //    tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                         break;
                     case MapExtXmlList.InputCheck:
+                         TextBox tbCheck = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper   + "_" + i);
+                         if (tbCheck != null)
+                         {
+                             tbCheck.Attributes[me.Tag2] += me.Tag1 + "(this);";
+                         }
+                         else
+                         {
+                             me.Delete();
+                         }
                         break;
                     case MapExtXmlList.PopVal: //弹出窗.
                         TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper + me.AttrOfOper + "_" + i);
@@ -376,7 +383,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             }
         }
         #endregion 处理拓展属性.
-
 
 
         // 输出自动计算公式
