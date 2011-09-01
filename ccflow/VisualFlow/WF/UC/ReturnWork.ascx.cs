@@ -140,7 +140,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         WorkNodes wns = new WorkNodes();
         if (wns.Count == 0)
             wns.GenerByFID(nd.HisFlow, this.FID);
-
         foreach (WorkNode mywn in wns)
         {
             if (mywn.HisNode.NodeID == this.FK_Node)
@@ -154,7 +153,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 if (val == "3")
                     continue;
             }
-
             this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
         }
 
@@ -271,7 +269,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         string appPath = this.Request.ApplicationPath;
         this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "','ds'); \" />");
 
-
         TextBox tb = new TextBox();
         tb.TextMode = TextBoxMode.MultiLine;
         tb.ID = "TB_Doc";
@@ -309,8 +306,8 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 WorkNodes wns = new WorkNodes();
                 //if (wn.HisNode.HisFNType == FNType.River)
                 //    wns.GenerByFID(wn.HisNode.HisFlow, this.WorkID);
-                
-                if (wns.Count==0)
+
+                if (wns.Count == 0)
                     wns.GenerByWorkID(wn.HisNode.HisFlow, this.WorkID);
 
 
@@ -327,7 +324,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
 
                             this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
                         }
-                        return;
+                        break;
                     case ReturnRole.ReturnPreviousNode:
                         foreach (WorkNode mywn in wns)
                         {
@@ -335,7 +332,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                                 continue;
                             this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
                         }
-                        return;
+                        break;
                     case ReturnRole.ReturnSpecifiedNodes:
                         NodeReturns rnds = new NodeReturns();
                         rnds.Retrieve(NodeReturnAttr.FK_Node, nd.NodeID);
@@ -349,16 +346,14 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
 
                             this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
                         }
-                        return;
+                        break;
                     default:
                         throw new Exception("@没有判断的退回类型。");
 
                 }
-              
 
                 this.DDL1.SetSelectItem(pwn.HisNode.NodeID);
                 this.DDL1.Enabled = true;
-
                 Work wk = pwn.HisWork;
                 this.TB1.Text = this.ToEP4("WBackInfo",
                     "{0}同志: \n您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
