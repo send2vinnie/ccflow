@@ -243,20 +243,27 @@ namespace BP.Web.Port
         {
             this.Response.Write(msg);
         }
+        /// <summary>
+        /// 验证登陆用户是否合法
+        /// </summary>
+        /// <returns></returns>
         public bool IsCanLogin()
         {
-            if (this.SID != this.GetKey())
+            if (BP.SystemConfig.AppSettings["IsAuth"] == "1")
             {
-                if (SystemConfig.IsDebug)
-                    return true;
-                else
-                return false;
+                if (this.SID != this.GetKey())
+                {
+                    if (SystemConfig.IsDebug)
+                        return true;
+                    else
+                        return false;
+                }
             }
             return true;
         }
         public string GetKey()
         {
-            return BP.DA.DBAccess.RunSQLReturnString("SELECT SID From Port_Emp where no='" + this.UserNo + "'");
+            return BP.DA.DBAccess.RunSQLReturnString("SELECT SID From Port_Emp WHERE no='" + this.UserNo + "'");
         }
 
         #region Web 窗体设计器生成的代码
