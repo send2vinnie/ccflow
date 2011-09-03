@@ -1,0 +1,6 @@
+Title: 驰骋workflow,表单字段的验证.
+
+关键字: 表单设计器, 字段验证. workflow,freeform, ccflow.
+
+Q: 什么是表单验证?
+A: 表单验证就是为了控制用户输入错误的
