@@ -578,9 +578,7 @@ public partial class Comm_Dtl : WebPage
                             case MapExtXmlList.InputCheck:
                                 TextBox tbCheck = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
                                 if (tbCheck != null)
-                                {
                                     tbCheck.Attributes[me.Tag2] += me.Tag1 + "(this);";
-                                }
                                 break;
                             case MapExtXmlList.PopVal: //弹出窗.
                                 TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);

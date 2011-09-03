@@ -42,7 +42,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.ToolBar1.AddBtn(NamesOfBtn.Forward);
+        this.ToolBar1.AddBtn(NamesOfBtn.Forward,"移交");
         this.ToolBar1.AddBtn(NamesOfBtn.Cancel, "取消");
         this.ToolBar1.GetBtnByID(NamesOfBtn.Forward).Attributes["onclick"] = " return confirm('您确定要执行吗？');";
 

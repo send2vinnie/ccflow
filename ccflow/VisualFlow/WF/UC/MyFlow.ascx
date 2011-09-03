@@ -10,6 +10,11 @@
         var v = WinShowModalDialog(url, 'df');
         window.location.href = window.history.url;
     }
+    function To(url) {
+        window.location.href = url;
+    }
+
+    
 </script>
 
 <script language="javascript">

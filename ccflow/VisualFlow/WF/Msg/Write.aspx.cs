@@ -68,7 +68,7 @@ public partial class WF_Msg_Write : WebPage
                     wk.OID=this.WorkID;
                     wk.Retrieve();
 
-                    string msgInfo="\t\n ************** workinfo **************";
+                    string msgInfo="\t\n ************** 工作信息 **************";
                     Attrs attrs =wk.EnMap.Attrs;
                     foreach (Attr attr in attrs )
 	               {
@@ -87,8 +87,8 @@ public partial class WF_Msg_Write : WebPage
         this.Pub1.AddTable("width='95%'");
         if (WebUser.IsWap)
             this.Pub1.AddCaptionLeft("<a href='./../Home.aspx' ><img src='./../Img/Home.gif' border=0>Home</a> - <a href='./../../WAP/Msg.aspx' >列表</a>");
-        else
-            this.Pub1.AddCaption("&nbsp;&nbsp;&nbsp;信息发送");
+        //else
+        //    this.Pub1.AddCaption("&nbsp;&nbsp;&nbsp;信息发送");
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("width=10%","<b>接受人</b>");

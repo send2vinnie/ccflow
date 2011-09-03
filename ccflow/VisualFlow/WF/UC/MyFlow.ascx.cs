@@ -408,6 +408,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
         try
         {
+            string small = this.PageID;
+            small = small.Replace("MyFlow", "");
+
             #region 增加按钮
             BtnLab btnLab = new BtnLab(currND.NodeID);
             if (btnLab.SendEnable)
@@ -428,8 +431,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (btnLab.ReturnEnable && this.currND.IsStartNode == false)
             {
-                this.ToolBar1.AddBtn("Btn_ReturnWork", btnLab.ReturnLab);
-                this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+
+                string urlr = "ReturnWork" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
+                this.ToolBar1.Add("<input type=button value='" + btnLab.ReturnLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
+
+                // this.ToolBar1.AddBtn("Btn_ReturnWork", btnLab.ReturnLab);
+                // this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
             if (btnLab.ShiftEnable)
@@ -1047,7 +1054,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     break;
                 case NamesOfBtn.Send:
                     this.Send(false);
-                   
                     break;
                 default:
                     break;
@@ -1260,6 +1266,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     }
     public void DoShift()
     {
+        GenerWorkFlow gwf = new GenerWorkFlow();
+        if (gwf.Retrieve(GenerWorkFlowAttr.WorkID, this.WorkID) == 0)
+        {
+            this.Alert("工作还没有发出，您不能转发。");
+            return;
+        }
         string url = "Forward" + Glo.FromPageType + ".aspx?FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
         this.Response.Redirect(url, true);
     }

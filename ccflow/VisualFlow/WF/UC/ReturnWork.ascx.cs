@@ -349,9 +349,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                         break;
                     default:
                         throw new Exception("@没有判断的退回类型。");
-
                 }
-
                 this.DDL1.SetSelectItem(pwn.HisNode.NodeID);
                 this.DDL1.Enabled = true;
                 Work wk = pwn.HisWork;
