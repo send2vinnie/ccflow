@@ -45,9 +45,11 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
             {
                 case "DownTempFrm":
                     MapData md =new MapData(this.FK_MapData);
+                    DataSet ds = md.GenerHisDataSet();
                     string name="ccflow表单模板."+md.Name+"."+md.No+".xml";
                     string file = this.Request.PhysicalApplicationPath + "\\Temp\\" + this.FK_MapData + ".xml";
-                    BP.PubClass.OpenWordDocV2(file, name);
+                    ds.WriteXml(file);
+                    this.Response.Redirect( "../../Temp/"+this.FK_MapData+".xml",true);
                     this.WinClose();
                     break;
                 case "FreeFrm":
