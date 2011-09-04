@@ -24,6 +24,7 @@
 }
 
 function FullDtl(key, fk_mapExt) {
+
     var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDtlFullList" };
     $.ajax({
         type: "get",
@@ -33,9 +34,6 @@ function FullDtl(key, fk_mapExt) {
             //ShowLoading();
         },
         success: function (data, textStatus) {
-            if (data == "")
-                return;
-
             var dataObj = eval("(" + data + ")"); //转换为json对象.
 
             for (var i in dataObj.Head) {
@@ -75,8 +73,6 @@ function FullCtrlDDL(key, ctrlIdBefore, fk_mapExt) {
             //ShowLoading();
         },
         success: function (data, textStatus) {
-            if (data == "")
-                return;
             var dataObj = eval("(" + data + ")"); //转换为json对象 
             var beforeID = ctrlIdBefore.substring(0, ctrlIdBefore.indexOf('TB_'));
             var endId = ctrlIdBefore.substring(ctrlIdBefore.lastIndexOf('_'));
@@ -111,8 +107,7 @@ function FullCtrlDDLDB(e, ddlID, ctrlIdBefore, endID, fk_mapExt) {
             //ShowLoading();
         },
         success: function (data, textStatus) {
-            if (data == "")
-                return;
+
             endID = endID.replace('_', '');
             if (endID != parseInt(endID)) {
                 endID = "";
@@ -149,8 +144,6 @@ function FullCtrl(e, ctrlIdBefore, fk_mapExt) {
             //ShowLoading();
         },
         success: function (data, textStatus) {
-            if (data == "")
-                return;
             var dataObj = eval("(" + data + ")"); //转换为json对象 
             var beforeID = ctrlIdBefore.substring(0, ctrlIdBefore.indexOf('TB_'));
             var endId = ctrlIdBefore.substring(ctrlIdBefore.lastIndexOf('_'));
@@ -162,7 +155,7 @@ function FullCtrl(e, ctrlIdBefore, fk_mapExt) {
                     if (k == 'No' || k == 'Name')
                         continue;
 
-                 //   alert(k);
+                    //   alert(k);
 
                     $("#" + beforeID + 'TB_' + k).val(dataObj.Head[i][k]);
                     $("#" + beforeID + 'TB_' + k + endId).val(dataObj.Head[i][k]);
@@ -191,6 +184,7 @@ function openDiv(e, tbID) {
         txtObject.focus();
     }
 }
+
 function getoffset(e) {
     var t = e.offsetTop;
     var l = e.offsetLeft;
@@ -201,6 +195,9 @@ function getoffset(e) {
     var rec = new Array(1);
     rec[0] = t;
     rec[1] = l;
+
+//    alert(t);
+//    alert(l);
     return rec
 }
 // ********************** 根据关键字动态查询. ******************************** //
@@ -331,7 +328,6 @@ function ItemClick(sender, val, tbid, fk_mapExt) {
 
     //执行填充明细表.
     FullDtl(oldValue, fk_mapExt);
-
 }
 
 function MyOver(sender) {
