@@ -67,9 +67,10 @@ namespace FreeFrm.Web
         /// </summary>
         /// <param name="fileByte">字节数</param>
         /// <param name="fk_mapData"></param>
+        /// <param name="isClear"></param>
         /// <returns></returns>
         [WebMethod]
-        public string LoadFrmTemplete(byte[] fileByte, string fk_mapData)
+        public string LoadFrmTemplete(byte[] fileByte, string fk_mapData, bool isClear)
         {
             try
             {
