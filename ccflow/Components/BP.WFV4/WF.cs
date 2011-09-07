@@ -40,6 +40,8 @@ namespace BP.WF
         public const string DealWorkInSmallSingle = "DealWorkInSmallSingle";
 
         public const string Tools = "Tools";
+        public const string ToolsSmall = "ToolsSmall";
+
         public const string RuningSmall = "RuningSmall";
 
     }

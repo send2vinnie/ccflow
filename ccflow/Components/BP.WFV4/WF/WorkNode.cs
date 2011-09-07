@@ -2933,11 +2933,11 @@ namespace BP.WF
                 wk.Rec = BP.Web.WebUser.No;
                 try
                 {
-                    wk.Insert();
+                    wk.DirectInsert();
                 }
                 catch
                 {
-                    wk.Update();
+                    wk.DirectUpdate();
                 }
 
                 #region 复制多选数据
@@ -2953,11 +2953,11 @@ namespace BP.WF
                         m2.MapM2M = m2.MapM2M.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
                         try
                         {
-                            m2.Insert();
+                            m2.DirectInsert();
                         }
                         catch
                         {
-                            m2.Update();
+                            m2.DirectUpdate();
                         }
                     }
                 }
@@ -3074,7 +3074,7 @@ namespace BP.WF
                                 dtCopy.SetValByKey("IsPass", 0);
                                 dtCopy.SetValByKey("Rec", startUser);
                                 dtCopy.SetValByKey("Checker", BP.Web.WebUser.Name);
-                                dtCopy.Insert();
+                                dtCopy.DirectInsert();
                             }
                             DBAccess.RunSQL("UPDATE " + startDtl.PTable + " SET Rec='" + startUser + "',Checker='" + WebUser.No + "' WHERE BatchID=" + this.WorkID + " AND Rec='" + WebUser.No + "'");
                         }

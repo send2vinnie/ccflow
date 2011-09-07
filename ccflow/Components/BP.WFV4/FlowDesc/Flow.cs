@@ -293,41 +293,50 @@ namespace BP.WF
             StartWork wk = (StartWork)nd.HisWork;
             int num = wk.Retrieve(StartWorkAttr.NodeState, 0,
                 StartWorkAttr.Rec, WebUser.No);
-            if (num == 0)
+
+            try
             {
+                if (num == 0)
+                {
+                    wk.Rec = WebUser.No;
+                    wk.SetValByKey("RecText", WebUser.Name);
+                    wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+                    wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+                    wk.WFState = 0;
+                    wk.NodeState = 0;
+                    wk.OID = DBAccess.GenerOID("WID");
+                    wk.DirectInsert();
+                }
+
                 wk.Rec = WebUser.No;
-                wk.SetValByKey("RecText", WebUser.Name);
                 wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
                 wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
                 wk.WFState = 0;
                 wk.NodeState = 0;
-                wk.OID = DBAccess.GenerOID("WID");
-                wk.DirectInsert();
+                wk.FK_Dept = WebUser.FK_Dept;
+                wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
+                wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
+                wk.FID = 0;
+                wk.SetValByKey("RecText", WebUser.Name);
+
+                string msg = "";
+                if (WebUser.SysLang == "CH")
+                    msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
+                else
+                    msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
+
+                string title = wk.GetValStringByKey("Title");
+                if (string.IsNullOrEmpty(title))
+                    wk.Title = msg;
+                else if (title.Contains("在") == true)
+                    wk.Title = msg;
             }
+            catch(Exception ex)
+            {
+               
+                //if (ex.Message.Contains("key=["))
 
-            wk.Rec = WebUser.No;
-            wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
-            wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
-            wk.WFState = 0;
-            wk.NodeState = 0;
-            wk.FK_Dept = WebUser.FK_Dept;
-            wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
-            wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
-            wk.FID = 0;
-            wk.SetValByKey("RecText", WebUser.Name);
-
-
-            string msg = "";
-            if (WebUser.SysLang == "CH")
-                msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
-            else
-                msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
-
-            string title = wk.GetValStringByKey("Title");
-            if (string.IsNullOrEmpty(title))
-                wk.Title = msg;
-            else if (title.Contains("在") == true)
-                wk.Title = msg;
+            }
 
             return wk;
         }
