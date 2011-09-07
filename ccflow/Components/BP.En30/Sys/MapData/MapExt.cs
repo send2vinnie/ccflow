@@ -304,10 +304,6 @@ namespace BP.Sys
 
         protected override bool beforeDelete()
         {
-
-
-
-
             return base.beforeDelete();
         }
         

@@ -969,7 +969,7 @@ namespace BP.Sys
                 map.AddTBString(MapAttrAttr.UIRefKeyText, null, "绑定的Text", true, false, 0, 30, 20);
 
                 map.AddBoolean(MapAttrAttr.UIVisible, true, "是否可见", true, true);
-                map.AddBoolean(MapAttrAttr.UIIsEnable, false, "是否只读", true, true);
+                map.AddBoolean(MapAttrAttr.UIIsEnable, true, "是否启用", true, true);
                 map.AddBoolean(MapAttrAttr.UIIsLine, false, "是否单独栏显示", true, true);
 
                 map.AddTBString(MapAttrAttr.Tag, null, "标识（存放临时数据）", true, false, 0, 100, 20);

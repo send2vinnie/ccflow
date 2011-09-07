@@ -577,7 +577,7 @@ namespace BP.Sys
         public System.Data.DataSet GenerHisDataSet()
         {
             DataSet ds = new DataSet();
-            ds.Namespace = "ccflowFrm";
+            ds.Namespace = "ccFlowFrm";
 
             FrmLines lins = new FrmLines(this.No);
             ds.Tables.Add(lins.ToDataTableField("Sys_FrmLine"));
@@ -616,6 +616,9 @@ namespace BP.Sys
             FrmRBs rbs = new FrmRBs(this.No);
             ds.Tables.Add(rbs.ToDataTableField("Sys_FrmRB"));
 
+            FrmBtns btns = new FrmBtns(this.No);
+            ds.Tables.Add(btns.ToDataTableField("Sys_FrmBtn"));
+
             GroupFields gfs = new GroupFields(this.No);
             ds.Tables.Add(gfs.ToDataTableField("Sys_GroupField"));
             return ds;
@@ -638,39 +641,6 @@ namespace BP.Sys
             }
             return " alert( document.forms[0]." + tbPer + "_TB" + attr.KeyOfEn + "_" + pk + ".value ) ; \t\n " + left + right;
         }
-        public static string GenerAutoFull_d(Entity en, MapAttrs attrs, MapAttr attr, string tbPer)
-        {
-            return null;
-            //string script = "\n<script language='JavaScript'> function C" + en.PKVal + "(){ \n ";
-
-            //script += " \n var leftval=0;";
-            //script += " \n var rightval=0; ";
-
-            //string rightStr = en.FormularRight;  //   a+b-c+d
-            //string scriptRight = "";
-            //char[] chars = attr.AutoFull.ToCharArray();
-            //string para = ""; // ²ÎÊý
-            //foreach (char c in chars)
-            //{
-            //    if (c == '+' || c == '-')
-            //    {
-            //        scriptRight += "  parseFloat( document.forms[0]." + this.GetTBByID(para).ClientID + ".value) " + c.ToString();
-            //        //float f= parseFloat( document.forms[0]."+this.GetTBByID( para ).ClientID+".value)";
-            //        para = "";
-            //    }
-            //    else
-            //    {
-            //        para = para + c.ToString();
-            //    }
-            //}
-            //scriptRight += " parseFloat( document.forms[0]." + this.GetTBByID(para).ClientID + ".value ) ";
-            //scriptRight = "  rightval = parseFloat( " + scriptRight + " );  ";
-            //scriptRight += "   document.forms[0]." + tbPer + attr.Key + ".value = rightval";
-            //script += scriptRight;
-            //script += " } </script>";
-            //return script;
-        }
-         
     }
 	/// <summary>
 	/// Ó³Éä»ù´¡s

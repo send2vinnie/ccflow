@@ -1627,17 +1627,16 @@ namespace BP
         }
         public static void OpenWordDocV2(string filepath, string tempName)
         {
-            FileInfo DownloadFile = new FileInfo(filepath);
+            FileInfo fileInfo = new FileInfo(filepath);
             HttpContext.Current.Response.Clear();
             HttpContext.Current.Response.ClearHeaders();
             HttpContext.Current.Response.Buffer = false;
             HttpContext.Current.Response.ContentType = "application/octet-stream";
             HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=" + HttpUtility.UrlEncode(tempName, System.Text.Encoding.UTF8));
-            HttpContext.Current.Response.AppendHeader("Content-Length", DownloadFile.Length.ToString());
-            HttpContext.Current.Response.WriteFile(DownloadFile.FullName);
+            HttpContext.Current.Response.AppendHeader("Content-Length", fileInfo.Length.ToString());
+            HttpContext.Current.Response.WriteFile(fileInfo.FullName);
             HttpContext.Current.Response.Flush();
             HttpContext.Current.Response.End();
-
         }
 		#endregion
 		
