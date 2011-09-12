@@ -288,7 +288,7 @@ namespace BP
                 DataRow dr = dt.NewRow();
                 dr["输入项目"] = attr.Desc;
                 dr[nameOfEnterInfo] = "OneVSM" + attr.EnsOfMM.ToString();
-                dr["信息输入要求"] = "请进入编辑一对多的关系";
+                dr["信息输入要求"] = "请进入编辑多选";
                 dt.Rows.Add(dr);
             }
             return dt;
@@ -366,7 +366,7 @@ namespace BP
                 DataRow dr = dt.NewRow();
                 dr[col1] = attr.Desc;
                 dr[col2] = "OneVSM" + attr.EnsOfMM.ToString();
-                //dr["输入项目2"]="一对多的关系";
+                //dr["输入项目2"]="多选";
                 dt.Rows.Add(dr);
             }
             return dt;
