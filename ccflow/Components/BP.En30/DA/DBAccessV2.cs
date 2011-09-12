@@ -1707,7 +1707,6 @@ namespace BP.DA
         /// <returns>·µ»Øtable</returns>
         private static DataTable RunSQLReturnTable_200705_SQL(string selectSQL,Paras paras)
         {
-
             ConnOfSQL connofObj = GetAppCenterDBConn as ConnOfSQL;
             connofObj.AddSQL(selectSQL);
             SqlConnection conn = connofObj.Conn;
