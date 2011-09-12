@@ -3335,8 +3335,8 @@ namespace BP.WF
             lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss")+WebUser.No;
             lab.Text = this.ToE("Title","流程标题");
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
-            lab.X = (float)107.4;
-            lab.Y = (float)71.4;
+            lab.X = (float)101.95;
+            lab.Y = (float)55.04;
             lab.FontSize = 11;
             lab.FontColor = "black";
             lab.FontName = "Portable User Interface";
@@ -3348,8 +3348,8 @@ namespace BP.WF
             lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No+2;
             lab.Text ="发起人" ;
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
-            lab.X = (float)114.6;
-            lab.Y = (float)105;
+            lab.X = (float)171.02;
+            lab.Y = (float)93.71;
             lab.FontSize = 11;
             lab.FontColor = "black";
             lab.FontName = "Portable User Interface";
@@ -3361,8 +3361,8 @@ namespace BP.WF
             lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 3;
             lab.Text = "发起时间";
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
-            lab.X = (float)253.8;
-            lab.Y = (float)104.2;
+            lab.X = (float)374.91;
+            lab.Y = (float)92.8;
             	
             lab.FontSize = 11;
             lab.FontColor = "black";
@@ -3376,8 +3376,8 @@ namespace BP.WF
             lab.Text = "新建节点(请修改标题)";
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
 
-            lab.X = (float)207.4;
-            lab.Y = (float)5;
+            lab.X = (float)290.13;
+            lab.Y = (float)4.09;
 
             lab.FontSize = 23;
             lab.FontColor = "Blue";
@@ -3388,9 +3388,19 @@ namespace BP.WF
 
             lab = new FrmLab();
             lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 5;
-            lab.Text = "说明:以上内容是ccflow自动产生的，您可以修改/删除它，为了更方便您的设计您可以到ccflow官网下载表单模板.";
-            lab.X = (float)94.6;
-            lab.Y = (float)218.6;
+            lab.Text = "说明:以上内容是ccflow自动产生的，您可以修改/删除它。@为了更方便您的设计您可以到http://ccflow.org官网下载表单模板.";
+            lab.Text += "@因为当前技术问题与silverlight开发工具使用特别说明如下:";
+            lab.Text += "@1,改变控件位置: ";
+            lab.Text += "@  所有的控件都支持 wasd, 做为方向键， 部分控件支持方向键. ";
+            lab.Text += "@@2, 增加textbox, 从表, dropdownlistbox, 的宽度 shift+ -> 方向键增加宽度 shift + <- 减小宽度.";
+            lab.Text += "@@3, 保存 windows键 + s.  删除 delete.  复制 ctrl+c   粘帖: ctrl+v.";
+            lab.Text += "@@4, 支持全选，批量移动， 批量放大缩小字体., 批量改变线的宽度.";
+            lab.Text += "@@5, 改变线的长度： 选择线，点绿色的圆点，拖拉它。.";
+            lab.Text += "@@6, 放大或者缩小　label 的字体 , 选择一个多个label , 按 A+ 或者　A－　按钮.";
+            lab.Text += "@@7, 改变线或者标签的颜色， 选择操作对象，点工具栏上的调色板.";
+
+            lab.X = (float)168.24;
+            lab.Y = (float)137.7;
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
             lab.FontSize = 11;
             lab.FontColor = "Red";
@@ -3399,16 +3409,98 @@ namespace BP.WF
             lab.FontWeight = "normal";
             lab.Insert();
 
+            string key="L" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
             FrmLine line = new FrmLine();
-            line.MyPK = "L" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
+            line.MyPK = key+"_1";
             line.FK_MapData = "ND" + int.Parse(this.No + "01");
-            line.X1 = (float)106.6;
-            line.Y1 = (float)49.8;
-
-            line.X2 = (float)475.4;
-            line.Y2 = (float)49.8;
+            line.X1 = (float)281.82;
+            line.Y1 = (float)81.82;
+            line.X2 = (float)281.82;
+            line.Y2 = (float)121.82;
             line.BorderWidth = (float)2;
-            line.BorderColor = "Red";
+            line.BorderColor = "Black";
+            line.Insert();
+
+
+            line.MyPK = key + "_2";
+            line.FK_MapData = "ND" + int.Parse(this.No + "01");
+            line.X1 = (float)360;
+            line.Y1 = (float)80.91;
+            line.X2 = (float)360;
+            line.Y2 = (float)120.91;
+            line.BorderWidth = (float)2;
+            line.BorderColor = "Black";
+            line.Insert();
+
+            line.MyPK = key + "_3";
+            line.FK_MapData = "ND" + int.Parse(this.No + "01");
+            line.X1 = (float)158.82;
+            line.Y1 = (float)41.82;
+            line.X2 = (float)158.82;
+            line.Y2 = (float)482.73;
+            line.BorderWidth = (float)2;
+            line.BorderColor = "Black";
+            line.Insert();
+
+            line.MyPK = key + "_4";
+            line.FK_MapData = "ND" + int.Parse(this.No + "01");
+            line.X1 = (float)81.55;
+            line.Y1 = (float)80;
+            line.X2 = (float)718.82;
+            line.Y2 = (float)80;
+            line.BorderWidth = (float)2;
+            line.BorderColor = "Black";
+            line.Insert();
+
+
+            line.MyPK = key + "_5";
+            line.FK_MapData = "ND" + int.Parse(this.No + "01");
+            line.X1 = (float)81.82;
+            line.Y1 = (float)40;
+            line.X2 = (float)81.82;
+            line.Y2 = (float)480.91;
+            line.BorderWidth = (float)2;
+            line.BorderColor = "Black";
+            line.Insert();
+
+            line.MyPK = key + "_6";
+            line.FK_MapData = "ND" + int.Parse(this.No + "01");
+            line.X1 = (float)81.82;
+            line.Y1 = (float)481.82;
+            line.X2 = (float)720;
+            line.Y2 = (float)481.82;
+            line.BorderWidth = (float)2;
+            line.BorderColor = "Black";
+            line.Insert();
+
+            line.MyPK = key + "_7";
+            line.FK_MapData = "ND" + int.Parse(this.No + "01");
+            line.X1 = (float)83.36;
+            line.Y1 = (float)40.91;
+            line.X2 = (float)717.91;
+            line.Y2 = (float)40.91;
+            line.BorderWidth = (float)2;
+            line.BorderColor = "Black";
+            line.Insert();
+
+            line.MyPK = key + "_8";
+            line.FK_MapData = "ND" + int.Parse(this.No + "01");
+            line.X1 = (float)83.36;
+            line.Y1 = (float)120.91;
+            line.X2 = (float)717.91;
+            line.Y2 = (float)120.91;
+            line.BorderWidth = (float)2;
+            line.BorderColor = "Black";
+            line.Insert();
+
+            line.MyPK = key + "_9";
+            line.FK_MapData = "ND" + int.Parse(this.No + "01");
+            line.X1 = (float)719.09;
+            line.Y1 = (float)40;
+            line.X2 = (float)719.09;
+            line.Y2 = (float)482.73;
+            line.BorderWidth = (float)2;
+            line.BorderColor = "Black";
             line.Insert();
             #endregion
 
