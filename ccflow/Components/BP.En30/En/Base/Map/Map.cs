@@ -749,7 +749,7 @@ namespace BP.En
                 {
                     _DtlsAll = this.Dtls;
 
-                    // 加入他的一对多的关系。
+                    // 加入他的多选。
                     foreach (AttrOfOneVSM en in this.AttrsOfOneVSM)
                     {
                         EnDtl dtl = new EnDtl();

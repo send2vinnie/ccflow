@@ -717,20 +717,28 @@ namespace BP.DA
                 return myens;
             }
 
-            if (Htable_Ens == null)
+            if (Htable_Ens == null || Htable_Ens.Count == 0)
             {
                 Htable_Ens = new Hashtable();
                 string cl = "BP.En.Entities";
                 ArrayList al = ClassFactory.GetObjects(cl);
+
+                Htable_Ens.Clear();
                 foreach (Entities en in al)
                 {
                     if (en.ToString() == null)
                         continue;
 
-                    Htable_Ens.Add(en.ToString(), en);
+                    try
+                    {
+                        Htable_Ens.Add(en.ToString(), en);
+                    }
+                    catch
+                    {
+                    }
                 }
-
             }
+
             Entities ens = Htable_Ens[className] as Entities;
 
 #warning 会清除 cash 中的数据。
