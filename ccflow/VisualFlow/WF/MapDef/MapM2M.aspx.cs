@@ -280,7 +280,7 @@ public partial class WF_MapDef_MapM2M : WebPage
         this.Pub1.AddTD(this.ToE("Width", "框架宽度"));
         tb = new TB();
         tb.ID = "TB_Width";
-        tb.Text = dtl.Width;
+        tb.Text = dtl.Width.ToString();
         tb.ShowType = TBType.TB;
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD();
@@ -292,10 +292,22 @@ public partial class WF_MapDef_MapM2M : WebPage
         tb = new TB();
         tb.ID = "TB_Height";
         tb.ShowType = TBType.TB;
-        tb.Text = dtl.Height;
+        tb.Text = dtl.Height.ToString();
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("Cols", "记录呈现列数"));
+        tb = new TB();
+        tb.ID = "TB_Cols";
+        tb.ShowType = TBType.TB;
+        tb.Text = dtl.Cols.ToString();
+        this.Pub1.AddTD(tb);
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
@@ -309,7 +321,6 @@ public partial class WF_MapDef_MapM2M : WebPage
             rb.Checked = false;
         else
             rb.Checked = true;
-
         this.Pub1.Add(rb);
 
         rb = new RadioBtn();

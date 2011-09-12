@@ -479,7 +479,7 @@ public partial class WF_MapDef_MapDef : WebPage
                     break;
                 case MapExtXmlList.PopVal: //弹出窗.
                     TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper);
-                    tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
+                    //tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
                     break;
                 default:
                     break;

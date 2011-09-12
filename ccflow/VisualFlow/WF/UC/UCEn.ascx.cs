@@ -1020,6 +1020,7 @@ namespace BP.Web.Comm.UC.WF
             this.IsReadonly = isReadonly;
             this.FK_MapData = enName;
             this.HisEn = en;
+            m2ms = new MapM2Ms(enName);
 
             MapData md = new MapData();
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
@@ -1070,7 +1071,7 @@ namespace BP.Web.Comm.UC.WF
             foreach (FrmLink link in links)
             {
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + link.X + "px;top:" + link.Y + "px;text-align:left;' >");
-                this.Add("\t\n<span style='color:" + link.FontColorHtml + ";font-family: " + link.FontName + ";font-size: " + link.FontSize + "px;' > <a href='" + link.URL + "' target='" + link.Target + "'> " + link.Text + "</span>");
+                this.Add("\t\n<span style='color:" + link.FontColorHtml + ";font-family: " + link.FontName + ";font-size: " + link.FontSize + "px;' > <a href='" + link.URL + "' target='" + link.Target + "'> " + link.Text + "</a></span>");
                 this.Add("\t\n</DIV>");
             }
 
@@ -1079,7 +1080,15 @@ namespace BP.Web.Comm.UC.WF
             {
                 float y = img.Y + (float)70;
                 this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
-                this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;' />");
+                if (string.IsNullOrEmpty(img.LinkURL) == false)
+                {
+                    this.Add("\t\n<a href='"+img.LinkURL+"' target="+img.LinkTarget+" ><img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;' /></a>");
+                }
+                else
+                {
+                    this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;' />");
+
+                }
                 this.Add("\t\n</DIV>");
                 //style="position:absolute; left:170px; top:-20px; width:413px; height:478px"  position:absolute;left:" + img.X + "px;top:" + img.Y + "px;
             }
@@ -1336,14 +1345,52 @@ namespace BP.Web.Comm.UC.WF
             string js = "";
             if (this.IsReadonly == false)
             {
-                  js = "\t\n<script type='text/javascript' >";
+                js = "\t\n<script type='text/javascript' >";
                 js += "\t\n function SaveDtl(dtl) { ";
-                js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
+                js += "\t\n   document.getElementById('F' + dtl ).contentWindow.SaveDtlData();";
+                js += "\t\n } ";
+
+                js += "\t\n function SaveM2M(dtl) { ";
+                js += "\t\n   document.getElementById('F' + dtl ).contentWindow.SaveM2M();";
                 js += "\t\n } ";
                 js += "\t\n</script>";
                 this.Add(js);
             }
             #endregion 输出明细.
+
+            #region 多对多的关系
+            foreach (MapM2M M2M in m2ms)
+            {
+
+                this.Add("<DIV id='Fd" + M2M.No + "' style='position:absolute; left:" + M2M.X + "px; top:" + M2M.Y + "px; width:" + M2M.Width + "px; height:" + M2M.Height + "px;text-align: left;' >");
+                this.Add("<span>");
+
+                string src = "M2M.aspx?FK_MapM2M=" + M2M.No;
+                string paras = this.RequestParas;
+                try
+                {
+                    if (paras.Contains("FID=") == false)
+                        paras += "&FID=" + this.HisEn.GetValStrByKey("FID");
+                }
+                catch
+                {
+                }
+
+                if (paras.Contains("WorkID=") == false)
+                    paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
+
+                src += "&r=q" + paras;
+
+                //  if (M2M.IsAutoSize)
+                //    this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                //else
+
+                this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.Width + "' height='" + M2M.Height + "' scrolling=auto /></iframe>");
+
+                this.Add("</span>");
+                this.Add("</DIV>");
+            }
+            #endregion 多对多的关系
 
             #region 输出附件
             FrmAttachments aths = new FrmAttachments(enName);

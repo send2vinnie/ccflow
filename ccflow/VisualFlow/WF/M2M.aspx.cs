@@ -47,7 +47,6 @@ public partial class Comm_M2M : WebPage
         m2m.MyPK = mapM2M.FK_Node+"_"+this.WorkID+"_"+this.FK_MapM2M;
         m2m.RetrieveFromDBSources();
         DataTable dtGroup = new DataTable();
-        
         if (mapM2M.DBOfGroups.Length >5)
             dtGroup=BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfGroups);
 
@@ -74,6 +73,9 @@ public partial class Comm_M2M : WebPage
 
             this.Pub1.AddTR();
             this.Pub1.AddTDBegin("nowarp=false");
+
+            this.Pub1.AddTable();
+            int colIdx = -1;
             foreach (DataRow drObj in dtObj.Rows)
             {
                 string no = drObj[0].ToString();
@@ -82,24 +84,39 @@ public partial class Comm_M2M : WebPage
                 if (group != groupNo)
                     continue;
 
+                colIdx++;
+
+                if (colIdx == 0)
+                    this.Pub1.AddTR();
+
                 CheckBox cb = new CheckBox();
                 cb.ID = "CB_" + no;
                 ctlIDs += cb.ID + ",";
                 cb.Attributes["onclick"] = "isChange=true;";
                 cb.Text = name;
                 cb.Checked = m2m.Vals.Contains("," + no + ",");
+                this.Pub1.AddTD(cb);
 
-                //if (cb.Checked)
-                //{
-                //    cb.Enabled = isDelete;
-                //}
-                //else
-                //{
-                //    cb.Enabled = isInsert;
-                //}
-                this.Pub1.Add(cb);
+                if (mapM2M.Cols-1 == colIdx)
+                {
+                    this.Pub1.AddTREnd();
+                    colIdx = -1;
+                }
             }
             cbx.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
+
+            if (colIdx != -1)
+            {
+                while (colIdx != mapM2M.Cols - 1)
+                {
+                    colIdx++;
+                    this.Pub1.AddTD();
+                }
+                this.Pub1.AddTREnd();
+            }
+
+            this.Pub1.AddTableEnd();
+
 
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();
