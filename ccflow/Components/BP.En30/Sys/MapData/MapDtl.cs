@@ -712,8 +712,21 @@ namespace BP.Sys
         {
             try
             {
-                BP.DA.DBAccess.RunSQL("DELETE Sys_MapAttr WHERE FK_MapData='" + this.No + "'");
-                BP.DA.DBAccess.RunSQL("DELETE Sys_MapExt WHERE FK_MapData='" + this.No + "'");
+                string sql = "";
+                sql += "@DELETE Sys_FrmLine WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_FrmLab WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_FrmLink WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_FrmImg WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_FrmImgAth WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_FrmRB WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_FrmAttachment WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_MapM2M WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_MapFrame WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_MapExt WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_MapAttr WHERE FK_MapData='" + this.No + "'";
+                sql += "@DELETE Sys_GroupField WHERE EnName='" + this.No + "'";
+                DBAccess.RunSQLs(sql);
+                 
                 BP.DA.DBAccess.RunSQL("DROP TABLE " + this.PTable);
             }
             catch

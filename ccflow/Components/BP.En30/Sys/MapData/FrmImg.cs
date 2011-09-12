@@ -36,7 +36,15 @@ namespace BP.Sys
         /// <summary>
         /// URL
         /// </summary>
-        public const string URL = "URL";
+        public const string ImgURL = "ImgURL";
+        /// <summary>
+        /// LinkURL
+        /// </summary>
+        public const string LinkURL = "LinkURL";
+        /// <summary>
+        /// LinkTarget
+        /// </summary>
+        public const string LinkTarget = "LinkTarget";
     }
     /// <summary>
     /// Õº∆¨
@@ -44,18 +52,40 @@ namespace BP.Sys
     public class FrmImg : EntityMyPK
     {
         #region  Ù–‘
-        /// <summary>
-        /// URL
-        /// </summary>
-        public string URL
+        public string LinkTarget
         {
             get
             {
-                return this.GetValStringByKey(FrmImgAttr.URL);
+                return this.GetValStringByKey(FrmImgAttr.LinkTarget);
             }
             set
             {
-                this.SetValByKey(FrmImgAttr.URL, value);
+                this.SetValByKey(FrmImgAttr.LinkTarget, value);
+            }
+        }
+        /// <summary>
+        /// URL
+        /// </summary>
+        public string LinkURL
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmImgAttr.LinkURL);
+            }
+            set
+            {
+                this.SetValByKey(FrmImgAttr.LinkURL, value);
+            }
+        }
+        public string ImgURL
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmImgAttr.ImgURL);
+            }
+            set
+            {
+                this.SetValByKey(FrmImgAttr.ImgURL, value);
             }
         }
         /// <summary>
@@ -169,7 +199,10 @@ namespace BP.Sys
                 map.AddTBFloat(FrmImgAttr.H, 200, "H", true, false);
                 map.AddTBFloat(FrmImgAttr.W, 160, "W", false, false);
 
-                map.AddTBString(FrmImgAttr.URL, "black", "URL", true, false, 0, 200, 20);
+                map.AddTBString(FrmImgAttr.ImgURL, null, "URL", true, false, 0, 200, 20);
+                map.AddTBString(FrmImgAttr.LinkURL, null, "LinkURL", true, false, 0, 200, 20);
+                map.AddTBString(FrmImgAttr.LinkTarget, "_blank", "LinkTarget", true, false, 0, 200, 20);
+
                 this._enMap = map;
                 return this._enMap;
             }

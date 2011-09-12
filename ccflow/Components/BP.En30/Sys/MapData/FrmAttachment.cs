@@ -33,6 +33,10 @@ namespace BP.Sys
         /// Exts
         /// </summary>
         public const string Exts = "Exts";
+        /// <summary>
+        /// ¸½¼þ±àºÅ
+        /// </summary>
+        public const string NoOfAth = "NoOfAth";
     }
     /// <summary>
     /// ¸½¼þ
@@ -40,6 +44,9 @@ namespace BP.Sys
     public class FrmAttachment : EntityMyPK
     {
         #region ÊôÐÔ
+        /// <summary>
+        /// ¸½¼þÃû³Æ
+        /// </summary>
         public string Name
         {
             get
@@ -63,6 +70,20 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(FrmAttachmentAttr.Exts, value);
+            }
+        }
+        /// <summary>
+        /// ¸½¼þ±àºÅ
+        /// </summary>
+        public string NoOfAth
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttachmentAttr.NoOfAth);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.NoOfAth, value);
             }
         }
         /// <summary>
@@ -159,8 +180,10 @@ namespace BP.Sys
                 map.AddTBString(FrmAttachmentAttr.FK_MapData, null, 
                     "FK_MapData", true, false, 1, 30, 20);
 
-                map.AddTBString(FrmAttachmentAttr.Name, null,"Name", true, false, 0, 50, 20);
-                map.AddTBString(FrmAttachmentAttr.Exts, null, "Exts", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentAttr.NoOfAth, null, "¸½¼þ±àºÅ", true, false, 0, 50, 20);
+
+                map.AddTBString(FrmAttachmentAttr.Name, null,"Ãû³Æ", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentAttr.Exts, null, "À©Õ¹", true, false, 0, 50, 20);
                 
                 map.AddTBFloat(FrmAttachmentAttr.X, 5, "X", true, false);
                 map.AddTBFloat(FrmAttachmentAttr.Y, 5, "Y", false, false);

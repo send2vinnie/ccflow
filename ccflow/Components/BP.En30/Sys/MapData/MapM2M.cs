@@ -31,6 +31,15 @@ namespace BP.Sys
         public const string DBOfGroups = "DBOfGroups";
         public const string IsDelete = "IsDelete";
         public const string IsInsert = "IsInsert";
+
+
+        public const string W = "W";
+        public const string H = "H";
+
+        public const string X = "X";
+        public const string Y = "Y";
+
+        public const string Cols = "Cols";
     }
     /// <summary>
     /// 点对点
@@ -128,7 +137,18 @@ namespace BP.Sys
                 this.SetValByKey(MapM2MAttr.RowIdx, value);
             }
         }
-
+        public int Cols
+        {
+            get
+            {
+                return this.GetValIntByKey(MapM2MAttr.Cols);
+            }
+            set
+            {
+                this.SetValByKey(MapM2MAttr.Cols, value);
+            }
+        }
+        
         public int GroupID
         {
             get
@@ -162,6 +182,32 @@ namespace BP.Sys
                 this.SetValByKey(MapM2MAttr.Width, value);
             }
         }
+        public float X
+        {
+            get
+            {
+                return this.GetValFloatByKey(MapM2MAttr.X);
+            }
+            set
+            {
+                this.SetValByKey(MapM2MAttr.X, value);
+            }
+        }
+        public float Y
+        {
+            get
+            {
+                return this.GetValFloatByKey(MapM2MAttr.Y);
+            }
+            set
+            {
+                this.SetValByKey(MapM2MAttr.Y, value);
+            }
+        }
+
+        /// <summary>
+        /// 扩展属性
+        /// </summary>
         public int FK_Node
         {
             get
@@ -209,25 +255,28 @@ namespace BP.Sys
                 map.AddTBString(MapM2MAttr.DBOfObjs, null, "DBOfObjs", true, false, 0, 4000, 20);
                 map.AddTBString(MapM2MAttr.DBOfGroups, null, "DBOfGroups", true, false, 0, 4000, 20);
 
+                map.AddTBString(MapM2MAttr.Height, "100%", "Height", true, false, 0, 10, 20);
+                map.AddTBString(MapM2MAttr.Width, "100%", "Width", true, false, 0, 10, 20);
 
-                map.AddTBString(MapM2MAttr.Height, "100%", "Height", true, false, 0, 200, 20);
-                map.AddTBString(MapM2MAttr.Width, "100%", "Width", true, false, 0, 200, 20);
+            
 
                 map.AddBoolean(MapM2MAttr.IsAutoSize, true, "是否自动设置大小", false, false);
 
                 map.AddTBInt(MapM2MAttr.RowIdx, 99, "位置", false, false);
                 map.AddTBInt(MapM2MAttr.GroupID, 0, "分组ID", false, false);
 
+                map.AddTBInt(MapM2MAttr.Cols, 4, "记录呈现列数", false, false);
+
                 map.AddBoolean(MapM2MAttr.IsDelete, true, "可删除否", false, false);
                 map.AddBoolean(MapM2MAttr.IsInsert, true, "可插入否", false, false);
 
 
-
                 map.AddTBFloat(FrmImgAttr.X, 5, "X", true, false);
                 map.AddTBFloat(FrmImgAttr.Y, 5, "Y", false, false);
-                map.AddTBFloat(FrmImgAttr.H, 5, "H", true, false);
-                map.AddTBFloat(FrmImgAttr.W, 5, "W", false, false);
 
+
+                //map.AddTBFloat(FrmImgAttr.H, 200, "H", true, false);
+                //map.AddTBFloat(FrmImgAttr.W, 500, "W", false, false);
 
                 this._enMap = map;
                 return this._enMap;
@@ -235,15 +284,13 @@ namespace BP.Sys
         }
         protected override bool beforeInsert()
         {
+            this.DBOfGroups = "SELECT No,Name FROM Port_Dept";
+            this.DBOfObjs = "SELECT No,Name,FK_Dept FROM Port_Emp";
             return base.beforeInsert();
         }
         protected override void afterInsert()
         {
             base.afterInsert();
-        }
-        protected override void afterDelete()
-        {
-            base.afterDelete();
         }
         #endregion
     }
