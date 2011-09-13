@@ -33,19 +33,7 @@ namespace FreeFrm.Web
         {
             return BP.SystemConfig.AppSettings[kev];
         }
-        [WebMethod]
-        public void NewDtl(string dtlNo, string fk_mapdata)
-        {
-            MapDtl dtl = new MapDtl();
-            dtl.No = dtlNo;
-            if (dtl.RetrieveFromDBSources() != 0)
-                return;
-            dtl.Name = dtlNo;
-            dtl.FK_MapData = fk_mapdata;
-            dtl.PTable = dtlNo;
-            dtl.Insert();
-            dtl.IntMapAttrs();
-        }
+        
         [WebMethod]
         public string BackUpFrm(string fk_mapdata)
         {
@@ -82,7 +70,7 @@ namespace FreeFrm.Web
                 MapData.ImpMapData(fk_mapData, ds);
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex.Message;
             }
@@ -145,6 +133,123 @@ namespace FreeFrm.Web
             {
                 switch (dotype)
                 {
+                    case "NewDtl":
+                        MapDtl dtlN = new MapDtl();
+                        dtlN.No = v1;
+                        if (dtlN.RetrieveFromDBSources() != 0)
+                            return "明细表已存在";
+
+                        dtlN.Name = v1;
+                        dtlN.FK_MapData = v2;
+                        dtlN.PTable = v1;
+                        dtlN.Insert();
+                        dtlN.IntMapAttrs();
+                        return null;
+                    case "DelM2M":
+                        MapM2M m2mDel = new MapM2M();
+                        m2mDel.No = v1;
+                        m2mDel.Delete();
+
+                        M2M m2mData = new M2M();
+                        m2mData.Delete(M2MAttr.MapM2M, v1);
+                        return null;
+                    case "NewM2M":
+                        string fk_mapdataM2M = v1;
+                        string m2mName = v2;
+
+                        MapM2M m2m = new MapM2M();
+                        m2m.No = v2;
+                        if (m2m.IsExits)
+                            return "多选名称:" + m2mName + "，已经存在。";
+
+                        m2m.X = float.Parse(v3);
+                        m2m.Y = float.Parse(v4);
+
+                        m2m.Name = "新建多选";
+                        m2m.FK_MapData = fk_mapdataM2M;
+                        m2m.Insert();
+                        return null;
+                    case "DelEnum":
+                        // 检查这个物理表是否被使用。
+                        sql = "SELECT  * FROM Sys_MapAttr WHERE UIBindKey='" + v1 + "'";
+                        DataTable dtEnum = DBAccess.RunSQLReturnTable(sql);
+                        string msgDelEnum = "";
+                        foreach (DataRow dr in dtEnum.Rows)
+                        {
+                            msgDelEnum += "\n 表单编号:" + dr["FK_MapData"] + " , 字段:" + dr["KeyOfEn"] + ", 名称:" + dr["Name"];
+                        }
+
+                        if (msgDelEnum != "")
+                            return "该枚举已经被如下字段所引用，您不能删除它。" + msgDelEnum;
+
+                        sql = "DELETE Sys_EnumMain WHERE No='" + v1 + "'";
+                        sql += "@DELETE Sys_Enum WHERE EnumKey='" + v1 + "' ";
+                        DBAccess.RunSQLs(sql);
+                        return null;
+                    case "DelSFTable": /* 删除自定义的物理表. */
+                        // 检查这个物理表是否被使用。
+                        sql = "SELECT  * FROM Sys_MapAttr WHERE UIBindKey='" + v1 + "'";
+                        DataTable dt = DBAccess.RunSQLReturnTable(sql);
+                        string msgDel = "";
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            msgDel += "\n 表单编号:" + dr["FK_MapData"] + " , 字段:" + dr["KeyOfEn"] + ", 名称:" + dr["Name"];
+                        }
+
+                        if (msgDel != "")
+                            return "该数据表已经被如下字段所引用，您不能删除它。" + msgDel;
+
+                        SFTable sfDel = new SFTable();
+                        sfDel.No = v1;
+                        sfDel.DirectDelete();
+                        return null;
+                    case "CreateTable":
+                        string enName = v1;
+                        string chName = v2;
+                        if (string.IsNullOrEmpty(v1) || string.IsNullOrEmpty(v2))
+                            return "创建或者视图中的中英文名称不能为空。";
+
+                        SFTable sf = new SFTable();
+                        sf.No = enName;
+                        if (sf.IsExits == true)
+                            return "表名:" + sf.No + "已经存在.";
+
+                        sf.No = enName;
+                        sf.Name = chName;
+                        sf.FK_Val = enName;
+                        sf.Insert();
+
+
+                        if (DBAccess.IsExitsObject(enName))
+                        {
+                            /*已经存在此对象，检查一下是否有No,Name列。*/
+                            sql = "SELECT No,Name FROM " + enName;
+                            try
+                            {
+                                DBAccess.RunSQLReturnTable(sql);
+                            }
+                            catch (Exception ex)
+                            {
+                                return "您指定的表或视图(" + enName + ")，不包含No,Name两列，不符合ccflow约定的规则。技术信息:" + ex.Message;
+                            }
+                            return null;
+                        }
+
+                        try
+                        {
+                            // 如果没有该表或者视图，就要创建它。
+                            sql = "CREATE TABLE " + enName + "(No varchar(30) NOT NULL,Name varchar(50) NULL)";
+                            DBAccess.RunSQL(sql);
+                            DBAccess.RunSQL("INSERT INTO " + enName + " (No,Name) VALUES('001','Item1')");
+                            DBAccess.RunSQL("INSERT INTO " + enName + " (No,Name) VALUES('002','Item2')");
+                            DBAccess.RunSQL("INSERT INTO " + enName + " (No,Name) VALUES('003','Item3')");
+                        }
+                        catch (Exception ex)
+                        {
+                            sf.DirectDelete();
+                            return "创建物理表期间出现错误,可能是非法的物理表名.技术信息:" + ex.Message;
+                        }
+                        return null; /*创建成功后返回空值*/
                     case "FrmTempleteExp":  //导出表单.
                         MapData mdfrmtem = new MapData(v1);
                         mdfrmtem.No = v1;
@@ -162,7 +267,7 @@ namespace FreeFrm.Web
                         }
 
                         DataSet ds = mdfrmtem.GenerHisDataSet();
-                        string  file = System.Web.HttpContext.Current.Request.PhysicalApplicationPath+"\\Temp\\" + v1 + ".xml";
+                        string file = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\Temp\\" + v1 + ".xml";
                         if (System.IO.File.Exists(file))
                             System.IO.File.Delete(file);
                         ds.WriteXml(file);
@@ -174,13 +279,13 @@ namespace FreeFrm.Web
                         MapData.ImpMapData(v1, dsImp);
                         return null;
                     case "NewHidF":
-                        string fk_mapdata = v1;
+                        string fk_mapdataHid = v1;
                         string key = v2;
                         string name = v3;
-                        int dataType  =int.Parse(v4);
+                        int dataType = int.Parse(v4);
                         MapAttr mdHid = new MapAttr();
-                        mdHid.MyPK = fk_mapdata + "_" + key;
-                        mdHid.FK_MapData = fk_mapdata;
+                        mdHid.MyPK = fk_mapdataHid + "_" + key;
+                        mdHid.FK_MapData = fk_mapdataHid;
                         mdHid.KeyOfEn = key;
                         mdHid.Name = name;
                         mdHid.MyDataType = dataType;
@@ -189,7 +294,7 @@ namespace FreeFrm.Web
                         mdHid.MinLen = 0;
                         mdHid.LGType = FieldTypeS.Normal;
                         mdHid.UIVisible = false;
-                        mdHid.UIIsEnable=false; 
+                        mdHid.UIIsEnable = false;
                         mdHid.Insert();
 
                         return null;
@@ -223,7 +328,7 @@ namespace FreeFrm.Web
                         if (v5 == "1")
                             isPrint = true;
 
-                        bool isReadonly=false;
+                        bool isReadonly = false;
                         if (v4 == "1")
                             isReadonly = true;
                         string msg = this.SaveEn(vals);
@@ -398,12 +503,16 @@ namespace FreeFrm.Web
                 if (ens==null)
                     ens = BP.DA.ClassFactory.GetEns(ensName);
 
+                if (ens==null)
+                    ens = BP.DA.ClassFactory.GetEns(ensName);
+
                 ens.RetrieveAllFromDBSource();
                 dt = ens.ToDataTableField();
                 ds.Tables.Add(dt);
             }
             else
             {
+
                 string sql = "SELECT No,Name FROM " + ensName;
                 ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
             }
