@@ -31,7 +31,8 @@ public partial class Demo_QingJiaTiao_S1_TianxieShenqingDan : FlowPage
     }
     protected void Btn_Send_Click(object sender, EventArgs e)
     {
-        string msg = BP.WF.Dev2Interface.Node_SendWork(this.FK_Flow,this.WorkID,this.GenerWorkInfo());
+        string msg = BP.WF.Dev2Interface.Node_SendWork(this.FK_Flow,
+            this.WorkID,this.GenerWorkInfo());
         msg = msg.Replace("@@", "@");
         msg = msg.Replace("@", "<BR>@");
         this.Alert("发送提示", msg);
@@ -48,7 +49,7 @@ public partial class Demo_QingJiaTiao_S1_TianxieShenqingDan : FlowPage
     }
     protected void Btn_Save_Click(object sender, EventArgs e)
     {
-
+        
         Hashtable ht = new Hashtable();
         ht.Add("Title", this.TB_Title.Text);
         ht.Add("qingjiatian", float.Parse(this.TB_qingjiatian.Text));
