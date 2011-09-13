@@ -1078,16 +1078,14 @@ namespace BP.Web.Comm.UC.WF
             FrmImgs imgs = new FrmImgs(this.FK_MapData);
             foreach (FrmImg img in imgs)
             {
-                float y = img.Y + (float)70;
-                this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
+                this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + img.Y + "px;text-align:left;vertical-align:top' >");
                 if (string.IsNullOrEmpty(img.LinkURL) == false)
                 {
-                    this.Add("\t\n<a href='"+img.LinkURL+"' target="+img.LinkTarget+" ><img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;' /></a>");
+                    this.Add("\t\n<a href='" + img.LinkURL + "' target=" + img.LinkTarget + " ><img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px' /></a>");
                 }
                 else
                 {
-                    this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;' />");
-
+                    this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px' />");
                 }
                 this.Add("\t\n</DIV>");
                 //style="position:absolute; left:170px; top:-20px; width:413px; height:478px"  position:absolute;left:" + img.X + "px;top:" + img.Y + "px;
@@ -1361,10 +1359,8 @@ namespace BP.Web.Comm.UC.WF
             #region 多对多的关系
             foreach (MapM2M M2M in m2ms)
             {
-
                 this.Add("<DIV id='Fd" + M2M.No + "' style='position:absolute; left:" + M2M.X + "px; top:" + M2M.Y + "px; width:" + M2M.Width + "px; height:" + M2M.Height + "px;text-align: left;' >");
                 this.Add("<span>");
-
                 string src = "M2M.aspx?FK_MapM2M=" + M2M.No;
                 string paras = this.RequestParas;
                 try
@@ -1375,18 +1371,10 @@ namespace BP.Web.Comm.UC.WF
                 catch
                 {
                 }
-
                 if (paras.Contains("WorkID=") == false)
                     paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
-
                 src += "&r=q" + paras;
-
-                //  if (M2M.IsAutoSize)
-                //    this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
-                //else
-
                 this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.Width + "' height='" + M2M.Height + "' scrolling=auto /></iframe>");
-
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
