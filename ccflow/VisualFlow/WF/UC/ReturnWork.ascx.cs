@@ -370,7 +370,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         switch (btn.ID)
         {
             case "Btn_Cancel":
-                this.Response.Redirect("MyFlow"+Glo.FromPageType+".aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID, true);
+                this.Response.Redirect("MyFlow"+Glo.FromPageType+".aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID+"&FK_Node="+this.FK_Node, true);
                 return;
             default:
                 break;
