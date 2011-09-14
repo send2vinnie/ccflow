@@ -696,16 +696,23 @@ namespace FreeFrm.Web
             BP.Web.WebUser.SignInOfGener(emp);
         }
         [WebMethod(EnableSession = true)]
-        public string CopyFrm(string fromMapData, string fk_mapdata)
+        public string CopyFrm(string fromMapData, string fk_mapdata, bool isClear)
         {
             this.LetAdminLogin();
+
+            //string path = System.Web.HttpContext.Current.Request.ApplicationPath + "\\Temp\\";
+            //MapData md = new MapData();
+            //DataSet ds= md.GenerHisDataSet();
+            //ds.WriteXml(path+"\\tt.xml");
 
             string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
 
             #region 删除现有的当前节点数据, 并查询出来from节点数据.
             // line
             BP.Sys.FrmLines lins = new BP.Sys.FrmLines();
-            lins.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            if (isClear)
+                lins.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+
             lins.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             int i = 0;
             foreach (BP.Sys.FrmLine item in lins)
@@ -720,7 +727,8 @@ namespace FreeFrm.Web
 
             // link.
             BP.Sys.FrmLinks liks = new BP.Sys.FrmLinks();
-            liks.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            if (isClear)
+                liks.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             liks.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             i = 0;
             foreach (BP.Sys.FrmLink item in liks)
@@ -737,7 +745,8 @@ namespace FreeFrm.Web
             // Btn
             i = 0;
             BP.Sys.FrmBtns btns = new BP.Sys.FrmBtns();
-            btns.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            if (isClear)
+                btns.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             btns.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             foreach (BP.Sys.FrmBtn item in btns)
             {
@@ -752,7 +761,10 @@ namespace FreeFrm.Web
             // Img
             i = 0;
             BP.Sys.FrmImgs imgs = new BP.Sys.FrmImgs();
-            imgs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+
+            if (isClear)
+
+                imgs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             imgs.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             foreach (BP.Sys.FrmImg item in imgs)
             {
@@ -767,7 +779,8 @@ namespace FreeFrm.Web
 
             // Sys_FrmLab
             BP.Sys.FrmLabs labs = new BP.Sys.FrmLabs();
-            labs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            if (isClear)
+                labs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             labs.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             i = 0;
             foreach (BP.Sys.FrmLab item in labs)
@@ -783,7 +796,8 @@ namespace FreeFrm.Web
 
             // Sys_FrmRB
             BP.Sys.FrmRBs rbs = new BP.Sys.FrmRBs();
-            rbs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            if (isClear)
+                rbs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             rbs.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             foreach (BP.Sys.FrmRB item in rbs)
             {
@@ -801,14 +815,14 @@ namespace FreeFrm.Web
             qo.AddWhere(BP.Sys.MapAttrAttr.FK_MapData, fk_mapdata);
             qo.addAnd();
             qo.AddWhereNotIn(BP.Sys.MapAttrAttr.KeyOfEn,
-                "'BillNo','CDT','Emps','FID','FK_Dept','FK_NY','MyNum','NodeState','OID','RDT','Rec','Title','WFLog','WFState'");
+                "'BillNo','CDT','Emps','FID','FK_Dept','FK_NY','MyNum','NodeState','OID','RDT','Rec','WFLog','WFState'");
             qo.DoQuery();
             attrs.Delete();
             qo.clear();
             qo.AddWhere(BP.Sys.MapAttrAttr.FK_MapData, fromMapData);
             qo.addAnd();
             qo.AddWhereNotIn(BP.Sys.MapAttrAttr.KeyOfEn,
-                "'BillNo','CDT','Emps','FID','FK_Dept','FK_NY','MyNum','NodeState','OID','RDT','Rec','Title','WFLog','WFState'");
+                "'BillNo','CDT','Emps','FID','FK_Dept','FK_NY','MyNum','NodeState','OID','RDT','Rec','WFLog','WFState'");
             qo.DoQuery();
             foreach (BP.Sys.MapAttr attr in attrs)
             {
@@ -824,7 +838,8 @@ namespace FreeFrm.Web
 
             // MapDtl
             BP.Sys.MapDtls dtls = new BP.Sys.MapDtls();
-            dtls.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            if (isClear)
+                dtls.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             dtls.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             // 复制明细表.
             foreach (MapDtl dtl in dtls)
@@ -862,7 +877,8 @@ namespace FreeFrm.Web
 
             // Map2m
             BP.Sys.MapM2Ms m2ms = new BP.Sys.MapM2Ms();
-            m2ms.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            if (isClear)
+                m2ms.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             m2ms.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             foreach (MapM2M m2m in m2ms)
             {
@@ -881,7 +897,8 @@ namespace FreeFrm.Web
 
             // FrmAttachments
             BP.Sys.FrmAttachments aths = new BP.Sys.FrmAttachments();
-            aths.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            if (isClear)
+                aths.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             aths.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             i = 0;
             foreach (FrmAttachment ath in aths)
@@ -895,7 +912,8 @@ namespace FreeFrm.Web
 
             // FrmImgAth
             BP.Sys.FrmImgAths imgAths = new BP.Sys.FrmImgAths();
-            imgAths.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
+            if (isClear)
+                imgAths.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             imgAths.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             i = 0;
             foreach (FrmImgAth ath in imgAths)
@@ -908,7 +926,7 @@ namespace FreeFrm.Web
             }
             #endregion 删除现有的当前节点数据. 并查询出来from节点数据.
 
-            return "copy ok.";
+            return "复制成功.";
         }
 
         [WebMethod]
