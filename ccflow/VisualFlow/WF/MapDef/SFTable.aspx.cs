@@ -41,6 +41,8 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
     }
     public void BindSFTable(SFTable en)
     {
+
+        string star = "<font color=red><b>(*)</b></font>";
         this.Ucsys1.AddTable();
         if (this.RefNo == null)
             this.Ucsys1.AddCaption("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSFTable&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("FK", "外键") + "</a> - " + this.ToE("NewTable", "新建表"));
@@ -59,7 +61,7 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(this.ToE("TableEName", "表英文名称"));
+        this.Ucsys1.AddTD(this.ToE("TableEName", "表英文名称"+star));
         BP.Web.Controls.TB tb = new BP.Web.Controls.TB();
         tb.ID = "TB_No";
         tb.Text = en.No;
@@ -76,7 +78,7 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(this.ToE("TableName", "表中文名称"));
+        this.Ucsys1.AddTD(this.ToE("TableName", "表中文名称" + star));
         tb = new BP.Web.Controls.TB();
         tb.ID = "TB_Name";
         tb.Text = en.Name;
@@ -84,14 +86,9 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
         this.Ucsys1.AddTD();
         this.Ucsys1.AddTREnd();
 
-        //this.Ucsys1.AddTR();
-        //this.Ucsys1.AddTD(this.ToE("Sort"));
-        //this.Ucsys1.AddTD("");
-        //this.Ucsys1.AddTD("");
-        //this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD( this.ToE("Desc","描述") );
+        this.Ucsys1.AddTD(this.ToE("Desc", "描述" + star));
         tb = new BP.Web.Controls.TB();
         tb.ID = "TB_TableDesc";
         tb.Text = en.TableDesc;
@@ -172,6 +169,7 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
         {
             SFTable main = new SFTable();
             main = (SFTable)this.Ucsys1.Copy(main);
+
             if (main.No.Length == 0 || main.Name.Length == 0)
                 throw new Exception(this.ToE("NoNameBlank", "编号与名称不能为空"));
 
@@ -215,7 +213,7 @@ public partial class Comm_MapDef_SFTable : BP.Web.WebPage
                 throw new Exception(this.ToE("NoNameBlank", "编号与名称不能为空"));
 
             if (main.TableDesc.Length == 0)
-                throw new Exception(this.ToE("DescBlank", "编号与名称不能为空"));
+                throw new Exception(this.ToE("DescBlank", "描述不能为空"));
 
             if (this.RefNo == null)
             {
