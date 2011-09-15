@@ -210,13 +210,15 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         switch (this.ExtType)
         {
             case MapExtXmlList.ActiveDDL: //联动菜单.
-                if (this.MyPK != null || this.OperAttrKey != null)
+                if (this.MyPK != null || this.OperAttrKey != null || this.DoType=="New" )
                 {
                     Edit_ActiveDDL();
                     return;
                 }
+
                 mes.Retrieve(MapExtAttr.ExtType, this.ExtType,
                     MapExtAttr.FK_MapData, this.FK_MapData);
+
                 this.MapExtList(mes);
                 break;
             case MapExtXmlList.FullCtrl: //自动完成.
