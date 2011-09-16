@@ -1000,6 +1000,18 @@ namespace BP.DA
             }
         }
 
+        public static void RunSQLScript(string sqlOfScriptFilePath)
+        {
+            string str = BP.DA.DataType.ReadTextFile(sqlOfScriptFilePath);
+            string[] strs = str.Split(';');
+            foreach (string s in strs)
+            {
+                if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
+                    continue;
+
+                BP.DA.DBAccess.RunSQL(s);
+            }
+        }
         public static void RunSQLs(string sql)
         {
             sql = sql.Replace("@GO","~");

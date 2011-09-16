@@ -1825,6 +1825,9 @@ namespace BP.En
 
                 val = val + "," + attr.Field + "=" + en.HisDBVarStr + attr.Key;
             }
+            if (string.IsNullOrEmpty(val))
+                throw new Exception("@生成sql出现错误:"+map.EnDesc+"，"+en.ToString()+"，要更新的字段为空。");
+
             string sql = "";
             switch (en.EnMap.EnDBUrl.DBType)
             {

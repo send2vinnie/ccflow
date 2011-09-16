@@ -79,6 +79,7 @@ namespace BP.DA
 		/// <returns>sql</returns>
 		public static int Update(Entity en, string[] keys)
 		{
+           
 			if (en.EnMap.EnType==EnType.View)
 				return 0;
 
