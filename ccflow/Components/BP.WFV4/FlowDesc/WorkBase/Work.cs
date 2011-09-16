@@ -671,9 +671,15 @@ namespace BP.WF
                 if (this.HisNode.HisDeliveryWay== DeliveryWay.BySelected && this.HisNode.IsEndNode == false)
                 {
                     if (this.OID == 0)
-                        tp += "[<a href=\"javascript:alert('" + this.ToE("JSRen", "保存后才能执行") + "');\" ><img src='../images/Btn/Search.gif' border=0/>" + this.ToE("JSRen", "接受人") + "</a>]";
+                    {
+                     //   tp += "[<a href=\"javascript:alert('" + this.ToE("JSRen", "保存后才能执行") + "');\" ><img src='../images/Btn/Search.gif' border=0/>" + this.ToE("JSRen", "接受人") + "</a>]";
+                    }
                     else
-                        tp += "[<a href=\"javascript:WinOpen('../WF/Accpter.aspx?WorkID=" + this.OID + "&FK_Node=" + this.HisNode.NodeID + "' ,'s8d');\" ><img src='../images/Btn/Adjunct.gif' border=0/>" + this.ToE("JSRen", "接受人") + "</a>]";
+                    {
+
+                        if (this.HisNode.HisFormType == FormType.FixForm)
+                            tp += "[<a href=\"javascript:WinOpen('../WF/Accpter.aspx?WorkID=" + this.OID + "&FK_Node=" + this.HisNode.NodeID + "' ,'s8d');\" ><img src='../images/Btn/Adjunct.gif' border=0/>" + this.ToE("JSRen", "接受人") + "</a>]";
+                    }
                 }
 
                 //if (this.HisNode.IsCanCC)

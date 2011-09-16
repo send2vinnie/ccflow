@@ -3091,8 +3091,8 @@ namespace BP.WF
                 attr.MinLen = 0;
                 attr.MaxLen = 200;
                 attr.IDX = -100;
-                attr.X = (float)171.2;
-                attr.Y = (float)68.4;
+                attr.X = (float)174.83;
+                attr.Y = (float)54.4;
                 attr.Insert();
 
                 attr = new BP.Sys.MapAttr();
@@ -3110,8 +3110,8 @@ namespace BP.WF
                 attr.MaxLen = 200;
                 attr.IDX = -100;
                 attr.DefVal = "@WebUser.No";
-                attr.X = (float)159.2;
-                attr.Y = (float)102.8;
+                attr.X = (float)175.56;
+                attr.Y = (float)92.43;
                 attr.Insert();
 
                 attr = new BP.Sys.MapAttr();
@@ -3126,8 +3126,8 @@ namespace BP.WF
                 attr.UIIsEnable = false;
                 attr.DefVal = "@RDT";
                 attr.Tag = "1";
-                attr.X = (float)324;
-                attr.Y = (float)102.8;
+                attr.X = (float)384;
+                attr.Y = (float)92.43;
                 attr.Insert();
 
 

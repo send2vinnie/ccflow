@@ -1712,8 +1712,11 @@ namespace BP.WF
                         mywk.Rec = wl.FK_Emp;
                         mywk.Emps = wl.FK_Emp;
                         mywk.BeforeSave();
-                        mywk.OID = DBAccess.GenerOID("ND"+toNode.NodeID);  //BP.DA.DBAccess.GenerOID();
-                        mywk.BeforeSave();
+                        mywk.OID = DBAccess.GenerOID();  //BP.DA.DBAccess.GenerOID();
+
+                      //  mywk.OID = DBAccess.GenerOID("ND" + toNode.NodeID);  //BP.DA.DBAccess.GenerOID();
+                      //  mywk.BeforeSave();
+
                         // 跳过特殊的规则约束。
                         mywk.InsertAsOID(mywk.OID);
 
@@ -2927,17 +2930,24 @@ namespace BP.WF
                 #region  初始化发起的工作节点。
                 Work wk = nd.HisWork;
                 wk.SetValByKey("OID", this.HisWork.OID); //设定它的ID.
-                wk.Copy(this.HisWork); // 执行copy 上一个节点的数据。
+                wk.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
                 wk.Rec = "";
                 wk.NodeState = NodeState.Init; //节点状态。
                 wk.Rec = BP.Web.WebUser.No;
                 try
                 {
-                    wk.DirectInsert();
+                    wk.Insert();
                 }
-                catch
+                catch(Exception ex)
                 {
-                    wk.DirectUpdate();
+                    try
+                    {
+                        wk.Update();
+                    }
+                    catch(Exception ex11)
+                    {
+                        throw new Exception(ex.Message+" === "+ex11.Message );
+                    }
                 }
 
                 #region 复制多选数据

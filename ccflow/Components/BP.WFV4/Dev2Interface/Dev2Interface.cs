@@ -280,10 +280,16 @@ namespace BP.WF
                 foreach (string str in ht.Keys)
                     sw.SetValByKey(str, ht[str]);
             }
-            sw.BeforeSave();
             sw.Title = sw.Title + "(自动发起)";
+            sw.SetValByKey("RDT", DataType.CurrentDataTime);
+            sw.SetValByKey("CDT", DataType.CurrentDataTime);
+            sw.SetValByKey("FK_NY", DataType.CurrentYearMonth);
+            sw.SetValByKey("Rec", WebUser.No);
+            sw.SetValByKey("Emps", WebUser.No);
+            sw.SetValByKey("FK_Dept", WebUser.FK_Dept);
             sw.BeforeSend();
-            sw.Save();
+            sw.InsertAsOID(BP.DA.DBAccess.GenerOID());
+
             WorkNode wn = new WorkNode(sw, nd);
             return wn.AfterNodeSave();
         }

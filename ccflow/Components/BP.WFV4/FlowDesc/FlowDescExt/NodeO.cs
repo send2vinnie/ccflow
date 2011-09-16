@@ -308,13 +308,19 @@ namespace BP.WF.Ext
                 map.AttrsOfOneVSM.Add(new BP.WF.NodeFlows(), new Flows(), NodeFlowAttr.FK_Node, NodeFlowAttr.FK_Flow, DeptAttr.Name, DeptAttr.No,
                     this.ToE("CallSubFlow", "可调用的子流程"));
 
-                map.AttrsOfOneVSM.Add(new BP.WF.NodeReturns(), new BP.WF.Port.Emps(), NodeEmpAttr.FK_Node, EmpDeptAttr.FK_Emp, DeptAttr.Name,
-                  DeptAttr.No, this.ToE("Accpter", "可退回的节点"));
+                //map.AttrsOfOneVSM.Add(new BP.WF.NodeReturns(), new BP.WF.NodeExts(), NodeEmpAttr.FK_Node, EmpDeptAttr.FK_Emp, DeptAttr.Name,
+                //  DeptAttr.No, this.ToE("Accpter", "可退回的节点"));
 
                 RefMethod rm = new RefMethod();
+                rm.Title = this.ToE("CanReturnNodes", "可退回的节点"); // "设计表单";
+                rm.ClassMethodName = this.ToString() + ".DoCanReturnNodes";
+                map.AddRefMethod(rm);
+
+                rm = new RefMethod();
                 rm.Title = this.ToE("DesignSheet", "设计表单"); // "设计表单";
                 rm.ClassMethodName = this.ToString() + ".DoMapData";
                 map.AddRefMethod(rm);
+
 
                 rm = new RefMethod();
                 rm.Title = this.ToE("Bill", "单据打印"); //"单据&单据";

@@ -3324,19 +3324,33 @@ namespace BP.WF
             nd.CreateMap();
             nd.HisWork.CheckPhysicsTable();
 
-
             BP.Sys.MapData md = new BP.Sys.MapData();
             md.No = "ND" + int.Parse(this.No) + "Rpt";
             md.Name = this.Name;
             md.Save();
 
             #region 生成freeFrm 的装饰.
+
+            FrmImg img = new FrmImg();
+            img.MyPK = "Img" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
+            img.FK_MapData = "ND" + int.Parse(this.No + "01");
+            img.X = (float)572.18;
+            img.Y = (float)1.54;
+
+            img.W = (float)41;
+            img.H = (float)151;
+
+            img.ImgURL = "/FreeFrm;component/Img/LogoBig.png";
+            img.LinkURL = "http://ccflow.org";
+            img.LinkTarget = "_blank";
+            img.Insert();
+
             FrmLab lab = new FrmLab();
             lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss")+WebUser.No;
             lab.Text = this.ToE("Title","流程标题");
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
-            lab.X = (float)101.95;
-            lab.Y = (float)55.04;
+            lab.X = (float)106.5;
+            lab.Y = (float)59.22;
             lab.FontSize = 11;
             lab.FontColor = "black";
             lab.FontName = "Portable User Interface";
@@ -3348,8 +3362,8 @@ namespace BP.WF
             lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No+2;
             lab.Text ="发起人" ;
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
-            lab.X = (float)171.02;
-            lab.Y = (float)93.71;
+            lab.X = (float)106.48;
+            lab.Y = (float)96.08;
             lab.FontSize = 11;
             lab.FontColor = "black";
             lab.FontName = "Portable User Interface";
@@ -3361,8 +3375,8 @@ namespace BP.WF
             lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 3;
             lab.Text = "发起时间";
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
-            lab.X = (float)374.91;
-            lab.Y = (float)92.8;
+            lab.X = (float)307.64;
+            lab.Y = (float)95.17;
             	
             lab.FontSize = 11;
             lab.FontColor = "black";
@@ -3376,8 +3390,8 @@ namespace BP.WF
             lab.Text = "新建节点(请修改标题)";
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
 
-            lab.X = (float)290.13;
-            lab.Y = (float)4.09;
+            lab.X = (float)294.67;
+            lab.Y = (float)8.27;
 
             lab.FontSize = 23;
             lab.FontColor = "Blue";
@@ -3389,7 +3403,7 @@ namespace BP.WF
             lab = new FrmLab();
             lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 5;
             lab.Text = "说明:以上内容是ccflow自动产生的，您可以修改/删除它。@为了更方便您的设计您可以到http://ccflow.org官网下载表单模板.";
-            lab.Text += "@因为当前技术问题与silverlight开发工具使用特别说明如下:";
+            lab.Text += "@因为当前技术问题与silverlight开发工具使用特别说明如下:@";
             lab.Text += "@1,改变控件位置: ";
             lab.Text += "@  所有的控件都支持 wasd, 做为方向键， 部分控件支持方向键. ";
             lab.Text += "@@2, 增加textbox, 从表, dropdownlistbox, 的宽度 shift+ -> 方向键增加宽度 shift + <- 减小宽度.";
@@ -3400,7 +3414,7 @@ namespace BP.WF
             lab.Text += "@@7, 改变线或者标签的颜色， 选择操作对象，点工具栏上的调色板.";
 
             lab.X = (float)168.24;
-            lab.Y = (float)137.7;
+            lab.Y = (float)163.7;
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
             lab.FontSize = 11;
             lab.FontColor = "Red";
