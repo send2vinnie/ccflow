@@ -14,12 +14,12 @@
    <meta http-equiv="Pragma" content="no-cache" />
    <script type="text/javascript">
        function NoSubmit(ev) {
-       //    alert(window.event.srcElement.tagName);
 
            if (window.event.srcElement.tagName == "TEXTAREA")
-               return false;
+               return true;
 
            if (ev.keyCode == 13) {
+               event.keyCode = 9;
                return false;
            }
            return true;
