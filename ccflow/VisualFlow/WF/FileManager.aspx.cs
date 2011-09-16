@@ -107,6 +107,9 @@ public partial class WF_FileManager : WebPage
                 throw new Exception("@没有判断的情况。");
         }
 
+
+        this.Pub1.AddFieldSet("文件列表");
+
         this.Pub1.AddTable(); // ("<Table border=0 width='100%' >");
         //this.Pub1.AddCaptionLeft("流程附件 -  <a href='" + this.GenerUrl + "&DoType=DB' ><img src='../Images/FileType/zip.gif' border=0/>打包下载</a>");
 
@@ -115,6 +118,7 @@ public partial class WF_FileManager : WebPage
         this.Pub1.AddTDTitle("节点");
         this.Pub1.AddTDTitle("上传人");
         this.Pub1.AddTDTitle("文件名称");
+        this.Pub1.AddTDTitle("备注");
         this.Pub1.AddTDTitle("日期");
         this.Pub1.AddTDTitle("KB");
         this.Pub1.AddTDTitle("操作");
@@ -141,10 +145,11 @@ public partial class WF_FileManager : WebPage
             else
                 this.Pub1.AddTD(fm.FK_Emp + "," + fm.FK_EmpText);
 
-
             this.Pub1.AddTD("<a href='../DataUser/FlowFile/" + fm.FK_Dept + "/" + fm.OID + "." + fm.Ext + "' target=_bl ><img src='../Images/FileType/" + fm.Ext + ".gif' border=0/>" + fm.Name + "</a>");
 
+            this.Pub1.AddTD(fm.Note);
             this.Pub1.AddTD(fm.RDT);
+
             this.Pub1.AddTD(fm.FileSize);
 
             if (fm.FK_Emp == BP.Web.WebUser.No)
@@ -156,7 +161,11 @@ public partial class WF_FileManager : WebPage
         }
         this.Pub1.AddTableEnd();
 
+        this.Pub1.AddFieldSetEnd();
         #region 选择文件
+
+        this.Pub1.AddFieldSet("上传文件");
+
         this.Pub1.Add("选择文件:");
         System.Web.UI.HtmlControls.HtmlInputFile file = new HtmlInputFile();
         file.ID = "File1";
@@ -164,10 +173,12 @@ public partial class WF_FileManager : WebPage
         // file.Attributes.Add("style", "Font-Size:XX-Small;WIDTH:60%");
         file.MaxLength = 300;
         this.Pub1.Add(file);
-        #endregion
 
+        this.Pub1.Add("&nbsp;&nbsp;备注:");
+        TextBox tb = new TextBox();
+        tb.ID = "TB_Note";
+        this.Pub1.Add(tb);
 
-        #region 上传文件
         Button btn = new Button();
         btn.ID = "Btn_Submit";
         btn.Text = "上传文件";
@@ -175,11 +186,11 @@ public partial class WF_FileManager : WebPage
         btn.Click += new EventHandler(btn_Upload_Click);
         //btn.CssClass = "Btn";
         this.Pub1.Add(btn);
+
+        this.Pub1.AddFieldSetEnd(); 
         #endregion
 
         //this.Pub1.AddFieldSetEnd(); 
-
-
         if (this.DoType == null)
             return;
 
@@ -199,10 +210,8 @@ public partial class WF_FileManager : WebPage
             System.IO.File.Copy(ffile, toFile, true);
             //  zf.Add(toFile);
         }
-
         //zf.CommitUpdate();
         //zf.Close();
-
         string httpDir = BP.SystemConfig.PathOfDataUser + @"\\FlowFile\\Temp\\" + WebUser.No + "\\";
         if (System.IO.Directory.Exists(httpDir) == false)
         {
@@ -237,6 +246,8 @@ public partial class WF_FileManager : WebPage
             fm.WorkID = this.WorkID;
             fm.FK_Emp = BP.Web.WebUser.No;
             fm.FK_Node = this.FK_Node;
+            fm.Note = this.Pub1.GetTextBoxByID("TB_Note").Text;
+
             fm.FK_Dept = BP.Web.WebUser.FK_Dept;
             fm.FID = this.FID;
             fm.Insert();
