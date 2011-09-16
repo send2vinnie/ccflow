@@ -1,11 +1,11 @@
-//===========================================================================
-// ´ËÎÄ¼şÊÇ×÷Îª ASP.NET 2.0 Web ÏîÄ¿×ª»»µÄÒ»²¿·ÖĞŞ¸ÄµÄ¡£
-// ÀàÃûÒÑ¸ü¸Ä£¬ÇÒÀàÒÑĞŞ¸ÄÎª´ÓÎÄ¼ş¡°App_Code\Migrated\comm\uc\Stub_ucen_ascx_cs.cs¡±µÄ³éÏó»ùÀà 
-// ¼Ì³Ğ¡£
-// ÔÚÔËĞĞÊ±£¬´ËÏîÔÊĞíÄúµÄ Web Ó¦ÓÃ³ÌĞòÖĞµÄÆäËûÀàÊ¹ÓÃ¸Ã³éÏó»ùÀà°ó¶¨ºÍ·ÃÎÊ 
-// ´úÂëÒş²ØÒ³¡£ 
-// ¹ØÁªµÄÄÚÈİÒ³¡°comm\uc\ucen.ascx¡±Ò²ÒÑĞŞ¸Ä£¬ÒÔÒıÓÃĞÂµÄÀàÃû¡£
-// ÓĞ¹Ø´Ë´úÂëÄ£Ê½µÄ¸ü¶àĞÅÏ¢£¬Çë²Î¿¼ http://go.microsoft.com/fwlink/?LinkId=46995 
+ï»¿//===========================================================================
+// æ­¤æ–‡ä»¶æ˜¯ä½œä¸º ASP.NET 2.0 Web é¡¹ç›®è½¬æ¢çš„ä¸€éƒ¨åˆ†ä¿®æ”¹çš„ã€‚
+// ç±»åå·²æ›´æ”¹ï¼Œä¸”ç±»å·²ä¿®æ”¹ä¸ºä»æ–‡ä»¶â€œApp_Code\Migrated\comm\uc\Stub_ucen_ascx_cs.csâ€çš„æŠ½è±¡åŸºç±» 
+// ç»§æ‰¿ã€‚
+// åœ¨è¿è¡Œæ—¶ï¼Œæ­¤é¡¹å…è®¸æ‚¨çš„ Web åº”ç”¨ç¨‹åºä¸­çš„å…¶ä»–ç±»ä½¿ç”¨è¯¥æŠ½è±¡åŸºç±»ç»‘å®šå’Œè®¿é—® 
+// ä»£ç éšè—é¡µã€‚ 
+// å…³è”çš„å†…å®¹é¡µâ€œcomm\uc\ucen.ascxâ€ä¹Ÿå·²ä¿®æ”¹ï¼Œä»¥å¼•ç”¨æ–°çš„ç±»åã€‚
+// æœ‰å…³æ­¤ä»£ç æ¨¡å¼çš„æ›´å¤šä¿¡æ¯ï¼Œè¯·å‚è€ƒ http://go.microsoft.com/fwlink/?LinkId=46995 
 //===========================================================================
 namespace BP.Web.Comm.UC.WF
 {
@@ -23,11 +23,11 @@ namespace BP.Web.Comm.UC.WF
     using BP.Web;
     using BP.Web.Controls;
     /// <summary>
-    ///	UCEn µÄÕªÒªËµÃ÷¡£
+    ///	UCEn çš„æ‘˜è¦è¯´æ˜ã€‚
     /// </summary>
     public partial class UCEn : BP.Web.UC.UCBase3
     {
-        #region add 2010-07-24 ´¦ÀíÊµÌå°ó¶¨µÄµÚ¶ş¸öËã·¨
+        #region add 2010-07-24 å¤„ç†å®ä½“ç»‘å®šçš„ç¬¬äºŒä¸ªç®—æ³•
 
         #region add varable.
         public GroupField currGF = new GroupField();
@@ -87,8 +87,8 @@ namespace BP.Web.Comm.UC.WF
                     rowIdx++;
                     this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
 
-                    #region ¼ÓÈë×Ö¶Î
-                    // ÏÔÊ¾µÄË³ĞòºÅ.
+                    #region åŠ å…¥å­—æ®µ
+                    // æ˜¾ç¤ºçš„é¡ºåºå·.
                     idx++;
                     if (attr.IsBigDoc && attr.UIIsLine)
                     {
@@ -224,7 +224,7 @@ namespace BP.Web.Comm.UC.WF
                     }
                     #endregion add contrals.
 
-                    string desc = attr.Name.Replace("£º", "");
+                    string desc = attr.Name.Replace("ï¼š", "");
                     desc = desc.Replace(":", "");
                     desc = desc.Replace(" ", "");
 
@@ -240,7 +240,7 @@ namespace BP.Web.Comm.UC.WF
                         this.AddTD("width='100%' class=TBReadonly", ctl);
                         this.AddTREnd();
                     }
-                    #endregion ¼ÓÈë×Ö¶Î
+                    #endregion åŠ å…¥å­—æ®µ
                 }
                 //  this.InsertObjects(false);
             }
@@ -248,7 +248,7 @@ namespace BP.Web.Comm.UC.WF
 
             this.AfterBindEn_DealMapExt(enName, mattrs);
 
-            #region ´¦ÀíiFrom µÄ×ÔÊÊÓ¦µÄÎÊÌâ¡£
+            #region å¤„ç†iFrom çš„è‡ªé€‚åº”çš„é—®é¢˜ã€‚
             string js = "\t\n<script type='text/javascript' >";
             foreach (MapDtl dtl in dtls)
             {
@@ -270,33 +270,33 @@ namespace BP.Web.Comm.UC.WF
 
             js += "\t\n</script>";
             this.Add(js);
-            #endregion ´¦ÀíiFrom µÄ×ÔÊÊÓ¦µÄÎÊÌâ¡£
+            #endregion å¤„ç†iFrom çš„è‡ªé€‚åº”çš„é—®é¢˜ã€‚
 
-            #region ´¦ÀíiFrom Save¡£
+            #region å¤„ç†iFrom Saveã€‚
             js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveDtl(dtl) { ";
             js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
-            #endregion ´¦ÀíiFrom Save¡£
+            #endregion å¤„ç†iFrom Saveã€‚
 
-            #region ´¦ÀíiFrom Save M2M¡£
+            #region å¤„ç†iFrom Save M2Mã€‚
             js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveM2M(dtl) { ";
             js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveM2M(); ";
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
-            #endregion ´¦ÀíiFrom µÄ×ÔÊÊÓ¦µÄÎÊÌâ¡£
+            #endregion å¤„ç†iFrom çš„è‡ªé€‚åº”çš„é—®é¢˜ã€‚
 
-            //´¦ÀíÀ©Õ¹.
+            //å¤„ç†æ‰©å±•.
         }
 
 
         public void InsertObjects2Col(bool isJudgeRowIdx, string pk, string fid)
         {
-            #region Ã÷Ï¸±í
+            #region æ˜ç»†è¡¨
             foreach (MapDtl dtl in dtls)
             {
                 if (dtl.IsUse)
@@ -331,9 +331,9 @@ namespace BP.Web.Comm.UC.WF
                 //this.AddTDEnd();
                 this.AddTREnd();
             }
-            #endregion Ã÷Ï¸±í
+            #endregion æ˜ç»†è¡¨
 
-            #region ¿ò¼Ü±í
+            #region æ¡†æ¶è¡¨
             foreach (MapFrame fram in frames)
             {
                 if (fram.IsUse)
@@ -371,7 +371,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("<TD colspan=2 class=FDesc ID='TD" + fram.No + "'><a href='" + src + "'>" + fram.Name + "</a></TD>");
                 this.AddTREnd();
             }
-            #endregion Ã÷Ï¸±í
+            #endregion æ˜ç»†è¡¨
         }
 
         public void BindColumn4(Entity en, string enName)
@@ -418,8 +418,8 @@ namespace BP.Web.Comm.UC.WF
                     if (isLeftNext == true)
                         this.InsertObjects(true);
 
-                    #region ¼ÓÈë×Ö¶Î
-                    // ÏÔÊ¾µÄË³ĞòºÅ.
+                    #region åŠ å…¥å­—æ®µ
+                    // æ˜¾ç¤ºçš„é¡ºåºå·.
                     idx++;
                     if (attr.IsBigDoc && attr.UIIsLine)
                     {
@@ -514,7 +514,7 @@ namespace BP.Web.Comm.UC.WF
                         continue;
                     }
 
-                    //¼ÆËã colspanOfCtl .
+                    //è®¡ç®— colspanOfCtl .
                     int colspanOfCtl = 1;
                     if (attr.UIIsLine)
                         colspanOfCtl = 3;
@@ -675,9 +675,9 @@ namespace BP.Web.Comm.UC.WF
                     }
                     #endregion add contrals.
 
-                    #endregion ¼ÓÈë×Ö¶Î
+                    #endregion åŠ å…¥å­—æ®µ
 
-                    #region Î²ºó´¦Àí¡£
+                    #region å°¾åå¤„ç†ã€‚
 
                     if (colspanOfCtl == 3)
                     {
@@ -696,7 +696,7 @@ namespace BP.Web.Comm.UC.WF
                     #endregion add contrals.
 
                 }
-                // ×îºó´¦Àí²¹³äÉÏËü¡£
+                // æœ€åå¤„ç†è¡¥å……ä¸Šå®ƒã€‚
                 if (isLeftNext == false)
                 {
                     this.AddTD();
@@ -708,7 +708,7 @@ namespace BP.Web.Comm.UC.WF
             this.AddTableEnd();
 
 
-            #region ´¦ÀíiFrom µÄ×ÔÊÊÓ¦µÄÎÊÌâ¡£
+            #region å¤„ç†iFrom çš„è‡ªé€‚åº”çš„é—®é¢˜ã€‚
             string js = "\t\n<script type='text/javascript' >";
             foreach (MapDtl dtl in dtls)
             {
@@ -726,13 +726,13 @@ namespace BP.Web.Comm.UC.WF
             }
             js += "\t\n</script>";
             this.Add(js);
-            #endregion ´¦ÀíiFrom µÄ×ÔÊÊÓ¦µÄÎÊÌâ¡£
+            #endregion å¤„ç†iFrom çš„è‡ªé€‚åº”çš„é—®é¢˜ã€‚
 
-            // ´¦ÀíÀ©Õ¹¡£
+            // å¤„ç†æ‰©å±•ã€‚
             this.AfterBindEn_DealMapExt(enName, mattrs);
 
 
-            #region ´¦ÀíiFrom SaveDtlData¡£
+            #region å¤„ç†iFrom SaveDtlDataã€‚
             js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveDtl(dtl) { ";
 
@@ -740,20 +740,20 @@ namespace BP.Web.Comm.UC.WF
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
-            #endregion ´¦ÀíiFrom SaveDtlData¡£
+            #endregion å¤„ç†iFrom SaveDtlDataã€‚
 
-            #region ´¦ÀíiFrom  SaveM2M Save¡£
+            #region å¤„ç†iFrom  SaveM2M Saveã€‚
             js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveM2M(dtl) { ";
             js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveM2M();";
             js += "\t\n } ";
             js += "\t\n</script>";
             this.Add(js);
-            #endregion ´¦ÀíiFrom  SaveM2M Save¡£
+            #endregion å¤„ç†iFrom  SaveM2M Saveã€‚
         }
         private void AfterBindEn_DealMapExt(string enName, MapAttrs mattrs)
         {
-            #region ´¦ÀíÀ©Õ¹ÉèÖÃ
+            #region å¤„ç†æ‰©å±•è®¾ç½®
             MapExts mes = new MapExts(enName);
             if (mes.Count != 0)
             {
@@ -778,7 +778,7 @@ namespace BP.Web.Comm.UC.WF
                         DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
                         ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
                         break;
-                    case MapExtXmlList.FullCtrl: // ×Ô¶¯Ìî³ä.
+                    case MapExtXmlList.FullCtrl: // è‡ªåŠ¨å¡«å…….
                         TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
                         tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                         tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
@@ -787,7 +787,7 @@ namespace BP.Web.Comm.UC.WF
                         TextBox tbJS = this.GetTextBoxByID("TB_" + me.AttrOfOper);
                         tbJS.Attributes[me.Tag2] = me.Tag1 + "(this);";
                         break;
-                    case MapExtXmlList.PopVal: // µ¯³ö´°.
+                    case MapExtXmlList.PopVal: // å¼¹å‡ºçª—.
                         TB tb = this.GetTBByID("TB_" + me.AttrOfOper);
                         tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
                         break;
@@ -795,9 +795,9 @@ namespace BP.Web.Comm.UC.WF
                         break;
                 }
             }
-            #endregion ´¦ÀíÀ©Õ¹ÉèÖÃ
+            #endregion å¤„ç†æ‰©å±•è®¾ç½®
 
-            #region ´¦Àí JS ×Ô¶¯¼ÆËã.
+            #region å¤„ç† JS è‡ªåŠ¨è®¡ç®—.
             string js = "";
             for (int i = 0; i < mattrs.Count; i++)
             {
@@ -845,11 +845,11 @@ namespace BP.Web.Comm.UC.WF
                 }
             }
             this.Add(js);
-            #endregion ´¦Àí JS ×Ô¶¯¼ÆËã.
+            #endregion å¤„ç† JS è‡ªåŠ¨è®¡ç®—.
         }
         public void InsertObjects(bool isJudgeRowIdx)
         {
-            #region Ã÷Ï¸±í
+            #region æ˜ç»†è¡¨
             foreach (MapDtl dtl in dtls)
             {
                 if (dtl.IsUse)
@@ -886,9 +886,9 @@ namespace BP.Web.Comm.UC.WF
                 this.AddTDEnd();
                 this.AddTREnd();
             }
-            #endregion Ã÷Ï¸±í
+            #endregion æ˜ç»†è¡¨
 
-            #region ¶à¶Ô¶àµÄ¹ØÏµ
+            #region å¤šå¯¹å¤šçš„å…³ç³»
             foreach (MapM2M M2M in m2ms)
             {
                 if (M2M.IsUse)
@@ -947,9 +947,9 @@ namespace BP.Web.Comm.UC.WF
                 this.AddTDEnd();
                 this.AddTREnd();
             }
-            #endregion ¶à¶Ô¶àµÄ¹ØÏµ
+            #endregion å¤šå¯¹å¤šçš„å…³ç³»
 
-            #region ¿ò¼Ü
+            #region æ¡†æ¶
             foreach (MapFrame fram in frames)
             {
                 if (fram.IsUse)
@@ -1009,11 +1009,11 @@ namespace BP.Web.Comm.UC.WF
                 this.AddTDEnd();
                 this.AddTREnd();
             }
-            #endregion ¿ò¼Ü
+            #endregion æ¡†æ¶
         }
         #endregion
 
-        #region Êä³ö×ÔÓÉ¸ñÊ½µÄ±íµ¥.
+        #region è¾“å‡ºè‡ªç”±æ ¼å¼çš„è¡¨å•.
         public string FK_MapData = null;
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
@@ -1025,7 +1025,7 @@ namespace BP.Web.Comm.UC.WF
             MapData md = new MapData();
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
 
-            #region Êä³öÊúÏßÓë±êÇ© & ³¬Á¬½Ó Img.
+            #region è¾“å‡ºç«–çº¿ä¸æ ‡ç­¾ & è¶…è¿æ¥ Img.
             FrmLabs labs = new FrmLabs(this.FK_MapData);
             foreach (FrmLab lab in labs)
             {
@@ -1053,14 +1053,14 @@ namespace BP.Web.Comm.UC.WF
             {
                 if (line.X1 == line.X2)
                 {
-                    /* Ò»µÀÊúÏß */
+                    /* ä¸€é“ç«–çº¿ */
                     float h = line.Y1 - line.Y2;
                     h = Math.Abs(h);
                     this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + line.BorderWidth + "px; height:" + h + "px;background-color:" + line.BorderColorHtml + "\" />");
                 }
                 else
                 {
-                    /* Ò»µÀºáÏß */
+                    /* ä¸€é“æ¨ªçº¿ */
                     float w = line.X2 - line.X1;
                     w = Math.Abs(w);
                     this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px;background-color:" + line.BorderColorHtml + "\" />");
@@ -1078,21 +1078,23 @@ namespace BP.Web.Comm.UC.WF
             FrmImgs imgs = new FrmImgs(this.FK_MapData);
             foreach (FrmImg img in imgs)
             {
-                this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + img.Y + "px;text-align:left;vertical-align:top' >");
+                float y = img.Y + (float)70;
+                this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
                 if (string.IsNullOrEmpty(img.LinkURL) == false)
                 {
-                    this.Add("\t\n<a href='" + img.LinkURL + "' target=" + img.LinkTarget + " ><img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px' /></a>");
+                    this.Add("\t\n<a href='"+img.LinkURL+"' target="+img.LinkTarget+" ><img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;' /></a>");
                 }
                 else
                 {
-                    this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px' />");
+                    this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;' />");
+
                 }
                 this.Add("\t\n</DIV>");
                 //style="position:absolute; left:170px; top:-20px; width:413px; height:478px"  position:absolute;left:" + img.X + "px;top:" + img.Y + "px;
             }
-            #endregion Êä³öÊúÏßÓë±êÇ©
+            #endregion è¾“å‡ºç«–çº¿ä¸æ ‡ç­¾
 
-            #region Êä³ö¿Ø¼ş.
+            #region è¾“å‡ºæ§ä»¶.
             foreach (MapAttr attr in mattrs)
             {
                 if (attr.UIVisible == false)
@@ -1104,14 +1106,28 @@ namespace BP.Web.Comm.UC.WF
                 #region add contrals.
                 TB tb = new TB();
                 tb.ID = "TB_" + attr.KeyOfEn;
-                tb.Enabled = attr.UIIsEnable;
+                if (attr.UIIsEnable)
+                {
+                    tb.Enabled = attr.UIIsEnable;
+                }
+                else
+                {
+                    tb.ReadOnly = true;
+                }
                 tb.Attributes["tabindex"] = attr.IDX.ToString();
                 if (this.IsReadonly)
                     tb.ReadOnly = true;
                 switch (attr.LGType)
                 {
                     case FieldTypeS.Normal:
-                        tb.Enabled = attr.UIIsEnable;
+                        if (attr.UIIsEnable)
+                        {
+                            tb.Enabled = attr.UIIsEnable;
+                        }
+                        else
+                        {
+                            tb.ReadOnly = true;
+                        }
                         switch (attr.MyDataType)
                         {
                             case BP.DA.DataType.AppString:
@@ -1261,7 +1277,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("</DIV>");
             }
 
-            // Êä³ö rb.
+            // è¾“å‡º rb.
             BP.Sys.FrmRBs myrbs = new FrmRBs();
             myrbs.RetrieveFromCash(FrmRBAttr.FK_MapData, enName);
             MapAttr attrRB=new MapAttr();
@@ -1303,9 +1319,9 @@ namespace BP.Web.Comm.UC.WF
                         rb.Checked = true;
                 }
             }
-            #endregion Êä³ö¿Ø¼ş.
+            #endregion è¾“å‡ºæ§ä»¶.
 
-            #region Êä³öÃ÷Ï¸.
+            #region è¾“å‡ºæ˜ç»†.
             MapDtls dtls = new MapDtls(enName);
             foreach (MapDtl dtl in dtls)
             {
@@ -1354,13 +1370,15 @@ namespace BP.Web.Comm.UC.WF
                 js += "\t\n</script>";
                 this.Add(js);
             }
-            #endregion Êä³öÃ÷Ï¸.
+            #endregion è¾“å‡ºæ˜ç»†.
 
-            #region ¶à¶Ô¶àµÄ¹ØÏµ
+            #region å¤šå¯¹å¤šçš„å…³ç³»
             foreach (MapM2M M2M in m2ms)
             {
+
                 this.Add("<DIV id='Fd" + M2M.No + "' style='position:absolute; left:" + M2M.X + "px; top:" + M2M.Y + "px; width:" + M2M.Width + "px; height:" + M2M.Height + "px;text-align: left;' >");
                 this.Add("<span>");
+
                 string src = "M2M.aspx?FK_MapM2M=" + M2M.No;
                 string paras = this.RequestParas;
                 try
@@ -1371,16 +1389,24 @@ namespace BP.Web.Comm.UC.WF
                 catch
                 {
                 }
+
                 if (paras.Contains("WorkID=") == false)
                     paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
+
                 src += "&r=q" + paras;
+
+                //  if (M2M.IsAutoSize)
+                //    this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                //else
+
                 this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.Width + "' height='" + M2M.Height + "' scrolling=auto /></iframe>");
+
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
-            #endregion ¶à¶Ô¶àµÄ¹ØÏµ
+            #endregion å¤šå¯¹å¤šçš„å…³ç³»
 
-            #region Êä³ö¸½¼ş
+            #region è¾“å‡ºé™„ä»¶
             FrmAttachments aths = new FrmAttachments(enName);
             if (isReadonly == false)
             {
@@ -1399,9 +1425,9 @@ namespace BP.Web.Comm.UC.WF
                     this.Add("</DIV>");
                 }
             }
-            #endregion Êä³ö¸½¼ş.
+            #endregion è¾“å‡ºé™„ä»¶.
 
-            #region Êä³ö img ¸½¼ş
+            #region è¾“å‡º img é™„ä»¶
             FrmImgAths imgAths = new FrmImgAths(enName);
             if (imgAths.Count != 0 && this.IsReadonly==false)
             {
@@ -1422,7 +1448,7 @@ namespace BP.Web.Comm.UC.WF
 
                 string url = "ImgAth.aspx?W=" + ath.W + "&H=" + ath.H + "&MyPK=" + en.PKVal + "&ImgAth=" + ath.MyPK;
                 if (isReadonly == false)
-                    this.AddFieldSet("<a href=\"javascript:ImgAth('" + url + "','" + ath.MyPK + "');\" >±à¼­:" + ath.Name + "</a>");
+                    this.AddFieldSet("<a href=\"javascript:ImgAth('" + url + "','" + ath.MyPK + "');\" >ç¼–è¾‘:" + ath.Name + "</a>");
 
                 this.Add("\t\n<img src='/Flow/DataUser/ImgAth/Data/" + ath.MyPK + "_" + en.PKVal + ".png' onerror=\"this.src='./../Data/Img/LogH.PNG'\" name='Img" + ath.MyPK + "' id='Img" + ath.MyPK + "' style='padding: 0px;margin: 0px;border-width: 0px;' width=" + ath.W + " height=" + ath.H + " />");
 
@@ -1431,9 +1457,9 @@ namespace BP.Web.Comm.UC.WF
 
                 this.Add("\t\n</DIV>");
             }
-            #endregion Êä³ö¸½¼ş.
+            #endregion è¾“å‡ºé™„ä»¶.
 
-            // ´¦ÀíÀ©Õ¹.
+            // å¤„ç†æ‰©å±•.
             if (isReadonly == false)
                 this.AfterBindEn_DealMapExt(enName, mattrs);
             return;
@@ -1446,7 +1472,7 @@ namespace BP.Web.Comm.UC.WF
             string path = System.Web.HttpContext.Current.Request.ApplicationPath;
             int i = 0;
 
-            #region ¼ÓÈëÒ»¶Ô¶àµÄÊµÌå±à¼­
+            #region åŠ å…¥ä¸€å¯¹å¤šçš„å®ä½“ç¼–è¾‘
             AttrsOfOneVSM oneVsM = en.EnMap.AttrsOfOneVSM;
             if (oneVsM.Count > 0)
             {
@@ -1479,7 +1505,7 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion
 
-            #region ¼ÓÈëËûÃÅµÄ ·½·¨
+            #region åŠ å…¥ä»–é—¨çš„ æ–¹æ³•
             RefMethods myreffuncs = en.EnMap.HisRefMethods;
             if (myreffuncs.Count > 0)
             {
@@ -1508,7 +1534,7 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion
 
-            #region ¼ÓÈëËûµÄÃ÷Ï¸
+            #region åŠ å…¥ä»–çš„æ˜ç»†
             EnDtls enDtls = en.EnMap.Dtls;
             //  string path = this.Request.ApplicationPath;
             if (enDtls.Count > 0)
@@ -1656,7 +1682,7 @@ namespace BP.Web.Comm.UC.WF
             this.AddTDEnd();
         }
         /// <summary>
-        /// Ôö¼Ó¿Õ¼ş
+        /// å¢åŠ ç©ºä»¶
         /// </summary>
         /// <param name="desc"></param>
         /// <param name="tb"></param>
@@ -1715,7 +1741,7 @@ namespace BP.Web.Comm.UC.WF
             this.Add("</td>");
         }
 
-        #region ·½·¨
+        #region æ–¹æ³•
         public bool IsReadonly
         {
             get
@@ -1791,7 +1817,7 @@ namespace BP.Web.Comm.UC.WF
                     }
                     else if (attr.MyFieldType == FieldType.MultiValues)
                     {
-                        /* Èç¹ûÊÇ¶àÖµµÄ.*/
+                        /* å¦‚æœæ˜¯å¤šå€¼çš„.*/
                         LB lb = new LB(attr);
                         lb.Visible = true;
                         lb.Height = 128;
@@ -1825,7 +1851,8 @@ namespace BP.Web.Comm.UC.WF
                                 area.Rows = 8;
                                 area.TextMode = TextBoxMode.MultiLine;
                                 if (isReadonly)
-                                    area.Enabled = false;
+                                    //area.Enabled = false;
+                                    area.ReadOnly = true; 
                                 this.AddContral(attr.Desc, area);
                             }
                             else
@@ -1835,7 +1862,8 @@ namespace BP.Web.Comm.UC.WF
 
                                 tb.ID = "TB_" + attr.Key;
                                 if (isReadonly)
-                                    tb.Enabled = false;
+                                    //tb.Enabled = false;
+                                    tb.ReadOnly = true;
                                 switch (attr.MyDataType)
                                 {
                                     case DataType.AppMoney:
@@ -1871,10 +1899,10 @@ namespace BP.Web.Comm.UC.WF
                 {
                     if (isReadonly || !attr.UIIsReadonly)
                     {
-                        /* Èç¹ûÊÇ DDLIsEnable µÄ, ¾ÍÒªÕÒµ½. */
+                        /* å¦‚æœæ˜¯ DDLIsEnable çš„, å°±è¦æ‰¾åˆ°. */
                         if (attr.MyFieldType == FieldType.Enum)
                         {
-                            /* Èç¹ûÊÇ enum ÀàĞÍ */
+                            /* å¦‚æœæ˜¯ enum ç±»å‹ */
                             int enumKey = 0;
                             try
                             {
@@ -1882,7 +1910,7 @@ namespace BP.Web.Comm.UC.WF
                             }
                             catch 
                             {
-                                throw new Exception("Ä¬ÈÏÖµ´íÎó£º" + attr.Key + " = " + val.ToString());
+                                throw new Exception("é»˜è®¤å€¼é”™è¯¯ï¼š" + attr.Key + " = " + val.ToString());
                             }
 
                             BP.Sys.SysEnum enEnum = new BP.Sys.SysEnum(attr.UIBindKey, "CH", enumKey);
@@ -1900,7 +1928,7 @@ namespace BP.Web.Comm.UC.WF
                         }
                         else
                         {
-                            /* Èç¹ûÊÇ ens ÀàĞÍ */
+                            /* å¦‚æœæ˜¯ ens ç±»å‹ */
                             Entities ens = ClassFactory.GetEns(attr.UIBindKey);
                             Entity en1 = ens.GetNewEntity;
                             en1.SetValByKey(attr.UIRefKeyValue, val.ToString());
@@ -1919,7 +1947,7 @@ namespace BP.Web.Comm.UC.WF
                                 else
                                 {
                                     lab = "" + val.ToString();
-                                    //lab="Ã»ÓĞ¹ØÁªµ½Öµ"+val.ToString()+"Class="+attr.UIBindKey+"EX="+ex.Message;
+                                    //lab="æ²¡æœ‰å…³è”åˆ°å€¼"+val.ToString()+"Class="+attr.UIBindKey+"EX="+ex.Message;
                                 }
                             }
 
@@ -1931,7 +1959,7 @@ namespace BP.Web.Comm.UC.WF
                     }
                     else
                     {
-                        /* ¿ÉÒÔÊ¹ÓÃµÄÇé¿ö. */
+                        /* å¯ä»¥ä½¿ç”¨çš„æƒ…å†µ. */
                         DDL ddl1 = new DDL(attr, val.ToString(), "enumLab", true, this.Page.Request.ApplicationPath);
                         ddl1.ID = "DDL_" + attr.Key;
                         this.AddContral(attr.Desc, ddl1, true);
@@ -1951,7 +1979,7 @@ namespace BP.Web.Comm.UC.WF
                     this.AddTREnd();
 
                 isLeft = !isLeft;
-            } // ½áÊøÑ­»·.
+            } // ç»“æŸå¾ªç¯.
 
             this.Add("</TABLE>");
         }
@@ -1985,7 +2013,7 @@ namespace BP.Web.Comm.UC.WF
                     }
                     else if (attr.MyFieldType == FieldType.MultiValues)
                     {
-                        /* Èç¹ûÊÇ¶àÖµµÄ.*/
+                        /* å¦‚æœæ˜¯å¤šå€¼çš„.*/
                         LB lb = new LB(attr);
                         lb.Visible = true;
                         lb.Height = 128;
@@ -2028,9 +2056,9 @@ namespace BP.Web.Comm.UC.WF
                 else if (attr.UIContralType == UIContralType.CheckBok)
                 {
                     if (en.GetValBooleanByKey(attr.Key))
-                        this.AddContral(attr.Desc, "ÊÇ");
+                        this.AddContral(attr.Desc, "æ˜¯");
                     else
-                        this.AddContral(attr.Desc, "·ñ");
+                        this.AddContral(attr.Desc, "å¦");
                 }
                 else if (attr.UIContralType == UIContralType.DDL)
                 {
@@ -2049,7 +2077,7 @@ namespace BP.Web.Comm.UC.WF
                     this.AddTREnd();
 
                 isLeft = !isLeft;
-            } // ½áÊøÑ­»·.
+            } // ç»“æŸå¾ªç¯.
 
             this.Add("</TABLE>");
 
@@ -2118,7 +2146,7 @@ namespace BP.Web.Comm.UC.WF
                     }
                     else if (attr.MyFieldType == FieldType.MultiValues)
                     {
-                        /* Èç¹ûÊÇ¶àÖµµÄ.*/
+                        /* å¦‚æœæ˜¯å¤šå€¼çš„.*/
                         LB lb = new LB(attr);
                         lb.Visible = true;
 
@@ -2140,7 +2168,7 @@ namespace BP.Web.Comm.UC.WF
                         {
                             if (attr.UIHeight != 0)
                             {
-                                /* doc ÎÄ±¾ÀàĞÍ¡£¡¡*/
+                                /* doc æ–‡æœ¬ç±»å‹ã€‚ã€€*/
                                 TB area = new TB();
                                 area.LoadMapAttr(attr);
                                 area.ID = "TB_" + attr.Key;
@@ -2232,10 +2260,10 @@ namespace BP.Web.Comm.UC.WF
                 {
                     if (isReadonly || !attr.UIIsReadonly)
                     {
-                        /* Èç¹ûÊÇ DDLIsEnable µÄ, ¾ÍÒªÕÒµ½. */
+                        /* å¦‚æœæ˜¯ DDLIsEnable çš„, å°±è¦æ‰¾åˆ°. */
                         if (attr.MyFieldType == FieldType.Enum)
                         {
-                            /* Èç¹ûÊÇ enum ÀàĞÍ */
+                            /* å¦‚æœæ˜¯ enum ç±»å‹ */
                             int enumKey = int.Parse(val.ToString());
                             BP.Sys.SysEnum enEnum = new BP.Sys.SysEnum(attr.UIBindKey, "CH", enumKey);
 
@@ -2252,7 +2280,7 @@ namespace BP.Web.Comm.UC.WF
                         }
                         else
                         {
-                            /* Èç¹ûÊÇ ens ÀàĞÍ */
+                            /* å¦‚æœæ˜¯ ens ç±»å‹ */
                             Entities ens = ClassFactory.GetEns(attr.UIBindKey);
                             Entity en1 = ens.GetNewEntity;
                             en1.SetValByKey(attr.UIRefKeyValue, val.ToString());
@@ -2271,7 +2299,7 @@ namespace BP.Web.Comm.UC.WF
                                 else
                                 {
                                     lab = "" + val.ToString();
-                                    //lab="Ã»ÓĞ¹ØÁªµ½Öµ"+val.ToString()+"Class="+attr.UIBindKey+"EX="+ex.Message;
+                                    //lab="æ²¡æœ‰å…³è”åˆ°å€¼"+val.ToString()+"Class="+attr.UIBindKey+"EX="+ex.Message;
                                 }
                             }
 
@@ -2285,7 +2313,7 @@ namespace BP.Web.Comm.UC.WF
                     }
                     else
                     {
-                        /* ¿ÉÒÔÊ¹ÓÃµÄÇé¿ö. */
+                        /* å¯ä»¥ä½¿ç”¨çš„æƒ…å†µ. */
                         DDL ddl1 = new DDL(attr, val.ToString(), "enumLab", true, this.Page.Request.ApplicationPath);
                         ddl1.ID = "DDL_" + attr.Key;
                         //ddl1.SelfBindKey = ens.ToString();
@@ -2308,12 +2336,12 @@ namespace BP.Web.Comm.UC.WF
                     this.AddTD("class='Note'", ad1.Desc);
 
                 this.AddTREnd();
-            } //½áÊøÑ­»·.
+            } //ç»“æŸå¾ªç¯.
 
-            #region ²é¿´ÊÇ·ñ°üº¬ MyFile×Ö¶ÎÈç¹ûÓĞ¾ÍÈÏÎªÊÇ¸½¼ş¡£
+            #region æŸ¥çœ‹æ˜¯å¦åŒ…å« MyFileå­—æ®µå¦‚æœæœ‰å°±è®¤ä¸ºæ˜¯é™„ä»¶ã€‚
             if (en.EnMap.Attrs.Contains("MyFileName"))
             {
-                /* Èç¹û°üº¬Õâ¶ş¸ö×Ö¶Î¡£*/
+                /* å¦‚æœåŒ…å«è¿™äºŒä¸ªå­—æ®µã€‚*/
                 string fileName = en.GetValStringByKey("MyFileName");
                 string filePath = en.GetValStringByKey("MyFilePath");
                 string fileExt = en.GetValStringByKey("MyFileExt");
@@ -2321,7 +2349,7 @@ namespace BP.Web.Comm.UC.WF
                 string url = "";
                 if (fileExt != "")
                 {
-                    // ÏµÍ³ÎïÀíÂ·¾¶¡£
+                    // ç³»ç»Ÿç‰©ç†è·¯å¾„ã€‚
                     string path = this.Request.PhysicalApplicationPath.ToLower();
                     string path1 = filePath.ToLower();
                     path1 = path1.Replace(path, "");
@@ -2329,7 +2357,7 @@ namespace BP.Web.Comm.UC.WF
                 }
 
                 this.AddTR();
-                this.AddTD("align=right nowrap=true class='FDesc'", "¸½¼ş»òÍ¼Æ¬:");
+                this.AddTD("align=right nowrap=true class='FDesc'", "é™„ä»¶æˆ–å›¾ç‰‡:");
                 HtmlInputFile file = new HtmlInputFile();
                 file.ID = "file";
                 file.Attributes.Add("style", "width:60%");
@@ -2339,11 +2367,11 @@ namespace BP.Web.Comm.UC.WF
                 if (fileExt != "")
                 {
                     Button btn1 = new Button();
-                    btn1.Text = "ÒÆ³ı";
+                    btn1.Text = "ç§»é™¤";
                     btn1.ID = "Btn_DelFile";
                     btn1.Attributes.Add("class", "Btn1");
 
-                    btn1.Attributes["onclick"] += " return confirm('´Ë²Ù×÷ÒªÖ´ĞĞÒÆ³ı¸½¼ş»òÍ¼Æ¬£¬ÊÇ·ñ¼ÌĞø£¿');";
+                    btn1.Attributes["onclick"] += " return confirm('æ­¤æ“ä½œè¦æ‰§è¡Œç§»é™¤é™„ä»¶æˆ–å›¾ç‰‡ï¼Œæ˜¯å¦ç»§ç»­ï¼Ÿ');";
                     this.Add(btn1);
                 }
                 this.Add("</TD>");
@@ -2362,7 +2390,7 @@ namespace BP.Web.Comm.UC.WF
             {
                 btn = new Button();
                 btn.ID = "Btn_New";
-                btn.Text = "  ĞÂ ½¨  ";
+                btn.Text = "  æ–° å»º  ";
                 btn.Attributes.Add("class", "Btn1");
 
                 this.Add(btn);
@@ -2373,7 +2401,7 @@ namespace BP.Web.Comm.UC.WF
             {
                 btn = new Button();
                 btn.ID = "Btn_Save";
-                btn.Text = "  ±£  ´æ  ";
+                btn.Text = "  ä¿  å­˜  ";
                 btn.Attributes.Add("class", "Btn1");
 
                 this.Add(btn);
@@ -2385,15 +2413,15 @@ namespace BP.Web.Comm.UC.WF
             {
                 btn = new Button();
                 btn.ID = "Btn_Del";
-                btn.Text = "  É¾  ³ı  ";
+                btn.Text = "  åˆ   é™¤  ";
                 btn.Attributes.Add("class", "Btn1");
 
-                btn.Attributes["onclick"] = " return confirm('ÄúÈ·¶¨ÒªÖ´ĞĞÉ¾³ıÂğ£¿');";
+                btn.Attributes["onclick"] = " return confirm('æ‚¨ç¡®å®šè¦æ‰§è¡Œåˆ é™¤å—ï¼Ÿ');";
                 this.Add(btn);
                 this.Add("&nbsp;");
             }
 
-            this.Add("&nbsp;<input class='Btn1' type=button onclick='javascript:window.close()' value='  ¹Ø  ±Õ  ' />");
+            this.Add("&nbsp;<input class='Btn1' type=button onclick='javascript:window.close()' value='  å…³  é—­  ' />");
 
             this.Add("</TD>");
             this.AddTREnd();
@@ -2565,7 +2593,7 @@ namespace BP.Web.Comm.UC.WF
         {
             string refstrs = "";
 
-            #region ¼ÓÈëÒ»¶Ô¶àµÄÊµÌå±à¼­
+            #region åŠ å…¥ä¸€å¯¹å¤šçš„å®ä½“ç¼–è¾‘
             AttrsOfOneVSM oneVsM = en.EnMap.AttrsOfOneVSM;
             if (oneVsM.Count > 0)
             {
@@ -2591,7 +2619,7 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion
 
-            #region ¼ÓÈëËûÃÅµÄÏà¹Ø¹¦ÄÜ
+            #region åŠ å…¥ä»–é—¨çš„ç›¸å…³åŠŸèƒ½
             //			SysUIEnsRefFuncs reffuncs = en.GetNewEntities.HisSysUIEnsRefFuncs ;
             //			if ( reffuncs.Count > 0  )
             //			{
@@ -2603,7 +2631,7 @@ namespace BP.Web.Comm.UC.WF
             //			}
             #endregion
 
-            #region ¼ÓÈëËûµÄÃ÷Ï¸
+            #region åŠ å…¥ä»–çš„æ˜ç»†
             EnDtls enDtls = en.EnMap.Dtls;
             if (enDtls.Count > 0)
             {
@@ -2631,19 +2659,19 @@ namespace BP.Web.Comm.UC.WF
             return refstrs;
         }
 
-        #region Web ´°ÌåÉè¼ÆÆ÷Éú³ÉµÄ´úÂë
+        #region Web çª—ä½“è®¾è®¡å™¨ç”Ÿæˆçš„ä»£ç 
         override protected void OnInit(EventArgs e)
         {
             //
-            // CODEGEN: ¸Ãµ÷ÓÃÊÇ ASP.NET Web ´°ÌåÉè¼ÆÆ÷Ëù±ØĞèµÄ¡£
+            // CODEGEN: è¯¥è°ƒç”¨æ˜¯ ASP.NET Web çª—ä½“è®¾è®¡å™¨æ‰€å¿…éœ€çš„ã€‚
             //
             InitializeComponent();
             base.OnInit(e);
         }
 
         /// <summary>
-        ///		Éè¼ÆÆ÷Ö§³ÖËùĞèµÄ·½·¨ - ²»ÒªÊ¹ÓÃ´úÂë±à¼­Æ÷
-        ///		ĞŞ¸Ä´Ë·½·¨µÄÄÚÈİ¡£
+        ///		è®¾è®¡å™¨æ”¯æŒæ‰€éœ€çš„æ–¹æ³• - ä¸è¦ä½¿ç”¨ä»£ç ç¼–è¾‘å™¨
+        ///		ä¿®æ”¹æ­¤æ–¹æ³•çš„å†…å®¹ã€‚
         /// </summary>
         private void InitializeComponent()
         {

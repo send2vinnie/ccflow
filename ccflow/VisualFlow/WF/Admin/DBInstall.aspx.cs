@@ -52,6 +52,9 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     //删除公文类.
                     sql = "DELETE WF_FlowSort WHERE No='01'";
                     BP.DA.DBAccess.RunSQLs(sql);
+
+                    string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
+                    BP.DA.DBAccess.RunSQLScript(scrpts);
                 }
                 return;
             }

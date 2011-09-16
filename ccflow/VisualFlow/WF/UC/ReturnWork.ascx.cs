@@ -130,12 +130,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         this.ToolBar1.AddBtn("Btn_OK", this.ToE("OK", "确定"));
         this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
         this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_FL_Click);
-        //if (nd.IsCanHidReturn)
-        //{
-        //    this.ToolBar1.AddBtn("Btn_ReturnHid", "隐形退回");
-        //    this.ToolBar1.GetBtnByID("Btn_ReturnHid").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
-        //    this.ToolBar1.GetBtnByID("Btn_ReturnHid").Click += new EventHandler(WF_UC_ReturnWork_FL_Click);
-        //}
 
         WorkNodes wns = new WorkNodes();
         if (wns.Count == 0)
@@ -195,7 +189,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
 
             this.ToMsg(this.ToEP2("WReInfo", "@任务被你成功退回到【{0}】，退回给【{1}】。", mywn.HisNode.Name, mywn.HisWork.Rec),
                 "info");
-            //  this.WinCloseWithMsg(this.ToEP2("WReInfo", "@任务被你成功退回到【{0}】，退回给【{1}】。", mywn.HisNode.Name, mywn.HisWork.Rec));
             return;
         }
         catch (Exception ex)
@@ -280,16 +273,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             try
             {
                 WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
-
-                //if (nd.HisNodeWorkType == NodeWorkType.WorkHL)
-                //{
-                //    wn = new WorkNode(this.FID, this.FK_Node);
-                //}
-                //else
-                //{
-                //    wn = new WorkNode(this.WorkID, this.FK_Node);
-                //}
-
                 WorkNode pwn = wn.GetPreviousWorkNode();
                 switch (pwn.HisNode.HisNodeWorkType)
                 {
@@ -315,27 +298,28 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 {
                     case ReturnRole.CanNotReturn:
                         return;
-                    case ReturnRole.ReturnPreviousAnyNodes:
-                        int nodeId = wn.GetPreviousWorkNode().HisNode.NodeID;
+                    case ReturnRole.ReturnAnyNodes:
                         foreach (WorkNode mywn in wns)
                         {
-                            if (mywn.HisNode.NodeID == nodeId)
+                            if (mywn.HisNode.NodeID == this.FK_Node)
                                 continue;
 
                             this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
                         }
                         break;
                     case ReturnRole.ReturnPreviousNode:
+                        int nodeId = wn.GetPreviousWorkNode().HisNode.NodeID;
                         foreach (WorkNode mywn in wns)
                         {
-                            if (mywn.HisNode.NodeID == this.FK_Node)
+                            if (mywn.HisNode.NodeID != this.FK_Node)
                                 continue;
+
                             this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
                         }
                         break;
-                    case ReturnRole.ReturnSpecifiedNodes:
+                    case ReturnRole.ReturnSpecifiedNodes: //退回指定的节点。
                         NodeReturns rnds = new NodeReturns();
-                        rnds.Retrieve(NodeReturnAttr.FK_Node, nd.NodeID);
+                        rnds.Retrieve(NodeReturnAttr.FK_Node, this.FK_Node);
                         foreach (WorkNode mywn in wns)
                         {
                             if (mywn.HisNode.NodeID == this.FK_Node)
