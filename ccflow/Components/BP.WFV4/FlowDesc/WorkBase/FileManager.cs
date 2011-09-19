@@ -20,6 +20,7 @@ namespace BP.WF
         public const string WorkID = "WorkID";
         public const string FK_Dept = "FK_Dept";
         public const string FID = "FID";
+        public const string Note = "Note";
     }
 	/// <summary>
 	/// 流程附件
@@ -46,6 +47,17 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(FileManagerAttr.FID, value);
+            }
+        }
+        public string Note
+        {
+            get
+            {
+                return this.GetValStringByKey(FileManagerAttr.Note);
+            }
+            set
+            {
+                this.SetValByKey(FileManagerAttr.Note, value);
             }
         }
         public string FK_Node
@@ -187,6 +199,9 @@ namespace BP.WF
                 map.AddDDLEntities(FileManagerAttr.FK_Node, null, "节点", new NodeExts(), false);
                 map.AddTBString(FileManagerAttr.Name, null, "名称", true, false, 1, 100, 100);
                 map.AddTBString(FileManagerAttr.Ext, null, "扩展", true, false, 0, 100, 100);
+
+                map.AddTBString(FileManagerAttr.Note, null, "备注", true, false, 0, 800, 100);
+
                 map.AddTBInt(FileManagerAttr.FileSize, 10, "大小", true, false);
                 map.AddDDLEntities(FileManagerAttr.FK_Emp, null, "上传人", new Port.Emps(), false);
 

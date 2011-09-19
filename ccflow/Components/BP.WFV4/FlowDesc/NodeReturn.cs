@@ -60,11 +60,11 @@ namespace BP.WF
         /// <summary>
         /// 工作流程
         /// </summary>
-        public string FK_Node
+        public int FK_Node
         {
             get
             {
-                return this.GetValStringByKey(NodeReturnAttr.FK_Node);
+                return this.GetValIntByKey(NodeReturnAttr.FK_Node);
             }
             set
             {
@@ -94,10 +94,10 @@ namespace BP.WF
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
 
-                map.AddTBStringPK(NodeReturnAttr.FK_Node, null, "流程编号", true, true, 1, 20, 20);
-                map.AddDDLEntitiesPK(NodeReturnAttr.ReturnN, null, "节点", new NodeExts(), true);
+                map.AddTBIntPK(NodeReturnAttr.FK_Node, 0, "节点", true, true);
+                map.AddTBIntPK(NodeReturnAttr.ReturnN, 0, "节点", true, true);
+
                 this._enMap = map;
-                
                 return this._enMap;
             }
         }

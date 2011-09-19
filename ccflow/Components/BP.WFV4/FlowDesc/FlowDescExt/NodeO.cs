@@ -355,7 +355,6 @@ namespace BP.WF.Ext
                 rm.ClassMethodName = this.ToString() + ".DoListen";
                 map.AddRefMethod(rm);
 
-                //rm = new RefMethod();
                 //rm.Title = this.ToE("DoFeatureSet", "特性集"); // "调用事件接口";
                 //rm.ClassMethodName = this.ToString() + ".DoFeatureSet";
                 //map.AddRefMethod(rm);
@@ -364,6 +363,14 @@ namespace BP.WF.Ext
                 return this._enMap;
             }
         }
+
+
+        public string DoCanReturnNodes()
+        {
+            PubClass.WinOpen("./../WF/Admin/CanReturnNodes.aspx?FK_Node=" + this.NodeID + "&FK_Flow=" + this.FK_Flow, "可退回的节点", "Bill", 500, 300, 200, 300);
+            return null;
+        }
+
         public string DoListen()
         {
             BP.WF.Node nd = new BP.WF.Node(this.NodeID);

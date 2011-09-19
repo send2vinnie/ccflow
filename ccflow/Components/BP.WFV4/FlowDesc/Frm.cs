@@ -33,6 +33,10 @@ namespace BP.WF
         /// PTable
         /// </summary>
         public const string PTable = "PTable";
+        /// <summary>
+        /// DBURL
+        /// </summary>
+        public const string DBURL = "DBURL";
     }
 	/// <summary>
 	/// Frm
@@ -128,6 +132,8 @@ namespace BP.WF
                 map.AddTBString(FrmAttr.FK_Flow, null, "流程表单属性:FK_Flow", true, false, 0, 50, 10);
                 map.AddDDLSysEnum(FrmAttr.FormType, 0, "流程表单属性:表单类型", true, false, FrmAttr.FormType);
                 map.AddTBString(FrmAttr.PTable, null, "PTable", true, false, 0, 50, 10);
+                map.AddTBInt(FrmAttr.DBURL, 0, "DBURL", true, false);
+
                 map.AddTBString(FrmAttr.URL, null, "流程表单属性:Url", true, false, 0, 50, 10);
 
                 map.AddTBInt(Sys.MapDataAttr.FrmW, 900, "表单宽度", true, false);

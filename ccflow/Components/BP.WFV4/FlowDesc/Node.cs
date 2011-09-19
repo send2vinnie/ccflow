@@ -54,7 +54,7 @@ namespace BP.WF
         /// <summary>
         /// 可退回以前任意节点(默认)
         /// </summary>
-        ReturnPreviousAnyNodes,
+        ReturnAnyNodes,
         /// <summary>
         /// 可退回指定的节点
         /// </summary>
@@ -2296,6 +2296,8 @@ namespace BP.WF
             PubClass.WinOpen("./../WF/Admin/Action.aspx?NodeID=" + this.NodeID + "&FK_Flow=" + this.FK_Flow, "单据", "Bill", 800, 500, 200, 300);
             return null;
         }
+
+       
         public string DoBill()
         {
             PubClass.WinOpen("./../WF/Admin/Bill.aspx?NodeID=" + this.NodeID + "&FK_Flow=" + this.FK_Flow, "单据", "Bill", 800, 500, 200, 300);
