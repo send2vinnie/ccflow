@@ -776,19 +776,28 @@ namespace BP.Web.Comm.UC.WF
                     case MapExtXmlList.ActiveDDL:
                         DDL ddlPerant = this.GetDDLByID("DDL_" + me.AttrOfOper);
                         DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
+                        if (ddlPerant == null || ddlChild==null)
+                            continue;
                         ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
                         break;
                     case MapExtXmlList.FullCtrl: // 自动填充.
                         TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
+                        if (tbAuto == null)
+                            continue;
                         tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                         tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
                         break;
                     case MapExtXmlList.InputCheck:
                         TextBox tbJS = this.GetTextBoxByID("TB_" + me.AttrOfOper);
+                        if (tbJS == null)
+                            continue;
                         tbJS.Attributes[me.Tag2] = me.Tag1 + "(this);";
                         break;
                     case MapExtXmlList.PopVal: // 弹出窗.
                         TB tb = this.GetTBByID("TB_" + me.AttrOfOper);
+                        if (tb == null)
+                            continue;
+
                         tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
                         break;
                     default:
@@ -1025,6 +1034,37 @@ namespace BP.Web.Comm.UC.WF
             MapData md = new MapData();
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
 
+            #region 输出按钮
+            FrmBtns btns = new FrmBtns(this.FK_MapData);
+            foreach (FrmBtn btn in btns)
+            {
+                this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + btn.X + "px;top:" + btn.Y + "px;text-align:left;' >");
+                this.Add("\t\n<span >");
+
+                switch (btn.HisBtnEventType)
+                {
+                    case BtnEventType.Disable:
+                        this.Add("<input type=button value='" + btn.Text.Replace("&nbsp;", " ") + "' disabled='disabled'/>");
+                        break; 
+                    case BtnEventType.RunExe:
+                    case BtnEventType.RunJS:
+                        this.Add("<input type=button value='" + btn.Text.Replace("&nbsp;", " ") + "' enable=true onclick=\"" + btn.EventContext.Replace("~","'") + "\" />");
+                        break;
+                    default:
+                        Button myBtn = new Button();
+                        myBtn.Enabled = true;
+                        myBtn.ID = btn.MyPK;
+                        myBtn.Text = btn.Text.Replace("&nbsp;", " ");
+                        myBtn.Click += new EventHandler(myBtn_Click);
+                        this.Add(myBtn);
+                        break;
+                }
+                this.Add("\t\n</span>");
+                this.Add("\t\n</DIV>");
+            }
+
+            #endregion
+
             #region 输出竖线与标签 & 超连接 Img.
             FrmLabs labs = new FrmLabs(this.FK_MapData);
             foreach (FrmLab lab in labs)
@@ -1035,19 +1075,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n</DIV>");
             }
 
-            FrmBtns btns = new FrmBtns(this.FK_MapData);
-            foreach (FrmBtn btn in btns)
-            {
-                this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + btn.X + "px;top:" + btn.Y + "px;text-align:left;' >");
-                this.Add("\t\n<span >");
-                Button myBtn = new Button();
-                myBtn.ID = btn.MyPK;
-                myBtn.Text = btn.Text.Replace("&nbsp;", " ");
-                this.Add(myBtn);
-                this.Add("\t\n</span>");
-                this.Add("\t\n</DIV>");
-            }
-
+        
             FrmLines lines = new FrmLines(this.FK_MapData);
             foreach (FrmLine line in lines)
             {
@@ -1078,15 +1106,15 @@ namespace BP.Web.Comm.UC.WF
             FrmImgs imgs = new FrmImgs(this.FK_MapData);
             foreach (FrmImg img in imgs)
             {
-                float y = img.Y + (float)70;
+                float y = img.Y  ;
                 this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
                 if (string.IsNullOrEmpty(img.LinkURL) == false)
                 {
-                    this.Add("\t\n<a href='"+img.LinkURL+"' target="+img.LinkTarget+" ><img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;' /></a>");
+                    this.Add("\t\n<a href='" + img.LinkURL + "' target=" + img.LinkTarget + " ><img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' /></a>");
                 }
                 else
                 {
-                    this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;' />");
+                    this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' />");
 
                 }
                 this.Add("\t\n</DIV>");
@@ -1145,7 +1173,6 @@ namespace BP.Web.Comm.UC.WF
                                             tb.CssClass = "TB";
                                         else
                                             tb.CssClass = "TBReadonly";
-
                                         this.Add(tb);
                                     }
                                     else
@@ -1464,6 +1491,73 @@ namespace BP.Web.Comm.UC.WF
                 this.AfterBindEn_DealMapExt(enName, mattrs);
             return;
         }
+
+        void myBtn_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            FrmBtn mybtn = new FrmBtn(btn.ID);
+            string doc = mybtn.EventContext.Replace("~", "'");
+
+            Attrs attrs = this.HisEn.EnMap.Attrs;
+            foreach (Attr attr in attrs)
+            {
+                doc = doc.Replace("@" + attr.Key, this.HisEn.GetValStrByKey(attr.Key));
+            }
+            doc = doc.Replace("@FK_Dept", WebUser.FK_Dept);
+            doc = doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+            doc = doc.Replace("@WebUser.No", WebUser.No);
+            doc = doc.Replace("@WebUser.Name", WebUser.Name);
+            doc = doc.Replace("@MyPK", this.HisEn.PKVal.ToString());
+
+            #region 处理两个变量.
+            string alertMsgErr = mybtn.MsgErr;
+            string alertMsgOK = mybtn.MsgOK;
+            if (alertMsgOK.Contains("@"))
+            {
+                foreach (Attr attr in attrs)
+                    alertMsgOK = alertMsgOK.Replace("@" + attr.Key, this.HisEn.GetValStrByKey(attr.Key));
+            }
+
+            if (alertMsgErr.Contains("@"))
+            {
+                foreach (Attr attr in attrs)
+                    alertMsgErr = alertMsgErr.Replace("@" + attr.Key, this.HisEn.GetValStrByKey(attr.Key));
+            }
+            #endregion 处理两个变量.
+
+            try
+            {
+                switch (mybtn.HisBtnEventType)
+                {
+                    case BtnEventType.RunSQL:
+                        DBAccess.RunSQL(doc);
+                        this.Alert(alertMsgOK);
+                        return;
+                    case BtnEventType.RunSP:
+                        DBAccess.RunSP(doc);
+                        this.Alert(alertMsgOK);
+                        return;
+                    case BtnEventType.RunURL:
+                        doc = doc.Replace("@AppPath", System.Web.HttpContext.Current.Request.ApplicationPath);
+
+                        string text = DataType.ReadURLContext(doc, 800, System.Text.Encoding.UTF8);
+                        if (text != null && text.Substring(0, 7).Contains("Err"))
+                            throw new Exception(text);
+                        alertMsgOK += text;
+                        this.Alert(alertMsgOK);
+                        return;
+                    default:
+                        throw new Exception("没有处理的执行类型:" + mybtn.HisBtnEventType);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Alert(alertMsgErr + ex.Message);
+            }
+
+            #region 处理按钮事件。
+            #endregion
+        }
         #endregion
 
         public static string GetRefstrs(string keys, Entity en, Entities hisens)
@@ -1569,11 +1663,9 @@ namespace BP.Web.Comm.UC.WF
             #endregion
             return refstrs;
         }
-
         public UCEn()
         {
         }
-
         public void AddContral()
         {
             this.Controls.Add(new LiteralControl("<td class='FDesc' nowrap width=1% ></td>"));
