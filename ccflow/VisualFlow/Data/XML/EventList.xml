@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" standalone="yes" ?>
 <NewDataSet>
 	<!-- 外部连接配置说明  No, 部门编号，URL 对方sqlserver 的连接。  -->
- 
+  
+  <Item No="FrmLoadBefore"  CH="节点表单载入前" EN="When the node before saving"  />
+  <Item No="FrmLoadAfter"   CH="节点表单载入后" EN="When the node saved"  />
+  
   <Item No="SaveBefore"  CH="当节点保存前" EN="When the node before saving"  />
   <Item No="SaveAfter" CH="当节点保存后" EN="When the node saved"  />
 	
