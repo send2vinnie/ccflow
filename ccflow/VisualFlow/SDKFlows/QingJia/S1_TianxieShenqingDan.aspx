@@ -8,7 +8,8 @@
     <tr>
         <td  align=left>
             <asp:Button ID="Btn_NewFlow" runat="server" Text="新建流程" />
-            <asp:Button ID="Btn_Send" runat="server" Text="发送" onclick="Btn_Send_Click" />
+            <asp:Button ID="Btn_Send" runat="server" Text="发送" onclick="Btn_Send_Click" 
+                style="margin-top: 0px" />
             <asp:Button ID="Btn_Save" runat="server" Text="保存" onclick="Btn_Save_Click" />
             <asp:Button ID="Btn_Return" runat="server" Text="退回" 
                 onclick="Btn_Return_Click" />
