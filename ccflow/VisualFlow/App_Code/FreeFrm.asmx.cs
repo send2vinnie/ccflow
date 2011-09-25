@@ -35,7 +35,7 @@ namespace FreeFrm.Web
         }
         
         [WebMethod]
-        public string BackUpFrm(string fk_mapdata)
+        public string BackUpFrm_del(string fk_mapdata)
         {
             try
             {
@@ -65,15 +65,36 @@ namespace FreeFrm.Web
                 string file = "\\Temp\\" + fk_mapData + ".xml";
                 UploadFile(fileByte, file);
                 string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + file;
-                DataSet ds = new DataSet();
-                ds.ReadXml(path);
-                MapData.ImpMapData(fk_mapData, ds);
+                this.LoadFrmTempleteFile(path, fk_mapData, isClear);
                 return null;
             }
             catch (Exception ex)
             {
                 return ex.Message;
             }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileByte"></param>
+        /// <param name="fk_mapData"></param>
+        /// <param name="isClear"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string LoadFrmTempleteFile(string file, string fk_mapData, bool isClear)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                ds.ReadXml(file);
+
+                MapData.ImpMapData(fk_mapData, ds);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            } 
         }
         /// <summary>
         /// 上传文件
@@ -271,6 +292,7 @@ namespace FreeFrm.Web
                         if (System.IO.File.Exists(file))
                             System.IO.File.Delete(file);
                         ds.WriteXml(file);
+                        //this.DownLoadFile(System.Web.HttpContext.Current, file, mdfrmtem.Name);
                         return null;
                     case "FrmTempleteImp": //导入表单.
                         DataSet dsImp = new DataSet();
@@ -330,7 +352,8 @@ namespace FreeFrm.Web
 
                         bool isReadonly = false;
                         if (v4 == "1")
-                            isReadonly = true;
+                            isReadonly = true; 
+
                         string msg = this.SaveEn(vals);
                         if (msg.Contains("Error"))
                             return msg;
@@ -405,7 +428,7 @@ namespace FreeFrm.Web
             }
         }
         /// <summary>
-        /// 
+        /// 保存entity.
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
@@ -458,6 +481,61 @@ namespace FreeFrm.Web
             DataSet ds = new DataSet();
             ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
             return Connector.ToXml(ds);
+        }
+        /// <summary>
+        /// 获取路径
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string FtpMethod(string doType, string v1, string v2, string v3)
+        {
+            // FtpSupport.FtpConnection conn = new FtpSupport.FtpConnection("localhost", "administrator", "jiaozi");
+            FtpSupport.FtpConnection conn = new FtpSupport.FtpConnection();
+            switch (doType)
+            {
+                case "ShareFrm": /*共享模板*/
+                    MapData md = new MapData(v1);
+                    DataSet ds = md.GenerHisDataSet();
+
+                    string file = System.Web.HttpContext.Current.Request.PhysicalPath + "\\Temp\\" + v1 + "_"+v2+".xml";
+                    ds.WriteXml(file);
+                    conn.SetCurrentDirectory(v3);
+                    conn.PutFile(file, file);
+                    conn.Close();
+                    return null;
+                case "GetDirs":
+                    return "@01.日常办公@02.人力资源@03.其它类";
+                    conn.SetCurrentDirectory(v1);
+                    FtpSupport.Win32FindData[] dirs = conn.FindFiles();
+                    conn.Close();
+                    string dirsStr = "";
+                    foreach (FtpSupport.Win32FindData dir in dirs)
+                    {
+                        dirsStr += "@" + dir.FileName;
+                    }
+                    return dirsStr;
+                case "GetFls":
+                    return "@报销单据.xml@请假条.xml";
+                    
+                    conn.SetCurrentDirectory(v1);
+                    FtpSupport.Win32FindData[] fls = conn.FindFiles();
+                    conn.Close();
+                    string myfls = "";
+                    foreach (FtpSupport.Win32FindData fl in fls)
+                    {
+                        myfls += "@" + fl.FileName;
+                    }
+                case "LoadTempleteFile":
+                    //return null;
+                    string fileFtpPath = v1;
+
+                    /*下载文件到指定的目录: */
+                    string tempFile = "D:\\ccflow\\VisualFlow\\Temp\\ND201.xml";
+                    return this.LoadFrmTempleteFile(tempFile, v2, true);
+                default:
+                    return null;
+            }
         }
         /// <summary>
         /// 运行sql返回table.
@@ -761,9 +839,7 @@ namespace FreeFrm.Web
             // Img
             i = 0;
             BP.Sys.FrmImgs imgs = new BP.Sys.FrmImgs();
-
             if (isClear)
-
                 imgs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             imgs.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
             foreach (BP.Sys.FrmImg item in imgs)
@@ -880,18 +956,17 @@ namespace FreeFrm.Web
             if (isClear)
                 m2ms.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
             m2ms.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
+            i = 0;
             foreach (MapM2M m2m in m2ms)
             {
                 MapM2M mym2m = new MapM2M();
-                mym2m.No = m2m.No.Replace(fromMapData, fk_mapdata);
-                if (mym2m.IsExits)
-                    continue;
-
+                mym2m.No = "M" + timeKey + i;
                 mym2m.Copy(m2m);
                 mym2m.FK_MapData = fk_mapdata;
                 mym2m.GroupID = 0;
                 mym2m.No = m2m.No.Replace(fromMapData, fk_mapdata);
                 mym2m.Insert();
+                i++;
             }
 
 
@@ -928,7 +1003,6 @@ namespace FreeFrm.Web
 
             return "复制成功.";
         }
-
         [WebMethod]
         public string SaveFrm(string xml, string sqls)
         {
@@ -959,10 +1033,15 @@ namespace FreeFrm.Web
                 }
             }
 
+            #region 处理数据库兼容的问题
             if (BP.SystemConfig.AppCenterDBType == DBType.Oracle9i)
             {
                 sqls = sqls.Replace("LEN(", "LENGTH(");
             }
+                DBAccess.RunSQL("UPDATE Sys_MapAttr SET Name='' WHERE Name IS NULL ");
+            #endregion 处理数据库兼容的问题
+
+
 
             this.RunSQLs(sqls);
             if (string.IsNullOrEmpty(str))
@@ -1040,7 +1119,6 @@ namespace FreeFrm.Web
                         ps.Add(dc.ColumnName, dr[dc.ColumnName]);
                 }
                 ps.SQL = updataSQL;
-
                 try
                 {
                     if (BP.DA.DBAccess.RunSQL(ps) == 0)
@@ -1053,6 +1131,7 @@ namespace FreeFrm.Web
                         }
                         ps.SQL = insertSQL;
                         BP.DA.DBAccess.RunSQL(ps);
+                        continue;
                     }
                 }
                 catch (Exception ex)
