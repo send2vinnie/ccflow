@@ -238,7 +238,7 @@ namespace BP.WF
                     else
                         sql = sql.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
                 }
-
+                sql = sql.Replace("~", "'");
                 dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)
                 {
