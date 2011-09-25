@@ -5,6 +5,39 @@ using BP.En;
 namespace BP.Sys
 {
     /// <summary>
+    /// 按钮事件类型 - 与sl 中设置的要相同。
+    /// </summary>
+    public enum BtnEventType
+    {
+        /// <summary>
+        /// 禁用
+        /// </summary>
+        Disable = 0,
+        /// <summary>
+        /// 运行存储过程
+        /// </summary>
+        RunSP = 1,
+        /// <summary>
+        /// 运行sql
+        /// </summary>
+        RunSQL = 2,
+        /// <summary>
+        /// 执行URL
+        /// </summary>
+        RunURL = 3,
+        /// <summary>
+        /// 运行webservices
+        /// </summary>
+        RunWS = 4,
+        /// <summary>
+        /// 运行Exe文件.
+        /// </summary>
+        RunExe = 5,
+        /// <summary>
+        /// 运行JS
+        /// </summary>
+        RunJS =6
+    }    /// <summary>
     /// 按钮访问
     /// </summary>
     public enum BtnUAC
@@ -105,6 +138,15 @@ namespace BP.Sys
         /// 控制类型
         /// </summary>
         public const string UAC = "UAC";
+        /// <summary>
+        /// MsgOK
+        /// </summary>
+        public const string MsgOK = "MsgOK";
+        /// <summary>
+        /// MsgErr
+        /// </summary>
+        public const string MsgErr = "MsgErr";
+        
     }
     /// <summary>
     /// 按钮
@@ -112,6 +154,28 @@ namespace BP.Sys
     public class FrmBtn : EntityMyPK
     {
         #region 属性
+        public string MsgOK
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmBtnAttr.MsgOK);
+            }
+            set
+            {
+                this.SetValByKey(FrmBtnAttr.MsgOK, value);
+            }
+        }
+        public string MsgErr
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmBtnAttr.MsgErr);
+            }
+            set
+            {
+                this.SetValByKey(FrmBtnAttr.MsgErr, value);
+            }
+        }
         /// <summary>
         /// EventContext
         /// </summary>
@@ -230,6 +294,13 @@ namespace BP.Sys
                 this.SetValByKey(FrmBtnAttr.X, value);
             }
         }
+        public BtnEventType HisBtnEventType
+        {
+            get
+            {
+                return (BtnEventType)this.GetValIntByKey(FrmBtnAttr.EventType);
+            }
+        }
         /// <summary>
         /// BtnType
         /// </summary>
@@ -309,6 +380,7 @@ namespace BP.Sys
             {
                 if (this._enMap != null)
                     return this._enMap;
+
                 Map map = new Map("Sys_FrmBtn");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
@@ -325,7 +397,6 @@ namespace BP.Sys
                 map.AddTBInt(FrmBtnAttr.IsView, 0, "是否可见", false, false);
                 map.AddTBInt(FrmBtnAttr.IsEnable, 0, "是否起用", false, false);
 
-
                 map.AddTBInt(FrmBtnAttr.BtnType, 0, "类型", false, false);
 
                 map.AddTBInt(FrmBtnAttr.UAC, 0, "控制类型", false, false);
@@ -334,6 +405,10 @@ namespace BP.Sys
                 map.AddTBInt(FrmBtnAttr.EventType, 0, "事件类型", false, false);
                 map.AddTBString(FrmBtnAttr.EventContext, null, "事件内容", true, false, 0, 3900, 20);
 
+                map.AddTBString(FrmBtnAttr.MsgOK, null, "运行成功提示", true, false, 0, 500, 20);
+                map.AddTBString(FrmBtnAttr.MsgErr, null, "运行失败提示", true, false, 0, 500, 20);
+
+             
                 this._enMap = map;
                 return this._enMap;
             }

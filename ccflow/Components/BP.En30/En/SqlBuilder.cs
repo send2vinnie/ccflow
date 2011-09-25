@@ -532,7 +532,7 @@ namespace BP.En
                     case DataType.AppDate:
                     case DataType.AppDateTime:
 
-                        if (attr.MinLength >= 1 || attr.IsPK)
+                        if ( attr.IsPK)
                             sql += "[" + attr.Field + "]  VARCHAR (" + attr.MaxLength + ") NOT NULL,";
                         else
                             sql += "[" + attr.Field + "]  VARCHAR (" + attr.MaxLength + ") NULL,";
@@ -578,14 +578,14 @@ namespace BP.En
                     case DataType.AppDateTime:
                         if (attr.MaxLength <= 254)
                         {
-                            if (attr.MinLength >= 1 || attr.IsPK)
+                            if (  attr.IsPK)
                                 sql += "[" + attr.Field + "]  varchar (" + attr.MaxLength + ") NOT NULL,";
                             else
                                 sql += "[" + attr.Field + "]  varchar (" + attr.MaxLength + ") NULL,";
                         }
                         else
                         {
-                            if (attr.MinLength >= 1 || attr.IsPK)
+                            if ( attr.IsPK)
                                 sql += "[" + attr.Field + "]  text  NOT NULL,";
                             else
                                 sql += "[" + attr.Field + "] text ,";
@@ -642,7 +642,6 @@ namespace BP.En
                 throw new Exception("您没有为[" + en.EnDesc + "],设置物理表。");
 
             string sql = "CREATE TABLE  " + en.EnMap.PhysicsTable + " (";
-
             foreach (Attr attr in en.EnMap.Attrs)
             {
                 if (attr.MyFieldType == FieldType.RefText)
@@ -653,7 +652,7 @@ namespace BP.En
                     case DataType.AppString:
                     case DataType.AppDate:
                     case DataType.AppDateTime:
-                        if (attr.MinLength >= 1 || attr.IsPK)
+                        if (  attr.IsPK)
                             sql += attr.Field + " varchar (" + attr.MaxLength + ") NOT NULL,";
                         else
                             sql += attr.Field + " varchar (" + attr.MaxLength + ") NULL,";

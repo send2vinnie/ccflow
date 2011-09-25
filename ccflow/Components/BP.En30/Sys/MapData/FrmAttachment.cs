@@ -37,6 +37,22 @@ namespace BP.Sys
         /// 附件编号
         /// </summary>
         public const string NoOfAth = "NoOfAth";
+        /// <summary>
+        /// 是否可以上传
+        /// </summary>
+        public const string IsUpload = "IsUpload";
+        /// <summary>
+        /// 是否可以删除
+        /// </summary>
+        public const string IsDelete = "IsDelete";
+        /// <summary>
+        /// 是否可以下载
+        /// </summary>
+        public const string IsDownload = "IsDownload";
+        /// <summary>
+        /// 保存到
+        /// </summary>
+        public const string SaveTo = "SaveTo";
     }
     /// <summary>
     /// 附件
@@ -44,6 +60,48 @@ namespace BP.Sys
     public class FrmAttachment : EntityMyPK
     {
         #region 属性
+        /// <summary>
+        /// 是否可以上传
+        /// </summary>
+        public bool IsUpload
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FrmAttachmentAttr.IsUpload);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.IsUpload, value);
+            }
+        }
+        /// <summary>
+        /// 是否可以下载
+        /// </summary>
+        public bool IsDownload
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FrmAttachmentAttr.IsDownload);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.IsDownload, value);
+            }
+        }
+        /// <summary>
+        /// 是否可以删除
+        /// </summary>
+        public bool IsDelete
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FrmAttachmentAttr.IsDelete);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.IsDelete, value);
+            }
+        }
         /// <summary>
         /// 附件名称
         /// </summary>
@@ -70,6 +128,17 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(FrmAttachmentAttr.Exts, value);
+            }
+        }
+        public string SaveTo
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttachmentAttr.SaveTo);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.SaveTo, value);
             }
         }
         /// <summary>
@@ -184,11 +253,18 @@ namespace BP.Sys
 
                 map.AddTBString(FrmAttachmentAttr.Name, null,"名称", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentAttr.Exts, null, "扩展", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentAttr.SaveTo, null, "保存到", true, false, 0, 50, 20);
+                
                 
                 map.AddTBFloat(FrmAttachmentAttr.X, 5, "X", true, false);
                 map.AddTBFloat(FrmAttachmentAttr.Y, 5, "Y", false, false);
-
                 map.AddTBFloat(FrmAttachmentAttr.W, 5, "TBWidth", false, false);
+
+
+                map.AddTBInt(FrmAttachmentAttr.IsUpload, 1, "是否可以上传", false, false);
+                map.AddTBInt(FrmAttachmentAttr.IsDelete, 1, "是否可以删除", false, false);
+                map.AddTBInt(FrmAttachmentAttr.IsDownload, 1, "是否可以下载", false, false);
+
 
                 this._enMap = map;
                 return this._enMap;

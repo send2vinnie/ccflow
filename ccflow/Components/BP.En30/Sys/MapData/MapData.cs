@@ -7,9 +7,6 @@ namespace BP.Sys
 {
     public enum FrmFrom
     {
-        /// <summary>
-        /// 
-        /// </summary>
         Flow,
         Node,
         Dtl
@@ -30,6 +27,23 @@ namespace BP.Sys
         /// 来源
         /// </summary>
         public const string FrmFrom = "FrmFrom";
+        /// <summary>
+        /// DBURL
+        /// </summary>
+        public const string DBURL = "DBURL";
+
+        /// <summary>
+        /// 设计者
+        /// </summary>
+        public const string Designer = "Designer";
+        /// <summary>
+        /// 设计者单位
+        /// </summary>
+        public const string DesignerUnit = "DesignerUnit";
+        /// <summary>
+        /// 设计者联系方式
+        /// </summary>
+        public const string DesignerContext = "DesignerContext";
     }
 	/// <summary>
 	/// 映射基础
@@ -131,6 +145,13 @@ namespace BP.Sys
                 this.SetValByKey(MapDataAttr.PTable, value);
             }
         }
+        public DBUrlType HisDBUrl
+        {
+            get
+            {
+                return (DBUrlType)this.GetValIntByKey(MapDataAttr.DBURL);
+            }
+        }
         public string Dtls
         {
             get
@@ -228,6 +249,10 @@ namespace BP.Sys
         {
             MapAttrs mapAttrs = new MapAttrs(this.No);
             Map map = new Map(this.PTable);
+
+            DBUrl u = new DBUrl(this.HisDBUrl);
+            map.EnDBUrl = u;
+
             map.EnDesc = this.Name;
             map.EnType = EnType.App;
             map.DepositaryOfEntity = Depositary.None;
@@ -328,8 +353,14 @@ namespace BP.Sys
                 map.AddTBFloat(MapDataAttr.FrmW, 900, "FrmW", true, true);
                 map.AddTBFloat(MapDataAttr.FrmH, 1200, "FrmH", true, true);
 
-               //  map.AddTBInt(MapDataAttr.FrmFrom, 0, "来源", true, true);
+                map.AddTBInt(MapDataAttr.DBURL, 0, "DBURL", true, false);
 
+
+                map.AddTBString(MapDataAttr.Designer, null, "设计者", true, false, 0, 500, 20);
+                map.AddTBString(MapDataAttr.DesignerUnit, null, "单位", true, false, 0, 500, 20);
+                map.AddTBString(MapDataAttr.DesignerContext, null, "联系方式", true, false, 0, 500, 20);
+
+                //  map.AddTBInt(MapDataAttr.FrmFrom, 0, "来源", true, true);
 
                 this._enMap = map;
                 return this._enMap;

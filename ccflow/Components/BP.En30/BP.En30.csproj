@@ -415,6 +415,7 @@
     <Compile Include="Sys\MapData\MapM2M.cs" />
     <Compile Include="Sys\MapData\InputCheckXml.cs" />
     <Compile Include="Sys\MapData\ExpFucnXml.cs" />
+    <Compile Include="Sys\MapData\FrmEvent.cs" />
     <Compile Include="Sys\MapData\TBEventXml.cs" />
     <Compile Include="Sys\MapData\FrmLine.cs" />
     <Compile Include="Sys\MapData\FrmLab.cs" />
@@ -424,6 +425,7 @@
     <Compile Include="Sys\MapData\FrmAttachment.cs" />
     <Compile Include="Sys\MapData\FrmImgAth.cs" />
     <Compile Include="Sys\MapData\FrmBtn.cs" />
+    <Compile Include="Sys\MapData\FrmAttachmentDB.cs" />
     <Compile Include="Sys\Sys\GloVer.cs" />
     <Compile Include="Sys\Message\Msg.cs" />
     <Compile Include="Sys\PTable\SFTable.cs" />

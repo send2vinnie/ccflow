@@ -100,7 +100,8 @@ namespace BP.DA
 						return DBType.SQL2000;
 					case DBUrlType.DBAccessOfOLE:
 						return DBType.Access;
-					case DBUrlType.DBAccessOfOracle9i:
+					case DBUrlType.DBAccessOfOracle9i1:
+                    case DBUrlType.DBAccessOfOracle9i:
 						return DBType.Oracle9i ;				 
 					default:
 						throw new Exception("不明确的连接");
