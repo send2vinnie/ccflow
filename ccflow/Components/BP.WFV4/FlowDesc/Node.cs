@@ -448,13 +448,13 @@ namespace BP.WF
     public class Node : Entity, IDTS
     {
         #region 初试化全局的 Nod
-        private NDEvents _HisNDEvents = null;
-        public NDEvents HisNDEvents
+        private FrmEvents _HisNDEvents = null;
+        public FrmEvents HisNDEvents
         {
             get
             {
                 if (_HisNDEvents == null)
-                    _HisNDEvents = new NDEvents(this.NodeID);
+                    _HisNDEvents = new FrmEvents( "ND"+this.NodeID);
                 return _HisNDEvents;
             }
         }

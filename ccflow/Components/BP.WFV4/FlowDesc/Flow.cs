@@ -3334,11 +3334,11 @@ namespace BP.WF
             FrmImg img = new FrmImg();
             img.MyPK = "Img" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
             img.FK_MapData = "ND" + int.Parse(this.No + "01");
-            img.X = (float)572.18;
-            img.Y = (float)1.54;
+            img.X = (float)577.26;
+            img.Y = (float)3.45;
 
-            img.W = (float)41;
-            img.H = (float)151;
+            img.W = (float)40;
+            img.H = (float)137;
 
             img.ImgURL = "/FreeFrm;component/Img/LogoBig.png";
             img.LinkURL = "http://ccflow.org";
@@ -3405,7 +3405,7 @@ namespace BP.WF
             lab.Text = "说明:以上内容是ccflow自动产生的，您可以修改/删除它。@为了更方便您的设计您可以到http://ccflow.org官网下载表单模板.";
             lab.Text += "@因为当前技术问题与silverlight开发工具使用特别说明如下:@";
             lab.Text += "@1,改变控件位置: ";
-            lab.Text += "@  所有的控件都支持 wasd, 做为方向键， 部分控件支持方向键. ";
+            lab.Text += "@  所有的控件都支持 wasd, 做为方向键用来移动控件的位置， 部分控件支持方向键. ";
             lab.Text += "@@2, 增加textbox, 从表, dropdownlistbox, 的宽度 shift+ -> 方向键增加宽度 shift + <- 减小宽度.";
             lab.Text += "@@3, 保存 windows键 + s.  删除 delete.  复制 ctrl+c   粘帖: ctrl+v.";
             lab.Text += "@@4, 支持全选，批量移动， 批量放大缩小字体., 批量改变线的宽度.";
@@ -3569,7 +3569,6 @@ namespace BP.WF
 
             // 删除配置.
             sql += "@GO DELETE WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
-
 
 
             // 删除报表
