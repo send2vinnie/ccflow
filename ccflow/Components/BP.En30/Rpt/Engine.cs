@@ -366,16 +366,22 @@ namespace BP.Rpt.RTF
                             return pict.ToString();
                         //替换rtf模板文件中的签名图片标识为图片字符串
                         // str = str.Replace(imgMark, pict.ToString());
+                        case "YesNo":
+                            if (val == "1")
+                                return "[√]";
+                            else
+                                return "[×]";
+                            break;
                         case "Yes":
                             if (val == "0")
-                                return "[X]";
+                                return "[×]";
                             else
-                                return "[V]";
+                                return "[√]";
                         case "No":
                             if (val == "0")
-                                return "[V]";
+                                return "[√]";
                             else
-                                return "[X]";
+                                return "[×]";
                         default:
                             throw new Exception("参数设置错误，特殊方式取值错误：" + key);
                     }
