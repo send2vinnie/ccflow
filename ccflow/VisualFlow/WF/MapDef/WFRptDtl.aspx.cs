@@ -72,7 +72,7 @@ public partial class WF_MapDef_WFRptDtl : WebPage
 
         Nodes nds = new Nodes(BP.WF.Glo.GenerFlowNo(this.MyPK));
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX("请选择要插入的明细表");
+        this.Pub1.AddCaptionLeft("请选择要插入的明细表");
         foreach (BP.WF.Node nd in nds)
         {
             if (nd.IsEndNode == false)

@@ -82,8 +82,8 @@ public partial class WF_Accpter : WebPage
 
         Dept dept = new Dept();
         string fk_dept = "";
-        this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX(this.Title+"，可选择范围："+dt.Rows.Count+" 位。");
+        this.Pub1.AddTable("width=100%");
+        this.Pub1.AddCaptionLeft(this.Title+"，可选择范围："+dt.Rows.Count+" 位。");
 
         if (dt.Rows.Count > 50)
         {

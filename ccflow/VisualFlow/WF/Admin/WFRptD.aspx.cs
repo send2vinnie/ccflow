@@ -32,7 +32,7 @@ public partial class WF_Admin_RptD : WebPage
         WFRpt rpt = new WFRpt(this.RefNo);
         this.Title = rpt.Name + this.ToE("DesignRpt", "设计报表"); // "设计报表";
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX(rpt.Name + " -<a href=\"javascript:AddF('" + this.RefNo + "','0');\"  ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a>- " + BP.WF.Glo.GenerHelp("WFRpt"));
+        this.Ucsys1.AddCaptionLeft(rpt.Name + " -<a href=\"javascript:AddF('" + this.RefNo + "','0');\"  ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a>- " + BP.WF.Glo.GenerHelp("WFRpt"));
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("colspan=3",  this.ToE("Order","排序") );
         this.Ucsys1.AddTDTitle(this.ToE("Node","节点"));
@@ -151,7 +151,7 @@ public partial class WF_Admin_RptD : WebPage
         RptAttrs rptAttrs = new RptAttrs(this.RefNo);
 
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX(this.ToE("FieldsChose", "为构造视图选择字段"));
+        this.Ucsys1.AddCaptionLeft(this.ToE("FieldsChose", "为构造视图选择字段"));
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("IDX");
         this.Ucsys1.AddTDTitle( this.ToE("Node","节点") );

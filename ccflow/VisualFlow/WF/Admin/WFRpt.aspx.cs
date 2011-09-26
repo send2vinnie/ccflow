@@ -39,7 +39,7 @@ public partial class WF_Admin_View : WebPage
 
         BP.WF.Flow flow = new BP.WF.Flow(this.FK_Flow);
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX("<a href='WFRpt.aspx?FK_Flow=" + this.FK_Flow + "' >" + flow.Name + "</a> - <img src='../../Images/Btn/New.gif' />"+this.ToE("New","新建")+" - " + BP.WF.Glo.GenerHelp("WFRpt"));
+        this.Ucsys1.AddCaptionLeft("<a href='WFRpt.aspx?FK_Flow=" + this.FK_Flow + "' >" + flow.Name + "</a> - <img src='../../Images/Btn/New.gif' />" + this.ToE("New", "新建") + " - " + BP.WF.Glo.GenerHelp("WFRpt"));
 
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle(this.ToE("Item", "项目"));
@@ -178,7 +178,7 @@ public partial class WF_Admin_View : WebPage
         BP.WF.Flow flow = new BP.WF.Flow(this.FK_Flow);
         this.Title = this.ToE("DesignRpt", "设计报表"); // "设计报表";
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX(this.Title + " - <a href='WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>  - " + BP.WF.Glo.GenerHelp("WFRpt"));
+        this.Ucsys1.AddCaptionLeft(this.Title + " - <a href='WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>  - " + BP.WF.Glo.GenerHelp("WFRpt"));
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("IDX");
         this.Ucsys1.AddTDTitle(this.ToE("Flow", "流程"));

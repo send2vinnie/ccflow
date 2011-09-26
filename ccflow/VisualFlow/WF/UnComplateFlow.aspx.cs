@@ -38,7 +38,7 @@ namespace BP.Web.WFQH.WF
 
 			this.UCSys1.Clear();
 			this.UCSys1.AddTable();
-			this.UCSys1.AddCaptionLeftTX(fl.Name);
+            this.UCSys1.AddCaptionLeft(fl.Name);
 			this.UCSys1.AddTR();
 			this.UCSys1.AddTDTitle("工作步骤");
 			this.UCSys1.AddTDTitle("停留工作节点名称");

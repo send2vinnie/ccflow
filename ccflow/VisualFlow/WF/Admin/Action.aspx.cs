@@ -24,7 +24,7 @@ public partial class WF_Admin_Action : WebPage
     {
         this.Title = "设置:节点事件接口";
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX(this.ToE("NodeAction", "节点事件接口") +" - <a href=http://ccflow.org target=_blank >Help</a>");
+        this.Pub1.AddCaptionLeft(this.ToE("NodeAction", "节点事件接口") + " - <a href=http://ccflow.org target=_blank >Help</a>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle("事件");
@@ -34,8 +34,8 @@ public partial class WF_Admin_Action : WebPage
         this.Pub1.AddTDTitle("错误提示");
         this.Pub1.AddTREnd();
 
-        NDEvents ndevs = new NDEvents();
-        ndevs.Retrieve(NDEventAttr.FK_Node, this.FK_Node);
+        FrmEvents ndevs = new FrmEvents();
+        ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_Node);
 
         EventLists xmls = new EventLists();
         xmls.RetrieveAll();
@@ -43,9 +43,9 @@ public partial class WF_Admin_Action : WebPage
         bool is1 = false;
         foreach (BP.WF.XML.EventList xml in xmls)
         {
-            NDEvent nde = ndevs.GetEntityByKey(NDEventAttr.FK_Event, xml.No) as NDEvent;
+            FrmEvent nde = ndevs.GetEntityByKey(FrmEventAttr.FK_Event, xml.No) as FrmEvent;
             if (nde == null)
-                nde = new NDEvent();
+                nde = new FrmEvent();
 
             is1 = this.Pub1.AddTR(is1);
             this.Pub1.AddTDIdx(i++);
@@ -65,13 +65,13 @@ public partial class WF_Admin_Action : WebPage
             tb = new TextBox();
             tb.ID = "TB_MsgOK_" + xml.No;
             tb.Columns = 20;
-            tb.Text = nde.MsgOK;
+            tb.Text = nde.MsgOKString;
             this.Pub1.AddTD(tb);
 
             tb = new TextBox();
             tb.ID = "TB_MsgErr_" + xml.No;
             tb.Columns = 20;
-            tb.Text = nde.MsgError;
+            tb.Text = nde.MsgErrorString;
             this.Pub1.AddTD(tb);
             this.Pub1.AddTREnd();
         }
@@ -85,17 +85,17 @@ public partial class WF_Admin_Action : WebPage
 
     void btn_Click(object sender, EventArgs e)
     {
-        NDEvents ndevs = new NDEvents();
-        ndevs.Retrieve(NDEventAttr.FK_Node, this.FK_Node);
+        FrmEvents ndevs = new FrmEvents();
+        ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_Node);
 
         EventLists xmls = new EventLists();
         xmls.RetrieveAll();
         int i = 1;
         foreach (EventList xml in xmls)
         {
-            NDEvent nde = ndevs.GetEntityByKey(NDEventAttr.FK_Event, xml.No) as NDEvent;
+            FrmEvent nde = ndevs.GetEntityByKey(FrmEventAttr.FK_Event, xml.No) as FrmEvent;
             if (nde == null)
-                nde = new NDEvent();
+                nde = new FrmEvent();
             string doc = this.Pub1.GetTextBoxByID("TB_Doc_" + xml.No).Text.Trim();
             if (doc == "" || doc == null)
             {
@@ -104,13 +104,13 @@ public partial class WF_Admin_Action : WebPage
                 continue;
             }
 
-            nde.MyPK = this.FK_Node + "_" + xml.No;
+            nde.MyPK = "ND" + this.FK_Node + "_" + xml.No;
             nde.DoDoc = doc;
             nde.FK_Event = xml.No;
-            nde.FK_Node = this.FK_Node;
+            nde.FK_MapData = "ND"+this.FK_Node;
             nde.HisDoType = (EventDoType)this.Pub1.GetDDLByID("DDL_EventDoType_" + xml.No).SelectedItemIntVal;//.Trim();
-            nde.MsgOK = this.Pub1.GetTextBoxByID("TB_MsgOK_" + xml.No).Text;
-            nde.MsgError = this.Pub1.GetTextBoxByID("TB_MsgErr_" + xml.No).Text;
+            nde.MsgOKString = this.Pub1.GetTextBoxByID("TB_MsgOK_" + xml.No).Text;
+            nde.MsgErrorString = this.Pub1.GetTextBoxByID("TB_MsgErr_" + xml.No).Text;
             nde.Save();
             
         }

@@ -53,7 +53,7 @@ public partial class WF_Admin_WorkEndSheet : WebPage
         this.Title =  "请选择节点(" + mynd.Name + ")底部显示的表单";
 
         this.ucsys1.AddTable("width='100%'");
-        this.ucsys1.AddCaptionLeftTX("请设置显示在此表单下放的表单");
+        this.ucsys1.AddCaptionLeft("请设置显示在此表单下放的表单");
         this.ucsys1.AddTR();
         this.ucsys1.AddTDTitle("步骤");
         this.ucsys1.AddTDTitle("节点名称(注意选择此节点以后的节点无效)");

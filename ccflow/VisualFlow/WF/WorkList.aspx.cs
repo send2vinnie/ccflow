@@ -57,7 +57,7 @@ namespace BP.Web.WF
             }
 
             this.UCFlow1.AddTable();
-            this.UCFlow1.AddCaptionLeftTX(fl.Name);
+            this.UCFlow1.AddCaptionLeft(fl.Name);
             this.UCFlow1.AddTR();
             this.UCFlow1.AddTDTitle("IDX");
             this.UCFlow1.AddTDTitle( "БъЬт");

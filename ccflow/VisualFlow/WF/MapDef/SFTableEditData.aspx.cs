@@ -45,7 +45,7 @@ public partial class Comm_MapDef_SFTableEditData : BP.Web.WebPage
     {
         SFTable sf = new SFTable(this.RefNo);
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX("编辑:" + sf.Name);
+        this.Pub1.AddCaptionLeft("编辑:" + sf.Name);
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("编号");
         this.Pub1.AddTDTitle("名称");

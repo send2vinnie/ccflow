@@ -46,7 +46,7 @@ public partial class WF_Admin_Exp : System.Web.UI.Page
     {
        
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX("<img src='../../Images/Btn/Do.gif' />流程数据导出 " + BP.WF.Glo.GenerHelp("Exp"));
+        this.Ucsys1.AddCaptionLeft("<img src='../../Images/Btn/Do.gif' />流程数据导出 " + BP.WF.Glo.GenerHelp("Exp"));
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("项目");
         this.Ucsys1.AddTDTitle("输入");

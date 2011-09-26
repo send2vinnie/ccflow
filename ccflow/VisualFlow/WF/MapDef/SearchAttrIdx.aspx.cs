@@ -29,7 +29,7 @@ public partial class Comm_MapDef_SearchAttrIdx : WebPage
 
         MapData md = new MapData(this.RefNo);
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX(md.Name + " " + this.ToE("DefSearchFK", "定义查询条件"));
+        this.Ucsys1.AddCaptionLeft(md.Name + " " + this.ToE("DefSearchFK", "定义查询条件"));
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("colspan=3", "ID");
         this.Ucsys1.AddTDTitle(this.ToE("Name","名称"));

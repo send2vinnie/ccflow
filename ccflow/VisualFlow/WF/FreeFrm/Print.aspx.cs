@@ -71,21 +71,21 @@ public partial class WF_FreeFrm_Print : WebPage
     public void PrintBill()
     {
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-        string path = ApplicationPath +"\\DataUser\\CyclostyleFile\\FlowFrm\\" + nd.FK_Flow + "\\" + nd.NodeID + "\\";
+        string path = ApplicationPath + "\\DataUser\\CyclostyleFile\\FlowFrm\\" + nd.FK_Flow + "\\" + nd.NodeID + "\\";
 
-        if (System.IO.Directory.Exists(path)==false)
+        if (System.IO.Directory.Exists(path) == false)
         {
         }
 
         string[] fls = System.IO.Directory.GetFiles(path);
         string file = fls[int.Parse(this.BillIdx)];
-        file = file.Replace( ApplicationPath+@"DataUser\CyclostyleFile", "");
+        file = file.Replace(ApplicationPath + @"DataUser\CyclostyleFile", "");
 
         FileInfo finfo = new FileInfo(file);
         string tempName = finfo.Name.Split('.')[0];
         string tempNameChinese = finfo.Name.Split('.')[1];
 
-        string toPath = ApplicationPath+@"DataUser\Bill\FlowFrm\" + DateTime.Now.ToString("yyyyMMdd") + "\\";
+        string toPath = ApplicationPath + @"DataUser\Bill\FlowFrm\" + DateTime.Now.ToString("yyyyMMdd") + "\\";
         if (System.IO.Directory.Exists(toPath) == false)
             System.IO.Directory.CreateDirectory(toPath);
 
@@ -109,7 +109,7 @@ public partial class WF_FreeFrm_Print : WebPage
             }
 
             // 增加主表.
-            GEEntity myge = new GEEntity("ND"+nd.NodeID, this.WorkID);
+            GEEntity myge = new GEEntity("ND" + nd.NodeID, this.WorkID);
             engine.AddEn(myge);
             MapDtls mymdtls = new MapDtls("ND" + nd.NodeID);
             foreach (MapDtl dtl in mymdtls)
@@ -135,7 +135,6 @@ public partial class WF_FreeFrm_Print : WebPage
                 engine.EnsDataDtls.Add(enDtls);
             }
             engine.MakeDoc(file, toPath, tempName + "." + this.FID + ".doc", null, false);
-
         }
 
         BP.PubClass.OpenWordDocV2(billFile, tempNameChinese + ".doc");
@@ -143,15 +142,12 @@ public partial class WF_FreeFrm_Print : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         ApplicationPath = this.Request.PhysicalApplicationPath;
-
         this.Title = "单据打印";
-
         if (this.BillIdx != null)
         {
             this.PrintBill();
             return;
         }
-
         this.Pub1.AddTable();
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");

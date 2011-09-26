@@ -29,7 +29,7 @@ public partial class WF_SelfRpt : WebPage
 
 
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX(this.ToE("SelfRpt","自定义报表") + " - <a href=\"javascript:WinOpen('../Comm/PanelEns.aspx?EnsName=BP.WF.CHOfFlows')\" >" + this.ToE("FlowSearch", "流程查询") + "</a>");
+        this.Ucsys1.AddCaptionLeft(this.ToE("SelfRpt", "自定义报表") + " - <a href=\"javascript:WinOpen('../Comm/PanelEns.aspx?EnsName=BP.WF.CHOfFlows')\" >" + this.ToE("FlowSearch", "流程查询") + "</a>");
 
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("IDX");

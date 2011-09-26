@@ -49,7 +49,7 @@ public partial class WF_Admin_CCNode : WebPage
         Flow fl = new Flow(this.FK_Flow);
 
         this.Ucsys1.AddTable("width=100%");
-        this.Ucsys1.AddCaptionLeftTX("为流程:" + fl.Name + "，设置抄送节点。");
+        this.Ucsys1.AddCaptionLeft("为流程:" + fl.Name + "，设置抄送节点。");
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle( this.ToE("Step", "步骤") );
         this.Ucsys1.AddTDTitle( this.ToE("NodeName", "节点名称") );

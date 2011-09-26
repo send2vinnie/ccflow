@@ -1,42 +1,42 @@
-DELETE Sys_SFTable WHERE No='BP.CN.Citys';
+ï»¿DELETE Sys_SFTable WHERE No='BP.CN.Citys';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)
-VALUES ('BP.CN.Citys','³ÇÊĞ','FK_City','2','ÖĞ¹úµÄÊĞ¼¶³ÇÊĞ','','1');
+VALUES ('BP.CN.Citys','åŸå¸‚','FK_City','2','ä¸­å›½çš„å¸‚çº§åŸå¸‚','','1');
 
 DELETE Sys_SFTable WHERE No='BP.CN.PQs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)
-VALUES ('BP.CN.PQs','µØÇø','FK_DQ','2','»ª±±¡¢Î÷±±¡¢Î÷ÄÏ¡£¡£¡£','','1');
+VALUES ('BP.CN.PQs','åœ°åŒº','FK_DQ','2','ååŒ—ã€è¥¿åŒ—ã€è¥¿å—ã€‚ã€‚ã€‚','','1');
 
 DELETE Sys_SFTable WHERE No='BP.CN.SFs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)
-VALUES ('BP.CN.SFs','Ê¡·İ','FK_SF','2','ÖĞ¹úµÄÊ¡·İ¡£','','1');
+VALUES ('BP.CN.SFs','çœä»½','FK_SF','2','ä¸­å›½çš„çœä»½ã€‚','','1');
 
 DELETE Sys_SFTable WHERE No='BP.Port.Depts';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)
-VALUES ('BP.Port.Depts','²¿ÃÅ','FK_Dept','2','²¿ÃÅ','','1');
+VALUES ('BP.Port.Depts','éƒ¨é—¨','FK_Dept','2','éƒ¨é—¨','','1');
 
 DELETE Sys_SFTable WHERE No='BP.Port.Emps';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)
-VALUES ('BP.Port.Emps','ÈËÔ±','FK_Emp','2','ÏµÍ³ÖĞµÄ²Ù×÷Ô±','','1');
+VALUES ('BP.Port.Emps','äººå‘˜','FK_Emp','2','ç³»ç»Ÿä¸­çš„æ“ä½œå‘˜','','1');
 
 
 DELETE Sys_SFTable WHERE No='BP.Port.Stations';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)
-VALUES ('BP.Port.Stations','¸ÚÎ»','FK_Station','2','¹¤×÷¸ÚÎ»','','1');
+VALUES ('BP.Port.Stations','å²—ä½','FK_Station','2','å·¥ä½œå²—ä½','','1');
 
 DELETE Sys_SFTable WHERE No='BP.Pub.Days';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)
-VALUES ('BP.Pub.Days','ÈÕ','FK_Day','0','1-31ÈÕ','','1');
+VALUES ('BP.Pub.Days','æ—¥','FK_Day','0','1-31æ—¥','','1');
 
 
 DELETE Sys_SFTable WHERE No='BP.Pub.YFs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)
-VALUES ('BP.Pub.YFs','ÔÂ','FK_NY','0','1-12ÔÂ','','1');
+VALUES ('BP.Pub.YFs','æœˆ','FK_NY','0','1-12æœˆ','','1');
 
 DELETE Sys_SFTable WHERE No='BP.Pub.NYs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)
-VALUES ('BP.Pub.NYs','ÄêÔÂ','FK_NY','0','Äê¶ÈÓëÔÂ·İ','','1');
+VALUES ('BP.Pub.NYs','å¹´æœˆ','FK_NY','0','å¹´åº¦ä¸æœˆä»½','','1');
 
 DELETE Sys_SFTable WHERE No='BP.Pub.NDs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)
-VALUES ('BP.Pub.NDs','Äê¶È','FK_ND','0','Äê¶È','','1');
+VALUES ('BP.Pub.NDs','å¹´åº¦','FK_ND','0','å¹´åº¦','','1');
 

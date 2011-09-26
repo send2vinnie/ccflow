@@ -39,7 +39,7 @@ public partial class WF_Admin_BillSet : WebPage
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
 
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeftTX("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "' >" + this.ToE("Back","返回") + "</a> - <img src='../../Images/Btn/New.gif' />" + this.ToE("New", "新建") + "-" + BP.WF.Glo.GenerHelp("Bill" ));
+        this.Ucsys1.AddCaptionLeft("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "' >" + this.ToE("Back", "返回") + "</a> - <img src='../../Images/Btn/New.gif' />" + this.ToE("New", "新建") + "-" + BP.WF.Glo.GenerHelp("Bill"));
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle(ToE("Item", "项目"));
         this.Ucsys1.AddTDTitle(ToE("Input","输入"));

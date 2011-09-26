@@ -85,7 +85,7 @@ public partial class WF_MapDef_MapFrame : WebPage
         }
 
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + this.MyPK + "'>" + this.ToE("Back", "返回") + ":" + md.Name + "</a> - <a href='MapFrame.aspx?DoType=New&FK_MapData=" + this.FK_MapData + "&sd=sd'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
+        this.Pub1.AddCaptionLeft("<a href='MapDef.aspx?MyPK=" + this.MyPK + "'>" + this.ToE("Back", "返回") + ":" + md.Name + "</a> - <a href='MapFrame.aspx?DoType=New&FK_MapData=" + this.FK_MapData + "&sd=sd'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle(this.ToE("No", "编号"));

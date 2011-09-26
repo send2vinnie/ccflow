@@ -9,18 +9,5 @@
       
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<table>
-<tr>
- <td>
-     <cc1:Tree ID="Tree1" runat="server">
-     </cc1:Tree>
-    </td>
-    
-    <td>
     <uc1:Pub ID="Pub1" runat="server" />
-    </td>
-   
-    </tr>
-    </table>
 </asp:Content>
-

@@ -31,7 +31,9 @@ public partial class WF_Admin_CanReturnNodes : WebPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        BP.WF.Node mynd = new BP.WF.Node(this.FK_Node);
+        BP.WF.Node mynd = new BP.WF.Node();
+        mynd.NodeID = this.FK_Node;
+        mynd.RetrieveFromDBSources();
 
         if (mynd.HisReturnRole != ReturnRole.ReturnSpecifiedNodes)
         {
@@ -39,12 +41,12 @@ public partial class WF_Admin_CanReturnNodes : WebPage
             return;
         }
 
-        this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX("操作节点:" + mynd.Name);
-        this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("节点步骤");
-        this.Pub1.AddTDTitle("可退回的节点");
-        this.Pub1.AddTREnd();
+        this.Pub1.AddTable("width='80%'");
+        this.Pub1.AddCaptionLeft("为“" + mynd.Name +"”, 设置可退回的节点。");
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTDTitle("节点步骤");
+        //this.Pub1.AddTDTitle("可退回的节点");
+        //this.Pub1.AddTREnd();
 
         BP.WF.NodeReturns rnds = new NodeReturns();
         rnds.Retrieve(BP.WF.NodeReturnAttr.FK_Node, this.FK_Node);

@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BP.Sys;
+
 
 public partial class WF_Admin_DBInstall : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        FrmEvent fe = new FrmEvent();
+        fe.CheckPhysicsTable();
+        return;
+
         this.Pub1.AddH3("ccflow 数据库修复与安装工具");
         this.Pub1.AddHR();
 
@@ -47,7 +54,6 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     //删除表单类型.
                     sql = "DELETE Sys_Enum WHERE EnumKey='FormType'";
                     BP.DA.DBAccess.RunSQLs(sql);
-
 
                     //删除公文类.
                     sql = "DELETE WF_FlowSort WHERE No='01'";

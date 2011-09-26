@@ -91,7 +91,7 @@ public partial class WF_BPR : WebPage
         Node nd = new Node(int.Parse(this.FK_Node));
 
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX( "<a href='BPR.aspx?FK_Flow="+this.FK_Flow+"'>返回</a> - "+ fl.Name+"-"+nd.Name);
+        this.Pub1.AddCaptionLeft("<a href='BPR.aspx?FK_Flow=" + this.FK_Flow + "'>返回</a> - " + fl.Name + "-" + nd.Name);
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("Idx");
         this.Pub1.AddTDTitle("操作员");

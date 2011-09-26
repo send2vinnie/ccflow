@@ -461,7 +461,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         this.Pub2.AddTable("border=0  width='700px' ");
         MapAttr attr = new MapAttr(this.RefNo);
-        this.Pub2.AddCaptionLeftTX(attr.KeyOfEn + " - " + attr.Name);
+        this.Pub2.AddCaptionLeft(attr.KeyOfEn + " - " + attr.Name);
         this.Pub2.AddTR();
         this.Pub2.AddTD("函数库来源:");
         this.Pub2.AddTDBegin();

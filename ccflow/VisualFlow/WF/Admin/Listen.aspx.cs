@@ -210,7 +210,7 @@ public partial class WF_Admin_listen : WebPage
         }
 
         this.Pub1.AddTable("width=80%");
-        this.Pub1.AddCaptionLeftTX("设置收听：" + nd.Name + "- <a href='Listen.aspx?FK_Node=" + this.FK_Node + "&DoType=New' >" + this.ToE("New", "新建") + "</a>");
+        this.Pub1.AddCaptionLeft("设置收听：" + nd.Name + "- <a href='Listen.aspx?FK_Node=" + this.FK_Node + "&DoType=New' >" + this.ToE("New", "新建") + "</a>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle(this.ToE("CurrNode", "当前节点"));
         this.Pub1.AddTDTitle(this.ToE("CurrNode", "收听节点"));
