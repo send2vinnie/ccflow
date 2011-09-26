@@ -22,7 +22,7 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         this.Pub1.AddFieldSet("文件上传");
         FileUpload fu = new FileUpload();
         fu.ID = "s";
-        fu.Width = 300;
+       // fu.Width = 300;
         this.Pub1.Add(fu);
         this.Pub1.AddFieldSetEnd();
     }
