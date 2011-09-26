@@ -11,10 +11,6 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        FrmEvent fe = new FrmEvent();
-        fe.CheckPhysicsTable();
-        return;
-
         this.Pub1.AddH3("ccflow 数据库修复与安装工具");
         this.Pub1.AddHR();
 
