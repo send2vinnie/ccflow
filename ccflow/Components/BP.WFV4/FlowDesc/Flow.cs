@@ -3337,8 +3337,8 @@ namespace BP.WF
             img.X = (float)577.26;
             img.Y = (float)3.45;
 
-            img.W = (float)40;
-            img.H = (float)137;
+            img.W = (float)137;
+            img.H = (float)40;
 
             img.ImgURL = "/FreeFrm;component/Img/LogoBig.png";
             img.LinkURL = "http://ccflow.org";

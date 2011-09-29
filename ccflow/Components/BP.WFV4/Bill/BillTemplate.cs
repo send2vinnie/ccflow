@@ -43,7 +43,6 @@ namespace BP.WF
         /// 是否生成PDF
         /// </summary>
         public const string BillFileType = "BillFileType";
-
     }
 	/// <summary>
 	/// 单据模板
@@ -211,8 +210,7 @@ namespace BP.WF
                 map.AddTBInt("NodeID", 0, "NodeID", true, false);
 
 
-                map.AddDDLSysEnum("BillFileType", 0, "生成的文件类型", true, false, "BillFileType","@0=Word@1=PDF@2=Excel");
-
+                map.AddDDLSysEnum("BillFileType", 0, "生成的文件类型", true, false, "BillFileType","@0=Word@1=PDF@2=Excel(未完成)@3=Html(未完成)");
 
                 map.AddTBString("FK_BillType", null, "单据类型", true, false, 0, 4, 4);
 
