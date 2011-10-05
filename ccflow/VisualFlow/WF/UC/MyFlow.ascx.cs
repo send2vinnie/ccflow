@@ -479,11 +479,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (btnLab.OptEnable)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \"  />");
-
             #endregion
 
             this.BindWork(currND, currWK);
-
 
             this.Session["Ect"] = null;
             if (currND.HisDeliveryWay == DeliveryWay.BySelected && currND.IsEndNode == false)
@@ -1075,9 +1073,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         System.Web.HttpContext.Current.Session["RunDT"] = DateTime.Now;
         if (this.FK_Node == 0)
             throw new Exception(this.ToE("NotCurrNode", "没有找到当前的节点"));
-
-       // work.OID = this.WorkID;
-        // work.RetrieveFromDBSources();
         try
         {
             switch (currND.HisFormType)

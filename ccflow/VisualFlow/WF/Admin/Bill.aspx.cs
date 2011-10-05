@@ -105,7 +105,7 @@ public partial class WF_Admin_BillSet : WebPage
         ddl.BindSysEnum("BillFileType");
         ddl.SetSelectItem(bill.BillFileType);
         this.Ucsys1.AddTD(ddl);
-        this.Ucsys1.AddTD("目前不支持excel.");
+        this.Ucsys1.AddTD("目前不支持excel,html格式.");
         this.Ucsys1.AddTREnd();
 
         //this.Ucsys1.AddTR();

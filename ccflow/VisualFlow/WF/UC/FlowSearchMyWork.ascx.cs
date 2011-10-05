@@ -92,7 +92,6 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
         this.Pub1.AddTable("width='100%' align=left ");
         
         this.Pub1.AddCaptionLeft("流程查询:" + fl.Name);
- 
 
         this.Pub1.AddTRSum();
         this.Pub1.Add("<TD colspan=" + colspan + " class=ToolBar><b>发生日期&nbsp;从:</b>");
@@ -111,9 +110,7 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
         tb.Columns = 10;
         this.Pub1.Add(tb);
 
-
         this.Pub1.AddB("&nbsp;");
-
 
         Button btn = new Button();
         btn.Text = "查询";
@@ -236,7 +233,9 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
             else
                 qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
+
             this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName);
+           
             qo.DoQuery();
 
             try

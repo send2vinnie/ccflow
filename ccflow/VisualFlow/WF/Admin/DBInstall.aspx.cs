@@ -22,6 +22,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
             this.Pub1.AddFieldSetEnd();
             return;
         }
+
         try
         {
             if (BP.DA.DBAccess.IsExitsObject("WF_Flow") == true)

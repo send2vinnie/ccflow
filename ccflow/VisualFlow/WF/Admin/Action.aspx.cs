@@ -13,11 +13,11 @@ using BP.Sys;
 
 public partial class WF_Admin_Action : WebPage
 {
-    public int FK_Node
+    public string FK_MapData
     {
         get
         {
-            return int.Parse(this.Request.QueryString["NodeID"]);
+            return "ND"+this.Request.QueryString["NodeID"];
         }
     }
     protected void Page_Load(object sender, EventArgs e)
@@ -35,7 +35,7 @@ public partial class WF_Admin_Action : WebPage
         this.Pub1.AddTREnd();
 
         FrmEvents ndevs = new FrmEvents();
-        ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_Node);
+        ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_MapData);
 
         EventLists xmls = new EventLists();
         xmls.RetrieveAll();
@@ -86,7 +86,7 @@ public partial class WF_Admin_Action : WebPage
     void btn_Click(object sender, EventArgs e)
     {
         FrmEvents ndevs = new FrmEvents();
-        ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_Node);
+        ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_MapData);
 
         EventLists xmls = new EventLists();
         xmls.RetrieveAll();
@@ -104,10 +104,10 @@ public partial class WF_Admin_Action : WebPage
                 continue;
             }
 
-            nde.MyPK = "ND" + this.FK_Node + "_" + xml.No;
+            nde.MyPK =   this.FK_MapData + "_" + xml.No;
             nde.DoDoc = doc;
             nde.FK_Event = xml.No;
-            nde.FK_MapData = "ND"+this.FK_Node;
+            nde.FK_MapData = this.FK_MapData;
             nde.HisDoType = (EventDoType)this.Pub1.GetDDLByID("DDL_EventDoType_" + xml.No).SelectedItemIntVal;//.Trim();
             nde.MsgOKString = this.Pub1.GetTextBoxByID("TB_MsgOK_" + xml.No).Text;
             nde.MsgErrorString = this.Pub1.GetTextBoxByID("TB_MsgErr_" + xml.No).Text;

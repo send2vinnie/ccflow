@@ -64,8 +64,6 @@ public partial class WF_Admin_DoPort : System.Web.UI.Page
                  this.GetNewMsg();
                 break;
             case "OpenWork":
-                //if (this.SID == this.Session.SessionID)
-                //{
                     Emp emp = new Emp(this.UserNo);
                     emp.No = this.UserNo;
                     emp.RetrieveFromDBSources();
@@ -73,8 +71,6 @@ public partial class WF_Admin_DoPort : System.Web.UI.Page
                     BP.Web.WebUser.SignInOfGenerLang(emp,this.Lang );
                     this.Response.Redirect("../MyFlow.aspx?OID="+this.Request.QueryString["WorkID"]+"&FK_Flow="+this.Request.QueryString["FK_Flow"] ,true);
                     return;
-                //}
-                break;
             default:
                 throw new Exception( "错误的标记:" + this.DoType );
         }
