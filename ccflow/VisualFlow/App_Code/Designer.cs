@@ -38,10 +38,10 @@ public class Designer : System.Web.Services.WebService
     }
     #endregion 数据库访问
 
-
     public Designer()
     {
     }
+
     #region 设计器的方法
     /// <summary>
     /// 运行sql返回 dataset .

@@ -318,7 +318,6 @@ namespace FreeFrm.Web
                         mdHid.UIVisible = false;
                         mdHid.UIIsEnable = false;
                         mdHid.Insert();
-
                         return null;
                     case "DelDtl":
                         MapDtl dtl = new MapDtl(v1);
@@ -466,7 +465,6 @@ namespace FreeFrm.Web
             {
                 if (en != null)
                     en.CheckPhysicsTable();
-
                 return "Error:" + ex.Message;
             }
         }
@@ -490,51 +488,59 @@ namespace FreeFrm.Web
         [WebMethod]
         public string FtpMethod(string doType, string v1, string v2, string v3)
         {
-            // FtpSupport.FtpConnection conn = new FtpSupport.FtpConnection("localhost", "administrator", "jiaozi");
-            FtpSupport.FtpConnection conn = new FtpSupport.FtpConnection();
-            switch (doType)
+            try
             {
-                case "ShareFrm": /*共享模板*/
-                    MapData md = new MapData(v1);
-                    DataSet ds = md.GenerHisDataSet();
+                FtpSupport.FtpConnection conn = new FtpSupport.FtpConnection("192.168.0.3", "administrator", "jiaozi");
+                switch (doType)
+                {
+                    case "ShareFrm": /*共享模板*/
+                        MapData md = new MapData(v1);
+                        DataSet ds = md.GenerHisDataSet();
+                        string file =  BP.SystemConfig.PathOfTemp + v1 + "_" + v2 +"_"+DateTime.Now.ToString("MM-dd hh-mm")+ ".xml";
+                        ds.WriteXml(file);
+                        conn.SetCurrentDirectory("/");
+                        conn.SetCurrentDirectory("/Upload.Form/");
+                        conn.SetCurrentDirectory(v3);
+                        conn.PutFile(file, md.Name+".xml");
+                        conn.Close();
+                        return null;
+                    case "GetDirs":
+                        //   return "@01.日常办公@02.人力资源@03.其它类";
+                        conn.SetCurrentDirectory(v1);
+                        FtpSupport.Win32FindData[] dirs = conn.FindFiles();
+                        conn.Close();
+                        string dirsStr = "";
+                        foreach (FtpSupport.Win32FindData dir in dirs)
+                        {
+                            dirsStr += "@" + dir.FileName;
+                        }
+                        return dirsStr;
+                    case "GetFls":
+                        conn.SetCurrentDirectory(v1);
+                        FtpSupport.Win32FindData[] fls = conn.FindFiles();
+                        conn.Close();
+                        string myfls = "";
+                        foreach (FtpSupport.Win32FindData fl in fls)
+                        {
+                            myfls += "@" + fl.FileName;
+                        }
+                        return myfls;
+                    case "LoadTempleteFile":
+                        string fileFtpPath = v1;
+                        conn.SetCurrentDirectory("/Form.表单模版/");
+                        conn.SetCurrentDirectory(v3);
 
-                    string file = System.Web.HttpContext.Current.Request.PhysicalPath + "\\Temp\\" + v1 + "_"+v2+".xml";
-                    ds.WriteXml(file);
-                    conn.SetCurrentDirectory(v3);
-                    conn.PutFile(file, file);
-                    conn.Close();
-                    return null;
-                case "GetDirs":
-                    return "@01.日常办公@02.人力资源@03.其它类";
-                    conn.SetCurrentDirectory(v1);
-                    FtpSupport.Win32FindData[] dirs = conn.FindFiles();
-                    conn.Close();
-                    string dirsStr = "";
-                    foreach (FtpSupport.Win32FindData dir in dirs)
-                    {
-                        dirsStr += "@" + dir.FileName;
-                    }
-                    return dirsStr;
-                case "GetFls":
-                    return "@报销单据.xml@请假条.xml";
-                    
-                    conn.SetCurrentDirectory(v1);
-                    FtpSupport.Win32FindData[] fls = conn.FindFiles();
-                    conn.Close();
-                    string myfls = "";
-                    foreach (FtpSupport.Win32FindData fl in fls)
-                    {
-                        myfls += "@" + fl.FileName;
-                    }
-                case "LoadTempleteFile":
-                    //return null;
-                    string fileFtpPath = v1;
-
-                    /*下载文件到指定的目录: */
-                    string tempFile = "D:\\ccflow\\VisualFlow\\Temp\\ND201.xml";
-                    return this.LoadFrmTempleteFile(tempFile, v2, true);
-                default:
-                    return null;
+                         /*下载文件到指定的目录: */
+                        string tempFile = BP.SystemConfig.PathOfTemp+"\\"+v2+".xml";
+                        conn.GetFile(v1, tempFile, false, FileAttributes.Archive, FtpSupport.FtpTransferType.Ascii);
+                        return this.LoadFrmTempleteFile(tempFile, v2, true);
+                    default:
+                        return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Error:"+ex.Message;
             }
         }
         /// <summary>
@@ -881,7 +887,14 @@ namespace FreeFrm.Web
                 toItem.Copy(item);
                 toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
                 toItem.FK_MapData = fk_mapdata;
-                toItem.DirectInsert();
+                try
+                {
+                    toItem.DirectInsert();
+                }
+                catch
+                {
+                    toItem.Update();
+                }
             }
 
 
