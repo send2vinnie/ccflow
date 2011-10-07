@@ -123,22 +123,25 @@ public partial class Comm_M2M : WebPage
         }
 
         #region 处理未分组的情况.
-        bool isHaveUnGroup = true;
-        foreach (DataRow drObj in dtObj.Rows)
+        bool isHaveUnGroup = false;
+        if (dtObj.Columns.Count > 2)
         {
-            string group = drObj[2].ToString();
-            isHaveUnGroup = true;
-            foreach (DataRow drGroup in dtGroup.Rows)
+            foreach (DataRow drObj in dtObj.Rows)
             {
-                string groupNo = drGroup[0].ToString();
-                if (group == groupNo)
+                string group = drObj[2].ToString();
+                isHaveUnGroup = true;
+                foreach (DataRow drGroup in dtGroup.Rows)
                 {
-                    isHaveUnGroup = false;
-                    break;
+                    string groupNo = drGroup[0].ToString();
+                    if (group == groupNo)
+                    {
+                        isHaveUnGroup = false;
+                        break;
+                    }
                 }
+                if (isHaveUnGroup == false)
+                    continue;
             }
-            if (isHaveUnGroup == false)
-                continue;
         }
 
         if (isHaveUnGroup == true)
