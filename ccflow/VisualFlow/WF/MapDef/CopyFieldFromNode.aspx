@@ -18,6 +18,9 @@ function GroupClick(groupID)
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <table width='100%'>
+<%--<tr>
+    <TD valign=top   colspan=2 ><caption class=Caption>复制字段</caption></TD>
+    </tr>--%>
 <tr>
     <TD valign=top   >
         <uc1:Pub ID="Pub1" runat="server" />
@@ -26,6 +29,6 @@ function GroupClick(groupID)
         <uc1:Pub ID="Pub2" runat="server" />
     </TD>
     </tr>
-    </table>
+ </table>
 </asp:Content>
 

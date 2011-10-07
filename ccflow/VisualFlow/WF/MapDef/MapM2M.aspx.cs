@@ -107,6 +107,7 @@ public partial class WF_MapDef_MapM2M : WebPage
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();
+
     }
     void btn_Click(object sender, EventArgs e)
     {
@@ -253,7 +254,7 @@ public partial class WF_MapDef_MapM2M : WebPage
 
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD(this.ToE("Desc", "主体数据源"));
+        this.Pub1.AddTD(this.ToE("Desc", "主体数据源")+"<font color=red>*</font>");
         tb = new TB();
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 3;
@@ -408,5 +409,15 @@ public partial class WF_MapDef_MapM2M : WebPage
         this.Pub1.AddTDEnd();
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
+
+        this.Pub1.AddFieldSet("SQL事例");
+
+        this.Pub1.Add("主体数据源:");
+        this.Pub1.AddBR("SELECT No,Name,FK_Dept FROM Port_Emp ");
+
+        this.Pub1.AddBR();
+        this.Pub1.Add("分组数据源:");
+        this.Pub1.AddBR("SELECT No,Name FROM Port_Dept ");
+        this.Pub1.AddFieldSetEnd();
     }
 }
