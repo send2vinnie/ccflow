@@ -341,6 +341,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
        }
        else
        {
+
            currWK = this.currFlow.GenerWork(this.WorkID, this.currND);
 
            string msg = "";
