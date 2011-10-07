@@ -153,7 +153,7 @@ public partial class WF_MapDef_MapDef : WebPage
                     this.Pub1.Add(lab);
                     this.Pub1.Add("</span><br>");
 
-                    TextBox mytbLine = new TextBox();
+                    TB mytbLine = new TB();
                     mytbLine.ID = "TB_" + attr.KeyOfEn;
                     mytbLine.TextMode = TextBoxMode.MultiLine;
                     mytbLine.Rows = 8;
@@ -170,7 +170,7 @@ public partial class WF_MapDef_MapDef : WebPage
 
                     lab = this.Pub1.GetLabelByID("Lab" + attr.KeyOfEn);
                     string ctlID = mytbLine.ClientID;
-                    lab.Text = "<a href=\"javascript:TBHelp('" + ctlID + "','" + this.Request.ApplicationPath + "','" + this.PK + "','" + attr.KeyOfEn + "')\">默认值</a>";
+                    lab.Text = "<a href=\"javascript:TBHelp('" + ctlID + "','" + this.Request.ApplicationPath + "','" + md.No  + "','" + attr.KeyOfEn + "')\">默认值</a>";
 
                     this.Pub1.AddTDEnd();
                     this.Pub1.AddTREnd();
@@ -195,7 +195,7 @@ public partial class WF_MapDef_MapDef : WebPage
                     this.Pub1.Add(lab);
                     this.Pub1.Add("</span>");
 
-                    TextBox mytbLine = new TextBox();
+                    TB mytbLine = new TB();
                     mytbLine.TextMode = TextBoxMode.MultiLine;
                     mytbLine.Rows = 8;
                     mytbLine.Attributes["class"] = "TBDoc"; // "width:100%;padding: 0px;margin: 0px;";
@@ -208,7 +208,7 @@ public partial class WF_MapDef_MapDef : WebPage
 
                     lab = this.Pub1.GetLabelByID("Lab" + attr.KeyOfEn);
                     string ctlID = mytbLine.ClientID;
-                    lab.Text = "<a href=\"javascript:TBHelp('" + ctlID + "','" + this.Request.ApplicationPath + "','" + this.PK + "','" + attr.KeyOfEn + "')\">默认值</a>";
+                    lab.Text = "<a href=\"javascript:TBHelp('" + ctlID + "','" + this.Request.ApplicationPath + "','" + md.No + "','" + attr.KeyOfEn + "')\">默认值</a>";
 
 
                     this.Pub1.AddTDEnd();
@@ -275,7 +275,7 @@ public partial class WF_MapDef_MapDef : WebPage
                                 break;
                             case BP.DA.DataType.AppDate:
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                TextBox tbD = new TextBox();
+                                TB tbD = new TB();
                                 if (attr.UIIsEnable)
                                 {
                                     tbD.Attributes["onfocus"] = "WdatePicker();";
@@ -291,7 +291,7 @@ public partial class WF_MapDef_MapDef : WebPage
                                 break;
                             case BP.DA.DataType.AppDateTime:
                                 this.Pub1.AddTDDesc(this.GenerLab(attr, idx, i, count));
-                                TextBox tbDT = new TextBox();
+                                TB tbDT = new TB();
                                 tbDT.Text = attr.DefVal;
                                 if (attr.UIIsEnable)
                                 {

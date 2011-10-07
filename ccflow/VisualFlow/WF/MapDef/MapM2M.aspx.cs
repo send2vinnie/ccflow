@@ -255,9 +255,12 @@ public partial class WF_MapDef_MapM2M : WebPage
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("Desc", "主体数据源"));
         tb = new TB();
+        tb.TextMode = TextBoxMode.MultiLine;
+        tb.Rows = 3;
         tb.ID = "TB_DBOfObjs";
         tb.Text = dtl.DBOfObjs;
         tb.Columns = 50;
+
         this.Pub1.AddTD("colspan=2", tb);
         this.Pub1.AddTREnd();
         this.Pub1.AddTREnd();
@@ -270,6 +273,8 @@ public partial class WF_MapDef_MapM2M : WebPage
         tb.ID = "TB_DBOfGroups";
         tb.Text = dtl.DBOfGroups;
         tb.Columns = 50;
+        tb.TextMode = TextBoxMode.MultiLine;
+        tb.Rows = 3;
         this.Pub1.AddTD("colspan=2", tb);
         this.Pub1.AddTREnd();
         this.Pub1.AddTREnd();

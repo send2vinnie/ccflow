@@ -1146,6 +1146,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.UCEn1.ResetEnVal(currWK);
             return;
         }
+
+
         try
         {
             currWK.BeforeSend(); // 发送前作逻辑检查。

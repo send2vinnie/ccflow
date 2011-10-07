@@ -33,8 +33,9 @@ public partial class WF_MapDef_M2MDe : WebPage
         DataTable dtGroup = new DataTable();
 
         if (M2M.DBOfGroups.Length > 3)
-            dtGroup = BP.DA.DBAccess.RunSQLReturnTable(M2M.DBOfGroups);
-        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(M2M.DBOfObjs);
+            dtGroup = BP.DA.DBAccess.RunSQLReturnTable(M2M.DBOfGroupsRun);
+
+        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(M2M.DBOfObjsRun);
 
         this.Pub1.AddTable("border=0");
         foreach (DataRow drGroup in dtGroup.Rows)
@@ -91,11 +92,11 @@ public partial class WF_MapDef_M2MDe : WebPage
         if (isHaveUnGroup == true)
         {
             this.Pub1.AddTR();
-            CheckBox cbx = new CheckBox();
-            cbx.ID = "CBs_UnGroup";
-            cbx.Text = "未分组";
-            this.Pub1.AddTDTitle("align=left", cbx);
-            this.Pub1.AddTREnd();
+            //CheckBox cbx = new CheckBox();
+            //cbx.ID = "CBs_UnGroup";
+            //cbx.Text = "未分组";
+            //this.Pub1.AddTDTitle("align=left", cbx);
+            //this.Pub1.AddTREnd();
 
             this.Pub1.AddTR();
             this.Pub1.AddTDBigDocBegain(); // ("nowarp=true");
@@ -127,7 +128,7 @@ public partial class WF_MapDef_M2MDe : WebPage
                 cb.Text = name;
                 this.Pub1.Add(cb);
             }
-            cbx.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
+          //  cbx.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();
         }

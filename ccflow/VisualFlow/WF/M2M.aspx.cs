@@ -48,9 +48,9 @@ public partial class Comm_M2M : WebPage
         m2m.RetrieveFromDBSources();
         DataTable dtGroup = new DataTable();
         if (mapM2M.DBOfGroups.Length >5)
-            dtGroup=BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfGroups);
+            dtGroup=BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfGroupsRun);
 
-        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjs);
+        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjsRun);
 
         bool isInsert = mapM2M.IsInsert;
         bool isDelete = mapM2M.IsDelete;
@@ -143,12 +143,12 @@ public partial class Comm_M2M : WebPage
 
         if (isHaveUnGroup == true)
         {
-            this.Pub1.AddTR();
-            CheckBox cbx = new CheckBox();
-            cbx.ID = "CBs_UnGroup";
-            cbx.Text = "未分组";
-            this.Pub1.AddTDTitle("align=left", cbx);
-            this.Pub1.AddTREnd();
+            //this.Pub1.AddTR();
+            //CheckBox cbx = new CheckBox();
+            //cbx.ID = "CBs_UnGroup";
+            //cbx.Text = "未分组";
+            //this.Pub1.AddTDTitle("align=left", cbx);
+            //this.Pub1.AddTREnd();
 
             this.Pub1.AddTR();
             this.Pub1.AddTDBigDocBegain(); // ("nowarp=true");
@@ -181,7 +181,8 @@ public partial class Comm_M2M : WebPage
                 cb.Checked = m2m.Vals.Contains("," + no + ",");
                 this.Pub1.Add(cb);
             }
-            cbx.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
+
+            //cbx.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();
         }
