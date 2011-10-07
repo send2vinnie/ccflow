@@ -95,11 +95,6 @@ public partial class WF_MapDef_M2MDe : WebPage
         if (isHaveUnGroup == true)
         {
             this.Pub1.AddTR();
-            //CheckBox cbx = new CheckBox();
-            //cbx.ID = "CBs_UnGroup";
-            //cbx.Text = "未分组";
-            //this.Pub1.AddTDTitle("align=left", cbx);
-            //this.Pub1.AddTREnd();
 
             this.Pub1.AddTR();
             this.Pub1.AddTDBigDocBegain(); // ("nowarp=true");
