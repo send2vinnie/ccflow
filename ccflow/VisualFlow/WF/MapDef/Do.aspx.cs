@@ -292,8 +292,6 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                     attrU.DoUp();
                     else
                         attrU.DoDtlUp();
-
-
                     this.WinClose();
                     break;
                 case "Down":

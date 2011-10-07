@@ -3,8 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-<title runat=server /> 
-</title>
+<title runat=server /> </title>
    <link href="../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
    <script language="JavaScript" src="./../../Comm/JScript.js" type="text/javascript" ></script>
     <script language=javascript>
@@ -47,7 +46,17 @@
         //window.location.href = window.location.href;
     }
     </script>
-    <base target=_self /> 
+    <base target=_self />
+    <style type="text/css">
+    .FUL
+    {
+        
+    }
+    .FLI
+    {
+        
+    }
+    </style>
 </head>
 <body  topmargin="20" leftmargin="20" onkeypress="Esc()"  onload="RSize()" >
     <form id="form1" runat="server">
