@@ -453,7 +453,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
         TextBox tb = new TextBox();
         tb.ID = "TB_F";
-        tb.Columns = 7;
+        tb.Columns = 10;
         tb.Text = this.DT_F;
         tb.Attributes["onfocus"] = "WdatePicker();";
         this.Pub1.Add(tb);

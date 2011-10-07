@@ -128,6 +128,9 @@ public partial class WF_Frm : WebPage
         //this.IsPrint;
         //   this.Button1.Enabled = this.IsReadonly;
     }
+    /// <summary>
+    /// 保存点
+    /// </summary>
     public void SaveNode()
     {   
         Node nd = new Node(this.FK_Node);
