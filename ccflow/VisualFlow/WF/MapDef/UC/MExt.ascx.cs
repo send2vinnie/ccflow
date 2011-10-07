@@ -644,15 +644,14 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         this.Pub2.AddTDBegin("colspan=3");
 
-        this.Pub2.AddFieldSet("Example:");
+        this.Pub2.AddFieldSet("填充事例:");
         this.Pub2.AddB("For oracle:");
-        string sql = "SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM Port_Emp WHERE No LIKE '@Key%'";
+        string sql = "SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM Port_Emp WHERE No LIKE '@Key%' AND ROWNUM<=15";
         this.Pub2.AddBR(sql.Replace("~", "\""));
-
 
         this.Pub2.AddBR();
         this.Pub2.AddB("For sqlserver:");
-        sql = "SELECT No, Name , Name as mingcheng FROM Port_Emp WHERE No LIKE '@Key%'";
+        sql = "SELECT TOP 15 No, Name , Name as mingcheng FROM Port_Emp WHERE No LIKE '@Key%'";
         this.Pub2.AddBR(sql.Replace("~", "\""));
 
         this.Pub2.AddFieldSetEnd();
@@ -959,7 +958,8 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         catch (Exception ex)
         {
-            this.Alert(ex.Message);
+            //this.Alert(ex.Message);
+            this.AlertMsg_Warning("SQL错误", ex.Message);
             return;
         }
         this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo , true);

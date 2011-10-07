@@ -53,9 +53,9 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
 
         this.Pub1.AddTable();
         if (this.RefNo == null)
-            this.Pub1.AddCaption("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("New", "新建"));
+            this.Pub1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("New", "新建"));
         else
-            this.Pub1.AddCaption("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("Edit", "编辑"));
+            this.Pub1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("EnumField", "枚举字段") + "</a> - " + this.ToE("Edit", "编辑"));
 
         if (this.RefNo == null)
             this.Title = this.ToE("NewEnum", "新建枚举");
@@ -71,11 +71,11 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("&nbsp;");
         this.Pub1.AddTDTitle("&nbsp;");
-        this.Pub1.AddTDTitle(this.ToE("Note","备注"));
+        this.Pub1.AddTDTitle(this.ToE("Note", "备注"));
         this.Pub1.AddTREnd();
-         
+
         this.Pub1.AddTRSum();
-        this.Pub1.AddTD( this.ToE("No","编号") );
+        this.Pub1.AddTD(this.ToE("No", "编号"));
         BP.Web.Controls.TB tb = new BP.Web.Controls.TB();
         tb.ID = "TB_No";
         tb.Text = en.No;
@@ -90,7 +90,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
 
 
         this.Pub1.AddTRSum();
-        this.Pub1.AddTD(this.ToE("Name","名称") );
+        this.Pub1.AddTD(this.ToE("Name", "名称"));
         tb = new BP.Web.Controls.TB();
         tb.ID = "TB_Name";
         tb.Text = en.Name;
@@ -119,7 +119,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
         this.Pub1.Add("<TD colspan=3 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = " "+this.ToE("Save","保存")+" ";
+        btn.Text = " " + this.ToE("Save", "保存") + " ";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
@@ -132,7 +132,6 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
             btn.Enabled = false;
         this.Pub1.Add(btn);
 
-
         btn = new Button();
         btn.ID = "Btn_Del";
         btn.Text = " " + this.ToE("Del", "删除") + " ";
@@ -143,7 +142,7 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
         btn.Click += new EventHandler(btn_Del_Click);
         this.Pub1.Add(btn);
 
-        this.Pub1.AddTDEnd(); 
+        this.Pub1.AddTDEnd();
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }
@@ -211,6 +210,9 @@ public partial class Comm_MapDef_NewEnum : BP.Web.WebPage
             se1s.Delete(SysEnumAttr.EnumKey, main.No);
             SysEnums ses = new SysEnums();
             ses.RegIt(main.No, cfgVal);
+
+            string keyApp = "EnumOf" + main.No + WebUser.SysLang;
+            BP.DA.Cash.DelObjFormApplication(keyApp);
 
             if (this.MyPK != null)
                 this.Response.Redirect("SysEnum.aspx?RefNo=" + main.No + "&MyPK=" + this.MyPK + "&IDX=" + this.IDX, true);
