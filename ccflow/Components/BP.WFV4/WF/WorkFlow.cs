@@ -584,7 +584,7 @@ namespace BP.WF
                 // 查询出来报表的数据（主表的数据），以供明细表复制。 
                 BP.Sys.GEEntity geRpt = new GEEntity("ND" + int.Parse(this.HisFlow.No) + "Rpt");
                 geRpt.SetValByKey("OID", this.WorkID);
-                geRpt.Retrieve();
+                geRpt.RetrieveFromDBSources();
                 geRpt.SetValByKey("FK_NY", DataType.CurrentYearMonth);
 
                 string emps ="";
@@ -612,7 +612,7 @@ namespace BP.WF
                 geRpt.SetValByKey(GERptAttr.FlowEnderRDT, DataType.CurrentDataTime);
                 geRpt.SetValByKey(GERptAttr.WFState, (int)WFState.Complete);
                 geRpt.SetValByKey(GERptAttr.MyNum,1);
-                geRpt.Update();
+                geRpt.Save();
 
                 //geRpt.Update("Emps", emps);
                 //处理明细数据的copy问题。 首先检查：当前节点（最后节点）是否有明细表。

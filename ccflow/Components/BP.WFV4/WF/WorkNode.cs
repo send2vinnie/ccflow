@@ -2474,7 +2474,17 @@ namespace BP.WF
             #region 判断流程条件.
             try
             {
-                if (this.HisNode.IsCCFlow && this.HisFlowCompleteConditions.IsPass)
+                if (this.HisNode.HisToNodes.Count == 0 && this.HisNode.IsStartNode)
+                {
+                    /* 如果流程完成 */
+                    string overMsg = this.HisWorkFlow.DoFlowOver();
+                    this.IsStopFlow = true;
+                    return "工作已经成功处理(一个流程的工作)。";
+                    // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
+                    // return msg + "@符合工作流程完成条件" + this.HisFlowCompleteConditions.ConditionDesc + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
+                }
+
+                if ((this.HisNode.IsCCFlow && this.HisFlowCompleteConditions.IsPass))
                 {
                     /* 如果流程完成 */
                     string overMsg = this.HisWorkFlow.DoFlowOver();
