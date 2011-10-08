@@ -225,7 +225,7 @@ namespace BP.Sys
         }
         public string GenerCaseWhenForOracle(string enName, string mTable, string key, string field, string enumKey, int def)
         {
-            string sql = (string)Cash.GetObjFormApplication("ESQL" + enName + key + "_" + enumKey, null);
+            string sql = (string)Cash.GetObjFormApplication("ESQL" + enName +mTable+ key + "_" + enumKey, null);
             // string sql = "";
             if (sql != null)
                 return sql;
@@ -243,7 +243,7 @@ namespace BP.Sys
             else
                 sql += " WHEN NULL THEN '" + se.Lab + "' END " + key + "TEXT";
 
-            Cash.AddObj("ESQL" + enName + key + "_" + enumKey, Depositary.Application, sql);
+            Cash.AddObj("ESQL" + enName + mTable + key + "_" + enumKey, Depositary.Application, sql);
             return sql;
         }
 
@@ -273,7 +273,7 @@ namespace BP.Sys
                 try
                 {
                     BP.DA.DBAccess.RunSQL("UPDATE Sys_Enum WHERE Lang='" + Web.WebUser.SysLang + "' WHERE LANG IS NULL ");
-                    BP.DA.DBAccess.RunSQL("UPDATE Sys_Enum set MyPK=EnumKey+'_'+Lang+'_'+cast(IntKey as varchar )");
+                    BP.DA.DBAccess.RunSQL("UPDATE Sys_Enum SET MyPK=EnumKey+'_'+Lang+'_'+cast(IntKey as varchar )");
                 }
                 catch
                 {
@@ -356,15 +356,12 @@ namespace BP.Sys
             if (qo.DoQuery() == 0)
             {
                 /* 看看xml配置里面是否有?*/
-
-
                 return false;
             }
 
-
             Cash.AddObj("EnumOf" + enumKey + Web.WebUser.SysLang, Depositary.Application, this);
+             
             return true;
-
         }
 		/// <summary>
 		/// DBSimpleNoNames

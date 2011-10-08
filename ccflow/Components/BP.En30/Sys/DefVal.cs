@@ -149,14 +149,14 @@ namespace BP.Sys
                 map.DepositaryOfEntity = Depositary.None;
 
                 map.AddTBIntPKOID();
-                map.AddTBString(DefValAttr.EnsName, null, "类名称", false, true, 1, 100, 10);
-                map.AddTBString(DefValAttr.EnsDesc, null, "类描述", false, true, 1, 100, 10);
+                map.AddTBString(DefValAttr.EnsName, null, "类名称", false, true, 0, 100, 10);
+                map.AddTBString(DefValAttr.EnsDesc, null, "类描述", false, true, 0, 100, 10);
 
-                map.AddTBString(DefValAttr.AttrKey, null, "属性", false, true, 1, 100, 10);
-                map.AddTBString(DefValAttr.AttrDesc, null, "属性描述", false, true, 1, 100, 10);
+                map.AddTBString(DefValAttr.AttrKey, null, "属性", false, true, 0, 100, 10);
+                map.AddTBString(DefValAttr.AttrDesc, null, "属性描述", false, true, 0, 100, 10);
 
-                map.AddTBString(DefValAttr.FK_Emp, Web.WebUser.No, "人员", false, true, 1, 100, 10);
-                map.AddTBString(DefValAttr.Val, null, "值", true, false, 1, 1000, 10);
+                map.AddTBString(DefValAttr.FK_Emp, null, "人员", false, true, 0, 100, 10);
+                map.AddTBString(DefValAttr.Val, null, "值", true, false, 0, 1000, 10);
                 this._enMap = map;
                 return this._enMap;
             }

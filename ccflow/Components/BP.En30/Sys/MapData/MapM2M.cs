@@ -96,7 +96,13 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStrByKey(MapM2MAttr.DBOfObjs);
+                string sql = this.GetValStrByKey(MapM2MAttr.DBOfObjs);
+                //if (string.IsNullOrEmpty(sql))
+                //{
+                //    return "SELECT No,Name,FK_Dept FROM Port_Emp ";
+                //}
+                sql = sql.Replace("~", "'");
+                return sql;
             }
             set
             {
@@ -107,13 +113,53 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStrByKey(MapM2MAttr.DBOfGroups);
+                string sql = this.GetValStrByKey(MapM2MAttr.DBOfGroups);
+                //if (string.IsNullOrEmpty(sql))
+                //{
+                //    return "SELECT No,Name Port_Dept ";
+                //}
+                sql = sql.Replace("~", "'");
+                return sql;
             }
             set
             {
                 this.SetValByKey(MapM2MAttr.DBOfGroups, value);
             }
         }
+
+        public string DBOfObjsRun
+        {
+            get
+            {
+                string sql = this.GetValStrByKey(MapM2MAttr.DBOfObjs);
+                sql = sql.Replace("~", "'");
+                sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
+                sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                return sql;
+            }
+            set
+            {
+                this.SetValByKey(MapM2MAttr.DBOfObjs, value);
+            }
+        }
+        public string DBOfGroupsRun
+        {
+            get
+            {
+                string sql = this.GetValStrByKey(MapM2MAttr.DBOfGroups);
+                sql = sql.Replace("~", "'");
+                sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
+                sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                return sql;
+            }
+            set
+            {
+                this.SetValByKey(MapM2MAttr.DBOfGroups, value);
+            }
+        }
+
         public bool IsUse = false;
         public string FK_MapData
         {
@@ -284,8 +330,11 @@ namespace BP.Sys
         }
         protected override bool beforeInsert()
         {
-            this.DBOfGroups = "SELECT No,Name FROM Port_Dept";
-            this.DBOfObjs = "SELECT No,Name,FK_Dept FROM Port_Emp";
+            if (this.DBOfObjs.Trim().Length <= 5)
+            {
+                this.DBOfGroups = "SELECT No,Name FROM Port_Dept";
+                this.DBOfObjs = "SELECT No,Name,FK_Dept FROM Port_Emp";
+            }
             return base.beforeInsert();
         }
         protected override void afterInsert()
