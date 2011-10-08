@@ -638,23 +638,24 @@ namespace BP.En
             try
             {
                 i = EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
-                //  i = EnDA.Retrieve(this, SqlBuilder.Retrieve(this));
             }
             catch (Exception ex)
             {
                 Log.DebugWriteWarning(ex.Message);
                 this.CheckPhysicsTable();
-            }
-
-            if (this.EnMap.DepositaryOfEntity == Depositary.None)
-                return i;
-
-            if (i >= 1)
-            {
-                /* 如果过有查询结果, 就把它们放到系统里面去。 */
-                //Cash.AddObj(this.TheNameInCash,this.EnMap.DepositaryOfEntity,this);			 
+                throw ex;
             }
             return i;
+
+            //if (this.EnMap.DepositaryOfEntity == Depositary.None)
+            //    return i;
+
+            //if (i >= 1)
+            //{
+            //    /* 如果过有查询结果, 就把它们放到系统里面去。 */
+            //    //Cash.AddObj(this.TheNameInCash,this.EnMap.DepositaryOfEntity,this);			 
+            //}
+            //return i;
         }
 
         public int Retrieve(string key, object val)

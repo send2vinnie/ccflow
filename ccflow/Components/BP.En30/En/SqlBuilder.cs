@@ -954,7 +954,8 @@ namespace BP.En
                         if (attr.MyFieldType == FieldType.Enum || attr.MyFieldType == FieldType.PKEnum)
                         {
                             Sys.SysEnums ses = new BP.Sys.SysEnums(attr.UIBindKey, attr.UITag);
-                            val = val + "," + ses.GenerCaseWhenForOracle(en.ToString(), mainTable, attr.Key, attr.Field, attr.UIBindKey, int.Parse(attr.DefaultVal.ToString()));
+                            val = val + "," + ses.GenerCaseWhenForOracle(en.ToString(), mainTable, attr.Key, attr.Field, attr.UIBindKey,
+                                int.Parse(attr.DefaultVal.ToString()));
                         }
                         if (attr.MyFieldType == FieldType.FK || attr.MyFieldType == FieldType.PKFK)
                         {

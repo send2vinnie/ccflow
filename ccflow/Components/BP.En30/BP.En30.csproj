@@ -280,7 +280,6 @@
     <Compile Include="En\Base\Map\Row.cs" />
     <Compile Include="En\XMLBase\XmlMenu.cs" />
     <Compile Include="PubLib\Port\Unit.cs" />
-    <Compile Include="PubLib\Port\DeptStation.cs" />
     <Compile Include="PubLib\Pub\Week.cs" />
     <Compile Include="Right.cs">
     </Compile>

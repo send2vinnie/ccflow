@@ -111,11 +111,8 @@ namespace BP.Port
                 Map map = new Map("Port_DeptStation");
                 map.EnDesc = "部门岗位";
                 map.EnType = EnType.Dot2Dot;   
-
-
                 map.AddDDLEntitiesPK(DeptStationAttr.FK_Dept, null, "部门", new Depts(), true);
                 map.AddDDLEntitiesPK(DeptStationAttr.FK_Station, null, "岗位", new Stations(), true);
-
 
                 this._enMap = map;
                 return this._enMap;

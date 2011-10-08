@@ -146,8 +146,8 @@ namespace BP.Port
                 map.AddTBString(EmpAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 100, 30);
 
 
-                map.AttrsOfOneVSM.Add(new DeptStations(), new Stations(), DeptStationAttr.FK_Dept, EmpStationAttr.FK_Station,
-                    DeptAttr.Name, DeptAttr.No, "岗位对应");
+                //map.AttrsOfOneVSM.Add(new DeptStations(), new Stations(), DeptStationAttr.FK_Dept, EmpStationAttr.FK_Station,
+                //    DeptAttr.Name, DeptAttr.No, "岗位对应");
                
                // map.AttrsOfOneVSM.Add(new Stations(), new Stations(), EmpStationAttr.FK_Emp, EmpStationAttr.FK_Station,
 

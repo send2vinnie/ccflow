@@ -114,11 +114,9 @@ namespace BP.En
 		/// <param name="_no">编号</param>
 		public EntityNo(string _no)  
 		{
-
 			if (_no==null || _no=="")
-			{
 				throw new Exception( this.EnDesc+"@对表["+this.EnDesc+"]进行查询前必须指定编号。");
-			}
+
 			this.No = _no ;
 			if (this.Retrieve()==0) 
 			{				
@@ -137,7 +135,6 @@ namespace BP.En
                 if (this.EnMap.IsAutoGenerNo
                     && this.EnMap.GetAttrByKey("No").UIIsReadonly)
                     this.No = this.GenerNewNo;
-
 
                 this.Insert();
                 return 0;

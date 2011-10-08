@@ -10,16 +10,16 @@ namespace BP.DA
 	/// <summary>
 	/// Cash 的摘要说明。
 	/// </summary>
-	public class Cash
-	{
-		static Cash()
-		{
-			if( !SystemConfig.IsBSsystem)
-			{
-				CS_Cash = new Hashtable();
-			}
-		}
-		public static readonly Hashtable CS_Cash;
+    public class Cash
+    {
+        static Cash()
+        {
+            if (!SystemConfig.IsBSsystem)
+            {
+                CS_Cash = new Hashtable();
+            }
+        }
+        public static readonly Hashtable CS_Cash;
 
         #region Bill_Cash 单据模板cash.
         private static Hashtable _Bill_Cash;
@@ -38,7 +38,7 @@ namespace BP.DA
             if (isCheckCash == true)
                 val = null;
 
-            if (val == null )
+            if (val == null)
             {
                 string file = null;
                 if (cfile.Contains(":"))
@@ -77,7 +77,7 @@ namespace BP.DA
                 string perKey = en.ToString();
 
                 Attrs enAttrs = en.EnMap.Attrs;
-                foreach (Attr attr in  enAttrs)
+                foreach (Attr attr in enAttrs)
                 {
                     Attr attrN = new Attr();
                     attrN.Key = perKey + "." + attr.Key;
@@ -88,7 +88,7 @@ namespace BP.DA
 
                     if (attr.IsRefAttr)
                     {
-                        attrN.Field = perKey + "." + attr.Key+"Text";
+                        attrN.Field = perKey + "." + attr.Key + "Text";
                     }
                     attrN.MyDataType = attr.MyDataType;
                     attrN.MyFieldType = attr.MyFieldType;
@@ -114,7 +114,7 @@ namespace BP.DA
         }
         public static string[] GetBillParas_Gener(string cfile, Attrs attrs)
         {
-          //  Attrs attrs = en.EnMap.Attrs;
+            //  Attrs attrs = en.EnMap.Attrs;
             string[] paras = new string[300];
             string Billstr = Cash.GetBillStr(cfile, true);
             char[] chars = Billstr.ToCharArray();
@@ -128,7 +128,7 @@ namespace BP.DA
                 {
                     #region 首先解决空格的问题.
                     string real = para.Clone().ToString();
-                    if (attrs != null &&  real.Contains(" "))
+                    if (attrs != null && real.Contains(" "))
                     {
                         real = real.Replace(" ", "");
                         Billstr = Billstr.Replace(para, real);
@@ -138,7 +138,7 @@ namespace BP.DA
                     #endregion 首先解决空格的问题.
 
                     #region 解决特殊符号
-                    if ( attrs!=null && real.Contains("\\") && real.Contains("ND") == false)
+                    if (attrs != null && real.Contains("\\") && real.Contains("ND") == false)
                     {
                         haveError = true;
                         string findKey = null;
@@ -294,7 +294,7 @@ namespace BP.DA
             if (obj.Count == 0)
             {
                 ///obj.RetrieveAll();
-                #warning 设置个数为
+#warning 设置个数为
 
                 //  throw new Exception(clName + "设置个数为0 ， 请确定这个缓存实体，是否有数据？sq=select * from " + obj.GetNewEntity.EnMap.PhysicsTable);
             }
@@ -334,8 +334,8 @@ namespace BP.DA
 
             try
             {
-                BP.En.Entities ens; 
-                ens=  EnsData_Cash_Ext[clName] as BP.En.Entities ;
+                BP.En.Entities ens;
+                ens = EnsData_Cash_Ext[clName] as BP.En.Entities;
                 return ens;
             }
             catch
@@ -380,7 +380,7 @@ namespace BP.DA
         }
         public static void SetMap(string clName, BP.En.Map map)
         {
-            if (clName == null )
+            if (clName == null)
                 throw new Exception("clName.不能为空。");
             if (map == null)
             {
@@ -395,8 +395,8 @@ namespace BP.DA
         #region 取出对象
 
         /// <summary>
-		/// 从 Cash 里面取出对象.
-		/// </summary>
+        /// 从 Cash 里面取出对象.
+        /// </summary>
         public static object GetObj(string key, Depositary where)
         {
 
@@ -418,8 +418,8 @@ namespace BP.DA
                 return CS_Cash[key];
             }
         }
-		public static object GetObj(string key)
-		{
+        public static object GetObj(string key)
+        {
             if (SystemConfig.IsBSsystem)
             {
                 object obj = BS_Cash[key]; // Cash.GetObjFormApplication(key, null);
@@ -431,9 +431,58 @@ namespace BP.DA
             {
                 return CS_Cash[key];
             }
-		}
-		public static object GetObjFormApplication(string key, object isNullAsVal )
-		{
+        }
+        /// <summary>
+        /// 删除 like 名称的缓存对象。
+        /// </summary>
+        /// <param name="likeKey"></param>
+        /// <returns></returns>
+        public static int DelObjFormApplication(string likeKey)
+        {
+            int i = 0;
+            if (SystemConfig.IsBSsystem)
+            {
+                string willDelKeys = "";
+                foreach (string key  in BS_Cash.Keys)
+                {
+                    if (key.Contains(likeKey) == false)
+                        continue;
+                    willDelKeys += "@" + key;
+                }
+
+                string[] strs = willDelKeys.Split('@');
+                foreach (string s in strs)
+                {
+                    if (s == null || s == "")
+                        continue;
+                    BS_Cash.Remove(s);
+                    i++;
+                }
+            }
+            else
+            {
+                string willDelKeys = "";
+                foreach (string key in CS_Cash.Keys)
+                {
+                    if (key.Contains(likeKey) == false)
+                        continue;
+                    willDelKeys += "@" + key;
+                }
+
+                string[] strs = willDelKeys.Split('@');
+                foreach (string s in strs)
+                {
+                    if (s == null || s == "")
+                        continue;
+                    CS_Cash.Remove(s);
+                    i++;
+                }
+            }
+
+            return i;
+        }
+        public static object GetObjFormApplication(string key, object isNullAsVal)
+        {
             if (SystemConfig.IsBSsystem)
             {
                 object obj = BS_Cash[key]; // System.Web.HttpContext.Current.Cache[key];
@@ -450,9 +499,9 @@ namespace BP.DA
                 else
                     return obj;
             }
-		}
-		public static object GetObjFormSession(string key)
-		{
+        }
+        public static object GetObjFormSession(string key)
+        {
             if (SystemConfig.IsBSsystem)
             {
                 try
@@ -468,35 +517,35 @@ namespace BP.DA
             {
                 return CS_Cash[key];
             }
-		}
-		#endregion
+        }
+        #endregion
 
-		#region Remove Obj
-		/// <summary>
-		/// RemoveObj
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="where"></param>
-		public static void RemoveObj(string key, Depositary where)
-		{
-			if ( Cash.IsExits( key,where )==false )
-				return ;
+        #region Remove Obj
+        /// <summary>
+        /// RemoveObj
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="where"></param>
+        public static void RemoveObj(string key, Depositary where)
+        {
+            if (Cash.IsExits(key, where) == false)
+                return;
 
-			if( SystemConfig.IsBSsystem)
-			{
+            if (SystemConfig.IsBSsystem)
+            {
                 if (where == Depositary.Application)
                     System.Web.HttpContext.Current.Cache.Remove(key);
-				else
-					System.Web.HttpContext.Current.Session.Remove(key);
-			}
-			else
-			{   
-				CS_Cash.Remove( key );
-			}
-		}
-		#endregion
+                else
+                    System.Web.HttpContext.Current.Session.Remove(key);
+            }
+            else
+            {
+                CS_Cash.Remove(key);
+            }
+        }
+        #endregion
 
-		#region 放入对象
+        #region 放入对象
         public static void RemoveObj(string key)
         {
             BS_Cash.Remove(key);
@@ -535,16 +584,16 @@ namespace BP.DA
                     CS_Cash.Add(key, obj);
             }
         }
-		#endregion
+        #endregion
 
-		#region 判断对象是不是存在
-		/// <summary>
-		/// 判断对象是不是存在
-		/// </summary>
-		public static bool IsExits(string key, Depositary where)
-		{
-			if( SystemConfig.IsBSsystem)
-			{
+        #region 判断对象是不是存在
+        /// <summary>
+        /// 判断对象是不是存在
+        /// </summary>
+        public static bool IsExits(string key, Depositary where)
+        {
+            if (SystemConfig.IsBSsystem)
+            {
                 if (where == Depositary.Application)
                 {
                     if (System.Web.HttpContext.Current.Cache[key] == null)
@@ -559,14 +608,12 @@ namespace BP.DA
                     else
                         return true;
                 }
-			}
-			else
-			{
-				return CS_Cash.ContainsKey(key);
-			}
-		}
-		#endregion
-
-
-	}
+            }
+            else
+            {
+                return CS_Cash.ContainsKey(key);
+            }
+        }
+        #endregion
+    }
 }

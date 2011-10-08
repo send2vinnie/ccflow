@@ -261,12 +261,12 @@ namespace BP.Port
         }
         public override Entities GetNewEntities
         {
-            get { return new Emps(); }
+            get { return new Emps(); } 
         }
     }
 	/// <summary>
 	/// 工作人员
-	/// </summary>
+	// </summary>
     public class Emps : EntitiesNoName
     {
         /// <summary>
