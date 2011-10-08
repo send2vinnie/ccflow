@@ -137,7 +137,7 @@
     <Compile Include="Bill\BillType.cs" />
     <Compile Include="CH\CHOfFlow.cs" />
     <Compile Include="CH\CHOfFlowRpt.cs" />
-    <Compile Include="CH\CHOfQL.cs" />
+    <Compile Include="CH\CHOfNode.cs" />
     <Compile Include="Dev2Interface\BtnState.cs" />
     <Compile Include="DTS\DTSLog.cs">
       <SubType>Code</SubType>
@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="DTS\ClearDB.cs" />
     <Compile Include="DTS\Pack.cs" />
+    <Compile Include="DTS\DTSCHOfNode.cs" />
     <Compile Include="FlowDesc\Condition\Cond.cs" />
     <Compile Include="FlowDesc\FlowDescExt\BtnLab.cs">
       <SubType>Code</SubType>

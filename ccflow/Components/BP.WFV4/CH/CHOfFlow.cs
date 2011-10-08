@@ -373,31 +373,26 @@ namespace BP.WF
         public string DoSelfTest()
         {
             string info = "";
-
             CHOfFlows ens = new CHOfFlows();
             QueryObject qo = new QueryObject(ens);
             qo.AddWhere(CHOfFlowAttr.FK_Dept, " like ", BP.Web.WebUser.FK_Dept + "%");
             qo.addAnd();
             qo.AddWhere(CHOfFlowAttr.WFState, (int)BP.WF.WFState.Runing);
             qo.DoQuery();
-
             foreach (CHOfFlow en in ens)
             {
                 WorkFlow wf = new WorkFlow(this.FK_Flow, this.WorkID, this.FID);
                 info += "<hr><b>对：" + this.Title + "，体检信息如下：</b><BR>" + wf.DoSelfTest();
             }
-
             return info;
         }
-
-
         public string DoDeleteFlow()
         {
             if (Web.WebUser.No.Contains("admin") == false)
                 return "@您不是系统管理员，您不能删除。";
 
             if (this.FK_Dept_D.Contains(BP.Web.WebUser.FK_Dept) == false)
-                return "不是您局的数据，您不能操作。";
+                return "不是您单位的数据，您不能操作。";
 
             if (this.WFState == (int)BP.WF.WFState.Complete)
                 return "流程已经结束您不能删除。";

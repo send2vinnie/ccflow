@@ -338,17 +338,20 @@ namespace BP.WF.Ext
                 rm.ClassMethodName = this.ToString() + ".DoAction";
                 map.AddRefMethod(rm);
 
-
                 //rm = new RefMethod();
                 //rm.Title = "表单显示"; // this.ToE("DoAction", "调用事件接口"); // "调用事件接口";
                 //rm.ClassMethodName = this.ToString() + ".DoShowSheets";
                 //map.AddRefMethod(rm);
 
+                //rm = new RefMethod();
+                //rm.Title = this.ToE("DoCond", "节点完成条件"); // "节点完成条件";
+                //rm.ClassMethodName = this.ToString() + ".DoCond";
+                //map.AddRefMethod(rm);
+
                 rm = new RefMethod();
-                rm.Title = this.ToE("DoCond", "节点完成条件"); // "节点完成条件";
+                rm.Title = this.ToE("DoCond", "流程完成条件"); // "流程完成条件";
                 rm.ClassMethodName = this.ToString() + ".DoCond";
                 map.AddRefMethod(rm);
-
 
                 rm = new RefMethod();
                 rm.Title = this.ToE("DoListen", "消息收听"); // "调用事件接口";

@@ -132,9 +132,6 @@ namespace BP.WF
         }
         public override int RetrieveFromDBSources()
         {
-            if (SystemConfig.IsDebug == false)
-                return base.RetrieveFromDBSources();
-
             try
             {
                 return base.RetrieveFromDBSources();

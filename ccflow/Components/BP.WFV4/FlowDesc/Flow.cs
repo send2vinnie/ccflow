@@ -351,7 +351,7 @@ namespace BP.WF
             Work wk = nd.HisWork;
             wk.OID = workid;
             if (wk.RetrieveFromDBSources() == 0)
-                throw new Exception("@工作[" + wk.EnDesc + "],数据WorkID="+workid+"丢失,请联系管理员。");
+                throw new Exception("@工作[" + nd.No  + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
 
             // 设置当前的人员把记录人。
             wk.Rec = WebUser.No;
@@ -3309,7 +3309,6 @@ namespace BP.WF
             nd.CreateMap();
             nd.HisWork.CheckPhysicsTable();
 
-
             nd = new Node();
             nd.NodeID = int.Parse(this.No + "99");
             nd.Name = BP.Sys.Language.GetValByUserLang("EndNode", "结束节点"); // "结束节点";
@@ -3600,6 +3599,7 @@ namespace BP.WF
                     {
                     }
                 }
+
                 sql += "@GO DELETE  FROM  Sys_MapDtl WHERE FK_MapData='ND" + nd.NodeID + "'";
                 sql += "@GO DELETE  FROM  Sys_FrmLine WHERE FK_MapData='ND" + nd.NodeID + "'";
                 sql += "@GO DELETE  FROM  Sys_FrmLab WHERE FK_MapData='ND" + nd.NodeID + "'";
@@ -3607,6 +3607,15 @@ namespace BP.WF
                 sql += "@GO DELETE  FROM  Sys_MapAttr WHERE FK_MapData='ND" + nd.NodeID + "'";
                 sql += "@GO DELETE  FROM  Sys_GroupField WHERE EnName='ND" + nd.NodeID + "' OR EnName='' ";
                 sql += "@GO DELETE  FROM Sys_MapData WHERE No='ND" + nd.NodeID + "'";
+
+
+                sql += "@GO DELETE  FROM Sys_FrmBtn WHERE FK_MapData='ND" + nd.NodeID + "'";
+                sql += "@GO DELETE  FROM Sys_FrmEvent WHERE FK_MapData='ND" + nd.NodeID + "'";
+                sql += "@GO DELETE  FROM Sys_FrmLink WHERE FK_MapData='ND" + nd.NodeID + "'";
+
+                sql += "@GO DELETE  FROM Sys_FrmAttachmentDB WHERE FK_MapData='ND" + nd.NodeID + "'";
+                sql += "@GO DELETE  FROM Sys_FrmAttachment WHERE FK_MapData='ND" + nd.NodeID + "'";
+                sql += "@GO DELETE  FROM Sys_FrmRB WHERE FK_MapData='ND" + nd.NodeID + "'";
             }
 
             sql += "@GO DELETE  FROM WF_Node WHERE FK_Flow='" + this.No + "'";
