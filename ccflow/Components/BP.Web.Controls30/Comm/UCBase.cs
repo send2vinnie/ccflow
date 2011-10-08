@@ -117,6 +117,9 @@ namespace BP.Web.UC
             mess = mess.Replace("@@", "@");
 
             mess = mess.Replace("'", "＇");
+
+            mess = mess.Replace("\"", "＇");
+
             mess = mess.Replace("\"", "＂");
 
             mess = mess.Replace(";", "；");
@@ -338,18 +341,14 @@ namespace BP.Web.UC
         public Entity Copy(Entity en, string pk, Map map)
         {
             if (pk == null || pk == "")
-            {
                 pk = "";
-            }
             else
-            {
                 pk = "_" + pk;
-            }
 
             Attrs attrs = map.Attrs;
             foreach (Attr attr in attrs)
             {
-                if (attr.MyFieldType== FieldType.RefText )
+                if (attr.MyFieldType == FieldType.RefText)
                     continue;
 
                 string ctlid = "";
@@ -408,6 +407,7 @@ namespace BP.Web.UC
                             {
                                 string id = "RB_" + attr.Key + "_" + se.IntKey;
                                 RadioButton rb = this.GetRBLByID(id);
+
                                 #region 如果是空的,有可能是标记它是 rb 但是它用的ddl 显示的.
                                 if (rb == null)
                                 {
@@ -475,10 +475,8 @@ namespace BP.Web.UC
                     }
                 }
             }
-
             if (map.IsHaveAutoFull == false)
                 return en;
-
             en.AutoFull();
             return en;
         }
@@ -488,10 +486,7 @@ namespace BP.Web.UC
         /// <param name="en"></param>
         public void ResetEnVal(Entity en)
         {
-         //   string pk = en.PKVal.ToString();
-
             Attrs attrs = en.EnMap.Attrs;
-          //  string msg = "";
             foreach (Attr attr in attrs)
             {
                 string ctlid = "";
@@ -515,8 +510,6 @@ namespace BP.Web.UC
 
                         break;
                     case UIContralType.DDL:
-                        //if (attr.UIIsReadonly)
-                        //    continue;
                         try
                         {
                             ctlid = "DDL_" + attr.Key ;
@@ -1931,7 +1924,7 @@ namespace BP.Web.UC
         #region AddMsg
         public void AddMsgOfWarning(string title, string doc)
         {
-            this.AddFieldSetYellow(title);
+            this.AddFieldSetYellow("<font color=red><b>"+title+"</b></font>");
             this.Add(doc.Replace("@", "<BR>@"));
             this.AddFieldSetEnd();
         }

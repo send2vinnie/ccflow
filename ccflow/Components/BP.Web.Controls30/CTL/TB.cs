@@ -157,7 +157,7 @@ namespace BP.Web.Controls
                             throw new Exception("@您没有指定要邦定Key.");
                         break;
                     case TBType.Date:
-                        this.Columns = 7;
+                        this.Columns = 10;
                         this.MaxLength = 20;
                         if (this.Text == null || this.Text == null)
                             this.Text = DataType.CurrentData;
@@ -165,7 +165,7 @@ namespace BP.Web.Controls
                         break;
                     case TBType.DateTime:
                         this.Attributes["class"] = "TBcalendar";
-                        this.Columns = 16;
+                       // this.Columns = 16;
                         if (this.Text == null || this.Text == null)
                             this.Text = DataType.CurrentDataTime;
                         if (this.ReadOnly == false)
@@ -412,7 +412,7 @@ namespace BP.Web.Controls
                         throw new Exception("@您没有指定要邦定Key.");
                     break;
                 case TBType.Date:
-                    this.Columns = 7;
+                    this.Columns = 10;
                     this.MaxLength = 20;
                     if (this.Text == null || this.Text == null)
                         this.Text = DataType.CurrentData;
