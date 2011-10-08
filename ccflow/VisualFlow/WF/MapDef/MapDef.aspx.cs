@@ -59,12 +59,12 @@ public partial class WF_MapDef_MapDef : WebPage
         int count = mattrs.Count;
         if (gfs.Count == 1)
         {
-            GroupField mygf = (GroupField)gfs[0];
-            if (mygf.Lab != md.Name)
-            {
-                mygf.Lab = md.Name;
-                mygf.Update();
-            }
+            //GroupField mygf = (GroupField)gfs[0];
+            //if (mygf.Lab != md.Name)
+            //{
+            //    mygf.Lab = md.Name;
+            //    mygf.Update();
+            //}
         }
 
         BP.WF.XML.MapMenus xmls = new BP.WF.XML.MapMenus();
