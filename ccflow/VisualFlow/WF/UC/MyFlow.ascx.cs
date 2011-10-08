@@ -1140,24 +1140,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             if (string.IsNullOrEmpty(this.Request.QueryString["WorkID"]))
             {
-            //    this.Response.Redirect(this.PageID + ".aspx?FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "&FK_Node_From=" + this.FK_Node_From, true);
+                //    this.Response.Redirect(this.PageID + ".aspx?FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "&FK_Node_From=" + this.FK_Node_From, true);
                 return;
             }
             currWK.RetrieveFromDBSources();
             this.UCEn1.ResetEnVal(currWK);
             return;
-        }
-
-
-        try
-        {
-            currWK.BeforeSend(); // 发送前作逻辑检查。
-        }
-        catch (Exception ex)
-        {
-            if (BP.SystemConfig.IsDebug)
-                currWK.CheckPhysicsTable();
-            throw ex;
         }
 
         WorkNode firstwn = new WorkNode(this.currWK, this.currND);
@@ -1176,7 +1164,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.Pub1.AlertMsg_Warning("错误", msg);
             return;
         }
-
 
         //bool isCanDoNextWork = true;
         ////能不能执行下一步工作
