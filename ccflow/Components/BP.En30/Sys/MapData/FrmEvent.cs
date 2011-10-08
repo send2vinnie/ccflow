@@ -356,6 +356,7 @@ namespace BP.Sys
                 else
                     doc = doc.Replace("@" + attr.Key, en.GetValStrByKey(attr.Key));
             }
+            doc = doc.Replace("~", "'");
 
             if (nev.HisDoType == EventDoType.URL)
             {

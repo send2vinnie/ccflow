@@ -291,11 +291,25 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStrByKey(MapAttrAttr.AutoFullDoc);
+                string doc = this.GetValStrByKey(MapAttrAttr.AutoFullDoc);
+                doc = doc.Replace("~", "'");
+                return doc;
             }
             set
             {
                 this.SetValByKey(MapAttrAttr.AutoFullDoc, value);
+            }
+        }
+        public string AutoFullDocRun
+        {
+            get
+            {
+                string doc= this.GetValStrByKey(MapAttrAttr.AutoFullDoc);
+                doc = doc.Replace("~", "'");
+                doc = doc.Replace("@WebUser.No", BP.Web.WebUser.No);
+                doc = doc.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                doc = doc.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                return doc;
             }
         }
         public string KeyOfEn
