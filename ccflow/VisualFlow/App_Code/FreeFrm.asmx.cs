@@ -490,7 +490,7 @@ namespace FreeFrm.Web
         {
             try
             {
-                FtpSupport.FtpConnection conn = new FtpSupport.FtpConnection("192.168.0.3", "administrator", "jiaozi");
+                FtpSupport.FtpConnection conn = new FtpSupport.FtpConnection("192.168.1.138", "administrator", "jiaozi");
                 switch (doType)
                 {
                     case "ShareFrm": /*共享模板*/
