@@ -199,9 +199,15 @@ namespace BP.WF
                         en.CheckPhysicsTable();
                         break;
                 }
-
                 en.PKVal = "123";
-                en.RetrieveFromDBSources();
+                try
+                {
+                    en.RetrieveFromDBSources();
+                }
+                catch
+                {
+
+                }
             }
             #endregion ÐÞ¸´
 
