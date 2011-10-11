@@ -967,6 +967,12 @@ namespace BP.En
                     int recordConut = 0;
                     recordConut = this.GetCount(); // 获取 它的数量。
 
+                    if (recordConut == 0)
+                    {
+                        this._ens.Clear();
+                        return 0;
+                    }
+
                     decimal pageCountD = decimal.Parse(recordConut.ToString()) / decimal.Parse(pageSize.ToString()); // 页面个数。
                     string[] strs = pageCountD.ToString("0.0000").Split('.');
                     if (int.Parse(strs[1]) > 0)
