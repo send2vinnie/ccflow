@@ -50,7 +50,9 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
 
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
         BP.WF.Nodes nds = new BP.WF.Nodes(nd.FK_Flow);
+         
         Node sNd = new Node(this.NodeOfSelect);
+
         MapAttrs attrs = new MapAttrs(this.NodeOfSelect);
         MapAttrs attrsCopy = new MapAttrs(this.FK_Node);
 
