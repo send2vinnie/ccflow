@@ -621,8 +621,23 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             QueryObject qo = new QueryObject(wls);
             qo.AddWhere(WorkerListAttr.FID, wk.OID);
             qo.addAnd();
-            qo.AddWhere(WorkerListAttr.FK_Node, nd.HisFromNodes[0].GetValByKey(NodeAttr.NodeID));
-            qo.DoQuery();
+            qo.AddWhere(WorkerListAttr.IsEnable, 1);
+            qo.addAnd();
+            qo.AddWhere(WorkerListAttr.IsPass, 1);
+            qo.addAnd();
+            qo.AddWhere(WorkerListAttr.FK_Node,
+                nd.HisFromNodes[0].GetValByKey(NodeAttr.NodeID));
+          int i=  qo.DoQuery();
+          if (i == 1)
+          {
+              qo.clear();
+              qo.AddWhere(WorkerListAttr.FID, wk.OID);
+              qo.addAnd();
+              qo.AddWhere(WorkerListAttr.IsEnable, 1);
+              qo.addAnd();
+              qo.AddWhere(WorkerListAttr.IsPass, 1);
+              qo.DoQuery();
+          }
 
             this.Pub2.AddFieldSet("分流信息");
             this.Pub2.AddTable("border=0"); // ("<table border=0 >");
