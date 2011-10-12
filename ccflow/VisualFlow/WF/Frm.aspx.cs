@@ -91,28 +91,36 @@ public partial class WF_Frm : WebPage
             BP.SystemConfig.DoClearCash();
         }
 
-        MapData md = new MapData();
-        md.No = this.FK_MapData;
-        if (md.RetrieveFromDBSources() == 0 && md.Name.Length > 3)
+        try
         {
-            MapDtl dtl = new MapDtl(this.FK_MapData);
-            GEDtl dtlEn = dtl.HisGEDtl;
-            dtlEn.SetValByKey("OID", this.FID);
-            int i = dtlEn.RetrieveFromDBSources();
-            if (i == 0)
+            MapData md = new MapData();
+            md.No = this.FK_MapData;
+            if (md.RetrieveFromDBSources() == 0 && md.Name.Length > 3)
             {
+                MapDtl dtl = new MapDtl(this.FK_MapData);
+                GEDtl dtlEn = dtl.HisGEDtl;
+                dtlEn.SetValByKey("OID", this.FID);
+                int i = dtlEn.RetrieveFromDBSources();
+                if (i == 0)
+                {
+                }
+                this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
             }
-            this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
-        }
-        else
-        {
-            GEEntity en = md.HisGEEn;
-            en.SetValByKey("OID", this.FID);
-            int i = en.RetrieveFromDBSources();
-            if (i == 0 && this.FID != 0)
-                en.DirectInsert();
+            else
+            {
+                GEEntity en = md.HisGEEn;
+                en.SetValByKey("OID", this.FID);
+                int i = en.RetrieveFromDBSources();
+                if (i == 0 && this.FID != 0)
+                    en.DirectInsert();
 
-            this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
+                this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
+            }
+        }
+        catch
+        {
+            this.Response.Redirect(this.Request.RawUrl, true);
+            return;
         }
 
         //FrmBtns btns = new FrmBtns(this.FK_MapData);
