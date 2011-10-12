@@ -213,16 +213,29 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             SysEnums ses = new SysEnums("NodeState");
             foreach (DataRow dr in dt.Rows)
             {
-                int nodestate = (int)dr["NodeState"];
-                SysEnum se = new SysEnum();
-                foreach (SysEnum myse in ses)
+                int nodestate=0;
+                try
                 {
-                    if (myse.IntKey == (int)dr["NodeState"])
-                    {
-                        se = myse;
-                        break;
-                    }
+                    nodestate = (int)dr["NodeState"];
                 }
+                catch
+                {
+                    continue;
+                }
+
+                SysEnum se = ses.GetEntityByKey(SysEnumAttr.IntKey, nodestate) as SysEnum;
+                if (se==null)
+                    continue;
+
+                //new SysEnum();
+                //foreach (SysEnum myse in ses)
+                //{
+                //    if (myse.IntKey == (int)dr["NodeState"])
+                //    {
+                //        se = myse;
+                //        break;
+                //    }
+                //}
 
                 this.AddTR();
                 this.AddTD(se.Lab);

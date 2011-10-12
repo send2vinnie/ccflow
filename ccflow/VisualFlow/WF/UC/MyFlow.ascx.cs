@@ -627,6 +627,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             qo.addAnd();
             qo.AddWhere(WorkerListAttr.FK_Node,
                 nd.HisFromNodes[0].GetValByKey(NodeAttr.NodeID));
+
           int i=  qo.DoQuery();
           if (i == 1)
           {
@@ -642,8 +643,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.Pub2.AddFieldSet("分流信息");
             this.Pub2.AddTable("border=0"); // ("<table border=0 >");
             this.Pub2.AddTR();
-            this.Pub2.AddTDTitle("账号");
+            this.Pub2.AddTDTitle("节点");
+            this.Pub2.AddTDTitle("处理人");
             this.Pub2.AddTDTitle("名称");
+
             this.Pub2.AddTDTitle("部门");
             this.Pub2.AddTDTitle("状态");
             this.Pub2.AddTDTitle("应完成日期");
@@ -656,7 +659,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             foreach (WorkerList wl in wls)
             {
                 is1 = this.Pub2.AddTR(is1);
+                this.Pub2.AddTD(wl.FK_NodeT);
                 this.Pub2.AddTD(wl.FK_Emp);
+
                 this.Pub2.AddTD(wl.FK_EmpText);
                 this.Pub2.AddTD(wl.FK_DeptT);
 

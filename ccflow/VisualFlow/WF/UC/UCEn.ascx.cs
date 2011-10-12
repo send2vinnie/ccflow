@@ -1043,7 +1043,7 @@ namespace BP.Web.Comm.UC.WF
             }
             catch(Exception ex)
             {
-                this.Alert("载入之前错误:"+ex.Message);
+                this.Alert( ex.Message);
                 return;
             }
             #endregion 处理事件.
