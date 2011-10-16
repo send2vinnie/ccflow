@@ -12,7 +12,7 @@ namespace BP.WF
         PDF,
         Excel
     }
-    public class BillTemplateAttr
+    public class BillTemplateAttr:BP.En.EntityNoNameAttr
     {
         public const string Url = "Url";
         /// <summary>
@@ -201,18 +201,19 @@ namespace BP.WF
                 map.DepositaryOfMap = Depositary.Application;
                 map.CodeStruct = "6";
 
-                map.AddTBStringPK("No", null, null, true, false, 1, 300, 6);
+                map.AddTBStringPK(BillTemplateAttr.No, null, null, true, false, 1, 300, 6);
 
-                map.AddTBString("Name", null, null, true, false, 0, 200, 20);
+                map.AddTBString(BillTemplateAttr.Name, null, null, true, false, 0, 200, 20);
 
-                map.AddTBString("Url", null, null, true, false, 0, 200, 20);
+                map.AddTBString(BillTemplateAttr.Url, null, null, true, false, 0, 200, 20);
 
-                map.AddTBInt("NodeID", 0, "NodeID", true, false);
+                map.AddTBInt(BillTemplateAttr.NodeID, 0, "NodeID", true, false);
 
 
-                map.AddDDLSysEnum("BillFileType", 0, "生成的文件类型", true, false, "BillFileType","@0=Word@1=PDF@2=Excel(未完成)@3=Html(未完成)");
+                map.AddDDLSysEnum(BillTemplateAttr.BillFileType, 0, "生成的文件类型", true, false,
+                    "BillFileType","@0=Word@1=PDF@2=Excel(未完成)@3=Html(未完成)");
 
-                map.AddTBString("FK_BillType", null, "单据类型", true, false, 0, 4, 4);
+                map.AddTBString(BillTemplateAttr.FK_BillType, null, "单据类型", true, false, 0, 4, 4);
 
 
                 map.AddTBString("IDX", null, "IDX", false, false, 0, 200, 20);

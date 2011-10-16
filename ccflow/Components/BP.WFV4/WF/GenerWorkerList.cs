@@ -158,7 +158,9 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValRefTextByKey(WorkerListAttr.FK_Node);
+                Node nd = new Node(this.FK_Node);
+                return nd.Name;
+                //return this.GetValRefTextByKey(WorkerListAttr.FK_Node);
             }
         }
         /// <summary>

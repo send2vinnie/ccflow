@@ -43,6 +43,16 @@ namespace BP.WF
         /// </summary>
         public const string ReturnLab = "ReturnLab";
 
+
+        /// <summary>
+        /// 打印单据标签
+        /// </summary>
+        public const string PrintDocLab = "PrintDocLab";
+        /// <summary>
+        /// 打印单据是否起用
+        /// </summary>
+        public const string PrintDocEnable = "PrintDocEnable";
+
         /// <summary>
         /// 移交是否启用
         /// </summary>
@@ -189,6 +199,21 @@ namespace BP.WF
             get
             {
                 return this.GetValBooleanByKey(BtnAttr.FJOpen);
+            }
+        }
+
+        public string PrintDocLab
+        {
+            get
+            {
+                return this.GetValStringByKey(BtnAttr.PrintDocLab);
+            }
+        }
+        public bool PrintDocEnable
+        {
+            get
+            {
+                return this.GetValBooleanByKey(BtnAttr.PrintDocEnable);
             }
         }
 
@@ -343,6 +368,10 @@ namespace BP.WF
 
                 map.AddTBString(BtnAttr.RptLab, "报告", "报告按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.RptEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.PrintDocLab, "打印单据", "打印单据按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.PrintDocEnable, false, "是否启用", true, true);
+
 
                 map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.FJOpen, true, "是否启用", true, true);

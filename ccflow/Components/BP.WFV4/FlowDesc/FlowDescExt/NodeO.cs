@@ -264,6 +264,9 @@ namespace BP.WF.Ext
                 map.AddTBString(BtnAttr.RptLab, "报告", "报告按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.RptEnable, true, "是否启用", true, true);
 
+                map.AddTBString(BtnAttr.PrintDocLab, "打印单据", "打印单据按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.PrintDocEnable, false, "是否启用", true, true);
+
                 map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
                 map.AddDDLSysEnum(NodeAttr.FJOpen, 0, this.ToE("FJOpen", "附件权限"), true, true, 
                     NodeAttr.FJOpen, "@0=关闭附件@1=操作员@2=工作ID@3=流程ID");

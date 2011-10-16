@@ -34,6 +34,7 @@ namespace BP.WF
             {
                 if (this._enMap != null)
                     return this._enMap;
+
                 Map map = new Map("WF_FlowSort");
                 map.EnDesc =  this.ToE("FlowSort", "流程类别") ;
                 map.CodeStruct = "2";

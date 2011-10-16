@@ -3306,6 +3306,7 @@ namespace BP.WF
             nd.X = 100;
             nd.Y = 100;
             nd.Insert();
+
             nd.CreateMap();
             nd.HisWork.CheckPhysicsTable();
 

@@ -1502,7 +1502,6 @@ namespace BP.WF
         /// <returns></returns>
         public string AfterNodeSave()
         {
-
             DBAccess.DoTransactionBegin();
             DateTime dt = DateTime.Now;
             this.HisWork.Rec = Web.WebUser.No;
@@ -1526,7 +1525,6 @@ namespace BP.WF
             try
             {
                 msg += AfterNodeSave_Do();
-
 
                 #region 调用接口
                 string doc = this.HisNode.DoWhat;
@@ -2057,7 +2055,6 @@ namespace BP.WF
                     case NodeWorkType.WorkHL:   /* 当前工作节点是合流 */
                         msg = this.StartupNewNodeWork();
                         msg += this.DoSetThisWorkOver(); // 执行此工作结束。
-
                         break;
                     default: /* 其他的点的逻辑 */
                         msg = this.StartupNewNodeWork();
@@ -2138,14 +2135,14 @@ namespace BP.WF
                 #region 处理收听
                 Listens lts = new Listens();
                 lts.RetrieveByLike(ListenAttr.Nodes, "%" + this.HisNode.NodeID + "%");
+
                 foreach (Listen lt in lts)
                 {
-                    string sql = "SELECT FK_Emp FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID;
+                    string sql = "SELECT FK_Emp FROM WF_GenerWorkerList WHERE IsEnable=1 AND IsPass=1 AND FK_Node=" + lt.FK_Node + " AND WorkID=" + this.WorkID;
                     DataTable dtRem = BP.DA.DBAccess.RunSQLReturnTable(sql);
                     foreach (DataRow dr in dtRem.Rows)
                     {
                         string fk_emp = dr["FK_Emp"] as string;
-
                         Port.WFEmp emp = new BP.WF.Port.WFEmp(fk_emp);
                         if (emp.HisAlertWay == BP.WF.Port.AlertWay.None)
                         {
@@ -2954,7 +2951,6 @@ namespace BP.WF
                 Work wk = nd.HisWork;
                 wk.SetValByKey("OID", this.HisWork.OID); //设定它的ID.
                 wk.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
-                wk.Rec = "";
                 wk.NodeState = NodeState.Init; //节点状态。
                 wk.Rec = BP.Web.WebUser.No;
                 try
@@ -2963,6 +2959,7 @@ namespace BP.WF
                 }
                 catch(Exception ex)
                 {
+                    wk.CheckPhysicsTable();
                     try
                     {
                         wk.Update();
