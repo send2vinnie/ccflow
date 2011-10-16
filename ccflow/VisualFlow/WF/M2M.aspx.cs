@@ -184,7 +184,6 @@ public partial class Comm_M2M : WebPage
                 cb.Checked = m2m.Vals.Contains("," + no + ",");
                 this.Pub1.Add(cb);
             }
-
             //cbx.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();

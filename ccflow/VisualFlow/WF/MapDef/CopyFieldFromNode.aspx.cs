@@ -28,7 +28,6 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
             return this.Request.QueryString["GroupField"];
         }
     }
-    
     public string NodeOfSelect
     {
         get
@@ -319,7 +318,11 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
             foreach (MapAttr attr in willCopyAttrs)
             {
                 MapAttr attrNew = new MapAttr();
-                if (attrNew.IsExit(MapAttrAttr.FK_MapData, this.FK_Node, MapAttrAttr.KeyOfEn, attr.KeyOfEn) == true)
+                if (attrNew.IsExit(MapAttrAttr.FK_MapData, this.FK_Node,
+                    MapAttrAttr.KeyOfEn, attr.KeyOfEn) == true)
+                    continue;
+
+                if (attr.UIVisible == false)
                     continue;
 
                 idx1++;

@@ -405,7 +405,10 @@ public partial class Comm_Dtl : WebPage
                         tb.ID = "TB_" + attr.KeyOfEn + "_" + dtl.OID;
                         //  tb.Enabled = attr.UIIsEnable;
                         if (attr.UIIsEnable == false)
-                            tb.ReadOnly = true;
+                        {
+                          //  tb.ReadOnly = true;
+                            tb.Enabled = true;
+                        }
 
                         tb.Attributes["onfocus"] = "isChange=true;";
                         switch (attr.MyDataType)

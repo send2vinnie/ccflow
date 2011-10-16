@@ -430,14 +430,16 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.Btn_Save.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
+            if (btnLab.PrintDocEnable )
+            {
+                string urlr = "./WorkOpt/PrintDoc.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
+                this.ToolBar1.Add("<input type=button value='" + btnLab.PrintDocLab + "' enable=true onclick=\"WinOpen('" + urlr + "','dsdd'); \" />");
+            }
+
             if (btnLab.ReturnEnable && this.currND.IsStartNode == false)
             {
-
                 string urlr = "ReturnWork" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
                 this.ToolBar1.Add("<input type=button value='" + btnLab.ReturnLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
-
-                // this.ToolBar1.AddBtn("Btn_ReturnWork", btnLab.ReturnLab);
-                // this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
             if (btnLab.ShiftEnable)
