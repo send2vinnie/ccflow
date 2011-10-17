@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WFWord2007
+namespace CCFlowWord2007
 {
     public partial class FrmStartFlow : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace WFWord2007
+﻿namespace CCFlowWord2007
 {
     partial class AboutBox
     {

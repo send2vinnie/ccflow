@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
-//using BP = BP.DA.DBAccess;
+using CCFlowWord2007;
+using CCFlowWord2007.ServiceReference1;
 
 
 namespace BP.DA
@@ -11,28 +12,27 @@ namespace BP.DA
     {
         public static string GetWebConfigByKey(string key)
         {
-            WFWord2007.ServiceReference1.DBAcceSoapClient db = new WFWord2007.ServiceReference1.DBAcceSoapClient();
+            DocFlowSoapClient db = new DocFlowSoapClient();
             return db.GetSettingByKey(key);
         }
         public static int RunSQL(string sql)
         {
-            WFWord2007.ServiceReference1.DBAcceSoapClient db = new WFWord2007.ServiceReference1.DBAcceSoapClient();
-
+            DocFlowSoapClient db = new DocFlowSoapClient();
             return db.RunSQL(sql);
         }
         public static DataTable RunSQLReturnTable(string sql)
         {
-            WFWord2007.ServiceReference1.DBAcceSoapClient db = new WFWord2007.ServiceReference1.DBAcceSoapClient();
+            DocFlowSoapClient db = new DocFlowSoapClient();
             return db.RunSQLReturnTable(sql);
         }
         public static string  RunSQLReturnString(string sql)
         {
-            WFWord2007.ServiceReference1.DBAcceSoapClient db = new WFWord2007.ServiceReference1.DBAcceSoapClient();
+            DocFlowSoapClient db = new DocFlowSoapClient();
             return db.RunSQLReturnString(sql);
         }
         public static int GenerOID()
         {
-            WFWord2007.ServiceReference1.DBAcceSoapClient db = new WFWord2007.ServiceReference1.DBAcceSoapClient();
+            DocFlowSoapClient db = new DocFlowSoapClient();
             return db.GenerOID();
         }
     }

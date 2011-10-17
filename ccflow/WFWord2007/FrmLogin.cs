@@ -29,6 +29,9 @@ namespace BP.Comm
         }
         private void Btn_OK_Click(object sender, EventArgs e)
         {
+            CCFlowWord2007.ServiceReference1.DocFlowSoapClient da = new CCFlowWord2007.ServiceReference1.DocFlowSoapClient();
+            da.RunSQLReturnTable("SELECT * FROM PORT_EMP ");
+
             try
             {
                 TT++;

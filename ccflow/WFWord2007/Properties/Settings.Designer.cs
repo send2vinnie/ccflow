@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WFWord2007.Properties {
+namespace CCFlowWord2007.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace WFWord2007  
+namespace CCFlowWord2007  
 {
     partial class AboutBox : Form
     {

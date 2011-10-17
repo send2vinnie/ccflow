@@ -6,11 +6,11 @@ using System.Security;
 // 有关程序集的常规信息通过下列特性集
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("WFWord2007")]
+[assembly: AssemblyTitle("CCFlowWord2007")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Taizen")]
-[assembly: AssemblyProduct("WFWord2007")]
+[assembly: AssemblyProduct("CCFlowWord2007")]
 [assembly: AssemblyCopyright("Copyright © Taizen 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

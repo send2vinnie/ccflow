@@ -66,9 +66,6 @@ namespace CCFlowWord2007
                 return;
             }
 
-
-
-
             if (WebUser.WorkID == 0)
             {
                 //通过模板新的一个公文，创建一个草稿，生成工作ID。

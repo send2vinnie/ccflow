@@ -11,7 +11,6 @@
 #pragma warning disable 414
 namespace CCFlowWord2007 {
     
-    
     /// 
     [Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(0)]
     [global::System.Security.Permissions.PermissionSetAttribute(global::System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]

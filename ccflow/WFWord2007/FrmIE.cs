@@ -36,7 +36,7 @@ namespace BP.Comm
             try
             {
                 object obj = Type.Missing;
-                WFWord2007.Globals.ThisAddIn.Application.ActiveDocument.Close(ref obj, ref obj, ref obj);
+                CCFlowWord2007.Globals.ThisAddIn.Application.ActiveDocument.Close(ref obj, ref obj, ref obj);
             }
             catch
             {
@@ -58,7 +58,7 @@ namespace BP.Comm
 
             try
             {
-                WFWord2007.Globals.ThisAddIn.Application.Documents.Open(ref fileName, ref missing, ref readOnly,
+                CCFlowWord2007.Globals.ThisAddIn.Application.Documents.Open(ref fileName, ref missing, ref readOnly,
                     ref missing, ref missing, ref missing,
         ref missing, ref missing, ref missing, ref missing, ref missing,
         ref missing, ref missing, ref missing, ref missing, ref missing);
@@ -87,7 +87,7 @@ namespace BP.Comm
             // object documentDirection = false;
             // object noEncodingDialog = true;
             // object xmltransfrom = false;
-            // WFWord2007.Globals.ThisAddIn.Application.Documents.Open(ref fileName, ref  ConfirmConversions, ref isReadonly, ref addtoreconfiles,
+            // CCFlowWord2007.Globals.ThisAddIn.Application.Documents.Open(ref fileName, ref  ConfirmConversions, ref isReadonly, ref addtoreconfiles,
             //     ref passwordDocument, ref paaawordTempleate, ref revert, ref writepassword, ref waritepasswordtemplate, ref format,
             //     ref encoding, ref visible, ref openandrepair, ref documentDirection, ref noEncodingDialog, ref xmltransfrom);
         }
@@ -97,9 +97,9 @@ namespace BP.Comm
         /// <param name="para"></param>
         public void DoSend(BP.DA.AtPara para)
         {
-            WFWord2007.Globals.ThisAddIn.DoSave();
+            CCFlowWord2007.Globals.ThisAddIn.DoSave();
             object obj = Type.Missing;
-            WFWord2007.Globals.ThisAddIn.Application.ActiveDocument.Close(ref obj, ref obj, ref obj);
+            CCFlowWord2007.Globals.ThisAddIn.Application.ActiveDocument.Close(ref obj, ref obj, ref obj);
         }
         public void DoOpenDoc(BP.DA.AtPara para)
         {
@@ -274,7 +274,7 @@ namespace BP.Comm
             this.OpenDoc(file, false);
             this.Close();
         }
-        public WFWord2007.Ribbon1 HisRibbon1 = null;
+        public CCFlowWord2007.Ribbon1 HisRibbon1 = null;
         private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             string url = e.Url.AbsoluteUri;

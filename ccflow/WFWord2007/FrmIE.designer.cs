@@ -68,7 +68,7 @@
             this.Controls.Add(this.webBrowser1);
             this.Name = "FrmIE";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "时代智囊";
+            this.Text = "ccflow";
             this.Load += new System.EventHandler(this.FrmIE_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

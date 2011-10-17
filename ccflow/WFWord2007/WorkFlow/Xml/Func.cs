@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace BP.WF
@@ -88,7 +87,6 @@ namespace BP.WF
         {
             get { return new Func(); }
         }
-       
         /// <summary>
         /// 文件
         /// </summary>
@@ -96,7 +94,7 @@ namespace BP.WF
         {
             get
             {
-                return @"D:\VisualWorkFlow\WFWord2007\Toolbar.xml";
+                return @"D:\ccflow\CCFlowWord2007\Toolbar.xml";
             }
         }
         /// <summary>

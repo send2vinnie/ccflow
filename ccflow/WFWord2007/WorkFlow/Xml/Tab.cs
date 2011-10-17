@@ -34,7 +34,7 @@ namespace BP.WF
         {
             get
             {
-                return @"D:\VisualWorkFlow\WFWord2007\Toolbar.xml";
+                return @"D:\ccflow\CCFlowWord2007\Toolbar.xml";
             }
         }
         /// <summary>

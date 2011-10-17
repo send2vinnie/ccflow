@@ -108,7 +108,7 @@ namespace BP.Port
                 WebUser.WorkID = _HisWork.OID;
             }
         }
-        public static WFWord2007.Ribbon1 HisRib = null;
+        public static CCFlowWord2007.Ribbon1 HisRib = null;
         #endregion
 
         #region 公共的属性

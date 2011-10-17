@@ -3,7 +3,7 @@ using BP.Port;
 using System.Windows.Forms;
 using BP.WF;
 using BP.Comm;
-namespace WFWord2007
+namespace CCFlowWord2007
 {
     partial class Ribbon1 : Microsoft.Office.Tools.Ribbon.RibbonBase
     {
@@ -240,7 +240,7 @@ namespace WFWord2007
                 this.Btn_Start.Enabled = false;
             }
 
-            if (WFWord2007.Globals.ThisAddIn.Application.Documents.Count == 0)
+            if (CCFlowWord2007.Globals.ThisAddIn.Application.Documents.Count == 0)
             {
                 this.Btn_Start.Enabled = true;
                 this.Btn_Send.Enabled = false;
@@ -571,7 +571,7 @@ namespace WFWord2007
         /// </summary>
         public void DoSave()
         {
-            WFWord2007.Globals.ThisAddIn.DoSave();
+            CCFlowWord2007.Globals.ThisAddIn.DoSave();
         }
 
         public Ribbon1()
@@ -619,7 +619,7 @@ namespace WFWord2007
             }
 
             BP.Port.WebUser.HisRib = this;
-            //  WFWord2007.Globals.ThisAddIn.HisRibbon1 = this;
+            //  CCFlowWord2007.Globals.ThisAddIn.HisRibbon1 = this;
             return;
         }
 
