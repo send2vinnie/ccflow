@@ -113,7 +113,6 @@ public partial class WF_Frm : WebPage
                 int i = en.RetrieveFromDBSources();
                 if (i == 0 && this.FID != 0)
                     en.DirectInsert();
-
                 this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
             }
         }

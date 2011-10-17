@@ -35,11 +35,9 @@ public partial class WF_Admin_BillSet : WebPage
     public void DoNew(BillTemplate bill)
     {
         this.Ucsys1.Clear();
-
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
-
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeft("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "' >" + this.ToE("Back", "返回") + "</a> - <img src='../../Images/Btn/New.gif' />" + this.ToE("New", "新建") + "-" + BP.WF.Glo.GenerHelp("Bill"));
+        this.Ucsys1.AddCaptionLeft("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "' >" + this.ToE("Back", "返回") + "</a> - <a href=Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New ><img  border=0 src='../../Images/Btn/New.gif' />" + this.ToE("New", "新建") + "</a>-" + BP.WF.Glo.GenerHelp("Bill"));
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle(ToE("Item", "项目"));
         this.Ucsys1.AddTDTitle(ToE("Input","输入"));
@@ -95,8 +93,6 @@ public partial class WF_Admin_BillSet : WebPage
         this.Ucsys1.AddTD(tb);
         this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
-
-
 
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTD(this.ToE("Name", "生成的文件类型")); // 单据/单据名称
@@ -323,7 +319,7 @@ public partial class WF_Admin_BillSet : WebPage
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
         this.Title = nd.Name + " - " + this.ToE("BillMang", "单据管理");  //单据管理
         this.Ucsys1.AddTable();
-     //   this.Ucsys1.AddCaptionLeftTX(nd.Name + " - <a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
+        this.Ucsys1.AddCaptionLeft(nd.Name + " - <a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("IDX");
         this.Ucsys1.AddTDTitle(this.ToE("Node","节点"));

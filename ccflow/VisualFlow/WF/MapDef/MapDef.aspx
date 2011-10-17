@@ -67,6 +67,12 @@ body
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 200px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
+    function ExpImp(mypk) {
+        var url = 'ExpImp.aspx?RefNo=' + mypk + "&RefOID=0&DoType=FunList";
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 200px; dialogWidth: 600px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+
     function GroupField(mypk, OID )
     {
         var url='GroupField.aspx?RefNo='+mypk+"&RefOID="+OID ;
@@ -79,7 +85,7 @@ body
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-     
+   
     function Edit(mypk,refno, ftype)
     {
         var url='EditF.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refno +'&FType=' + ftype;
