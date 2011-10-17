@@ -10,7 +10,7 @@ using BP.Port;
 using System.Windows.Forms;
 using BP.WF;
 
-namespace WFWord2007
+namespace CCFlowWord2007
 {
     public partial class ThisAddIn
     {

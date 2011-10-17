@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 #pragma warning disable 414
-namespace WFWord2007 {
+namespace CCFlowWord2007 {
     
     
     /// 
