@@ -3104,7 +3104,7 @@ namespace BP.WF
                                 dtCopy.SetValByKey("IsPass", 0);
                                 dtCopy.SetValByKey("Rec", startUser);
                                 dtCopy.SetValByKey("Checker", BP.Web.WebUser.Name);
-                                dtCopy.DirectInsert();
+                                dtCopy.SaveAsOID(gedtl.OID);
                             }
                             DBAccess.RunSQL("UPDATE " + startDtl.PTable + " SET Rec='" + startUser + "',Checker='" + WebUser.No + "' WHERE BatchID=" + this.WorkID + " AND Rec='" + WebUser.No + "'");
                         }
