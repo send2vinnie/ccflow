@@ -182,7 +182,6 @@ namespace BP.Web
             WebUser.FK_Dept = em.FK_Dept;
             WebUser.FK_DeptName = em.FK_DeptText;
             WebUser.AppUserType = "Gener";
-
             WebUser.HisDepts = null;
             WebUser.HisStations = null;
 

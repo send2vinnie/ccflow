@@ -1613,7 +1613,17 @@ namespace BP
             HttpContext.Current.Response.End();
             HttpContext.Current.Response.Close();
         }
-
+        public static void DownloadFile(string filepath, string tempName)
+        {
+            HttpContext.Current.Response.Charset = "GB2312";
+            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=" + tempName);
+            HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.GetEncoding("GB2312");
+          //  HttpContext.Current.Response.ContentType = "application/ms-msword";  //image/JPEG;text/HTML;image/GIF;application/ms-excel
+            //HttpContext.Current.EnableViewState =false;
+            HttpContext.Current.Response.WriteFile(filepath);
+            HttpContext.Current.Response.End();
+            HttpContext.Current.Response.Close();
+        }
         public static void OpenWordDoc(string filepath, string tempName)
         {
             HttpContext.Current.Response.Charset = "GB2312";

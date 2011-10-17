@@ -1029,11 +1029,20 @@ namespace BP.DA
                 RunSQL(str);
             }
         }
-
+        /// <summary>
+        /// 运行带有参数的sql
+        /// </summary>
+        /// <param name="ps"></param>
+        /// <returns></returns>
         public static int RunSQL(Paras ps)
         {
             return RunSQL(ps.SQL, ps);
         }
+        /// <summary>
+        /// 运行sql
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
         public static int RunSQL(string sql)
         {
             Paras ps = new Paras();

@@ -370,9 +370,9 @@ namespace BP.Sys
 
         public static void ImpMapData(string fk_mapdata, DataSet ds)
         {
-            MapData md = new MapData();
-            md.No = fk_mapdata;
-            md.Delete();
+            MapData mdOld = new MapData();
+            mdOld.No = fk_mapdata;
+            mdOld.Delete();
 
             string timeKey = DateTime.Now.ToString("yyyyMMddhhmmss");
             foreach (DataTable dt in ds.Tables)
@@ -380,6 +380,38 @@ namespace BP.Sys
                 int idx = 0;
                 switch (dt.TableName)
                 {
+                    case "Sys_MapData":
+                        DataRow drMD = dt.Rows[0];
+                        MapData md = new MapData();
+                        foreach (Attr attr in md.EnMap.Attrs)
+                        {
+                            try
+                            {
+                                md.SetValByKey(attr.Key, drMD[attr.Key]);
+                            }
+                            catch
+                            {
+                            }
+                        }
+                        md.No = fk_mapdata;
+                        md.Insert();
+                        break;
+                    case "Sys_FrmBtn":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmBtn en = new FrmBtn();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+
+                                en.SetValByKey(dc.ColumnName, val);
+                            }
+                            en.FK_MapData = fk_mapdata;
+                            en.MyPK = "Btn" + timeKey + "_" + idx;
+                            en.Insert();
+                        }
+                        break;
                     case "Sys_FrmLine":
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -561,7 +593,7 @@ namespace BP.Sys
                                 string val = dr[dc.ColumnName] as string;
                                 en.SetValByKey(dc.ColumnName, val);
                             }
-                            en.EnName  = fk_mapdata;
+                            en.EnName = fk_mapdata;
                             en.OID = 0;
                             en.Insert();
                         }

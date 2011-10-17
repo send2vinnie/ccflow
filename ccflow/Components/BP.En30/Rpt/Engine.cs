@@ -392,7 +392,6 @@ namespace BP.Rpt.RTF
                 }
             }
 
-
 			foreach(Entity en in this.HisEns)
 			{
                 string enKey = en.ToString();

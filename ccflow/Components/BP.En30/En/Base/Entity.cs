@@ -295,7 +295,6 @@ namespace BP.En
                     return "";
 
                 string field = this.EnMap.GetFieldByKey(attrKey);
-
                 switch (this.EnMap.EnDBUrl.DBType)
                 {
                     case DBType.SQL2000:
@@ -1191,10 +1190,10 @@ namespace BP.En
             {
                 switch (SystemConfig.AppCenterDBType)
                 {
-                    case DBType.Access:
+                    case DBType.SQL2000:
                         this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
                         break;
-                    case DBType.SQL2000:
+                    case DBType.Access:
                         this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
                         break;
                     default:
@@ -1999,7 +1998,22 @@ namespace BP.En
                     continue;
 
                 if (dt.Columns.Contains(attr.Key) == true)
+                {
+                    if (attr.MyDataType != DataType.AppString)
+                        continue;
+
                     continue;
+                    /*
+                     // 检查长度问题
+                    DataColumn dc = dt.Columns[attr.Key];
+                    if (dc.MaxLength > attr.MaxLength)
+                        continue;
+                    // 开始扩展长度
+                     #warning 如何解决它.
+                    this.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " modify (" + attr.Key + " varchar2(" + attr.MaxLength + "))");
+                    continue;
+                     * */
+                }
 
                 if (attr.Key == "AID")
                 {
@@ -2008,38 +2022,33 @@ namespace BP.En
                     continue;
                 }
 
-                try
+                /*不存在此列 , 就增加此列。*/
+                switch (attr.MyDataType)
                 {
-                    /*不存在此列 , 就增加此列。*/
-                    switch (attr.MyDataType)
-                    {
-                        case DataType.AppString:
-                        case DataType.AppDate:
-                        case DataType.AppDateTime:
-                            int len = attr.MaxLength;
-                            if (dbtype == DBType.Access && len >= 254)
-                                DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + "  Memo DEFAULT '" + attr.DefaultVal + "' NULL");
-                            else
-                                DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " VARCHAR(" + len + ") DEFAULT '" + attr.DefaultVal + "' NULL");
-                            break;
-                        case DataType.AppInt:
-                        case DataType.AppBoolean:
-                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " INT DEFAULT '" + attr.DefaultVal + "' NULL");
-                            break;
-                        case DataType.AppFloat:
-                        case DataType.AppMoney:
-                        case DataType.AppRate:
-                        case DataType.AppDouble:
-                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " FLOAT DEFAULT '" + attr.DefaultVal + "' NULL");
-                            break;
-                        default:
-                            throw new Exception("error MyFieldType= " + attr.MyFieldType + " key=" + attr.Key);
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    // throw new Exception("@修复字段期间出现错误："+ex.Message+" Table="+this.EnMap.PhysicsTable );
+                    case DataType.AppString:
+                    case DataType.AppDate:
+                    case DataType.AppDateTime:
+                        int len = attr.MaxLength;
+                        if (len == 0)
+                            len = 200;
+                        //throw new Exception("属性的最小长度不能为0。");
+                        if (dbtype == DBType.Access && len >= 254)
+                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + "  Memo DEFAULT '" + attr.DefaultVal + "' NULL");
+                        else
+                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " VARCHAR(" + len + ") DEFAULT '" + attr.DefaultVal + "' NULL");
+                        break;
+                    case DataType.AppInt:
+                    case DataType.AppBoolean:
+                        DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " INT DEFAULT '" + attr.DefaultVal + "' NULL");
+                        break;
+                    case DataType.AppFloat:
+                    case DataType.AppMoney:
+                    case DataType.AppRate:
+                    case DataType.AppDouble:
+                        DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " FLOAT DEFAULT '" + attr.DefaultVal + "' NULL");
+                        break;
+                    default:
+                        throw new Exception("error MyFieldType= " + attr.MyFieldType + " key=" + attr.Key);
                 }
             }
             #endregion
@@ -2215,7 +2224,6 @@ namespace BP.En
 
                         //sql = sql.Replace("''", "'");
                       //  sql = sql.Replace("'''", "''");
-
 
                         string val="";
                         try
