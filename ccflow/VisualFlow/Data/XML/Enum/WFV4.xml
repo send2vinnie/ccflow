@@ -18,11 +18,11 @@
         />
     
 	<Item Key="EventDoType" 
-        CH="@0=禁用@1=SQL语句/存储过程@2=执行的URL@3=WebServices@4=exe文件"
-        EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
-        JP="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
-        RU="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
-        />
+        CH="@0=禁用@1=存储过程@2=SQL语句@3=执行的URL@4=WebServices@5=exe文件"
+        EN="@0=禁用@1=存储过程@2=SQL语句@3=执行的URL@4=WebServices@5=exe文件"
+        JP="@0=禁用@1=存储过程@2=SQL语句@3=执行的URL@4=WebServices@5=exe文件"
+        RU="@0=禁用@1=存储过程@2=SQL语句@3=执行的URL@4=WebServices@5=exe文件"
+   />
 
   <Item Key="WFState"
         CH="@0=运行@1=完成@2=强制终止@3=删除"
