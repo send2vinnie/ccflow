@@ -1,6 +1,6 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/DocFlow/Style/WinOpen.master" AutoEventWireup="true" CodeFile="History.aspx.cs" Inherits="GovDoc_History" Title="无标题页" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/WF/DocFlow/Style/WinOpen.master" AutoEventWireup="true" CodeFile="History.aspx.cs" Inherits="GovDoc_History" Title="无标题页" %>
 
-<%@ Register src="../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
+<%@ Register src="../../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>

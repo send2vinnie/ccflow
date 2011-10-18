@@ -1,6 +1,5 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/DocFlow/MasterPage.master" AutoEventWireup="true" CodeFile="MyFlowDoc.aspx.cs" Inherits="GovDoc_MyFlowDoc" Title="无标题页" %>
-
-<%@ Register src="../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/WF/DocFlow/MasterPage.master" AutoEventWireup="true" CodeFile="MyFlowDoc.aspx.cs" Inherits="GovDoc_MyFlowDoc" Title="无标题页" %>
+<%@ Register src="../../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>

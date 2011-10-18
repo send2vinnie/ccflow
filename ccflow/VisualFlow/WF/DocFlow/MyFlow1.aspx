@@ -1,13 +1,10 @@
-﻿
-
-
-<%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" 
+﻿<%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" 
 Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
-<%@ Register TagPrefix="uc1" TagName="UCSys" Src="../Comm/UC/UCSys.ascx" %>
+<%@ Register TagPrefix="uc1" TagName="UCSys" Src="../../Comm/UC/UCSys.ascx" %>
 <%@ Page Language="c#" Inherits="BP.Web.WF.GovDoc_MyFlow" CodeFile="MyFlow1.aspx.cs" %>
-<%@ Register TagPrefix="uc1" TagName="UCEn" Src="../Comm/UC/UCEn.ascx" %>
+<%@ Register TagPrefix="uc1" TagName="UCEn" Src="../../Comm/UC/UCEn.ascx" %>
 <%@ Register TagPrefix="cc1" Namespace="BP.Web.Controls" Assembly="BP.Web.Controls" %>
-<%@ Register Src="../WF/Pub.ascx" TagName="Pub" TagPrefix="uc2" %>
+<%@ Register Src="../../WF/Pub.ascx" TagName="Pub" TagPrefix="uc2" %>
 <html>
 <head>
     <title>我的工作 --

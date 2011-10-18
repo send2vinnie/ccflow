@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/WF/DocFlow/Style/WinOpen.master" AutoEventWireup="true"
     CodeFile="DoClient.aspx.cs" Inherits="GovDoc_DoClient" Title="无标题页" %>
 
-<%@ Register Src="../WF/Pub.ascx" TagName="Pub" TagPrefix="uc1" %>
+<%@ Register Src="../../WF/Pub.ascx" TagName="Pub" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
     <script language="javascript">

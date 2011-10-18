@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="MasterPage.master" AutoEventWireup="true" CodeFile="Runing.aspx.cs" Inherits="GovDoc_Runing" Title="无标题页" %>
-<%@ Register src="../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
+<%@ Register src="../../WF/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <script language=javascript>
 		function Do(warning, url)
