@@ -11,7 +11,8 @@ using System.Web.UI.HtmlControls;
 using System.Text; 
 using System.Security.Cryptography; 
 using System.IO;
-namespace www
+
+namespace BP
 {
     public partial class jiami 
     {

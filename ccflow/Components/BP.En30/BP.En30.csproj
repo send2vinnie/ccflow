@@ -553,7 +553,6 @@
   <ItemGroup>
     <Folder Include="DA\Pub\" />
     <Folder Include="En\Base\MBase\" />
-    <Folder Include="En\MBase\" />
     <Folder Include="Rpt\RptEn\RptEn\" />
     <Folder Include="Rpt\Self\" />
   </ItemGroup>
