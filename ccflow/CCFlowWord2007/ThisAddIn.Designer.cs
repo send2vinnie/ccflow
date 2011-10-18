@@ -9,7 +9,8 @@
 //------------------------------------------------------------------------------
 
 #pragma warning disable 414
-namespace CCFlowWord2007 {
+namespace CCFlowWord2007
+{
     
     /// 
     [Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(0)]
