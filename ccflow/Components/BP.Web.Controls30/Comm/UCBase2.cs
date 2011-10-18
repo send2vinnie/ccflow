@@ -111,7 +111,7 @@ namespace BP.Web.UC
                         if (val.ToString().Length == 0 && en.IsEmpty == false && attr.Key == "Doc")
                             val = en.GetValDocHtml();
                         else
-                            val = DataType.ParseText2Html(val as string);
+                            val = DataType.ParseText2Html(val.ToString() );
 
                         this.AddAttrDescValDoc(attr.Desc, val.ToString(), 4);
                         continue;
