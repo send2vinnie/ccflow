@@ -3602,8 +3602,7 @@ namespace BP.WF
             //删除侦听.
             sql += "@GO DELETE WF_Listen WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
-            // 删除事件.
-            sql += "@GO DELETE WF_Event WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+           
 
             // 删除d2d数据.
             sql += "@GO DELETE WF_M2M WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
@@ -3615,7 +3614,6 @@ namespace BP.WF
             // 删除配置.
             sql += "@GO DELETE WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
 
-
             // 删除报表
             WFRpts rpts = new WFRpts(this.No);
             rpts.Delete();
@@ -3623,15 +3621,16 @@ namespace BP.WF
             // 外部程序设置
             sql += "@GO DELETE  FROM  WF_FAppSet WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
-
             // 删除单据
             sql += "@GO DELETE FROM WF_BillTemplate WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-
 
             Nodes nds = new Nodes(this.No);
             foreach (Node nd in nds)
             {
                 string ndNo = "ND" + nd.NodeID;
+
+                // 删除事件.
+                sql += "@GO DELETE Sys_FrmEvent WHERE FK_MapData='"+ndNo+"'";
 
                 Sys.MapDtls dtls = new BP.Sys.MapDtls(ndNo);
                 foreach (MapDtl dtl in dtls)
