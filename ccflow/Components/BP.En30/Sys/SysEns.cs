@@ -28,11 +28,12 @@ namespace BP.Sys
         /// 实体类型
         /// </summary> 
         public const string EnType = "EnType";
+        public const string EnsEnsName = "EnsEnsName";
     }
 	/// <summary>
 	/// SysEns
 	/// </summary>
-    public class SysEn : EntityEnsName
+    public class SysEn : EntityNoName
     {
         #region 基本属性
         public Entity En
@@ -170,7 +171,7 @@ namespace BP.Sys
 	/// <summary>
 	/// 实体集合
 	/// </summary>
-	public class SysEns : EntitiesEnsName
+    public class SysEns : EntitiesNoName
 	{		
 		#region 构造
 		public SysEns(){}

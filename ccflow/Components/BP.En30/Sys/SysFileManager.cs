@@ -9,7 +9,7 @@ using System.Data.OleDb;
 //using BP.ZHZS.Base;
 namespace BP.Sys
 {
-    public class SysFileManagerAttr : EntityOIDNoAttr
+    public class SysFileManagerAttr : EntityNoNameAttr
     {
         /// <summary>
         /// 上传日期

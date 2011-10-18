@@ -143,7 +143,7 @@ namespace BP.Sys
 	/// <summary>
 	/// 实体集合
 	/// </summary>
-    public class EnCfgs : EntitiesEnsName
+    public class EnCfgs : EntitiesNoName
     {
         #region 构造
         /// <summary>
