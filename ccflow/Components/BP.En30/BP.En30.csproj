@@ -226,6 +226,7 @@
     <Compile Include="DA\SystemConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="En\Base\EntityOIDName.cs" />
     <Compile Include="En\Base\Map\EnDtl.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -233,9 +234,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="En\Base\Entity.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\EntityClassName.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="En\Base\EntityMID.cs">
@@ -253,24 +251,6 @@
     <Compile Include="En\Base\EntityOID.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="En\Base\EntityOIDMID.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\EntityOIDName.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\EntityOIDNo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\EntityOIDNoUrl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\GradeEntityNoNameBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\EntityNoNameInt.cs" />
-    <Compile Include="En\Base\EntityMyPKInt.cs" />
-    <Compile Include="En\Base\EntityOIDNoName.cs" />
     <Compile Include="En\Base\Map\Attr.cs" />
     <Compile Include="En\Base\Map\AttrFile.cs" />
     <Compile Include="En\Base\Map\AttrOfOneVSM.cs" />
@@ -293,21 +273,6 @@
     <Compile Include="En\Base\Map\AttrOfSearch.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="En\Base\MBase\EntityNoNameLink.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\MBase\IEn.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\MBase\IEnGrade.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\MBase\IEnUrl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\MBase\MEnNo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="En\Base\Map\RefMethod.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -321,9 +286,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="En\Base\EntityMyPK.cs" />
-    <Compile Include="En\Base\EntityOIDNameMyFile.cs" />
     <Compile Include="En\Base\Map\SQLCash.cs" />
-    <Compile Include="En\Base\EntityNoNameMyFile.cs" />
     <Compile Include="PubLib\Enum.cs" />
     <Compile Include="En\ClassFactory.cs">
       <SubType>Code</SubType>
@@ -332,9 +295,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="En\EnDa.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\MBase\SysMEns.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="En\QueryObject.cs">
@@ -533,12 +493,6 @@
     <Compile Include="Rpt\Engine.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Rpt\Self\Rpt.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Rpt\Self\RptSort.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Sys\BPSystem.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -558,9 +512,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sys\Serial.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Sys\SysEns.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sys\SysEnum.cs">
@@ -602,7 +553,10 @@
   <ItemGroup>
     <Folder Include="DA\Pub\" />
     <Folder Include="En\Base\db\" />
+    <Folder Include="En\Base\MBase\" />
+    <Folder Include="En\MBase\" />
     <Folder Include="Rpt\RptEn\RptEn\" />
+    <Folder Include="Rpt\Self\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
