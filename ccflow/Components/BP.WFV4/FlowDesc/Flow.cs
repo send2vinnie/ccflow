@@ -331,13 +331,10 @@ namespace BP.WF
                 else if (title.Contains("在") == true)
                     wk.Title = msg;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               
                 //if (ex.Message.Contains("key=["))
-
             }
-
             return wk;
         }
         /// <summary>
@@ -443,6 +440,52 @@ namespace BP.WF
                     uac.IsUpdate = true;
                 return uac;
             }
+        }
+        /// <summary>
+        /// 修补流程数据视图
+        /// </summary>
+        /// <returns></returns>
+        public string RepareV_FlowData_View()
+        {
+            Flows fls = new Flows();
+            fls.RetrieveAllFromDBSource();
+            if (fls.Count == 1)
+                return null;
+
+            string sql = "";
+            try
+            {
+                sql = "DROP VIEW V_FlowData ";
+                DBAccess.RunSQL(sql);
+            }
+            catch
+            {
+            }
+
+            string flowDataViewExtFields = BP.SystemConfig.AppSettings["FlowDataViewExtFields"];
+            if (flowDataViewExtFields == null)
+                flowDataViewExtFields = "";
+
+            sql = "CREATE VIEW V_FlowData  ";
+            sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
+            sql += " AS ";
+            foreach (Flow fl in fls)
+            {
+                string mysql = "\t\n SELECT " + flowDataViewExtFields + " '" + fl.FK_FlowSort + "' AS FK_FlowSort,'" + fl.No + "' AS FK_Flow,OID,FID,Title,BillNo,WFState,CDT,Emps,FK_Dept,FK_NY,FlowDaySpan,FlowEmps,FlowEnder,FlowEnderRDT,FlowStartRDT FROM ND" + int.Parse(fl.No) + "Rpt";
+                try
+                {
+                    DBAccess.RunSQLReturnTable(mysql);
+                }
+                catch
+                {
+                    fl.DoCheck();
+                }
+                sql += mysql;
+                sql += "\t\n UNION ";
+            }
+            sql = sql.Substring(0, sql.Length - 6);
+            DBAccess.RunSQL(sql);
+            return null;
         }
         /// <summary>
         /// 校验流程
@@ -3521,6 +3564,8 @@ namespace BP.WF
             //try
             //{
             this.CheckRpt();
+            this.RepareV_FlowData_View();
+
             //}
             //catch(Exception ex)
             //{
@@ -3659,6 +3704,8 @@ namespace BP.WF
             // 执行录制的sql scripts.
             BP.DA.DBAccess.RunSQLs(sql);
             this.Delete();
+
+            this.RepareV_FlowData_View();
         }
         #endregion
     }
