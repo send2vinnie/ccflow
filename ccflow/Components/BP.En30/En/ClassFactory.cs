@@ -748,12 +748,12 @@ namespace BP.DA
         }
         #endregion
 
-        public static GradeEntitiesNoNameBase GetGradeEntitiesNoNameBase(string className)
-        {
-            GradeEntitiesNoNameBase tmp = GetEns(className) as GradeEntitiesNoNameBase;
-            tmp.Clear();
-            return tmp;
-        }
+        //public static GradeEntitiesNoNameBase GetGradeEntitiesNoNameBase(string className)
+        //{
+        //    GradeEntitiesNoNameBase tmp = GetEns(className) as GradeEntitiesNoNameBase;
+        //    tmp.Clear();
+        //    return tmp;
+        //}
 
 
         #region ªÒ»° ens

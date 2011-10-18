@@ -1242,14 +1242,14 @@ namespace BP.En
 		#endregion
 
 		#region EntitiesOIDName
-		public void AddDDLEntities(string key ,object defaultVal,   string desc, EntitiesOIDName ens, bool uiIsEnable )
-		{
-			this.AddDDLEntities(key,key,defaultVal,DataType.AppInt, desc,ens,"OID","Name",uiIsEnable);
-		}
-		public void AddDDLEntities(string key , string field,  object defaultVal,   string desc, EntitiesOIDName ens, bool uiIsEnable )
-		{
-			this.AddDDLEntities(key,field,defaultVal,DataType.AppInt,desc,ens,"OID","Name",uiIsEnable);
-		}
+        public void AddDDLEntities(string key, object defaultVal, string desc, EntitiesOIDName ens, bool uiIsEnable)
+        {
+            this.AddDDLEntities(key, key, defaultVal, DataType.AppInt, desc, ens, "OID", "Name", uiIsEnable);
+        }
+        public void AddDDLEntities(string key, string field, object defaultVal, string desc, EntitiesOIDName ens, bool uiIsEnable)
+        {
+            this.AddDDLEntities(key, field, defaultVal, DataType.AppInt, desc, ens, "OID", "Name", uiIsEnable);
+        }
 		#endregion
 
 		public Attrs Clone()

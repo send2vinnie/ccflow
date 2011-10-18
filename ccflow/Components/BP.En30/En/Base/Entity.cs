@@ -768,7 +768,6 @@ namespace BP.En
 
                 if (this.CashKey != null)
                     Cash1.Set(this.CashKey, this.PKVal.ToString(), this, 0);
-
                 return i;
             }
 
