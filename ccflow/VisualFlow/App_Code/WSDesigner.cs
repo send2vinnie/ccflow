@@ -389,12 +389,13 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 try
                 {
                     fl1.DoDelete();
+                    return null;
                 }
                 catch(Exception ex)
                 {
                     AppLog.LogError("Do Method DelFlow Branch has a error , para:\t" + para1, ex);
+                    return ex.Message;
                 }
-                return null;
             case "DelLable":
                 BP.WF.LabNote ln = new BP.WF.LabNote(para1);
                 try
@@ -406,7 +407,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     AppLog.LogError("Do Method DelLable Branch has a error , para:\t" + para1, ex);
                 }
                 return null;
-                
             case "DelFlowSort":
                 try
                 {
