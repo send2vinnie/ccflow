@@ -1046,9 +1046,9 @@ namespace BP.DA
         public static int RunSQL(string sql)
         {
             Paras ps = new Paras();
-
             RunSQLReturnTableCount++;
-          //  Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "===RunSQLReturnTable sql=" + sql);
+
+          //Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "===RunSQLReturnTable sql=" + sql);
 
             if (sql == null || sql.Trim() == "")
                 return 1;

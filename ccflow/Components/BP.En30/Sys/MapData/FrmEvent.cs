@@ -15,11 +15,11 @@ namespace BP.Sys
         /// </summary>
         Disable,
         /// <summary>
-        /// 执行存储过程.
+        /// 执行存储过程
         /// </summary>
         SP,
         /// <summary>
-        /// 执行SQL
+        /// 运行SQL
         /// </summary>
         SQL,
         /// <summary>
@@ -64,7 +64,6 @@ namespace BP.Sys
     public class EventListOfNode : EventListFrm
     {
         #region 节点事件
-      
         /// <summary>
         /// 节点发送前
         /// </summary>
@@ -351,12 +350,40 @@ namespace BP.Sys
             {
                 if (doc.Contains("@" + attr.Key) == false)
                     continue;
-                if (attr.MyDataType == DataType.AppString)
+                if (attr.MyDataType == DataType.AppString
+                    || attr.MyDataType == DataType.AppDateTime
+                    || attr.MyDataType == DataType.AppDate)
                     doc = doc.Replace("@" + attr.Key, "'" + en.GetValStrByKey(attr.Key) + "'");
                 else
                     doc = doc.Replace("@" + attr.Key, en.GetValStrByKey(attr.Key));
             }
+
             doc = doc.Replace("~", "'");
+            doc = doc.Replace("@WebUser.No", BP.Web.WebUser.No);
+            doc = doc.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+            doc = doc.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+
+            //string str = "";
+            //foreach (string s in this.Request.QueryString)
+            //{
+            //    str += "&" + s + "=" + this.Request.QueryString[s];
+            //}
+            //return str;
+
+            if (System.Web.HttpContext.Current != null)
+            {
+                string url = System.Web.HttpContext.Current.Request.RawUrl;
+                url = url.Substring(url.IndexOf('?'));
+                string[] paras = url.Split('&');
+                foreach (string s in paras)
+                {
+                    if (doc.Contains("@" + s) == false)
+                        continue;
+
+                    string[] mys = s.Split('=');
+                    doc = doc.Replace("@" + s, mys[1]);
+                }
+            }
 
             if (nev.HisDoType == EventDoType.URL)
             {
@@ -377,7 +404,8 @@ namespace BP.Sys
                 case EventDoType.SP:
                     try
                     {
-                        DBAccess.RunSP(doc);
+                        Paras ps = new Paras();
+                        DBAccess.RunSP(doc, ps);
                         return nev.MsgOK(en);
                     }
                     catch (Exception ex)
@@ -393,7 +421,7 @@ namespace BP.Sys
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception(  nev.MsgError(en) + " Error:" + ex.Message);
+                        throw new Exception(nev.MsgError(en) + " Error:" + ex.Message);
                     }
                     break;
                 case EventDoType.URL:
