@@ -13,6 +13,9 @@ public partial class DoFunc : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.Response.Write("sdfsdfsdfsdfsd");
+
+        this.Response.Write("Err: sdsdsdsdfsdfsdfsdfsd");
 
     }
 }
