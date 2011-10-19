@@ -555,7 +555,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         CheckBox cb = new CheckBox();
         cb.CheckedChanged += new EventHandler(cb_CheckedChanged);
         cb.ID = "CB_IsM";
-        cb.Text = this.ToE("IsBigDoc", "是否大块文本");
+        cb.Text = this.ToE("IsBigDoc", "是否大块文本(对傻瓜表单有效)");
         cb.AutoPostBack = true;
         if (mapAttr.MaxLen >= 3000)
         {
