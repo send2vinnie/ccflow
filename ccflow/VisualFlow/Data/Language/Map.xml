@@ -54,7 +54,7 @@
   <Item No="EditData" CH="编辑数据" RU="Изменить данные" EN="Edit Data" JP="編集データ" />
   <Item No="PChose" CH="请选择" RU="Пожалуйста, выберите" EN="Please select" JP="選択してください" />
   <Item No="FExits" CH="字段已经存在" RU="Поле уже существует" EN="Field already exists" JP="フィールドが既に存在する" />
-  <Item No="IsBigDoc" CH="是否大块文本" RU="Если текст большой" EN="Large text" JP="大きなテキストかどうか" />
+  <Item No="IsBigDoc" CH="是否大块文本(对傻瓜表单有效)" RU="Если текст большой" EN="Large text" JP="大きなテキストかどうか" />
   <Item No="DefSysData" CH="默认系统当前日期" RU="На текущую дату по умолчанию система" EN="Default to system current date" JP="現在の日付は、デフォルトのシステム&#xD;&#xA;現在の日付は、デフォルトのシステム&#xD;&#xA;現在の日付は、デフォルトのシステム&#xD;&#xA;" />
   <Item No="EditEnum" CH="编辑枚举" RU="Редактор перечисление" EN="Edit enumeration" JP="エディタの列挙" />
   <Item No="NewEnum" CH="新建枚举" RU="Новые перечисление" EN="New enumeration" JP="新しい列挙" />
