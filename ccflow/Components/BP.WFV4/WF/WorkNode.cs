@@ -1719,6 +1719,7 @@ namespace BP.WF
                     {
                         Work mywk = toNode.HisWork;
                         mywk.Copy(this.HisWork);  //复制过来信息。
+                        mywk.Copy(this.rptGe);
                         mywk.FID = this.HisWork.FID;
                         mywk.Rec = wl.FK_Emp;
                         mywk.Emps = wl.FK_Emp;
@@ -2951,6 +2952,8 @@ namespace BP.WF
                 Work wk = nd.HisWork;
                 wk.SetValByKey("OID", this.HisWork.OID); //设定它的ID.
                 wk.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
+                wk.Copy(this.rptGe);
+
                 wk.NodeState = NodeState.Init; //节点状态。
                 wk.Rec = BP.Web.WebUser.No;
                 try
