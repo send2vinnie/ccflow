@@ -751,28 +751,31 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         this.Pub2.AddFieldSet(rb);
         this.Pub2.Add("在下面文本框中输入一个SQL,具有编号，标签列，用来绑定下从动下拉框。");
-        this.Pub2.Add("比如:SELECT No, Name FROM CN_City WHERE FK_PQ LIKE '@Key%' ");
+        this.Pub2.Add("比如:SELECT No, Name FROM CN_City WHERE FK_SF = '@Key' ");
         this.Pub2.AddBR();
         TextBox tb = new TextBox();
         tb.ID = "TB_Doc";
         tb.Text = me.Doc;
         tb.Columns = 70;
         tb.CssClass = "TH";
+        tb.TextMode = TextBoxMode.MultiLine;
+        tb.Rows = 3;
         this.Pub2.Add( tb);
-
+        this.Pub2.Add("说明:@Key是ccflow约定的关键字，是主下拉框传递过来的值");
         this.Pub2.AddFieldSetEnd();
 
-        rb = new RadioButton();
-        rb.Text = "通过编码标识获取";
-        rb.GroupName = "sdr";
-        rb.ID = "RB_1";
-        if (me.DoWay == 1)
-            rb.Checked = true;
+        //rb = new RadioButton();
+        //rb.Text = "通过编码标识获取";
+        //rb.GroupName = "sdr";
+        //rb.Enabled = false;
+        //rb.ID = "RB_1";
+        //if (me.DoWay == 1)
+        //    rb.Checked = true;
 
-        this.Pub2.AddFieldSet(rb);
-        this.Pub2.Add("主菜单是编号的是从动菜单编号的前几位，不必联动内容。");
-        this.Pub2.Add("比如: 主下拉框是省份，联动菜单是城市。");
-        this.Pub2.AddFieldSetEnd();
+        //this.Pub2.AddFieldSet(rb);
+        //this.Pub2.Add("主菜单是编号的是从动菜单编号的前几位，不必联动内容。");
+        //this.Pub2.Add("比如: 主下拉框是省份，联动菜单是城市。");
+        //this.Pub2.AddFieldSetEnd();
 
         this.Pub2.Add("</TD>");
         this.Pub2.AddTREnd();
