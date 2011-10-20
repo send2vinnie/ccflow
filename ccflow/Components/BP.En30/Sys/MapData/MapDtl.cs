@@ -93,14 +93,16 @@ namespace BP.Sys
         /// 显示格式
         /// </summary>
         public const string DtlShowModel = "DtlShowModel";
-
+        /// <summary>
+        /// 是否可见
+        /// </summary>
+        public const string IsView = "IsView";
         public const string X = "X";
         public const string Y = "Y";
         public const string H = "H";
         public const string W = "W";
         public const string FrmW = "FrmW";
         public const string FrmH = "FrmH";
-
         /// <summary>
         /// 是否可以导出
         /// </summary>
@@ -290,6 +292,20 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapDtlAttr.IsInsert, value);
+            }
+        }
+        /// <summary>
+        /// 是否可见
+        /// </summary>
+        public bool IsView
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsView);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsView, value);
             }
         }
         public bool IsUpdate
@@ -494,7 +510,7 @@ namespace BP.Sys
                 map.AddBoolean(MapDtlAttr.IsCopyNDData, true, "IsCopyNDData", false, false);
                 map.AddBoolean(MapDtlAttr.IsReadonly, false, "IsReadonly", false, false);
                 map.AddBoolean(MapDtlAttr.IsShowTitle, true, "IsShowTitle", false, false);
-
+                map.AddBoolean(MapDtlAttr.IsView, true, "是否可见", false, false);
 
                 map.AddBoolean(MapDtlAttr.IsExp, true, "IsExp", false, false);
                 map.AddBoolean(MapDtlAttr.IsImp, true, "IsImp", false, false);
