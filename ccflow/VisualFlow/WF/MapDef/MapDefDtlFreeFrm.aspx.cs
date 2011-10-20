@@ -33,11 +33,9 @@ public partial class WF_MapDef_MapDefDtlFreeFrm :BP.Web.WebPage
         {
             dtl.FK_MapData = this.FK_MapData;
             dtl.Name = this.FK_MapData;
-
             dtl.Insert();
             dtl.IntMapAttrs();
         }
-         
 
         this.Pub1.AddTable("width=100% height='100%'  align=left ");
         this.Pub1.AddTR(" ID='0_0' ");

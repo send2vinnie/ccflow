@@ -253,9 +253,10 @@ namespace BP.Web.Comm.UC.WF
             string js = "\t\n<script type='text/javascript' >";
             foreach (MapDtl dtl in dtls)
             {
+                if (dtl.IsView == false)
+                    continue;
                 js += "\t\n window.setInterval(\"ReinitIframe(\"ReinitIframe('F" + dtl.No + "','TD" + dtl.No + "')\", 200);";
             }
-
             foreach (MapM2M m2m in m2ms)
             {
                 if (m2m.IsAutoSize)
@@ -300,6 +301,9 @@ namespace BP.Web.Comm.UC.WF
             #region 明细表
             foreach (MapDtl dtl in dtls)
             {
+                if (dtl.IsView == false)
+                    continue;
+
                 if (dtl.IsUse)
                     continue;
 
@@ -713,6 +717,9 @@ namespace BP.Web.Comm.UC.WF
             string js = "\t\n<script type='text/javascript' >";
             foreach (MapDtl dtl in dtls)
             {
+                if (dtl.IsView == false)
+                    continue;
+
                 js += "\t\n window.setInterval(\"ReinitIframe('F" + dtl.No + "','TD" + dtl.No + "')\", 200);";
             }
             foreach (MapFrame fr in frames)
@@ -862,6 +869,9 @@ namespace BP.Web.Comm.UC.WF
             #region 明细表
             foreach (MapDtl dtl in dtls)
             {
+                if (dtl.IsView == false)
+                    continue;
+
                 if (dtl.IsUse)
                     continue;
 
@@ -1047,7 +1057,6 @@ namespace BP.Web.Comm.UC.WF
                 return;
             }
             #endregion 处理事件.
-
 
 
             m2ms = new MapM2Ms(enName);
@@ -1372,6 +1381,9 @@ namespace BP.Web.Comm.UC.WF
             MapDtls dtls = new MapDtls(enName);
             foreach (MapDtl dtl in dtls)
             {
+                if (dtl.IsView == false)
+                    continue;
+
                 float x = dtl.X;
                 float y = dtl.Y;
 

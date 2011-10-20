@@ -69,6 +69,10 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
 
         MapData md = new MapData(this.FK_MapData);
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
+
+        if (dtl.IsView == false)
+            return;
+
         MapAttrs attrs = new MapAttrs(this.MyPK);
 
         MapExts mes = new MapExts(this.MyPK);

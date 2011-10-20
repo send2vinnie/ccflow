@@ -313,10 +313,22 @@ public partial class Comm_MapDef_MapDtl : WebPage
        // this.Pub1.AddTD("用于明细表的权限控制");
         this.Pub1.AddTREnd();
 
+
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD("");
         CheckBox cb = new CheckBox();
+        cb.ID = "CB_IsView";
+        cb.Text = this.ToE("IsView", "是否可见"); // "是否可以修改行";
+        cb.Checked = dtl.IsView;
+        this.Pub1.AddTD(cb);
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD("");
+        cb = new CheckBox();
         cb.ID = "CB_IsUpdate";
         cb.Text = this.ToE("IsUpdateR", "是否可以修改行"); // "是否可以修改行";
         cb.Checked = dtl.IsUpdate;
