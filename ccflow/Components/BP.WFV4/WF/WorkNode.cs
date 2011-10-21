@@ -1718,8 +1718,8 @@ namespace BP.WF
                     foreach (WorkerList wl in gwls)
                     {
                         Work mywk = toNode.HisWork;
-                        mywk.Copy(this.HisWork);  //复制过来信息。
                         mywk.Copy(this.rptGe);
+                        mywk.Copy(this.HisWork);  //复制过来信息。
                         mywk.FID = this.HisWork.FID;
                         mywk.Rec = wl.FK_Emp;
                         mywk.Emps = wl.FK_Emp;
@@ -2038,8 +2038,28 @@ namespace BP.WF
         {
             try
             {
+
                 if (this.HisNode.IsStartNode)
+                {
                     this.InitStartWorkData();
+
+                    this.rptGe = this.HisNode.HisFlow.HisFlowData;
+                    rptGe.SetValByKey("OID", this.WorkID);
+                    rptGe.Delete();
+                    rptGe.SetValByKey(GERptAttr.FlowEmps, "@" + WebUser.No + "," + WebUser.Name);
+                    rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No);
+                    rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
+                    rptGe.SetValByKey(GERptAttr.WFState, 0);
+                    rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
+                    rptGe.Copy(this.HisWork);
+                }
+                else
+                {
+                    this.rptGe = this.HisNode.HisFlow.HisFlowData;
+                    rptGe.SetValByKey("OID", this.WorkID);
+                    rptGe.RetrieveFromDBSources();
+
+                }
 
                 string msg = "";
                 switch (this.HisNode.HisNodeWorkType)
@@ -2068,50 +2088,42 @@ namespace BP.WF
                 rptGe.SetValByKey("OID", this.WorkID);
                 if (this.HisNode.IsStartNode)
                 {
-                    rptGe.Delete();
-                    rptGe.SetValByKey("OID", this.WorkID);
-                    rptGe.SetValByKey(GERptAttr.FlowEmps, "@" + WebUser.No + "," + WebUser.Name);
-                    rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No );
-                    rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
-                    rptGe.SetValByKey(GERptAttr.WFState, 0);
-                    rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
-                   // rptGe.SetValByKey(GERptAttr.Title, this.WorkID);
                     rptGe.Copy(this.HisWork);
                     rptGe.Insert();
                 }
                 else
                 {
-                   int i= rptGe.RetrieveFromDBSources();
-                   if (i == 0)
-                   {
-                       /*没有查询到这条数据。
-                        * 有两种情况：
-                        * 1，报表的数据表没有创建，或者丢失。
-                        * 2，它在分合流节点上。
-                        */
-#warning 不处理分合流程的分支流程数据报表的情况。
-                   }
+//                    int i = rptGe.RetrieveFromDBSources();
+//                    if (i == 0)
+//                    {
+//                        /*没有查询到这条数据。
+//                         * 有两种情况：
+//                         * 1，报表的数据表没有创建，或者丢失。
+//                         * 2，它在分合流节点上。
+//                         */
+//#warning 不处理分合流程的分支流程数据报表的情况。
+//                    }
 
-                   foreach (Attr attr in rptGe.EnMap.Attrs)
-                   {
-                       switch (attr.Key)
-                       {
-                           case StartWorkAttr.FK_Dept:
-                           case StartWorkAttr.FID:
-                           case StartWorkAttr.CDT:
-                           case StartWorkAttr.RDT:
-                           case StartWorkAttr.Rec:
-                           case StartWorkAttr.Sender:
-                           case StartWorkAttr.NodeState:
-                               continue;
-                           default:
-                               break;
-                       }
-                       object obj = this.HisWork.GetValByKey(attr.Key);
-                       if (obj == null)
-                           continue;
-                       rptGe.SetValByKey(attr.Key, obj);
-                   }
+                    foreach (Attr attr in rptGe.EnMap.Attrs)
+                    {
+                        switch (attr.Key)
+                        {
+                            case StartWorkAttr.FK_Dept:
+                            case StartWorkAttr.FID:
+                            case StartWorkAttr.CDT:
+                            case StartWorkAttr.RDT:
+                            case StartWorkAttr.Rec:
+                            case StartWorkAttr.Sender:
+                            case StartWorkAttr.NodeState:
+                                continue;
+                            default:
+                                break;
+                        }
+                        object obj = this.HisWork.GetValByKey(attr.Key);
+                        if (obj == null)
+                            continue;
+                        rptGe.SetValByKey(attr.Key, obj);
+                    }
 
                     try
                     {
@@ -2125,10 +2137,8 @@ namespace BP.WF
                     {
                         this.HisNode.HisFlow.DoCheck();
                     }
-
                     if (this.HisNode.IsEndNode)
                         rptGe.SetValByKey(GERptAttr.WFState, 1); // 更新状态。
-
                     rptGe.DirectUpdate();
                 }
                 #endregion
@@ -2951,9 +2961,10 @@ namespace BP.WF
                 #region  初始化发起的工作节点。
                 Work wk = nd.HisWork;
                 wk.SetValByKey("OID", this.HisWork.OID); //设定它的ID.
-                wk.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
-                wk.Copy(this.rptGe);
+                if (this.HisNode.IsStartNode==false)
+                   wk.Copy(this.rptGe);
 
+                wk.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
                 wk.NodeState = NodeState.Init; //节点状态。
                 wk.Rec = BP.Web.WebUser.No;
                 try
@@ -2969,7 +2980,7 @@ namespace BP.WF
                     }
                     catch(Exception ex11)
                     {
-                        throw new Exception(ex.Message+" === "+ex11.Message );
+                        throw new Exception(ex.Message+" == "+ex11.Message );
                     }
                 }
 
@@ -3002,13 +3013,15 @@ namespace BP.WF
                 {
                     Sys.MapDtls toDtls = new BP.Sys.MapDtls("ND" + nd.NodeID);
                     Sys.MapDtls startDtls = null;
-                    foreach (MapDtl dtl in toDtls)
+                    bool isEnablePass = false;
+                    foreach (MapDtl dtl in dtls)
                     {
                         if (dtl.IsEnablePass)
-                        {
-                            startDtls = new BP.Sys.MapDtls("ND" + int.Parse(nd.FK_Flow) + "01");
-                        }
+                            isEnablePass = true;
                     }
+
+                    if (isEnablePass)
+                            startDtls = new BP.Sys.MapDtls("ND" + int.Parse(nd.FK_Flow) + "01");
 
                     int i = -1;
                     foreach (Sys.MapDtl dtl in dtls)
@@ -3018,7 +3031,6 @@ namespace BP.WF
                             continue;
 
                         Sys.MapDtl toDtl = (Sys.MapDtl)toDtls[i];
-
                         if (dtl.IsEnablePass == true)
                         {
                             /*如果启用了是否明细表的审核通过机制,就允许copy节点数据。*/
@@ -3049,11 +3061,12 @@ namespace BP.WF
                         qo.DoQuery();
                         int unPass = 0;
                         // 是否起用审核机制。
-                        bool isEnablePass = dtl.IsEnablePass;
+                          isEnablePass = dtl.IsEnablePass;
                         if (isEnablePass == true)
                         {
                             /*判断当前节点该明细表上是否有，isPass 审核字段，如果没有抛出异常信息。*/
                         }
+
                         foreach (GEDtl gedtl in gedtls)
                         {
                             if (isEnablePass)
@@ -3075,6 +3088,7 @@ namespace BP.WF
                             }
                             catch
                             {
+                                dtCopy.Update();
                             }
                         }
 
@@ -3101,7 +3115,7 @@ namespace BP.WF
                                 dtCopy.Copy(gedtl);
                                 dtCopy.OID = 0;
                                 dtCopy.FK_MapDtl = startDtl.No;
-                                dtCopy.RefPK = gedtl.OID.ToString();// this.WorkID.ToString();
+                                dtCopy.RefPK = gedtl.OID.ToString(); //this.WorkID.ToString();
 
                                 dtCopy.SetValByKey("BatchID", this.WorkID);
                                 dtCopy.SetValByKey("IsPass", 0);
