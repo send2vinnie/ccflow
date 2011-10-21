@@ -764,18 +764,18 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.Add("说明:@Key是ccflow约定的关键字，是主下拉框传递过来的值");
         this.Pub2.AddFieldSetEnd();
 
-        //rb = new RadioButton();
-        //rb.Text = "通过编码标识获取";
-        //rb.GroupName = "sdr";
-        //rb.Enabled = false;
-        //rb.ID = "RB_1";
-        //if (me.DoWay == 1)
-        //    rb.Checked = true;
+        rb = new RadioButton();
+        rb.Text = "通过编码标识获取";
+        rb.GroupName = "sdr";
+        rb.Enabled = false;
+        rb.ID = "RB_1";
+        if (me.DoWay == 1)
+            rb.Checked = true;
 
-        //this.Pub2.AddFieldSet(rb);
-        //this.Pub2.Add("主菜单是编号的是从动菜单编号的前几位，不必联动内容。");
-        //this.Pub2.Add("比如: 主下拉框是省份，联动菜单是城市。");
-        //this.Pub2.AddFieldSetEnd();
+        this.Pub2.AddFieldSet(rb);
+        this.Pub2.Add("主菜单是编号的是从动菜单编号的前几位，不必联动内容。");
+        this.Pub2.Add("比如: 主下拉框是省份，联动菜单是城市。");
+        this.Pub2.AddFieldSetEnd();
 
         this.Pub2.Add("</TD>");
         this.Pub2.AddTREnd();
