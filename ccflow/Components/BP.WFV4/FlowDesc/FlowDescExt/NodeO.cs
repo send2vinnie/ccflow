@@ -230,7 +230,11 @@ namespace BP.WF.Ext
                 map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 500, 10, true);
                 map.AddTBString(NodeAttr.DoWhat, null, this.ToE("DoWhat", "完成后处理SQL"), false, false, 0, 500, 10, false);
 
-                map.AddTBString(NodeAttr.MsgSend, null, "发送成功后提示信息", true, false, 0, 2000, 10, true);
+
+                map.AddDDLSysEnum(NodeAttr.TurnToDeal, 0, "成功发送后转向方式",
+                 true, true, NodeAttr.TurnToDeal, "@0=提示ccflow默认信息@1=提示指定信息@2=转向指定的url@3=按照条件转向");
+
+                map.AddTBString(NodeAttr.TurnToDealDoc, null, "转向处理内容", true, false, 0, 2000, 10, true);
 
                 //map.AddBoolean("IsSkipReturn", false, "是否可以跨级撤销", true, true, true);
 
@@ -361,6 +365,11 @@ namespace BP.WF.Ext
                 rm.ClassMethodName = this.ToString() + ".DoListen";
                 map.AddRefMethod(rm);
 
+                rm = new RefMethod();
+                rm.Title = this.ToE("DoTurn", "发送成功转向条件"); // "转向条件";
+                rm.ClassMethodName = this.ToString() + ".DoTurn";
+                map.AddRefMethod(rm);
+
                 //rm.Title = this.ToE("DoFeatureSet", "特性集"); // "调用事件接口";
                 //rm.ClassMethodName = this.ToString() + ".DoFeatureSet";
                 //map.AddRefMethod(rm);
@@ -369,7 +378,11 @@ namespace BP.WF.Ext
                 return this._enMap;
             }
         }
-
+        public string DoTurn()
+        {
+            BP.WF.Node nd = new BP.WF.Node(this.NodeID);
+            return nd.DoTurn();
+        }
 
         public string DoCanReturnNodes()
         {

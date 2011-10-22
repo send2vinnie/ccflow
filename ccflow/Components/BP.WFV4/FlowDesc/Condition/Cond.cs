@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using BP.DA;
 using BP.En;
-//using BP.ZHZS.Base;
 
 namespace BP.WF
 {
@@ -32,9 +31,9 @@ namespace BP.WF
         /// </summary>
         ByAnd
     }
-	/// <summary>
-	/// 条件属性
-	/// </summary>
+    /// <summary>
+    /// 条件属性
+    /// </summary>
     public class CondAttr
     {
         /// <summary>
@@ -85,7 +84,13 @@ namespace BP.WF
         /// 对方向条件有效
         /// </summary>
         public const string ToNodeID = "ToNodeID";
+        /// <summary>
+        /// 判断方式
+        /// </summary>
         public const string ConnJudgeWay = "ConnJudgeWay";
+        /// <summary>
+        /// MyPOID
+        /// </summary>
         public const string MyPOID = "MyPOID";
     }
     /// <summary>
@@ -105,16 +110,12 @@ namespace BP.WF
         /// 方向条件
         /// </summary>
         Dir
-        ///// <summary>
-        ///// 分流规则设置 。 
-        ///// </summary>
-        //FLRole
     }
-	/// <summary>
-	/// 条件基类
-	/// </summary>
-	public class Cond :EntityMyPK
-	{
+    /// <summary>
+    /// 条件
+    /// </summary>
+    public class Cond : EntityMyPK
+    {
         public ConnDataFrom HisDataFrom
         {
             get
@@ -214,7 +215,7 @@ namespace BP.WF
         {
             get
             {
-                int i= this.GetValIntByKey(CondAttr.FK_Node);
+                int i = this.GetValIntByKey(CondAttr.FK_Node);
                 if (i == 0)
                     return this.NodeID;
                 return i;
@@ -246,11 +247,11 @@ namespace BP.WF
                 this.SetValByKey(CondAttr.ToNodeID, value);
             }
         }
-       
-		/// <summary>
-		/// 在更新与插入之前要做得操作。
-		/// </summary>
-		/// <returns></returns>
+
+        /// <summary>
+        /// 在更新与插入之前要做得操作。
+        /// </summary>
+        /// <returns></returns>
         protected override bool beforeUpdateInsertAction()
         {
             this.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0");
@@ -261,7 +262,7 @@ namespace BP.WF
             return base.beforeUpdateInsertAction();
         }
 
-		#region 实现基本的方方法
+        #region 实现基本的方方法
         /// <summary>
         /// 属性
         /// </summary>
@@ -285,16 +286,16 @@ namespace BP.WF
                 this.SetValByKey(CondAttr.AttrName, attr.Name);
             }
         }
-		/// <summary>
-		/// 要运算的实体属性
-		/// </summary>
-		public string AttrKey
-		{
-			get
-			{
-				return this.GetValStringByKey(CondAttr.AttrKey);
-			}
-		}
+        /// <summary>
+        /// 要运算的实体属性
+        /// </summary>
+        public string AttrKey
+        {
+            get
+            {
+                return this.GetValStringByKey(CondAttr.AttrKey);
+            }
+        }
         public string AttrName
         {
             get
@@ -313,9 +314,9 @@ namespace BP.WF
                 this.SetValByKey(CondAttr.OperatorValueT, value);
             }
         }
-		/// <summary>
-		/// 运算符号
-		/// </summary>
+        /// <summary>
+        /// 运算符号
+        /// </summary>
         public string FK_Operator
         {
             get
@@ -330,9 +331,9 @@ namespace BP.WF
                 this.SetValByKey(CondAttr.FK_Operator, value);
             }
         }
-		/// <summary>
-		/// 运算值
-		/// </summary>
+        /// <summary>
+        /// 运算值
+        /// </summary>
         public object OperatorValue
         {
             get
@@ -367,24 +368,24 @@ namespace BP.WF
         }
         public Int64 WorkID = 0;
         public string MsgOfCond = "";
-		#endregion 
+        #endregion
 
-		#region 构造方法
-		/// <summary>
-		/// 条件基类
-		/// </summary>
-		public Cond(){}
+        #region 构造方法
+        /// <summary>
+        /// 条件
+        /// </summary>
+        public Cond() { }
         public Cond(string mypk)
         {
             this.MyPK = mypk;
             this.Retrieve();
         }
-		#endregion 
+        #endregion
 
-		#region 公共方法
-		/// <summary>
-		/// 这个条件能不能通过
-		/// </summary>
+        #region 公共方法
+        /// <summary>
+        /// 这个条件能不能通过
+        /// </summary>
         public virtual bool IsPassed
         {
             get
@@ -420,14 +421,14 @@ namespace BP.WF
                     this.MsgOfCond = "@以岗位判断方向，条件为false：岗位集合" + strs + "，操作员(" + en.Rec + ")岗位:" + strs1;
                     return false;
                 }
-                
-              
+
+
                 try
                 {
                     if (en.EnMap.Attrs.Contains(this.AttrKey) == false)
                         throw new Exception("判断条件方向出现错误：实体：" + nd.EnDesc + " 属性" + this.AttrKey + "已经不存在.");
 
-                    this.MsgOfCond = "@以表单值判断方向，值 "+en.EnDesc+"."+this.AttrKey+" (" + en.GetValStringByKey(this.AttrKey) + ") 操作符:(" + this.FK_Operator + ") 判断值:(" + this.OperatorValue.ToString()+")";
+                    this.MsgOfCond = "@以表单值判断方向，值 " + en.EnDesc + "." + this.AttrKey + " (" + en.GetValStringByKey(this.AttrKey) + ") 操作符:(" + this.FK_Operator + ") 判断值:(" + this.OperatorValue.ToString() + ")";
 
                     switch (this.FK_Operator.Trim().ToLower())
                     {
@@ -479,7 +480,7 @@ namespace BP.WF
                 catch (Exception ex)
                 {
                     Node nd23 = new Node(this.NodeID);
-                    throw new Exception("@判断条件:Node=[" + this.NodeID+"," +nd23.EnDesc+ "], 出现错误。@" + ex.Message +"  。有可能您设置了非法的条件判断方式。");
+                    throw new Exception("@判断条件:Node=[" + this.NodeID + "," + nd23.EnDesc + "], 出现错误。@" + ex.Message + "  。有可能您设置了非法的条件判断方式。");
                 }
             }
         }
@@ -498,22 +499,16 @@ namespace BP.WF
                 map.AddMyPK();
 
                 map.AddTBInt(CondAttr.CondType, 0, "条件类型", true, true);
-            //map.AddDDLSysEnum(CondAttr.CondType, 0, "条件类型", true, false, CondAttr.CondType,"@0=节点完成条件@1=流程完成条件@2=方向条件");
+                //map.AddDDLSysEnum(CondAttr.CondType, 0, "条件类型", true, false, CondAttr.CondType,"@0=节点完成条件@1=流程完成条件@2=方向条件");
 
                 map.AddTBInt(CondAttr.DataFrom, 0, "条件数据来源0表单,1岗位(对方向条件有效)", true, true);
-
                 map.AddTBString(CondAttr.FK_Flow, null, "流程", true, true, 0, 60, 20);
-
                 map.AddTBInt(CondAttr.NodeID, 0, "发生的事件", true, true);
-
                 map.AddTBInt(CondAttr.FK_Node, 0, "节点ID", true, true);
 
+                map.AddTBString(CondAttr.FK_Attr, null, "属性", true, true, 0, 80, 20);
 
-              //  map.AddTBInt(CondAttr.FK_Attr, 0, "属性ID", true, true);
-
-              map.AddTBString(CondAttr.FK_Attr, null, "属性", true, true, 0, 80, 20);
-
-                map.AddTBString(CondAttr.AttrKey, null, "属性", true, true, 0, 60, 20);
+                map.AddTBString(CondAttr.AttrKey, null, "属性键", true, true, 0, 60, 20);
                 map.AddTBString(CondAttr.AttrName, null, "中文名称", true, true, 0, 60, 20);
 
                 map.AddTBString(CondAttr.FK_Operator, "=", "运算符号", true, true, 0, 60, 20);
@@ -523,32 +518,29 @@ namespace BP.WF
                 map.AddTBInt(CondAttr.ToNodeID, 0, "ToNodeID（对方向条件有效）", true, true);
 
                 map.AddDDLSysEnum(CondAttr.ConnJudgeWay, 0, "条件关系", true, false, CondAttr.ConnJudgeWay, "@0=or@1=and");
-              //  map.AddTBInt(CondAttr.ConnJudgeWay, 0, "条件关系", true, true);
-
-
+                //  map.AddTBInt(CondAttr.ConnJudgeWay, 0, "条件关系", true, true);
                 map.AddTBInt(CondAttr.MyPOID, 0, "MyPOID", true, true);
-
                 this._enMap = map;
                 return this._enMap;
             }
         }
-		#endregion 
-	}
-	/// <summary>
-	/// 条件基类s
-	/// </summary>
-	public class Conds :En.Entities
-	{
-		#region public属性
+        #endregion
+    }
+    /// <summary>
+    /// 条件s
+    /// </summary>
+    public class Conds : Entities
+    {
+        #region 属性
         public override Entity GetNewEntity
         {
-            get {  return new Cond(); }
+            get { return new Cond(); }
         }
-		/// <summary>
-		/// 在这里面的所有条件是不是都符合.
-		/// </summary>
-		public bool IsAllPassed
-		{
+        /// <summary>
+        /// 在这里面的所有条件是不是都符合.
+        /// </summary>
+        public bool IsAllPassed
+        {
             get
             {
                 if (this.Count == 0)
@@ -561,7 +553,7 @@ namespace BP.WF
                 }
                 return true;
             }
-		}
+        }
         /// <summary>
         /// 是否通过
         /// </summary>
@@ -601,11 +593,11 @@ namespace BP.WF
                 return msg;
             }
         }
-		/// <summary>
-		/// 是不是其中的一个passed. 
-		/// </summary>
-		public bool IsOneOfCondPassed
-		{
+        /// <summary>
+        /// 是不是其中的一个passed. 
+        /// </summary>
+        public bool IsOneOfCondPassed
+        {
             get
             {
                 foreach (Cond en in this)
@@ -615,34 +607,34 @@ namespace BP.WF
                 }
                 return false;
             }
-		}
-		/// <summary>
-		/// 取出其中一个的完成条件。. 
-		/// </summary>
-		public Cond GetOneOfCondPassed
-		{
-			get
-			{				 
-				foreach(Cond en in this)
-				{
-					if (en.IsPassed==true)
-						return en;
-				}
-				throw new Exception("@没有完成条件。");
-			}
-		}
+        }
+        /// <summary>
+        /// 取出其中一个的完成条件。. 
+        /// </summary>
+        public Cond GetOneOfCondPassed
+        {
+            get
+            {
+                foreach (Cond en in this)
+                {
+                    if (en.IsPassed == true)
+                        return en;
+                }
+                throw new Exception("@没有完成条件。");
+            }
+        }
         public int NodeID = 0;
-		#endregion 
+        #endregion
 
-		#region 构造
-		/// <summary>
-		/// 条件基类
-		/// </summary>
-		public Conds()
+        #region 构造
+        /// <summary>
+        /// 条件
+        /// </summary>
+        public Conds()
         {
         }
         /// <summary>
-        /// 条件基类
+        /// 条件
         /// </summary>
         public Conds(string fk_flow)
         {
@@ -653,7 +645,7 @@ namespace BP.WF
         /// </summary>
         /// <param name="ct">类型</param>
         /// <param name="nodeID">节点</param>
-        public Conds(CondType ct, int nodeID, Int64 workid) 
+        public Conds(CondType ct, int nodeID, Int64 workid)
         {
             this.NodeID = nodeID;
             this.Retrieve(CondAttr.NodeID, nodeID, CondAttr.CondType, (int)ct);
@@ -661,7 +653,7 @@ namespace BP.WF
             foreach (Cond en in this)
                 en.WorkID = workid;
         }
-       
+
         public string ConditionDesc
         {
             get
@@ -669,7 +661,6 @@ namespace BP.WF
                 return "";
             }
         }
-		#endregion
-
-	}
+        #endregion
+    }
 }

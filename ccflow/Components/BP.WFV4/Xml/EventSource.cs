@@ -7,7 +7,7 @@ using BP.XML;
 namespace BP.WF.XML
 {
     /// <summary>
-    /// 事件来源
+    /// 事件源
     /// </summary>
 	public class EventSource:XmlEn
 	{
@@ -30,7 +30,7 @@ namespace BP.WF.XML
 
 		#region 构造
 		/// <summary>
-        /// 事件来源
+        /// 事件源
 		/// </summary>
 		public EventSource()
 		{
@@ -48,13 +48,13 @@ namespace BP.WF.XML
 		#endregion
 	}
 	/// <summary>
-    /// 事件来源s
+    /// 事件源s
 	/// </summary>
     public class EventSources : XmlEns
     {
         #region 构造
         /// <summary>
-        /// 事件来源s
+        /// 事件源s
         /// </summary>
         public EventSources() { }
         #endregion

@@ -9,6 +9,28 @@ using BP.Port;
 namespace BP.WF
 {
     /// <summary>
+    /// 节点完成转向处理
+    /// </summary>
+    public enum TurnToDeal
+    {
+        /// <summary>
+        /// 按系统默认的提示
+        /// </summary>
+        CCFlowMsg,
+        /// <summary>
+        /// 指定消息
+        /// </summary>
+        SpecMsg,
+        /// <summary>
+        /// 指定Url
+        /// </summary>
+        SpecUrl,
+        /// <summary>
+        /// 按指定的人员
+        /// </summary>
+        TurnToByCond
+    }
+    /// <summary>
     /// 投递方式
     /// </summary>
     public enum DeliveryWay
@@ -307,11 +329,14 @@ namespace BP.WF
         /// 接受人sql
         /// </summary>
         public const string RecipientSQL = "RecipientSQL";
-
         /// <summary>
         /// 退回规则
         /// </summary>
         public const string ReturnRole = "ReturnRole";
+        /// <summary>
+        /// 转向处理
+        /// </summary>
+        public const string TurnToDeal = "TurnToDeal";
         #endregion
 
         #region 基本属性
@@ -435,7 +460,7 @@ namespace BP.WF
         /// <summary>
         /// 个性化发送信息
         /// </summary>
-        public const string MsgSend = "MsgSend";
+        public const string TurnToDealDoc = "TurnToDealDoc";
         /// <summary>
         /// 投递规则
         /// </summary>
@@ -1144,15 +1169,15 @@ namespace BP.WF
                 SetValByKey(NodeAttr.DoWhat, value);
             }
         }
-        public string MsgSend
+        public string TurnToDealDoc
         {
             get
             {
-                return this.GetValStrByKey(NodeAttr.MsgSend);
+                return this.GetValStrByKey(NodeAttr.TurnToDealDoc);
             }
             set
             {
-                SetValByKey(NodeAttr.MsgSend, value);
+                SetValByKey(NodeAttr.TurnToDealDoc, value);
             }
         }
         public string FlowName
@@ -1524,6 +1549,20 @@ namespace BP.WF
         #endregion
 
         #region 节点的工作类型
+        /// <summary>
+        /// 转向处理
+        /// </summary>
+        public TurnToDeal HisTurnToDeal
+        {
+            get
+            {
+                return (TurnToDeal)this.GetValIntByKey(NodeAttr.TurnToDeal);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.TurnToDeal, (int)value);
+            }
+        }
         /// <summary>
         /// 投递规则
         /// </summary>
@@ -2162,7 +2201,8 @@ namespace BP.WF
 
                 map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10, true);
 
-                map.AddTBString(NodeAttr.MsgSend, null, "发送后提示信息", true, false, 0, 2000, 10, true);
+                map.AddTBInt(NodeAttr.TurnToDeal, 0, "转向处理", false, false);
+                map.AddTBString(NodeAttr.TurnToDealDoc, null, "发送后提示信息", true, false, 0, 2000, 10, true);
                 map.AddTBInt(NodeAttr.NodePosType, 0, "位置", false, false);
 
 
@@ -2296,7 +2336,15 @@ namespace BP.WF
             PubClass.WinOpen("./../WF/Admin/Action.aspx?NodeID=" + this.NodeID + "&FK_Flow=" + this.FK_Flow, "单据", "Bill", 800, 500, 200, 300);
             return null;
         }
-
+        /// <summary>
+        /// 转向
+        /// </summary>
+        /// <returns></returns>
+        public string DoTurn()
+        {
+            PubClass.WinOpen("./../WF/Admin/TurnTo.aspx?FK_Node=" + this.NodeID, "节点完成转向处理", "FrmTurn", 800, 500, 200, 300);
+            return null;
+        }
        
         public string DoBill()
         {

@@ -1562,7 +1562,7 @@ namespace BP.WF
                 }
 
 
-                string msgOfSend = this.HisNode.MsgSend;
+                string msgOfSend = this.HisNode.TurnToDealDoc;
                 if (msgOfSend.Length > 3)
                 {
                     if (msgOfSend.Contains("@"))
