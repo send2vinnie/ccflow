@@ -1,27 +1,35 @@
 ﻿<?xml version="1.0" standalone="yes" ?>
 <NewDataSet>
-	<!-- 外部连接配置说明  No, 部门编号，URL 对方sqlserver 的连接。  -->
-  
-  <Item No="FrmLoadBefore"  CH="节点表单载入前" EN="When the node before saving"  />
-  <Item No="FrmLoadAfter"   CH="节点表单载入后" EN="When the node saved"  />
-  
-  <Item No="SaveBefore"  CH="当节点保存前" EN="When the node before saving"  />
-  <Item No="SaveAfter" CH="当节点保存后" EN="When the node saved"  />
-	
-  <Item No="SendWhen" CH="当节点发送时" EN="When a node is sent"  />
-  <Item No="SendSuccess" CH="节点发送成功时" EN="Node has a successful"  />
-  <Item No="SendError" CH="节点发送失败时" EN="Node fails to send"  />
-	
-  <Item No="ReturnBefore" CH="当节点退回前" EN="When the node before returning"  />
-  <Item No="ReturnAfter" CH="当节点退回后" EN="When the node returned after"  />
-	
-  <Item No="UndoneBefore" CH="当节点撤销发送前" EN="When a node before sending cancellation"  />
-  <Item No="UndoneAfter" CH="当节点撤销发送后" EN="When the node after sending cancellation"  />
-	
-	<Item No="FlowOverBefore" CH="流程结束前" EN="When the node after sending cancellation"  />
-	<Item No="FlowOverAfter" CH="流程结束后" EN="When the node after sending cancellation"  />
 
-	<Item No="FlowDelBefore" CH="流程删除前" EN="When the node after sending cancellation"  />
-	<Item No="FlowDelAfter" CH="流程删除后" EN="When the node after sending cancellation"  />
+  <!-- 事件类型 -->
+  <Source No="Frm"  CH="表单事件"  EN=""/>
+  <Source No="Node" CH="节点事件" EN=""/>
+  <Source No="Flow" CH="流程事件" EN=""/>
+  
+  <!-- 表单事件 -->
+  <Item No="FrmLoadBefore"  CH="节点表单载入前" EN="When the node before saving" EventType="Frm"  />
+  <Item No="FrmLoadAfter"   CH="节点表单载入后" EN="When the node saved" EventType="Frm"  />
+  <Item No="SaveBefore"  CH="当节点保存前" EN="When the node before saving"  EventType="Frm" />
+  <Item No="SaveAfter" CH="当节点保存后" EN="When the node saved" EventType="Frm" />
+
+  <!-- 节点事件类型 -->
+  <Item No="SendWhen" CH="当节点发送时" EN="When a node is sent" EventType="Node" />
+  <Item No="SendSuccess" CH="节点发送成功时" EN="Node has a successful" EventType="Node"  />
+  <Item No="SendError" CH="节点发送失败时" EN="Node fails to send"  EventType="Node" />
+	
+  <Item No="ReturnBefore" CH="当节点退回前" EN="When the node before returning" EventType="Node" />
+  <Item No="ReturnAfter" CH="当节点退回后" EN="When the node returned after" EventType="Node" />
+	
+  <Item No="UndoneBefore" CH="当节点撤销发送前" EN="When a node before sending cancellation" EventType="Node" />
+  <Item No="UndoneAfter" CH="当节点撤销发送后" EN="When the node after sending cancellation" EventType="Node" />
+
+  <!-- 流程事件类型 -->
+	<Item No="FlowOverBefore" CH="流程结束前" EN="When the node after sending cancellation" EventType="Flow" />
+	<Item No="FlowOverAfter" CH="流程结束后" EN="When the node after sending cancellation"  EventType="Flow" />
+	<Item No="FlowDelBefore" CH="流程删除前" EN="When the node after sending cancellation" EventType="Flow"  />
+	<Item No="FlowDelAfter" CH="流程删除后" EN="When the node after sending cancellation" EventType="Flow"  />
+
+
+ 
 
 </NewDataSet>
