@@ -259,6 +259,9 @@
     <Compile Include="RememberMe.cs" />
     <Compile Include="Xml\AdminMenu.cs" />
     <Compile Include="Xml\DefVal.cs" />
+    <Compile Include="Xml\EventSource.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Xml\MapDef\MapMenu.cs" />
     <Compile Include="Xml\SysDataType.cs" />
     <Compile Include="Xml\Toolbar.cs" />

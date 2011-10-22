@@ -966,11 +966,13 @@ namespace BP.WF
             //    en.Insert();
             //}
         }
-
         public override void Copy(Entity fromEn)
         {
             if (fromEn == null)
                 return;
+
+            //if (this.EnMap.Attrs.Count > fromEn.EnMap.Attrs.Count)
+            //{
 
             Attrs attrs = fromEn.EnMap.Attrs;
             foreach (Attr attr in attrs)
@@ -984,13 +986,14 @@ namespace BP.WF
                     || attr.Key == WorkAttr.Note
                     || attr.Key == WorkAttr.Sender)
                     continue;
-                if (attr.Key == "RefMsg")
-                    if (this.EnMap.Attrs.Contains("RefMsg"))
-                        if (this.GetValStringByKey("RefMsg").Trim() != "")
-                            continue;
-
                 this.SetValByKey(attr.Key, fromEn.GetValByKey(attr.Key));
             }
+
+            //}
+            //else
+            //{
+            //    Attrs attrs = fromEn.EnMap.Attrs;
+            //}
         }
         /// <summary>
         /// Ω· ¯«∞≤Â»Î

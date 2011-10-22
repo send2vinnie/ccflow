@@ -7,11 +7,11 @@ using BP.XML;
 namespace BP.WF.XML
 {
     /// <summary>
-    /// 事件
+    /// 事件来源
     /// </summary>
-    public class EventList : XmlEn
-    {
-        #region 属性
+	public class EventSource:XmlEn
+	{
+		#region 属性
         public string No
         {
             get
@@ -26,37 +26,37 @@ namespace BP.WF.XML
                 return this.GetValStringByKey(BP.Web.WebUser.SysLang);
             }
         }
-        #endregion
+		#endregion
 
-        #region 构造
-        /// <summary>
-        /// 事件
-        /// </summary>
-        public EventList()
-        {
-        }
-        /// <summary>
-        /// 获取一个实例
-        /// </summary>
-        public override XmlEns GetNewEntities
-        {
-            get
-            {
-                return new EventLists();
-            }
-        }
-        #endregion
-    }
-    /// <summary>
-    /// 事件s
-    /// </summary>
-    public class EventLists : XmlEns
+		#region 构造
+		/// <summary>
+        /// 事件来源
+		/// </summary>
+		public EventSource()
+		{
+		}
+		/// <summary>
+		/// 获取一个实例
+		/// </summary>
+		public override XmlEns GetNewEntities
+		{
+			get
+			{
+				return new EventSources();
+			}
+		}
+		#endregion
+	}
+	/// <summary>
+    /// 事件来源s
+	/// </summary>
+    public class EventSources : XmlEns
     {
         #region 构造
         /// <summary>
-        /// 事件s
+        /// 事件来源s
         /// </summary>
-        public EventLists() { }
+        public EventSources() { }
         #endregion
 
         #region 重写基类属性或方法。
@@ -67,14 +67,14 @@ namespace BP.WF.XML
         {
             get
             {
-                return new EventList();
+                return new EventSource();
             }
         }
         public override string File
         {
             get
             {
-                return SystemConfig.PathOfXML + "\\EventList.xml";
+                return SystemConfig.PathOfXML + "\\EventSource.xml";
             }
         }
         /// <summary>
@@ -84,7 +84,7 @@ namespace BP.WF.XML
         {
             get
             {
-                return "Item";
+                return "Source";
             }
         }
         public override Entities RefEns
