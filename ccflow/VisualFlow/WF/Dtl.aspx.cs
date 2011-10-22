@@ -417,26 +417,44 @@ public partial class Comm_Dtl : WebPage
                                 tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
                                 this.Pub1.AddTD("width='2px'", tb);
                                 tb.Text = val;
+                                if (attr.UIIsEnable==false)
+                                    tb.ReadOnly = true;
                                 break;
                             case DataType.AppDate:
                                 tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
                                 tb.Text = val;
                                 if (attr.UIIsEnable)
+                                {
                                     tb.Attributes["onfocus"] = "WdatePicker();isChange=true;";
+                                }
+                                else
+                                {
+                                    tb.ReadOnly = true;
+                                }
                                 this.Pub1.AddTD("width='2px'", tb);
                                 break;
                             case DataType.AppDateTime:
                                 tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
                                 tb.Text = val;
                                 if (attr.UIIsEnable)
+                                {
                                     tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});isChange=true;";
+                                }
+                                else
+                                {
+                                    tb.ReadOnly = true;
+                                }
                                 this.Pub1.AddTD("width='2px'", tb);
                                 break;
                             case DataType.AppMoney:
                             case DataType.AppRate:
                                 tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
                                 if (attr.UIIsEnable == false)
+                                {
                                     tb.Attributes["class"] = "TBNumReadonly";
+                                    tb.ReadOnly = true;
+                                }
+
                                 try
                                 {
                                     tb.Text = decimal.Parse(val).ToString("0.00");

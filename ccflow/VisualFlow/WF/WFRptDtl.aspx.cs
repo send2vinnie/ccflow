@@ -45,7 +45,6 @@ public partial class WF_WFDtl : WebPage
         "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table.css' rel='stylesheet' type='text/css' />");
 
 
-
         BP.Sys.GEDtls dtls = new BP.Sys.GEDtls(this.EnName);
         QueryObject qo = new QueryObject(dtls);
         qo.AddWhere(BP.Sys.GEDtlAttr.RefPK, this.RefPK);
@@ -77,27 +76,39 @@ public partial class WF_WFDtl : WebPage
         foreach (BP.Sys.GEDtl dtl in dtls)
         {
             is1 = this.Ucsys1.AddTR(is1);
-
             this.Ucsys1.AddTDIdx(i++);
             foreach (Attr attr in map.Attrs)
             {
                 if (attr.UIVisible == false)
                     continue;
 
+                if (attr.IsRefAttr)
+                    continue;
+
                 switch (attr.MyDataType)
                 {
+
                     case DataType.AppInt:
-                        this.Ucsys1.AddTD(dtl.GetValIntByKey(attr.Key));
+                        this.Ucsys1.AddTDNum(dtl.GetValIntByKey(attr.Key));
                         break;
                     case DataType.AppMoney:
                     case DataType.AppRate:
-                        this.Ucsys1.AddTD(dtl.GetValIntByKey(attr.Key).ToString("0.00"));
+                        this.Ucsys1.AddTDNum(dtl.GetValIntByKey(attr.Key).ToString("0.00"));
                         break;
                     case DataType.AppFloat:
                         this.Ucsys1.AddTD(dtl.GetValFloatByKey(attr.Key));
                         break;
+                    case DataType.AppBoolean:
+                        if (dtl.GetValIntByKey(attr.Key) == 1)
+                            this.Ucsys1.AddTD("是");
+                        else
+                            this.Ucsys1.AddTD("否");
+                        break;
                     default:
-                        this.Ucsys1.AddTD(dtl.GetValStrByKey(attr.Key));
+                        if (attr.IsFKorEnum)
+                            this.Ucsys1.AddTD(dtl.GetValRefTextByKey(attr.Key));
+                        else
+                            this.Ucsys1.AddTD(dtl.GetValStrByKey(attr.Key));
                         break;
                 }
             }
@@ -112,11 +123,11 @@ public partial class WF_WFDtl : WebPage
             if (attr.UIVisible == false)
                 continue;
 
-            if (attr.IsNum == false )
+            if (attr.IsNum == false || attr.MyDataType == BP.DA.DataType.AppBoolean)
                 this.Ucsys1.AddTD();
             else
             {
-                this.Ucsys1.AddTDNum( dtls.GetSumFloatByKey(attr.Key).ToString());
+                this.Ucsys1.AddTDNum(dtls.GetSumFloatByKey(attr.Key).ToString());
             }
         }
         this.Ucsys1.AddTREnd();
