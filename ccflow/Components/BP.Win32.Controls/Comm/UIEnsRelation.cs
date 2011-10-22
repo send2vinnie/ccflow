@@ -204,7 +204,7 @@ namespace BP.Win32.Controls
 					//attr.AttrOfMValue
 					Entities ensOfM = vsM.EnsOfM;
 					ensOfM.RetrieveAll();
-					tree.BindEns(ensOfM,vsM.AttrOfMText,vsM.AttrOfMValue,true) ;		 
+					//tree.BindEns(ensOfM,vsM.AttrOfMText,vsM.AttrOfMValue,true) ;		 
  
 					Entities ensOfMM = vsM.EnsOfMM;
 					QueryObject qo = new QueryObject(ensOfMM);

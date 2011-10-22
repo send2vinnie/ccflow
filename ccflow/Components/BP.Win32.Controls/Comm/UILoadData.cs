@@ -208,7 +208,7 @@ namespace BP.Win32.Comm
 				switch(e.Button.Text)
 				{
 					case "文件格式输出":
-						this.saveFileDialog1.Title="南京税通软件--请选择文件存放的位置.";
+						this.saveFileDialog1.Title="ccflow软件--请选择文件存放的位置.";
 						this.saveFileDialog1.FileName=this.HisEn.EnDesc;
 						this.saveFileDialog1.DefaultExt=".xls";
 						this.saveFileDialog1.ShowDialog();

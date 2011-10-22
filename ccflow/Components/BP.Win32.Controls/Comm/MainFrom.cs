@@ -183,8 +183,8 @@ namespace BP.Admin
 			this.richTextBox1.Text="用户须知\n\n";
 			this.richTextBox1.Text+="    此控制台用来处理,流程关系维护，数据定时导入导出以及导入导出的定时设置。以及其他项目维护。\n";
 			this.richTextBox1.Text+="    此控制台程序,提供给系统管理员，流程维护人员使用， 它是 b/s 程序的一个补充,解决了b/s 端效率问题。\n"; 
-			this.richTextBox1.Text+="    此应用程序,有南京税通软件开发组开发，许可["+BP.SystemConfig.CustomerName+"]使用。\n\n" ; 
-			this.richTextBox1.Text+="南京税通软件开发组\n";
+			this.richTextBox1.Text+="    此应用程序,有ccflow软件开发组开发，许可["+BP.SystemConfig.CustomerName+"]使用。\n\n" ; 
+			this.richTextBox1.Text+="ccflow软件开发组\n";
 			this.richTextBox1.Text+="    开发组主页: http://www.chichengsoft.com\n";
 			this.richTextBox1.Text+="    技术支持文档:http://helper.chichengsoft.net/ E-mail: "+SystemConfig.ServiceMail+"\n";
 			this.richTextBox1.Text+="    服务电话:"+SystemConfig.ServiceTel+"\n" ; 

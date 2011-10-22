@@ -6,7 +6,7 @@
         /// 必需的设计器变量。
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+          
         /// <summary>
         /// 清理所有正在使用的资源。
         /// </summary>

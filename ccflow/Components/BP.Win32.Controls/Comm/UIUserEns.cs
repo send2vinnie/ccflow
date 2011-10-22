@@ -175,9 +175,9 @@ namespace BP.Win32.Comm
 		public void BindByEnType(EnType type)
 		{
 			this.Text="用户表维护";
-			this.statusBar1.Text="感谢你选择南京税通软件。";
-			SysEns ens = new SysEns();
-			ens.Retrieve(type);
+			this.statusBar1.Text="感谢你选择ccflow软件。";
+            //SysEns ens = new SysEns();
+            //ens.Retrieve(type);
 
             //this.lb1.BindEns(ens, SysEnPowerAbleAttr.Name, SysEnPowerAbleAttr.EnsEnsName);
 			this.ShowDialog();

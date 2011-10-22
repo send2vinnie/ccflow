@@ -40,62 +40,7 @@ namespace BP.Win32.Controls
 		/// <param name="refText">相关的文本</param>
 		/// <param name="refKey">相关的值</param>
 		/// <param name="CheckBoxes">是否加复选框</param>
-		public void BindEns(Entities ens, string refText, string refKey,bool CheckBoxes)
-		{
-			this.HisEns = ens ;
-			if (ens.IsGradeEntities)
-			{
-				this.BindEns((GradeEntitiesNoNameBase)ens,CheckBoxes) ;
-				return ;
-			}			
-			this.CheckBoxes = CheckBoxes ;
-			this.beforeBind();
-			
-			foreach(Entity en in ens)
-			{
-				this.Nodes.Add( new Node(en.GetValStringByKey(refText),en.GetValStringByKey(refKey),en)) ;
-			}
-			this.endBind();
-		}
-		/// <summary>
-		/// 加载实体集（第一级）
-		/// </summary>
-		/// <param name="ens"></param>
-		/// <param name="CheckBoxes"></param>
-		public void BindEns(GradeEntitiesNoNameBase ens, bool CheckBoxes)
-		{
-			this.HisEns = ens ;
-
-			this.CheckBoxes = CheckBoxes ;
-			this.beforeBind();
-
-			foreach(GradeEntityNoNameBase en  in ens)
-			{				
-				if (en.Grade==1)
-				{
-					Node nd1 = new Node();
-					nd1.Text = en.Name ;
-					nd1.Value = en.No;
-					nd1.Tag =en;
-					nd1.Grade=1 ; 		
-					//nd1.ExpandAll() ;
-					nd1.Expand();
-					this.Nodes.Add(nd1);
-					if (en.IsDtl)
-					continue;
-					this.NodeAdd(nd1,ens,en);
-				}
-			}
-
-			
-			this.endBind();
-
-			foreach(Node nd in this.Nodes)
-			{
-				this.ExpandIt(nd);
-				nd.ExpandAll();
-			}
-		}
+		 
 		public void ExpandIt(Node nd)
 		{
 			foreach(Node mynd in nd.Nodes)
@@ -103,35 +48,7 @@ namespace BP.Win32.Controls
 				mynd.ExpandAll();
 			}
 		}
-		/// <summary>
-		///加载节点 
-		/// </summary>
-		/// <param name="nd"></param>
-		/// <param name="ens"></param>
-		/// <param name="en"></param>
-		protected void NodeAdd(Node nd, GradeEntitiesNoNameBase ens,GradeEntityNoNameBase en )
-		{
-			if (en.IsDtl)
-				return ;
-			//Node childNode = new Node();
-			foreach(GradeEntityNoNameBase childen in ens)
-			{
-				if (childen.Grade ==en.Grade+1 && childen.NoOfParent ==en.No )
-				{					
-					Node nd1 = new Node();
-					nd1.Text = childen.Name ;
-					nd1.Value = childen.No;
-					nd1.Tag =childen;
-					nd1.Grade=childen.Grade ;
-					nd1.ExpandAll() ;
-					nd1.Expand();
-					nd.Nodes.Add(nd1) ;				 
-					if (en.IsDtl)
-					continue;
-					this.NodeAdd(nd1,ens,childen);					
-				}
-			}
-		}
+		 
 		/// <summary>
 		/// 获得当前选中实体集
 		/// </summary>
