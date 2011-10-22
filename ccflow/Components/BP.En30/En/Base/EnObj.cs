@@ -900,8 +900,8 @@ namespace BP.En
 					if (attr.MyFieldType==FieldType.PK || attr.MyFieldType==FieldType.PKEnum  || attr.MyFieldType==FieldType.PKFK )
 						i++;
 				}
-				if (i==0)				
-					throw new Exception("@没有给【"+this.EnDesc+"】定义主键。");
+				if (i==0)
+                    throw new Exception("@没有给【" + this.EnDesc + "，" + this.EnMap.PhysicsTable+ "】定义主键。");
 				else
 					return i;
 			}
@@ -955,7 +955,8 @@ namespace BP.En
                     if (attr.MyFieldType == FieldType.PK || attr.MyFieldType == FieldType.PKEnum || attr.MyFieldType == FieldType.PKFK)
                         return attr.Key;
                 }
-                throw new Exception("@没有给【" + this.EnDesc + "】定义主键。");
+                throw new Exception("@没有给【" + this.EnDesc + "，" + this.EnMap.PhysicsTable + "】定义主键。");
+               // throw new Exception("@没有给【" + this.EnDesc + "】定义主键。");
             }
         }
         public virtual string PKField

@@ -263,6 +263,13 @@
     <Compile Include="PubLib\Pub\Week.cs" />
     <Compile Include="Right.cs">
     </Compile>
+    <Compile Include="Sys\db\Msg.cs" />
+    <Compile Include="Sys\GroupEnsTemplate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sys\RptTemplate.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Sys\EnsAppCfg\EnsAppXml.cs" />
     <Compile Include="Sys\EnsAppCfg\EnsAppGroupXml.cs" />
     <Compile Include="Sys\MapData\FieldGroupXml.cs" />
@@ -386,7 +393,6 @@
     <Compile Include="Sys\MapData\FrmBtn.cs" />
     <Compile Include="Sys\MapData\FrmAttachmentDB.cs" />
     <Compile Include="Sys\Sys\GloVer.cs" />
-    <Compile Include="Sys\Message\Msg.cs" />
     <Compile Include="Sys\PTable\SFTable.cs" />
     <Compile Include="Sys\SysFileManager.cs">
       <SubType>Code</SubType>
@@ -396,7 +402,6 @@
     <Compile Include="Sys\XML\Language.cs" />
     <Compile Include="Sys\XML\WebConfig.cs" />
     <Compile Include="Sys\XML\EnumInfoXml.cs" />
-    <Compile Include="Sys\Zoom.cs" />
     <Compile Include="PubLib\SysApp\PubYearOfFuture.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -493,22 +498,10 @@
     <Compile Include="Rpt\Engine.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Sys\BPSystem.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Sys\CField.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sys\DefVal.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Sys\GroupEnsTemplate.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Sys\Operator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Sys\RptTemplate.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sys\Serial.cs">
@@ -547,7 +540,6 @@
     <Compile Include="PubLib\Xml\ColorXml.cs" />
     <Compile Include="Sys\SysEnumMain.cs" />
     <Compile Include="Sys\EnCfg.cs" />
-    <Compile Include="Sys\SysLog.cs" />
     <Compile Include="Sys\EnsAppCfg\EnsAppCfg.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -555,6 +547,7 @@
     <Folder Include="En\Base\MBase\" />
     <Folder Include="Rpt\RptEn\RptEn\" />
     <Folder Include="Rpt\Self\" />
+    <Folder Include="Sys\Message\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
