@@ -104,7 +104,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
         int i = 0;
         foreach (MapDtl dtl in dtls)
         {
-
             i++;
             this.Pub1.AddTR();
             this.Pub1.AddTDIdx(i);
@@ -165,7 +164,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
                     dtlN.GroupID = 0;
                     dtlN.RowIdx = 0;
                     GroupFields gfs1 = new GroupFields(this.FK_MapData);
-
                     if (gfs1.Count == 1)
                     {
                         GroupField gf = (GroupField)gfs1[0];

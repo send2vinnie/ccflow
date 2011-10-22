@@ -206,8 +206,6 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         Nodes ndsN = new Nodes();
         foreach (BP.WF.Node mynd in nds)
         {
-           
-
             ndsN.AddEntity(mynd);
         }
         DDL ddl = new DDL();
@@ -215,9 +213,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         ddl.BindEntities(ndsN, "NodeID", "Name");
         ddl.SetSelectItem(cond.FK_Node);
         ddl.AutoPostBack = true;
-
         ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
-
         this.AddTD(ddl);
         this.AddTD(this.ToE("Node", "节点"));
         this.AddTREnd();

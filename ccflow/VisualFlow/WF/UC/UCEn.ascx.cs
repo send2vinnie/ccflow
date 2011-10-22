@@ -1103,7 +1103,6 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n<span style='color:" + lab.FontColorHtml + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' >" + lab.TextHtml + "</span>");
                 this.Add("\t\n</DIV>");
             }
-
         
             FrmLines lines = new FrmLines(this.FK_MapData);
             foreach (FrmLine line in lines)

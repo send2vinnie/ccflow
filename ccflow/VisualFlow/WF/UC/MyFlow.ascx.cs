@@ -1175,7 +1175,48 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             msg = firstwn.AfterNodeSave();
             this.Btn_Send.Enabled = false;
-            this.ToMsg(msg, "info");
+            /*处理转向问题.*/
+            switch (firstwn.HisNode.HisTurnToDeal)
+            {
+                case TurnToDeal.SpecUrl:
+                    string myurl = firstwn.HisNode.TurnToDealDoc.Clone().ToString();
+                    if (myurl.Contains("&") == false)
+                        myurl += "?1=1";
+                    Attrs myattrs = firstwn.HisWork.EnMap.Attrs;
+                    foreach (Attr attr in myattrs)
+                    {
+                        myurl = myurl.Replace("@" + attr.Key, firstwn.HisWork.GetValStrByKey(attr.Key));
+                    }
+                    myurl += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
+                    this.Response.Redirect(myurl, true);
+                    return;
+                case TurnToDeal.TurnToByCond:
+                    TurnTos tts = new TurnTos(this.FK_Flow);
+                    if (tts.Count == 0)
+                        throw new Exception("@您没有设置节点完成后的转向条件。");
+                    foreach (TurnTo tt in tts)
+                    {
+                        tt.HisWork = firstwn.HisWork;
+                        if (tt.IsPassed == true)
+                        {
+                            string url = tt.TurnToURL.Clone().ToString();
+                            if (url.Contains("&") == false)
+                                url += "?1=1";
+                            Attrs attrs = firstwn.HisWork.EnMap.Attrs;
+                            foreach (Attr attr in attrs)
+                            {
+                                url = url.Replace("@" + attr.Key, firstwn.HisWork.GetValStrByKey(attr.Key));
+                            }
+                            url += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
+                            this.Response.Redirect(url, true);
+                            return;
+                        }
+                    }
+                    throw new Exception("您定义的转向条件不成立，没有出口。");
+                default:
+                    this.ToMsg(msg, "info");
+                    break;
+            }
             return;
         }
         catch (Exception ex)

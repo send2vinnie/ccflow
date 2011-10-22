@@ -112,7 +112,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 WorkNode wn = new WorkNode(this.FID, this.FK_Node);
                 Work wk = wn.HisWork;
                 this.TB1.Text = this.ToEP4("WBackInfo",
-                    "{0}同志: \n您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
+                    "{0}同志: \n   您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
                     wk.Rec + wk.RecText, wk.CDT, wn.HisNode.Name, WebUser.Name + BP.DA.DataType.CurrentDataTime);
             }
             catch (Exception ex)
@@ -163,7 +163,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
                 Work wk = wn.HisWork;
                 this.TB1.Text = this.ToEP4("WBackInfo",
-                    "{0}同志: \n您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
+                    "{0}同志: \n   您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
                     wk.Rec + wk.RecText, wk.CDT, wn.HisNode.Name, WebUser.Name + BP.DA.DataType.CurrentDataTime);
             }
             catch (Exception ex)
@@ -334,11 +334,12 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                     default:
                         throw new Exception("@没有判断的退回类型。");
                 }
+
                 this.DDL1.SetSelectItem(pwn.HisNode.NodeID);
                 this.DDL1.Enabled = true;
                 Work wk = pwn.HisWork;
                 this.TB1.Text = this.ToEP4("WBackInfo",
-                    "{0}同志: \n您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
+                    "{0}同志: \n  您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
                     wk.Rec + wk.RecText, wk.CDT, pwn.HisNode.Name, WebUser.Name + BP.DA.DataType.CurrentDataTime);
             }
             catch (Exception ex)

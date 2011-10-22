@@ -797,8 +797,9 @@ public partial class Comm_Dtl : WebPage
                 else
                     dtl.Update();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                dtl.CheckPhysicsTable();
                 err += "Row: " + idx + " Error \r\n" + ex.Message;
             }
         }
