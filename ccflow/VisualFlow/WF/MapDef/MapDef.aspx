@@ -61,6 +61,7 @@ body
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 700px; dialogWidth: 900px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
+
     function GroupFieldNew(mypk)
     {
         var url='GroupField.aspx?RefNo='+mypk+"&RefOID=0&DoType=FunList";

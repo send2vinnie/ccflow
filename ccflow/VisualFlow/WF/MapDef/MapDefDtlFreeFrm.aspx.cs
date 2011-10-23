@@ -39,14 +39,14 @@ public partial class WF_MapDef_MapDefDtlFreeFrm :BP.Web.WebPage
 
         this.Pub1.AddTable("width=100% height='100%'  align=left ");
         this.Pub1.AddTR(" ID='0_0' ");
-        this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditDtl('" + this.FK_MapData + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("Insert", "插入列") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddFGroup('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("InsertGroupF", "插入列组") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("Copy", "复制列") + "</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+        this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditDtl('" + this.FK_MapData + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("Insert", "插入列") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddFGroup('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("InsertGroupF", "插入列组") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("Copy", "复制列") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.HidAttr('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("HidAttr", "隐藏列") + "</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
         this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px'   align=left>");
         
         string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapDtl=" + dtl.No;
-        this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='align:left;padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='300' scrolling=no  /></iframe>");
+        this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='align:left;padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='400' scrolling=yes  /></iframe>");
      
         this.Pub1.AddTDEnd();
         this.Pub1.AddTREnd();
