@@ -813,7 +813,13 @@ namespace BP.WF
             rw.FK_Node = wn.HisNode.NodeID;
             rw.MyPK = rw.FK_Node + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmm");
             rw.Note = msg;
-            rw.Save();
+            try
+            {
+                rw.Insert();
+            }
+            catch
+            {
+            }
 
             // 删除退回时当前节点的工作信息
             this.HisWork.Delete();

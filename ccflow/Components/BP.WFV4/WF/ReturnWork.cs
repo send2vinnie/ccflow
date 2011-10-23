@@ -4,7 +4,6 @@ using BP.DA;
 using BP.En;
 using BP.WF;
 using BP.Port; 
-using BP.En;
 
 namespace BP.WF
 {
@@ -166,6 +165,12 @@ namespace BP.WF
             }
         }
         #endregion
+        protected override bool beforeInsert()
+        {
+            this.Returner = BP.Web.WebUser.No;
+            this.RDT =DataType.CurrentDataTime;
+            return base.beforeInsert();
+        }
     }
 	/// <summary>
 	/// �˻ع켣s 
