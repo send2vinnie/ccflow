@@ -526,6 +526,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// </summary>
     public void BindWork(BP.WF.Node nd, Work wk)
     {
+    //    if (wk.NodeState == NodeState.Forward
         switch (nd.HisNodeWorkType)
         {
             case NodeWorkType.StartWorkFL:
@@ -535,13 +536,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 if (this.FID != 0)
                 {
                     /* 这种情况是分流节点向退回到了分河流。*/
-                    //this.Btn_Send.Enabled = false;
-                    //this.Btn_Save.Enabled = false;
-                    //this.Btn_ReturnWork.Enabled = false;
-                    //this.Btn_Delete.Enabled = false;
-                    //this.Btn_Send.Enabled = false;
-                    //this.Btn_ReturnWork.Enabled = false;
-
                     this.UCEn1.AddFieldSet("分流节点退回信息");
 
                     ReturnWork rw = new ReturnWork();
@@ -595,14 +589,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
         }
 
-
         // 处理传递过来的参数。
         foreach (string k in this.Request.QueryString.AllKeys)
         {
             wk.SetValByKey(k, this.Request.QueryString[k]);
         }
 
-        #region 设置默认值。
+        #region 设置默认值
         MapAttrs mattrs = new MapAttrs("ND" + nd.NodeID);
         foreach (MapAttr attr in mattrs)
         {

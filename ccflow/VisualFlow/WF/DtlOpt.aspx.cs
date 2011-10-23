@@ -292,9 +292,12 @@ public partial class WF_DtlOpt : WebPage
             this.Pub1.AddTDTitle();
         }
 
+        string spField = ",Checker,Check_RDT,Check_Note,";
+
         foreach (MapAttr attr in attrs)
         {
-            if (attr.UIVisible == false)
+            if (attr.UIVisible == false
+                && spField.Contains("," +attr.KeyOfEn+",")==false)
                 continue;
 
             this.Pub1.AddTDTitle(attr.Name);
@@ -311,12 +314,25 @@ public partial class WF_DtlOpt : WebPage
             this.Pub1.AddTD(cb);
             foreach (MapAttr attr in attrs)
             {
-                if (attr.UIVisible == false)
+                if (attr.UIVisible == false
+                    && spField.Contains("," + attr.KeyOfEn + ",") == false)
                     continue;
+
                 if (attr.MyDataType == BP.DA.DataType.AppBoolean)
+                {
                     this.Pub1.AddTD(item.GetValBoolStrByKey(attr.KeyOfEn));
-                else
-                    this.Pub1.AddTD(item.GetValStrByKey(attr.KeyOfEn));
+                    continue;
+                }
+
+                switch (attr.UIContralType)
+                {
+                    case UIContralType.DDL:
+                        this.Pub1.AddTD(item.GetValRefTextByKey(attr.KeyOfEn));
+                        continue;
+                    default:
+                        this.Pub1.AddTD(item.GetValStrByKey(attr.KeyOfEn));
+                        continue;
+                }
             }
             this.Pub1.AddTREnd();
         }
