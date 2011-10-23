@@ -289,7 +289,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 WorkNodes wns = new WorkNodes();
                 //if (wn.HisNode.HisFNType == FNType.River)
                 //    wns.GenerByFID(wn.HisNode.HisFlow, this.WorkID);
-
                 if (wns.Count == 0)
                     wns.GenerByWorkID(wn.HisNode.HisFlow, this.WorkID);
 
@@ -311,7 +310,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                         int nodeId = wn.GetPreviousWorkNode().HisNode.NodeID;
                         foreach (WorkNode mywn in wns)
                         {
-                            if (mywn.HisNode.NodeID != this.FK_Node)
+                            if (mywn.HisNode.NodeID != nodeId)
                                 continue;
 
                             this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));

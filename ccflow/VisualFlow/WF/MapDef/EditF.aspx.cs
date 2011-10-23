@@ -592,7 +592,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         tb = new TB();
         tb.ID = "TB_UIHeight";
         tb.CssClass = "TBNum";
-        tb.Text = mapAttr.UIWidth.ToString();
+        tb.Text = mapAttr.UIHeight.ToString();
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
@@ -875,10 +875,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                     attr.IDX = int.Parse(this.IDX) - 1;
 
                 attr.MyDataType = this.FType;
-                //if (this.GroupField != 0)
-                //{
-                //    attr.GroupID = this.GroupField;
-                //}
                 switch (this.FType)
                 {
                     case DataType.AppBoolean:
@@ -892,11 +888,9 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             }
 
             Response.Buffer = true;
-
             attr.FK_MapData = this.MyPK;
             attr.MyPK = this.RefNo;
             attr.Save();
-
             switch (btn.ID)
             {
                 case "Btn_SaveAndClose":
