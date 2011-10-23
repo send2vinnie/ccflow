@@ -46,7 +46,7 @@ public partial class WF_MapDef_MapDefDtlFreeFrm :BP.Web.WebPage
         this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px'   align=left>");
         
         string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapDtl=" + dtl.No;
-        this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='align:left;padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='400' scrolling=yes  /></iframe>");
+        this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='align:left;padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='400'  /></iframe>");
      
         this.Pub1.AddTDEnd();
         this.Pub1.AddTREnd();
