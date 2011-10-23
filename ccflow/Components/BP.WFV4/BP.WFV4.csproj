@@ -286,7 +286,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\" />
-    <Folder Include="DTS\db\" />
     <Folder Include="FlowDesc\WorkBase\CheckWork\" />
     <Folder Include="WF\DTS\" />
     <Folder Include="Xml\db\" />
