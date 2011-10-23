@@ -349,12 +349,16 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
            {
                case NodeState.Back:
                    /* 如果工作节点退回了*/
-                   ReturnWork rw = new ReturnWork();
-                   rw.WorkID = this.WorkID;
-                   rw.FK_Node = this.FK_Node;
-                   if (rw.Retrieve(ReturnWorkAttr.FK_Node, this.FK_Node, ReturnWorkAttr.WorkID, rw.WorkID) != 0)
+                   ReturnWorks rws = new ReturnWorks();
+                   if (rws.Retrieve(ReturnWorkAttr.FK_Node, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID) != 0)
                    {
-                       this.FlowMsg.AlertMsg_Info("流程退回提示", rw.NoteHtml);
+                       string msgInfo = "";
+                       foreach (ReturnWork rw in rws)
+                       {
+                           msgInfo += "\t\n  =========== " + rw.Returner + "  " + rw.RDT + "========== \t\n";
+                           msgInfo += rw.NoteHtml;
+                       }
+                       this.FlowMsg.AlertMsg_Info("流程退回提示", msgInfo);
                        currWK.Update("NodeState", (int)NodeState.Init);
                    }
                    break;

@@ -1061,18 +1061,27 @@ namespace BP.Web.WF
 
                 if (wn.HisWork.NodeState == NodeState.Back)
                 {
+                    string msgInfo = "";
+
                     /* 如果工作节点退回了*/
-                    ReturnWork rw = new ReturnWork();
-                    rw.WorkID = wn.HisWork.OID;
-                    rw.NodeId = wn.HisNode.NodeID;
+                    ReturnWorks rws = new ReturnWorks();
+                    if (rws.Retrieve(ReturnWorkAttr.FK_Node, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID) != 0)
+                    {
+                        foreach (ReturnWork rw in rws)
+                        {
+                            msgInfo += rw.NoteHtml;
+                        }
+                    }
+
+
                     try
                     {
-                        rw.Retrieve();
+
                         //如果是第一个节点，那么把删除流程链接载入消息框页面
                         if (wn.HisNode.IsStartNode)
-                            this.ResponseWriteBlueMsg(rw.NoteHtml + "<HR><a href='../../WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.FK_Flow + "' /><img src='../../Images/Btn/Delete.gif' border=0/>" + this.ToE("SetOverFlow", "结束流程") + "</a>&nbsp;&nbsp;" + msg);
+                            this.ResponseWriteBlueMsg(msgInfo + "<HR><a href='../../WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.FK_Flow + "' /><img src='../../Images/Btn/Delete.gif' border=0/>" + this.ToE("SetOverFlow", "结束流程") + "</a>&nbsp;&nbsp;" + msg);
                         else
-                            this.ResponseWriteBlueMsg(rw.NoteHtml + "<HR>" + msg);
+                            this.ResponseWriteBlueMsg(msgInfo + "<HR>" + msg);
                     }
                     catch
                     {
@@ -1098,46 +1107,34 @@ namespace BP.Web.WF
 
 
                 // this.HisWork = wn.HisWork;
-                this.UCEn1.Bind(wn.HisWork, "ND" + this.FK_Node,  false, false);
+                this.UCEn1.Bind(wn.HisWork, "ND" + this.FK_Node, false, false);
                 this.UCEn1.Add(wn.HisWork.WorkEndInfo + this.GenerHZ(wn.HisWork, wn.HisNode));
 
                 this.Btn_Save.Enabled = true;
                 if (wn.HisWork.NodeState == NodeState.Back)
                 {
                     /* 如果工作节点退回了。 */
-                    ReturnWork rw = new ReturnWork();
-                    rw.WorkID = wn.HisWork.OID;
-                    rw.NodeId = wn.HisNode.NodeID;
-                    try
+                    string msgInfo = "";
+                    ReturnWorks rws = new ReturnWorks();
+                    if (rws.Retrieve(ReturnWorkAttr.FK_Node, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID) != 0)
                     {
-                        rw.Retrieve();
-                        //如果是第一个节点，那么把删除流程链接载入消息框页面
-                        if (wn.HisNode.Step == 1)
+                        foreach (ReturnWork rw in rws)
                         {
-                            this.ResponseWriteBlueMsg(rw.NoteHtml + "<HR><a href='../../WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.FK_Flow + "' />" + this.ToE("SetOverFlow", "结束流程") + "</a>" + msg);
+                            msgInfo += rw.NoteHtml;
                         }
-                        else
-                        {
-                            this.ResponseWriteBlueMsg(rw.NoteHtml + "<HR>" + msg);
-                        }
-                        //this.ResponseWriteBlueMsg("<b><font color=red >当前工作被退回，退回原因如下：</font></b><br><br>"+rw.NoteHtml);
                     }
-                    catch
-                    {
 
+                    if (wn.HisNode.IsStartNode)
+                    {
+                        this.ResponseWriteBlueMsg(msgInfo + "<HR><a href='../../WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.FK_Flow + "' />" + this.ToE("SetOverFlow", "结束流程") + "</a>" + msg);
+                    }
+                    else
+                    {
+                        this.ResponseWriteBlueMsg(msgInfo + "<HR>" + msg);
                     }
                 }
-                if (wn.HisNode.Step == 2)
-                {
-                    //this.Btn_ReturnWork.Enabled=false;
-                    //this.BPToolBar2.Items.Remove(this.Btn_ReturnWork);
-                }
-                //this.Btn_PrintWorkRpt.Enabled = true;
                 this.Btn_ReturnWork.Enabled = true;
-                //  this.BPTabStrip1.SelectedIndex = 0;
-
                 this.ShowSheets(wn.HisNode);
-
                 return wn.HisNode;
             }
             catch (Exception ex)
@@ -1145,12 +1142,9 @@ namespace BP.Web.WF
                 this.ResponseWriteRedMsg(this.ToE("WhenSeleWorkErr", "处理选择工作出现错误") + ex.Message);
                 return null;
             }
-
             this.ShowSheets(wn.HisNode);
-
             return wn.HisNode;
         }
-
         #endregion
     }
 }

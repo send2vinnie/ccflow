@@ -95,7 +95,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
     public void ViewWork()
     {
         ReturnWorks rws = new ReturnWorks();
-        rws.Retrieve(ReturnWorkAttr.NodeId, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID);
+        rws.Retrieve(ReturnWorkAttr.FK_Node, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID);
 
         ForwardWorks fws = new ForwardWorks();
         fws.Retrieve(ForwardWorkAttr.NodeId, this.FK_Node, ForwardWorkAttr.WorkID, this.WorkID);
@@ -539,7 +539,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         this.BindViewEn(en, "width=90%");
         foreach (ReturnWork rw in rws)
         {
-            if (rw.NodeId != nodeId)
+            if (rw.FK_Node != nodeId)
                 continue;
 
             this.AddBR();
