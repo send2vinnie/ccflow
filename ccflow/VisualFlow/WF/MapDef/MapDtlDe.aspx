@@ -28,7 +28,6 @@
         window.location.href = window.location.href;
     }
     function CopyF(mypk) {
-        alert(mypk);
         var url='CopyDtlField.aspx?MyPK='+mypk;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 600px; dialogWidth: 800px;center: yes; help: no'); 
         window.location.href = window.location.href;
@@ -36,7 +35,7 @@
     function HidAttr(mypk) {
         var url = 'HidAttr.aspx?FK_MapData=' + mypk;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 600px; dialogWidth: 800px;center: yes; help: no');
-        window.location.href = window.location.href;
+      //  window.location.href = window.location.href;
     }
     function Edit(mypk,refNo, ftype)
     {
