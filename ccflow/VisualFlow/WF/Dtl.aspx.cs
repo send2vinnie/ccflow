@@ -448,6 +448,7 @@ public partial class Comm_Dtl : WebPage
                                 break;
                             case DataType.AppMoney:
                             case DataType.AppRate:
+                            case DataType.AppInt:
                                 tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
                                 if (attr.UIIsEnable == false)
                                 {
