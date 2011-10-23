@@ -29,7 +29,7 @@ public partial class WF_WorkOpt_UnPassDtl : WebPage
 
         this.Pub2.AddFieldSet("未审核的数据");
 
-        this.Pub2.Add("无");
+        this.Pub2.Add("功能未实现");
 
         this.Pub2.AddFieldSetEnd();
     }

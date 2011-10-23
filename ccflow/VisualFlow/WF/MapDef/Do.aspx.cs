@@ -235,6 +235,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                             attr.UIIsLine = false;
                             attr.UIIsEnable = false;
                             attr.IsSigan = true;
+                            attr.DefVal = "1";
                             attr.IDX = 2;
                             attr.DefVal = "0";
                             attr.Insert();

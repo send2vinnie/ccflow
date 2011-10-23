@@ -41,8 +41,8 @@ public partial class WF_DtlOpt : WebPage
             switch (item.No)
             {
                 case "UnPass":
-                    if (dtl.IsEnablePass == false)
-                        continue;
+                    //if (dtl.IsEnablePass == false)
+                    //    continue;
                     break;
                 default:
                     break;
@@ -67,14 +67,12 @@ public partial class WF_DtlOpt : WebPage
     private void BindExpImp()
     {
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
-
         if (this.Request.QueryString["Flag"] == "ExpTemplete")
         {
             string file = this.Request.PhysicalApplicationPath + @"\DataUser\DtlTemplete\" + this.FK_MapDtl + ".xls";
             BP.PubClass.OpenExcel(file, dtl.Name + ".xls");
             this.WinClose();
         }
-
 
         if (this.Request.QueryString["Flag"] == "ExpTemplete")
         {
@@ -92,8 +90,6 @@ public partial class WF_DtlOpt : WebPage
             this.WinClose();
             return;
         }
-
-
 
         if (dtl.IsExp)
         {
@@ -327,13 +323,10 @@ public partial class WF_DtlOpt : WebPage
         this.Pub1.AddTableEndWithHR();
 
         if (geDtls.Count == 0)
-        {
             return;
-        }
 
         if (nd.IsStartNode == false)
             return;
-
 
         Button btn = new Button();
         btn.ID = "Btn_Delete";
@@ -344,7 +337,7 @@ public partial class WF_DtlOpt : WebPage
 
         btn = new Button();
         btn.ID = "Btn_Imp";
-        btn.Text = "导入并重新编辑(覆盖方式)";
+        btn.Text = "导入并重新编辑(追加方式)";
         btn.Click += new EventHandler(btn_Imp_Click);
         this.Pub1.Add(btn);
 
@@ -377,7 +370,7 @@ public partial class WF_DtlOpt : WebPage
         Button btn = sender as Button;
         if (btn.ID.Contains("ImpClear"))
         {
-            /*如果是晴空方式导入。*/
+            /*如果是清空方式导入。*/
             BP.DA.DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK='" + this.WorkID + "'");
         }
 

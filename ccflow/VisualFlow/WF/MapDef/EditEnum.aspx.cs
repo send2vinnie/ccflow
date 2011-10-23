@@ -342,6 +342,8 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
                 attr.UIBindKey =enumKey;
                 attr.MyDataType = BP.DA.DataType.AppInt;
                 attr.HisEditType = EditType.Edit;
+
+                attr.UIContralType = UIContralType.DDL;
                 attr.LGType = FieldTypeS.Enum;
                 attr.Insert();
             }
