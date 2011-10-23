@@ -3021,7 +3021,7 @@ namespace BP.WF
                     }
 
                     if (isEnablePass)
-                            startDtls = new BP.Sys.MapDtls("ND" + int.Parse(nd.FK_Flow) + "01");
+                        startDtls = new BP.Sys.MapDtls("ND" + int.Parse(nd.FK_Flow) + "01");
 
                     int i = -1;
                     foreach (Sys.MapDtl dtl in dtls)
@@ -3061,7 +3061,12 @@ namespace BP.WF
                         qo.DoQuery();
                         int unPass = 0;
                         // 是否起用审核机制。
-                          isEnablePass = dtl.IsEnablePass;
+                        isEnablePass = dtl.IsEnablePass;
+                        if (isEnablePass && this.HisNode.IsStartNode == false)
+                            isEnablePass = true;
+                        else
+                            isEnablePass = false;
+
                         if (isEnablePass == true)
                         {
                             /*判断当前节点该明细表上是否有，isPass 审核字段，如果没有抛出异常信息。*/
