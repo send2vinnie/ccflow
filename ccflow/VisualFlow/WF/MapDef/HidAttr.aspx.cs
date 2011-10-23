@@ -66,6 +66,8 @@ public partial class WF_MapDef_HidAttr : WebPage
         }
         this.Pub1.AddTableEndWithHR();
 
+        this.WinClose
+
         return;
 
         this.Pub1.AddFieldSet("编辑隐藏字段");
