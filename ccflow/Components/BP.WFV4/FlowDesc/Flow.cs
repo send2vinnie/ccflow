@@ -356,7 +356,7 @@ namespace BP.WF
             wk.Rec = WebUser.No;
             wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
             wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
-            wk.NodeState = 0;
+     //       wk.NodeState = 0; 保留节点状态才可提示它。
             wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
             wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
             wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);

@@ -1442,7 +1442,7 @@ namespace BP.WF
             fws.Delete(ForwardWorkAttr.NodeId, wn.HisNode.NodeID.ToString(), ForwardWorkAttr.WorkID, this.WorkID.ToString());
 
             ReturnWorks rws = new ReturnWorks();
-            rws.Delete(ReturnWorkAttr.NodeId, wn.HisNode.NodeID.ToString(), ReturnWorkAttr.WorkID, this.WorkID.ToString());
+            rws.Delete(ReturnWorkAttr.FK_Node, wn.HisNode.NodeID.ToString(), ReturnWorkAttr.WorkID, this.WorkID.ToString());
 
             #region 判断撤消的百分比条件的临界点条件
             if (wn.HisNode.PassRate != 0)
@@ -1576,7 +1576,7 @@ namespace BP.WF
                 ForwardWorkAttr.WorkID, this.WorkID.ToString());
 
             ReturnWorks rws = new ReturnWorks();
-            rws.Delete(ReturnWorkAttr.NodeId, wn.HisNode.NodeID.ToString(),
+            rws.Delete(ReturnWorkAttr.FK_Node, wn.HisNode.NodeID.ToString(),
                 ReturnWorkAttr.WorkID, this.WorkID.ToString());
 
 
@@ -1767,7 +1767,7 @@ namespace BP.WF
                 ForwardWorkAttr.WorkID, this.WorkID.ToString());
 
             ReturnWorks rws = new ReturnWorks();
-            rws.Delete(ReturnWorkAttr.NodeId, wn.HisNode.NodeID.ToString(),
+            rws.Delete(ReturnWorkAttr.FK_Node, wn.HisNode.NodeID.ToString(),
                 ReturnWorkAttr.WorkID, this.WorkID.ToString());
 
             #region 恢复工作轨迹，解决工作抢办。

@@ -683,8 +683,9 @@ namespace BP.WF
             /* 如果是隐性退回。*/
             BP.WF.ReturnWork rw = new ReturnWork();
             rw.WorkID = wl.WorkID;
-            rw.NodeId = wl.FK_Node;
+            rw.FK_Node = wl.FK_Node;
             rw.Note = msg;
+            rw.MyPK = rw.FK_Node + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmm");
             rw.Save();
 
             //  WorkerLists wls = new WorkerLists(wn.HisWork.OID, wn.HisNode.NodeID);
@@ -809,7 +810,8 @@ namespace BP.WF
             // 记录退回轨迹。
             ReturnWork rw = new ReturnWork();
             rw.WorkID = wn.HisWork.OID;
-            rw.NodeId = wn.HisNode.NodeID;
+            rw.FK_Node = wn.HisNode.NodeID;
+            rw.MyPK = rw.FK_Node + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmm");
             rw.Note = msg;
             rw.Save();
 
@@ -904,8 +906,9 @@ namespace BP.WF
             // 写入日志.
             BP.WF.ReturnWork rw = new ReturnWork();
             rw.WorkID = wn.HisWork.OID;
-            rw.NodeId = wn.HisNode.NodeID;
+            rw.FK_Node = wn.HisNode.NodeID;
             rw.Note = msg;
+            rw.MyPK = rw.FK_Node + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmm");
             rw.Save();
 
             //WorkFlow wf = this.HisWorkFlow;
@@ -944,8 +947,9 @@ namespace BP.WF
             // 写入日志.
             BP.WF.ReturnWork rw = new ReturnWork();
             rw.WorkID = workid;
-            rw.NodeId = wn.HisNode.NodeID;
+            rw.FK_Node = wn.HisNode.NodeID;
             rw.Note = msg;
+            rw.MyPK = rw.FK_Node + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmm");
             rw.Save();
 
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node='" + wn.HisNode.NodeID + "' and workid=" + workid);
