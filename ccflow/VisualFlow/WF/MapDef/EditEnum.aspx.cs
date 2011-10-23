@@ -56,13 +56,30 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
     {
         //this.Response.Write(this.Request.RawUrl);
         this.Title = this.ToE("EditEnum", "编辑枚举类型"); // "编辑枚举类型";
-        MapAttr attr = new MapAttr(this.RefNo);
+        MapAttr attr = null;
+
+        if (this.RefNo == null)
+        {
+            attr = new MapAttr();
+            string enumKey = this.Request.QueryString["EnumKey"];
+            if (enumKey != null)
+            {
+                SysEnumMain se = new SysEnumMain(enumKey);
+                attr.KeyOfEn = enumKey;
+                attr.UIBindKey = enumKey;
+                attr.Name = se.Name;
+                attr.Name = se.Name;
+            }
+        }
+        else
+        {
+            attr = new MapAttr(this.RefNo);
+        }
         BindEnum(attr);
     }
     int idx = 1;
     public void BindEnum(MapAttr mapAttr)
     {
-        
         this.Pub1.AddTable();
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
@@ -90,19 +107,6 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
         //this.Pub1.AddTD("不要以数字开头、不要中文。");
         this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR1();
-        this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD(this.ToE("DefaultVal", "默认值"));
-
-        DDL ddl = new DDL();
-        ddl.ID = "DDL";
-        ddl.BindSysEnum(mapAttr.UIBindKey);
-        ddl.SetSelectItem(mapAttr.DefVal);
-
-        this.Pub1.AddTD(ddl);
-        this.Pub1.AddTD("");
-        this.Pub1.AddTREnd();
-
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("FLabel", "字段中文名称"));
@@ -113,6 +117,19 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("DefaultVal", "默认值"));
+
+        DDL ddl = new DDL();
+        ddl.ID = "DDL";
+        ddl.BindSysEnum(mapAttr.UIBindKey);
+        ddl.SetSelectItem(mapAttr.DefVal);
+        this.Pub1.AddTD(ddl);
+        this.Pub1.AddTD("");
+        this.Pub1.AddTREnd();
+
 
         #region 是否可编辑
         this.Pub1.AddTR1();
@@ -302,12 +319,36 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
 
             MapAttr attr = new MapAttr();
             attr.MyPK = this.RefNo;
-            attr.Retrieve();
+            if (this.RefNo != null)
+                attr.Retrieve();
             attr = (MapAttr)this.Pub1.Copy(attr);
             attr.FK_MapData = this.MyPK;
             attr.DefVal = this.Pub1.GetDDLByID("DDL").SelectedItemStringVal;
             attr.GroupID = this.Pub1.GetDDLByID("DDL_GroupID").SelectedItemIntVal;
-            attr.Update();
+             
+            if (this.RefNo == null)
+            {
+                attr.MyPK = this.MyPK+"_"+this.Pub1.GetTBByID("TB_KeyOfEn").Text;
+                string idx=this.Request.QueryString["IDX"];
+                if (idx == null || idx == "")
+                {
+                }
+                else
+                {
+                    attr.IDX = int.Parse(this.Request.QueryString["IDX"]);
+                }
+
+                string enumKey = this.Request.QueryString["EnumKey"];
+                attr.UIBindKey =enumKey;
+                attr.MyDataType = BP.DA.DataType.AppInt;
+                attr.HisEditType = EditType.Edit;
+                attr.LGType = FieldTypeS.Enum;
+                attr.Insert();
+            }
+            else
+            {
+                attr.Update();
+            }
 
             switch (btn.ID)
             {
@@ -320,7 +361,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
                 default:
                     break;
             }
-            if (this.MyPK == null)
+            if (this.RefNo == null)
                 this.Response.Redirect("EditEnum.aspx?DoType=Edit&MyPK=" + this.MyPK + "&RefNo=" + attr.MyPK + "&GroupField=" + this.GroupField, true);
         }
         catch (Exception ex)

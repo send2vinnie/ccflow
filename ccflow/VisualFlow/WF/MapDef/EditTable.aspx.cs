@@ -56,14 +56,26 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "编辑外键类型";
-        MapAttr attr = new MapAttr(this.RefNo);
+        MapAttr attr = null;
+        if (this.RefNo == null)
+        {
+            attr = new MapAttr();
+            string sfKey = this.Request.QueryString["SFKey"];
+            SFTable sf = new SFTable(sfKey);
+            attr.KeyOfEn = sf.FK_Val;
+            attr.UIBindKey = sfKey;
+            attr.Name = sf.Name; 
+        }
+        else
+        {
+            attr = new MapAttr(this.RefNo);
+        }
         BindTable(attr);
     }
     int idx = 1;
     public void BindTable(MapAttr mapAttr)
     {
         this.Pub1.AddTable();
-        // this.Pub1.AddCaptionLeftTX(this.GetCaption);
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Item", "项目"));
@@ -91,16 +103,28 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         this.Pub1.AddTD("不要以数字开头、不要中文。");
         this.Pub1.AddTREnd();
 
+
+        this.Pub1.AddTR1();
+        this.Pub1.AddTDIdx(idx++);
+        this.Pub1.AddTD(this.ToE("FLabel", "字段中文名称")); // 字段中文名称
+        tb = new TB();
+        tb.ID = "TB_Name";
+        tb.Text = mapAttr.Name;
+        tb.Attributes["width"] = "100%";
+
+        this.Pub1.AddTD(tb);
+        this.Pub1.AddTD("");
+        this.Pub1.AddTREnd();
+
+
         this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("DefaultVal", "默认值")); // "默认值"
-
         DDL ddl = new DDL();
         ddl.ID = "DDL";
         ddl.BindEntities(mapAttr.HisEntitiesNoName);
         ddl.SetSelectItem(mapAttr.DefVal);
         this.Pub1.AddTD(ddl);
-
         if (mapAttr.UIBindKey.Contains(".") == false)
         {
             CheckBox cb = new CheckBox();
@@ -152,19 +176,6 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         }
         this.Pub1.AddTREnd();
 
-
-        this.Pub1.AddTR1();
-        this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD(this.ToE("FLabel", "字段中文名称")); // 字段中文名称
-        tb = new TB();
-        tb.ID = "TB_Name";
-        tb.Text = mapAttr.Name;
-        tb.Attributes["width"] = "100%";
-
-        this.Pub1.AddTD(tb);
-        this.Pub1.AddTD("");
-        this.Pub1.AddTREnd();
-
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("IsCanEdit", "是否可编辑"));
@@ -190,8 +201,7 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
             rb.Checked = false;
 
         this.Pub1.Add(rb);
-        this.Pub1.Add("</TD>");
-
+        this.Pub1.AddTDEnd();
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
 
@@ -356,8 +366,21 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
             }
 
             MapAttr attr = new MapAttr();
-            attr.MyPK = this.RefNo;
-            attr.Retrieve();
+            if (this.RefNo == null || this.RefNo == "")
+            {
+                attr.MyPK = this.MyPK + "_" + this.Pub1.GetTBByID("TB_KeyOfEn").Text;
+                attr.UIContralType = UIContralType.DDL;
+                attr.MyDataType = BP.DA.DataType.AppString;
+                attr.LGType = FieldTypeS.FK;
+                attr.DefVal = "";
+                attr.UIBindKey = this.Request.QueryString["SFKey"];
+                attr.UIIsEnable = true;
+            }
+            else
+            {
+                attr.MyPK = this.RefNo;
+                attr.Retrieve();
+            }
             attr = (MapAttr)this.Pub1.Copy(attr);
             attr.FK_MapData = this.MyPK;
             attr.GroupID = this.Pub1.GetDDLByID("DDL_GroupID").SelectedItemIntVal;
@@ -382,7 +405,10 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
                 }
             }
 
-            attr.Update();
+            if (this.RefNo == null || this.RefNo == "")
+                attr.Insert();
+            else
+                attr.Update();
 
             switch (btn.ID)
             {

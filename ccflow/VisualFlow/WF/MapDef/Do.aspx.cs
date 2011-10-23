@@ -155,6 +155,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                     sem.Delete();
                     this.WinClose();
                     return;
+                
                 case "AddSysEnum":
                     this.AddFEnum();
                     break;
@@ -163,38 +164,30 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                     break;
                 case "AddSFTableAttr":
                     SFTable sf = new SFTable(this.Request.QueryString["RefNo"]);
-                    MapAttr attrAddFK = new MapAttr();
-                    attrAddFK.KeyOfEn = sf.FK_Val;
-                    //while (true)
+                    //MapAttr attrAddFK = new MapAttr();
+                    //attrAddFK.KeyOfEn = sf.FK_Val;
+                    //attrAddFK.FK_MapData = this.MyPK;
+                    //attrAddFK.Name = sf.Name;
+                    //attrAddFK.UIContralType = UIContralType.DDL;
+                    //attrAddFK.UIBindKey = sf.No;
+                    //attrAddFK.MyDataType = BP.DA.DataType.AppString;
+                    //attrAddFK.LGType = FieldTypeS.FK;
+                    //attrAddFK.DefVal = "";
+                    //attrAddFK.UIIsEnable = true;
+                    //if (this.IDX == null || this.IDX == "")
                     //{
-                    //    if (attrAddFK.IsExit(MapAttrAttr.FK_MapData, this.MyPK, MapAttrAttr.KeyOfEn, sf.FK_Val))
-                    //    {
-                    //        BP.PubClass.Alert(this.ToE("FExits", "字段已经存在") + " [" + sf.FK_Val + "]。");
-                    //        BP.PubClass.WinClose();
-                    //        return;
-                    //    }
+                    //    attrAddFK.IDX = 0;
                     //}
-                    attrAddFK.FK_MapData = this.MyPK;
-                    attrAddFK.Name = sf.Name;
-                    attrAddFK.UIContralType = UIContralType.DDL;
-                    attrAddFK.UIBindKey = sf.No;
-                    attrAddFK.MyDataType = BP.DA.DataType.AppString;
-                    attrAddFK.LGType = FieldTypeS.FK;
-                    attrAddFK.DefVal = "";
-                    attrAddFK.UIIsEnable = true;
-                    if (this.IDX == null || this.IDX == "")
-                    {
-                        attrAddFK.IDX = 0;
-                    }
-                    else
-                    {
-                        attrAddFK.IDX = int.Parse(this.IDX);
-                    }
-                    attrAddFK.HisEditType = EditType.Edit;
-                    attrAddFK.Insert();
-                    attrAddFK.HisEditType = EditType.Edit;
-                    attrAddFK.Update();
-                    this.Response.Redirect("EditTable.aspx?MyPK=" + this.MyPK + "&RefNo=" + attrAddFK.MyPK, true);
+                    //else
+                    //{
+                    //    attrAddFK.IDX = int.Parse(this.IDX);
+                    //}
+                    //attrAddFK.HisEditType = EditType.Edit;
+                    //attrAddFK.Insert();
+                    //attrAddFK.HisEditType = EditType.Edit;
+                    //attrAddFK.Update();
+
+                    this.Response.Redirect("EditTable.aspx?MyPK=" + this.MyPK + "&SFKey=" + sf.No, true);
                     this.WinClose();
                     return;
                 case "AddFG": /*执行一个插入列组的命令.*/
@@ -488,12 +481,11 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
         this.Pub1.AddULEnd();
         this.Pub1.AddFieldSetEnd();
     }
+
+   
     public void AddFEnum()
     {
         this.Title = this.ToE("GuideNewField", "增加新字段向导");
-
-        //this.Pub1.AddFieldSet("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='SysEnum.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' >" + this.ToE("NewEnum", "新建枚举") + "</a>");
-
         this.Pub1.AddTable();
         this.Pub1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='SysEnum.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' >" + this.ToE("NewEnum", "新建枚举") + "</a>");
         this.Pub1.AddTR();

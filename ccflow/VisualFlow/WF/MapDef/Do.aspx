@@ -27,21 +27,16 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 500px;center: yes; help: no'); 
        window.location.href = window.location.href;
     }
-    function AddEnum( mypk, idx, key)
-    {
-        if (window.confirm('您确定要增加字段['+key+']吗？') ==false)
-            return ;
-    
-        var url='Do.aspx?DoType=AddEnum&MyPK=' + mypk + '&IDX='+ idx  + '&EnumKey=' + key ;
-       // window.location.href=url;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 500px;center: yes; help: no'); 
-        //window.location.href = window.location.href;
+    function AddEnum(mypk, idx, key) {
+        var url = '';
+        url = 'EditEnum.aspx?DoType=Edit&MyPK=' + mypk + '&EnumKey=' + key + '&IDX=' + idx;
+        var c = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 500px;center: yes; help: no');
+        return;
     }
     function AddSFTable(mypk, idx, key) {
-        if (window.confirm('您确定要增加字段[' + key + ']吗？') == false)
-            return;
+//        if (window.confirm('您确定要增加字段[' + key + ']吗？') == false)
+//            return;
         var url = 'Do.aspx?DoType=AddSFTableAttr&MyPK=' + mypk + '&IDX=' + idx + '&RefNo=' + key;
-        // window.location.href=url;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 500px;center: yes; help: no');
         //window.location.href = window.location.href;
     }
