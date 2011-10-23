@@ -416,7 +416,8 @@ namespace BP.Sys
                 case EventDoType.SQL:
                     try
                     {
-                        DBAccess.RunSQL(doc);
+                        // 允许执行带有GO的sql.
+                        DBAccess.RunSQLs(doc);
                         return nev.MsgOK(en);
                     }
                     catch (Exception ex)

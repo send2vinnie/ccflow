@@ -1016,7 +1016,6 @@ namespace BP.DA
         {
             sql = sql.Replace("@GO","~");
             sql = sql.Replace("@", "~");
-
             string[] strs = sql.Split('~');
             foreach (string str in strs)
             {
