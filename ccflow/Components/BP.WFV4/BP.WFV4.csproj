@@ -160,7 +160,9 @@
     <Compile Include="FlowDesc\FlowExt\ExpDtl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FlowDesc\Frm\FlowNode.cs" />
+    <Compile Include="FlowDesc\FlowNode.cs" />
+    <Compile Include="FlowDesc\Frm.cs" />
+    <Compile Include="FlowDesc\FrmSort.cs" />
     <Compile Include="FlowDesc\Listen.cs" />
     <Compile Include="FlowDesc\NodeFlow.cs" />
     <Compile Include="FlowDesc\FlowDescExt\FlowDoc.cs" />
@@ -180,9 +182,7 @@
     <Compile Include="FlowDesc\NodeUnitData.cs" />
     <Compile Include="FlowDesc\M2M.cs" />
     <Compile Include="FlowData.cs" />
-    <Compile Include="FlowDesc\Frm\Frm.cs" />
     <Compile Include="FlowDesc\FrmNode.cs" />
-    <Compile Include="FlowDesc\Frm\FrmSort.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="FlowDesc\Direction.cs">
       <SubType>Code</SubType>
