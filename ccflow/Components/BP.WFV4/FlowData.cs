@@ -15,21 +15,57 @@ namespace BP.WF
         /// 标题
         /// </summary>
         public const string Title = "Title";
+        /// <summary>
+        /// 流程编号
+        /// </summary>
         public const string FK_Flow = "FK_Flow";
+        /// <summary>
+        /// 单据编号
+        /// </summary>
         public const string BillNo = "BillNo";
+        /// <summary>
+        /// 参与成员
+        /// </summary>
         public const string FlowEmps = "FlowEmps";
+        /// <summary>
+        /// 流程ID
+        /// </summary>
         public const string FID = "FID";
+        /// <summary>
+        /// 工作ID
+        /// </summary>
         public const string OID = "OID";
+        /// <summary>
+        /// 年月
+        /// </summary>
         public const string FK_NY = "FK_NY";
+        /// <summary>
+        /// 流程发起人
+        /// </summary>
         public const string FlowStarter = "FlowStarter";
+        /// <summary>
+        /// 流程发起日期
+        /// </summary>
         public const string FlowStartRDT = "FlowStartRDT";
+        /// <summary>
+        /// 部门发起部门
+        /// </summary>
         public const string FK_Dept = "FK_Dept";
+        /// <summary>
+        /// 流程数量
+        /// </summary>
         public const string WFState = "WFState";
+        /// <summary>
+        /// 个数(统计分析用)
+        /// </summary>
         public const string MyNum = "MyNum";
         /// <summary>
         /// 结束人
         /// </summary>
         public const string FlowEnder = "FlowEnder";
+        /// <summary>
+        /// 流程结束日期
+        /// </summary>
         public const string FlowEnderRDT = "FlowEnderRDT";
         /// <summary>
         /// 跨度
