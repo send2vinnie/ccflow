@@ -109,7 +109,6 @@ namespace BP.TA
                 return;
 
             sms.FK_Emp = fk_emp;
-
             sms.Tel = tel;
             sms.TelDoc = telDoc;
 

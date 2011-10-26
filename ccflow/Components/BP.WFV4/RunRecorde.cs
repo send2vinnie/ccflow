@@ -235,6 +235,8 @@ namespace BP.WF
             this.FK_NY = now.ToString("MM");
             this.RDT = now.ToString("yyyy-MM-dd hh:mm:ss");
 
+         //   Frm
+
             this.FK_Emp = Web.WebUser.No;
             return base.beforeUpdateInsertAction();
         }

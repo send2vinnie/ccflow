@@ -689,15 +689,22 @@ namespace BP.WF
             rw.Save();
 
             //  WorkerLists wls = new WorkerLists(wn.HisWork.OID, wn.HisNode.NodeID);
-
             // 删除退回时当前节点的工作信息。
             //    this.HisWork.Delete();
-
             // 删除当前工作者.
             //WorkerLists wkls = new WorkerLists(this.HisWork.OID, this.HisNode.NodeID);
             //wkls.Delete();
 
+           
+
             WorkNode wn = new WorkNode(this.HisWork.FID, backtoNodeID);
+
+            WF.Port.WFEmp wfemp = new Port.WFEmp(wn.HisWork.Rec);
+            BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.HisNode.NodeID + "_" + wfemp.No, wfemp.No,
+                wfemp.HisAlertWay, wfemp.Tel,
+                  this.ToEP3("WN27", "工作退回：流程:{0}.工作:{1},退回人:{2},需您处理",
+                  wn.HisNode.FlowName, wn.HisNode.Name, WebUser.Name),
+                  wfemp.Email, null, msg);
             return wn;
 
             //// 以退回到的节点向前删除。
@@ -787,26 +794,6 @@ namespace BP.WF
             gwf.DirectUpdate();
             DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
 
-            //恢复抢办状态。
-            //if (backToNode.IsStartNode == false)
-            //{
-            //    RememberMe rm = new RememberMe();
-            //    rm.FK_Node = backtoNodeID;
-            //    WorkNode mywn = new WorkNode(this.WorkID, backtoNodeID);
-            //    WorkNode pwn = mywn.GetPreviousWorkNode();
-            //    rm.Retrieve(RememberMeAttr.FK_Emp, pwn.HisWork.Rec, RememberMeAttr.FK_Node, backtoNodeID);
-            //    WorkerList mywl =new WorkerList(this.WorkID,backtoNodeID,
-            //    string[] emps = rm.Objs.Split('@');
-            //    foreach (string emp in emps)
-            //    {
-            //        WorkerList wl = new WorkerList();
-            //        wl.FK_Dept
-            //    }
-            //}
-            //   DBAccess.RunSQL("DELETE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
-            //   DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
-
-
             // 记录退回轨迹。
             ReturnWork rw = new ReturnWork();
             rw.WorkID = wn.HisWork.OID;
@@ -828,17 +815,25 @@ namespace BP.WF
             MapDtls dtls = new MapDtls("ND" + this.HisNode.NodeID);
             foreach (MapDtl dtl in dtls)
             {
-                BP.DA.DBAccess.RunSQL("DELETE "+dtl.PTable+" WHERE RefPK='"+this.WorkID+"'");
+                BP.DA.DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK='" + this.WorkID + "'");
             }
-
 
             // 删除当前工作者.
             WorkerLists wkls = new WorkerLists(this.HisWork.OID, this.HisNode.NodeID);
             wkls.Delete();
 
             // 以退回到的节点向前数据用递归删除它。
-            Node nd = new Node(backtoNodeID);
-            DeleteToNodesData(nd.HisToNodes);
+            DeleteToNodesData(backToNode.HisToNodes);
+
+            //向他发送消息。
+            WorkNode backWN = new WorkNode(this.WorkID, backtoNodeID);
+            WF.Port.WFEmp wfemp = new Port.WFEmp(backWN.HisWork.Rec);
+            BP.TA.SMS.AddMsg(rw.MyPK, wfemp.No,
+                wfemp.HisAlertWay, wfemp.Tel,
+                  this.ToEP3("WN27", "工作退回：流程:{0}.工作:{1},退回人:{2},需您处理",
+                  backToNode.FlowName, backToNode.Name, WebUser.Name),
+                  wfemp.Email, null, msg);
+
             return wn;
         }
         /// <summary>
@@ -2413,7 +2408,8 @@ namespace BP.WF
                 BP.WF.Port.WFEmp wfemp = new BP.WF.Port.WFEmp(wl.FK_Emp);
                // wfemp.No = wl.FK_Emp;
                 BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.HisNode.NodeID + "_" + wfemp.No, wfemp.No, wfemp.HisAlertWay, wfemp.Tel,
-                    this.ToEP3("WN27", "流程:{0}.工作:{1},发送人:{2},需您处理", wl.HisNode.FlowName, wl.HisNode.Name, WebUser.Name),
+                    this.ToEP3("WN27", "流程:{0}.工作:{1},发送人:{2},需您处理",
+                    wl.HisNode.FlowName, wl.HisNode.Name, WebUser.Name),
                     wfemp.Email, null, mytemp);
             }
             return;

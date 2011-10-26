@@ -7,7 +7,9 @@ using BP.XML;
 
 namespace BP.WF.XML
 {
-	 
+    /// <summary>
+    /// 管理员
+    /// </summary>
 	public class AdminMenu:XmlEn
 	{
 		#region 属性
