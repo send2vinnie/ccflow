@@ -3356,7 +3356,7 @@ namespace BP.WF
             nd = new Node();
             nd.NodeID = int.Parse(this.No + "99");
             nd.Name = BP.Sys.Language.GetValByUserLang("EndNode", "结束节点"); // "结束节点";
-            nd.Step = 1;
+            nd.Step = 99;
             nd.FK_Flow = this.No;
             nd.FlowName = this.Name;
             nd.HisNodePosType = NodePosType.End;

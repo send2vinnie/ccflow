@@ -52,12 +52,10 @@ namespace BP.WF
                 return this._enMap;
             }
         }
-
         protected override bool beforeDelete()
         {
             if (this.No == "00")
                 throw new Exception("公文类别不允许删除。");
-
             return base.beforeDelete();
         }
 	}
