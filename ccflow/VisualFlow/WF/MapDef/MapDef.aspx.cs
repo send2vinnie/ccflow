@@ -81,13 +81,13 @@ public partial class WF_MapDef_MapDef : WebPage
         foreach (BP.WF.XML.MapMenu item in xmls)
         {
             this.Pub1.AddLi("<a href=\"" + item.JS.Replace("@MyPK", "'" + this.MyPK + "'") + "\" ><span>" + item.Name + "</span></a>");
-            //           this.Pub1.AddLi("<a href=\"" + item.JS.Replace("@MyPK", "'" + this.MyPK + "'") + "\" ><img src='" + item.Img + "' border=0/>" + item.Name + "</a>");
         }
         this.Pub1.Add("\t\n</ul>");
         this.Pub1.Add("\t\n</div>");
 
         this.Pub1.AddFieldSet("设计表单:"+md.Name);
         this.Pub1.Add("\t\n<Table style=\"width:500px;\" >");
+
         /*
          * 根据 GroupField 循环出现菜单。
          */

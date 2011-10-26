@@ -140,7 +140,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             this.Pub1.AddTR();
              if (dtl.IsShowIdx)
             this.Pub1.AddTDIdx(i);
-
             foreach (MapAttr attr in attrs)
             {
                 if (attr.UIVisible == false)
@@ -163,13 +162,16 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         tb.Text = attr.DefVal;
                         tb.ReadOnly = !attr.UIIsEnable;
                         this.Pub1.AddTD(tb);
-
-                     //   tb.ShowType = attr.HisTBType;
-                        //tb.Columns = attr.UIWidth;
                         switch (attr.MyDataType)
                         {
                             case BP.DA.DataType.AppString:
                                 tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border: none;";
+                                if (attr.UIHeight > 25)
+                                {
+                                    tb.TextMode = TextBoxMode.MultiLine;
+                                    tb.Attributes["Height"] = attr.UIHeight + "px";
+                                    tb.Rows = attr.UIHeight / 25 ;
+                                }
                                 //if (tb.Enabled)
                                 //    tb.Attributes["class"] = "TB";
                                 //else
@@ -348,6 +350,15 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
 
                         DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + i);
                         ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
+
+
+                        string val = ddlPerant.SelectedItemStringVal;
+                        DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
+                        ddlChild.Items.Clear();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                        }
                         break;
                     case MapExtXmlList.FullCtrl: // 自动填充.
                         TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper   + "_" + i);

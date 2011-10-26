@@ -27,7 +27,7 @@ public partial class WF_WorkOpt_PrintDoc : BP.Web.WebPage
             return int.Parse(this.Request.QueryString["WorkID"]);
         }
     }
-    public string FK_Bill 
+    public string FK_Bill
     {
         get
         {

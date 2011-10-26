@@ -419,6 +419,12 @@ public partial class Comm_Dtl : WebPage
                                 tb.Text = val;
                                 if (attr.UIIsEnable==false)
                                     tb.ReadOnly = true;
+                                if (attr.UIHeight > 25)
+                                {
+                                    tb.TextMode = TextBoxMode.MultiLine;
+                                    tb.Attributes["Height"] = attr.UIHeight + "px";
+                                    tb.Rows = attr.UIHeight / 25;
+                                }
                                 break;
                             case DataType.AppDate:
                                 tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
@@ -602,10 +608,22 @@ public partial class Comm_Dtl : WebPage
                                 DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + mydtl.OID);
                                 if (ddlPerant == null)
                                     continue;
-                                //  DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
+
+                                //DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
                                 //string ddlP = "Pub1_DDL_"+me.AttrOfOper+"_"+mydtl.OID;
+
                                 string ddlC = "Pub1_DDL_" + me.AttrsOfActive + "_" + mydtl.OID;
                                 ddlPerant.Attributes["onchange"] = " isChange=true; DDLAnsc(this.value, \'" + ddlC + "\', \'" + me.MyPK + "\')";
+
+#warning 此处需要优化。
+                                DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
+                                string val = ddlPerant.SelectedItemStringVal;
+                                DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
+                                ddlChild.Items.Clear();
+                                foreach (DataRow dr in dt.Rows)
+                                {
+                                    ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                                }
                                 break;
                             case MapExtXmlList.FullCtrl: // 自动填充.
                                 TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);

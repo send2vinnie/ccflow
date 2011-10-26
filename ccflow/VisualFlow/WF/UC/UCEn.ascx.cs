@@ -558,7 +558,11 @@ namespace BP.Web.Comm.UC.WF
                                     this.AddTDDesc(attr.Name);
                                     if (attr.IsSigan)
                                     {
-                                        this.AddTD("colspan=" + colspanOfCtl, "<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                        string v = en.GetValStrByKey(attr.KeyOfEn);
+                                        if (v.Length == 0)
+                                            this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                        else
+                                            this.Add("<img src='../DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                                     }
                                     else
                                     {
@@ -784,9 +788,18 @@ namespace BP.Web.Comm.UC.WF
                     case MapExtXmlList.ActiveDDL:
                         DDL ddlPerant = this.GetDDLByID("DDL_" + me.AttrOfOper);
                         DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
-                        if (ddlPerant == null || ddlChild==null)
+                        if (ddlPerant == null || ddlChild == null)
                             continue;
                         ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
+
+                        // 处理默认选择。
+                        string val = ddlPerant.SelectedItemStringVal;
+                        DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
+                        ddlChild.Items.Clear();
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                        }
                         break;
                     case MapExtXmlList.FullCtrl: // 自动填充.
                         TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
@@ -1019,7 +1032,7 @@ namespace BP.Web.Comm.UC.WF
 
                 if (fram.IsAutoSize)
                 {
-                    this.Add("<iframe ID='F" + fram.No + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                    this.Add("<iframe ID='F" + fram.No + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=auto /></iframe>");
                 }
                 else
                 {
@@ -1189,7 +1202,13 @@ namespace BP.Web.Comm.UC.WF
                             case BP.DA.DataType.AppString:
                                 if (attr.IsSigan)
                                 {
-                                    this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                    string v = en.GetValStrByKey(attr.KeyOfEn);
+                                    if (v.Length == 0)
+                                        this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                    else
+                                        this.Add("<img src='../DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                    continue;
+                                    //  this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                                 }
                                 else
                                 {
@@ -1406,9 +1425,9 @@ namespace BP.Web.Comm.UC.WF
                 }
 
                 if (this.IsReadonly == true)
-                    this.Add("<iframe ID='F" + dtl.No + "'    src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' /></iframe>");
+                    this.Add("<iframe ID='F" + dtl.No + "'    src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=auto /></iframe>");
                 else
-                    this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' /></iframe>");
+                    this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=auto /></iframe>");
 
                 this.Add("</span>");
                 this.Add("</DIV>");
@@ -1457,7 +1476,7 @@ namespace BP.Web.Comm.UC.WF
                 //    this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
                 //else
 
-                this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.Width + "' height='" + M2M.Height + "'  /></iframe>");
+                this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.Width + "' height='" + M2M.Height + "'   scrolling=auto/></iframe>");
 
                 this.Add("</span>");
                 this.Add("</DIV>");

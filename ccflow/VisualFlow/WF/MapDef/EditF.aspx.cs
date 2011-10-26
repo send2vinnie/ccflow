@@ -588,7 +588,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD(this.ToE("TBHeight", "行数"));
+        this.Pub1.AddTD(this.ToE("TBHeight", "高度"));
         tb = new TB();
         tb.ID = "TB_UIHeight";
         tb.CssClass = "TBNum";
@@ -596,7 +596,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
-
         this.EditBeforeEnd(mapAttr);
     }
 
