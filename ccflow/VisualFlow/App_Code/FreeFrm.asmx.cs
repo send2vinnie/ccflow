@@ -434,6 +434,7 @@ namespace FreeFrm.Web
         [WebMethod]
         public string SaveEn(string vals)
         {
+          //  vals = vals.Replace("^", "@");
             Entity en = null;
             try
             {
@@ -456,7 +457,7 @@ namespace FreeFrm.Web
                 {
                     if (key == "PKVal")
                         continue;
-                    en.SetValByKey(key, ap.HisHT[key]);
+                    en.SetValByKey(key, ap.HisHT[key].ToString().Replace('^', '@') );
                 }
                 en.Save();
                 return en.PKVal as string;

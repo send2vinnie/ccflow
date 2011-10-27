@@ -32,11 +32,11 @@ public class DocFlow : System.Web.Services.WebService {
 
     #region 功能执行
     [WebMethod]
-    public string DoType(string type,string p1,string p2,string p3,string p4, string p5,string p6)
+    public string DoType(string type, object p1, object p2, object p3, object p4, object p5, object p6,object p7)
     {
         switch (type)
         {
-            case "":
+            case "DeleteFlow":
                 break;
             default:
                 break;
