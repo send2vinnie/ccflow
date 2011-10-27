@@ -438,9 +438,7 @@ namespace BP.Web.UC
         }
         public void AddDateTime(DateTime dt)
         {
-
         }
-
         public void BindMenu(BP.XML.XmlMenus ens)
         {
             this.AddTable("width='100%'");
