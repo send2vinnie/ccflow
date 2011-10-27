@@ -98,7 +98,7 @@ namespace BP.Port
 
                 map.AddTBStringPK(EmpAttr.No, null, this.ToE("No", "±àºÅ"), true, false, 1, 20, 100);
                 map.AddTBString(EmpAttr.Name, null, this.ToE("Name", "Ãû³Æ"), true, false, 0, 100, 100);
-
+                
                 switch (BP.SystemConfig.SysNo)
                 {
                     case BP.SysNoList.WF:

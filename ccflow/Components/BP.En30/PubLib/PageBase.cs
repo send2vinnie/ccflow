@@ -824,7 +824,6 @@ namespace BP.Web
 			str+="</TR>";
 
 
-
 			foreach(DataRow dr in dt.Rows)
 			{
 				str+="<TR>";

@@ -342,6 +342,7 @@ namespace BP.Sys
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "Ó³Éä»ù´¡";
                 map.EnType = EnType.Sys;
+                map.CodeStruct = "4";
 
                 map.AddTBStringPK(MapDataAttr.No, null, "±àºÅ", true, false, 1, 20, 20);
                 map.AddTBString(MapDataAttr.Name, null, "ÃèÊö", true, false, 0, 500, 20);

@@ -56,10 +56,24 @@ namespace BP.DA
                 if (str == null || str == "")
                     continue;
                 string[] mystr = str.Split('=');
-                this.SetVal(mystr[0], mystr[1]);
+                if (mystr.Length == 2)
+                {
+                    this.SetVal(mystr[0], mystr[1]);
+                }
+                else
+                {
+                    string v = "";
+                    for (int i = 1; i < mystr.Length; i++)
+                    {
+                        if (i == 1)
+                            v += mystr[i];
+                        else
+                            v += "=" + mystr[i];
+                    }
+                    this.SetVal(mystr[0], v);
+                }
             }
         }
-
         public void SetVal(string key, string val)
         {
             this.HisHT.Add(key, val);
