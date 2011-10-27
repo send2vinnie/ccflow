@@ -618,12 +618,14 @@ public partial class Comm_Dtl : WebPage
 #warning 此处需要优化。
                                 DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
                                 string val = ddlPerant.SelectedItemStringVal;
+                                string valC = ddlChild.SelectedItemStringVal;
                                 DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
                                 ddlChild.Items.Clear();
                                 foreach (DataRow dr in dt.Rows)
                                 {
                                     ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
                                 }
+                                ddlChild.SetSelectItem(valC);
                                 break;
                             case MapExtXmlList.FullCtrl: // 自动填充.
                                 TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
