@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
@@ -15,7 +16,10 @@ public partial class WF_Admin_Sys_WatchDogaspx : WebPage
     {
         get
         {
-            return this.Request.QueryString["FK_Flow"];
+            string s= this.Request.QueryString["FK_Flow"];
+            if (s == "")
+                return null;
+            return s;
         }
     }
     protected void Page_Load(object sender, EventArgs e)
@@ -27,7 +31,10 @@ public partial class WF_Admin_Sys_WatchDogaspx : WebPage
         this.Top.Add("\t\n<ul>");
         foreach (WatchDogXml item in xmls)
         {
-            this.Top.AddLi("<a href='WatchDog.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + item.No + "' ><span>" + item.Name + "</span></a>");
+            if (this.DoType == item.No)
+                this.Top.AddLi("<a href='WatchDog.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + item.No + "' ><span><b>" + item.Name + "</b></span></a>");
+            else
+                this.Top.AddLi("<a href='WatchDog.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + item.No + "' ><span>" + item.Name + "</span></a>");
         }
         this.Top.Add("\t\n</ul>");
         this.Top.Add("\t\n</div>");
@@ -35,35 +42,35 @@ public partial class WF_Admin_Sys_WatchDogaspx : WebPage
 
 
         #region 流程树
-        FlowSorts fss = new FlowSorts();
-        fss.RetrieveAll();
-        Flows fls = new Flows();
-        fls.RetrieveAll();
+        //FlowSorts fss = new FlowSorts();
+        //fss.RetrieveAll();
+        //Flows fls = new Flows();
+        //fls.RetrieveAll();
 
-        this.Left.AddTable();
-        foreach (FlowSort fs in fss)
-        {
-            this.Left.AddTR();
-            this.Left.AddTDTitle(fs.Name);
-            this.Left.AddTREnd();
+        //this.Left.AddTable();
+        //foreach (FlowSort fs in fss)
+        //{
+        //    this.Left.AddTR();
+        //    this.Left.AddTDTitle(fs.Name);
+        //    this.Left.AddTREnd();
 
-            this.Left.AddTR();
-            this.Left.AddTDBegin();
-            this.Left.AddUL();
-            foreach (Flow fl in fls)
-            {
-                if (fl.FK_FlowSort != fs.No)
-                    continue;
-                if (this.FK_Flow == fl.No)
-                    this.Left.AddLi("WatchDog.aspx?DoType=" + this.DoType + "&FK_Flow=" + fl.No, "<b>" + fl.Name + "</b>");
-                else
-                    this.Left.AddLi("WatchDog.aspx?DoType=" + this.DoType + "&FK_Flow=" + fl.No, fl.Name);
-            }
-            this.Left.AddULEnd();
-            this.Left.AddTDEnd();
-            this.Left.AddTREnd();
-        }
-        this.Left.AddTableEnd();
+        //    this.Left.AddTR();
+        //    this.Left.AddTDBegin();
+        //    this.Left.AddUL();
+        //    foreach (Flow fl in fls)
+        //    {
+        //        if (fl.FK_FlowSort != fs.No)
+        //            continue;
+        //        if (this.FK_Flow == fl.No)
+        //            this.Left.AddLi("WatchDog.aspx?DoType=" + this.DoType + "&FK_Flow=" + fl.No, "<b>" + fl.Name + "</b>");
+        //        else
+        //            this.Left.AddLi("WatchDog.aspx?DoType=" + this.DoType + "&FK_Flow=" + fl.No, fl.Name);
+        //    }
+        //    this.Left.AddULEnd();
+        //    this.Left.AddTDEnd();
+        //    this.Left.AddTREnd();
+        //}
+        //this.Left.AddTableEnd();
         #endregion
 
         #region 生成流程数据列
@@ -71,17 +78,39 @@ public partial class WF_Admin_Sys_WatchDogaspx : WebPage
         this.Right.AddTR();
         this.Right.AddTDTitle("IDX");
         this.Right.AddTDTitle("停留节点");
+        this.Right.AddTDTitle("标题");
         this.Right.AddTDTitle("处理人");
         this.Right.AddTDTitle("接受时间");
         this.Right.AddTDTitle("应完成时间");
-        this.Right.AddTDTitle("状态");
+      //  this.Right.AddTDTitle("状态");
         this.Right.AddTDTitle("操作");
         this.Right.AddTREnd();
-        string sql = "SELECT *";
+        string sql = "";
+        if (this.FK_Flow != null)
+            sql = "SELECT * FROM WF_EmpWorks WHERE FK_Flow='" + this.FK_Flow + "'";
+        else
+            sql = "SELECT * FROM WF_EmpWorks WHERE 1=1";
 
-
+        DataTable dt = DBAccess.RunSQLReturnTable(sql);
+        int idx = 1;
+        foreach (DataRow dr in dt.Rows)
+        {
+            this.Right.AddTR();
+            this.Right.AddTDIdx(idx++);
+            this.Right.AddTD(dr["NodeName"].ToString());
+            this.Right.AddTD(dr["Title"].ToString());
+            this.Right.AddTD(dr["FK_Emp"].ToString());
+            this.Right.AddTD(dr["ADT"].ToString());
+            this.Right.AddTD(dr["SDT"].ToString());
+            this.Right.AddTDBegin();
+            this.Right.Add("<a href=\"javascript:DelIt('"+dr["WorkID"]+"','"+dr["FK_Flow"]+"');\" >删除</a>");
+            this.Right.AddTDEnd();
+            this.Right.AddTREnd();
+ 
+        }
         this.Right.AddTableEnd();
         #endregion
     }
+
 
 }

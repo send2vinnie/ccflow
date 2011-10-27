@@ -360,6 +360,11 @@ public partial class Comm_Dtl : WebPage
         string ids = ",";
         int dtlsNum = dtls.Count;
         MapExts mes = new MapExts(this.EnsName);
+        string activeDDLIDs = "";
+        foreach (MapExt me in mes)
+        {
+        }
+
         foreach (BP.Sys.GEDtl dtl in dtls)
         {
             if (ids.Contains("," + dtl.OID + ","))

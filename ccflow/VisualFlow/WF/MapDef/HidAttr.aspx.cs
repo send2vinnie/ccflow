@@ -35,7 +35,6 @@ public partial class WF_MapDef_HidAttr : WebPage
         {
             if (attr.UIVisible)
                 continue;
-
             switch (attr.KeyOfEn)
             {
                 case "BatchID":
@@ -60,7 +59,20 @@ public partial class WF_MapDef_HidAttr : WebPage
             this.Pub1.AddTR();
             this.Pub1.AddTDIdx(idx++);
             this.Pub1.AddTD(attr.KeyOfEn);
-            this.Pub1.AddTD("<a href=\"javascript:Edit('" + attr.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a>");
+            switch (attr.LGType)
+            {
+                case FieldTypeS.Normal:
+                    this.Pub1.AddTD("<a href=\"javascript:Edit('" + attr.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a>");
+                    break;
+                case FieldTypeS.Enum:
+                    this.Pub1.AddTD("<a href=\"javascript:EditEnum('" + attr.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a>");
+                    break;
+                case FieldTypeS.FK:
+                    this.Pub1.AddTD("<a href=\"javascript:EditTable('" + attr.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a>");
+                    break;
+                default:
+                    break;
+            }
             this.Pub1.AddTD(attr.LGType.ToString());
             this.Pub1.AddTREnd();
         }

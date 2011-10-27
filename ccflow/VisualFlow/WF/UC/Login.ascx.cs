@@ -37,6 +37,11 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
             return;
         }
 
+        if (this.DoType == "Logout")
+        {
+            BP.Web.WebUser.Exit();
+        }
+
         WebUser.SysLang = this.Lang;
         Response.AddHeader("P3P", "CP=CAO PSA OUR");
         int colspan = 1;
@@ -116,6 +121,8 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
                 this.Add(" - <a href=\"javascript:ExitAuth('" + WebUser.Auth + "')\" >退出授权模式[" + WebUser.Auth + "]</a>" + home);
             else
                 this.Add(" - <a href='Tools.aspx?RefNo=AutoLog' >" + this.ToE("AutoLog", "授权方式登录") + "</a>" + home);
+
+            this.Add(" - <a href='" + this.PageID + ".aspx?DoType=Logout' ><font color=green><b>安全退出</b></a>");
         }
 
         this.AddTDEnd();
@@ -127,10 +134,25 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         this.AddBR();
         this.AddBR();
 
-
         this.AddTDEnd();
         this.AddTREnd();
+
+
+        //this.AddTR();
+        //this.AddTDBegin();
+        //if (WebUser.No != null)
+        //{
+        //    this.AddFieldSet("注销");
+        //    this.AddH4("<a href='"+this.PageID+".aspx?DoType=Logout' >安全退出</a>");
+        //    this.AddFieldSetEnd();
+        //}
+        //this.AddTDEnd();
+        //this.AddTREnd();
+
         this.AddTableEnd();
+
+
+
     }
     public string ToWhere
     {

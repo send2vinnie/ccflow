@@ -349,8 +349,13 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         }
 
                         DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + i);
-                        ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
+                        if (ddlChild == null)
+                        {
+                            me.Delete();
+                            continue;
+                        }
 
+                        ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
 
                         string val = ddlPerant.SelectedItemStringVal;
                         DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));

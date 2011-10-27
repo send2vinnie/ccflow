@@ -4,6 +4,13 @@
     <link href="../../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
     <link href="../../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
 
+    <script language=javascript>
+        function DelIt(workid, fk_flow) {
+            if (window.confirm('您确定要删除吗？') == false)
+                return;
+        }
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <table>

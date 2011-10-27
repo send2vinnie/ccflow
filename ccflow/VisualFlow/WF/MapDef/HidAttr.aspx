@@ -10,6 +10,18 @@
         window.close();
         //window.location.href = window.location.href;
     }
+    function EditEnum(mypk, refno, ftype) {
+        var url = 'EditEnum.aspx?DoType=Edit&MyPK=' + mypk + '&RefNo=' + refno + '&FType=' + ftype;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+        window.close();
+        //window.location.href = window.location.href;
+    }
+    function EditTable(mypk, refno, ftype) {
+        var url = 'EditTable.aspx?DoType=Edit&MyPK=' + mypk + '&RefNo=' + refno + '&FType=' + ftype;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+        window.close();
+        //window.location.href = window.location.href;
+    }
 </script>
 <base target="_self" />
 </asp:Content>

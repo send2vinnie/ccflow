@@ -794,12 +794,14 @@ namespace BP.Web.Comm.UC.WF
 
                         // 处理默认选择。
                         string val = ddlPerant.SelectedItemStringVal;
+                        string valClient = ddlChild.SelectedItemStringVal;
                         DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
                         ddlChild.Items.Clear();
                         foreach (DataRow dr in dt.Rows)
                         {
                             ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
                         }
+                        ddlChild.SetSelectItem(valClient);
                         break;
                     case MapExtXmlList.FullCtrl: // 自动填充.
                         TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
