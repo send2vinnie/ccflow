@@ -260,7 +260,36 @@ namespace BP.Web.Controls
         }
 		#endregion   
 
-
+        public void Bind(DataTable dt, string val, string text)
+        {
+            if (this.Items.Count >= dt.Rows.Count)
+            {
+                bool isHave = false;
+                foreach (ListItem li in this.Items)
+                {
+                    li.Attributes["visibility"] = "false";
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        if (dr[val].ToString() == li.Value)
+                        {
+                            isHave = true;
+                            break;
+                        }
+                    }
+                    if (isHave)
+                        li.Attributes["visibility"] = "true";
+                    else
+                        li.Attributes["visibility"] = "false";
+                }
+            }
+            else
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    this.Items.Add(new ListItem(dr[text].ToString(), dr[val].ToString()));
+                }
+            }
+        }
 		public void SetSelectItemByIndex(int index)
 		{
 			foreach(ListItem li in this.Items)
