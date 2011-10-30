@@ -45,6 +45,7 @@ function DtlOpt(workId, fk_mapdtl) {
         	 width:1px;
         	 height:1px;
         	 display:none;
+        	 
         }
     </style>
 	<script language="JavaScript" src="./../Comm/JScript.js"></script>

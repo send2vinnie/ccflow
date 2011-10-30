@@ -64,17 +64,13 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "从表设计";
-
         MapData.IsEditDtlModel = true;
-
         MapData md = new MapData(this.FK_MapData);
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
-
         if (dtl.IsView == false)
             return;
 
         MapAttrs attrs = new MapAttrs(this.MyPK);
-
         MapExts mes = new MapExts(this.MyPK);
         if (mes.Count != 0)
         {
@@ -96,7 +92,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
         this.Pub1.Add("<Table border=0 ID='Tab' style='padding:0px;align:left' >");
    //     this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "' ><img src='../../Images/Btn/Back.gif' border=0/>" + this.ToE("Back","返回") + ":" + md.Name + "</a> - <img src='../../Images/Btn/Table.gif' border=0/>" + dtl.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> ");
-
+        
         this.Pub1.AddTR();
         if (dtl.IsShowIdx)
             this.Pub1.AddTDTitle(); 
@@ -144,6 +140,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             {
                 if (attr.UIVisible == false)
                     continue;
+
                 switch (attr.LGType)
                 {
                     case FieldTypeS.Normal:
@@ -156,7 +153,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                             this.Pub1.AddTD(cb);
                             break;
                         }
-
                         TextBox tb = new TextBox();
                         tb.ID = "TB_" + attr.KeyOfEn + "_" + i;
                         tb.Text = attr.DefVal;
@@ -172,10 +168,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                                     tb.Attributes["Height"] = attr.UIHeight + "px";
                                     tb.Rows = attr.UIHeight / 25 ;
                                 }
-                                //if (tb.Enabled)
-                                //    tb.Attributes["class"] = "TB";
-                                //else
-                                //    tb.Attributes["class"] = "TBReadonly";
                                 break;
                             case BP.DA.DataType.AppDateTime:
                                 tb.Attributes["style"] = "width:"+attr.UIWidth+"px;border: none;";
@@ -240,7 +232,11 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                             EntitiesNoName ens = attr.HisEntitiesNoName;
                             ens.RetrieveAll();
                             ddl1.BindEntities(ens);
-                            ddl1.SetSelectItem(attr.DefVal);
+                            if (ddl1.SetSelectItem(attr.DefVal) == false)
+                            {
+                                ddl1.Items.Insert(0, new ListItem("请选择", attr.DefVal));
+                                ddl1.SelectedIndex = 0;
+                            }
                         }
                         catch
                         {
@@ -273,7 +269,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                     tb.ReadOnly = true;
                     tb.Font.Bold = true;
                     tb.BackColor = System.Drawing.Color.FromName("infobackground");
-                  //  tb.Attributes["class"] = "TBNum";
                     tb.Attributes["class"] = "TBNumReadonly";
                     this.Pub1.AddTD(tb);
                 }
@@ -354,19 +349,44 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                             me.Delete();
                             continue;
                         }
-
                         ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
-
                         string val = ddlPerant.SelectedItemStringVal;
+                        string valC1 = ddlChild.SelectedItemStringVal;
                         DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
                         ddlChild.Items.Clear();
                         foreach (DataRow dr in dt.Rows)
                         {
                             ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
                         }
+                        ddlChild.SetSelectItem(valC1);
+                        break;
+                    case MapExtXmlList.AutoFullDLL: //自动填充下拉框的范围.
+                        DDL ddlFull = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + i);
+                        if (ddlFull == null)
+                        {
+                            me.Delete();
+                            continue;
+                        }
+
+                        string valOld = ddlFull.SelectedItemStringVal;
+                        ddlFull.Items.Clear();
+                        string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
+                        fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                        if (fullSQL.Contains("@"))
+                        {
+                            //Attrs attrsFull = mydtl.EnMap.Attrs;
+                            //foreach (Attr attr in attrsFull)
+                            //{
+                            //    if (fullSQL.Contains("@") == false)
+                            //        break;
+                            //    fullSQL = fullSQL.Replace("@" + attr.Key, mydtl.GetValStrByKey(attr.Key));
+                            //}
+                        }
+                        ddlFull.Bind(DBAccess.RunSQLReturnTable(fullSQL), "No", "Name");
+                        ddlFull.SetSelectItem(valOld);
                         break;
                     case MapExtXmlList.FullCtrl: // 自动填充.
-                        TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper   + "_" + i);
+                        TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + i);
                         if (tbAuto == null)
                         {
                             me.Delete();
@@ -374,19 +394,47 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         }
                         tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                         tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
+                        if (me.Tag != "")
+                        {
+                            /* 处理下拉框的选择范围的问题 */
+                            string[] strs = me.Tag.Split('$');
+                            foreach (string str in strs)
+                            {
+                                string[] myCtl = str.Split(':');
+                                string ctlID = myCtl[0];
+                                DDL ddlC = this.Pub1.GetDDLByID("DDL_" + ctlID + "_" + i);
+                                if (ddlC == null)
+                                {
+                                    continue;
+                                }
+
+                                string sql = myCtl[1].Replace("~", "'");
+                                sql = sql.Replace("@WebUser.No", WebUser.No);
+                                sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                                sql = sql.Replace("@Key", tbAuto.Text.Trim());
+                                dt = DBAccess.RunSQLReturnTable(sql);
+                                string valC = ddlC.SelectedItemStringVal;
+                                ddlC.Items.Clear();
+                                foreach (DataRow dr in dt.Rows)
+                                {
+                                    ddlC.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                                }
+                                ddlC.SetSelectItem(valC);
+                            }
+                        }
                         // tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value);";
-                        //    tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                        // tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                         break;
                     case MapExtXmlList.InputCheck:
-                         TextBox tbCheck = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper   + "_" + i);
-                         if (tbCheck != null)
-                         {
-                             tbCheck.Attributes[me.Tag2] += me.Tag1 + "(this);";
-                         }
-                         else
-                         {
-                             me.Delete();
-                         }
+                        TextBox tbCheck = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + i);
+                        if (tbCheck != null)
+                        {
+                            tbCheck.Attributes[me.Tag2] += me.Tag1 + "(this);";
+                        }
+                        else
+                        {
+                            me.Delete();
+                        }
                         break;
                     case MapExtXmlList.PopVal: //弹出窗.
                         TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper + me.AttrOfOper + "_" + i);
@@ -482,12 +530,9 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         catch (Exception ex)
         {
             this.Alert(ex.Message);
-
             return "";
         }
-        
     }
-
     public string GenerSum(MapAttr mattr,MapDtl dtl)
     {
         if (dtl.IsShowSum == false)

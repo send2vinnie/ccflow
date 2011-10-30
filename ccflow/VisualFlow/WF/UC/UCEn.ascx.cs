@@ -246,8 +246,7 @@ namespace BP.Web.Comm.UC.WF
                 //  this.InsertObjects(false);
             }
             this.AddTableEnd();
-
-            this.AfterBindEn_DealMapExt(enName, mattrs);
+            this.AfterBindEn_DealMapExt(enName, mattrs,en);
 
             #region 处理iFrom 的自适应的问题。
             string js = "\t\n<script type='text/javascript' >";
@@ -741,7 +740,7 @@ namespace BP.Web.Comm.UC.WF
             #endregion 处理iFrom 的自适应的问题。
 
             // 处理扩展。
-            this.AfterBindEn_DealMapExt(enName, mattrs);
+            this.AfterBindEn_DealMapExt(enName, mattrs,en);
 
 
             #region 处理iFrom SaveDtlData。
@@ -763,7 +762,7 @@ namespace BP.Web.Comm.UC.WF
             this.Add(js);
             #endregion 处理iFrom  SaveM2M Save。
         }
-        private void AfterBindEn_DealMapExt(string enName, MapAttrs mattrs)
+        private void AfterBindEn_DealMapExt(string enName, MapAttrs mattrs,Entity en)
         {
             #region 处理扩展设置
             MapExts mes = new MapExts(enName);
@@ -803,12 +802,60 @@ namespace BP.Web.Comm.UC.WF
                         }
                         ddlChild.SetSelectItem(valClient);
                         break;
+                    case MapExtXmlList.AutoFullDLL: // 自动填充下拉框.
+                        DDL ddlFull = this.GetDDLByID("DDL_" + me.AttrOfOper);
+                        string valOld = ddlFull.SelectedItemStringVal;
+                        ddlFull.Items.Clear();
+                        string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
+                        fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                        if (fullSQL.Contains("@"))
+                        {
+                            Attrs attrs =en.EnMap.Attrs;
+                            foreach (Attr attr in  attrs)
+                            {
+                                if (fullSQL.Contains("@") == false)
+                                    break;
+                                fullSQL = fullSQL.Replace("@" + attr.Key, en.GetValStrByKey(attr.Key) );
+                            }
+                        }
+                        ddlFull.Bind(DBAccess.RunSQLReturnTable(fullSQL), "No", "Name");
+                        ddlFull.SetSelectItem(valOld);
+                        break;
                     case MapExtXmlList.FullCtrl: // 自动填充.
                         TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
                         if (tbAuto == null)
                             continue;
                         tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                         tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
+
+                        if (me.Tag != "")
+                        {
+                            /* 处理下拉框的选择范围的问题 */
+                            string[] strs = me.Tag.Split('$');
+                            foreach (string str in strs)
+                            {
+                                string[] myCtl = str.Split(':');
+                                string ctlID = myCtl[0];
+                                DDL ddlC1 = this.GetDDLByID("DDL_" + ctlID);
+                                if (ddlC1 == null)
+                                {
+                                    //me.Tag = "";
+                                    // me.Update();
+                                    continue;
+                                }
+
+                                string sql = myCtl[1].Replace("~", "'");
+                                sql = sql.Replace("@WebUser.No", WebUser.No);
+                                sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                                sql = sql.Replace("@Key", tbAuto.Text.Trim());
+                                dt = DBAccess.RunSQLReturnTable(sql);
+                                string valC1 = ddlC1.SelectedItemStringVal;
+                                ddlC1.Items.Clear();
+                                foreach (DataRow dr in dt.Rows)
+                                    ddlC1.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                                ddlC1.SetSelectItem(valC1);
+                            }
+                        }
                         break;
                     case MapExtXmlList.InputCheck:
                         TextBox tbJS = this.GetTextBoxByID("TB_" + me.AttrOfOper);
@@ -1066,9 +1113,9 @@ namespace BP.Web.Comm.UC.WF
                 if (msg != null)
                     this.Alert(msg);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                this.Alert( ex.Message);
+                this.Alert(ex.Message);
                 return;
             }
             #endregion 处理事件.
@@ -1089,10 +1136,10 @@ namespace BP.Web.Comm.UC.WF
                 {
                     case BtnEventType.Disable:
                         this.Add("<input type=button value='" + btn.Text.Replace("&nbsp;", " ") + "' disabled='disabled'/>");
-                        break; 
+                        break;
                     case BtnEventType.RunExe:
                     case BtnEventType.RunJS:
-                        this.Add("<input type=button value='" + btn.Text.Replace("&nbsp;", " ") + "' enable=true onclick=\"" + btn.EventContext.Replace("~","'") + "\" />");
+                        this.Add("<input type=button value='" + btn.Text.Replace("&nbsp;", " ") + "' enable=true onclick=\"" + btn.EventContext.Replace("~", "'") + "\" />");
                         break;
                     default:
                         Button myBtn = new Button();
@@ -1118,7 +1165,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n<span style='color:" + lab.FontColorHtml + ";font-family: " + lab.FontName + ";font-size: " + lab.FontSize + "px;' >" + lab.TextHtml + "</span>");
                 this.Add("\t\n</DIV>");
             }
-        
+
             FrmLines lines = new FrmLines(this.FK_MapData);
             foreach (FrmLine line in lines)
             {
@@ -1149,7 +1196,7 @@ namespace BP.Web.Comm.UC.WF
             FrmImgs imgs = new FrmImgs(this.FK_MapData);
             foreach (FrmImg img in imgs)
             {
-                float y = img.Y  ;
+                float y = img.Y;
                 this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
                 if (string.IsNullOrEmpty(img.LinkURL) == false)
                 {
@@ -1321,7 +1368,7 @@ namespace BP.Web.Comm.UC.WF
                         break;
                     case FieldTypeS.FK:
                         DDL ddl1 = new DDL();
-                     //   ddl1.Width = attr.UIWidth;
+                        //   ddl1.Width = attr.UIWidth;
                         ddl1.ID = "DDL_" + attr.KeyOfEn;
                         ddl1.Attributes["tabindex"] = attr.IDX.ToString();
                         try
@@ -1356,14 +1403,14 @@ namespace BP.Web.Comm.UC.WF
             // 输出 rb.
             BP.Sys.FrmRBs myrbs = new FrmRBs();
             myrbs.RetrieveFromCash(FrmRBAttr.FK_MapData, enName);
-            MapAttr attrRB=new MapAttr();
+            MapAttr attrRB = new MapAttr();
             foreach (BP.Sys.FrmRB rb in myrbs)
             {
                 this.Add("<DIV id='F" + rb.MyPK + "' style='position:absolute; left:" + rb.X + "px; top:" + rb.Y + "px; width:100%; height:16px;text-align: left;word-break: keep-all;' >");
                 this.Add("<span style='word-break: keep-all;font-size:12px;'>");
 
                 System.Web.UI.WebControls.RadioButton rbCtl = new RadioButton();
-                rbCtl.ID = "RB_" + rb.KeyOfEn+"_" +rb.IntKey.ToString() ;
+                rbCtl.ID = "RB_" + rb.KeyOfEn + "_" + rb.IntKey.ToString();
                 rbCtl.GroupName = rb.KeyOfEn;
                 rbCtl.Text = rb.Lab;
                 this.Add(rbCtl);
@@ -1379,12 +1426,13 @@ namespace BP.Web.Comm.UC.WF
                         }
                     }
                 }
-                if (isReadonly == true || attrRB.UIIsEnable==false)
+                if (isReadonly == true || attrRB.UIIsEnable == false)
                     rbCtl.Enabled = false;
 
                 this.Add("</span>");
                 this.Add("</DIV>");
             }
+
             foreach (MapAttr attr in mattrs)
             {
                 if (attr.UIContralType == UIContralType.RadioBtn)
@@ -1488,7 +1536,7 @@ namespace BP.Web.Comm.UC.WF
             #region 输出附件
             FrmAttachments aths = new FrmAttachments(enName);
             FrmAttachmentDBs athDBs = null;
-            if (aths.Count>0)
+            if (aths.Count > 0)
                 athDBs = new FrmAttachmentDBs(enName, en.PKVal.ToString());
 
             foreach (FrmAttachment ath in aths)
@@ -1511,7 +1559,7 @@ namespace BP.Web.Comm.UC.WF
                     btnUpload.ID = ath.MyPK;
                     btnUpload.Text = "上传";
                     btnUpload.CssClass = "bg";
-                    btnUpload.ID = "Btn_Upload_" + ath.MyPK+"_"+this.HisEn.PKVal;
+                    btnUpload.ID = "Btn_Upload_" + ath.MyPK + "_" + this.HisEn.PKVal;
                     btnUpload.Click += new EventHandler(btnUpload_Click);
                     this.Add(btnUpload);
                 }
@@ -1554,7 +1602,7 @@ namespace BP.Web.Comm.UC.WF
 
             #region 输出 img 附件
             FrmImgAths imgAths = new FrmImgAths(enName);
-            if (imgAths.Count != 0 && this.IsReadonly==false)
+            if (imgAths.Count != 0 && this.IsReadonly == false)
             {
                 js = "\t\n<script type='text/javascript' >";
                 js += "\t\n function ImgAth(url,athMyPK)";
@@ -1586,7 +1634,7 @@ namespace BP.Web.Comm.UC.WF
 
             // 处理扩展.
             if (isReadonly == false)
-                this.AfterBindEn_DealMapExt(enName, mattrs);
+                this.AfterBindEn_DealMapExt(enName, mattrs, en);
 
             #region 处理事件.
             fes = new FrmEvents(enName);
@@ -1602,7 +1650,6 @@ namespace BP.Web.Comm.UC.WF
                 return;
             }
             #endregion 处理事件.
-
             return;
         }
 

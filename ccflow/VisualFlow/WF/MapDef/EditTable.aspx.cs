@@ -99,10 +99,8 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
             tb.Text = mapAttr.KeyOfEn;
             this.Pub1.AddTD(tb);
         }
-
         this.Pub1.AddTD("不要以数字开头、不要中文。");
         this.Pub1.AddTREnd();
-
 
         this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);
@@ -115,7 +113,6 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
-
 
         this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);
@@ -205,7 +202,6 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
 
-
         #region 是否可界面可见
         this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);
@@ -244,9 +240,6 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         this.Pub1.AddTREnd();
         #endregion 是否可界面可见
 
-
-
-
         #region 是否可单独行显示
         this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);
@@ -278,7 +271,6 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         //this.Pub1.AddTD("控制该它在表单的显示方式");
         this.Pub1.AddTREnd();
         #endregion 是否可编辑
-
 
         #region 字段分组
         this.Pub1.AddTR();

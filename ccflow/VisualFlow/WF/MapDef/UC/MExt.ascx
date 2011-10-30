@@ -4,7 +4,6 @@
     function DoDel(mypk,fk_mapdata,extType) {
         if (window.confirm('您确定要删除吗？') == false)
             return;
-
         window.location.href = 'MapExt.aspx?DoType=Del&FK_MapData=' + fk_mapdata + '&ExtType=' + extType + '&MyPK=' + mypk;
     }
 </script>

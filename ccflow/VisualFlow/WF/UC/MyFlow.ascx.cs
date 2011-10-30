@@ -208,6 +208,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count == 0)
             return;
+
         int i = 0;
         bool is1 = false;
         DateTime cdt = DateTime.Now;
@@ -1087,12 +1088,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// 保存工作
     /// </summary>
     /// <param name="isDraft">是不是做为草稿保存</param> 
-    private void
-        Send(bool isSave)
+    private void Send(bool isSave)
     {
         System.Web.HttpContext.Current.Session["RunDT"] = DateTime.Now;
         if (this.FK_Node == 0)
             throw new Exception(this.ToE("NotCurrNode", "没有找到当前的节点"));
+
         try
         {
             switch (currND.HisFormType)

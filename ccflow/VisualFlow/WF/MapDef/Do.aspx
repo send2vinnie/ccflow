@@ -4,7 +4,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
 <title runat=server /> </title>
+
+   <link href="../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
    <link href="../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
+
    <script language="JavaScript" src="./../../Comm/JScript.js" type="text/javascript" ></script>
     <script language=javascript>
     /* ESC Key Down  */

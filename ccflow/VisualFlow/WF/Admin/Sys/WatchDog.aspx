@@ -8,6 +8,19 @@
         function DelIt(workid, fk_flow) {
             if (window.confirm('您确定要删除吗？') == false)
                 return;
+            var url = 'Do.aspx?DoType=DelFlow&WorkID=' + workid + '&FK_Flow=' + fk_flow;
+            var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+            window.location.href = window.location.href;
+        }
+        function Track(workid, fk_flow, fid) {
+            var url = '../../Chart.aspx?WorkID=' + workid + '&FK_Flow=' + fk_flow + '&FID=' + fid;
+           // var b = window.open(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+            var c = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+        }
+        function Rpt(workid, fk_flow, fid) {
+            var url = '../../WFRpt.aspx?WorkID=' + workid + '&FK_Flow=' + fk_flow + '&FID=' + fid;
+            // var b = window.open(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+            var c = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
         }
     </script>
 
@@ -19,7 +32,7 @@
 <td ><uc1:Pub ID="Top" runat="server" /></td>
 </tr>
 <tr>
-<td colspan=1 width='30%'><uc1:Pub ID="Left" runat="server" /></td>
+<td colspan=1 width='1%'><uc1:Pub ID="Left" runat="server" /></td>
 <td colspan=1 valign=top><uc1:Pub ID="Right" runat="server" /></td>
 </tr>
 </table>

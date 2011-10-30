@@ -7,6 +7,7 @@
   <MapMenu No="Frm" CH="设置框架"    JS="javascript:MapFrame(@MyPK);" Img="./Img/Frame.gif"  />
   <MapMenu No="FGroup" CH="字段分组" JS="javascript:GroupFieldNew(@MyPK);" Img="../../Images/Btn/Apply.gif"  />
   <MapMenu No="ExpImp" CH="导入/导出" JS="javascript:ExpImp(@MyPK);" Img="../../Images/Btn/Apply.gif"  />
+  
 
   <MapMenu111 No="Ext" CH="扩展设置"    JS="javascript:MapExt(@MyPK);" Img="../../Images/Btn/DTS.gif" />
 

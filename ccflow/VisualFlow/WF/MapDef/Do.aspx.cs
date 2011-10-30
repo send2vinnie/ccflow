@@ -283,7 +283,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                 case "Up":
                     MapAttr attrU = new MapAttr(this.RefNo);
                     if (this.Request.QueryString["IsDtl"]==null)
-                    attrU.DoUp();
+                        attrU.DoUp();
                     else
                         attrU.DoDtlUp();
                     this.WinClose();
@@ -458,37 +458,36 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
 
         this.Pub1.AddFieldSet(this.ToE("FType1", "新增普通字段"));
         this.Pub1.AddUL();
-        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppString + "&IDX=" + this.IDX + "&GroupField="+this.GroupField+"'>" + this.ToE("TString", "字符型") + "</a> - <font color=Note>" + this.ToE("TStringD", "如:姓名、地址、邮编、电话") + "</font>");
-        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppInt + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'>" + this.ToE("TInt", "整数型") + "</a> - <font color=Note>" + this.ToE("TIntD", "如:年龄、个数。") + "</font>");
-        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppMoney + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'>" + this.ToE("TMoney", "金额型") + "</a> - <font color=Note>" + this.ToE("TMoneyD", "如:单价、薪水。") + "</font>");
-        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppFloat + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'>" + this.ToE("TFloat", "浮点型") + "</a> - <font color=Note>" + this.ToE("TFloatD", "如：身高、体重、长度。") + "</font>");
-        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppDate + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'>" + this.ToE("TDate", "日期型") + "</a> - <font color=Note>" + this.ToE("TDateD", "如：出生日期、发生日期。") + "</font>");
-        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppDateTime + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'>" + this.ToE("TDateTime", "日期时间型") + "</a> - <font color=Note>" + this.ToE("TDateTimeD", "如：发生日期时间") + "</font>");
-        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppBoolean + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'>" + this.ToE("TBool", "Boole型(是/否)") + "</a> - <font color=Note>" + this.ToE("TBoolD", "如：是否完成、是否达标") + "</font>");
+        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppString + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'><b>" + this.ToE("TString", "字符型") + "</b></a> - <font color=Note>" + this.ToE("TStringD", "如:姓名、地址、邮编、电话") + "</font>");
+        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppInt + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'><b>" + this.ToE("TInt", "整数型") + "</b></a> - <font color=Note>" + this.ToE("TIntD", "如:年龄、个数。") + "</font>");
+        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppMoney + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'><b>" + this.ToE("TMoney", "金额型") + "</b></a> - <font color=Note>" + this.ToE("TMoneyD", "如:单价、薪水。") + "</font>");
+        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppFloat + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'><b>" + this.ToE("TFloat", "浮点型") + "</b></a> - <font color=Note>" + this.ToE("TFloatD", "如：身高、体重、长度。") + "</font>");
+        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppDate + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'><b>" + this.ToE("TDate", "日期型") + "</b></a> - <font color=Note>" + this.ToE("TDateD", "如：出生日期、发生日期。") + "</font>");
+        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppDateTime + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'><b>" + this.ToE("TDateTime", "日期时间型") + "</b></a> - <font color=Note>" + this.ToE("TDateTimeD", "如：发生日期时间") + "</font>");
+        this.Pub1.AddLi("<a href='EditF.aspx?DoType=Add&MyPK=" + this.MyPK + "&FType=" + BP.DA.DataType.AppBoolean + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'><b>" + this.ToE("TBool", "Boole型(是/否)") + "</b></a> - <font color=Note>" + this.ToE("TBoolD", "如：是否完成、是否达标") + "</font>");
         this.Pub1.AddULEnd();
         this.Pub1.AddFieldSetEnd();
 
 
         this.Pub1.AddFieldSet(this.ToE("FType2", "新增枚举字段(用来表示，状态、类型...的数据。)"));
         this.Pub1.AddUL();
-        this.Pub1.AddLi("<a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'>" + this.ToE("TEnum", "枚举型") + "</a> - " + this.ToE("TEnumD", "比如：性别:男/女。请假类型：事假/病假/婚假/产假/其它。"));
+        this.Pub1.AddLi("<a href='Do.aspx?DoType=AddSysEnum&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'><b>" + this.ToE("TEnum", "枚举型") + "</b></a> - " + this.ToE("TEnumD", "比如：性别:男/女。请假类型：事假/病假/婚假/产假/其它。"));
         this.Pub1.AddULEnd();
         this.Pub1.AddFieldSetEnd();
 
 
         this.Pub1.AddFieldSet(this.ToE("FType3", "新增外键字段(字典表，通常只有编号名称两个列)"));
         this.Pub1.AddUL();
-        this.Pub1.AddLi("<a href='Do.aspx?DoType=AddSFTable&MyPK=" + this.MyPK + "&FType=Class&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'>" + this.ToE("TFK", "外键型") + "</a> - " + this.ToE("TFKD", "比如：岗位、税种、行业、经济性质。"));
+        this.Pub1.AddLi("<a href='Do.aspx?DoType=AddSFTable&MyPK=" + this.MyPK + "&FType=Class&IDX=" + this.IDX + "&GroupField=" + this.GroupField + "'><b>" + this.ToE("TFK", "外键型") + "</b></a> - " + this.ToE("TFKD", "比如：岗位、税种、行业、经济性质。"));
         this.Pub1.AddULEnd();
         this.Pub1.AddFieldSetEnd();
     }
-
    
     public void AddFEnum()
     {
         this.Title = this.ToE("GuideNewField", "增加新字段向导");
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='SysEnum.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' >" + this.ToE("NewEnum", "新建枚举") + "</a>");
+        this.Pub1.AddCaptionLeftTX("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='SysEnum.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' >" + this.ToE("NewEnum", "新建枚举") + "</a>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle(this.ToE("No", "编号") + "(" + this.ToE("ClickToAdd", "点击增加到表单") + ")");

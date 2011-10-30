@@ -77,12 +77,14 @@ public partial class WF_Admin_Sys_WatchDogaspx : WebPage
         this.Right.AddTable("width='96%'");
         this.Right.AddTR();
         this.Right.AddTDTitle("IDX");
+        this.Right.AddTDTitle("WorkID");
+        this.Right.AddTDTitle("流程");
         this.Right.AddTDTitle("停留节点");
         this.Right.AddTDTitle("标题");
         this.Right.AddTDTitle("处理人");
         this.Right.AddTDTitle("接受时间");
         this.Right.AddTDTitle("应完成时间");
-      //  this.Right.AddTDTitle("状态");
+        this.Right.AddTDTitle("状态");
         this.Right.AddTDTitle("操作");
         this.Right.AddTREnd();
         string sql = "";
@@ -93,20 +95,36 @@ public partial class WF_Admin_Sys_WatchDogaspx : WebPage
 
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
         int idx = 1;
+        DateTime cdt = DateTime.Now;
+        string sta = "";
         foreach (DataRow dr in dt.Rows)
         {
+            string sdt = dr["SDT"] as string;
+            DateTime mysdt = DataType.ParseSysDate2DateTime(dr["SDT"].ToString());
+            if (cdt >= mysdt)
+                sta = "<font color=red>逾期</font>";
+            else
+                sta = "正常";
+
             this.Right.AddTR();
             this.Right.AddTDIdx(idx++);
+            this.Right.AddTD(dr["WorkID"].ToString());
+            this.Right.AddTD(dr["FlowName"].ToString());
             this.Right.AddTD(dr["NodeName"].ToString());
-            this.Right.AddTD(dr["Title"].ToString());
+
+            this.Right.AddTD("<a href=\"javascript:Rpt('" + dr["WorkID"] + "','" + dr["FK_Flow"] + "','" + dr["FID"] + "');\" >" + dr["Title"] + "</a>");
+
             this.Right.AddTD(dr["FK_Emp"].ToString());
             this.Right.AddTD(dr["ADT"].ToString());
             this.Right.AddTD(dr["SDT"].ToString());
+
+            this.Right.AddTD(sta);
+
             this.Right.AddTDBegin();
-            this.Right.Add("<a href=\"javascript:DelIt('"+dr["WorkID"]+"','"+dr["FK_Flow"]+"');\" >删除</a>");
+            this.Right.Add("<a href=\"javascript:DelIt('" + dr["WorkID"] + "','" + dr["FK_Flow"] + "');\" >删除</a>");
+            this.Right.Add("-<a href=\"javascript:Track('" + dr["WorkID"] + "','" + dr["FK_Flow"] + "','0');\" >轨迹</a>");
             this.Right.AddTDEnd();
             this.Right.AddTREnd();
- 
         }
         this.Right.AddTableEnd();
         #endregion

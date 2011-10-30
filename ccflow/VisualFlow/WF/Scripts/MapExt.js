@@ -8,11 +8,45 @@
             //ShowLoading();
         },
         success: function (data, textStatus) {
+
+            // 这里要设置一下获取的外部数据.
+            // var seleValOfOld = $("#" + ddlChild).selectedindex;
+            // alert(seleValOfOld);
+            // 获取原来选择值.
+
+            var oldVal = null;
+            var ddl = document.getElementById(ddlChild);
+            var mylen = ddl.options.length - 1;
+            while (mylen >= 0) {
+                if (ddl.options[mylen].selected) {
+                    oldVal = ddl.options[mylen].value;
+                }
+                mylen--;
+            }
+
+            //alert(oldVal);
+
             $("#" + ddlChild).empty();
-            var dataObj = eval("(" + data + ")"); //转换为json对象 
+            var dataObj = eval("(" + data + ")"); //转换为json对象.
+
             $.each(dataObj.Head, function (idx, item) {
                 $("#" + ddlChild).append("<option value='" + item.No + "'>" + item.Name + "</option");
             });
+
+            var isInIt = false;
+            mylen = ddl.options.length - 1;
+            while (mylen >= 0) {
+                if (ddl.options[mylen].value == oldVal) {
+                    ddl.options[mylen].selected = true;
+                    isInIt = true;
+                    break;
+                }
+                mylen--;
+            }
+            if (isInIt == false) {
+                $("#" + ddlChild).append("<option value='" + oldVal + "' selected='selected' >*请选择</option");
+            }
+            //  alert(oldVal);
         },
         complete: function (XMLHttpRequest, textStatus) {
             //HideLoading();
@@ -34,8 +68,10 @@ function FullDtl(key, fk_mapExt) {
             //ShowLoading();
         },
         success: function (data, textStatus) {
-            var dataObj = eval("(" + data + ")"); //转换为json对象.
+            if (data == "")
+                return;
 
+            var dataObj = eval("(" + data + ")"); //转换为json对象.
             for (var i in dataObj.Head) {
                 if (typeof (i) == "function")
                     continue;
@@ -73,6 +109,9 @@ function FullCtrlDDL(key, ctrlIdBefore, fk_mapExt) {
             //ShowLoading();
         },
         success: function (data, textStatus) {
+            if (data == "")
+                return;
+
             var dataObj = eval("(" + data + ")"); //转换为json对象 
             var beforeID = ctrlIdBefore.substring(0, ctrlIdBefore.indexOf('TB_'));
             var endId = ctrlIdBefore.substring(ctrlIdBefore.lastIndexOf('_'));

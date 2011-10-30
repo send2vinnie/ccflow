@@ -299,7 +299,6 @@ public partial class Comm_Dtl : WebPage
                 return;
             }
             #endregion
-            //this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal, true);
         }
 
         #region 生成翻页
@@ -360,9 +359,22 @@ public partial class Comm_Dtl : WebPage
         string ids = ",";
         int dtlsNum = dtls.Count;
         MapExts mes = new MapExts(this.EnsName);
-        string activeDDLIDs = "";
+
+        // 需要自动填充的下拉框IDs. 这些下拉框不需要自动填充数据。
+        string autoFullDataDDLIDs = ",";
         foreach (MapExt me in mes)
         {
+            switch (me.ExtType)
+            {
+                case MapExtXmlList.ActiveDDL:
+                    autoFullDataDDLIDs += me.AttrsOfActive + ",";
+                    break;
+                case MapExtXmlList.AutoFullDLL:
+                    autoFullDataDDLIDs += me.AttrOfOper + ",";
+                    break;
+                default:
+                    break;
+            }
         }
 
         foreach (BP.Sys.GEDtl dtl in dtls)
@@ -544,19 +556,32 @@ public partial class Comm_Dtl : WebPage
                             case FieldTypeS.FK:
                                 DDL ddl1 = new DDL();
                                 ddl1.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
-                                cb.Attributes["onchange"] = "isChange= true;";
-                                try
+                                if (attr.UIIsEnable)
                                 {
+                                    ddl1.Attributes["onchange"] = "isChange=true;";
                                     EntitiesNoName ens = attr.HisEntitiesNoName;
                                     ens.RetrieveAll();
+
                                     ddl1.BindEntities(ens);
-                                    ddl1.SetSelectItem(val);
+                                    ddl1.Enabled = attr.UIIsEnable;
+                                    if (ddl1.SetSelectItem(val) == false)
+                                        ddl1.Items.Insert(0, new ListItem("请选择", val));
+
+                                    this.Pub1.AddTDCenter(ddl1);
                                 }
-                                catch
+                                else
                                 {
+                                    EntitiesNoName ens = attr.HisEntitiesNoName;
+                                    Entity en = ens.GetNewEntity;
+                                    en.SetValByKey("No", val);
+                                    en.SetValByKey("Name", val);
+                                    en.RetrieveFromDBSources();
+
+                                    ddl1.Items.Add(new ListItem(en.GetValStrByKey("Name"), en.GetValStringByKey("No")));
+                                    ddl1.SetSelectItem(val);
+                                    ddl1.Enabled = attr.UIIsEnable;
+                                    this.Pub1.AddTDCenter(ddl1);
                                 }
-                                ddl1.Enabled = attr.UIIsEnable;
-                                this.Pub1.AddTDCenter(ddl1);
                                 break;
                             default:
                                 break;
@@ -611,26 +636,57 @@ public partial class Comm_Dtl : WebPage
                         {
                             case MapExtXmlList.ActiveDDL:
                                 DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + mydtl.OID);
+                                string val, valC;
+                                DataTable dt;
                                 if (ddlPerant == null)
                                     continue;
-
-                                //DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
-                                //string ddlP = "Pub1_DDL_"+me.AttrOfOper+"_"+mydtl.OID;
-
+#warning 此处需要优化
                                 string ddlC = "Pub1_DDL_" + me.AttrsOfActive + "_" + mydtl.OID;
                                 ddlPerant.Attributes["onchange"] = " isChange=true; DDLAnsc(this.value, \'" + ddlC + "\', \'" + me.MyPK + "\')";
-
-#warning 此处需要优化。
                                 DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive + "_" + mydtl.OID);
-                                string val = ddlPerant.SelectedItemStringVal;
-                                string valC = ddlChild.SelectedItemStringVal;
-                                DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
-                                ddlChild.Items.Clear();
-                                foreach (DataRow dr in dt.Rows)
+                                val = ddlPerant.SelectedItemStringVal;
+                                if (ddlChild.Items.Count == 0)
+                                    valC = mydtl.GetValStrByKey(me.AttrsOfActive);
+                                else
+                                    valC = ddlChild.SelectedItemStringVal;
+
+                                dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
+
+                                ddlChild.Bind(dt, "No", "Name");
+                                if (ddlChild.SetSelectItem(valC) == false)
                                 {
-                                    ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                                    ddlChild.Items.Insert(0, new ListItem("请选择" + valC, valC));
+                                    ddlChild.SelectedIndex = 0;
                                 }
-                                ddlChild.SetSelectItem(valC);
+                                ddlChild.Attributes["onchange"] = " isChange=true;";
+                                break;
+                            case MapExtXmlList.AutoFullDLL: //自动填充下拉框的范围.
+                                DDL ddlFull = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + mydtl.OID);
+                                if (ddlFull == null)
+                                    continue;
+
+                                string valOld =  ddlFull.SelectedItemStringVal;
+
+                                string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
+                                fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                                if (fullSQL.Contains("@"))
+                                {
+                                    Attrs attrsFull = mydtl.EnMap.Attrs;
+                                    foreach (Attr attr in attrsFull)
+                                    {
+                                        if (fullSQL.Contains("@") == false)
+                                            break;
+                                        fullSQL = fullSQL.Replace("@" + attr.Key, mydtl.GetValStrByKey(attr.Key));
+                                    }
+                                }
+
+                                ddlFull.Bind(DBAccess.RunSQLReturnTable(fullSQL), "No", "Name");
+                                if (ddlFull.SetSelectItem(valOld) == false)
+                                {
+                                    ddlFull.Items.Insert(0, new ListItem("请选择" + valOld, valOld));
+                                    ddlFull.SelectedIndex = 0;
+                                }
+                                ddlFull.Attributes["onchange"] = " isChange=true;";
                                 break;
                             case MapExtXmlList.FullCtrl: // 自动填充.
                                 TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
@@ -638,6 +694,35 @@ public partial class Comm_Dtl : WebPage
                                     continue;
                                 tbAuto.Attributes["onkeyup"] = " isChange=true; DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                                 tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
+
+                                if (me.Tag != "")
+                                {
+                                    /* 处理下拉框的选择范围的问题 */
+                                    string[] strs = me.Tag.Split('$');
+                                    foreach (string str in strs)
+                                    {
+                                        string[] myCtl = str.Split(':');
+                                        string ctlID = myCtl[0];
+                                        DDL ddlC1 = this.Pub1.GetDDLByID("DDL_" + ctlID + "_" + mydtl.OID);
+                                        if (ddlC1 == null)
+                                        {
+                                            //me.Tag = "";
+                                            // me.Update();
+                                            continue;
+                                        }
+
+                                        string sql = myCtl[1].Replace("~", "'");
+                                        sql = sql.Replace("@WebUser.No", WebUser.No);
+                                        sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                                        sql = sql.Replace("@Key", tbAuto.Text.Trim());
+                                        dt = DBAccess.RunSQLReturnTable(sql);
+                                        string valC1 = ddlC1.SelectedItemStringVal;
+                                        ddlC1.Items.Clear();
+                                        foreach (DataRow dr in dt.Rows)
+                                            ddlC1.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                                        ddlC1.SetSelectItem(valC1);
+                                    }
+                                }
                                 break;
                             case MapExtXmlList.InputCheck:
                                 TextBox tbCheck = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
@@ -713,11 +798,6 @@ public partial class Comm_Dtl : WebPage
 
         this.Pub1.AddTableEnd();
 
-        //Button btn = new Button();
-        //btn.Click += new EventHandler(Button1_Click);
-        //btn.ID = "Btn_Save";
-        //this.Pub2.Add(btn);
-
         #region 生成 自动计算行
         if (this.IsReadonly == 0)
         {
@@ -726,7 +806,6 @@ public partial class Comm_Dtl : WebPage
             foreach (GEDtl dtl in dtls)
             {
                 string top = "\n function C" + dtl.OID + "() { \n ";
-
                 string script = "";
                 foreach (MapAttr attr in attrs)
                 {
@@ -793,8 +872,7 @@ public partial class Comm_Dtl : WebPage
     {
         MapDtl mdtl = new MapDtl(this.EnsName);
         GEDtls dtls = new GEDtls(this.EnsName);
-        QueryObject qo = null;
-        qo = new QueryObject(dtls);
+        QueryObject qo = new QueryObject(dtls);
         switch (mdtl.DtlOpenType)
         {
             case DtlOpenType.ForEmp:
@@ -814,8 +892,7 @@ public partial class Comm_Dtl : WebPage
         int dtlCount = dtls.Count;
 
         mdtl.RowsOfList = mdtl.RowsOfList + this.addRowNum;
-
-        for (int i = 0; i < mdtl.RowsOfList  - dtlCount; i++)
+        for (int i = 0; i < mdtl.RowsOfList - dtlCount; i++)
         {
             BP.Sys.GEDtl dt = new GEDtl(this.EnsName);
             dt.ResetDefaultVal();
@@ -834,7 +911,7 @@ public partial class Comm_Dtl : WebPage
         Map map = dtls.GetNewEntity.EnMap;
         bool isTurnPage = false;
         string err = "";
-        int idx=0;
+        int idx = 0;
         foreach (GEDtl dtl in dtls)
         {
             idx++;
@@ -856,7 +933,9 @@ public partial class Comm_Dtl : WebPage
                     dtl.InsertAsNew();
                 }
                 else
+                {
                     dtl.Update();
+                }
             }
             catch (Exception ex)
             {
@@ -868,9 +947,9 @@ public partial class Comm_Dtl : WebPage
         if (err != "")
             this.Alert(err);
 
-        if (isAddDDLSelectIdxChange==true)
+        if (isAddDDLSelectIdxChange == true)
             return;
-        
+
         if (isTurnPage)
         {
             int pageNum = 0;
@@ -881,20 +960,19 @@ public partial class Comm_Dtl : WebPage
                 pageNum = int.Parse(strs[0]) + 1;
             else
                 pageNum = int.Parse(strs[0]);
-            this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + pageNum+"&IsWap="+this.IsWap+"&FK_Node="+this.FK_Node, true);
+            this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + pageNum + "&IsWap=" + this.IsWap + "&FK_Node=" + this.FK_Node, true);
         }
         else
+        {
             this.Response.Redirect("Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&PageIdx=" + this.PageIdx + "&IsWap=" + this.IsWap + "&FK_Node=" + this.FK_Node, true);
+        }
     }
     public void ExpExcel()
     {
         BP.Sys.MapDtl mdtl = new MapDtl(this.EnsName);
-
         this.Title = mdtl.Name;
-
         GEDtls dtls = new GEDtls(this.EnsName);
-        QueryObject qo = null;
-        qo = new QueryObject(dtls);
+        QueryObject qo = new QueryObject(dtls);
         switch (mdtl.DtlOpenType)
         {
             case DtlOpenType.ForEmp:
@@ -914,7 +992,7 @@ public partial class Comm_Dtl : WebPage
         // this.ExportDGToExcelV2(dtls, this.Title + ".xls");
         //DataTable dt = dtls.ToDataTableDesc();
         // this.GenerExcel(dtls.ToDataTableDesc(), mdtl.Name + ".xls");
-
+        
         this.GenerExcel_pri_Text(dtls.ToDataTableDesc(), mdtl.Name + "@" + WebUser.No + "@" + DataType.CurrentData + ".xls");
 
         //this.ExportDGToExcelV2(dtls, this.Title + ".xls");
