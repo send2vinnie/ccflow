@@ -38,9 +38,14 @@ public partial class WF_WorkOpt_PrintDoc : BP.Web.WebPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-      
         BillTemplates templetes = new BillTemplates();
         templetes.Retrieve(BillTemplateAttr.NodeID, this.FK_Node);
+        if (templetes.Count == 0)
+        {
+            this.WinCloseWithMsg("当前节点上没朋绑定单据模板。");
+            return;
+        }
+
         if (templetes.Count == 1)
         {
             PrintDoc(templetes[0] as BillTemplate);
