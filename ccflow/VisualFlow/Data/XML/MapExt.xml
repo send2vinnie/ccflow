@@ -6,6 +6,9 @@
   <FieldExt No="ActiveDDL"    CH="级联下拉框" DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
   <FieldExt No="InputCheck"   CH="脚本验证"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
   <FieldExt No="FullCtrl"     CH="自动完成"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+
+  <FieldExt No="AutoFullDLL"    CH="动态填充下拉框"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+
   <FieldExt No="PopVal"       CH="Pop返回值" DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
   <FieldExt No="Func"         CH="功能执行"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
 
