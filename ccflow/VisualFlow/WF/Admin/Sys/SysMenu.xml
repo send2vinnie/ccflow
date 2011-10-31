@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" standalone="yes" ?>
-<NewDataSet>
-	<!-- 外部连接配置说明  No, 部门编号，URL 对方sqlserver 的连接。  -->
-	<Item No="WatchDogRuning" Name="正常流程"/>
-  <Item No="WatchDogWarning" Name="预警流程"/>
-  <Item No="WatchDogOutTime" Name="逾期流程"/>
-  <Item No="WatchDogHistory" Name="归档流程"/>
-</NewDataSet>
