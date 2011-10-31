@@ -1047,11 +1047,11 @@ namespace BP.Sys
 
         public void DoUp()
         {
-            this.DoOrderUp(MapAttrAttr.GroupID, this.GroupID.ToString(), MapAttrAttr.IDX);
+            this.DoOrderUp(MapAttrAttr.GroupID, this.GroupID.ToString(),MapAttrAttr.UIVisible,"1", MapAttrAttr.IDX);
         }
         public void DoDown()
         {
-            this.DoOrderDown(MapAttrAttr.GroupID, this.GroupID.ToString(), MapAttrAttr.IDX);
+            this.DoOrderDown(MapAttrAttr.GroupID, this.GroupID.ToString(),MapAttrAttr.UIVisible,"1", MapAttrAttr.IDX);
         }
         public void DoDtlDown()
         {

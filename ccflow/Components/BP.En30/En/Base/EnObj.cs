@@ -813,8 +813,8 @@ namespace BP.En
 
                     if (attr.IsFKorEnum)
                     {
-                        if (attr.DefaultVal == null || attr.DefaultVal == "")
-                            continue;
+                        //if (attr.DefaultVal == null || attr.DefaultVal == "")
+                        //    continue;
 
                         if (attr.DefaultVal.ToString() != str)
                             return false;

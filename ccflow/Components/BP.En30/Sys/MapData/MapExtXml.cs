@@ -30,9 +30,10 @@ namespace BP.Sys
         /// Func
         /// </summary>
         public const string Func = "Func";
-
-
-
+        /// <summary>
+        /// (动态的)填充下拉框
+        /// </summary>
+        public const string AutoFullDLL = "AutoFullDLL";
     }
 	public class MapExtXml:XmlEnNoName
 	{
