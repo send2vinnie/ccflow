@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="WF.Controls.MenuTool"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" LostFocus="UserControl_LostFocus">
+
+    <StackPanel  Orientation="Vertical">
+ <Button Content="流程设计" Height="23" Name="btnFlow" Width="75" Click="btnFlow_Click"  />
+        <Popup Name="flowlist" Width="75" Height="Auto"  IsOpen="False"  >
+            <StackPanel Height="Auto" Name="stackPanel1" Width="75" Orientation="Vertical" >
+                <Button Content="新建流程" Name="btnNewFlow" VerticalAlignment="Top" Margin="2 5 2 5" HorizontalAlignment="Right" Width="60" Height="30"     Click="btnNewFlow_Click"  />
+
+                <Button Content="添加节点" Name="btnAddFlowNode" VerticalAlignment="Top" Margin="2 5 2 5" HorizontalAlignment="Right" Width="60" Height="30"     Click="AddFlowNode_Click"  />
+                <Button Content="添加连线" Name="btnAddDirection"  VerticalAlignment="Top"  Margin="2 5 2 5" HorizontalAlignment="Right" Width="60" Height="30"    Click="AddDirection_Click" />
+                <Button Content="添加标签" Name="btnAddLabel"  VerticalAlignment="Top"  Margin="2 5 2 5"  HorizontalAlignment="Right" Width="60" Height="30"    Click="AddLabel_Click" />
+
+                <Button Content="保存"    Name="btnSave"  VerticalAlignment="Top"  Margin="2 5 2 5"  HorizontalAlignment="Right" Width="60" Height="30"  Click="btnSave_Click" />
+                <Button Content="设计报表"    Name="btnDesignerTable"  VerticalAlignment="Top"  Margin="2 5 2 5"  HorizontalAlignment="Right" Width="60" Height="30"  Click="btnDesignerTable_Click" />
+                <Button Content="检查"    Name="btnCheck"  VerticalAlignment="Top"  Margin="2 5 2 5"  HorizontalAlignment="Right" Width="60" Height="30"  Click="btnCheck_Click" />
+
+                <Button Content="试运行"    Name="btnRun"  VerticalAlignment="Top"  Margin="2 5 2 5"  HorizontalAlignment="Right" Width="60" Height="30"  Click="btnRun_Click" />
+                <Button Content="编辑"    Name="btnEdit"  VerticalAlignment="Top"  Margin="2 5 2 5"  HorizontalAlignment="Right" Width="60" Height="30"  Click="btnEdit_Click" />
+                <Button Content="删除流程"    Name="btnDel"  VerticalAlignment="Top"  Margin="2 5 2 5"  HorizontalAlignment="Right" Width="60" Height="30"  Click="btnDel_Click" />
+
+                <Button Content="生成模版"    Name="btnCreatMode"  VerticalAlignment="Top"  Margin="2 5 2 5"  HorizontalAlignment="Right" Width="60" Height="30"  Click="btnCreatMode_Click" />
+                <Button Content="装载模版"    Name="btnAddMode"  VerticalAlignment="Top"  Margin="2 5 2 5"  HorizontalAlignment="Right" Width="60" Height="30"  Click="btnAddMode_Click" />
+
+
+            </StackPanel>
+            
+        </Popup>
+      
+    </StackPanel>
+</UserControl>
