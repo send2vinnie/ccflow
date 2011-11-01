@@ -38,7 +38,7 @@ public partial class WF_Admin_FApp : WebPage
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
 
         this.Ucsys1.AddTable("width='500px' align=center" );
-        this.Ucsys1.AddCaption("<a href='FAppSet.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "' >" + nd.Name + "</a> - <img src='../../Images/Btn/New.gif' />" + this.ToE("New", "新建") + " - " + BP.WF.Glo.GenerHelp("FAppSet"));
+        this.Ucsys1.AddCaptionLeft("<a href='FAppSet.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "' >" + nd.Name + "</a> - <img src='../../Images/Btn/New.gif' />" + this.ToE("New", "新建") + " - " + BP.WF.Glo.GenerHelp("FAppSet"));
 
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle(this.ToE("Item", "项目"));
@@ -58,16 +58,6 @@ public partial class WF_Admin_FApp : WebPage
         this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
 
-        //this.Ucsys1.AddTR();
-        //this.Ucsys1.AddTD(this.ToE("InvoWhen", "调用时间"));
-        //ddl = new DDL();
-        //ddl.ID = "DDL_ShowTime";
-        //ddl.BindSysEnum(FAppSetAttr.ShowTime);
-        //ddl.SetSelectItem(Bill.ShowTime);
-        //this.Ucsys1.AddTD(ddl);
-        //this.Ucsys1.AddTD("");
-        //this.Ucsys1.AddTREnd();
-
 
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTD(this.ToE("Label","标签"));
@@ -83,6 +73,9 @@ public partial class WF_Admin_FApp : WebPage
         tb = new TB();
         tb.ID = "TB_DoWhat";
         tb.Text = Bill.DoWhat;
+        tb.Columns = 55;
+        tb.TextMode = TextBoxMode.MultiLine;
+        tb.Rows = 4;
         this.Ucsys1.AddTD(tb);
         this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
@@ -102,19 +95,20 @@ public partial class WF_Admin_FApp : WebPage
             btn.Text = " " + this.ToE("Del", "删除") + " ";
             this.Ucsys1.Add(btn);
             btn.Attributes["onclick"] += " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
-
             btn.Click += new EventHandler(btn_Del_Click);
         }
-
         this.Ucsys1.Add("</TD>");
         this.Ucsys1.AddTREnd();
 
+        string help = "";
+        help += "<br>1, 执行内容里面支持用@符号取变量。";
+        help += "<br>2, 可获取全局变量@WebUser.No,@WebUser.FK_Dept,@WebUser.SID,@FK_Node";
+        help += "<br><b>例如：</b>您要打印当前节点的单据可以如下配置:<br>./WorkOpt/PrintDoc.aspx?FK_Node=202&WorkID=@OID";
+
+
 
         this.Ucsys1.AddTR1();
-        //string msg = "设置帮助：关于如何传递参数请打开帮助。<hr>";
-        //msg += "<li>如果您选择<b>“外部Url连接”</b>，执行内容请按照http:// 格式填写，比如：http://ccFlow.org/demo.aspx  <br> 参数格式为：http://ccFlow.org/demo.aspx?WorkID=1234&UserNo=zp,安全问题，用户接受参数与工作ID后自己处理。</li>";
-        //msg += "<li>如果您选择<b>“本地的可执行文件”</b>，执行内容请按照windows路径格式填写，比如：C:\\\\AppPath\\\\AppName.exe.<br>参数格式为：C:\\\\AppPath\\\\AppName.exe @WorkID=123@UserNo=zp</li>";
-        this.Ucsys1.AddTDBigDoc("colspan=3 class=BigDoc", "<a href='./Help/index.htm' target=_b><img src='../../Images/Btn/Help.gif' border=0/>" + this.ToE("Help", "帮助") + "</a>");
+        this.Ucsys1.AddTDBigDoc("colspan=3 class=BigDoc", "<a href='./Help/index.htm' target=_b><img src='../../Images/Btn/Help.gif' border=0/>" + this.ToE("Help", "帮助") + "</a>"+help);
         this.Ucsys1.AddTREnd();
 
         //this.Ucsys1.AddTRSum();
@@ -181,7 +175,7 @@ public partial class WF_Admin_FApp : WebPage
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
         this.Title = nd.Name + " - " + this.ToE("FAppSet", "调用外部程序接口");
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaption(nd.Name + " - <a href='FAppSet.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>  - " + BP.WF.Glo.GenerHelp("FAppSet" ));
+        this.Ucsys1.AddCaptionLeft(nd.Name + " - <a href='FAppSet.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>  - " + BP.WF.Glo.GenerHelp("FAppSet"));
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("ID");
         this.Ucsys1.AddTDTitle( this.ToE("Node","节点") );

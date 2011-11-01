@@ -177,7 +177,6 @@ public partial class Comm_Dtl : WebPage
             BP.DA.Cash.SetMap(this.EnsName, null);
 
         GEDtls dtls = new GEDtls(this.EnsName);
-
         #region 处理设计时自动填充明细表.
         if (this.Key != null && this.IsReadonly == 0)
         {
@@ -379,6 +378,7 @@ public partial class Comm_Dtl : WebPage
 
         foreach (BP.Sys.GEDtl dtl in dtls)
         {
+            #region 处理
             if (ids.Contains("," + dtl.OID + ","))
                 continue;
 
@@ -404,6 +404,8 @@ public partial class Comm_Dtl : WebPage
                     this.Pub1.AddTDIdx(idx++);
                 }
             }
+            #endregion 处理
+
 
             #region 增加rows
             foreach (MapAttr attr in attrs)
@@ -540,17 +542,24 @@ public partial class Comm_Dtl : WebPage
                             case FieldTypeS.Enum:
                                 DDL myddl = new DDL();
                                 myddl.ID = "DDL_" + attr.KeyOfEn + "_" + dtl.OID;
-                                cb.Attributes["onchange"] = "isChange= true;";
-                                try
+                                myddl.Attributes["onchange"] = "isChange= true;";
+                                if (attr.UIIsEnable)
                                 {
-                                    myddl.BindSysEnum(attr.KeyOfEn);
-                                    myddl.SetSelectItem(val);
+                                    try
+                                    {
+                                        myddl.BindSysEnum(attr.KeyOfEn);
+                                        myddl.SetSelectItem(val);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        BP.PubClass.Alert(ex.Message);
+                                    }
                                 }
-                                catch (Exception ex)
+                                else
                                 {
-                                    BP.PubClass.Alert(ex.Message);
+                                    myddl.Items.Add(new ListItem(dtl.GetValRefTextByKey(attr.KeyOfEn), dtl.GetValStrByKey(attr.KeyOfEn)));
                                 }
-                                //myddl.Enabled = dtlEnable;
+                                myddl.Enabled = attr.UIIsEnable;
                                 this.Pub1.AddTDCenter(myddl);
                                 break;
                             case FieldTypeS.FK:
@@ -561,27 +570,16 @@ public partial class Comm_Dtl : WebPage
                                     ddl1.Attributes["onchange"] = "isChange=true;";
                                     EntitiesNoName ens = attr.HisEntitiesNoName;
                                     ens.RetrieveAll();
-
                                     ddl1.BindEntities(ens);
-                                    ddl1.Enabled = attr.UIIsEnable;
                                     if (ddl1.SetSelectItem(val) == false)
                                         ddl1.Items.Insert(0, new ListItem("请选择", val));
-
-                                    this.Pub1.AddTDCenter(ddl1);
                                 }
                                 else
                                 {
-                                    EntitiesNoName ens = attr.HisEntitiesNoName;
-                                    Entity en = ens.GetNewEntity;
-                                    en.SetValByKey("No", val);
-                                    en.SetValByKey("Name", val);
-                                    en.RetrieveFromDBSources();
-
-                                    ddl1.Items.Add(new ListItem(en.GetValStrByKey("Name"), en.GetValStringByKey("No")));
-                                    ddl1.SetSelectItem(val);
-                                    ddl1.Enabled = attr.UIIsEnable;
-                                    this.Pub1.AddTDCenter(ddl1);
+                                    ddl1.Items.Add(new ListItem(dtl.GetValRefTextByKey(attr.KeyOfEn), dtl.GetValStrByKey(attr.KeyOfEn)));
                                 }
+                                ddl1.Enabled = attr.UIIsEnable;
+                                this.Pub1.AddTDCenter(ddl1);
                                 break;
                             default:
                                 break;

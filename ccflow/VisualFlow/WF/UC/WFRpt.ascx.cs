@@ -396,7 +396,6 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         WorkNodes wns = wf.HisWorkNodesOfWorkID;
 
         this.Add("<p align='left' style='line-height: 100%' > &nbsp;&nbsp;&nbsp; " + wf.HisStartWork.Title + " " + this.ToE("Work", "工作") + ", " + this.ToE("From", "从") + " " + wf.HisStartWork.HisRec.Name + "  " + wf.HisStartWork.RDT + " " + wns.Count + " " + this.ToE("WorkStep", "工作步骤"));
-
         //this.AddHtml(wf.IsCompleteStr + "结束，<a href=\"javascript:WinOpen('Option.aspx?WorkID=" + workid + "&FK_Flow=" + wf.HisFlow.No + "');\" >流程操作</a>。现在历经如下步骤,详细报告如下:</p>");
         this.Add(wf.IsCompleteStr + this.ToE("WFRpt1", "结束，现在历经如下步骤,详细报告如下:") + "</p>");
         int i = 0;
@@ -424,10 +423,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
 
         this.BindWorkNodes(wns, rws, fws);
 
-        //			this.AddHtml("</TD></TR><TR><TD>");
-        //			 
         this.Add("<p align='left'> &nbsp;&nbsp;&nbsp;&nbsp;<hr> </p>");
-        //  this.Add("<p align='center'> 流程系统 </p>");
         this.Add("<p align='center'> " + BP.DA.DataType.CurrentDataTime + " </p>");
         this.Add("<p align='center'>　</p>");
         this.Add("</TABLE>");
@@ -490,10 +486,43 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                         string path = paths[0] + "/" + paths[1] + "/" + paths[2] + "/";
                         string BillInfo = "<img src='./../Images/Btn/Word.gif' /><a href='./../DataUser/Bill/" + path + file + "' target=_blank >" + func.Name + "</a>";
                         this.Add(BillInfo);
-                        //  string  = BP.SystemConfig.GetConfig("FtpPath") + file;
-                        // path = BP.SystemConfig.AppSettings["FtpPath"].ToString() + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
-                        // this.Add("<img src='../Images/Btn/Word.gif' /><a href=\"javascript:Run('C:\\\\ds2002\\\\OpenBill.EXE','" + file + "','0');\"  >" + func.Name + "</a>");
                     }
+                }
+                this.Add("</p>");
+            }
+
+            BP.WF.FAppSets sets = new FAppSets();
+            sets.Retrieve(FAppSetAttr.NodeID, wn.HisNode.NodeID);
+
+            if (sets.Count >= 1)
+            {
+                bool isMyBill = false;
+                if (wn.HisWork.Rec == WebUser.No)
+                    isMyBill = true;
+
+                this.Add("<p>");
+                string year = DateTime.Now.Year.ToString();
+                foreach (BP.WF.FAppSet s in sets)
+                {
+                    string url = s.DoWhat;
+                    url = url.Replace("@WebUser.No", WebUser.No);
+                    url = url.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                    url = url.Replace("@FK_Node", s.NodeID.ToString());
+                    url = url.Replace("@FK_Flow", s.FK_Flow.ToString());
+                    if (url.Contains("@"))
+                    {
+                        Work wk = wn.HisWork;
+                        Map map = wk.EnMap;
+                        foreach (Attr attr in map.Attrs)
+                        {
+                            if (url.Contains("@") == false)
+                                continue;
+                            url = url.Replace("@" + attr.Key, wk.GetValStrByKey(attr.Key));
+                        }
+                    }
+
+                    string strs = "<img src='./../Images/Btn/DTS.gif' /><a href=\"javascript:WinOpen('" + url + "'," + s.W + "," + s.H + ");\" >" + s.Name + "</a>";
+                    this.Add(strs);
                 }
                 this.Add("</p>");
             }
@@ -510,11 +539,9 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             {
                 this.ADDWork(wn.HisWork, rws, fws, wn.HisNode.NodeID);
             }
-
             this.Add("</div>");
         }
     }
-
     protected void AddContral(string desc, string text)
     {
         this.Add("<td  class='FDesc' nowrap> " + desc + "</td>");

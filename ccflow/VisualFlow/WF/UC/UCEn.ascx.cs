@@ -35,8 +35,6 @@ namespace BP.Web.Comm.UC.WF
         public MapDtls dtls;
         public MapFrames frames;
         public MapM2Ms m2ms;
-
-
         private GroupFields gfs;
         public int rowIdx = 0;
         public bool isLeftNext = true;
@@ -795,7 +793,7 @@ namespace BP.Web.Comm.UC.WF
                         string val = ddlPerant.SelectedItemStringVal;
                         string valClient = ddlChild.SelectedItemStringVal;
                         DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
-                        ddlChild.Items.Clear();
+                       // ddlChild.Items.Clear();
                         foreach (DataRow dr in dt.Rows)
                         {
                             ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
@@ -805,7 +803,9 @@ namespace BP.Web.Comm.UC.WF
                     case MapExtXmlList.AutoFullDLL: // 自动填充下拉框.
                         DDL ddlFull = this.GetDDLByID("DDL_" + me.AttrOfOper);
                         string valOld = ddlFull.SelectedItemStringVal;
-                        ddlFull.Items.Clear();
+                       
+                    // ddlFull.Items.Clear();
+
                         string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
                         fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
                         if (fullSQL.Contains("@"))
@@ -827,7 +827,6 @@ namespace BP.Web.Comm.UC.WF
                             continue;
                         tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                         tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
-
                         if (me.Tag != "")
                         {
                             /* 处理下拉框的选择范围的问题 */
@@ -1098,7 +1097,6 @@ namespace BP.Web.Comm.UC.WF
         #region 输出自由格式的表单.
         public string FK_MapData = null;
         FrmEvents fes =null;
-
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
             this.IsReadonly = isReadonly;
@@ -1225,13 +1223,10 @@ namespace BP.Web.Comm.UC.WF
                 TB tb = new TB();
                 tb.ID = "TB_" + attr.KeyOfEn;
                 if (attr.UIIsEnable)
-                {
                     tb.Enabled = attr.UIIsEnable;
-                }
                 else
-                {
                     tb.ReadOnly = true;
-                }
+
                 tb.Attributes["tabindex"] = attr.IDX.ToString();
                 if (this.IsReadonly)
                     tb.ReadOnly = true;
@@ -1239,13 +1234,9 @@ namespace BP.Web.Comm.UC.WF
                 {
                     case FieldTypeS.Normal:
                         if (attr.UIIsEnable)
-                        {
                             tb.Enabled = attr.UIIsEnable;
-                        }
                         else
-                        {
                             tb.ReadOnly = true;
-                        }
                         switch (attr.MyDataType)
                         {
                             case BP.DA.DataType.AppString:
@@ -1304,7 +1295,6 @@ namespace BP.Web.Comm.UC.WF
                                 if (attr.UIIsEnable)
                                     tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
                                 tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 19px;";
-
                                 this.Add(tb);
                                 break;
                             case BP.DA.DataType.AppBoolean:
@@ -1354,7 +1344,6 @@ namespace BP.Web.Comm.UC.WF
                             ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
                             ddle.Enabled = attr.UIIsEnable;
                             ddle.Attributes["tabindex"] = attr.IDX.ToString();
-
                             if (ddle.Enabled == true && isReadonly == true)
                                 ddle.Enabled = false;
                             this.Add(ddle);
@@ -1368,27 +1357,24 @@ namespace BP.Web.Comm.UC.WF
                         break;
                     case FieldTypeS.FK:
                         DDL ddl1 = new DDL();
-                        //   ddl1.Width = attr.UIWidth;
                         ddl1.ID = "DDL_" + attr.KeyOfEn;
                         ddl1.Attributes["tabindex"] = attr.IDX.ToString();
-                        try
+                        if (ddl1.Enabled)
                         {
                             EntitiesNoName ens = attr.HisEntitiesNoName;
                             ens.RetrieveAll();
                             ddl1.BindEntities(ens);
                             ddl1.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
                         }
-                        catch
+                        else
                         {
+                            ddl1.Attributes["style"] = "width: " + attr.UIWidth + "px;height: 19px;";
+                            if (ddl1.Enabled == true && isReadonly == true)
+                                ddl1.Enabled = false;
+                            ddl1.Attributes["Width"] = attr.UIWidth.ToString();
+                            ddl1.Items.Add(new ListItem(en.GetValRefTextByKey(attr.KeyOfEn), en.GetValStrByKey(attr.KeyOfEn)));
                         }
                         ddl1.Enabled = attr.UIIsEnable;
-                        ddl1.Attributes["style"] = "width: " + attr.UIWidth + "px;height: 19px;";
-
-                        if (ddl1.Enabled == true && isReadonly == true)
-                            ddl1.Enabled = false;
-
-                        ddl1.Attributes["Width"] = attr.UIWidth.ToString();
-
                         this.Add(ddl1);
                         break;
                     default:
@@ -1400,7 +1386,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("</DIV>");
             }
 
-            // 输出 rb.
+            #region  输出 rb.
             BP.Sys.FrmRBs myrbs = new FrmRBs();
             myrbs.RetrieveFromCash(FrmRBAttr.FK_MapData, enName);
             MapAttr attrRB = new MapAttr();
@@ -1443,6 +1429,8 @@ namespace BP.Web.Comm.UC.WF
                         rb.Checked = true;
                 }
             }
+            #endregion  输出 rb.
+
             #endregion 输出控件.
 
             #region 输出明细.
@@ -1650,6 +1638,7 @@ namespace BP.Web.Comm.UC.WF
                 return;
             }
             #endregion 处理事件.
+
             return;
         }
 

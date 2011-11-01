@@ -42,7 +42,7 @@ public partial class WF_WorkOpt_PrintDoc : BP.Web.WebPage
         templetes.Retrieve(BillTemplateAttr.NodeID, this.FK_Node);
         if (templetes.Count == 0)
         {
-            this.WinCloseWithMsg("当前节点上没朋绑定单据模板。");
+            this.WinCloseWithMsg("当前节点上没有绑定单据模板。");
             return;
         }
 
