@@ -499,6 +499,59 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     AppLog.LogError("Do Method GetFlows Branch has a error :\t" , ex); ;
                 }
                 return string.Empty;
+			case "ReleaseToFTP":
+                // 暂时注释，下次更新ftp功能时会得新编译 。
+                //var args = para1.Split(',');
+                //var binaryData = Convert.FromBase64String(args[1]);
+                //var imageFilePath = Server.MapPath(System.Web.HttpContext.Current.Request.ApplicationPath) + "/Temp/" + args[0] + ".jpg";
+                //if (File.Exists(imageFilePath))
+                //{
+                //    File.Delete(imageFilePath);
+                //}
+                //System.IO.Directory.CreateDirectory(
+                //    Server.MapPath(System.Web.HttpContext.Current.Request.ApplicationPath) + "/Temp");
+                //var stream = new System.IO.FileStream(imageFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                //stream.Write(binaryData, 0, binaryData.Length);
+                //stream.Close();
+
+                //var xmlFilePath = FlowTemplete_Gener(args[0], true);
+
+
+                //string remoteDr = "/" + ConfigurationSettings.AppSettings["UserIdentifier"];;
+
+                //var ftp = new FtpConnection();
+                
+                //try
+                //{
+                //    string ftpIP = ConfigurationSettings.AppSettings["FTPServerIP"];
+                //    string email = ConfigurationSettings.AppSettings["FTPUserEmail"];
+
+                //    Session session = new Session();
+                //    session.Server = ftpIP;
+                    
+
+                //    session.Connect("anonymous", "someone@somewhere.com");
+                //    ftp.Connect(ftpIP, "anonymous", email);
+                //    remoteDr = remoteDr;
+                //    if(!ftp.DirectoryExist(remoteDr))
+                //    {
+                //        ftp.CreateDirectory(remoteDr);
+                //    }
+                //    ftp.SetCurrentDirectory(remoteDr);
+                //    ftp.PutFile(imageFilePath, remoteDr);
+                //    return string.Empty;//上传成功
+
+                //}
+                //catch (Exception err)
+                //{
+                //    return err.Message;//上传失败
+                //}
+                //finally
+                //{
+                //    ftp.Close();
+                //}
+                return string.Empty;
+                break;
 
             default:
                 throw null;
