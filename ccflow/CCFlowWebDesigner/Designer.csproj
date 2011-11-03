@@ -66,7 +66,9 @@
     <Reference Include="ColorPicker">
       <HintPath>..\DLL\ColorPicker.dll</HintPath>
     </Reference>
-    <Reference Include="FJ.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="FJ.Core">
+      <HintPath>..\DLL\FJ.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Liquid.Menu">
       <HintPath>..\DLL\Liquid.Menu.dll</HintPath>
     </Reference>
