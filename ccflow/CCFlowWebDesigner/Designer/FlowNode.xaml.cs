@@ -19,38 +19,18 @@ using System.ComponentModel;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
-
     public delegate void MoveDelegate(FlowNode a, MouseEventArgs e);
+
     public delegate void DeleteDelegate(FlowNode a);
 
     public delegate void FlowNodeChangeDelegate(FlowNode a);
 
     public partial class FlowNode : UserControl, IElement
     {
-         
         double origPictureWidth = 0;
         double origPictureHeight = 0;
         Point origPosition;
-        bool positionIsChange = true;
-        public WSDesignerSoapClient _service = new WSDesignerSoapClient();
-        public void Zoom(double zoomDeep)
-        {
-            if (origPictureWidth == 0)
-            {
-                origPictureWidth = sdPicture.PictureWidth;
-                origPictureHeight = sdPicture.PictureHeight;
-            }
-            if (positionIsChange)
-            {
-                origPosition = this.Position;
-                positionIsChange = false;
-            }
-
-            sdPicture.PictureHeight = origPictureHeight * zoomDeep;
-            sdPicture.PictureWidth = origPictureWidth * zoomDeep;
-            this.Position = new Point(origPosition.X * zoomDeep, origPosition.Y * zoomDeep);
-
-        }
+        bool positionIsChange = true; 
 
         public double PictureWidth
         {
@@ -312,9 +292,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         p.Y += -beginPointRadius;
                     } 
                 }
-
-
-
             }
 
 
@@ -425,6 +402,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
 
         }
+        
         ErrorTip _errorTipControl;
         ErrorTip errorTipControl
         {
@@ -449,6 +427,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
 
         FlowNode _stationTipControl;
+
         /// <summary>
         /// 状态提示节点
         /// </summary>
@@ -566,6 +545,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
 
         }
+
         string _subFlow;
         public string SubFlow
         {
@@ -578,7 +558,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 _subFlow = value;
             }
         }
-
          
         public PointCollection ThisPointCollection
         {
@@ -587,6 +566,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return sdPicture.ThisPointCollection; 
             }
         }
+
         FlowNodeComponent getFlowNodeComponentFromServer(string FlowNodeID)
         {
             FlowNodeComponent ac = new FlowNodeComponent();
@@ -598,6 +578,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             ac.SubFlow = this.SubFlow;
             return ac;
         }
+
         FlowNodeComponent flowNodeData;
         public FlowNodeComponent FlowNodeData
         {
@@ -714,7 +695,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return WorkFlowElementType.FlowNode;
             }
         }
-         System.Text.StringBuilder xml = new System.Text.StringBuilder();  
+
+        System.Text.StringBuilder xml = new System.Text.StringBuilder();  
+
         public string ToXmlString()
         {
             xml = new System.Text.StringBuilder();
@@ -739,51 +722,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             return xml.ToString();
         }
 
-        void _service_RunSQLReturnTableCompleted(object sender, RunSQLReturnTableCompletedEventArgs e)
-        {
-           
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-            FlowNodeID=    dr[0].ToString();
-                xml.Append(@"       <FlowNode ");
-                xml.Append(@" FlowID=""" + FlowID + @"""");
-                xml.Append(@" FlowNodeID=""" + FlowNodeID + @"""");
-                xml.Append(@" FlowNodeName=""" + FlowNodeName + @"""");
-                xml.Append(@" Type=""" + Type.ToString() + @"""");
-                xml.Append(@" SubFlow=""" + (Type == FlowNodeType.SUBPROCESS ? SubFlow : @"") + @"""");
-                xml.Append(@" PositionX=""" + CenterPoint.X + @"""");
-                xml.Append(@" PositionY=""" + CenterPoint.Y + @"""");
-                xml.Append(@" RepeatDirection=""" + RepeatDirection.ToString() + @"""");
-                xml.Append(@" ZIndex=""" + ZIndex + @""">");
-
-                xml.Append(Environment.NewLine);
-                xml.Append("        </FlowNode>");
-            }
-        }
-
-        void _service_DoNewNodeCompleted(object sender, DoNewNodeCompletedEventArgs e)
-        {
-            try
-            {
-                FlowNodeID = e.Result.ToString();
-                xml.Append(@"       <FlowNode ");
-                xml.Append(@" FlowID=""" + FlowID + @"""");
-                xml.Append(@" FlowNodeID=""" + FlowNodeID + @"""");
-                xml.Append(@" FlowNodeName=""" + FlowNodeName + @"""");
-                xml.Append(@" Type=""" + Type.ToString() + @"""");
-                xml.Append(@" SubFlow=""" + (Type == FlowNodeType.SUBPROCESS ? SubFlow : @"") + @"""");
-                xml.Append(@" PositionX=""" + CenterPoint.X + @"""");
-                xml.Append(@" PositionY=""" + CenterPoint.Y + @"""");
-                xml.Append(@" RepeatDirection=""" + RepeatDirection.ToString() + @"""");
-                xml.Append(@" ZIndex=""" + ZIndex + @""">");
-
-                xml.Append(Environment.NewLine);
-                xml.Append("        </FlowNode>");
-            }
-            catch { }
-        }
         public void LoadFromXmlString(string xmlString)
         {
         }
@@ -800,6 +738,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
         bool canShowMenu = false;
+
         public void AddBeginDirection(Direction r)
         {
             if (!BeginDirectionCollections.Contains(r))
@@ -807,9 +746,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 BeginDirectionCollections.Add(r);
                 r.BeginFlowNode = this;
                 Move(this, null);
+
+                // 添加节点后，将结束节点变为交互节点
+                if (FlowNodeType.COMPLETION == this.Type)
+                {
+                    this.type = FlowNodeType.INTERACTION;
+                }
             }
 
         }
+
         public void RemoveBeginDirection(Direction r)
         {
             if (BeginDirectionCollections.Contains(r))
@@ -817,21 +763,19 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 BeginDirectionCollections.Remove(r);
                 r.RemoveBeginFlowNode(this);
 
+                //移除连线后，如果如果节点不是开始节点，并且没有开始节点，则变为结束节点
+                if (0 == BeginDirectionCollections.Count && FlowNodeType.INITIAL != this.Type)
+                {
+                    this.type = FlowNodeType.COMPLETION;
+                }
             }
         }
-
 
         public void AddEndDirection(Direction r)
         {
             if (!EndDirectionCollections.Contains(r))
             {
                 EndDirectionCollections.Add(r);
-
-                if (FlowNodeType.COMPLETION != this.Type)
-                {
-                    this.type = FlowNodeType.INTERACTION;
-                }
-
                 r.EndFlowNode = this;
                 Move(this, null);
 
@@ -843,12 +787,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             if (EndDirectionCollections.Contains(r))
             {
                 EndDirectionCollections.Remove(r);
-
-                if(0 == EndDirectionCollections.Count || FlowNodeType.INITIAL != this.Type)
-                {
-                    this.type = FlowNodeType.COMPLETION;
-                }
-
                 r.RemoveEndFlowNode(this);
             }
         }
@@ -981,13 +919,34 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         }
 
+        public void Zoom(double zoomDeep)
+        {
+            if (origPictureWidth == 0)
+            {
+                origPictureWidth = sdPicture.PictureWidth;
+                origPictureHeight = sdPicture.PictureHeight;
+            }
+            if (positionIsChange)
+            {
+                origPosition = this.Position;
+                positionIsChange = false;
+            }
+
+            sdPicture.PictureHeight = origPictureHeight * zoomDeep;
+            sdPicture.PictureWidth = origPictureWidth * zoomDeep;
+            this.Position = new Point(origPosition.X * zoomDeep, origPosition.Y * zoomDeep);
+
+        }
+
         void sdPicture_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
            
         }
 
         public List<Direction> BeginDirectionCollections = new List<Direction>();
+       
         public List<Direction> EndDirectionCollections = new List<Direction>();
+       
         IContainer _container;
         public IContainer Container
         {
@@ -1173,6 +1132,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 FlowNodeChange();
             }
         }
+        
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
             canShowMenu = true;
@@ -1182,11 +1142,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             return;
 
         }
+        
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
             canShowMenu = false;
 
         }
+        
         public void SetPositionByDisplacement(double x, double y)
         {
             Point p = new Point();
@@ -1198,6 +1160,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             Move(this, null);
 
         }
+        
         bool isSelectd = false;
         public bool IsSelectd
         {
@@ -1224,7 +1187,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         }
 
-
         public bool PointIsInside(Point p)
         {
             bool isInside = false;
@@ -1245,8 +1207,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             return isInside;
         }
-
-
 
         public FlowNode Clone()
         {
@@ -1325,6 +1285,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             }
         }
+        
         private void CenterEllipse_MouseMove(object sender, MouseEventArgs e)
         {
             if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID") || System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
@@ -1378,13 +1339,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
         }
+        
         public void Edit()
         {
             _container.ShowFlowNodeSetting(this);
         }
 
         #region IElement 成员
-
 
         public UserStation Station()
         {
@@ -1490,11 +1451,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             return us;
         }
-
-      
-        #endregion
-
-        #region IElement 成员
+        
         public void worklist()
         {
             if (!(string.IsNullOrEmpty(_container.FK_Flow) && string.IsNullOrEmpty(_container.WorkID)))
@@ -1513,7 +1470,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
       
-      void _Service_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
+        void _Service_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
         {
             if (e.Result == null)
                 return;
