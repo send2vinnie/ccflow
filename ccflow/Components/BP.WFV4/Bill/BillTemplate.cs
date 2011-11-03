@@ -201,28 +201,20 @@ namespace BP.WF
                 map.DepositaryOfMap = Depositary.Application;
                 map.CodeStruct = "6";
 
-                map.AddTBStringPK(BillTemplateAttr.No, null, null, true, false, 1, 300, 6);
-
-                map.AddTBString(BillTemplateAttr.Name, null, null, true, false, 0, 200, 20);
-
-                map.AddTBString(BillTemplateAttr.Url, null, null, true, false, 0, 200, 20);
+                map.AddTBStringPK(BillTemplateAttr.No, null, "No", true, false, 1, 300, 6);
+                map.AddTBString(BillTemplateAttr.Name, null, "Name", true, false, 0, 200, 20);
+                map.AddTBString(BillTemplateAttr.Url, null, "URL", true, false, 0, 200, 20);
 
                 map.AddTBInt(BillTemplateAttr.NodeID, 0, "NodeID", true, false);
-
 
                 map.AddDDLSysEnum(BillTemplateAttr.BillFileType, 0, "生成的文件类型", true, false,
                     "BillFileType","@0=Word@1=PDF@2=Excel(未完成)@3=Html(未完成)");
 
                 map.AddTBString(BillTemplateAttr.FK_BillType, null, "单据类型", true, false, 0, 4, 4);
 
-
                 map.AddTBString("IDX", null, "IDX", false, false, 0, 200, 20);
-
                 map.AddTBString(BillTemplateAttr.ExpField, null, "要排除的字段", false, false, 0, 800, 20);
                 map.AddTBString(BillTemplateAttr.ReplaceVal, null, "要替换的值", false, false, 0, 3000, 20);
-
-                //  map.AddBoolean(BillTemplateAttr.IsNeedSend, false, "是否需要送达回执", true, true);
-
                 this._enMap = map;
                 return this._enMap;
             }

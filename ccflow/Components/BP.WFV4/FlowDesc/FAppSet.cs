@@ -96,27 +96,6 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 显示时间
-        /// </summary>
-        public int ShowTime_
-        {
-            get
-            {
-                return this.GetValIntByKey(FAppSetAttr.ShowTime );
-            }
-            set
-            {
-                this.SetValByKey(FAppSetAttr.ShowTime, value);
-            }
-        }
-        public string ShowTimeT_del
-        {
-            get
-            {
-                return this.GetValRefTextByKey(FAppSetAttr.ShowTime);
-            }
-        }
-        /// <summary>
         /// 外部程序设置的事务编号
         /// </summary>
         public string FK_Flow
@@ -195,7 +174,8 @@ namespace BP.WF
                 map.AddTBString(NodeAttr.Name, null, "显示标签", true, false, 0, 400, 10);
                 map.AddTBInt(FAppSetAttr.NodeID, 0, "NodeID", false, false);
 
-                map.AddDDLSysEnum(FAppSetAttr.AppType, 0, "应用类型", true, false, FAppSetAttr.AppType,"@0=外部Url连接@1=本地可执行文件");
+                map.AddDDLSysEnum(FAppSetAttr.AppType, 0, "应用类型", true, false, 
+                    FAppSetAttr.AppType,"@0=exe@1=打开url@2=javascript");
 
                 //map.AddDDLSysEnum(FAppSetAttr.ShowTime, 0, "发生时间", true, false, FAppSetAttr.ShowTime, 
                 //    "@0=无(显示在表单底部)@1=当工作选择时@2=当保存时@3=当发送时");

@@ -70,41 +70,16 @@ namespace BP.WF.Ext
                 map.AddTBString(FlowAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 50, 10, true);
                 map.AddBoolean(FlowAttr.IsOK, true, this.ToE("IsEnable", "是否起用"), true, true);
 
-                // map.AddDDLSysEnum(BP.WF.FlowAttr.CCType, (int)CCType.None, "抄送类型", true, true, BP.WF.FlowAttr.CCType,
-                // "@0=不抄送@1=按人员@2=按岗位@3=按节点@4=按部门@5=按照部门与岗位");
-                // map.AddDDLSysEnum(BP.WF.FlowAttr.CCWay, (int)CCWay.ByMsg, "抄送方式", true, true, BP.WF.FlowAttr.CCWay,
-                //"@0=调用本系统及时信息@1=通过Email(在web.config中配置)@2=调用手机接口@3=调用数据库函数");
-                // map.AddBoolean(FlowAttr.IsCCAll, false, "是否抄送参与人", true, true);
 
-                map.AddDDLSysEnum(FlowAttr.FlowRunWay, (int)FlowRunWay.HandWork, this.ToE("RunWay", "运行方式"), true, true, FlowAttr.FlowRunWay,
-                    "@0=手工启动@1=按月启动@2=按周启动@3=按天启动@4=按小时启动");
+                map.AddDDLSysEnum(FlowAttr.FlowRunWay, (int)FlowRunWay.HandWork, this.ToE("RunWay", "运行方式"),
+                    true, true, FlowAttr.FlowRunWay,"@0=手工启动@1=按月启动@2=按周启动@3=按天启动@4=按小时启动");
 
                 map.AddTBString(FlowAttr.FlowRunObj, null, this.ToE("RunDoc", "运行内容"), true, false, 0, 100, 10,true);
                 map.AddBoolean(FlowAttr.IsCanStart, true, this.ToE("IsCanRunBySelf", "可以独立启动否？(独立启动的流程可以显示在发起流程列表里)"), true, true, true);
 
-                map.AddTBStringDoc(BP.WF.FlowAttr.RunSQL, null, this.ToE("EndFlowRunSQL", "流程结束执行后执行的SQL"), true, false, true);
-
-                //map.AddTBStringDoc("ABC", null,"ABC", true, false, true);
-
-
-
-               // map.AddTBString(BP.WF.FlowAttr.RunSQL, null, this.ToE("Note", "备注"), true, false, 0, 100, 10, true);
-
                 map.AddTBString(FlowAttr.Note, null, this.ToE("Note", "备注"), true, false, 0, 100, 10, true);
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
-
-                //  map.AddTBInt("Age", 20, "年龄", true, false);
-                //  map.AttrsOfOneVSM.Add(new FlowStations(), new Stations(), FlowStationAttr.FK_Flow,
-                //  FlowStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "抄送岗位");
-
-                //map.AttrsOfOneVSM.Add(new FlowEmps(), new Emps(), FlowEmpAttr.FK_Flow,
-                //FlowEmpAttr.FK_Emp, DeptAttr.Name, DeptAttr.No, "干预人员");
-
                 map.AddSearchAttr(BP.WF.FlowAttr.FK_FlowSort);
-
-                //map.AddSearchAttr(BP.WF.FlowAttr.FlowRunWay);
-                //map.AddSearchAttr(BP.WF.FlowAttr.FlowRunWay);
-
 
 
                 RefMethod rm = new RefMethod();
@@ -114,19 +89,12 @@ namespace BP.WF.Ext
                 rm.ClassMethodName = this.ToString() + ".DoCCNode";
                 //map.AddRefMethod(rm);
 
-
                 rm = new RefMethod();
                 rm.Title = this.ToE("DesignCheckRpt", "检查报告"); // "设计检查报告";
                 //rm.ToolTip = "检查流程设计的问题。";
                 rm.Icon = "/Images/Btn/Confirm.gif";
                 rm.ClassMethodName = this.ToString() + ".DoCheck";
                 map.AddRefMethod(rm);
-
-                //rm = new RefMethod();
-                //rm.Title = this.ToE("ViewDef", "视图定义"); //"视图定义";
-                //rm.Icon = "/Images/Btn/View.gif";
-                //rm.ClassMethodName = this.ToString() + ".DoDRpt";
-                //map.AddRefMethod(rm);
 
                 rm = new RefMethod();
                 rm.Title = this.ToE("Rpt", "设计报表"); // "报表运行";
@@ -141,7 +109,7 @@ namespace BP.WF.Ext
                 rm.Title = this.ToE("DelFlowData", "删除数据"); // "删除数据";
                 rm.Warning = this.ToE("AYS", "您确定要执行删除流程数据吗?");// "您确定要执行删除流程数据吗？";
 
-                //  rm.Warning = "您确定要执行删除流程数据吗？";
+                //rm.Warning = "您确定要执行删除流程数据吗？";
                 //rm.ToolTip = "清除历史流程数据。";
 
                 rm.ClassMethodName = this.ToString() + ".DoDelData";
