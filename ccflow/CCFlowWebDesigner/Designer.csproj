@@ -64,21 +64,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ColorPicker">
-      <HintPath>..\..\..\ccflow\DLL\ColorPicker.dll</HintPath>
+      <HintPath>..\DLL\ColorPicker.dll</HintPath>
     </Reference>
     <Reference Include="FJ.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Liquid.Menu">
-      <HintPath>..\..\..\ccflow\DLL\Liquid.Menu.dll</HintPath>
+      <HintPath>..\DLL\Liquid.Menu.dll</HintPath>
     </Reference>
     <Reference Include="Liquid.TreeView">
-      <HintPath>..\..\..\ccflow\DLL\Liquid.TreeView.dll</HintPath>
+      <HintPath>..\DLL\Liquid.TreeView.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Silverlight.Controls">
-      <HintPath>..\..\..\ccflow\DLL\Silverlight.Controls.dll</HintPath>
+      <HintPath>..\DLL\Silverlight.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Silverlight.DataSet">
-      <HintPath>..\..\..\ccflow\DLL\Silverlight.DataSet.dll</HintPath>
+      <HintPath>..\DLL\Silverlight.DataSet.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
