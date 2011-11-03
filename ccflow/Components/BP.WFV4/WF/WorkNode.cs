@@ -334,7 +334,7 @@ namespace BP.WF
             }
 
             /* 如果执行节点 与 接受节点岗位集合一致 */
-            if (this.HisNode.GroupStaNDs != town.HisNode.GroupStaNDs)
+            if (this.HisNode.GroupStaNDs == town.HisNode.GroupStaNDs)
             {
                 /* 说明，就把当前人员做为下一个节点处理人。*/
                 DataRow dr = dt.NewRow();
