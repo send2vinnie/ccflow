@@ -1,8 +1,0 @@
-D:\ccflow\Components\BP.WFV4\bin\BP.WFV4.dll
-D:\ccflow\Components\BP.WFV4\bin\BP.WFV4.pdb
-D:\ccflow\Components\BP.WFV4\bin\BP.En30.dll
-D:\ccflow\Components\BP.WFV4\bin\ChineseConverter.dll
-D:\ccflow\Components\BP.WFV4\bin\BP.En30.pdb
-D:\ccflow\Components\BP.WFV4\obj\Debug\ResolveAssemblyReference.cache
-D:\ccflow\Components\BP.WFV4\obj\Debug\BP.WFV4.dll
-D:\ccflow\Components\BP.WFV4\obj\Debug\BP.WFV4.pdb
