@@ -100,7 +100,7 @@ namespace BP.WF.Ext
                 rm.Title = this.ToE("Rpt", "设计报表"); // "报表运行";
                 rm.Icon = "/Images/Btn/View.gif";
                 rm.ClassMethodName = this.ToString() + ".DoOpenRpt()";
-                //rm.Icon = "/Images/Btn/Table.gif";
+                //rm.Icon = "/Images/Btn/Table.gif"; 
                 map.AddRefMethod(rm);
 
 
@@ -115,14 +115,12 @@ namespace BP.WF.Ext
                 rm.ClassMethodName = this.ToString() + ".DoDelData";
                 map.AddRefMethod(rm);
 
-
                 //rm = new RefMethod();
                 //rm.Title = this.ToE("Event", "事件"); // "报表运行";
                 //rm.Icon = "/Images/Btn/View.gif";
                 //rm.ClassMethodName = this.ToString() + ".DoOpenRpt()";
                 ////rm.Icon = "/Images/Btn/Table.gif";
                 //map.AddRefMethod(rm);
-
 
                 //rm = new RefMethod();
                 //rm.Title = this.ToE("FlowSheetDataOut", "数据转出定义");  //"数据转出定义";
