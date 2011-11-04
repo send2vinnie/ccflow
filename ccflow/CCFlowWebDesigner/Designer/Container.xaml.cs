@@ -1535,26 +1535,39 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public void MoveControlCollectionByDisplacement(double x, double y, UserControl uc)
         {
             if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
+            {
                 return;
+            }
+
+            // 如果光标所在的节点没有被选中，则不移动所有被选中的节点，光移动光标所有的节点即可。
+            var element = uc as IElement;
+            if(element != null && !element.IsSelectd)
+            {
+                return;
+            }
 
             FlowNode selectedFlowNode = null;
             Direction selectedDirection = null;
             NodeLabel selectedLabel = null;
             if (uc is FlowNode)
+            {
                 selectedFlowNode = uc as FlowNode;
+            }
 
             if (uc is Direction)
+            {
                 selectedDirection = uc as Direction;
+            }
             if (uc is NodeLabel)
+            {
                 selectedLabel = uc as NodeLabel;
+            }
 
             FlowNode a = null;
             Direction r = null;
             NodeLabel l = null;
             for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
             {
-
-
                 if (CurrentSelectedControlCollection[i] is FlowNode)
                 {
                     a = CurrentSelectedControlCollection[i] as FlowNode;
