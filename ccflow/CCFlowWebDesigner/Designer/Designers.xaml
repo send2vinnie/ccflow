@@ -14,7 +14,8 @@
     KeyUp="UserControl_KeyUp"        
     xmlns:my="clr-namespace:WF.Controls" 
     xmlns:controlsPrimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls" 
-    Loaded="UserControl_Loaded"  MouseLeftButtonDown="UserControl_MouseLeftButtonDown"  >
+    Loaded="UserControl_Loaded"  MouseLeftButtonDown="UserControl_MouseLeftButtonDown" 
+    MouseRightButtonDown="UserControl_MouseRightButtonDown" >
 
     <Grid x:Name="LayoutRoot" ShowGridLines="False" Margin="0" Background="white"  >
         <Grid.ColumnDefinitions>

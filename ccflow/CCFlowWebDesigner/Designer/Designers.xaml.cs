@@ -1128,6 +1128,47 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         } 
         #endregion
 
+        /// <summary>
+        /// 当前流程变化时，确保只有当前流程才显示关闭按钮，这样可以避免“当前流程是A，然后点击B的关闭按钮
+        /// 表示用户想关闭B，但关闭的是A”的情况。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbDesigner_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (TabItem t in tbDesigner.Items)
+            {
+                if (t.IsSelected)
+                {
+                    var canvas = t.Header as Canvas;
+                    if (canvas != null)
+                    {
+                        canvas.Children[0].Visibility = Visibility.Visible;
+                    }
+                }
+                else
+                {
+                    var canvas = t.Header as Canvas;
+                    if (canvas != null)
+                    {
+                        canvas.Children[0].Visibility = Visibility.Collapsed;
+                    }
+                }
+
+            }
+
+        }
+
+        /// <summary>
+        ///  diable the default silverlight rightmenu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
         #endregion
 
         #region 进度指示
@@ -1146,36 +1187,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         } 
         #endregion
 
-        /// <summary>
-        /// 当前流程变化时，确保只有当前流程才显示关闭按钮，这样可以避免“当前流程是A，然后点击B的关闭按钮
-        /// 表示用户想关闭B，但关闭的是A”的情况。
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tbDesigner_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            foreach (TabItem t in tbDesigner.Items)
-            {
-                if(t.IsSelected)
-                {
-                    var canvas = t.Header as Canvas;
-                    if(canvas != null)
-                    {
-                        canvas.Children[0].Visibility = Visibility.Visible;
-                    }
-                }
-                else
-                {
-                    var canvas = t.Header as Canvas;
-                    if (canvas != null)
-                    {
-                        canvas.Children[0].Visibility = Visibility.Collapsed;
-                    }
-                }
-                
-            }
-
-        }
+       
 
     }
 }
