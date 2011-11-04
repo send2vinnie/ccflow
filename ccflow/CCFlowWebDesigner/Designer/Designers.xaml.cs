@@ -28,14 +28,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
     /// </summary>
     public partial class Designers : UserControl
     {
-        #region 全局变量
+        #region 变量
 
         private TreeNode firstNodeByFlow = new TreeNode();
         private System.Windows.Threading.DispatcherTimer _doubleClickTimer;
         private string FlowTempleteUrl = "";
         private string title; // 子窗体标题       
         private WSDesignerSoapClient _service = new WSDesignerSoapClient();
-
+        
+        // 最后的流程类型，用于重新绑定流程树后，再打开最后操作的流程类别
+        private string latestFlowSortID; 
 
         #endregion
 
@@ -302,19 +304,17 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                 _Service.DoCompleted += Server_DoCompletedToRefreshSortTree;
 
-
             }
         }
 
         void Server_DoCompletedToRefreshSortTree(object sender, DoCompletedEventArgs e)
         {
-
-            _Service.DoCompleted -= Server_DoCompletedToRefreshSortTree;
+             _Service.DoCompleted -= Server_DoCompletedToRefreshSortTree;
 
             foreach (TabItem t in tbDesigner.Items)
             {
-                Container ct = t.Content as Container;
-                if (ct.FlowID == TvwFlow.Selected.Name)
+                var ct = t.Content as Container;
+                if (ct != null && ct.FlowID == TvwFlow.Selected.Name)
                 {
                     tbDesigner.Items.Remove(t);
                     break;
@@ -335,6 +335,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 _Service.DoCompleted += Server_DoCompletedToRefreshSortTree;
             }
         }
+
         /// <summary>
         /// 新建工作流
         /// </summary>
@@ -468,7 +469,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
            
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
-                TreeNode node = new TreeNode();
+                var node = new TreeNode();
                 node.Title = dr["Name"].ToString();
                 node.ID = dr["No"].ToString();
                 node.IsFlowSort = true;
@@ -480,7 +481,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             foreach (DataRow d in ds.Tables[1].Rows)
             {
-                TreeNode node = new TreeNode();
+                var node = new TreeNode();
                 node.Title = d["Name"].ToString();
                 node.ID = d["FK_FlowSort"].ToString();
                 node.Name = d["No"].ToString();
@@ -489,7 +490,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 {
                     if (SelectedContainer.FlowID == node.Name)
                     {
-                        TabItemEx te = this.tbDesigner.SelectedItem as TabItemEx;
+                        var te = this.tbDesigner.SelectedItem as TabItemEx;
                         te.Title = node.Title;
                         Canvas cs = te.Header as Canvas;
                         TextBlock tbx = cs.Children[1] as TextBlock;
@@ -509,6 +510,18 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     catch
                     {
                     }
+                }
+            }
+
+
+            // 完成绑定后，展开最后的FlowSort
+            foreach(TreeNode node in TvwFlow.Nodes)
+            {
+                if (node.ID == latestFlowSortID)
+                {
+                    node.IsExpanded = true;
+                    node.Expand();
+                    latestFlowSortID = string.Empty;
                 }
             }
 
@@ -547,7 +560,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     NewFlowHandler(2);
                     break;
                 case "NewFlowSort":
-                    NewFlowSort newFlowSort = new NewFlowSort(this);
+                    var newFlowSort = new NewFlowSort(this);
                     newFlowSort.DisplayType = NewFlowSort.DisplayTypeEnum.Add;
                     newFlowSort.ServiceDoCompletedEvent += AddEditFlowSortDoCompletedEventHandler;
                     newFlowSort.Show();
@@ -555,9 +568,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 case "Delete":
                     var deleteFlowNode = TvwFlow.Selected as TreeNode;
                     if(null == deleteFlowNode)
+                    {
                         break;
+                    }
                     if (!deleteFlowNode.IsFlowSort)
                     {
+                        latestFlowSortID = TvwFlow.Selected.ID;
                         DeleteFlow(TvwFlow.Selected.Name);
 
                         foreach (TabItem t in tbDesigner.Items)
@@ -580,6 +596,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     bindFlowAndFlowSort();
                     break;
                 case "Edit":
+                    latestFlowSortID = TvwFlow.Selected.ID;
                     var editFlowSort = new NewFlowSort(this);
                     editFlowSort.InitControl(TvwFlow.Selected.ID, TvwFlow.Selected.EditedTitle);
                     editFlowSort.DisplayType = NewFlowSort.DisplayTypeEnum.Edit;
@@ -606,23 +623,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
 
-        /// <summary>
-        /// 键盘按键按下事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UserControl_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// 键盘按键释放事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UserControl_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
 
         /// <summary>
         /// 在工作流树空白处按下鼠标左键事件
@@ -782,7 +782,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         
         public void NewFlowHandler(int tabIdx)
         {
-            FrmNewFlow fu = new FrmNewFlow();
+            latestFlowSortID = TvwFlow.Selected.ID;
+            var fu = new FrmNewFlow();
             fu.CurrentDesinger = this;
             fu.tabControl.TabIndex = tabIdx;
 
@@ -814,6 +815,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             };
             fu.Show();
         }
+        
         /// <summary>
         /// 关闭选项卡事件
         /// </summary>
@@ -879,27 +881,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _Service.GetRelativeUrlCompleted -= _Service_GetRelativeUrlCompleted;
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            HtmlPage.RegisterScriptableObject("Designer", this);
-
-            _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
-            _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
-            _doubleClickTimer.Tick += DoubleClick_Timer;
-            ApplyCulture();
-            try
-            {
-                LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
-                TbcFDS.Height = LayoutRoot.Height - 75;
-                TvwFlow.Height = Application.Current.Host.Content.ActualHeight - 35 - 100;
-                tbDesigner.Height = Application.Current.Host.Content.ActualHeight - 35;
-                tbDesigner.Width = Application.Current.Host.Content.ActualWidth - 227;
-            }
-            catch
-            {
-            }
-            Application.Current.Host.Content.FullScreenChanged += Content_FullScreenChanged;
-        }
 
         /// <summary>
         /// Asp.net网页关闭时要执行的事件
@@ -1159,6 +1140,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         }
 
+        #region UserControl Related 
         /// <summary>
         ///  diable the default silverlight rightmenu
         /// </summary>
@@ -1168,6 +1150,47 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             e.Handled = true;
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            HtmlPage.RegisterScriptableObject("Designer", this);
+
+            _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
+            _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
+            _doubleClickTimer.Tick += DoubleClick_Timer;
+            ApplyCulture();
+            try
+            {
+                LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
+                TbcFDS.Height = LayoutRoot.Height - 75;
+                TvwFlow.Height = Application.Current.Host.Content.ActualHeight - 35 - 100;
+                tbDesigner.Height = Application.Current.Host.Content.ActualHeight - 35;
+                tbDesigner.Width = Application.Current.Host.Content.ActualWidth - 227;
+            }
+            catch
+            {
+            }
+            Application.Current.Host.Content.FullScreenChanged += Content_FullScreenChanged;
+        }
+
+        /// <summary>
+        /// 键盘按键按下事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// 键盘按键释放事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_KeyUp(object sender, KeyEventArgs e)
+        {
+        } 
+        #endregion
 
         #endregion
 
