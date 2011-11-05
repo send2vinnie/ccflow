@@ -342,9 +342,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
        }
        else
        {
-
            currWK = this.currFlow.GenerWork(this.WorkID, this.currND);
-
            string msg = "";
            switch (currWK.NodeState)
            {
@@ -356,7 +354,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                        string msgInfo = "";
                        foreach (ReturnWork rw in rws)
                        {
-                           msgInfo += "\t\n  =========== " + rw.Returner + "  " + rw.RDT + "========== \t\n";
+                           msgInfo += "\t\n  =========== " + rw.Returner + "  " + rw.RDT + "========== <br>";
                            msgInfo += rw.NoteHtml;
                        }
                        this.FlowMsg.AlertMsg_Info("流程退回提示", msgInfo);
@@ -435,7 +433,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.Btn_Save.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
-            if (btnLab.PrintDocEnable )
+            if (btnLab.PrintDocEnable)
             {
                 string urlr = "./WorkOpt/PrintDoc.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
                 this.ToolBar1.Add("<input type=button value='" + btnLab.PrintDocLab + "' enable=true onclick=\"WinOpen('" + urlr + "','dsdd'); \" />");
@@ -492,10 +490,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.BindWork(currND, currWK);
 
             this.Session["Ect"] = null;
-            if (currND.HisDeliveryWay == DeliveryWay.BySelected && currND.IsEndNode == false)
-            {
-                this.ToolBar1.Add("<input type=button value='" + this.ToE("JSRen", "接受人") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
-            }
+            //if (currND.HisDeliveryWay == DeliveryWay.BySelected && currND.IsEndNode == false)
+            //{
+
+            if (btnLab.SelectAccepterEnable)
+                this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
+
+            // }
         }
         catch (Exception ex)
         {
@@ -1090,6 +1091,14 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// <param name="isDraft">是不是做为草稿保存</param> 
     private void Send(bool isSave)
     {
+        // 判断当前人员是否有执行该人员的权限。
+        string sql = "SELECT FK_Emp FROM WF_GenerWorkerlist WHERE FK_Node='"+this.FK_Node+"' AND WorkID="+this.WorkID+" AND FK_Emp='"+WebUser.No+"' AND IsEnable=1 AND IsPass=0";
+        if (DBAccess.RunSQLReturnTable(sql).Rows.Count != 1  && currND.IsStartNode==false)
+        {
+            this.ToMsg("保存或发送错误","您好：" + WebUser.No + "," + WebUser.Name + "：<br> 当前工作已经被其它人处理，您不能在执行保存或者发送!!!");
+            return;
+        }
+
         System.Web.HttpContext.Current.Session["RunDT"] = DateTime.Now;
         if (this.FK_Node == 0)
             throw new Exception(this.ToE("NotCurrNode", "没有找到当前的节点"));
@@ -1124,8 +1133,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             if (BP.SystemConfig.IsDebug)
                 currWK.CheckPhysicsTable();
-
-           // this.Btn_Send.Enabled = true;
+            // this.Btn_Send.Enabled = true;
             throw new Exception("@在保存前执行逻辑检查错误。@技术信息:" + ex.Message);
         }
 

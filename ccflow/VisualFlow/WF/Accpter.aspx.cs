@@ -52,11 +52,22 @@ public partial class WF_Accpter : WebPage
     public DataTable GetTable()
     {
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
+        int nodeID = 0;
         if (nd.HisToNodes.Count > 1)
-            throw new Exception("@流程设计错误，下一个节点发送到那里不能确定，您不能选择接受人员。");
-
-        Nodes nds = nd.HisToNodes;
-        int nodeID = nds[0].GetValIntByKey("NodeID");
+        {
+            Nodes nds = nd.HisToNodes;
+            foreach (BP.WF.Node mynd in nds)
+            {
+                if (mynd.HisDeliveryWay == DeliveryWay.BySelected)
+                    nodeID = mynd.NodeID;
+            }
+        //    throw new Exception("@流程设计错误，下一个节点发送到那里不能确定，您不能选择接受人员。");
+        }
+        else
+        {
+            Nodes nds = nd.HisToNodes;
+              nodeID = nds[0].GetValIntByKey("NodeID");
+        }
 
         NodeStations stas = new NodeStations(nodeID);
         if (stas.Count == 0)
@@ -69,6 +80,8 @@ public partial class WF_Accpter : WebPage
         sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
         sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + nodeID + ") ";
         sql += ") ORDER BY FK_DEPT";
+
+       // sql = "SELECT No,Name,FK_Dept, '' as DeptName FROM Port_Emp ";
         return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }
     protected void Page_Load(object sender, EventArgs e)

@@ -803,8 +803,6 @@ namespace BP.Web.Comm.UC.WF
                     case MapExtXmlList.AutoFullDLL: // 自动填充下拉框.
                         DDL ddlFull = this.GetDDLByID("DDL_" + me.AttrOfOper);
                         string valOld = ddlFull.SelectedItemStringVal;
-                       
-                    // ddlFull.Items.Clear();
 
                         string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
                         fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
@@ -1097,11 +1095,13 @@ namespace BP.Web.Comm.UC.WF
         #region 输出自由格式的表单.
         public string FK_MapData = null;
         FrmEvents fes =null;
+        public string EnName = null;
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
             this.IsReadonly = isReadonly;
             this.FK_MapData = enName;
             this.HisEn = en;
+            this.EnName = enName;
 
             #region 处理事件.
             fes = new FrmEvents(enName);
@@ -1117,7 +1117,6 @@ namespace BP.Web.Comm.UC.WF
                 return;
             }
             #endregion 处理事件.
-
 
             m2ms = new MapM2Ms(enName);
             MapData md = new MapData();
@@ -1210,7 +1209,7 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion 输出竖线与标签
 
-            #region 输出控件.
+            #region 输出数据控件.
             foreach (MapAttr attr in mattrs)
             {
                 if (attr.UIVisible == false)
@@ -1431,7 +1430,7 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion  输出 rb.
 
-            #endregion 输出控件.
+            #endregion 输出数据控件.
 
             #region 输出明细.
             MapDtls dtls = new MapDtls(enName);
@@ -1510,10 +1509,6 @@ namespace BP.Web.Comm.UC.WF
 
                 src += "&r=q" + paras;
 
-                //  if (M2M.IsAutoSize)
-                //    this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
-                //else
-
                 this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.Width + "' height='" + M2M.Height + "'   scrolling=auto/></iframe>");
 
                 this.Add("</span>");
@@ -1534,56 +1529,58 @@ namespace BP.Web.Comm.UC.WF
                 float x = ath.X;
                 float y = ath.Y;
                 this.Add("<DIV id='Fa" + ath.MyPK + "' style='position:absolute; left:" + x + "px; top:" + y + "px; width:" + ath.W + "px;text-align: left;float:left' >");
-                this.Add("<span>");
+              //  this.Add("<span>");
 
                 FileUpload fu = new FileUpload();
                 fu.ID = ath.MyPK;
                 fu.Attributes["Width"] = ath.W.ToString();
                 this.Add(fu);
 
-                Button btnUpload = new Button();
+                Button mybtn = new Button();
                 if (ath.IsUpload)
                 {
-                    btnUpload.ID = ath.MyPK;
-                    btnUpload.Text = "上传";
-                    btnUpload.CssClass = "bg";
-                    btnUpload.ID = "Btn_Upload_" + ath.MyPK + "_" + this.HisEn.PKVal;
-                    btnUpload.Click += new EventHandler(btnUpload_Click);
-                    this.Add(btnUpload);
+                    mybtn.ID = ath.MyPK;
+                    mybtn.Text = "上传";
+                    mybtn.CssClass = "bg";
+                    mybtn.ID = "Btn_Upload_" + ath.MyPK + "_" + this.HisEn.PKVal;
+                    mybtn.Click += new EventHandler(btnUpload_Click);
+                    this.Add(mybtn);
                 }
 
                 if (ath.IsDownload)
                 {
-                    btnUpload = new Button();
-                    btnUpload.Text = "下载";
-                    btnUpload.ID = "Btn_Download_" + ath.MyPK + "_" + this.HisEn.PKVal;
-                    btnUpload.Click += new EventHandler(btnUpload_Click);
-                    btnUpload.CssClass = "bg";
+                    mybtn = new Button();
+                    mybtn.Text = "下载";
+                    mybtn.ID = "Btn_Download_" + ath.MyPK + "_" + this.HisEn.PKVal;
+                    mybtn.Click += new EventHandler(btnUpload_Click);
+                    mybtn.CssClass = "bg";
                     if (athDB == null)
-                        btnUpload.Enabled = false;
+                        mybtn.Visible = false;
                     else
-                        btnUpload.Enabled = true;
-                    this.Add(btnUpload);
+                        mybtn.Visible = true;
+                    this.Add(mybtn);
                 }
 
                 if (ath.IsDelete)
                 {
-                    btnUpload = new Button();
-                    btnUpload.Text = "删除";
-                    btnUpload.ID = "Btn_Delete_" + ath.MyPK + "_" + this.HisEn.PKVal;
-                    btnUpload.Click += new EventHandler(btnUpload_Click);
-                    btnUpload.CssClass = "bg";
+                    mybtn = new Button();
+                    mybtn.Text = "删除";
+                    mybtn.Attributes["onclick"] = " return confirm('您确定要执行删除吗？');";
+
+                    mybtn.ID = "Btn_Delete_" + ath.MyPK + "_" + this.HisEn.PKVal;
+                    mybtn.Click += new EventHandler(btnUpload_Click);
+                    mybtn.CssClass = "bg";
                     if (athDB == null)
-                        btnUpload.Enabled = false;
+                        mybtn.Visible = false;
                     else
-                        btnUpload.Enabled = true;
-                    this.Add(btnUpload);
+                        mybtn.Visible = true;
+                    this.Add(mybtn);
                 }
 
                 //this.Add("<input type=button value='编辑("+ath.Name+")附件' enable=true onclick=\"javascript:WinOpen('UploadFile.aspx?MyPK=" + en.PKVal + "&Ath=" + ath.MyPK + "');\" />");
                 //this.Add("<a href=# onclick=\"javascript:WinShowModalDialog('./FreeFrm/UploadFile.aspx?MyPK=" + en.PKVal + "&Ath=" + ath.MyPK + "','','400','120');\" />编辑(" + ath.Name + ")附件</a>");
+                //this.Add("</span>");
 
-                this.Add("</span>");
                 this.Add("</DIV>");
             }
             #endregion 输出附件.
@@ -1657,12 +1654,23 @@ namespace BP.Web.Comm.UC.WF
                     FrmAttachmentDB db = new FrmAttachmentDB();
                     db.MyPK = athDBPK;
                     db.Delete();
+                    Button btnDel = this.GetButtonByID("Btn_Delete_" + athDBPK);
+                    btnDel.Visible = false;
+
+                    btnDel = this.GetButtonByID("Btn_Download_" + athDBPK);
+                    btnDel.Visible = false;
                     this.Alert("删除成功...");
                     break;
                 case "Upload":
                     FileUpload fu = this.FindControl(athPK) as FileUpload;
-                    if (fu.HasFile == false)
-                        this.Alert("请上传文件.");
+                    if (fu.HasFile == false || fu.FileName.Length <= 2)
+                    {
+                        this.Alert("请选择上传的文件.");
+                        return;
+                    }
+
+                    if (System.IO.Directory.Exists(frmAth.SaveTo) == false)
+                        System.IO.Directory.CreateDirectory(frmAth.SaveTo);
 
                     string saveTo = frmAth.SaveTo + "\\" + fu.FileName;
                     fu.SaveAs(saveTo);
@@ -1670,17 +1678,32 @@ namespace BP.Web.Comm.UC.WF
                     FrmAttachmentDB dbUpload = new FrmAttachmentDB();
                     dbUpload.MyPK = athDBPK;
                     dbUpload.FK_FrmAttachment = athPK;
-
                     dbUpload.RefPKVal = this.HisEn.PKVal.ToString();
+                    if (this.EnName == null)
+                        dbUpload.FK_MapData = this.HisEn.ToString();
+                    else
+                        dbUpload.FK_MapData = this.EnName;
 
-                    dbUpload.FK_MapData = this.HisEn.ToString();
                     dbUpload.FileExts = info.Extension;
+                    dbUpload.SaveTo = info.Directory.FullName;
                     dbUpload.FileName = fu.FileName;
                     dbUpload.FileSize = (float)info.Length;
+
                     dbUpload.Save();
+
+                    Button myBtnDel = this.GetButtonByID("Btn_Delete_" + athDBPK);
+                    myBtnDel.Visible = true;
+
+                    myBtnDel = this.GetButtonByID("Btn_Download_" + athDBPK);
+                    myBtnDel.Visible = true;
+
                     this.Alert("上传成功.");
                     return;
                 case "Download":
+                    FrmAttachmentDB dbDown = new FrmAttachmentDB();
+                    dbDown.MyPK = athDBPK;
+                    dbDown.Retrieve();
+                    PubClass.DownloadFile(dbDown.FileFull, dbDown.FileName);
                     break;
                 default:
                     break;
