@@ -229,7 +229,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                     this.BindItWorkHL(nd);
                     return;
                 }
-              break;
+                break;
             case NodeWorkType.WorkFHL:
                 throw new Exception("系统没有判断的情况。");
             case NodeWorkType.WorkFL:
@@ -293,6 +293,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                     wns.GenerByWorkID(wn.HisNode.HisFlow, this.WorkID);
 
 
+                string turnTo = "xxx";
                 switch (nd.HisReturnRole)
                 {
                     case ReturnRole.CanNotReturn:
@@ -313,6 +314,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                             if (mywn.HisNode.NodeID != nodeId)
                                 continue;
 
+                            turnTo = mywn.HisWork.Rec + mywn.HisWork.RecText;
                             this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
                         }
                         break;
@@ -327,8 +329,11 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                             if (rnds.Contains(NodeReturnAttr.ReturnN, mywn.HisNode.NodeID) == false)
                                 continue;
 
+                            turnTo = mywn.HisWork.Rec + mywn.HisWork.RecText;
                             this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
                         }
+                        if (this.DDL1.Items.Count != 1)
+                            turnTo = " xxx ";
                         break;
                     default:
                         throw new Exception("@没有判断的退回类型。");
@@ -338,8 +343,8 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 this.DDL1.Enabled = true;
                 Work wk = pwn.HisWork;
                 this.TB1.Text = this.ToEP4("WBackInfo",
-                    "{0}同志: \n  您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
-                    wk.Rec + wk.RecText, wk.CDT, pwn.HisNode.Name, WebUser.Name + BP.DA.DataType.CurrentDataTime);
+                    "{0}同志: \n  您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n此致!!!   \n\n  {3}",
+                    turnTo, wk.CDT, pwn.HisNode.Name, WebUser.Name +"\n  "+ BP.DA.DataType.CurrentDataTime);
             }
             catch (Exception ex)
             {
