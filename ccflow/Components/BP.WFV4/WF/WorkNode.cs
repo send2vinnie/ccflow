@@ -1049,21 +1049,21 @@ namespace BP.WF
                     break;
             }
 
-            // 改变当前的工作节点．
-            WorkNode wn = new WorkNode(this.WorkID, backtoNodeID);
-            // 更新 return work 状态．
-            wn.HisWork.NodeState = NodeState.Back;
-            wn.HisWork.DirectUpdate();
 
-            GenerWorkFlow gwf = new GenerWorkFlow(this.HisWork.OID);
-            gwf.FK_Node = backtoNodeID;
-            gwf.DirectUpdate();
+            // 改变当前的工作节点．
+            WorkNode wnOfBackTo = new WorkNode(this.WorkID, backtoNodeID);
+            wnOfBackTo.HisWork.NodeState = NodeState.Back; // 更新 return work 状态．
+            wnOfBackTo.HisWork.DirectUpdate();
+
+            // 改变当前待办工作节点。
+            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow   SET FK_Node='" + backtoNodeID + "' WHERE  WorkID=" + this.WorkID);
             DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
 
+            
             // 记录退回轨迹。
             ReturnWork rw = new ReturnWork();
-            rw.WorkID = wn.HisWork.OID;
-            rw.FK_Node = wn.HisNode.NodeID;
+            rw.WorkID = wnOfBackTo.HisWork.OID;
+            rw.FK_Node = wnOfBackTo.HisNode.NodeID;
             rw.MyPK = rw.FK_Node + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmm");
             rw.Note = msg;
             try
@@ -1072,35 +1072,31 @@ namespace BP.WF
             }
             catch
             {
+                rw.Update();
             }
 
-            // 删除退回时当前节点的工作信息
-            this.HisWork.Delete();
+            
 
-            // 删除明细表信息。
-            MapDtls dtls = new MapDtls("ND" + this.HisNode.NodeID);
-            foreach (MapDtl dtl in dtls)
-            {
-                BP.DA.DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK='" + this.WorkID + "'");
-            }
-
-            // 删除当前工作者.
-            WorkerLists wkls = new WorkerLists(this.HisWork.OID, this.HisNode.NodeID);
-            wkls.Delete();
 
             // 以退回到的节点向前数据用递归删除它。
             DeleteToNodesData(backToNode.HisToNodes);
 
+            //删除正常的垃圾数据。
+            DBAccess.RunSQL("DELETE WF_GenerWorkFlow WHERE WorkID NOT IN (SELECT WorkID FROM WF_GenerWorkerList )");
+            DBAccess.RunSQL("DELETE WF_GenerFH WHERE FID NOT IN (SELECT FID FROM WF_GenerWorkerList)");
+
+
             //向他发送消息。
             WorkNode backWN = new WorkNode(this.WorkID, backtoNodeID);
-            WF.Port.WFEmp wfemp = new Port.WFEmp(backWN.HisWork.Rec);
+
+            WF.Port.WFEmp wfemp = new Port.WFEmp(wnOfBackTo.HisWork.Rec);
             BP.TA.SMS.AddMsg(rw.MyPK, wfemp.No,
                 wfemp.HisAlertWay, wfemp.Tel,
                   this.ToEP3("WN27", "工作退回：流程:{0}.工作:{1},退回人:{2},需您处理",
                   backToNode.FlowName, backToNode.Name, WebUser.Name),
                   wfemp.Email, null, msg);
 
-            return wn;
+            return wnOfBackTo;
         }
         /// <summary>
         /// 递归删除两个节点之间的数据
@@ -1120,18 +1116,42 @@ namespace BP.WF
                         continue;
                 }
 
+                #region 删除当前节点数据，删除附件信息。
+                // 删除明细表信息。
+                MapDtls dtls = new MapDtls("ND" + nd.NodeID);
+                foreach (MapDtl dtl in dtls)
+                {
+                    BP.DA.DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK='" + this.WorkID + "'");
+                }
+
+                // 删除表单附件信息。
+                BP.Sys.FrmAttachmentDBs fdbs = new FrmAttachmentDBs("ND" + nd.NodeID, wk.OID.ToString());
+                fdbs.Delete();
+                #endregion 删除当前节点数据。
+
+
                 /*说明:已经删除该节点数据。*/
                 DBAccess.RunSQL("DELETE WF_GenerWorkerList WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + ") AND FK_Node=" + nd.NodeID);
-
-                //删除正常的垃圾数据。
-                DBAccess.RunSQL("DELETE WF_GenerWorkFlow WHERE WorkID NOT IN (SELECT WorkID FROM WF_GenerWorkerList )");
-                DBAccess.RunSQL("DELETE WF_GenerFH WHERE FID NOT IN (SELECT FID FROM WF_GenerWorkerList)");
-
                 if (nd.IsFL)
                 {
                     /* 如果是分流 */
                     WorkerLists wls = new WorkerLists();
-                    wls.Retrieve(WorkerListAttr.FID, this.WorkID);
+                    QueryObject qo = new QueryObject(wls);
+                    qo.AddWhere(WorkerListAttr.FID, this.WorkID);
+                    qo.addAnd();
+
+                    string[] ndsStrs = nd.HisToNDs.Split('@');
+                    string inStr = "";
+                    foreach (string s in ndsStrs)
+                    {
+                        if (s == "" || s == null)
+                            continue;
+                        inStr += "'"+s+"',";
+                    }
+                    inStr = inStr.Substring(0, inStr.Length - 1);
+                    qo.AddWhereIn(WorkerListAttr.FK_Node, inStr);
+                    qo.DoQuery();
+
                     foreach (WorkerList wl in wls)
                     {
                         Node subNd = new Node(wl.FK_Node);
@@ -1148,6 +1168,9 @@ namespace BP.WF
                 }
                 DeleteToNodesData(nd.HisToNodes);
             }
+
+        
+
         }
         /// <summary>
         /// 执行退回
