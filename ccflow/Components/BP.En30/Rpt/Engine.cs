@@ -526,7 +526,6 @@ namespace BP.Rpt.RTF
         public void MakeDoc(string cfile, string path, string file, string replaceVals, bool isOpen)
         {
             string str = Cash.GetBillStr(cfile, false).Substring(0);
-
             if (this.HisEns.Count == 0)
                 if (this.HisGEEntity == null)
                     throw new Exception("@您没有为报表设置数据源...");
@@ -542,10 +541,8 @@ namespace BP.Rpt.RTF
                 ensStrs = this.HisGEEntity.ToString();
             }
 
-
             string error = "";
             string[] paras = null;
-
             if (this.HisGEEntity != null)
                 paras = Cash.GetBillParas(cfile, ensStrs, this.HisGEEntity);
             else
@@ -576,7 +573,6 @@ namespace BP.Rpt.RTF
                         error += "取参数[" + para + "]出现错误：有以下情况导致此错误;1你用Text取值时间，此属性不是外键。2,类无此属性。<br>更详细的信息：<br>" + ex.Message;
                         if (SystemConfig.IsDebug)
                             throw new Exception(error);
-
                         Log.DebugWriteError(error);
                     }
                 }

@@ -33,6 +33,10 @@ namespace BP.Sys
         /// 文件大小
         /// </summary>
         public const string FileSize = "FileSize";
+        /// <summary>
+        /// 保存到
+        /// </summary>
+        public const string SaveTo = "SaveTo";
     }
     /// <summary>
     /// 附件数据存储
@@ -40,6 +44,18 @@ namespace BP.Sys
     public class FrmAttachmentDB : EntityMyPK
     {
         #region 属性
+        public string SaveTo
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttachmentDBAttr.SaveTo);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentDBAttr.SaveTo, value);
+            }
+        }
+        
         /// <summary>
         /// 附件名称
         /// </summary>
@@ -122,6 +138,14 @@ namespace BP.Sys
                 this.SetValByKey(FrmAttachmentDBAttr.FileSize, value);
             }
         }
+        public string FileFull
+        {
+            get
+            {
+                return this.SaveTo + "\\" + this.FileName;
+                //return this.GetValStringByKey(FrmAttachmentDBAttr.FK_FrmAttachment);
+            }
+        }
         #endregion
 
         #region 构造方法
@@ -162,6 +186,8 @@ namespace BP.Sys
 
                 map.AddTBString(FrmAttachmentDBAttr.RefPKVal, null, "实体主键", true, false, 0, 50, 20);
 
+                map.AddTBString(FrmAttachmentDBAttr.SaveTo, null, "SaveTo", true, false, 0, 200, 20);
+                
                 map.AddTBString(FrmAttachmentDBAttr.FileName, null,"名称", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentDBAttr.FileExts, null, "扩展", true, false, 0, 50, 20);
                 map.AddTBFloat(FrmAttachmentDBAttr.FileSize, 0, "文件大小", true, false);

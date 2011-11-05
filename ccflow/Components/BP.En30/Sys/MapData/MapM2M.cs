@@ -206,22 +206,22 @@ namespace BP.Sys
                 this.SetValByKey(MapM2MAttr.GroupID, value);
             }
         }
-        public string Height
+        public int Height
         {
             get
             {
-                return this.GetValStringByKey(MapM2MAttr.Height);
+                return this.GetValIntByKey(MapM2MAttr.Height);
             }
             set
             {
                 this.SetValByKey(MapM2MAttr.Height, value);
             }
         }
-        public string Width
+        public int Width
         {
             get
             {
-                return this.GetValStringByKey(MapM2MAttr.Width);
+                return this.GetValIntByKey(MapM2MAttr.Width);
             }
             set
             {
@@ -291,7 +291,7 @@ namespace BP.Sys
                 Map map = new Map("Sys_MapM2M");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
-                map.EnDesc = "点对点";
+                map.EnDesc = "多选";
                 map.EnType = EnType.Sys;
 
                 map.AddTBStringPK(MapM2MAttr.No, null, "编号", true, false, 1, 20, 20);
@@ -301,10 +301,13 @@ namespace BP.Sys
                 map.AddTBString(MapM2MAttr.DBOfObjs, null, "DBOfObjs", true, false, 0, 4000, 20);
                 map.AddTBString(MapM2MAttr.DBOfGroups, null, "DBOfGroups", true, false, 0, 4000, 20);
 
-                map.AddTBString(MapM2MAttr.Height, "100%", "Height", true, false, 0, 10, 20);
-                map.AddTBString(MapM2MAttr.Width, "100%", "Width", true, false, 0, 10, 20);
 
-            
+                map.AddTBInt(MapM2MAttr.Height, 100, "Height", false, false);
+                map.AddTBInt(MapM2MAttr.Width, 160, "Width", false, false);
+
+                //map.AddTBString(MapM2MAttr.Height, "100%", "Height", true, false, 0, 10, 20);
+                //map.AddTBString(MapM2MAttr.Width, "100%", "Width", true, false, 0, 10, 20);
+
 
                 map.AddBoolean(MapM2MAttr.IsAutoSize, true, "是否自动设置大小", false, false);
 

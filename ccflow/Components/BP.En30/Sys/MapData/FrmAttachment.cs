@@ -253,7 +253,7 @@ namespace BP.Sys
 
                 map.AddTBString(FrmAttachmentAttr.Name, null,"名称", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentAttr.Exts, null, "扩展", true, false, 0, 50, 20);
-                map.AddTBString(FrmAttachmentAttr.SaveTo, null, "保存到", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentAttr.SaveTo, null, "保存到", true, false, 0, 150, 20);
                 
                 
                 map.AddTBFloat(FrmAttachmentAttr.X, 5, "X", true, false);
