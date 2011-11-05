@@ -215,7 +215,8 @@ namespace BP.WF
             }
             return WorkerListWayOfDept(town, dt);
         }
-        public WorkerLists GenerWorkerLists_WidthFID(WorkNode town)
+        private WorkNode town = null;
+       public WorkerLists GenerWorkerLists_WidthFID(WorkNode town)
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("No", typeof(string));
@@ -1075,8 +1076,6 @@ namespace BP.WF
                 rw.Update();
             }
 
-            
-
 
             // 以退回到的节点向前数据用递归删除它。
             DeleteToNodesData(backToNode.HisToNodes);
@@ -1146,10 +1145,14 @@ namespace BP.WF
                     {
                         if (s == "" || s == null)
                             continue;
-                        inStr += "'"+s+"',";
+                        inStr += "'" + s + "',";
                     }
                     inStr = inStr.Substring(0, inStr.Length - 1);
-                    qo.AddWhereIn(WorkerListAttr.FK_Node, inStr);
+                    if (inStr.Contains(",") == true)
+                        qo.AddWhere(WorkerListAttr.FK_Node, int.Parse(inStr));
+                    else
+                        qo.AddWhereIn(WorkerListAttr.FK_Node, "(" + inStr + ")");
+
                     qo.DoQuery();
 
                     foreach (WorkerList wl in wls)
