@@ -96,6 +96,14 @@ namespace BP.WF
         /// FJOpen
         /// </summary>
         public const string FJOpen = "FJOpen";
+        /// <summary>
+        /// 选择接受人
+        /// </summary>
+        public const string SelectAccepterLab = "SelectAccepterLab";
+        /// <summary>
+        /// SelectAccepterEnable
+        /// </summary>
+        public const string SelectAccepterEnable = "SelectAccepterEnable";
     }
     /// <summary>
     /// Btn
@@ -141,6 +149,20 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(BtnAttr.ShiftEnable, value);
+            }
+        }
+        public string SelectAccepterLab
+        {
+            get
+            {
+                return this.GetValStringByKey(BtnAttr.SelectAccepterLab);
+            }
+        }
+        public bool SelectAccepterEnable
+        {
+            get
+            {
+                return this.GetValBooleanByKey(BtnAttr.SelectAccepterEnable);
             }
         }
         public string RptLab
@@ -379,9 +401,14 @@ namespace BP.WF
                 map.AddTBString(BtnAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.TrackEnable, true, "是否启用", true, true);
 
+
+                map.AddTBString(BtnAttr.SelectAccepterLab, "接受人", "接受人按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.SelectAccepterEnable, false, "是否启用", true, true);
+
+
                 map.AddTBString(BtnAttr.OptLab, "选项", "选项按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.OptEnable, true, "是否启用", true, true);
-                 
+
 
                 //map.AddTBString(BtnAttr.URL, null, "URL", true, false, 0, 50, 10);
 
