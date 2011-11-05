@@ -267,7 +267,7 @@ namespace BP.Web.Controls
                 bool isHave = false;
                 foreach (ListItem li in this.Items)
                 {
-                    li.Attributes["visibility"] = "false";
+                    isHave = false;
                     foreach (DataRow dr in dt.Rows)
                     {
                         if (dr[val].ToString() == li.Value)
@@ -276,6 +276,12 @@ namespace BP.Web.Controls
                             break;
                         }
                     }
+                    //if (isHave==false)
+                    //    li.Attributes["display"] = "none";
+
+                    //else
+                    //    li.Attributes["visibility"] = "false";
+
                     if (isHave)
                         li.Attributes["visibility"] = "true";
                     else
