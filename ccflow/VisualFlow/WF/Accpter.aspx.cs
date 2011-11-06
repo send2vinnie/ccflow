@@ -17,6 +17,15 @@ using BP.Web.Controls;
 
 public partial class WF_Accpter : WebPage
 {
+    public int ToNode
+    {
+        get
+        {
+            if (this.Request.QueryString["ToNode"] == null)
+                return 0;
+            return int.Parse(this.Request["ToNode"].ToString());
+        }
+    }
     public int FK_Node
     {
         get
@@ -49,44 +58,52 @@ public partial class WF_Accpter : WebPage
             return this.Request.QueryString["FK_Station"];
         }
     }
+    public int MyToNode = 0;
     public DataTable GetTable()
     {
-        BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-        int nodeID = 0;
-        if (nd.HisToNodes.Count > 1)
-        {
-            Nodes nds = nd.HisToNodes;
-            foreach (BP.WF.Node mynd in nds)
-            {
-                if (mynd.HisDeliveryWay == DeliveryWay.BySelected)
-                    nodeID = mynd.NodeID;
-            }
-        //    throw new Exception("@流程设计错误，下一个节点发送到那里不能确定，您不能选择接受人员。");
-        }
-        else
-        {
-            Nodes nds = nd.HisToNodes;
-              nodeID = nds[0].GetValIntByKey("NodeID");
-        }
-
-        NodeStations stas = new NodeStations(nodeID);
+        NodeStations stas = new NodeStations(MyToNode);
         if (stas.Count == 0)
         {
-            BP.WF.Node toNd = new BP.WF.Node(nodeID);
+            BP.WF.Node toNd = new BP.WF.Node(MyToNode);
             throw new Exception("@流程设计错误：设计员没有设计节点[" + toNd.Name + "]，接受人的岗位范围。");
         }
 
         string sql = "SELECT No,Name,FK_Dept, '' as DeptName FROM Port_Emp WHERE NO IN ( ";
         sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
-        sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + nodeID + ") ";
-        sql += ") ORDER BY FK_DEPT";
+        sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
+        sql += ") ORDER BY FK_DEPT ";
 
-       // sql = "SELECT No,Name,FK_Dept, '' as DeptName FROM Port_Emp ";
+        // sql = "SELECT No,Name,FK_Dept, '' as DeptName FROM Port_Emp ";
         return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "选择下一步骤接受的人员";
+        string title = "";
+        BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
+        if (this.ToNode == 0)
+        {
+            if (nd.HisToNodes.Count > 1)
+            {
+                Nodes nds = nd.HisToNodes;
+                foreach (BP.WF.Node mynd in nds)
+                {
+                    if (mynd.HisDeliveryWay == DeliveryWay.BySelected)
+                        this.MyToNode = mynd.NodeID;
+                }
+                if (this.MyToNode == 0)
+                {
+                    this.WinCloseWithMsg("流程设计错误：\n\n 当前节点的所有分支节点没有一个接受人员规则为按照选择接受。");
+                    return;
+                }
+            }
+            else
+            {
+                Nodes nds = nd.HisToNodes;
+                this.MyToNode = nds[0].GetValIntByKey("NodeID");
+            }
+        }
+
 
         DataTable dt = this.GetTable(); //获取人员列表。
         SelectAccpers accps = new SelectAccpers();
@@ -97,7 +114,6 @@ public partial class WF_Accpter : WebPage
         string fk_dept = "";
         this.Pub1.AddTable("width=100%");
         this.Pub1.AddCaptionLeft(this.Title+"，可选择范围："+dt.Rows.Count+" 位。");
-
         if (dt.Rows.Count > 50)
         {
             /*多于一定的数，就显示导航。*/

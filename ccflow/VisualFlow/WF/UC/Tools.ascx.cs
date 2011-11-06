@@ -42,7 +42,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 
         this.Left.AddTR();
         this.Left.AddTDBigDocBegain();
-        this.Left.AddUL("id=ULM");
+        this.Left.AddUL();
 
         foreach (BP.WF.XML.Tool tool in tools)
         {
