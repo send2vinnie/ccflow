@@ -1309,17 +1309,15 @@ namespace BP.WF
         private WorkerLists WorkerListWayOfDept(WorkNode town, DataTable dt, Int64 fid)
         {
             if (dt.Rows.Count == 0)
-                throw new Exception(this.ToE("WN4", "接受人员列表为空")); // 接受人员列表为空
+                throw new Exception(this.ToE("WN4", "接受人员列表为空.")); // 接受人员列表为空
 
             Int64 workID = fid;
-            if (workID==0)
-                workID=this.HisWork.OID;
+            if (workID == 0)
+                workID = this.HisWork.OID;
 
             int toNodeId = town.HisNode.NodeID;
-
             this.HisWorkerLists = new WorkerLists();
             this.HisWorkerLists.Clear();
-
 
 #warning 限期时间  town.HisNode.DeductDays-1
 
@@ -1348,7 +1346,7 @@ namespace BP.WF
                "SDT", dtOfShould.ToString("yyyy-MM-dd"));
                     break;
             }
-           
+
 
             if (dt.Rows.Count == 1)
             {
@@ -1385,6 +1383,10 @@ namespace BP.WF
             {
                 /* 如果有多个人员 */
                 RememberMe rm = this.GetHisRememberMe(town.HisNode);
+
+                // 如果按照选择的人员处理，就设置它的记忆为空。2011-11-06处理电厂需求.
+                if (this.town.HisNode.HisDeliveryWay == DeliveryWay.BySelected)
+                    rm.Objs = "";
 
                 // 记忆中是否存在当前的人员。
                 bool isHaveIt = false;
@@ -1550,10 +1552,9 @@ namespace BP.WF
                     rm.Save();
                 }
             }
-
             if (this.HisWorkerLists.Count == 0)
                 throw new Exception("@根据部门产生工作人员出现错误，流程[" + this.HisWorkFlow.HisFlow.Name + "],中节点[" + town.HisNode.Name + "]定义错误,没有找到接受此工作的工作人员.");
-             
+
             return this.HisWorkerLists;
         }
         #endregion
