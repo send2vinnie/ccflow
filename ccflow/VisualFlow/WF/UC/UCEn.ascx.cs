@@ -1529,7 +1529,14 @@ namespace BP.Web.Comm.UC.WF
                 float x = ath.X;
                 float y = ath.Y;
                 this.Add("<DIV id='Fa" + ath.MyPK + "' style='position:absolute; left:" + x + "px; top:" + y + "px; width:" + ath.W + "px;text-align: left;float:left' >");
-              //  this.Add("<span>");
+                //  this.Add("<span>");
+
+                Label lab = new Label();
+                lab.ID = "Lab" + ath.MyPK;
+                this.Add(lab);
+                if (athDB != null)
+                    lab.Text = "<a href='./../DataUser/UploadFile/" + athDB.FilePathName + "' target=_blank ><img src='./../Images/FileType/" + athDB.FileExts + ".gif' border=0/>" + athDB.FileName + "</a>";
+
 
                 FileUpload fu = new FileUpload();
                 fu.ID = ath.MyPK;
@@ -1566,7 +1573,6 @@ namespace BP.Web.Comm.UC.WF
                     mybtn = new Button();
                     mybtn.Text = "删除";
                     mybtn.Attributes["onclick"] = " return confirm('您确定要执行删除吗？');";
-
                     mybtn.ID = "Btn_Delete_" + ath.MyPK + "_" + this.HisEn.PKVal;
                     mybtn.Click += new EventHandler(btnUpload_Click);
                     mybtn.CssClass = "bg";
@@ -1577,6 +1583,7 @@ namespace BP.Web.Comm.UC.WF
                     this.Add(mybtn);
                 }
 
+               
                 //this.Add("<input type=button value='编辑("+ath.Name+")附件' enable=true onclick=\"javascript:WinOpen('UploadFile.aspx?MyPK=" + en.PKVal + "&Ath=" + ath.MyPK + "');\" />");
                 //this.Add("<a href=# onclick=\"javascript:WinShowModalDialog('./FreeFrm/UploadFile.aspx?MyPK=" + en.PKVal + "&Ath=" + ath.MyPK + "','','400','120');\" />编辑(" + ath.Name + ")附件</a>");
                 //this.Add("</span>");
@@ -1659,7 +1666,9 @@ namespace BP.Web.Comm.UC.WF
 
                     btnDel = this.GetButtonByID("Btn_Download_" + athDBPK);
                     btnDel.Visible = false;
-                    this.Alert("删除成功...");
+
+                    Label lab1 = this.GetLabelByID("Lab" + frmAth.MyPK);
+                    lab1.Text = "";
                     break;
                 case "Upload":
                     FileUpload fu = this.FindControl(athPK) as FileUpload;
@@ -1672,8 +1681,9 @@ namespace BP.Web.Comm.UC.WF
                     if (System.IO.Directory.Exists(frmAth.SaveTo) == false)
                         System.IO.Directory.CreateDirectory(frmAth.SaveTo);
 
-                    string saveTo = frmAth.SaveTo + "\\" + fu.FileName;
+                    string saveTo = frmAth.SaveTo + "\\" + athDBPK + "." + fu.FileName.Substring(fu.FileName.LastIndexOf('.') + 1);
                     fu.SaveAs(saveTo);
+
                     FileInfo info = new FileInfo(saveTo);
                     FrmAttachmentDB dbUpload = new FrmAttachmentDB();
                     dbUpload.MyPK = athDBPK;
@@ -1685,25 +1695,24 @@ namespace BP.Web.Comm.UC.WF
                         dbUpload.FK_MapData = this.EnName;
 
                     dbUpload.FileExts = info.Extension;
-                    dbUpload.SaveTo = info.Directory.FullName;
+                    dbUpload.FileFullName = saveTo;
                     dbUpload.FileName = fu.FileName;
                     dbUpload.FileSize = (float)info.Length;
-
                     dbUpload.Save();
 
                     Button myBtnDel = this.GetButtonByID("Btn_Delete_" + athDBPK);
                     myBtnDel.Visible = true;
-
                     myBtnDel = this.GetButtonByID("Btn_Download_" + athDBPK);
                     myBtnDel.Visible = true;
 
-                    this.Alert("上传成功.");
+                    Label lab = this.GetLabelByID("Lab" + frmAth.MyPK);
+                    lab.Text = "<a href='./../DataUser/UploadFile/" + dbUpload.FilePathName + "' target=_blank ><img src='./../../Images/FileType/" + dbUpload.FileExts + ".gif' border=0/>" + dbUpload.FileName + "</a>";
                     return;
                 case "Download":
                     FrmAttachmentDB dbDown = new FrmAttachmentDB();
                     dbDown.MyPK = athDBPK;
                     dbDown.Retrieve();
-                    PubClass.DownloadFile(dbDown.FileFull, dbDown.FileName);
+                    PubClass.DownloadFile(dbDown.FileFullName, dbDown.FileName);
                     break;
                 default:
                     break;
