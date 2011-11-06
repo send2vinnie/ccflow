@@ -1,0 +1,118 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  
+  <!-- 节点状态  -->
+    <Item Key="NodeState"  
+          CH="@0=初始化@1=已完成@2=扣分@3=终止@4=删除@5=退回"  
+          EN="@0=Init@1=Completed@2=Points@3=Termination@4=Delete@5=Return"
+          JP="@0=Init@1=Completed@2=Points@3=Termination@4=Delete@5=Return"
+          RU="@0=Init@1=Completed@2=Points@3=Termination@4=Delete@5=Return" />
+   <!-- 审核模式  -->
+<Item Key="SignType"
+      CH="@0=单签@1=汇签"
+      EN="@0=Single sign@1=Health Check"
+      JP="@0=Single sign@1=Health Check"
+      RU="@0=Single sign@1=Health Check" />
+
+  <!-- 分流规则  -->
+<Item Key="FLRole"
+        CH="@0=按接受人@1=按部门@2=按岗位"
+        EN="@0=By recipient@1=By sector@2=By post"
+        JP="@0=By recipient@1=By sector@2=By post"
+        RU="@0=By recipient@1=By sector@2=By post"
+         />
+     
+
+  <!-- 附件权限  -->
+<Item Key="FJOpen"
+    CH="@0=关闭附件@1=操作员@2=工作ID@3=流程ID"
+    EN="@0=Close attachments@1=Operator@2=WorkID@3=FlowID"
+    JP="@0=Close attachments@1=Operator@2=WorkID@3=FlowID"
+    RU="@0=Close attachments@1=Operator@2=WorkID@3=FlowID" />
+    
+  <!-- 表单类型  -->
+<Item Key="FormType"
+     CH="@0=系统表单@1=自定义表单"
+     EN="@0=System Form@1=Custom Form"
+     JP="@0=System Form@1=Custom Form"
+     RU="@0=System Form@1=Custom Form" />
+
+  <!-- 公文类型  -->
+<Item Key="DocType"
+    CH="@0=正式公文@1=便函"
+    EN="@0=Official documents@1=Memo"
+    JP="@0=Official documents@1=Memo"
+    RU="@0=Official documents@1=Memo" />
+     
+
+  <!-- 运行方式  -->
+<Item Key="FlowRunWay"
+ CH="@0=手工启动@1=按月启动@2=按周启动@3=按天启动@4=按小时启动"
+ EN="@0=By Hand@1=By Month@2=By Week@3=By Day@4=By Hour"
+ JP="@0=By Hand@1=By Month@2=By Week@3=By Day@4=By Hour"
+ RU="@0=By Hand@1=By Month@2=By Week@3=By Day@4=By Hour" />
+
+<!-- 应用类型  -->
+<Item Key="AppType"
+  CH="@0=外部Url连接@1=本地可执行文件"
+  EN="@0=Url@1=exe"
+  JP="@0=Url@1=exe"
+  RU="@0=Url@1=exe" />
+
+  <!-- 运行模式  -->
+ <Item Key="RunModel"
+ CH="@0=普通@1=合流@2=分流@3=分合流"
+ EN="@0=General@1=Confluence@2=Shunt@3=Sub-confluent"
+ JP="@0=General@1=Confluence@2=Shunt@3=Sub-confluent"
+ RU="@0=General@1=Confluence@2=Shunt@3=Sub-confluent" />
+     
+
+  <!-- 提示信息类型  -->
+<Item Key="AlertType"
+CH="@0=短信@1=邮件@2=邮件与短信"
+EN="@0=SMS@1=Email@2=SMS-Email"
+JP="@0=SMS@1=Email@2=SMS-Email"
+RU="@0=SMS@1=Email@2=SMS-Email" />
+     
+
+  <!-- 收听方式  -->
+<Item Key="AlertWay"
+CH="@0=不接收@1=短信@2=邮件@3=邮件与短信"
+EN="@0=None@1=SMS@2=Email@3=SMS-Email"
+JP="@0=None@1=SMS@2=Email@3=SMS-Email"
+RU="@0=None@1=SMS@2=Email@3=SMS-Email" />
+
+  <!-- CycleWay  --><!--
+<Item Key="CycleWay"  IntKey="0"  CH="未设置"  EN="" RU=""  JP=""/>
+<Item Key="CycleWay"  IntKey="1"  CH="按周"  EN="" RU="" JP=""  />
+<Item Key="CycleWay"  IntKey="2"  CH="按月"  EN="" RU="" JP=""  />
+<Item Key="CycleWay"  IntKey="3"  CH="按年"  EN="" RU="" JP=""  />-->
+
+  <!-- Target  -->
+    <Item Key="Target"
+CH="@0=新窗口@1=本窗口@2=父窗口"
+EN="@0=New@1=Self@2=Parent"
+JP="@0=New@1=Self@2=Parent"
+RU="@0=New@1=SMS@2=Parent" />
+
+  <!-- SharingType  -->
+<Item Key="SharingType"
+CH="@0=共享@1=私有"
+EN="@0=Share@1=Privete"
+JP="@0=Share@1=Privete"
+RU="@0=Share@1=Privete" />
+
+<!-- TaskSta状态  -->
+<Item Key="TaskSta"
+CH="@0=未开始@1=进行中@2=完成@3=推迟"
+EN="@0=Init@1=Runing@2=Complete@3=Postpone"
+JP="@0=Init@1=Runing@2=Complete@3=Postpone"
+RU="@0=Init@1=Runing@2=Complete@3=Postpone" />
+    
+<!-- PRI 优先级  -->
+<Item Key="PRI"
+CH="@0=高@1=中@2=低"
+EN="@0=Height@1=Middle@2=Low"
+JP="@0=Height@1=Middle@2=Low"
+RU="@0=Height@1=Middle@2=Low" />
+</NewDataSet>
