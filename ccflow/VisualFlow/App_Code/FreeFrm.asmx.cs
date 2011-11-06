@@ -327,7 +327,7 @@ namespace FreeFrm.Web
                         string delFK_Frm = v1;
                         MapData mdDel = new MapData(delFK_Frm);
                         mdDel.Delete();
-                        sql = "@DELETE WF_Frm WHERE No='" + delFK_Frm + "'";
+                        sql = "@DELETE Sys_MapData WHERE No='" + delFK_Frm + "'";
                         sql = "@DELETE WF_FrmNode WHERE FK_Frm='" + delFK_Frm + "'";
                         DBAccess.RunSQLs(sql);
                         return null;
@@ -357,7 +357,7 @@ namespace FreeFrm.Web
                         if (msg.Contains("Error"))
                             return msg;
 
-                        BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
+                       // BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
 
                         string fk_frm = msg;
                         Frm fm = new Frm();
@@ -371,7 +371,7 @@ namespace FreeFrm.Web
                             fn.IsReadonly = isReadonly;
                             fn.IsPrint = isPrint;
                             fn.Update();
-                            BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
+                        //    BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
                             return fk_frm;
                         }
 
@@ -415,7 +415,7 @@ namespace FreeFrm.Web
                         attr.DefVal = "0";
                         attr.HisEditType = BP.En.EditType.Readonly;
                         attr.Insert();
-                        BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
+                       // BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
                         return fk_frm;
                     default:
                         return "Error:";
