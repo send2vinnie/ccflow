@@ -36,7 +36,19 @@ namespace BP.Sys
         /// <summary>
         /// 保存到
         /// </summary>
-        public const string SaveTo = "SaveTo";
+        public const string FileFullName = "FileFullName";
+        /// <summary>
+        /// 记录日期
+        /// </summary>
+        public const string RDT = "RDT";
+        /// <summary>
+        /// 记录人
+        /// </summary>
+        public const string Rec = "Rec";
+        /// <summary>
+        /// 记录人名字
+        /// </summary>
+        public const string RecName = "RecName";
     }
     /// <summary>
     /// 附件数据存储
@@ -44,18 +56,38 @@ namespace BP.Sys
     public class FrmAttachmentDB : EntityMyPK
     {
         #region 属性
-        public string SaveTo
+        public string RDT
         {
             get
             {
-                return this.GetValStringByKey(FrmAttachmentDBAttr.SaveTo);
+                return this.GetValStringByKey(FrmAttachmentDBAttr.RDT);
             }
             set
             {
-                this.SetValByKey(FrmAttachmentDBAttr.SaveTo, value);
+                this.SetValByKey(FrmAttachmentDBAttr.RDT, value);
             }
         }
-        
+        /// <summary>
+        /// 文件
+        /// </summary>
+        public string FileFullName
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttachmentDBAttr.FileFullName);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentDBAttr.FileFullName, value);
+            }
+        }
+        public string FilePathName
+        {
+            get
+            {
+                return this.FileFullName.Substring(this.FileFullName.LastIndexOf('\\') + 1);
+            }
+        }
         /// <summary>
         /// 附件名称
         /// </summary>
@@ -81,7 +113,7 @@ namespace BP.Sys
             }
             set
             {
-                this.SetValByKey(FrmAttachmentDBAttr.FileExts, value);
+                this.SetValByKey(FrmAttachmentDBAttr.FileExts, value.Replace(".",""));
             }
         }
         /// <summary>
@@ -109,7 +141,28 @@ namespace BP.Sys
                 this.SetValByKey(FrmAttachmentDBAttr.RefPKVal, value);
             }
         }
-        
+        public string Rec
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttachmentDBAttr.Rec);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentDBAttr.Rec, value);
+            }
+        }
+        public string RecName
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttachmentDBAttr.RecName);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentDBAttr.RecName, value);
+            }
+        }
         /// <summary>
         /// 附件编号
         /// </summary>
@@ -135,15 +188,7 @@ namespace BP.Sys
             }
             set
             {
-                this.SetValByKey(FrmAttachmentDBAttr.FileSize, value);
-            }
-        }
-        public string FileFull
-        {
-            get
-            {
-                return this.SaveTo + "\\" + this.FileName;
-                //return this.GetValStringByKey(FrmAttachmentDBAttr.FK_FrmAttachment);
+                this.SetValByKey(FrmAttachmentDBAttr.FileSize, value/1024);
             }
         }
         #endregion
@@ -180,21 +225,27 @@ namespace BP.Sys
                 map.EnDesc = "附件数据存储";
                 map.EnType = EnType.Sys;
                 map.AddMyPK();
-
                 map.AddTBString(FrmAttachmentDBAttr.FK_MapData, null,"FK_MapData", true, false, 1, 30, 20);
                 map.AddTBString(FrmAttachmentDBAttr.FK_FrmAttachment, null, "附件编号", true, false, 1, 50, 20);
-
                 map.AddTBString(FrmAttachmentDBAttr.RefPKVal, null, "实体主键", true, false, 0, 50, 20);
-
-                map.AddTBString(FrmAttachmentDBAttr.SaveTo, null, "SaveTo", true, false, 0, 200, 20);
-                
+                map.AddTBString(FrmAttachmentDBAttr.FileFullName, null, "FileFullName", true, false, 0, 200, 20);
                 map.AddTBString(FrmAttachmentDBAttr.FileName, null,"名称", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentDBAttr.FileExts, null, "扩展", true, false, 0, 50, 20);
                 map.AddTBFloat(FrmAttachmentDBAttr.FileSize, 0, "文件大小", true, false);
 
+                map.AddTBDateTime(FrmAttachmentDBAttr.RDT, null, "记录日期", true, false);
+                map.AddTBString(FrmAttachmentDBAttr.Rec, null, "记录人", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentDBAttr.RecName, null, "记录人名字", true, false, 0, 50, 20);
                 this._enMap = map;
                 return this._enMap;
             }
+        }
+        protected override bool beforeInsert()
+        {
+            this.RDT = DataType.CurrentDataTime;
+            this.Rec=BP.Web.WebUser.No;
+            this.RecName = BP.Web.WebUser.Name;
+            return base.beforeInsert();
         }
         #endregion
     }

@@ -640,6 +640,7 @@ namespace BP.En
             }
             catch (Exception ex)
             {
+                throw new Exception("@无法执行对:"+this.ToString()+"的查询，可能是它的字段属性清除了，请检查map文件。"+this.EnMap.PhysicsTable+"。@异常信息:"+ex.Message);
                 Log.DebugWriteWarning(ex.Message);
                 this.CheckPhysicsTable();
                 throw ex;

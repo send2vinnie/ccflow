@@ -5,6 +5,24 @@ using BP.En;
 namespace BP.Sys
 {
     /// <summary>
+    /// 附件上传类型
+    /// </summary>
+    public enum AttachmentUploadType
+    {
+        /// <summary>
+        /// 单个的
+        /// </summary>
+        Single,
+        /// <summary>
+        /// 多个的
+        /// </summary>
+        Multi,
+        /// <summary>
+        /// 指定的
+        /// </summary>
+        Specifically
+    }
+    /// <summary>
     /// 附件
     /// </summary>
     public class FrmAttachmentAttr : EntityMyPKAttr
@@ -26,9 +44,13 @@ namespace BP.Sys
         /// </summary>
         public const string Y = "Y";
         /// <summary>
-        /// W
+        /// 宽度
         /// </summary>
         public const string W = "W";
+        /// <summary>
+        /// 高度
+        /// </summary>
+        public const string H = "H";
         /// <summary>
         /// Exts
         /// </summary>
@@ -53,6 +75,10 @@ namespace BP.Sys
         /// 保存到
         /// </summary>
         public const string SaveTo = "SaveTo";
+        /// <summary>
+        /// 上传类型
+        /// </summary>
+        public const string UploadType = "UploadType";
     }
     /// <summary>
     /// 附件
@@ -60,6 +86,20 @@ namespace BP.Sys
     public class FrmAttachment : EntityMyPK
     {
         #region 属性
+        /// <summary>
+        /// 上传类型
+        /// </summary>
+        public AttachmentUploadType UploadType
+        {
+            get
+            {
+                return (AttachmentUploadType)this.GetValIntByKey(FrmAttachmentAttr.UploadType);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.UploadType, value);
+            }
+        }
         /// <summary>
         /// 是否可以上传
         /// </summary>
@@ -134,7 +174,10 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStringByKey(FrmAttachmentAttr.SaveTo);
+                string s= this.GetValStringByKey(FrmAttachmentAttr.SaveTo);
+                if (s == "" || s == null)
+                    s = @"D:\ccflow\VisualFlow\DataUser\UploadFile";
+                return s;
             }
             set
             {
@@ -198,6 +241,20 @@ namespace BP.Sys
             }
         }
         /// <summary>
+        /// H
+        /// </summary>
+        public float H
+        {
+            get
+            {
+                return this.GetValFloatByKey(FrmAttachmentAttr.H);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.H, value);
+            }
+        }
+        /// <summary>
         /// FK_MapData
         /// </summary>
         public string FK_MapData
@@ -250,21 +307,20 @@ namespace BP.Sys
                     "FK_MapData", true, false, 1, 30, 20);
 
                 map.AddTBString(FrmAttachmentAttr.NoOfAth, null, "附件编号", true, false, 0, 50, 20);
-
                 map.AddTBString(FrmAttachmentAttr.Name, null,"名称", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentAttr.Exts, null, "扩展", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentAttr.SaveTo, null, "保存到", true, false, 0, 150, 20);
-                
-                
+
                 map.AddTBFloat(FrmAttachmentAttr.X, 5, "X", true, false);
                 map.AddTBFloat(FrmAttachmentAttr.Y, 5, "Y", false, false);
-                map.AddTBFloat(FrmAttachmentAttr.W, 5, "TBWidth", false, false);
-
+                map.AddTBFloat(FrmAttachmentAttr.W, 40, "TBWidth", false, false);
+                map.AddTBFloat(FrmAttachmentAttr.H, 150, "H", false, false);
 
                 map.AddTBInt(FrmAttachmentAttr.IsUpload, 1, "是否可以上传", false, false);
                 map.AddTBInt(FrmAttachmentAttr.IsDelete, 1, "是否可以删除", false, false);
                 map.AddTBInt(FrmAttachmentAttr.IsDownload, 1, "是否可以下载", false, false);
 
+                map.AddTBInt(FrmAttachmentAttr.UploadType, 0, "上传类型0单个1多个2指定", false, false);
 
                 this._enMap = map;
                 return this._enMap;
