@@ -228,8 +228,11 @@
       <DependentUpon>StationNode.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Text.Designer.cs" />
-    <Compile Include="Resources\Text.en-us.Designer.cs" />
+    <Compile Include="Resources\Text.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Text.resx</DependentUpon>
+    </Compile>
     <Compile Include="Service References\WS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -409,15 +412,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Text.en-us.resx" />
-    <EmbeddedResource Include="Resources\Text.ja-JP.resx" />
-    <EmbeddedResource Include="Resources\Text.resx" />
-    <EmbeddedResource Include="Resources\Text.ru-RU.resx">
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Resources\Text.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Text.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Text.zh-cn.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Text.zh-Hant.resx" />
+    <EmbeddedResource Include="Resources\Text.zh-cn.resx" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\image\Authorize.gif" />

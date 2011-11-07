@@ -415,7 +415,7 @@
     <value>部门</value>
   </data>
   <data name="TbItemFlow" xml:space="preserve">
-    <value>流程</value>
+    <value>流程树</value>
   </data>
   <data name="TbStation" xml:space="preserve">
     <value>岗位</value>

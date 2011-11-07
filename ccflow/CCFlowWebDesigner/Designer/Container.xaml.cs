@@ -1594,23 +1594,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             IsNeedSave = true;
         }
         
-        void applyContainerCulture()
-        {
-
-            btnCloseMessage.Content = Text.Button_Close;
-
-        }
         
-        public void ApplyCulture()
-        {
-            applyContainerCulture();
-
-            menuFlowNode.ApplyCulture();
-            //  menuLabel.ApplyCulture();
-            menuDirection.ApplyCulture();
-            //siFlowNodeSetting.ApplyCulture();
-            //siDirectionSetting.ApplyCulture();
-        }
 
         public void PastMemoryToContainer()
         {
@@ -1917,8 +1901,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _Service.GetDirectionAsync(FlowID);
             _Service.GetDirectionCompleted += new EventHandler<GetDirectionCompletedEventArgs>(_service_GetDirectionCompleted);
 
-
-
             SaveChange(HistoryType.New);
             _Service.RunSQLReturnTableCompleted -= new EventHandler<RunSQLReturnTableCompletedEventArgs>(_service_RunSQLReturnTableCompleted);
         }
@@ -1928,8 +1910,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             DataSet ds = new DataSet();
             ds.FromXml(e.Result);
 
-
-            foreach (FlowNode bfn in FlowNodeCollections)
+             foreach (FlowNode bfn in FlowNodeCollections)
             {
 
 
@@ -2409,7 +2390,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             menuContainer.Visibility = Visibility.Collapsed;
             menuContainer.Container = this;
 
-
             SetGridLines();
 
             HtmlPage.Document.AttachEvent("oncontextmenu", OnContextMenu);
@@ -2417,15 +2397,17 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
-            ApplyCulture();
+
             cnsDesignerContainer.Height = Application.Current.Host.Content.ActualHeight;
             cnsDesignerContainer.Width = Application.Current.Host.Content.ActualWidth;
 
         }
+
         public Container(string flowid): this()
         {
             this.FlowID = flowid;
         }
+
         #endregion
 
     }

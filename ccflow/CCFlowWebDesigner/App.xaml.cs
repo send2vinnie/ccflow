@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -30,7 +32,11 @@ namespace WF
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //this.RootVisual = new Dtl();
+            //设置当前线程的culture,以加载指定语言的字符
+            var culture = new CultureInfo("zh-cn");
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+
             WF.WS.WSDesignerSoapClient da = new WS.WSDesignerSoapClient();
             da.CfgKeyAsync("BPMHost");
             da.CfgKeyCompleted += new EventHandler<WS.CfgKeyCompletedEventArgs>(da_CfgKeyCompleted);

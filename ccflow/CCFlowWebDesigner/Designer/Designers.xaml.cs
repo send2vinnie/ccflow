@@ -463,7 +463,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             catch (Exception ex)
             {
-                MessageBox.Show("加载流程树时发生了错误,请检查数据库连接信息以及IIS WebService配置错误信息.", "错误", MessageBoxButton.OK);
+                MessageBox.Show("加载流程树时发生了错误,请检查数据库和Web.Config。错误具体信息为:\n" + e.Result, "错误", MessageBoxButton.OK);
                 return;
             }
            
