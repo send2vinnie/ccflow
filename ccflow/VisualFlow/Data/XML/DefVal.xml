@@ -2,10 +2,10 @@
 <NewDataSet>
 	<!-- 外部连接配置说明  No, 部门编号，URL 对方sqlserver 的连接。  -->
 	<Item No="CH_1" Lang="CH" Name="选择系统约定默认值" Val=""  />
-  <Item No="CH_2" Lang="CH" Name="操作员编号" Val="@WebUser.No"  />
-  <Item No="CH_3" Lang="CH" Name="操作员名称" Val="@WebUser.Name"  />
-  <Item No="CH_4" Lang="CH" Name="操作员部门编号" Val="@WebUser.FK_Dept"  />
-  <Item No="CH_5" Lang="CH" Name="操作员部门名称" Val="@WebUser.FK_DeptName"  />
+  <Item No="CH_2" Lang="CH" Name="登陆人员账号" Val="@WebUser.No"  />
+  <Item No="CH_3" Lang="CH" Name="登陆人员名称" Val="@WebUser.Name"  />
+  <Item No="CH_4" Lang="CH" Name="登陆人员部门编号" Val="@WebUser.FK_Dept"  />
+  <Item No="CH_5" Lang="CH" Name="登陆人员部门名称" Val="@WebUser.FK_DeptName"  />
   <Item No="CH_6" Lang="CH" Name="当前日期-1" Val="@yyyy年mm月dd日"  />
   <Item No="CH_7" Lang="CH" Name="当前日期-2" Val="@yy年mm月dd日"  />
   <Item No="CH_8" Lang="CH" Name="当前年度" Val="@FK_ND"  />

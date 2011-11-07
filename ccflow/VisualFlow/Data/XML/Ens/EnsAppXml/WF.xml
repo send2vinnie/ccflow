@@ -6,5 +6,6 @@
   DBType = String Int Enum Boolen
   -->
   <!-- 信息发布 -->
-  <Item EnsName="BP.WF.GEWorks" No="EditerType" Name="文本编辑器类型" DefVal="0" Desc="文本编辑器类型" DBType="Enum" EnumKey="EditerType" EnumVals="@0=无@1=Sina@2=FCediter" />
+  <Item EnsName="BP.WF.GEWorks" No="EditerType" Name="文本编辑器类型" DefVal="0" 
+        Desc="文本编辑器类型" DBType="Enum" EnumKey="EditerType" EnumVals="@0=无@1=Sina@2=FCediter" />
 </NewDataSet>
