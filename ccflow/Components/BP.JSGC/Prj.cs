@@ -57,6 +57,10 @@ namespace BP.PRJ
         /// 项目状态
         /// </summary>
         public const string PrjState = "PrjState";
+        /// <summary>
+        /// 部门
+        /// </summary>
+        public const string FK_Dept = "FK_Dept";
     }
 	/// <summary>
 	/// 项目
@@ -237,6 +241,8 @@ namespace BP.PRJ
 
                 map.AddTBStringPK(PrjAttr.No, null, "编号", true, true, 4, 4, 4);
                 map.AddTBString(PrjAttr.Name, null, "名称", true, false, 0, 60, 500);
+                map.AddDDLEntities(PrjAttr.FK_Dept, null, this.ToE("Dept", "部门"), new Port.Depts(), true);
+
                
                 map.AddDDLSysEnum(PrjAttr.PrjState, 0, "项目状态", true, true, PrjAttr.PrjState,
                     "@0=新建@1=运行中@2=备案");
@@ -247,9 +253,10 @@ namespace BP.PRJ
                 map.AttrsOfOneVSM.Add(new EmpPrjs(), new Emps(), EmpPrjAttr.FK_Prj, EmpPrjAttr.FK_Emp,
                     DeptAttr.Name, DeptAttr.No, "成员");
 
-                  
 
+                map.AddSearchAttr(PrjAttr.FK_Dept);
                 map.AddSearchAttr(PrjAttr.PrjState);
+
 
                 RefMethod rm = new RefMethod();
                 rm.Title = "成员岗位";
