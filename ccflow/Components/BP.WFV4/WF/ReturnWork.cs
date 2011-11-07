@@ -151,6 +151,7 @@ namespace BP.WF
                 Map map = new Map("WF_ReturnWork");
                 map.EnDesc = this.ToE("ReturnRec", "�˻ع켣");
                 map.EnType = EnType.App;
+
                 map.AddMyPK();
 
                 map.AddTBInt(ReturnWorkAttr.WorkID, 0, "WorkID", true, true);

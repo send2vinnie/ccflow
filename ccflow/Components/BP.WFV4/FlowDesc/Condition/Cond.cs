@@ -92,6 +92,10 @@ namespace BP.WF
         /// MyPOID
         /// </summary>
         public const string MyPOID = "MyPOID";
+        /// <summary>
+        /// PRI
+        /// </summary>
+        public const string PRI = "PRI";
     }
     /// <summary>
     /// 条件类型
@@ -184,6 +188,17 @@ namespace BP.WF
             get
             {
                 return new Node(this.NodeID);
+            }
+        }
+        public int PRI
+        {
+            get
+            {
+                return this.GetValIntByKey(CondAttr.PRI);
+            }
+            set
+            {
+                this.SetValByKey(CondAttr.PRI, value);
             }
         }
         public int MyPOID
@@ -520,6 +535,9 @@ namespace BP.WF
                 map.AddDDLSysEnum(CondAttr.ConnJudgeWay, 0, "条件关系", true, false, CondAttr.ConnJudgeWay, "@0=or@1=and");
                 //  map.AddTBInt(CondAttr.ConnJudgeWay, 0, "条件关系", true, true);
                 map.AddTBInt(CondAttr.MyPOID, 0, "MyPOID", true, true);
+
+                map.AddTBInt(CondAttr.PRI, 0, "计算优先级", true, true);
+
                 this._enMap = map;
                 return this._enMap;
             }
@@ -648,8 +666,7 @@ namespace BP.WF
         public Conds(CondType ct, int nodeID, Int64 workid)
         {
             this.NodeID = nodeID;
-            this.Retrieve(CondAttr.NodeID, nodeID, CondAttr.CondType, (int)ct);
-
+            this.Retrieve(CondAttr.NodeID, nodeID, CondAttr.CondType, (int)ct, CondAttr.PRI);
             foreach (Cond en in this)
                 en.WorkID = workid;
         }

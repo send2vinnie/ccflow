@@ -218,6 +218,7 @@ namespace BP.WF
         private WorkNode town = null;
        public WorkerLists GenerWorkerLists_WidthFID(WorkNode town)
         {
+            this.town = town;
             DataTable dt = new DataTable();
             dt.Columns.Add("No", typeof(string));
             string sql;
@@ -449,6 +450,8 @@ namespace BP.WF
         }
         public WorkerLists GenerWorkerLists(WorkNode town)
         {
+            this.town = town;
+
             DataTable dt = new DataTable();
             dt.Columns.Add("No", typeof(string));
             string sql;
@@ -603,7 +606,8 @@ namespace BP.WF
                             isInit = true;
                         }
                     }
-                    if (isInit == false)
+#warning edit by peng, 用来确定不同岗位集合的传递包含同一个人的处理方式。
+                    if (isInit == false || isInit==true)
                         return WorkerListWayOfDept(town, dt);
                 }
             }
@@ -1300,12 +1304,6 @@ namespace BP.WF
         {
             return WorkerListWayOfDept(town,dt,0);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="town"></param>
-        /// <param name="dt"></param>
-        /// <returns></returns>
         private WorkerLists WorkerListWayOfDept(WorkNode town, DataTable dt, Int64 fid)
         {
             if (dt.Rows.Count == 0)
@@ -1386,7 +1384,10 @@ namespace BP.WF
 
                 // 如果按照选择的人员处理，就设置它的记忆为空。2011-11-06处理电厂需求.
                 if (this.town.HisNode.HisDeliveryWay == DeliveryWay.BySelected)
-                    rm.Objs = "";
+                {
+                    if (rm != null)
+                        rm.Objs = "";
+                }
 
                 // 记忆中是否存在当前的人员。
                 bool isHaveIt = false;
@@ -2147,7 +2148,7 @@ namespace BP.WF
                 return FeiLiuStartUp((Node)toNodes[0]);
 
             Conds dcsAll = new Conds();
-            dcsAll.Retrieve(CondAttr.NodeID, this.HisNode.NodeID);
+            dcsAll.Retrieve(CondAttr.NodeID, this.HisNode.NodeID, CondAttr.PRI);
             if (dcsAll.Count == 0)
             {
                 /*如果没有设置方向条件就全部通过*/
@@ -2857,35 +2858,42 @@ namespace BP.WF
             Node toNode = null;
             int numOfWay = 0;
             string condMsg = "";
-            foreach (Node nd in toNodes)
+            Conds dcs = new Conds();
+            QueryObject qo = new QueryObject(dcs);
+            qo.AddWhere(CondAttr.NodeID, this.HisNode.NodeID);
+            qo.addOrderBy(CondAttr.PRI);
+            qo.DoQuery();
+
+            foreach (Cond cd in dcs)
             {
-                Conds dcs = new Conds();
-                QueryObject qo = new QueryObject(dcs);
-                qo.AddWhere(CondAttr.NodeID, this.HisNode.NodeID);
-                qo.addAnd();
-                qo.AddWhere(CondAttr.ToNodeID, nd.NodeID);
-                qo.DoQuery();
+                foreach (Node nd in toNodes)
+                {
+                    if (cd.ToNodeID != nd.NodeID)
+                        continue;
 
-                foreach (Cond dc in dcs)
-                {
-                    dc.WorkID = this.HisWork.OID;
-                }
-                if (dcs.Count == 0)
-                {
-                    throw new Exception(string.Format(this.ToE("WN10",
-                        "@定义节点的方向条件错误:没有给从{0}节点到{1},定义转向条件."),
-                        this.HisNode.NodeID + this.HisNode.Name, nd.NodeID + nd.Name));
-                }
+                    foreach (Cond dc in dcs)
+                        dc.WorkID = this.HisWork.OID;
 
-                if (dcs.IsPass) // 如果多个转向条件中有一个成立.
-                {
-                    numOfWay++;
-                    toNode = nd;
+                    if (dcs.Count == 0)
+                    {
+                        throw new Exception(string.Format(this.ToE("WN10",
+                            "@定义节点的方向条件错误:没有给从{0}节点到{1},定义转向条件."),
+                            this.HisNode.NodeID + this.HisNode.Name, nd.NodeID + nd.Name));
+                    }
+
+                    if (dcs.IsPass) // 如果多个转向条件中有一个成立.
+                    {
+                        numOfWay++;
+                        toNode = nd;
+                        break;
+                    }
+                    condMsg += "<b>@检查方向条件：到节点：" + nd.Name + "</b>";
+                    condMsg += dcs.MsgOfDesc;
+                }
+                if (toNode != null)
                     break;
-                }
-                condMsg += "<b>@检查方向条件：到节点：" + nd.Name + "</b>";
-                condMsg += dcs.MsgOfDesc;
             }
+
             if (toNode == null)
                 throw new Exception(string.Format(this.ToE("WN11", "@转向条件设置错误:节点名称{0}, 系统无法投递。"),
                     this.HisNode.Name));
@@ -2943,6 +2951,8 @@ namespace BP.WF
                         athDB_N.Copy(athDB);
                         athDB_N.FK_MapData = "ND" + nd.NodeID;
                         athDB_N.MyPK = athDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
+                        athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
+                            "ND" + nd.NodeID);
                         athDB_N.Save();
                     }
                 }
@@ -3003,7 +3013,7 @@ namespace BP.WF
                         {
                             case NodeWorkType.Work:
                             case NodeWorkType.StartWork:
-                                if (this.HisWork.FID == 0 )
+                                if (this.HisWork.FID == 0)
                                     msg = StartNextWorkNodeHeLiu_WithOutFID(nd);  /* 没有流程ID,比如: */
                                 else
                                     msg = StartNextWorkNodeHeLiu_WithFID(nd);  /* 合流节点, 开始节点是分流节点 */
@@ -3012,7 +3022,7 @@ namespace BP.WF
                                 throw new Exception("@没有判断的情况。");
                         }
 
-                        msg += "@<a href='" + this.VirPath + "/WF/MyFlowInfo"+Glo.FromPageType+".aspx?DoType=UnSend&FID=" + this.HisWork.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + nd.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
+                        msg += "@<a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&FID=" + this.HisWork.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + nd.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
                         return msg;
                     case NodeWorkType.StartWork:
                     case NodeWorkType.StartWorkFL:
@@ -3270,6 +3280,8 @@ namespace BP.WF
                         athDB_N.Copy(athDB);
                         athDB_N.FK_MapData = "ND" + nd.NodeID;
                         athDB_N.MyPK = athDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
+                        athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
+                           "ND" + nd.NodeID);
                         athDB_N.Save();
                     }
                 }

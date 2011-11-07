@@ -173,7 +173,7 @@ namespace BP.WF
             }
             set
             {
-                this.SetValByKey(FileManagerAttr.FileSize, value/1000);
+                this.SetValByKey(FileManagerAttr.FileSize, value/1024);
             }
         }
         
