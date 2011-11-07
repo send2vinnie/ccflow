@@ -174,6 +174,21 @@ namespace FreeFrm.Web
                         M2M m2mData = new M2M();
                         m2mData.Delete(M2MAttr.MapM2M, v1);
                         return null;
+                    case "NewAthM": // 新建 NewAthM. 
+                        string fk_mapdataAth = v1;
+                        string athName = v2;
+
+                        BP.Sys.FrmAttachment athM = new FrmAttachment();
+                        athM.MyPK = athName;
+                        if (athM.IsExits)
+                            return "多选名称:" + athName + "，已经存在。";
+
+                        athM.X = float.Parse(v3);
+                        athM.Y = float.Parse(v4);
+                        athM.Name = "多文件上传";
+                        athM.FK_MapData = fk_mapdataAth;
+                        athM.Insert();
+                        return null;
                     case "NewM2M":
                         string fk_mapdataM2M = v1;
                         string m2mName = v2;
