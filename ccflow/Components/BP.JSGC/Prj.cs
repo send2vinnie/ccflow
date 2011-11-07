@@ -247,7 +247,7 @@ namespace BP.PRJ
                 map.AddDDLSysEnum(PrjAttr.PrjState, 0, "项目状态", true, true, PrjAttr.PrjState,
                     "@0=新建@1=运行中@2=备案");
 
-                map.AddTBString(PrjAttr.DW, null, "单位", true, false, 0, 60, 500);
+                map.AddTBString(PrjAttr.DW, null, "单位", true, false, 0, 60, 500); 
                 map.AddTBString(PrjAttr.Addr, null, "地址", true, false, 0, 60, 500);
 
                 map.AttrsOfOneVSM.Add(new EmpPrjs(), new Emps(), EmpPrjAttr.FK_Prj, EmpPrjAttr.FK_Emp,

@@ -9,7 +9,7 @@ namespace BP.PRJ
 	/// <summary>
 	/// 人员项目组
 	/// </summary>
-	public class EmpPrjExtAttr
+	public class EmpPrjExtAttr 
 	{
 		#region 基本属性
 		/// <summary>
