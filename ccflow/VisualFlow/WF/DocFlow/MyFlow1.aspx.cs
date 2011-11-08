@@ -1073,7 +1073,6 @@ namespace BP.Web.WF
                     }
                     try
                     {
-
                         //如果是第一个节点，那么把删除流程链接载入消息框页面
                         if (wn.HisNode.IsStartNode)
                             this.ResponseWriteBlueMsg(msgInfo + "<HR><a href='../../WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.FK_Flow + "' /><img src='../../Images/Btn/Delete.gif' border=0/>" + this.ToE("SetOverFlow", "结束流程") + "</a>&nbsp;&nbsp;" + msg);

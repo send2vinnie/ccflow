@@ -43,7 +43,6 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         this.Left.AddTR();
         this.Left.AddTDBigDocBegain();
         this.Left.AddUL();
-
         foreach (BP.WF.XML.Tool tool in tools)
         {
             if (tool.No == refno)
@@ -53,9 +52,7 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
         }
 
         if (WebUser.No == "admin")
-        {
             this.Left.AddLi("Tools.aspx?RefNo=AdminSet", this.ToE("SiteSet", "网站设置"), "_self");
-        }
         this.Left.AddULEnd();
 
         this.Left.AddTDEnd();

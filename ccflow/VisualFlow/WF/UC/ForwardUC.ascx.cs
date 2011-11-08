@@ -114,6 +114,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             wk.OID = this.WorkID;
             wk.Retrieve();
             wk.Emps = emps;
+            wk.Rec = toEmp;
             wk.NodeState = NodeState.Forward;
             wk.Update();
 
@@ -131,6 +132,9 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
         }
         catch (Exception ex)
         {
+            ForwardWork fw = new ForwardWork();
+            fw.CheckPhysicsTable();
+
             Log.DebugWriteWarning(ex.Message);
             this.Alert("工作移交出错：" + ex.Message);
         }

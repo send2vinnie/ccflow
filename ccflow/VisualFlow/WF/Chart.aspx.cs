@@ -52,6 +52,7 @@ public partial class WF_Chart : WebPage
         {
             case "Chart": //流程图形.
                 FlowChart(this.FK_Flow);
+                this.Title = "流程图";
                 break;
             case "DT": // 流程运行数据。。
                 FlowDT(this.FK_Flow, this.WorkID);
