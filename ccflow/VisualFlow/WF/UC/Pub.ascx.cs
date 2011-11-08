@@ -287,7 +287,7 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
 
         foreach (ForwardWork fw in fws)
         {
-            if (fw.NodeId != nodeId)
+            if (fw.FK_Node != nodeId)
                 continue;
 
             this.AddBR();

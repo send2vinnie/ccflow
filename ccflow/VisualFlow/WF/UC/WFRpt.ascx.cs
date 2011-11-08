@@ -98,7 +98,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         rws.Retrieve(ReturnWorkAttr.ReturnToNode, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID);
 
         ForwardWorks fws = new ForwardWorks();
-        fws.Retrieve(ForwardWorkAttr.NodeId, this.FK_Node, ForwardWorkAttr.WorkID, this.WorkID);
+        fws.Retrieve(ForwardWorkAttr.FK_Node, this.FK_Node, ForwardWorkAttr.WorkID, this.WorkID);
 
         Node nd = new Node(this.FK_Node);
         Work wk = nd.HisWork;
@@ -573,7 +573,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
 
         foreach (ForwardWork fw in fws)
         {
-            if (fw.NodeId != nodeId)
+            if (fw.FK_Node != nodeId)
                 continue;
 
             this.AddBR();

@@ -1046,13 +1046,13 @@ namespace BP.Web.WF
                     /* 如果不是退回来的，就判断是否是转发过来的。 */
                     ForwardWork fw = new ForwardWork();
                     int i = fw.Retrieve(ForwardWorkAttr.WorkID, this.WorkID,
-                        ForwardWorkAttr.NodeId, node.NodeID);
+                        ForwardWorkAttr.FK_Node, node.NodeID);
 
                     if (i == 1)
                     {
-                        if (fw.IsTakeBack == false)
+                        if (fw.IsRead == false)
                         {
-                            msg += "@" + this.ToE("Transfer", "转发人") + "[" + fw.FK_Emp + "]。@" + this.ToE("Accepter", "接受人") + "：" + fw.Emps + "。@" + this.ToE("FWNote", "转发原因") + "： @" + fw.NoteHtml;
+                            msg += "@" + this.ToE("Transfer", "转发人") + "[" + fw.FK_Emp + "]。@" + this.ToE("Accepter", "接受人") + "：" + fw.ToEmp + "。@" + this.ToE("FWNote", "转发原因") + "： @" + fw.NoteHtml;
                             isClose = false;
                             this.Alert(msg);
                         }

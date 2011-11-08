@@ -370,16 +370,16 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                    }
                    break;
                case NodeState.Forward:
-                   /* 如果不是退回来的，就判断是否是转发过来的。 */
+                   /* 如果不是退回来的，就判断是否是移交过来的。 */
                    ForwardWork fw = new ForwardWork();
                    int i = fw.Retrieve(ForwardWorkAttr.WorkID, this.WorkID,
-                       ForwardWorkAttr.NodeId, this.FK_Node);
-                   if (i == 1)
+                       ForwardWorkAttr.FK_Node, this.FK_Node);
+                   if (i >= 1)
                    {
-                       if (fw.IsTakeBack == false)
+                       if (fw.IsRead == false)
                        {
-                           msg += "@" + this.ToE("Transfer", "转发人") + "[" + fw.FK_Emp + "]。@" + this.ToE("Accepter", "接受人") + "：" + fw.Emps + "。@" + this.ToE("FWNote", "转发原因") + "： @" + fw.NoteHtml;
-                           this.FlowMsg.AlertMsg_Info("转发提示:", msg);
+                           msg += "@" + this.ToE("Transfer", "移交人") + "[" + fw.FK_Emp + "]。@" + this.ToE("Accepter", "接受人") + "：" + fw.ToEmp + "。@" + this.ToE("FWNote", "移交原因") + "： @" + fw.NoteHtml;
+                           this.FlowMsg.AlertMsg_Info("移交提示:", msg);
                        }
                    }
                    break;
@@ -1329,7 +1329,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         GenerWorkFlow gwf = new GenerWorkFlow();
         if (gwf.Retrieve(GenerWorkFlowAttr.WorkID, this.WorkID) == 0)
         {
-            this.Alert("工作还没有发出，您不能转发。");
+            this.Alert("工作还没有发出，您不能移交。");
             return;
         }
         string url = "Forward" + Glo.FromPageType + ".aspx?FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;

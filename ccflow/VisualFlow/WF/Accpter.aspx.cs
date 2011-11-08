@@ -71,7 +71,6 @@ public partial class WF_Accpter : WebPage
         sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
         sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
         sql += ") ORDER BY FK_DEPT ";
-
         return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }
     private BP.WF.Node _HisNode = null;
@@ -84,55 +83,95 @@ public partial class WF_Accpter : WebPage
         {
             if (_HisNode == null)
                 _HisNode = new BP.WF.Node(this.FK_Node);
-
             return _HisNode;
         }
     }
+    /// <summary>
+    /// 是否多分支
+    /// </summary>
+    public bool IsMFZ
+    {
+        get
+        {
+            Nodes nds = this.HisNode.HisToNodes;
+            int num = 0;
+            foreach (BP.WF.Node mynd in nds)
+            {
+                if (mynd.HisDeliveryWay == DeliveryWay.BySelected)
+                {
+                    this.MyToNode = mynd.NodeID;
+                    num++;
+                }
+            }
+            if (num == 0)
+                return false;
+            if (num == 1)
+                return false;
+            return true;
+        }
+    }
+    /// <summary>
+    /// 绑定多分支
+    /// </summary>
     public void BindMStations()
     {
+        #region 判断是否有岗位.
+        if (this.ToNode == 0)
+        {
+            Nodes nds = this.HisNode.HisToNodes;
+            int num = 0;
+            foreach (BP.WF.Node mynd in nds)
+            {
+                if (mynd.HisDeliveryWay == DeliveryWay.BySelected)
+                {
+                    this.MyToNode = mynd.NodeID;
+                    num++;
+                }
+            }
+            if (this.MyToNode == 0)
+            {
+                this.WinCloseWithMsg("流程设计错误：\n\n 当前节点的所有分支节点没有一个接受人员规则为按照选择接受。");
+                return;
+            }
+            this.Response.Redirect("Accpter.aspx?FK_Node=" + this.FK_Node + "&ToNode=" + this.MyToNode + "&WorkID=" + this.WorkID, true);
+        }
+        else
+        {
+            this.MyToNode = this.ToNode;
+        }
+        #endregion 判断是否有岗位
+
+        this.BindIt();
+
+        Nodes mynds = this.HisNode.HisToNodes;
+        this.Left.AddFieldSet("选择方向:不同的方向列出下一个岗位的不同人员列表");
+        string str = "<p>";
+        foreach (BP.WF.Node mynd in mynds)
+        {
+            if (mynd.HisDeliveryWay != DeliveryWay.BySelected)
+                continue;
+            if (this.ToNode == mynd.NodeID)
+                str += "&nbsp;&nbsp;<b>" + mynd.Name + "</B>";
+            else
+                str += "&nbsp;&nbsp;<a href='Accpter.aspx?FK_Node=" + this.FK_Node + "&ToNode=" + mynd.NodeID + "&WorkID=" + this.WorkID + "' >" + mynd.Name + "</a>";
+        }
+        this.Left.Add(str + "</p>");
+        this.Left.AddFieldSetEnd();
     }
-  
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "选择下一步骤接受的人员";
 
         /* 首先判断是否有多个分支的情况。*/
-
-
-        string title = "";
-        BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-        if (this.ToNode == 0)
+        if (this.IsMFZ)
         {
-            /* 没参数 */
-            if (nd.HisToNodes.Count > 1)
-            {
-                Nodes nds = nd.HisToNodes;
-                int num = 0;
-                foreach (BP.WF.Node mynd in nds)
-                {
-                    if (mynd.HisDeliveryWay == DeliveryWay.BySelected)
-                    {
-                        this.MyToNode = mynd.NodeID;
-                        num++;
-                    }
-                }
-
-                if (this.MyToNode == 0)
-                {
-                    this.WinCloseWithMsg("流程设计错误：\n\n 当前节点的所有分支节点没有一个接受人员规则为按照选择接受。");
-                    return;
-                }
-
-
-            }
-            else
-            {
-                Nodes nds = nd.HisToNodes;
-                this.MyToNode = nds[0].GetValIntByKey("NodeID");
-            }
+            this.BindMStations();
+            return;
         }
-
-
+        this.BindIt();
+    }
+    public void BindIt()
+    {
         DataTable dt = this.GetTable(); //获取人员列表。
         SelectAccpers accps = new SelectAccpers();
         accps.Retrieve(SelectAccperAttr.FK_Node, this.FK_Node,
@@ -141,7 +180,7 @@ public partial class WF_Accpter : WebPage
         Dept dept = new Dept();
         string fk_dept = "";
         this.Pub1.AddTable("width=100%");
-        this.Pub1.AddCaptionLeft(this.Title+"，可选择范围："+dt.Rows.Count+" 位。");
+        this.Pub1.AddCaptionLeft(this.Title + "，可选择范围：" + dt.Rows.Count + " 位。");
         if (dt.Rows.Count > 50)
         {
             /*多于一定的数，就显示导航。*/
@@ -157,7 +196,6 @@ public partial class WF_Accpter : WebPage
                     this.Pub1.Add("<a href='#d" + dept.No + "' >" + dept.Name + "</a>&nbsp;");
                 }
             }
-
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();
         }
@@ -202,14 +240,13 @@ public partial class WF_Accpter : WebPage
 
                 this.Pub1.AddTRSum();
                 fk_dept = dr["FK_Dept"].ToString();
-               string  deptName = dr["DeptName"].ToString();
-
-               this.Pub1.AddTD("colspan=5 class=FDesc", "<a name='d" + dept.No + "' >" + deptName + "</a>");
+                string deptName = dr["DeptName"].ToString();
+                this.Pub1.AddTD("colspan=5 class=FDesc", "<a name='d" + dept.No + "' >" + deptName + "</a>");
                 this.Pub1.AddTREnd();
                 is1 = false;
                 idx = 0;
             }
-
+            
             string no = dr["No"].ToString();
             string name = dr["Name"].ToString();
 
@@ -226,7 +263,7 @@ public partial class WF_Accpter : WebPage
             switch (idx)
             {
                 case 0:
-                   is1= this.Pub1.AddTR(is1);
+                    is1 = this.Pub1.AddTR(is1);
                     this.Pub1.AddTD(cb);
                     break;
                 case 1:
@@ -245,26 +282,27 @@ public partial class WF_Accpter : WebPage
         }
         this.Pub1.AddTableEnd();
 
-
         this.Pub1.AddHR();
         Button btn = new Button();
         btn.Text = this.ToE("Save", " 保存 ");
         btn.ID = "Btn_Save";
-        btn.Click += new EventHandler(btn_Click);
+        btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
     }
-
-    void btn_Click(object sender, EventArgs e)
+    /// <summary>
+    /// 保存
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    void btn_Save_Click(object sender, EventArgs e)
     {
         DataTable dt = this.GetTable();
-
         string emps = "";
         foreach (DataRow dr in dt.Rows)
         {
             CheckBox cb = this.Pub1.GetCBByID("CB_" + dr["No"].ToString());
             if (cb.Checked == false)
                 continue;
-
             emps += dr["No"].ToString() + ",";
         }
 
@@ -290,7 +328,6 @@ public partial class WF_Accpter : WebPage
             en.WorkID = this.WorkID;
             en.Insert();
         }
-
         this.WinCloseWithMsg("接受人的范围选择成功。");
     }
 }
