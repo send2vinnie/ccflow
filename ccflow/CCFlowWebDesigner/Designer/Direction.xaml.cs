@@ -25,9 +25,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         Point origTurnPoint1Point;
         Point origTurnPoint2Point; 
         bool positionIsChange = true;
+
         public void Zoom(double zoomDeep)
         {
-            
             if (positionIsChange)
             {
                 origBeginPoint = BeginPointPosition;
@@ -183,7 +183,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             return clone;
         }
-      
 
         DirectionLineType lineType = DirectionLineType.Line;
         public DirectionLineType LineType
@@ -383,7 +382,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public event DeleteDelegate DeleteDirection;
 
 
-
         bool isDeleted = false;
         public bool IsDeleted
         {
@@ -471,8 +469,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             }
         }
-
-
 
         public Point GetPointPosition(DirectionMoveType MoveType)
         {
@@ -697,7 +693,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         }
 
-
         public void RemoveBeginFlowNode(FlowNode a)
         {
             if (BeginFlowNode == a)
@@ -705,17 +700,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             //需要删除事件代理 
         }
 
-
-
-
-
         public Point GetResetPoint(Point beginPoint, Point endPoint, FlowNode a, DirectionMoveType type)
         {
             Point p = a.GetPointOfIntersection(beginPoint, endPoint, type);
-
             return p;
-
-
         }
 
         void OnFlowNodeMove(FlowNode a, MouseEventArgs e)
@@ -816,8 +804,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 EndFlowNode = null;
             //需要删除事件代理 
         }
-
-
 
         bool trackingLineMouseMove = false;
         Point mousePosition;
@@ -1342,7 +1328,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return ruleTurnPoint2;
             }
         }
-
         
         DirectionTurnPoint ruleTurnPoint1;
         public DirectionTurnPoint DirectionTurnPoint1
@@ -1759,6 +1744,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             _container.ShowDirectionSetting(this);
         }
+
         #region IElement 成员
 
 
@@ -1767,7 +1753,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
           
             return null;
         }
-
 
         public void worklist()
         {
