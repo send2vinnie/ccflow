@@ -488,6 +488,8 @@ namespace BP.WF
             {
                 sql = "SELECT  FK_Emp  FROM WF_SelectAccper WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID;
                 dt = DBAccess.RunSQLReturnTable(sql);
+                if (dt.Rows.Count == 0)
+                    throw new Exception("请选择下一步骤工作(" + town.HisNode.Name + ")接受人员。");
                 return WorkerListWayOfDept(town, dt);
             }
 
@@ -925,7 +927,6 @@ namespace BP.WF
 
             // 获取当前工作的信息.
             WorkerList wl = new WorkerList(this.HisWork.FID, this.HisNode.NodeID, fk_emp);
-
             Emp emp = new Emp(fk_emp);
 
             // 改变部分属性让它适应新的数据,并显示一条新的待办工作让用户看到。
@@ -954,22 +955,15 @@ namespace BP.WF
             /* 如果是隐性退回。*/
             BP.WF.ReturnWork rw = new ReturnWork();
             rw.WorkID = wl.WorkID;
-            rw.FK_Node = wl.FK_Node;
+            rw.ReturnToNode = wl.FK_Node;
+            rw.ReturnNode = this.HisNode.NodeID;
+            rw.ReturnNodeName = this.HisNode.Name;
+            rw.ReturnToEmp = fk_emp;
             rw.Note = msg;
-            rw.MyPK = rw.FK_Node + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmm");
-            rw.Save();
-
-            //  WorkerLists wls = new WorkerLists(wn.HisWork.OID, wn.HisNode.NodeID);
-            // 删除退回时当前节点的工作信息。
-            //    this.HisWork.Delete();
-            // 删除当前工作者.
-            //WorkerLists wkls = new WorkerLists(this.HisWork.OID, this.HisNode.NodeID);
-            //wkls.Delete();
-
-           
+            rw.MyPK = rw.ReturnToNode + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            rw.Insert();
 
             WorkNode wn = new WorkNode(this.HisWork.FID, backtoNodeID);
-
             WF.Port.WFEmp wfemp = new Port.WFEmp(wn.HisWork.Rec);
             BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.HisNode.NodeID + "_" + wfemp.No, wfemp.No,
                 wfemp.HisAlertWay, wfemp.Tel,
@@ -1054,7 +1048,6 @@ namespace BP.WF
                     break;
             }
 
-
             // 改变当前的工作节点．
             WorkNode wnOfBackTo = new WorkNode(this.WorkID, backtoNodeID);
             wnOfBackTo.HisWork.NodeState = NodeState.Back; // 更新 return work 状态．
@@ -1064,22 +1057,23 @@ namespace BP.WF
             DBAccess.RunSQL("UPDATE WF_GenerWorkFlow   SET FK_Node='" + backtoNodeID + "' WHERE  WorkID=" + this.WorkID);
             DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
 
-            
+
             // 记录退回轨迹。
             ReturnWork rw = new ReturnWork();
             rw.WorkID = wnOfBackTo.HisWork.OID;
-            rw.FK_Node = wnOfBackTo.HisNode.NodeID;
-            rw.MyPK = rw.FK_Node + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmm");
-            rw.Note = msg;
-            try
-            {
-                rw.Insert();
-            }
-            catch
-            {
-                rw.Update();
-            }
+            rw.ReturnToNode = wnOfBackTo.HisNode.NodeID;
+            rw.ReturnNodeName = this.HisNode.Name;
 
+
+            rw.ReturnNode = this.HisNode.NodeID; // 当前退回节点.
+            rw.ReturnToEmp = wnOfBackTo.HisWork.Rec; //退回给。
+
+            rw.MyPK = rw.ReturnToNode + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            rw.Note = msg;
+            rw.Insert();
+
+            // 记录退回日志.
+            ReorderLog(backToNode, this.HisNode,rw);
 
             // 以退回到的节点向前数据用递归删除它。
             DeleteToNodesData(backToNode.HisToNodes);
@@ -1087,7 +1081,6 @@ namespace BP.WF
             //删除正常的垃圾数据。
             DBAccess.RunSQL("DELETE WF_GenerWorkFlow WHERE WorkID NOT IN (SELECT WorkID FROM WF_GenerWorkerList )");
             DBAccess.RunSQL("DELETE WF_GenerFH WHERE FID NOT IN (SELECT FID FROM WF_GenerWorkerList)");
-
 
             //向他发送消息。
             WorkNode backWN = new WorkNode(this.WorkID, backtoNodeID);
@@ -1098,8 +1091,107 @@ namespace BP.WF
                   this.ToEP3("WN27", "工作退回：流程:{0}.工作:{1},退回人:{2},需您处理",
                   backToNode.FlowName, backToNode.Name, WebUser.Name),
                   wfemp.Email, null, msg);
-
             return wnOfBackTo;
+        }
+        private string infoLog = "";
+        public void ReorderLog(Node fromND, Node toND, ReturnWork rw)
+        {
+            string filePath = BP.SystemConfig.PathOfDataUser + "\\ReturnLog\\" + this.HisNode.FK_Flow + "\\";
+            if (System.IO.Directory.Exists(filePath) == false)
+                System.IO.Directory.CreateDirectory(filePath);
+
+            string file = filePath + "\\" + rw.MyPK;
+            infoLog = "\r\n退回人:" + WebUser.No+","+WebUser.Name + " \r\n退回节点:" + fromND.Name + " \r\n退回到:" + toND.Name;
+            infoLog += "\r\n退回时间:" + DataType.CurrentDataTime;
+            infoLog += "\r\n原因:" + rw.Note;
+
+            ReorderLog(fromND, toND);
+            DataType.WriteFile(file+".txt", infoLog);
+            DataType.WriteFile(file + ".htm", infoLog.Replace("\r\n","<br>"));
+        }
+        public void ReorderLog(Node fromND, Node toND)
+        {
+            /*开始遍历到达的节点集合*/
+            foreach (Node nd in fromND.HisToNodes)
+            {
+                Work wk = nd.HisWork;
+                wk.OID = this.WorkID;
+                if (wk.RetrieveFromDBSources() == 0)
+                {
+                    wk.FID = this.WorkID;
+                    if (wk.Retrieve(WorkAttr.FID, this.WorkID) == 0)
+                        continue;
+                }
+
+                if (nd.IsFL)
+                {
+                    /* 如果是分流 */
+                    WorkerLists wls = new WorkerLists();
+                    QueryObject qo = new QueryObject(wls);
+                    qo.AddWhere(WorkerListAttr.FID, this.WorkID);
+                    qo.addAnd();
+
+                    string[] ndsStrs = nd.HisToNDs.Split('@');
+                    string inStr = "";
+                    foreach (string s in ndsStrs)
+                    {
+                        if (s == "" || s == null)
+                            continue;
+                        inStr += "'" + s + "',";
+                    }
+                    inStr = inStr.Substring(0, inStr.Length - 1);
+                    if (inStr.Contains(",") == true)
+                        qo.AddWhere(WorkerListAttr.FK_Node, int.Parse(inStr));
+                    else
+                        qo.AddWhereIn(WorkerListAttr.FK_Node, "(" + inStr + ")");
+
+                    qo.DoQuery();
+                    foreach (WorkerList wl in wls)
+                    {
+                        Node subNd = new Node(wl.FK_Node);
+                        Work subWK = subNd.GetWork(wl.WorkID);
+
+                        infoLog += "\r\n*****************************************************************************************";
+                        infoLog += "\r\n节点ID:" + subNd.NodeID + "  工作名称:" + subWK.EnDesc;
+                        infoLog += "\r\n处理人:" + subWK.Rec + " , " + wk.RecOfEmp.Name;
+                        infoLog += "\r\n接收时间:" + subWK.RDT + " 处理时间:" + subWK.CDT;
+                        infoLog += "\r\n ------------------------------------------------- ";
+
+
+                        foreach (Attr attr in wk.EnMap.Attrs)
+                        {
+                            if (attr.UIVisible == false)
+                                continue;
+                            infoLog += "\r\n " + attr.Desc + ":" + subWK.GetValStrByKey(attr.Key);
+                        }
+
+                        //递归调用。
+                        ReorderLog(subNd, toND);
+                    }
+                }
+                else
+                {
+                    infoLog += "\r\n*****************************************************************************************";
+                    infoLog += "\r\n节点ID:" + wk.NodeID + "  工作名称:" + wk.EnDesc;
+                    infoLog += "\r\n处理人:" + wk.Rec +" , "+wk.RecOfEmp.Name;
+                    infoLog += "\r\n接收时间:" + wk.RDT + " 处理时间:" + wk.CDT;
+                    infoLog += "\r\n ------------------------------------------------- ";
+
+                    foreach (Attr attr in wk.EnMap.Attrs)
+                    {
+                        if (attr.UIVisible == false)
+                            continue;
+                        infoLog += "\r\n" + attr.Desc + " : " + wk.GetValStrByKey(attr.Key);
+                    }
+                }
+
+                /* 如果到了当前的节点 */
+                if (nd.NodeID == toND.NodeID)
+                    break;
+
+                //递归调用。
+                ReorderLog(nd, toND);
+            }
         }
         /// <summary>
         /// 递归删除两个节点之间的数据
@@ -1128,8 +1220,7 @@ namespace BP.WF
                 }
 
                 // 删除表单附件信息。
-                BP.Sys.FrmAttachmentDBs fdbs = new FrmAttachmentDBs("ND" + nd.NodeID, wk.OID.ToString());
-                fdbs.Delete();
+                BP.DA.DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE RefPKVal='" + this.WorkID + "' AND FK_MapData='ND" + nd.NodeID + "'");
                 #endregion 删除当前节点数据。
 
 
@@ -1158,7 +1249,6 @@ namespace BP.WF
                         qo.AddWhereIn(WorkerListAttr.FK_Node, "(" + inStr + ")");
 
                     qo.DoQuery();
-
                     foreach (WorkerList wl in wls)
                     {
                         Node subNd = new Node(wl.FK_Node);
@@ -1175,9 +1265,6 @@ namespace BP.WF
                 }
                 DeleteToNodesData(nd.HisToNodes);
             }
-
-        
-
         }
         /// <summary>
         /// 执行退回
@@ -1203,10 +1290,14 @@ namespace BP.WF
             // 写入日志.
             BP.WF.ReturnWork rw = new ReturnWork();
             rw.WorkID = wn.HisWork.OID;
-            rw.FK_Node = wn.HisNode.NodeID;
+            rw.ReturnToNode = wn.HisNode.NodeID;
+            rw.ReturnToEmp = wn.HisWork.Rec;
+            rw.ReturnNode = this.HisNode.NodeID;
+            rw.ReturnNodeName = this.HisNode.Name;
+
             rw.Note = msg;
-            rw.MyPK = rw.FK_Node + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmm");
-            rw.Save();
+            rw.MyPK = rw.ReturnToNode + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            rw.Insert();
 
             //WorkFlow wf = this.HisWorkFlow;
             //wf.WritLog(msg);
@@ -1244,10 +1335,13 @@ namespace BP.WF
             // 写入日志.
             BP.WF.ReturnWork rw = new ReturnWork();
             rw.WorkID = workid;
-            rw.FK_Node = wn.HisNode.NodeID;
+            rw.ReturnToNode = wn.HisNode.NodeID;
+            rw.ReturnToEmp = wn.HisWork.Rec;
+            rw.ReturnNode = this.HisNode.NodeID; 
+
             rw.Note = msg;
-            rw.MyPK = rw.FK_Node + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmm");
-            rw.Save();
+            rw.MyPK = rw.ReturnToNode + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            rw.Insert();
 
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node='" + wn.HisNode.NodeID + "' and workid=" + workid);
 
@@ -1556,6 +1650,10 @@ namespace BP.WF
             if (this.HisWorkerLists.Count == 0)
                 throw new Exception("@根据部门产生工作人员出现错误，流程[" + this.HisWorkFlow.HisFlow.Name + "],中节点[" + town.HisNode.Name + "]定义错误,没有找到接受此工作的工作人员.");
 
+            if (this.HisNode.IsStartNode)
+                this.AddToTrack(ActionType.Start, null, null);
+            else
+                this.AddToTrack(ActionType.Forward, town.HisNode, null);
             return this.HisWorkerLists;
         }
         #endregion
@@ -1824,7 +1922,6 @@ namespace BP.WF
                     {
                         if (doc.Contains("@" + attr.Key) == false)
                             continue;
-
                         switch (attr.MyDataType)
                         {
                             case BP.DA.DataType.AppString:
@@ -1849,8 +1946,6 @@ namespace BP.WF
                 catch
                 {
                 }
-
-
                 string msgOfSend = this.HisNode.TurnToDealDoc;
                 if (msgOfSend.Length > 3)
                 {
@@ -1997,6 +2092,10 @@ namespace BP.WF
             wk.Delete(WorkAttr.FID, this.HisWork.OID);
 
             string msg = "";
+            FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
+                                            this.WorkID.ToString());
+            if (athDBs.Count > 0) /* 删除目标数据 */
+                BP.DA.DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND" + toNode.NodeID + "' AND RefPKVal='" + this.WorkID + "'");
 
             // 按照部门分组，分别启动流程。
             switch (this.HisNode.HisFLRole)
@@ -2014,12 +2113,26 @@ namespace BP.WF
                         mywk.Emps = wl.FK_Emp;
                         mywk.BeforeSave();
                         mywk.OID = DBAccess.GenerOID();  //BP.DA.DBAccess.GenerOID();
-
-                        //  mywk.OID = DBAccess.GenerOID("ND" + toNode.NodeID);  //BP.DA.DBAccess.GenerOID();
-                        //  mywk.BeforeSave();
-                        //  跳过特殊的规则约束。
-
                         mywk.InsertAsOID(mywk.OID);
+
+                        /* 复制附件信息 */
+                        if (athDBs.Count >= 0)
+                        {
+                            /*说明当前节点有附件数据*/
+                            int i = 0;
+                            foreach (FrmAttachmentDB athDB in athDBs)
+                            {
+                                i++;
+                                FrmAttachmentDB athDB_N = new FrmAttachmentDB();
+                                athDB_N.Copy(athDB);
+                                athDB_N.FK_MapData = "ND" + toNode.NodeID;
+                                athDB_N.MyPK = mywk.OID + "_" + i.ToString();
+                                athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
+                                    "ND" + toNode.NodeID);
+                                athDB_N.RefPKVal = mywk.OID.ToString();
+                                athDB_N.DirectInsert();
+                            }
+                        }
 
                         // 产生工作的信息。
                         GenerWorkFlow gwf = new GenerWorkFlow();
@@ -2616,8 +2729,11 @@ namespace BP.WF
                 }
                 #endregion
 
-                this.HisWork.DoCopy(); // copy 本地的数据到指定的系统.
+               // this.HisWork.DoCopy(); // copy 本地的数据到指定的系统.
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=1 WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID);
+
+
+
                 return msg;
             }
             catch (Exception ex)  // 如果抛出异常，说明没有正确的执行。当前的工作，不能完成。工作流程不能完成。
@@ -2642,6 +2758,60 @@ namespace BP.WF
                 }
                 throw ex;
                 //throw new Exception("@回滚数据期间发生错误:" + ex1.Message + ex.Message);
+            }
+        }
+        /// <summary>
+        /// 增加日志
+        /// </summary>
+        /// <param name="at">类型</param>
+        /// <param name="tonode">到节点</param>
+        /// <param name="toEmp">到人员</param>
+        public void AddToTrack(ActionType at, Node tonode, string toEmp)
+        {
+            Track t = new Track();
+            t.RDT = DataType.CurrentDataTime;
+            t.FromEmp = WebUser.No;
+            t.FK_Flow = this.HisNode.FK_Flow;
+            t.MyPK = t.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            t.FID = this.HisWork.FID;
+            t.WorkID = this.HisWork.OID;
+            switch (at)
+            {
+                case ActionType.Start:
+                    t.ToEmp = WebUser.No+" "+WebUser.Name;
+                    t.MyPK = DateTime.Now.ToString("yyyyMMddhhmmss");
+                    t.Insert();
+                    break;
+                case ActionType.Forward:
+                    if (toEmp == null)
+                    {
+                        string emps = "";
+                        foreach (WorkerList wl in this.HisWorkerLists)
+                            emps += wl.FK_Emp + "(" + wl.FK_EmpText + ")、";
+                        t.ToEmp = emps;
+                    }
+                    else
+                    {
+                        t.ToEmp = toEmp;
+                    }
+                    t.Insert();
+                    break;
+                case ActionType.Return:
+                     if (toEmp == null)
+                    {
+                        string emps = "";
+                        foreach (WorkerList wl in this.HisWorkerLists)
+                            emps += wl.FK_Emp + "(" + wl.FK_EmpText + ")、";
+                        t.ToEmp = emps;
+                    }
+                    else
+                    {
+                        t.ToEmp = toEmp;
+                    }
+                    t.Insert();
+                    break;
+                default:
+                    break;
             }
         }
         /// <summary>
@@ -2863,25 +3033,15 @@ namespace BP.WF
             qo.AddWhere(CondAttr.NodeID, this.HisNode.NodeID);
             qo.addOrderBy(CondAttr.PRI);
             qo.DoQuery();
-
             foreach (Cond cd in dcs)
             {
+                cd.WorkID = this.WorkID;
                 foreach (Node nd in toNodes)
                 {
                     if (cd.ToNodeID != nd.NodeID)
                         continue;
 
-                    foreach (Cond dc in dcs)
-                        dc.WorkID = this.HisWork.OID;
-
-                    if (dcs.Count == 0)
-                    {
-                        throw new Exception(string.Format(this.ToE("WN10",
-                            "@定义节点的方向条件错误:没有给从{0}节点到{1},定义转向条件."),
-                            this.HisNode.NodeID + this.HisNode.Name, nd.NodeID + nd.Name));
-                    }
-
-                    if (dcs.IsPass) // 如果多个转向条件中有一个成立.
+                    if (cd.IsPassed) // 如果多个转向条件中有一个成立.
                     {
                         numOfWay++;
                         toNode = nd;
@@ -2910,6 +3070,8 @@ namespace BP.WF
                 wk.OID = this.HisWork.OID;
                 if (wk.Delete() != 0)
                 {
+                    /* 删除其它附件信息，明细表信息。 */
+                    #warning 没处理。
                 }
             }
             msg += StartNextNode(toNode);
@@ -2945,19 +3107,20 @@ namespace BP.WF
                 if (athDBs.Count >= 0)
                 {
                     /*说明当前节点有附件数据*/
+                    int idx = 0;
                     foreach (FrmAttachmentDB athDB in athDBs)
                     {
+                        idx++;
                         FrmAttachmentDB athDB_N = new FrmAttachmentDB();
                         athDB_N.Copy(athDB);
                         athDB_N.FK_MapData = "ND" + nd.NodeID;
                         athDB_N.MyPK = athDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
                         athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
-                            "ND" + nd.NodeID);
-                        athDB_N.Save();
+                            "ND" + nd.NodeID) + "_" + idx;
+                        athDB_N.RefPKVal = wk.OID.ToString();
+                        athDB_N.Insert();
                     }
                 }
-              
-
 
                 //获得它的工作者。
                 WorkNode town = new WorkNode(wk, nd);
@@ -3109,7 +3272,7 @@ namespace BP.WF
         /// <returns></returns>
         private string StartNextWorkNodeHeLiu_WithOutFID(Node nd)
         {
-            return null;
+            throw new Exception("未完成:StartNextWorkNodeHeLiu_WithOutFID");
         }
         /// <summary>
         /// 有FID
@@ -3205,10 +3368,43 @@ namespace BP.WF
             if (mainWK.RetrieveFromDBSources() == 1)
                 mainWK.Delete();
 
+            DataTable dt = DBAccess.RunSQLReturnTable("SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE OID=" + this.HisWork.FID);
+            foreach (DataColumn dc in dt.Columns)
+                mainWK.SetValByKey(dc.ColumnName, dt.Rows[0][dc.ColumnName]);
+
             mainWK.NodeState = NodeState.Init;
             mainWK.Rec = fk_emp;
             mainWK.Emps = emps;
+
+          //mainWK.RDT = DataType.CurrentDataTime;
+
+            mainWK.OID = this.HisWork.FID;
+           // mainWK.FID = 0;
             mainWK.Insert();
+
+            /*处理表单数据的复制。*/
+
+            #region 复制附件。
+            FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
+                  this.WorkID.ToString());
+            if (athDBs.Count >= 0)
+            {
+                /*说明当前节点有附件数据*/
+                int idx = 0;
+                foreach (FrmAttachmentDB athDB in athDBs)
+                {
+                    idx++;
+                    FrmAttachmentDB athDB_N = new FrmAttachmentDB();
+                    athDB_N.Copy(athDB);
+                    athDB_N.FK_MapData = "ND" + nd.NodeID;
+                    athDB_N.MyPK = athDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID) + "_" + idx;
+                    athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
+                       "ND" + nd.NodeID);
+                    athDB_N.RefPKVal = this.HisWork.FID.ToString();
+                    athDB_N.Save();
+                }
+            }
+            #endregion 复制附件。
 
             /* 
              * 为了解决 大连需求
@@ -3255,39 +3451,39 @@ namespace BP.WF
                 {
                     wk.Insert();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     wk.CheckPhysicsTable();
                     try
                     {
                         wk.Update();
                     }
-                    catch(Exception ex11)
+                    catch (Exception ex11)
                     {
-                        throw new Exception(ex.Message+" == "+ex11.Message );
+                        throw new Exception(ex.Message + " == " + ex11.Message);
                     }
                 }
 
                 #region 复制附件。
                 FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                       this.WorkID.ToString());
+                int idx = 0;
                 if (athDBs.Count >= 0)
                 {
                     /*说明当前节点有附件数据*/
                     foreach (FrmAttachmentDB athDB in athDBs)
                     {
+                        idx++;
                         FrmAttachmentDB athDB_N = new FrmAttachmentDB();
                         athDB_N.Copy(athDB);
                         athDB_N.FK_MapData = "ND" + nd.NodeID;
-                        athDB_N.MyPK = athDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
+                        athDB_N.MyPK = this.WorkID + "_" + idx;
                         athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
                            "ND" + nd.NodeID);
                         athDB_N.Save();
                     }
                 }
                 #endregion 复制附件。
-
-
 
                 #region 复制多选数据
                 M2Ms m2ms = new M2Ms(this.HisNode.NodeID, this.WorkID);

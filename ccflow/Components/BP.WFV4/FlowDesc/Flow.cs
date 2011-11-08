@@ -271,7 +271,10 @@ namespace BP.WF
         /// 是否可以启动？
         /// </summary>
         public const string IsCanStart = "IsCanStart";
-
+        /// <summary>
+        /// 轨迹字段
+        /// </summary>
+        public const string TrackFields = "TrackFields";
     }
     /// <summary>
     /// 流程
@@ -281,6 +284,20 @@ namespace BP.WF
     public class Flow : EntityNoName
     {
         #region 业务处理
+        /// <summary>
+        /// 轨迹字段
+        /// </summary>
+        public string TrackFields
+        {
+            get
+            {
+                return this.GetValStrByKey(FlowAttr.TrackFields);
+            }
+            set
+            {
+                this.SetValByKey(FlowAttr.TrackFields, value);
+            }
+        }
         /// <summary>
         /// 产生一个新工作
         /// </summary>
@@ -2452,7 +2469,7 @@ namespace BP.WF
                 map.AddDDLSysEnum(FlowAttr.FlowRunWay, (int)FlowRunWay.HandWork, "运行方式", false,
                     false, FlowAttr.FlowRunWay,
                     "@0=手工启动@1=按月启动@2=按天启动@3=按周启动@4=按天启动@5=按小时启动");
-                map.AddTBString(FlowAttr.FlowRunObj, null, "运行内容", true, false, 0, 100, 10);
+                map.AddTBString(FlowAttr.FlowRunObj, null, "运行内容", true, false, 0, 3000, 10);
 
                 map.AddTBString(FlowAttr.Note, null, null, true, false, 0, 100, 10);
                 map.AddTBString(FlowAttr.RunSQL, null, "流程结束执行后执行的SQL", true, false, 0, 2000, 10);
@@ -2472,6 +2489,7 @@ namespace BP.WF
 
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
 
+                map.AddTBString(FlowAttr.TrackFields, null, "轨迹字段(不输入不记录轨迹)", true, false, 0, 3000, 10);
 
                 map.AddSearchAttr(FlowAttr.FK_FlowSort);
                    map.AddSearchAttr(FlowAttr.FlowRunWay);

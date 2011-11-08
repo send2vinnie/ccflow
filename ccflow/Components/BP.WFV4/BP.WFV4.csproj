@@ -259,6 +259,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RememberMe.cs" />
+    <Compile Include="WF\Track.cs" />
     <Compile Include="Xml\AdminMenu.cs" />
     <Compile Include="Xml\DefVal.cs" />
     <Compile Include="Xml\EventSource.cs">

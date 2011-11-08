@@ -79,6 +79,8 @@ namespace BP.WF.Ext
 
                 map.AddTBString(FlowAttr.Note, null, this.ToE("Note", "备注"), true, false, 0, 100, 10, true);
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
+                map.AddTBString(FlowAttr.TrackFields, null, "轨迹字段(不输入不记录轨迹)", true, false, 0, 200, 10);
+
                 map.AddSearchAttr(BP.WF.FlowAttr.FK_FlowSort);
 
 

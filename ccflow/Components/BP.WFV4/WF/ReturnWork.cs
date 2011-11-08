@@ -17,10 +17,7 @@ namespace BP.WF
 		/// 工作ID
 		/// </summary>
 		public const  string WorkID="WorkID";
-		/// <summary>
-		/// 节点
-		/// </summary>
-		public const  string FK_Node="FK_Node";
+		
 		/// <summary>
 		/// 工作人员
 		/// </summary>
@@ -33,11 +30,30 @@ namespace BP.WF
         /// 退回日期
         /// </summary>
         public const string RDT = "RDT";
-
         /// <summary>
         /// 退回人
         /// </summary>
         public const string Returner = "Returner";
+        /// <summary>
+        /// 退回人名称
+        /// </summary>
+        public const string ReturnerName = "ReturnerName";
+        /// <summary>
+        /// 退回到节点
+        /// </summary>
+        public const string ReturnToNode = "ReturnToNode";
+        /// <summary>
+        /// 退回节点
+        /// </summary>
+        public const string ReturnNode = "ReturnNode";
+        /// <summary>
+        /// 退回节点名称
+        /// </summary>
+        public const string ReturnNodeName = "ReturnNodeName";
+        /// <summary>
+        /// 退回给
+        /// </summary>
+        public const string ReturnToEmp = "ReturnToEmp";
 		#endregion
 	}
 	/// <summary>
@@ -61,17 +77,42 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// FK_Node
+        /// 退回到节点
         /// </summary>
-        public int FK_Node
+        public int ReturnToNode
         {
             get
             {
-                return this.GetValIntByKey(ReturnWorkAttr.FK_Node);
+                return this.GetValIntByKey(ReturnWorkAttr.ReturnToNode);
             }
             set
             {
-                SetValByKey(ReturnWorkAttr.FK_Node, value);
+                SetValByKey(ReturnWorkAttr.ReturnToNode, value);
+            }
+        }
+        /// <summary>
+        /// 退回节点
+        /// </summary>
+        public int ReturnNode
+        {
+            get
+            {
+                return this.GetValIntByKey(ReturnWorkAttr.ReturnNode);
+            }
+            set
+            {
+                SetValByKey(ReturnWorkAttr.ReturnNode, value);
+            }
+        }
+        public string ReturnNodeName
+        {
+            get
+            {
+                return this.GetValStrByKey(ReturnWorkAttr.ReturnNodeName);
+            }
+            set
+            {
+                SetValByKey(ReturnWorkAttr.ReturnNodeName, value);
             }
         }
         /// <summary>
@@ -86,6 +127,31 @@ namespace BP.WF
             set
             {
                 SetValByKey(ReturnWorkAttr.Returner, value);
+            }
+        }
+        public string ReturnerName
+        {
+            get
+            {
+                return this.GetValStringByKey(ReturnWorkAttr.ReturnerName);
+            }
+            set
+            {
+                SetValByKey(ReturnWorkAttr.ReturnerName, value);
+            }
+        }
+        /// <summary>
+        /// 退回给
+        /// </summary>
+        public string ReturnToEmp
+        {
+            get
+            {
+                return this.GetValStringByKey(ReturnWorkAttr.ReturnToEmp);
+            }
+            set
+            {
+                SetValByKey(ReturnWorkAttr.ReturnToEmp, value);
             }
         }
         public string Note
@@ -128,17 +194,6 @@ namespace BP.WF
         /// </summary>
         public ReturnWork() { }
         /// <summary>
-        /// 退回轨迹
-        /// </summary>
-        /// <param name="workid"></param>
-        /// <param name="FK_Node"></param>
-        public ReturnWork(int workid, int FK_Node)
-        {
-            this.WorkID = workid;
-            this.FK_Node = FK_Node;
-            this.Retrieve();
-        }
-        /// <summary>
         /// 重写基类方法
         /// </summary>
         public override Map EnMap
@@ -151,16 +206,21 @@ namespace BP.WF
                 Map map = new Map("WF_ReturnWork");
                 map.EnDesc = this.ToE("ReturnRec", "退回轨迹");
                 map.EnType = EnType.App;
-
                 map.AddMyPK();
 
                 map.AddTBInt(ReturnWorkAttr.WorkID, 0, "WorkID", true, true);
-                map.AddTBInt(ReturnWorkAttr.FK_Node, 0, "FK_Node", true, true);
-                map.AddTBString(ReturnWorkAttr.Note, "", "Note", true, true, 0, 4000, 10);
 
-                map.AddTBString(ReturnWorkAttr.Returner, null, "退回人", true, true, 0, 4000, 10);
+                map.AddTBInt(ReturnWorkAttr.ReturnNode, 0, "退回节点", true, true);
+                map.AddTBString(ReturnWorkAttr.ReturnNodeName, null, "退回节点名称", true, true, 0, 200, 10);
+
+                map.AddTBString(ReturnWorkAttr.Returner, null, "退回人", true, true, 0, 20, 10);
+                map.AddTBString(ReturnWorkAttr.ReturnerName, null, "退回人名称", true, true, 0, 200, 10);
+
+                map.AddTBInt(ReturnWorkAttr.ReturnToNode, 0, "ReturnToNode", true, true);
+                map.AddTBString(ReturnWorkAttr.ReturnToEmp, null, "退回给", true, true, 0, 4000, 10);
+
+                map.AddTBString(ReturnWorkAttr.Note, "", "退回原因", true, true, 0, 4000, 10);
                 map.AddTBDateTime(ReturnWorkAttr.RDT, null, "退回日期", true, true);
-
                 this._enMap = map;
                 return this._enMap;
             }
@@ -169,6 +229,8 @@ namespace BP.WF
         protected override bool beforeInsert()
         {
             this.Returner = BP.Web.WebUser.No;
+            this.ReturnerName = BP.Web.WebUser.Name;
+
             this.RDT =DataType.CurrentDataTime;
             return base.beforeInsert();
         }
@@ -184,7 +246,6 @@ namespace BP.WF
 		/// </summary>
 		public ReturnWorks()
 		{
-
 		}
 		/// <summary>
 		/// 得到它的 Entity
