@@ -235,7 +235,7 @@ namespace BP.WF
                   "@0=发起@1=前进@2=后退@3=移交@4=删除");
 
                 map.AddTBString(TrackAttr.FromEmp, null, "从人员", true, false, 0, 100, 100);
-                map.AddTBString(TrackAttr.ToEmp, null, "到人员", true, false, 0, 100, 100);
+                map.AddTBString(TrackAttr.ToEmp, null, "到人员", true, false, 0, 4000, 100);
                 map.AddTBDateTime(TrackAttr.RDT, null, "记录日期", true, false);
                 map.AddTBDateTime(TrackAttr.CDT, null, "完成日期", true, false);
 

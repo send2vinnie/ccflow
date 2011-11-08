@@ -1413,19 +1413,18 @@ namespace BP.WF
         public string DoUnSendSubFlow(GenerWorkFlow gwf)
         {
             WorkNode wn = this.GetCurrentWorkNode();
-
             WorkNode wnPri = wn.GetPreviousWorkNode();
 
             WorkerList wl = new WorkerList();
             int num = wl.Retrieve(WorkerListAttr.FK_Emp, Web.WebUser.No,
                 WorkerListAttr.FK_Node, wnPri.HisNode.NodeID);
-
             if (num == 0)
                 return "@" + this.ToE("WF6", "您不能执行撤消发送，因为当前工作不是您发送的。");
 
-            // if (wl.RDT.IndexOf(DataType.CurrentData) == -1)
-            //   return "@您不能执行撤消发送，因为当前工作不是您当天发送的，发送日期"+wl.RDT+"。" ;
+            // 处理事件。
+            string msg = wn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.UndoneBefore, wn.HisWork);
 
+            // 删除工作者。
             WorkerLists wls = new WorkerLists();
             wls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node.ToString());
             wn.HisWork.Delete();
@@ -1437,12 +1436,8 @@ namespace BP.WF
                 (int)NodeState.Init);
 
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node);
-
             ForwardWorks fws = new ForwardWorks();
             fws.Delete(ForwardWorkAttr.FK_Node, wn.HisNode.NodeID.ToString(), ForwardWorkAttr.WorkID, this.WorkID.ToString());
-
-            //ReturnWorks rws = new ReturnWorks();
-            //rws.Delete(ReturnWorkAttr.FK_Node, wn.HisNode.NodeID.ToString(), ReturnWorkAttr.WorkID, this.WorkID.ToString());
 
             #region 判断撤消的百分比条件的临界点条件
             if (wn.HisNode.PassRate != 0)
@@ -1457,36 +1452,38 @@ namespace BP.WF
             }
             #endregion
 
+            // 处理事件。
+            msg += wn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.UndoneAfter, wn.HisWork);
 
             if (wnPri.HisNode.IsStartNode)
             {
                 if (Web.WebUser.IsWap)
                 {
-                    return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。";
+                    return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + gwf.FID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                 }
                 else
                 {
                     if (this.HisFlow.FK_FlowSort != "00")
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/WF/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + gwf.FID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/WF/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                     else
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/WF/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + gwf.FID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/WF/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                 }
             }
             else
             {
                 // 更新是否显示。
-                DBAccess.RunSQL("UPDATE WF_ForwardWork SET IsTakeBack=1 WHERE WORKID=" + this.WorkID + " AND NODEID=" + wnPri.HisNode.NodeID);
+                DBAccess.RunSQL("UPDATE WF_ForwardWork SET IsRead=1 WHERE WORKID=" + this.WorkID + " AND FK_Node=" + wnPri.HisNode.NodeID);
 
                 if (Web.WebUser.IsWap == false)
                 {
                     if (this.HisFlow.FK_FlowSort != "00")
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + gwf.FID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。" + msg;
                     else
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + gwf.FID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。" + msg;
                 }
                 else
                 {
-                    return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。";
+                    return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + gwf.FID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。" + msg;
                 }
             }
         }
@@ -1546,12 +1543,8 @@ namespace BP.WF
             if (nd.IsStartNode)
                 return "您不能撤消发送，因为它是开始节点。";
 
-            //   return "您不能撤消发送，因为它是开始节点。<a href='" + this.VirPath + "/WF/MyFlowInfo"+Glo.FromPageType+".aspx?DoType=DeleteFlow&WorkID=" + this.WorkID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='../Images/Btn/Delete.gif' border=0/>结束流程</a>";
-
-
             WorkNode wn = this.GetCurrentWorkNode();
             WorkNode wnPri = wn.GetPreviousWorkNode();
-
             WorkerList wl = new WorkerList();
             int num = wl.Retrieve(WorkerListAttr.FK_Emp, Web.WebUser.No,
                 WorkerListAttr.FK_Node, wnPri.HisNode.NodeID);
@@ -1559,8 +1552,9 @@ namespace BP.WF
             if (num == 0)
                 return "@" + this.ToE("WF6", "您不能执行撤消发送，因为当前工作不是您发送的。");
 
-            // if (wl.RDT.IndexOf(DataType.CurrentData) == -1)
-            //   return "@您不能执行撤消发送，因为当前工作不是您当天发送的，发送日期"+wl.RDT+"。" ;
+
+            // 调用撤消发送前事件。
+            string msg = nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneBefore, wn.HisWork);
 
             WorkerLists wls = new WorkerLists();
             wls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node.ToString());
@@ -1606,49 +1600,51 @@ namespace BP.WF
             }
             #endregion 恢复工作轨迹，解决工作抢办。
 
+            //调用撤消发送后事件。
+            msg += nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneAfter, wn.HisWork);
 
             if (wnPri.HisNode.IsStartNode)
             {
                 if (Web.WebUser.IsWap)
                 {
                     if (wnPri.HisNode.HisFormType != FormType.SDKForm)
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                     else
-                        return this.ToE("UnSendOK", "撤销成功.");
+                        return this.ToE("UnSendOK", "撤销成功.") + msg;
                 }
                 else
                 {
                     if (this.HisFlow.FK_FlowSort != "00")
                     {
                         if (wnPri.HisNode.HisFormType != FormType.SDKForm)
-                            return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。";
+                            return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                         else
                             return this.ToE("UnSendOK", "撤销成功.");
                     }
                     else
                     {
                         if (wnPri.HisNode.HisFormType != FormType.SDKForm)
-                            return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。";
+                            return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                         else
-                            return this.ToE("UnSendOK", "撤销成功.");
+                            return this.ToE("UnSendOK", "撤销成功.") + msg;
                     }
                 }
             }
             else
             {
                 // 更新是否显示。
-                DBAccess.RunSQL("UPDATE WF_ForwardWork SET IsTakeBack=1 WHERE WORKID=" + this.WorkID + " AND NODEID=" + wnPri.HisNode.NodeID);
+                DBAccess.RunSQL("UPDATE WF_ForwardWork SET IsRead=1 WHERE WORKID=" + this.WorkID + " AND FK_Node=" + wnPri.HisNode.NodeID);
 
                 if (Web.WebUser.IsWap == false)
                 {
                     if (this.HisFlow.FK_FlowSort != "00")
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。" + msg;
                     else
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。" + msg;
                 }
                 else
                 {
-                    return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。";
+                    return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。" + msg;
                 }
             }
         }
@@ -1659,20 +1655,23 @@ namespace BP.WF
         /// <returns></returns>
         private string DoUnSendFeiLiu(GenerWorkFlow gwf)
         {
-            //  string sql = "SELECT COUNT(*) FROM WF_GenerWorkerList WHERE WorkID=" + this.WorkID + " AND FK_Emp='" + Web.WebUser.No + "' AND FK_Node='" + gwf.FK_Node + "'";
-            string sql = "SELECT COUNT(*) FROM WF_GenerWorkerList WHERE WorkID=" + this.WorkID + " AND FK_Emp='" + Web.WebUser.No + "' AND FK_Node='" + gwf.FK_Node + "'";
-            if (DBAccess.RunSQLReturnValInt(sql) == 0)
+            string sql = "SELECT FK_Node FROM WF_GenerWorkerList WHERE WorkID=" + this.WorkID + " AND FK_Emp='" + Web.WebUser.No + "' AND FK_Node='" + gwf.FK_Node + "'";
+            DataTable dt = DBAccess.RunSQLReturnTable(sql);
+            if (dt.Rows.Count == 0)
                 return "@" + this.ToE("WF6", "您不能执行撤消发送，因为当前工作不是您发送的。");
 
-            ////找出来上一个节点。
-            //WorkNode wn = this.GetCurrentWorkNode();
+            //处理事件.
+            Node nd = new Node(gwf.FK_Node);
+            Work wk = nd.HisWork;
+            wk.OID = gwf.WorkID;
+            wk.RetrieveFromDBSources();
+            string msg = nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneBefore, wk);
 
             // 找出它的下一个节点。
             sql = "SELECT FK_Node FROM WF_GenerWorkFlow WHERE FID=" + this.WorkID + " AND FK_Node!='" + gwf.FK_Node + "'";
-            DataTable dt = DBAccess.RunSQLReturnTable(sql);
+            dt = DBAccess.RunSQLReturnTable(sql);
             if (dt.Rows.Count == 0)
                 throw new Exception("system error, pls call administrator.");
-
 
             // 删除分合流记录。
             DBAccess.RunSQL("DELETE WF_GenerFH WHERE FID=" + this.WorkID);
@@ -1699,41 +1698,38 @@ namespace BP.WF
             cWork.OID = this.WorkID;
             cWork.Update(WorkAttr.NodeState, 0);
 
-            //ForwardWorks fws = new ForwardWorks();
-            //fws.Delete(ForwardWorkAttr.NodeId, wn.HisNode.NodeID.ToString(),
-            //    ForwardWorkAttr.WorkID, this.WorkID.ToString());
-            //ReturnWorks rws = new ReturnWorks();
-            //rws.Delete(ReturnWorkAttr.NodeId, wn.HisNode.NodeID.ToString(),
-            //    ReturnWorkAttr.WorkID, this.WorkID.ToString());
+
+            msg += nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneAfter, wk);
+
 
             if (cNode.IsStartNode)
             {
                 if (Web.WebUser.IsWap)
                 {
-                    return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + cWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='../Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。";
+                    return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + cWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='../Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                 }
                 else
                 {
                     if (this.HisFlow.FK_FlowSort != "00")
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0' ><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + cWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='../Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0' ><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + cWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='../Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                     else
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0' ><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='Do.aspx?ActionType=DeleteFlow&WorkID=" + cWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='../Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0' ><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='Do.aspx?ActionType=DeleteFlow&WorkID=" + cWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='../Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                 }
             }
             else
             {
                 // 更新是否显示。
-                DBAccess.RunSQL("UPDATE WF_ForwardWork SET IsTakeBack=1 WHERE WORKID=" + this.WorkID + " AND NODEID=" + cNode.NodeID);
+                DBAccess.RunSQL("UPDATE WF_ForwardWork SET IsRead=1 WHERE WORKID=" + this.WorkID + " AND FK_Node=" + cNode.NodeID);
                 if (Web.WebUser.IsWap == false)
                 {
                     if (this.HisFlow.FK_FlowSort != "00")
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0' ><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0' ><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。" + msg;
                     else
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0' ><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。";
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0' ><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。" + msg;
                 }
                 else
                 {
-                    return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0' ><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。";
+                    return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=0' ><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>。" + msg;
                 }
             }
         }
@@ -1829,7 +1825,7 @@ namespace BP.WF
             else
             {
                 // 更新是否显示。
-                DBAccess.RunSQL("UPDATE WF_ForwardWork SET IsTakeBack=1 WHERE WORKID=" + this.WorkID + " AND NODEID=" + wnPri.HisNode.NodeID);
+                DBAccess.RunSQL("UPDATE WF_ForwardWork SET IsRead=1 WHERE WORKID=" + this.WorkID + " AND FK_Node=" + wnPri.HisNode.NodeID);
 
                 if (Web.WebUser.IsWap == false)
                 {
