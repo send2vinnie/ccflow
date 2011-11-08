@@ -45,6 +45,19 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     string sql = "DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
                     BP.DA.DBAccess.RunSQL(sql);
 
+                    // 升级退回规则。
+                    sql = "SELECT FK_Node FROM WF_ReturnWork ";
+                    try
+                    {
+                        /*如果有这个列说明是未升级的 , 让它删除重建。*/
+                        BP.DA.DBAccess.RunSQLReturnTable(sql);
+                        sql = "DROP TABLE WF_ReturnWork";
+                        BP.DA.DBAccess.RunSQL(sql);
+                    }
+                    catch
+                    {
+                    }
+
                     sql = "INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态')";
                     BP.DA.DBAccess.RunSQL(sql);
 

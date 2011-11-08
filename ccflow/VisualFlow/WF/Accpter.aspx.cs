@@ -47,7 +47,6 @@ public partial class WF_Accpter : WebPage
             string s = this.Request.QueryString["FK_Dept"];
             if (s == null)
                 s = WebUser.FK_Dept;
-
             return s;
         }
     }
@@ -61,10 +60,10 @@ public partial class WF_Accpter : WebPage
     public int MyToNode = 0;
     public DataTable GetTable()
     {
-        NodeStations stas = new NodeStations(MyToNode);
+        NodeStations stas = new NodeStations(this.MyToNode);
         if (stas.Count == 0)
         {
-            BP.WF.Node toNd = new BP.WF.Node(MyToNode);
+            BP.WF.Node toNd = new BP.WF.Node(this.MyToNode);
             throw new Exception("@流程设计错误：设计员没有设计节点[" + toNd.Name + "]，接受人的岗位范围。");
         }
 
@@ -73,29 +72,58 @@ public partial class WF_Accpter : WebPage
         sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
         sql += ") ORDER BY FK_DEPT ";
 
-        // sql = "SELECT No,Name,FK_Dept, '' as DeptName FROM Port_Emp ";
         return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }
+    private BP.WF.Node _HisNode = null;
+    /// <summary>
+    /// 它的节点
+    /// </summary>
+    public BP.WF.Node HisNode
+    {
+        get
+        {
+            if (_HisNode == null)
+                _HisNode = new BP.WF.Node(this.FK_Node);
+
+            return _HisNode;
+        }
+    }
+    public void BindMStations()
+    {
+    }
+  
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "选择下一步骤接受的人员";
+
+        /* 首先判断是否有多个分支的情况。*/
+
+
         string title = "";
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
         if (this.ToNode == 0)
         {
+            /* 没参数 */
             if (nd.HisToNodes.Count > 1)
             {
                 Nodes nds = nd.HisToNodes;
+                int num = 0;
                 foreach (BP.WF.Node mynd in nds)
                 {
                     if (mynd.HisDeliveryWay == DeliveryWay.BySelected)
+                    {
                         this.MyToNode = mynd.NodeID;
+                        num++;
+                    }
                 }
+
                 if (this.MyToNode == 0)
                 {
                     this.WinCloseWithMsg("流程设计错误：\n\n 当前节点的所有分支节点没有一个接受人员规则为按照选择接受。");
                     return;
                 }
+
+
             }
             else
             {

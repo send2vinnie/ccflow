@@ -1062,18 +1062,15 @@ namespace BP.Web.WF
                 if (wn.HisWork.NodeState == NodeState.Back)
                 {
                     string msgInfo = "";
-
                     /* 如果工作节点退回了*/
                     ReturnWorks rws = new ReturnWorks();
-                    if (rws.Retrieve(ReturnWorkAttr.FK_Node, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID) != 0)
+                    if (rws.Retrieve(ReturnWorkAttr.ReturnToNode, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID) != 0)
                     {
                         foreach (ReturnWork rw in rws)
                         {
                             msgInfo += rw.NoteHtml;
                         }
                     }
-
-
                     try
                     {
 
@@ -1116,7 +1113,7 @@ namespace BP.Web.WF
                     /* 如果工作节点退回了。 */
                     string msgInfo = "";
                     ReturnWorks rws = new ReturnWorks();
-                    if (rws.Retrieve(ReturnWorkAttr.FK_Node, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID) != 0)
+                    if (rws.Retrieve(ReturnWorkAttr.ReturnToNode, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID) != 0)
                     {
                         foreach (ReturnWork rw in rws)
                         {

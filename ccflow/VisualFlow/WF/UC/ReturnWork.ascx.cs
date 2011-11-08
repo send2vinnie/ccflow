@@ -273,25 +273,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             try
             {
                 WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
-                WorkNode pwn = wn.GetPreviousWorkNode();
-                switch (pwn.HisNode.HisNodeWorkType)
-                {
-                    //case NodeWorkType.WorkFL:
-                    //case NodeWorkType.StartWorkFL:
-                    //case NodeWorkType.WorkFHL:
-                    //    this.AddMsgOfInfo("提示", "您的上一步骤是分合流节点，您不能执行退回。");
-                    //    return;
-                    case NodeWorkType.WorkHL:
-                    default:
-                        break;
-                }
-
                 WorkNodes wns = new WorkNodes();
-                //if (wn.HisNode.HisFNType == FNType.River)
-                //    wns.GenerByFID(wn.HisNode.HisFlow, this.WorkID);
-                if (wns.Count == 0)
-                    wns.GenerByWorkID(wn.HisNode.HisFlow, this.WorkID);
-
 
                 string turnTo = "xxx";
                 switch (nd.HisReturnRole)
@@ -299,6 +281,8 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                     case ReturnRole.CanNotReturn:
                         return;
                     case ReturnRole.ReturnAnyNodes:
+                        if (wns.Count == 0)
+                            wns.GenerByWorkID(wn.HisNode.HisFlow, this.WorkID);
                         foreach (WorkNode mywn in wns)
                         {
                             if (mywn.HisNode.NodeID == this.FK_Node)
@@ -308,17 +292,13 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                         }
                         break;
                     case ReturnRole.ReturnPreviousNode:
-                        int nodeId = wn.GetPreviousWorkNode().HisNode.NodeID;
-                        foreach (WorkNode mywn in wns)
-                        {
-                            if (mywn.HisNode.NodeID != nodeId)
-                                continue;
-
-                            turnTo = mywn.HisWork.Rec + mywn.HisWork.RecText;
-                            this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
-                        }
+                        WorkNode mywnP = wn.GetPreviousWorkNode();
+                        turnTo = mywnP.HisWork.Rec + mywnP.HisWork.RecText;
+                        this.DDL1.Items.Add(new ListItem(mywnP.HisWork.RecText + "=>" + mywnP.HisNode.Name, mywnP.HisNode.NodeID.ToString()));
                         break;
                     case ReturnRole.ReturnSpecifiedNodes: //退回指定的节点。
+                        if (wns.Count == 0)
+                            wns.GenerByWorkID(wn.HisNode.HisFlow, this.WorkID);
                         NodeReturns rnds = new NodeReturns();
                         rnds.Retrieve(NodeReturnAttr.FK_Node, this.FK_Node);
                         foreach (WorkNode mywn in wns)
@@ -326,7 +306,8 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                             if (mywn.HisNode.NodeID == this.FK_Node)
                                 continue;
 
-                            if (rnds.Contains(NodeReturnAttr.ReturnN, mywn.HisNode.NodeID) == false)
+                            if (rnds.Contains(NodeReturnAttr.ReturnN,
+                                mywn.HisNode.NodeID) == false)
                                 continue;
 
                             turnTo = mywn.HisWork.Rec + mywn.HisWork.RecText;
@@ -339,6 +320,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                         throw new Exception("@没有判断的退回类型。");
                 }
 
+                WorkNode pwn = wn.GetPreviousWorkNode();
                 this.DDL1.SetSelectItem(pwn.HisNode.NodeID);
                 this.DDL1.Enabled = true;
                 Work wk = pwn.HisWork;

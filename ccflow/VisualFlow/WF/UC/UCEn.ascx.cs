@@ -802,6 +802,11 @@ namespace BP.Web.Comm.UC.WF
                         break;
                     case MapExtXmlList.AutoFullDLL: // 自动填充下拉框.
                         DDL ddlFull = this.GetDDLByID("DDL_" + me.AttrOfOper);
+                        if (ddlFull == null)
+                        {
+                            me.Delete();
+                            continue;
+                        }
                         string valOld = ddlFull.SelectedItemStringVal;
 
                         string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
@@ -1339,7 +1344,7 @@ namespace BP.Web.Comm.UC.WF
                         {
                             DDL ddle = new DDL();
                             ddle.ID = "DDL_" + attr.KeyOfEn;
-                            ddle.BindSysEnum(attr.KeyOfEn);
+                            ddle.BindSysEnum(attr.UIBindKey);
                             ddle.SetSelectItem(en.GetValStrByKey(attr.KeyOfEn));
                             ddle.Enabled = attr.UIIsEnable;
                             ddle.Attributes["tabindex"] = attr.IDX.ToString();
@@ -1524,71 +1529,80 @@ namespace BP.Web.Comm.UC.WF
 
             foreach (FrmAttachment ath in aths)
             {
-                FrmAttachmentDB athDB = athDBs.GetEntityByKey(FrmAttachmentDBAttr.FK_FrmAttachment, ath.MyPK) as FrmAttachmentDB;
-
-                float x = ath.X;
-                float y = ath.Y;
-                this.Add("<DIV id='Fa" + ath.MyPK + "' style='position:absolute; left:" + x + "px; top:" + y + "px; width:" + ath.W + "px;text-align: left;float:left' >");
-                //  this.Add("<span>");
-
-                Label lab = new Label();
-                lab.ID = "Lab" + ath.MyPK;
-                this.Add(lab);
-                if (athDB != null)
-                    lab.Text = "<a href='./../DataUser/UploadFile/" + athDB.FilePathName + "' target=_blank ><img src='./../Images/FileType/" + athDB.FileExts + ".gif' border=0/>" + athDB.FileName + "</a>";
-
-
-                FileUpload fu = new FileUpload();
-                fu.ID = ath.MyPK;
-                fu.Attributes["Width"] = ath.W.ToString();
-                this.Add(fu);
-
-                Button mybtn = new Button();
-                if (ath.IsUpload)
+                if (ath.UploadType == AttachmentUploadType.Single)
                 {
-                    mybtn.ID = ath.MyPK;
-                    mybtn.Text = "上传";
-                    mybtn.CssClass = "bg";
-                    mybtn.ID = "Btn_Upload_" + ath.MyPK + "_" + this.HisEn.PKVal;
-                    mybtn.Click += new EventHandler(btnUpload_Click);
-                    this.Add(mybtn);
+                    /* 单个文件 */
+                    FrmAttachmentDB athDB = athDBs.GetEntityByKey(FrmAttachmentDBAttr.FK_FrmAttachment, ath.MyPK) as FrmAttachmentDB;
+                    float x = ath.X;
+                    float y = ath.Y;
+                    this.Add("<DIV id='Fa" + ath.MyPK + "' style='position:absolute; left:" + x + "px; top:" + y + "px; width:" + ath.W + "px;text-align: left;float:left' >");
+                    //  this.Add("<span>");
+
+                    Label lab = new Label();
+                    lab.ID = "Lab" + ath.MyPK;
+                    this.Add(lab);
+                    if (athDB != null)
+                        lab.Text = "<a href='./../DataUser/UploadFile/" + athDB.FilePathName + "' target=_blank ><img src='./../Images/FileType/" + athDB.FileExts + ".gif' border=0/>" + athDB.FileName + "</a>";
+
+
+                    FileUpload fu = new FileUpload();
+                    fu.ID = ath.MyPK;
+                    fu.Attributes["Width"] = ath.W.ToString();
+                    this.Add(fu);
+
+                    Button mybtn = new Button();
+                    if (ath.IsUpload)
+                    {
+                        mybtn.ID = ath.MyPK;
+                        mybtn.Text = "上传";
+                        mybtn.CssClass = "bg";
+                        mybtn.ID = "Btn_Upload_" + ath.MyPK + "_" + this.HisEn.PKVal;
+                        mybtn.Click += new EventHandler(btnUpload_Click);
+                        this.Add(mybtn);
+                    }
+
+                    if (ath.IsDownload)
+                    {
+                        mybtn = new Button();
+                        mybtn.Text = "下载";
+                        mybtn.ID = "Btn_Download_" + ath.MyPK + "_" + this.HisEn.PKVal;
+                        mybtn.Click += new EventHandler(btnUpload_Click);
+                        mybtn.CssClass = "bg";
+                        if (athDB == null)
+                            mybtn.Visible = false;
+                        else
+                            mybtn.Visible = true;
+                        this.Add(mybtn);
+                    }
+
+                    if (ath.IsDelete)
+                    {
+                        mybtn = new Button();
+                        mybtn.Text = "删除";
+                        mybtn.Attributes["onclick"] = " return confirm('您确定要执行删除吗？');";
+                        mybtn.ID = "Btn_Delete_" + ath.MyPK + "_" + this.HisEn.PKVal;
+                        mybtn.Click += new EventHandler(btnUpload_Click);
+                        mybtn.CssClass = "bg";
+                        if (athDB == null)
+                            mybtn.Visible = false;
+                        else
+                            mybtn.Visible = true;
+                        this.Add(mybtn);
+                    }
+                    this.Add("</DIV>");
                 }
 
-                if (ath.IsDownload)
+                if (ath.UploadType == AttachmentUploadType.Multi)
                 {
-                    mybtn = new Button();
-                    mybtn.Text = "下载";
-                    mybtn.ID = "Btn_Download_" + ath.MyPK + "_" + this.HisEn.PKVal;
-                    mybtn.Click += new EventHandler(btnUpload_Click);
-                    mybtn.CssClass = "bg";
-                    if (athDB == null)
-                        mybtn.Visible = false;
-                    else
-                        mybtn.Visible = true;
-                    this.Add(mybtn);
+                    this.Add("<DIV id='Fd" + ath.MyPK + "' style='position:absolute; left:" + ath.X + "px; top:" + ath.Y + "px; width:" + ath.W + "px; height:" + ath.H + "px;text-align: left;' >");
+                    this.Add("<span>");
+                    string src = "";
+                    src = this.Request.ApplicationPath + "/WF/FreeFrm/AttachmentUpload.aspx?PKVal=" + this.HisEn.PKVal.ToString() + "&FK_FrmAttachment=" + ath.MyPK;
+                    this.Add("<iframe ID='F" + ath.MyPK + "'    src='" + src + "' frameborder=0  style='position:absolute;width:" + ath.W + "px; height:" + ath.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=auto /></iframe>");
+                    this.Add("</span>");
+                    this.Add("</DIV>");
                 }
 
-                if (ath.IsDelete)
-                {
-                    mybtn = new Button();
-                    mybtn.Text = "删除";
-                    mybtn.Attributes["onclick"] = " return confirm('您确定要执行删除吗？');";
-                    mybtn.ID = "Btn_Delete_" + ath.MyPK + "_" + this.HisEn.PKVal;
-                    mybtn.Click += new EventHandler(btnUpload_Click);
-                    mybtn.CssClass = "bg";
-                    if (athDB == null)
-                        mybtn.Visible = false;
-                    else
-                        mybtn.Visible = true;
-                    this.Add(mybtn);
-                }
-
-               
-                //this.Add("<input type=button value='编辑("+ath.Name+")附件' enable=true onclick=\"javascript:WinOpen('UploadFile.aspx?MyPK=" + en.PKVal + "&Ath=" + ath.MyPK + "');\" />");
-                //this.Add("<a href=# onclick=\"javascript:WinShowModalDialog('./FreeFrm/UploadFile.aspx?MyPK=" + en.PKVal + "&Ath=" + ath.MyPK + "','','400','120');\" />编辑(" + ath.Name + ")附件</a>");
-                //this.Add("</span>");
-
-                this.Add("</DIV>");
             }
             #endregion 输出附件.
 
@@ -1642,7 +1656,6 @@ namespace BP.Web.Comm.UC.WF
                 return;
             }
             #endregion 处理事件.
-
             return;
         }
 
@@ -2784,8 +2797,6 @@ namespace BP.Web.Comm.UC.WF
         private void btn_Click(object sender, EventArgs e)
         {
         }
-
-
 
         public Entity GetEnData(Entity en)
         {

@@ -95,7 +95,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
     public void ViewWork()
     {
         ReturnWorks rws = new ReturnWorks();
-        rws.Retrieve(ReturnWorkAttr.FK_Node, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID);
+        rws.Retrieve(ReturnWorkAttr.ReturnToNode, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID);
 
         ForwardWorks fws = new ForwardWorks();
         fws.Retrieve(ForwardWorkAttr.NodeId, this.FK_Node, ForwardWorkAttr.WorkID, this.WorkID);
@@ -123,13 +123,16 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         this.Clear();
         this.Page.Title = "ccflow WorkFlow Rpt";
         Flow fl = new Flow(this.FK_Flow);
+        this.BindPanel(fl);
+        return;
+        
         switch (fl.HisFlowType)
         {
             case FlowType.Panel:
                 this.BindPanel(fl);
                 break;
             default:
-                if (this.WorkID == this.FID || this.FID==0 )
+                if (this.WorkID == this.FID || this.FID == 0)
                     this.BindRavie(fl); //主流程.
                 else
                     this.BindBrach(fl);
@@ -443,20 +446,15 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                     wn.HisNode.NodeID);
                 this.Add("<p align='left' style='line-height: 100%' >&nbsp;&nbsp;&nbsp;&nbsp;<a name='ND" + wn.HisNode.NodeID + "' >" + this.ToEP1("NStep", "@第{0}步", idx.ToString()) + "</a>" + wn.HisNode.Name + "，" + this.ToE("NodeState", "节点状态") + "：" + wn.HisWork.NodeStateText + "。");
                 string msg = this.ToE("WFRpt0", "当前操作人员:");
-                if (wn.HisNode.IsSecret)
+
+                foreach (WorkerList wl in wls)
                 {
-                    msg = "保密步骤";
+                    if (wl.IsEnable)
+                        msg += wl.FK_Emp + wl.FK_EmpText + "、";
+                    else
+                        msg += "<strike>" + wl.FK_Emp + wl.FK_EmpText + "</strike>、";
                 }
-                else
-                {
-                    foreach (WorkerList wl in wls)
-                    {
-                        if (wl.IsEnable)
-                            msg += wl.FK_Emp + wl.FK_EmpText + "、";
-                        else
-                            msg += "<strike>" + wl.FK_Emp + wl.FK_EmpText + "</strike>、";
-                    }
-                }
+
                 this.Add(msg);
             }
             else
@@ -566,7 +564,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         this.BindViewEn(en, "width=90%");
         foreach (ReturnWork rw in rws)
         {
-            if (rw.FK_Node != nodeId)
+            if (rw.ReturnToNode != nodeId)
                 continue;
 
             this.AddBR();

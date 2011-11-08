@@ -125,6 +125,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             ViewState["WorkID"] = value;
         }
     }
+    private int _FK_Node = 0;
     /// <summary>
     /// 当前的 NodeID ,在开始时间,nodeID,是地一个,流程的开始节点ID.
     /// </summary>
@@ -139,19 +140,21 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             if (string.IsNullOrEmpty(fk_nodeReq) == false)
                 return int.Parse(fk_nodeReq);
 
-            if (ViewState["FK_Node"] == null)
+            if (_FK_Node == 0)
             {
-                ViewState["FK_Node"] = int.Parse(this.FK_Flow + "01");
-                return int.Parse(this.FK_Flow + "01");
+                if (this.Request.QueryString["WorkID"] != null)
+                {
+                    string sql = "SELECT FK_Node from  WF_GenerWorkFlow where WorkID=" + this.WorkID;
+
+                    _FK_Node=  DBAccess.RunSQLReturnValInt(sql);
+
+                }
+                else
+                {
+                    _FK_Node= int.Parse(this.FK_Flow + "01");
+                }
             }
-            else
-            {
-                return (int)ViewState["FK_Node"];
-            }
-        }
-        set
-        {
-            ViewState["FK_Node"] = value;
+            return _FK_Node;
         }
     }
     public int FID
@@ -349,13 +352,18 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                case NodeState.Back:
                    /* 如果工作节点退回了*/
                    ReturnWorks rws = new ReturnWorks();
-                   if (rws.Retrieve(ReturnWorkAttr.FK_Node, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID) != 0)
+                   rws.Retrieve(ReturnWorkAttr.ReturnToNode, this.FK_Node,
+                       ReturnWorkAttr.WorkID, this.WorkID,
+                       ReturnWorkAttr.RDT);
+                   if ( rws.Count!= 0)
                    {
                        string msgInfo = "";
                        foreach (ReturnWork rw in rws)
                        {
-                           msgInfo += "\t\n  =========== " + rw.Returner + "  " + rw.RDT + "========== <br>";
+                           msgInfo += "<fieldset width='100%' ><legend>&nbsp; 来自节点:" + rw.ReturnNodeName + " 退回人:" + rw.ReturnerName + "  " + rw.RDT + "&nbsp;<a href='./../DataUser/ReturnLog/" + this.FK_Flow + "/" + rw.MyPK + ".htm' target=_blank>工作日志</a></legend>";
                            msgInfo += rw.NoteHtml;
+                           //  msgInfo += "<br>";
+                           msgInfo += "</fieldset>";
                        }
                        this.FlowMsg.AlertMsg_Info("流程退回提示", msgInfo);
                        currWK.Update("NodeState", (int)NodeState.Init);
@@ -488,15 +496,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             #endregion
 
             this.BindWork(currND, currWK);
-
             this.Session["Ect"] = null;
-            //if (currND.HisDeliveryWay == DeliveryWay.BySelected && currND.IsEndNode == false)
-            //{
 
             if (btnLab.SelectAccepterEnable)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
-
-            // }
         }
         catch (Exception ex)
         {
@@ -545,7 +548,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     this.UCEn1.AddFieldSet("分流节点退回信息");
 
                     ReturnWork rw = new ReturnWork();
-                    rw.Retrieve(ReturnWorkAttr.WorkID, this.WorkID, ReturnWorkAttr.FK_Node, nd.NodeID);
+                    rw.Retrieve(ReturnWorkAttr.WorkID, this.WorkID, ReturnWorkAttr.ReturnToNode, nd.NodeID);
                     this.UCEn1.Add(rw.NoteHtml);
                     this.UCEn1.AddHR();
                     //this.UCEn1.addb
@@ -629,74 +632,77 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             qo.AddWhere(WorkerListAttr.FK_Node,
                 nd.HisFromNodes[0].GetValByKey(NodeAttr.NodeID));
 
-          int i=  qo.DoQuery();
-          if (i == 1)
-          {
-              qo.clear();
-              qo.AddWhere(WorkerListAttr.FID, wk.OID);
-              qo.addAnd();
-              qo.AddWhere(WorkerListAttr.IsEnable, 1);
-              qo.addAnd();
-              qo.AddWhere(WorkerListAttr.IsPass, 1);
-              qo.DoQuery();
-          }
-
-            this.Pub2.AddFieldSet("分流信息");
-            this.Pub2.AddTable("border=0"); // ("<table border=0 >");
-            this.Pub2.AddTR();
-            this.Pub2.AddTDTitle("节点");
-            this.Pub2.AddTDTitle("处理人");
-            this.Pub2.AddTDTitle("名称");
-
-            this.Pub2.AddTDTitle("部门");
-            this.Pub2.AddTDTitle("状态");
-            this.Pub2.AddTDTitle("应完成日期");
-            this.Pub2.AddTDTitle("实际完成日期");
-            this.Pub2.AddTDTitle("");
-            this.Pub2.AddTREnd();
-
-            bool isHaveRuing = false;
-            bool is1 = false;
-            foreach (WorkerList wl in wls)
+            int i = qo.DoQuery();
+            if (i == 1)
             {
-                is1 = this.Pub2.AddTR(is1);
-                this.Pub2.AddTD(wl.FK_NodeT);
-                this.Pub2.AddTD(wl.FK_Emp);
+                qo.clear();
+                qo.AddWhere(WorkerListAttr.FID, wk.OID);
+                qo.addAnd();
+                qo.AddWhere(WorkerListAttr.IsEnable, 1);
+                qo.addAnd();
+                qo.AddWhere(WorkerListAttr.IsPass, 1);
+                qo.DoQuery();
+            }
 
-                this.Pub2.AddTD(wl.FK_EmpText);
-                this.Pub2.AddTD(wl.FK_DeptT);
+            if (1 == 2)
+            {
+                this.Pub2.AddFieldSet("分流信息");
+                this.Pub2.AddTable("border=0"); // ("<table border=0 >");
+                this.Pub2.AddTR();
+                this.Pub2.AddTDTitle("节点");
+                this.Pub2.AddTDTitle("处理人");
+                this.Pub2.AddTDTitle("名称");
 
-                if (wl.IsPass)
-                {
-                    this.Pub2.AddTD("已完成");
-                    this.Pub2.AddTD(wl.SDT);
-                    this.Pub2.AddTD(wl.RDT);
-                }
-                else
-                {
-                    this.Pub2.AddTD("未完成-<a href=\"javascript:WinOpen('');\"><img src='./Img/sms.gif' border=0/>催办</a>");
-                    this.Pub2.AddTD(wl.SDT);
-                    this.Pub2.AddTD();
-                }
-
-                if (wl.IsPass == false)
-                {
-                    isHaveRuing = true;
-                    this.Pub2.AddTD("<a href=\"javascript:DoDelSubFlow('" + wl.FK_Flow + "','" + wl.WorkID + "')\"><img src='./../Images/Btn/Delete.gif' border=0/>终止</a>");
-                }
-                else
-                {
-                    this.Pub2.AddTD("<a href=\"javascript:WinOpen('FHLFlow.aspx?WorkID=" + wl.WorkID + "&FID=" + wl.FID + "&FK_Flow=" + nd.FK_Flow + "&FK_Node=" + this.FK_Node + "')\">打开</a>");
-                }
+                this.Pub2.AddTDTitle("部门");
+                this.Pub2.AddTDTitle("状态");
+                this.Pub2.AddTDTitle("应完成日期");
+                this.Pub2.AddTDTitle("实际完成日期");
+                this.Pub2.AddTDTitle("");
                 this.Pub2.AddTREnd();
+
+                bool isHaveRuing = false;
+                bool is1 = false;
+                foreach (WorkerList wl in wls)
+                {
+                    is1 = this.Pub2.AddTR(is1);
+                    this.Pub2.AddTD(wl.FK_NodeT);
+                    this.Pub2.AddTD(wl.FK_Emp);
+
+                    this.Pub2.AddTD(wl.FK_EmpText);
+                    this.Pub2.AddTD(wl.FK_DeptT);
+
+                    if (wl.IsPass)
+                    {
+                        this.Pub2.AddTD("已完成");
+                        this.Pub2.AddTD(wl.SDT);
+                        this.Pub2.AddTD(wl.RDT);
+                    }
+                    else
+                    {
+                        this.Pub2.AddTD("未完成-<a href=\"javascript:WinOpen('');\"><img src='./Img/sms.gif' border=0/>催办</a>");
+                        this.Pub2.AddTD(wl.SDT);
+                        this.Pub2.AddTD();
+                    }
+
+                    if (wl.IsPass == false)
+                    {
+                        isHaveRuing = true;
+                        this.Pub2.AddTD("<a href=\"javascript:DoDelSubFlow('" + wl.FK_Flow + "','" + wl.WorkID + "')\"><img src='./../Images/Btn/Delete.gif' border=0/>终止</a>");
+                    }
+                    else
+                    {
+                        this.Pub2.AddTD("<a href=\"javascript:WinOpen('FHLFlow.aspx?WorkID=" + wl.WorkID + "&FID=" + wl.FID + "&FK_Flow=" + nd.FK_Flow + "&FK_Node=" + this.FK_Node + "')\">打开</a>");
+                    }
+                    this.Pub2.AddTREnd();
+                }
+                if (isHaveRuing)
+                {
+                    if (nd.IsForceKill == false)
+                        this.Btn_Send.Enabled = false;
+                }
+                this.Pub2.AddTableEnd();
+                this.Pub2.AddFieldSetEnd(); //.AddFieldSet("分流信息");
             }
-            if (isHaveRuing)
-            {
-                if (nd.IsForceKill == false)
-                    this.Btn_Send.Enabled = false;
-            }
-            this.Pub2.AddTableEnd();
-            this.Pub2.AddFieldSetEnd(); //.AddFieldSet("分流信息");
         }
         #endregion 判断是否合流节点。
 

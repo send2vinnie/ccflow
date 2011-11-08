@@ -329,7 +329,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
                 this.AddTD(this.ToE("Value", "值"));
                 ddl = new DDL();
                 ddl.ID = "DDL_Val";
-                ddl.BindSysEnum(attrS.KeyOfEn);
+                ddl.BindSysEnum(attrS.UIBindKey);
                 if (cond != null)
                 {
                     try

@@ -85,12 +85,11 @@ public partial class WF_FileManager : WebPage
         //BP.WF.CHOfFlow f = new CHOfFlow(this.WorkID);
         //Flow fl = new Flow(this.FK_Flow);
 
-
         FileManagers fms = new FileManagers();
+        QueryObject qo = new QueryObject(fms);
         switch (this.HisFJOpen)
         {
             case FJOpen.ForEmp:
-                QueryObject qo = new QueryObject(fms);
                 qo.AddWhere(FileManagerAttr.WorkID, this.WorkID);
                 qo.addAnd();
                 qo.AddWhere(FileManagerAttr.FK_Emp, BP.Web.WebUser.No);
@@ -98,7 +97,13 @@ public partial class WF_FileManager : WebPage
                 qo.DoQuery();
                 break;
             case FJOpen.ForFID:
-                fms.Retrieve(FileManagerAttr.FID, this.FID, FileManagerAttr.RDT);
+              //  qo.clear();
+                qo.AddWhere(FileManagerAttr.WorkID, this.WorkID);
+                qo.addOr();
+                qo.AddWhere(FileManagerAttr.FID, this.FID);
+
+                qo.addOrderBy(FileManagerAttr.RDT);
+                qo.DoQuery();
                 break;
             case FJOpen.ForWorkID:
                 fms.Retrieve(FileManagerAttr.WorkID, this.WorkID, FileManagerAttr.RDT);
