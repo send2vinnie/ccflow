@@ -76,18 +76,6 @@ namespace BP.WF
             string str = "";
             foreach (WorkerList wl in this.HisWorkerLists)
                 str = wl.FK_Emp + ",";
-
-            if (this.HisWorkerLists.Count == 0)
-            {
-                try
-                {
-                    Log.DefaultLogWriteLineError("@" + this.ToE("ErrEmpNull", "产生人员集合为空") + "，WorkID=" + this.WorkID + "@FK_Flow=" + this.HisNode.FK_Flow);
-                }
-                catch
-                {
-
-                }
-            }
             return str;
         }
         private string _VirPath = null;
@@ -3040,7 +3028,6 @@ namespace BP.WF
                 {
                     if (cd.ToNodeID != nd.NodeID)
                         continue;
-
                     if (cd.IsPassed) // 如果多个转向条件中有一个成立.
                     {
                         numOfWay++;

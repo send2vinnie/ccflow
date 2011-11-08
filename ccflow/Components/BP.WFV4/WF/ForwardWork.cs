@@ -13,7 +13,7 @@ using BP.En;
 namespace BP.WF
 {
 	/// <summary>
-	/// 转发记录
+	/// 移交记录
 	/// </summary>
     public class ForwardWorkAttr
     {
@@ -25,7 +25,7 @@ namespace BP.WF
         /// <summary>
         /// 节点
         /// </summary>
-        public const string NodeId = "NodeId";
+        public const string FK_Node = "FK_Node";
         /// <summary>
         /// 工作人员
         /// </summary>
@@ -34,34 +34,30 @@ namespace BP.WF
         /// 退回原因
         /// </summary>
         public const string Note = "Note";
-        public const string FK_Emp = "FK_Emp";
-        public const string Emps = "Emps";
         /// <summary>
-        /// 是否是收回
+        /// 移交人
         /// </summary>
-        public const string IsTakeBack = "IsTakeBack";
+        public const string FK_Emp = "FK_Emp";
+        /// <summary>
+        /// 移交给
+        /// </summary>
+        public const string ToEmp = "ToEmp";
+        /// <summary>
+        /// 移交时间
+        /// </summary>
+        public const string RDT = "RDT";
+        /// <summary>
+        /// 是否读取？
+        /// </summary>
+        public const string IsRead = "IsRead";
         #endregion
     }
 	/// <summary>
-	/// 转发记录
+	/// 移交记录
 	/// </summary>
 	public class ForwardWork : EntityMyPK
 	{		
 		#region 基本属性
-        /// <summary>
-        /// 是否是收回
-        /// </summary>
-        public bool IsTakeBack
-        {
-            get
-            {
-                return this.GetValBooleanByKey(ForwardWorkAttr.IsTakeBack);
-            }
-            set
-            {
-                SetValByKey(ForwardWorkAttr.IsTakeBack, value);
-            }
-        }
 		/// <summary>
 		/// 工作ID
 		/// </summary>
@@ -77,20 +73,51 @@ namespace BP.WF
 			}
 		}
 		/// <summary>
-		/// NodeId
+		/// 工作节点
 		/// </summary>
-		public int  NodeId
+		public int FK_Node
 		{
 			get
 			{
-				return this.GetValIntByKey(ForwardWorkAttr.NodeId);
+				return this.GetValIntByKey(ForwardWorkAttr.FK_Node);
 			}
 			set
 			{
-				SetValByKey(ForwardWorkAttr.NodeId,value);
+				SetValByKey(ForwardWorkAttr.FK_Node,value);
 			}
 		}
-		public string  Note
+        /// <summary>
+        /// 是否读取？
+        /// </summary>
+        public bool IsRead
+        {
+            get
+            {
+                return this.GetValBooleanByKey(ForwardWorkAttr.IsRead);
+            }
+            set
+            {
+                SetValByKey(ForwardWorkAttr.IsRead, value);
+            }
+        }
+        /// <summary>
+        /// 移交时间
+        /// </summary>
+        public string RDT
+        {
+            get
+            {
+                return this.GetValStringByKey(ForwardWorkAttr.RDT);
+            }
+            set
+            {
+                SetValByKey(ForwardWorkAttr.RDT, value);
+            }
+        }
+        /// <summary>
+        /// 移交意见
+        /// </summary>
+		public string Note
 		{
 			get
 			{
@@ -102,19 +129,18 @@ namespace BP.WF
 			}
 		}
         /// <summary>
-        /// 接受人
+        /// 移交意见html格式
         /// </summary>
-        public string Emps
+        public string NoteHtml
         {
             get
             {
-                return this.GetValStringByKey(ForwardWorkAttr.Emps);
-            }
-            set
-            {
-                SetValByKey(ForwardWorkAttr.Emps, value);
+                return this.GetValHtmlStringByKey(ForwardWorkAttr.Note);
             }
         }
+        /// <summary>
+        /// 移交人
+        /// </summary>
         public string FK_Emp
         {
             get
@@ -126,33 +152,28 @@ namespace BP.WF
                 SetValByKey(ForwardWorkAttr.FK_Emp, value);
             }
         }
-        public string FK_EmpText
+        /// <summary>
+        /// 移交给
+        /// </summary>
+        public string ToEmp
         {
             get
             {
-                return this.GetValRefTextByKey(ForwardWorkAttr.FK_Emp);
+                return this.GetValStringByKey(ForwardWorkAttr.ToEmp);
             }
-        }
-        public string NoteHtml
-        {
-            get
+            set
             {
-                return this.GetValHtmlStringByKey(ForwardWorkAttr.Note);
+                SetValByKey(ForwardWorkAttr.ToEmp, value);
             }
         }
-		#endregion 
+		#endregion
 
 		#region 构造函数
 		/// <summary>
-		/// 转发记录
+		/// 移交记录
 		/// </summary>
-		public ForwardWork(){}
-
-        public ForwardWork(int workid, int nodeid)
+		public ForwardWork()
         {
-            this.WorkID = workid;
-            this.NodeId = nodeid;
-            this.Retrieve();
         }
 		/// <summary>
 		/// 重写基类方法
@@ -165,40 +186,40 @@ namespace BP.WF
                     return this._enMap;
 
                 Map map = new Map("WF_ForwardWork");
-                map.EnDesc = "转发记录";
+                map.EnDesc = "移交记录";
                 map.EnType = EnType.App;
-
                 map.AddMyPK();
                 map.AddTBInt(ForwardWorkAttr.WorkID, 0, "工作ID", true, true);
-                map.AddTBInt(ForwardWorkAttr.NodeId, 0, "NodeId", true, true);
-                map.AddTBString(ForwardWorkAttr.FK_Emp, null, "处理人", true, true, 0, 4000, 10);
+                map.AddTBInt(ForwardWorkAttr.FK_Node, 0, "FK_Node", true, true);
+                map.AddTBString(ForwardWorkAttr.FK_Emp, null, "移交人", true, true, 0, 40, 10);
+                map.AddTBString(ForwardWorkAttr.ToEmp, null, "移交给", true, true, 0, 40, 10);
+                map.AddTBDateTime(ForwardWorkAttr.RDT, null, "移交时间", true, true);
+                map.AddTBString(ForwardWorkAttr.Note, null, "移交原因", true, true, 0, 2000, 10);
 
-                map.AddTBString(ForwardWorkAttr.Note, null, "Note", true, true, 0, 4000, 10);
-                map.AddTBString(ForwardWorkAttr.Emps, null, "Emps", true, true, 0, 4000, 10);
-                map.AddBoolean(ForwardWorkAttr.IsTakeBack, false, "是否是收回", true, true);
+                map.AddTBInt(ForwardWorkAttr.IsRead, 0, "是否读取？", true, true);
                 this._enMap = map;
                 return this._enMap;
             }
         }
         protected override bool beforeUpdateInsertAction()
         {
-            this.MyPK = this.WorkID + "_" + this.NodeId + "_" + this.FK_Emp;
+            this.MyPK = this.FK_Emp + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            this.RDT = DataType.CurrentDataTime;
             return base.beforeUpdateInsertAction();
         }
 		#endregion	 
 	}
 	/// <summary>
-	/// 转发记录s 
+	/// 移交记录s 
 	/// </summary>
 	public class ForwardWorks : Entities
 	{	 
 		#region 构造
 		/// <summary>
-		/// 转发记录s
+		/// 移交记录s
 		/// </summary>
 		public ForwardWorks()
 		{
-
 		}
 		/// <summary>
 		/// 得到它的 Entity

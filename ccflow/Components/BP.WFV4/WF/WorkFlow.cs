@@ -1439,7 +1439,7 @@ namespace BP.WF
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node);
 
             ForwardWorks fws = new ForwardWorks();
-            fws.Delete(ForwardWorkAttr.NodeId, wn.HisNode.NodeID.ToString(), ForwardWorkAttr.WorkID, this.WorkID.ToString());
+            fws.Delete(ForwardWorkAttr.FK_Node, wn.HisNode.NodeID.ToString(), ForwardWorkAttr.WorkID, this.WorkID.ToString());
 
             //ReturnWorks rws = new ReturnWorks();
             //rws.Delete(ReturnWorkAttr.FK_Node, wn.HisNode.NodeID.ToString(), ReturnWorkAttr.WorkID, this.WorkID.ToString());
@@ -1763,7 +1763,7 @@ namespace BP.WF
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node);
 
             ForwardWorks fws = new ForwardWorks();
-            fws.Delete(ForwardWorkAttr.NodeId, wn.HisNode.NodeID.ToString(),
+            fws.Delete(ForwardWorkAttr.FK_Node, wn.HisNode.NodeID.ToString(),
                 ForwardWorkAttr.WorkID, this.WorkID.ToString());
 
             //ReturnWorks rws = new ReturnWorks();
