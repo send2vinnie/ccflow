@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 // 属性集控制的。更改这些属性值可修改与程序集
 // 关联的信息。
 //
-[assembly: AssemblyTitle("驰骋工作流程引擎V3.0")]
+[assembly: AssemblyTitle("驰骋工作流程引擎V4.4")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("驰骋软件")]
-[assembly: AssemblyProduct("工作流程引擎")]
-[assembly: AssemblyCopyright("驰骋软件沂水地税局共同所有")]
+[assembly: AssemblyProduct("ccflow")]
+[assembly: AssemblyCopyright("驰骋软件(R)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

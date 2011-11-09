@@ -58,7 +58,12 @@ namespace BP.WF
                     WorkerList wl = new WorkerList();
                     wl.WorkID = this.HisWork.OID;
                     wl.FK_Emp = empId;
+
+                    Emp myEmp = new  Emp(empId);
+                    wl.FK_EmpText = myEmp.Name;
+
                     wl.FK_Node = this.HisNode.NodeID;
+                    wl.FK_NodeText = this.HisNode.Name;
                     return wl.IsExits;
                 }
             }
@@ -923,7 +928,10 @@ namespace BP.WF
             wl.FID = this.HisWork.FID;
             wl.RDT = DataType.CurrentDataTime;
             wl.FK_Emp = fk_emp;
+            wl.FK_EmpText = emp.Name;
+             
             wl.FK_Node = backtoNodeID;
+            wl.FK_NodeText = nd.Name;
             wl.WarningDays = nd.WarningDays;
             wl.FK_Dept = emp.FK_Dept;
 
@@ -953,7 +961,7 @@ namespace BP.WF
 
             WorkNode wn = new WorkNode(this.HisWork.FID, backtoNodeID);
             WF.Port.WFEmp wfemp = new Port.WFEmp(wn.HisWork.Rec);
-            BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.HisNode.NodeID + "_" + wfemp.No, wfemp.No,
+            BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.FK_Node + "_" + wfemp.No, wfemp.No,
                 wfemp.HisAlertWay, wfemp.Tel,
                   this.ToEP3("WN27", "工作退回：流程:{0}.工作:{1},退回人:{2},需您处理",
                   wn.HisNode.FlowName, wn.HisNode.Name, WebUser.Name),
@@ -1434,6 +1442,8 @@ namespace BP.WF
                 WorkerList wl = new WorkerList();
                 wl.WorkID = workID;
                 wl.FK_Node = toNodeId;
+                wl.FK_NodeText = town.HisNode.Name;
+
                 wl.FK_Emp = dt.Rows[0][0].ToString();
 
                 Emp emp = new Emp(wl.FK_Emp);
@@ -1499,6 +1509,7 @@ namespace BP.WF
                         wl.IsEnable = true;
                         wl.WorkID = workID;
                         wl.FK_Node = toNodeId;
+                        wl.FK_NodeText = town.HisNode.Name;
                         wl.FK_Emp = dr[0].ToString();
 
                         Emp emp = new Emp();
@@ -1551,17 +1562,17 @@ namespace BP.WF
                         wl.IsEnable = true;
                         wl.WorkID = workID;
                         wl.FK_Node = toNodeId;
-                        wl.FK_Emp = s;
-
-                        Emp emp = new Emp();
-                        try
-                        {
-                            emp = new Emp(wl.FK_Emp);
-                        }
-                        catch
-                        {
-                            continue;
-                        }
+                        wl.FK_NodeText = town.HisNode.Name;
+                         wl.FK_Emp = s;
+                         Emp emp = null;
+                         try
+                         {
+                             emp = new Emp(s);
+                         }
+                         catch
+                         {
+                             continue;
+                         }
 
                         wl.FK_EmpText = emp.Name;
                         wl.FK_Dept = emp.FK_Dept;
@@ -2181,6 +2192,7 @@ namespace BP.WF
                         gwf.RDT = DataType.CurrentDataTime;
                         gwf.Rec = Web.WebUser.No;
                         gwf.FK_Flow = toNode.FK_Flow;
+                        gwf.FK_FlowSort = toNode.HisFlow.FK_FlowSort;
                         gwf.FK_Node = toNode.NodeID;
                         gwf.FK_Dept = wl.FK_Dept;
 
@@ -2389,6 +2401,8 @@ namespace BP.WF
             gwf.RDT = this.HisWork.RDT;
             gwf.Rec = Web.WebUser.No;
             gwf.FK_Flow = this.HisNode.FK_Flow;
+            gwf.FK_FlowSort = this.HisNode.HisFlow.FK_FlowSort;
+
             gwf.FK_Node = this.HisNode.NodeID;
             //  gwf.FK_Station = this.HisStationOfUse.No;
             gwf.FK_Dept = this.HisWork.RecOfEmp.FK_Dept;
@@ -2439,7 +2453,11 @@ namespace BP.WF
             WorkerList wl = new WorkerList();
             wl.WorkID = this.HisWork.OID;
             wl.FK_Node = this.HisNode.NodeID;
-            wl.FK_Emp = this.HisWork.Rec;
+            wl.FK_NodeText = this.HisNode.Name;
+
+            wl.FK_Emp =WebUser.No;
+            wl.FK_EmpText = WebUser.Name;
+
             wl.FK_Flow = this.HisNode.FK_Flow;
             wl.FK_Dept = WebUser.FK_Dept;
 
@@ -2876,17 +2894,16 @@ namespace BP.WF
                 string url = basePath + "/WF/Do.aspx?DoType=OF&SID=" + sid;
                 string urlWap = basePath + "/WF/Do.aspx?DoType=OF&SID=" + sid + "&IsWap=1";
 
-
                 //string mytemp ="您好" + wl.FK_EmpText + ":  <br><br>&nbsp;&nbsp; "+WebUser.Name+"发来的工作需要您处理，点这里<a href='" + url + "'>打开工作</a>。 \t\n <br>&nbsp;&nbsp;如果打不开请复制到浏览器地址栏里。<br>&nbsp;&nbsp;" + url + " <br><br>&nbsp;&nbsp;此邮件由驰骋工作流程引擎自动发出，请不要回复。<br>*^_^*  谢谢 ";
                 string mytemp = mailTemp.Clone() as string;
                 mytemp = string.Format(mytemp, wl.FK_EmpText, WebUser.Name, url, urlWap);
 
                 //执行消息发送。
                 BP.WF.Port.WFEmp wfemp = new BP.WF.Port.WFEmp(wl.FK_Emp);
-               // wfemp.No = wl.FK_Emp;
-                BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.HisNode.NodeID + "_" + wfemp.No, wfemp.No, wfemp.HisAlertWay, wfemp.Tel,
+                // wfemp.No = wl.FK_Emp;
+                BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.FK_Node + "_" + wfemp.No, wfemp.No, wfemp.HisAlertWay, wfemp.Tel,
                     this.ToEP3("WN27", "流程:{0}.工作:{1},发送人:{2},需您处理",
-                    wl.HisNode.FlowName, wl.HisNode.Name, WebUser.Name),
+                    this.HisNode.FlowName, wl.FK_NodeText, WebUser.Name),
                     wfemp.Email, null, mytemp);
             }
             return;
@@ -3186,6 +3203,8 @@ namespace BP.WF
                     gwf.RDT = DataType.CurrentDataTime;
                     gwf.Rec = Web.WebUser.No;
                     gwf.FK_Flow = nd.FK_Flow;
+                    gwf.FK_FlowSort = this.HisNode.HisFlow.FK_FlowSort;
+                     
                     gwf.FK_Node = nd.NodeID;
                     gwf.FK_Dept = wl.FK_Dept;
                     try

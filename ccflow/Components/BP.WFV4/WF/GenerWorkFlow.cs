@@ -76,6 +76,26 @@ namespace BP.WF
         /// 是否启用
         /// </summary>
         public const string IsEnable = "IsEnable";
+        /// <summary>
+        /// 流程名称
+        /// </summary>
+        public const string FlowName = "FlowName";
+        /// <summary>
+        /// 发起人名称
+        /// </summary>
+        public const string RecName = "RecName";
+        /// <summary>
+        /// 节点名称
+        /// </summary>
+        public const string NodeName = "NodeName";
+        /// <summary>
+        /// 部门名称
+        /// </summary>
+        public const string DeptName = "DeptName";
+        /// <summary>
+        /// 流程类别
+        /// </summary>
+        public const string FK_FlowSort = "FK_FlowSort";
         #endregion
     }
 	/// <summary>
@@ -84,16 +104,16 @@ namespace BP.WF
 	public class GenerWorkFlow : Entity
 	{	
 		#region 基本属性
-		/// <summary>
-		/// HisFlow
-		/// </summary>
-		public Flow HisFlow
-		{
-			get
-			{
-				return new Flow(this.FK_Flow); 
-			}
-		}
+        ///// <summary>
+        ///// HisFlow
+        ///// </summary>
+        //public Flow HisFlow
+        //{
+        //    get
+        //    {
+        //        return new Flow(this.FK_Flow); 
+        //    }
+        //}
 		/// <summary>
 		/// 工作流程编号
 		/// </summary>
@@ -101,13 +121,24 @@ namespace BP.WF
 		{
 			get
 			{
-				return this.GetValStringByKey(GenerWorkFlowAttr.FK_Flow);
+				return this.GetValStrByKey(GenerWorkFlowAttr.FK_Flow);
 			}
 			set
 			{
 				SetValByKey(GenerWorkFlowAttr.FK_Flow,value);
 			}
 		}
+        public string FK_FlowSort
+        {
+            get
+            {
+                return this.GetValStrByKey(GenerWorkFlowAttr.FK_FlowSort);
+            }
+            set
+            {
+                SetValByKey(GenerWorkFlowAttr.FK_FlowSort, value);
+            }
+        }
 //		/// <summary>
 //		/// 部门
 //		/// </summary>
@@ -115,7 +146,7 @@ namespace BP.WF
 //		{
 //			get
 //			{
-//				return this.GetValStringByKey(GenerWorkFlowAttr.FK_Dept);
+//				return this.GetValStrByKey(GenerWorkFlowAttr.FK_Dept);
 //			}
 //			set
 //			{
@@ -126,7 +157,7 @@ namespace BP.WF
 		{
 			get
 			{
-				return this.GetValStringByKey(GenerWorkFlowAttr.FK_Dept);
+				return this.GetValStrByKey(GenerWorkFlowAttr.FK_Dept);
 			}
 			set
 			{
@@ -140,7 +171,7 @@ namespace BP.WF
 		{
 			get
 			{
-				return this.GetValStringByKey(GenerWorkFlowAttr.Title);
+				return this.GetValStrByKey(GenerWorkFlowAttr.Title);
 			}
 			set
 			{
@@ -154,7 +185,7 @@ namespace BP.WF
 		{
 			get
 			{
-				return this.GetValStringByKey(GenerWorkFlowAttr.RDT);
+				return this.GetValStrByKey(GenerWorkFlowAttr.RDT);
 			}
 			set
 			{
@@ -168,7 +199,7 @@ namespace BP.WF
 //		{
 //			get
 //			{
-//				return this.GetValStringByKey(GenerWorkFlowAttr.FlowNote);
+//				return this.GetValStrByKey(GenerWorkFlowAttr.FlowNote);
 //			}
 //			set
 //			{
@@ -204,7 +235,7 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(GenerWorkFlowAttr.Rec);
+                return this.GetValStrByKey(GenerWorkFlowAttr.Rec);
             }
             set
             {
@@ -332,19 +363,22 @@ namespace BP.WF
                 map.AddTBIntPK(GenerWorkFlowAttr.WorkID, 0, "WorkID", true, true);
                 map.AddTBInt(GenerWorkFlowAttr.FID, 0, "流程ID", true, true);
 
+                map.AddTBString(GenerWorkFlowAttr.FK_FlowSort, null, "流程类别", true, false, 0, 500, 10);
                 map.AddTBString(GenerWorkFlowAttr.FK_Flow, null, "流程", true, false, 0, 500, 10);
-                map.AddTBString(GenerWorkFlowAttr.Title, null, "标题", true, false, 0, 500, 10);
-                map.AddTBInt(GenerWorkFlowAttr.WFState, 0, "WFState", true, false);
-                map.AddTBString(GenerWorkFlowAttr.Rec, null, "发起人", true, false, 0, 500, 10);
+                map.AddTBString(GenerWorkFlowAttr.FlowName, null, "流程名称", true, false, 0, 500, 10);
 
+                map.AddTBString(GenerWorkFlowAttr.Title, null, "标题", true, false, 0, 500, 10);
+                map.AddTBInt(GenerWorkFlowAttr.WFState, 0, "流程状态", true, false);
+
+                map.AddTBString(GenerWorkFlowAttr.Rec, null, "发起人", true, false, 0, 500, 10);
+                map.AddTBString(GenerWorkFlowAttr.RecName, null, "发起人名称", true, false, 0, 500, 10);
 
                 map.AddTBDateTime(GenerWorkFlowAttr.RDT, "记录日期", true, true);
                 map.AddTBInt(GenerWorkFlowAttr.FK_Node, 0, "节点", true, false);
-                 
+                map.AddTBString(GenerWorkFlowAttr.NodeName, null, "节点名称", true, false, 0, 500, 10);
 
                 map.AddTBString(GenerWorkFlowAttr.FK_Dept, null, "部门", true, false, 0, 500, 10);
-
-               // map.AddTBInt(GenerWorkFlowAttr.IsEnable, 1, "是否启用?", true, false);
+                map.AddTBString(GenerWorkFlowAttr.DeptName, null, "部门名称", true, false, 0, 500, 10);
 
 
                 RefMethod rm = new RefMethod();

@@ -74,8 +74,14 @@ namespace BP.WF
         /// 流程ID
         /// </summary>
         public const string FID = "FID";
-    //    public const string IsCurr = "IsCurr";
-        
+        /// <summary>
+        /// 人员名称
+        /// </summary>
+        public const string FK_EmpText = "FK_EmpText";
+        /// <summary>
+        /// 节点名称
+        /// </summary>
+        public const string FK_NodeText = "FK_NodeText";
         #endregion
     }
     /// <summary>
@@ -98,20 +104,6 @@ namespace BP.WF
                 this.SetValByKey(WorkerListAttr.IsEnable, value);
             }
         }
-        /// <summary>
-        /// 是否当前节点
-        /// </summary>
-        //public bool IsCurr_del
-        //{
-        //    get
-        //    {
-        //        return this.GetValBooleanByKey(WorkerListAttr.IsCurr);
-        //    }
-        //    set
-        //    {
-        //        this.SetValByKey(WorkerListAttr.IsCurr, value);
-        //    }
-        //}
         /// <summary>
         /// 是否通过(对审核的会签节点有效)
         /// </summary>
@@ -153,16 +145,23 @@ namespace BP.WF
             {
                 this.SetValByKey(WorkerListAttr.FK_Node, value);
             }
+           
         }
-        public string FK_NodeT
+        /// <summary>
+        /// 节点名称
+        /// </summary>
+        public string FK_NodeText
         {
             get
             {
-                Node nd = new Node(this.FK_Node);
-                return nd.Name;
-                //return this.GetValRefTextByKey(WorkerListAttr.FK_Node);
+                return this.GetValStrByKey(WorkerListAttr.FK_NodeText);
+            }
+            set
+            {
+                this.SetValByKey(WorkerListAttr.FK_NodeText, value);
             }
         }
+        
         /// <summary>
         /// 流程ID
         /// </summary>
@@ -201,7 +200,9 @@ namespace BP.WF
                 return new Emp(this.FK_Emp);
             }
         }
-
+        /// <summary>
+        /// 发送日期
+        /// </summary>
         public string RDT
         {
             get
@@ -239,7 +240,7 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 工作人员
+        /// 人员
         /// </summary>
         public string FK_Emp
         {
@@ -252,7 +253,23 @@ namespace BP.WF
                 this.SetValByKey(WorkerListAttr.FK_Emp, value);
             }
         }
-
+        /// <summary>
+        /// 人员名称
+        /// </summary>
+        public string FK_EmpText
+        {
+            get
+            {
+                return this.GetValStrByKey(WorkerListAttr.FK_EmpText);
+            }
+            set
+            {
+                this.SetValByKey(WorkerListAttr.FK_EmpText, value);
+            }
+        }
+        /// <summary>
+        /// 部门
+        /// </summary>
         public string FK_Dept
         {
             get
@@ -268,24 +285,13 @@ namespace BP.WF
         {
             get
             {
-                Dept d = new Dept(this.FK_Dept);
+                BP.Port.Dept d = new BP.Port.Dept(this.FK_Dept);
                 return d.Name;
-            }
-        }
-
-        public string FK_EmpText
-        {
-            get
-            {
-                return this.GetValRefTextByKey(WorkerListAttr.FK_Emp);
-            }
-            set
-            {
-                this.SetValByKey(WorkerListAttr.FK_Emp + "Text", value);
+                //return this.GetValStringByKey(WorkerListAttr.FK_Dept);
             }
         }
         /// <summary>
-        /// FK_Flow
+        /// 流程编号
         /// </summary>		 
         public string FK_Flow
         {
@@ -298,21 +304,11 @@ namespace BP.WF
                 this.SetValByKey(WorkerListAttr.FK_Flow, value);
             }
         }
-        /// <summary>
-        /// 节点
-        /// </summary>
-        public Node HisNode
-        {
-            get
-            {
-                return new Node(this.FK_Node);
-            }
-        }
         #endregion
 
         #region 构造函数
         /// <summary>
-        /// WorkerList
+        /// 工作者
         /// </summary>
         public WorkerList()
         {
@@ -343,13 +339,15 @@ namespace BP.WF
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
 
-
                 map.AddTBIntPK(WorkerListAttr.WorkID, 0, "工作ID", true, true);
-                map.AddDDLEntitiesPK(WorkerListAttr.FK_Emp, null, "FK_Emp", new Emps(),  false);
+
+                map.AddTBStringPK(WorkerListAttr.FK_Emp, null, "人员", true, false, 0, 100, 100);
+                map.AddTBString(WorkerListAttr.FK_EmpText, null, "人员名称", true, false, 0, 100, 100);
+
                 map.AddTBIntPK(WorkerListAttr.FK_Node, 0, "节点ID", true, false);
+                map.AddTBString(WorkerListAttr.FK_NodeText, null, "节点名称", true, false, 0, 100, 100);
 
                 map.AddTBInt(WorkerListAttr.FID, 0, "流程ID", true, false);
-
                 map.AddTBString(WorkerListAttr.FK_Flow, null, "流程", true, false, 0, 100, 100);
                 map.AddTBString(WorkerListAttr.FK_Dept, null, "使用部门", true, false, 0, 100, 100);
 
@@ -360,7 +358,6 @@ namespace BP.WF
                 map.AddTBDateTime(WorkerListAttr.RDT, "RDT", false, false);
 
                 map.AddBoolean(WorkerListAttr.IsEnable, true, "是否可用", true, true);
-              //  map.AddTBInt(WorkerListAttr.IsCurr, 1, "是否当前节点", true, false);
 
                 //对会签节点有效
                 map.AddTBInt(WorkerListAttr.IsPass, 0, "是否通过(对会签节点有效)", false, false);
@@ -453,6 +450,8 @@ namespace BP.WF
                 mywl.Copy(wl);
                 mywl.IsEnable = false;
                 mywl.FK_Emp = emp;
+                WF.Port.WFEmp myEmp = new Port.WFEmp(emp);
+                mywl.FK_EmpText = myEmp.Name;
                 try
                 {
                     mywl.Insert();

@@ -1552,26 +1552,18 @@ namespace BP.WF
             if (num == 0)
                 return "@" + this.ToE("WF6", "您不能执行撤消发送，因为当前工作不是您发送的。");
 
-
             // 调用撤消发送前事件。
             string msg = nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneBefore, wn.HisWork);
 
             WorkerLists wls = new WorkerLists();
             wls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node.ToString());
             wn.HisWork.Delete();
+            DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND"+gwf.FK_Node+"' AND RefPKVal='"+this.WorkID+"'");
 
+            // 更新.
             gwf.FK_Node = wnPri.HisNode.NodeID;
             gwf.Update();
-
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node);
-
-            //ForwardWorks fws = new ForwardWorks();
-            //fws.Delete(ForwardWorkAttr.NodeId, wn.HisNode.NodeID.ToString(),
-            //    ForwardWorkAttr.WorkID, this.WorkID.ToString());
-
-            //ReturnWorks rws = new ReturnWorks();
-            //rws.Delete(ReturnWorkAttr.FK_Node, wn.HisNode.NodeID.ToString(),
-            //    ReturnWorkAttr.WorkID, this.WorkID.ToString());
 
 
             #region 恢复工作轨迹，解决工作抢办。
@@ -1595,6 +1587,10 @@ namespace BP.WF
                     WorkerList wlN = new WorkerList();
                     wlN.Copy(wl);
                     wlN.FK_Emp = s;
+
+                    WF.Port.WFEmp myEmp = new Port.WFEmp(s);
+                    wlN.FK_EmpText = myEmp.Name;
+
                     wlN.Insert();
                 }
             }
@@ -1787,6 +1783,10 @@ namespace BP.WF
                     WorkerList wlN = new WorkerList();
                     wlN.Copy(wl);
                     wlN.FK_Emp = s;
+
+                    WF.Port.WFEmp myEmp = new Port.WFEmp(s);
+                    wlN.FK_EmpText = myEmp.Name;
+
                     wlN.Insert();
                 }
             }

@@ -495,6 +495,7 @@ namespace BP.WF
                 }
                 catch
                 {
+                    continue;
                     fl.DoCheck();
                 }
                 sql += mysql;
@@ -1792,7 +1793,6 @@ namespace BP.WF
         {
             string fk_mapData = "ND" + int.Parse(this.No) + "Rpt";
             string flowId = int.Parse(this.No).ToString();
-            
 
             #region 插入字段。
             string sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " +SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
@@ -1808,21 +1808,19 @@ namespace BP.WF
             string pks = "@";
             foreach (DataRow dr in dtExits.Rows)
                 pks += dr[0] + "@";
-
+            
             foreach (DataRow dr in dt.Rows)
             {
                 string mypk = dr["MyPK"].ToString();
                 if (pks.Contains("@" + dr["KeyOfEn"].ToString() + "@"))
                     continue;
-
+                
                 pks += dr["KeyOfEn"].ToString() + "@";
-
                 BP.Sys.MapAttr ma = new BP.Sys.MapAttr(mypk);
                 ma.MyPK = "ND" + flowId + "Rpt" + "_" + ma.KeyOfEn;
                 ma.FK_MapData = "ND" + flowId + "Rpt";
                 ma.UIIsEnable = false;
                 ma.DefVal = "";
-
                 try
                 {
                     ma.Insert();
@@ -1834,9 +1832,16 @@ namespace BP.WF
 
             BP.Sys.MapData md = new BP.Sys.MapData();
             md.No = "ND" + flowId + "Rpt";
-            md.Name = this.Name;
-            md.Save();
-
+            if (md.RetrieveFromDBSources() == 0)
+            {
+                md.Name = this.Name;
+                md.Insert();
+            }
+            else
+            {
+                md.Name = this.Name;
+                md.Update();
+            }
 
             sql = "SELECT DISTINCT GroupID FROM Sys_MapAttr WHERE FK_MapData='ND" + flowId + "Rpt' AND GroupID NOT IN( SELECT OID FROM Sys_GroupField WHERE EnName='ND" + flowId + "Rpt') ";
             Sys.GroupFields gfs = new BP.Sys.GroupFields();
@@ -1893,24 +1898,15 @@ namespace BP.WF
                         // }
                         break;
                     case "FK_NY":
-                        //if (attr.UIContralType != UIContralType.DDL)
-                        //{
                         attr.UIBindKey = "BP.Pub.NYs";
                         attr.UIContralType = UIContralType.DDL;
                         attr.LGType = FieldTypeS.FK;
                         attr.UIVisible = true;
                         attr.UIIsEnable = false;
-                        //   if (gfs.Contains(attr.GroupID) == false)
-                        attr.GroupID = groupID; // gfs[0].GetValIntByKey("OID");
-
+                        attr.GroupID = groupID; 
                         attr.Update();
                         break;
                     case "FK_Emp":
-                        //attr.UIBindKey = "BP.Port.Emps";
-                        //attr.UIContralType = UIContralType.DDL;
-                        //attr.LGType = FieldTypeS.FK;
-                        //attr.UIVisible = true;
-                        //attr.Update();
                         break;
                     default:
                         break;
@@ -1986,11 +1982,9 @@ namespace BP.WF
                 attr.KeyOfEn = GERptAttr.FlowEnder;
                 attr.Name = this.ToE("Ender", "结束人"); //  
                 attr.MyDataType = DataType.AppString;
-
                 attr.UIBindKey = "BP.Port.Emps";
                 attr.UIContralType = UIContralType.DDL;
                 attr.LGType = FieldTypeS.FK;
-
                 attr.UIVisible = true;
                 attr.UIIsEnable = false;
                 attr.MinLen = 0;
@@ -2075,7 +2069,6 @@ namespace BP.WF
             }
 
             DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID=" + flowGF.OID + " WHERE  FK_MapData='" + fk_mapData + "'  AND KeyOfEn IN('" + GERptAttr.MyNum + "','" + GERptAttr.BillNo + "','" + GERptAttr.FK_Dept + "','" + GERptAttr.FK_NY + "','" + GERptAttr.FlowDaySpan + "','" + GERptAttr.FlowEmps + "','" + GERptAttr.FlowEnder + "','" + GERptAttr.FlowEnderRDT + "','" + GERptAttr.FlowStarter + "','" + GERptAttr.FlowStartRDT + "','" + GERptAttr.WFState + "')");
-            // DBAccess.RunSQL("UPDATE Sys_MapAttr SET  WHERE FK_MapData='" + fk_mapData + "' AND KeyOfEn='Title'");
             #endregion 为流程字段设置分组
 
             BP.Sys.GEEntity sw = this.HisFlowData;
@@ -3326,10 +3319,6 @@ namespace BP.WF
         public void DoNewFlow()
         {
             this.No = this.GenerNewNoByKey(FlowAttr.No);
-            if (this.No.Substring(0, 1) == "1")
-                this.No = "100";
-
-         //   this.Name = BP.Sys.Language.GetValByUserLang("NewFlow", "新建流程") + this.No; //新建流程
             if (string.IsNullOrWhiteSpace(this.Name))
                 this.Name = BP.Sys.Language.GetValByUserLang("NewFlow", "新建流程") + this.No; //新建流程
 
@@ -3357,7 +3346,6 @@ namespace BP.WF
 
             Node nd = new Node();
             nd.NodeID = int.Parse(this.No + "01");
-
             nd.Name = BP.Sys.Language.GetValByUserLang("StartNode", "开始节点");//  "开始节点"; 
             nd.Step = 1;
             nd.FK_Flow = this.No;
@@ -3407,8 +3395,8 @@ namespace BP.WF
             img.Insert();
 
             FrmLab lab = new FrmLab();
-            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss")+WebUser.No;
-            lab.Text = this.ToE("Title","流程标题");
+            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
+            lab.Text = this.ToE("Title", "流程标题");
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
             lab.X = (float)106.5;
             lab.Y = (float)59.22;
@@ -3420,8 +3408,8 @@ namespace BP.WF
             lab.Insert();
 
             lab = new FrmLab();
-            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No+2;
-            lab.Text ="发起人" ;
+            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 2;
+            lab.Text = "发起人";
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
             lab.X = (float)106.48;
             lab.Y = (float)96.08;
@@ -3438,7 +3426,7 @@ namespace BP.WF
             lab.FK_MapData = "ND" + int.Parse(this.No + "01");
             lab.X = (float)307.64;
             lab.Y = (float)95.17;
-            	
+
             lab.FontSize = 11;
             lab.FontColor = "black";
             lab.FontName = "Portable User Interface";
@@ -3467,12 +3455,12 @@ namespace BP.WF
             lab.Text += "@因为当前技术问题与silverlight开发工具使用特别说明如下:@";
             lab.Text += "@1,改变控件位置: ";
             lab.Text += "@  所有的控件都支持 wasd, 做为方向键用来移动控件的位置， 部分控件支持方向键. ";
-            lab.Text += "@@2, 增加textbox, 从表, dropdownlistbox, 的宽度 shift+ -> 方向键增加宽度 shift + <- 减小宽度.";
-            lab.Text += "@@3, 保存 windows键 + s.  删除 delete.  复制 ctrl+c   粘帖: ctrl+v.";
-            lab.Text += "@@4, 支持全选，批量移动， 批量放大缩小字体., 批量改变线的宽度.";
-            lab.Text += "@@5, 改变线的长度： 选择线，点绿色的圆点，拖拉它。.";
-            lab.Text += "@@6, 放大或者缩小　label 的字体 , 选择一个多个label , 按 A+ 或者　A－　按钮.";
-            lab.Text += "@@7, 改变线或者标签的颜色， 选择操作对象，点工具栏上的调色板.";
+            lab.Text += "@2, 增加textbox, 从表, dropdownlistbox, 的宽度 shift+ -> 方向键增加宽度 shift + <- 减小宽度.";
+            lab.Text += "@3, 保存 windows键 + s.  删除 delete.  复制 ctrl+c   粘帖: ctrl+v.";
+            lab.Text += "@4, 支持全选，批量移动， 批量放大缩小字体., 批量改变线的宽度.";
+            lab.Text += "@5, 改变线的长度： 选择线，点绿色的圆点，拖拉它。.";
+            lab.Text += "@6, 放大或者缩小　label 的字体 , 选择一个多个label , 按 A+ 或者　A－　按钮.";
+            lab.Text += "@7, 改变线或者标签的颜色， 选择操作对象，点工具栏上的调色板.";
 
             lab.X = (float)168.24;
             lab.Y = (float)163.7;
@@ -3484,9 +3472,9 @@ namespace BP.WF
             lab.FontWeight = "normal";
             lab.Insert();
 
-            string key="L" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
+            string key = "L" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
             FrmLine line = new FrmLine();
-            line.MyPK = key+"_1";
+            line.MyPK = key + "_1";
             line.FK_MapData = "ND" + int.Parse(this.No + "01");
             line.X1 = (float)281.82;
             line.Y1 = (float)81.82;
@@ -3579,16 +3567,8 @@ namespace BP.WF
             line.Insert();
             #endregion
 
-            //try
-            //{
             this.CheckRpt();
             this.RepareV_FlowData_View();
-
-            //}
-            //catch(Exception ex)
-            //{
-            //    //Log.DefaultLogWriteLineError(""
-            //}
         }
         protected override bool beforeUpdate()
         {
