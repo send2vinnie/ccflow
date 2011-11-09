@@ -38,7 +38,7 @@ namespace BP.Web.WF
         /// <param name="fl"></param>
         public void BindIt(BP.WF.Flow fl)
         {
-            GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
+            GenerWorkFlows gwfs = new GenerWorkFlows();
             QueryObject qo = new QueryObject(gwfs);
             qo.AddWhereInSQL(GenerWorkFlowAttr.WorkID, " SELECT WorkID FROM WF_GenerWorkFlow WHERE FK_Node IN ( SELECT FK_Node FROM WF_GenerWorkerlist WHERE FK_Emp='" + Web.WebUser.No + "' AND FK_Flow='" + fl.No + "' AND WORKID=WF_GenerWorkFlow.WORKID AND ISENABLE=1 ) ");
             qo.addOrderBy(GenerWorkFlowAttr.FK_Node, GenerWorkFlowAttr.WorkID);
@@ -69,21 +69,21 @@ namespace BP.Web.WF
             this.UCFlow1.AddTDTitle("工作序号");
             this.UCFlow1.AddTREnd();
             int i = 0;
-            foreach (GenerWorkFlowExt gwf in gwfs)
+            foreach (GenerWorkFlow gwf in gwfs)
             {
                 i++;
                 //this.AddTR("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"WinOpen('MyFlow.aspx?FK_Flow="+fl.No+"&WorkID="+dr[WorkAttr.OID ].ToString()+"' )\" " );
                 this.UCFlow1.AddTR("title='在列表中根据标题选择您的代办工作' onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"javascript:window.location.href='MyFlow.aspx?FK_Flow=" + fl.No + "&WorkID=" + gwf.WorkID + "'\" ");
                 this.UCFlow1.AddTDIdx(i);
                 this.UCFlow1.AddTD(gwf.Title);
-                this.UCFlow1.AddTD(gwf.FK_NodeText);
+                this.UCFlow1.AddTD(gwf.NodeName);
                 this.UCFlow1.AddTD(gwf.RDT);
-                this.UCFlow1.AddTD(gwf.SDT);
+                this.UCFlow1.AddTD("");
 
                 // this.UCFlow1.AddTD(gwf.w);
                 // this.UCFlow1.AddTD(gwf.RDT);
 
-                this.UCFlow1.AddTD(gwf.RecText);
+                this.UCFlow1.AddTD(gwf.RecName);
                 //this.UCFlow1.AddTD(gwf.FK_Taxpayer);
                 //this.UCFlow1.AddTD(gwf.TaxpayerName);
                 this.UCFlow1.AddTD(gwf.WorkID);

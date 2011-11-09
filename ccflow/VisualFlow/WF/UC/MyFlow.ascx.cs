@@ -269,20 +269,20 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         string sql = "  SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID AND B.FK_Emp='" + BP.Web.WebUser.No + "' AND B.IsEnable=1 AND B.IsPass=1 AND b.FK_Flow='" + this.FK_Flow + "'";
         //this.Response.Write(sql);
 
-        GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
+        GenerWorkFlows gwfs = new GenerWorkFlows();
         gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
         int i = 0;
         bool is1 = false;
         string FromPageType=Glo.FromPageType;
-        foreach (GenerWorkFlowExt gwf in gwfs)
+        foreach (GenerWorkFlow gwf in gwfs)
         {
             i++;
             is1 = this.Pub1.AddTR(is1);
             this.Pub1.AddTDIdx(i);
             this.Pub1.AddTDA("MyFlow" + this.PageSmall + ".aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
-            this.Pub1.AddTD(gwf.FK_NodeText);
+            this.Pub1.AddTD(gwf.NodeName);
             this.Pub1.AddTD(gwf.RDT);
-            this.Pub1.AddTD(gwf.RecText);
+            this.Pub1.AddTD(gwf.RecName);
 
             this.Pub1.AddTDBegin();
             this.Pub1.Add("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo" + this.PageSmall + ".aspx?DoType=UnSend&FID=" + gwf.FID + "&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");

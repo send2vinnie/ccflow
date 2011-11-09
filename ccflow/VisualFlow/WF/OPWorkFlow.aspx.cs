@@ -110,7 +110,7 @@ namespace BP.Web.WF
                     this.WinClose();
                     return;
                 }
-                GenerWorkFlowExt gwf = new GenerWorkFlowExt();
+                GenerWorkFlow gwf = new GenerWorkFlow();
                 //workId,flowNo
                 gwf.WorkID = workId;
                 gwf.FK_Flow = flowNo;
@@ -146,7 +146,7 @@ namespace BP.Web.WF
                 {
                     throw new Exception("error ");
                 }
-                this.Label1.Text = "当前流程状态:" + gwf.WFStateLab;
+                this.Label1.Text = "当前流程状态:" + gwf.WFState;
 
                 Flow fl = new Flow(gwf.FK_Flow);
                 //显示日志信息		

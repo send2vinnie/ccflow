@@ -414,7 +414,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         if (i > 1)
         {
             this.Clear();
-            this.AddMsgOfWarning(this.ToE("Warning", "预警"), "流程出现错误，实际当前工作是[" + wf.HisGenerWorkFlow.FK_NodeText + "]，请关闭当前窗口体检此流程。");
+            this.AddMsgOfWarning(this.ToE("Warning", "预警"), "流程出现错误，实际当前工作是[" + wf.HisGenerWorkFlow.NodeName + "]，请关闭当前窗口体检此流程。");
             return;
         }
 

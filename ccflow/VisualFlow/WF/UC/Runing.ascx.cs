@@ -38,7 +38,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        GenerWorkFlowExts gwfs = BP.WF.Dev2Interface.DB_GenerRuningOfEntities();
+        GenerWorkFlows gwfs = BP.WF.Dev2Interface.DB_GenerRuningOfEntities();
 
 
         this.Page.Title = this.ToE("OnTheWayWork", "在途工作");
@@ -71,16 +71,16 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
 
         int i = 0;
         bool is1 = false;
-        foreach (GenerWorkFlowExt gwf in gwfs)
+        foreach (GenerWorkFlow gwf in gwfs)
         {
             i++;
             is1 = this.Pub1.AddTR(is1);
             this.Pub1.AddTDIdx(i);
             //   this.Pub1.AddTDA("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
             this.Pub1.AddTDDoc(gwf.Title,50,gwf.Title);
-            this.Pub1.AddTD(gwf.FK_NodeText);
+            this.Pub1.AddTD(gwf.NodeName);
             this.Pub1.AddTD(gwf.RDT);
-            this.Pub1.AddTD(gwf.RecText);
+            this.Pub1.AddTD(gwf.RecName);
             this.Pub1.AddTDBegin();
             this.Pub1.Add("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo" + this.PageSmall + ".aspx?DoType=UnSend&FID=" + gwf.FID + "&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
             this.Pub1.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
@@ -100,20 +100,20 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.AddFieldSet("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作"));
 
         string sql = " SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + BP.Web.WebUser.No + "' AND B.IsEnable=1";
-        GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
+        GenerWorkFlows gwfs = new GenerWorkFlows();
         gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
         int i = 0;
         bool is1 = true;
         //this.Add("<Table border=0 width='100%'>");
         this.AddUL();
-        foreach (GenerWorkFlowExt gwf in gwfs)
+        foreach (GenerWorkFlow gwf in gwfs)
         {
             i++;
             is1 = this.AddTR(is1);
             this.AddTDBegin("border=0");
 
             //this.AddUL();
-            this.AddLi("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title + gwf.FK_NodeText);
+            this.AddLi("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title + gwf.NodeName);
             this.Add("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&FID=" + gwf.FID + "&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
             this.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
         }
@@ -121,7 +121,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
 
         // this.AddTableEnd();
         //this.AddUL();
-        //foreach (GenerWorkFlowExt gwf in gwfs)
+        //foreach (GenerWorkFlow gwf in gwfs)
         //{
         //    i++;
         //    is1 = this.AddTR(is1);
@@ -166,19 +166,19 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.AddTREnd();
 
         string sql = "  SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + BP.Web.WebUser.No + "' AND B.IsEnable=1";
-        GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
+        GenerWorkFlows gwfs = new GenerWorkFlows();
         gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
         int i = 0;
         bool is1 = false;
-        foreach (GenerWorkFlowExt gwf in gwfs)
+        foreach (GenerWorkFlow gwf in gwfs)
         {
             i++;
             is1 = this.AddTR(is1);
             this.AddTD(i);
             this.AddTDA("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
-            this.AddTD(gwf.FK_NodeText);
+            this.AddTD(gwf.NodeName);
             this.AddTD(gwf.RDT);
-            this.AddTD(gwf.RecText);
+            this.AddTD(gwf.RecName);
             this.AddTD("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&FID=" + gwf.FID + "&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
             this.AddTD("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
             this.AddTREnd();
