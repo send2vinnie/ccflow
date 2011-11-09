@@ -77,14 +77,14 @@ namespace BP.WF
         /// 获取当前操作员的在途工作
         /// </summary>
         /// <returns>在途工作</returns>
-        public static GenerWorkFlowExts DB_GenerRuningOfEntities()
+        public static GenerWorkFlows DB_GenerRuningOfEntities()
         {
             return DB_GenerRuningOfEntities(WebUser.No);
         }
-        public static GenerWorkFlowExts DB_GenerRuningOfEntities(string userNo)
+        public static GenerWorkFlows DB_GenerRuningOfEntities(string userNo)
         {
             string sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + userNo + "' AND B.IsEnable=1 AND B.IsPass=1 ";
-            GenerWorkFlowExts gwfs = new GenerWorkFlowExts();
+            GenerWorkFlows gwfs = new GenerWorkFlows();
             gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
             return gwfs;
         }

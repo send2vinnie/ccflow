@@ -943,6 +943,7 @@ namespace BP.WF
 
             GenerWorkFlow gwf = new GenerWorkFlow(this.HisWork.OID);
             gwf.FK_Node = backtoNodeID;
+            gwf.NodeName = nd.Name;
             gwf.DirectUpdate();
 
 
@@ -1273,6 +1274,7 @@ namespace BP.WF
             WorkNode wn = this.GetPreviousWorkNode();
             GenerWorkFlow gwf = new GenerWorkFlow(this.HisWork.OID);
             gwf.FK_Node = wn.HisNode.NodeID;
+            gwf.NodeName = wn.HisNode.Name;
             gwf.DirectUpdate();
 
             // 更新 return work 状态．
@@ -1318,6 +1320,7 @@ namespace BP.WF
 
             GenerWorkFlow gwf = new GenerWorkFlow(workid);
             gwf.FK_Node = wn.HisNode.NodeID;
+            gwf.NodeName = wn.HisNode.Name;
             gwf.DirectUpdate();
 
             // 更新 return work 状态．
@@ -2010,6 +2013,7 @@ namespace BP.WF
                 {
                     /* 如果这两项其中有一项有变化。*/
                     gwf.FK_Node = this.HisNode.NodeID;
+                    gwf.NodeName = this.HisNode.Name;
                     gwf.WFState = 0;
                     gwf.Update();
                 }
@@ -2105,6 +2109,12 @@ namespace BP.WF
             string msg = "";
             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                                             this.WorkID.ToString());
+
+            MapDtls dtlsFrom = new MapDtls("ND" + this.HisNode.NodeID);
+            MapDtls dtlsTo=null;
+            if (dtlsFrom.Count>=1)
+               dtlsTo = new MapDtls("ND" + toNode.NodeID);
+
             // 按照部门分组，分别启动流程。
             switch (this.HisNode.HisFLRole)
             {
@@ -2157,10 +2167,11 @@ namespace BP.WF
                         mywk.BeforeSave();
                         mywk.InsertAsOID(mywk.OID);
 
-                        /* 复制附件信息 */
+
+                        #region  复制附件信息
                         if (athDBs.Count >= 0)
                         {
-                            /*说明当前节点有附件数据*/
+                            /* 说明当前节点有附件数据 */
                             athDBs.Delete(FrmAttachmentDBAttr.FK_MapData, "ND" + toNode.NodeID,
                                 FrmAttachmentDBAttr.RefPKVal, mywk.OID);
                             int i = 0;
@@ -2170,13 +2181,72 @@ namespace BP.WF
                                 FrmAttachmentDB athDB_N = new FrmAttachmentDB();
                                 athDB_N.Copy(athDB);
                                 athDB_N.FK_MapData = "ND" + toNode.NodeID;
-                                athDB_N.MyPK = mywk.OID+"_"+mywk.FID+"_"+toNode.NodeID + "_" + i.ToString();
+                                athDB_N.MyPK = mywk.OID + "_" + mywk.FID + "_" + toNode.NodeID + "_" + i.ToString();
                                 athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
                                     "ND" + toNode.NodeID);
                                 athDB_N.RefPKVal = mywk.OID.ToString();
                                 athDB_N.DirectInsert();
                             }
                         }
+                        #endregion  复制附件信息
+
+                        #region  复制明细表信息.
+                        if (dtlsFrom.Count >= 1)
+                        {
+                            int i = -1;
+                            foreach (Sys.MapDtl dtl in dtlsFrom)
+                            {
+                                i++;
+                                if (dtlsTo.Count <= i)
+                                    continue;
+
+                                Sys.MapDtl toDtl = (Sys.MapDtl)dtlsTo[i];
+                                if (dtl.IsEnablePass == true)
+                                {
+                                    /*如果启用了是否明细表的审核通过机制,就允许copy节点数据。*/
+                                    toDtl.IsCopyNDData = true;
+                                }
+
+                                if (toDtl.IsCopyNDData == false)
+                                    continue;
+
+                                //获取明细数据。
+                                GEDtls gedtls = new GEDtls(dtl.No);
+                                QueryObject qo = null;
+                                qo = new QueryObject(gedtls);
+                                switch (dtl.DtlOpenType)
+                                {
+                                    case DtlOpenType.ForEmp:
+                                        qo.AddWhere(GEDtlAttr.RefPK, this.WorkID);
+                                        break;
+                                    case DtlOpenType.ForWorkID:
+                                        qo.AddWhere(GEDtlAttr.RefPK, this.WorkID);
+                                        break;
+                                    case DtlOpenType.ForFID:
+                                        qo.AddWhere(GEDtlAttr.FID, this.WorkID);
+                                        break;
+                                }
+                                qo.DoQuery();
+                                int unPass = 0;
+                                foreach (GEDtl gedtl in gedtls)
+                                {
+                                    BP.Sys.GEDtl dtCopy = new GEDtl(toDtl.No);
+                                    dtCopy.Copy(gedtl);
+                                    dtCopy.FK_MapDtl = toDtl.No;
+                                    dtCopy.RefPK = this.WorkID.ToString();
+                                    try
+                                    {
+                                        dtCopy.InsertAsOID(dtCopy.OID);
+                                    }
+                                    catch
+                                    {
+                                        dtCopy.Update();
+                                    }
+                                }
+                            }
+                        }
+                        #endregion  复制附件信息
+
 
                         // 产生工作的信息。
                         GenerWorkFlow gwf = new GenerWorkFlow();
@@ -2191,10 +2261,15 @@ namespace BP.WF
                         gwf.WFState = 0;
                         gwf.RDT = DataType.CurrentDataTime;
                         gwf.Rec = Web.WebUser.No;
+                        gwf.RecName = Web.WebUser.Name;
+
                         gwf.FK_Flow = toNode.FK_Flow;
                         gwf.FK_FlowSort = toNode.HisFlow.FK_FlowSort;
                         gwf.FK_Node = toNode.NodeID;
+                        gwf.NodeName = toNode.Name;
                         gwf.FK_Dept = wl.FK_Dept;
+                        gwf.DeptName = wl.FK_DeptT;
+
 
                         // 判断历史轨迹里面是否有这个数据.
                         if (isHaveEmp)
@@ -2400,12 +2475,20 @@ namespace BP.WF
             gwf.WFState = 0;
             gwf.RDT = this.HisWork.RDT;
             gwf.Rec = Web.WebUser.No;
+            gwf.RecName = Web.WebUser.Name;
+
             gwf.FK_Flow = this.HisNode.FK_Flow;
+            gwf.FlowName = this.HisNode.Name;
+
             gwf.FK_FlowSort = this.HisNode.HisFlow.FK_FlowSort;
 
             gwf.FK_Node = this.HisNode.NodeID;
+            gwf.NodeName = this.HisNode.Name;
+
             //  gwf.FK_Station = this.HisStationOfUse.No;
             gwf.FK_Dept = this.HisWork.RecOfEmp.FK_Dept;
+            gwf.DeptName = this.HisWork.RecOfEmp.FK_DeptText;
+
             try
             {
                 gwf.DirectInsert();
@@ -3202,11 +3285,17 @@ namespace BP.WF
                     gwf.WFState = 0;
                     gwf.RDT = DataType.CurrentDataTime;
                     gwf.Rec = Web.WebUser.No;
+                    gwf.RecName = Web.WebUser.Name;
                     gwf.FK_Flow = nd.FK_Flow;
+                    gwf.FlowName = nd.FlowName;
+
                     gwf.FK_FlowSort = this.HisNode.HisFlow.FK_FlowSort;
                      
                     gwf.FK_Node = nd.NodeID;
+                    gwf.NodeName = nd.Name;
                     gwf.FK_Dept = wl.FK_Dept;
+                    gwf.DeptName = wl.FK_DeptT;
+
                     try
                     {
                         gwf.DirectInsert();

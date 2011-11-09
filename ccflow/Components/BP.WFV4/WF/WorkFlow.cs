@@ -1430,6 +1430,8 @@ namespace BP.WF
             wn.HisWork.Delete();
 
             gwf.FK_Node = wnPri.HisNode.NodeID;
+            gwf.NodeName = wnPri.HisNode.Name;
+
             gwf.Update();
 
             wnPri.HisWork.Update(WorkAttr.NodeState,
@@ -1562,6 +1564,7 @@ namespace BP.WF
 
             // ¸üÐÂ.
             gwf.FK_Node = wnPri.HisNode.NodeID;
+            gwf.NodeName = wnPri.HisNode.Name;
             gwf.Update();
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node);
 
@@ -1750,6 +1753,7 @@ namespace BP.WF
             wls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node.ToString());
             wn.HisWork.Delete();
             gwf.FK_Node = wnPri.HisNode.NodeID;
+            gwf.NodeName = wnPri.HisNode.Name;
             gwf.Update();
 
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node);

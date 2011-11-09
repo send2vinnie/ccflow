@@ -229,9 +229,6 @@
     <Compile Include="Bill\BillTemplate.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WF\GenerWorkFlowExt.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DTS\RepariDB.cs" />
     <Compile Include="WF\ReturnWork.cs">
       <SubType>Code</SubType>

@@ -128,6 +128,23 @@ namespace BP.WF
 				SetValByKey(GenerWorkFlowAttr.FK_Flow,value);
 			}
 		}
+        /// <summary>
+        /// 流程名称
+        /// </summary>
+        public string FlowName
+        {
+            get
+            {
+                return this.GetValStrByKey(GenerWorkFlowAttr.FlowName);
+            }
+            set
+            {
+                SetValByKey(GenerWorkFlowAttr.FlowName, value);
+            }
+        }
+        /// <summary>
+        /// 类别编号
+        /// </summary>
         public string FK_FlowSort
         {
             get
@@ -239,34 +256,57 @@ namespace BP.WF
             }
             set
             {
-                this.SetValByKey(GenerWorkFlowAttr.Rec, value);
+                SetValByKey(GenerWorkFlowAttr.Rec, value);
             }
         }
-        public string FK_NodeText
+        public string RecName
         {
             get
             {
-                Node nd = new Node(this.FK_Node);
-                return nd.Name;
+                return this.GetValStrByKey(GenerWorkFlowAttr.RecName);
+            }
+            set
+            {
+                this.SetValByKey(GenerWorkFlowAttr.RecName, value);
+            }
+        }
+        public string DeptName
+        {
+            get
+            {
+                return this.GetValStrByKey(GenerWorkFlowAttr.DeptName);
+            }
+            set
+            {
+                this.SetValByKey(GenerWorkFlowAttr.DeptName, value);
+            }
+        }
+        public string NodeName
+        {
+            get
+            {
+                return this.GetValStrByKey(GenerWorkFlowAttr.NodeName);
+            }
+            set
+            {
+                this.SetValByKey(GenerWorkFlowAttr.NodeName, value);
             }
         }
 		/// <summary>
 		/// 当前工作到的节点
 		/// </summary>
-		public int FK_Node
-		{
-			get
-			{
-				return this.GetValIntByKey(GenerWorkFlowAttr.FK_Node);
-			}
+        public int FK_Node
+        {
+            get
+            {
+                return this.GetValIntByKey(GenerWorkFlowAttr.FK_Node);
+            }
             set
             {
                 this.SetValByKey(GenerWorkFlowAttr.FK_Node, value);
             }
-			
-		}		
-		 
-		/// <summary>
+        }
+        /// <summary>
 		/// 工作流程状态( 0, 未完成,1 完成, 2 强制终止 3, 删除状态,) 
 		/// </summary>
         public int WFState
@@ -278,6 +318,26 @@ namespace BP.WF
             set
             {
                 SetValByKey(GenerWorkFlowAttr.WFState, value);
+            }
+        }
+        public string WFStateText
+        {
+            get
+            {
+                BP.WF.WFState ws = (WFState)this.WFState;
+                switch(ws)
+                {
+                    case WF.WFState.Complete:
+                        return "已完成";
+                    case WF.WFState.Delete:
+                        return "已删除";
+                    case WF.WFState.Runing:
+                        return "在运行";
+                    case WF.WFState.Stop:
+                        return "已停止";
+                    default:
+                        return "未判断";
+                }
             }
         }
         /// <summary>
@@ -456,7 +516,8 @@ namespace BP.WF
                 return "此流程是因为发起工作失败被系统删除。";
             }
 
-            this.FK_Node = FK_Node;
+            this.FK_Node = nd.NodeID;
+            this.NodeName = nd.Name;
             this.Update();
 
             string str = "";
