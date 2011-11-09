@@ -99,6 +99,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId);
             string emps = "," + toEmp + ",";
             int i = DBAccess.RunSQL("UPDATE WF_GenerWorkerlist set IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId + " AND FK_Emp='" + toEmp + "'");
+            Emp emp = new Emp(toEmp);
             if (i == 0)
             {
                 /*说明: 用其它的岗位上的人来处理的，就给他增加待办工作。*/
@@ -106,7 +107,6 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
                 WorkerList wl = wls[0] as WorkerList;
                 wl.FK_Emp = toEmp.ToString();
 
-                Emp emp = new Emp(toEmp);
                 wl.FK_EmpText = emp.Name;
 
                 wl.IsEnable = true;
@@ -126,11 +126,17 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             fw.WorkID = this.WorkID;
             fw.FK_Node = nodeId;
             fw.ToEmp = emps;
+            fw.ToEmpName = emp.Name;
             fw.Note = this.Pub1.GetTextBoxByID("TB_Doc").Text;
-            fw.FK_Emp = BP.Web.WebUser.No;
+            fw.FK_Emp = WebUser.No;
+            fw.FK_EmpName = WebUser.Name;
             fw.Insert();
 
-            this.Session["info"] = "@工作移交成功。";
+            // 记录日志.
+            WorkNode wn = new WorkNode(wk, nd);
+            wn.AddToTrack(ActionType.Shift, toEmp, emp.Name, nd.NodeID, nd.Name, fw.Note);
+
+            this.Session["info"] = "@工作移交成功。@您已经成功的把工作移交给："+emp.No+" , "+emp.Name;
             this.Response.Redirect("MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=Msg&FK_Flow=" + this.FK_Flow, true);
             return;
         }

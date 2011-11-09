@@ -104,13 +104,91 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         Work wk = nd.HisWork;
         wk.OID = this.WorkID;
         wk.RetrieveFromDBSources();
-
         this.AddB(wk.EnDesc);
         this.ADDWork(wk, rws, fws, this.FK_Node);
+    }
+    /// <summary>
+    /// view work.
+    /// </summary>
+    public void BindTrack_ViewWork()
+    {
+        Track tk = new Track(this.MyPK);
+        Node nd = new Node(tk.NDFrom);
+        Work wk = nd.HisWork;
+        wk.OID = tk.WorkID;
+        wk.Retrieve();
+
+        this.AddFieldSet(wk.EnDesc);
+        if (wk.NodeState != NodeState.Complete)
+            this.AddH1("当工作(" + nd.Name + ")未完成，您不能查看它的工作日志。");
+        else
+        {
+            ReturnWorks rws = new ReturnWorks();
+            rws.Retrieve(ReturnWorkAttr.ReturnNode, nd.NodeID, ReturnWorkAttr.WorkID, wk.OID);
+
+            ForwardWorks fws = new ForwardWorks();
+            fws.Retrieve(ForwardWorkAttr.FK_Node, nd.NodeID, ReturnWorkAttr.WorkID, wk.OID);
+            this.ADDWork(wk, rws, fws, tk.NDFrom);
+        }
+        this.AddFieldSetEnd();
+    }
+    public void BindTrack()
+    {
+        this.Page.Title = "感谢您使用ccflow";
+        if (this.DoType == "View")
+        {
+            this.BindTrack_ViewWork();
+            return;
+        }
+
+        this.AddTable("width='100%'");
+        this.AddCaptionLeft("工作日志");
+        this.AddTR();
+        this.AddTDTitle("IDX");
+        this.AddTDTitle("日期时间");
+        this.AddTDTitle("活动");
+        this.AddTDTitle("从节点");
+        this.AddTDTitle("人员");
+        this.AddTDTitle("到节点");
+        this.AddTDTitle("人员");
+        this.AddTDTitle("焦点字段&消息");
+        this.AddTDTitle("日志");
+        this.AddTREnd();
+
+        Tracks tks = new Tracks();
+        QueryObject qo = new QueryObject(tks);
+        qo.AddWhere(TrackAttr.WorkID, this.FID);
+        qo.addOr();
+        qo.AddWhere(TrackAttr.WorkID, this.WorkID);
+        qo.DoQuery();
+
+        int idx = 1;
+        foreach (Track item in tks)
+        {
+            this.AddTR();
+            this.AddTDIdx(idx++);
+            this.AddTD(item.RDT);
+            this.AddTD(item.HisActionTypeT);
+
+            this.AddTD(item.NDFromT);
+            this.AddTD(item.EmpFromT);
+
+            this.AddTD(item.NDToT);
+            this.AddTD(item.EmpToT);
+
+            this.AddTDBigDoc(item.MsgHtml);
+
+            this.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?DoType=View&MyPK=" + item.MyPK + "','"+item.MyPK+"');\">日志</a>");
+            this.AddTREnd();
+        }
+        this.AddTableEnd();
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.BindTrack();
+        return;
+
         switch (this.DoType)
         {
             case "ViewWork":
@@ -531,7 +609,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.Add("<div align=center>");
             if (wn.HisNode.IsSecret)
             {
-                this.AddB("保密步骤不可以查看工作"); ;
+                this.AddB("保密步骤不可以查看工作"); 
             }
             else
             {
