@@ -465,6 +465,10 @@ namespace BP.WF
         /// 投递规则
         /// </summary>
         public const string DeliveryWay = "DeliveryWay";
+        /// <summary>
+        /// 焦点字段
+        /// </summary>
+        public const string FocusField = "FocusField";
         #endregion
     }
     /// <summary>
@@ -1118,6 +1122,20 @@ namespace BP.WF
             get
             {
                 return (RunModel)this.GetValIntByKey(NodeAttr.RunModel);
+            }
+        }
+        /// <summary>
+        /// 焦点字段
+        /// </summary>
+        public string FocusField
+        {
+            get
+            {
+                return this.GetValStrByKey(NodeAttr.FocusField);
+            }
+            set
+            {
+                SetValByKey(NodeAttr.FocusField, value);
             }
         }
         /// <summary>
@@ -2129,7 +2147,7 @@ namespace BP.WF
 
                 map.AddTBString(NodeAttr.FK_Flow, null, "FK_Flow", false, false, 0, 100, 10);
 
-                map.AddTBString(NodeAttr.FlowName, null, null, false, true, 0, 100, 10);
+                map.AddTBString(NodeAttr.FlowName, null, "流程名", false, true, 0, 100, 10);
                 map.AddTBString(NodeAttr.FK_FlowSort, null, "FK_FlowSort", false, true, 0, 100, 10);
                 map.AddTBString(NodeAttr.FK_FlowSortT, null, "FK_FlowSortT", false, true, 0, 100, 10);
                 map.AddTBString(NodeAttr.FrmAttr, null, "FrmAttr", false, true, 0, 500, 10);
@@ -2168,7 +2186,7 @@ namespace BP.WF
                 map.AddBoolean(NodeAttr.IsCanOver, false, "是否可以终止流程", true, true);
                 map.AddBoolean(NodeAttr.IsSecret, false, "是否是保密步骤", true, true);
                 map.AddBoolean(NodeAttr.IsCanDelFlow, false, "是否可以删除流程", true, true);
-                map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除了流程(对河流点有效)", true, true);
+                map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除了流程(对合流点有效)", true, true);
 
 
                 map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交", true, true);
@@ -2225,6 +2243,9 @@ namespace BP.WF
                 map.AddTBString(NodeAttr.GroupStaNDs, null, "岗位分组节点", false, false, 0, 200, 10);
                 map.AddTBInt(NodeAttr.X, 0, "X坐标", false, false);
                 map.AddTBInt(NodeAttr.Y, 0, "Y坐标", false, false);
+
+                map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 100, 10);
+
 
 
                 //map.AddTBDate(FlowAttr.LifeCycleFrom, BP.DA.DataType.CurrentData, "生命周期从", true, false);

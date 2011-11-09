@@ -50,6 +50,15 @@ namespace BP.WF
         /// 是否读取？
         /// </summary>
         public const string IsRead = "IsRead";
+        /// <summary>
+        /// 移交人名称
+        /// </summary>
+        public const string FK_EmpName = "FK_EmpName";
+        /// <summary>
+        /// 移交给人员名称
+        /// </summary>
+        public const string ToEmpName = "ToEmpName";
+
         #endregion
     }
 	/// <summary>
@@ -98,6 +107,34 @@ namespace BP.WF
             set
             {
                 SetValByKey(ForwardWorkAttr.IsRead, value);
+            }
+        }
+        /// <summary>
+        /// ToEmpName
+        /// </summary>
+        public string ToEmpName
+        {
+            get
+            {
+                return this.GetValStringByKey(ForwardWorkAttr.ToEmpName);
+            }
+            set
+            {
+                SetValByKey(ForwardWorkAttr.ToEmpName, value);
+            }
+        }
+        /// <summary>
+        /// 移交人名称.
+        /// </summary>
+        public string FK_EmpName
+        {
+            get
+            {
+                return this.GetValStringByKey(ForwardWorkAttr.FK_EmpName);
+            }
+            set
+            {
+                SetValByKey(ForwardWorkAttr.FK_EmpName, value);
             }
         }
         /// <summary>
@@ -192,7 +229,13 @@ namespace BP.WF
                 map.AddTBInt(ForwardWorkAttr.WorkID, 0, "工作ID", true, true);
                 map.AddTBInt(ForwardWorkAttr.FK_Node, 0, "FK_Node", true, true);
                 map.AddTBString(ForwardWorkAttr.FK_Emp, null, "移交人", true, true, 0, 40, 10);
+                map.AddTBString(ForwardWorkAttr.FK_EmpName, null, "移交人名称", true, true, 0, 40, 10);
+
+
                 map.AddTBString(ForwardWorkAttr.ToEmp, null, "移交给", true, true, 0, 40, 10);
+                map.AddTBString(ForwardWorkAttr.ToEmpName, null, "移交给名称", true, true, 0, 40, 10);
+
+
                 map.AddTBDateTime(ForwardWorkAttr.RDT, null, "移交时间", true, true);
                 map.AddTBString(ForwardWorkAttr.Note, null, "移交原因", true, true, 0, 2000, 10);
 

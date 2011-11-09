@@ -946,7 +946,6 @@ namespace BP.WF
             gwf.NodeName = nd.Name;
             gwf.DirectUpdate();
 
-
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=3 WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID);
 
             /* 如果是隐性退回。*/
@@ -959,6 +958,9 @@ namespace BP.WF
             rw.Note = msg;
             rw.MyPK = rw.ReturnToNode + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
             rw.Insert();
+
+            // 加入track.
+            this.AddToTrack(ActionType.Return, fk_emp, emp.Name, backtoNodeID, nd.Name, msg);
 
             WorkNode wn = new WorkNode(this.HisWork.FID, backtoNodeID);
             WF.Port.WFEmp wfemp = new Port.WFEmp(wn.HisWork.Rec);
@@ -1024,7 +1026,6 @@ namespace BP.WF
                     GenerFH fh = new GenerFH();
                     fh.FID = this.WorkID;
                     fh.Delete();
-                    //DBAccess.RunSQL("DELETE WF_GenerWorkerList WHERE FID="+this.HisWork.OID);
                     break;
                 default:
                     switch (backToNode.HisNodeWorkType)
@@ -1061,13 +1062,17 @@ namespace BP.WF
             rw.ReturnToNode = wnOfBackTo.HisNode.NodeID;
             rw.ReturnNodeName = this.HisNode.Name;
 
-
             rw.ReturnNode = this.HisNode.NodeID; // 当前退回节点.
             rw.ReturnToEmp = wnOfBackTo.HisWork.Rec; //退回给。
 
             rw.MyPK = rw.ReturnToNode + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
             rw.Note = msg;
             rw.Insert();
+
+            // 加入track.
+            this.AddToTrack(ActionType.Return, wnOfBackTo.HisWork.Rec, wnOfBackTo.HisWork.RecText, 
+                backtoNodeID, wnOfBackTo.HisNode.Name, msg);
+
 
             // 记录退回日志.
             ReorderLog(backToNode, this.HisNode,rw);
@@ -1566,29 +1571,25 @@ namespace BP.WF
                         wl.WorkID = workID;
                         wl.FK_Node = toNodeId;
                         wl.FK_NodeText = town.HisNode.Name;
-                         wl.FK_Emp = s;
-                         Emp emp = null;
-                         try
-                         {
-                             emp = new Emp(s);
-                         }
-                         catch
-                         {
-                             continue;
-                         }
+                        wl.FK_Emp = s;
+                        Emp emp = null;
+                        try
+                        {
+                            emp = new Emp(s);
+                        }
+                        catch
+                        {
+                            continue;
+                        }
 
                         wl.FK_EmpText = emp.Name;
                         wl.FK_Dept = emp.FK_Dept;
-
-                        //wl.UseDept = this.HisDeptOfUse.No;
-                        //wl.UseStation = this.HisStationOfUse.No;
                         wl.WarningDays = town.HisNode.WarningDays;
                         wl.SDT = dtOfShould.ToString(DataType.SysDataFormat);
                         wl.DTOfWarning = dtOfWarning.ToString(DataType.SysDataFormat);
                         wl.RDT = DateTime.Now.ToString(DataType.SysDataTimeFormat);
                         wl.FK_Flow = town.HisNode.FK_Flow;
                         wl.FID = town.HisWork.FID;
-
                         try
                         {
                             if (town.HisNode.IsFLHL == false)
@@ -1603,7 +1604,6 @@ namespace BP.WF
                         }
                     }
                 }
-
                 string objsmy = "@";
                 foreach (WorkerList wl in this.HisWorkerLists)
                 {
@@ -1649,13 +1649,24 @@ namespace BP.WF
                     rm.Save();
                 }
             }
+
             if (this.HisWorkerLists.Count == 0)
                 throw new Exception("@根据部门产生工作人员出现错误，流程[" + this.HisWorkFlow.HisFlow.Name + "],中节点[" + town.HisNode.Name + "]定义错误,没有找到接受此工作的工作人员.");
 
-            if (this.HisNode.IsStartNode)
-                this.AddToTrack(ActionType.Start, null, null);
+            if (this.HisNode.IsStartNode == true)
+            {
+                foreach (WorkerList wl in this.HisWorkerLists)
+                {
+                    this.AddToTrack(ActionType.Start, wl.FK_Emp,wl.FK_EmpText, wl.FK_Node,wl.FK_NodeText, null);
+                }
+            }
             else
-                this.AddToTrack(ActionType.Forward, town.HisNode, null);
+            {
+                foreach (WorkerList wl in this.HisWorkerLists)
+                {
+                    this.AddToTrack(ActionType.Forward, wl.FK_Emp,wl.FK_EmpText, wl.FK_Node,wl.FK_NodeText, null);
+                }
+            }
             return this.HisWorkerLists;
         }
         #endregion
@@ -2105,15 +2116,22 @@ namespace BP.WF
             bool IsHaveFH = false;
             if (DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM WF_GenerWorkerlist WHERE FID=" + this.HisWork.OID) != 0)
                 IsHaveFH = true;
-            
+
             string msg = "";
             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                                             this.WorkID.ToString());
 
             MapDtls dtlsFrom = new MapDtls("ND" + this.HisNode.NodeID);
-            MapDtls dtlsTo=null;
-            if (dtlsFrom.Count>=1)
-               dtlsTo = new MapDtls("ND" + toNode.NodeID);
+            if (dtlsFrom.Count > 1)
+            {
+                foreach (MapDtl d in dtlsFrom)
+                {
+                    d.HisGEDtls_temp = null;
+                }
+            }
+            MapDtls dtlsTo = null;
+            if (dtlsFrom.Count >= 1)
+                dtlsTo = new MapDtls("ND" + toNode.NodeID);
 
             // 按照部门分组，分别启动流程。
             switch (this.HisNode.HisFLRole)
@@ -2131,7 +2149,7 @@ namespace BP.WF
                         if (IsHaveFH)
                         {
                             /* 如果曾经走过分流合流，就找到同一个人员同一个FID下的OID ，做这当前线程的ID。*/
-                            DataTable dt = DBAccess.RunSQLReturnTable("SELECT WorkID,FK_Node FROM WF_GenerWorkerlist WHERE FID="+this.WorkID+" AND FK_Emp='" + wl.FK_Emp + "' ORDER BY RDT DESC");
+                            DataTable dt = DBAccess.RunSQLReturnTable("SELECT WorkID,FK_Node FROM WF_GenerWorkerlist WHERE FID=" + this.WorkID + " AND FK_Emp='" + wl.FK_Emp + "' ORDER BY RDT DESC");
                             if (dt.Rows.Count == 0)
                             {
                                 /*没有发现，就说明以前分流节点中没有这个人的分流信息 */
@@ -2201,52 +2219,48 @@ namespace BP.WF
                                     continue;
 
                                 Sys.MapDtl toDtl = (Sys.MapDtl)dtlsTo[i];
-                                if (dtl.IsEnablePass == true)
-                                {
-                                    /*如果启用了是否明细表的审核通过机制,就允许copy节点数据。*/
-                                    toDtl.IsCopyNDData = true;
-                                }
-
                                 if (toDtl.IsCopyNDData == false)
                                     continue;
 
+
                                 //获取明细数据。
-                                GEDtls gedtls = new GEDtls(dtl.No);
-                                QueryObject qo = null;
-                                qo = new QueryObject(gedtls);
-                                switch (dtl.DtlOpenType)
+                                GEDtls gedtls = null;
+                                if (dtl.HisGEDtls_temp == null)
                                 {
-                                    case DtlOpenType.ForEmp:
-                                        qo.AddWhere(GEDtlAttr.RefPK, this.WorkID);
-                                        break;
-                                    case DtlOpenType.ForWorkID:
-                                        qo.AddWhere(GEDtlAttr.RefPK, this.WorkID);
-                                        break;
-                                    case DtlOpenType.ForFID:
-                                        qo.AddWhere(GEDtlAttr.FID, this.WorkID);
-                                        break;
+                                    gedtls = new GEDtls(dtl.No);
+                                    QueryObject qo = null;
+                                    qo = new QueryObject(gedtls);
+                                    switch (dtl.DtlOpenType)
+                                    {
+                                        case DtlOpenType.ForEmp:
+                                            qo.AddWhere(GEDtlAttr.RefPK, this.WorkID);
+                                            break;
+                                        case DtlOpenType.ForWorkID:
+                                            qo.AddWhere(GEDtlAttr.RefPK, this.WorkID);
+                                            break;
+                                        case DtlOpenType.ForFID:
+                                            qo.AddWhere(GEDtlAttr.FID, this.WorkID);
+                                            break;
+                                    }
+                                    qo.DoQuery();
+                                    dtl.HisGEDtls_temp = gedtls;
                                 }
-                                qo.DoQuery();
+                                gedtls = dtl.HisGEDtls_temp;
+
                                 int unPass = 0;
+                                DBAccess.RunSQL("DELETE " + toDtl.PTable + " WHERE RefPK=" + mywk.OID);
                                 foreach (GEDtl gedtl in gedtls)
                                 {
                                     BP.Sys.GEDtl dtCopy = new GEDtl(toDtl.No);
                                     dtCopy.Copy(gedtl);
                                     dtCopy.FK_MapDtl = toDtl.No;
-                                    dtCopy.RefPK = this.WorkID.ToString();
-                                    try
-                                    {
-                                        dtCopy.InsertAsOID(dtCopy.OID);
-                                    }
-                                    catch
-                                    {
-                                        dtCopy.Update();
-                                    }
+                                    dtCopy.RefPK = mywk.OID.ToString();
+                                    dtCopy.OID = 0;
+                                    dtCopy.Insert();
                                 }
                             }
                         }
                         #endregion  复制附件信息
-
 
                         // 产生工作的信息。
                         GenerWorkFlow gwf = new GenerWorkFlow();
@@ -2264,6 +2278,8 @@ namespace BP.WF
                         gwf.RecName = Web.WebUser.Name;
 
                         gwf.FK_Flow = toNode.FK_Flow;
+                        gwf.FlowName = toNode.HisFlow.Name;
+
                         gwf.FK_FlowSort = toNode.HisFlow.FK_FlowSort;
                         gwf.FK_Node = toNode.NodeID;
                         gwf.NodeName = toNode.Name;
@@ -2327,7 +2343,7 @@ namespace BP.WF
             else
             {
                 msg += "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
-              //  msg += "@<a href=\"javascript:WinOpen('" + this.VirPath + "/" + this.AppType + "/" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
+                //  msg += "@<a href=\"javascript:WinOpen('" + this.VirPath + "/" + this.AppType + "/" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + this.WorkID + "&FK_Flow=" + toNode.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
             }
 
             msg += this.GenerWhySendToThem(this.HisNode.NodeID, toNode.NodeID);
@@ -2340,7 +2356,10 @@ namespace BP.WF
             // +" <font color=blue><b>" + this.nextStationName + "</b></font>   " + this._RememberMe.NumOfObjs + " ：@" + this._RememberMe.EmpsExt;
             // return this.ToEP3("TaskAutoSendTo", "@任务自动下达给{0}如下{1}位同事,{2}.", this._RememberMe.NumOfObjs.ToString(), this._RememberMe.EmpsExt);  // +" <font color=blue><b>" + this.nextStationName + "</b></font>   " + this._RememberMe.NumOfObjs + " ：@" + this._RememberMe.EmpsExt;
         }
-
+        /// <summary>
+        /// 分流发起
+        /// </summary>
+        /// <returns></returns>
         public string FeiLiuStartUp()
         {
             #region GenerFH
@@ -2903,61 +2922,55 @@ namespace BP.WF
                 //throw new Exception("@回滚数据期间发生错误:" + ex1.Message + ex.Message);
             }
         }
+       
         /// <summary>
         /// 增加日志
         /// </summary>
         /// <param name="at">类型</param>
-        /// <param name="tonode">到节点</param>
         /// <param name="toEmp">到人员</param>
-        public void AddToTrack(ActionType at, Node tonode, string toEmp)
+        /// <param name="toNode">到节点</param>
+        /// <param name="msg">消息</param>
+        public void AddToTrack(ActionType at, string toEmp, string toEmpName, int toNDid, string toNDName, string msg)
         {
-            return;
-
             Track t = new Track();
+            t.WorkID = this.HisWork.OID;
+            t.FID = this.HisWork.FID;
             t.RDT = DataType.CurrentDataTime;
-            t.FromEmp = WebUser.No;
+            t.HisActionType = at;
+            t.EmpFrom = WebUser.No;
+            t.EmpFromT = WebUser.Name;
+
             t.FK_Flow = this.HisNode.FK_Flow;
-            t.MyPK = t.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            t.MyPK = t.WorkID + "_" + t.FID + "_" + "_" + toEmp + "_" + toNDid + DateTime.Now.ToString("yyMMddhhmmss");
             t.FID = this.HisWork.FID;
             t.WorkID = this.HisWork.OID;
+
+            t.NDFrom = this.HisNode.NodeID;
+            t.NDFromT = this.HisNode.Name;
+
+            t.NDTo = toNDid;
+            t.NDToT = toNDName;
+            t.EmpTo = toEmp;
+            t.EmpToT = toEmpName;
+            t.Msg = msg;
             switch (at)
             {
-                case ActionType.Start:
-                    t.ToEmp = WebUser.No+" "+WebUser.Name;
-                    t.MyPK = DateTime.Now.ToString("yyyyMMddhhmmss");
-                    t.Insert();
-                    break;
                 case ActionType.Forward:
-                    if (toEmp == null)
-                    {
-                        string emps = "";
-                        foreach (WorkerList wl in this.HisWorkerLists)
-                            emps += wl.FK_Emp + "(" + wl.FK_EmpText + ")、";
-                        t.ToEmp = emps;
-                    }
-                    else
-                    {
-                        t.ToEmp = toEmp;
-                    }
-                    t.Insert();
-                    break;
-                case ActionType.Return:
-                     if (toEmp == null)
-                    {
-                        string emps = "";
-                        foreach (WorkerList wl in this.HisWorkerLists)
-                            emps += wl.FK_Emp + "(" + wl.FK_EmpText + ")、";
-                        t.ToEmp = emps;
-                    }
-                    else
-                    {
-                        t.ToEmp = toEmp;
-                    }
-                    t.Insert();
+                case ActionType.Start:
+                case ActionType.Undo:
+                    //判断是否有焦点字段，如果有就把它记录到日志里。
+                    if (this.HisNode.FocusField.Length > 1)
+                        t.Msg = this.HisWork.GetValStrByKey(this.HisNode.FocusField);
                     break;
                 default:
                     break;
             }
+            if (at == ActionType.Forward)
+            {
+                if (this.HisNode.IsFL)
+                    at = ActionType.ForwardFL;
+            }
+            t.Insert();
         }
         /// <summary>
         /// 加入工作记录

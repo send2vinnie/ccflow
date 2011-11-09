@@ -221,6 +221,7 @@ namespace BP.WF.Ext
                 //map.AddDDLSysEnum(NodeAttr.FLRole, 0, this.ToE("FLRole", "分流规则"), true, true, NodeAttr.FLRole,
                 //    "@0=按接受人@1=按部门@2=按岗位");
 
+                map.AddTBString(NodeAttr.FocusField, null, "焦点字段", true, false, 0, 100, 10);
 
                 map.AddDDLSysEnum(NodeAttr.DeliveryWay, 0, "投递规则", true, true);
                 map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10, true);
@@ -230,6 +231,7 @@ namespace BP.WF.Ext
                 map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 500, 10, true);
                 map.AddTBString(NodeAttr.DoWhat, null, this.ToE("DoWhat", "完成后处理SQL"), false, false, 0, 500, 10, false);
 
+                map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 500, 10, false);
 
                 map.AddDDLSysEnum(NodeAttr.TurnToDeal, 0, "成功发送后转向方式",
                  true, true, NodeAttr.TurnToDeal, "@0=提示ccflow默认信息@1=提示指定信息@2=转向指定的url@3=按照条件转向");

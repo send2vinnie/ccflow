@@ -24,21 +24,25 @@ namespace BP.WF
         /// <summary>
         /// 移交
         /// </summary>
-        Shift
+        Shift,
+        /// <summary>
+        /// 撤消
+        /// </summary>
+        Undo,
+        /// <summary>
+        /// 分流前进
+        /// </summary>
+        ForwardFL,
+        /// <summary>
+        /// 合流前进
+        /// </summary>
+        ForwardHL
     }
     /// <summary>
     ///  属性
     /// </summary>
     public class TrackAttr
     {
-        /// <summary>
-        /// 从人员
-        /// </summary>
-        public const string FromEmp = "FromEmp";
-        /// <summary>
-        /// 到人员
-        /// </summary>
-        public const string ToEmp = "ToEmp";
         /// <summary>
         /// 记录日期
         /// </summary>
@@ -75,6 +79,46 @@ namespace BP.WF
         /// 轨迹字段
         /// </summary>
         public const string TrackFields = "TrackFields";
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public const string Note = "Note";
+        /// <summary>
+        /// 从节点
+        /// </summary>
+        public const string NDFrom = "NDFrom";
+        /// <summary>
+        /// 到节点
+        /// </summary>
+        public const string NDTo = "NDTo";
+        /// <summary>
+        /// 从人员
+        /// </summary>
+        public const string EmpFrom = "EmpFrom";
+        /// <summary>
+        /// 到人员
+        /// </summary>
+        public const string EmpTo = "EmpTo";
+        /// <summary>
+        /// 审核
+        /// </summary>
+        public const string Msg = "Msg";
+        /// <summary>
+        /// EmpFromT
+        /// </summary>
+        public const string EmpFromT = "EmpFromT";
+        /// <summary>
+        /// NDFromT
+        /// </summary>
+        public const string NDFromT = "NDFromT";
+        /// <summary>
+        /// NDToT
+        /// </summary>
+        public const string NDToT = "NDToT";
+        /// <summary>
+        /// EmpToT
+        /// </summary>
+        public const string EmpToT = "EmpToT";
     }
     /// <summary>
     /// 轨迹
@@ -82,6 +126,34 @@ namespace BP.WF
     public class Track : BP.En.EntityMyPK
     {
         #region attrs
+        /// <summary>
+        /// 节点从
+        /// </summary>
+        public int NDFrom
+        {
+            get
+            {
+                return this.GetValIntByKey(TrackAttr.NDFrom);
+            }
+            set
+            {
+                this.SetValByKey(TrackAttr.NDFrom, value);
+            }
+        }
+        /// <summary>
+        /// 节点到
+        /// </summary>
+        public int NDTo
+        {
+            get
+            {
+                return this.GetValIntByKey(TrackAttr.NDTo);
+            }
+            set
+            {
+                this.SetValByKey(TrackAttr.NDTo, value);
+            }
+        }
         /// <summary>
         /// 流程编号
         /// </summary>
@@ -99,29 +171,29 @@ namespace BP.WF
         /// <summary>
         /// 从人员
         /// </summary>
-        public string FromEmp
+        public string EmpFrom
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.FromEmp);
+                return this.GetValStringByKey(TrackAttr.EmpFrom);
             }
             set
             {
-                this.SetValByKey(TrackAttr.FromEmp, value);
+                this.SetValByKey(TrackAttr.EmpFrom, value);
             }
         }
         /// <summary>
         /// 到人员
         /// </summary>
-        public string ToEmp
+        public string EmpTo
         {
             get
             {
-                return this.GetValStringByKey(TrackAttr.ToEmp);
+                return this.GetValStringByKey(TrackAttr.EmpTo);
             }
             set
             {
-                this.SetValByKey(TrackAttr.ToEmp, value);
+                this.SetValByKey(TrackAttr.EmpTo, value);
             }
         }
         /// <summary>
@@ -136,20 +208,6 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(TrackAttr.RDT, value);
-            }
-        }
-        /// <summary>
-        /// 完成日期
-        /// </summary>
-        public string CDT
-        {
-            get
-            {
-                return this.GetValStringByKey(TrackAttr.CDT);
-            }
-            set
-            {
-                this.SetValByKey(TrackAttr.CDT, value);
             }
         }
         /// <summary>
@@ -194,8 +252,31 @@ namespace BP.WF
                 this.SetValByKey(TrackAttr.ActionType, (int)value);
             }
         }
+        public string HisActionTypeT
+        {
+            get
+            {
+                switch (this.HisActionType)
+                {
+                    case ActionType.Forward:
+                        return "前进";
+                    case ActionType.Return:
+                        return "退回";
+                    case ActionType.Shift:
+                        return "转发";
+                    case ActionType.Start:
+                        return "发起";
+                    case ActionType.Undo:
+                        return "撤消";
+                    case ActionType.ForwardFL:
+                        return " -前进(分流点)";
+                    default:
+                        return "未知";
+                }
+            }
+        }
         /// <summary>
-        /// 流程结束时间
+        /// 节点数据
         /// </summary>
         public string NodeData
         {
@@ -206,6 +287,72 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(TrackAttr.NodeData, value);
+            }
+        }
+        /// <summary>
+        /// 审核意见
+        /// </summary>
+        public string Msg
+        {
+            get
+            {
+                return this.GetValStringByKey(TrackAttr.Msg);
+            }
+            set
+            {
+                this.SetValByKey(TrackAttr.Msg, value);
+            }
+        }
+        public string MsgHtml
+        {
+            get
+            {
+                return this.GetValHtmlStringByKey(TrackAttr.Msg);
+            }
+        }
+        public string EmpToT
+        {
+            get
+            {
+                return this.GetValStringByKey(TrackAttr.EmpToT);
+            }
+            set
+            {
+                this.SetValByKey(TrackAttr.EmpToT, value);
+            }
+        }
+        public string EmpFromT
+        {
+            get
+            {
+                return this.GetValStringByKey(TrackAttr.EmpFromT);
+            }
+            set
+            {
+                this.SetValByKey(TrackAttr.EmpFromT, value);
+            }
+        }
+
+        public string NDFromT
+        {
+            get
+            {
+                return this.GetValStringByKey(TrackAttr.NDFromT);
+            }
+            set
+            {
+                this.SetValByKey(TrackAttr.NDFromT, value);
+            }
+        }
+        public string NDToT
+        {
+            get
+            {
+                return this.GetValStringByKey(TrackAttr.NDToT);
+            }
+            set
+            {
+                this.SetValByKey(TrackAttr.NDToT, value);
             }
         }
         #endregion attrs
@@ -234,16 +381,26 @@ namespace BP.WF
                 map.AddDDLSysEnum(TrackAttr.ActionType, 0, "操作类型", true, false, TrackAttr.ActionType,
                   "@0=发起@1=前进@2=后退@3=移交@4=删除");
 
-                map.AddTBString(TrackAttr.FromEmp, null, "从人员", true, false, 0, 100, 100);
-                map.AddTBString(TrackAttr.ToEmp, null, "到人员", true, false, 0, 4000, 100);
-                map.AddTBDateTime(TrackAttr.RDT, null, "记录日期", true, false);
-                map.AddTBDateTime(TrackAttr.CDT, null, "完成日期", true, false);
-
                 map.AddTBInt(TrackAttr.FID, 0, "流程ID", true, false);
                 map.AddTBInt(TrackAttr.WorkID, 0, "工作ID", true, false);
-              
+
+                map.AddTBInt(TrackAttr.NDFrom, 0, "从节点", true, false);
+                map.AddTBString(TrackAttr.NDFromT, null, "从节点(名称)", true, false, 0, 100, 100);
+
+                map.AddTBInt(TrackAttr.NDTo, 0, "到节点", true, false);
+                map.AddTBString(TrackAttr.NDToT, null, "到节点(名称)", true, false, 0, 100, 100);
+
+
+                map.AddTBString(TrackAttr.EmpFrom, null, "从人员", true, false, 0, 100, 100);
+                map.AddTBString(TrackAttr.EmpFromT, null, "从人员(名称)", true, false, 0, 100, 100);
+
+                map.AddTBString(TrackAttr.EmpTo, null, "到人员", true, false, 0, 4000, 100);
+                map.AddTBString(TrackAttr.EmpToT, null, "到人员(名称)", true, false, 0, 100, 100);
+                map.AddTBDateTime(TrackAttr.RDT, null, "记录日期", true, false);
+
                 map.AddTBFloat(TrackAttr.WorkTimeSpan, 0, "时间跨度(天)", true, false);
-                map.AddTBStringDoc(TrackAttr.NodeData, null, "节点数据", true, false);
+                map.AddTBStringDoc(TrackAttr.Msg, null, "消息", true, false);
+                map.AddTBStringDoc(TrackAttr.NodeData, null, "节点数据(日志信息)", true, false);
                 #endregion 字段
 
                 this._enMap = map;
@@ -254,9 +411,10 @@ namespace BP.WF
         /// 轨迹
         /// </summary>
         /// <param name="rptName"></param>
-        public Track(string rptName)
+        public Track(string mypk)
         {
-            this.RptName = rptName;
+            this.MyPK = mypk;
+            this.Retrieve();
         }
         /// <summary>
         /// 轨迹

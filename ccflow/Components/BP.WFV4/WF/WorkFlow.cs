@@ -205,7 +205,7 @@ namespace BP.WF
             {
                 string sql = "";
                 /* 
-                 * 取出来获取停留点,没有获取到说明没有任何子线程到达河流点的位置.
+                 * 取出来获取停留点,没有获取到说明没有任何子线程到达合流点的位置.
                  */
                 sql = "SELECT FK_Node FROM WF_GenerWorkerList WHERE WorkID=" + wn.HisWork.FID + " AND IsPass=3";
                 int fk_node = DBAccess.RunSQLReturnValInt(sql, 0);
@@ -239,7 +239,7 @@ namespace BP.WF
                         decimal passRate = ok / all * 100;
                         if (nextNode.PassRate <= passRate)
                         {
-                            /*说明全部的人员都完成了，就让河流点显示它。*/
+                            /*说明全部的人员都完成了，就让合流点显示它。*/
                             DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0  WHERE IsPass=3  AND WorkID=" + wn.HisWork.FID + " AND FK_Node=" + fk_node);
                         }
                         #endregion 处理完成率
@@ -253,7 +253,7 @@ namespace BP.WF
                     Node fND = new Node(gwf.FK_Node);
                     switch (fND.HisNodeWorkType)
                     {
-                        case NodeWorkType.WorkHL: /*主流程运行到河流点上了*/
+                        case NodeWorkType.WorkHL: /*主流程运行到合流点上了*/
                             break;
                         default:
                             /* 解决删除最后一个子流程时要把干流程也要删除。*/
@@ -1457,6 +1457,9 @@ namespace BP.WF
             // 处理事件。
             msg += wn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.UndoneAfter, wn.HisWork);
 
+            // 记录日志..
+            wn.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "无");
+
             if (wnPri.HisNode.IsStartNode)
             {
                 if (Web.WebUser.IsWap)
@@ -1508,13 +1511,12 @@ namespace BP.WF
         public string DoUnSend()
         {
             GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
-
             // 如果停留的节点是分合流。
             Node nd = new Node(gwf.FK_Node);
             switch (nd.HisNodeWorkType)
             {
                 case NodeWorkType.WorkFHL:
-                    throw new Exception("分河流点不允许撤消。");
+                    throw new Exception("分合流点不允许撤消。");
                 case NodeWorkType.WorkFL:
                     /*到达了分流点, 有两种情况1，未处理过。 2，已经处理过了.
                      *  这两种情况处理的方式不同的。
@@ -1567,6 +1569,9 @@ namespace BP.WF
             gwf.NodeName = wnPri.HisNode.Name;
             gwf.Update();
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node);
+
+            // 记录日志..
+            wnPri.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, wnPri.HisNode.NodeID,wnPri.HisNode.Name, "无");
 
 
             #region 恢复工作轨迹，解决工作抢办。
@@ -1666,6 +1671,10 @@ namespace BP.WF
             wk.RetrieveFromDBSources();
             string msg = nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneBefore, wk);
 
+            // 记录日志..
+            WorkNode wn = new WorkNode(wk, nd);
+            wn.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, gwf.FK_Node, gwf.NodeName, "无");
+
             // 找出它的下一个节点。
             sql = "SELECT FK_Node FROM WF_GenerWorkFlow WHERE FID=" + this.WorkID + " AND FK_Node!='" + gwf.FK_Node + "'";
             dt = DBAccess.RunSQLReturnTable(sql);
@@ -1697,9 +1706,7 @@ namespace BP.WF
             cWork.OID = this.WorkID;
             cWork.Update(WorkAttr.NodeState, 0);
 
-
             msg += nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneAfter, wk);
-
 
             if (cNode.IsStartNode)
             {
@@ -1748,6 +1755,9 @@ namespace BP.WF
 
             WorkNode wn = this.GetCurrentWorkNode();
             WorkNode wnPri = new WorkNode(this.WorkID, priFLNode.NodeID);
+
+            // 记录日志..
+            wnPri.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, wnPri.HisNode.NodeID, wnPri.HisNode.Name, "无");
 
             WorkerLists wls = new WorkerLists();
             wls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node.ToString());
