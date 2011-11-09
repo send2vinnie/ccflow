@@ -447,11 +447,22 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.ToolBar1.Add("<input type=button value='" + btnLab.PrintDocLab + "' enable=true onclick=\"WinOpen('" + urlr + "','dsdd'); \" />");
             }
 
-            if (btnLab.ReturnEnable && this.currND.IsStartNode == false)
+            if (btnLab.ReturnEnable && this.currND.IsStartNode == false && this.currND.FocusField == "")
             {
+                /*如果没有焦点字段*/
                 string urlr = "ReturnWork" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
                 this.ToolBar1.Add("<input type=button value='" + btnLab.ReturnLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
             }
+
+            if (btnLab.ReturnEnable && this.currND.IsStartNode == false && this.currND.FocusField != "")
+            {
+                /*如果有焦点字段*/
+                this.ToolBar1.AddBtn("Btn_ReturnWork", btnLab.ReturnLab);
+                this.Btn_ReturnWork.UseSubmitBehavior = false;
+                this.Btn_ReturnWork.OnClientClick = "this.disabled=true;";
+                this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            }
+
 
             if (btnLab.ShiftEnable)
             {
@@ -1013,6 +1024,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             Btn btn = (Btn)sender;
             switch (btn.ID)
             {
+               
                 case "Btn_Reject":
                 case "Btn_KillSubFlow":
                     try
@@ -1310,9 +1322,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         wk.Retrieve();
         try
         {
-            string msg = nd.HisNDEvents.DoEventNode(EventListOfNode.ReturnBefore, wk);
-            if (msg != null)
-                throw new Exception(msg);
+            string msg = this.UCEn1.GetTextBoxByID("TB_" + nd.FocusField).Text;
+            wk.Update(nd.FocusField, msg);
 
             string small = this.PageID;
             small = small.Replace("MyFlow", "");
@@ -1326,12 +1337,25 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     }
     public void DoShift()
     {
+       
+
         GenerWorkFlow gwf = new GenerWorkFlow();
         if (gwf.Retrieve(GenerWorkFlowAttr.WorkID, this.WorkID) == 0)
         {
             this.Alert("工作还没有发出，您不能移交。");
             return;
         }
+
+        BP.WF.Node nd = new BP.WF.Node(gwf.FK_Node);
+        if (nd.FocusField != "")
+        {
+            Work wk = nd.HisWork;
+            wk.OID = this.WorkID;
+            wk.Retrieve();
+            string msg = this.UCEn1.GetTextBoxByID("TB_" + nd.FocusField).Text;
+            wk.Update(nd.FocusField, msg);
+        }
+
         string url = "Forward" + Glo.FromPageType + ".aspx?FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
         this.Response.Redirect(url, true);
     }

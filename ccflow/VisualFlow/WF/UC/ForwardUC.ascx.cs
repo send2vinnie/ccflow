@@ -190,18 +190,31 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
         WorkerLists wls = new WorkerLists();
         wls.Retrieve(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.IsEnable, 1,
             WorkerListAttr.IsPass, 0);
+
+        int nodeID = 0;
         foreach (WorkerList wl in wls)
         {
             RadioButton cb = this.Top.GetRadioButtonByID("RB_" + wl.FK_Emp);
             if (cb != null)
                 cb.Checked = true;
-        }
 
+            nodeID = wl.FK_Node;
+        }
         TextBox tb = new TextBox();
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 10;
         tb.Columns = 70;
         tb.ID = "TB_Doc";
+
+
+        BP.WF.Node nd = new BP.WF.Node(nodeID);
+        if (nd.FocusField != "")
+        {
+            Work wk = nd.HisWork;
+            wk.OID = this.WorkID;
+            wk.Retrieve();
+            tb.Text = wk.GetValStringByKey(nd.FocusField);
+        }
         this.Pub1.Add(tb);
     }
 }

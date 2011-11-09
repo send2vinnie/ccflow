@@ -324,9 +324,16 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 this.DDL1.SetSelectItem(pwn.HisNode.NodeID);
                 this.DDL1.Enabled = true;
                 Work wk = pwn.HisWork;
-                this.TB1.Text = this.ToEP4("WBackInfo",
-                    "{0}同志: \n  您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n此致!!!   \n\n  {3}",
-                    turnTo, wk.CDT, pwn.HisNode.Name, WebUser.Name +"\n  "+ BP.DA.DataType.CurrentDataTime);
+                if (wn.HisNode.FocusField != "")
+                {
+                    this.TB1.Text = wn.HisWork.GetValStrByKey(wn.HisNode.FocusField);
+                }
+                else
+                {
+                    this.TB1.Text = this.ToEP4("WBackInfo",
+                  "{0}同志: \n  您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n此致!!!   \n\n  {3}",
+                  turnTo, wk.CDT, pwn.HisNode.Name, WebUser.Name + "\n  " + BP.DA.DataType.CurrentDataTime);
+                }
             }
             catch (Exception ex)
             {
