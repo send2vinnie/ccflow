@@ -665,7 +665,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 foreach (WorkerList wl in wls)
                 {
                     is1 = this.Pub2.AddTR(is1);
-                    this.Pub2.AddTD(wl.FK_NodeT);
+                    this.Pub2.AddTD(wl.FK_NodeText);
                     this.Pub2.AddTD(wl.FK_Emp);
 
                     this.Pub2.AddTD(wl.FK_EmpText);

@@ -105,6 +105,10 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
                 WorkerLists wls = new WorkerLists(this.WorkID, nodeId);
                 WorkerList wl = wls[0] as WorkerList;
                 wl.FK_Emp = toEmp.ToString();
+
+                Emp emp = new Emp(toEmp);
+                wl.FK_EmpText = emp.Name;
+
                 wl.IsEnable = true;
                 wl.Insert();
             }
