@@ -263,7 +263,7 @@ namespace BP.WF
                     case ActionType.Return:
                         return "退回";
                     case ActionType.Shift:
-                        return "转发";
+                        return "移交";
                     case ActionType.Start:
                         return "发起";
                     case ActionType.Undo:

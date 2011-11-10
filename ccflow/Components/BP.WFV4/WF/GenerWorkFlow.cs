@@ -195,20 +195,7 @@ namespace BP.WF
 				SetValByKey(GenerWorkFlowAttr.RDT,value);
 			}
 		}
-//		/// <summary>
-//		/// 流程备注
-//		/// </summary>
-//		public string  FlowNote
-//		{
-//			get
-//			{
-//				return this.GetValStrByKey(GenerWorkFlowAttr.FlowNote);
-//			}
-//			set
-//			{
-//				SetValByKey(GenerWorkFlowAttr.FlowNote,value);
-//			}
-//		}		
+         
 		/// <summary>
 		/// 流程ID
 		/// </summary>

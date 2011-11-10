@@ -520,6 +520,22 @@ namespace BP.WF
                 return WorkerListWayOfDept(town, dt);
             }
 
+            string prjNo="";
+            FlowAppType flowAppType = this.HisNode.HisFlow.HisFlowAppType;
+            sql = "";
+            if (this.HisNode.HisFlow.HisFlowAppType == FlowAppType.PRJ)
+            {
+                prjNo = "";
+                try
+                {
+                    prjNo = this.HisWork.GetValStrByKey("PrjNo");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("@当前流程是工程类流程，但是在节点表单中没有PrjNo字段(注意区分大小写)，请确认。@异常信息:" + ex.Message);
+                }
+            }
+
             // 判断节点部门里面是否设置了部门，如果设置了，就按照它的部门处理。
             if (town.HisNode.IsSetDept)
             {
@@ -532,7 +548,7 @@ namespace BP.WF
                 }
                 else
                 {
-                    if (this.HisNode.HisFlow.HisFlowAppType == FlowAppType.Normal)
+                    if (flowAppType == FlowAppType.Normal)
                     {
                         sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
                         sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
@@ -544,17 +560,17 @@ namespace BP.WF
                         sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ")";
                         sql += ")";
                     }
-                    else
+
+                    if (flowAppType == FlowAppType.PRJ)
                     {
-                        string prjNo = this.HisWork.GetValStringByKey("PrjNo");
                         sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
                         sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
                         sql += "( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + town.HisNode.NodeID + ")";
                         sql += ")";
                         sql += "AND NO IN ";
                         sql += "(";
-                        sql += "SELECT FK_Emp FROM Port_EmpStation WHERE FK_Station IN ";
-                        sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ")";
+                        sql += "SELECT FK_Emp FROM Prj_EmpPrjStation WHERE FK_Station IN ";
+                        sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") AND FK_Prj='" + prjNo + "'";
                         sql += ")";
                     }
 
@@ -567,10 +583,21 @@ namespace BP.WF
             #region  按照岗位来执行。
             if (this.HisNode.IsStartNode == false)
             {
-                // 如果当前的节点不是开始节点， 从轨迹里面查询。
-                sql = "SELECT DISTINCT FK_Emp  FROM Port_EmpStation WHERE FK_Station IN "
-                   + "(SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") "
-                   + "AND FK_Emp IN (SELECT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node IN (" + DataType.PraseAtToInSql(town.HisNode.GroupStaNDs, true) + ") )";
+                if (flowAppType == FlowAppType.Normal)
+                {
+                    // 如果当前的节点不是开始节点， 从轨迹里面查询。
+                    sql = "SELECT DISTINCT FK_Emp  FROM Port_EmpStation WHERE FK_Station IN "
+                       + "(SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") "
+                       + "AND FK_Emp IN (SELECT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node IN (" + DataType.PraseAtToInSql(town.HisNode.GroupStaNDs, true) + ") )";
+                }
+
+                if (flowAppType == FlowAppType.PRJ)
+                {
+                    // 如果当前的节点不是开始节点， 从轨迹里面查询。
+                    sql = "SELECT DISTINCT FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Station IN "
+                       + "(SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") AND FK_Prj='" + prjNo + "' "
+                       + "AND FK_Emp IN (SELECT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node IN (" + DataType.PraseAtToInSql(town.HisNode.GroupStaNDs, true) + ") )";
+                }
                 dt = DBAccess.RunSQLReturnTable(sql);
 
                 // 如果能够找到.
@@ -599,10 +626,20 @@ namespace BP.WF
             if (this.HisNode.GroupStaNDs != town.HisNode.GroupStaNDs)
             {
                 /* 没有查询到的情况下, 先按照本部门计算。*/
-                sql = "SELECT NO FROM Port_Emp WHERE NO IN "
-                   + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
-                   + " AND  NO IN "
-                   + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept = '" + WebUser.FK_Dept + "')";
+                if (flowAppType == FlowAppType.Normal)
+                {
+                    sql = "SELECT NO FROM Port_Emp WHERE NO IN "
+                       + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
+                       + " AND  NO IN "
+                       + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept = '" + WebUser.FK_Dept + "')";
+                }
+                if (flowAppType == FlowAppType.PRJ)
+                {
+                    sql = "SELECT NO FROM Port_Emp WHERE NO IN "
+                      + "(SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
+                      + " AND  NO IN "
+                      + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept = '" + WebUser.FK_Dept + "')";
+                }
 
                 dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)
@@ -624,19 +661,29 @@ namespace BP.WF
                         }
                     }
 #warning edit by peng, 用来确定不同岗位集合的传递包含同一个人的处理方式。
-                    if (isInit == false || isInit==true)
+                    if (isInit == false || isInit == true)
                         return WorkerListWayOfDept(town, dt);
                 }
             }
 
             // 没有查询到的情况下, 执行查询隶属本部门的下级部门人员。
-            sql = "SELECT NO FROM Port_Emp WHERE NO IN "
-               + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
-               + " AND  NO IN "
-               + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + WebUser.FK_Dept + "%')"
-               + " AND No!='"+WebUser.No+"'";
 
-
+            if (flowAppType == FlowAppType.Normal)
+            {
+                sql = "SELECT NO FROM Port_Emp WHERE NO IN "
+                   + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
+                   + " AND  NO IN "
+                   + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + WebUser.FK_Dept + "%')"
+                   + " AND No!='" + WebUser.No + "'";
+            }
+            if (flowAppType == FlowAppType.PRJ)
+            {
+                sql = "SELECT NO FROM Port_Emp WHERE NO IN "
+                   + "(SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj=" + prjNo + "'' AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
+                   + " AND  NO IN "
+                   + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + WebUser.FK_Dept + "%')"
+                   + " AND No!='" + WebUser.No + "'";
+            }
 
             dt = DBAccess.RunSQLReturnTable(sql);
             if (dt.Rows.Count == 0)
