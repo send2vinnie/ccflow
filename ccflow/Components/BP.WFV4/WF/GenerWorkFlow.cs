@@ -156,20 +156,6 @@ namespace BP.WF
                 SetValByKey(GenerWorkFlowAttr.FK_FlowSort, value);
             }
         }
-//		/// <summary>
-//		/// ≤ø√≈
-//		/// </summary>
-//		public string  FK_Dept
-//		{
-//			get
-//			{
-//				return this.GetValStrByKey(GenerWorkFlowAttr.FK_Dept);
-//			}
-//			set
-//			{
-//				SetValByKey(GenerWorkFlowAttr.FK_Dept,value);
-//			}
-//		}
 		public string  FK_Dept
 		{
 			get

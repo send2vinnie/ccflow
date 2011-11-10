@@ -208,9 +208,10 @@ namespace BP.WF
             }
             return WorkerListWayOfDept(town, dt);
         }
+          
         private WorkNode town = null;
        public WorkerLists GenerWorkerLists_WidthFID(WorkNode town)
-        {
+       {
             this.town = town;
             DataTable dt = new DataTable();
             dt.Columns.Add("No", typeof(string));
@@ -441,6 +442,10 @@ namespace BP.WF
             }
             #endregion  按照岗位来执行。
         }
+
+       //private WorkerLists GenerWorkerLists(WorkNode town)
+       //{
+       //}
         public WorkerLists GenerWorkerLists(WorkNode town)
         {
             this.town = town;
@@ -527,15 +532,32 @@ namespace BP.WF
                 }
                 else
                 {
-                    sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
-                    sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
-                    sql += "( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + town.HisNode.NodeID + ")";
-                    sql += ")";
-                    sql += "AND NO IN ";
-                    sql += "(";
-                    sql += "SELECT FK_Emp FROM Port_EmpStation WHERE FK_Station IN ";
-                    sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ")";
-                    sql += ")";
+                    if (this.HisNode.HisFlow.HisFlowAppType == FlowAppType.Normal)
+                    {
+                        sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
+                        sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
+                        sql += "( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + town.HisNode.NodeID + ")";
+                        sql += ")";
+                        sql += "AND NO IN ";
+                        sql += "(";
+                        sql += "SELECT FK_Emp FROM Port_EmpStation WHERE FK_Station IN ";
+                        sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ")";
+                        sql += ")";
+                    }
+                    else
+                    {
+                        string prjNo = this.HisWork.GetValStringByKey("PrjNo");
+                        sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
+                        sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
+                        sql += "( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + town.HisNode.NodeID + ")";
+                        sql += ")";
+                        sql += "AND NO IN ";
+                        sql += "(";
+                        sql += "SELECT FK_Emp FROM Port_EmpStation WHERE FK_Station IN ";
+                        sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ")";
+                        sql += ")";
+                    }
+
                     dt = DBAccess.RunSQLReturnTable(sql);
                     if (dt.Rows.Count > 0)
                         return WorkerListWayOfDept(town, dt);
@@ -2262,7 +2284,7 @@ namespace BP.WF
                         gwf.RecName = Web.WebUser.Name;
 
                         gwf.FK_Flow = toNode.FK_Flow;
-                        gwf.FlowName = toNode.HisFlow.Name;
+                        gwf.FlowName = toNode.FlowName;
 
                         gwf.FK_FlowSort = toNode.HisFlow.FK_FlowSort;
                         gwf.FK_Node = toNode.NodeID;
@@ -2481,7 +2503,7 @@ namespace BP.WF
             gwf.RecName = Web.WebUser.Name;
 
             gwf.FK_Flow = this.HisNode.FK_Flow;
-            gwf.FlowName = this.HisNode.Name;
+            gwf.FlowName = this.HisNode.FlowName;
 
             gwf.FK_FlowSort = this.HisNode.HisFlow.FK_FlowSort;
 
