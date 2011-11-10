@@ -371,16 +371,25 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                    break;
                case NodeState.Forward:
                    /* 如果不是退回来的，就判断是否是移交过来的。 */
-                   ForwardWork fw = new ForwardWork();
-                   int i = fw.Retrieve(ForwardWorkAttr.WorkID, this.WorkID,
-                       ForwardWorkAttr.FK_Node, this.FK_Node);
-                   if (i >= 1)
+                   ForwardWorks fws = new ForwardWorks();
+                   BP.En.QueryObject qo = new QueryObject(fws);
+                   qo.AddWhere(ForwardWorkAttr.WorkID, this.WorkID);
+                   qo.addAnd();
+                   qo.AddWhere(ForwardWorkAttr.FK_Node, this.FK_Node);
+                   qo.addAnd();
+                   qo.AddWhere(ForwardWorkAttr.ToEmp, WebUser.No);
+                   qo.addOrderBy(ForwardWorkAttr.RDT);
+                   if (fws.Count >= 1)
                    {
-                       if (fw.IsRead == false)
+                       this.FlowMsg.AddFieldSet("转发历史信息");
+                       foreach (ForwardWork fw in fws)
                        {
-                           msg += "@" + this.ToE("Transfer", "移交人") + "[" + fw.FK_Emp + "," + fw.FK_EmpName + "]。@接受人：" + fw.ToEmp + "," + fw.ToEmpName + "。移交原因@" + fw.NoteHtml;
-                           this.FlowMsg.AlertMsg_Info("移交提示:", msg);
+                           msg = "@" + this.ToE("Transfer", "移交人") + "[" + fw.FK_Emp + "," + fw.FK_EmpName + "]。@接受人：" + fw.ToEmp + "," + fw.ToEmpName + "。移交原因@" + fw.NoteHtml;
+                           if (fw.IsRead == false)
+                               msg = "<b>" + msg + "</b>";
+                           this.FlowMsg.Add(msg + "<hr>");
                        }
+                       this.FlowMsg.AddFieldSetEnd();
                    }
                    break;
                default:

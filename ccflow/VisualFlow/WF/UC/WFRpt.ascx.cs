@@ -160,7 +160,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         qo.AddWhere(TrackAttr.WorkID, this.FID);
         qo.addOr();
         qo.AddWhere(TrackAttr.WorkID, this.WorkID);
-        qo.addOrderByDesc(TrackAttr.RDT);
+        qo.addOrderBy(TrackAttr.RDT);
         qo.DoQuery();
 
         int idx = 1;
