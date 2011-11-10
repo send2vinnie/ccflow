@@ -26,6 +26,10 @@ namespace BP.WF
         /// </summary>
         Shift,
         /// <summary>
+        /// 撤消移交
+        /// </summary>
+        UnShift,
+        /// <summary>
         /// 撤消
         /// </summary>
         Undo,
@@ -264,10 +268,12 @@ namespace BP.WF
                         return "退回";
                     case ActionType.Shift:
                         return "移交";
+                    case ActionType.UnShift:
+                        return "撤消移交";
                     case ActionType.Start:
                         return "发起";
                     case ActionType.Undo:
-                        return "撤消";
+                        return "撤消发起";
                     case ActionType.ForwardFL:
                         return " -前进(分流点)";
                     default:

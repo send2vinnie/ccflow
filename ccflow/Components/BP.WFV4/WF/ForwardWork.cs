@@ -27,11 +27,7 @@ namespace BP.WF
         /// </summary>
         public const string FK_Node = "FK_Node";
         /// <summary>
-        /// 工作人员
-        /// </summary>
-        public const string Worker = "Worker";
-        /// <summary>
-        /// 退回原因
+        /// 移交原因
         /// </summary>
         public const string Note = "Note";
         /// <summary>
@@ -39,9 +35,9 @@ namespace BP.WF
         /// </summary>
         public const string FK_Emp = "FK_Emp";
         /// <summary>
-        /// 移交给
+        /// 移交人名成
         /// </summary>
-        public const string ToEmp = "ToEmp";
+        public const string FK_EmpName = "FK_EmpName";
         /// <summary>
         /// 移交时间
         /// </summary>
@@ -51,9 +47,9 @@ namespace BP.WF
         /// </summary>
         public const string IsRead = "IsRead";
         /// <summary>
-        /// 移交人名称
+        /// 移交给
         /// </summary>
-        public const string FK_EmpName = "FK_EmpName";
+        public const string ToEmp = "ToEmp";
         /// <summary>
         /// 移交给人员名称
         /// </summary>

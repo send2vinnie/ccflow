@@ -1506,6 +1506,63 @@ namespace BP.WF
             }
         }
         /// <summary>
+        /// 撤消移交
+        /// </summary>
+        /// <returns></returns>
+        public string DoUnShift()
+        {
+            GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+            WorkerLists wls = new WorkerLists();
+            wls.Retrieve(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node);
+            if (wls.Count == 0)
+                return "移交失败没有当前的工作。";
+
+            Node nd = new Node(gwf.FK_Node);
+            Work wk1 = nd.HisWork;
+            wk1.OID = this.WorkID;
+            wk1.Retrieve();
+
+            // 记录日志.
+            WorkNode wn = new WorkNode(wk1, nd);
+            wn.AddToTrack(ActionType.UnShift, WebUser.No, WebUser.Name, nd.NodeID, nd.Name, "撤消移交");
+
+            if (wls.Count == 1)
+            {
+                WorkerList wl = (WorkerList)wls[0];
+                wl.FK_Emp = WebUser.No;
+                wl.FK_EmpText = WebUser.Name;
+                wl.IsEnable = true;
+                wl.IsPass = false;
+                wl.Update();
+                return "@撤消移交成功，<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>";
+            }
+
+            bool isHaveMe = false;
+            foreach (WorkerList wl in wls)
+            {
+                if (wl.FK_Emp == WebUser.No)
+                {
+                    wl.FK_Emp = WebUser.No;
+                    wl.FK_EmpText = WebUser.Name;
+                    wl.IsEnable = true;
+                    wl.IsPass = false;
+                    wl.Update();
+                    return "@撤消移交成功，<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>";
+                }
+            }
+
+            WorkerList wk = (WorkerList)wls[0];
+            WorkerList wkNew = new WorkerList();
+            wkNew.Copy(wk);
+            wkNew.FK_Emp = WebUser.No;
+            wkNew.FK_EmpText = WebUser.Name;
+            wkNew.IsEnable = true;
+            wkNew.IsPass = false;
+            wkNew.Insert();
+
+            return "@撤消移交成功，<a href='" + this.VirPath + "/WF/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A>";
+        }
+        /// <summary>
         /// 执行撤消
         /// </summary>
         public string DoUnSend()
@@ -1568,7 +1625,7 @@ namespace BP.WF
             wn.HisWork.Delete();
 
             // 删除附件信息。
-            DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND"+gwf.FK_Node+"' AND RefPKVal='"+this.WorkID+"'");
+            DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND" + gwf.FK_Node + "' AND RefPKVal='" + this.WorkID + "'");
             #endregion 删除当前节点数据。
 
 
@@ -1579,7 +1636,7 @@ namespace BP.WF
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node);
 
             // 记录日志..
-            wnPri.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, wnPri.HisNode.NodeID,wnPri.HisNode.Name, "无");
+            wnPri.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, wnPri.HisNode.NodeID, wnPri.HisNode.Name, "无");
 
 
             #region 恢复工作轨迹，解决工作抢办。
@@ -1646,7 +1703,6 @@ namespace BP.WF
             {
                 // 更新是否显示。
                 DBAccess.RunSQL("UPDATE WF_ForwardWork SET IsRead=1 WHERE WORKID=" + this.WorkID + " AND FK_Node=" + wnPri.HisNode.NodeID);
-
                 if (Web.WebUser.IsWap == false)
                 {
                     if (this.HisFlow.FK_FlowSort != "00")
