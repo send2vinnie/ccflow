@@ -61,6 +61,8 @@ namespace BP.WF
             DA.DBAccess.RunSQL("DELETE FROM WF_RememberMe");
             DA.DBAccess.RunSQL("DELETE FROM WF_RunRecord");
             DA.DBAccess.RunSQL("DELETE FROM Sys_FrmAttachmentDB");
+            DA.DBAccess.RunSQL("DELETE FROM WF_Track");
+
             Nodes nds = new Nodes();
             foreach (Node nd in nds)
             {

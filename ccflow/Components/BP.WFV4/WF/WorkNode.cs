@@ -971,29 +971,6 @@ namespace BP.WF
                   wfemp.Email, null, msg);
             return wn;
 
-            //// 以退回到的节点向前删除。
-            //Node nd = new Node(backtoNodeID);
-            //Nodes nds = nd.HisToNodes;
-            //foreach (Node item in nds)
-            //{
-            //    Work wk = item.HisWork;
-            //    wk.OID = this.WorkID;
-            //    if (wk.Delete() == 0)
-            //        continue;
-
-            //    wkls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, item.NodeID);
-            //    Nodes nds2 = item.HisToNodes;
-            //    foreach (Node myitem in nds2)
-            //    {
-            //        Work w2k = myitem.HisWork;
-            //        w2k.OID = this.WorkID;
-            //        if (w2k.Delete() == 0)
-            //            continue;
-            //        wkls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, myitem.NodeID);
-            //    }
-            //}
-            //return wn;
-
             throw new Exception("分流子线程退回到分流点或者分合流点功能，没有实现。");
         }
         /// <summary>
@@ -1005,7 +982,14 @@ namespace BP.WF
         /// <returns></returns>
         public WorkNode DoReturnWork(int backtoNodeID, string msg, bool isHiden)
         {
+            if (this.HisNode.FocusField != "")
+            {
+                // 把数据更新它。
+                this.HisWork.Update(this.HisNode.FocusField, "");
+            }
+
             Node backToNode = new Node(backtoNodeID);
+             
             switch (this.HisNode.HisNodeWorkType)
             {
                 case NodeWorkType.WorkHL: /*如果当前是合流点 */
@@ -3631,6 +3615,9 @@ namespace BP.WF
                 int idx = 0;
                 if (athDBs.Count >= 0)
                 {
+                    athDBs.Delete(FrmAttachmentDBAttr.FK_MapData, "ND" + nd.NodeID,
+                        FrmAttachmentDBAttr.RefPKVal, this.WorkID);
+
                     /*说明当前节点有附件数据*/
                     foreach (FrmAttachmentDB athDB in athDBs)
                     {
@@ -3638,7 +3625,8 @@ namespace BP.WF
                         FrmAttachmentDB athDB_N = new FrmAttachmentDB();
                         athDB_N.Copy(athDB);
                         athDB_N.FK_MapData = "ND" + nd.NodeID;
-                        athDB_N.MyPK = this.WorkID + "_" + idx;
+                        athDB_N.RefPKVal = this.WorkID.ToString();
+                        athDB_N.MyPK = this.WorkID + "_" + idx + "_" + athDB_N.FK_MapData;
                         athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
                            "ND" + nd.NodeID);
                         athDB_N.Save();

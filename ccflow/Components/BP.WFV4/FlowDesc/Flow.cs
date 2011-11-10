@@ -14,6 +14,20 @@ using Microsoft.Win32;
 namespace BP.WF
 {
     /// <summary>
+    /// 流程应用类型
+    /// </summary>
+    public enum FlowAppType
+    {
+        /// <summary>
+        /// 普通的
+        /// </summary>
+        Normal,
+        /// <summary>
+        /// 工程类
+        /// </summary>
+        PRJ 
+    }
+    /// <summary>
     /// 抄送方式
     /// </summary>
     public enum CCWay
@@ -274,7 +288,7 @@ namespace BP.WF
         /// <summary>
         /// 轨迹字段
         /// </summary>
-        public const string TrackFields = "TrackFields";
+        public const string AppType = "AppType";
     }
     /// <summary>
     /// 流程
@@ -287,15 +301,15 @@ namespace BP.WF
         /// <summary>
         /// 轨迹字段
         /// </summary>
-        public string TrackFields
+        public string AppType
         {
             get
             {
-                return this.GetValStrByKey(FlowAttr.TrackFields);
+                return this.GetValStrByKey(FlowAttr.AppType);
             }
             set
             {
-                this.SetValByKey(FlowAttr.TrackFields, value);
+                this.SetValByKey(FlowAttr.AppType, value);
             }
         }
         /// <summary>
@@ -2281,6 +2295,20 @@ namespace BP.WF
         #endregion
 
         #region 扩展属性
+        /// <summary>
+        /// 应用类型
+        /// </summary>
+        public FlowAppType HisFlowAppType
+        {
+            get
+            {
+                return (FlowAppType)this.GetValIntByKey(FlowAttr.AppType);
+            }
+            set
+            {
+                this.SetValByKey(FlowAttr.AppType, (int)value);
+            }
+        }
         public DocType HisDocType
         {
             get
@@ -2480,9 +2508,12 @@ namespace BP.WF
 
                 map.AddTBDecimal(FlowAttr.AvgDay, 0, "平均运行用天", false, false);
 
+
+
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
 
-                map.AddTBString(FlowAttr.TrackFields, null, "轨迹字段(不输入不记录轨迹)", true, false, 0, 3000, 10);
+
+                map.AddTBInt(FlowAttr.AppType, 0, "应用类型", false, false);
 
                 map.AddSearchAttr(FlowAttr.FK_FlowSort);
                    map.AddSearchAttr(FlowAttr.FlowRunWay);

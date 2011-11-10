@@ -1559,10 +1559,18 @@ namespace BP.WF
             // 调用撤消发送前事件。
             string msg = nd.HisNDEvents.DoEventNode(EventListOfNode.UndoneBefore, wn.HisWork);
 
+            #region 删除当前节点数据。
+            // 删除产生的工作列表。
             WorkerLists wls = new WorkerLists();
             wls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node.ToString());
+
+            // 删除工作信息。
             wn.HisWork.Delete();
+
+            // 删除附件信息。
             DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND"+gwf.FK_Node+"' AND RefPKVal='"+this.WorkID+"'");
+            #endregion 删除当前节点数据。
+
 
             // 更新.
             gwf.FK_Node = wnPri.HisNode.NodeID;
