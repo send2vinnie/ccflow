@@ -322,13 +322,24 @@ namespace BP.Sys
 	/// </summary>
     public class FrmEvents : EntitiesOID
     {
+        public string DoEventNode(string dotype, Entity en)
+        {
+            try
+            {
+                return _DoEventNode(dotype, en);
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
+        }
         /// <summary>
         /// 执行事件，事件标记是 EventList.
         /// </summary>
         /// <param name="dotype"></param>
         /// <param name="en"></param>
         /// <returns></returns>
-        public string DoEventNode(string dotype, Entity en)
+        private string _DoEventNode(string dotype, Entity en)
         {
             if (this.Count == 0)
                 return null;

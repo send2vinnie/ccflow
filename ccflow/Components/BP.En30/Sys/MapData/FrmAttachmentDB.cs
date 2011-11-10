@@ -242,9 +242,7 @@ namespace BP.Sys
         }
         protected override bool beforeInsert()
         {
-            this.RDT = DataType.CurrentDataTime;
-            this.Rec=BP.Web.WebUser.No;
-            this.RecName = BP.Web.WebUser.Name;
+          
             return base.beforeInsert();
         }
         #endregion

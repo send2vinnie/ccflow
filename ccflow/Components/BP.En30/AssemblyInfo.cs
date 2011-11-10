@@ -8,15 +8,14 @@ using System.Runtime.InteropServices;
 // 关联的信息。
 //
 
-[assembly: AssemblyTitle("驰骋软件中间层")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("chichengsoft")]
+[assembly: AssemblyDescription("chichengsoft")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("chichengsoft")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("驰骋软件")]
-[assembly: AssemblyTrademark("驰骋软件")]
-[assembly: AssemblyCulture("")]
-
+[assembly: AssemblyCompany("济南驰骋信息技术有限公司")]
+[assembly: AssemblyProduct("chichengsoft")]
+[assembly: AssemblyCopyright("驰骋软件2003-2011")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]	
 //
 // 程序集的版本信息由下列 4 个值组成:
 //

@@ -183,6 +183,7 @@ namespace BP.Sys
         #endregion
 
         #region  Ù–‘
+        public GEDtls HisGEDtls_temp = null;
         public DtlShowModel HisDtlShowModel
         {
             get
