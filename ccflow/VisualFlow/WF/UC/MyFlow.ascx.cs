@@ -378,7 +378,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                    {
                        if (fw.IsRead == false)
                        {
-                           msg += "@" + this.ToE("Transfer", "移交人") + "[" + fw.FK_Emp + "," + fw.FK_EmpName + "]。@接受人：" + fw.ToEmp + ","+fw.ToEmpName+"。移交原因@" + fw.NoteHtml;
+                           msg += "@" + this.ToE("Transfer", "移交人") + "[" + fw.FK_Emp + "," + fw.FK_EmpName + "]。@接受人：" + fw.ToEmp + "," + fw.ToEmpName + "。移交原因@" + fw.NoteHtml;
                            this.FlowMsg.AlertMsg_Info("移交提示:", msg);
                        }
                    }
