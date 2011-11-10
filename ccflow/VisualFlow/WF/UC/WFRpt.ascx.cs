@@ -160,6 +160,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         qo.AddWhere(TrackAttr.WorkID, this.FID);
         qo.addOr();
         qo.AddWhere(TrackAttr.WorkID, this.WorkID);
+        qo.addOrderByDesc(TrackAttr.RDT);
         qo.DoQuery();
 
         int idx = 1;
@@ -176,9 +177,9 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.AddTD(item.NDToT);
             this.AddTD(item.EmpToT);
 
-            this.AddTDBigDoc(item.MsgHtml);
+            this.AddTD(item.MsgHtml);
 
-            this.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?DoType=View&MyPK=" + item.MyPK + "','"+item.MyPK+"');\">日志</a>");
+            this.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?DoType=View&MyPK=" + item.MyPK + "','" + item.MyPK + "');\">日志</a>");
             this.AddTREnd();
         }
         this.AddTableEnd();
