@@ -5,15 +5,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.Sys;
 
-
 public partial class WF_Admin_DBInstall : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         this.Pub1.AddH3("ccflow 数据库修复与安装工具");
         this.Pub1.AddHR();
-
         if (this.Request.QueryString["DoType"] == "OK")
         {
             this.Pub1.AddFieldSet("提示");
@@ -73,14 +70,12 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     sql = "DELETE Sys_Enum WHERE EnumKey='EventDoType'";
                     BP.DA.DBAccess.RunSQLs(sql);
 
-                    
                     //更新 WF_EmpWorks. 2011-11-09
                     sql = "DROP VIEW WF_EmpWorks";
                     BP.DA.DBAccess.RunSQLs(sql);
 
-                    sql = "CREATE VIEW  WF_EmpWorks AS SELECT A.WorkID, A.Rec AS Starter, A.FK_Flow, A.FlowName,B.FK_Node, B.FK_NodeText AS NodeName, A.Title, A.RDT, B.RDT AS ADT, B.SDT, B.FK_Emp,B.FID ,A.FK_FlowSort FROM  WF_GenerWorkFlow A, WF_GenerWorkerList B WHERE     (B.IsEnable = 1) AND (B.IsPass = 0) AND A.WorkID = B.WorkID AND A.FK_Node = B.FK_Node ";
+                    sql = "CREATE VIEW  WF_EmpWorks AS SELECT     A.WorkID, A.Rec AS Starter,A.RecName as StarterName, A.FK_Flow, A.FlowName,B.FK_Node, B.FK_NodeText AS NodeName, A.Title, A.RDT, B.RDT AS ADT, B.SDT, B.FK_Emp,B.FK_EmpText, B.FID ,A.FK_FlowSort FROM  WF_GenerWorkFlow A, WF_GenerWorkerList B WHERE     (B.IsEnable = 1) AND (B.IsPass = 0) AND A.WorkID = B.WorkID AND A.FK_Node = B.FK_Node ";
                     BP.DA.DBAccess.RunSQLs(sql);
-
 
                     string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
                     BP.DA.DBAccess.RunSQLScript(scrpts);

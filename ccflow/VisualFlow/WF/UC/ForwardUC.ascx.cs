@@ -96,6 +96,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
             int nodeId = gwf.FK_Node;
             Int64 workId = this.WorkID;
+
             DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId);
             string emps = "," + toEmp + ",";
             int i = DBAccess.RunSQL("UPDATE WF_GenerWorkerlist set IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId + " AND FK_Emp='" + toEmp + "'");
@@ -135,6 +136,10 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             // 记录日志.
             WorkNode wn = new WorkNode(wk, nd);
             wn.AddToTrack(ActionType.Shift, toEmp, emp.Name, nd.NodeID, nd.Name, fw.Note);
+            if (wn.HisNode.FocusField != "")
+            {
+                wn.HisWork.Update(wn.HisNode.FocusField, "");
+            }
 
             this.Session["info"] = "@工作移交成功。@您已经成功的把工作移交给："+emp.No+" , "+emp.Name;
             this.Response.Redirect("MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=Msg&FK_Flow=" + this.FK_Flow, true);
