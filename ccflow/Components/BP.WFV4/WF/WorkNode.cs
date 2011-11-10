@@ -676,6 +676,7 @@ namespace BP.WF
                    + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + WebUser.FK_Dept + "%')"
                    + " AND No!='" + WebUser.No + "'";
             }
+
             if (flowAppType == FlowAppType.PRJ)
             {
                 sql = "SELECT NO FROM Port_Emp WHERE NO IN "
@@ -2231,13 +2232,11 @@ namespace BP.WF
                         {
                             mywk.OID = DBAccess.GenerOID();  //BP.DA.DBAccess.GenerOID();
                         }
-
                         mywk.FID = this.HisWork.FID;
                         mywk.Rec = wl.FK_Emp;
                         mywk.Emps = wl.FK_Emp;
                         mywk.BeforeSave();
                         mywk.InsertAsOID(mywk.OID);
-
 
                         #region  复制附件信息
                         if (athDBs.Count >= 0)
@@ -2270,11 +2269,9 @@ namespace BP.WF
                                 i++;
                                 if (dtlsTo.Count <= i)
                                     continue;
-
                                 Sys.MapDtl toDtl = (Sys.MapDtl)dtlsTo[i];
                                 if (toDtl.IsCopyNDData == false)
                                     continue;
-
 
                                 //获取明细数据。
                                 GEDtls gedtls = null;
@@ -3677,7 +3674,6 @@ namespace BP.WF
                         throw new Exception(ex.Message + " == " + ex11.Message);
                     }
                 }
-
                 #region 复制附件。
                 FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                       this.WorkID.ToString());

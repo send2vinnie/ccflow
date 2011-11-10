@@ -8,7 +8,7 @@ using BP.En;
 namespace BP.WF
 {
     /// <summary>
-    /// Method 的摘要说明
+    /// 修复数据库 的摘要说明
     /// </summary>
     public class RepariDB : Method
     {
@@ -59,11 +59,6 @@ namespace BP.WF
             //删除表单类型.
             sql = "DELETE Sys_Enum WHERE EnumKey='FormType'";
             BP.DA.DBAccess.RunSQLs(sql);
-
-            // 2011-08-02 升级包 mapdata 数据有变化.
-            //foreach ( item in collection)
-            //{
-            //}
 
             return "执行成功...";
         }
