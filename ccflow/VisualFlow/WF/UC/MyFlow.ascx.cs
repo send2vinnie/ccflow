@@ -327,7 +327,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// <param name="e"></param>
     protected void Page_Load(object sender, System.EventArgs e)
     {
-       if (this.DoType != null)
+        if (this.DoType != null)
         {
             DoDoType();
             return;
@@ -376,21 +376,26 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                    qo.AddWhere(ForwardWorkAttr.WorkID, this.WorkID);
                    qo.addAnd();
                    qo.AddWhere(ForwardWorkAttr.FK_Node, this.FK_Node);
-                   qo.addAnd();
-                   qo.AddWhere(ForwardWorkAttr.ToEmp, WebUser.No);
                    qo.addOrderBy(ForwardWorkAttr.RDT);
+                   qo.DoQuery();
+
                    if (fws.Count >= 1)
                    {
-                       this.FlowMsg.AddFieldSet("转发历史信息");
+                       this.FlowMsg.AddFieldSet("移交历史信息");
                        foreach (ForwardWork fw in fws)
                        {
                            msg = "@" + this.ToE("Transfer", "移交人") + "[" + fw.FK_Emp + "," + fw.FK_EmpName + "]。@接受人：" + fw.ToEmp + "," + fw.ToEmpName + "。移交原因@" + fw.NoteHtml;
-                           if (fw.IsRead == false)
+                           if (fw.FK_Emp == WebUser.No)
                                msg = "<b>" + msg + "</b>";
+
+
+                           msg = msg.Replace("@", "<br>@");
                            this.FlowMsg.Add(msg + "<hr>");
                        }
                        this.FlowMsg.AddFieldSetEnd();
                    }
+
+                   currWK.Update("NodeState", (int)NodeState.Init);
                    break;
                default:
                    break;

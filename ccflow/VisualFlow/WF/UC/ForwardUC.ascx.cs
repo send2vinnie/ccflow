@@ -98,7 +98,6 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             Int64 workId = this.WorkID;
 
             DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId);
-            string emps = "," + toEmp + ",";
             int i = DBAccess.RunSQL("UPDATE WF_GenerWorkerlist set IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId + " AND FK_Emp='" + toEmp + "'");
             Emp emp = new Emp(toEmp);
             if (i == 0)
@@ -107,9 +106,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
                 WorkerLists wls = new WorkerLists(this.WorkID, nodeId);
                 WorkerList wl = wls[0] as WorkerList;
                 wl.FK_Emp = toEmp.ToString();
-
                 wl.FK_EmpText = emp.Name;
-
                 wl.IsEnable = true;
                 wl.Insert();
             }
@@ -118,7 +115,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             Work wk = nd.HisWork;
             wk.OID = this.WorkID;
             wk.Retrieve();
-            wk.Emps = emps;
+            wk.Emps = ","+toEmp+".";
             wk.Rec = toEmp;
             wk.NodeState = NodeState.Forward;
             wk.Update();
@@ -126,7 +123,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             ForwardWork fw = new ForwardWork();
             fw.WorkID = this.WorkID;
             fw.FK_Node = nodeId;
-            fw.ToEmp = emps;
+            fw.ToEmp = toEmp;
             fw.ToEmpName = emp.Name;
             fw.Note = this.Pub1.GetTextBoxByID("TB_Doc").Text;
             fw.FK_Emp = WebUser.No;
@@ -140,8 +137,9 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             {
                 wn.HisWork.Update(wn.HisNode.FocusField, "");
             }
-
-            this.Session["info"] = "@工作移交成功。@您已经成功的把工作移交给："+emp.No+" , "+emp.Name;
+            string info = "@工作移交成功。@您已经成功的把工作移交给：" + emp.No + " , " + emp.Name;
+            info += "@<a href='MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnShift&FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "' ><img src='./Img/UnDo.gif' border=0 />撤消工作移交</a>.";
+            this.Session["info"] = info;
             this.Response.Redirect("MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=Msg&FK_Flow=" + this.FK_Flow, true);
             return;
         }

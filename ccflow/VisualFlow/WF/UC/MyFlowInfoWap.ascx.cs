@@ -61,6 +61,18 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
                 wf.DoDeleteWorkFlowByReal();
                 this.Session["info"] = this.ToE("FlowDelOK", "流程删除成功");
                 break;
+            case "UnShift":
+                try
+                {
+                    WorkFlow mwf = new WorkFlow(this.FK_Flow, this.WorkID);
+                    string str = mwf.DoUnShift();
+                    this.Session["info"] = str;
+                }
+                catch (Exception ex)
+                {
+                    this.Session["info"] = "@执行撤消失败。@失败信息" + ex.Message;
+                }
+                break;
             case "UnSend":
                 try
                 {
@@ -92,13 +104,12 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
             s = s.Replace("@", "<BR>@");
             this.Add("<div style='width:500px;text-align:center'>");
             if (WebUser.IsWap)
-            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0/>主页</a> - " + this.ToE("Note", "操作提示"), s);
+                this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0/>主页</a> - " + this.ToE("Note", "操作提示"), s);
             else
                 this.AddFieldSet("" + this.ToE("Note", "操作提示"), s);
 
             this.Add("</div>");
             return;
-            //this.AlertMsg_Info(this.ToE("Note", "操作提示"), s);
         }
 
       //  string sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "' ORDER BY WorkID ";
