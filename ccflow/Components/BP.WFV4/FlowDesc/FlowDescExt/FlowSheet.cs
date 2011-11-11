@@ -80,13 +80,10 @@ namespace BP.WF.Ext
                 map.AddTBString(FlowAttr.Note, null, this.ToE("Note", "备注"), true, false, 0, 100, 10, true);
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
 
-
                 map.AddDDLSysEnum(FlowAttr.AppType, (int)FlowAppType.Normal,"流程应用类型",
                   true, true, "FlowAppType", "@0=正常的@1=工程类(具有项目组概念)");
 
-
                 map.AddSearchAttr(BP.WF.FlowAttr.FK_FlowSort);
-
 
                 RefMethod rm = new RefMethod();
                 rm.Title = this.ToE("CCNode", "抄送节点"); // "抄送节点";

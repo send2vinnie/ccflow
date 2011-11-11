@@ -572,6 +572,24 @@ namespace BP.WF
                         sql += "SELECT FK_Emp FROM Prj_EmpPrjStation WHERE FK_Station IN ";
                         sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") AND FK_Prj='" + prjNo + "'";
                         sql += ")";
+                        dt = DBAccess.RunSQLReturnTable(sql);
+                        if (dt.Rows.Count == 0)
+                        {
+                            /* 如果项目组里没有工作人员就提交到公共部门里去找。*/
+                            sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
+                            sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
+                            sql += "( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + town.HisNode.NodeID + ")";
+                            sql += ")";
+                            sql += "AND NO IN ";
+                            sql += "(";
+                            sql += "SELECT FK_Emp FROM Port_EmpStation WHERE FK_Station IN ";
+                            sql += "( SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ")";
+                            sql += ")";
+                        }
+                        else
+                        {
+                            return WorkerListWayOfDept(town, dt);
+                        }
                     }
 
                     dt = DBAccess.RunSQLReturnTable(sql);
@@ -597,7 +615,20 @@ namespace BP.WF
                     sql = "SELECT DISTINCT FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Station IN "
                        + "(SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") AND FK_Prj='" + prjNo + "' "
                        + "AND FK_Emp IN (SELECT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node IN (" + DataType.PraseAtToInSql(town.HisNode.GroupStaNDs, true) + ") )";
+                    dt = DBAccess.RunSQLReturnTable(sql);
+                    if (dt.Rows.Count == 0)
+                    {
+                        /* 如果项目组里没有工作人员就提交到公共部门里去找。*/
+                        sql = "SELECT DISTINCT FK_Emp  FROM Port_EmpStation WHERE FK_Station IN "
+                         + "(SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") "
+                         + "AND FK_Emp IN (SELECT FK_Emp FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node IN (" + DataType.PraseAtToInSql(town.HisNode.GroupStaNDs, true) + ") )";
+                    }
+                    else
+                    {
+                        return WorkerListWayOfDept(town, dt);
+                    }
                 }
+
                 dt = DBAccess.RunSQLReturnTable(sql);
 
                 // 如果能够找到.
@@ -633,12 +664,27 @@ namespace BP.WF
                        + " AND  NO IN "
                        + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept = '" + WebUser.FK_Dept + "')";
                 }
+
                 if (flowAppType == FlowAppType.PRJ)
                 {
                     sql = "SELECT NO FROM Port_Emp WHERE NO IN "
                       + "(SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
                       + " AND  NO IN "
                       + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept = '" + WebUser.FK_Dept + "')";
+
+                    dt = DBAccess.RunSQLReturnTable(sql);
+                    if (dt.Rows.Count == 0)
+                    {
+                        /* 如果项目组里没有工作人员就提交到公共部门里去找。*/
+                        sql = "SELECT NO FROM Port_Emp WHERE NO IN "
+                      + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
+                      + " AND  NO IN "
+                      + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept = '" + WebUser.FK_Dept + "')";
+                    }
+                    else
+                    {
+                        return WorkerListWayOfDept(town, dt);
+                    }
                 }
 
                 dt = DBAccess.RunSQLReturnTable(sql);
@@ -684,6 +730,21 @@ namespace BP.WF
                    + " AND  NO IN "
                    + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + WebUser.FK_Dept + "%')"
                    + " AND No!='" + WebUser.No + "'";
+
+                dt = DBAccess.RunSQLReturnTable(sql);
+                if (dt.Rows.Count == 0)
+                {
+                    /* 如果项目组里没有工作人员就提交到公共部门里去找。*/
+                    sql = "SELECT NO FROM Port_Emp WHERE NO IN "
+                   + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
+                   + " AND  NO IN "
+                   + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + WebUser.FK_Dept + "%')"
+                   + " AND No!='" + WebUser.No + "'";
+                }
+                else
+                {
+                    return WorkerListWayOfDept(town, dt);
+                }
             }
 
             dt = DBAccess.RunSQLReturnTable(sql);
@@ -699,7 +760,12 @@ namespace BP.WF
             }
 
 
-            // 没有查询到的情况下, 按照最大匹配数 提高一个级别 计算，递归算法未完成，不过现在已经满足大部分需要。
+            /* 没有查询到的情况下, 按照最大匹配数 提高一个级别 计算，递归算法未完成，不过现在已经满足大部分需要。
+             * 
+             * 因为:以上已经做的岗位的判断，就没有必要在判断其它类型的流程处理了。
+             * 
+             * */
+
             int lengthStep = 0; //增长步骤。
             while (true)
             {
@@ -709,7 +775,6 @@ namespace BP.WF
                    + " AND  NO IN "
                    + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + WebUser.FK_Dept.Substring(0, WebUser.FK_Dept.Length - lengthStep) + "%')"
                    + " AND No!='" + WebUser.No + "'";
-
 
                 dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)
