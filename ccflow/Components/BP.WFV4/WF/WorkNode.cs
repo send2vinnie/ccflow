@@ -726,7 +726,7 @@ namespace BP.WF
             if (flowAppType == FlowAppType.PRJ)
             {
                 sql = "SELECT NO FROM Port_Emp WHERE NO IN "
-                   + "(SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj=" + prjNo + "'' AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
+                   + "(SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
                    + " AND  NO IN "
                    + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + WebUser.FK_Dept + "%')"
                    + " AND No!='" + WebUser.No + "'";
