@@ -1515,7 +1515,7 @@ namespace BP.WF
             WorkerLists wls = new WorkerLists();
             wls.Retrieve(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node);
             if (wls.Count == 0)
-                return "移交失败没有当前的工作。";
+                return "移交失败没有当前的工作。";  
 
             Node nd = new Node(gwf.FK_Node);
             Work wk1 = nd.HisWork;

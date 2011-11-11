@@ -1707,20 +1707,32 @@ namespace BP.WF
             if (this.HisWorkerLists.Count == 0)
                 throw new Exception("@根据部门产生工作人员出现错误，流程[" + this.HisWorkFlow.HisFlow.Name + "],中节点[" + town.HisNode.Name + "]定义错误,没有找到接受此工作的工作人员.");
 
-            if (this.HisNode.IsStartNode == true)
+            // 求出日志类型。
+            ActionType at = ActionType.Forward;
+            switch (town.HisNode.HisNodeWorkType)
             {
-                foreach (WorkerList wl in this.HisWorkerLists)
-                {
-                    this.AddToTrack(ActionType.Start, wl.FK_Emp,wl.FK_EmpText, wl.FK_Node,wl.FK_NodeText, null);
-                }
+                case NodeWorkType.StartWork:
+                case NodeWorkType.StartWorkFL:
+                    at = ActionType.Start;
+                    break;
+                case NodeWorkType.Work:
+                    if (this.HisNode.HisNodeWorkType == NodeWorkType.WorkFL
+                        || this.HisNode.HisNodeWorkType == NodeWorkType.WorkFHL)
+                        at = ActionType.ForwardFL;
+                    else
+                        at = ActionType.Forward;
+                    break;
+                case NodeWorkType.WorkHL:
+                    at = ActionType.ForwardHL;
+                    break;
+                default:
+                    break;
             }
-            else
+            foreach (WorkerList wl in this.HisWorkerLists)
             {
-                foreach (WorkerList wl in this.HisWorkerLists)
-                {
-                    this.AddToTrack(ActionType.Forward, wl.FK_Emp,wl.FK_EmpText, wl.FK_Node,wl.FK_NodeText, null);
-                }
+                this.AddToTrack(at, wl.FK_Emp, wl.FK_EmpText, wl.FK_Node, wl.FK_NodeText, null);
             }
+
             return this.HisWorkerLists;
         }
         #endregion
@@ -2985,7 +2997,7 @@ namespace BP.WF
             Track t = new Track();
             t.WorkID = this.HisWork.OID;
             t.FID = this.HisWork.FID;
-            t.RDT = DataType.CurrentDataTime;
+            t.RDT = DataType.CurrentDataTimess;
             t.HisActionType = at;
             t.EmpFrom = WebUser.No;
             t.EmpFromT = WebUser.Name;
@@ -3008,6 +3020,8 @@ namespace BP.WF
                 case ActionType.Forward:
                 case ActionType.Start:
                 case ActionType.Undo:
+                case ActionType.ForwardFL:
+                case ActionType.ForwardHL:
                     //判断是否有焦点字段，如果有就把它记录到日志里。
                     if (this.HisNode.FocusField.Length > 1)
                         t.Msg = this.HisWork.GetValStrByKey(this.HisNode.FocusField);
@@ -3020,7 +3034,15 @@ namespace BP.WF
                 if (this.HisNode.IsFL)
                     at = ActionType.ForwardFL;
             }
-            t.Insert();
+
+            try
+            {
+                t.Insert();
+            }
+            catch
+            {
+                t.CheckPhysicsTable();
+            }
         }
         /// <summary>
         /// 加入工作记录
@@ -3518,6 +3540,7 @@ namespace BP.WF
                 this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Complete,
                     WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
 
+
                 #region 处理完成率
                 string sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID + " AND IsPass=1";
                 decimal ok = (decimal)DBAccess.RunSQLReturnValInt(sql);
@@ -3533,8 +3556,14 @@ namespace BP.WF
                 }
                 #endregion 处理完成率
 
+                //  sql = "SELECT FK_Emp,FK_EmpText FROM WF_GenerWorkerlist WHERE WorkID="+myfh.FID+" AND IsPass=3";
+                //DataTable dt =
+                string fk_emp1 = myfh.ToEmpsMsg.Substring(0, myfh.ToEmpsMsg.LastIndexOf('<'));
+                this.AddToTrack(ActionType.ForwardHL, fk_emp1, myfh.ToEmpsMsg, nd.NodeID, nd.Name, null);
+
                 return "@流程已经运行到合流节点[" + nd.Name + "]，当前工作已经完成.@您的工作已经发送给如下人员[" + myfh.ToEmpsMsg + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + nd.NodeID + "')\" >短信通知他们</a>。" + this.GenerWhySendToThem(this.HisNode.NodeID, nd.NodeID) + numStr;
             }
+
             /* 已经有FID，说明：以前已经有分流或者合流节点。*/
             /*
              * 以下处理的是没有流程到达此位置
@@ -3570,7 +3599,6 @@ namespace BP.WF
             * 更新它的节点 worklist 信息, 说明当前节点已经完成了.
             * 不让当前的操作员能看到自己的工作。
             */
-            // DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=1,FK_Node="+nd.NodeID+" WHERE WorkID=" + this.WorkID + " AND FID=" + this.HisWork.FID + " AND FK_Node=" + this.HisNode.NodeID);
 
 
             #region 设置父流程状态 设置当前的节点为:
@@ -3618,7 +3646,6 @@ namespace BP.WF
             #endregion 复制附件。
 
             /* 
-             *  为了解决 大连需求
              *  合流点需要等待各个分流点全部处理完后才能看到它。
              */
             string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;

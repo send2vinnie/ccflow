@@ -276,6 +276,8 @@ namespace BP.WF
                         return "撤消发起";
                     case ActionType.ForwardFL:
                         return " -前进(分流点)";
+                    case ActionType.ForwardHL:
+                        return " -向合流点发送";
                     default:
                         return "未知";
                 }
@@ -402,7 +404,8 @@ namespace BP.WF
 
                 map.AddTBString(TrackAttr.EmpTo, null, "到人员", true, false, 0, 4000, 100);
                 map.AddTBString(TrackAttr.EmpToT, null, "到人员(名称)", true, false, 0, 100, 100);
-                map.AddTBDateTime(TrackAttr.RDT, null, "记录日期", true, false);
+
+                map.AddTBString(TrackAttr.RDT, null, "到人员", true, false, 0, 30, 100);
 
                 map.AddTBFloat(TrackAttr.WorkTimeSpan, 0, "时间跨度(天)", true, false);
                 map.AddTBStringDoc(TrackAttr.Msg, null, "消息", true, false);
@@ -428,16 +431,7 @@ namespace BP.WF
         public Track()
         {
         }
-        /// <summary>
-        /// 轨迹
-        /// </summary>
-        /// <param name="rptName"></param>
-        /// <param name="WorkID"></param>
-        public Track(string rptName, int WorkID)
-        {
-            this.RptName = rptName;
-            this.Retrieve();
-        }
+       
         #endregion attrs
     }
     /// <summary>
