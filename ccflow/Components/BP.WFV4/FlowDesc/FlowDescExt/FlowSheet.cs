@@ -82,7 +82,7 @@ namespace BP.WF.Ext
 
 
                 map.AddDDLSysEnum(FlowAttr.AppType, (int)FlowAppType.Normal,"流程应用类型",
-                  true, true, FlowAttr.AppType, "@0=正常的@1=工程类(具有项目组概念)");
+                  true, true, "FlowAppType", "@0=正常的@1=工程类(具有项目组概念)");
 
 
                 map.AddSearchAttr(BP.WF.FlowAttr.FK_FlowSort);
