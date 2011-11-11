@@ -2329,7 +2329,6 @@ namespace BP.DA
                 return false;
             return true;
         }
-
         public static bool IsExits(string sql, Paras ps)
         {
             if (RunSQLReturnVal(sql, ps) == null)

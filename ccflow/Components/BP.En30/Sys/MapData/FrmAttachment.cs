@@ -174,9 +174,9 @@ namespace BP.Sys
         {
             get
             {
-                string s= this.GetValStringByKey(FrmAttachmentAttr.SaveTo);
+                string s = this.GetValStringByKey(FrmAttachmentAttr.SaveTo);
                 if (s == "" || s == null)
-                    s = @"D:\ccflow\VisualFlow\DataUser\UploadFile";
+                    s = @"D:\ccflow\VisualFlow\DataUser\UploadFile\";
                 return s;
             }
             set
