@@ -2615,13 +2615,17 @@ namespace BP.WF
             DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE FK_Flow='" + this.No + "'");
 
             DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE FK_Flow='" + this.No + "'");
-            DA.DBAccess.RunSQL("DELETE FROM WF_ReturnWork " + sql1);
+
+            string sqlIn = " WHERE ReturnNode IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            DA.DBAccess.RunSQL("DELETE FROM WF_ReturnWork " + sqlIn);
             DA.DBAccess.RunSQL("DELETE FROM WF_GenerFH WHERE FK_Flow='" + this.No + "'");
             DA.DBAccess.RunSQL("DELETE FROM WF_SelectAccper " + sql);
             DA.DBAccess.RunSQL("DELETE FROM WF_FileManager " + sql);
             DA.DBAccess.RunSQL("DELETE FROM WF_RememberMe " + sql);
 
-            DA.DBAccess.RunSQL("DELETE FROM ND" + int.Parse(this.No) + "Rpt ");
+
+            if (DBAccess.IsExitsObject("ND" + int.Parse(this.No) + "Rpt"))
+                DBAccess.RunSQL("DELETE FROM ND" + int.Parse(this.No) + "Rpt ");
 
             //DA.DBAccess.RunSQL("DELETE FROM WF_WorkList WHERE FK_Flow='" + this.No + "'");
             //DA.DBAccess.RunSQL("DELETE Sys_MapExt WHERE FK_MapData LIKE 'ND"+int.Parse(this.No)+"%'" );
@@ -2651,9 +2655,6 @@ namespace BP.WF
                     }
                 }
             }
-
-
-            DA.DBAccess.RunSQL("DELETE FROM ND" + int.Parse(this.No) + "Rpt ");
             MapDtls mydtls = new MapDtls("ND" + int.Parse(this.No) + "Rpt");
             foreach (MapDtl dtl in mydtls)
             {
@@ -2681,13 +2682,16 @@ namespace BP.WF
 
             DataTable dtFlow = ds.Tables["WF_Flow"];
             Flow fl = new Flow();
+            fl.No = fl.GenerNewNo;
             string oldFlowNo = dtFlow.Rows[0]["No"].ToString();
             int oldFlowID = int.Parse(oldFlowNo);
             string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
             int idx = 0;
             try
             {
-                fl.DoNewFlow();
+                fl.DoDelData();
+                fl.DoDelete();
+
                 int flowID = int.Parse(fl.No);
                 #region 处理流程表数据
                 foreach (DataColumn dc in dtFlow.Columns)
@@ -2707,7 +2711,7 @@ namespace BP.WF
                     fl.SetValByKey(dc.ColumnName, val);
                 }
                 fl.FK_FlowSort = fk_flowSort;
-                fl.Update();
+                fl.Save();
                 #endregion 处理流程表数据
 
                 string msg = "";
@@ -3406,20 +3410,8 @@ namespace BP.WF
 
             #region 删除有可能存在的历史数据.
             Flow fl = new Flow(this.No);
-            try
-            {
                 fl.DoDelData();
-            }
-            catch
-            {
-            }
-            try
-            {
                 fl.DoDelete();
-            }
-            catch
-            {
-            }
             this.Save();
             #endregion 删除有可能存在的历史数据.
 
