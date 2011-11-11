@@ -73,7 +73,7 @@ public partial class WF_FreeFrm_UploadFile : WebPage
               this.Pub1.AddTR();
               this.Pub1.AddTDIdx(i++);
               if (ath.IsDownload)
-                  this.Pub1.AddTD("<a href='../../DataUser/UploadFile/" + db.FilePathName + "' target=_blank><img src='../../Images/FileType/" + db.FileExts + ".gif' border=0>" + db.FileName + "</a>");
+                  this.Pub1.AddTD("<a href='../../DataUser/UploadFile/" + db.FilePathName + "' target=_blank><img src='../../Images/FileType/" + db.FileExts + ".gif' border=0 onerror=\"src='../../Images/FileType/Undefined.gif'\" />" + db.FileName + "</a>");
               else
                   this.Pub1.AddTD(db.FileName);
 

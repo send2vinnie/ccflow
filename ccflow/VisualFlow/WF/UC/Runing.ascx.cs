@@ -83,8 +83,8 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
             this.Pub1.AddTD(gwf.RecName);
             this.Pub1.AddTDBegin();
             this.Pub1.Add("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo" + this.PageSmall + ".aspx?DoType=UnSend&FID=" + gwf.FID + "&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
-            this.Pub1.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
-            this.Pub1.Add("<a href=\"javascript:WinOpen('./../WF/Chart.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='./Img/Track.gif' border=0 />" + this.ToE("WorkTrack", "工作轨迹") + "</a>");
+            this.Pub1.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID="+gwf.FID+"')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
+            this.Pub1.Add("<a href=\"javascript:WinOpen('./../WF/Chart.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=" + gwf.FID + "')\" ><img src='./Img/Track.gif' border=0 />" + this.ToE("WorkTrack", "工作轨迹") + "</a>");
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();
         }
@@ -119,22 +119,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         }
         this.AddULEnd();
 
-        // this.AddTableEnd();
-        //this.AddUL();
-        //foreach (GenerWorkFlow gwf in gwfs)
-        //{
-        //    i++;
-        //    is1 = this.AddTR(is1);
-        //    this.AddLi("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
-
-        //    this.Add(gwf.FK_NodeText);
-        //    //this.Add(gwf.RDT);
-        //    //this.Add(gwf.RecText);
-        //    this.AddBR("<a href=\"javascript:Do('" + this.ToE("AYS", "您确认吗？") + "','MyFlowInfo.aspx?DoType=UnSend&WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "');\" ><img src='../images/btn/delete.gif' border=0 />" + this.ToE("UnDo", "撤消") + "</a>");
-        //    this.Add("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=0')\" ><img src='../images/btn/rpt.gif' border=0 />" + this.ToE("WorkRpt", "报告") + "</a>");
-        //    //this.AddTREnd();
-        //}
-        //this.AddULEnd();
+       
         this.AddFieldSetEnd();
     }
     public void BindWap_bal()

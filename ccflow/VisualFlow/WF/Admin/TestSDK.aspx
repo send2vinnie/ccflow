@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WF/Style/WinOpen.master" AutoEventWireup="true" CodeFile="TestSDK.aspx.cs" Inherits="WF_Admin_LoginTest" %><%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WF/WinOpen.master" AutoEventWireup="true" CodeFile="TestSDK.aspx.cs" Inherits="WF_Admin_LoginTest" %><%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>

@@ -8,7 +8,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-
 public partial class Face_MasterPage : BP.Web.MasterPage
 {
     private string _pageID = null;
@@ -49,15 +48,6 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         this.Page.RegisterClientScriptBlock("s",
             "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
-       // this.Page.RegisterClientScriptBlock("df",
-       //"<link href='" + this.Request.ApplicationPath + "/Comm/Style/Skin/T" + BP.Web.WebUser.Style + "/menu.css' rel='stylesheet' type='text/css' />");
-
-        //this.Page.RegisterClientScriptBlock("a",
-        //   "<link href='" + this.Request.ApplicationPath + "/WF/Style/Menu" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
-
-        //this.Page.RegisterClientScriptBlock("d",
-        //"<link href='" + this.Request.ApplicationPath + "/Comm/Style/t1/style.css' rel='stylesheet' type='text/css' />");
-
         if (this.Request.RawUrl.ToLower().Contains("login.aspx") == false)
         {
             if (BP.Web.WebUser.No == null)
@@ -92,7 +82,6 @@ public partial class Face_MasterPage : BP.Web.MasterPage
             script += "</script> ";
             this.Page.ClientScript.RegisterClientScriptBlock(typeof(string), "s", script);
         }
-
         #region 菜单输出区域
 
 
@@ -104,7 +93,6 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         }
         this.Page.RegisterClientScriptBlock("d",
            "<link href='" + this.Request.ApplicationPath + "/WF/Style/Skin/T" + BP.Web.WebUser.Style + "/Style.css' rel='stylesheet' type='text/css' />");
-         
 
         this.Pub1.Add("<DIV ID=nv class='nv' >");
         this.Pub1.Add("<UL>");
@@ -135,54 +123,7 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         #endregion 菜单输出区域
 
 
-        #region 菜单输出区域 bak
-        //string dotype = this.PageID;
-        //if (BP.WF.Glo.IsShowTitle)
-        //    this.Pub1.Add("<Img src='./../DataUser/Title.gif' align=center onerror=\"src='./Style/TitleCCFlow.gif'\" >");
-
-        //this.Pub1.Add("<DIV align=center><UL id=main_nav align=center>");
-        //this.Pub1.Add("<LI>Hi:" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "</LI>");
-        //foreach (BP.WF.XML.ToolBar en in ens)
-        //{
-        //    if (en.No == dotype)
-        //    {
-        //        if (en.No == "EmpWorks")
-        //            this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
-        //        else
-        //            this.Pub1.Add("<LI class=activetab><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
-        //    }
-        //    else
-        //    {
-        //        if (en.No == "EmpWorks")
-        //            this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + msg + "</a></LI>");
-        //        else
-        //            this.Pub1.Add("<LI ><a href='" + en.Url + "' target='_self' title='" + en.Title + "' >" + en.Name + "</a></LI>");
-        //    }
-        //}
-        //this.Pub1.Add("</UL>");
-        //this.Pub1.Add("</DIV>");
-        #endregion 菜单输出区域 bak
-
         return;
-
-        //this.Pub1.Add("<div align=center ><Table width='500px' class=TTable ><TR>");
-        //this.Pub1.Add("<TD width='10%' align=right nowarp=true ><a href='Tools.aspx' >Hi:" + BP.Web.WebUser.No + "</a></TD>");
-        //this.Pub1.Add("<TD width='50%' align=right ></TD>");
-
-        //string dotype = "";
-        //foreach (BP.WF.XML.ToolBar en in ens)
-        //{
-        //    if (en.No == this.DoType)
-        //    {
-        //        this.Pub1.Add("<TD nowrap=true><img src='" + en.Img + "' border='0' ><b>" + en.Name + "</b></TD>");
-        //    }
-        //    else
-        //    {
-        //        this.Pub1.Add("<TD nowrap=true><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><img src='" + en.Img + "' border='0' >" + en.Name + "</a></TD>");
-        //    }
-        //}
-        //this.Pub1.Add("<TD width='20%' ></TD>");
-        //this.Pub1.Add("</TR>");
-        //this.Pub1.Add("</Table></div><hr width='80%'>");
+         
     }
 }

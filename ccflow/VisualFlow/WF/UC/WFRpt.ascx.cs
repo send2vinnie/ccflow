@@ -146,22 +146,33 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         this.AddTR();
         this.AddTDTitle("IDX");
         this.AddTDTitle("日期时间");
-        this.AddTDTitle("活动");
         this.AddTDTitle("从节点");
         this.AddTDTitle("人员");
         this.AddTDTitle("到节点");
         this.AddTDTitle("人员");
-        this.AddTDTitle("焦点字段&消息");
+        this.AddTDTitle("活动");
+        this.AddTDTitle("信息");
         this.AddTDTitle("日志");
         this.AddTREnd();
 
         Tracks tks = new Tracks();
         QueryObject qo = new QueryObject(tks);
-        qo.AddWhere(TrackAttr.WorkID, this.FID);
-        qo.addOr();
-        qo.AddWhere(TrackAttr.WorkID, this.WorkID);
-        qo.addOrderBy(TrackAttr.RDT);
-        qo.DoQuery();
+        if (this.FID == 0)
+        {
+            qo.AddWhere(TrackAttr.FID, this.WorkID);
+            qo.addOr();
+            qo.AddWhere(TrackAttr.WorkID, this.WorkID);
+            qo.addOrderBy(TrackAttr.RDT);
+            qo.DoQuery();
+        }
+        else
+        {
+            qo.AddWhere(TrackAttr.FID, this.FID);
+            qo.addOr();
+            qo.AddWhere(TrackAttr.WorkID, this.FID);
+            qo.addOrderBy(TrackAttr.RDT);
+            qo.DoQuery();
+        }
 
         int idx = 1;
         foreach (Track item in tks)
@@ -169,13 +180,14 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.AddTR();
             this.AddTDIdx(idx++);
             this.AddTD(item.RDT);
-            this.AddTD(item.HisActionTypeT);
 
             this.AddTD(item.NDFromT);
             this.AddTD(item.EmpFromT);
 
             this.AddTD(item.NDToT);
             this.AddTD(item.EmpToT);
+
+            this.AddTD(item.HisActionTypeT);
 
             this.AddTD(item.MsgHtml);
 

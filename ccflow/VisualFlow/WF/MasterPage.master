@@ -65,7 +65,7 @@ div#Top
     margin: 0px;
     padding: 0px 30px 0px 0px;
     height: 100%;
-   <%-- background-image: url('./../../DataUser/LogBiger.png');--%>
+   <%-- background-image: url('./../../DataUser/LogBiger.png'); --%>
     background-repeat: no-repeat;
     vertical-align: middle;
 }
@@ -79,15 +79,6 @@ div#Top
         <br>
       <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
-
-       <%-- <div  class=Footer>
-         <% if (BP.SystemConfig.IsDebug  )
-            { %>
-<a href='http://ccFlow.org:666/BugFree/'  target=_blank >Bug and advices Reg.</a> 
-<% } %>
-             http://ccFlow.org @2003-2011
-        </div>
---%>
     </form>
 </body>
 </html>
