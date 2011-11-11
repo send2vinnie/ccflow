@@ -556,15 +556,13 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
         this.Pub1.AddTDTitle(this.ToE("Name", "名称"));
         this.Pub1.AddTDTitle(this.ToE("Sort", "类别"));
         this.Pub1.AddTDTitle(this.ToE("Desc", "描述/编辑"));
-
         this.Pub1.AddTDTitle(this.ToE("Edit", "编辑数据"));
-
         this.Pub1.AddTREnd();
-
 
         BP.Sys.SFTables ens = new SFTables();
         QueryObject qo = new QueryObject(ens);
-        this.Pub2.BindPageIdx(qo.GetCount(), pageSize, this.PageIdx, "Do.aspx?DoType=AddSFTable&MyPK=" + this.MyPK + "&IDX=&GroupField");
+        this.Pub2.BindPageIdx(qo.GetCount(), pageSize, this.PageIdx,
+            "Do.aspx?DoType=AddSFTable&MyPK=" + this.MyPK + "&IDX=&GroupField");
         qo.DoQuery("No", pageSize, this.PageIdx);
 
         bool is1 = false;

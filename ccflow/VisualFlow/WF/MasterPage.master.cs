@@ -46,7 +46,8 @@ public partial class Face_MasterPage : BP.Web.MasterPage
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.RegisterClientScriptBlock("s",
-            "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
+            "<link href='" + this.Request.ApplicationPath + "/DataUser/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
+
 
         if (this.Request.RawUrl.ToLower().Contains("login.aspx") == false)
         {
@@ -91,8 +92,9 @@ public partial class Face_MasterPage : BP.Web.MasterPage
             this.Pub1.Add("<DIV class='wp' >");
             this.Pub1.Add("<div  id='Top' class='top' /><h2><img src='./../DataUser/LogBiger.png'  border=0 /></h2></div>");
         }
+
         this.Page.RegisterClientScriptBlock("d",
-           "<link href='" + this.Request.ApplicationPath + "/WF/Style/Skin/T" + BP.Web.WebUser.Style + "/Style.css' rel='stylesheet' type='text/css' />");
+           "<link href='" + this.Request.ApplicationPath + "/DataUser/Style/Skin/T" + BP.Web.WebUser.Style + "/Style.css' rel='stylesheet' type='text/css' />");
 
         this.Pub1.Add("<DIV ID=nv class='nv' >");
         this.Pub1.Add("<UL>");

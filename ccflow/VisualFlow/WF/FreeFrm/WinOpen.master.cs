@@ -13,6 +13,5 @@ public partial class WF_FreeFrm_WinOpen : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
 }

@@ -2,12 +2,12 @@
 <DS>
   <MapMenu No="NewF" CH="新建字段"   JS="javascript:AddF(@MyPK);"  Img="../../Images/Btn/New.gif" />
   <MapMenu No="CopyF" CH="复制字段"  JS="javascript:CopyFieldFromNode(@MyPK);"  Img="../../Images/Btn/Copy.gif" />
-  <MapMenu No="DTable" CH="设计表格" JS="javascript:MapDtl(@MyPK);" Img="../../Images/Btn/Table.gif"  />
-  <MapMenu No="DM" CH="设计多选"     JS="javascript:MapM2M(@MyPK);" Img="../../Images/Btn/ChoseCol.gif"  />
+  <MapMenu No="DTable" CH="增加从表" JS="javascript:MapDtl(@MyPK);" Img="../../Images/Btn/Table.gif"  />
+  <MapMenu No="DM" CH="增加多选框"     JS="javascript:MapM2M(@MyPK);" Img="../../Images/Btn/ChoseCol.gif"  />
+  <MapMenu No="Ath" CH="多附件组件"     JS="javascript:Ath(@MyPK);" Img="../../Images/Btn/ChoseCol.gif"  />
   <MapMenu No="Frm" CH="设置框架"    JS="javascript:MapFrame(@MyPK);" Img="./Img/Frame.gif"  />
   <MapMenu No="FGroup" CH="字段分组" JS="javascript:GroupFieldNew(@MyPK);" Img="../../Images/Btn/Apply.gif"  />
   <MapMenu No="ExpImp" CH="导入/导出" JS="javascript:ExpImp(@MyPK);" Img="../../Images/Btn/Apply.gif"  />
-  
 
   <MapMenu111 No="Ext" CH="扩展设置"    JS="javascript:MapExt(@MyPK);" Img="../../Images/Btn/DTS.gif" />
 
