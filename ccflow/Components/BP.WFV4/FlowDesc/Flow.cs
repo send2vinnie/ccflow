@@ -875,12 +875,11 @@ namespace BP.WF
             fls.AddEntity(this);
 
             // fls.SaveToXml(path + "Flow.xml");
-            ds.Tables.Add(fls.ToDataTableField("Flow"));
+            ds.Tables.Add(fls.ToDataTableField("WF_Flow"));
 
             // 节点信息
             Nodes nds = this.HisNodes;
-            //   nds.SaveToXml(path + "Nodes.xml");
-            ds.Tables.Add(nds.ToDataTableField("Nodes"));
+            ds.Tables.Add(nds.ToDataTableField("WF_Node"));
 
             // 文书信息
             BillTemplates tmps = new BillTemplates(this.No);
@@ -899,98 +898,84 @@ namespace BP.WF
                 }
             }
             tmps.Remove(pks);
-            ds.Tables.Add(tmps.ToDataTableField("BillTemplates"));
+            ds.Tables.Add(tmps.ToDataTableField("WF_BillTemplate"));
 
             // 条件信息
             Conds cds = new Conds(this.No);
-            // cds.SaveToXml(path + "Conds.xml");
-            ds.Tables.Add(cds.ToDataTableField("Conds"));
+            ds.Tables.Add(cds.ToDataTableField("WF_Cond"));
 
             // 方向
             string sqlin = "SELECT NodeID FROM WF_Node WHERE fk_flow='" + this.No + "'";
             string sql = "select * from WF_Direction where Node IN (" + sqlin + ") OR ToNode In (" + sqlin + ")";
-
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
-            dt.TableName = "Directions";
-            //   ds1.WriteXml(path + "Directions.xml");
+            dt.TableName = "WF_Direction";
             ds.Tables.Add(dt);
 
             // 应用设置 FAppSet
             FAppSets sets = new FAppSets(this.No);
             //sets.SaveToXml(path + "FAppSets.xml");
-            ds.Tables.Add(sets.ToDataTableField("FAppSets"));
+            ds.Tables.Add(sets.ToDataTableField("WF_FAppSet"));
 
 
             // 流程发送完后抄送到岗位 
             FlowStations fstas = new FlowStations(this.No);
-            // fstas.SaveToXml(path + "FlowStations.xml");
-            ds.Tables.Add(fstas.ToDataTableField("FlowStations"));
+            ds.Tables.Add(fstas.ToDataTableField("WF_FlowStation"));
 
             // 流程标签.
             LabNotes labs = new LabNotes(this.No);
-            //  labs.SaveToXml(path + "LabNotes.xml");
-            ds.Tables.Add(labs.ToDataTableField("LabNotes"));
+            ds.Tables.Add(labs.ToDataTableField("WF_LabNote"));
 
             // 消息监听.
             Listens lts = new Listens(this.No);
-            ds.Tables.Add(lts.ToDataTableField("Listens"));
-
+            ds.Tables.Add(lts.ToDataTableField("WF_Listen"));
 
             // 节点与部门。
             sql = "SELECT * FROM WF_NodeDept where FK_Node IN (" + sqlin + ")";
             dt = DBAccess.RunSQLReturnTable(sql);
-            dt.TableName = "NodeDept";
+            dt.TableName = "WF_NodeDept";
             ds.Tables.Add(dt);
 
             // 节点与岗位权限。
             sql = "SELECT * FROM WF_NodeStation where FK_Node IN (" + sqlin + ")";
             dt = DBAccess.RunSQLReturnTable(sql);
-            dt.TableName = "NodeStations";
+            dt.TableName = "WF_NodeStation";
             ds.Tables.Add(dt);
 
             // 节点与人员。
             sql = "SELECT * FROM WF_NodeEmp where FK_Node IN (" + sqlin + ")";
             dt = DBAccess.RunSQLReturnTable(sql);
-            dt.TableName = "WF_NodeEmps";
+            dt.TableName = "WF_NodeEmp";
             ds.Tables.Add(dt);
 
-            //ds = DBAccess.RunSQLReturnDataSet(sql);
-            //ds.WriteXml(path + "WF_NodeEmps.xml");
+            //// 流程报表。
+            //WFRpts rpts = new WFRpts(this.No);
+            //// rpts.SaveToXml(path + "WFRpts.xml");
+            //ds.Tables.Add(rpts.ToDataTableField("WF_Rpt"));
 
-            // 流程报表。
-            WFRpts rpts = new WFRpts(this.No);
-            // rpts.SaveToXml(path + "WFRpts.xml");
-            ds.Tables.Add(rpts.ToDataTableField("WFRpts"));
+            //// 流程报表属性
+            //RptAttrs rptAttrs = new RptAttrs();
+            //rptAttrs.RetrieveAll();
+            //ds.Tables.Add(rptAttrs.ToDataTableField("RptAttrs"));
 
-            // 流程报表属性
-            RptAttrs rptAttrs = new RptAttrs();
-            rptAttrs.RetrieveAll();
-            ds.Tables.Add(rptAttrs.ToDataTableField("RptAttrs"));
+            //// 流程报表访问权限。
+            //RptStations rptStations = new RptStations(this.No);
+            //rptStations.RetrieveAll();
+            ////  rptStations.SaveToXml(path + "RptStations.xml");
+            //ds.Tables.Add(rptStations.ToDataTableField("RptStations"));
 
+            //// 流程报表人员访问权限。
+            //RptEmps rptEmps = new RptEmps(this.No);
+            //rptEmps.RetrieveAll();
 
-            // 流程报表访问权限。
-            RptStations rptStations = new RptStations(this.No);
-            rptStations.RetrieveAll();
-            //  rptStations.SaveToXml(path + "RptStations.xml");
-            ds.Tables.Add(rptStations.ToDataTableField("RptStations"));
-
-
-            // 流程报表人员访问权限。
-            RptEmps rptEmps = new RptEmps(this.No);
-            rptEmps.RetrieveAll();
             // rptEmps.SaveToXml(path + "RptEmps.xml");
-            ds.Tables.Add(rptEmps.ToDataTableField("RptEmps"));
-
+            // ds.Tables.Add(rptEmps.ToDataTableField("RptEmps"));
 
             int flowID = int.Parse(this.No);
-            // Sys_MapData
             sql = "SELECT * FROM Sys_MapData WHERE No LIKE 'ND" + flowID + "%'";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_MapData";
             ds.Tables.Add(dt);
 
-            //ds = DBAccess.RunSQLReturnDataSet(sql);
-            //ds.WriteXml(path + "Sys_MapData.xml");
 
             // Sys_MapAttr.
             sql = "SELECT * FROM Sys_MapAttr WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
@@ -1020,7 +1005,7 @@ namespace BP.WF
 
 
             // Sys_Enum
-            sql = "SELECT * from Sys_Enum WHERE EnumKey IN ( SELECT No FROM Sys_EnumMain where NO IN (SELECT KeyOfEn from Sys_MapAttr WHERE FK_MapData LIKE 'ND" + flowID + "%' ) )";
+            sql = "SELECT * FROM Sys_Enum WHERE EnumKey IN ( SELECT No FROM Sys_EnumMain where NO IN (SELECT KeyOfEn from Sys_MapAttr WHERE FK_MapData LIKE 'ND" + flowID + "%' ) )";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_Enum";
             ds.Tables.Add(dt);
@@ -1085,7 +1070,6 @@ namespace BP.WF
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_FrmAttachment";
             ds.Tables.Add(dt);
-
 
             ds.WriteXml(path + this.Name + ".xml");
             return path;
@@ -2699,12 +2683,12 @@ namespace BP.WF
             Flow fl = new Flow();
             string oldFlowNo = dtFlow.Rows[0]["No"].ToString();
             int oldFlowID = int.Parse(oldFlowNo);
+            string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
+            int idx = 0;
             try
             {
                 fl.DoNewFlow();
-
                 int flowID = int.Parse(fl.No);
-
                 #region 处理流程表数据
                 foreach (DataColumn dc in dtFlow.Columns)
                 {
@@ -2760,9 +2744,7 @@ namespace BP.WF
                     {
                         case "WF_Flow": //模版文件。
                             continue;
-                        case "BillTemplates": //模版文件。
                         case "WF_BillTemplate":
-                        case "WF_BillTemplates":
                             foreach (DataRow dr in dt.Rows)
                             {
                                 BillTemplate bt = new BillTemplate();
@@ -2830,9 +2812,8 @@ namespace BP.WF
                                 cd.MyPK = DA.DBAccess.GenerOID().ToString();
                                 cd.Insert();
                             }
-
                             break;
-                        case "Directions": //FAppSets.xml。
+                        case "WF_Direction": //FAppSets.xml。
                             foreach (DataRow dr in dt.Rows)
                             {
                                 Direction dir = new Direction();
@@ -2882,7 +2863,7 @@ namespace BP.WF
                             }
 
                             break;
-                        case "FlowStations": //FlowStations.xml。
+                        case "WF_FlowStation": //FlowStations.xml。
                             foreach (DataRow dr in dt.Rows)
                             {
                                 FlowStation fs = new FlowStation();
@@ -2926,7 +2907,7 @@ namespace BP.WF
                                 //ln.InsertAsOID(ln.OID);
                             }
                             break;
-                        case "NodeDept": //FAppSets.xml。
+                        case "WF_NodeDept": //FAppSets.xml。
                             foreach (DataRow dr in dt.Rows)
                             {
                                 NodeDept dir = new NodeDept();
@@ -2990,7 +2971,8 @@ namespace BP.WF
                                 }
                             }
                             break;
-                        case "NodeStations": //FAppSets.xml。
+                        case "WF_NodeStation": //FAppSets.xml。
+                            DBAccess.RunSQL("DELETE WF_NodeStation where FK_Node IN (SELECT NodeID FROM WF_Node where FK_Flow='" + fl.No + "')");
                             foreach (DataRow dr in dt.Rows)
                             {
                                 NodeStation ns = new NodeStation();
@@ -3013,7 +2995,7 @@ namespace BP.WF
                                 ns.Insert();
                             }
                             break;
-                        case "Listens": // 信息侦听。
+                        case "WF_Listen": // 信息侦听。
                             foreach (DataRow dr in dt.Rows)
                             {
                                 Listen li = new Listen();
@@ -3059,35 +3041,31 @@ namespace BP.WF
                                 li.Insert();
                             }
                             break;
-                        case "RptAttrs": //LabNotes.xml。
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                RptAttr attr = new RptAttr();
-                                attr.FK_Node = fl.No;
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
-                                    {
-                                        case RptAttrAttr.FK_Node:
-                                            if (val.Length == 3)
-                                                val = flowID + val.Substring(1);
-                                            else if (val.Length == 4)
-                                                val = flowID + val.Substring(2);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    attr.SetValByKey(dc.ColumnName, val);
-                                }
-                                attr.MyPK = attr.FK_Node + "_" + attr.FK_Rpt + "_" + attr.RefAttrOID + "_" + attr.RefField;
-                                attr.Save();
-                            }
-
-                            break;
-                        case "RptStations": //RptEmps.xml。
-                        case "RptEmps": //RptEmps.xml。
-                            break;
+                        //case "RptAttrs": //LabNotes.xml。
+                        //    foreach (DataRow dr in dt.Rows)
+                        //    {
+                        //        RptAttr attr = new RptAttr();
+                        //        attr.FK_Node = fl.No;
+                        //        foreach (DataColumn dc in dt.Columns)
+                        //        {
+                        //            string val = dr[dc.ColumnName] as string;
+                        //            switch (dc.ColumnName)
+                        //            {
+                        //                case RptAttrAttr.FK_Node:
+                        //                    if (val.Length == 3)
+                        //                        val = flowID + val.Substring(1);
+                        //                    else if (val.Length == 4)
+                        //                        val = flowID + val.Substring(2);
+                        //                    break;
+                        //                default:
+                        //                    break;
+                        //            }
+                        //            attr.SetValByKey(dc.ColumnName, val);
+                        //        }
+                        //        attr.MyPK = attr.FK_Node + "_" + attr.FK_Rpt + "_" + attr.RefAttrOID + "_" + attr.RefField;
+                        //        attr.Save();
+                        //    }
+                        //    break;
                         case "Sys_Enum": //RptEmps.xml。
                             foreach (DataRow dr in dt.Rows)
                             {
@@ -3097,7 +3075,7 @@ namespace BP.WF
                                     string val = dr[dc.ColumnName] as string;
                                     switch (dc.ColumnName)
                                     {
-                                        case RptAttrAttr.FK_Node:
+                                        case "FK_Node":
                                             break;
                                         default:
                                             break;
@@ -3215,7 +3193,107 @@ namespace BP.WF
                                 md.Save();
                             }
                             break;
-                        case "WF_NodeEmps": //FAppSets.xml。
+                        case "Sys_FrmLine":
+                            idx = 0;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                idx++;
+                                FrmLine en = new FrmLine();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    switch (dc.ColumnName)
+                                    {
+                                        case Sys.MapDtlAttr.No:
+                                        case Sys.MapDtlAttr.FK_MapData:
+                                        case Sys.MapDtlAttr.PTable:
+                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    en.SetValByKey(dc.ColumnName, val);
+                                }
+                                en.MyPK = "Line" + timeKey + "_" + idx;
+                                en.Insert();
+                            }
+                            break;
+                        case "Sys_FrmLab":
+                            idx = 0;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                idx++;
+                                FrmLab en = new FrmLab();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    switch (dc.ColumnName)
+                                    {
+                                        case Sys.MapDtlAttr.No:
+                                        case Sys.MapDtlAttr.FK_MapData:
+                                        case Sys.MapDtlAttr.PTable:
+                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    en.SetValByKey(dc.ColumnName, val);
+                                }
+                                en.MyPK = "Lab" + timeKey + "_" + idx;
+                                en.Insert();
+                            }
+                            break;
+                        case "Sys_FrmLink":
+                            idx = 0;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                idx++;
+                                FrmLink en = new FrmLink();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    switch (dc.ColumnName)
+                                    {
+                                        case Sys.MapDtlAttr.No:
+                                        case Sys.MapDtlAttr.FK_MapData:
+                                        case Sys.MapDtlAttr.PTable:
+                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    en.SetValByKey(dc.ColumnName, val);
+                                }
+                                en.MyPK = "Link" + timeKey + "_" + idx;
+                                en.Insert();
+                            }
+                            break;
+                        case "Sys_FrmAttachment":
+                            idx = 0;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                idx++;
+                                FrmAttachment en = new FrmAttachment();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    switch (dc.ColumnName)
+                                    {
+                                        case Sys.MapDtlAttr.No:
+                                        case Sys.MapDtlAttr.FK_MapData:
+                                        case Sys.MapDtlAttr.PTable:
+                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    en.SetValByKey(dc.ColumnName, val);
+                                }
+                                en.MyPK = "Ath" + timeKey + "_" + idx;
+                                en.Insert();
+                            }
+                            break;
+                        case "WF_NodeEmp": //FAppSets.xml。
                             foreach (DataRow dr in dt.Rows)
                             {
                                 NodeEmp ne = new NodeEmp();
@@ -3236,35 +3314,6 @@ namespace BP.WF
                                     ne.SetValByKey(dc.ColumnName, val);
                                 }
                                 ne.Insert();
-                            }
-                            break;
-                        case "WFRpts": //RptEmps.xml。
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                WFRpt rpt = new WFRpt();
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
-                                    {
-                                        case WFRptAttr.FK_FlowSort:
-                                            val = fl.FK_FlowSort;
-                                            break;
-                                        case WFRptAttr.FK_Flow:
-                                            val = fl.No;
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    rpt.SetValByKey(dc.ColumnName, val);
-                                }
-                                try
-                                {
-                                    rpt.Save();
-                                }
-                                catch
-                                {
-                                }
                             }
                             break;
                         case "Sys_GroupField": // 
@@ -3643,9 +3692,9 @@ namespace BP.WF
             // 删除配置.
             sql += "@GO DELETE WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
 
-            // 删除报表
-            WFRpts rpts = new WFRpts(this.No);
-            rpts.Delete();
+            //// 删除报表
+            //WFRpts rpts = new WFRpts(this.No);
+            //rpts.Delete();
 
             // 外部程序设置
             sql += "@GO DELETE  FROM  WF_FAppSet WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";

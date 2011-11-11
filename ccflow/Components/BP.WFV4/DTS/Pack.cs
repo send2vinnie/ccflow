@@ -75,7 +75,6 @@ namespace BP.WF
             dtls.RetrieveAll();
             foreach (MapDtl dtl in dtls)
             {
-
                 MapData md = new MapData();
                 md.No = dtl.No;
                 if (md.RetrieveFromDBSources() == 0)

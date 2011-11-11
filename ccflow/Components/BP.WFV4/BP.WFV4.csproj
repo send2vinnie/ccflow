@@ -139,15 +139,13 @@
     <Compile Include="CH\CHOfFlowRpt.cs" />
     <Compile Include="CH\CHOfNode.cs" />
     <Compile Include="Dev2Interface\BtnState.cs" />
-    <Compile Include="DTS\DTSLog.cs">
+    <Compile Include="DTS\Pack.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DTS\WFDTS.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DTS\ClearDB.cs" />
-    <Compile Include="DTS\Pack.cs" />
-    <Compile Include="DTS\DTSCHOfNode.cs" />
     <Compile Include="DTS\RepariNodeFrmMap.cs" />
     <Compile Include="FlowDesc\Condition\Cond.cs" />
     <Compile Include="FlowDesc\Condition\TurnTo.cs" />
@@ -155,12 +153,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FlowDesc\FlowEmp.cs" />
-    <Compile Include="FlowDesc\FlowExt\Exp.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FlowDesc\FlowExt\ExpDtl.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="FlowDesc\FlowNode.cs" />
     <Compile Include="FlowDesc\Frm.cs" />
     <Compile Include="FlowDesc\FrmSort.cs" />
@@ -169,10 +161,6 @@
     <Compile Include="FlowDesc\FlowDescExt\FlowDoc.cs" />
     <Compile Include="FlowDesc\FlowDescExt\FlowSheet.cs" />
     <Compile Include="FlowDesc\FlowDescExt\NodeO.cs" />
-    <Compile Include="FlowDesc\FlowExt\RptStation.cs" />
-    <Compile Include="FlowDesc\FlowExt\WFRpt.cs" />
-    <Compile Include="FlowDesc\FlowExt\RptAttr.cs" />
-    <Compile Include="FlowDesc\FlowExt\RptEmp.cs" />
     <Compile Include="FlowDesc\LabNote.cs" />
     <Compile Include="FlowDesc\FAppSet.cs" />
     <Compile Include="FlowDesc\NodeEmp.cs" />
@@ -287,6 +275,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\" />
+    <Folder Include="FlowDesc\FlowExt\" />
     <Folder Include="FlowDesc\WorkBase\CheckWork\" />
     <Folder Include="WF\DTS\" />
     <Folder Include="Xml\db\" />
