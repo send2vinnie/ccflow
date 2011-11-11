@@ -10,13 +10,13 @@
   <Tab No="GovDoc" Name="电子公文" />
   <Group No="Oper" Name="基础操作"  FK_Tab="GovDoc" ShowType="1" Desc="" />
   <Item No="Start" Name="拟定公文" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=Start" Icon="1" Width="600" Height="400" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
-  <Item No="Send" Name="签发" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=Send" Icon="1" Width="700" Height="500" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
-  <Item No="Return" Name="退签" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=Return" Width="550" Height="450" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
-  <Item No="FW" Name="工作转发" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=FW" Width="550" Height="450" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
-  <Item No="UnSend" Name="撤消签发" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=UnSend" Width="600" Height="400" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
-  <Item No="Rpt" Name="流程监控" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=Rpt" Width="800" Height="700" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
+  <Item No="Send" Name="发送" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=Send" Icon="1" Width="700" Height="500" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
+  <Item No="Return" Name="退回" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=Return" Width="550" Height="450" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
+  <Item No="FW" Name="移交" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=FW" Width="550" Height="450" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
+  <Item No="UnSend" Name="撤消发送" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=UnSend" Width="600" Height="400" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
+  <Item No="Rpt" Name="流程轨迹" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=Rpt" Width="800" Height="700" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
   <Item No="Del" Name="删除流程" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=DelFlow" Width="10" Height="10" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
-  <Item No="History" Name="历史活动" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=History" Icon="0" Width="600" Height="400" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
+  <Item No="Ath" Name="附件" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=Ath" Width="10" Height="10" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
   <Item No="Save" Name="保存到网络" DoType="RunFunc"  Tag="" Width="400" Height="300" FK_Group="Oper" CtlType="Btn" WinModel="Dilg"   Desc=""/>
 
   <Group No="Doc" Name="电子公文"  FK_Tab="GovDoc" ShowType="1" Desc="" />
@@ -38,5 +38,4 @@
   <Item No="ReLogin" Name="切换用户" DoType="RunFunc"  Tag="" Width="800" Height="700" FK_Group="Help" CtlType="Btn" WinModel="Dilg"   Desc=""/>
   <Item No="LogOut" Name="注销" DoType="RunFunc"  Tag="" Width="800" Height="700" FK_Group="Help" CtlType="Btn" WinModel="Dilg"   Desc=""/>
   <Item No="WKInfo" Name="测试" DoType="RunFunc"  Tag="" Width="800" Height="700" FK_Group="Help" CtlType="Btn" WinModel="Dilg"   Desc=""/>
- 
 </DataSet>
