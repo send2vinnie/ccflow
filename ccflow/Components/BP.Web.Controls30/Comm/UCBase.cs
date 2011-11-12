@@ -1752,7 +1752,6 @@ namespace BP.Web.UC
         public void AddCaptionLeftTX2(string str)
         {
             string table = "<table class='Caption' width='1px' border=0><tr><td nowrap=true >" + str + "</td></tr></table>";
-
             this.Add("\n<Caption class='Caption' align=left >" + str + "</Caption>");
         }
         public void AddTDTitle(string attr, System.Web.UI.Control ctl)
