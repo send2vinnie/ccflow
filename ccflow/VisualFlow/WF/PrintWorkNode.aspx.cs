@@ -43,6 +43,5 @@ public partial class WF_PrintWorkNode : BP.Web.WebPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
 }

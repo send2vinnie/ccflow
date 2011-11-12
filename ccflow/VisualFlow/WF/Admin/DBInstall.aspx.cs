@@ -77,6 +77,10 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     sql = "CREATE VIEW  WF_EmpWorks AS SELECT     A.WorkID, A.Rec AS Starter,A.RecName as StarterName, A.FK_Flow, A.FlowName,B.FK_Node, B.FK_NodeText AS NodeName, A.Title, A.RDT, B.RDT AS ADT, B.SDT, B.FK_Emp,B.FK_EmpText, B.FID ,A.FK_FlowSort FROM  WF_GenerWorkFlow A, WF_GenerWorkerList B WHERE     (B.IsEnable = 1) AND (B.IsPass = 0) AND A.WorkID = B.WorkID AND A.FK_Node = B.FK_Node ";
                     BP.DA.DBAccess.RunSQLs(sql);
 
+                    // 更新老版本的字段长度。
+                    sql = "ALTER   TABLE  WF_Track   ALTER COLUMN RDT varchar(20)";
+                    BP.DA.DBAccess.RunSQLs(sql);
+
                     string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
                     BP.DA.DBAccess.RunSQLScript(scrpts);
                 }

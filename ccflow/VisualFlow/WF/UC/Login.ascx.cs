@@ -51,6 +51,11 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
         this.AddTREnd();
 
+        this.AddTR();
+        this.Add("<TD class=BigDoc align=left colspan=" + colspan + "><img src='./Img/Login.gif' > <b>系统登陆</b></TD>");
+        this.AddTREnd();
+
+
         //this.AddTR();
         //this.Add("<TD class=BigDoc align=left colspan=" + colspan + "><img src='./Img/Login.gif' > <b>" + this.ToE("Login", "系统登陆") + "</b> " + this.ToE("PlsChoseLang", "请选择系统支持的语言") + "</TD>");
         //this.AddTREnd();
@@ -85,7 +90,6 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         tb.ID = "TB_User";
         tb.Text = BP.Web.WebUser.No;
         tb.Columns = 20;
-        //   tb.Attributes["class"] = "TB";
 
         this.AddTD(tb);
         this.AddTREnd();

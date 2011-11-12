@@ -12,8 +12,6 @@
     function To(url) {
         window.location.href = url;
     }
-
-    
 </script>
 
 <script language="javascript">
@@ -53,6 +51,7 @@
         // WinOpen(url);
     }
 </script>
+
 <style type="text/css">
 .Bar
 {
