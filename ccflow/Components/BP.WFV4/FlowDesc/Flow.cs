@@ -325,6 +325,19 @@ namespace BP.WF
             int num = wk.Retrieve(StartWorkAttr.NodeState, 0,
                 StartWorkAttr.Rec, WebUser.No);
 
+            if (SystemConfig.IsBSsystem)
+            {
+
+                if (System.Web.HttpContext.Current.Request.QueryString["IsDeleteDraft"] == "1")
+                {
+                    /*是否要删除Draft */
+                    Int64 oid = wk.OID;
+                    if (num != 0)
+                        wk.ResetDefaultVal();
+                    wk.OID = oid;
+                }
+            }
+
             try
             {
                 if (num == 0)
@@ -868,22 +881,23 @@ namespace BP.WF
             if (System.IO.Directory.Exists(path) == false)
                 System.IO.Directory.CreateDirectory(path);
 
+            // 把所有的数据都存储在这里。
             DataSet ds = new DataSet();
 
-            // 把流程信息生成一个文件。
-            Flows fls = new Flows();
-            fls.AddEntity(this);
-
-            // fls.SaveToXml(path + "Flow.xml");
-            ds.Tables.Add(fls.ToDataTableField("WF_Flow"));
+            // 流程信息。
+            string sql = "SELECT * FROM WF_Flow WHERE No='"+this.No+"'";
+            DataTable dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "WF_Flow";
+            ds.Tables.Add(dt);
 
             // 节点信息
-            Nodes nds = this.HisNodes;
-            ds.Tables.Add(nds.ToDataTableField("WF_Node"));
+            sql = "SELECT * FROM WF_Node WHERE FK_Flow='" + this.No + "'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "WF_Node";
+            ds.Tables.Add(dt);
 
             // 文书信息
             BillTemplates tmps = new BillTemplates(this.No);
-            //tmps.SaveToXml(path + "BillTemplates.xml");
             string pks = "";
             foreach (BillTemplate tmp in tmps)
             {
@@ -901,20 +915,23 @@ namespace BP.WF
             ds.Tables.Add(tmps.ToDataTableField("WF_BillTemplate"));
 
             // 条件信息
-            Conds cds = new Conds(this.No);
-            ds.Tables.Add(cds.ToDataTableField("WF_Cond"));
+            sql = "SELECT * FROM WF_Cond WHERE FK_Flow='" + this.No + "'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "WF_Cond";
+            ds.Tables.Add(dt);
 
             // 方向
             string sqlin = "SELECT NodeID FROM WF_Node WHERE fk_flow='" + this.No + "'";
-            string sql = "select * from WF_Direction where Node IN (" + sqlin + ") OR ToNode In (" + sqlin + ")";
-            DataTable dt = DBAccess.RunSQLReturnTable(sql);
+            sql = "select * from WF_Direction where Node IN (" + sqlin + ") OR ToNode In (" + sqlin + ")";
+            dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "WF_Direction";
             ds.Tables.Add(dt);
 
             // 应用设置 FAppSet
-            FAppSets sets = new FAppSets(this.No);
-            //sets.SaveToXml(path + "FAppSets.xml");
-            ds.Tables.Add(sets.ToDataTableField("WF_FAppSet"));
+            sql = "SELECT * FROM WF_FAppSet WHERE FK_Flow='" + this.No + "'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "WF_FAppSet";
+            ds.Tables.Add(dt);
 
             // 流程发送完后抄送到岗位 
             FlowStations fstas = new FlowStations(this.No);
@@ -2692,6 +2709,8 @@ namespace BP.WF
             int oldFlowID = int.Parse(oldFlowNo);
             string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
             int idx = 0;
+            string infoErr = "";
+            string infoTable = "";
             try
             {
                 fl.DoDelData();
@@ -2719,7 +2738,6 @@ namespace BP.WF
                 fl.Save();
                 #endregion 处理流程表数据
 
-                string msg = "";
 
                 #region 处理OID 插入重复的问题。 Sys_GroupField ， Sys_MapAttr.
                 DataTable mydtGF = ds.Tables["Sys_GroupField"];
@@ -2749,6 +2767,7 @@ namespace BP.WF
 
                 foreach (DataTable dt in ds.Tables)
                 {
+                    infoTable = "@导入:" + dt.TableName + " 出现异常。";
                     switch (dt.TableName)
                     {
                         case "WF_Flow": //模版文件。
@@ -2760,6 +2779,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case "FK_Flow":
@@ -2790,7 +2812,7 @@ namespace BP.WF
                                 }
                                 catch (Exception ex)
                                 {
-                                    msg += "@恢复单据模板时出现错误：" + ex.Message + ",有可能是您在复制流程模板时没有复制同目录下的单据模板文件。";
+                                    infoErr += "@恢复单据模板时出现错误：" + ex.Message + ",有可能是您在复制流程模板时没有复制同目录下的单据模板文件。";
                                 }
                                 bt.Insert();
                             }
@@ -2803,6 +2825,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case "ToNodeID":
@@ -2829,6 +2854,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case "Node":
@@ -2854,6 +2882,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case "FK_Node":
@@ -2867,10 +2898,9 @@ namespace BP.WF
                                     }
                                     fs.SetValByKey(dc.ColumnName, val);
                                 }
-                                fs.OID = DA.DBAccess.GenerOID();
+                                fs.OID = 0;
                                 fs.Insert();
                             }
-
                             break;
                         case "WF_FlowStation": //FlowStations.xml。
                             foreach (DataRow dr in dt.Rows)
@@ -2880,6 +2910,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case FlowStationAttr.FK_Flow:
@@ -2901,6 +2934,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case LabNoteAttr.FK_Flow:
@@ -2912,8 +2948,6 @@ namespace BP.WF
                                 }
                                 ln.MyPK = ln.FK_Flow + "_" + ln.X + "_" + ln.Y;
                                 ln.DirectInsert();
-                                //ln.OID = DA.DBAccess.GenerOID();
-                                //ln.InsertAsOID(ln.OID);
                             }
                             break;
                         case "WF_NodeDept": //FAppSets.xml。
@@ -2923,6 +2957,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case "FK_Node":
@@ -2943,11 +2980,14 @@ namespace BP.WF
                         case "WF_Node": //LabNotes.xml。
                             foreach (DataRow dr in dt.Rows)
                             {
-                                Node nd = new Node();
+                                BP.WF.Ext.NodeO nd = new BP.WF.Ext.NodeO();
                                 nd.FK_Flow = fl.No;
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case NodeAttr.NodeID:
@@ -2979,6 +3019,40 @@ namespace BP.WF
                                     nd.DirectUpdate();
                                 }
                             }
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                Node nd = new Node();
+                                nd.FK_Flow = fl.No;
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
+                                    switch (dc.ColumnName)
+                                    {
+                                        case NodeAttr.NodeID:
+                                            if (val.Length == 3)
+                                                val = flowID + val.Substring(1);
+                                            else if (val.Length == 4)
+                                                val = flowID + val.Substring(2);
+                                            break;
+                                        case NodeAttr.FK_Flow:
+                                        case "FK_FlowSort":
+                                            continue;
+                                        case NodeAttr.ShowSheets:
+                                        case NodeAttr.HisToNDs:
+                                        case NodeAttr.GroupStaNDs:
+                                            string key = "@" + flowID;
+                                            val = val.Replace(key, "");
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    nd.SetValByKey(dc.ColumnName, val);
+                                }
+                                nd.Update();
+                            }
                             break;
                         case "WF_NodeStation": //FAppSets.xml。
                             DBAccess.RunSQL("DELETE WF_NodeStation where FK_Node IN (SELECT NodeID FROM WF_Node where FK_Flow='" + fl.No + "')");
@@ -2988,6 +3062,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case "FK_Node":
@@ -3011,6 +3088,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case "OID":
@@ -3031,6 +3111,7 @@ namespace BP.WF
                                                     continue;
 
                                                 string ndExt = nd.Clone() as string;
+                                                
 
                                                 if (ndExt.Length == 3)
                                                     ndExt = flowID + ndExt.Substring(1);
@@ -3050,31 +3131,6 @@ namespace BP.WF
                                 li.Insert();
                             }
                             break;
-                        //case "RptAttrs": //LabNotes.xml。
-                        //    foreach (DataRow dr in dt.Rows)
-                        //    {
-                        //        RptAttr attr = new RptAttr();
-                        //        attr.FK_Node = fl.No;
-                        //        foreach (DataColumn dc in dt.Columns)
-                        //        {
-                        //            string val = dr[dc.ColumnName] as string;
-                        //            switch (dc.ColumnName)
-                        //            {
-                        //                case RptAttrAttr.FK_Node:
-                        //                    if (val.Length == 3)
-                        //                        val = flowID + val.Substring(1);
-                        //                    else if (val.Length == 4)
-                        //                        val = flowID + val.Substring(2);
-                        //                    break;
-                        //                default:
-                        //                    break;
-                        //            }
-                        //            attr.SetValByKey(dc.ColumnName, val);
-                        //        }
-                        //        attr.MyPK = attr.FK_Node + "_" + attr.FK_Rpt + "_" + attr.RefAttrOID + "_" + attr.RefField;
-                        //        attr.Save();
-                        //    }
-                        //    break;
                         case "Sys_Enum": //RptEmps.xml。
                             foreach (DataRow dr in dt.Rows)
                             {
@@ -3105,6 +3161,8 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
                                     sem.SetValByKey(dc.ColumnName, val);
                                 }
 
@@ -3145,14 +3203,11 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
-                                    {
-                                        case Sys.MapDataAttr.No:
-                                            val = val.Replace("ND" + oldFlowID, "ND" + int.Parse(fl.No));
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                    if (val == null)
+                                        continue;
+
+                                    val = val.Replace("ND" + oldFlowID, "ND" + int.Parse(fl.No));
+
                                     md.SetValByKey(dc.ColumnName, val);
                                 }
                                 md.Save();
@@ -3165,16 +3220,11 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
-                                    {
-                                        case Sys.MapDtlAttr.No:
-                                        case Sys.MapDtlAttr.FK_MapData:
-                                        case Sys.MapDtlAttr.PTable:
-                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                    if (val == null)
+                                        continue;
+
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+
                                     md.SetValByKey(dc.ColumnName, val);
                                 }
                                 md.Save();
@@ -3187,16 +3237,10 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
-                                    {
-                                        case Sys.MapDtlAttr.No:
-                                        case Sys.MapDtlAttr.FK_MapData:
-                                        case Sys.MapDtlAttr.PTable:
-                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                    if (val == null)
+                                        continue;
+
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
                                     md.SetValByKey(dc.ColumnName, val);
                                 }
                                 md.Save();
@@ -3211,16 +3255,10 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
-                                    {
-                                        case Sys.MapDtlAttr.No:
-                                        case Sys.MapDtlAttr.FK_MapData:
-                                        case Sys.MapDtlAttr.PTable:
-                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                    if (val == null)
+                                        continue;
+
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
                                     en.SetValByKey(dc.ColumnName, val);
                                 }
                                 en.MyPK = "Line" + timeKey + "_" + idx;
@@ -3236,16 +3274,10 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
-                                    {
-                                        case Sys.MapDtlAttr.No:
-                                        case Sys.MapDtlAttr.FK_MapData:
-                                        case Sys.MapDtlAttr.PTable:
-                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                    if (val == null)
+                                        continue;
+
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
                                     en.SetValByKey(dc.ColumnName, val);
                                 }
                                 en.MyPK = "Lab" + timeKey + "_" + idx;
@@ -3261,16 +3293,10 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
-                                    {
-                                        case Sys.MapDtlAttr.No:
-                                        case Sys.MapDtlAttr.FK_MapData:
-                                        case Sys.MapDtlAttr.PTable:
-                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                    if (val == null)
+                                        continue;
+
                                     en.SetValByKey(dc.ColumnName, val);
                                 }
                                 en.MyPK = "Link" + timeKey + "_" + idx;
@@ -3286,20 +3312,14 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
-                                    {
-                                        case Sys.MapDtlAttr.No:
-                                        case Sys.MapDtlAttr.FK_MapData:
-                                        case Sys.MapDtlAttr.PTable:
-                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                    if (val == null)
+                                        continue;
+
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
                                     en.SetValByKey(dc.ColumnName, val);
                                 }
-                                en.MyPK = "Ath" + timeKey + "_" + idx;
-                                en.Insert();
+                                en.MyPK = en.FK_MapData + "_" + en.NoOfAth;
+                                en.Save();
                             }
                             break;
                         case "Sys_FrmEvent": //事件.
@@ -3311,6 +3331,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     val = val.Replace("ND" + oldFlowID, "ND" + flowID);
                                     en.SetValByKey(dc.ColumnName, val);
                                 }
@@ -3324,6 +3347,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case "FK_Node":
@@ -3346,8 +3372,10 @@ namespace BP.WF
                                 Sys.GroupField gf = new Sys.GroupField();
                                 foreach (DataColumn dc in dt.Columns)
                                 {
-
                                     string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
                                     switch (dc.ColumnName)
                                     {
                                         case Sys.GroupFieldAttr.EnName:
@@ -3366,7 +3394,7 @@ namespace BP.WF
                             }
                             break;
                         default:
-                            msg += "Error:" + dt.TableName;
+                            infoErr += "Error:" + dt.TableName;
                             break;
                         //    throw new Exception("@unhandle named " + dt.TableName);
                     }
@@ -3378,17 +3406,17 @@ namespace BP.WF
                 DBAccess.RunSQL("DELETE FROM WF_Cond WHERE NodeID NOT IN (SELECT NodeID FROM WF_Node)");
                 #endregion
 
-                if (msg == "")
+                if (infoErr == "")
                     return fl; // "完全成功。";
 
-                msg = "执行期间出现如下非致命的错误：\t\r" + msg;
+                infoErr = "执行期间出现如下非致命的错误：\t\r" + infoErr + "@ " + infoTable;
                 fl.DoCheck();
-                throw new Exception(msg);
+                throw new Exception(infoErr);
             }
             catch (Exception ex)
             {
                 fl.DoDelete();
-                throw ex;
+                throw new Exception("@" + infoErr + " @table=" + infoTable + "@" + ex.Message);
             }
         }
         public Node DoNewNode(int x, int y)
