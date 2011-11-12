@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="DTS\ClearDB.cs" />
     <Compile Include="DTS\RepariNodeFrmMap.cs" />
+    <Compile Include="DTS\RepariMapAttrMinLen.cs" />
     <Compile Include="FlowDesc\Condition\Cond.cs" />
     <Compile Include="FlowDesc\Condition\TurnTo.cs" />
     <Compile Include="FlowDesc\FlowDescExt\BtnLab.cs">
@@ -268,12 +269,6 @@
     <Compile Include="Xml\WatchDogXml.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BP.En30\BP.En30.csproj">
-      <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
-      <Name>BP.En30</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="App\" />
     <Folder Include="FlowDesc\FlowExt\" />
     <Folder Include="FlowDesc\WorkBase\CheckWork\" />
@@ -296,6 +291,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BP.En30\BP.En30.csproj">
+      <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
+      <Name>BP.En30</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
