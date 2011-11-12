@@ -916,7 +916,6 @@ namespace BP.WF
             //sets.SaveToXml(path + "FAppSets.xml");
             ds.Tables.Add(sets.ToDataTableField("WF_FAppSet"));
 
-
             // 流程发送完后抄送到岗位 
             FlowStations fstas = new FlowStations(this.No);
             ds.Tables.Add(fstas.ToDataTableField("WF_FlowStation"));
@@ -1069,6 +1068,12 @@ namespace BP.WF
             sql = "SELECT * FROM Sys_FrmAttachment WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_FrmAttachment";
+            ds.Tables.Add(dt);
+
+            // Sys_FrmEvent.
+            sql = "SELECT * FROM Sys_FrmEvent WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_FrmEvent";
             ds.Tables.Add(dt);
 
             ds.WriteXml(path + this.Name + ".xml");
@@ -3295,6 +3300,21 @@ namespace BP.WF
                                 }
                                 en.MyPK = "Ath" + timeKey + "_" + idx;
                                 en.Insert();
+                            }
+                            break;
+                        case "Sys_FrmEvent": //事件.
+                            idx = 0;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                idx++;
+                                FrmEvent en = new FrmEvent();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                    en.SetValByKey(dc.ColumnName, val);
+                                }
+                                en.Save();
                             }
                             break;
                         case "WF_NodeEmp": //FAppSets.xml。
