@@ -253,15 +253,15 @@ namespace BP.WF
     public enum FormType
     {
         /// <summary>
-        /// system form.
+        /// 傻瓜表单.
         /// </summary>
         FixForm = 0,
         /// <summary>
-        /// system form.
+        /// 自由表单.
         /// </summary>
         FreeForm = 1,
         /// <summary>
-        /// self form.
+        /// 自定义表单.
         /// </summary>
         SelfForm = 2,
         /// <summary>
