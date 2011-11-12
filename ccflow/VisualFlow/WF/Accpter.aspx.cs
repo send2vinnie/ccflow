@@ -67,10 +67,11 @@ public partial class WF_Accpter : WebPage
             throw new Exception("@流程设计错误：设计员没有设计节点[" + toNd.Name + "]，接受人的岗位范围。");
         }
 
-        string sql = "SELECT No,Name,FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
+        string sql = "SELECT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
         sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
         sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
         sql += ") ORDER BY FK_DEPT ";
+
         return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }
     private BP.WF.Node _HisNode = null;
@@ -241,7 +242,7 @@ public partial class WF_Accpter : WebPage
                 this.Pub1.AddTRSum();
                 fk_dept = dr["FK_Dept"].ToString();
                 string deptName = dr["DeptName"].ToString();
-                this.Pub1.AddTD("colspan=5 class=FDesc", "<a name='d" + dept.No + "' >" + deptName + "</a>");
+                this.Pub1.AddTD("colspan=5 aligen=left  class=FDesc ", "<a name='d" + dept.No + "' >" + deptName + "</a>");
                 this.Pub1.AddTREnd();
                 is1 = false;
                 idx = 0;

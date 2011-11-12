@@ -86,7 +86,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                         break;
                     default:
                         throw new Exception("为考虑的类型" + this.FType);
-                        break;
                 }
                 break;
             default:
@@ -150,7 +149,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             this.Pub1.AddTREnd();
         }
 
-
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("FEName", "字段英文名称"));
@@ -161,11 +159,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             tb.Enabled = false;
 
        tb.Attributes["onkeyup"] = "return IsDigit(this);";
-
-      // tb.Attributes["onblur"] = "return IsDigit(this.value);";
-      //tb.Attributes["onblur"] = "return IsDigit(this);"; onkeyup="value=value.replace(/[^\uFF00-\uFFFF]/g,'')" 
-     //  tb.Attributes["onkeyup"] = " value=value.replace(/^[a-zA-Z][a-zA-Z0-9_]*$/g,'');";
-        //onkeyup="value=value.replace(/[^\uFF00-\uFFFF]/g,'')" 
+         
 
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD(this.ToE("FENameD", "字母或者字母数字组合"));
@@ -481,13 +475,13 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         }
 
         string url = "Do.aspx?DoType=AddF&MyPK=" + mapAttr.FK_MapData + "&IDX=" + mapAttr.IDX;
-        btn = new Btn();
+        btn = new Button();
         btn.ID = "Btn_New";
         btn.Text = this.ToE("New", "新建");
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
-        btn = new Btn();
+        btn = new Button();
         btn.ID = "Btn_Back";
         btn.Text = this.ToE("Back", "返回");
         btn.Click += new EventHandler(btn_Click);
