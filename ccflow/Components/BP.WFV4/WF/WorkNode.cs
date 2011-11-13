@@ -1583,6 +1583,7 @@ namespace BP.WF
                 wl.RDT = DateTime.Now.ToString(DataType.SysDataTimeFormat);
                 wl.FK_Flow = town.HisNode.FK_Flow;
                 wl.FID = town.HisWork.FID;
+                wl.Sender = WebUser.No;
                 //if (wl.FID == 0)
                 //    wl.FID = this.WorkID;
 
@@ -1657,6 +1658,8 @@ namespace BP.WF
                         wl.RDT = DateTime.Now.ToString(DataType.SysDataTimeFormat);
                         wl.FK_Flow = town.HisNode.FK_Flow;
                         wl.FID = town.HisWork.FID;
+                        wl.Sender = WebUser.No;
+
 
                         //if (wl.FID == 0)
                         //    wl.FID = this.WorkID;
@@ -1709,6 +1712,8 @@ namespace BP.WF
                         wl.RDT = DateTime.Now.ToString(DataType.SysDataTimeFormat);
                         wl.FK_Flow = town.HisNode.FK_Flow;
                         wl.FID = town.HisWork.FID;
+                        wl.Sender = WebUser.No;
+
                         try
                         {
                             if (town.HisNode.IsFLHL == false)
@@ -2025,6 +2030,16 @@ namespace BP.WF
 
             return null;
         }
+        private Flow _HisFlow = null;
+        public Flow HisFlow
+        {
+            get
+            {
+                if (_HisFlow == null)
+                    _HisFlow = this.HisNode.HisFlow;
+                return _HisFlow;
+            }
+        }
         /// <summary>
         /// 解决流程回滚的问题
         /// </summary>
@@ -2041,7 +2056,7 @@ namespace BP.WF
             #region 发送前的逻辑检查
             try
             {
-                this.HisWork.BeforeSend();  //发送前作逻辑检查
+                this.HisWork.BeforeSend();  //发送前作逻辑检查.
             }
             catch (Exception ex)
             {
@@ -2725,6 +2740,8 @@ namespace BP.WF
             {
                 if (this.HisNode.IsStartNode)
                 {
+                   
+
                     this.InitStartWorkData();
                     this.rptGe = this.HisNode.HisFlow.HisFlowData;
                     rptGe.SetValByKey("OID", this.WorkID);
@@ -2735,6 +2752,7 @@ namespace BP.WF
                     rptGe.SetValByKey(GERptAttr.WFState, 0);
                     rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
                     rptGe.Copy(this.HisWork);
+ 
                 }
                 else
                 {
