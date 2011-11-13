@@ -46,7 +46,10 @@ namespace BP.WF.XML
         {
             get
             {
-                return this.GetValStringByKey("Url");
+                 string url=this.GetValStringByKey("Url");
+                 if (url == "")
+                     url = "javascript:" + this.GetValStringByKey("OnClick") ;
+                 return url;
             }
         }
 		#endregion

@@ -1802,7 +1802,6 @@ namespace BP.WF
             {
                 this.AddToTrack(at, wl.FK_Emp, wl.FK_EmpText, wl.FK_Node, wl.FK_NodeText, null);
             }
-
             return this.HisWorkerLists;
         }
         #endregion
