@@ -212,10 +212,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// </summary>
         private void Btn_DesignerFlowFrm()
         {
-            WF.FlowFrm ff = new WF.FlowFrm();
-            ff.FK_Flow = _container.FlowID;
-            ff.FK_Node = int.Parse(RelatedFlowNode.FlowNodeID);
-            ff.Show();
+            //WF.FlowFrm ff = new WF.FlowFrm();
+            //ff.FK_Flow = _container.FlowID;
+            //ff.FK_Node = int.Parse(RelatedFlowNode.FlowNodeID);
+            //ff.Show();
         }
         //private void btnNodeFreeFrm()
         //{

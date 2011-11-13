@@ -98,9 +98,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             ws = new WSDesignerSoapClient();
             ws.DoTypeAsync("InitDesignerXml", null, null, null, null, null);
             ws.DoTypeCompleted += ws_DoTypeCompleted;
+            
+            Application.Current.Host.Content.Resized += new EventHandler(Content_Resized);
 
         }
 
+        #endregion
+
+        #region 方法
+
+       
         void ws_GetCustomerIdCompleted(object sender, DoCompletedEventArgs e)
         {
             var id = e.Result;
@@ -205,27 +212,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
 
  
-        #endregion
-
-        #region 方法
-        /// <summary>
-        /// 语言设置
-        /// </summary>
-        private void applyContainerCulture()
-        {
-        }
-
-        /// <summary>
-        /// 语言设置
-        /// </summary>
-        public void ApplyCulture()
-        {
-            applyContainerCulture();
-
-            //siFlowNodeSetting.ApplyCulture();
-            //siDirectionSetting.ApplyCulture();
-        }
-
         #region Flow CRUD related
 
         /// <summary>
@@ -967,7 +953,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
-            ApplyCulture();
             try
             {
                 LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
@@ -983,9 +968,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
 
-        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Content_Resized(object sender, EventArgs e)
         {
-            MuFlowTree.Hide();
+            LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
+            TbcFDS.Height = LayoutRoot.Height - 75;
+            TvwFlow.Height = Application.Current.Host.Content.ActualHeight - 35 - 100;
+            tbDesigner.Height = Application.Current.Host.Content.ActualHeight - 35;
+            tbDesigner.Width = Application.Current.Host.Content.ActualWidth - 227;
         }
 
         private void TbcFDS_MouseLeave(object sender, MouseEventArgs e)
@@ -1038,6 +1027,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             switch (control.Name)
             {
+                case "Btn_ToolBarLogin":
+                    var client = new WSDesignerSoapClient();
+                    client.GetRelativeUrlCompleted += client_GetRelativeUrlCompleted;
+                    client.GetRelativeUrlAsync("CN", "LoginPage", string.Empty, string.Empty, string.Empty, true);
+                    break;
                 case "Btn_ToolBarNewNode":
                     if (SelectedContainer != null)
                     {
@@ -1106,6 +1100,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     releaseToFtp();
                     break;
             }
+        }
+
+        void client_GetRelativeUrlCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
+        {
+            string suburl = HtmlPage.Document.DocumentUri.ToString();
+            string url = suburl.Substring(0, suburl.LastIndexOf('/'));
+            OpenWindow(url + e.Result, title, 600,1024);
+
         } 
         #endregion
 
@@ -1141,6 +1143,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
 
         #region UserControl Related 
+
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MuFlowTree.Hide();
+        }
         /// <summary>
         ///  diable the default silverlight rightmenu
         /// </summary>
@@ -1158,14 +1165,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += DoubleClick_Timer;
-            ApplyCulture();
             try
             {
-                LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
-                TbcFDS.Height = LayoutRoot.Height - 75;
-                TvwFlow.Height = Application.Current.Host.Content.ActualHeight - 35 - 100;
-                tbDesigner.Height = Application.Current.Host.Content.ActualHeight - 35;
-                tbDesigner.Width = Application.Current.Host.Content.ActualWidth - 227;
+                Content_Resized(null,null);
             }
             catch
             {

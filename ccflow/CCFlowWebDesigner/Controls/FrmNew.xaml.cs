@@ -163,6 +163,12 @@ namespace WF.Controls
         
         void _Service_UploadfileCompleted(object sender, UploadfileCompletedEventArgs e)
         {
+            if (e.Result.Contains("Error:"))
+            {
+                loadingWindow.Close();
+                MessageBox.Show(e.Result, "Error", MessageBoxButton.OK);
+                return;
+            }
             _service.FlowTemplete_LoadCompleted += _service_FlowTemplete_LoadCompleted;
             _service.FlowTemplete_LoadAsync((cbxFlowSortImport.SelectedItem as BindableObject).GetValue("NO"), e.Result, true);
 

@@ -610,7 +610,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             else
             {
                 _Service.DoAsync("NewFlow", null, true);
-            } _Service.DoCompleted += new EventHandler<DoCompletedEventArgs>(_service_DoCompleted);
+            } 
+            _Service.DoCompleted += _service_DoCompleted;
             //_Service.GetFlowSortAsync();
         }
 
@@ -1034,11 +1035,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             SaveChange(HistoryType.New);
         }
 
-        void display(string xml)
-        {
-            LoadFromXmlString(xml);
-            SaveChange(HistoryType.New);
-        }
+       
 
         public void AddFlowNode(FlowNode a)
         {
@@ -1912,7 +1909,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
              foreach (FlowNode bfn in FlowNodeCollections)
             {
-
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {

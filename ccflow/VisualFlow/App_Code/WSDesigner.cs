@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
+using System.ServiceModel;
 using System.Web;
 using System.Web.Services;
 using BP;
+using BP.DA;
 using BP.WF;
 using BP.En;
 using BP.Port;
@@ -16,8 +19,6 @@ using System.IO;
 
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-//若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消对下行的注释。 
-// [System.Web.Script.Services.ScriptService]
 public class WSDesigner : WSBase
 {
     /// <summary>
@@ -93,21 +94,32 @@ public class WSDesigner : WSBase
     /// 让admin 登录
     /// </summary>
     /// <param name="lang">当前的语言</param>
+    /// <returns>成功则为空，有异常时返回异常信息</returns>
     [WebMethod(EnableSession = true)]
-    public void LetAdminLogin(string lang, bool islogin)
+    public string LetAdminLogin(string lang, bool islogin)
     {
-        if (islogin)
+        try
         {
-            Emp emp = new Emp("admin");
-            BP.Web.WebUser.SignInOfGener(emp, lang, "admin", true);
+            if (islogin)
+            {
+                Emp emp = new Emp("admin");
+                WebUser.SignInOfGener(emp, lang, "admin", true);
 
+            }
         }
+        catch (Exception exception)
+        {
+
+            return exception.Message;
+        }
+        return string.Empty;
+
     }
 
     [WebMethod(EnableSession = true)]
     public string WinOpenEns(string lang, string dotype, string fk_dept, string fk_emp, string enName,bool isLogin)
     {
-        LetAdminLogin("CH", isLogin);
+       LetAdminLogin("CH", isLogin);
        string url = "";
        switch (dotype)
        {
@@ -188,6 +200,9 @@ public class WSDesigner : WSBase
                 break;
             case "FileHandler": //模板导出用到
                 url = @"/WebClientDownloadHandler.ashx";
+                break;
+            case "LoginPage":
+                url = @"/WF/Login.aspx";
                 break;
             default:
                 AppLog.LogError("Wrong GetRelativeUrl Parameter" + dotype, new Exception());
@@ -314,7 +329,13 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string Do(string doWhat, string para1, bool isLogin)
     {
-        LetAdminLogin("CH", isLogin);
+        // 如果admin账户登录时有错误发生，则返回错误信息
+        var result = LetAdminLogin("CH", isLogin);
+        if(!string.IsNullOrEmpty(result))
+        {
+            return result;
+        }
+        
 
         switch (doWhat)
         {
@@ -499,6 +520,40 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     AppLog.LogError("Do Method GetFlows Branch has a error :\t" , ex); ;
                 }
                 return string.Empty;
+            case "SaveFlowFrm":
+                Entity en = null;
+            try
+            {
+                AtPara ap = new AtPara(para1);
+                string enName = ap.GetValStrByKey("EnName");
+                string pk = ap.GetValStrByKey("PKVal");
+                  en = ClassFactory.GetEn(enName);
+                en.ResetDefaultVal();
+
+                if (en == null)
+                    throw new Exception("无效的类名:" + enName);
+
+                if (string.IsNullOrEmpty(pk) == false)
+                {
+                    en.PKVal = pk;
+                    en.RetrieveFromDBSources();
+                }
+
+                foreach (string key in ap.HisHT.Keys)
+                {
+                    if (key == "PKVal")
+                        continue;
+                    en.SetValByKey(key, ap.HisHT[key].ToString().Replace('^', '@') );
+                }
+                en.Save();
+                return en.PKVal as string;
+            }
+            catch (Exception ex)
+            {
+                if (en != null)
+                    en.CheckPhysicsTable();
+                return "Error:" + ex.Message;
+            }
 			case "ReleaseToFTP":
                 // 暂时注释，下次更新ftp功能时会得新编译 。
                 //var args = para1.Split(',');
@@ -811,17 +866,25 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod]
     public string Uploadfile(byte[] FileByte, string fileName)
     {
-        //文件存放路径
-        string filepath = Server.MapPath(@".\Temp") + "\\" + fileName;
-        //如果文件已经存在则删除
-        if (File.Exists(filepath))
-            File.Delete(filepath);
-        //创建文件流实例，用于写入文件
-        FileStream stream = new FileStream(filepath, FileMode.CreateNew);
-        //写入文件
-        stream.Write(FileByte, 0, FileByte.Length);
-        stream.Close();
-        return filepath;
+        try
+        {
+            //文件存放路径
+            string filepath = Server.MapPath(@".\Temp") + "\\" + fileName;
+            //如果文件已经存在则删除
+            if (File.Exists(filepath))
+                File.Delete(filepath);
+            //创建文件流实例，用于写入文件
+            FileStream stream = new FileStream(filepath, FileMode.CreateNew);
+            //写入文件
+            stream.Write(FileByte, 0, FileByte.Length);
+            stream.Close();
+            return filepath;
+        }
+        catch (Exception exception)
+        {
+            return "Error:Error Occured on upload the file. Error Message is :\n" + exception.Message;
+        }
+        
     }
 
 }

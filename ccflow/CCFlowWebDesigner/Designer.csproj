@@ -93,8 +93,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -109,37 +111,19 @@
     <Compile Include="Component\DirectionComponent.cs" />
     <Compile Include="Component\FlowNodeComponent.cs" />
     <Compile Include="Component\Utility.cs" />
-    <Compile Include="Controls\DeptTree.xaml.cs">
-      <DependentUpon>DeptTree.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DirectionSetting.xaml.cs">
-      <DependentUpon>DirectionSetting.xaml</DependentUpon>
+    <Compile Include="Controls\FlowFrm.xaml.cs">
+      <DependentUpon>FlowFrm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\FrmNew.xaml.cs">
       <DependentUpon>FrmNew.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FlowNodeSetting.xaml.cs">
-      <DependentUpon>FlowNodeSetting.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SLInput .xaml.cs">
-      <DependentUpon>SLInput .xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\SnapshotCapturer.cs" />
     <Compile Include="Controls\ToolbarItem.cs" />
-    <Compile Include="Controls\MenuTool.xaml.cs">
-      <DependentUpon>MenuTool.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\NewFlowSort.xaml.cs">
       <DependentUpon>NewFlowSort.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Org.xaml.cs">
-      <DependentUpon>Org.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\StationTree.xaml.cs">
-      <DependentUpon>StationTree.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TabControlEx.cs" />
     <Compile Include="Controls\TabItemEx.cs" />
@@ -171,6 +155,9 @@
     <Compile Include="Designer\ErrorTip.xaml.cs">
       <DependentUpon>ErrorTip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Designer\FlowFormManager.xaml.cs">
+      <DependentUpon>FlowFormManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Designer\FlowNode.xaml.cs">
       <DependentUpon>FlowNode.xaml</DependentUpon>
     </Compile>
@@ -198,9 +185,6 @@
       <DependentUpon>SelContainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Designer\Triangle.cs" />
-    <Compile Include="FlowFrm.xaml.cs">
-      <DependentUpon>FlowFrm.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Glo.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -261,11 +245,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\DeptTree.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DirectionSetting.xaml">
+    <Page Include="Controls\FlowFrm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -273,31 +253,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\FlowNodeSetting.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\MenuTool.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\NewFlowSort.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Org.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\SLInput .xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\StationTree.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -337,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Designer\FlowFormManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Designer\FlowNode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -368,10 +332,6 @@
     <Page Include="Designer\SelContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="FlowFrm.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -458,6 +418,7 @@
     <Resource Include="Images\MenuItem\FlowSheet.png" />
     <Resource Include="Images\MenuItem\Setting.png" />
     <Content Include="Images\ReleaseToFTP.png" />
+    <Content Include="Images\ToolBarLogin.png" />
     <Content Include="Images\ToolBarNewLabel.png" />
     <Content Include="Images\ToolBarNewLine.png" />
     <Content Include="Images\ToolBarNewNode.png" />

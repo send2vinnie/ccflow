@@ -29,6 +29,7 @@ namespace WF.Controls
         {
             List<ToolbarItem> ToolList = new List<ToolbarItem>()
             {
+                new ToolbarItem(){No="ToolBarLogin", Name = " 登录"},
                 new ToolbarItem(){No="ToolBarNewNode", Name="添加节点"},
                 new ToolbarItem(){No="ToolBarNewLine", Name="添加连线"},
                 new ToolbarItem(){No="ToolBarNewLabel", Name="添加标签"},

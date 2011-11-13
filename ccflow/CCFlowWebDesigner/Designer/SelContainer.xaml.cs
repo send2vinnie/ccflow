@@ -1,36 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.IO.IsolatedStorage;
 using System.Xml.Linq;
 using System.IO;
 using Ccflow.Web.UI.Control.Workflow.Designer;
-using Ccflow.Web.Component.Workflow;
+using FluxJpeg.Core;
 using WF.Resources;
 using WF.WS;
-using Liquid;
-using System.ServiceModel;
 using Silverlight;
-using WF.Controls;
 using System.Windows.Browser;
-using WF.Designer;
 
 namespace WF.Designer
 {
+    /// <summary>
+    /// 主要用来显示流程轨迹
+    /// </summary>
     public partial class SelContainer : UserControl, IContainer
     {
+        #region Constructs
+
         public SelContainer()
         {
             InitializeComponent();
-            Application.Current.Host.Content.IsFullScreen = !Application.Current.Host.Content.IsFullScreen;
             cnsDesignerContainer.Width = Application.Current.Host.Content.ActualWidth;
             cnsDesignerContainer.Height = Application.Current.Host.Content.ActualHeight;
             Application.Current.Host.Content.Resized += new EventHandler(Content_Resized);
@@ -40,23 +36,27 @@ namespace WF.Designer
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
-            ApplyCulture();
+
         }
 
-        private void Content_Resized(object sender, EventArgs e)
+        public SelContainer(string fk_flow, string workid)
+            : this()
         {
-            cnsDesignerContainer.Width = Application.Current.Host.Content.ActualWidth;
-            cnsDesignerContainer.Height = Application.Current.Host.Content.ActualHeight;
-            SetGridLines();
+            getFlow(fk_flow);
+        }
+        #endregion
+
+        #region Properties
+
+        public bool IsMouseSelecting
+        {
+            get { return (temproaryEllipse != null); }
         }
 
-        public SelContainer(string fk_flow, string workid) : this()
+        public WSDesignerSoapClient _Service
         {
-            getFlow(fk_flow, workid);
-        }
-
-        public SelContainer(string fk_flow) : this()
-        {
+            get { return _service; }
+            set { _service = value; }
         }
 
         public string FK_Flow
@@ -64,7 +64,9 @@ namespace WF.Designer
             get
             {
                 if (HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
+                {
                     return HtmlPage.Document.QueryString["FK_Flow"];
+                }
                 return "";
             }
         }
@@ -74,7 +76,9 @@ namespace WF.Designer
             get
             {
                 if (HtmlPage.Document.QueryString.ContainsKey("WorkID"))
+                {
                     return HtmlPage.Document.QueryString["WorkID"];
+                }
                 return "";
             }
         }
@@ -86,14 +90,210 @@ namespace WF.Designer
         /// </summary>
         public bool IsSomeChildEditing { get; set; }
 
+        public PageEditType EditType
+        {
+            get
+            {
+                if (editType == PageEditType.None)
+                {
+                    editType = PageEditType.Add;
+                }
+                return editType;
+            }
+            set { editType = value; }
+        }
+
 
         public int NodeID;
 
-        private WSDesignerSoapClient _service = new WSDesignerSoapClient(); //new BasicHttpBinding(), address);
+        public List<FlowNode> flowNodeCollections;
 
-        /// <summary>
-        /// 设置设计器栏
-        /// </summary>
+        public List<FlowNode> FlowNodeCollections
+        {
+            get
+            {
+                if (flowNodeCollections == null)
+                {
+                    flowNodeCollections = new List<FlowNode>();
+                }
+                return flowNodeCollections;
+            }
+        }
+
+        public List<Direction> directionCollections;
+
+        public List<Direction> DirectionCollections
+        {
+            get
+            {
+                if (directionCollections == null)
+                {
+                    directionCollections = new List<Direction>();
+                }
+                return directionCollections;
+            }
+        }
+
+        public List<NodeLabel> lableCollections;
+
+        public List<NodeLabel> LableCollections
+        {
+            get
+            {
+                if (lableCollections == null)
+                {
+                    lableCollections = new List<NodeLabel>();
+                }
+                return lableCollections;
+            }
+        }
+
+        private int nextMaxIndex = 0;
+
+        public int NextMaxIndex
+        {
+            get
+            {
+                nextMaxIndex++;
+                return nextMaxIndex;
+            }
+        }
+
+        public double Left
+        {
+            get { return 230; }
+        }
+
+        public double Top
+        {
+            get { return 40; }
+        }
+
+        public string FlowID { get; set; }
+
+        public Double ContainerWidth
+        {
+            get { return cnsDesignerContainer.Width; }
+            set { cnsDesignerContainer.Width = value; }
+        }
+
+        public Double ContainerHeight
+        {
+            get { return cnsDesignerContainer.Height; }
+            set { cnsDesignerContainer.Height = value; }
+        }
+
+        public int NextNewFlowNodeIndex
+        {
+            get { return 0; }
+        }
+
+        public int NextNewDirectionIndex
+        {
+            get { return 0; }
+        }
+
+        public int NextNewLabelIndex
+        {
+            get { return 0; }
+        }
+
+        public Double ScrollViewerHorizontalOffset
+        {
+            get { return svContainer.HorizontalOffset; }
+            set { svContainer.ScrollToHorizontalOffset(value); }
+        }
+
+        public Double ScrollViewerVerticalOffset
+        {
+            get { return svContainer.VerticalOffset; }
+            set { svContainer.ScrollToVerticalOffset(value); }
+        }
+
+        public Canvas GridLinesContainer
+        {
+            get
+            {
+                if (_gridLinesContainer == null)
+                {
+                    Canvas temCan = new Canvas();
+                    temCan.Name = "canGridLinesContainer";
+                    cnsDesignerContainer.Children.Add(temCan);
+                    _gridLinesContainer = temCan;
+                }
+                return _gridLinesContainer;
+            }
+        }
+
+        private List<Control> copyElementCollectionInMemory;
+
+        public List<Control> CopyElementCollectionInMemory
+        {
+            get
+            {
+                if (copyElementCollectionInMemory == null)
+                    copyElementCollectionInMemory = new List<System.Windows.Controls.Control>();
+                return copyElementCollectionInMemory;
+            }
+            set { copyElementCollectionInMemory = value; }
+        }
+
+        private bool mouseIsInContainer = false;
+
+        public bool MouseIsInContainer
+        {
+            get { return mouseIsInContainer; }
+            set { mouseIsInContainer = value; }
+        }
+
+        public Direction CurrentTemporaryDirection { get; set; }
+
+        private List<System.Windows.Controls.Control> _currentSelectedControlCollection;
+
+        public List<System.Windows.Controls.Control> CurrentSelectedControlCollection
+        {
+            get
+            {
+                if (_currentSelectedControlCollection == null)
+                    _currentSelectedControlCollection = new List<System.Windows.Controls.Control>();
+                return _currentSelectedControlCollection;
+            }
+        }
+
+        //bool ctrlKeyIsPress;
+        public bool CtrlKeyIsPress
+        {
+            get
+            {
+                return (Keyboard.Modifiers == ModifierKeys.Control);
+                //return ctrlKeyIsPress;
+            }
+        }
+
+        public bool IsContainerRefresh { get; set; }
+
+        #endregion
+
+        #region Variables
+
+        private WSDesignerSoapClient _service = new WSDesignerSoapClient();
+        private PageEditType editType = PageEditType.None;
+        private Point mousePosition;
+        private bool trackingMouseMove = false;
+        private System.Windows.Threading.DispatcherTimer _doubleClickTimer;
+        private Canvas _gridLinesContainer;
+        private Rectangle temproaryEllipse;
+
+        #endregion
+        
+        private void Content_Resized(object sender, EventArgs e)
+        {
+            cnsDesignerContainer.Width = Application.Current.Host.Content.ActualWidth;
+            cnsDesignerContainer.Height = Application.Current.Host.Content.ActualHeight;
+            SetGridLines();
+        }
+
+        
         public void SetGridLines()
         {
             GridLinesContainer.Children.Clear();
@@ -159,83 +359,117 @@ namespace WF.Designer
         {
             CheckResult cr = new CheckResult();
             cr.IsPass = true;
-            CheckResult temCR = null;
-            IElement iel;
-            bool hasInitial = false;
-            bool hasCompledion = false;
-            string msg = "";
-            foreach (UIElement uic in cnsDesignerContainer.Children)
-            {
-                iel = uic as IElement;
-                if (iel != null)
-                {
-                    temCR = iel.CheckSave();
-                    if (!temCR.IsPass)
-                    {
-                        cr.IsPass = false;
-                        cr.Message += temCR.Message;
-                    }
-                    if (iel.ElementType == WorkFlowElementType.FlowNode)
-                    {
-                        if (((FlowNode) uic).Type == FlowNodeType.INITIAL)
-                        {
-                            hasInitial = true;
-                        }
-                        else if (((FlowNode) uic).Type == FlowNodeType.COMPLETION)
-                        {
-                            hasCompledion = true;
-                        }
-                    }
-                }
-            }
-
-            if (!hasInitial)
-            {
-                cr.IsPass = false;
-                msg += Text.Message_MustHaveOnlyOneBeginFlowNode + "\r\n";
-            }
-            if (!hasCompledion)
-            {
-                cr.IsPass = false;
-                msg += Text.Message_MustHaveAtLeastOneEndFlowNode + "\r\n";
-            }
-            //if (string.IsNullOrEmpty(txtWorkFlowName.Text))
-            //{
-            //    try
-            //    {
-            //        cr.IsPass = false;
-            //        msg += "必须输入流程名称\r\n";
-            //    }
-            //    catch { }
-            //}
-            msg += Text.Message_ModifyWorkFlowByTip;
-            cr.Message = msg;
             return cr;
         }
 
-
-        public void NewFlow()
-        {
-        }
-
-        private void getFlow(string flowID, string workid)
-        {
-            this.FlowID = flowID;
-            _Service.RunSQLReturnTableAsync(
-                "select nodeid,Name,X,Y,nodepostype,HisToNDs from wf_node where fk_flow=" + flowID, false);
-            _Service.RunSQLReturnTableCompleted +=
-                new EventHandler<RunSQLReturnTableCompletedEventArgs>(_service_RunSQLReturnTableCompleted);
-        }
-
+        #region 加载流程相关
         private void getFlow(string flowID)
         {
             this.FlowID = flowID;
             _Service.RunSQLReturnTableAsync(
                 "select nodeid,Name,X,Y,nodepostype,HisToNDs from wf_node where fk_flow=" + flowID, false);
-            _Service.RunSQLReturnTableCompleted +=
-                new EventHandler<RunSQLReturnTableCompletedEventArgs>(_service_RunSQLReturnTableCompleted);
+            _Service.RunSQLReturnTableCompleted += _service_RunSQLReturnTableCompleted;
         }
 
+        private void _service_RunSQLReturnTableCompleted(object sender, RunSQLReturnTableCompletedEventArgs e)
+        {
+            var ds = new DataSet();
+            ds.FromXml(e.Result);
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                FlowNode flowNode = null;
+                if (dr["nodepostype"].ToString() == "0")
+                {
+                    flowNode = new FlowNode((IContainer)this, FlowNodeType.INITIAL);
+                }
+                else if (dr["nodepostype"].ToString() == "2")
+                {
+                    flowNode = new FlowNode((IContainer)this, FlowNodeType.COMPLETION);
+                }
+                else
+                {
+                    flowNode = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
+                }
+                flowNode.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
+                flowNode.FlowID = FlowID;
+                flowNode.FlowNodeID = dr["nodeid"].ToString();
+                flowNode.FlowNodeName = dr["Name"].ToString();
+                double x = double.Parse(dr["X"]);
+                double y = double.Parse(dr["Y"]);
+                if (x < 50)
+                    x = 50;
+                if (x > 1190)
+                {
+                    x = 1190;
+                }
+                if (y < 30)
+                    y = 30;
+                if (y > 770)
+                    y = 770;
+                flowNode.CenterPoint = new Point(x, y);
+                AddFlowNode(flowNode);
+            }
+            _Service.GetLablesAsync(FlowID);
+            _Service.GetLablesCompleted += _service_GetLablesCompleted;
+
+            _Service.GetDirectionAsync(FlowID);
+            _Service.GetDirectionCompleted += _service_GetDirectionCompleted;
+
+
+            SaveChange(HistoryType.New);
+            _Service.RunSQLReturnTableCompleted -= _service_RunSQLReturnTableCompleted;
+        }
+
+        private void _service_GetDirectionCompleted(object sender, GetDirectionCompletedEventArgs e)
+        {
+            var ds = new DataSet();
+            ds.FromXml(e.Result);
+
+            foreach (FlowNode bfn in FlowNodeCollections)
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    if (bfn.FlowNodeID == dr["Node"].ToString())
+                    {
+                        foreach (FlowNode efn in FlowNodeCollections)
+                        {
+                            if (efn.FlowNodeID == dr["ToNode"].ToString())
+                            {
+                                var d = new Direction((IContainer)this);
+                                d.FlowID = FlowID;
+                                d.BeginFlowNode = bfn;
+                                d.EndFlowNode = efn;
+                                AddDirection(d);
+                            }
+                        }
+                    }
+                }
+            }
+            if (!string.IsNullOrEmpty(WorkID))
+            {
+                _Service.GetDTOfWorkListAsync(FK_Flow, WorkID);
+                _Service.GetDTOfWorkListCompleted += _Service_GetDTOfWorkListCompleted;
+            }
+            _Service.GetDirectionCompleted -= _service_GetDirectionCompleted;
+        }
+
+        private void _service_GetLablesCompleted(object sender, GetLablesCompletedEventArgs e)
+        {
+            var ds = new DataSet();
+            ds.FromXml(e.Result);
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                var nodeLabel = new NodeLabel((IContainer)this);
+                nodeLabel.LabelName = dr["Name"].ToString();
+                nodeLabel.Position = new Point(double.Parse(dr["X"].ToString()), double.Parse(dr["Y"].ToString()));
+                nodeLabel.LableID = dr["MyPK"].ToString();
+
+                AddLabel(nodeLabel);
+            }
+            _Service.GetLablesCompleted -= _service_GetLablesCompleted;
+        }
 
         private void _Service_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
         {
@@ -277,437 +511,6 @@ namespace WF.Designer
             SaveChange(HistoryType.New);
         }
 
-        private void _service_GetLablesCompleted(object sender, GetLablesCompletedEventArgs e)
-        {
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                NodeLabel r = new NodeLabel((IContainer) this);
-                r.LabelName = dr["Name"].ToString();
-                r.Position = new Point(double.Parse(dr["X"].ToString()), double.Parse(dr["Y"].ToString()));
-                r.LableID = dr["MyPK"].ToString();
-
-                AddLabel(r);
-            }
-            _Service.GetLablesCompleted -= _service_GetLablesCompleted;
-        }
-
-
-        private void _service_RunSQLReturnTableCompleted(object sender, RunSQLReturnTableCompletedEventArgs e)
-        {
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                FlowNode a = null;
-                if (dr["nodepostype"].ToString() == "0")
-                    a = new FlowNode((IContainer) this, FlowNodeType.INITIAL);
-                if (dr["nodepostype"].ToString() == "2")
-                    a = new FlowNode((IContainer) this, FlowNodeType.COMPLETION);
-
-                if (dr["nodepostype"].ToString() == "1")
-                    a = new FlowNode((IContainer) this, FlowNodeType.INTERACTION);
-                a.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
-                a.FlowID = FlowID;
-                a.FlowNodeID = dr["nodeid"].ToString();
-                a.FlowNodeName = dr["Name"].ToString();
-                double x = double.Parse(dr["X"]);
-                double y = double.Parse(dr["Y"]);
-                if (x < 50)
-                    x = 50;
-                if (x > 1190)
-                {
-                    x = 1190;
-                }
-                if (y < 30)
-                    y = 30;
-                if (y > 770)
-                    y = 770;
-                a.CenterPoint = new Point(x, y);
-                //   a.CenterPoint = new Point(double.Parse(dr["X"]), double.Parse(dr["Y"]));
-                AddFlowNode(a);
-            }
-            _Service.GetLablesAsync(FlowID);
-            _Service.GetLablesCompleted += new EventHandler<GetLablesCompletedEventArgs>(_service_GetLablesCompleted);
-
-            _Service.GetDirectionAsync(FlowID);
-            _Service.GetDirectionCompleted += _service_GetDirectionCompleted;
-
-
-            SaveChange(HistoryType.New);
-            _Service.RunSQLReturnTableCompleted -= _service_RunSQLReturnTableCompleted;
-        }
-
-        private void _service_GetDirectionCompleted(object sender, GetDirectionCompletedEventArgs e)
-        {
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-
-            foreach (FlowNode bfn in FlowNodeCollections)
-            {
-                foreach (DataRow dr in ds.Tables[0].Rows)
-                {
-                    if (bfn.FlowNodeID == dr["Node"].ToString())
-                    {
-                        foreach (FlowNode efn in FlowNodeCollections)
-                        {
-                            if (efn.FlowNodeID == dr["ToNode"].ToString())
-                            {
-                                Direction d = new Direction((IContainer) this);
-                                d.FlowID = FlowID;
-                                d.BeginFlowNode = bfn;
-                                d.EndFlowNode = efn;
-                                AddDirection(d);
-                            }
-                        }
-                    }
-                }
-            }
-            if (!string.IsNullOrEmpty(WorkID))
-            {
-                _Service.GetDTOfWorkListAsync(FK_Flow, WorkID);
-                _Service.GetDTOfWorkListCompleted +=
-                    new EventHandler<GetDTOfWorkListCompletedEventArgs>(_Service_GetDTOfWorkListCompleted);
-            }
-            _Service.GetDirectionCompleted -=
-                new EventHandler<GetDirectionCompletedEventArgs>(_service_GetDirectionCompleted);
-        }
-
-
-        private void DoubleClick_Timer(object sender, EventArgs e)
-        {
-            _doubleClickTimer.Stop();
-        }
-
-        private PageEditType editType = PageEditType.None;
-
-        public PageEditType EditType
-        {
-            get
-            {
-                if (editType == PageEditType.None)
-                {
-                    editType = PageEditType.Add;
-                }
-                return editType;
-            }
-            set { editType = value; }
-        }
-
-        public void ShowFlowNodeSetting(FlowNode a)
-        {
-            //a.sdPicture.tbNodeName.Visibility = Visibility.Visible;
-            //a.sdPicture.txtFlowNodeName.Visibility = Visibility.Collapsed;
-        }
-
-        public void ShowDirectionSetting(Direction r)
-        {
-            //siDirectionSetting.Visibility = Visibility.Visible;
-            //siDirectionSetting.SetSetting(r);
-        }
-
-        private int nextNewFlowNodeIndex = 0;
-
-        public int NextNewFlowNodeIndex
-        {
-            get { return ++nextNewFlowNodeIndex; }
-        }
-
-        private int nextNewDirectionIndex = 0;
-
-        public int NextNewDirectionIndex
-        {
-            get { return ++nextNewDirectionIndex; }
-        }
-
-        private int nextNewLabelIndex = 0;
-
-        public int NextNewLabelIndex
-        {
-            get { return ++nextNewLabelIndex; }
-        }
-
-        public void LoadFromXmlString(string xml)
-        {
-            if (string.IsNullOrEmpty(xml))
-                return;
-            FlowNodeType FlowNodeType;
-            MergePictureRepeatDirection repeatDirection = MergePictureRepeatDirection.None;
-            string FlowID = "";
-            int zIndex = 0;
-            string FlowNodeID = "";
-            string FlowNodeName = "";
-            Point FlowNodePosition = new Point();
-            double temd = 0;
-            Byte[] b = System.Text.UTF8Encoding.UTF8.GetBytes(xml);
-            XElement xele = XElement.Load(System.Xml.XmlReader.Create(new MemoryStream(b)));
-            //txtWorkFlowName.Text = xele.Attribute(XName.Get("Name")).Value;
-            FlowID = xele.Attribute(XName.Get("FlowID")).Value;
-
-            var partNos = from item in xele.Descendants("FlowNode") select item;
-            foreach (XElement node in partNos)
-            {
-                FlowNodeType =
-                    (FlowNodeType) Enum.Parse(typeof (FlowNodeType), node.Attribute(XName.Get("Type")).Value, true);
-                try
-                {
-                    repeatDirection =
-                        (MergePictureRepeatDirection)
-                        Enum.Parse(typeof (MergePictureRepeatDirection),
-                                   node.Attribute(XName.Get("RepeatDirection")).Value, true);
-                }
-                catch
-                {
-                }
-                FlowID = node.Attribute(XName.Get("FlowID")).Value;
-                FlowNodeID = node.Attribute(XName.Get("FlowNodeID")).Value;
-                FlowNodeName = node.Attribute(XName.Get("FlowNodeName")).Value;
-
-                double.TryParse(node.Attribute(XName.Get("PositionX")).Value, out temd);
-                FlowNodePosition.X = temd;
-                double.TryParse(node.Attribute(XName.Get("PositionY")).Value, out temd);
-                FlowNodePosition.Y = temd;
-                int.TryParse(node.Attribute(XName.Get("ZIndex")).Value, out zIndex);
-
-                FlowNode a = new FlowNode((IContainer) this, FlowNodeType);
-                a.SubFlow = node.Attribute(XName.Get("SubFlow")).Value;
-                a.RepeatDirection = repeatDirection;
-                a.CenterPoint = FlowNodePosition;
-                a.FlowNodeID = FlowNodeID;
-                a.FlowNodeName = FlowNodeName;
-                a.ZIndex = zIndex;
-                a.EditType = this.EditType;
-                a.FlowID = FlowID;
-
-                AddFlowNode(a);
-            }
-
-            string beginFlowNodeID = "";
-            string endFlowNodeID = "";
-            double beginPointX = 0;
-            double beginPointY = 0;
-            double endPointX = 0;
-            double endPointY = 0;
-            double turnPoint1X = 0;
-            double turnPoint1Y = 0;
-            double turnPoint2X = 0;
-            double turnPoint2Y = 0;
-
-            string ruleID = "";
-            string ruleName = "";
-            string beginFlowNodeFlowID = "";
-            string endFlowNodeFlowID = "";
-            double containerWidth = 0;
-            double containerHeight = 0;
-            DirectionLineType lineType = DirectionLineType.Line;
-            double.TryParse(xele.Attribute(XName.Get("Width")).Value, out containerWidth);
-            double.TryParse(xele.Attribute(XName.Get("Height")).Value, out containerHeight);
-
-
-            ContainerWidth = containerWidth;
-            ContainerHeight = containerHeight;
-
-
-            FlowNode temFlowNode = null;
-            partNos = from item in xele.Descendants("Direction") select item;
-            foreach (XElement node in partNos)
-            {
-                lineType =
-                    (DirectionLineType)
-                    Enum.Parse(typeof (DirectionLineType), node.Attribute(XName.Get("LineType")).Value, true);
-
-                FlowID = node.Attribute(XName.Get("FlowID")).Value;
-
-                ruleID = node.Attribute(XName.Get("DirectionID")).Value;
-                ruleName = node.Attribute(XName.Get("DirectionName")).Value;
-                beginFlowNodeFlowID = node.Attribute(XName.Get("BeginFlowNodeFlowID")).Value;
-                endFlowNodeFlowID = node.Attribute(XName.Get("EndFlowNodeFlowID")).Value;
-
-                beginFlowNodeID = node.Attribute(XName.Get("BeginFlowNodeID")).Value;
-                endFlowNodeID = node.Attribute(XName.Get("EndFlowNodeID")).Value;
-
-
-                double.TryParse(node.Attribute(XName.Get("TurnPoint1X")).Value, out turnPoint1X);
-                double.TryParse(node.Attribute(XName.Get("TurnPoint1Y")).Value, out turnPoint1Y);
-                double.TryParse(node.Attribute(XName.Get("TurnPoint2X")).Value, out turnPoint2X);
-                double.TryParse(node.Attribute(XName.Get("TurnPoint2Y")).Value, out turnPoint2Y);
-
-                double.TryParse(node.Attribute(XName.Get("BeginPointX")).Value, out beginPointX);
-                double.TryParse(node.Attribute(XName.Get("BeginPointY")).Value, out beginPointY);
-                double.TryParse(node.Attribute(XName.Get("EndPointX")).Value, out endPointX);
-                double.TryParse(node.Attribute(XName.Get("EndPointY")).Value, out endPointY);
-
-                int.TryParse(node.Attribute(XName.Get("ZIndex")).Value, out zIndex);
-
-
-                Direction r = new Direction(this, false, lineType);
-                AddDirection(r);
-                r.DirectionID = ruleID;
-                r.DirectionName = ruleName;
-                r.ZIndex = zIndex;
-                r.EditType = this.EditType;
-                r.FlowID = FlowID;
-                r.LineType = lineType;
-                if (turnPoint1X > 0 && turnPoint2X > 0)
-                {
-                    r.TurnPoint1HadMoved = true;
-                    r.TurnPoint2HadMoved = true;
-                    r.DirectionTurnPoint1.CenterPosition = new Point(turnPoint1X, turnPoint1Y);
-                    r.DirectionTurnPoint2.CenterPosition = new Point(turnPoint2X, turnPoint2Y);
-                }
-                if (beginFlowNodeFlowID != "")
-                {
-                    temFlowNode = getFlowNode(beginFlowNodeFlowID);
-                    if (temFlowNode != null)
-                        temFlowNode.AddBeginDirection(r);
-                    else
-                        r.BeginPointPosition = new Point(beginPointX, beginPointY);
-                }
-                else
-                {
-                    r.BeginPointPosition = new Point(beginPointX, beginPointY);
-                }
-                temFlowNode = null;
-                if (endFlowNodeFlowID != "")
-                {
-                    temFlowNode = getFlowNode(endFlowNodeFlowID);
-                    if (temFlowNode != null)
-                        temFlowNode.AddEndDirection(r);
-                    else
-                        r.EndPointPosition = new Point(endPointX, endPointY);
-                }
-                else
-                {
-                    r.EndPointPosition = new Point(endPointX, endPointY);
-                }
-            }
-
-
-            partNos = from item in xele.Descendants("NodeLabel") select item;
-            string labelName = "";
-            double labelX = 0;
-            double labelY = 0;
-            foreach (XElement node in partNos)
-            {
-                labelName = node.Value;
-
-                double.TryParse(node.Attribute(XName.Get("X")).Value, out labelX);
-                double.TryParse(node.Attribute(XName.Get("Y")).Value, out labelY);
-
-
-                NodeLabel l = new NodeLabel(this);
-                l.LabelName = labelName;
-                l.Position = new Point(labelX, labelY);
-                AddLabel(l);
-            }
-        }
-
-        public void SetProper(string lang, string dotype, string fk_flow, string node1, string node2, string title)
-        {
-        }
-
-        public void WinOpen(string url, string title)
-        {
-            HtmlPage.Window.Eval("window.open ('" + url +
-                                 "', 'newwindow', 'height=600, width=800, top=200, left=200, toolbar=no, menubar=no, scrollbars=no, resizable=yes,location=no, status=no')");
-        }
-
-        public string FlowID { get; set; }
-
-        public Double ContainerWidth
-        {
-            get { return cnsDesignerContainer.Width; }
-            set { cnsDesignerContainer.Width = value; }
-        }
-
-        public Double ContainerHeight
-        {
-            get { return cnsDesignerContainer.Height; }
-            set { cnsDesignerContainer.Height = value; }
-        }
-
-        public Double ScrollViewerHorizontalOffset
-        {
-            get { return svContainer.HorizontalOffset; }
-            set { svContainer.ScrollToHorizontalOffset(value); }
-        }
-
-        public Double ScrollViewerVerticalOffset
-        {
-            get { return svContainer.VerticalOffset; }
-            set { svContainer.ScrollToVerticalOffset(value); }
-        }
-
-        public WSDesignerSoapClient _Service
-        {
-            get { return _service; }
-            set { _service = value; }
-        }
-
-        public string ToXmlString()
-        {
-            System.Text.StringBuilder xml =
-                new System.Text.StringBuilder(@"<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>
-");
-            xml.Append(Environment.NewLine);
-            xml.Append(@"<WorkFlow");
-            xml.Append(@" FlowID=""" + FlowID + @"""");
-            xml.Append(@" ID=""" + Guid.NewGuid().ToString() + @"""");
-            xml.Append(@" Name=""" + "Test" + @"""");
-            xml.Append(@" Description=""" + "Test" + @"""");
-            xml.Append(@" Width=""" + ContainerWidth.ToString() + @"""");
-            xml.Append(@" Height=""" + ContainerHeight.ToString() + @""">");
-
-
-            System.Text.StringBuilder FlowNodeXml = new System.Text.StringBuilder("    <FlowNodes>");
-            System.Text.StringBuilder ruleXml = new System.Text.StringBuilder("    <Directions>");
-            System.Text.StringBuilder labelXml = new System.Text.StringBuilder("    <Labels>");
-
-            IElement ele;
-            foreach (UIElement c in cnsDesignerContainer.Children)
-            {
-                ele = c as IElement;
-                if (ele != null)
-                {
-                    if (ele.IsDeleted)
-                        continue;
-                    if (ele.ElementType == WorkFlowElementType.FlowNode)
-                    {
-                        FlowNodeXml.Append(Environment.NewLine);
-                        FlowNodeXml.Append(ele.ToXmlString());
-                    }
-                    else if (ele.ElementType == WorkFlowElementType.Direction)
-                    {
-                        ruleXml.Append(Environment.NewLine);
-                        ruleXml.Append(ele.ToXmlString());
-                    }
-                    else if (ele.ElementType == WorkFlowElementType.Label)
-                    {
-                        labelXml.Append(Environment.NewLine);
-                        labelXml.Append(ele.ToXmlString());
-                    }
-                }
-            }
-            FlowNodeXml.Append(Environment.NewLine);
-            FlowNodeXml.Append("    </FlowNodes>");
-            ruleXml.Append(Environment.NewLine);
-            ruleXml.Append("    </Directions>");
-            labelXml.Append(Environment.NewLine);
-            labelXml.Append("    </Labels>");
-            xml.Append(Environment.NewLine);
-            xml.Append(FlowNodeXml.ToString());
-            xml.Append(Environment.NewLine);
-            xml.Append(ruleXml.ToString());
-            xml.Append(Environment.NewLine);
-            xml.Append(labelXml.ToString());
-            xml.Append(Environment.NewLine);
-            xml.Append(@"</WorkFlow>");
-            return xml.ToString();
-        }
-
         public void AddDirection(Direction r)
         {
             if (!cnsDesignerContainer.Children.Contains(r))
@@ -715,7 +518,6 @@ namespace WF.Designer
                 cnsDesignerContainer.Children.Add(r);
                 r.Container = this;
 
-                r.DirectionChanged += new DirectionChangeDelegate(OnDirectionChanged);
             }
             if (!DirectionCollections.Contains(r))
             {
@@ -735,138 +537,29 @@ namespace WF.Designer
             }
         }
 
-        public void AddLabel(int x, int y)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveDirection(Direction r)
-        {
-            if (cnsDesignerContainer.Children.Contains(r))
-            {
-                cnsDesignerContainer.Children.Remove(r);
-            }
-            if (DirectionCollections.Contains(r))
-                DirectionCollections.Remove(r);
-        }
-
-
-        private void OnDirectionChanged(Direction a)
-        {
-            SaveChange(HistoryType.New);
-        }
-
-        public void OnFlowNodeChanged(FlowNode a)
-        {
-            SaveChange(HistoryType.New);
-        }
-
-
         public void AddFlowNode(FlowNode a)
         {
             if (!cnsDesignerContainer.Children.Contains(a))
             {
                 cnsDesignerContainer.Children.Add(a);
-                //sliWidth.Value = sliWidth.Minimum;
-                //  sliHeight.Value = sliHeight.Minimum;
 
                 a.Container = this;
-                a.FlowNodeChanged += new FlowNodeChangeDelegate(OnFlowNodeChanged);
                 a.FlowID = FlowID;
                 if (a.Type != FlowNodeType.STATIONODE)
+                {
                     a.worklist();
-                //_service.DoNewNodeAsync(FlowID, (int)a.Position.X, (int)a.Position.Y);
-                //_service.DoNewNodeCompleted += new EventHandler<DoNewNodeCompletedEventArgs>(_service_DoNewNodeCompleted);
+                }
             }
             if (!FlowNodeCollections.Contains(a))
+            {
                 FlowNodeCollections.Add(a);
-        }
-
-        
-
-        public void RemoveFlowNode(FlowNode a)
-        {
-            if (cnsDesignerContainer.Children.Contains(a))
-                cnsDesignerContainer.Children.Remove(a);
-            if (FlowNodeCollections.Contains(a))
-            {
-                FlowNodeCollections.Remove(a);
             }
         }
 
-        public void RemoveLabel(NodeLabel l)
-        {
-            if (cnsDesignerContainer.Children.Contains(l))
-                cnsDesignerContainer.Children.Remove(l);
-            if (LableCollections.Contains(l))
-            {
-                LableCollections.Remove(l);
-            }
-        }
+        #endregion
 
-        public List<FlowNode> flowNodeCollections;
 
-        public List<FlowNode> FlowNodeCollections
-        {
-            get
-            {
-                if (flowNodeCollections == null)
-                {
-                    flowNodeCollections = new List<FlowNode>();
-                }
-                return flowNodeCollections;
-            }
-        }
-
-        public List<Direction> directionCollections;
-
-        public List<Direction> DirectionCollections
-        {
-            get
-            {
-                if (directionCollections == null)
-                {
-                    directionCollections = new List<Direction>();
-                }
-                return directionCollections;
-            }
-        }
-
-        public List<NodeLabel> lableCollections;
-
-        public List<NodeLabel> LableCollections
-        {
-            get
-            {
-                if (lableCollections == null)
-                {
-                    lableCollections = new List<NodeLabel>();
-                }
-                return lableCollections;
-            }
-        }
-
-        private int nextMaxIndex = 0;
-
-        public int NextMaxIndex
-        {
-            get
-            {
-                nextMaxIndex++;
-                return nextMaxIndex;
-            }
-        }
-
-        public double Left
-        {
-            get { return 230; }
-        }
-
-        public double Top
-        {
-            get { return 40; }
-        }
-
+        #region 菜单相关
         public void ShowFlowNodeContentMenu(FlowNode a, object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
@@ -880,140 +573,26 @@ namespace WF.Designer
         public void ShowDirectionContentMenu(Direction r, object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-        }
+        } 
+        #endregion
 
         public void ShowMessage(string message)
         {
-            ShowContainerCover();
+           
         }
-
-
-        public void ShowContainerCover()
-        {
-        }
-
-        public void CloseContainerCover()
-        {
-        }
-
-        private FlowNode getFlowNode(string FlowNodeFlowID)
-        {
-            for (int i = 0; i < FlowNodeCollections.Count; i++)
-            {
-                if (FlowNodeCollections[i].FlowID == FlowNodeFlowID)
-                {
-                    return FlowNodeCollections[i];
-                }
-            }
-            return null;
-        }
-
-
-        private Canvas _gridLinesContainer;
-
-        public Canvas GridLinesContainer
-        {
-            get
-            {
-                if (_gridLinesContainer == null)
-                {
-                    Canvas temCan = new Canvas();
-                    temCan.Name = "canGridLinesContainer";
-                    cnsDesignerContainer.Children.Add(temCan);
-                    _gridLinesContainer = temCan;
-                }
-                return _gridLinesContainer;
-            }
-        }
-
-        private void cleareContainer()
-        {
-            cnsDesignerContainer.Children.Clear();
-            _gridLinesContainer = null;
-            SetGridLines();
-            flowNodeCollections = null;
-            directionCollections = null;
-        }
-
-        private Stack<string> _workFlowXmlNextStack;
-
-        public Stack<string> WorkFlowXmlNextStack
-        {
-            get
-            {
-                if (_workFlowXmlNextStack == null)
-                    _workFlowXmlNextStack = new Stack<string>(50);
-                return _workFlowXmlNextStack;
-            }
-        }
-
-        private Stack<string> _workFlowXmlPreStack;
-
-        public Stack<string> WorkFlowXmlPreStack
-        {
-            get
-            {
-                if (_workFlowXmlPreStack == null)
-                    _workFlowXmlPreStack = new Stack<string>(50);
-                return _workFlowXmlPreStack;
-            }
-        }
-
-        private string workflowXmlCurrent = @"";
 
         public void SaveChange(HistoryType action)
         {
-            if (action == HistoryType.New)
-            {
-                WorkFlowXmlPreStack.Push(workflowXmlCurrent);
-                workflowXmlCurrent = ToXmlString();
-                WorkFlowXmlNextStack.Clear();
-            }
-            if (action == HistoryType.Next)
-            {
-                if (WorkFlowXmlNextStack.Count > 0)
-                {
-                    WorkFlowXmlPreStack.Push(workflowXmlCurrent);
-                    workflowXmlCurrent = WorkFlowXmlNextStack.Pop();
-                    cleareContainer();
-                    ClearSelectFlowElement(null);
-                }
-
-                LoadFromXmlString(workflowXmlCurrent);
-            }
-            if (action == HistoryType.Previous)
-            {
-                if (WorkFlowXmlPreStack.Count > 0)
-                {
-                    WorkFlowXmlNextStack.Push(workflowXmlCurrent);
-                    workflowXmlCurrent = WorkFlowXmlPreStack.Pop();
-                    cleareContainer();
-
-                    LoadFromXmlString(workflowXmlCurrent);
-                    ClearSelectFlowElement(null);
-                }
-            }
-            setQueueButtonEnable();
-            //SetGridLines();
+            
         }
 
-        private void setQueueButtonEnable()
+        private void DoubleClick_Timer(object sender, EventArgs e)
         {
-        }
-
-        public void PreviousAction()
-        {
-            SaveChange(HistoryType.Previous);
-        }
-
-        public void NextAction()
-        {
-            SaveChange(HistoryType.Next);
+            _doubleClickTimer.Stop();
         }
 
 
-        public Direction CurrentTemporaryDirection { get; set; }
-
+        #region 鼠标操作相关
         public void AddSelectedControl(System.Windows.Controls.Control uc)
         {
             if (!CurrentSelectedControlCollection.Contains(uc))
@@ -1024,28 +603,6 @@ namespace WF.Designer
         {
             if (CurrentSelectedControlCollection.Contains(uc))
                 CurrentSelectedControlCollection.Remove(uc);
-        }
-
-        private List<System.Windows.Controls.Control> _currentSelectedControlCollection;
-
-        public List<System.Windows.Controls.Control> CurrentSelectedControlCollection
-        {
-            get
-            {
-                if (_currentSelectedControlCollection == null)
-                    _currentSelectedControlCollection = new List<System.Windows.Controls.Control>();
-                return _currentSelectedControlCollection;
-            }
-        }
-
-        //bool ctrlKeyIsPress;
-        public bool CtrlKeyIsPress
-        {
-            get
-            {
-                return (Keyboard.Modifiers == ModifierKeys.Control);
-                //return ctrlKeyIsPress;
-            }
         }
 
         public void SetWorkFlowElementSelected(System.Windows.Controls.Control uc, bool isSelected)
@@ -1066,181 +623,15 @@ namespace WF.Designer
             int count = CurrentSelectedControlCollection.Count;
             for (int i = 0; i < count; i++)
             {
-                ((IElement) CurrentSelectedControlCollection[i]).IsSelectd = false;
+                ((IElement)CurrentSelectedControlCollection[i]).IsSelectd = false;
             }
             CurrentSelectedControlCollection.Clear();
             if (uc != null)
             {
-                ((IElement) uc).IsSelectd = true;
+                ((IElement)uc).IsSelectd = true;
                 AddSelectedControl(uc);
             }
             mouseIsInContainer = true;
-        }
-
-        public void DeleteSeletedControl()
-        {
-            if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
-                return;
-            FlowNode a = null;
-            Direction r = null;
-            NodeLabel l = null;
-            for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-            {
-                if (CurrentSelectedControlCollection[i] is FlowNode)
-                {
-                    a = CurrentSelectedControlCollection[i] as FlowNode;
-                    a.Delete();
-                }
-                if (CurrentSelectedControlCollection[i] is Direction)
-                {
-                    r = CurrentSelectedControlCollection[i] as Direction;
-                    r.Delete();
-                }
-                if (CurrentSelectedControlCollection[i] is NodeLabel)
-                {
-                    l = CurrentSelectedControlCollection[i] as NodeLabel;
-                    l.Delete();
-                }
-            }
-            ClearSelectFlowElement(null);
-        }
-
-        public void AlignTop()
-        {
-            if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
-                return;
-            FlowNode a = null;
-            double minY = 100000.0;
-            for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-            {
-                if (CurrentSelectedControlCollection[i] is FlowNode)
-                {
-                    a = CurrentSelectedControlCollection[i] as FlowNode;
-
-                    if (a.CenterPoint.Y < minY)
-                        minY = a.CenterPoint.Y;
-                }
-            }
-            for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-            {
-                if (CurrentSelectedControlCollection[i] is FlowNode)
-                {
-                    a = CurrentSelectedControlCollection[i] as FlowNode;
-                    a.CenterPoint = new Point(a.CenterPoint.X, minY);
-                }
-            }
-        }
-
-        public void AlignBottom()
-        {
-            if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
-                return;
-            FlowNode a = null;
-            double maxY = 0;
-            for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-            {
-                if (CurrentSelectedControlCollection[i] is FlowNode)
-                {
-                    a = CurrentSelectedControlCollection[i] as FlowNode;
-
-                    if (a.CenterPoint.Y > maxY)
-                        maxY = a.CenterPoint.Y;
-                }
-            }
-            for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-            {
-                if (CurrentSelectedControlCollection[i] is FlowNode)
-                {
-                    a = CurrentSelectedControlCollection[i] as FlowNode;
-                    a.CenterPoint = new Point(a.CenterPoint.X, maxY);
-                }
-            }
-        }
-
-        public void AlignLeft()
-        {
-            if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
-                return;
-            FlowNode a = null;
-            double minX = 100000.0;
-            for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-            {
-                if (CurrentSelectedControlCollection[i] is FlowNode)
-                {
-                    a = CurrentSelectedControlCollection[i] as FlowNode;
-
-                    if (a.CenterPoint.X < minX)
-                        minX = a.CenterPoint.X;
-                }
-            }
-            for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-            {
-                if (CurrentSelectedControlCollection[i] is FlowNode)
-                {
-                    a = CurrentSelectedControlCollection[i] as FlowNode;
-                    a.CenterPoint = new Point(minX, a.CenterPoint.Y);
-                }
-            }
-        }
-
-        public void AlignRight()
-        {
-            if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
-                return;
-            FlowNode a = null;
-            double maxX = 0;
-            for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-            {
-                if (CurrentSelectedControlCollection[i] is FlowNode)
-                {
-                    a = CurrentSelectedControlCollection[i] as FlowNode;
-
-                    if (a.CenterPoint.X > maxX)
-                        maxX = a.CenterPoint.X;
-                }
-            }
-            for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-            {
-                if (CurrentSelectedControlCollection[i] is FlowNode)
-                {
-                    a = CurrentSelectedControlCollection[i] as FlowNode;
-                    a.CenterPoint = new Point(maxX, a.CenterPoint.Y);
-                }
-            }
-        }
-
-        private int moveStepLenght
-        {
-            get
-            {
-                if (CtrlKeyIsPress)
-                    return 5;
-                return 1;
-            }
-        }
-
-        public void MoveUp()
-        {
-            MoveControlCollectionByDisplacement(0, -moveStepLenght, null);
-            SaveChange(HistoryType.New);
-        }
-
-        public void MoveLeft()
-        {
-            MoveControlCollectionByDisplacement(-moveStepLenght, 0, null);
-            SaveChange(HistoryType.New);
-        }
-
-        public void MoveDown()
-        {
-            MoveControlCollectionByDisplacement(0, moveStepLenght, null);
-            SaveChange(HistoryType.New);
-        }
-
-        public void MoveRight()
-        {
-            MoveControlCollectionByDisplacement(moveStepLenght, 0, null);
-            SaveChange(HistoryType.New);
         }
 
         public void MoveControlCollectionByDisplacement(double x, double y, UserControl uc)
@@ -1300,10 +691,6 @@ namespace WF.Designer
             //}
         }
 
-        private Point mousePosition;
-        private bool trackingMouseMove = false;
-        private System.Windows.Threading.DispatcherTimer _doubleClickTimer;
-
         private void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (_doubleClickTimer.IsEnabled)
@@ -1331,13 +718,6 @@ namespace WF.Designer
                 mousePosition = e.GetPosition(element);
                 trackingMouseMove = true;
             }
-        }
-
-        private Rectangle temproaryEllipse;
-
-        public bool IsMouseSelecting
-        {
-            get { return (temproaryEllipse != null); }
         }
 
         private void Container_MouseMove(object sender, MouseEventArgs e)
@@ -1456,8 +836,8 @@ namespace WF.Designer
                 if (width > 10 && height > 10)
                 {
                     Point p = new Point();
-                    p.X = (double) temproaryEllipse.GetValue(Canvas.LeftProperty);
-                    p.Y = (double) temproaryEllipse.GetValue(Canvas.TopProperty);
+                    p.X = (double)temproaryEllipse.GetValue(Canvas.LeftProperty);
+                    p.Y = (double)temproaryEllipse.GetValue(Canvas.TopProperty);
 
                     FlowNode a = null;
                     Direction r = null;
@@ -1509,246 +889,6 @@ namespace WF.Designer
             }
         }
 
-        public void PastMemoryToContainer()
-        {
-            if (CopyElementCollectionInMemory != null
-                && CopyElementCollectionInMemory.Count > 0)
-            {
-                FlowNode a = null;
-                Direction r = null;
-                NodeLabel l = null;
-
-                foreach (System.Windows.Controls.Control c in CopyElementCollectionInMemory)
-                {
-                    if (c is Direction)
-                    {
-                        r = c as Direction;
-                        AddDirection(r);
-                        if (r.LineType == DirectionLineType.Line)
-                        {
-                            r.SetDirectionPosition(new Point(r.BeginPointPosition.X + 20, r.BeginPointPosition.Y + 20),
-                                                   new Point(r.EndPointPosition.X + 20, r.EndPointPosition.Y + 20));
-                        }
-                        else
-                        {
-                            r.SetDirectionPosition(new Point(r.BeginPointPosition.X + 20, r.BeginPointPosition.Y + 20),
-                                                   new Point(r.EndPointPosition.X + 20, r.EndPointPosition.Y + 20)
-                                                   ,
-                                                   new Point(r.DirectionTurnPoint1.CenterPosition.X + 20,
-                                                             r.DirectionTurnPoint1.CenterPosition.Y + 20)
-                                                   ,
-                                                   new Point(r.DirectionTurnPoint2.CenterPosition.X + 20,
-                                                             r.DirectionTurnPoint2.CenterPosition.Y + 20)
-                                );
-                        }
-                    }
-                }
-
-
-                foreach (System.Windows.Controls.Control c in CopyElementCollectionInMemory)
-                {
-                    if (c is FlowNode)
-                    {
-                        a = c as FlowNode;
-                        AddFlowNode(a);
-                        a.CenterPoint = new Point(a.CenterPoint.X + 20, a.CenterPoint.Y + 20);
-                        a.Move(a, null);
-                    }
-                }
-                foreach (System.Windows.Controls.Control c in CopyElementCollectionInMemory)
-                {
-                    if (c is NodeLabel)
-                    {
-                        l = c as NodeLabel;
-                        AddLabel(l);
-                        l.Position = new Point(l.Position.X + 20, l.Position.Y + 20);
-                    }
-                }
-
-
-                for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
-                {
-                    ((IElement) CurrentSelectedControlCollection[i]).IsSelectd = false;
-                }
-                CurrentSelectedControlCollection.Clear();
-
-                for (int i = 0; i < CopyElementCollectionInMemory.Count; i++)
-                {
-                    ((IElement) CopyElementCollectionInMemory[i]).IsSelectd = true;
-                    AddSelectedControl(CopyElementCollectionInMemory[i]);
-                }
-                CopySelectedControlToMemory(null);
-
-                SaveChange(HistoryType.New);
-            }
-        }
-
-        public void CopySelectedControlToMemory(System.Windows.Controls.Control currentControl)
-        {
-            copyElementCollectionInMemory = null;
-
-            if (currentControl != null)
-            {
-                if (currentControl is FlowNode)
-                {
-                    CopyElementCollectionInMemory.Add(((FlowNode) currentControl).Clone());
-                }
-                if (currentControl is Direction)
-                {
-                    CopyElementCollectionInMemory.Add(((Direction) currentControl).Clone());
-                }
-                if (currentControl is NodeLabel)
-                {
-                    CopyElementCollectionInMemory.Add(((NodeLabel) currentControl).Clone());
-                }
-            }
-            else
-            {
-                if (CurrentSelectedControlCollection != null
-                    && CurrentSelectedControlCollection.Count > 0)
-                {
-                    FlowNode a = null;
-                    Direction r = null;
-                    NodeLabel l = null;
-                    foreach (System.Windows.Controls.Control c in CurrentSelectedControlCollection)
-                    {
-                        if (c is FlowNode)
-                        {
-                            a = c as FlowNode;
-
-                            CopyElementCollectionInMemory.Add(a.Clone());
-                        }
-                    }
-                    foreach (System.Windows.Controls.Control c in CurrentSelectedControlCollection)
-                    {
-                        if (c is NodeLabel)
-                        {
-                            l = c as NodeLabel;
-
-                            CopyElementCollectionInMemory.Add(l.Clone());
-                        }
-                    }
-                    foreach (System.Windows.Controls.Control c in CurrentSelectedControlCollection)
-                    {
-                        if (c is Direction)
-                        {
-                            r = c as Direction;
-                            r = r.Clone();
-                            CopyElementCollectionInMemory.Add(r);
-
-                            if (r.OriginDirection.BeginFlowNode != null)
-                            {
-                                FlowNode temA = null;
-                                foreach (System.Windows.Controls.Control c1 in CopyElementCollectionInMemory)
-                                {
-                                    if (c1 is FlowNode)
-                                    {
-                                        temA = c1 as FlowNode;
-                                        if (r.OriginDirection.BeginFlowNode == temA.OriginFlowNode)
-                                        {
-                                            r.BeginFlowNode = temA;
-                                        }
-                                    }
-                                }
-                            }
-                            if (r.OriginDirection.EndFlowNode != null)
-                            {
-                                FlowNode temA = null;
-                                foreach (System.Windows.Controls.Control c1 in CopyElementCollectionInMemory)
-                                {
-                                    if (c1 is FlowNode)
-                                    {
-                                        temA = c1 as FlowNode;
-                                        if (r.OriginDirection.EndFlowNode == temA.OriginFlowNode)
-                                        {
-                                            r.EndFlowNode = temA;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    foreach (System.Windows.Controls.Control c in CurrentSelectedControlCollection)
-                    {
-                        if (c is FlowNode)
-                        {
-                            a = c as FlowNode;
-
-                            a.OriginFlowNode = null;
-                        }
-                        if (c is Direction)
-                        {
-                            r = c as Direction;
-
-                            r.OriginDirection = null;
-                        }
-                    }
-                }
-            }
-        }
-
-        public void UpdateSelectedControlToMemory(System.Windows.Controls.Control currentControl)
-        {
-            NodeLabel ll = (NodeLabel) currentControl;
-            ll.txtLabelName.Visibility = Visibility.Collapsed;
-            ll.tbLabelName.Visibility = Visibility.Visible;
-        }
-
-        public void UpDateSelectedNode(System.Windows.Controls.Control currentControl)
-        {
-            FlowNode f = (FlowNode) currentControl;
-            f.sdPicture.tbNodeName.Visibility = Visibility.Visible;
-            f.sdPicture.txtFlowNodeName.Visibility = Visibility.Collapsed;
-        }
-
-        private void applyContainerCulture()
-        {
-        }
-
-        public void ApplyCulture()
-        {
-            applyContainerCulture();
-        }
-
-        private List<System.Windows.Controls.Control> copyElementCollectionInMemory;
-
-        public List<System.Windows.Controls.Control> CopyElementCollectionInMemory
-        {
-            get
-            {
-                if (copyElementCollectionInMemory == null)
-                    copyElementCollectionInMemory = new List<System.Windows.Controls.Control>();
-                return copyElementCollectionInMemory;
-            }
-            set { copyElementCollectionInMemory = value; }
-        }
-
-
-        private void btnApplyEnglishCulture_Click(object sender, RoutedEventArgs e)
-        {
-            System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-us");
-            Ccflow.Web.Component.Workflow.Configure.CurrentCulture = culture;
-
-            ApplyCulture();
-        }
-
-        private void btnApplyChineseCulture_Click(object sender, RoutedEventArgs e)
-        {
-            System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("zh-cn");
-            Ccflow.Web.Component.Workflow.Configure.CurrentCulture = culture;
-
-
-            ApplyCulture();
-        }
-
-        private bool mouseIsInContainer = false;
-
-        public bool MouseIsInContainer
-        {
-            get { return mouseIsInContainer; }
-            set { mouseIsInContainer = value; }
-        }
-
         private void Container_MouseEnter(object sender, MouseEventArgs e)
         {
             mouseIsInContainer = true;
@@ -1767,75 +907,88 @@ namespace WF.Designer
             }
             e.Handled = true;
         }
+        
+        #endregion
+       
+        #region IContainer 成员，但是不需要实现
 
-        #region IContainer 成员
-
-        public UserStation Station()
+        public void SetProper(string lang, string dotype, string fk_flow, string node1, string node2, string title)
         {
-            UserStation us = new UserStation();
-            us.IsPass = true;
-            UserStation temCR = null;
-            IElement iel;
-            bool hasInitial = false;
-            bool hasCompledion = false;
-            string msg = "";
-            foreach (UIElement uic in cnsDesignerContainer.Children)
-            {
-                iel = uic as IElement;
-                if (iel != null)
-                {
-                    temCR = iel.Station();
-                    if (!temCR.IsPass)
-                    {
-                        us.IsPass = false;
-                        us.Message += temCR.Message;
-                    }
-                    if (iel.ElementType == WorkFlowElementType.FlowNode)
-                    {
-                        if (((FlowNode) uic).Type == FlowNodeType.INITIAL)
-                        {
-                            hasInitial = true;
-                        }
-                        else if (((FlowNode) uic).Type == FlowNodeType.COMPLETION)
-                        {
-                            hasCompledion = true;
-                        }
-                    }
-                }
-            }
-
-            if (!hasInitial)
-            {
-                us.IsPass = false;
-                msg += Text.Message_MustHaveOnlyOneBeginFlowNode + "\r\n";
-            }
-            if (!hasCompledion)
-            {
-                us.IsPass = false;
-                msg += Text.Message_MustHaveAtLeastOneEndFlowNode + "\r\n";
-            }
-            //if (string.IsNullOrEmpty(txtWorkFlowName.Text))
-            //{
-            //    try
-            //    {
-            //        cr.IsPass = false;
-            //        msg += "必须输入流程名称\r\n";
-            //    }
-            //    catch { }
-            //}
-            msg += Text.Message_ModifyWorkFlowByTip;
-            us.Message = msg;
-            return us;
+            throw new NotImplementedException();
+        }
+        public void CopySelectedControlToMemory(System.Windows.Controls.Control currentControl)
+        {
+            throw new NotImplementedException();
         }
 
-        #endregion
+        public void UpdateSelectedControlToMemory(System.Windows.Controls.Control currentControl)
+        {
+            throw new NotImplementedException();
+        }
 
-        #region IContainer 成员
+        public void UpDateSelectedNode(System.Windows.Controls.Control currentControl)
+        {
+            throw new NotImplementedException();
+        }
 
-        public bool IsContainerRefresh { get
-            ; set
-                ; }
+        public void DeleteSeletedControl()
+        {
+            throw new NotImplementedException();
+        }
 
+        public void RemoveFlowNode(FlowNode a)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveLabel(NodeLabel l)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowFlowNodeSetting(FlowNode a)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowDirectionSetting(Direction r)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PreviousAction()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NextAction()
+        {
+            throw new NotImplementedException();
+        }
+        public void RemoveDirection(Direction r)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LoadFromXmlString(string xml)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ToXmlString()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PastMemoryToContainer()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddLabel(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }
