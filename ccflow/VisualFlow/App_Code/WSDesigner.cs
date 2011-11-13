@@ -70,7 +70,7 @@ public class WSDesigner : WSBase
         try
         {
             string sql = " SELECT A.FK_Node, A.RDT,A.SDT,A.FK_Emp,b.Name as EmpName";
-            sql += " FROM WF_GenerWorkerList A, WF_Emp B WHERE A.FK_Emp=b.No AND A.IsEnable=1 AND A.WorkID=" + workid;
+            sql += " FROM WF_GenerWorkerList A, WF_Emp B WHERE A.FK_Emp=b.No AND A.IsEnable=1 AND A.WorkID=" + workid + " Order by A.SDT";
 
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
             if (dt.Rows.Count == 0)

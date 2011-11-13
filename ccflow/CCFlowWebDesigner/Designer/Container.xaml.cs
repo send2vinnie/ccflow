@@ -1098,14 +1098,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             sbContainerCoverClose.Completed += new EventHandler(sbContainerCoverClose_Completed);
             sbContainerCoverClose.Begin();
-
-
         }
 
         public void AddDirection()
         {
-
-            Direction r = new Direction((IContainer)this);
+            var r = new Direction((IContainer)this);
             r.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
             r.DirectionName = Text.NewDirection + NextNewDirectionIndex.ToString();
             AddDirection(r);

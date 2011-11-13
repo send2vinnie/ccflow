@@ -42,7 +42,10 @@ namespace WF.Designer
         public SelContainer(string fk_flow, string workid)
             : this()
         {
-            getFlow(fk_flow);
+            FK_Flow = fk_flow;
+            WorkID = workid;
+            _Service.GetDTOfWorkListAsync(FK_Flow, WorkID);
+            _Service.GetDTOfWorkListCompleted += _Service_GetDTOfWorkListCompleted;
         }
         #endregion
 
@@ -59,29 +62,9 @@ namespace WF.Designer
             set { _service = value; }
         }
 
-        public string FK_Flow
-        {
-            get
-            {
-                if (HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
-                {
-                    return HtmlPage.Document.QueryString["FK_Flow"];
-                }
-                return "";
-            }
-        }
+        public string FK_Flow { get; set; }
 
-        public string WorkID
-        {
-            get
-            {
-                if (HtmlPage.Document.QueryString.ContainsKey("WorkID"))
-                {
-                    return HtmlPage.Document.QueryString["WorkID"];
-                }
-                return "";
-            }
-        }
+        public string WorkID { get; set; }
 
         public bool IsNeedSave { get; set; }
 
@@ -283,9 +266,200 @@ namespace WF.Designer
         private System.Windows.Threading.DispatcherTimer _doubleClickTimer;
         private Canvas _gridLinesContainer;
         private Rectangle temproaryEllipse;
+        private DataSet workListDataSet;
+
 
         #endregion
         
+        #region 加载流程相关
+        private void getFlow(string flowID)
+        {
+            this.FlowID = flowID;
+            _Service.RunSQLReturnTableAsync(
+                "select nodeid,Name,X,Y,nodepostype,HisToNDs from wf_node where fk_flow=" + flowID, false);
+            _Service.RunSQLReturnTableCompleted += _service_RunSQLReturnTableCompleted;
+        }
+
+        private void _service_RunSQLReturnTableCompleted(object sender, RunSQLReturnTableCompletedEventArgs e)
+        {
+            var ds = new DataSet();
+            ds.FromXml(e.Result);
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                FlowNode flowNode = null;
+                if (dr["nodepostype"].ToString() == "0")
+                {
+                    flowNode = new FlowNode((IContainer)this, FlowNodeType.INITIAL);
+                }
+                else if (dr["nodepostype"].ToString() == "2")
+                {
+                    flowNode = new FlowNode((IContainer)this, FlowNodeType.COMPLETION);
+                }
+                else
+                {
+                    flowNode = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
+                }
+                flowNode.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
+                flowNode.FlowID = FlowID;
+                flowNode.FlowNodeID = dr["nodeid"].ToString();
+                flowNode.FlowNodeName = dr["Name"].ToString();
+                double x = double.Parse(dr["X"]);
+                double y = double.Parse(dr["Y"]);
+                if (x < 50)
+                    x = 50;
+                if (x > 1190)
+                {
+                    x = 1190;
+                }
+                if (y < 30)
+                    y = 30;
+                if (y > 770)
+                    y = 770;
+                flowNode.CenterPoint = new Point(x, y);
+                AddFlowNode(flowNode);
+            }
+            _Service.GetLablesAsync(FlowID);
+            _Service.GetLablesCompleted += _service_GetLablesCompleted;
+
+            _Service.GetDirectionAsync(FlowID);
+            _Service.GetDirectionCompleted += _service_GetDirectionCompleted;
+
+            SaveChange(HistoryType.New);
+            _Service.RunSQLReturnTableCompleted -= _service_RunSQLReturnTableCompleted;
+        }
+
+        void _Service_GetDTOfWorkListCompleted(object sender, WF.WS.GetDTOfWorkListCompletedEventArgs e)
+        {
+            if (e.Result == null)
+            {
+                return;
+            }
+            try
+            {
+                workListDataSet = new DataSet();
+                workListDataSet.FromXml(e.Result);
+
+                getFlow(FK_Flow);
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("在取得轨迹信息时出错，错误信息为：\n"  + exception.Message);
+            }
+        }
+
+        private void _service_GetDirectionCompleted(object sender, GetDirectionCompletedEventArgs e)
+        {
+            var ds = new DataSet();
+            ds.FromXml(e.Result);
+
+            foreach (FlowNode bfn in FlowNodeCollections)
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    if (bfn.FlowNodeID == dr["Node"].ToString())
+                    {
+                        foreach (FlowNode efn in FlowNodeCollections)
+                        {
+                            if (efn.FlowNodeID == dr["ToNode"].ToString())
+                            {
+                                var d = new Direction((IContainer)this);
+                                d.FlowID = FlowID;
+                                d.BeginFlowNode = bfn;
+                                d.EndFlowNode = efn;
+                                AddDirection(d);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            _Service.GetDirectionCompleted -= _service_GetDirectionCompleted;
+        }
+
+        private void _service_GetLablesCompleted(object sender, GetLablesCompletedEventArgs e)
+        {
+            var ds = new DataSet();
+            ds.FromXml(e.Result);
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                var nodeLabel = new NodeLabel((IContainer)this);
+                nodeLabel.LabelName = dr["Name"].ToString();
+                nodeLabel.Position = new Point(double.Parse(dr["X"].ToString()), double.Parse(dr["Y"].ToString()));
+                nodeLabel.LableID = dr["MyPK"].ToString();
+
+                AddLabel(nodeLabel);
+            }
+            _Service.GetLablesCompleted -= _service_GetLablesCompleted;
+        }
+
+        public void AddDirection(Direction r)
+        {
+            r.Worklist(workListDataSet);
+            if (!cnsDesignerContainer.Children.Contains(r))
+            {
+                cnsDesignerContainer.Children.Add(r);
+                r.Container = this;
+
+            }
+            if (!DirectionCollections.Contains(r))
+            {
+                DirectionCollections.Add(r);
+            }
+        }
+
+        public void AddLabel(NodeLabel l)
+        {
+            if (!cnsDesignerContainer.Children.Contains(l))
+            {
+                cnsDesignerContainer.Children.Add(l);
+            }
+            if (!LableCollections.Contains(l))
+            {
+                LableCollections.Add(l);
+            }
+        }
+
+        public void AddFlowNode(FlowNode a)
+        {
+            if (!cnsDesignerContainer.Children.Contains(a))
+            {
+                cnsDesignerContainer.Children.Add(a);
+
+                a.Container = this;
+                a.FlowID = FlowID;
+                if (a.Type != FlowNodeType.STATIONODE)
+                {
+                    a.Worklist(workListDataSet);
+                }
+            }
+            if (!FlowNodeCollections.Contains(a))
+            {
+                FlowNodeCollections.Add(a);
+            }
+        }
+        
+        #endregion
+
+        #region 菜单相关
+        public void ShowFlowNodeContentMenu(FlowNode a, object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        public void ShowLabelContentMenu(NodeLabel l, object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        public void ShowDirectionContentMenu(Direction r, object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        } 
+        #endregion
+
         private void Content_Resized(object sender, EventArgs e)
         {
             cnsDesignerContainer.Width = Application.Current.Host.Content.ActualWidth;
@@ -293,7 +467,7 @@ namespace WF.Designer
             SetGridLines();
         }
 
-        
+
         public void SetGridLines()
         {
             GridLinesContainer.Children.Clear();
@@ -361,220 +535,6 @@ namespace WF.Designer
             cr.IsPass = true;
             return cr;
         }
-
-        #region 加载流程相关
-        private void getFlow(string flowID)
-        {
-            this.FlowID = flowID;
-            _Service.RunSQLReturnTableAsync(
-                "select nodeid,Name,X,Y,nodepostype,HisToNDs from wf_node where fk_flow=" + flowID, false);
-            _Service.RunSQLReturnTableCompleted += _service_RunSQLReturnTableCompleted;
-        }
-
-        private void _service_RunSQLReturnTableCompleted(object sender, RunSQLReturnTableCompletedEventArgs e)
-        {
-            var ds = new DataSet();
-            ds.FromXml(e.Result);
-
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                FlowNode flowNode = null;
-                if (dr["nodepostype"].ToString() == "0")
-                {
-                    flowNode = new FlowNode((IContainer)this, FlowNodeType.INITIAL);
-                }
-                else if (dr["nodepostype"].ToString() == "2")
-                {
-                    flowNode = new FlowNode((IContainer)this, FlowNodeType.COMPLETION);
-                }
-                else
-                {
-                    flowNode = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
-                }
-                flowNode.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
-                flowNode.FlowID = FlowID;
-                flowNode.FlowNodeID = dr["nodeid"].ToString();
-                flowNode.FlowNodeName = dr["Name"].ToString();
-                double x = double.Parse(dr["X"]);
-                double y = double.Parse(dr["Y"]);
-                if (x < 50)
-                    x = 50;
-                if (x > 1190)
-                {
-                    x = 1190;
-                }
-                if (y < 30)
-                    y = 30;
-                if (y > 770)
-                    y = 770;
-                flowNode.CenterPoint = new Point(x, y);
-                AddFlowNode(flowNode);
-            }
-            _Service.GetLablesAsync(FlowID);
-            _Service.GetLablesCompleted += _service_GetLablesCompleted;
-
-            _Service.GetDirectionAsync(FlowID);
-            _Service.GetDirectionCompleted += _service_GetDirectionCompleted;
-
-
-            SaveChange(HistoryType.New);
-            _Service.RunSQLReturnTableCompleted -= _service_RunSQLReturnTableCompleted;
-        }
-
-        private void _service_GetDirectionCompleted(object sender, GetDirectionCompletedEventArgs e)
-        {
-            var ds = new DataSet();
-            ds.FromXml(e.Result);
-
-            foreach (FlowNode bfn in FlowNodeCollections)
-            {
-                foreach (DataRow dr in ds.Tables[0].Rows)
-                {
-                    if (bfn.FlowNodeID == dr["Node"].ToString())
-                    {
-                        foreach (FlowNode efn in FlowNodeCollections)
-                        {
-                            if (efn.FlowNodeID == dr["ToNode"].ToString())
-                            {
-                                var d = new Direction((IContainer)this);
-                                d.FlowID = FlowID;
-                                d.BeginFlowNode = bfn;
-                                d.EndFlowNode = efn;
-                                AddDirection(d);
-                            }
-                        }
-                    }
-                }
-            }
-            if (!string.IsNullOrEmpty(WorkID))
-            {
-                _Service.GetDTOfWorkListAsync(FK_Flow, WorkID);
-                _Service.GetDTOfWorkListCompleted += _Service_GetDTOfWorkListCompleted;
-            }
-            _Service.GetDirectionCompleted -= _service_GetDirectionCompleted;
-        }
-
-        private void _service_GetLablesCompleted(object sender, GetLablesCompletedEventArgs e)
-        {
-            var ds = new DataSet();
-            ds.FromXml(e.Result);
-
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                var nodeLabel = new NodeLabel((IContainer)this);
-                nodeLabel.LabelName = dr["Name"].ToString();
-                nodeLabel.Position = new Point(double.Parse(dr["X"].ToString()), double.Parse(dr["Y"].ToString()));
-                nodeLabel.LableID = dr["MyPK"].ToString();
-
-                AddLabel(nodeLabel);
-            }
-            _Service.GetLablesCompleted -= _service_GetLablesCompleted;
-        }
-
-        private void _Service_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
-        {
-            DataSet ds = new DataSet();
-            //ds.FromXml(e.Result);
-            //foreach (DataRow dr in ds.Tables[0].Rows)
-            //{
-            // IElement ele;
-            // foreach (UIElement c in cnsDesignerContainer.Children)
-            // {
-            //     ele = c as IElement;
-            //     if (ele != null)
-            //     {
-
-
-            //         if (ele.ElementType == WorkFlowElementType.Direction)
-            //         {
-            //             Direction d = ele as Direction;
-
-            //             if (d.EndFlowNode.FlowNodeID == dr["FK_Node"].ToString())
-            //             {
-            //                 SolidColorBrush brush = new SolidColorBrush();
-            //                 brush.Color = Colors.Red;
-            //                 d.begin.Fill = brush;
-            //                 d.endArrow.Stroke = brush;
-            //                 d.line.Stroke = brush;
-
-
-            //             }
-
-
-            //         }
-
-            //     }
-            // }
-
-
-            //}
-            SaveChange(HistoryType.New);
-        }
-
-        public void AddDirection(Direction r)
-        {
-            if (!cnsDesignerContainer.Children.Contains(r))
-            {
-                cnsDesignerContainer.Children.Add(r);
-                r.Container = this;
-
-            }
-            if (!DirectionCollections.Contains(r))
-            {
-                DirectionCollections.Add(r);
-            }
-        }
-
-        public void AddLabel(NodeLabel l)
-        {
-            if (!cnsDesignerContainer.Children.Contains(l))
-            {
-                cnsDesignerContainer.Children.Add(l);
-            }
-            if (!LableCollections.Contains(l))
-            {
-                LableCollections.Add(l);
-            }
-        }
-
-        public void AddFlowNode(FlowNode a)
-        {
-            if (!cnsDesignerContainer.Children.Contains(a))
-            {
-                cnsDesignerContainer.Children.Add(a);
-
-                a.Container = this;
-                a.FlowID = FlowID;
-                if (a.Type != FlowNodeType.STATIONODE)
-                {
-                    a.worklist();
-                }
-            }
-            if (!FlowNodeCollections.Contains(a))
-            {
-                FlowNodeCollections.Add(a);
-            }
-        }
-
-        #endregion
-
-
-        #region 菜单相关
-        public void ShowFlowNodeContentMenu(FlowNode a, object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        public void ShowLabelContentMenu(NodeLabel l, object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        public void ShowDirectionContentMenu(Direction r, object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        } 
-        #endregion
 
         public void ShowMessage(string message)
         {

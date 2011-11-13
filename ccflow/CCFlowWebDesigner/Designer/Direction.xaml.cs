@@ -508,7 +508,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public Direction(IContainer container)
             : this(container, false)
         {
-            worklist();
         }
         public Direction(IContainer container, bool isTemporary):this(container,isTemporary, DirectionLineType.Line)
         {
@@ -1754,40 +1753,24 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             return null;
         }
 
-        public void worklist()
+        public void Worklist(DataSet dataSet)
         {
-            if (!(string.IsNullOrEmpty(_container.FK_Flow) && string.IsNullOrEmpty(_container.WorkID)))
-            {
-                _container._Service.GetDTOfWorkListAsync(_container.FK_Flow, _container.WorkID);
-                _container._Service.GetDTOfWorkListCompleted +=
-                    new EventHandler<WF.WS.GetDTOfWorkListCompletedEventArgs>(_Service_GetDTOfWorkListCompleted);
-            }
-        }
-        void _Service_GetDTOfWorkListCompleted(object sender, WF.WS.GetDTOfWorkListCompletedEventArgs e)
-        {
-            if (e.Result == null)
-                return;
-            DataSet ds = new DataSet();
-            try
-            {
-                ds.FromXml(e.Result);
-            }
-            catch { }
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
+           if(dataSet == null || dataSet.Tables.Count == 0)
+           {
+               return;
+           }
+            foreach (DataRow dr in dataSet.Tables[0].Rows)
+            {       
                 if (this.EndFlowNode.FlowNodeID == dr["FK_Node"].ToString())
                 {
-                    SolidColorBrush brush = new SolidColorBrush();
+                    var brush = new SolidColorBrush();
                     brush.Color = Colors.Red;
                     this.begin.Fill = brush;
                     this.endArrow.Stroke = brush;
                     this.line.Stroke = brush;
                 }
-               
-             }
 
-
-            
+            }            
         }
 
         #endregion

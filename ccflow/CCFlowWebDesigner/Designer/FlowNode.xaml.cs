@@ -1455,38 +1455,19 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             return us;
         }
 
-        public void worklist()
+        public void Worklist(DataSet dataSet)
         {
-            if (!(string.IsNullOrEmpty(_container.FK_Flow) && string.IsNullOrEmpty(_container.WorkID)))
-            {
-                _container._Service.GetDTOfWorkListAsync(_container.FK_Flow, _container.WorkID);
-                _container._Service.GetDTOfWorkListCompleted += _Service_GetDTOfWorkListCompleted;
-            }
-        }
-
-        public string StationMessage
-        {
-            set
-            {
-                sdPicture.picSTATION.tbMessage.Text = value;
-            }
-        }
-
-        void _Service_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
-        {
-            if (e.Result == null)
+            if (dataSet == null || dataSet.Tables.Count == 0)
             {
                 return;
             }
 
             bool ishave = false;
-            var ds = new DataSet();
-            ds.FromXml(e.Result);
             string empName = "：";
 
             string sdt = "";
             int rowIndex = 0;
-            foreach (DataRow dr in ds.Tables[0].Rows)
+            foreach (DataRow dr in dataSet.Tables[0].Rows)
             {
                 if (this.FlowNodeID == dr["FK_Node"].ToString())
                 {
@@ -1494,7 +1475,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     empName += dr["EmpName"].ToString() + ";";
 
                     // 第一个点应该是 xxx在xxx时间发起，而非xxx在什么时间接受.
-                    if(rowIndex == 0)
+                    if (rowIndex == 0)
                     {
                         sdt = DateTime.Parse(dr["RDT"].ToString()).ToString("MM月dd号HH时mm分") + "发起";
                     }
@@ -1508,13 +1489,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             if (ishave)
             {
                 var dir = new Direction(_container)
-                              {
-                                  BeginFlowNode = this,
-                                  EndFlowNode = stationTipControl,
-                                  IsTemporaryDirection = true,
-                                  FlowID = this.FlowID,
-                                  Container = _container
-                              };
+                {
+                    BeginFlowNode = this,
+                    EndFlowNode = stationTipControl,
+                    IsTemporaryDirection = true,
+                    FlowID = this.FlowID,
+                    Container = _container
+                };
 
                 _container.AddDirection(dir);
 
@@ -1525,6 +1506,19 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 ishave = false;
             }
             _container._Service.GetDTOfWorkListCompleted -= _Service_GetDTOfWorkListCompleted;
+        }
+
+        public string StationMessage
+        {
+            set
+            {
+                sdPicture.picSTATION.tbMessage.Text = value;
+            }
+        }
+
+        void _Service_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
+        {
+            
 
         }
 
