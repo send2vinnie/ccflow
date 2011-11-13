@@ -336,7 +336,6 @@ namespace BP.WF
                     MapDtls dtls = new MapDtls("ND" + int.Parse(this.No) + "01");
                     foreach (MapDtl dtl in dtls)
                         DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + oid);
-
                     wk.OID = oid;
                 }
             }

@@ -82,6 +82,10 @@ namespace BP.WF
         /// 节点名称
         /// </summary>
         public const string FK_NodeText = "FK_NodeText";
+        /// <summary>
+        /// 发送人
+        /// </summary>
+        public const string Sender = "Sender";
         #endregion
     }
     /// <summary>
@@ -146,6 +150,20 @@ namespace BP.WF
                 this.SetValByKey(WorkerListAttr.FK_Node, value);
             }
            
+        }
+        /// <summary>
+        /// 发送人
+        /// </summary>
+        public string Sender
+        {
+            get
+            {
+                return this.GetValStrByKey(WorkerListAttr.Sender);
+            }
+            set
+            {
+                this.SetValByKey(WorkerListAttr.Sender, value);
+            }
         }
         /// <summary>
         /// 节点名称
@@ -361,6 +379,11 @@ namespace BP.WF
 
                 //对会签节点有效
                 map.AddTBInt(WorkerListAttr.IsPass, 0, "是否通过(对会签节点有效)", false, false);
+
+
+                //发送人. 2011-11-12 为天津用户增加。
+                map.AddTBString(WorkerListAttr.Sender, null, "发送人", true, false, 0, 100, 100);
+
                 this._enMap = map;
                 return this._enMap;
             }
@@ -373,9 +396,9 @@ namespace BP.WF
                 if (this.FID == this.WorkID)
                     this.FID = 0;
             }
+            this.Sender = BP.Web.WebUser.No + "," + BP.Web.WebUser.Name;
             return base.beforeInsert();
         }
-
     }
     /// <summary>
     /// 工作人员集合
