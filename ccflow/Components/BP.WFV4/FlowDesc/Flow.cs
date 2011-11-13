@@ -324,16 +324,19 @@ namespace BP.WF
             StartWork wk = (StartWork)nd.HisWork;
             int num = wk.Retrieve(StartWorkAttr.NodeState, 0,
                 StartWorkAttr.Rec, WebUser.No);
-
             if (SystemConfig.IsBSsystem)
             {
-
                 if (System.Web.HttpContext.Current.Request.QueryString["IsDeleteDraft"] == "1")
                 {
                     /*是否要删除Draft */
                     Int64 oid = wk.OID;
                     if (num != 0)
                         wk.ResetDefaultVal();
+
+                    MapDtls dtls = new MapDtls("ND" + int.Parse(this.No) + "01");
+                    foreach (MapDtl dtl in dtls)
+                        DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + oid);
+
                     wk.OID = oid;
                 }
             }
@@ -920,6 +923,12 @@ namespace BP.WF
             dt.TableName = "WF_Cond";
             ds.Tables.Add(dt);
 
+            // 转向规则.
+            sql = "SELECT * FROM WF_TurnTo WHERE FK_Flow='" + this.No + "'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "WF_TurnTo";
+            ds.Tables.Add(dt);
+
             // 方向
             string sqlin = "SELECT NodeID FROM WF_Node WHERE fk_flow='" + this.No + "'";
             sql = "select * from WF_Direction where Node IN (" + sqlin + ") OR ToNode In (" + sqlin + ")";
@@ -945,11 +954,19 @@ namespace BP.WF
             Listens lts = new Listens(this.No);
             ds.Tables.Add(lts.ToDataTableField("WF_Listen"));
 
+            // 可退回的节点。
+            sql = "SELECT * FROM WF_NodeReturn WHERE FK_Node IN (" + sqlin + ")";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "WF_NodeReturn";
+            ds.Tables.Add(dt);
+
+
             // 节点与部门。
             sql = "SELECT * FROM WF_NodeDept where FK_Node IN (" + sqlin + ")";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "WF_NodeDept";
             ds.Tables.Add(dt);
+
 
             // 节点与岗位权限。
             sql = "SELECT * FROM WF_NodeStation where FK_Node IN (" + sqlin + ")";
@@ -2827,7 +2844,6 @@ namespace BP.WF
                                     string val = dr[dc.ColumnName] as string;
                                     if (val == null)
                                         continue;
-
                                     switch (dc.ColumnName)
                                     {
                                         case "ToNodeID":
@@ -2843,8 +2859,45 @@ namespace BP.WF
                                     }
                                     cd.SetValByKey(dc.ColumnName, val);
                                 }
+
+                                // ，开始插入。
                                 cd.MyPK = DA.DBAccess.GenerOID().ToString();
                                 cd.Insert();
+                            }
+                            break;
+                        case "WF_NodeReturn"://可退回的节点。
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                NodeReturn cd = new NodeReturn();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+                                    switch (dc.ColumnName)
+                                    {
+                                        case NodeReturnAttr.FK_Node:
+                                        case NodeReturnAttr.ReturnN:
+                                            if (val.Length == 3)
+                                                val = flowID + val.Substring(1);
+                                            else if (val.Length == 4)
+                                                val = flowID + val.Substring(2);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    cd.SetValByKey(dc.ColumnName, val);
+                                }
+
+                                //开始插入。
+                                try
+                                {
+                                    cd.Insert();
+                                }
+                                catch
+                                {
+                                    cd.Update();
+                                }
                             }
                             break;
                         case "WF_Direction": //FAppSets.xml。
@@ -2873,6 +2926,34 @@ namespace BP.WF
                                 }
                                 dir.Insert();
                             }
+                            break;
+                        case "WF_TurnTo": //转向规则.
+                               foreach (DataRow dr in dt.Rows)
+                            {
+                                TurnTo fs = new TurnTo();
+
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+                                    switch (dc.ColumnName)
+                                    {
+                                        case TurnToAttr.FK_Node:
+                                            if (val.Length == 3)
+                                                val = flowID + val.Substring(1);
+                                            else if (val.Length == 4)
+                                                val = flowID + val.Substring(2);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    fs.SetValByKey(dc.ColumnName, val);
+                                }
+                                fs.FK_Flow = fl.No;
+                                fs.Save();
+                            }
+                            break;
                             break;
                         case "WF_FAppSet": //FAppSets.xml。
                             foreach (DataRow dr in dt.Rows)
@@ -2906,7 +2987,6 @@ namespace BP.WF
                             foreach (DataRow dr in dt.Rows)
                             {
                                 FlowStation fs = new FlowStation();
-                                fs.FK_Flow = fl.No;
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
@@ -2922,31 +3002,23 @@ namespace BP.WF
                                     }
                                     fs.SetValByKey(dc.ColumnName, val);
                                 }
+                                fs.FK_Flow = fl.No;
                                 fs.Insert();
                             }
-
                             break;
                         case "WF_LabNote": //LabNotes.xml。
                             foreach (DataRow dr in dt.Rows)
                             {
                                 LabNote ln = new LabNote();
-                                ln.FK_Flow = fl.No;
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
                                     if (val == null)
                                         continue;
-
-                                    switch (dc.ColumnName)
-                                    {
-                                        case LabNoteAttr.FK_Flow:
-                                            continue;
-                                        default:
-                                            break;
-                                    }
                                     ln.SetValByKey(dc.ColumnName, val);
                                 }
                                 ln.MyPK = ln.FK_Flow + "_" + ln.X + "_" + ln.Y;
+                                ln.FK_Flow = fl.No;
                                 ln.DirectInsert();
                             }
                             break;
@@ -2981,7 +3053,6 @@ namespace BP.WF
                             foreach (DataRow dr in dt.Rows)
                             {
                                 BP.WF.Ext.NodeO nd = new BP.WF.Ext.NodeO();
-                                nd.FK_Flow = fl.No;
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
@@ -3010,6 +3081,9 @@ namespace BP.WF
                                     }
                                     nd.SetValByKey(dc.ColumnName, val);
                                 }
+
+                                nd.FK_Flow = fl.No;
+                                nd.FlowName = fl.Name;
                                 try
                                 {
                                     nd.DirectInsert();
@@ -3018,17 +3092,20 @@ namespace BP.WF
                                 {
                                     nd.DirectUpdate();
                                 }
+                                //删除mapdata.
+                                DBAccess.RunSQL("DELETE FROM Sys_MapAttr WHERE FK_MapData='ND" + nd.NodeID + "'");
                             }
                             foreach (DataRow dr in dt.Rows)
                             {
                                 Node nd = new Node();
+                                nd.NodeID = int.Parse(dr[NodeAttr.NodeID].ToString());
+                                nd.RetrieveFromDBSources();
                                 nd.FK_Flow = fl.No;
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
                                     if (val == null)
                                         continue;
-
                                     switch (dc.ColumnName)
                                     {
                                         case NodeAttr.NodeID:
@@ -3051,7 +3128,10 @@ namespace BP.WF
                                     }
                                     nd.SetValByKey(dc.ColumnName, val);
                                 }
-                                nd.Update();
+                               
+                                nd.FK_Flow = fl.No;
+                                nd.FlowName = fl.Name;
+                                nd.DirectUpdate();
                             }
                             break;
                         case "WF_NodeStation": //FAppSets.xml。
@@ -3111,7 +3191,7 @@ namespace BP.WF
                                                     continue;
 
                                                 string ndExt = nd.Clone() as string;
-                                                
+
 
                                                 if (ndExt.Length == 3)
                                                     ndExt = flowID + ndExt.Substring(1);
@@ -3409,8 +3489,7 @@ namespace BP.WF
                 if (infoErr == "")
                     return fl; // "完全成功。";
 
-                infoErr = "执行期间出现如下非致命的错误：\t\r" + infoErr + "@ " + infoTable;
-                fl.DoCheck();
+                infoErr = "@执行期间出现如下非致命的错误：\t\r" + infoErr + "@ " + infoTable;
                 throw new Exception(infoErr);
             }
             catch (Exception ex)
