@@ -609,6 +609,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         if (nd.IsStartNode)
         {
+          
+
+
             /*判断是否来与子流程.*/
             if (string.IsNullOrEmpty(this.Request.QueryString["FK_Node_From"]) == false)
             {

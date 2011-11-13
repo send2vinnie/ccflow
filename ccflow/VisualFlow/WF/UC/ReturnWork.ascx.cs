@@ -301,6 +301,8 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                             wns.GenerByWorkID(wn.HisNode.HisFlow, this.WorkID);
                         NodeReturns rnds = new NodeReturns();
                         rnds.Retrieve(NodeReturnAttr.FK_Node, this.FK_Node);
+                        if (rnds.Count == 0)
+                            throw new Exception("@流程设计错误，您设置该节点可以退回指定的节点，但是指定的节点集合为空，请在节点属性设置它的制订节点。");
                         foreach (WorkNode mywn in wns)
                         {
                             if (mywn.HisNode.NodeID == this.FK_Node)
