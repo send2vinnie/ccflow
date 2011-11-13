@@ -1160,6 +1160,24 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             throw new Exception("@在保存前执行逻辑检查错误。" + ex.Message);
         }
 
+        #region 判断特殊的业务逻辑
+        if (currND.IsStartNode)
+        {
+            if (this.currND.HisFlow.HisFlowAppType == FlowAppType.PRJ)
+            {
+                /*对特殊的流程进行检查，检查是否有权限。*/
+                string prjNo = currWK.GetValStringByKey("PrjNo");
+                if (DBAccess.RunSQLReturnTable("SELECT * FROM Prj_EmpPrj WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "'").Rows.Count == 0)
+                {
+                    prjNo = currWK.GetValStringByKey("PrjNo");
+                    string prjName = currWK.GetValStringByKey("PrjName");
+                    throw new Exception("您不属于项目组(" + prjNo + "," + prjName + ")，您不能发起改流程。");
+                }
+            }
+        }
+        #endregion 判断特殊的业务逻辑。
+
+
         try
         {
             currWK.BeforeSave(); //调用业务逻辑检查。
@@ -1176,6 +1194,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         currWK.Rec = WebUser.No;
         currWK.SetValByKey("FK_Dept", WebUser.FK_Dept);
         currWK.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
+
+      
+
         try
         {
             if (currND.IsStartNode)
