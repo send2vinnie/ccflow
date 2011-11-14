@@ -588,6 +588,8 @@ namespace BP.WF
             if (flowDataViewExtFields == null)
                 flowDataViewExtFields = "";
 
+            return null;
+
             sql = "CREATE VIEW V_FlowData  ";
          //   sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
             sql += " AS ";
