@@ -115,10 +115,19 @@ public partial class WF_Frm : WebPage
                     en.DirectInsert();
                 this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
             }
+            Session["Count"] = null;
         }
-        catch
+        catch (Exception ex)
         {
-            this.Response.Redirect(this.Request.RawUrl, true);
+            if (Session["Count"] == null)
+            {
+                Session["Count"] = "1";
+                this.Response.Redirect(this.Request.RawUrl, true);
+            }
+            else
+            {
+                this.UCEn1.AddMsgOfWarning("异常错误,有可能是您的字段名称命名不符合规范，造成数据表无法创建，请删除它。", ex.Message + "<hr><a href='" + this.Request.RawUrl + "'><h2>点这里刷新。。。。</h2></a>");
+            }
             return;
         }
 
