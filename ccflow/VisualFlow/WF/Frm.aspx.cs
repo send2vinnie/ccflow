@@ -88,13 +88,13 @@ public partial class WF_Frm : WebPage
     {
         if (this.Request.QueryString["IsTest"] == "1")
         {
-            BP.SystemConfig.DoClearCash();
+           // BP.SystemConfig.DoClearCash();
         }
 
         MapData md = new MapData();
+        md.No = this.FK_MapData;
         try
         {
-            md.No = this.FK_MapData;
             if (md.RetrieveFromDBSources() == 0 && md.Name.Length > 3)
             {
                 MapDtl dtl = new MapDtl(this.FK_MapData);
@@ -116,6 +116,17 @@ public partial class WF_Frm : WebPage
         }
         catch (Exception ex)
         {
+            try
+            {
+                GEEntity en = md.HisGEEn;
+                en.CheckPhysicsTable();
+            }
+            catch (Exception exE)
+            {
+                this.UCEn1.AddMsgOfWarning("异常错误,有可能是您的字段名称命名不符合规范，造成数据表无法创建，请删除它。",
+                    exE.Message);
+            }
+
             if (Session["Count"] == null)
             {
                 Session["Count"] = "1";
