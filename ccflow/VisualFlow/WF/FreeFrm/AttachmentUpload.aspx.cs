@@ -45,11 +45,20 @@ public partial class WF_FreeFrm_UploadFile : WebPage
       }
       protected void Page_Load(object sender, EventArgs e)
       {
+
           if (this.DoType == "Del")
           {
               FrmAttachmentDB delDB = new FrmAttachmentDB();
               delDB.MyPK = this.DelPKVal;
               delDB.DirectDelete();
+          }
+          if (this.DoType == "Down")
+          {
+              FrmAttachmentDB downDB = new FrmAttachmentDB();
+              downDB.MyPK = this.DelPKVal;
+              downDB.DirectDelete();
+              BP.PubClass.DownloadFile(downDB.FileFullName, downDB.FileName);
+              this.WinClose();
           }
 
           this.Pub1.AddTable("width='100%'");
