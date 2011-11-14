@@ -55,10 +55,11 @@ public partial class WF_FreeFrm_UploadFile : WebPage
           if (this.DoType == "Down")
           {
               FrmAttachmentDB downDB = new FrmAttachmentDB();
-              downDB.MyPK = this.DelPKVal;
-              downDB.DirectDelete();
+              downDB.MyPK = this.MyPK;
+              downDB.Retrieve();
               BP.PubClass.DownloadFile(downDB.FileFullName, downDB.FileName);
               this.WinClose();
+              return;
           }
 
           this.Pub1.AddTable("width='100%'");
@@ -82,9 +83,13 @@ public partial class WF_FreeFrm_UploadFile : WebPage
               this.Pub1.AddTR();
               this.Pub1.AddTDIdx(i++);
               if (ath.IsDownload)
-                  this.Pub1.AddTD("<a href='../../DataUser/UploadFile/" + db.FilePathName + "' target=_blank><img src='../../Images/FileType/" + db.FileExts + ".gif' border=0 onerror=\"src='../../Images/FileType/Undefined.gif'\" />" + db.FileName + "</a>");
+              {
+                  this.Pub1.AddTD("<a href='AttachmentUpload.aspx?DoType=Down&MyPK=" + db.MyPK + "' target=_blank><img src='../../Images/FileType/" + db.FileExts + ".gif' border=0 onerror=\"src='../../Images/FileType/Undefined.gif'\" />" + db.FileName + "</a>");
+              }
               else
+              {
                   this.Pub1.AddTD(db.FileName);
+              }
 
               this.Pub1.AddTD(db.FileSize);
               this.Pub1.AddTD(db.RDT);

@@ -70,21 +70,25 @@ public partial class WF_Accpter : WebPage
             throw new Exception("@流程设计错误：设计员没有设计节点[" + toNd.Name + "]，接受人的岗位范围。");
         }
 
+        string sql = "";
+
         // 优先解决本部门的问题。
-        string sql = "SELECT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
-        sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
-        sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
-        sql += ") AND a.No IN (SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept ='" + WebUser.FK_Dept + "')";
-        sql += " ORDER BY FK_DEPT ";
-        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-        if (dt.Rows.Count != 0)
-            return dt;
+        if (this.FK_Dept== WebUser.FK_Dept)
+        {
+            sql = "SELECT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
+            sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
+            sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
+            sql += ") AND a.No IN (SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept ='" + WebUser.FK_Dept + "')";
+            sql += " ORDER BY FK_DEPT ";
+            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            if (dt.Rows.Count != 0)
+                return dt;
+        }
 
         sql = "SELECT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
         sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
         sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
         sql += ") ORDER BY FK_DEPT ";
-
         return BP.DA.DBAccess.RunSQLReturnTable(sql);
     }
     private BP.WF.Node _HisNode = null;
@@ -142,6 +146,7 @@ public partial class WF_Accpter : WebPage
                     num++;
                 }
             }
+
             if (this.MyToNode == 0)
             {
                 this.WinCloseWithMsg("流程设计错误：\n\n 当前节点的所有分支节点没有一个接受人员规则为按照选择接受。");
@@ -175,7 +180,6 @@ public partial class WF_Accpter : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "选择下一步骤接受的人员";
-
         /* 首先判断是否有多个分支的情况。*/
         if (this.IsMFZ)
         {
@@ -194,7 +198,14 @@ public partial class WF_Accpter : WebPage
         Dept dept = new Dept();
         string fk_dept = "";
         this.Pub1.AddTable("width=100%");
-        this.Pub1.AddCaptionLeft(this.Title + "，可选择范围：" + dt.Rows.Count + " 位。");
+
+        string info = "";
+        if (this.FK_Dept == WebUser.FK_Dept)
+            info = "<b><a href='Accpter.aspx?FK_Station=" + this.FK_Station + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Dept=" + WebUser.FK_Dept.Substring(0, WebUser.FK_Dept.Length - 2) + "'>更多人员...</b></a>";
+        else
+            info = "<b><a href='Accpter.aspx?FK_Station=" + this.FK_Station + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Dept=" + WebUser.FK_Dept + "'>本部门人员...</a></b>";
+
+        this.Pub1.AddCaptionLeft( "可选择范围：" + dt.Rows.Count + " 位。"+info);
         if (dt.Rows.Count > 50)
         {
             /*多于一定的数，就显示导航。*/
@@ -260,7 +271,7 @@ public partial class WF_Accpter : WebPage
                 is1 = false;
                 idx = 0;
             }
-            
+
             string no = dr["No"].ToString();
             string name = dr["Name"].ToString();
 
@@ -302,6 +313,7 @@ public partial class WF_Accpter : WebPage
         btn.ID = "Btn_Save";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
+     
     }
     /// <summary>
     /// 保存
