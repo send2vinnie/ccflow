@@ -191,6 +191,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     {
         switch (this.DoType)
         {
+        
             case "Runing":
                 ShowRuning();
                 return;
@@ -1177,7 +1178,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         #endregion 判断特殊的业务逻辑。
 
-
         try
         {
             currWK.BeforeSave(); //调用业务逻辑检查。
@@ -1194,9 +1194,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         currWK.Rec = WebUser.No;
         currWK.SetValByKey("FK_Dept", WebUser.FK_Dept);
         currWK.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
-
-      
-
         try
         {
             if (currND.IsStartNode)
@@ -1249,7 +1246,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     {
                         myurl = myurl.Replace("@" + attr.Key, firstwn.HisWork.GetValStrByKey(attr.Key));
                     }
-                    myurl += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
+                    myurl += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
                     this.Response.Redirect(myurl, true);
                     return;
                 case TurnToDeal.TurnToByCond:
@@ -1269,7 +1266,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                             {
                                 url = url.Replace("@" + attr.Key, firstwn.HisWork.GetValStrByKey(attr.Key));
                             }
-                            url += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
+                            url += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
                             this.Response.Redirect(url, true);
                             return;
                         }
