@@ -91,19 +91,16 @@ public partial class WF_Frm : WebPage
             BP.SystemConfig.DoClearCash();
         }
 
+        MapData md = new MapData();
         try
         {
-            MapData md = new MapData();
             md.No = this.FK_MapData;
             if (md.RetrieveFromDBSources() == 0 && md.Name.Length > 3)
             {
                 MapDtl dtl = new MapDtl(this.FK_MapData);
                 GEDtl dtlEn = dtl.HisGEDtl;
                 dtlEn.SetValByKey("OID", this.FID);
-                int i = dtlEn.RetrieveFromDBSources();
-                if (i == 0)
-                {
-                }
+                int i = dtlEn.RetrieveFromDBSources();               
                 this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
             }
             else
@@ -126,6 +123,7 @@ public partial class WF_Frm : WebPage
             }
             else
             {
+                Session["Count"] = null;
                 this.UCEn1.AddMsgOfWarning("异常错误,有可能是您的字段名称命名不符合规范，造成数据表无法创建，请删除它。", ex.Message + "<hr><a href='" + this.Request.RawUrl + "'><h2>点这里刷新。。。。</h2></a>");
             }
             return;
