@@ -678,14 +678,12 @@ namespace BP
         public static void DoClearCash()
         {
             HttpRuntime.UnloadAppDomain();
-
             BP.DA.Cash.Map_Cash.Clear();
             BP.DA.Cash.SQL_Cash.Clear();
             BP.DA.Cash.EnsData_Cash.Clear();
             BP.DA.Cash.EnsData_Cash_Ext.Clear();
             BP.DA.Cash.BS_Cash.Clear();
             BP.DA.Cash.Bill_Cash.Clear();
-
             try
             {
                 System.Web.HttpContext.Current.Session.Clear();

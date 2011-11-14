@@ -4,7 +4,6 @@ using BP.DA;
 using BP.En;
 namespace BP.Sys
 {
-   
     /// <summary>
     ///  µÃÂ Ù–‘
     /// </summary>
@@ -1055,14 +1054,27 @@ namespace BP.Sys
         }
         public void DoDtlDown()
         {
-            string sql = "UPDATE Sys_MapAttr SET GroupID=( SELECT OID FROM Sys_GroupField WHERE EnName='"+this.FK_MapData+"') WHERE FK_MapData='"+this.FK_MapData+"'";
-            DBAccess.RunSQL(sql);
+            try
+            {
+                string sql = "UPDATE Sys_MapAttr SET GroupID=( SELECT OID FROM Sys_GroupField WHERE EnName='" + this.FK_MapData + "') WHERE FK_MapData='" + this.FK_MapData + "'";
+                DBAccess.RunSQL(sql);
+            }
+            catch
+            {
+            }
+
             this.DoDown();
         }
         public void DoDtlUp()
         {
-            string sql = "UPDATE Sys_MapAttr SET GroupID=( SELECT OID FROM Sys_GroupField WHERE EnName='" + this.FK_MapData + "') WHERE FK_MapData='" + this.FK_MapData + "'";
-            DBAccess.RunSQL(sql);
+            try
+            {
+                string sql = "UPDATE Sys_MapAttr SET GroupID=( SELECT OID FROM Sys_GroupField WHERE EnName='" + this.FK_MapData + "') WHERE FK_MapData='" + this.FK_MapData + "'";
+                DBAccess.RunSQL(sql);
+            }
+            catch
+            {
+            }
             this.DoUp();
         }
         public void DoJump(MapAttr attrTo)

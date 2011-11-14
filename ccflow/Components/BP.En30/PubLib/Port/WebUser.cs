@@ -373,8 +373,12 @@ namespace BP.Web
             if (IsBSMode)
             {
                 string token = WebUser.Token;
-                System.Web.HttpContext.Current.Session.Clear();
-                System.Web.HttpContext.Current.Request.Cookies.Clear();
+
+                HttpCookie cookie = new HttpCookie("CCS", string.Empty);
+                cookie.Expires = DateTime.Now.AddMinutes(1);
+                cookie.Values.Add("No", string.Empty);
+                cookie.Values.Add("Name", string.Empty);
+                System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
                 WebUser.Token = token;
             }
             else

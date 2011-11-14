@@ -4,7 +4,6 @@ using BP.DA;
 using BP.En;
 namespace BP.Sys
 {
-      
     /// <summary>
     /// ±Í«©
     /// </summary>
