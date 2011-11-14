@@ -324,63 +324,136 @@ namespace BP.WF
             StartWork wk = (StartWork)nd.HisWork;
             int num = wk.Retrieve(StartWorkAttr.NodeState, 0,
                 StartWorkAttr.Rec, WebUser.No);
+
+            if (num == 0)
+            {
+                wk.Rec = WebUser.No;
+                wk.SetValByKey("RecText", WebUser.Name);
+                wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+                wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+                wk.WFState = 0;
+                wk.NodeState = 0;
+                wk.OID = DBAccess.GenerOID("WID");
+                wk.DirectInsert();
+            }
+
             if (SystemConfig.IsBSsystem)
             {
-                if (System.Web.HttpContext.Current.Request.QueryString["IsDeleteDraft"] == "1")
+                // 记录这个id ,不让其它在复制时间被修改。
+                Int64 newOID = wk.OID;
+                // 处理传递过来的参数。
+                foreach (string k in System.Web.HttpContext.Current.Request.QueryString.AllKeys)
+                    wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
+
+
+                #region 处理删除草稿的需求。
+                if (System.Web.HttpContext.Current.Request.QueryString["IsDeleteDraft"] == "1" && num == 1)
                 {
                     /*是否要删除Draft */
                     Int64 oid = wk.OID;
                     if (num != 0)
                         wk.ResetDefaultVal();
 
-                    MapDtls dtls = new MapDtls("ND" + int.Parse(this.No) + "01");
+                    MapDtls dtls = wk.HisMapDtls;
                     foreach (MapDtl dtl in dtls)
                         DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + oid);
-                    wk.OID = oid;
-                }
-            }
 
-            try
-            {
-                if (num == 0)
+                    //删除附件数据。
+                    DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND" + wk.NodeID + "' AND RefPKVal='" + wk.OID + "'");
+                    wk.OID = newOID;
+                }
+                #endregion 处理删除草稿的需求。
+
+
+                #region 处理流程之间的数据传递。
+                if (System.Web.HttpContext.Current.Request.QueryString["FromWorkID"] != null)
                 {
-                    wk.Rec = WebUser.No;
-                    wk.SetValByKey("RecText", WebUser.Name);
-                    wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
-                    wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
-                    wk.WFState = 0;
-                    wk.NodeState = 0;
-                    wk.OID = DBAccess.GenerOID("WID");
-                    wk.DirectInsert();
+                    /* 如果是从另外的一个流程上传递过来的，就考虑另外的流程数据。*/
+                    string fromFlow = System.Web.HttpContext.Current.Request.QueryString["FromFlow"];
+                    int fromNode = int.Parse(System.Web.HttpContext.Current.Request.QueryString["FromNode"]);
+                    Int64 fromWorkID = Int64.Parse(System.Web.HttpContext.Current.Request.QueryString["FromWorkID"]);
+                    BP.WF.Node fromNd = new BP.WF.Node(fromNode);
+                    Work wkFrom = fromNd.HisWork;
+                    wkFrom.OID = fromWorkID;
+                    wkFrom.RetrieveFromDBSources();
+
+                    wk.Copy(wkFrom);
+                    wk.OID = newOID;
+                    wk.Update();
+
+                    //复制明细。
+                    MapDtls dtls = wk.HisMapDtls;
+                    if (dtls.Count > 0)
+                    {
+                        MapDtls dtlsFrom = wkFrom.HisMapDtls;
+                        int idx = 0;
+                        foreach (MapDtl dtl in dtls)
+                        {
+                            //new 一个实例.
+                            GEDtl dtlData = new GEDtl(dtl.No);
+                            MapDtl dtlFrom = dtlsFrom[idx] as MapDtl;
+
+                            GEDtls dtlsFromData = new GEDtls(dtlFrom.No);
+                            dtlsFromData.Retrieve(GEDtlAttr.RefPK, fromWorkID);
+                            foreach (GEDtl geDtlFromData in dtlsFromData)
+                            {
+                                dtlData.Copy(geDtlFromData);
+                                dtlData.RefPK = wk.OID.ToString();
+                                dtlData.SaveAsOID(geDtlFromData.OID);
+                            }
+                        }
+                    }
+
+                    //复制附件数据。
+                    if (wk.HisFrmAttachments.Count > 0)
+                    {
+                        if (wkFrom.HisFrmAttachments.Count > 0)
+                        {
+                            //删除数据。
+                            DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND" + wk.NodeID + "' AND RefPKVal='" + wk.OID + "'");
+                            FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + fromNode, fromWorkID.ToString());
+                            int idx = 0;
+                            foreach (FrmAttachmentDB athDB in athDBs)
+                            {
+                                idx++;
+                                FrmAttachmentDB dbNew = new FrmAttachmentDB();
+                                dbNew.Copy(athDB);
+                                dbNew.RefPKVal = wk.OID.ToString();
+                                dbNew.FK_FrmAttachment = dbNew.FK_FrmAttachment.Replace("ND"+fromNode, "ND"+wk.HisNode.NodeID);
+
+                                dbNew.MyPK = dbNew.FK_FrmAttachment + "_" + dbNew.RefPKVal + "_" + idx;
+                                dbNew.FK_MapData = "ND" + wk.HisNode.NodeID;
+                                dbNew.Insert();
+                            }
+                        }
+                    }
                 }
-
-                wk.Rec = WebUser.No;
-                wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
-                wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
-                wk.WFState = 0;
-                wk.NodeState = 0;
-                wk.FK_Dept = WebUser.FK_Dept;
-                wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
-                wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
-                wk.FID = 0;
-                wk.SetValByKey("RecText", WebUser.Name);
-
-                string msg = "";
-                if (WebUser.SysLang == "CH")
-                    msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
-                else
-                    msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
-
-                string title = wk.GetValStringByKey("Title");
-                if (string.IsNullOrEmpty(title))
-                    wk.Title = msg;
-                else if (title.Contains("在") == true)
-                    wk.Title = msg;
+                #endregion 处理流程之间的数据传递。
             }
-            catch (Exception ex)
-            {
-                //if (ex.Message.Contains("key=["))
-            }
+
+            wk.Rec = WebUser.No;
+            wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
+            wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+            wk.WFState = 0;
+            wk.NodeState = 0;
+            wk.FK_Dept = WebUser.FK_Dept;
+            wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
+            wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
+            wk.FID = 0;
+            wk.SetValByKey("RecText", WebUser.Name);
+
+            string msg = "";
+            if (WebUser.SysLang == "CH")
+                msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
+            else
+                msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
+
+            string title = wk.GetValStringByKey("Title");
+            if (string.IsNullOrEmpty(title))
+                wk.Title = msg;
+            else if (title.Contains("在") == true)
+                wk.Title = msg;
+
             return wk;
         }
         /// <summary>
@@ -419,6 +492,9 @@ namespace BP.WF
 
                 wk.SetValByKey("Title", msg);
             }
+
+          
+
             return wk;
         }
         #endregion 业务处理

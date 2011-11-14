@@ -1628,7 +1628,6 @@ namespace BP.WF
             DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND" + gwf.FK_Node + "' AND RefPKVal='" + this.WorkID + "'");
             #endregion 删除当前节点数据。
 
-
             // 更新.
             gwf.FK_Node = wnPri.HisNode.NodeID;
             gwf.NodeName = wnPri.HisNode.Name;

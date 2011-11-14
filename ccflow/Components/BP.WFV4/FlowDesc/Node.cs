@@ -1521,8 +1521,9 @@ namespace BP.WF
                         _Work = new BP.WF.GEStartWork(this.NodeID);
                         return _Work;
                     }
-
                     _Work = new BP.WF.GEWork(this.NodeID);
+                    _Work.HisNode = this;
+                    _Work.NodeID = this.NodeID;
                     return _Work;
                 }
                 return _Work;

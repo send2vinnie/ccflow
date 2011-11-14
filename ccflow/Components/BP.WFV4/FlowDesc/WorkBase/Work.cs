@@ -305,8 +305,41 @@ namespace BP.WF
                 }
                 return _HisNode;
             }
+            set
+            {
+                _HisNode = value;
+            }
         }
-
+        private MapDtls _HisMapDtls = null;
+        /// <summary>
+        /// 明细表.
+        /// </summary>
+        public MapDtls HisMapDtls
+        {
+            get
+            {
+                if (this._HisMapDtls == null)
+                {
+                    this._HisMapDtls = new MapDtls( "ND"+this.NodeID);
+                }
+                return _HisMapDtls;
+            }
+        }
+        private FrmAttachments _HisFrmAttachments = null;
+        /// <summary>
+        /// 明细表.
+        /// </summary>
+        public FrmAttachments HisFrmAttachments
+        {
+            get
+            {
+                if (this._HisFrmAttachments == null)
+                {
+                    this._HisFrmAttachments = new FrmAttachments("ND" + this.NodeID);
+                }
+                return _HisFrmAttachments;
+            }
+        }
         #region 用于不是明细表的数据拷贝 .
         /// <summary>
         /// 他的相管联的 en . 
