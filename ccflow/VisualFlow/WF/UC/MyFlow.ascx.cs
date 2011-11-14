@@ -343,6 +343,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
        {
            currWK = this.currFlow.NewWork();
            this.WorkID = currWK.OID;
+        //   this.Response.Redirect("MyFlow" + this.PageSmall + ".aspx?WorkID=" + currWK.OID + "&FK_Flow=" + this.FK_Flow + "&FK_Node=" + currWK.HisNode.NodeID, true);
+          // return;
        }
        else
        {
@@ -611,8 +613,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         if (nd.IsStartNode)
         {
           
-
-
             /*判断是否来与子流程.*/
             if (string.IsNullOrEmpty(this.Request.QueryString["FK_Node_From"]) == false)
             {
@@ -1221,7 +1221,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             if (string.IsNullOrEmpty(this.Request.QueryString["WorkID"]))
             {
-                //    this.Response.Redirect(this.PageID + ".aspx?FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "&FK_Node_From=" + this.FK_Node_From, true);
                 return;
             }
             currWK.RetrieveFromDBSources();
@@ -1246,7 +1245,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     {
                         myurl = myurl.Replace("@" + attr.Key, firstwn.HisWork.GetValStrByKey(attr.Key));
                     }
-                    myurl += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
+                    myurl += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID=" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
                     this.Response.Redirect(myurl, true);
                     return;
                 case TurnToDeal.TurnToByCond:

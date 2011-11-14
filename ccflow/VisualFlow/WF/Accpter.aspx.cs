@@ -200,10 +200,13 @@ public partial class WF_Accpter : WebPage
         this.Pub1.AddTable("width=100%");
 
         string info = "";
-        if (this.FK_Dept == WebUser.FK_Dept)
-            info = "<b><a href='Accpter.aspx?FK_Station=" + this.FK_Station + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Dept=" + WebUser.FK_Dept.Substring(0, WebUser.FK_Dept.Length - 2) + "'>更多人员...</b></a>";
-        else
-            info = "<b><a href='Accpter.aspx?FK_Station=" + this.FK_Station + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Dept=" + WebUser.FK_Dept + "'>本部门人员...</a></b>";
+        if (WebUser.FK_Dept.Length > 2)
+        {
+            if (this.FK_Dept == WebUser.FK_Dept)
+                info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Dept=" + WebUser.FK_Dept.Substring(0, WebUser.FK_Dept.Length - 2) + "'>更多人员...</b></a>";
+            else
+                info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Dept=" + WebUser.FK_Dept + "'>本部门人员...</a></b>";
+        }
 
         this.Pub1.AddCaptionLeft( "可选择范围：" + dt.Rows.Count + " 位。"+info);
         if (dt.Rows.Count > 50)
