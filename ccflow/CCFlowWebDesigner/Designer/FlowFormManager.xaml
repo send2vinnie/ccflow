@@ -34,10 +34,11 @@
                     </sdk:DataGridTemplateColumn.HeaderStyle>
                     <sdk:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox x:Name="chkID" Click="chkID_Click" Tag="{Binding Path=ID}"></CheckBox>
+                            <CheckBox x:Name="chkID" Click="chkID_Click" Tag="{Binding Path=Id}"></CheckBox>
                         </DataTemplate>
                     </sdk:DataGridTemplateColumn.CellTemplate>
                 </sdk:DataGridTemplateColumn>
+                <sdk:DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed" IsReadOnly="True" CanUserReorder="False" CanUserSort="True" />
                 <sdk:DataGridTextColumn Header="名称" Binding="{Binding Name}" IsReadOnly="True" CanUserReorder="False" CanUserSort="True" />
                 <!--<sdk:DataGridTextColumn Header="类型" Binding="{Binding Type}" IsReadOnly="True" CanUserReorder="False" CanUserSort="True" />-->
                 <!--<sdk:DataGridTextColumn Header="URL" Binding="{Binding URL}" IsReadOnly="True" CanUserReorder="False" CanUserSort="True" />-->

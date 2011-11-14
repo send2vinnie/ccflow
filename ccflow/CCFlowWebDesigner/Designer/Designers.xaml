@@ -31,7 +31,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.RowSpan="2" Background="white"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Name="stackPanelLeft"   Orientation="Vertical">
-            <Image x:Name="imageLogo" Width="210" Height="70" Margin="5,2,5,2"   />
+            <Image x:Name="imageLogo" Width="210" Height="70" Margin="5,2,5,2" Source="/Images/Icons/CCflow.jpg"   />
             <sdk:TabControl  Name="TbcFDS" Width="220" Height="auto"    MouseLeave="TbcFDS_MouseLeave" >
                 <sdk:TabItem Header="{Binding TbItemFlow, Source={StaticResource TextRes}}" Name="TbItemFlow" Background="white" BorderThickness="0">
                     <Canvas Background="white" MouseLeftButtonDown="CvsFlowTree_MouseLeftButtonDown" Name="CvsFlowTree" Width="Auto" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
@@ -84,9 +84,10 @@
         </StackPanel>
 
         <my:TabControlEx Grid.Row="1" Grid.Column="1"   Width="Auto" Height="Auto"  x:Name="tbDesigner"
-            TabStripPlacement="Top"  HorizontalAlignment="Left" VerticalAlignment="Top"  SelectionChanged="tbDesigner_SelectionChanged">
+            TabStripPlacement="Top"  HorizontalAlignment="Left" VerticalAlignment="Top"  
+            SelectionChanged="tbDesigner_SelectionChanged" >
             <my:TabControlEx.Background>
-                <ImageBrush ImageSource="../Images/Welcome.jpg" Stretch="Fill"/>
+                <ImageBrush ImageSource="/Images/Icons/CCFlowWelcome.jpg" Stretch="Fill"/>
             </my:TabControlEx.Background>
             <my:TabControlEx.Template>
                 <ControlTemplate>

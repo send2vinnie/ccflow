@@ -1079,6 +1079,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
 
         #region Mouse Move and Click Related
+
         void DoubleClick_Timer(object sender, EventArgs e)
         {
             _doubleClickTimer.Stop();
@@ -1500,12 +1501,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 _container.AddDirection(dir);
 
                 stationTipControl.Visibility = Visibility.Visible;
-                stationTipControl.StationMessage = empName + "\n" + sdt;
+                stationTipControl.StationMessage = empName.TrimEnd(';') + "\n" + sdt;
 
                 _stationTipControl = null;
                 ishave = false;
             }
-            _container._Service.GetDTOfWorkListCompleted -= _Service_GetDTOfWorkListCompleted;
         }
 
         public string StationMessage
@@ -1516,11 +1516,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
 
-        void _Service_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
-        {
-            
-
-        }
 
         #endregion 
         #endregion

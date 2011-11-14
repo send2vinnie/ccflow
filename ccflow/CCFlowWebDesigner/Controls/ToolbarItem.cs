@@ -19,6 +19,8 @@ namespace WF.Controls
         public string No { get; set; }
  
         public string Name { get; set; }
+
+        public bool IsEnable { get; set; }
  
         #region 单一实例
         public static readonly ToolbarItem Instance = new ToolbarItem();
@@ -29,7 +31,7 @@ namespace WF.Controls
         {
             List<ToolbarItem> ToolList = new List<ToolbarItem>()
             {
-                new ToolbarItem(){No="ToolBarLogin", Name = " 登录"},
+                new ToolbarItem(){No="ToolBarLogin", Name = " 登录", IsEnable = true},
                 new ToolbarItem(){No="ToolBarNewNode", Name="添加节点"},
                 new ToolbarItem(){No="ToolBarNewLine", Name="添加连线"},
                 new ToolbarItem(){No="ToolBarNewLabel", Name="添加标签"},
@@ -41,7 +43,7 @@ namespace WF.Controls
                 new ToolbarItem(){No="ToolBarDeleteFlow", Name="删除"},
                 new ToolbarItem(){No="ToolBarGenerateModel", Name="导出"},
                 new ToolbarItem(){No="ToolBarReleaseToFTP", Name="发布到FTP"},
-                new ToolbarItem(){No="ToolBarHelp", Name="帮助"}
+                new ToolbarItem(){No="ToolBarHelp", Name="帮助", IsEnable = true}
                 
             };
             return ToolList;

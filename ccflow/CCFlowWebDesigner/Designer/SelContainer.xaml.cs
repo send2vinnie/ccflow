@@ -457,7 +457,16 @@ namespace WF.Designer
         public void ShowDirectionContentMenu(Direction r, object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-        } 
+        }
+
+        /// <summary>
+        /// 双击节点后要做的事件
+        /// </summary>
+        /// <param name="a">节点</param>
+        public void ShowFlowNodeSetting(FlowNode a)
+        {
+            ///todo 周朋说这里要弹出一个窗口。不过url还没定
+        }
         #endregion
 
         private void Content_Resized(object sender, EventArgs e)
@@ -902,11 +911,6 @@ namespace WF.Designer
         }
 
         public void RemoveLabel(NodeLabel l)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowFlowNodeSetting(FlowNode a)
         {
             throw new NotImplementedException();
         }

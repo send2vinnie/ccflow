@@ -18,18 +18,13 @@ namespace WF.Designer
     public partial class FlowFormManager : Page
     {
         private List<CheckBox> checkboxLists = new List<CheckBox>();
+        List<FlowForm> list = new List<FlowForm>();
         public FlowFormManager()
         {
             InitializeComponent();
         }
 
-        // Executes when the user navigates to this page.
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-           
-
-
-        }
+        
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             var client = new WS.WSDesignerSoapClient();
@@ -40,7 +35,7 @@ namespace WF.Designer
 
         void client_RunSQLReturnTableCompleted(object sender, WS.RunSQLReturnTableCompletedEventArgs e)
         {
-            var list = new List<FlowForm>();
+           
             try
             {
                 var ds = new DataSet();
@@ -68,15 +63,11 @@ namespace WF.Designer
                 
                 throw;
             }
-           
-
-            
-
         }
 
         void gridFlowFrom_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            CheckBox chk = gridFlowFrom.Columns[0].GetCellContent(e.Row) as CheckBox;
+            var chk = gridFlowFrom.Columns[0].GetCellContent(e.Row) as CheckBox;
             chk.IsChecked = false;
             checkboxLists.Add(chk);
         }
@@ -140,30 +131,36 @@ namespace WF.Designer
 
         private void btnPreview_Click(object sender, RoutedEventArgs e)
         {
-           
+            if(checkboxLists[2].IsChecked == true)
+            {
+                MessageBox.Show(list[2].Name);
+            }
+            
 
         }
 
         private void chkAll_Click(object sender, RoutedEventArgs e)
         {
-            CheckBox chk = sender as CheckBox;
+            var chk = sender as CheckBox;
             bool check = chk.IsChecked.Value;
             foreach (CheckBox chkbox in checkboxLists)
+            {
                 chkbox.IsChecked = check;
+            }
         }
 
         private void chkID_Click(object sender, RoutedEventArgs e)
         {
-            CheckBox cb = GetCheckBoxWithParent(this.gridFlowFrom, typeof(CheckBox), "chkAll");
+            CheckBox cb = getCheckBoxWithParent(this.gridFlowFrom, typeof(CheckBox), "chkAll");
             if (cb != null)
             {
                 cb.IsChecked = false;
             }
         }
 
-        private CheckBox GetCheckBoxWithParent(UIElement parent, Type targetType, string CheckBoxName)
+        private CheckBox getCheckBoxWithParent(UIElement parent, Type targetType, string checkBoxName)
         {
-            if (parent.GetType() == targetType && ((CheckBox)parent).Name == CheckBoxName)
+            if (parent.GetType() == targetType && ((CheckBox)parent).Name == checkBoxName)
             {
                 return (CheckBox)parent;
             }
@@ -171,17 +168,23 @@ namespace WF.Designer
             int count = VisualTreeHelper.GetChildrenCount(parent);
             for (int i = 0; i < count; i++)
             {
-                UIElement child = (UIElement)VisualTreeHelper.GetChild(parent, i);
-                if (GetCheckBoxWithParent(child, targetType, CheckBoxName) != null)
+                var child = (UIElement)VisualTreeHelper.GetChild(parent, i);
+                if (getCheckBoxWithParent(child, targetType, checkBoxName) != null)
                 {
-                    result = GetCheckBoxWithParent(child, targetType, CheckBoxName);
+                    result = getCheckBoxWithParent(child, targetType, checkBoxName);
                     break;
                 }
             }
             return result;
         }
 
-       
+        private void GetSelected<T>()
+        {
+
+            
+        }
+
+        
 
     }
 

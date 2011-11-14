@@ -39,6 +39,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         // 最后的流程类型，用于重新绑定流程树后，再打开最后操作的流程类别
         private string latestFlowSortID; 
 
+        private List<ToolbarButton> ToolBarButtonList = new List<ToolbarButton>();
+        private const string ToolBarEnableIsFlowSensitived = "EnableIsFlowSensitived";
+
         #endregion
 
         #region 属性
@@ -87,8 +90,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             InitializeComponent();
 
             var ws = new WSDesignerSoapClient();
-            ws.DoAsync("GetSettings", "CompanyId", true);
-            ws.DoCompleted += ws_GetCustomerIdCompleted;
+                
+            // bugs 暂时不需要根据公司动态加载图片的功能，因为会降低速度
+            //ws.DoAsync("GetSettings", "CompanyId", true);
+            //ws.DoCompleted += ws_GetCustomerIdCompleted;
             
             bindFlowAndFlowSort();
 
@@ -107,7 +112,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         #region 方法
 
-       
         void ws_GetCustomerIdCompleted(object sender, DoCompletedEventArgs e)
         {
             var id = e.Result;
@@ -277,6 +281,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             tbDesigner.Items.Add(ti);
             tbDesigner.SelectedItem = ti;
+
+            setToolBarButtonEnableStatus(true);
         }
 
         /// <summary>
@@ -831,6 +837,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                 }
             }
+
+            if(tbDesigner.Items.Count == 0)
+            {
+                setToolBarButtonEnableStatus(false);
+            }
         }
 
         /// <summary>
@@ -983,28 +994,33 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
 
         #region Toolbar related
+
         private void loadToolbar()
         {
-            #region 生成toolbar .
-            List<ToolbarItem> ens = new List<ToolbarItem>();
+            var ens = new List<ToolbarItem>();
             ens = ToolbarItem.Instance.GetLists();
             foreach (ToolbarItem en in ens)
             {
-                ToolbarButton btn = new ToolbarButton();
+                var btn = new ToolbarButton();
                 btn.Name = "Btn_" + en.No;
+                btn.IsEnabled = en.IsEnable;
+                if (!en.IsEnable)
+                {
+                    btn.Tag = ToolBarEnableIsFlowSensitived;
+                }
                 btn.Click += new RoutedEventHandler(ToolBar_Click);
 
-                StackPanel mysp = new StackPanel();
+                var mysp = new StackPanel();
                 mysp.Orientation = Orientation.Horizontal;
                 mysp.VerticalAlignment = System.Windows.VerticalAlignment.Center;
                 mysp.Name = "sp" + en.No;
 
-                Image img = new Image();
-                BitmapImage png = new BitmapImage(new Uri("/Images/" + en.No + ".png", UriKind.Relative));
+                var img = new Image();
+                var png = new BitmapImage(new Uri("/Images/" + en.No + ".png", UriKind.Relative));
                 img.Source = png;
                 mysp.Children.Add(img);
 
-                TextBlock tb = new TextBlock();
+                var tb = new TextBlock();
                 tb.Name = "tbT" + en.No;
                 tb.Text = en.Name;
                 tb.FontSize = 12;
@@ -1012,8 +1028,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                 btn.Content = mysp;
                 this.toolbar1.AddBtn(btn);
+                ToolBarButtonList.Add(btn);
             }
-            #endregion 生成toolbar .
 
         }
 
@@ -1107,8 +1123,20 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             string suburl = HtmlPage.Document.DocumentUri.ToString();
             string url = suburl.Substring(0, suburl.LastIndexOf('/'));
             OpenWindow(url + e.Result, title, 600,1024);
-
         } 
+
+        private void  setToolBarButtonEnableStatus(bool isEnable)
+        {
+
+            foreach (var toolbarButton in ToolBarButtonList)
+            {
+                if (toolbarButton.Tag != null && toolbarButton.Tag.ToString() == ToolBarEnableIsFlowSensitived)
+                {
+                    toolbarButton.IsEnabled = isEnable;
+                }
+            }
+        }
+        
         #endregion
 
         /// <summary>
