@@ -124,7 +124,7 @@ namespace BP.WF
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.CodeStruct = "4";
-                map.IsAutoGenerNo = true;
+                map.IsAutoGenerNo = false;
 
                 map.AddTBStringPK(FrmAttr.No, null, null, true, true, 1, 4, 4);
                 map.AddTBString(FrmAttr.Name, null, null, true, false, 0, 50, 10);
@@ -133,6 +133,8 @@ namespace BP.WF
                 map.AddTBString(FrmAttr.PTable, null, "PTable", true, false, 0, 50, 10);
                 map.AddTBInt(FrmAttr.DBURL, 0, "DBURL", true, false);
                 map.AddTBString(FrmAttr.URL, null, "流程表单属性:Url", true, false, 0, 50, 10);
+
+                map.AddTBString(MapDataAttr.FK_FrmSort, "01", "表单类别", true, false, 0, 500, 20);
 
                 map.AddTBInt(Sys.MapDataAttr.FrmW, 900, "表单宽度", true, false);
                 map.AddTBInt(Sys.MapDataAttr.FrmH, 1200, "表单高度", true, false);

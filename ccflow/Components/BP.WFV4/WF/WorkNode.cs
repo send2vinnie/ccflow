@@ -3106,7 +3106,16 @@ namespace BP.WF
                 case ActionType.ForwardHL:
                     //判断是否有焦点字段，如果有就把它记录到日志里。
                     if (this.HisNode.FocusField.Length > 1)
-                        t.Msg = this.HisWork.GetValStrByKey(this.HisNode.FocusField);
+                    {
+                        try
+                        {
+                            t.Msg = this.HisWork.GetValStrByKey(this.HisNode.FocusField);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.DebugWriteError("@焦点字段被删除了" + ex.Message + "@" + this.HisNode.FocusField);
+                        }
+                    }
                     break;
                 default:
                     break;

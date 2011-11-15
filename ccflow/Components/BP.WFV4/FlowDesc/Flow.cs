@@ -574,6 +574,9 @@ namespace BP.WF
             if (fls.Count == 1)
                 return null;
 
+            if (fls.Count == 0)
+                return null;
+
             string sql = "";
             try
             {
@@ -588,10 +591,8 @@ namespace BP.WF
             if (flowDataViewExtFields == null)
                 flowDataViewExtFields = "";
 
-            return null;
-
             sql = "CREATE VIEW V_FlowData  ";
-         //   sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
+            sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
             sql += " AS ";
             foreach (Flow fl in fls)
             {
@@ -673,7 +674,6 @@ namespace BP.WF
                         rpt += attr.KeyOfEn + " " + attr.Name + "、";
                     }
                 }
-
                 rpt += "<br>" + this.ToE("Station", "岗位") + "：";
 
                 // 岗位是否设置正确。
@@ -816,6 +816,22 @@ namespace BP.WF
                     }
                 }
                 #endregion 检查是否有方向条件
+            }
+            #endregion
+
+            #region 检查焦点字段设置是否还有效.
+            foreach (Node nd in nds)
+            {
+                if (nd.FocusField.Trim() == "")
+                    continue;
+                try
+                {
+                    string s = nd.HisWork.GetValStrByKey(nd.FocusField);
+                }
+                catch
+                {
+                    msg += "<font color=red><br>@焦点字段（" + nd.FocusField + "）在节点(step:" + nd.Step + " 名称:" + nd.Name + ")属性里的设置已无效，表单里不存在该字段。</font>";
+                }
             }
             #endregion
 
