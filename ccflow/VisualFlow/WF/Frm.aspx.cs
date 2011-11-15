@@ -100,7 +100,7 @@ public partial class WF_Frm : WebPage
                 MapDtl dtl = new MapDtl(this.FK_MapData);
                 GEDtl dtlEn = dtl.HisGEDtl;
                 dtlEn.SetValByKey("OID", this.FID);
-                int i = dtlEn.RetrieveFromDBSources();               
+                int i = dtlEn.RetrieveFromDBSources();
                 this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
             }
             else

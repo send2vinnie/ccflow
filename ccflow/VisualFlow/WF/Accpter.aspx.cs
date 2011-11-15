@@ -170,9 +170,9 @@ public partial class WF_Accpter : WebPage
             if (mynd.HisDeliveryWay != DeliveryWay.BySelected)
                 continue;
             if (this.ToNode == mynd.NodeID)
-                str += "&nbsp;&nbsp;<b>" + mynd.Name + "</B>";
+                str += "&nbsp;&nbsp;<b><font color='red' >" + mynd.Name + "</font></B>";
             else
-                str += "&nbsp;&nbsp;<a href='Accpter.aspx?FK_Node=" + this.FK_Node + "&ToNode=" + mynd.NodeID + "&WorkID=" + this.WorkID + "' >" + mynd.Name + "</a>";
+                str += "&nbsp;&nbsp;<b><a href='Accpter.aspx?FK_Node=" + this.FK_Node + "&ToNode=" + mynd.NodeID + "&WorkID=" + this.WorkID + "' >" + mynd.Name + "</a></b>";
         }
         this.Left.Add(str + "</p>");
         this.Left.AddFieldSetEnd();
