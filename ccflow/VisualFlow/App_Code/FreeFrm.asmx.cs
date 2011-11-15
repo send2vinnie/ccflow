@@ -372,7 +372,7 @@ namespace FreeFrm.Web
                         if (msg.Contains("Error"))
                             return msg;
 
-                       // BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
+                       //BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
 
                         string fk_frm = msg;
                         Frm fm = new Frm();
@@ -400,10 +400,13 @@ namespace FreeFrm.Web
 
                         MapData md = new MapData();
                         md.No = fm.No;
-                        md.Name = fm.Name;
-                        md.PTable = "T" + md.No;
-                        md.EnPK = "OID";
-                        md.Insert();
+                        if (md.RetrieveFromDBSources() == 0)
+                        {
+                            md.Name = fm.Name;
+                            //  md.PTable = "T" + md.No;
+                            md.EnPK = "OID";
+                            md.Insert();
+                        }
 
                         MapAttr attr = new MapAttr();
                         attr.FK_MapData = md.No;
