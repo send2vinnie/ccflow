@@ -222,7 +222,28 @@ namespace BP.WF.Port
         {
             get
             {
-                return this.GetValStringByKey(WFEmpAttr.Stas);
+                string s= this.GetValStringByKey(WFEmpAttr.Stas);
+                if (s == "")
+                {
+                    EmpStations ess = new EmpStations();
+                    ess.Retrieve(EmpStationAttr.FK_Emp, this.No);
+                    foreach (EmpStation es in ess)
+                    {
+                        s += es.FK_StationT + ",";
+                    }
+
+                    if (ess.Count != 0)
+                    {
+                        this.Stas = s;
+                        this.Update();
+                        //this.Update(WFEmpAttr.Stas, s);
+                    }
+                    return s;
+                }
+                else
+                {
+                    return s;
+                }
             }
             set
             {
