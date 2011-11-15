@@ -15,6 +15,7 @@ using BP.Sys;
 using BP.Web.Controls;
 using BP.DA;
 using BP.En;
+using BP.Port;
 using BP.Web;
 
 public partial class WF_UC_Emps : BP.Web.UC.UCBase3
@@ -23,6 +24,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
     {
         BP.WF.Port.WFEmps empWFs = new BP.WF.Port.WFEmps();
         empWFs.RetrieveAll();
+
         foreach (BP.WF.Port.WFEmp emp in empWFs)
         {
             if (System.IO.File.Exists(BP.SystemConfig.PathOfDataUser + "\\Siganture\\" + emp.No + ".JPG")
@@ -31,32 +33,40 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
                 continue;
             }
 
-            string path = BP.SystemConfig.PathOfDataUser + "\\Siganture\\T.JPG";
-            string pathMe = BP.SystemConfig.PathOfDataUser + "\\Siganture\\" + emp.No + ".JPG";
-            File.Copy(BP.SystemConfig.PathOfDataUser + "\\Siganture\\Templete.JPG",
-                path, true);
-
-            string fontName = "宋体";
-            System.Drawing.Image img = System.Drawing.Image.FromFile(path);
-            Font font = new Font(fontName, 15);
-            Graphics g = Graphics.FromImage(img);
-            System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
-            System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat(StringFormatFlags.DirectionVertical);//文本
-            g.DrawString(emp.Name, font, drawBrush, 3, 3);
-
             try
             {
-                File.Delete(pathMe);
+                string path = BP.SystemConfig.PathOfDataUser + "\\Siganture\\T.JPG";
+                string pathMe = BP.SystemConfig.PathOfDataUser + "\\Siganture\\" + emp.No + ".JPG";
+                File.Copy(BP.SystemConfig.PathOfDataUser + "\\Siganture\\Templete.JPG",
+                    path, true);
+
+
+                string fontName = "宋体";
+                System.Drawing.Image img = System.Drawing.Image.FromFile(path);
+                Font font = new Font(fontName, 15);
+                Graphics g = Graphics.FromImage(img);
+                System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
+                System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat(StringFormatFlags.DirectionVertical);//文本
+                g.DrawString(emp.Name, font, drawBrush, 3, 3);
+
+                try
+                {
+                    File.Delete(pathMe);
+                }
+                catch
+                {
+                }
+                img.Save(pathMe);
+                img.Dispose();
+                g.Dispose();
+
+                File.Copy(pathMe,
+                BP.SystemConfig.PathOfDataUser + "\\Siganture\\" + emp.Name + ".JPG", true);
             }
             catch
             {
-            }
-            img.Save(pathMe);
-            img.Dispose();
-            g.Dispose();
 
-            File.Copy(pathMe,
-            BP.SystemConfig.PathOfDataUser + "\\Siganture\\" + emp.Name + ".JPG", true);
+            }
         }
     }
     protected void Page_Load(object sender, EventArgs e)
@@ -88,6 +98,7 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
         this.AddTDTitle(this.ToE("Dept", "签名"));
         if (WebUser.No == "admin")
             this.AddTDTitle(this.ToE("Order", "顺序"));
+
         if (this.DoType != null)
         {
             BP.WF.Port.WFEmp.DTSData();
@@ -98,6 +109,10 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
         string keys = DateTime.Now.ToString("MMddhhmmss");
         string deptName = null;
         int idx = 0;
+
+        EmpStations ess = new EmpStations();
+        ess.RetrieveAll();
+
         foreach (DataRow dr in dt.Rows)
         {
             string fk_emp = dr["No"].ToString();
@@ -124,13 +139,20 @@ public partial class WF_UC_Emps : BP.Web.UC.UCBase3
             else
                 this.AddTD(fk_emp + "-" + dr["Name"]);
 
-
             BP.WF.Port.WFEmp emp = emps.GetEntityByKey(fk_emp) as BP.WF.Port.WFEmp;
             if (emp != null)
             {
                 this.AddTD(emp.TelHtml);
                 this.AddTD(emp.EmailHtml );
-                this.AddTD(emp.Stas);
+
+                string stas = "";
+                foreach (EmpStation es in ess)
+                {
+                    if (es.FK_Emp != emp.No)
+                        continue;
+                    stas += es.FK_StationT + ",";
+                }
+                this.AddTD(stas);
             }
             else
             {
