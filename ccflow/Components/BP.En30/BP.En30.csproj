@@ -267,6 +267,7 @@
     <Compile Include="Sys\GroupEnsTemplate.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Sys\MapData\FrmSort.cs" />
     <Compile Include="Sys\RptTemplate.cs">
       <SubType>Code</SubType>
     </Compile>

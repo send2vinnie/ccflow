@@ -44,6 +44,10 @@ namespace BP.Sys
         /// 设计者联系方式
         /// </summary>
         public const string DesignerContext = "DesignerContext";
+        /// <summary>
+        /// 表单类别
+        /// </summary>
+        public const string FK_FrmSort = "FK_FrmSort";
     }
 	/// <summary>
 	/// 映射基础
@@ -351,6 +355,10 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.PTable, null, "物理表", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.Dtls, null, "明细表", true, false, 0, 500, 20);
 
+
+
+
+
                 map.AddTBFloat(MapDataAttr.FrmW, 900, "FrmW", true, true);
                 map.AddTBFloat(MapDataAttr.FrmH, 1200, "FrmH", true, true);
 
@@ -361,7 +369,10 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.DesignerUnit, null, "单位", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.DesignerContext, null, "联系方式", true, false, 0, 500, 20);
 
-                //  map.AddTBInt(MapDataAttr.FrmFrom, 0, "来源", true, true);
+
+                // 可以为空这个字段。
+                map.AddTBString(MapDataAttr.FK_FrmSort, null, "表单类别", true, false, 0, 500, 20);
+                // map.AddTBInt(MapDataAttr.FrmFrom, 0, "来源", true, true);
 
                 this._enMap = map;
                 return this._enMap;

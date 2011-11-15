@@ -320,22 +320,22 @@ namespace BP.Sys
                 return this._enMap;
             }
         }
-        protected override bool beforeUpdateInsertAction()
-        {
-            throw new Exception("sss Îª´íÎó¡£");
-            return base.beforeUpdateInsertAction();
-        }
+        //protected override bool beforeUpdateInsertAction()
+        //{
+        //    throw new Exception("sss Îª´íÎó¡£");
+        //    return base.beforeUpdateInsertAction();
+        //}
 
-        public override void DirectInsert()
-        {
-            throw new Exception("sss sdsdÎª´íÎó¡£");
-            base.DirectInsert();
-        }
-        public override int Save()
-        {
-            throw new Exception("Save sdsdÎª´íÎó¡£");
-            return base.Save();
-        }
+        //public override void DirectInsert()
+        //{
+        //    throw new Exception("sss sdsdÎª´íÎó¡£");
+        //    base.DirectInsert();
+        //}
+        //public override int Save()
+        //{
+        //    throw new Exception("Save sdsdÎª´íÎó¡£");
+        //    return base.Save();
+        //}
         #endregion
     }
     /// <summary>
