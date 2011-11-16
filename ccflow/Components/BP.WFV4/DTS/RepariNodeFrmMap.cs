@@ -105,7 +105,7 @@ namespace BP.WF
                 {
                     msg += "@字段CDT被非法删除了.";
                     BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
-                    attr.FK_MapData = "ND"+nd.NodeID;
+                    attr.FK_MapData = "ND" + nd.NodeID;
                     attr.HisEditType = BP.En.EditType.UnDel;
                     attr.KeyOfEn = WorkAttr.CDT;
                     if (nd.IsStartNode)

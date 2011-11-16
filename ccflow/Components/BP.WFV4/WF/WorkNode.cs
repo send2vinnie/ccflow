@@ -667,19 +667,17 @@ namespace BP.WF
 
                 if (flowAppType == FlowAppType.PRJ)
                 {
-                    sql = "SELECT NO FROM Port_Emp WHERE NO IN "
-                      + "(SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
-                      + " AND  NO IN "
-                      + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept = '" + WebUser.FK_Dept + "')";
+                    sql = "SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ")"
+                    + " AND  FK_Prj='" + prjNo + "' ";
 
                     dt = DBAccess.RunSQLReturnTable(sql);
                     if (dt.Rows.Count == 0)
                     {
-                        /* 如果项目组里没有工作人员就提交到公共部门里去找。*/
+                        /* 如果项目组里没有工作人员就提交到公共部门里去找。 */
                         sql = "SELECT NO FROM Port_Emp WHERE NO IN "
                       + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
                       + " AND  NO IN "
-                      + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept = '" + WebUser.FK_Dept + "')";
+                      + "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept = '" + WebUser.FK_Dept + "')";
                     }
                     else
                     {
@@ -725,11 +723,8 @@ namespace BP.WF
 
             if (flowAppType == FlowAppType.PRJ)
             {
-                sql = "SELECT NO FROM Port_Emp WHERE NO IN "
-                   + "(SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
-                   + " AND  NO IN "
-                   + "(SELECT  FK_Emp  FROM Port_EmpDept WHERE FK_Dept LIKE '" + WebUser.FK_Dept + "%')"
-                   + " AND No!='" + WebUser.No + "'";
+                sql = "SELECT  FK_Emp  FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ")"
+                    + " AND  FK_Prj='" + prjNo + "' ";
 
                 dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)

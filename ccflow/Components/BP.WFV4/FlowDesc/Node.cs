@@ -3155,8 +3155,8 @@ namespace BP.WF
                 attr.MyDataType = BP.DA.DataType.AppString;
                 attr.UIContralType = UIContralType.TB;
                 attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = false;
-                attr.UIIsEnable = false;
+                attr.UIVisible = true;
+                attr.UIIsEnable = true;
                 attr.UIIsLine = true;
                 attr.UIWidth = 251;
 
