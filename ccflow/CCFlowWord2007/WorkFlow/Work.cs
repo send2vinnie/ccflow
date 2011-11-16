@@ -50,7 +50,6 @@ namespace BP.WF
             string sql = "INSERT INTO ND" + this.NodeID + " (OID,FID,FK_Dept,NodeState,RDT,CDT,Rec,Title) VALUES (" + this.OID + "," + this.FID + ",'" + this.FK_Dept + "'," + this.NodeState + ",'" + this.RDT + "','" + this.CDT + "','" + this.Rec + "','" + this.Title + "')";
             BP.DA.DBAccess.RunSQL(sql);
             return this.OID;
-
         }
         public int OID = 0;
         public int FID = 0;
