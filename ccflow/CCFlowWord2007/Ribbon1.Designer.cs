@@ -489,9 +489,9 @@ namespace CCFlowWord2007
             switch (func.No)
             {
                 case "LogOut":
-                    if (MessageBox.Show("您确定要注销吗？", "执行确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+                    if (MessageBox.Show("您确定要注销吗？", "执行确认", 
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
                         return;
-
                     WebUser.No = null;
                     WebUser.Name = null;
                     WebUser.Pass = null;

@@ -103,6 +103,9 @@ namespace CCFlowWord2007
             }
             catch
             {
+                if (conn.DirectoryExist("/DocFlow/") == false)
+                    conn.CreateDirectory("/DocFlow/");
+
                 if (conn.DirectoryExist("/DocFlow/" + WebUser.FK_Flow + "/") == false)
                     conn.CreateDirectory("/DocFlow/" + WebUser.FK_Flow + "/");
 
