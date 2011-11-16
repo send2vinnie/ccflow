@@ -321,7 +321,6 @@
     <Compile Include="PubLib\CN\SF.cs" />
     <Compile Include="PubLib\CN\QXS.cs" />
     <Compile Include="PubLib\CN\Area.cs" />
-    <Compile Include="PubLib\CN\IP.cs" />
     <Compile Include="PubLib\Port\Current.cs">
       <SubType>Code</SubType>
     </Compile>

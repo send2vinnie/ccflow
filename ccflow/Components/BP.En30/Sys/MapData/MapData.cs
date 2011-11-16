@@ -356,14 +356,10 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.Dtls, null, "明细表", true, false, 0, 500, 20);
 
 
-
-
-
                 map.AddTBFloat(MapDataAttr.FrmW, 900, "FrmW", true, true);
                 map.AddTBFloat(MapDataAttr.FrmH, 1200, "FrmH", true, true);
 
                 map.AddTBInt(MapDataAttr.DBURL, 0, "DBURL", true, false);
-
 
                 map.AddTBString(MapDataAttr.Designer, null, "设计者", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.DesignerUnit, null, "单位", true, false, 0, 500, 20);
