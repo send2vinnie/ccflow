@@ -21,27 +21,9 @@ namespace BP.WF
                 }
             }
         }
-        private static string FtpIP
-        {
-            get
-            {
-                return "127.0.0.1";
-            }
-        }
-        private static string FtpUser
-        {
-            get
-            {
-                return "docflow";
-            }
-        }
-        private static string FtpPass
-        {
-            get
-            {
-                return "docflow";
-            }
-        }
+        public static string FtpIP { private get; set; }
+        public static string FtpUser { private get; set; }
+        public static string FtpPass { private get; set; }
         /// <summary>
         /// 临时文件
         /// </summary>

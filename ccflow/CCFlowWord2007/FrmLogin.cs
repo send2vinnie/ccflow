@@ -29,9 +29,6 @@ namespace BP.Comm
         }
         private void Btn_OK_Click(object sender, EventArgs e)
         {
-            CCFlowWord2007.ServiceReference1.DocFlowSoapClient da = new CCFlowWord2007.ServiceReference1.DocFlowSoapClient();
-            da.RunSQLReturnTable("SELECT * FROM PORT_EMP ");
-
             try
             {
                 TT++;
@@ -43,13 +40,13 @@ namespace BP.Comm
                     throw new Exception("@您输入的密码不正确。 \t\n@注意密码区分大小写。");
 
 
-                BP.Port.WebUser.IsSaveInfo = this.CB_SaveInfo.Checked;
-                BP.Port.WebUser.IsSavePass = this.CB_SavePass.Checked;
+                WebUser.IsSaveInfo = this.CB_SaveInfo.Checked;
+                WebUser.IsSavePass = this.CB_SavePass.Checked;
 
-                BP.Port.WebUser.Sigin(ue);
-                BP.Port.WebUser.FK_Flow = null;
-                BP.Port.WebUser.FK_Node = 0;
-                BP.Port.WebUser.WorkID = 0;
+                WebUser.Sigin(ue);
+                WebUser.FK_Flow = null;
+                WebUser.FK_Node = 0;
+                WebUser.WorkID = 0;
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();

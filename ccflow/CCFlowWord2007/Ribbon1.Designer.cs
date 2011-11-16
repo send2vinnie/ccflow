@@ -207,7 +207,6 @@ namespace CCFlowWord2007
             this.Btn_UnSend.Enabled = true;
             this.Btn_Rpt.Enabled = true;
             this.Btn_Save.Enabled = true;
-            this.Btn_History.Enabled = true;
             this.Btn_Start.Enabled = true;
 
 
@@ -240,7 +239,7 @@ namespace CCFlowWord2007
                 this.Btn_Start.Enabled = false;
             }
 
-            if (CCFlowWord2007.Globals.ThisAddIn.Application.Documents.Count == 0)
+            if (Globals.ThisAddIn.Application.Documents.Count == 0)
             {
                 this.Btn_Start.Enabled = true;
                 this.Btn_Send.Enabled = false;
@@ -249,7 +248,6 @@ namespace CCFlowWord2007
                 this.Btn_UnSend.Enabled = false;
                 this.Btn_Rpt.Enabled = false;
                 this.Btn_Save.Enabled = false;
-                this.Btn_History.Enabled = false;
                 this.Btn_SaveAs.Enabled = false;
                 this.Btn_SaveAsPDF.Enabled = false;
                 this.Btn_SaveToU.Enabled = false;
@@ -258,8 +256,6 @@ namespace CCFlowWord2007
                 return;
             }
 
-
-
             if (WebUser.FK_Flow == null)
             {
                 this.Btn_Save.Enabled = false;
@@ -267,14 +263,12 @@ namespace CCFlowWord2007
                 this.Btn_Del.Enabled = false;
             }
 
-
             if (WebUser.WorkID == 0)
             {
                 this.Btn_FW.Enabled = false;
                 this.Btn_UnSend.Enabled = false;
                 this.Btn_Rpt.Enabled = false;
                 this.Btn_Return.Enabled = false;
-                this.Btn_History.Enabled = false;
                 this.Btn_Del.Enabled = false;
             }
             else
@@ -285,7 +279,6 @@ namespace CCFlowWord2007
                     this.Btn_Rpt.Enabled = false;
                     this.Btn_Return.Enabled = false;
                     this.Btn_FW.Enabled = false;
-                    this.Btn_History.Enabled = false;
                     this.Btn_Del.Enabled = true;
                 }
                 else
@@ -297,7 +290,6 @@ namespace CCFlowWord2007
                         this.Btn_Rpt.Enabled = false;
                         this.Btn_Return.Enabled = false;
                         this.Btn_FW.Enabled = false;
-                        this.Btn_History.Enabled = false;
                     }
                     else
                     {
@@ -312,6 +304,9 @@ namespace CCFlowWord2007
                 }
             }
         }
+
+        #region RibbonBtn
+
         public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_Rpt
         {
             get
@@ -435,6 +430,7 @@ namespace CCFlowWord2007
                 return this.GetBtn("Btn_SaveAsPDF");
             }
         }
+
         public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_Start
         {
             get
@@ -451,14 +447,8 @@ namespace CCFlowWord2007
                 return this.GetBtn("Btn_SaveToU");
             }
         }
+        #endregion
 
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_History
-        {
-            get
-            {
-                return this.GetBtn("Btn_History");
-            }
-        }
         #endregion 处理状态
 
         public Microsoft.Office.Tools.Ribbon.RibbonButton GetBtn(string key)
@@ -517,7 +507,7 @@ namespace CCFlowWord2007
                     WebUser.SID = null;
                     try
                     {
-                        System.IO.File.Delete("C:\\WF\\Profile.txt");
+                        System.IO.File.Delete(Glo.Profile);
                     }
                     catch
                     {
@@ -534,7 +524,7 @@ namespace CCFlowWord2007
                     if (dl != DialogResult.OK)
                         return;
 
-                    System.IO.File.Delete("D:\\ShiDai\\Profile.txt");
+                    System.IO.File.Delete(Glo.Profile);
                     btn.Enabled = false;
                     break;
                 case "ChUser": // 切换用户.
@@ -601,13 +591,13 @@ namespace CCFlowWord2007
         /// </summary>
         private void InitializeComponent()
         {
-            if (BP.Port.WebUser.LoadProfile() == false)
-            {
-                FrmLogin lg = new FrmLogin();
-                DialogResult dl = lg.ShowDialog();
-                if (dl != DialogResult.OK)
-                    return;
-            }
+            //if (BP.Port.WebUser.LoadProfile() == false)
+            //{
+            //    FrmLogin lg = new FrmLogin();
+            //    DialogResult dl = lg.ShowDialog();
+            //    if (dl != DialogResult.OK)
+            //        return;
+            //}
 
             try
             {

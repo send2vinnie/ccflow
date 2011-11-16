@@ -37,19 +37,19 @@ namespace BP.Comm
             try
             {
                 object obj = Type.Missing;
-                CCFlowWord2007.Globals.ThisAddIn.Application.ActiveDocument.Close(ref obj, ref obj, ref obj);
+                Globals.ThisAddIn.Application.ActiveDocument.Close();
             }
             catch
             {
             }
 
-            if (file == null)
+            if (string.IsNullOrEmpty(file))
             {
                 file = BP.WF.Glo.PathOfTInstall + "\\" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".doc";
-                System.IO.StreamWriter sr;
-                if (System.IO.File.Exists(file))
-                    System.IO.File.Delete(file);
-                sr = new System.IO.StreamWriter(file, false, System.Text.Encoding.GetEncoding("GB2312"));
+                StreamWriter sr;
+                if (File.Exists(file))
+                    File.Delete(file);
+                sr = new StreamWriter(file, false, System.Text.Encoding.GetEncoding("GB2312"));
                 sr.Write(DateTime.Now.ToString("yyyy年MM月dd日") + " 无公文模板");
                 sr.Close();
             }
@@ -60,10 +60,7 @@ namespace BP.Comm
             
             try
             {
-                CCFlowWord2007.Globals.ThisAddIn.Application.Documents.Open(ref fileName, ref missing, ref readOnly,
-                    ref missing, ref missing, ref missing,
-        ref missing, ref missing, ref missing, ref missing, ref missing,
-        ref missing, ref missing, ref missing, ref missing, ref missing);
+                Globals.ThisAddIn.Application.Documents.Open(ref fileName, ref missing, ref readOnly);
                 return;
             }
             catch (Exception ex)

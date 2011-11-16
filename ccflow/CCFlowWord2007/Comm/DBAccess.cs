@@ -8,32 +8,70 @@ using CCFlowWord2007.ServiceReference1;
 
 namespace BP.DA
 {
-    public class DBAccess
+    /// <summary>
+    /// 数据库连接
+    /// 2011.11.09 Liuxc
+    /// </summary>
+    public static class DBAccess
     {
+        static DBAccess()
+        {
+            client = new DocFlowSoapClient();
+        }
+
+        private static DocFlowSoapClient client;
+
+        #region Methods
+
+        /// <summary>
+        /// 获取网站配置项
+        /// </summary>
+        /// <param name="key">配置项名称</param>
+        /// <returns></returns>
         public static string GetWebConfigByKey(string key)
         {
-            DocFlowSoapClient db = new DocFlowSoapClient();
-            return db.GetSettingByKey(key);
+            return client.GetSettingByKey(key);
         }
+
+        /// <summary>
+        /// 运行SQL语句，返回int数字
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        /// <returns></returns>
         public static int RunSQL(string sql)
         {
-            DocFlowSoapClient db = new DocFlowSoapClient();
-            return db.RunSQL(sql);
+            return client.RunSQL(sql);
         }
+
+        /// <summary>
+        /// 运行SQL语句，返回DataTable
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        /// <returns></returns>
         public static DataTable RunSQLReturnTable(string sql)
         {
-            DocFlowSoapClient db = new DocFlowSoapClient();
-            return db.RunSQLReturnTable(sql);
+            return client.RunSQLReturnTable(sql);
         }
-        public static string  RunSQLReturnString(string sql)
+
+        /// <summary>
+        /// 运行SQL语句，返回string字符串
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        /// <returns></returns>
+        public static string RunSQLReturnString(string sql)
         {
-            DocFlowSoapClient db = new DocFlowSoapClient();
-            return db.RunSQLReturnString(sql);
+            return client.RunSQLReturnString(sql);
         }
+
+        /// <summary>
+        /// 获取一个ID
+        /// </summary>
+        /// <returns></returns>
         public static int GenerOID()
         {
-            DocFlowSoapClient db = new DocFlowSoapClient();
-            return db.GenerOID();
+            return client.GenerOID();
         }
+
+        #endregion
     }
 }

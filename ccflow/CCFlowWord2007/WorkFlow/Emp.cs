@@ -26,7 +26,7 @@ namespace BP.Port
             this.Name = dt.Rows[0]["Name"].ToString();
             this.FK_Dept = dt.Rows[0]["FK_Dept"].ToString();
             this.Pass = dt.Rows[0]["Pass"].ToString();
-            this.SID = dt.Rows[0]["SID"].ToString();
+            //this.SID = dt.Rows[0]["SID"].ToString();
         }
         public void Update()
         {
@@ -36,6 +36,6 @@ namespace BP.Port
         public string Name = null;
         public string FK_Dept = null;
         public string Pass = null;
-        public string SID = null;
+        //public string SID = null;
     }
 }

@@ -201,8 +201,10 @@ namespace BP.Port
             WebUser.FK_Dept = emp.FK_Dept;
             WebUser.DoType = "";
             Dept dept = WebUser.HisDept;
-            WebUser.WriterIt();
 
+            WebUser.GetFtpInfomation();
+
+            WebUser.WriterIt();
         }
         /// <summary>
         /// 写入文件
@@ -227,18 +229,17 @@ namespace BP.Port
             if (Directory.Exists(strLocalPath) == false)
                 Directory.CreateDirectory(strLocalPath);
 
-            string strProFileName = BP.WF.Glo.PathOfTInstall + "\\Profile.txt";
-            if (File.Exists(strProFileName))
-                File.Delete(strProFileName);
+            if (File.Exists(Glo.Profile))
+                File.Delete(Glo.Profile);
 
-            FileStream fs1 = File.Create(strProFileName);
+            FileStream fs1 = File.Create(Glo.Profile);
             fs1.Close();
 
             string strContent = "@No=" + WebUser.No + "@Name=" + WebUser.Name + "@FK_Dept=" +
                 WebUser.FK_Dept + "@FK_DeptName=" + WebUser.FK_DeptName
                 + "@WorkID=" + workid + "@FK_Flow=" +
              fk_flow + "@FK_Node=" + fk_node + "@DoType=" + dotype;
-            File.WriteAllText(strProFileName, strContent);
+            File.WriteAllText(Glo.Profile, strContent);
         }
         public static void WriterCookes()
         {
@@ -249,15 +250,24 @@ namespace BP.Port
             if (Directory.Exists(strLocalPath) == false)
                 Directory.CreateDirectory(strLocalPath);
 
-            string strProFileName = BP.WF.Glo.PathOfTInstall + "\\Login.txt";
-            if (File.Exists(strProFileName))
-                File.Delete(strProFileName);
+            if (File.Exists(Glo.ProfileLogin))
+                File.Delete(Glo.ProfileLogin);
 
-            FileStream fs1 = File.Create(strProFileName);
+            FileStream fs1 = File.Create(Glo.ProfileLogin);
             fs1.Close();
 
             string strContent = "@No=" + WebUser.No + "@Name=" + WebUser.Name;
-            File.WriteAllText(strProFileName, strContent);
+            File.WriteAllText(Glo.ProfileLogin, strContent);
+        }
+
+        /// <summary>
+        /// 获取FTP信息
+        /// </summary>
+        private static void GetFtpInfomation()
+        {
+            Glo.FtpIP = DBAccess.GetWebConfigByKey("FtpIP");
+            Glo.FtpUser = DBAccess.GetWebConfigByKey("FtpUser");
+            Glo.FtpPass = DBAccess.GetWebConfigByKey("FtpPass");
         }
     }
 }
