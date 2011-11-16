@@ -23,7 +23,7 @@
   <Item No="EmpWorks" Name="待办公文" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=EmpWorks" Width="600" Height="400" FK_Group="Doc" CtlType="Btn" WinModel="Dilg"   Desc=""/>
   <Item No="Runing" Name="在途公文" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=Runing" Width="600" Height="400" FK_Group="Doc" CtlType="Btn" WinModel="Dilg"   Desc=""/>
   <Item No="View" Name="公文查询" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=View" Width="600" Height="400" FK_Group="Doc" CtlType="Btn" WinModel="Dilg"   Desc=""/>
-  
+   
   <Item1 No="Reg" Name="收文登记" DoType="RunIE"  Tag="@Serv/WF/DocFlow/DoPort.aspx?DoType=Reg" Width="600" Height="400" FK_Group="Doc" CtlType="Btn" WinModel="Dilg"   Desc=""/>
 
   <Group No="SaveTab" Name="文件操作"  FK_Tab="GovDoc" ShowType="1" Desc="" />
