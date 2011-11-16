@@ -259,7 +259,7 @@ namespace WF.Designer
 
         #region Variables
 
-        private WSDesignerSoapClient _service = new WSDesignerSoapClient();
+        private WSDesignerSoapClient _service = Glo.GetDesignerServiceInstance();
         private PageEditType editType = PageEditType.None;
         private Point mousePosition;
         private bool trackingMouseMove = false;

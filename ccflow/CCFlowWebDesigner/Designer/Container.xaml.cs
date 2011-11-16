@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using System.IO;
 using Ccflow.Web.UI.Control.Workflow.Designer;
 using Ccflow.Web.Component.Workflow;
+using WF;
 using WF.Resources;
 using WF.WS;
 using Liquid;
@@ -36,7 +37,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <summary>
         /// 服务
         /// </summary>
-        WSDesignerSoapClient _service = new WSDesignerSoapClient();//new BasicHttpBinding(), address);
+        WSDesignerSoapClient _service = Glo.GetDesignerServiceInstance();//new BasicHttpBinding(), address);
         /// <summary>
         /// 页面编辑类型
         /// </summary>
@@ -907,7 +908,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
 
             this.WinTitle = title;
-            var serviceProxy = new WSDesignerSoapClient();
+            var serviceProxy = Glo.GetDesignerServiceInstance();
             serviceProxy.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
             serviceProxy.GetRelativeUrlCompleted += (s, e) =>
                                                  {

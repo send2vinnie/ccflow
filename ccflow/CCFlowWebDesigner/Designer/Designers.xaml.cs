@@ -34,7 +34,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private System.Windows.Threading.DispatcherTimer _doubleClickTimer;
         private string FlowTempleteUrl = "";
         private string title; // 子窗体标题       
-        private WSDesignerSoapClient _service = new WSDesignerSoapClient();
+        private WSDesignerSoapClient _service = Glo.GetDesignerServiceInstance();
         
         // 最后的流程类型，用于重新绑定流程树后，再打开最后操作的流程类别
         private string latestFlowSortID; 
@@ -89,7 +89,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             InitializeComponent();
 
-            var ws = new WSDesignerSoapClient();
+            var ws = Glo.GetDesignerServiceInstance();
                 
             // bugs 暂时不需要根据公司动态加载图片的功能，因为会降低速度
             //ws.DoAsync("GetSettings", "CompanyId", true);
@@ -100,7 +100,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             loadToolbar();
 
             // InitDesignerXml
-            ws = new WSDesignerSoapClient();
+            ws = Glo.GetDesignerServiceInstance();
             ws.DoTypeAsync("InitDesignerXml", null, null, null, null, null);
             ws.DoTypeCompleted += ws_DoTypeCompleted;
             
@@ -403,7 +403,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return;
             var result = SnapshotCapturer.SaveScreenToString();
 
-            _service = new WSDesignerSoapClient();
+            _service = Glo.GetDesignerServiceInstance();
             var sortId = SelectedContainer.FK_Flow;
             _Service.DoAsync("ReleaseToFTP", SelectedContainer.FlowID + "," +  result, true);
             _Service.DoCompleted += _service_ReleaseToFTPCompleted;
@@ -433,7 +433,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// </summary>
         private void bindFlowAndFlowSort()
         {
-            _service = new WSDesignerSoapClient();
+            _service = Glo.GetDesignerServiceInstance();
             _Service.DoAsync("GetFlows", string.Empty, true);
             _Service.DoCompleted += _service_GetFlowsCompleted;
          }
@@ -1044,7 +1044,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             switch (control.Name)
             {
                 case "Btn_ToolBarLogin":
-                    var client = new WSDesignerSoapClient();
+                    var client = Glo.GetDesignerServiceInstance();
                     client.GetRelativeUrlCompleted += client_GetRelativeUrlCompleted;
                     client.GetRelativeUrlAsync("CN", "LoginPage", string.Empty, string.Empty, string.Empty, true);
                     break;

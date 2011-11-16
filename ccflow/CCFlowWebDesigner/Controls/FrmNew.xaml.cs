@@ -19,7 +19,7 @@ namespace WF.Controls
     public partial class FrmNewFlow : ChildWindow
     {
         #region Private Variables
-        WSDesignerSoapClient _service = new WSDesignerSoapClient();
+        WSDesignerSoapClient _service = Glo.GetDesignerServiceInstance();
         private LoadingWindow loadingWindow = new LoadingWindow();
         OpenFileDialog dialog = new OpenFileDialog();
         private byte[] buffer;

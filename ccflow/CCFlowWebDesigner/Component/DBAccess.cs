@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using WF;
 using WF.Controls;
 using WF.WS;
 using Silverlight;
@@ -20,7 +21,7 @@ namespace BP.DA
         #region run sql
         public static int RunSQL(string sql)
         {
-            WSDesignerSoapClient client = new WSDesignerSoapClient();
+            WSDesignerSoapClient client = Glo.GetDesignerServiceInstance();
             client.RunSQLAsync(sql, true);
             client.RunSQLCompleted += new EventHandler<RunSQLCompletedEventArgs>(client_RunSQLCompleted);
             return  myResultInt;
@@ -39,7 +40,7 @@ namespace BP.DA
 
         public static DataTable RunSQLReturnTable(string sql)
         {
-            var client = new WSDesignerSoapClient();
+            var client = Glo.GetDesignerServiceInstance();
             client.RunSQLReturnTableAsync(sql, true);
             client.RunSQLReturnTableCompleted+=new EventHandler<RunSQLReturnTableCompletedEventArgs>(client_RunSQLReturnTableCompleted);
             

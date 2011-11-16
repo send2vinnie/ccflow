@@ -37,20 +37,14 @@ namespace WF
             Thread.CurrentThread.CurrentUICulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
 
-            WF.WS.WSDesignerSoapClient da = new WS.WSDesignerSoapClient();
-            da.CfgKeyAsync("BPMHost");
-            da.CfgKeyCompleted += new EventHandler<WS.CfgKeyCompletedEventArgs>(da_CfgKeyCompleted);
-        }
-
-        void da_CfgKeyCompleted(object sender, WS.CfgKeyCompletedEventArgs e)
-        {
-            Glo.BPMHost = "http://"+ e.Result;
+            Glo.BPMHost = getHostUrl();
             this.RootVisual = new MainPage();
         }
 
         private void Application_Exit(object sender, EventArgs e)
         {
         }
+
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             // 如果应用程序是在调试器外运行的，则使用浏览器的
@@ -71,10 +65,22 @@ namespace WF
         private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)
         {
             string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
-            errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
-            throw new Exception(errorMsg);
-            //MessageBox.Show(errorMsg);
-            System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
+            errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");  
+            HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
+        }
+
+        /// <summary>
+        /// 得到当前所在网站的根目录，如Http://localhost/flow
+        /// 注意对于将Silverlight Host页不放在根目录的网站可能会工作不正常。
+        ///    如用localhost/flow/Second/three/designer.aspx这样的页面来Host Silverlight时系统工作不正常。
+        /// </summary>
+        /// <returns></returns>
+        private string getHostUrl()
+        {
+            var location = (HtmlPage.Window.GetProperty("location")) as ScriptObject;
+            var hrefObject = location.GetProperty("href");
+            string url = hrefObject.ToString().Substring(0, hrefObject.ToString().LastIndexOf("/"));
+            return url;
         }
     }
 }
