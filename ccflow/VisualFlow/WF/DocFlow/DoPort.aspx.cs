@@ -95,7 +95,7 @@ public partial class GovDoc_DoPort : System.Web.UI.Page
                 this.Response.Redirect("Runing.aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID, true);
                 break;
             case "Rpt":
-                this.Response.Redirect("../WF/WFRpt.aspx?DoType=Return&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID, true);
+                this.Response.Redirect("./WF/WFRpt.aspx?DoType=Return&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID, true);
                 break;
             case "Start":
                 this.Response.Redirect("Start.aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID, true);
@@ -104,10 +104,10 @@ public partial class GovDoc_DoPort : System.Web.UI.Page
                 this.Response.Redirect("MyFlow.aspx?DoType=Sheet&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID, true);
                 break;
             case "Return":
-                this.Response.Redirect("../WF/ReturnWork.aspx?DoType=Return&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&IsClient=1", true);
+                this.Response.Redirect("./WF/ReturnWork.aspx?DoType=Return&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&IsClient=1", true);
                 break;
             case "FW":
-                this.Response.Redirect("../WF/Forward.aspx?DoType=Return&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&IsClient=1", true);
+                this.Response.Redirect("./WF/Forward.aspx?DoType=Return&FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&IsClient=1", true);
                 break;
             case "EmpWorks":
                 this.Response.Redirect("EmpWorks.aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&IsClient=1", true);

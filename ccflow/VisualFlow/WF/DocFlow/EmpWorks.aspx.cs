@@ -122,7 +122,7 @@ public partial class GovDoc_EmpWorks : WebPage
 
             this.Pub2.AddTD(dr["NodeName"].ToString());
 
-            this.Pub2.AddTDA("DoClient.aspx?DoType=OpenFlow&FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"]+"&FK_Node="+dr["NodeID"], dr["Title"].ToString());
+            this.Pub2.AddTDA("DoClient.aspx?DoType=OpenFlow&FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "&FK_Node=" + dr["FK_Node"], dr["Title"].ToString());
 
             //this.Pub2.AddTD("<a href=\"javascript:WinOpen('MyFlow.aspx?FK_Flow=" + dr["FK_Flow"] + "&WorkID=" + dr["WorkID"] + "','sd');\">" + dr["Title"].ToString());
 
