@@ -124,7 +124,12 @@ public partial class WF_WorkOpt_PrintDoc : BP.Web.WebPage
                 try
                 {
                     Glo.Rtf2PDF(rtfPath, pdfPath);
-                }
+
+                    file = file.Replace(".doc", ".pdf");
+                    System.IO.File.Delete(rtfPath);
+
+                    file = file.Replace(".doc", ".pdf");
+                    //System.IO.File.Delete(rtfPath);                }
                 catch (Exception ex)
                 {
                     msg += ex.Message;

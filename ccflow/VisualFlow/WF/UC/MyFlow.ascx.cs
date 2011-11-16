@@ -391,7 +391,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                            if (fw.FK_Emp == WebUser.No)
                                msg = "<b>" + msg + "</b>";
 
-
                            msg = msg.Replace("@", "<br>@");
                            this.FlowMsg.Add(msg + "<hr>");
                        }
@@ -1168,12 +1167,17 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 /*对特殊的流程进行检查，检查是否有权限。*/
                 string prjNo = currWK.GetValStringByKey("PrjNo");
-                if (DBAccess.RunSQLReturnTable("SELECT * FROM Prj_EmpPrj WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "'").Rows.Count == 0)
+                if (DBAccess.RunSQLReturnTable("SELECT * FROM WF_NodeStation WHERE FK_Station IN ( SELECT FK_Station FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "' )  AND  FK_Node=" + this.FK_Node ).Rows.Count == 0)
                 {
-                    prjNo = currWK.GetValStringByKey("PrjNo");
                     string prjName = currWK.GetValStringByKey("PrjName");
-                    throw new Exception("您不属于项目组(" + prjNo + "," + prjName + ")，您不能发起改流程。");
+                    if (DBAccess.RunSQLReturnTable("SELECT * FROM Prj_EmpPrj WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "'").Rows.Count == 0)
+                        throw new Exception("您不是(" + prjNo + "," + prjName + ")成员，您不能发起改流程。");
+                    else
+                        throw new Exception("您属于这个项目(" + prjNo + "," + prjName + ")，但是在此项目下您没有发起改流程的岗位。");
                 }
+                //if (DBAccess.RunSQLReturnTable("SELECT * FROM Prj_EmpPrj WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "'").Rows.Count == 0)
+                //{
+                //}
             }
         }
         #endregion 判断特殊的业务逻辑。
