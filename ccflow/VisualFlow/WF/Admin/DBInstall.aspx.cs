@@ -91,6 +91,12 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
 
                     string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
                     BP.DA.DBAccess.RunSQLScript(scrpts);
+
+                    #region 初始化数据。
+                    scrpts = BP.DA.DataType.ReadTextFile(BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql");
+                    BP.DA.DBAccess.RunSQLs(scrpts);
+                    #endregion 初始化数据
+
                 }
                 return;
             }
