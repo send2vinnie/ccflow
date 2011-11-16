@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Configuration;
 using System.Data;
-
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -174,7 +173,7 @@ public partial class GovDoc_MyFlow : BP.Web.WebPage
         //bars.RetrieveAll();
         //foreach (BP.WF.XML.FlowBar bar in bars)
         //{
-        //    this.PubBar.Add("<a href='" + bar.No + "&FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&FK_Node="+this.FK_Node+"' >" + bar.Name + "</a>&nbsp;&nbsp;");
+        //this.PubBar.Add("<a href='" + bar.No + "&FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&FK_Node="+this.FK_Node+"' >" + bar.Name + "</a>&nbsp;&nbsp;");
 
         BP.WF.Node currNd = this.CurrentNode;
         this.PubBar.Add("流程:<b>" + currNd.FlowName + "</b>节点：<b>" + currNd.Name + "</b>");
