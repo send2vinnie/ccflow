@@ -122,11 +122,11 @@ namespace BP.WF
                     attr.Insert();
                 }
 
-                if (wk.EnMap.Attrs.Contains("NodeState") == false)
+                if (wk.EnMap.Attrs.Contains(StartWorkAttr.NodeState) == false)
                 {
                     msg += "@开始节点字段NodeState被非法删除了.";
                     MapAttr attr = new BP.Sys.MapAttr();
-                    attr.FK_MapData = "ND"+nd.No;
+                    attr.FK_MapData = "ND" + nd.NodeID;
                     attr.KeyOfEn = WorkAttr.NodeState;
                     attr.Name = BP.Sys.Language.GetValByUserLang("NodeState", "节点状态"); //"节点状态";
                     attr.MyDataType = BP.DA.DataType.AppInt;
@@ -202,7 +202,7 @@ namespace BP.WF
                         attr.Insert();
                     }
 
-                    if (wk.EnMap.Attrs.Contains("WFState") == false)
+                    if (wk.EnMap.Attrs.Contains(StartWorkAttr.WFState) == false)
                     {
                         msg += "@开始节点字段WFState被非法删除了.";
                         MapAttr attr = new BP.Sys.MapAttr();
