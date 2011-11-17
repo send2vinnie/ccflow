@@ -149,8 +149,12 @@
     </Compile>
     <Compile Include="Comm\Xml\RelationalMapping.cs" />
     <Compile Include="Comm\Xml\CfgMenu.cs" />
-    <Compile Include="Comm\WebPageSession.cs" />
-    <Compile Include="Comm\WebPageAdmin.cs" />
+    <Compile Include="Comm\WebPageSession.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Comm\WebPageAdmin.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="CTL\Lab.cs" />
     <Compile Include="FCKeditor\FCKeditor.cs" />
     <Compile Include="FCKeditor\FCKeditorConfigurations.cs" />
@@ -197,7 +201,9 @@
     <Compile Include="Comm\UCBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Comm\WebPage.cs" />
+    <Compile Include="Comm\WebPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Comm\Help.cs" />
     <Compile Include="CTL\BPHyperLink.cs">
       <SubType>Code</SubType>
