@@ -982,6 +982,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private void Content_Resized(object sender, EventArgs e)
         {
             LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
+            if(LayoutRoot.Height < 100)
+            {
+                return;     
+            }
             TbcFDS.Height = LayoutRoot.Height - 75;
             TvwFlow.Height = Application.Current.Host.Content.ActualHeight - 35 - 100;
             tbDesigner.Height = Application.Current.Host.Content.ActualHeight - 35;

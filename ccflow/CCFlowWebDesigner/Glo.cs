@@ -57,7 +57,8 @@ namespace WF
         /// <returns></returns>
         public static WSDesignerSoapClient GetDesignerServiceInstance()
         {
-            var basicBinding = new BasicHttpBinding() {MaxBufferSize = 2147483647, MaxReceivedMessageSize = 2147483647};
+            var basicBinding = new BasicHttpBinding() { MaxBufferSize = 2147483647, MaxReceivedMessageSize = 2147483647, Name = "WSDesignerSoap" };
+            basicBinding.Security.Mode = BasicHttpSecurityMode.None;    
             var endPoint = new EndpointAddress(BPMHost + "/WebService.asmx");
             var ctor =
                 typeof (WSDesignerSoapClient).GetConstructor(new Type[] {typeof (Binding), typeof (EndpointAddress)});

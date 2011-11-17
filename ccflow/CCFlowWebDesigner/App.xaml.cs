@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Net.Browser;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,6 +33,10 @@ namespace WF
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            bool registerResult = WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
+            bool httpsResult = WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
+
+
             //设置当前线程的culture,以加载指定语言的字符
             var culture = new CultureInfo("zh-cn");
             Thread.CurrentThread.CurrentUICulture = culture;
@@ -71,15 +76,14 @@ namespace WF
 
         /// <summary>
         /// 得到当前所在网站的根目录，如Http://localhost/flow
-        /// 注意对于将Silverlight Host页不放在根目录的网站可能会工作不正常。
-        ///    如用localhost/flow/Second/three/designer.aspx这样的页面来Host Silverlight时系统工作不正常。
+        /// 注意站点名字必须是Flow,否则会报错。
         /// </summary>
         /// <returns></returns>
         private string getHostUrl()
         {
             var location = (HtmlPage.Window.GetProperty("location")) as ScriptObject;
             var hrefObject = location.GetProperty("href");
-            string url = hrefObject.ToString().Substring(0, hrefObject.ToString().LastIndexOf("/"));
+            string url = hrefObject.ToString().Substring(0, hrefObject.ToString().IndexOf("Flow/") + 5);
             return url;
         }
     }

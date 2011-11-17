@@ -19,6 +19,7 @@ using System.IO;
 
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
 public class WSDesigner : WSBase
 {
     /// <summary>
