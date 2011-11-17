@@ -4,7 +4,7 @@ using BP.DA;
 using BP.Port;
 using BP.En;
  
-namespace BP.PRJ
+namespace BP.PRJ 
 {
 	/// <summary>
 	/// 人员项目组 
