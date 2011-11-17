@@ -7,12 +7,12 @@ using System.Runtime.CompilerServices;
 // 关联的信息。
 //
 
-[assembly: AssemblyTitle("驰骋工作流")]
-[assembly: AssemblyDescription("驰骋工作流4.5.0.0")]
+[assembly: AssemblyTitle("ccflow")]
+[assembly: AssemblyDescription("ccflow4.5.0.0")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("驰骋工作流")]
-[assembly: AssemblyProduct("驰骋工作流4.5")]
-[assembly: AssemblyCopyright("驰骋工作流2003-2010")]
+[assembly: AssemblyCompany("济南驰骋信息技术有限公司")]
+[assembly: AssemblyProduct("ccflow4.5")]
+[assembly: AssemblyCopyright("驰骋工作流2003-2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]	
  
