@@ -232,6 +232,12 @@ namespace BP.WF
 
             BP.DA.DBAccess.RunSQLs(sqlscript);
             #endregion 创建视图与系统函数
+
+            #region 5, 初始化数据。
+            sqlscript = BP.DA.DataType.ReadTextFile(SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql");
+
+            BP.DA.DBAccess.RunSQLs(sqlscript);
+            #endregion 初始化数据
         }
         public static void KillProcess(string processName) //杀掉进程的方法
         {

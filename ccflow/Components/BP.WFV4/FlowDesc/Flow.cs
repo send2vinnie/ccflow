@@ -364,6 +364,30 @@ namespace BP.WF
                 }
                 #endregion 处理删除草稿的需求。
 
+                #region 处理开始节点.
+                if (System.Web.HttpContext.Current.Request.QueryString["FromTableName"] != null)
+                {
+                    string tableName = System.Web.HttpContext.Current.Request.QueryString["FromTableName"];
+                    string tablePK = System.Web.HttpContext.Current.Request.QueryString["FromTablePK"];
+                    string tablePKVal = System.Web.HttpContext.Current.Request.QueryString["FromTablePKVal"];
+
+                    DataTable dt = DBAccess.RunSQLReturnTable("SELECT * FROM " + tableName + " WHERE " + tablePK + "='" + tablePKVal + "'");
+                    if (dt.Rows.Count == 0)
+                        throw new Exception("@利用table传递数据错误，没有找到指定的行数据，无法为用户填充数据。");
+
+                    string innerKeys = ",OID,NodeState,RDT,CDT,FID,WFState,";
+                    foreach (DataColumn dc in dt.Columns)
+                    {
+                        if (innerKeys.Contains("," + dc.ColumnName + ","))
+                            continue;
+
+                        wk.SetValByKey(dc.ColumnName, dt.Rows[0][dc.ColumnName].ToString());
+                    }
+                }
+                #endregion 处理删除草稿的需求。
+
+
+
 
                 #region 处理流程之间的数据传递。
                 if (System.Web.HttpContext.Current.Request.QueryString["FromWorkID"] != null)
@@ -419,7 +443,7 @@ namespace BP.WF
                                 FrmAttachmentDB dbNew = new FrmAttachmentDB();
                                 dbNew.Copy(athDB);
                                 dbNew.RefPKVal = wk.OID.ToString();
-                                dbNew.FK_FrmAttachment = dbNew.FK_FrmAttachment.Replace("ND"+fromNode, "ND"+wk.HisNode.NodeID);
+                                dbNew.FK_FrmAttachment = dbNew.FK_FrmAttachment.Replace("ND" + fromNode, "ND" + wk.HisNode.NodeID);
 
                                 dbNew.MyPK = dbNew.FK_FrmAttachment + "_" + dbNew.RefPKVal + "_" + idx;
                                 dbNew.FK_MapData = "ND" + wk.HisNode.NodeID;

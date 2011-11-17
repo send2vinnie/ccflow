@@ -818,8 +818,6 @@ namespace BP.WF
             // 如果执行了两次发送，那前一次的轨迹就需要被删除。这里是为了避免错误。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node =" + town.HisNode.NodeID);
 
-             
-
             //首先判断是否配置了获取下一步接受人员的sql.
             if (this.HisNode.RecipientSQL.Length > 4)
             {
