@@ -1,0 +1,41 @@
+
+开源的asp.net工作流程引擎,ccflow安装中遇到的问题?
+ 
+
+1, 没有把文件checkout 到d:\ccflow 下面, 这样会导致打开解决方案时找不到项目文件.
+   强烈建议你放在 d:\ccflow下面.
+
+2, 没有按照说明设置数据库连接，并且没有按照说明执行创建数据库.
+ 
+
+3, 没有按照说明设置mime类型，导致silverlight程序不能使用. 导致设计器界面不能下载100%不能动。
+
+
+4, 没有按照说明把 Flow 设置成虚拟目录. 并把它设置成 application 类型.导致程序不能被运行.
+
+
+6, 在运行程序时，用了不支持的浏览器类型，导致,一些格式不兼容或者在流程设计器使用中一些窗口弹出被阻止.
+
+7, 我在更换ip,或者使用域名访问部署在服务器的ccflow时，设计器怎么不工作了？
+   re: 你需要更改clentbin\ 里面的设置。详细请参考<<03.ccflow 如何部署silverlight程序？>>
+
+
+8. 程序不能工作.  请按照如下步骤，重新注册iis的.net.
+cd C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319
+aspnet_regiis.exe -ua
+aspnet_regiis.exe -i
+
+
+9.  未能加载文件或程序集“Interop.Microsoft.Office.Core”或它的某一个依赖项。试图加载格式不正确的程序。
+
+   重新引用 dll 
+
+10. 装载出现错误:列"EnsName"不属于表Item.
+
+   这个属于缓存造成的. 请按照如下方式解决.
+   1. 建议一个应用程序池 ccflow.
+   2. 让虚拟目录 Flow 应用程序池使用 ccflow.
+
+
+
+

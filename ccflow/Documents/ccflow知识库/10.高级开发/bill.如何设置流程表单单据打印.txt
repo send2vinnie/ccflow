@@ -1,0 +1,28 @@
+如何设置流程表单单据打印?
+
+
+单据打印分为流程单据打印与节点表单打印, 设置打印内容这两种情况没有区别.
+
+节点表单单据打印需要在节点属性里上传，而流程表单的打印只需要按照约定设置就可以了。
+
+流程表单单据设置方式如下:
+
+1, 打开 D:\ccflow\VisualFlow\DataUser\CyclostyleFile\FlowFrm\
+
+2, 按照流程编号建立一个目录比如: 001 所有该流程下的表单都在这里面.
+  D:\ccflow\VisualFlow\DataUser\CyclostyleFile\FlowFrm\001
+
+3, 找到节点编号, 比如我们对107 节点设置打印, 建立在流程编号目录下建立目录.
+  D:\ccflow\VisualFlow\DataUser\CyclostyleFile\FlowFrm\001\107 
+  所有的流程表单模版都放在这里面.
+
+4, 表单命名规则: 流程图表单编号+'.'+ 自定义的表单名称+'.rtf'.
+   比如: D:\ccflow\VisualFlow\DataUser\CyclostyleFile\FlowFrm\001\107\00001.企业简介.rtf
+
+5, 以上说明了对于单个表单中设置一个打印的单据, 打印的格式是按照rtf 格式的内容进行. 
+   系统就会取表单 00001 的表单数据，替换 00001.企业简介.rtf 里面的内容进行执行打印.
+   
+6, 如果一个单据中有需要多个表单数据支持. 约定的格式为.
+    D:\ccflow\VisualFlow\DataUser\CyclostyleFile\FlowFrm\001\107\all.企业简介.rtf
+  它的是意思就是把整个流程表单数据都放入里面.
+ 

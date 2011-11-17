@@ -1,0 +1,25 @@
+在ccflow表单设计器中，如何实现自动编号（或者时间戳）
+http://hi.baidu.com/ccflow/blog/item/ff1129f9dc480713d9f9fd1c.html
+
+
+应用需求特性:
+1, 在开始节点生成.
+
+2, 生成后会自动传递到其它的节点上去.
+
+
+实现方法:
+1, 创建一个生成自动编号或者时间戳的函数. 比如: GenerMyNo
+
+2, 建立一个string字段，设置为只读属性.
+
+3, 在这个字段中的属性的扩展设置中，数据获取-> 方式2：利用sql 自动填充.
+   填写一个sql 
+    for sqlserver:
+   比如: SELECT dbo.GenerMyNo() 
+    
+    for oracle:
+   比如: SELECT dbo.GenerMyNo() 
+    
+
+ 
