@@ -73,7 +73,6 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     sql = "DELETE Sys_Enum WHERE EnumKey='EventDoType'";
                     BP.DA.DBAccess.RunSQLs(sql);
 
-
                     try
                     {
                         //更新 WF_EmpWorks. 2011-11-09
@@ -88,7 +87,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     BP.DA.DBAccess.RunSQLs(sql);
 
                     // 更新老版本的字段长度。
-                    sql = "ALTER   TABLE  WF_Track   ALTER COLUMN RDT varchar(20)";
+                    sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
                     BP.DA.DBAccess.RunSQLs(sql);
 
                     string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
