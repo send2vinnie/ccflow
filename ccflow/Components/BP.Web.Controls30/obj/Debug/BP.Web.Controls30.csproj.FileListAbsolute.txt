@@ -1,5 +1,0 @@
-D:\WorkFlow\DLL\BP.Web.Controls.dll
-D:\WorkFlow\DLL\BP.Web.Controls.pdb
-D:\WorkFlow\Components\BP.Web.Controls30\obj\Debug\ResolveAssemblyReference.cache
-D:\WorkFlow\Components\BP.Web.Controls30\obj\Debug\BP.Web.Controls.dll
-D:\WorkFlow\Components\BP.Web.Controls30\obj\Debug\BP.Web.Controls.pdb
