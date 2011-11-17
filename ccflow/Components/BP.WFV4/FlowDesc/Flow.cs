@@ -345,7 +345,6 @@ namespace BP.WF
                 foreach (string k in System.Web.HttpContext.Current.Request.QueryString.AllKeys)
                     wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
 
-
                 #region 处理删除草稿的需求。
                 if (System.Web.HttpContext.Current.Request.QueryString["IsDeleteDraft"] == "1" && num == 1)
                 {
