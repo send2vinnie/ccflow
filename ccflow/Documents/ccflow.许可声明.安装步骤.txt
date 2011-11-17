@@ -4,8 +4,8 @@
 开发历史: 2003-2011年. 性    质: 开源软件
 许可协议: LGPL URL: http://www.gnu.org/licenses/lgpl.html
 官方网站: http://ccflow.org
-源 代 码: http://ccflow.googlecode.com/svn/ccflow/
-运行环境: bs 结构. windows xp, windows server. IIS6.0以上. .net4.0. Office2007 (如果需要单据打印.)
+源 代 码: http://ccflow.googlecode.com/svn/ccflow/ 请用svn下载.
+运行环境: bs 结构. windows xp, windows server. win7 IIS6.0以上. .net4.0. Office2007 (如果需要单据打印.)
 开发语言: VS2010. .net4.0 c#.net.
 客 户 端: FireFox 3.0以上. IE7+,或者使用IE内核的浏览器.
 组成部分: 流程图形设计器(有:cs版本与bs版本)/流程前台运行程序(BS结构)/流程服务(CS)/web的方式的表单设计器/BRP工具
@@ -16,7 +16,7 @@
 *****************************************************************
 1. .net 4.0
 2, owc11.exe 用于生成数据图形分析。
-3, SaveAsPDFandXPS.exe 生成pdf文件的组件.
+3, SaveAsPDFandXPS.exe 生成pdf文件的组件.【选装】
 4, iewebcontrols.msi  控件.
 5, vs2010 开发环境(不进行二次开发不必要安装)
 *****************************************************************
@@ -28,16 +28,16 @@ D:\ccflow\Components\BP.En30   -- 底层基类.
 D:\ccflow\Components\BP.Web.Controls30   --bs控件层.
 D:\ccflow\Components\BP.WFV4  --工作流程引擎层
 D:\ccflow\Components\BP.Win32.Controls --cs控件层.
-D:\ccflow\DataBase  -- 案例数据库备份文件.
+
+
 D:\ccflow\DLL  -- 第三方组件中需要调用dll.
 D:\ccflow\Documents - 文档
-D:\ccflow\Release  -发布的程序.
 D:\ccflow\VisualFlow  --bs工作流程引擎前台.  
 D:\ccflow\VisualWorkFlowServices - 流程服务程序.
 D:\ccflow\VisualFlowWebDesigner - silverlight流程设计器.
-
 D:\ccflow\SLPrj\FreeFrm - silverlight 自由表单设计器. (说明:对A级用户有效)
 D:\ccflow\SLPrj\Flow\Flow - silverlight 版本前台应用源程序. (说明:对B级用户有效)
+D:\ccflow\CCFlowWord2007 - 公文流程.
 
 
 关于: ccflow前台目录结构.
@@ -53,12 +53,19 @@ D:\ccflow\VisualFlow\WF -- ccflow前台应用程序层(主要的功能都是在这个目录里面)
 D:\ccflow\VisualFlow\WF\Admin - 对ccflow的管理比如设计方向条件.报表定义...
 D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
 D:\ccflow\VisualFlow\ClientBin - silverlight 程序. 
-    Flow.xap silverlight版本的前台执行程序, WF.xap流程设计器,FreeFrm.xap自由表单设计器.                             
+D:\ccflow\VisualFlow\ClientBin\Flow.xap  silverlight版本的前台执行程序
+D:\ccflow\VisualFlow\ClientBin\WF.xap 流程设计器
+D:\ccflow\VisualFlow\ClientBin\FreeFrm.xap 自由表单设计器.
 *****************************************************************
 
 
  如何安装并设置ccflow开发环境?
 ===================================================
+安装设置CCFLOW前，为了保证显示效果，请确认已经安装了 D:\ccflow\Release 下面的iewebcontrols.msi及owc11.exe   office组件
+
+安装微软silverlight，目前微软银光的版本为4.0，可以从  http://www.microsoft.com/silverlight/   下载并安装 ,如果你本机上是4.0以下的版本请删除它在安装它。
+
+
 0, 确认升级到IE7 以上，并且做如下设置.
    1, 菜单->工具->Internet 选项-> 隐私 -> 把打开弹出窗口阻止程序 关闭上，否则一些功能就不能使用.
    2, 菜单->工具->Internet 选项-> 常规 -> 浏览历史记录设置-> 选中 () 每次访问此网页时. 单选按钮. 点确定，以避免缓存对程序有影响。 
@@ -66,21 +73,23 @@ D:\ccflow\VisualFlow\ClientBin - silverlight 程序.
 1，使用 svn下载源程序,请查看如下连接.   
    http://ccflow.googlecode.com/svn/ccflow/
 
-2, 建立虚拟目录 Flow 在80 端口下  映射目录为 D:\ccflow\VisualFlow\
-   注意一定是应用程序.
+2，在IIS里面新建一个应用程序池，应用程序池ID号为：ccflow
+
+3, 建立虚拟目录 Flow 在80 端口下  映射目录为 D:\ccflow\VisualFlow\
+   执行权限为纯脚本，应用程序池选择为：步骤2新增的应用程序池。
 
 
-3, 创建数据库WF.
+4, 创建数据库ccflow.
 
-    1, 建立数据库(不管你用的什么数据库) 比如: WF
+    1, 建立数据库(不管你用的什么数据库) 比如: ccflow
 
-    2, 请看下面第4步骤, 为数据库配置链接.
+    2, 请看下面第5步骤, 为数据库配置链接.
 
-    3, 执行修复&安装数据库工具: http://localhost/Flow/WF/Admin/DBInstall.aspx
+    3, 执行修复&安装数据库工具: http://localhost/Flow/WF/Admin/DBInstall.aspx (如果这个网页打不开，这是你的iis配置不正确.)
 
 
-4, 修改 D:\ccflow\VisualFlow\web.config Appsetting 节点中的数据库连接。
-    如下：
+5, 修改 D:\ccflow\VisualFlow\web.config Appsetting 节点中的数据库连接。
+    如下：【如果使用的是MSSQL数据库，修改数据库的链接的用户名和密码即可】
   <appSettings>
   <add key="IsDebug" value="0" />
   <add key="SysLanguage" value="CH" />
@@ -88,18 +97,19 @@ D:\ccflow\VisualFlow\ClientBin - silverlight 程序.
   <add key="SysName" value="驰骋工作流" />
   <add key="InitConnNum" value="10" />
   <!-- 数据库连接url. -->
-  <add key="AppCenterDSN" value="Password=;Persist Security Info=True;User ID=sa;Initial Catalog=WF;Data Source=.;Timeout=2" />
+  <add key="AppCenterDSN" value="Password=;Persist Security Info=True;User ID=sa;Initial Catalog=ccflow;Data Source=.;Timeout=2" />
 
-  <!--ccflow 支持的数据库类型, MSSQL, Oracle, DB2,MYSQL -->
+  <!--ccflow 支持的数据库类型, MSSQL, Oracle, DB2,   注意区分大小写. -->
   <add key="AppCenterDBType" value="MSSQL" />
 
-5, 启动流程设计器
-   BS版本流程设计器路径, beta版本.
+6, 启动流程设计器
+   BS版本流程设计器路径, Silverlight beta版本.
    http://localhost/Flow/Designer.aspx
 
-6, 启动流程服务: 用来发短信与邮件的服务. 
+7, 启动流程服务: 用来发短信与邮件的服务. 
     D:\ccflow\VisualWorkFlowServices\bin\Release\VisualWorkFlowServices.exe 
-    把他在做面上创建一个快捷方式.
+    把他在桌面上创建一个快捷方式.
+
 
 安装过程中经常遇到的问题:
 =======================================================================
@@ -120,6 +130,9 @@ D:\ccflow\VisualFlow\ClientBin - silverlight 程序.
   扩展名： .xap     MIME类型：  xapapplication/x-silverlight  
   扩展名： .xaml   MIME类型：  application/xaml+xml
 
+6. 出现用户名及密码错误，请在web.config 文件中删除 userName="administrator" password="jiaozi"
+
+7. silverlight 版本不是 4.0以及4.0以上，请先卸了，重新安装。
 ==================================================================================================
 =  我们坚持,开源,共享协作. 
 == 始终把: "做最好用的工作流程引擎，工作流程管理系统，奉献社会。" 做为发展目标与理念。
