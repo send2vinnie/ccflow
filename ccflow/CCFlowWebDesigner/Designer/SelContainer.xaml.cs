@@ -27,8 +27,8 @@ namespace WF.Designer
         public SelContainer()
         {
             InitializeComponent();
-            cnsDesignerContainer.Width = Application.Current.Host.Content.ActualWidth;
-            cnsDesignerContainer.Height = Application.Current.Host.Content.ActualHeight;
+            //cnsDesignerContainer.Width = Application.Current.Host.Content.ActualWidth;
+            //cnsDesignerContainer.Height = Application.Current.Host.Content.ActualHeight;
             Application.Current.Host.Content.Resized += new EventHandler(Content_Resized);
 
             SetGridLines();
@@ -42,7 +42,7 @@ namespace WF.Designer
         public SelContainer(string fk_flow, string workid)
             : this()
         {
-            FK_Flow = fk_flow;
+                FK_Flow = fk_flow;
             WorkID = workid;
             _Service.GetDTOfWorkListAsync(FK_Flow, WorkID);
             _Service.GetDTOfWorkListCompleted += _Service_GetDTOfWorkListCompleted;
@@ -267,7 +267,8 @@ namespace WF.Designer
         private Canvas _gridLinesContainer;
         private Rectangle temproaryEllipse;
         private DataSet workListDataSet;
-
+        private double DesignerHeight = 50;
+        private double DesignerWdith = 50;
 
         #endregion
         
@@ -317,6 +318,17 @@ namespace WF.Designer
                 if (y > 770)
                     y = 770;
                 flowNode.CenterPoint = new Point(x, y);
+
+                // 永远使设计器的宽和高为节点的最大值　
+                if(y > DesignerHeight )
+                {
+                    DesignerHeight = y;
+                }
+
+                if(x >DesignerWdith)
+                {
+                    DesignerWdith = x;
+                }
                 AddFlowNode(flowNode);
             }
             _Service.GetLablesAsync(FlowID);
@@ -326,6 +338,8 @@ namespace WF.Designer
             _Service.GetDirectionCompleted += _service_GetDirectionCompleted;
 
             SaveChange(HistoryType.New);
+
+            Content_Resized(null,null);
             _Service.RunSQLReturnTableCompleted -= _service_RunSQLReturnTableCompleted;
         }
 
@@ -471,11 +485,17 @@ namespace WF.Designer
 
         private void Content_Resized(object sender, EventArgs e)
         {
-            cnsDesignerContainer.Width = Application.Current.Host.Content.ActualWidth;
-            cnsDesignerContainer.Height = Application.Current.Host.Content.ActualHeight;
+            var contentHeight = Application.Current.Host.Content.ActualHeight - 20;
+            var contentWidth = Application.Current.Host.Content.ActualWidth - 20;
+            cnsDesignerContainer.Width = DesignerWdith > contentWidth
+                                             ? DesignerWdith
+                                             : contentWidth;
+            cnsDesignerContainer.Height = DesignerHeight > contentHeight
+                                              ? DesignerHeight
+                                              :contentHeight;      
             SetGridLines();
-        }
 
+        }
 
         public void SetGridLines()
         {
@@ -954,5 +974,16 @@ namespace WF.Designer
             throw new NotImplementedException();
         }
         #endregion
+
+
+        /// <summary>
+        /// 屏蔽SL默认的右键菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

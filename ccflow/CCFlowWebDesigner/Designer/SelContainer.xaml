@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Width="Auto" Height="Auto" >       
+    mc:Ignorable="d" Width="Auto" Height="Auto" MouseRightButtonDown="UserControl_MouseRightButtonDown">       
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />           
@@ -13,10 +13,11 @@
                 VerticalAlignment="Top"
                 BorderBrush="Beige"  BorderThickness="0" HorizontalAlignment="Stretch" 
                 Grid.Row="0" Grid.Column="0"  
-                HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
+                HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
             <ScrollViewer.Content>
                  <Canvas Name="cnsDesignerContainer" VerticalAlignment="Top" HorizontalAlignment="Left" 
-                        Width="Auto" Height="Auto" Background="#dcdcdc"
+                        Width="Auto" Height="Auto"  
+                        Background="#dcdcdc"
                         MouseLeftButtonDown="Container_MouseLeftButtonDown"
                         MouseMove="Container_MouseMove"
                         MouseLeftButtonUp="Container_MouseLeftButtonUp"  
