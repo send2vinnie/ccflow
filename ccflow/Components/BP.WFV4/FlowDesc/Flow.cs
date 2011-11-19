@@ -615,7 +615,7 @@ namespace BP.WF
                 flowDataViewExtFields = "";
 
             sql = "CREATE VIEW V_FlowData  ";
-            sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
+       //     sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
             sql += " AS ";
             foreach (Flow fl in fls)
             {

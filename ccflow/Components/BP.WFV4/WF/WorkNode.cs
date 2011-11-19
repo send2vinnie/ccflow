@@ -2878,11 +2878,7 @@ namespace BP.WF
                     #region 生成单据信息
                     Int64 workid = this.HisWork.OID;
                     int nodeId = this.HisNode.NodeID;
-                    //string BillTable=this.HisNode.HisFlow.BillTable;
                     string flowNo = this.HisNode.FK_Flow;
-
-                    // 删除这个sql, 在后面已经做了异常判断。
-                    //DBAccess.RunSQL("DELETE FROM WF_Bill WHERE WorkID='" + workid + "' AND (FK_Node='" + nodeId + "') ");
                     #endregion
 
                     rptGe.RetrieveFromDBSources();
@@ -3042,7 +3038,6 @@ namespace BP.WF
                     if (this.HisWork.FID == 0)
                     {
                         WorkNode wn = this.HisWorkFlow.HisStartWorkNode;
-                        //wn.HisWork.SetValByKey("WFState",0);
                         wn.HisWork.Update("WFState", (int)WFState.Runing);
                         this.HisWork.NodeState = NodeState.Init;
                         this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Init);

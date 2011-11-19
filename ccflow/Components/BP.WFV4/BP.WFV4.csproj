@@ -268,9 +268,7 @@
     <Compile Include="Xml\WorkOptDtl.cs" />
     <Compile Include="Xml\WatchDogXml.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
