@@ -257,13 +257,19 @@ namespace SMSServices
 
                         if (this.checkBox1.Checked)
                             Console.Beep();
+
                         //this.SetText("暂停中...");
                     }
 
                     try
                     {
                         this.SetText("@执行：" + sm.Tel + " email: " + sm.Email);
+                        //switch (sm.AlertType)
+                        //{ 
+                        //     case 
+                        //}
                         this.SendMail(sm);
+
 
                         idx++;
                         this.SetText("已完成 , 第:" + idx + " 个.");
