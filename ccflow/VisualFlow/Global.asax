@@ -8,8 +8,6 @@
         {
             string temp = Server.MapPath(System.Web.HttpContext.Current.Request.ApplicationPath) + "/Temp/";
             System.IO.File.Delete(temp);
-            
-          
         }
         catch
         {
