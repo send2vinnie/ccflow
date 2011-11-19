@@ -64,23 +64,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ColorPicker">
-      <HintPath>..\DLL\ColorPicker.dll</HintPath>
+      <HintPath>..\..\..\ccflow\DLL\ColorPicker.dll</HintPath>
     </Reference>
-    <Reference Include="FJ.Core">
-      <HintPath>..\DLL\FJ.Core.dll</HintPath>
-    </Reference>
+    <Reference Include="FJ.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Liquid.Menu">
-      <HintPath>..\DLL\Liquid.Menu.dll</HintPath>
+      <HintPath>..\..\..\ccflow\DLL\Liquid.Menu.dll</HintPath>
     </Reference>
     <Reference Include="Liquid.TreeView">
-      <HintPath>..\DLL\Liquid.TreeView.dll</HintPath>
+      <HintPath>..\..\..\ccflow\DLL\Liquid.TreeView.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Silverlight.Controls">
-      <HintPath>..\DLL\Silverlight.Controls.dll</HintPath>
+      <HintPath>..\..\..\ccflow\DLL\Silverlight.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Silverlight.DataSet">
-      <HintPath>..\DLL\Silverlight.DataSet.dll</HintPath>
+      <HintPath>..\..\..\ccflow\DLL\Silverlight.DataSet.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
@@ -93,10 +91,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -111,19 +107,37 @@
     <Compile Include="Component\DirectionComponent.cs" />
     <Compile Include="Component\FlowNodeComponent.cs" />
     <Compile Include="Component\Utility.cs" />
-    <Compile Include="Controls\FlowFrm.xaml.cs">
-      <DependentUpon>FlowFrm.xaml</DependentUpon>
+    <Compile Include="Controls\DeptTree.xaml.cs">
+      <DependentUpon>DeptTree.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DirectionSetting.xaml.cs">
+      <DependentUpon>DirectionSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\FrmNew.xaml.cs">
       <DependentUpon>FrmNew.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FlowNodeSetting.xaml.cs">
+      <DependentUpon>FlowNodeSetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SLInput .xaml.cs">
+      <DependentUpon>SLInput .xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SnapshotCapturer.cs" />
     <Compile Include="Controls\ToolbarItem.cs" />
+    <Compile Include="Controls\MenuTool.xaml.cs">
+      <DependentUpon>MenuTool.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NewFlowSort.xaml.cs">
       <DependentUpon>NewFlowSort.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Org.xaml.cs">
+      <DependentUpon>Org.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StationTree.xaml.cs">
+      <DependentUpon>StationTree.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TabControlEx.cs" />
     <Compile Include="Controls\TabItemEx.cs" />
@@ -155,9 +169,6 @@
     <Compile Include="Designer\ErrorTip.xaml.cs">
       <DependentUpon>ErrorTip.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Designer\FlowFormManager.xaml.cs">
-      <DependentUpon>FlowFormManager.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Designer\FlowNode.xaml.cs">
       <DependentUpon>FlowNode.xaml</DependentUpon>
     </Compile>
@@ -185,6 +196,9 @@
       <DependentUpon>SelContainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Designer\Triangle.cs" />
+    <Compile Include="FlowFrm.xaml.cs">
+      <DependentUpon>FlowFrm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Glo.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -212,11 +226,8 @@
       <DependentUpon>StationNode.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Text.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Text.resx</DependentUpon>
-    </Compile>
+    <Compile Include="Resources\Text.Designer.cs" />
+    <Compile Include="Resources\Text.en-us.Designer.cs" />
     <Compile Include="Service References\WS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -245,7 +256,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\FlowFrm.xaml">
+    <Page Include="Controls\DeptTree.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DirectionSetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -253,11 +268,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\FlowNodeSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\MenuTool.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\NewFlowSort.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Org.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SLInput .xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StationTree.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -297,10 +332,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Designer\FlowFormManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Designer\FlowNode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -332,6 +363,10 @@
     <Page Include="Designer\SelContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FlowFrm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -372,11 +407,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Text.en-us.resx" />
-    <EmbeddedResource Include="Resources\Text.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Text.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="Resources\Text.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Text.resx" />
+    <EmbeddedResource Include="Resources\Text.ru-RU.resx">
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Text.zh-cn.resx" />
+    <EmbeddedResource Include="Resources\Text.zh-cn.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Text.zh-Hant.resx" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\image\Authorize.gif" />
@@ -418,7 +457,6 @@
     <Resource Include="Images\MenuItem\FlowSheet.png" />
     <Resource Include="Images\MenuItem\Setting.png" />
     <Content Include="Images\ReleaseToFTP.png" />
-    <Content Include="Images\ToolBarLogin.png" />
     <Content Include="Images\ToolBarNewLabel.png" />
     <Content Include="Images\ToolBarNewLine.png" />
     <Content Include="Images\ToolBarNewNode.png" />
@@ -450,6 +488,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="ServiceReferences.ClientConfig">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Themes\img1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

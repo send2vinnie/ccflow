@@ -25,9 +25,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         Point origTurnPoint1Point;
         Point origTurnPoint2Point; 
         bool positionIsChange = true;
-
         public void Zoom(double zoomDeep)
         {
+            
             if (positionIsChange)
             {
                 origBeginPoint = BeginPointPosition;
@@ -183,6 +183,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             return clone;
         }
+      
 
         DirectionLineType lineType = DirectionLineType.Line;
         public DirectionLineType LineType
@@ -382,6 +383,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public event DeleteDelegate DeleteDirection;
 
 
+
         bool isDeleted = false;
         public bool IsDeleted
         {
@@ -470,6 +472,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
 
+
+
         public Point GetPointPosition(DirectionMoveType MoveType)
         {
             Point p = new Point();
@@ -508,6 +512,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public Direction(IContainer container)
             : this(container, false)
         {
+            worklist();
         }
         public Direction(IContainer container, bool isTemporary):this(container,isTemporary, DirectionLineType.Line)
         {
@@ -692,6 +697,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         }
 
+
         public void RemoveBeginFlowNode(FlowNode a)
         {
             if (BeginFlowNode == a)
@@ -699,10 +705,17 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             //需要删除事件代理 
         }
 
+
+
+
+
         public Point GetResetPoint(Point beginPoint, Point endPoint, FlowNode a, DirectionMoveType type)
         {
             Point p = a.GetPointOfIntersection(beginPoint, endPoint, type);
+
             return p;
+
+
         }
 
         void OnFlowNodeMove(FlowNode a, MouseEventArgs e)
@@ -803,6 +816,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 EndFlowNode = null;
             //需要删除事件代理 
         }
+
+
 
         bool trackingLineMouseMove = false;
         Point mousePosition;
@@ -1327,6 +1342,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return ruleTurnPoint2;
             }
         }
+
         
         DirectionTurnPoint ruleTurnPoint1;
         public DirectionTurnPoint DirectionTurnPoint1
@@ -1743,7 +1759,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             _container.ShowDirectionSetting(this);
         }
-
         #region IElement 成员
 
 
@@ -1753,24 +1768,41 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             return null;
         }
 
-        public void Worklist(DataSet dataSet)
+
+        public void worklist()
         {
-           if(dataSet == null || dataSet.Tables.Count == 0)
-           {
-               return;
-           }
-            foreach (DataRow dr in dataSet.Tables[0].Rows)
-            {       
+            if (!(string.IsNullOrEmpty(_container.FK_Flow) && string.IsNullOrEmpty(_container.WorkID)))
+            {
+                _container._Service.GetDTOfWorkListAsync(_container.FK_Flow, _container.WorkID);
+                _container._Service.GetDTOfWorkListCompleted +=
+                    new EventHandler<WF.WS.GetDTOfWorkListCompletedEventArgs>(_Service_GetDTOfWorkListCompleted);
+            }
+        }
+        void _Service_GetDTOfWorkListCompleted(object sender, WF.WS.GetDTOfWorkListCompletedEventArgs e)
+        {
+            if (e.Result == null)
+                return;
+            DataSet ds = new DataSet();
+            try
+            {
+                ds.FromXml(e.Result);
+            }
+            catch { }
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
                 if (this.EndFlowNode.FlowNodeID == dr["FK_Node"].ToString())
                 {
-                    var brush = new SolidColorBrush();
+                    SolidColorBrush brush = new SolidColorBrush();
                     brush.Color = Colors.Red;
                     this.begin.Fill = brush;
                     this.endArrow.Stroke = brush;
                     this.line.Stroke = brush;
                 }
+               
+             }
 
-            }            
+
+            
         }
 
         #endregion

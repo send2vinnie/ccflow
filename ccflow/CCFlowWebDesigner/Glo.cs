@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -17,7 +15,6 @@ using System.Windows.Browser;
 using System.IO;
 using Silverlight;
 using Ccflow.Web.UI.Control.Workflow.Designer;
-using WF.WS;
 
 namespace WF
 {
@@ -52,22 +49,6 @@ namespace WF
         }
 
         /// <summary>
-        /// 得到WebService对象
-        /// </summary>
-        /// <returns></returns>
-        public static WSDesignerSoapClient GetDesignerServiceInstance()
-        {
-            var basicBinding = new BasicHttpBinding() { MaxBufferSize = 2147483647, MaxReceivedMessageSize = 2147483647, Name = "WSDesignerSoap" };
-            basicBinding.Security.Mode = BasicHttpSecurityMode.None;    
-            var endPoint = new EndpointAddress(BPMHost + "/WebService.asmx");
-            var ctor =
-                typeof (WSDesignerSoapClient).GetConstructor(new Type[] {typeof (Binding), typeof (EndpointAddress)});
-            return (WSDesignerSoapClient) ctor.Invoke(new object[] {basicBinding, endPoint});
-        } 
-
-        #endregion 共用方法
-
-        /// <summary>
         /// 弹出网页窗口
         /// </summary>
         /// <param name="url">网页地址</param>
@@ -89,6 +70,6 @@ namespace WF
                         title, property));
             }
         }
-
+        #endregion 共用方法
     }
 }

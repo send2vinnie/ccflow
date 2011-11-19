@@ -19,7 +19,7 @@ namespace WF.Controls
     public partial class FrmNewFlow : ChildWindow
     {
         #region Private Variables
-        WSDesignerSoapClient _service = Glo.GetDesignerServiceInstance();
+        WSDesignerSoapClient _service = new WSDesignerSoapClient();
         private LoadingWindow loadingWindow = new LoadingWindow();
         OpenFileDialog dialog = new OpenFileDialog();
         private byte[] buffer;
@@ -163,12 +163,6 @@ namespace WF.Controls
         
         void _Service_UploadfileCompleted(object sender, UploadfileCompletedEventArgs e)
         {
-            if (e.Result.Contains("Error:"))
-            {
-                loadingWindow.Close();
-                MessageBox.Show(e.Result, "Error", MessageBoxButton.OK);
-                return;
-            }
             _service.FlowTemplete_LoadCompleted += _service_FlowTemplete_LoadCompleted;
             _service.FlowTemplete_LoadAsync((cbxFlowSortImport.SelectedItem as BindableObject).GetValue("NO"), e.Result, true);
 

@@ -14,7 +14,6 @@ using System.Xml.Linq;
 using System.IO;
 using Ccflow.Web.UI.Control.Workflow.Designer;
 using Ccflow.Web.Component.Workflow;
-using WF;
 using WF.Resources;
 using WF.WS;
 using Liquid;
@@ -37,7 +36,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <summary>
         /// 服务
         /// </summary>
-        WSDesignerSoapClient _service = Glo.GetDesignerServiceInstance();//new BasicHttpBinding(), address);
+        WSDesignerSoapClient _service = new WSDesignerSoapClient();//new BasicHttpBinding(), address);
         /// <summary>
         /// 页面编辑类型
         /// </summary>
@@ -611,8 +610,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             else
             {
                 _Service.DoAsync("NewFlow", null, true);
-            } 
-            _Service.DoCompleted += _service_DoCompleted;
+            } _Service.DoCompleted += new EventHandler<DoCompletedEventArgs>(_service_DoCompleted);
             //_Service.GetFlowSortAsync();
         }
 
@@ -908,7 +906,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
 
             this.WinTitle = title;
-            var serviceProxy = Glo.GetDesignerServiceInstance();
+            var serviceProxy = new WSDesignerSoapClient();
             serviceProxy.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
             serviceProxy.GetRelativeUrlCompleted += (s, e) =>
                                                  {
@@ -1036,7 +1034,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             SaveChange(HistoryType.New);
         }
 
-       
+        void display(string xml)
+        {
+            LoadFromXmlString(xml);
+            SaveChange(HistoryType.New);
+        }
 
         public void AddFlowNode(FlowNode a)
         {
@@ -1099,11 +1101,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             sbContainerCoverClose.Completed += new EventHandler(sbContainerCoverClose_Completed);
             sbContainerCoverClose.Begin();
+
+
         }
 
         public void AddDirection()
         {
-            var r = new Direction((IContainer)this);
+
+            Direction r = new Direction((IContainer)this);
             r.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
             r.DirectionName = Text.NewDirection + NextNewDirectionIndex.ToString();
             AddDirection(r);
@@ -1530,39 +1535,26 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public void MoveControlCollectionByDisplacement(double x, double y, UserControl uc)
         {
             if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
-            {
                 return;
-            }
-
-            // 如果光标所在的节点没有被选中，则不移动所有被选中的节点，光移动光标所有的节点即可。
-            var element = uc as IElement;
-            if(element != null && !element.IsSelectd)
-            {
-                return;
-            }
 
             FlowNode selectedFlowNode = null;
             Direction selectedDirection = null;
             NodeLabel selectedLabel = null;
             if (uc is FlowNode)
-            {
                 selectedFlowNode = uc as FlowNode;
-            }
 
             if (uc is Direction)
-            {
                 selectedDirection = uc as Direction;
-            }
             if (uc is NodeLabel)
-            {
                 selectedLabel = uc as NodeLabel;
-            }
 
             FlowNode a = null;
             Direction r = null;
             NodeLabel l = null;
             for (int i = 0; i < CurrentSelectedControlCollection.Count; i++)
             {
+
+
                 if (CurrentSelectedControlCollection[i] is FlowNode)
                 {
                     a = CurrentSelectedControlCollection[i] as FlowNode;
@@ -1589,7 +1581,23 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             IsNeedSave = true;
         }
         
+        void applyContainerCulture()
+        {
+
+            btnCloseMessage.Content = Text.Button_Close;
+
+        }
         
+        public void ApplyCulture()
+        {
+            applyContainerCulture();
+
+            menuFlowNode.ApplyCulture();
+            //  menuLabel.ApplyCulture();
+            menuDirection.ApplyCulture();
+            //siFlowNodeSetting.ApplyCulture();
+            //siDirectionSetting.ApplyCulture();
+        }
 
         public void PastMemoryToContainer()
         {
@@ -1896,6 +1904,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _Service.GetDirectionAsync(FlowID);
             _Service.GetDirectionCompleted += new EventHandler<GetDirectionCompletedEventArgs>(_service_GetDirectionCompleted);
 
+
+
             SaveChange(HistoryType.New);
             _Service.RunSQLReturnTableCompleted -= new EventHandler<RunSQLReturnTableCompletedEventArgs>(_service_RunSQLReturnTableCompleted);
         }
@@ -1905,8 +1915,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             DataSet ds = new DataSet();
             ds.FromXml(e.Result);
 
-             foreach (FlowNode bfn in FlowNodeCollections)
+
+            foreach (FlowNode bfn in FlowNodeCollections)
             {
+
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
@@ -2384,6 +2396,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             menuContainer.Visibility = Visibility.Collapsed;
             menuContainer.Container = this;
 
+
             SetGridLines();
 
             HtmlPage.Document.AttachEvent("oncontextmenu", OnContextMenu);
@@ -2391,17 +2404,15 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
-
+            ApplyCulture();
             cnsDesignerContainer.Height = Application.Current.Host.Content.ActualHeight;
             cnsDesignerContainer.Width = Application.Current.Host.Content.ActualWidth;
 
         }
-
         public Container(string flowid): this()
         {
             this.FlowID = flowid;
         }
-
         #endregion
 
     }

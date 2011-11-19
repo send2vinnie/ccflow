@@ -25,7 +25,7 @@
                       VerticalAlignment="Top"
                       BorderBrush="Beige"  BorderThickness="0" HorizontalAlignment="Left" 
                       Style="{StaticResource ScrollViewerLime}"
-                      HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto    " >
+                      HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
 
                 <ScrollViewer.Content>
                     <!--<Border   VerticalAlignment="Top"   HorizontalAlignment="Left"    BorderThickness="1"  BorderBrush="White" >-->

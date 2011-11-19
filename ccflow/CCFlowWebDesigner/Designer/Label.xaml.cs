@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Silverlight;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
@@ -379,7 +378,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         #region IElement 成员
 
-        public void Worklist(DataSet dataSet)
+        public void worklist()
         {
             throw new NotImplementedException();
         }

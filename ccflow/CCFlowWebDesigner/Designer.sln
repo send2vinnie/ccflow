@@ -29,7 +29,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Flow", "http://localhost/Fl
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		SlnRelativePath = "..\..\ccflow\VisualFlow\"
-		ProjOutputReferences = "{F55B885C-F362-4F08-BCAA-9CDEFE4A42AC}|ClientBin|false;"
+		ProjOutputReferences = ""
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Designer", "Designer.csproj", "{F55B885C-F362-4F08-BCAA-9CDEFE4A42AC}"

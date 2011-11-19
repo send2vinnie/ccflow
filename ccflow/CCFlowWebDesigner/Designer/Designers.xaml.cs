@@ -28,19 +28,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
     /// </summary>
     public partial class Designers : UserControl
     {
-        #region 变量
+        #region 全局变量
 
         private TreeNode firstNodeByFlow = new TreeNode();
         private System.Windows.Threading.DispatcherTimer _doubleClickTimer;
         private string FlowTempleteUrl = "";
         private string title; // 子窗体标题       
-        private WSDesignerSoapClient _service = Glo.GetDesignerServiceInstance();
-        
-        // 最后的流程类型，用于重新绑定流程树后，再打开最后操作的流程类别
-        private string latestFlowSortID; 
+        private WSDesignerSoapClient _service = new WSDesignerSoapClient();
 
-        private List<ToolbarButton> ToolBarButtonList = new List<ToolbarButton>();
-        private const string ToolBarEnableIsFlowSensitived = "EnableIsFlowSensitived";
 
         #endregion
 
@@ -89,28 +84,20 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             InitializeComponent();
 
-            var ws = Glo.GetDesignerServiceInstance();
-                
-            // bugs 暂时不需要根据公司动态加载图片的功能，因为会降低速度
-            //ws.DoAsync("GetSettings", "CompanyId", true);
-            //ws.DoCompleted += ws_GetCustomerIdCompleted;
+            var ws = new WSDesignerSoapClient();
+            ws.DoAsync("GetSettings", "CompanyId", true);
+            ws.DoCompleted += ws_GetCustomerIdCompleted;
             
             bindFlowAndFlowSort();
 
             loadToolbar();
 
             // InitDesignerXml
-            ws = Glo.GetDesignerServiceInstance();
+            ws = new WSDesignerSoapClient();
             ws.DoTypeAsync("InitDesignerXml", null, null, null, null, null);
             ws.DoTypeCompleted += ws_DoTypeCompleted;
-            
-            Application.Current.Host.Content.Resized += new EventHandler(Content_Resized);
 
         }
-
-        #endregion
-
-        #region 方法
 
         void ws_GetCustomerIdCompleted(object sender, DoCompletedEventArgs e)
         {
@@ -216,6 +203,27 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
 
  
+        #endregion
+
+        #region 方法
+        /// <summary>
+        /// 语言设置
+        /// </summary>
+        private void applyContainerCulture()
+        {
+        }
+
+        /// <summary>
+        /// 语言设置
+        /// </summary>
+        public void ApplyCulture()
+        {
+            applyContainerCulture();
+
+            //siFlowNodeSetting.ApplyCulture();
+            //siDirectionSetting.ApplyCulture();
+        }
+
         #region Flow CRUD related
 
         /// <summary>
@@ -281,8 +289,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             tbDesigner.Items.Add(ti);
             tbDesigner.SelectedItem = ti;
-
-            setToolBarButtonEnableStatus(true);
         }
 
         /// <summary>
@@ -296,17 +302,19 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                 _Service.DoCompleted += Server_DoCompletedToRefreshSortTree;
 
+
             }
         }
 
         void Server_DoCompletedToRefreshSortTree(object sender, DoCompletedEventArgs e)
         {
-             _Service.DoCompleted -= Server_DoCompletedToRefreshSortTree;
+
+            _Service.DoCompleted -= Server_DoCompletedToRefreshSortTree;
 
             foreach (TabItem t in tbDesigner.Items)
             {
-                var ct = t.Content as Container;
-                if (ct != null && ct.FlowID == TvwFlow.Selected.Name)
+                Container ct = t.Content as Container;
+                if (ct.FlowID == TvwFlow.Selected.Name)
                 {
                     tbDesigner.Items.Remove(t);
                     break;
@@ -327,7 +335,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 _Service.DoCompleted += Server_DoCompletedToRefreshSortTree;
             }
         }
-
         /// <summary>
         /// 新建工作流
         /// </summary>
@@ -403,7 +410,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return;
             var result = SnapshotCapturer.SaveScreenToString();
 
-            _service = Glo.GetDesignerServiceInstance();
+            _service = new WSDesignerSoapClient();
             var sortId = SelectedContainer.FK_Flow;
             _Service.DoAsync("ReleaseToFTP", SelectedContainer.FlowID + "," +  result, true);
             _Service.DoCompleted += _service_ReleaseToFTPCompleted;
@@ -433,7 +440,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// </summary>
         private void bindFlowAndFlowSort()
         {
-            _service = Glo.GetDesignerServiceInstance();
+            _service = new WSDesignerSoapClient();
             _Service.DoAsync("GetFlows", string.Empty, true);
             _Service.DoCompleted += _service_GetFlowsCompleted;
          }
@@ -455,13 +462,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             catch (Exception ex)
             {
-                MessageBox.Show("加载流程树时发生了错误,请检查数据库和Web.Config。错误具体信息为:\n" + e.Result, "错误", MessageBoxButton.OK);
+                MessageBox.Show("加载流程树时发生了错误,请检查数据库连接信息以及IIS WebService配置错误信息.", "错误", MessageBoxButton.OK);
                 return;
             }
            
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
-                var node = new TreeNode();
+                TreeNode node = new TreeNode();
                 node.Title = dr["Name"].ToString();
                 node.ID = dr["No"].ToString();
                 node.IsFlowSort = true;
@@ -473,7 +480,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             foreach (DataRow d in ds.Tables[1].Rows)
             {
-                var node = new TreeNode();
+                TreeNode node = new TreeNode();
                 node.Title = d["Name"].ToString();
                 node.ID = d["FK_FlowSort"].ToString();
                 node.Name = d["No"].ToString();
@@ -482,7 +489,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 {
                     if (SelectedContainer.FlowID == node.Name)
                     {
-                        var te = this.tbDesigner.SelectedItem as TabItemEx;
+                        TabItemEx te = this.tbDesigner.SelectedItem as TabItemEx;
                         te.Title = node.Title;
                         Canvas cs = te.Header as Canvas;
                         TextBlock tbx = cs.Children[1] as TextBlock;
@@ -502,18 +509,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     catch
                     {
                     }
-                }
-            }
-
-
-            // 完成绑定后，展开最后的FlowSort
-            foreach(TreeNode node in TvwFlow.Nodes)
-            {
-                if (node.ID == latestFlowSortID)
-                {
-                    node.IsExpanded = true;
-                    node.Expand();
-                    latestFlowSortID = string.Empty;
                 }
             }
 
@@ -552,7 +547,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     NewFlowHandler(2);
                     break;
                 case "NewFlowSort":
-                    var newFlowSort = new NewFlowSort(this);
+                    NewFlowSort newFlowSort = new NewFlowSort(this);
                     newFlowSort.DisplayType = NewFlowSort.DisplayTypeEnum.Add;
                     newFlowSort.ServiceDoCompletedEvent += AddEditFlowSortDoCompletedEventHandler;
                     newFlowSort.Show();
@@ -560,12 +555,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 case "Delete":
                     var deleteFlowNode = TvwFlow.Selected as TreeNode;
                     if(null == deleteFlowNode)
-                    {
                         break;
-                    }
                     if (!deleteFlowNode.IsFlowSort)
                     {
-                        latestFlowSortID = TvwFlow.Selected.ID;
                         DeleteFlow(TvwFlow.Selected.Name);
 
                         foreach (TabItem t in tbDesigner.Items)
@@ -588,7 +580,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     bindFlowAndFlowSort();
                     break;
                 case "Edit":
-                    latestFlowSortID = TvwFlow.Selected.ID;
                     var editFlowSort = new NewFlowSort(this);
                     editFlowSort.InitControl(TvwFlow.Selected.ID, TvwFlow.Selected.EditedTitle);
                     editFlowSort.DisplayType = NewFlowSort.DisplayTypeEnum.Edit;
@@ -615,6 +606,23 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
 
+        /// <summary>
+        /// 键盘按键按下事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// 键盘按键释放事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserControl_KeyUp(object sender, KeyEventArgs e)
+        {
+        }
 
         /// <summary>
         /// 在工作流树空白处按下鼠标左键事件
@@ -774,8 +782,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         
         public void NewFlowHandler(int tabIdx)
         {
-            latestFlowSortID = TvwFlow.Selected.ID;
-            var fu = new FrmNewFlow();
+            FrmNewFlow fu = new FrmNewFlow();
             fu.CurrentDesinger = this;
             fu.tabControl.TabIndex = tabIdx;
 
@@ -807,7 +814,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             };
             fu.Show();
         }
-        
         /// <summary>
         /// 关闭选项卡事件
         /// </summary>
@@ -836,11 +842,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     tbDesigner.Items.Remove(this.tbDesigner.SelectedItem);
 
                 }
-            }
-
-            if(tbDesigner.Items.Count == 0)
-            {
-                setToolBarButtonEnableStatus(false);
             }
         }
 
@@ -878,6 +879,27 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _Service.GetRelativeUrlCompleted -= _Service_GetRelativeUrlCompleted;
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            HtmlPage.RegisterScriptableObject("Designer", this);
+
+            _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
+            _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
+            _doubleClickTimer.Tick += DoubleClick_Timer;
+            ApplyCulture();
+            try
+            {
+                LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
+                TbcFDS.Height = LayoutRoot.Height - 75;
+                TvwFlow.Height = Application.Current.Host.Content.ActualHeight - 35 - 100;
+                tbDesigner.Height = Application.Current.Host.Content.ActualHeight - 35;
+                tbDesigner.Width = Application.Current.Host.Content.ActualWidth - 227;
+            }
+            catch
+            {
+            }
+            Application.Current.Host.Content.FullScreenChanged += Content_FullScreenChanged;
+        }
 
         /// <summary>
         /// Asp.net网页关闭时要执行的事件
@@ -964,6 +986,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
+            ApplyCulture();
             try
             {
                 LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
@@ -979,17 +1002,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
 
-        private void Content_Resized(object sender, EventArgs e)
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
-            if(LayoutRoot.Height < 100)
-            {
-                return;     
-            }
-            TbcFDS.Height = LayoutRoot.Height - 75;
-            TvwFlow.Height = Application.Current.Host.Content.ActualHeight - 35 - 100;
-            tbDesigner.Height = Application.Current.Host.Content.ActualHeight - 35;
-            tbDesigner.Width = Application.Current.Host.Content.ActualWidth - 227;
+            MuFlowTree.Hide();
         }
 
         private void TbcFDS_MouseLeave(object sender, MouseEventArgs e)
@@ -998,33 +1013,28 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
 
         #region Toolbar related
-
         private void loadToolbar()
         {
-            var ens = new List<ToolbarItem>();
+            #region 生成toolbar .
+            List<ToolbarItem> ens = new List<ToolbarItem>();
             ens = ToolbarItem.Instance.GetLists();
             foreach (ToolbarItem en in ens)
             {
-                var btn = new ToolbarButton();
+                ToolbarButton btn = new ToolbarButton();
                 btn.Name = "Btn_" + en.No;
-                btn.IsEnabled = en.IsEnable;
-                if (!en.IsEnable)
-                {
-                    btn.Tag = ToolBarEnableIsFlowSensitived;
-                }
                 btn.Click += new RoutedEventHandler(ToolBar_Click);
 
-                var mysp = new StackPanel();
+                StackPanel mysp = new StackPanel();
                 mysp.Orientation = Orientation.Horizontal;
                 mysp.VerticalAlignment = System.Windows.VerticalAlignment.Center;
                 mysp.Name = "sp" + en.No;
 
-                var img = new Image();
-                var png = new BitmapImage(new Uri("/Images/" + en.No + ".png", UriKind.Relative));
+                Image img = new Image();
+                BitmapImage png = new BitmapImage(new Uri("/Images/" + en.No + ".png", UriKind.Relative));
                 img.Source = png;
                 mysp.Children.Add(img);
 
-                var tb = new TextBlock();
+                TextBlock tb = new TextBlock();
                 tb.Name = "tbT" + en.No;
                 tb.Text = en.Name;
                 tb.FontSize = 12;
@@ -1032,8 +1042,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                 btn.Content = mysp;
                 this.toolbar1.AddBtn(btn);
-                ToolBarButtonList.Add(btn);
             }
+            #endregion 生成toolbar .
 
         }
 
@@ -1047,11 +1057,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             switch (control.Name)
             {
-                case "Btn_ToolBarLogin":
-                    var client = Glo.GetDesignerServiceInstance();
-                    client.GetRelativeUrlCompleted += client_GetRelativeUrlCompleted;
-                    client.GetRelativeUrlAsync("CN", "LoginPage", string.Empty, string.Empty, string.Empty, true);
-                    break;
                 case "Btn_ToolBarNewNode":
                     if (SelectedContainer != null)
                     {
@@ -1120,109 +1125,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     releaseToFtp();
                     break;
             }
-        }
-
-        void client_GetRelativeUrlCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
-        {
-            string suburl = HtmlPage.Document.DocumentUri.ToString();
-            string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-            OpenWindow(url + e.Result, title, 600,1024);
-        } 
-
-        private void  setToolBarButtonEnableStatus(bool isEnable)
-        {
-
-            foreach (var toolbarButton in ToolBarButtonList)
-            {
-                if (toolbarButton.Tag != null && toolbarButton.Tag.ToString() == ToolBarEnableIsFlowSensitived)
-                {
-                    toolbarButton.IsEnabled = isEnable;
-                }
-            }
-        }
-        
-        #endregion
-
-        /// <summary>
-        /// 当前流程变化时，确保只有当前流程才显示关闭按钮，这样可以避免“当前流程是A，然后点击B的关闭按钮
-        /// 表示用户想关闭B，但关闭的是A”的情况。
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tbDesigner_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            foreach (TabItem t in tbDesigner.Items)
-            {
-                if (t.IsSelected)
-                {
-                    var canvas = t.Header as Canvas;
-                    if (canvas != null)
-                    {
-                        canvas.Children[0].Visibility = Visibility.Visible;
-                    }
-                }
-                else
-                {
-                    var canvas = t.Header as Canvas;
-                    if (canvas != null)
-                    {
-                        canvas.Children[0].Visibility = Visibility.Collapsed;
-                    }
-                }
-
-            }
-
-        }
-
-        #region UserControl Related 
-
-        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MuFlowTree.Hide();
-        }
-        /// <summary>
-        ///  diable the default silverlight rightmenu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UserControl_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            HtmlPage.RegisterScriptableObject("Designer", this);
-
-            _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
-            _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
-            _doubleClickTimer.Tick += DoubleClick_Timer;
-            try
-            {
-                Content_Resized(null,null);
-            }
-            catch
-            {
-            }
-            Application.Current.Host.Content.FullScreenChanged += Content_FullScreenChanged;
-        }
-
-        /// <summary>
-        /// 键盘按键按下事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UserControl_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// 键盘按键释放事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UserControl_KeyUp(object sender, KeyEventArgs e)
-        {
         } 
         #endregion
 
@@ -1244,7 +1146,36 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         } 
         #endregion
 
-       
+        /// <summary>
+        /// 当前流程变化时，确保只有当前流程才显示关闭按钮，这样可以避免“当前流程是A，然后点击B的关闭按钮
+        /// 表示用户想关闭B，但关闭的是A”的情况。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tbDesigner_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (TabItem t in tbDesigner.Items)
+            {
+                if(t.IsSelected)
+                {
+                    var canvas = t.Header as Canvas;
+                    if(canvas != null)
+                    {
+                        canvas.Children[0].Visibility = Visibility.Visible;
+                    }
+                }
+                else
+                {
+                    var canvas = t.Header as Canvas;
+                    if (canvas != null)
+                    {
+                        canvas.Children[0].Visibility = Visibility.Collapsed;
+                    }
+                }
+                
+            }
+
+        }
 
     }
 }
