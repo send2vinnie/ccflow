@@ -14,7 +14,7 @@ using BP;
 namespace BP.WF
 {
     public class Glo
-    {
+    {  
         public static void ResetFlowView()
         {
             string sql = "DROP VIEW V_WF_Data ";
