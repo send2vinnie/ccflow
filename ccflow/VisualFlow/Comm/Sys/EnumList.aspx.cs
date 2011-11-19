@@ -12,16 +12,16 @@ public partial class Comm_Sys_EnumList : BP.Web.WebPageAdmin
     public void BindRefNo()
     {
         SysEnumMain sem = new SysEnumMain(this.RefNo);
-
         this.UCSys1.AddTable();
-        this.UCSys1.AddCaption("<a href=EnumList.aspx ><img src='./../../Images/Btn/Home.gif' border=0>枚举值列表</a> -<a href='EnumList.aspx?DoType=New' ><img src='./../../Images/Btn/New.gif' border=0/>新建</a>- <img src='./../../Images/Btn/Edit.gif' border />编辑:" + sem.No + " " + sem.Name);
+
+        this.UCSys1.AddCaptionLeftTX("<a href=EnumList.aspx ><img src='./../../Images/Btn/Home.gif' border=0>枚举值列表</a> -<a href='EnumList.aspx?DoType=New' ><img src='./../../Images/Btn/New.gif' border=0/>新建</a>- <img src='./../../Images/Btn/Edit.gif' border />编辑:" + sem.No + " " + sem.Name);
 
         this.UCSys1.AddTR();
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = "  Save  ";
         btn.Click += new EventHandler(btn_Click);
-        this.UCSys1.AddTDTitle("colspan=3",btn);
+        this.UCSys1.AddTDTitle("colspan=3", btn);
         this.UCSys1.AddTREnd();
 
         this.UCSys1.AddTR();
@@ -38,27 +38,27 @@ public partial class Comm_Sys_EnumList : BP.Web.WebPageAdmin
         TextBox tb = new TextBox();
         tb.ID = "TB_No";
         tb.Text = this.RefNo;
-        tb.Enabled=false;
+        tb.Enabled = false;
         this.UCSys1.AddTD(tb);
         this.UCSys1.AddTD("不可修改");
         this.UCSys1.AddTREnd();
 
         this.UCSys1.AddTRSum();
         this.UCSys1.AddTD("名称");
-         tb = new TextBox();
+        tb = new TextBox();
         tb.ID = "TB_Name";
         tb.Text = sem.Name;
         this.UCSys1.AddTD(tb);
         this.UCSys1.AddTD("");
         this.UCSys1.AddTREnd();
 
-        int myNum=0;
+        int myNum = 0;
         foreach (SysEnum se in ses)
         {
             this.UCSys1.AddTR();
-            this.UCSys1.AddTD( se.IntKey);
+            this.UCSys1.AddTD(se.IntKey);
             tb = new TextBox();
-            tb.ID = "TB_"+se.IntKey;
+            tb.ID = "TB_" + se.IntKey;
             tb.Text = se.Lab;
             tb.Columns = 50;
             this.UCSys1.AddTD(tb);
@@ -66,6 +66,7 @@ public partial class Comm_Sys_EnumList : BP.Web.WebPageAdmin
             this.UCSys1.AddTREnd();
             myNum = se.IntKey;
         }
+
         myNum++;
 
         for (int i = myNum; i < 20; i++)
@@ -84,7 +85,7 @@ public partial class Comm_Sys_EnumList : BP.Web.WebPageAdmin
     public void BindNew()
     {
         this.UCSys1.AddTable();
-        this.UCSys1.AddCaptionLeft("<a href=EnumList.aspx ><img src='./../../Images/Btn/Home.gif' border=0 />枚举值列表</a> - <img src='./../../Images/Btn/New.gif' />新建枚举值");
+        this.UCSys1.AddCaptionLeftTX("<a href=EnumList.aspx ><img src='./../../Images/Btn/Home.gif' border=0 />枚举值列表</a> - <img src='./../../Images/Btn/New.gif' />新建枚举值");
 
         this.UCSys1.AddTR();
         Button btn = new Button();
@@ -270,7 +271,7 @@ public partial class Comm_Sys_EnumList : BP.Web.WebPageAdmin
         }
 
         this.UCSys1.AddTable();
-        this.UCSys1.AddCaption("<img src='./../../Images/Btn/Home.gif' border=0/>列表 - <a href='EnumList.aspx?DoType=New' ><img border=0 src='./../../Images/Btn/New.gif' >新建</a>");
+        this.UCSys1.AddCaptionLeftTX("<img src='./../../Images/Btn/Home.gif' border=0/>列表 - <a href='EnumList.aspx?DoType=New' ><img border=0 src='./../../Images/Btn/New.gif' >新建</a>");
         this.UCSys1.AddTR();
         this.UCSys1.AddTDTitle("序");
         this.UCSys1.AddTDTitle("编号");

@@ -130,7 +130,6 @@ namespace BP.Web.Comm
                             return;
                         case MsgShowType.Blank:
                             this.ToMsgPage(obj.ToString());
-                            //this.ToMsgPage_Do(obj.ToString());
                             return;
                         default:
                             return;
@@ -141,8 +140,6 @@ namespace BP.Web.Comm
             catch (Exception ex)
             {
                 this.UcMsg.AddMsgOfWarning("@执行[" + ensName + "]期间出现错误：", ex.Message);
-                //    string msg = "";
-                //  throw new Exception( + ex.Message);
             }
             return;
         }

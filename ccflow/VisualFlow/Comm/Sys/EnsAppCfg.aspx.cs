@@ -38,7 +38,12 @@ public partial class Comm_Sys_EnsAppCfg : BP.Web.WebPageAdmin
             return;
         }
 
-        this.UCSys1.AddTable("width='90%'");
+        this.UCSys1.AddTable("width=100%");
+        if (BP.Web.WebUser.No == "admin")
+            this.UCSys1.AddCaptionLeftTX("<a href='?EnsName=" + this.EnsName + "'>" + this.ToE("BaseSet", "基本设置") + "</a> - <a href='?EnsName=" + this.EnsName + "&DoType=Adv'>" + this.ToE("AdvSet", "高级设置") + "</a> - <a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "' >" + this.ToE("ExpImp", "导入导出") + "</a>");
+        else
+            this.UCSys1.AddCaptionLeftTX(this.ToE("BaseSet", "基本设置"));
+
         this.UCSys1.AddTR();
         this.UCSys1.AddTDTitle( this.ToE("Item", "配置项"));
         this.UCSys1.AddTDTitle(this.ToE("Value","内容"));
@@ -123,7 +128,11 @@ public partial class Comm_Sys_EnsAppCfg : BP.Web.WebPageAdmin
         EnsAppXmls xmls = new EnsAppXmls();
         xmls.Retrieve(EnsAppCfgAttr.EnsName, this.EnsName);
 
-        this.UCSys1.AddTable();
+        this.UCSys1.AddTable("width=100%");
+        if (BP.Web.WebUser.No == "admin")
+            this.UCSys1.AddCaptionLeftTX("<a href='?EnsName=" + this.EnsName + "'>" + this.ToE("BaseSet", "基本设置") + "</a> - <a href='?EnsName=" + this.EnsName + "&DoType=Adv'>" + this.ToE("AdvSet", "高级设置") + "</a> - <a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "' >" + this.ToE("ExpImp", "导入导出") + "</a>");
+        else
+            this.UCSys1.AddCaptionLeftTX(this.ToE("BaseSet", "基本设置"));
         this.UCSys1.AddTR();
 
         this.UCSys1.AddTR();
@@ -207,11 +216,6 @@ public partial class Comm_Sys_EnsAppCfg : BP.Web.WebPageAdmin
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (BP.Web.WebUser.No == "admin")
-            this.UCSys1.AddCaptionLeft("<a href='?EnsName=" + this.EnsName + "'>" + this.ToE("BaseSet", "基本设置") + "</a> - <a href='?EnsName=" + this.EnsName + "&DoType=Adv'>" + this.ToE("AdvSet", "高级设置") + "</a> - <a href='EnsDataIO.aspx?EnsName=" + this.EnsName + "' >" + this.ToE("ExpImp", "导入导出") + "</a>");
-        else
-            this.UCSys1.AddCaptionLeft(this.ToE("BaseSet", "基本设置"));
-
         switch (this.DoType)
         {
             case "Adv":

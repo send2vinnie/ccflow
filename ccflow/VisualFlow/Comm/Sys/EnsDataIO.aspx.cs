@@ -121,7 +121,7 @@ public partial class Comm_Sys_EnsDataIO : BP.Web.WebPageAdmin
         this.Pub1.DivInfoBlockEnd();
     }
     /// <summary>
-    /// 晴空方式导入
+    /// 清空方式导入
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -142,8 +142,8 @@ public partial class Comm_Sys_EnsDataIO : BP.Web.WebPageAdmin
 
             //this.ResponseWriteRedMsg(dt.Rows.Count.ToString() );
             //return;
-
             // 开始执行导入。
+
             ens.ClearTable();
 
             int idx = 0;

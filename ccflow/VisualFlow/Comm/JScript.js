@@ -375,6 +375,8 @@ function SetSelected(cb, ids) {
 
 /* 输入的是否是字段类型 */
 function IsDigit(s) {
+    if (s.value == '' || s.value==' ' )
+        return true;
     var patrn = new RegExp("^[a-zA-Z][a-zA-Z0-9_]*$");
     if (!patrn.exec(s.value)) {
         alert("请输入字母或数字，第一个字符必须是字母！")

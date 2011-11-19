@@ -16,10 +16,11 @@ public partial class Comm_MethodLink : WebPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Ucsys1.Add( this.GenerCaption("功能执行"));
+        this.Ucsys1.AddBR();
+        this.Ucsys1.AddH3( this.GenerCaption("功能执行"));
         this.Ucsys1.AddHR();
-
         this.Ucsys1.Add("<ul>");
+
         #region  bind it .
         ArrayList al = BP.DA.ClassFactory.GetObjects("BP.En.Method");
         int i = 1;

@@ -46,7 +46,11 @@ public partial class Comm_Sys_SFTableList : BP.Web.WebPageAdmin
         btn.Text = " Save  ";
         btn.Click += new EventHandler(btn_Click);
         this.UCSys1.AddTD("colspan=2", btn);
-        this.UCSys1.AddTD("<a href=''>编辑数据</a>");
+        if (this.RefNo.Contains(".") == false)
+            this.UCSys1.AddTD("<a href='./../../WF/MapDef/SFTableEditData.aspx?RefNo=" + this.RefNo + "' >编辑数据</a>");
+        else
+            this.UCSys1.AddTD("<a href='./../Ens.aspx?EnsName=" + this.RefNo + "' >编辑数据</a>");
+
         this.UCSys1.AddTREnd();
         this.UCSys1.AddTableEnd();
     }

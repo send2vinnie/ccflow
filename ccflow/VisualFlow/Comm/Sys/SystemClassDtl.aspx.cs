@@ -181,7 +181,7 @@ namespace BP.Web.CT.Comm.Sys
                     continue;
                 i++;
                 this.UCSys1.AddTR();
-                this.UCSys1.AddTD(i);
+                this.UCSys1.AddTDIdx(i);
                 this.UCSys1.AddTD(attr.Desc);
                 this.UCSys1.AddTD(attr.Key);
                 this.UCSys1.AddTD(attr.Field);
@@ -198,7 +198,6 @@ namespace BP.Web.CT.Comm.Sys
                     this.UCSys1.AddTD("无");
                 else
                     this.UCSys1.AddTD(attr.MaxLength);
-
 
 
                 switch (attr.MyFieldType)
@@ -223,7 +222,7 @@ namespace BP.Web.CT.Comm.Sys
                     case FieldType.FK:
                     case FieldType.PKFK:
                         Entities ens = ClassFactory.GetEns(attr.UIBindKey);
-                        this.UCSys1.AddTD(ens.GetNewEntity.EnMap.PhysicsTable);
+                        this.UCSys1.AddTD("表/视图:"+ens.GetNewEntity.EnMap.PhysicsTable+" 关联字段:"+attr.UIRefKeyValue+","+attr.UIRefKeyText);
                         break;
                     default:
                         this.UCSys1.AddTD("无");
