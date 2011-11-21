@@ -38,27 +38,27 @@ namespace BP.WF
         /// <summary>
         /// 按岗位
         /// </summary>
-        ByStation,
+        ByStation=0,
         /// <summary>
         /// 按部门
         /// </summary>
-        ByDept,
-        /// <summary>
-        /// 按指定的人员
-        /// </summary>
-        BySpcEmp,
+        ByDept=1,
         /// <summary>
         /// 按SQL
         /// </summary>
-        BySQL,
+        BySQL = 2,
+        /// <summary>
+        /// 按指定的人员
+        /// </summary>
+        BySpcEmp=3,
         /// <summary>
         /// 由发送人选择
         /// </summary>
-        BySelected,
+        BySelected=4,
         /// <summary>
         /// 按人员
         /// </summary>
-        ByEmp
+        ByEmp=5
     }
     /// <summary>
     /// 节点工作退回规则
