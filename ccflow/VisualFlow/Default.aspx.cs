@@ -22,8 +22,8 @@ public partial class _Default : System.Web.UI.Page
             this.Response.Redirect("./WAP/", true);
             return;
         }
-        this.Response.Redirect("./WF/Login.aspx", true);
-        //    this.Response.Redirect("Designer.aspx", true);
+      //  this.Response.Redirect("./WF/Login.aspx", true);
+           this.Response.Redirect("./WF/Admin/Designer.aspx", true);
         return;
     }
 }
