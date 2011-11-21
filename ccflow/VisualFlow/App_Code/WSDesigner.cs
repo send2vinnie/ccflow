@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Linq;
 using System.ServiceModel;
 using System.Web;
 using System.Web.Services;
@@ -40,19 +39,19 @@ public class WSDesigner : WSBase
             switch (doType)
             {
                 case "InitDesignerXml":
-                    string path=System.Web.HttpContext.Current.Request.PhysicalApplicationPath+"\\Data\\Xml\\Designer.xml";
+                    string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\Data\\Xml\\Designer.xml";
                     DataSet ds = new DataSet();
                     ds.ReadXml(path);
                     ds = this.TurnXmlDataSet2SLDataSet(ds);
-                   return Connector.ToXml(ds);
+                    return Connector.ToXml(ds);
                 default:
                     throw new Exception("没有判断的，功能编号" + doType);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            AppLog.LogError("执行错误，功能编号" + doType + " error:" + ex.Message, ex);
-            throw new Exception("执行错误，功能编号"+doType+" error:"+ex.Message);
+            BP.DA.Log.DefaultLogWriteLineError("执行错误，功能编号" + doType + " error:" + ex.Message);
+            throw new Exception("执行错误，功能编号" + doType + " error:" + ex.Message);
         }
     }
     /// <summary>
@@ -86,11 +85,10 @@ public class WSDesigner : WSBase
         }
         catch (Exception ex)
         {
-            AppLog.LogError(string.Concat("GetDTOfWorkList发生了错误 paras:",fk_flow, "\t" + workid ), ex);
+            BP.DA.Log.DefaultLogWriteLineError("GetDTOfWorkList发生了错误 paras:" + fk_flow + "\t" + workid + ex.Message);
             return null;
         }
     }
-   
     /// <summary>
     /// 让admin 登录
     /// </summary>
@@ -206,8 +204,7 @@ public class WSDesigner : WSBase
                 url = @"/WF/Login.aspx";
                 break;
             default:
-                AppLog.LogError("Wrong GetRelativeUrl Parameter" + dotype, new Exception());
-                break;
+                throw new Exception("参数错误:"+dotype);
         }
         return url;
     }
@@ -230,7 +227,7 @@ public class WSDesigner : WSBase
         }
         catch (Exception ex)
         {
-            AppLog.LogError("RunSQLReturnTable返回了错误, para:\t" + sql.ToString(), ex);
+            BP.DA.Log.DefaultLogWriteLineError("RunSQLReturnTable返回了错误, para:\t" + sql.ToString());
         }
         return string.Empty;
     }
@@ -260,7 +257,7 @@ public class WSDesigner : WSBase
         }
         catch (Exception ex)
         {
-            AppLog.LogError("RunSqlReturnTableS返回了错误, para:\t" + sqls.ToString(),ex);
+            BP.DA.Log.DefaultLogWriteLineError("RunSqlReturnTableS返回了错误, para:\t" + sqls.ToString()+ex.Message);
         }
         return string.Empty;
 
@@ -355,7 +352,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch(Exception ex)
                 {
-                    AppLog.LogError("Do Method NewFlowSort Branch has a error , para:\t" + para1, ex);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewFlowSort Branch has a error , para:\t" + para1 +ex.Message);
                    
                     return null;
                 }
@@ -371,7 +368,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch(Exception ex)
                 {
-                    AppLog.LogError("Do Method EditFlowSort Branch has a error , para:\t" + para1, ex);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method EditFlowSort Branch has a error , para:\t" + para1+ ex.Message);
                     return null;
                 }
             case "NewFlow":
@@ -399,7 +396,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch(Exception ex)
                 {
-                    AppLog.LogError("Do Method NewFlow Branch has a error , para:\t" + para1, ex);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewFlow Branch has a error , para:\t" + para1+ ex.Message);
                     return ex.Message;
 
                 }
@@ -412,7 +409,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch(Exception ex)
                 {
-                    AppLog.LogError("Do Method DelFlow Branch has a error , para:\t" + para1, ex);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelFlow Branch has a error , para:\t" + para1+ex.Message);
                     return ex.Message;
                 }
             case "DelLable":
@@ -423,7 +420,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    AppLog.LogError("Do Method DelLable Branch has a error , para:\t" + para1, ex);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelLable Branch has a error , para:\t" + para1+ex.Message);
                 }
                 return null;
             case "DelFlowSort":
@@ -434,7 +431,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    AppLog.LogError("Do Method DelFlowSort Branch has a error , para:\t" + para1, ex);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelFlowSort Branch has a error , para:\t" + para1+ex.Message);
                 }
                
                 return null;
@@ -450,7 +447,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    AppLog.LogError("Do Method NewNode Branch has a error , para:\t" + para1, ex);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewNode Branch has a error , para:\t" + para1+ex.Message);
                 }
                
                 return null;
@@ -465,7 +462,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    AppLog.LogError("Do Method DelNode Branch has a error , para:\t" + para1, ex);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelNode Branch has a error , para:\t" + para1+ ex.Message);
                 }
                 
                 return null;
@@ -480,7 +477,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    AppLog.LogError("Do Method NewLab Branch has a error , para:\t" + para1, ex);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewLab Branch has a error , para:\t" + para1+ex.Message);
                 }
                 return lab.MyPK;
             case "DelLab":
@@ -492,7 +489,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    AppLog.LogError("Do Method DelLab Branch has a error , para:\t" + para1, ex);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelLab Branch has a error , para:\t" + para1+ex.Message);
                 }
                
                 return null;
@@ -504,7 +501,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 catch (Exception ex)
                 {
 
-                    AppLog.LogError("Do Method GetSettings Branch has a error , para:\t" + para1, ex); ;
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method GetSettings Branch has a error , para:\t" + para1+ex.Message); ;
                 }
                 return string.Empty;
             case "GetFlows":
@@ -518,7 +515,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 catch (Exception ex)
                 {
 
-                    AppLog.LogError("Do Method GetFlows Branch has a error :\t" , ex); ;
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method GetFlows Branch has a error :\t" +ex.Message); ;
                 }
                 return string.Empty;
             case "SaveFlowFrm":
