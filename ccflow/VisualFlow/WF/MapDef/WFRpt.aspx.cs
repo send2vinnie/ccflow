@@ -50,7 +50,6 @@ public partial class WF_MapDef_WFRpt : WebPage
             string flowNo = this.MyPK.Replace("ND", "");
 
             flowNo = flowNo.Replace("Rpt", "");
-
             flowNo = flowNo.Replace("Dtl1", "");
             flowNo = flowNo.Replace("Dtl2", "");
             flowNo = flowNo.Replace("Dtl3", "");
@@ -64,7 +63,6 @@ public partial class WF_MapDef_WFRpt : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = this.ToE("FlowRptDef", "流程报表定义");
-
         switch (this.DoType)
         {
             case "Reset":
@@ -132,9 +130,10 @@ public partial class WF_MapDef_WFRpt : WebPage
         {
             this.Pub1.AddB("-<a href=\"WFRpt.aspx?MyPK=ND" + int.Parse(this.FK_Flow) + "Rpt\">" + this.ToE("Back", "返回") + "</a>");
         }
+
         this.Pub1.AddHR();
 
-        this.Pub1.Add("<Table class='Table' width='100%' align=center >");
+        this.Pub1.AddTable("width='100%'");
         /*
          * 根据 GroupField 循环出现菜单。
          */
@@ -181,6 +180,7 @@ public partial class WF_MapDef_WFRpt : WebPage
                     else
                         this.InsertObjects(true);
                 }
+
                 // 显示的顺序号.
                 idx++;
                 if (attr.IsBigDoc && attr.UIIsLine)

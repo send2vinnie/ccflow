@@ -19,7 +19,7 @@ public partial class Designer : System.Web.UI.Page
                 if (DBAccess.IsExitsObject("WF_FlowSort") == false)
                 {
                     /*如果是没有安装.*/
-                    this.Response.Redirect("../admin/DBInstall.aspx", true);
+                    this.Response.Redirect("../Admin/DBInstall.aspx", true);
                     return;
                 }
             }
@@ -28,7 +28,7 @@ public partial class Designer : System.Web.UI.Page
                 if (DBAccess.IsExitsObject("WF_FlowSort") == false)
                 {
                     /*如果是没有安装.*/
-                    this.Response.Redirect("../admin/DBInstall.aspx", true);
+                    this.Response.Redirect("../Admin/DBInstall.aspx", true);
                     return;
                 }
             }

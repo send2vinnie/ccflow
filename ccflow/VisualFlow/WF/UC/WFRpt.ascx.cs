@@ -107,6 +107,21 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         this.AddB(wk.EnDesc);
         this.ADDWork(wk, rws, fws, this.FK_Node);
     }
+    public void BindTrack_ViewSpecialWork()
+    {
+        ReturnWorks rws = new ReturnWorks();
+        rws.Retrieve(ReturnWorkAttr.ReturnToNode, this.FK_Node, ReturnWorkAttr.WorkID, this.WorkID);
+
+        ForwardWorks fws = new ForwardWorks();
+        fws.Retrieve(ForwardWorkAttr.FK_Node, this.FK_Node, ForwardWorkAttr.WorkID, this.WorkID);
+
+        Node nd = new Node(this.FK_Node);
+        Work wk = nd.HisWork;
+        wk.OID = this.WorkID;
+        wk.RetrieveFromDBSources();
+        this.AddB(wk.EnDesc);
+        this.ADDWork(wk, rws, fws, this.FK_Node);
+    }
     /// <summary>
     /// view work.
     /// </summary>
@@ -138,6 +153,12 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         if (this.DoType == "View")
         {
             this.BindTrack_ViewWork();
+            return;
+        }
+
+        if (this.DoType == "ViewSpecialWork")
+        {
+            this.BindTrack_ViewSpecialWork();
             return;
         }
 
