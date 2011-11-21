@@ -14,7 +14,11 @@
     KeyUp="UserControl_KeyUp"        
     xmlns:my="clr-namespace:WF.Controls" 
     xmlns:controlsPrimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls" 
-    Loaded="UserControl_Loaded"  MouseLeftButtonDown="UserControl_MouseLeftButtonDown"  >
+    Loaded="UserControl_Loaded"  MouseLeftButtonDown="UserControl_MouseLeftButtonDown" 
+    MouseRightButtonDown="UserControl_MouseRightButtonDown" >
+    <UserControl.Resources>
+        <local:Text x:Name="TextRes"></local:Text>
+    </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" ShowGridLines="False" Margin="0" Background="white"  >
         <Grid.ColumnDefinitions>
@@ -27,9 +31,9 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.RowSpan="2" Background="white"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Name="stackPanelLeft"   Orientation="Vertical">
-            <Image x:Name="imageLogo" Width="210" Height="70" Margin="5,2,5,2"   />
+            <Image x:Name="imageLogo" Width="210" Height="70" Margin="5,2,5,2" Source="/Images/Icons/CCflow.jpg"   />
             <sdk:TabControl  Name="TbcFDS" Width="220" Height="auto"    MouseLeave="TbcFDS_MouseLeave" >
-                <sdk:TabItem Header="流程树" Name="TbItemFlow" Background="white" BorderThickness="0">
+                <sdk:TabItem Header="{Binding TbItemFlow, Source={StaticResource TextRes}}" Name="TbItemFlow" Background="white" BorderThickness="0">
                     <Canvas Background="white" MouseLeftButtonDown="CvsFlowTree_MouseLeftButtonDown" Name="CvsFlowTree" Width="Auto" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
                         <liquidTreeView:Tree x:Name="TvwFlow"  BorderThickness="0" Width="210"  
                                              HorizontalScrollBarVisibility="Auto"
@@ -80,9 +84,10 @@
         </StackPanel>
 
         <my:TabControlEx Grid.Row="1" Grid.Column="1"   Width="Auto" Height="Auto"  x:Name="tbDesigner"
-            TabStripPlacement="Top"  HorizontalAlignment="Left" VerticalAlignment="Top"  SelectionChanged="tbDesigner_SelectionChanged">
+            TabStripPlacement="Top"  HorizontalAlignment="Left" VerticalAlignment="Top"  
+            SelectionChanged="tbDesigner_SelectionChanged" >
             <my:TabControlEx.Background>
-                <ImageBrush ImageSource="../Images/Welcome.jpg" Stretch="Fill"/>
+                <ImageBrush ImageSource="/Images/Icons/CCFlowWelcome.jpg" Stretch="Fill"/>
             </my:TabControlEx.Background>
             <my:TabControlEx.Template>
                 <ControlTemplate>

@@ -19,38 +19,27 @@ using System.ComponentModel;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
-
     public delegate void MoveDelegate(FlowNode a, MouseEventArgs e);
+
     public delegate void DeleteDelegate(FlowNode a);
 
     public delegate void FlowNodeChangeDelegate(FlowNode a);
 
     public partial class FlowNode : UserControl, IElement
     {
-         
+        #region Variables
         double origPictureWidth = 0;
         double origPictureHeight = 0;
         Point origPosition;
         bool positionIsChange = true;
-        public WSDesignerSoapClient _service = new WSDesignerSoapClient();
-        public void Zoom(double zoomDeep)
-        {
-            if (origPictureWidth == 0)
-            {
-                origPictureWidth = sdPicture.PictureWidth;
-                origPictureHeight = sdPicture.PictureHeight;
-            }
-            if (positionIsChange)
-            {
-                origPosition = this.Position;
-                positionIsChange = false;
-            }
+        System.Windows.Threading.DispatcherTimer _doubleClickTimer;
+        #endregion
 
-            sdPicture.PictureHeight = origPictureHeight * zoomDeep;
-            sdPicture.PictureWidth = origPictureWidth * zoomDeep;
-            this.Position = new Point(origPosition.X * zoomDeep, origPosition.Y * zoomDeep);
+        #region Properties
 
-        }
+        public List<Direction> BeginDirectionCollections = new List<Direction>();
+
+        public List<Direction> EndDirectionCollections = new List<Direction>();
 
         public double PictureWidth
         {
@@ -59,6 +48,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return sdPicture.PictureWidth;
             }
         }
+
         public double PictureHeight
         {
             get
@@ -82,6 +72,384 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
         }
+
+        ErrorTip _errorTipControl;
+        ErrorTip errorTipControl
+        {
+            get
+            {
+                if (_errorTipControl == null)
+                {
+                    _errorTipControl = new ErrorTip();
+                    _errorTipControl.ParentElement = this;
+                    container.Children.Add(_errorTipControl);
+
+                }
+                _errorTipControl.SetValue(Canvas.ZIndexProperty, 1);
+
+                var top = -this.PictureHeight / 2;
+                var left = this.PictureWidth;
+
+                _errorTipControl.SetValue(Canvas.TopProperty, top);
+                _errorTipControl.SetValue(Canvas.LeftProperty, left);
+                return _errorTipControl;
+            }
+        }
+
+        FlowNode _stationTipControl;
+        /// <summary>
+        /// 状态提示节点
+        /// </summary>
+        FlowNode stationTipControl
+        {
+            get
+            {
+                if (_stationTipControl == null)
+                {
+                    _stationTipControl = new FlowNode(_container, FlowNodeType.STATIONODE);
+                    _stationTipControl.Container = this.Container;
+                    _stationTipControl.sdPicture.txtFlowNodeName.Text = "";
+                    // container.Children.Add(_stationTipControl);
+                    _container.AddFlowNode(_stationTipControl);
+
+                }
+                _stationTipControl.SetValue(Canvas.ZIndexProperty, 1);
+                _stationTipControl.SetValue(Canvas.TopProperty, -(this.PictureHeight / 2) - 40);
+                _stationTipControl.SetValue(Canvas.LeftProperty, this.PictureWidth - 60);
+                _stationTipControl.CenterPoint = new Point(this.CenterPoint.X + this.PictureWidth + 40, this.CenterPoint.Y);
+                return _stationTipControl;
+            }
+        }
+
+        IContainer _container;
+        public IContainer Container
+        {
+            get
+            {
+                return _container;
+            }
+            set
+            {
+                _container = value;
+                sdPicture.CurrentContainer = value;
+            }
+        }
+
+        FlowNodeType type = FlowNodeType.INTERACTION;
+        public FlowNodeType Type
+        {
+            get
+            {
+                return type;
+            }
+            set
+            {
+                bool isChanged = false;
+                if (type != value)
+                {
+
+                    isChanged = true;
+                }
+                type = value;
+                eiCenterEllipse.Visibility = Visibility.Visible;
+                sdPicture.Type = type;
+                sdPicture.ResetInitColor();
+                if (isChanged)
+                {
+                    Move(this, null);
+                }
+
+            }
+        }
+
+        string flowID;
+        public string FlowID
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(flowID))
+                {
+                    flowID = Guid.NewGuid().ToString();
+                }
+                return flowID;
+            }
+            set
+            {
+                flowID = value;
+            }
+
+        }
+
+        string flowNodeID;
+        public string FlowNodeID
+        {
+            get
+            {
+
+                return flowNodeID;
+            }
+            set
+            {
+                flowNodeID = value;
+            }
+
+        }
+
+        public string FlowNodeName
+        {
+            get
+            {
+                return sdPicture.NodeName;
+            }
+            set
+            {
+
+                sdPicture.NodeName = value;
+                sdPicture.PropertyChanged += sdPicture_PropertyChanged;
+            }
+
+        }
+
+        public int ZIndex
+        {
+            get
+            {
+                return (int)this.GetValue(Canvas.ZIndexProperty);
+
+            }
+            set
+            {
+                this.SetValue(Canvas.ZIndexProperty, value);
+            }
+
+        }
+
+        string _subFlow;
+        public string SubFlow
+        {
+            get
+            {
+                return _subFlow;
+            }
+            set
+            {
+                _subFlow = value;
+            }
+        }
+
+        public bool IsDeleted
+        {
+            get
+            {
+                return isDeleted;
+            }
+        }
+
+        FlowNodeComponent flowNodeData;
+        public FlowNodeComponent FlowNodeData
+        {
+            get
+            {
+                if (flowNodeData == null)
+                {
+                    if (EditType == PageEditType.Add)
+                    {
+                        flowNodeData = new FlowNodeComponent();
+                        flowNodeData.FlowNodeID = this.FlowNodeID;
+                        flowNodeData.FlowID = this.FlowID;
+                        flowNodeData.FlowNodeName = sdPicture.NodeName;
+                        flowNodeData.FlowNodeType = Type.ToString();
+                        flowNodeData.RepeatDirection = RepeatDirection.ToString();
+                        flowNodeData.SubFlow = SubFlow;
+
+
+                    }
+                    else if (EditType == PageEditType.Modify)
+                    {
+                        FlowNodeData = getFlowNodeComponentFromServer(this.FlowNodeID);
+
+                    }
+                }
+                return FlowNodeData;
+            }
+            set
+            {
+                flowNodeData = value;
+            }
+        }
+
+        PageEditType editType = PageEditType.None;
+        public PageEditType EditType
+        {
+            get
+            {
+                return editType;
+            }
+            set
+            {
+                editType = value;
+            }
+        }
+
+        public Point CenterPoint
+        {
+            get
+            {
+
+
+                return new Point((double)this.GetValue(Canvas.LeftProperty) + this.Width / 2, (double)this.GetValue(Canvas.TopProperty) + this.Height / 2);
+
+            }
+            set
+            {
+
+
+                this.SetValue(Canvas.LeftProperty, value.X - this.Width / 2);
+                this.SetValue(Canvas.TopProperty, value.Y - this.Height / 2);
+                Move(this, null);
+
+
+            }
+        }
+
+        public Point Position
+        {
+            get
+            {
+                Point position;
+
+                position = new Point();
+                position.Y = (double)this.GetValue(Canvas.TopProperty);
+                position.X = (double)this.GetValue(Canvas.LeftProperty);
+
+
+                return position;
+            }
+            set
+            {
+
+                this.SetValue(Canvas.TopProperty, value.Y);
+                this.SetValue(Canvas.LeftProperty, value.X);
+                Move(this, null);
+            }
+        }
+        public WorkFlowElementType ElementType
+        {
+            get
+            {
+                return WorkFlowElementType.FlowNode;
+            }
+        }
+
+        public bool CanShowMenu
+        {
+            get
+            {
+                return canShowMenu;
+            }
+            set
+            {
+                canShowMenu = value;
+            }
+        }
+        bool canShowMenu = false;
+
+        FlowNode originFlowNode;
+        public FlowNode OriginFlowNode
+        {
+            get
+            {
+                return originFlowNode;
+            }
+            set
+            {
+                originFlowNode = null;
+            }
+
+        }
+
+        bool isSelectd = false;
+        public bool IsSelectd
+        {
+            get
+            {
+                return isSelectd;
+            }
+            set
+            {
+                isSelectd = value;
+                if (isSelectd)
+                {
+                    sdPicture.SetSelectedColor();
+
+                    if (!_container.CurrentSelectedControlCollection.Contains(this))
+                        _container.AddSelectedControl(this);
+
+                }
+                else
+                {
+                    sdPicture.ResetInitColor();
+                }
+            }
+
+        }
+
+        public bool PointIsInside(Point p)
+        {
+            bool isInside = false;
+
+
+            double thisWidth = sdPicture.PictureWidth;
+            double thisHeight = sdPicture.PictureHeight;
+
+            double thisX = CenterPoint.X - thisWidth / 2;
+            double thisY = CenterPoint.Y - thisHeight / 2;
+
+            if (thisX < p.X && p.X < thisX + thisWidth
+                && thisY < p.Y && p.Y < thisY + thisHeight)
+            {
+                isInside = true;
+            }
+
+
+            return isInside;
+        } 
+        #endregion
+
+        #region Delegete and Event
+
+        public event MoveDelegate FlowNodeMove;
+        public event DeleteDelegate DeleteFlowNode;
+        public event FlowNodeChangeDelegate FlowNodeChanged;
+
+        #endregion
+
+        #region Constructs
+        public FlowNode(IContainer container, FlowNodeType at)
+            : this()
+        {
+
+            _container = container;
+            editType = PageEditType.Add;
+            this.Type = at;
+            System.Windows.Browser.HtmlPage.Document.AttachEvent("oncontextmenu", OnContextMenu);
+            this.Name = FlowID;
+
+
+            _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
+            _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
+            _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
+            sbDisplay.Begin();
+
+
+        }
+        public FlowNode()
+        {
+            InitializeComponent();
+        } 
+        #endregion
+
+        #region Methods
         public Point GetPointOfIntersection(Point beginPoint, Point endPoint, DirectionMoveType type)
         {
             double endPointRadius = 4;
@@ -94,8 +462,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 )
             {
 
-                #region 
-                
+                #region
+
 
                 if (Math.Abs(endPoint.X - beginPoint.X) <= PictureWidth / 2
                     && Math.Abs(endPoint.Y - beginPoint.Y) <= PictureHeight / 2)
@@ -107,9 +475,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     //起始点坐标和终点坐标之间的夹角（相对于Y轴坐标系）
                     double angle = Math.Abs(Math.Atan((endPoint.X - beginPoint.X) / (endPoint.Y - beginPoint.Y)) * 180.0 / Math.PI);
                     //节点的长和宽之间的夹角（相对于Y轴坐标系）
-                    double angel2 =Math.Abs( Math.Atan(PictureWidth / PictureHeight) * 180.0 / Math.PI);
+                    double angel2 = Math.Abs(Math.Atan(PictureWidth / PictureHeight) * 180.0 / Math.PI);
                     //半径
-                    double radio = PictureHeight<PictureWidth?PictureHeight/2:PictureWidth/2;
+                    double radio = PictureHeight < PictureWidth ? PictureHeight / 2 : PictureWidth / 2;
 
                     if (angle <= angel2)//起始点坐标在终点坐标的上方,或者下方
                     {
@@ -156,9 +524,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     }
                 }
 
-
-
-
                 if (type == DirectionMoveType.End)
                 {
                     p.X -= endPointRadius;
@@ -177,7 +542,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
               || Type == FlowNodeType.COMPLETION
               || Type == FlowNodeType.AUTOMATION
                || Type == FlowNodeType.DUMMY
-                || Type == FlowNodeType.SUBPROCESS||Type==FlowNodeType.STATIONODE)
+                || Type == FlowNodeType.SUBPROCESS || Type == FlowNodeType.STATIONODE)
             {
                 #region
                 if (Math.Abs(endPoint.X - beginPoint.X) <= PictureWidth / 2
@@ -263,42 +628,31 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     //}
 
 
-                    double x=0,y=0;
+                    double x = 0, y = 0;
                     double tan = Math.Abs((endPoint.Y - beginPoint.Y) / (beginPoint.X - endPoint.X));
 
                     if (endPoint.X <= beginPoint.X && endPoint.Y >= beginPoint.Y)//右上
                     {
-                        y = (endPoint.Y +( ThisPointCollection[0].Y + (double)GetValue(Canvas.TopProperty) )* tan) / (1 + tan);
+                        y = (endPoint.Y + (ThisPointCollection[0].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
 
                         x = (endPoint.Y - y) / tan + endPoint.X;
-
-                        
                     }
                     else if (this.CenterPoint.X <= beginPoint.X && this.CenterPoint.Y <= beginPoint.Y)//右下
                     {
-                        y =(endPoint.Y+( ThisPointCollection[2].Y + (double)GetValue(Canvas.TopProperty) ) *tan) / (1 + tan);
-                        x =  (y-endPoint.Y ) / tan + endPoint.X; 
-                       
-
-                        
+                        y = (endPoint.Y + (ThisPointCollection[2].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
+                        x = (y - endPoint.Y) / tan + endPoint.X;
                     }
                     else if (this.CenterPoint.X >= beginPoint.X && this.CenterPoint.Y >= beginPoint.Y)//左上
                     {
                         y = (endPoint.Y + (ThisPointCollection[0].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
+                        x = (y - endPoint.Y) / tan + endPoint.X;
 
-                        x = (y-endPoint.Y ) / tan + endPoint.X;
-
-                       
-                        
                     }
                     else if (this.CenterPoint.X >= beginPoint.X && this.CenterPoint.Y <= beginPoint.Y)//左下
                     {
                         y = (endPoint.Y + (ThisPointCollection[2].Y + (double)GetValue(Canvas.TopProperty)) * tan) / (1 + tan);
-                        x = (endPoint.Y-y) / tan + endPoint.X;
-                       
-
-                        
-                    } 
+                        x = (endPoint.Y - y) / tan + endPoint.X;
+                    }
                     p.Y = y;
                     p.X = x;
                     if (type == DirectionMoveType.End)
@@ -310,16 +664,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     {
                         p.X += -beginPointRadius;
                         p.Y += -beginPointRadius;
-                    } 
+                    }
                 }
-
-
-
             }
 
 
             return p;
         }
+
         public CheckResult CheckSave()
         {
             CheckResult cr = new CheckResult();
@@ -425,53 +777,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
 
         }
-        ErrorTip _errorTipControl;
-        ErrorTip errorTipControl
-        {
-            get
-            {
-                if (_errorTipControl == null)
-                {
-                    _errorTipControl = new ErrorTip();
-                    _errorTipControl.ParentElement = this;
-                    container.Children.Add(_errorTipControl);
-
-                }
-                _errorTipControl.SetValue(Canvas.ZIndexProperty, 1);
-
-                var top = -this.PictureHeight/2;
-                var left = this.PictureWidth;
-                
-                _errorTipControl.SetValue(Canvas.TopProperty, top);
-                _errorTipControl.SetValue(Canvas.LeftProperty, left);
-                return _errorTipControl;
-            }
-        }
-
-        FlowNode _stationTipControl;
-        /// <summary>
-        /// 状态提示节点
-        /// </summary>
-        FlowNode stationTipControl
-        {
-            get
-            {
-                if (_stationTipControl == null)
-                {
-                    _stationTipControl = new FlowNode(_container,FlowNodeType.STATIONODE);
-                    _stationTipControl.Container = this.Container;
-                    _stationTipControl.sdPicture.txtFlowNodeName.Text = "";
-                   // container.Children.Add(_stationTipControl);
-                    _container.AddFlowNode(_stationTipControl);
-
-                }
-                _stationTipControl.SetValue(Canvas.ZIndexProperty, 1);
-                _stationTipControl.SetValue(Canvas.TopProperty, -(this.PictureHeight / 2) - 40);
-                _stationTipControl.SetValue(Canvas.LeftProperty, this.PictureWidth - 60);
-                _stationTipControl.CenterPoint=new Point(this.CenterPoint.X + this.PictureWidth+40, this.CenterPoint.Y);
-                return _stationTipControl;
-            }
-        }
 
         public MergePictureRepeatDirection RepeatDirection
         {
@@ -499,38 +804,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
 
-        FlowNodeType type = FlowNodeType.INTERACTION;
-        public FlowNodeType Type
-        {
-            get
-            {
-                return type;
-            }
-            set
-            {
-                bool isChanged = false;
-                if (type != value)
-                {
-                    
-                    isChanged = true;
-                }
-                type = value;
-                if (type == FlowNodeType.COMPLETION)
-                {
-                    eiCenterEllipse.Visibility = Visibility.Collapsed;
-
-                }
-                else
-                {
-                    eiCenterEllipse.Visibility = Visibility.Visible;
-                }
-                sdPicture.Type = type;
-                if (isChanged)
-                    Move(this, null);
-
-            }
-        }
-
         public void SetFlowNodeData(FlowNodeComponent FlowNodeData)
         {
             bool isChanged = false;
@@ -544,7 +817,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             }
 
-         
+
             setUIValueByFlowNodeData(FlowNodeData);
             if (isChanged)
             {
@@ -566,27 +839,15 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
 
         }
-        string _subFlow;
-        public string SubFlow
-        {
-            get
-            {
-                return _subFlow;
-            }
-            set
-            {
-                _subFlow = value;
-            }
-        }
 
-         
         public PointCollection ThisPointCollection
         {
             get
             {
-                return sdPicture.ThisPointCollection; 
+                return sdPicture.ThisPointCollection;
             }
         }
+
         FlowNodeComponent getFlowNodeComponentFromServer(string FlowNodeID)
         {
             FlowNodeComponent ac = new FlowNodeComponent();
@@ -598,208 +859,41 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             ac.SubFlow = this.SubFlow;
             return ac;
         }
-        FlowNodeComponent flowNodeData;
-        public FlowNodeComponent FlowNodeData
-        {
-            get
-            {
-                if (flowNodeData == null)
-                {
-                    if (EditType == PageEditType.Add)
-                    {
-                        flowNodeData = new FlowNodeComponent();
-                        flowNodeData.FlowNodeID = this.FlowNodeID;
-                        flowNodeData.FlowID = this.FlowID;
-                        flowNodeData.FlowNodeName = sdPicture.NodeName;
-                        flowNodeData.FlowNodeType = Type.ToString();
-                        flowNodeData.RepeatDirection = RepeatDirection.ToString();
-                        flowNodeData.SubFlow = SubFlow;
-
-
-                    }
-                    else if (EditType == PageEditType.Modify)
-                    {
-                        FlowNodeData = getFlowNodeComponentFromServer(this.FlowNodeID);
-
-                    }
-                }
-                return FlowNodeData;
-            }
-            set
-            {
-               flowNodeData = value;
-            }
-        }
-
-        PageEditType editType = PageEditType.None;
-        public PageEditType EditType
-        {
-            get
-            {
-                return editType;
-            }
-            set
-            {
-                editType = value;
-            }
-        }
-
-        public event FlowNodeChangeDelegate FlowNodeChanged;
 
         public void UpperZIndex()
         {
             ZIndex = _container.NextMaxIndex;
         }
 
-        public int ZIndex
-        {
-            get
-            {
-                return (int)this.GetValue(Canvas.ZIndexProperty);
-
-            }
-            set
-            {
-                this.SetValue(Canvas.ZIndexProperty, value);
-            }
-
-        }
-
-        public Point CenterPoint
-        {
-            get
-            {
-
-
-                return new Point((double)this.GetValue(Canvas.LeftProperty) + this.Width / 2, (double)this.GetValue(Canvas.TopProperty) + this.Height / 2);
-
-            }
-            set
-            {
-
-
-                this.SetValue(Canvas.LeftProperty, value.X - this.Width / 2);
-                this.SetValue(Canvas.TopProperty, value.Y - this.Height / 2);
-                Move(this, null);
-
-
-            }
-        }
-
-        public Point Position
-        {
-            get
-            {
-                Point position;
-
-                position = new Point();
-                position.Y = (double)this.GetValue(Canvas.TopProperty);
-                position.X = (double)this.GetValue(Canvas.LeftProperty);
-
-
-                return position;
-            }
-            set
-            {
-
-                this.SetValue(Canvas.TopProperty, value.Y);
-                this.SetValue(Canvas.LeftProperty, value.X);
-                Move(this, null);
-            }
-        }
-        public WorkFlowElementType ElementType
-        {
-            get
-            {
-                return WorkFlowElementType.FlowNode;
-            }
-        }
-         System.Text.StringBuilder xml = new System.Text.StringBuilder();  
         public string ToXmlString()
         {
-            xml = new System.Text.StringBuilder();
-           
-                xml.Append(@"       <FlowNode ");
-                xml.Append(@" FlowID=""" + FlowID + @"""");
-                xml.Append(@" FlowNodeID=""" + FlowNodeID + @"""");
-                xml.Append(@" FlowNodeName=""" + FlowNodeName + @"""");
-                xml.Append(@" Type=""" + Type.ToString() + @"""");
-                xml.Append(@" SubFlow=""" + (Type == FlowNodeType.SUBPROCESS ? SubFlow : @"") + @"""");
-                xml.Append(@" PositionX=""" + CenterPoint.X + @"""");
-                xml.Append(@" PositionY=""" + CenterPoint.Y + @"""");
-                xml.Append(@" RepeatDirection=""" + RepeatDirection.ToString() + @"""");
-                xml.Append(@" ZIndex=""" + ZIndex + @""">");
+            var xml = new System.Text.StringBuilder();
 
-                xml.Append(Environment.NewLine);
-                xml.Append("        </FlowNode>");
-           
-        
-           
-          
+            xml.Append(@"       <FlowNode ");
+            xml.Append(@" FlowID=""" + FlowID + @"""");
+            xml.Append(@" FlowNodeID=""" + FlowNodeID + @"""");
+            xml.Append(@" FlowNodeName=""" + FlowNodeName + @"""");
+            xml.Append(@" Type=""" + Type.ToString() + @"""");
+            xml.Append(@" SubFlow=""" + (Type == FlowNodeType.SUBPROCESS ? SubFlow : @"") + @"""");
+            xml.Append(@" PositionX=""" + CenterPoint.X + @"""");
+            xml.Append(@" PositionY=""" + CenterPoint.Y + @"""");
+            xml.Append(@" RepeatDirection=""" + RepeatDirection.ToString() + @"""");
+            xml.Append(@" ZIndex=""" + ZIndex + @""">");
+
+            xml.Append(Environment.NewLine);
+            xml.Append("        </FlowNode>");
+
+
+
+
             return xml.ToString();
         }
 
-        void _service_RunSQLReturnTableCompleted(object sender, RunSQLReturnTableCompletedEventArgs e)
-        {
-           
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-            FlowNodeID=    dr[0].ToString();
-                xml.Append(@"       <FlowNode ");
-                xml.Append(@" FlowID=""" + FlowID + @"""");
-                xml.Append(@" FlowNodeID=""" + FlowNodeID + @"""");
-                xml.Append(@" FlowNodeName=""" + FlowNodeName + @"""");
-                xml.Append(@" Type=""" + Type.ToString() + @"""");
-                xml.Append(@" SubFlow=""" + (Type == FlowNodeType.SUBPROCESS ? SubFlow : @"") + @"""");
-                xml.Append(@" PositionX=""" + CenterPoint.X + @"""");
-                xml.Append(@" PositionY=""" + CenterPoint.Y + @"""");
-                xml.Append(@" RepeatDirection=""" + RepeatDirection.ToString() + @"""");
-                xml.Append(@" ZIndex=""" + ZIndex + @""">");
-
-                xml.Append(Environment.NewLine);
-                xml.Append("        </FlowNode>");
-            }
-        }
-
-        void _service_DoNewNodeCompleted(object sender, DoNewNodeCompletedEventArgs e)
-        {
-            try
-            {
-                FlowNodeID = e.Result.ToString();
-                xml.Append(@"       <FlowNode ");
-                xml.Append(@" FlowID=""" + FlowID + @"""");
-                xml.Append(@" FlowNodeID=""" + FlowNodeID + @"""");
-                xml.Append(@" FlowNodeName=""" + FlowNodeName + @"""");
-                xml.Append(@" Type=""" + Type.ToString() + @"""");
-                xml.Append(@" SubFlow=""" + (Type == FlowNodeType.SUBPROCESS ? SubFlow : @"") + @"""");
-                xml.Append(@" PositionX=""" + CenterPoint.X + @"""");
-                xml.Append(@" PositionY=""" + CenterPoint.Y + @"""");
-                xml.Append(@" RepeatDirection=""" + RepeatDirection.ToString() + @"""");
-                xml.Append(@" ZIndex=""" + ZIndex + @""">");
-
-                xml.Append(Environment.NewLine);
-                xml.Append("        </FlowNode>");
-            }
-            catch { }
-        }
         public void LoadFromXmlString(string xmlString)
         {
         }
 
-        public bool CanShowMenu
-        {
-            get
-            {
-                return canShowMenu;
-            }
-            set
-            {
-                canShowMenu = value;
-            }
-        }
-        bool canShowMenu = false;
+        #region Add or Remove Direction
         public void AddBeginDirection(Direction r)
         {
             if (!BeginDirectionCollections.Contains(r))
@@ -807,9 +901,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 BeginDirectionCollections.Add(r);
                 r.BeginFlowNode = this;
                 Move(this, null);
+
+                // 添加节点后，将结束节点变为交互节点
+                if (FlowNodeType.COMPLETION == this.Type)
+                {
+                    this.Type = FlowNodeType.INTERACTION;
+                }
             }
 
         }
+
         public void RemoveBeginDirection(Direction r)
         {
             if (BeginDirectionCollections.Contains(r))
@@ -817,52 +918,35 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 BeginDirectionCollections.Remove(r);
                 r.RemoveBeginFlowNode(this);
 
+                //移除连线后，如果如果节点不是开始节点，并且没有开始节点，则变为结束节点
+                if (0 == BeginDirectionCollections.Count && FlowNodeType.INITIAL != this.Type)
+                {
+                    this.Type = FlowNodeType.COMPLETION;
+                }
             }
         }
-
 
         public void AddEndDirection(Direction r)
         {
             if (!EndDirectionCollections.Contains(r))
             {
                 EndDirectionCollections.Add(r);
-
-                if (FlowNodeType.COMPLETION != this.Type)
-                {
-                    this.type = FlowNodeType.INTERACTION;
-                }
-
                 r.EndFlowNode = this;
                 Move(this, null);
 
             }
 
         }
+
         public void RemoveEndDirection(Direction r)
         {
             if (EndDirectionCollections.Contains(r))
             {
                 EndDirectionCollections.Remove(r);
-
-                if(0 == EndDirectionCollections.Count || FlowNodeType.INITIAL != this.Type)
-                {
-                    this.type = FlowNodeType.COMPLETION;
-                }
-
                 r.RemoveEndFlowNode(this);
             }
         }
-
-        public event MoveDelegate FlowNodeMove;
-        public event DeleteDelegate DeleteFlowNode;
-
-        public bool IsDeleted
-        {
-            get
-            {
-                return isDeleted;
-            }
-        }
+        #endregion
 
         bool isDeleted = false;
         public void Delete()
@@ -884,6 +968,85 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
                 _container._Service.DoAsync("DelNode", this.FlowNodeID, true);
             }
+
+        }
+
+        public void Move(FlowNode a, MouseEventArgs e)
+        {
+            if (FlowNodeMove != null)
+                FlowNodeMove(a, e);
+        }
+
+        public void Zoom(double zoomDeep)
+        {
+            if (origPictureWidth == 0)
+            {
+                origPictureWidth = sdPicture.PictureWidth;
+                origPictureHeight = sdPicture.PictureHeight;
+            }
+            if (positionIsChange)
+            {
+                origPosition = this.Position;
+                positionIsChange = false;
+            }
+
+            sdPicture.PictureHeight = origPictureHeight * zoomDeep;
+            sdPicture.PictureWidth = origPictureWidth * zoomDeep;
+            this.Position = new Point(origPosition.X * zoomDeep, origPosition.Y * zoomDeep);
+
+        }
+
+        public void Edit()
+        {
+            _container.ShowFlowNodeSetting(this);
+        }
+
+        public FlowNode Clone()
+        {
+            FlowNode clone = new FlowNode(this._container, this.Type);
+            clone.originFlowNode = this;
+            clone.FlowNodeData = new FlowNodeComponent();
+            clone.FlowNodeData.FlowNodeName = this.FlowNodeData.FlowNodeName;
+            clone.FlowNodeData.FlowNodeType = this.FlowNodeData.FlowNodeType;
+            clone.setUIValueByFlowNodeData(clone.FlowNodeData);
+            // clone.CenterPoint = this.CenterPoint;
+            clone.CenterPoint = this.CenterPoint;
+            clone.ZIndex = this.ZIndex;
+            //_container.AddFlowNode(clone);
+
+            return clone;
+        }
+
+        void FlowNodeChange()
+        {
+            if (FlowNodeChanged != null)
+            {
+                FlowNodeChanged(this);
+            }
+        }
+
+        public void ShowMessage(string message)
+        {
+            _container.ShowMessage(message);
+        }
+
+        private void OnContextMenu(object sender, System.Windows.Browser.HtmlEventArgs e)
+        {
+
+            //if (_container.MouseIsInContainer)
+            //{
+            //    e.PreventDefault();
+
+            //    if (canShowMenu && !IsDeleted)
+            //    {
+
+            //        _container.ShowFlowNodeContentMenu(this, sender, e);
+            //    }
+            //}
+        }
+
+        void sdPicture_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
 
         }
 
@@ -915,138 +1078,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
 
-        public void Move(FlowNode a, MouseEventArgs e)
-        {
-            if (FlowNodeMove != null)
-                FlowNodeMove(a, e);
-        }
-
-        FlowNode originFlowNode;
-        public FlowNode OriginFlowNode
-        {
-            get
-            {
-                return originFlowNode;
-            }
-            set
-            {
-                originFlowNode = null;
-            }
-
-        }
-
-        string flowID;
-        public string FlowID
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(flowID))
-                {
-                    flowID = Guid.NewGuid().ToString();
-                }
-                return flowID;
-            }
-            set
-            {
-                flowID = value;
-            }
-
-        }
-        string flowNodeID;
-        public string FlowNodeID
-        {
-            get
-            {
-
-                return flowNodeID;
-            }
-            set
-            {
-               flowNodeID = value;
-            }
-
-        }
-        public string FlowNodeName
-        {
-            get
-            {
-                return sdPicture.NodeName;
-            }
-            set
-            {
-
-                sdPicture.NodeName = value;
-                sdPicture.PropertyChanged += sdPicture_PropertyChanged;
-            }
-
-        }
-
-        void sdPicture_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-           
-        }
-
-        public List<Direction> BeginDirectionCollections = new List<Direction>();
-        public List<Direction> EndDirectionCollections = new List<Direction>();
-        IContainer _container;
-        public IContainer Container
-        {
-            get
-            {
-                return _container;
-            }
-            set
-            {
-                _container = value;
-                sdPicture.CurrentContainer = value;
-            }
-        }
-
-        public void ShowMessage(string message)
-        {
-            _container.ShowMessage(message);
-        }
-        System.Windows.Threading.DispatcherTimer _doubleClickTimer;
-        public FlowNode(IContainer container, FlowNodeType at):this()
-        {
-          
-            _container = container;
-            editType = PageEditType.Add;
-            this.Type = at;
-            System.Windows.Browser.HtmlPage.Document.AttachEvent("oncontextmenu", OnContextMenu);
-            this.Name = FlowID;
-
-
-            _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
-            _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
-            _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
-            sbDisplay.Begin();
-           
-
-        }
-        public FlowNode() 
-        {
-            InitializeComponent();
-        }
+        #region Mouse Move and Click Related
 
         void DoubleClick_Timer(object sender, EventArgs e)
         {
             _doubleClickTimer.Stop();
-        }
-
-        private void OnContextMenu(object sender, System.Windows.Browser.HtmlEventArgs e)
-        {
-
-            //if (_container.MouseIsInContainer)
-            //{
-            //    e.PreventDefault();
-
-            //    if (canShowMenu && !IsDeleted)
-            //    {
-
-            //        _container.ShowFlowNodeContentMenu(this, sender, e);
-            //    }
-            //}
         }
 
         bool trackingMouseMove = false;
@@ -1080,7 +1116,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         double deltaH = e.GetPosition(null).X - mousePosition.X;
                         double newTop = deltaV + Position.Y;
                         double newLeft = deltaH + Position.X;
-                        
+
                         double containerWidth = (double)this.Parent.GetValue(Canvas.WidthProperty);
                         double containerHeight = (double)this.Parent.GetValue(Canvas.HeightProperty);
                         if ((CenterPoint.X - sdPicture.PictureWidth / 2 < 2 && deltaH < 0)
@@ -1111,37 +1147,37 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             e.Handled = true;
             hadActualMove = false;
-            if(_doubleClickTimer!=null)
-            if (_doubleClickTimer.IsEnabled)
-            {
-                _doubleClickTimer.Stop();
-                _container.ShowFlowNodeSetting(this);
-
-            }
-            else
-            {
-                _doubleClickTimer.Start();
-                this.SetValue(Canvas.ZIndexProperty, _container.NextMaxIndex);
-
-                FrameworkElement element = sender as FrameworkElement;
-                FlowNodePictureContainer fn = sender as FlowNodePictureContainer;
-                StationNode sn = fn.currentPic as StationNode;
-                mousePosition = e.GetPosition(null);
-                trackingMouseMove = true;
-                if (null != element)
+            if (_doubleClickTimer != null)
+                if (_doubleClickTimer.IsEnabled)
                 {
-                    element.CaptureMouse();
-                   
-                    if (sn!=null&&sn.picSTATION.Cursor == Cursors.SizeNWSE)
+                    _doubleClickTimer.Stop();
+                    _container.ShowFlowNodeSetting(this);
+
+                }
+                else
+                {
+                    _doubleClickTimer.Start();
+                    this.SetValue(Canvas.ZIndexProperty, _container.NextMaxIndex);
+
+                    FrameworkElement element = sender as FrameworkElement;
+                    FlowNodePictureContainer fn = sender as FlowNodePictureContainer;
+                    StationNode sn = fn.currentPic as StationNode;
+                    mousePosition = e.GetPosition(null);
+                    trackingMouseMove = true;
+                    if (null != element)
                     {
-                        
-                    }
-                    else
-                    {
-                        element.Cursor = Cursors.Hand;    
+                        element.CaptureMouse();
+
+                        if (sn != null && sn.picSTATION.Cursor == Cursors.SizeNWSE)
+                        {
+
+                        }
+                        else
+                        {
+                            element.Cursor = Cursors.Hand;
+                        }
                     }
                 }
-            }
         }
 
         private void UserControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -1173,6 +1209,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 FlowNodeChange();
             }
         }
+
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
             canShowMenu = true;
@@ -1182,11 +1219,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             return;
 
         }
+
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
             canShowMenu = false;
 
         }
+
         public void SetPositionByDisplacement(double x, double y)
         {
             Point p = new Point();
@@ -1198,88 +1237,18 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             Move(this, null);
 
         }
-        bool isSelectd = false;
-        public bool IsSelectd
-        {
-            get
-            {
-                return isSelectd;
-            }
-            set
-            {
-                isSelectd = value;
-                if (isSelectd)
-                {
-                    sdPicture.SetSelectedColor();
-
-                    if (!_container.CurrentSelectedControlCollection.Contains(this))
-                        _container.AddSelectedControl(this);
-
-                }
-                else
-                {
-                    sdPicture.ResetInitColor();
-                }
-            }
-
-        }
-
-
-        public bool PointIsInside(Point p)
-        {
-            bool isInside = false;
-
-
-            double thisWidth = sdPicture.PictureWidth;
-            double thisHeight = sdPicture.PictureHeight;
-
-            double thisX = CenterPoint.X - thisWidth / 2;
-            double thisY = CenterPoint.Y - thisHeight / 2;
-
-            if (thisX < p.X && p.X < thisX + thisWidth
-                && thisY < p.Y && p.Y < thisY + thisHeight)
-            {
-                isInside = true;
-            }
-
-
-            return isInside;
-        }
-
-
-
-        public FlowNode Clone()
-        {
-            FlowNode clone = new FlowNode(this._container, this.Type);
-            clone.originFlowNode = this;
-            clone.FlowNodeData = new FlowNodeComponent();
-            clone.FlowNodeData.FlowNodeName = this.FlowNodeData.FlowNodeName;
-            clone.FlowNodeData.FlowNodeType = this.FlowNodeData.FlowNodeType;
-            clone.setUIValueByFlowNodeData(clone.FlowNodeData);
-            // clone.CenterPoint = this.CenterPoint;
-            clone.CenterPoint = this.CenterPoint;
-            clone.ZIndex = this.ZIndex;
-            //_container.AddFlowNode(clone);
-
-            return clone;
-        }
-
-        void FlowNodeChange()
-        {
-            if (FlowNodeChanged != null)
-            {
-                FlowNodeChanged(this);
-            }
-        }
 
         private void CenterEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID") || System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
+            if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID")
+                || System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
             {
                 return;
             }
             if (isDeleted)
+            {
                 return;
+            }
             e.Handled = true;
             if (_doubleClickTimer.IsEnabled)
             {
@@ -1295,17 +1264,17 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 {
                     if (_container.CurrentTemporaryDirection == null)
                     {
-                        if (this.Type != FlowNodeType.COMPLETION)
-                        {
-                            _container.CurrentTemporaryDirection = new Direction(_container, true);
-                            _container.AddDirection(_container.CurrentTemporaryDirection);
-                            _container.CurrentTemporaryDirection.BeginFlowNode = this;
-                            _container.CurrentTemporaryDirection.BeginPointPosition = this.CenterPoint;
-                            _container.CurrentTemporaryDirection.EndPointPosition = _container.CurrentTemporaryDirection.BeginPointPosition;
-                            _container.CurrentTemporaryDirection.ZIndex = _container.NextMaxIndex;
-                            _container.IsNeedSave = true;
-                            // _container.CurrentTemporaryDirection.DirectionName = Text.NewDirection;
-                        }
+                        //if (this.Type != FlowNodeType.COMPLETION)
+                        //{
+                        _container.CurrentTemporaryDirection = new Direction(_container, true);
+                        _container.AddDirection(_container.CurrentTemporaryDirection);
+                        _container.CurrentTemporaryDirection.BeginFlowNode = this;
+                        _container.CurrentTemporaryDirection.BeginPointPosition = this.CenterPoint;
+                        _container.CurrentTemporaryDirection.EndPointPosition = _container.CurrentTemporaryDirection.BeginPointPosition;
+                        _container.CurrentTemporaryDirection.ZIndex = _container.NextMaxIndex;
+                        _container.IsNeedSave = true;
+                        // _container.CurrentTemporaryDirection.DirectionName = Text.NewDirection;
+                        //}
                     }
                 }
                 else
@@ -1321,19 +1290,22 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     }
 
                 }
-
-
             }
         }
+
         private void CenterEllipse_MouseMove(object sender, MouseEventArgs e)
         {
-            if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID") || System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
+            if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID")
+                || System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
             {
                 return;
 
             }
             if (isDeleted)
+            {
                 return;
+            }
+
             UserControl_MouseMove(sender, e);
 
         }
@@ -1365,26 +1337,19 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         private void eiCenterEllipse_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             if (_container.MouseIsInContainer)
             {
                 e.GetPosition(null);
 
                 if (canShowMenu && !IsDeleted)
                 {
-
                     _container.ShowFlowNodeContentMenu(this, sender, e);
-                    
                 }
             }
         }
-        public void Edit()
-        {
-            _container.ShowFlowNodeSetting(this);
-        }
+        #endregion
 
         #region IElement 成员
-
 
         public UserStation Station()
         {
@@ -1491,17 +1456,55 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             return us;
         }
 
-      
-        #endregion
-
-        #region IElement 成员
-        public void worklist()
+        public void Worklist(DataSet dataSet)
         {
-            if (!(string.IsNullOrEmpty(_container.FK_Flow) && string.IsNullOrEmpty(_container.WorkID)))
+            if (dataSet == null || dataSet.Tables.Count == 0)
             {
-                _container._Service.GetDTOfWorkListAsync(_container.FK_Flow, _container.WorkID);
-                _container._Service.GetDTOfWorkListCompleted +=
-                    new EventHandler<WF.WS.GetDTOfWorkListCompletedEventArgs>(_Service_GetDTOfWorkListCompleted);
+                return;
+            }
+
+            bool ishave = false;
+            string empName = "：";
+
+            string sdt = "";
+            int rowIndex = 0;
+            foreach (DataRow dr in dataSet.Tables[0].Rows)
+            {
+                if (this.FlowNodeID == dr["FK_Node"].ToString())
+                {
+                    ishave = true;
+                    empName += dr["EmpName"].ToString() + ";";
+
+                    // 第一个点应该是 xxx在xxx时间发起，而非xxx在什么时间接受.
+                    if (rowIndex == 0)
+                    {
+                        sdt = DateTime.Parse(dr["RDT"].ToString()).ToString("MM月dd号HH时mm分") + "发起";
+                    }
+                    else
+                    {
+                        sdt = DateTime.Parse(dr["RDT"].ToString()).ToString("MM月dd号HH时mm分") + "接收";
+                    }
+                }
+                rowIndex++;
+            }
+            if (ishave)
+            {
+                var dir = new Direction(_container)
+                {
+                    BeginFlowNode = this,
+                    EndFlowNode = stationTipControl,
+                    IsTemporaryDirection = true,
+                    FlowID = this.FlowID,
+                    Container = _container
+                };
+
+                _container.AddDirection(dir);
+
+                stationTipControl.Visibility = Visibility.Visible;
+                stationTipControl.StationMessage = empName.TrimEnd(';') + "\n" + sdt;
+
+                _stationTipControl = null;
+                ishave = false;
             }
         }
 
@@ -1512,50 +1515,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 sdPicture.picSTATION.tbMessage.Text = value;
             }
         }
-      
-      void _Service_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
-        {
-            if (e.Result == null)
-                return;
-            bool ishave=false;
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-            string empName = "：";
-         
-            string sdt = "";
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                if (this.FlowNodeID == dr["FK_Node"].ToString())
-                {
-                    ishave = true;
-                    empName += dr["EmpName"].ToString()+";";
 
-                    sdt = DateTime.Parse(dr["RDT"].ToString()).ToString("MM月dd号HH时mm分") + "接收";
-               }
 
-            }
-            if (ishave)
-            {
-                Direction dir = new Direction(_container);
-                dir.BeginFlowNode = this;
-                dir.EndFlowNode =stationTipControl ;
-              
-                dir.IsTemporaryDirection = true;
-                dir.FlowID = this.FlowID;
-                dir.Container = _container;
-                _container.AddDirection(dir);
-                
-               // container.Children.Add(dir);
-                stationTipControl.Visibility = Visibility.Visible;
-                stationTipControl.StationMessage = empName + "\n"  + sdt;
-             
-              _stationTipControl = null;
-                ishave = false;
-            }
-            _container._Service.GetDTOfWorkListCompleted -=_Service_GetDTOfWorkListCompleted;
-                   
-        }
-
+        #endregion 
         #endregion
     }
 }

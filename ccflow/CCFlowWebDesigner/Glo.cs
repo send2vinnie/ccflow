@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -15,7 +17,7 @@ using System.Windows.Browser;
 using System.IO;
 using Silverlight;
 using Ccflow.Web.UI.Control.Workflow.Designer;
-
+using WF.WS;
 namespace WF
 {
     /// <summary>
@@ -23,7 +25,13 @@ namespace WF
     /// </summary>
     public enum WindowModelEnum
     {
+        /// <summary>
+        /// 对话框
+        /// </summary>
         Dialog,
+        /// <summary>
+        /// 窗口
+        /// </summary>
         Window
     }
     public class Glo
@@ -37,16 +45,28 @@ namespace WF
         {
             OpenWindowOrDialog(url, title, string.Format("dialogHeight:{0}px;dialogWidth:{1}px", h, w), WindowModelEnum.Dialog);
         }
-
         public static void WinOpen(string url, string title, int h, int w)
         {
             OpenWindowOrDialog(url, title, string.Format("height={0},width={1}", h, w), WindowModelEnum.Window);
         }
-
         public static void OpenDialog(string url, string title)
         {
             OpenWindowOrDialog(url, title, "dialogHeight:600px;dialogWidth:800px", WindowModelEnum.Dialog);
         }
+        /// <summary>
+        /// 得到WebService对象
+        /// </summary>
+        /// <returns></returns>
+        public static WSDesignerSoapClient GetDesignerServiceInstance()
+        {
+            var basicBinding = new BasicHttpBinding() { MaxBufferSize = 2147483647, MaxReceivedMessageSize = 2147483647, Name = "WSDesignerSoap" };
+            basicBinding.Security.Mode = BasicHttpSecurityMode.None;    
+            var endPoint = new EndpointAddress(BPMHost + "/WF/XAP/WebService.asmx");
+            var ctor =
+                typeof (WSDesignerSoapClient).GetConstructor(new Type[] {typeof (Binding), typeof (EndpointAddress)});
+            return (WSDesignerSoapClient) ctor.Invoke(new object[] {basicBinding, endPoint});
+        } 
+        #endregion 共用方法
 
         /// <summary>
         /// 弹出网页窗口
@@ -70,6 +90,6 @@ namespace WF
                         title, property));
             }
         }
-        #endregion 共用方法
+
     }
 }

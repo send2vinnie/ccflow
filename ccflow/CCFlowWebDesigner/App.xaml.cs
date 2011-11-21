@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Net.Browser;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -15,6 +18,8 @@ using System.Windows.Browser;
 using System.IO;
 using Silverlight;
 using Ccflow.Web.UI.Control.Workflow.Designer;
+using WF.Designer;
+
 //using WF.Designer;
 namespace WF
 {
@@ -30,15 +35,15 @@ namespace WF
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //this.RootVisual = new Dtl();
-            WF.WS.WSDesignerSoapClient da = new WS.WSDesignerSoapClient();
-            da.CfgKeyAsync("BPMHost");
-            da.CfgKeyCompleted += new EventHandler<WS.CfgKeyCompletedEventArgs>(da_CfgKeyCompleted);
-        }
+            bool registerResult = WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
+            bool httpsResult = WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
 
-        void da_CfgKeyCompleted(object sender, WS.CfgKeyCompletedEventArgs e)
-        {
-            Glo.BPMHost = "http://"+ e.Result;
+            //设置当前线程的culture,以加载指定语言的字符.
+            var culture = new CultureInfo("zh-cn");
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+
+            Glo.BPMHost = GetHostUrl();
             this.RootVisual = new MainPage();
         }
 
@@ -61,14 +66,24 @@ namespace WF
                 Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
             }
         }
-
         private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)
         {
             string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
-            errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
-            throw new Exception(errorMsg);
-            //MessageBox.Show(errorMsg);
-            System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
+            errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");  
+            HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
+        }
+        /// <summary>
+        /// 得到当前所在网站的根目录，如Http://localhost/flow
+        /// 注意站点名字必须是Flow,否则会报错。
+        /// </summary>
+        /// <returns></returns>
+        private string GetHostUrl()
+        {
+            var location = (HtmlPage.Window.GetProperty("location")) as ScriptObject;
+            var hrefObject = location.GetProperty("href");
+            string url = hrefObject.ToString();
+            string[] strs = url.Split('/');
+            return strs[0] + "//" + strs[1] + strs[2] + "/" + strs[3];
         }
     }
 }

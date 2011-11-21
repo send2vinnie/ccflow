@@ -27,7 +27,7 @@ namespace WF.Designer
         
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var client = new WS.WSDesignerSoapClient();
+            var client = Glo.GetDesignerServiceInstance();
             var sql = "select * from sys_mapdata";
             client.RunSQLReturnTableCompleted += client_RunSQLReturnTableCompleted;
             client.RunSQLReturnTableAsync(sql, true);

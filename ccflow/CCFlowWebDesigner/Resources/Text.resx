@@ -366,6 +366,9 @@
   <data name="DeleteFlowSort" xml:space="preserve">
     <value>will delete WorkFlow Sort,continue?</value>
   </data>
+  <data name="IsSave" xml:space="preserve">
+    <value>Is Save ?</value>
+  </data>
   <data name="Button_AddTemplate" xml:space="preserve">
     <value>AddTemplate</value>
   </data>
@@ -409,7 +412,7 @@
     <value>Dept</value>
   </data>
   <data name="TbItemFlow" xml:space="preserve">
-    <value>Flows</value>
+    <value>Flow</value>
   </data>
   <data name="TbStation" xml:space="preserve">
     <value>Station</value>
