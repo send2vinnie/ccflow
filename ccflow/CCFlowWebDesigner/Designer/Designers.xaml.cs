@@ -206,6 +206,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             string w = dr["W"];
             string h = dr["H"];
             string url = dr["Url"];
+
             Glo.WinOpen(Glo.BPMHost + url, "name", int.Parse(h), int.Parse(w));
         }
 
@@ -356,17 +357,17 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         public void OpenDialog(string url, string title, int h, int w)
         {
-            OpenWindowOrDialog(url, title, string.Format("dialogHeight:{0}px;dialogWidth:{1}px", h, w), WindowModelEnum.Dialog);
+            OpenWindowOrDialog(Glo.BPMHost + url, title, string.Format("dialogHeight:{0}px;dialogWidth:{1}px", h, w), WindowModelEnum.Dialog);
         }
 
         public void OpenWindow(string url, string title, int h, int w)
         {
-            OpenWindowOrDialog(url, title, string.Format("height={0},width={1}", h, w), WindowModelEnum.Window);
+            OpenWindowOrDialog(Glo.BPMHost+ url, title, string.Format("height={0},width={1}", h, w), WindowModelEnum.Window);
         }
 
         public void OpenDialog(string url, string title)
         {
-            OpenWindowOrDialog(url, title, "dialogHeight:600px;dialogWidth:800px", WindowModelEnum.Dialog);
+            OpenWindowOrDialog(Glo.BPMHost + url, title, "dialogHeight:600px;dialogWidth:800px", WindowModelEnum.Dialog);
         }
 
         /// <summary>
@@ -375,7 +376,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <param name="url">网页地址</param>
         private void OpenWindowOrDialog(string url, string title, string property, WindowModelEnum windowModel)
         {
-            if (WindowModelEnum.Dialog == windowModel )
+            if (url.Contains("http") == false)
+                url = Glo.BPMHost + url;
+
+            if (WindowModelEnum.Dialog == windowModel)
             {
                 HtmlPage.Window.Eval(
                     string.Format(
@@ -390,11 +394,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         "window.open('{0}','{1}','{2};help=no,resizable=yes,status=no,scrollbars=1');", url,
                         title, property));
 
-
             }
-
-            
-        } 
+        }
         #endregion
 
         private void releaseToFtp()
@@ -402,22 +403,15 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             if (SelectedContainer == null)
                 return;
             var result = SnapshotCapturer.SaveScreenToString();
-
             _service = Glo.GetDesignerServiceInstance();
             var sortId = SelectedContainer.FK_Flow;
             _Service.DoAsync("ReleaseToFTP", SelectedContainer.FlowID + "," +  result, true);
             _Service.DoCompleted += _service_ReleaseToFTPCompleted;
-
-
         }
-        
         private void _service_ReleaseToFTPCompleted(object sender, DoCompletedEventArgs e)
         {
             _Service.DoCompleted -= _service_GetFlowsCompleted;
-
-
         }
-
         /// <summary>
         /// 双击事件
         /// </summary>

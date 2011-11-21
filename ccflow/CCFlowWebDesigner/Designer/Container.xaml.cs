@@ -701,7 +701,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             Designer.OpenWindow(url + e.Result, WinTitle, 550, 500);
 
             _Service.GetRelativeUrlCompleted -= _Service_ShowDirectionCompleted;
-
         }
 
         public void LoadFromXmlString(string xml)
@@ -773,7 +772,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             DirectionLineType lineType = DirectionLineType.Line;
             double.TryParse(xele.Attribute(XName.Get("Width")).Value, out containerWidth);
             double.TryParse(xele.Attribute(XName.Get("Height")).Value, out containerHeight);
-
 
             ContainerWidth = containerWidth;
             ContainerHeight = containerHeight;
@@ -851,9 +849,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 {
                     r.EndPointPosition = new Point(endPointX, endPointY);
                 }
-
-
-
             }
 
 
@@ -863,12 +858,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             double labelY = 0;
             foreach (XElement node in partNos)
             {
-
                 labelName = node.Value;
 
                 double.TryParse(node.Attribute(XName.Get("X")).Value, out labelX);
                 double.TryParse(node.Attribute(XName.Get("Y")).Value, out labelY);
-
 
                 NodeLabel l = new NodeLabel(this);
                 l.LabelName = labelName;
@@ -888,13 +881,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <param name="title"></param>
         public void SetProper(string lang, string dotype, string fk_flow, string node1, string node2, string title)
         {
-
             this.WinTitle = title;
             _Service.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
             _Service.GetRelativeUrlCompleted += _Service_GetRelativeUrlCompleted;
-
         }
-        
         /// <summary>
         /// 打开窗口
         /// </summary>
@@ -914,14 +904,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                                                  {
                                                      string suburl = HtmlPage.Document.DocumentUri.ToString();
                                                      string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-                                                   
+
                                                      Designer.IsRefresh = IsContainerRefresh;
                                                      Designer.OpenWindow(url + e.Result, WinTitle, 600, 800);
 
                                                  };
 
         }
-
         public string ToXmlString()
         {
             System.Text.StringBuilder xml = new System.Text.StringBuilder(@"<?xml version=""1.0"" encoding=""utf-8"" standalone=""yes"" ?>  ");
@@ -2023,7 +2012,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         
         public void ShowLabelContentMenu(NodeLabel l, object sender, MouseButtonEventArgs e)
         {
-
             menuLabel.RelatedLabel = l;
             menuContainer.Visibility = Visibility.Collapsed;
             menuDirection.Visibility = Visibility.Collapsed;
@@ -2040,7 +2028,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             menuDirection.RelatedDirection = r;
             menuContainer.Visibility = Visibility.Collapsed;
             menuLabel.Visibility = Visibility.Collapsed;
-
             menuFlowNode.Visibility = Visibility.Collapsed;
             double top = (double)(e.GetPosition(svContainer).Y);
             double left = (double)(e.GetPosition(svContainer).X);
@@ -2048,21 +2035,15 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             menuDirection.ShowMenu();
             e.Handled = true;
         }
-        
         private void btnCloseMessageButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBody.Visibility = Visibility.Collapsed;
             CloseContainerCover();
         }
-        
         void _Service_GetRelativeUrlCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
         {
-            string suburl = HtmlPage.Document.DocumentUri.ToString();
-            string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-            WinOpen(url + e.Result, WinTitle);
-
+            WinOpen(e.Result, WinTitle);
             _Service.GetRelativeUrlCompleted -= _Service_GetRelativeUrlCompleted;
-
         }
         
         void _Service_DoNewNodeCompleted(object sender, DoNewNodeCompletedEventArgs e)

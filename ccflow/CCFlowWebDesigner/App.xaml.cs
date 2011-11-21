@@ -32,19 +32,22 @@ namespace WF
             this.UnhandledException += this.Application_UnhandledException;
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Application_Startup
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             bool registerResult = WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
             bool httpsResult = WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
-
 
             //设置当前线程的culture,以加载指定语言的字符
             var culture = new CultureInfo("zh-cn");
             Thread.CurrentThread.CurrentUICulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
 
-            Glo.BPMHost = getHostUrl();
+            Glo.BPMHost = GetHostUrl();
             this.RootVisual = new MainPage();
         }
 
@@ -73,6 +76,7 @@ namespace WF
         {
             string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
             errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");  
+
             HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
         }
 
@@ -81,12 +85,16 @@ namespace WF
         /// 注意站点名字必须是Flow,否则会报错。
         /// </summary>
         /// <returns></returns>
-        private string getHostUrl()
+        private string GetHostUrl()
         {
             var location = (HtmlPage.Window.GetProperty("location")) as ScriptObject;
             var hrefObject = location.GetProperty("href");
-            string url = hrefObject.ToString().Substring(0, hrefObject.ToString().IndexOf("Flow/") + 5);
-            return url;
+            string url = hrefObject.ToString();
+            string[] strs = url.Split('/');
+            return strs[0] + "//" + strs[1] + strs[2] + "/" + strs[3];
+
+            //string url = hrefObject.ToString().Substring(0, hrefObject.ToString().IndexOf("Flow/") + 5);
+            //return url;
         }
     }
 }
