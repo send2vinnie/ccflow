@@ -236,7 +236,7 @@
     <None Include="Service References\WS\WF.WS.UploadFileResponse1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="ServiceReferences.ClientConfig.eee" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
