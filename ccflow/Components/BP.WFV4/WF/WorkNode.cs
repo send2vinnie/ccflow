@@ -473,10 +473,11 @@ namespace BP.WF
                     else
                         sql = sql.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
                 }
+
                 sql = sql.Replace("~", "'");
-                sql = sql.Replace("@WebUser.No", WebUser.No);
-                sql = sql.Replace("@WebUser.Name", WebUser.Name);
-                sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                sql = sql.Replace("@WebUser.No", "'"+WebUser.No+"'");
+                sql = sql.Replace("@WebUser.Name", "'" + WebUser.Name + "'");
+                sql = sql.Replace("@WebUser.FK_Dept", "'" + WebUser.FK_Dept + "'");
 
                 dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)
