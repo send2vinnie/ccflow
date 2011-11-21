@@ -13,8 +13,7 @@ public partial class Comm_Sys_EnumList : BP.Web.WebPageAdmin
     {
         SysEnumMain sem = new SysEnumMain(this.RefNo);
         this.UCSys1.AddTable();
-
-        this.UCSys1.AddCaptionLeftTX("<a href=EnumList.aspx ><img src='./../../Images/Btn/Home.gif' border=0>枚举值列表</a> -<a href='EnumList.aspx?DoType=New' ><img src='./../../Images/Btn/New.gif' border=0/>新建</a>- <img src='./../../Images/Btn/Edit.gif' border />编辑:" + sem.No + " " + sem.Name);
+        this.UCSys1.AddCaptionLeft("<a href=EnumList.aspx ><img src='./../../Images/Btn/Home.gif' border=0>枚举值列表</a> -<a href='EnumList.aspx?DoType=New' ><img src='./../../Images/Btn/New.gif' border=0/>新建</a>- <img src='./../../Images/Btn/Edit.gif' border />编辑:" + sem.No + " " + sem.Name);
 
         this.UCSys1.AddTR();
         Button btn = new Button();
