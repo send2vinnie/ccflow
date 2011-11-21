@@ -387,8 +387,6 @@
     <Resource Include="Images\MenuItem\Post.png" />
     <Content Include="Images\Icons\CCFlow.jpg" />
     <Content Include="Images\Icons\CCFlowWelcome.jpg" />
-    <Content Include="Images\Icons\Flow.jpg" />
-    <Content Include="Images\Icons\FlowWelcome.jpg" />
     <Content Include="Images\ToolBarHelp.png" />
     <Content Include="Images\loading.png" />
     <Resource Include="Images\MenuItem\deFrm.png" />
