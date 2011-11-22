@@ -20,6 +20,7 @@ using Liquid;
 using WF.Resources;
 using WF.Designer;
 using System.IO;
+using BP;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
@@ -1038,14 +1039,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 return;
             }
-
             switch (control.Name)
             {
                 case "Btn_ToolBarLogin":
-                    var client = Glo.GetDesignerServiceInstance();
-                    client.GetRelativeUrlCompleted += client_GetRelativeUrlCompleted;
-                    client.GetRelativeUrlAsync("CN", "LoginPage", string.Empty, string.Empty, string.Empty, true);
-                    break;
+                    Glo.WinOpen("/WF/Lgoin.aspx", "登陆", 800, 600);
+                    return;
                 case "Btn_ToolBarNewNode":
                     if (SelectedContainer != null)
                     {

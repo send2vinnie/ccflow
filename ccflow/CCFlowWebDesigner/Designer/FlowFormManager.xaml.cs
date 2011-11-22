@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using Silverlight;
 using WF.Controls;
-
+using BP;
 namespace WF.Designer
 {
     public partial class FlowFormManager : Page

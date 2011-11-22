@@ -20,8 +20,7 @@ using Silverlight;
 using Ccflow.Web.UI.Control.Workflow.Designer;
 using WF.Designer;
 
-//using WF.Designer;
-namespace WF
+namespace BP
 {
     public partial class App : Application
     {

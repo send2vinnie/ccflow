@@ -23,6 +23,7 @@ using Silverlight;
 using WF.Controls;
 using System.Windows.Browser;
 using WF.Designer;
+using BP;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {

@@ -3,7 +3,7 @@
              xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
 xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
 xmlns:controlsPrimitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls"
-             x:Class="WF.App"  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  mc:Ignorable="d" >
+             x:Class="BP.App"  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  mc:Ignorable="d" >
     <Application.Resources>
      
         <!--************** Caramel styles begin ************** -->

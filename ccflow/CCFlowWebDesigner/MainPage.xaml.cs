@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Ccflow.Web.UI.Control.Workflow.Designer;
 using WF.Designer;
-namespace WF
+namespace BP
 {
     public partial class MainPage : UserControl
     {
@@ -25,17 +25,18 @@ namespace WF
                 var workId = string.Empty;
                 var flowId = string.Empty;
                 var queryString = System.Windows.Browser.HtmlPage.Document.QueryString;
-                if(queryString.ContainsKey("WorkID"))
+                if (queryString.ContainsKey("WorkID"))
                 {
                     workId = queryString["WorkID"];
                 }
 
-                if(queryString.ContainsKey("FK_Flow"))
+                if (queryString.ContainsKey("FK_Flow"))
                 {
                     flowId = queryString["FK_Flow"];
                 }
-                SelContainer sc = new SelContainer(flowId, workId);
-                this.Content = sc;
+
+                BP.Track track = new BP.Track(flowId, workId);
+                this.Content = track;
             }
             else
             {

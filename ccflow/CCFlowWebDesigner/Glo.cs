@@ -19,7 +19,7 @@ using Silverlight;
 using Ccflow.Web.UI.Control.Workflow.Designer;
 using WF.WS;
 
-namespace WF
+namespace BP
 {
     /// <summary>
     /// 窗口打开方式 
@@ -50,21 +50,25 @@ namespace WF
         {
             OpenWindowOrDialog(url, title, "dialogHeight:600px;dialogWidth:800px", WindowModelEnum.Dialog);
         }
-
         /// <summary>
         /// 得到WebService对象
         /// </summary>
         /// <returns></returns>
         public static WSDesignerSoapClient GetDesignerServiceInstance()
         {
-            var basicBinding = new BasicHttpBinding() { MaxBufferSize = 2147483647, MaxReceivedMessageSize = 2147483647, Name = "WSDesignerSoap" };
-            basicBinding.Security.Mode = BasicHttpSecurityMode.None;    
-            var endPoint = new EndpointAddress( Glo.BPMHost + "/WF/XAP/WebService.asmx");
-            var ctor =
-                typeof (WSDesignerSoapClient).GetConstructor(new Type[] {typeof (Binding), typeof (EndpointAddress)});
-            return (WSDesignerSoapClient) ctor.Invoke(new object[] {basicBinding, endPoint});
-        } 
+            var basicBinding = new BasicHttpBinding()
+            {
+                MaxBufferSize = 2147483647,
+                MaxReceivedMessageSize = 2147483647,
+                Name = "WSDesignerSoap"
+            };
 
+            basicBinding.Security.Mode = BasicHttpSecurityMode.None;
+            var endPoint = new EndpointAddress(Glo.BPMHost + "/WF/Admin/XAP/WebService.asmx");
+            var ctor =
+                typeof(WSDesignerSoapClient).GetConstructor(new Type[] { typeof(Binding), typeof(EndpointAddress) });
+            return (WSDesignerSoapClient)ctor.Invoke(new object[] { basicBinding, endPoint });
+        }
         #endregion 共用方法
 
         /// <summary>
@@ -73,6 +77,10 @@ namespace WF
         /// <param name="url">网页地址</param>
         private static void OpenWindowOrDialog(string url, string title, string property, WindowModelEnum windowModel)
         {
+            if (url.Contains("ttp://") == false)
+                url = Glo.BPMHost + url;
+
+
             if (WindowModelEnum.Dialog == windowModel)
             {
                 HtmlPage.Window.Eval(
@@ -89,6 +97,5 @@ namespace WF
                         title, property));
             }
         }
-
     }
 }

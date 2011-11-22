@@ -148,7 +148,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             switch (e.Tag.ToString())
             {
                 case "Help":
-                    WF.Glo.WinOpen("http://ccflow.org/Help.aspx?wd=设计器", "帮助", 900, 1200);
+                    BP.Glo.WinOpen("http://ccflow.org/Help.aspx?wd=设计器", "帮助", 900, 1200);
                     break;
                 case "menuExp":
                     WF.Designer.FrmExp exp = new WF.Designer.FrmExp();

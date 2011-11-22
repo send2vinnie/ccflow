@@ -13,13 +13,13 @@ using Liquid;
 using WF.Resources;
 using System.Windows.Browser;
 using MenuItem = Liquid.MenuItem;
+using BP;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
     public partial class FlowNodeMenu : UserControl
     {
         private IContainer _container;
-
         public FlowNodeMenu()
         {
             InitializeComponent();
@@ -263,7 +263,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     imp.Show();
                     break;
                 case "Help":
-                    WF.Glo.WinOpen("http://ccflow.org/Help.aspx?wd=设计器", "帮助", 900, 1200);
+                    Glo.WinOpen("http://ccflow.org/Help.aspx?wd=设计器", "帮助", 900, 1200);
                     break;
                 case "menuModifyName":
                     showFlowNodeSetting();

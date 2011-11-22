@@ -181,8 +181,8 @@
     <Compile Include="Designer\LabelMenu.xaml.cs">
       <DependentUpon>LabelMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Designer\SelContainer.xaml.cs">
-      <DependentUpon>SelContainer.xaml</DependentUpon>
+    <Compile Include="Designer\Track.xaml.cs">
+      <DependentUpon>Track.xaml</DependentUpon>
     </Compile>
     <Compile Include="Designer\Triangle.cs" />
     <Compile Include="Glo.cs" />
@@ -329,7 +329,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Designer\SelContainer.xaml">
+    <Page Include="Designer\Track.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

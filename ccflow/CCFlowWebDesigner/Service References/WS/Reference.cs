@@ -1344,29 +1344,35 @@ namespace WF.WS {
         public void GetDTOfWorkListAsync(string fk_flow, string workid) {
             this.GetDTOfWorkListAsync(fk_flow, workid, null);
         }
-        
-        public void GetDTOfWorkListAsync(string fk_flow, string workid, object userState) {
-            if ((this.onBeginGetDTOfWorkListDelegate == null)) {
+
+        public void GetDTOfWorkListAsync(string fk_flow, string workid, object userState)
+        {
+            if ((this.onBeginGetDTOfWorkListDelegate == null))
+            {
                 this.onBeginGetDTOfWorkListDelegate = new BeginOperationDelegate(this.OnBeginGetDTOfWorkList);
             }
-            if ((this.onEndGetDTOfWorkListDelegate == null)) {
+            if ((this.onEndGetDTOfWorkListDelegate == null))
+            {
                 this.onEndGetDTOfWorkListDelegate = new EndOperationDelegate(this.OnEndGetDTOfWorkList);
             }
-            if ((this.onGetDTOfWorkListCompletedDelegate == null)) {
+            if ((this.onGetDTOfWorkListCompletedDelegate == null))
+            {
                 this.onGetDTOfWorkListCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetDTOfWorkListCompleted);
             }
             base.InvokeAsync(this.onBeginGetDTOfWorkListDelegate, new object[] {
                         fk_flow,
                         workid}, this.onEndGetDTOfWorkListDelegate, this.onGetDTOfWorkListCompletedDelegate, userState);
         }
-        
+
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WF.WS.WSDesignerSoap.BeginLetAdminLogin(string lang, bool islogin, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult WF.WS.WSDesignerSoap.BeginLetAdminLogin(string lang, bool islogin, System.AsyncCallback callback, object asyncState)
+        {
             return base.Channel.BeginLetAdminLogin(lang, islogin, callback, asyncState);
         }
-        
+
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string WF.WS.WSDesignerSoap.EndLetAdminLogin(System.IAsyncResult result) {
+        string WF.WS.WSDesignerSoap.EndLetAdminLogin(System.IAsyncResult result)
+        {
             return base.Channel.EndLetAdminLogin(result);
         }
         
@@ -1501,7 +1507,8 @@ namespace WF.WS {
             this.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, isLogin, null);
         }
         
-        public void GetRelativeUrlAsync(string lang, string dotype, string fk_flow, string node1, string node2, bool isLogin, object userState) {
+        public void GetRelativeUrlAsync(string lang, string dotype, string fk_flow, 
+            string node1, string node2, bool isLogin, object userState) {
             if ((this.onBeginGetRelativeUrlDelegate == null)) {
                 this.onBeginGetRelativeUrlDelegate = new BeginOperationDelegate(this.OnBeginGetRelativeUrl);
             }

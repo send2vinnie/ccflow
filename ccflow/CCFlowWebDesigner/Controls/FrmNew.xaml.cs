@@ -14,6 +14,7 @@ using Ccflow.Web.UI.Control.Workflow.Designer;
 using WF.WS;
 using Silverlight;
 using System.Collections;
+using BP;
 namespace WF.Controls
 {
     public partial class FrmNewFlow : ChildWindow
