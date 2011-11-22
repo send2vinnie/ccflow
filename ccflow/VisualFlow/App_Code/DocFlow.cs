@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using BP.DA;
+using BP.WF;
+using BP.En;
 using System.Web;
 using System.Web.Services;
 
@@ -12,7 +14,7 @@ using System.Web.Services;
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 //若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消对下行的注释。 
 // [System.Web.Script.Services.ScriptService]
-public class DocFlow : System.Web.Services.WebService {
+public class DocFlow : BP.Web.WSBase {
 
     public DocFlow () {
         //如果使用设计的组件，请取消注释以下行 
@@ -32,12 +34,36 @@ public class DocFlow : System.Web.Services.WebService {
 
     #region 功能执行
     [WebMethod]
-    public string DoType(string type, object p1, object p2, object p3, object p4, object p5, object p6,object p7)
+    public string DoType(string doType, object p1, object p2, object p3, object p4, object p5, object p6, object p7)
     {
-        switch (type)
+        switch (doType)
         {
-            case "DeleteFlow":
-                break;
+            case "DeleteFlow": //删除流程.
+                try
+                {
+                    string undoFlowNo = p1 as string;
+                    Int64 workid = Int64.Parse(p2.ToString());
+                    WorkFlow wf = new WorkFlow(undoFlowNo, workid);
+                    wf.DoDeleteWorkFlowByReal();
+                    return "1";
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
+            case "Undo": //撤销流程发送.
+                try
+                {
+                    string undoFlowNo = p1 as string;
+                    Int64 workid = Int64.Parse(p2.ToString());
+                    WorkFlow wf = new WorkFlow(undoFlowNo, workid);
+                    wf.DoUnSend();
+                    return "1";
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
             default:
                 break;
         }
