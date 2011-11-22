@@ -20,7 +20,6 @@
    </style>
     <script type="text/javascript" src="Silverlight.js"></script>
     <script type="text/javascript">
-
         function onSilverlightError(sender, args) {
             var appSource = "";
             if (sender != null && sender != 0) {
@@ -52,8 +51,7 @@
                 }
                 errMsg += "方法名称: " + args.methodName + "     \n";
             }
-
-            引发新错误(errMsg);
+            alert(errMsg);
         }
     </script>
     <script language="JavaScript" type="text/JavaScript">
