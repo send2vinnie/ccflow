@@ -1201,7 +1201,7 @@ namespace BP.Web.Comm.UC.WF
                     }
                 }
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + link.X + "px;top:" + link.Y + "px;text-align:left;' >");
-                this.Add("\t\n<span style='color:" + link.FontColorHtml + ";font-family: " + link.FontName + ";font-size: " + link.FontSize + "px;' > <a href='" + link.URL + "' target='" + link.Target + "'> " + link.Text + "</a></span>");
+                this.Add("\t\n<span style='color:" + link.FontColorHtml + ";font-family: " + link.FontName + ";font-size: " + link.FontSize + "px;' > <a href='" + url + "' target='" + link.Target + "'> " + link.Text + "</a></span>");
                 this.Add("\t\n</DIV>");
             }
 
