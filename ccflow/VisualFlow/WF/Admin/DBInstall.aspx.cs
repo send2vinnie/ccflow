@@ -15,7 +15,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         {
             this.Pub1.AddFieldSet("提示");
             this.Pub1.Add("ccflow数据库初始化成功.");
-            this.Pub1.AddBR("<a href='./../../Designer.aspx' >进入流程设计器.</a>");
+            this.Pub1.AddBR("<a href='./XAP/Designer.aspx' >进入流程设计器.</a>");
             this.Pub1.AddFieldSetEnd();
             return;
         }
@@ -38,17 +38,8 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     this.Pub1.AddMsgGreen("同步数据表结构成功, 部分错误不会影响系统运行.",
                         "执行成功，希望在系统每次升级后执行此功能，不会对你的数据库数据产生影响。<br> <a href='./../../Designer.aspx'>进入流程设计器.</a>");
 
-                   
-
-                  
-
-                
-
                     string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
                     BP.DA.DBAccess.RunSQLScript(scrpts);
-
-                 
-
                 }
                 return;
             }
