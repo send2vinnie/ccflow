@@ -447,7 +447,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 editType = value;
             }
         }
-        public Designers Designer { get; set; }
+        public MainPage Designer { get; set; }
         private Point GetPosition { get; set; }
         #endregion
 
@@ -671,7 +671,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public void btnRun()
         {
             openWindow("", "RunFlow", FlowID, "0", "0", "运行");
-
         }
 
         public void ShowFlowNodeSetting(FlowNode fn)
@@ -897,7 +896,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <param name="title"></param>
         private void openWindow(string lang, string dotype, string fk_flow, string node1, string node2, string title)
         {
-
             this.WinTitle = title;
             var serviceProxy = Glo.GetDesignerServiceInstance();
             serviceProxy.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
@@ -907,8 +905,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                                                      string url = suburl.Substring(0, suburl.LastIndexOf('/'));
 
                                                      Designer.IsRefresh = IsContainerRefresh;
-                                                     Designer.OpenWindow(url + e.Result, WinTitle, 600, 800);
-
+                                                     Designer.OpenWindow(Glo.BPMHost + e.Result, WinTitle, 600, 800);
                                                  };
 
         }
@@ -1025,19 +1022,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             SaveChange(HistoryType.New);
         }
-
-       
-
         public void AddFlowNode(FlowNode a)
         {
             if (!cnsDesignerContainer.Children.Contains(a))
             {
                 cnsDesignerContainer.Children.Add(a);
-
                 a.Container = this;
                 a.FlowNodeChanged += OnFlowNodeChanged;
                 a.FlowID = FlowID;
-
             }
             if (!FlowNodeCollections.Contains(a))
             {
@@ -1237,14 +1229,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             MessageTitle.Text = message;
             MessageBody.Visibility = Visibility.Visible;
         }
-        
+
         public void AddFlowNode()
-        { 
+        {
             NewFlowNodeName = Text.NewFlowNode + NextNewFlowNodeIndex.ToString();
             nextNewFlowNodeIndex--;
             _Service.DoNewNodeAsync(FlowID, 10, 10, NewFlowNodeName, true);
             _Service.DoNewNodeCompleted += _Service_DoNewNodeCompleted;
-
         }
 
         void pushNextQueueToPreQueue()
@@ -2046,16 +2037,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             WinOpen(e.Result, WinTitle);
             _Service.GetRelativeUrlCompleted -= _Service_GetRelativeUrlCompleted;
         }
-        
+
         void _Service_DoNewNodeCompleted(object sender, DoNewNodeCompletedEventArgs e)
-        { 
+        {
             var a = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
 
             a.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
             a.FlowNodeName = Text.NewFlowNode + NextNewFlowNodeIndex.ToString();
             a.FlowNodeID = e.Result.ToString();
             a.FlowID = FlowID;
-            a.CenterPoint = new Point(50,30);
+            a.CenterPoint = new Point(50, 30);
             AddFlowNode(a);
             SaveChange(HistoryType.New);
             _Service.DoNewNodeCompleted -= _Service_DoNewNodeCompleted;

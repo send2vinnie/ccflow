@@ -1,0 +1,16 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="WSDesignerSoap" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost/ccflow/WF/Admin/XAP/WebService.asmx"
+                binding="basicHttpBinding" bindingConfiguration="WSDesignerSoap"
+                contract="WS.WSDesignerSoap" name="WSDesignerSoap" />
+        </client>
+    </system.serviceModel>
+</configuration>

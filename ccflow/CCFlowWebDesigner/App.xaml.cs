@@ -46,13 +46,35 @@ namespace BP
             Thread.CurrentThread.CurrentUICulture = culture;
 
             Glo.BPMHost = GetHostUrl();
-            this.RootVisual = new MainPage();
-        }
 
+            if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID")
+             || System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
+            {
+                var workId = string.Empty;
+                var flowId = string.Empty;
+                var queryString = System.Windows.Browser.HtmlPage.Document.QueryString;
+                if (queryString.ContainsKey("WorkID"))
+                {
+                    workId = queryString["WorkID"];
+                }
+
+                if (queryString.ContainsKey("FK_Flow"))
+                {
+                    flowId = queryString["FK_Flow"];
+                }
+
+                BP.Track track = new BP.Track(flowId, workId);
+                this.RootVisual = track;
+            }
+            else
+            {
+                MainPage c = new MainPage();
+                this.RootVisual = c;
+            }
+        }
         private void Application_Exit(object sender, EventArgs e)
         {
         }
-
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             // 如果应用程序是在调试器外运行的，则使用浏览器的
@@ -68,6 +90,7 @@ namespace BP
                 Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
             }
         }
+
         private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)
         {
             string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;

@@ -43,7 +43,7 @@ namespace WF.Controls
         public event EventHandler<DoCompletedEventArgs> ServiceDoCompletedEvent;
 
 
-        public NewFlowSort(Designers contaniner): this()
+        public NewFlowSort(MainPage contaniner): this()
         {
            
             this._container = contaniner;
@@ -53,8 +53,8 @@ namespace WF.Controls
             InitializeComponent();
         
         }
-        Designers _container;
-        public Designers Container
+        MainPage _container;
+        public MainPage Container
         {
             get
             {

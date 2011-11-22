@@ -36,7 +36,7 @@ namespace WF.Controls
         /// <summary>
         /// 当前设计器的实例
         /// </summary>
-        public Designers CurrentDesinger { get; set; }
+        public MainPage CurrentDesinger { get; set; }
         /// <summary>
         /// 默认流程类别
         /// </summary>

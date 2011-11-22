@@ -80,7 +80,6 @@ namespace BP
             if (url.Contains("ttp://") == false)
                 url = Glo.BPMHost + url;
 
-
             if (WindowModelEnum.Dialog == windowModel)
             {
                 HtmlPage.Window.Eval(

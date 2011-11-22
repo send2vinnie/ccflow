@@ -217,6 +217,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             //ff.FK_Node = int.Parse(RelatedFlowNode.FlowNodeID);
             //ff.Show();
         }
+
         //private void btnNodeFreeFrm()
         //{
         //    _container.IsContainerRefresh = false;
@@ -275,7 +276,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     Btn_DesignerNodeFrm();
                     break;
                 case "menuDesignFlowFrm":
-                    Btn_DesignerFlowFrm();
+                    WF.Frm.FrmLib frm = new WF.Frm.FrmLib();
+                    frm.Show();
                     break;
                 case "menuJobStation":
                     btnNodeStation();
