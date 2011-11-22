@@ -5,15 +5,13 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 		<meta content="Microsoft FrontPage 4.0" name="GENERATOR"/>
 		<meta content="FrontPage.Editor.Document" name="ProgId">
-		<script language="javascript">		
-		function toHome()
-		{
-alert( window.location.href  );
-                   if (window.location.href.tolower().indexof('wap')!=-1)
-		   window.location.href='./WF/Login.aspx';
-else
-		   window.location.href='./WF/WAP/Login.aspx';
-		}
+		<script language="javascript">
+		    function toHome() {
+		        if (window.location.href.tolower().indexof('wap') != -1)
+		            window.location.href = './WF/Login.aspx';
+		        else
+		            window.location.href = './WF/WAP/Login.aspx';
+		    }
 		</script>
 	</head>
 	<body onload='toHome();'  >
