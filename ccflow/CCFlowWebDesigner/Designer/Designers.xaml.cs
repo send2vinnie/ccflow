@@ -1042,7 +1042,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             switch (control.Name)
             {
                 case "Btn_ToolBarLogin":
-                    Glo.WinOpen("/WF/Lgoin.aspx", "登陆", 800, 600);
+                    Glo.WinOpen("/WF/Login.aspx", "登陆", 800, 900);
                     return;
                 case "Btn_ToolBarNewNode":
                     if (SelectedContainer != null)

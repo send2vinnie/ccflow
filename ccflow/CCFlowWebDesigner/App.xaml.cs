@@ -44,7 +44,6 @@ namespace BP
             //设置当前线程的culture,以加载指定语言的字符
             var culture = new CultureInfo("zh-cn");
             Thread.CurrentThread.CurrentUICulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
 
             Glo.BPMHost = GetHostUrl();
             this.RootVisual = new MainPage();
@@ -61,7 +60,6 @@ namespace BP
             // 黄色警报图标来显示该异常，而 Firefox 则会显示一个脚本错误。
             if (!System.Diagnostics.Debugger.IsAttached)
             {
-
                 // 注意: 这使应用程序可以在已引发异常但尚未处理该异常的情况下
                 // 继续运行。 
                 // 对于生产应用程序，此错误处理应替换为向网站报告错误
@@ -70,15 +68,12 @@ namespace BP
                 Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
             }
         }
-
         private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)
         {
             string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
-            errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");  
-
+            errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
             HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
         }
-
         /// <summary>
         /// 得到当前所在网站的根目录，如Http://localhost/flow
         /// 注意站点名字必须是Flow,否则会报错。
@@ -91,7 +86,6 @@ namespace BP
             string url = hrefObject.ToString();
             string[] strs = url.Split('/');
             return strs[0] + "//" + strs[1] + strs[2] + "/" + strs[3];
-
             //string url = hrefObject.ToString().Substring(0, hrefObject.ToString().IndexOf("Flow/") + 5);
             //return url;
         }

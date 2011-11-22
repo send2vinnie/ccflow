@@ -13,18 +13,17 @@ namespace WF.Controls
 {
 	public partial class ToolbarButton
 	{
-		public ToolbarButton()
-		{
-			InitializeComponent();
-            
-			VerticalAlignment = VerticalAlignment.Top;
+        public ToolbarButton()
+        {
+            InitializeComponent();
 
-			Storyboard.SetTarget(Activate, this);
-			Storyboard.SetTarget(Deactivate, this);
-			MouseEnter += new MouseEventHandler(ToolbarButton_MouseEnter);
-			MouseLeave += new MouseEventHandler(ToolbarButton_MouseLeave);
-		}
+            VerticalAlignment = VerticalAlignment.Top;
 
+            Storyboard.SetTarget(Activate, this);
+            Storyboard.SetTarget(Deactivate, this);
+            MouseEnter += new MouseEventHandler(ToolbarButton_MouseEnter);
+            MouseLeave += new MouseEventHandler(ToolbarButton_MouseLeave);
+        }
 		void SetToolbarZIndex(int nValue)
 		{
 			StackPanel panel = this.Parent as StackPanel;
