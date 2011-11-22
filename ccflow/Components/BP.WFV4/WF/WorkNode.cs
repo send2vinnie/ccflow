@@ -482,7 +482,6 @@ namespace BP.WF
                 dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)
                     throw new Exception("@没有找到可接受的工作人员。@技术信息：执行的sql没有发现人员:" + sql);
-
                 return WorkerListWayOfDept(town, dt);
             }
 
