@@ -23,7 +23,7 @@ public partial class _Default : System.Web.UI.Page
             return;
         }
       //  this.Response.Redirect("./WF/Login.aspx", true);
-           this.Response.Redirect("./WF/Admin/Designer.aspx", true);
+           this.Response.Redirect("./WF/Admin/XAP/Designer.aspx", true);
         return;
     }
 }
