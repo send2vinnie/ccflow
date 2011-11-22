@@ -768,7 +768,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string GetLables(string flowid)
     {
-        LabNotes lns = new LabNotes(flowid);
+        LabNotes lns = new LabNotes();
         lns.Retrieve("FK_Flow", flowid);
         DataSet ds = lns.ToDataSet();
         return Connector.ToXml(ds);
