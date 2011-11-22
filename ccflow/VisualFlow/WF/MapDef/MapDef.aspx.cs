@@ -52,7 +52,7 @@ public partial class WF_MapDef_MapDef : WebPage
 
             if (nd.HisFormType != BP.WF.FormType.FixForm)
             {
-                this.Response.Redirect("./FreeFrm/Frm.aspx?FK_MapData=" + this.MyPK + "&FK_Flow=" + nd.FK_Flow, true);
+                this.Response.Redirect("./CCForm/Frm.aspx?FK_MapData=" + this.MyPK + "&FK_Flow=" + nd.FK_Flow, true);
                 return;
             }
         }

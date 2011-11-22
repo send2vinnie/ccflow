@@ -120,14 +120,14 @@ public partial class DoPort : System.Web.UI.Page
                 nd1.NodeID = nodeid;
                 nd1.RetrieveFromDBSources();
                 if (nd1.HisFormType == FormType.FreeForm)
-                    this.Response.Redirect("../MapDef/FreeFrm/Frm.aspx?FK_MapData=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
+                    this.Response.Redirect("../MapDef/CCForm/Frm.aspx?FK_MapData=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
                 else
                     this.Response.Redirect("../MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
                 break;
             case "MapDefFree": //表单定义.
                 int nodeidFree = int.Parse(this.PK.Replace("ND", ""));
                 Node ndFree = new Node(nodeidFree);
-                this.Response.Redirect("../MapDef/FreeFrm/Frm.aspx?FK_MapData=" + this.PK + "&FK_Flow=" + ndFree.FK_Flow, true);
+                this.Response.Redirect("../MapDef/CCForm/Frm.aspx?FK_MapData=" + this.PK + "&FK_Flow=" + ndFree.FK_Flow, true);
                 break;
             case "MapDefF4": //表单定义.
                 int nodeidF4 = int.Parse(this.PK.Replace("ND", ""));
