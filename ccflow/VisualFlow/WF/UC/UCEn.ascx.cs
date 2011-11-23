@@ -740,7 +740,6 @@ namespace BP.Web.Comm.UC.WF
             // 处理扩展。
             this.AfterBindEn_DealMapExt(enName, mattrs,en);
 
-
             #region 处理iFrom SaveDtlData。
             js = "\t\n<script type='text/javascript' >";
             js += "\t\n function SaveDtl(dtl) { ";
@@ -811,6 +810,7 @@ namespace BP.Web.Comm.UC.WF
 
                         string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
                         fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+
                         if (fullSQL.Contains("@"))
                         {
                             Attrs attrs =en.EnMap.Attrs;
@@ -821,6 +821,8 @@ namespace BP.Web.Comm.UC.WF
                                 fullSQL = fullSQL.Replace("@" + attr.Key, en.GetValStrByKey(attr.Key) );
                             }
                         }
+                        ddlFull.Items.Clear();
+
                         ddlFull.Bind(DBAccess.RunSQLReturnTable(fullSQL), "No", "Name");
                         ddlFull.SetSelectItem(valOld);
                         break;
