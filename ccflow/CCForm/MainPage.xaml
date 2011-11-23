@@ -1,0 +1,333 @@
+﻿<UserControl xmlns:my1="clr-namespace:Liquid;assembly=Liquid.TreeView"  x:Class="CCForm.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    mc:Ignorable="d"
+    d:DesignHeight="419" d:DesignWidth="900" 
+xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" 
+              xmlns:liquidTreeView="clr-namespace:Liquid;assembly=Liquid.TreeView"
+    xmlns:liquidMenu="clr-namespace:Liquid;assembly=Liquid.Menu"
+xmlns:my="clr-namespace:Toolbar" 
+             xmlns:my2="clr-namespace:Liquid;assembly=Liquid.Menu">
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="225" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"   />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <sdk:TabControl Height="1200" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" 
+                        Name="tabControl1" VerticalAlignment="Top"
+                        MinWidth="220" >
+            <sdk:TabItem Header="工具箱" Name="tabItem1">
+                <Grid>
+                    <!-- 工具栏  -->
+                        <ListBox Name="ListBox1" Background="AliceBlue" Width="220"
+                     HorizontalAlignment="Right" VerticalAlignment="Top"  >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Width="200" Height="24" Orientation="Horizontal" >
+                                        <Border BorderThickness="1">
+                                            <Image Source="{Binding IcoImage}" 
+                                       Width="24"
+                                   Height="24" Margin="10,0,0,0"
+                                   Tag="{Binding IcoName}"
+                                       MouseLeftButtonDown="Toolbox_MouseLeftButtonDown"
+                                   HorizontalAlignment="Left" />
+                                        </Border>
+                                        <TextBlock AllowDrop="False" Margin="0,0,0,0" 
+                                       Text="{Binding IcoNameText}"
+                                       Tag="{Binding IcoName}"
+                                       FontSize="14"
+                                       MouseLeftButtonDown="Toolbox_MouseLeftButtonDown"
+                                       HorizontalAlignment="Left" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    <!-- end工具栏  -->
+                </Grid>
+            </sdk:TabItem>
+            <sdk:TabItem Header="节点表单" Name="tabItem2">
+                <Canvas Name="zz_NodeCanvas" 
+                        MouseLeftButtonDown="zz_NodeCanvas_MouseLeftButtonDown"
+                        MouseLeftButtonUp="zz_NodeCanvas_MouseLeftButtonDown" >
+                    <!--<my1:Tree  Height="1200" HorizontalAlignment="Left"
+                                  Margin="0,0,0,0"
+                                  VerticalAlignment="Top" Width="220" 
+                               Canvas.Left="51" Canvas.Top="280" 
+                                Name="tree1" /> -->
+                    <sdk:TreeView Height="1200" HorizontalAlignment="Left"
+                                  Margin="0,0,0,0" 
+                                  VerticalAlignment="Top" Width="220" 
+                                  Name="treeView_Node"  />
+
+                    <liquidMenu:Menu x:Name="muNodeFrm" 
+                                     Visibility="Collapsed" Height="280" 
+                                     Width="150" >
+                        <liquidMenu:MenuItem Name="DeFrm" Text="设计" Icon="./Img/Menu/deFrm.png"
+                                             MouseLeftButtonDown="muItem_MouseLeftButtonDown" />
+
+                        <liquidMenu:MenuItem Name="NewFrm" Text="新建流程表单"  Icon="./Img/Menu/New.png"
+                                             MouseLeftButtonDown="muItem_MouseLeftButtonDown" />
+
+                        <liquidMenu:MenuItem Name="EditFrm" Text="表单属性"
+                                             MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
+
+                        <liquidMenu:MenuItem Name="FrmAction" Text="表单事件" Icon="./Img/Menu/Event.png"
+                                             MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
+
+                        <liquidMenu:MenuDivider />
+                        <liquidMenu:MenuItem Name="RefFrm" Text="增加/移除表单"
+                                             MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
+                        <liquidMenu:MenuItem Name="FrmUp" Text="上移"  Icon="./Img/Menu/Up.png"
+                                             MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
+                        <liquidMenu:MenuItem Name="FrmDown" Text="下移" Icon="./Img/Menu/Down.png"
+                                             MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
+
+                        <liquidMenu:MenuDivider />
+                        <liquidMenu:MenuItem Name="DeleteFrm" Text="删除" Icon="./Img/Menu/Delete.png"
+                                             MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
+
+                        <liquidMenu:MenuItem Name="FrmRef" Text="刷新"
+                                             MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
+                    </liquidMenu:Menu>
+                </Canvas>
+            </sdk:TabItem>
+            <sdk:TabItem Header="流程表单" Name="tabItem3" Visibility="Collapsed" >
+                <Canvas Name="zz_FlowCanvas" >
+                    <sdk:TreeView Height="1200" HorizontalAlignment="Left"
+                                  Margin="0,0,0,0" 
+                                  VerticalAlignment="Top" Width="220" 
+                                  MouseLeftButtonDown="BindTreeView_li_MouseLeftButtonDown" 
+                                  Name="treeView_Flow"  />
+                    <liquidMenu:Menu x:Name="muFlowFrm" 
+                                     Visibility="Collapsed" Height="100" 
+                                     Width="150" >
+                        <liquidMenu:MenuItem ID="OpenFlow" Text="打开"  Icon="./Img/Menu/Open.png"  />
+                        <liquidMenu:MenuItem ID="EditFrm" Text="增加/移除表单" />
+                        <liquidMenu:MenuDivider />
+                        <liquidMenu:MenuItem ID="Up" Text="上移"  Icon="./Img/Menu/Up.png" />
+                        <liquidMenu:MenuItem ID="Down" Text="下移" Icon="./Img/Menu/Down.png" />
+                    </liquidMenu:Menu>
+                </Canvas>
+            </sdk:TabItem>
+        </sdk:TabControl>
+
+        <Image Height="32" HorizontalAlignment="Stretch" Name="image1" Stretch="Fill" Grid.Column="0" Grid.Row="0"
+               Grid.ColumnSpan="2"
+               VerticalAlignment="Top" Source="/CCForm;component/Img/menuBK.png" />
+        <my:Toolbar Margin="0,1,0,0"  HorizontalAlignment="Left"   Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                      x:Name="toolbar1" 
+                    VerticalAlignment="Top" >
+        </my:Toolbar>
+        <my:Toolbar Margin="600,1,0,0"  HorizontalAlignment="Right"   Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                      x:Name="toolbar_eleFunc" 
+                    VerticalAlignment="Top" >
+        </my:Toolbar>
+
+        <ScrollViewer Height="800"  Grid.Column="1" Grid.Row="1" 
+                       Width="790"
+                      HorizontalAlignment="Left"  Margin="0,0,0,0" 
+                      Name="scrollViewer1" 
+                      VerticalAlignment="Top"
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Auto" >
+            <ScrollViewer.Content>
+                <!-- 画版 -->
+                <Canvas VerticalAlignment="Top"  Margin="0,0,0,0" 
+                Background="Beige" 
+                HorizontalAlignment="Left"
+                        Height="710"
+                        Width="790"
+                        Name="canvasMain"
+                MouseLeftButtonDown="canvasMain_MouseLeftButtonDown" 
+                MouseLeftButtonUp="canvasMain_MouseLeftButtonUp" 
+                MouseRightButtonDown="canvasMain_MouseRightButtonDown" 
+                MouseMove="canvasMain_MouseMove">
+                    <Canvas.Effect>
+                        <DropShadowEffect Color="Gray"></DropShadowEffect>
+                    </Canvas.Effect>
+
+                    <liquidMenu:Menu x:Name="muFrm" Visibility="Collapsed"   Width="190" >
+                        <liquidMenu:MenuItem Name="FrmTempleteExp" Text="导出表单模版" Icon="./Img/Menu/Download.png" 
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown"/>
+                        <liquidMenu:MenuItem Name="FrmTempleteShareIt" Text="共享此模板" Icon="./Img/Menu/Share.png" 
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+
+                        <liquidMenu:MenuItem Name="FrmTempleteImp" Text="导入表单模版"   Icon="./Img/Menu/Upload.png"
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+
+                        <liquidMenu:MenuItem Name="FrmTempleteShare" Text="共享表单模板库"   Icon="./Img/Menu/ShareNet.png"
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+
+                        <liquidMenu:MenuItem Name="FrmTempleteWord" Text="导入Word模版"
+                                             Icon="./Img/Menu/Word.png" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <liquidMenu:MenuDivider />
+                        <liquidMenu:MenuItem Name="FrmDo" Text="撤消"  Icon="./Img/ForwardDo.png"  MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <liquidMenu:MenuItem Name="FrmUnDo" Text="恢复"  Icon="./Img/Undo.png"  MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+
+                        <liquidMenu:MenuDivider />
+                        <liquidMenu:MenuItem Name="AdvAction" Text="表单事件" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <liquidMenu:MenuItem Name="AdvUAC" Text="表单访问权限"    MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+
+                        <liquidMenu:MenuItem Name="FrmBill" Text="单据打印模板" Icon="./Img/Menu/Word.png"
+                                             MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
+
+                        <liquidMenu:MenuDivider />
+                        <liquidMenu:MenuItem Name="FullScreen" Text="全屏/取消屏幕" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <liquidMenu:MenuItem Name="GradeLine" Text="显示/隐藏网格" Icon="./Img/Menu/Grid.png" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <liquidMenu:MenuItem Name="eleTabIdx" Text="设置Tab顺序键" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown"  />
+                    </liquidMenu:Menu>
+
+                    <liquidMenu:Menu x:Name="muElePanel"  Visibility="Collapsed" Width="190" >
+                        <liquidMenu:MenuItem Name="eleEdit" Text="编辑"  Icon="./Img/Menu/Edit.png"
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <liquidMenu:MenuItem Name="eleDel" Text="删除" Icon="./Img/Menu/Delete.png"
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+
+                        <liquidMenu:MenuItem Name="eleHid" Text="隐藏" Icon="./Img/Menu/Hidden.png"
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <!--<liquidMenu:MenuItem Name="eleCancel" Text="取消" Icon="./Img/Menu/Cancel.png"
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown"  />-->
+                        <liquidMenu:MenuDivider />
+                        <liquidMenu:MenuItem Name="eleDtlFrm" Text="设计表单"
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown"  />
+
+                        <liquidMenu:MenuDivider />
+
+                        <liquidMenu:MenuItem Name="FrmTempleteExp_Ext" Text="导出表单模版" Icon="./Img/Menu/Download.png" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown"/>
+                        <liquidMenu:MenuItem Name="FrmTempleteImp_Ext" Text="导入表单模版"   Icon="./Img/Menu/Upload.png"
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <liquidMenu:MenuItem Name="FrmTempleteWord_Ext" Text="导入Word模版"
+                                             Icon="./Img/Menu/Word.png" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+
+                        <liquidMenu:MenuDivider />
+                        <liquidMenu:MenuItem Name="AdvActionExt" Text="表单事件" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <liquidMenu:MenuItem Name="AdvUACExt" Text="表单访问权限"  Icon="./Img/Menu/Grid.png" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        
+                        <liquidMenu:MenuDivider />
+                        <liquidMenu:MenuItem Name="FullScreen_Ext" Text="全屏/取消屏幕" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <liquidMenu:MenuItem Name="GradeLine_Ext" Text="显示/隐藏网格"  Icon="./Img/Menu/Grid.png" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        <liquidMenu:MenuItem Name="eleTabIdx_Ext" Text="设置Tab顺序键"
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown"  />
+                        
+                        
+                          
+                    </liquidMenu:Menu>
+
+                </Canvas>
+                <!-- end 画版 -->
+            </ScrollViewer.Content>
+        </ScrollViewer>
+       
+        <!-- lab 标签. -->
+        
+        <!--<Canvas Name="labWin" Visibility="Collapsed" Width="350" Height="152" Opacity="0.8"
+                Background="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Margin="600,125,125,125">
+            <Canvas.Effect>
+                <DropShadowEffect Color="Gray"></DropShadowEffect>
+            </Canvas.Effect>
+
+            <TextBlock Text="文字:" Canvas.Left="6" Canvas.Top="20" Foreground="White"  />
+            <TextBox Width="330" Name="labWin_Label" Canvas.Left="10" Text="Label" Canvas.Top="40" />
+            <TextBlock Text="@符号表示换行字符." Canvas.Left="6" Canvas.Top="80" Foreground="White"  />
+            <TextBlock Text="X"  Foreground="White" Cursor="Hand" Canvas.Left="340" 
+                           Canvas.Top="2" Name="labWin_Close"
+                           MouseLeftButtonDown="UI_WinCanvas_Btn_Click" />
+
+            <Button Canvas.Left="255" Canvas.Top="109" Content="Cancel" Height="20"
+                        Name="labWin_Cancel" Width="56"  Click="UI_WinCanvas_Btn_Click" />
+            <Button Canvas.Left="196" Canvas.Top="110" Content="OK" Height="20" 
+                        Name="labWin_OK" Width="53"   Click="UI_WinCanvas_Btn_Click" />
+        </Canvas>-->
+      
+        <!-- end labe windows -->
+        
+
+        <!-- BPText  -->
+        <Canvas Name="textWin" Visibility="Collapsed" Width="350" Height="152" Opacity="0.8"
+                Background="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Margin="600,125,125,125">
+            <Canvas.Effect>
+                <DropShadowEffect Color="Gray"></DropShadowEffect>
+            </Canvas.Effect>
+
+            <TextBlock Text="中文名:" Canvas.Left="12" Canvas.Top="13" Foreground="White"  />
+            <TextBox Width="328" Name="textWin_Name" Canvas.Left="12" Text="" Canvas.Top="33" Height="28" LostFocus="textWin_Name_LostFocus" />
+
+            <TextBlock Text="字段名:" Canvas.Left="11" Canvas.Top="61" Foreground="White"  />
+            <TextBox Width="328" Name="textWin_Key" Canvas.Left="12" Text="" Canvas.Top="83" Height="23" />
+
+            <TextBlock Text="X"  Foreground="White" Cursor="Hand" Canvas.Left="340" 
+                           Canvas.Top="2" Name="textWin_Close"
+                           MouseLeftButtonDown="UI_WinCanvas_Btn_Click" />
+
+            <Button Canvas.Left="174" Canvas.Top="120" Content="Cancel" Height="20"
+                        Name="textWin_Cancel" Width="56"  Click="UI_WinCanvas_Btn_Click" />
+            <Button Canvas.Left="115" Canvas.Top="121" Content="OK" Height="20" 
+                        Name="textWin_OK" Width="53"   Click="UI_WinCanvas_Btn_Click" />
+        </Canvas>
+        <!-- end labe windows -->
+
+        <!--
+        <Canvas Name="linkWin" Visibility="Collapsed" Width="350" Height="152" Opacity="0.8"
+                    Background="Blue"  HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Margin="125,91,125,57" >
+            <Canvas.Effect>
+                <DropShadowEffect Color="Gray"></DropShadowEffect>
+            </Canvas.Effect>
+
+            <TextBlock Text="文字:" Canvas.Left="6" Canvas.Top="58" Foreground="White"  />
+            <TextBox Width="256" Name="linkWin_Label" Canvas.Left="56" Text="Label" Canvas.Top="53" />
+            <TextBlock Text="字号:" Canvas.Left="17" Canvas.Top="25"  Foreground="White" />
+            <ComboBox Name="linkWin_cbSize" Canvas.Left="52" Canvas.Top="24">
+            </ComboBox>
+            <CheckBox Name="linkWin_CBWight" IsChecked="False" Content="加粗" 
+                          Foreground="White"
+                          Canvas.Left="122" Canvas.Top="25" />
+ 
+            <TextBlock Text="X"  Foreground="White" Cursor="Hand" Canvas.Left="340" 
+                           Canvas.Top="2" Name="linkWin_Close"
+                           MouseLeftButtonDown="UI_WinCanvas_Btn_Click" />
+
+            <Button Canvas.Left="255" Canvas.Top="109" Content="Cancel" Height="20"
+                        Name="linkWin_Cancel" Width="56"  Click="UI_WinCanvas_Btn_Click" />
+            <Button Canvas.Left="196" Canvas.Top="110" Content="OK" Height="20" 
+                        Name="linkWin_OK" Width="53"   Click="UI_WinCanvas_Btn_Click" />
+            
+            <TextBlock Canvas.Left="6" Canvas.Top="81" Foreground="White" Text="URL" />
+            <TextBox Canvas.Left="56" Canvas.Top="77" Name="linkWin_Url" Text="http://ccflow.org" Width="256" />
+        </Canvas>
+        -->
+
+        <!-- checkBox . -->
+        <Canvas Name="checkBoxWin" Visibility="Collapsed" Width="350" Height="71" Opacity="0.8"
+                    Background="Blue"   HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Margin="125,132,125,97" >
+            <Canvas.Effect>
+                <DropShadowEffect Color="Gray"></DropShadowEffect>
+            </Canvas.Effect>
+
+            <TextBlock Text="文字:" Canvas.Left="17" Canvas.Top="25"  Foreground="White" FontStyle="Normal" />
+            <TextBox Name="checkBoxWin_Text" Canvas.Left="60" Canvas.Top="25"  Width="200" />
+            <TextBlock Text="X"  Foreground="White" Cursor="Hand" Canvas.Left="340" 
+                           Canvas.Top="2" Name="checkBoxWin_Close"
+                           MouseLeftButtonDown="UI_WinCanvas_Btn_Click" />
+
+            <Button Canvas.Left="196" Canvas.Top="50" Content="Cancel" Height="20"
+                        Name="checkBoxWin_Cancel" Width="56"  Click="UI_WinCanvas_Btn_Click" />
+            <Button Canvas.Left="266" Canvas.Top="26" Content="OK" Height="20" 
+                        Name="checkBoxWin_OK" Width="53"   Click="UI_WinCanvas_Btn_Click" />
+        </Canvas>
+        <!-- end checkBox . -->
+        
+    </Grid>
+</UserControl>
