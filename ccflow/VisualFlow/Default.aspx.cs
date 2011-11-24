@@ -19,7 +19,7 @@ public partial class _Default : System.Web.UI.Page
     {
         if (this.Request.RawUrl.ToLower().Contains("wap"))
         {
-            this.Response.Redirect("./WAP/", true);
+            this.Response.Redirect("./WF/WAP/", true);
             return;
         }
       //  this.Response.Redirect("./WF/Login.aspx", true);
