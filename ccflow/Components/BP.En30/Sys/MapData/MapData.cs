@@ -48,6 +48,10 @@ namespace BP.Sys
         /// 表单类别
         /// </summary>
         public const string FK_FrmSort = "FK_FrmSort";
+        /// <summary>
+        /// 显示的列
+        /// </summary>
+        public const string ShowAttrs = "ShowAttrs";
     }
 	/// <summary>
 	/// 映射基础
@@ -106,7 +110,6 @@ namespace BP.Sys
                 return _FrmImgAths;
             }
         }
-
         private FrmRBs _FrmRBs = null;
         public FrmRBs FrmRBs
         {
@@ -190,6 +193,20 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapDataAttr.SearchKeys, value);
+            }
+        }
+        /// <summary>
+        /// 显示的列
+        /// </summary>
+        public string ShowAttrs
+        {
+            get
+            {
+                return this.GetValStrByKey(MapDataAttr.ShowAttrs);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.ShowAttrs, value);
             }
         }
         public float FrmW
@@ -355,19 +372,19 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.PTable, null, "物理表", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.Dtls, null, "明细表", true, false, 0, 500, 20);
 
-
                 map.AddTBFloat(MapDataAttr.FrmW, 900, "FrmW", true, true);
                 map.AddTBFloat(MapDataAttr.FrmH, 1200, "FrmH", true, true);
-
                 map.AddTBInt(MapDataAttr.DBURL, 0, "DBURL", true, false);
 
                 map.AddTBString(MapDataAttr.Designer, null, "设计者", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.DesignerUnit, null, "单位", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.DesignerContext, null, "联系方式", true, false, 0, 500, 20);
 
-
                 // 可以为空这个字段。
                 map.AddTBString(MapDataAttr.FK_FrmSort, null, "表单类别", true, false, 0, 500, 20);
+
+                map.AddTBString(MapDataAttr.ShowAttrs, null, "显示的列", true, false, 0, 3800, 20);
+
                 // map.AddTBInt(MapDataAttr.FrmFrom, 0, "来源", true, true);
 
                 this._enMap = map;

@@ -1120,6 +1120,79 @@ namespace BP
                 }
             }
 
+            #region 检查处理必要的基础数据 Pub_Day .
+            string sql = "";
+            string sqls = "";
+            sql = "SELECT count(*) Num FROM Pub_Day";
+            try
+            {
+                if (DBAccess.RunSQLReturnValInt(sql) == 0)
+                {
+                    for (int i = 1; i <= 31; i++)
+                    {
+                        string d = i.ToString().PadLeft(2, '0');
+                        sqls += "@INSERT INTO Pub_Day(No,Name)VALUES('" + d.ToString() + "','" + d.ToString() + "')";
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            sql = "SELECT count(*) Num FROM Pub_YF";
+            try
+            {
+                if (DBAccess.RunSQLReturnValInt(sql) == 0)
+                {
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        string d = i.ToString().PadLeft(2, '0');
+                        sqls += "@INSERT INTO Pub_YF(No,Name)VALUES('" + d.ToString() + "','" + d.ToString() + "')";
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            sql = "SELECT count(*) Num FROM Pub_ND";
+            try
+            {
+                if (DBAccess.RunSQLReturnValInt(sql) == 0)
+                {
+                    for (int i = 2010; i < 2015; i++)
+                    {
+                        string d = i.ToString();
+                        sqls += "@INSERT INTO Pub_ND(No,Name)VALUES('" + d.ToString() + "','" + d.ToString() + "')";
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            sql = "SELECT count(*) Num FROM Pub_NY";
+            try
+            {
+                if (DBAccess.RunSQLReturnValInt(sql) == 0)
+                {
+                    for (int i = 2010; i < 2015; i++)
+                    {
+
+                        for (int yf = 1; yf <= 12; yf++)
+                        {
+                            string d = i.ToString() + "-" + yf.ToString().PadLeft(2,'0');
+                            sqls += "@INSERT INTO Pub_NY(No,Name)VALUES('" + d + "','" + d + "')";
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            DBAccess.RunSQLs(sqls);
+            #endregion 检查处理必要的基础数据。
             return msg;
         }
         private static void RepleaceFieldDesc(Entity en)
