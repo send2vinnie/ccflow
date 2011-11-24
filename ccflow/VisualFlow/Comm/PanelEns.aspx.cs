@@ -184,10 +184,6 @@ namespace BP.Web.Comm
                 uac.IsUpdate = false;
             }
 
-            //this.WebMenu1.EnName = this.HisEn.ToString();
-            //this.WebMenu1.EnsName = this.HisEns.ToString();
-            //this.WebMenu1.DataPanel(this.HisEns, uac);
-            //this.WebMenu1.Visible = true;
 
             if (this.Request.QueryString["PageIdx"] == null)
                 this.PageIdx = 1;
@@ -207,14 +203,9 @@ namespace BP.Web.Comm
 
                 this.ToolBar1.InitByMapV2(map, 1);
 
-                //if (map.IsShowSearchKey)
-                //    this.TB_Key.Text = .Key;
-                //this.ToolBar1.AddSpt("spt1");
-                //this.ToolBar1.AddLab("Lab_Result","¼ÇÂ¼¸öÊý[0]");
 
                 this.ToolBar1.AddSpt("spt2");
                 this.ToolBar1.AddBtn(NamesOfBtn.Excel);
-                // this.ToolBar1.AddBtn(NamesOfBtn.Excel_S);
 
                 bool isEdit = true;
                 if (this.IsReadonly)

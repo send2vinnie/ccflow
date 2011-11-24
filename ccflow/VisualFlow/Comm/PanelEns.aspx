@@ -46,16 +46,13 @@
 
            var url = 'SelectMVals.aspx?EnsName=' + ensName + '&AttrKey=' + attrKey;
            var val = window.showModalDialog(url, 'dg', 'dialogHeight: 450px; dialogWidth: 450px; center: yes; help: no');
-
-           //alert(val);
-
            if (val == '' || val == null) {
                // if (idx_Old==ctrl.options.cont
                ctrl.selectedIndex = 0;
                //    ctrl.options[0].selected = true;
            }
        }
-		</script>
+	</script>
 	</HEAD>
 	<body   onkeypress="Esc()"   onkeydown='DoKeyDown();' topmargin="0" leftmargin="0" >
 		<form id="Form1" method="post" runat="server">

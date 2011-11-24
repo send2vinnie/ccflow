@@ -1,13 +1,4 @@
-//===========================================================================
-// 此文件是作为 ASP.NET 2.0 Web 项目转换的一部分修改的。
-// 类名已更改，且类已修改为从文件“App_Code\Migrated\comm\uc\Stub_ucsys_ascx_cs.cs”的抽象基类 
-// 继承。
-// 在运行时，此项允许您的 Web 应用程序中的其他类使用该抽象基类绑定和访问 
-// 代码隐藏页。
-// 关联的内容页“comm\uc\ucsys.ascx”也已修改，以引用新的类名。
-// 有关此代码模式的更多信息，请参考 http://go.microsoft.com/fwlink/?LinkId=46995 
-//===========================================================================
-
+ 
 namespace BP.Web.Comm.UC
 {
     using System;
@@ -1461,10 +1452,8 @@ namespace BP.Web.Comm.UC
             string pk = myen.PK;
             string clName = myen.ToString();
             Attrs attrs = myen.EnMap.Attrs;
-         //   Attrs selectedAttrs = attrs; // myen.EnMap.GetChoseAttrs(ens);
+         
             Attrs selectedAttrs = myen.EnMap.GetChoseAttrs(ens);
-
-
             BP.Sys.Xml.PanelEnss cfgs = new BP.Sys.Xml.PanelEnss();
             cfgs.RetrieveBy(BP.Sys.Xml.PanelEnsAttr.For, ens.ToString());
 
