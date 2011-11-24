@@ -2344,7 +2344,7 @@ namespace BP.WF
             switch (this.HisFormType)
             {
                 case FormType.FreeForm:
-                    PubClass.WinOpen("./../WF/MapDef/FreeFrm/Frm.aspx?FK_MapData=ND" + this.NodeID + "&FK_Flow="+this.FK_Flow, "设计表单", "sheet", 1024, 768, 0, 0);
+                    PubClass.WinOpen("./../WF/MapDef/CCForm/Frm.aspx?FK_MapData=ND" + this.NodeID + "&FK_Flow=" + this.FK_Flow, "设计表单", "sheet", 1024, 768, 0, 0);
                     break;
                 default:
                 case FormType.FixForm:

@@ -3704,7 +3704,7 @@ namespace BP.WF
             img.W = (float)137;
             img.H = (float)40;
 
-            img.ImgURL = "/FreeFrm;component/Img/LogoBig.png";
+            img.ImgURL = "/ccform;component/Img/LogoBig.png";
             img.LinkURL = "http://ccflow.org";
             img.LinkTarget = "_blank";
             img.Insert();
