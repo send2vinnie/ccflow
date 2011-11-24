@@ -89,22 +89,30 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public MainPage()
         {
             InitializeComponent();
-            var ws = Glo.GetDesignerServiceInstance();
+            try
+            {
+                var ws = Glo.GetDesignerServiceInstance();
 
+                // 图片.
+                ws.DoAsync("GetSettings", "CompanyID", true);
+                ws.DoCompleted += ws_GetCustomerIdCompleted;
 
-            // 图片.
-            ws.DoAsync("GetSettings", "CompanyID", true);
-            ws.DoCompleted += ws_GetCustomerIdCompleted;
+                // 流程树。
+                this.BindFlowAndFlowSort();
 
-            bindFlowAndFlowSort();
+                //装 toolbar.
+                this.LoadToolbar();
 
-            loadToolbar();
-
-            // InitDesignerXml
-            ws = Glo.GetDesignerServiceInstance();
-            ws.DoTypeAsync("InitDesignerXml", null, null, null, null, null);
-            ws.DoTypeCompleted += ws_DoTypeCompleted;
-            Application.Current.Host.Content.Resized += new EventHandler(Content_Resized);
+                // InitDesignerXml
+                ws = Glo.GetDesignerServiceInstance();
+                ws.DoTypeAsync("InitDesignerXml", null, null, null, null, null);
+                ws.DoTypeCompleted += ws_DoTypeCompleted;
+                Application.Current.Host.Content.Resized += new EventHandler(Content_Resized);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         #endregion
@@ -112,14 +120,22 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         #region 方法
         void ws_GetCustomerIdCompleted(object sender, DoCompletedEventArgs e)
         {
-            var id = e.Result;
-            imageLogo.Source = new BitmapImage(new Uri(string.Format("/Images/Icons/{0}.jpg", id), UriKind.Relative));
+            try
+            {
+                var id = e.Result;
+                if (id == null || id == "")
+                    id = "CCFlow";
 
-            var brush = new ImageBrush(); //定义图片画刷
-            brush.ImageSource = new BitmapImage(new Uri(string.Format("/Images/Icons/{0}Welcome.jpg", id), UriKind.Relative));
-            tbDesigner.Background = brush;
+                imageLogo.Source = new BitmapImage(new Uri(string.Format("/Images/Icons/{0}.jpg", id), UriKind.Relative));
+                var brush = new ImageBrush(); //定义图片画刷
+                brush.ImageSource = new BitmapImage(new Uri(string.Format("/Images/Icons/{0}Welcome.jpg", id), UriKind.Relative));
+                tbDesigner.Background = brush;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
         void ws_DoTypeCompleted(object sender, DoTypeCompletedEventArgs e)
         {
             DataSet ds = new DataSet();
@@ -298,7 +314,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
                 }
             }
-            bindFlowAndFlowSort();
+            BindFlowAndFlowSort();
         }
         /// <summary>
         /// 删除工作流类别
@@ -409,7 +425,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <summary>
         /// 绑定工作流树
         /// </summary>
-        private void bindFlowAndFlowSort()
+        private void BindFlowAndFlowSort()
         {
             _service = Glo.GetDesignerServiceInstance();
             _Service.DoAsync("GetFlows", string.Empty, true);
@@ -433,7 +449,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             catch (Exception ex)
             {
-                MessageBox.Show("加载流程树时发生了错误,请检查数据库和Web.Config。错误具体信息为:\n" + e.Result, "错误", MessageBoxButton.OK);
+                MessageBox.Show("加载流程树时发生了错误,请检查数据库和Web.Config。错误具体信息为:\n" + e.Result + "\t\n@异常信息:" + ex.Message,
+                    "错误", MessageBoxButton.OK);
                 return;
             }
            
@@ -563,7 +580,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     }
                     break;
                 case "Refresh":
-                    bindFlowAndFlowSort();
+                    this.BindFlowAndFlowSort();
                     break;
                 case "Edit":
                     latestFlowSortID = TvwFlow.Selected.ID;
@@ -589,7 +606,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             if (add.DialogResult == true)
             {
-                bindFlowAndFlowSort();
+                this.BindFlowAndFlowSort();
             }
         }
 
@@ -775,7 +792,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         return;
                     }
 
-                    bindFlowAndFlowSort();
+                    this.BindFlowAndFlowSort();
                     OpenFlow(result[0], result[1], result[2]);
                 }
                 catch (Exception ex)
@@ -838,7 +855,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             string[] flow = e.Result.Split(';');
             FlowID = flow[0];
             _Service.DoCompleted -= _service_DoCompleted;
-            bindFlowAndFlowSort();
+            this.BindFlowAndFlowSort();
             OpenFlow(flow[0], flow[1]);
      }
 
@@ -929,8 +946,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         index ++;
                     }
 
-                    bindFlowAndFlowSort();
-
+                    this.BindFlowAndFlowSort();
                     break;
 
             }
@@ -977,7 +993,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         #region Toolbar related
 
-        private void loadToolbar()
+        private void LoadToolbar()
         {
             var ens = new List<ToolbarItem>();
             ens = ToolbarItem.Instance.GetLists();

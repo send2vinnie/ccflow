@@ -35,7 +35,7 @@ namespace WF.Frm
             InitializeComponent();
 
             var client = Glo.GetDesignerServiceInstance();
-            var sql = "select No,Name,PTable from Sys_MapData";
+            var sql = "select No,Name,PTable,FormType,URL from Sys_MapData ";
             client.RunSQLReturnTableCompleted += new EventHandler<RunSQLReturnTableCompletedEventArgs>(client_RunSQLReturnTableCompleted);
             client.RunSQLReturnTableAsync(sql, true);
         }
@@ -52,13 +52,29 @@ namespace WF.Frm
                     No = dataRow["No"].ToString(),
                     Name = dataRow["Name"].ToString(),
                     PTable = dataRow["PTable"].ToString(),
-                    //Type = formatFormType(dataRow["FormType"]),
-                    //URL = dataRow["URL"]
+                    Type = formatFormType(dataRow["FormType"]),
+                    URL = dataRow["URL"]
                 };
                 list.Add(flowForm);
             }
             this.Grid1.ItemsSource = list;
-
+        }
+        private string formatFormType(string intValue)
+        {
+            string stringValue = string.Empty;
+            switch (intValue)
+            {
+                case "0":
+                    stringValue = "傻瓜表单";
+                    break;
+                case "1":
+                    stringValue = "自由表单";
+                    break;
+                default:
+                    stringValue = "自定义表单";
+                    break;
+            }
+            return stringValue;
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)

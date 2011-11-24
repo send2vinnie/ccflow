@@ -69,6 +69,23 @@ namespace BP
                 typeof(WSDesignerSoapClient).GetConstructor(new Type[] { typeof(Binding), typeof(EndpointAddress) });
             return (WSDesignerSoapClient)ctor.Invoke(new object[] { basicBinding, endPoint });
         }
+
+        //public static TServiceClient CreateServiceClient()
+        //{
+        //    var typeName = typeof(TService).Name;
+        //    var serviceAddress = "../" + typeName + ".svc";
+        //    return CreateServiceClient(serviceAddress);
+        //}
+        //public static TServiceClient CreateServiceClient(string serviceAddress)
+        //{
+        //    var endpointAddr = new EndpointAddress(new Uri(Application.Current.Host.Source, serviceAddress));
+        //    var binding = new BasicHttpBinding(Application.Current.Host.Source.Scheme.Equals("https", StringComparison.InvariantCultureIgnoreCase) ? BasicHttpSecurityMode.Transport : BasicHttpSecurityMode.None);
+        //    binding.MaxBufferSize = int.MaxValue;
+        //    binding.MaxReceivedMessageSize = int.MaxValue;
+
+        //    var ctor = typeof(TServiceClient).GetConstructor(new Type[] { typeof(Binding), typeof(EndpointAddress) });
+        //    return (TServiceClient)ctor.Invoke(new object[] { binding, endpointAddr });
+        //}
         #endregion 共用方法
 
         /// <summary>
