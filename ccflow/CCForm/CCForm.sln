@@ -13,11 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.Web.Controls30", "..\Com
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ccflow", "http://localhost/ccflow", "{0FEB1C07-3C75-47BB-9F76-398529274E73}"
 	ProjectSection(WebsiteProperties) = preProject
-		SccProjectName = "SAK"
-		SccAuxPath = "SAK"
-		SccLocalPath = "SAK"
-		SccProvider = "SAK"
-		UseIISExpress = "false"
+		SccProjectName = ""
+		SccAuxPath = ""
+		SccLocalPath = ""
+		SccProvider = ""
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/ccflow"
 		Debug.AspNetCompiler.PhysicalPath = "..\VisualFlow\"
