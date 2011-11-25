@@ -1,5 +1,4 @@
-<<<<<<< .mine
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿﻿<?xml version="1.0" encoding="utf-8" ?> 
  <access-policy>
 <cross-domain-access>
 <policy>
@@ -12,7 +11,7 @@
   </grant-to> 
  </policy> 
  </cross-domain-access> 
- </access-policy>=======
+ </access-policy> 
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <access-policy>
   <cross-domain-access>
@@ -27,4 +26,4 @@
       </grant-to>
     </policy>
   </cross-domain-access>
-</access-policy>>>>>>>> .r1624
+</access-policy> 
