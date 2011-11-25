@@ -1,3 +1,18 @@
+<<<<<<< .mine
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+ <access-policy>
+<cross-domain-access>
+<policy>
+<allow-from http-request-headers="*">  
+<domain uri="http://*" />  
+ </allow-from>
+ <grant-to> 
+ <resource path="/" include-subpaths="true" /> 
+<socket-resource port="4502" protocol="tcp" />
+  </grant-to> 
+ </policy> 
+ </cross-domain-access> 
+ </access-policy>=======
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <access-policy>
   <cross-domain-access>
@@ -12,4 +27,4 @@
       </grant-to>
     </policy>
   </cross-domain-access>
-</access-policy>
+</access-policy>>>>>>>> .r1624
