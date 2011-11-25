@@ -2064,6 +2064,7 @@ namespace BP.WF
 
             // 调用发送前的接口。
             string msg = this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
+
             try
             {
                 msg += AfterNodeSave_Do();
