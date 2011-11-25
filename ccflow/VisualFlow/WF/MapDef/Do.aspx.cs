@@ -52,7 +52,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                     this.Response.Redirect( "../../Temp/"+this.FK_MapData+".xml",true);
                     this.WinClose();
                     break;
-                case "FreeFrm":
+                case "CCForm":
                     this.Application.Clear();
                     if (WebUser.NoOfRel != "admin")
                     {

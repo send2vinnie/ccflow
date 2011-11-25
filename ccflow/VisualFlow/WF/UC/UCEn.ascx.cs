@@ -765,6 +765,7 @@ namespace BP.Web.Comm.UC.WF
             MapExts mes = new MapExts(enName);
             if (mes.Count != 0)
             {
+                #region load js.
                 this.Page.RegisterClientScriptBlock("s4",
               "<script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' ></script>");
 
@@ -775,107 +776,125 @@ namespace BP.Web.Comm.UC.WF
             "<script language='JavaScript' src='./../DataUser/JSLibData/" + enName + ".js' ></script>");
 
                 this.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
-            }
+                #endregion load js.
 
-            foreach (MapExt me in mes)
-            {
-                switch (me.ExtType)
+                #region 首先处理自动填充，下拉框数据。
+                foreach (MapExt me in mes)
                 {
-                    case MapExtXmlList.ActiveDDL:
-                        DDL ddlPerant = this.GetDDLByID("DDL_" + me.AttrOfOper);
-                        DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
-                        if (ddlPerant == null || ddlChild == null)
-                            continue;
-                        ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
+                    switch (me.ExtType)
+                    {
 
-                        // 处理默认选择。
-                        string val = ddlPerant.SelectedItemStringVal;
-                        string valClient = ddlChild.SelectedItemStringVal;
-                        DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
-                       // ddlChild.Items.Clear();
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
-                        }
-                        ddlChild.SetSelectItem(valClient);
-                        break;
-                    case MapExtXmlList.AutoFullDLL: // 自动填充下拉框.
-                        DDL ddlFull = this.GetDDLByID("DDL_" + me.AttrOfOper);
-                        if (ddlFull == null)
-                        {
-                            me.Delete();
-                            continue;
-                        }
-                        string valOld = ddlFull.SelectedItemStringVal;
-
-                        string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
-                        fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
-
-                        if (fullSQL.Contains("@"))
-                        {
-                            Attrs attrs =en.EnMap.Attrs;
-                            foreach (Attr attr in  attrs)
+                        case MapExtXmlList.AutoFullDLL: // 自动填充下拉框.
+                            DDL ddlFull = this.GetDDLByID("DDL_" + me.AttrOfOper);
+                            if (ddlFull == null)
                             {
-                                if (fullSQL.Contains("@") == false)
-                                    break;
-                                fullSQL = fullSQL.Replace("@" + attr.Key, en.GetValStrByKey(attr.Key) );
+                                me.Delete();
+                                continue;
                             }
-                        }
-                        ddlFull.Items.Clear();
-                        ddlFull.Bind(DBAccess.RunSQLReturnTable(fullSQL), "No", "Name");
-                        ddlFull.SetSelectItem(valOld);
-                        break;
-                    case MapExtXmlList.FullCtrl: // 自动填充.
-                        TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
-                        if (tbAuto == null)
-                            continue;
-                        tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
-                        tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
-                        if (me.Tag != "")
-                        {
-                            /* 处理下拉框的选择范围的问题 */
-                            string[] strs = me.Tag.Split('$');
-                            foreach (string str in strs)
+                            string valOld = ddlFull.SelectedItemStringVal;
+
+                            string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
+                            fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+
+                            if (fullSQL.Contains("@"))
                             {
-                                string[] myCtl = str.Split(':');
-                                string ctlID = myCtl[0];
-                                DDL ddlC1 = this.GetDDLByID("DDL_" + ctlID);
-                                if (ddlC1 == null)
+                                Attrs attrs = en.EnMap.Attrs;
+                                foreach (Attr attr in attrs)
                                 {
-                                    //me.Tag = "";
-                                    // me.Update();
-                                    continue;
+                                    if (fullSQL.Contains("@") == false)
+                                        break;
+                                    fullSQL = fullSQL.Replace("@" + attr.Key, en.GetValStrByKey(attr.Key));
                                 }
-
-                                string sql = myCtl[1].Replace("~", "'");
-                                sql = sql.Replace("@WebUser.No", WebUser.No);
-                                sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
-                                sql = sql.Replace("@Key", tbAuto.Text.Trim());
-                                dt = DBAccess.RunSQLReturnTable(sql);
-                                string valC1 = ddlC1.SelectedItemStringVal;
-                                ddlC1.Items.Clear();
-                                foreach (DataRow dr in dt.Rows)
-                                    ddlC1.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
-                                ddlC1.SetSelectItem(valC1);
                             }
-                        }
-                        break;
-                    case MapExtXmlList.InputCheck:
-                        TextBox tbJS = this.GetTextBoxByID("TB_" + me.AttrOfOper);
-                        if (tbJS == null)
-                            continue;
-                        tbJS.Attributes[me.Tag2] = me.Tag1 + "(this);";
-                        break;
-                    case MapExtXmlList.PopVal: // 弹出窗.
-                        TB tb = this.GetTBByID("TB_" + me.AttrOfOper);
-                        if (tb == null)
-                            continue;
+                            ddlFull.Items.Clear();
+                            ddlFull.Bind(DBAccess.RunSQLReturnTable(fullSQL), "No", "Name");
+                            ddlFull.SetSelectItem(valOld);
+                            break;
 
-                        tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
-                        break;
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
+                #endregion 首先处理自动填充，下拉框数据。
+
+                #region 在处理其它。
+                foreach (MapExt me in mes)
+                {
+                    switch (me.ExtType)
+                    {
+                        case MapExtXmlList.ActiveDDL:
+                            DDL ddlPerant = this.GetDDLByID("DDL_" + me.AttrOfOper);
+                            DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
+                            if (ddlPerant == null || ddlChild == null)
+                                continue;
+                            ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
+
+                            // 处理默认选择。
+                            string val = ddlPerant.SelectedItemStringVal;
+                            string valClient = ddlChild.SelectedItemStringVal;
+                            DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
+                            // ddlChild.Items.Clear();
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                            }
+                            ddlChild.SetSelectItem(valClient);
+                            break;
+                        case MapExtXmlList.AutoFullDLL: // 自动填充下拉框.
+                            continue; //已经处理了。
+                        case MapExtXmlList.FullCtrl: // 自动填充.
+                            TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
+                            if (tbAuto == null)
+                                continue;
+                            tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                            tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
+                            if (me.Tag != "")
+                            {
+                                /* 处理下拉框的选择范围的问题 */
+                                string[] strs = me.Tag.Split('$');
+                                foreach (string str in strs)
+                                {
+                                    string[] myCtl = str.Split(':');
+                                    string ctlID = myCtl[0];
+                                    DDL ddlC1 = this.GetDDLByID("DDL_" + ctlID);
+                                    if (ddlC1 == null)
+                                    {
+                                        //me.Tag = "";
+                                        // me.Update();
+                                        continue;
+                                    }
+
+                                    string sql = myCtl[1].Replace("~", "'");
+                                    sql = sql.Replace("@WebUser.No", WebUser.No);
+                                    sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                                    sql = sql.Replace("@Key", tbAuto.Text.Trim());
+                                    dt = DBAccess.RunSQLReturnTable(sql);
+                                    string valC1 = ddlC1.SelectedItemStringVal;
+                                    ddlC1.Items.Clear();
+                                    foreach (DataRow dr in dt.Rows)
+                                        ddlC1.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                                    ddlC1.SetSelectItem(valC1);
+                                }
+                            }
+                            break;
+                        case MapExtXmlList.InputCheck:
+                            TextBox tbJS = this.GetTextBoxByID("TB_" + me.AttrOfOper);
+                            if (tbJS == null)
+                                continue;
+                            tbJS.Attributes[me.Tag2] = me.Tag1 + "(this);";
+                            break;
+                        case MapExtXmlList.PopVal: // 弹出窗.
+                            TB tb = this.GetTBByID("TB_" + me.AttrOfOper);
+                            if (tb == null)
+                                continue;
+
+                            tb.Attributes["ondblclick"] = "ReturnVal(this,'" + me.Doc + "','sd');";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                #endregion 在处理其它。
             }
             #endregion 处理扩展设置
 
