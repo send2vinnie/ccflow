@@ -36,6 +36,30 @@ namespace BP
         #endregion
 
         #region 共用方法
+        /// <summary>
+        /// 设置打开网页窗口的属性
+        /// </summary>
+        /// <param name="lang">语言</param>
+        /// <param name="dotype">窗口类型</param>
+        /// <param name="fk_flow">工作流ID</param>
+        /// <param name="node1">结点1</param>
+        /// <param name="node2">结点2</param>
+        public static void WinOpenByDoType(string lang, string dotype, string fk_flow, string node1, string node2)
+        {
+            WSDesignerSoapClient ws = Glo.GetDesignerServiceInstance();
+            ws.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
+            ws.GetRelativeUrlCompleted += new EventHandler<GetRelativeUrlCompletedEventArgs>(ws_GetRelativeUrlCompleted);
+        }
+        public static void ws_GetRelativeUrlCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
+        {
+            if (e.Result == null)
+            {
+                MessageBox.Show("执行标记错误,没有获得到它的url。", "error", MessageBoxButton.OK);
+                return;
+            }
+            OpenDialog(Glo.BPMHost + e.Result, "执行");
+        }
+
         public static void OpenDialog(string url, string title, int h, int w)
         {
             OpenWindowOrDialog(url, title, string.Format("dialogHeight:{0}px;dialogWidth:{1}px", h, w), WindowModelEnum.Dialog);
@@ -69,23 +93,6 @@ namespace BP
                 typeof(WSDesignerSoapClient).GetConstructor(new Type[] { typeof(Binding), typeof(EndpointAddress) });
             return (WSDesignerSoapClient)ctor.Invoke(new object[] { basicBinding, endPoint });
         }
-
-        //public static TServiceClient CreateServiceClient()
-        //{
-        //    var typeName = typeof(TService).Name;
-        //    var serviceAddress = "../" + typeName + ".svc";
-        //    return CreateServiceClient(serviceAddress);
-        //}
-        //public static TServiceClient CreateServiceClient(string serviceAddress)
-        //{
-        //    var endpointAddr = new EndpointAddress(new Uri(Application.Current.Host.Source, serviceAddress));
-        //    var binding = new BasicHttpBinding(Application.Current.Host.Source.Scheme.Equals("https", StringComparison.InvariantCultureIgnoreCase) ? BasicHttpSecurityMode.Transport : BasicHttpSecurityMode.None);
-        //    binding.MaxBufferSize = int.MaxValue;
-        //    binding.MaxReceivedMessageSize = int.MaxValue;
-
-        //    var ctor = typeof(TServiceClient).GetConstructor(new Type[] { typeof(Binding), typeof(EndpointAddress) });
-        //    return (TServiceClient)ctor.Invoke(new object[] { binding, endpointAddr });
-        //}
         #endregion 共用方法
 
         /// <summary>

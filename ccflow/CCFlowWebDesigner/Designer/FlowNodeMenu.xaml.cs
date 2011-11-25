@@ -46,7 +46,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         public Point CenterPoint
         {
-            get { return new Point((double) this.GetValue(Canvas.LeftProperty), (double) this.GetValue(Canvas.TopProperty)); }
+            get { return new Point((double)this.GetValue(Canvas.LeftProperty), (double)this.GetValue(Canvas.TopProperty)); }
             set
             {
                 // 调整x,y 值 ，以防止菜单被遮盖住
@@ -101,7 +101,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             try
             {
-                if (FlowNodeType.INITIAL == RelatedFlowNode.Type  )
+                if (FlowNodeType.INITIAL == RelatedFlowNode.Type)
                 {
                     MuContentMenu.SetEnabledStatus("menuDeleteNode", false);
                 }
@@ -133,7 +133,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     subMenu.FontWeight = FontWeights.Normal;
                 }
             }
-
             switch (type)
             {
                 case FlowNodeType.INTERACTION:
@@ -151,8 +150,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
             }
         }
-
-
         private void deleteFlowNode()
         {
             if (relatedFlowNode != null)
@@ -160,7 +157,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 if (HtmlPage.Window.Confirm(Text.Comfirm_Delete))
                 {
                     this.Visibility = Visibility.Collapsed;
-
                     IElement iel;
                     foreach (System.Windows.Controls.Control c in _container.CurrentSelectedControlCollection)
                     {
@@ -170,15 +166,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                             iel.Delete();
                         }
                     }
-
                     relatedFlowNode.Delete();
-
                     _container.SaveChange(HistoryType.New);
                     _container.IsNeedSave = true;
                 }
             }
         }
-
         private void showFlowNodeSetting()
         {
             this.Visibility = Visibility.Collapsed;
@@ -194,55 +187,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             e.Handled = true;
         }
-        private void btnNodeProperty()
-        {
-            _container.IsContainerRefresh = true;
-            _container.SetProper("", "NodeP", _container.FlowID, RelatedFlowNode.FlowNodeID, "0", "结点属性");
-        }
-        /// <summary>
-        /// 设计节点表单
-        /// </summary>
-        private void Btn_DesignerNodeFrm()
-        {
-            _container.IsContainerRefresh = false;
-            _container.SetProper("", "MapDef", _container.FlowID, RelatedFlowNode.FlowNodeID, "0", "报表设计");
-        }
-        /// <summary>
-        /// 设计流程表单
-        /// </summary>
-        private void Btn_DesignerFlowFrm()
-        {
-            //WF.FlowFrm ff = new WF.FlowFrm();
-            //ff.FK_Flow = _container.FlowID;
-            //ff.FK_Node = int.Parse(RelatedFlowNode.FlowNodeID);
-            //ff.Show();
-        }
-
-        //private void btnNodeFreeFrm()
-        //{
-        //    _container.IsContainerRefresh = false;
-        //    _container.SetProper("", "MapDefFree", _container.FlowID, RelatedFlowNode.FlowNodeID, "0", "自由表单设计器");
-        //}
-        //private void btnNodeF4()
-        //{
-        //    _container.IsContainerRefresh = false;
-        //    _container.SetProper("", "MapDefF4", _container.FlowID, RelatedFlowNode.FlowNodeID, "0", "傻瓜表单设计器");
-        //}
-
-        private void btnNodeStation()
-        {
-            _container.IsContainerRefresh = false;
-
-            _container.SetProper("", "StaDef", _container.FlowID, RelatedFlowNode.FlowNodeID, "0", "节点岗位");
-        }
-
-
-        private void btnFlowProperty()
-        {
-            _container.IsContainerRefresh = true;
-            _container.SetProper("", "FlowP", _container.FlowID, RelatedFlowNode.FlowNodeID, "0", "流程属性");
-        }
-
         private void Menu_ItemSelected(object sender, MenuEventArgs e)
         {
             if (e.Tag == null)
@@ -273,20 +217,20 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     deleteFlowNode();
                     break;
                 case "menuDesignNodeFrm":
-                    Btn_DesignerNodeFrm();
+                    Glo.WinOpenByDoType("CH", "MapDef", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
                     break;
                 case "menuDesignFlowFrm":
                     WF.Frm.FrmLib frm = new WF.Frm.FrmLib();
                     frm.Show();
                     break;
-                case "menuJobStation":
-                    btnNodeStation();
+                case "menuJobStation": // 节点工作岗位。
+                    Glo.WinOpenByDoType("CH", "StaDef", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
                     break;
                 case "menuNodeProperty":
-                    btnNodeProperty();
+                    Glo.WinOpenByDoType("CH", "NodeP", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
                     break;
                 case "menuFlowProperty":
-                    btnFlowProperty();
+                    Glo.WinOpenByDoType("CH", "FlowP", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
                     break;
                 case "menuNodeTypeFL":
                     RelatedFlowNode.Type = FlowNodeType.AND_BRANCH;
@@ -301,7 +245,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     RelatedFlowNode.Type = FlowNodeType.AND_MERGE;
                     break;
             }
-
             MuContentMenu.Hide();
         }
     }

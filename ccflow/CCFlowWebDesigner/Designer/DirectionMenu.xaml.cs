@@ -160,17 +160,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 return;
             }
-
             switch (e.Tag.ToString())
             {
                 case "menuDeleteDirection":
                     deleteDirection();
                     break;
                 case "menuSetDirectionCondition":
+                  //  _Service.GetRelativeUrlAsync("", "Dir", FlowID, r.BeginFlowNode.FlowNodeID, r.EndFlowNode.FlowNodeID, true);
                     showDirectionSetting();
                     break;
             }
-
             MuContentMenu.Hide();
         }
 

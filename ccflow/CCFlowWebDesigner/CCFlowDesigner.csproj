@@ -229,6 +229,14 @@
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
+    <None Include="Service References\WS\WebService.disco" />
+    <None Include="Service References\WS\configuration91.svcinfo" />
+    <None Include="Service References\WS\configuration.svcinfo" />
+    <None Include="Service References\WS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\WS\WebService.wsdl" />
     <None Include="Service References\WS\WF.WS.RunSQLReturnTablePengResponseRunSQLReturnTablePengResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -383,7 +391,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Text.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Text.zh-cn.resx" />
+    <EmbeddedResource Include="Resources\Text.zh-cn.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\image\Authorize.gif" />
@@ -450,13 +460,6 @@
     <Resource Include="Themes\Authorize.gif" />
     <Resource Include="Themes\CH.gif" />
     <Resource Include="Themes\CH.jpg" />
-    <None Include="Service References\WS\WebService.disco" />
-    <None Include="Service References\WS\configuration91.svcinfo" />
-    <None Include="Service References\WS\configuration.svcinfo" />
-    <None Include="Service References\WS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="Themes\img1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

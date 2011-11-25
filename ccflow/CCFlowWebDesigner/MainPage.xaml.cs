@@ -340,19 +340,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         #endregion
 
         #region Window or Dialog open related
-        /// <summary>
-        /// 设置打开网页窗口的属性
-        /// </summary>
-        /// <param name="lang">语言</param>
-        /// <param name="dotype">窗口类型</param>
-        /// <param name="fk_flow">工作流ID</param>
-        /// <param name="node1">结点1</param>
-        /// <param name="node2">结点2</param>
-        public void SetProper(string lang, string dotype, string fk_flow, string node1, string node2)
-        {
-            _Service.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
-            _Service.GetRelativeUrlCompleted += _Service_GetRelativeUrlCompleted;
-        }
 
         public void OpenDialog(string url, string title, int h, int w)
         {
@@ -847,7 +834,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private void _service_DoCompleted(object sender, DoCompletedEventArgs e)
         {
             loadingWin(false);
-            if(e.Result.IndexOf(";") < 0)
+            if (e.Result.IndexOf(";") < 0)
             {
                 MessageBox.Show(e.Result, "错误", MessageBoxButton.OK);
                 return;
@@ -857,22 +844,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _Service.DoCompleted -= _service_DoCompleted;
             this.BindFlowAndFlowSort();
             OpenFlow(flow[0], flow[1]);
-     }
-
-        /// <summary>
-        /// 弹出网页窗口事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _Service_GetRelativeUrlCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
-        {
-            string suburl = HtmlPage.Document.DocumentUri.ToString();
-            string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-            OpenDialog(url + e.Result, title);
-
-            _Service.GetRelativeUrlCompleted -= _Service_GetRelativeUrlCompleted;
         }
-
 
         /// <summary>
         /// Asp.net网页关闭时要执行的事件
@@ -1088,7 +1060,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
                 case "Btn_ToolBarEditFlow":
                     if (SelectedContainer != null)
-                        SelectedContainer.Edit();
+                        Glo.WinOpenByDoType("CH", "FlowP", FlowID, null, null);
                     break;
                 case "Btn_ToolBarDeleteFlow":
                     if (SelectedContainer != null)
@@ -1166,7 +1138,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
 
         #region UserControl Related 
-
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             MuFlowTree.Hide();
@@ -1184,20 +1155,18 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             HtmlPage.RegisterScriptableObject("Designer", this);
-
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += DoubleClick_Timer;
             try
             {
-                Content_Resized(null,null);
+                Content_Resized(null, null);
             }
             catch
             {
             }
             Application.Current.Host.Content.FullScreenChanged += Content_FullScreenChanged;
         }
-
         /// <summary>
         /// 键盘按键按下事件
         /// </summary>
@@ -1206,7 +1175,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private void UserControl_KeyDown(object sender, KeyEventArgs e)
         {
         }
-
         /// <summary>
         /// 键盘按键释放事件
         /// </summary>

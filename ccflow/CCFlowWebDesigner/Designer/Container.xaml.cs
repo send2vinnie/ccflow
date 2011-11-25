@@ -632,16 +632,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             getFlows(FlowID);
 
         }
-
-        /// <summary>
-        /// 编辑
-        /// </summary>
-        public void Edit()
-        {
-            SetProper("", "FlowP", FlowID, "0", "0", "编辑");
-
-        }
-
+      
         /// <summary>
         /// 设计报表
         /// </summary>
@@ -649,8 +640,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <param name="e"></param>
         public void btnDesignerTable()
         {
-            openWindow("", "WFRpt", FlowID, "0", "0", "报表设计");
-
+            Glo.WinOpenByDoType("CH", "WFRpt", FlowID, null, null);
         }
 
         /// <summary>
@@ -660,7 +650,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <param name="e"></param>
         public void btnCheck()
         {
-            openWindow("", "FlowCheck", FlowID, "0", "0", "检查");
+            Glo.WinOpenByDoType("CH", "FlowCheck", FlowID, null, null);
         }
 
         /// <summary>
@@ -670,7 +660,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <param name="e"></param>
         public void btnRun()
         {
-            openWindow("", "RunFlow", FlowID, "0", "0", "运行");
+            Glo.WinOpenByDoType("CH", "RunFlow", FlowID, null, null);
         }
 
         public void ShowFlowNodeSetting(FlowNode fn)
@@ -682,27 +672,21 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             fn.sdPicture.txtFlowNodeName.Visibility = Visibility.Collapsed;
             fn.sdPicture.tbNodeName.LostFocus += new RoutedEventHandler(tbNodeName_LostFocus);
             IsSomeChildEditing = true;
-
         }
-
         public void ShowDirectionSetting(Direction r)
         {
             this.WinTitle = "方向设置";
-            _Service.GetRelativeUrlAsync("", "Dir", FlowID, r.BeginFlowNode.FlowNodeID,r.EndFlowNode.FlowNodeID ,true);
+            _Service.GetRelativeUrlAsync("", "Dir", FlowID, r.BeginFlowNode.FlowNodeID, r.EndFlowNode.FlowNodeID, true);
             _Service.GetRelativeUrlCompleted += _Service_ShowDirectionCompleted;
         }
-
         void _Service_ShowDirectionCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
         {
-            string suburl = HtmlPage.Document.DocumentUri.ToString();
-            string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-
+            //string suburl = HtmlPage.Document.DocumentUri.ToString();
+            //string url = suburl.Substring(0, suburl.LastIndexOf('/'));
             Designer.IsRefresh = IsContainerRefresh;
-            Designer.OpenWindow(url + e.Result, WinTitle, 550, 500);
-
+            Designer.OpenWindow(Glo.BPMHost + e.Result, WinTitle, 550, 500);
             _Service.GetRelativeUrlCompleted -= _Service_ShowDirectionCompleted;
         }
-
         public void LoadFromXmlString(string xml)
         {
             if (string.IsNullOrEmpty(xml))
@@ -905,7 +889,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                                                      string url = suburl.Substring(0, suburl.LastIndexOf('/'));
 
                                                      Designer.IsRefresh = IsContainerRefresh;
-                                                     Designer.OpenWindow(Glo.BPMHost + e.Result, WinTitle, 600, 800);
+                                                     Designer.OpenDialog(Glo.BPMHost + e.Result, WinTitle, 600, 800);
                                                  };
 
         }
