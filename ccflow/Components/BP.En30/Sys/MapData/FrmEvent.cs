@@ -324,14 +324,7 @@ namespace BP.Sys
     {
         public string DoEventNode(string dotype, Entity en)
         {
-            try
-            {
-                return _DoEventNode(dotype, en);
-            }
-            catch(Exception ex)
-            {
-                return ex.Message;
-            }
+            return _DoEventNode(dotype, en);
         }
         /// <summary>
         /// 执行事件，事件标记是 EventList.
