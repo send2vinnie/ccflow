@@ -11,9 +11,9 @@ using System.Windows.Shapes;
 
 namespace Toolbar
 {
-	public partial class Toolbar : UserControl
+	public partial class Bar : UserControl
 	{
-		public Toolbar()
+        public Bar()
 		{
 			InitializeComponent();	
 		}
@@ -40,7 +40,5 @@ namespace Toolbar
             btn.Width = width;
             this.Children.Add(btn);
         }
-
-         
 	}
 }

@@ -13,23 +13,23 @@ namespace Toolbar
 {
 	public partial class ToolbarButton
 	{
-		public ToolbarButton()
-		{
-			InitializeComponent();
-            
-			VerticalAlignment = VerticalAlignment.Top;
+        public ToolbarButton()
+        {
+            InitializeComponent();
 
-			Storyboard.SetTarget(Activate, this);
-			Storyboard.SetTarget(Deactivate, this);
-			
-			MouseEnter += new MouseEventHandler(ToolbarButton_MouseEnter);
-			MouseLeave += new MouseEventHandler(ToolbarButton_MouseLeave);
-		}
+            this.VerticalAlignment = VerticalAlignment.Top;
+
+            Storyboard.SetTarget(this.Activate, this);
+            Storyboard.SetTarget(this.Deactivate, this);
+
+            MouseEnter += new MouseEventHandler(ToolbarButton_MouseEnter);
+            MouseLeave += new MouseEventHandler(ToolbarButton_MouseLeave);
+        }
 
 		void SetToolbarZIndex(int nValue)
 		{
 			StackPanel panel = this.Parent as StackPanel;
-			Toolbar toolbar = panel.Parent as Toolbar;
+            Bar toolbar = panel.Parent as Bar;
 			toolbar.SetValue(Canvas.ZIndexProperty, nValue);
 		}
 

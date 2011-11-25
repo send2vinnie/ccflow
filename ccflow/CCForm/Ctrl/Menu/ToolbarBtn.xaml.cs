@@ -29,7 +29,7 @@ namespace Toolbar
 		void SetToolbarZIndex(int nValue)
 		{
 			StackPanel panel = this.Parent as StackPanel;
-			Toolbar toolbar = panel.Parent as Toolbar;
+            Bar toolbar = panel.Parent as Bar;
 			toolbar.SetValue(Canvas.ZIndexProperty, nValue);
 		}
 

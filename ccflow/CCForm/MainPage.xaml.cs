@@ -13,8 +13,8 @@ using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Windows.Browser;
 using System.Text;
-using System.Windows.Interactivity;
 using Microsoft.Expression.Interactivity;
+using System.Windows.Interactivity;
 using Microsoft.Expression.Interactivity.Layout;
 using System.Windows.Media.Imaging;
 using Silverlight;
@@ -638,15 +638,6 @@ namespace CCForm
             ens = Func.instance.GetToolList();
             foreach (Func en in ens)
             {
-                //Toolbar.ToolbarButton btn = new Toolbar.ToolbarButton();
-                //btn.Name = "Btn_" + en.No;
-                //btn.Click += new RoutedEventHandler(ToolBar_Click);
-                //Image img = new Image();
-                // BitmapImage png = new BitmapImage(new Uri("/CCForm;component/Img/" + en.No + ".png", UriKind.Relative));  //= @"\\Img\\LogBig.png";
-                //img.Source = png;
-                //btn.Content = img;
-                //this.toolbar1.AddBtn(btn);
-
                 Toolbar.ToolbarButton btn = new Toolbar.ToolbarButton();
                 btn.Name = "Btn_" + en.No;
                 btn.Click += new RoutedEventHandler(ToolBar_Click);
@@ -667,6 +658,7 @@ namespace CCForm
                 tb.FontSize = 15;
                 mysp.Children.Add(tb);
                 btn.Content = mysp;
+
                 this.toolbar1.AddBtn(btn);
             }
 

@@ -69,7 +69,7 @@ namespace CCForm
         {
             List<EleFunc> ToolList = new List<EleFunc>()
             {
-                new EleFunc(){ No=EleFunc.SelectAll,  Name="复制",Img=new BitmapImage(new Uri("/CCForm;component/Img/"+EleFunc.SelectAll+".png",UriKind.RelativeOrAbsolute))},
+                new EleFunc(){ No=EleFunc.SelectAll,  Name="全选",Img=new BitmapImage(new Uri("/CCForm;component/Img/"+EleFunc.SelectAll+".png",UriKind.RelativeOrAbsolute))},
                 new EleFunc(){ No=EleFunc.CopyEle,  Name="复制",Img=new BitmapImage(new Uri("/CCForm;component/Img/"+EleFunc.CopyEle+".png",UriKind.RelativeOrAbsolute))},
                 new EleFunc(){ No=EleFunc.Paste,  Name="粘帖",Img=new BitmapImage(new Uri("/CCForm;component/Img/"+EleFunc.Paste+".png",UriKind.RelativeOrAbsolute))},
 

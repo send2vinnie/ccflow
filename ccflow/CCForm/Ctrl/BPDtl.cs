@@ -13,7 +13,6 @@ using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Windows.Browser;
 using System.Text;
-using System.Windows.Interactivity;
 using Microsoft.Expression.Interactivity;
 using Microsoft.Expression.Interactivity.Layout;
 using System.Windows.Media.Imaging;

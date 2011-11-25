@@ -123,14 +123,16 @@ xmlns:my="clr-namespace:Toolbar"
         <Image Height="32" HorizontalAlignment="Stretch" Name="image1" Stretch="Fill" Grid.Column="0" Grid.Row="0"
                Grid.ColumnSpan="2"
                VerticalAlignment="Top" Source="/CCForm;component/Img/menuBK.png" />
-        <my:Toolbar Margin="0,1,0,0"  HorizontalAlignment="Left"   Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+        
+        <my:Bar Margin="0,1,0,0"  HorizontalAlignment="Left"   Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
                       x:Name="toolbar1" 
                     VerticalAlignment="Top" >
-        </my:Toolbar>
-        <my:Toolbar Margin="600,1,0,0"  HorizontalAlignment="Right"   Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+
+        </my:Bar>
+        <my:Bar Margin="600,1,0,0"  HorizontalAlignment="Right"   Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
                       x:Name="toolbar_eleFunc" 
                     VerticalAlignment="Top" >
-        </my:Toolbar>
+        </my:Bar>
 
         <ScrollViewer Height="800"  Grid.Column="1" Grid.Row="1" 
                        Width="790"
