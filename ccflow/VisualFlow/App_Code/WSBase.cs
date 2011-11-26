@@ -82,6 +82,11 @@ namespace BP.Web
 
             return Connector.ToXml(ds);
         }
+        [WebMethod(EnableSession = true)]
+        public int RunSQL(string sql)
+        {
+            return BP.DA.DBAccess.RunSQL(sql);
+        }
         /// <summary>
         /// 运行sqls
         /// </summary>
@@ -152,11 +157,24 @@ namespace BP.Web
         /// <param name="sql"></param>
         /// <returns></returns>
         [WebMethod]
-        public string RunSQLReturnTableS(string[] sqls)
+        public string RunSQLReturnTable(string sql)
         {
             DataSet ds = new DataSet();
+            ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
+            return Connector.ToXml(ds);
+        }
+        /// <summary>
+        /// 运行sql返回table.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string RunSQLReturnTableS(string sqls)
+        {
+            string[] strs = sqls.Split('@');
+            DataSet ds = new DataSet();
             int i = 0;
-            foreach (string sql in sqls)
+            foreach (string sql in strs)
             {
                 if (string.IsNullOrEmpty(sql))
                     continue;

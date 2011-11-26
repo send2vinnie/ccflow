@@ -82,27 +82,6 @@ public class DocFlow : BP.Web.WSBase {
     {
         return BP.DA.DBAccess.RunSQLReturnString(sql);
     }
-
-    /// <summary>
-    /// 运行sql
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <returns></returns>
-    [WebMethod]
-    public int RunSQL(string sql)
-    {
-        return BP.DA.DBAccess.RunSQL(sql);
-    }
-    /// <summary>
-    /// 运行sql 返回datatable
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <returns></returns>
-    [WebMethod]
-    public DataTable RunSQLReturnTable(string sql)
-    {
-        return BP.DA.DBAccess.RunSQLReturnTable(sql);
-    }
     /// <summary>
     /// 产生OID
     /// </summary>

@@ -207,22 +207,7 @@ public class WSDesigner : WSBase
         }
         return url;
     }
-
-    [WebMethod(EnableSession = true)]
-    public string RunSQLReturnTable(string sql, bool isLogin)
-    {
-        try
-        {
-            LetAdminLogin("CH", isLogin);
-            DataSet ds = BP.DA.DBAccess.RunSQLReturnDataSet(sql);
-            return Connector.ToXml(ds);
-        }
-        catch (Exception ex)
-        {
-            BP.DA.Log.DefaultLogWriteLineError("RunSQLReturnTable返回了错误, para:\t" + sql.ToString());
-        }
-        return string.Empty;
-    }
+   
 
     [WebMethod(EnableSession = true)]
     [Obsolete]
@@ -277,22 +262,18 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         return url;
     }
 
-    [WebMethod(EnableSession = true)]
-    public int RunSQL(string sql)
-    {
-        return BP.DA.DBAccess.RunSQL(sql);
-    }
+  
 
     [WebMethod(EnableSession = true)]
     public string Do(string doWhat, string para1, bool isLogin)
     {
         // 如果admin账户登录时有错误发生，则返回错误信息
         var result = LetAdminLogin("CH", isLogin);
-        if(!string.IsNullOrEmpty(result))
+        if (!string.IsNullOrEmpty(result))
         {
             return result;
         }
-        
+
 
         switch (doWhat)
         {
@@ -309,10 +290,10 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     fs.Insert();
                     return fs.No;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewFlowSort Branch has a error , para:\t" + para1 +ex.Message);
-                   
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewFlowSort Branch has a error , para:\t" + para1 + ex.Message);
+
                     return null;
                 }
 
@@ -325,9 +306,9 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     fs.Save();
                     return fs.No;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method EditFlowSort Branch has a error , para:\t" + para1+ ex.Message);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method EditFlowSort Branch has a error , para:\t" + para1 + ex.Message);
                     return null;
                 }
             case "NewFlow":
@@ -353,9 +334,9 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     fl.DoNewFlow();
                     return fl.No + ";" + fl.Name;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewFlow Branch has a error , para:\t" + para1+ ex.Message);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewFlow Branch has a error , para:\t" + para1 + ex.Message);
                     return ex.Message;
 
                 }
@@ -366,9 +347,9 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     fl1.DoDelete();
                     return null;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelFlow Branch has a error , para:\t" + para1+ex.Message);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelFlow Branch has a error , para:\t" + para1 + ex.Message);
                     return ex.Message;
                 }
             case "DelLable":
@@ -379,7 +360,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelLable Branch has a error , para:\t" + para1+ex.Message);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelLable Branch has a error , para:\t" + para1 + ex.Message);
                 }
                 return null;
             case "DelFlowSort":
@@ -390,9 +371,9 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelFlowSort Branch has a error , para:\t" + para1+ex.Message);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelFlowSort Branch has a error , para:\t" + para1 + ex.Message);
                 }
-               
+
                 return null;
             case "NewNode":
                 try
@@ -406,9 +387,9 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewNode Branch has a error , para:\t" + para1+ex.Message);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewNode Branch has a error , para:\t" + para1 + ex.Message);
                 }
-               
+
                 return null;
             case "DelNode":
                 try
@@ -421,22 +402,22 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelNode Branch has a error , para:\t" + para1+ ex.Message);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelNode Branch has a error , para:\t" + para1 + ex.Message);
                 }
-                
+
                 return null;
             case "NewLab":
-                BP.WF.LabNote lab = new BP.WF.LabNote();;
+                BP.WF.LabNote lab = new BP.WF.LabNote(); ;
                 try
                 {
                     lab.FK_Flow = para1;
                     lab.MyPK = BP.DA.DBAccess.GenerOID().ToString();
                     lab.Insert();
-                    
+
                 }
                 catch (Exception ex)
                 {
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewLab Branch has a error , para:\t" + para1+ex.Message);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method NewLab Branch has a error , para:\t" + para1 + ex.Message);
                 }
                 return lab.MyPK;
             case "DelLab":
@@ -448,68 +429,51 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 }
                 catch (Exception ex)
                 {
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelLab Branch has a error , para:\t" + para1+ex.Message);
+                    BP.DA.Log.DefaultLogWriteLineError("Do Method DelLab Branch has a error , para:\t" + para1 + ex.Message);
                 }
-               
+
                 return null;
             case "GetSettings":
-                try
-                {
-                    return SystemConfig.AppSettings[para1];
-                }
-                catch (Exception ex)
-                {
-
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method GetSettings Branch has a error , para:\t" + para1+ex.Message); ;
-                }
-                return string.Empty;
+                return SystemConfig.AppSettings[para1];
             case "GetFlows":
-                try
-                {
-                    var sqls = new string[] { "select NO,NAME from WF_FlowSort", "select No,Name,FK_FlowSort from WF_Flow " };
-                    return RunSQLReturnTableS(sqls);
-                }
-                catch (Exception ex)
-                {
-
-                    BP.DA.Log.DefaultLogWriteLineError("Do Method GetFlows Branch has a error :\t" +ex.Message); ;
-                }
-                return string.Empty;
+                string sqls = "SELECT NO,NAME FROM WF_FlowSort";
+                sqls += "@SELECT No,Name,FK_FlowSort FROM WF_Flow";
+                return RunSQLReturnTableS(sqls);
             case "SaveFlowFrm":
                 Entity en = null;
-            try
-            {
-                AtPara ap = new AtPara(para1);
-                string enName = ap.GetValStrByKey("EnName");
-                string pk = ap.GetValStrByKey("PKVal");
-                  en = ClassFactory.GetEn(enName);
-                en.ResetDefaultVal();
-
-                if (en == null)
-                    throw new Exception("无效的类名:" + enName);
-
-                if (string.IsNullOrEmpty(pk) == false)
+                try
                 {
-                    en.PKVal = pk;
-                    en.RetrieveFromDBSources();
-                }
+                    AtPara ap = new AtPara(para1);
+                    string enName = ap.GetValStrByKey("EnName");
+                    string pk = ap.GetValStrByKey("PKVal");
+                    en = ClassFactory.GetEn(enName);
+                    en.ResetDefaultVal();
 
-                foreach (string key in ap.HisHT.Keys)
-                {
-                    if (key == "PKVal")
-                        continue;
-                    en.SetValByKey(key, ap.HisHT[key].ToString().Replace('^', '@') );
+                    if (en == null)
+                        throw new Exception("无效的类名:" + enName);
+
+                    if (string.IsNullOrEmpty(pk) == false)
+                    {
+                        en.PKVal = pk;
+                        en.RetrieveFromDBSources();
+                    }
+
+                    foreach (string key in ap.HisHT.Keys)
+                    {
+                        if (key == "PKVal")
+                            continue;
+                        en.SetValByKey(key, ap.HisHT[key].ToString().Replace('^', '@'));
+                    }
+                    en.Save();
+                    return en.PKVal as string;
                 }
-                en.Save();
-                return en.PKVal as string;
-            }
-            catch (Exception ex)
-            {
-                if (en != null)
-                    en.CheckPhysicsTable();
-                return "Error:" + ex.Message;
-            }
-			case "ReleaseToFTP":
+                catch (Exception ex)
+                {
+                    if (en != null)
+                        en.CheckPhysicsTable();
+                    return "Error:" + ex.Message;
+                }
+            case "ReleaseToFTP":
                 // 暂时注释，下次更新ftp功能时会得新编译 。
                 //var args = para1.Split(',');
                 //var binaryData = Convert.FromBase64String(args[1]);
@@ -530,7 +494,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 //string remoteDr = "/" + ConfigurationSettings.AppSettings["UserIdentifier"];;
 
                 //var ftp = new FtpConnection();
-                
+
                 //try
                 //{
                 //    string ftpIP = ConfigurationSettings.AppSettings["FTPServerIP"];
@@ -538,7 +502,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
 
                 //    Session session = new Session();
                 //    session.Server = ftpIP;
-                    
+
 
                 //    session.Connect("anonymous", "someone@somewhere.com");
                 //    ftp.Connect(ftpIP, "anonymous", email);
@@ -592,9 +556,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
             return nf.NodeID ;
         }
         catch { return 0; }
-
     }
-
     /// <summary>
     /// 创建一个连接线
     /// </summary>

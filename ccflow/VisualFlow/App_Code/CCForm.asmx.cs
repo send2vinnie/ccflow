@@ -21,7 +21,7 @@ namespace BP.Web
     [System.ComponentModel.ToolboxItem(false)]
     // 若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消对下行的注释。
     // [System.Web.Script.Services.ScriptService]
-    public class CCForm : System.Web.Services.WebService
+    public class CCForm : WSBase
     {
         /// <summary>
         /// 获取值
@@ -32,23 +32,6 @@ namespace BP.Web
         public string CfgKey(string kev)
         {
             return BP.SystemConfig.AppSettings[kev];
-        }
-        
-        [WebMethod]
-        public string BackUpFrm_del(string fk_mapdata)
-        {
-            try
-            {
-                //   string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\Temp\\" + fk_mapdata + ".xml";
-                string path = @"D:\ccflow\VisualFlow\Temp\" + fk_mapdata + ".xml";
-                this.GenerFrm(fk_mapdata, 0);
-                ds.WriteXml(path);
-                return null;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
         }
         /// <summary>
         /// 装载表单模板
@@ -125,27 +108,7 @@ namespace BP.Web
                 return ex.Message;
             }
         }
-        /// <summary>
-        /// 运行sqls
-        /// </summary>
-        /// <param name="sqls"></param>
-        /// <returns></returns>
-        [WebMethod]
-        public int RunSQLs(string sqls)
-        {
-            if (string.IsNullOrEmpty(sqls))
-                return 0;
-
-            int i = 0;
-            string[] strs = sqls.Split('@');
-            foreach (string str in strs)
-            {
-                if (string.IsNullOrEmpty(str))
-                    continue;
-                i += BP.DA.DBAccess.RunSQL(str);
-            }
-            return i;
-        }
+       
         [WebMethod]
         public string DoType(string dotype, string v1, string v2, string v3, string v4,string v5)
         {
@@ -487,18 +450,7 @@ namespace BP.Web
                 return "Error:" + ex.Message;
             }
         }
-        /// <summary>
-        /// 运行sql返回table.
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        [WebMethod]
-        public string RunSQLReturnTable(string sql)
-        {
-            DataSet ds = new DataSet();
-            ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
-            return Connector.ToXml(ds);
-        }
+    
         /// <summary>
         /// 获取路径
         /// </summary>
