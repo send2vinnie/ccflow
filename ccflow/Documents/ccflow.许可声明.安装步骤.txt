@@ -143,9 +143,26 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 
 5, 没有配置mime 类型, 导致流程轨迹图,流程设计器不能被使用. 处理方法.
 
+  windows XP 用户:
     打开IIS->站点属性->HTTP头->MIME类型->新建： 
   扩展名： .xap     MIME类型：  xapapplication/x-silverlight  
   扩展名： .xaml   MIME类型：  application/xaml+xml
+
+  Win7 用户:
+    1， 启用iis7.
+        控制面板-> 程序和功能-> 在左边有打开或者关闭windows功能.
+        把 Internet information services. 与 Internet 信息服务 全部选择上。
+   
+          
+    2,  设置mimee类型.
+     
+       开始->运行->输入inetmgr . 把鼠标放在根节点上, 选择iis 分组中的 MIME类型.
+
+       扩展名： .xap     MIME类型：  xapapplication/x-silverlight  
+       扩展名： .xaml   MIME类型：  application/xaml+xml
+
+
+       
 
 6. 出现用户名及密码错误，请在web.config 文件中删除 userName="administrator" password="jiaozi"
 
