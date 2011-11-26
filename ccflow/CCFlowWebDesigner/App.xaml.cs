@@ -54,14 +54,10 @@ namespace BP
                 var flowId = string.Empty;
                 var queryString = System.Windows.Browser.HtmlPage.Document.QueryString;
                 if (queryString.ContainsKey("WorkID"))
-                {
                     workId = queryString["WorkID"];
-                }
 
                 if (queryString.ContainsKey("FK_Flow"))
-                {
                     flowId = queryString["FK_Flow"];
-                }
 
                 BP.Track track = new BP.Track(flowId, workId);
                 this.RootVisual = track;

@@ -13,6 +13,7 @@ using Liquid;
 using WF.Controls;
 using WF.WS;
 using WF.Resources;
+using BP;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
@@ -171,20 +172,25 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     menuAddLabel_Click();
                     break;
                 case "menuFlowPropertity":
-                    _container.SetProper("", "FlowP", _container.FlowID, "0", "0", "流程属性");
-                    _container.IsContainerRefresh = true;
+                    BP.Glo.WinOpenByDoType("CH", BP.UrlFlag.FlowP, _container.FlowID, null, null);
+                    //_container.SetProper("", "FlowP", _container.FlowID, "0", "0", "流程属性");
+                    //_container.IsContainerRefresh = true;
                     break;
                 case "menuRunFlow":
-                    _container.IsContainerRefresh = false;
-                    _container.SetProper("", "RunFlow", _container.FlowID, "0", "0", "运行");
+                    //_container.IsContainerRefresh = false;
+                    //_container.SetProper("", "RunFlow", _container.FlowID, "0", "0", "运行");
+                    BP.Glo.WinOpenByDoType("CH", BP.UrlFlag.RunFlow, _container.FlowID, null, null);
                     break;
                 case "menuCheckFlow":
-                    _container.IsContainerRefresh = false;
-                    _container.SetProper("", "FlowCheck", _container.FlowID, "0", "0", "检查");
+                    //_container.IsContainerRefresh = false;
+                    //_container.SetProper("", "FlowCheck", _container.FlowID, "0", "0", "检查");
+                    BP.Glo.WinOpenByDoType("CH", BP.UrlFlag.FlowCheck, _container.FlowID, null, null);
                     break;
                 case "menuFlowDefination":
-                    _container.IsContainerRefresh = false;
-                    _container.SetProper("", "WFRpt", _container.FlowID, "0", "0", "流程报表定义");
+                    //_container.IsContainerRefresh = false;
+                    //_container.SetProper("", "WFRpt", _container.FlowID, "0", "0", "流程报表定义");
+
+                    BP.Glo.WinOpenByDoType("CH", BP.UrlFlag.WFRpt, _container.FlowID, null, null);
                     break;
                 case "menuDelete": // 删除流程。
                     if (System.Windows.Browser.HtmlPage.Window.Confirm(Text.Comfirm_Delete))

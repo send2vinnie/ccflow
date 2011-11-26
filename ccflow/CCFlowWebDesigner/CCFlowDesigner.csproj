@@ -238,9 +238,6 @@
     </None>
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\WS\WebService.wsdl" />
-    <None Include="Service References\WS\WF.WS.RunSQLReturnTablePengResponseRunSQLReturnTablePengResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\WS\WF.WS.UploadfileResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

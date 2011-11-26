@@ -13,6 +13,7 @@ using Ccflow.Web.UI.Control.Workflow.Designer.Picture;
 using Ccflow.Web.Component.Workflow;
 using WF.Resources;
 using System.ComponentModel;
+using BP;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
@@ -93,8 +94,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             set
             {
                 type = value;
-
-
+                 
                 picAUTOMATION.PictureVisibility = Visibility.Collapsed;
                 picBegin.PictureVisibility = Visibility.Collapsed;
                 picBRANCH.PictureVisibility = Visibility.Collapsed;

@@ -92,7 +92,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             try
             {
                 var ws = Glo.GetDesignerServiceInstance();
-
                 // 图片.
                 ws.DoAsync("GetSettings", "CompanyID", true);
                 ws.DoCompleted += ws_GetCustomerIdCompleted;
@@ -745,15 +744,21 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         private void getUploadedFileUriCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
         {
+            string url = Glo.BPMHost + e.Result;
+            BP.Glo.WinOpen(url, "", 800, 500);
+            _service.GetRelativeUrlCompleted -= getUploadedFileUriCompleted;
+            return;
 
-            string suburl = HtmlPage.Document.DocumentUri.ToString();
-            string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-            url += e.Result;
+            //string suburl = HtmlPage.Document.DocumentUri.ToString();
+            //string url = suburl.Substring(0, suburl.LastIndexOf('/'));
+            //url += e.Result;
+            //string url = Glo.BPMHost+e.Result;
+            //BP.Glo.WinOpen(url);
+
             var address = new Uri(String.Format("{1}?filePath={0}", FlowTempleteUrl, url), UriKind.RelativeOrAbsolute);
             HtmlPage.Window.Navigate(address);
-            _service.GetRelativeUrlCompleted -= getUploadedFileUriCompleted;
+
         }
-        
         public void NewFlowHandler(int tabIdx)
         {
             latestFlowSortID = TvwFlow.Selected.ID;

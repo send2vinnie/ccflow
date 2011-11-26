@@ -52,7 +52,7 @@
             </Ellipse>
 
             <sharedesigner:FlowNodePictureContainer x:Name="sdPicture"   MouseLeftButtonDown="UserControl_MouseLeftButtonDown" 
-             MouseLeftButtonUp="UserControl_MouseLeftButtonUp"   
+             MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
              MouseMove="UserControl_MouseMove" ></sharedesigner:FlowNodePictureContainer>
         </Grid>
 

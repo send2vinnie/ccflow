@@ -32,36 +32,51 @@ namespace BP
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
         }
-
+       
+        /// <summary>
+        /// 轨迹图
+        /// </summary>
+        /// <param name="fk_flow"></param>
+        /// <param name="workid"></param>
         public Track(string fk_flow, string workid)
             : this()
         {
-                FK_Flow = fk_flow;
-            WorkID = workid;
-            _Service.GetDTOfWorkListAsync(FK_Flow, WorkID);
-            _Service.GetDTOfWorkListCompleted += _Service_GetDTOfWorkListCompleted;
+            this.FK_Flow = fk_flow;
+            this.WorkID = workid;
+
+            if (string.IsNullOrEmpty(workid) == false)
+            //如果传递过来workid 说明要显示轨图.
+            {
+                WSDesignerSoapClient ws = BP.Glo.GetDesignerServiceInstance();
+                ws.GetDTOfWorkListAsync(this.FK_Flow, workid);
+                ws.GetDTOfWorkListCompleted += new EventHandler<GetDTOfWorkListCompletedEventArgs>(ws_GetDTOfWorkListCompleted);
+            }
+            else
+            {
+                this.GenerFlowChart(FK_Flow);
+            }
+        }
+        void ws_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
+        {
+            workListDataSet = new DataSet();
+            workListDataSet.FromXml(e.Result);
+            this.GenerFlowChart(FK_Flow);
         }
         #endregion
 
         #region Properties
-        
         public bool IsMouseSelecting
         {
             get { return (temproaryEllipse != null); }
         }
-
         public WSDesignerSoapClient _Service
         {
             get { return _service; }
             set { _service = value; }
         }
-
         public string FK_Flow { get; set; }
-
         public string WorkID { get; set; }
-
         public bool IsNeedSave { get; set; }
-
         /// <summary>
         /// 当前是否有节点在编辑状态
         /// </summary>
@@ -173,19 +188,16 @@ namespace BP
         {
             get { return 0; }
         }
-
         public Double ScrollViewerHorizontalOffset
         {
             get { return svContainer.HorizontalOffset; }
             set { svContainer.ScrollToHorizontalOffset(value); }
         }
-
         public Double ScrollViewerVerticalOffset
         {
             get { return svContainer.VerticalOffset; }
             set { svContainer.ScrollToVerticalOffset(value); }
         }
-
         public Canvas GridLinesContainer
         {
             get
@@ -200,9 +212,7 @@ namespace BP
                 return _gridLinesContainer;
             }
         }
-
         private List<Control> copyElementCollectionInMemory;
-
         public List<Control> CopyElementCollectionInMemory
         {
             get
@@ -213,19 +223,14 @@ namespace BP
             }
             set { copyElementCollectionInMemory = value; }
         }
-
         private bool mouseIsInContainer = false;
-
         public bool MouseIsInContainer
         {
             get { return mouseIsInContainer; }
             set { mouseIsInContainer = value; }
         }
-
         public Direction CurrentTemporaryDirection { get; set; }
-
         private List<System.Windows.Controls.Control> _currentSelectedControlCollection;
-
         public List<System.Windows.Controls.Control> CurrentSelectedControlCollection
         {
             get
@@ -235,23 +240,17 @@ namespace BP
                 return _currentSelectedControlCollection;
             }
         }
-
-        //bool ctrlKeyIsPress;
         public bool CtrlKeyIsPress
         {
             get
             {
                 return (Keyboard.Modifiers == ModifierKeys.Control);
-                //return ctrlKeyIsPress;
             }
         }
-
         public bool IsContainerRefresh { get; set; }
-
         #endregion
 
         #region Variables
-
         private WSDesignerSoapClient _service =  Glo.GetDesignerServiceInstance();
         private PageEditType editType = PageEditType.None;
         private Point mousePosition;
@@ -262,108 +261,83 @@ namespace BP
         private DataSet workListDataSet;
         private double DesignerHeight = 50;
         private double DesignerWdith = 50;
-
         #endregion
         
         #region 加载流程相关
-        private void getFlow(string flowID)
+        private void GenerFlowChart(string flowID)
         {
             this.FlowID = flowID;
-            _Service.RunSQLReturnTableAsync(
-                "select nodeid,Name,X,Y,nodepostype,HisToNDs from wf_node where fk_flow=" + flowID, false);
-            _Service.RunSQLReturnTableCompleted += _service_RunSQLReturnTableCompleted;
+            string sqls = "";
+            sqls += "SELECT NodeID,Name,X,Y,NodePosType,RunModel,HisToNDs FROM WF_Node WHERE FK_Flow='" + flowID + "'";
+            sqls += "@SELECT MyPK,Name,FK_Flow,X,Y FROM WF_LabNote WHERE FK_Flow='" + flowID + "'";
+            sqls += "@SELECT Node,ToNode FROM WF_Direction ";
+            WSDesignerSoapClient ws = BP.Glo.GetDesignerServiceInstance();
+            ws.RunSQLReturnTableSAsync(sqls.Split('@'));
+            ws.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(ws_RunSQLReturnTableSCompleted);
         }
-
-        private void _service_RunSQLReturnTableCompleted(object sender, RunSQLReturnTableCompletedEventArgs e)
+        void ws_RunSQLReturnTableSCompleted(object sender, RunSQLReturnTableSCompletedEventArgs e)
         {
             var ds = new DataSet();
             ds.FromXml(e.Result);
 
-            foreach (DataRow dr in ds.Tables[0].Rows)
+            #region 画流程节点。
+            DataTable dtNode = ds.Tables[0];
+            foreach (DataRow dr in dtNode.Rows)
             {
                 FlowNode flowNode = null;
-                if (dr["nodepostype"].ToString() == "0")
-                {
+                 
+                if (dr["NodePosType"].ToString() == "0")
                     flowNode = new FlowNode((IContainer)this, FlowNodeType.INITIAL);
-                }
-                else if (dr["nodepostype"].ToString() == "2")
-                {
+                else if (dr["NodePosType"].ToString() == "2")
                     flowNode = new FlowNode((IContainer)this, FlowNodeType.COMPLETION);
-                }
                 else
-                {
                     flowNode = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
-                }
+
                 flowNode.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
                 flowNode.FlowID = FlowID;
-                flowNode.FlowNodeID = dr["nodeid"].ToString();
+                flowNode.FlowNodeID = dr["NodeID"].ToString();
                 flowNode.FlowNodeName = dr["Name"].ToString();
                 double x = double.Parse(dr["X"]);
                 double y = double.Parse(dr["Y"]);
                 if (x < 50)
                     x = 50;
                 if (x > 1190)
-                {
                     x = 1190;
-                }
                 if (y < 30)
                     y = 30;
                 if (y > 770)
                     y = 770;
+
                 flowNode.CenterPoint = new Point(x, y);
 
                 // 永远使设计器的宽和高为节点的最大值　
-                if(y > DesignerHeight )
-                {
+                if (y > DesignerHeight)
                     DesignerHeight = y;
-                }
 
-                if(x >DesignerWdith)
-                {
+                if (x > DesignerWdith)
                     DesignerWdith = x;
-                }
+
                 AddFlowNode(flowNode);
             }
-            _Service.GetLablesAsync(FlowID);
-            _Service.GetLablesCompleted += _service_GetLablesCompleted;
+            #endregion 画流程节点。
 
-            _Service.GetDirectionAsync(FlowID);
-            _Service.GetDirectionCompleted += _service_GetDirectionCompleted;
-
-            SaveChange(HistoryType.New);
-
-            Content_Resized(null,null);
-            _Service.RunSQLReturnTableCompleted -= _service_RunSQLReturnTableCompleted;
-        }
-
-        void _Service_GetDTOfWorkListCompleted(object sender, WF.WS.GetDTOfWorkListCompletedEventArgs e)
-        {
-            if (e.Result == null)
+            #region 生成标签.
+            DataTable dtLabel = ds.Tables[1];
+            foreach (DataRow dr in dtLabel.Rows)
             {
-                return;
+                var nodeLabel = new NodeLabel((IContainer)this);
+                nodeLabel.LabelName = dr["Name"].ToString();
+                nodeLabel.Position = new Point(double.Parse(dr["X"].ToString()), double.Parse(dr["Y"].ToString()));
+                nodeLabel.LableID = dr["MyPK"].ToString();
+                this.AddLabel(nodeLabel);
             }
-            try
-            {
-                workListDataSet = new DataSet();
-                workListDataSet.FromXml(e.Result);
+            #endregion 生成标签.
 
-                getFlow(FK_Flow);
-
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show("在取得轨迹信息时出错，错误信息为：\n"  + exception.Message);
-            }
-        }
-
-        private void _service_GetDirectionCompleted(object sender, GetDirectionCompletedEventArgs e)
-        {
-            var ds = new DataSet();
-            ds.FromXml(e.Result);
-
+            #region 生成方向.
+            DataTable dtDir = ds.Tables[2];
             foreach (FlowNode bfn in FlowNodeCollections)
             {
-                foreach (DataRow dr in ds.Tables[0].Rows)
+                foreach (DataRow dr in dtDir.Rows)
                 {
                     if (bfn.FlowNodeID == dr["Node"].ToString())
                     {
@@ -381,60 +355,49 @@ namespace BP
                     }
                 }
             }
-            
-            _Service.GetDirectionCompleted -= _service_GetDirectionCompleted;
+            #endregion 生成方向.
+
+            SaveChange(HistoryType.New);
+            Content_Resized(null, null);
         }
-
-        private void _service_GetLablesCompleted(object sender, GetLablesCompletedEventArgs e)
-        {
-            var ds = new DataSet();
-            ds.FromXml(e.Result);
-
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                var nodeLabel = new NodeLabel((IContainer)this);
-                nodeLabel.LabelName = dr["Name"].ToString();
-                nodeLabel.Position = new Point(double.Parse(dr["X"].ToString()), double.Parse(dr["Y"].ToString()));
-                nodeLabel.LableID = dr["MyPK"].ToString();
-
-                AddLabel(nodeLabel);
-            }
-            _Service.GetLablesCompleted -= _service_GetLablesCompleted;
-        }
-
+        /// <summary>
+        /// 增加方向
+        /// </summary>
+        /// <param name="r"></param>
         public void AddDirection(Direction r)
         {
             r.Worklist(workListDataSet);
+
             if (!cnsDesignerContainer.Children.Contains(r))
             {
                 cnsDesignerContainer.Children.Add(r);
                 r.Container = this;
-
             }
-            if (!DirectionCollections.Contains(r))
-            {
+
+            if ( DirectionCollections.Contains(r)==false)
                 DirectionCollections.Add(r);
-            }
         }
-
+        /// <summary>
+        /// 增加标签
+        /// </summary>
+        /// <param name="l"></param>
         public void AddLabel(NodeLabel l)
         {
             if (!cnsDesignerContainer.Children.Contains(l))
-            {
                 cnsDesignerContainer.Children.Add(l);
-            }
-            if (!LableCollections.Contains(l))
-            {
-                LableCollections.Add(l);
-            }
-        }
 
+            if (!LableCollections.Contains(l))
+                LableCollections.Add(l);
+        }
+        /// <summary>
+        /// 增加节点
+        /// </summary>
+        /// <param name="a"></param>
         public void AddFlowNode(FlowNode a)
         {
-            if (!cnsDesignerContainer.Children.Contains(a))
+            if (cnsDesignerContainer.Children.Contains(a)==false)
             {
                 cnsDesignerContainer.Children.Add(a);
-
                 a.Container = this;
                 a.FlowID = FlowID;
                 if (a.Type != FlowNodeType.STATIONODE)
@@ -442,12 +405,12 @@ namespace BP
                     a.Worklist(workListDataSet);
                 }
             }
-            if (!FlowNodeCollections.Contains(a))
+
+            if (FlowNodeCollections.Contains(a) == false)
             {
                 FlowNodeCollections.Add(a);
             }
         }
-        
         #endregion
 
         #region 菜单相关
@@ -465,13 +428,13 @@ namespace BP
         {
             e.Handled = true;
         }
-
         /// <summary>
         /// 双击节点后要做的事件
         /// </summary>
         /// <param name="a">节点</param>
         public void ShowFlowNodeSetting(FlowNode a)
         {
+            MessageBox.Show("在施工中.");
             ///todo 周朋说这里要弹出一个窗口。不过url还没定
         }
         #endregion
@@ -491,11 +454,9 @@ namespace BP
                                              : contentWidth;
             cnsDesignerContainer.Height = DesignerHeight > contentHeight
                                               ? DesignerHeight
-                                              :contentHeight;      
+                                              : contentHeight;
             SetGridLines();
-
         }
-
         public void SetGridLines()
         {
             GridLinesContainer.Children.Clear();
@@ -523,7 +484,6 @@ namespace BP
                 line.X2 = x;
                 line.Y2 = y + height;
 
-
                 line.Stroke = brush;
                 line.StrokeThickness = thickness;
                 line.Stretch = Stretch.Fill;
@@ -531,10 +491,8 @@ namespace BP
                 x += stepLength;
             }
 
-
             x = left;
             y = top + stepLength;
-
             while (y < height + top)
             {
                 Line line = new Line();
@@ -542,7 +500,6 @@ namespace BP
                 line.Y1 = y;
                 line.X2 = x + width;
                 line.Y2 = y;
-
 
                 line.Stroke = brush;
                 line.Stretch = Stretch.Fill;
@@ -556,29 +513,23 @@ namespace BP
         {
             return cnsDesignerContainer.Children.Contains(uie);
         }
-
         public CheckResult CheckSave()
         {
             CheckResult cr = new CheckResult();
             cr.IsPass = true;
             return cr;
         }
-
         public void ShowMessage(string message)
         {
-           
         }
 
         public void SaveChange(HistoryType action)
         {
-            
         }
-
         private void DoubleClick_Timer(object sender, EventArgs e)
         {
             _doubleClickTimer.Stop();
         }
-
 
         #region 鼠标操作相关
         public void AddSelectedControl(System.Windows.Controls.Control uc)

@@ -676,16 +676,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public void ShowDirectionSetting(Direction r)
         {
             this.WinTitle = "方向设置";
-            _Service.GetRelativeUrlAsync("", "Dir", FlowID, r.BeginFlowNode.FlowNodeID, r.EndFlowNode.FlowNodeID, true);
-            _Service.GetRelativeUrlCompleted += _Service_ShowDirectionCompleted;
-        }
-        void _Service_ShowDirectionCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
-        {
-            //string suburl = HtmlPage.Document.DocumentUri.ToString();
-            //string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-            Designer.IsRefresh = IsContainerRefresh;
-            Designer.OpenWindow(Glo.BPMHost + e.Result, WinTitle, 550, 500);
-            _Service.GetRelativeUrlCompleted -= _Service_ShowDirectionCompleted;
+            Glo.WinOpenByDoType("CH", BP.UrlFlag.Dir, FlowID, r.BeginFlowNode.FlowNodeID, r.EndFlowNode.FlowNodeID);
         }
         public void LoadFromXmlString(string xml)
         {
@@ -885,9 +876,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             serviceProxy.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
             serviceProxy.GetRelativeUrlCompleted += (s, e) =>
                                                  {
-                                                     string suburl = HtmlPage.Document.DocumentUri.ToString();
-                                                     string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-
+                                                     //string suburl = HtmlPage.Document.DocumentUri.ToString();
+                                                     //string url = suburl.Substring(0, suburl.LastIndexOf('/'));
                                                      Designer.IsRefresh = IsContainerRefresh;
                                                      Designer.OpenDialog(Glo.BPMHost + e.Result, WinTitle, 600, 800);
                                                  };

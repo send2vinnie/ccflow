@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Ccflow.Web.Component.Workflow;
 using WF.Resources;
 using Silverlight;
+using BP;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
@@ -1715,7 +1716,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             canShowMenu = true;
             //ttDirectionTip.Content = DirectionData.DirectionName + "\r\n" + DirectionData.DirectionCondition;
-
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
@@ -1733,34 +1733,27 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 if (canShowMenu && !IsDeleted)
                 {
                     _container.ShowDirectionContentMenu(this, sender, e);
-
                 }
-
             }
         }
-
         public void Edit() 
         {
             _container.ShowDirectionSetting(this);
         }
-
         #region IElement 成员
-
 
         public UserStation Station()
         {
-          
             return null;
         }
-
         public void Worklist(DataSet dataSet)
         {
-           if(dataSet == null || dataSet.Tables.Count == 0)
-           {
-               return;
-           }
+            if (dataSet == null || dataSet.Tables.Count == 0)
+            {
+                return;
+            }
             foreach (DataRow dr in dataSet.Tables[0].Rows)
-            {       
+            {
                 if (this.EndFlowNode.FlowNodeID == dr["FK_Node"].ToString())
                 {
                     var brush = new SolidColorBrush();
@@ -1769,10 +1762,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     this.endArrow.Stroke = brush;
                     this.line.Stroke = brush;
                 }
-
-            }            
+            }
         }
-
         #endregion
     }
 }

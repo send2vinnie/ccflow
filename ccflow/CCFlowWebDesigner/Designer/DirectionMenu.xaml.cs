@@ -11,6 +11,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Liquid;
 using WF.Resources;
+using Ccflow.Web.UI.Control.Workflow.Designer;
+using BP;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
@@ -150,10 +152,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _container.IsContainerRefresh = false;
 
         }
-
-       
- 
-
         private void Menu_ItemSelected(object sender, MenuEventArgs e)
         {
             if (e.Tag == null)

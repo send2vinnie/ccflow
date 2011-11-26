@@ -16,6 +16,7 @@ using Silverlight;
 using WF.Designer;
 using Ccflow.Web.UI.Control.Workflow.Designer.Picture;
 using System.ComponentModel;
+using BP;
 
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
@@ -134,7 +135,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 sdPicture.CurrentContainer = value;
             }
         }
-
         FlowNodeType type = FlowNodeType.INTERACTION;
         public FlowNodeType Type
         {
@@ -146,10 +146,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 bool isChanged = false;
                 if (type != value)
-                {
-
                     isChanged = true;
-                }
+
                 type = value;
                 eiCenterEllipse.Visibility = Visibility.Visible;
                 sdPicture.Type = type;
@@ -158,10 +156,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 {
                     Move(this, null);
                 }
-
             }
         }
-
         string flowID;
         public string FlowID
         {
@@ -1139,10 +1135,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                     }
                 }
-                catch { }
+                catch
+                {
+                }
             }
         }
-
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
@@ -1152,7 +1149,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 {
                     _doubleClickTimer.Stop();
                     _container.ShowFlowNodeSetting(this);
-
                 }
                 else
                 {
@@ -1356,8 +1352,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             UserStation us = new UserStation();
             us.IsPass = true;
 
-
-
             if (Type == FlowNodeType.INITIAL)
             {
                 if (EndDirectionCollections != null
@@ -1455,17 +1449,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             return us;
         }
-
         public void Worklist(DataSet dataSet)
         {
             if (dataSet == null || dataSet.Tables.Count == 0)
-            {
                 return;
-            }
 
             bool ishave = false;
             string empName = "：";
-
             string sdt = "";
             int rowIndex = 0;
             foreach (DataRow dr in dataSet.Tables[0].Rows)
@@ -1477,37 +1467,29 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                     // 第一个点应该是 xxx在xxx时间发起，而非xxx在什么时间接受.
                     if (rowIndex == 0)
-                    {
                         sdt = DateTime.Parse(dr["RDT"].ToString()).ToString("MM月dd号HH时mm分") + "发起";
-                    }
                     else
-                    {
                         sdt = DateTime.Parse(dr["RDT"].ToString()).ToString("MM月dd号HH时mm分") + "接收";
-                    }
                 }
                 rowIndex++;
             }
-            if (ishave)
+            if (ishave == false)
+                return;
+
+            var dir = new Direction(_container)
             {
-                var dir = new Direction(_container)
-                {
-                    BeginFlowNode = this,
-                    EndFlowNode = stationTipControl,
-                    IsTemporaryDirection = true,
-                    FlowID = this.FlowID,
-                    Container = _container
-                };
+                BeginFlowNode = this,
+                EndFlowNode = stationTipControl,
+                IsTemporaryDirection = true,
+                FlowID = this.FlowID,
+                Container = _container
+            };
 
-                _container.AddDirection(dir);
-
-                stationTipControl.Visibility = Visibility.Visible;
-                stationTipControl.StationMessage = empName.TrimEnd(';') + "\n" + sdt;
-
-                _stationTipControl = null;
-                ishave = false;
-            }
+            _container.AddDirection(dir);
+            stationTipControl.Visibility = Visibility.Visible;
+            stationTipControl.StationMessage = empName.TrimEnd(';') + "\n" + sdt;
+            _stationTipControl = null;
         }
-
         public string StationMessage
         {
             set
@@ -1515,7 +1497,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 sdPicture.picSTATION.tbMessage.Text = value;
             }
         }
-
 
         #endregion 
         #endregion

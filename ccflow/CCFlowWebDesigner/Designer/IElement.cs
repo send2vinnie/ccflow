@@ -10,8 +10,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Silverlight;
 using WF.WS;
+using Ccflow.Web.UI.Control.Workflow.Designer;
 
-namespace Ccflow.Web.UI.Control.Workflow.Designer
+namespace BP
 {
     public enum MergePictureRepeatDirection
     {
@@ -19,14 +20,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         Horizontal,
         None
     }
-
+    /// <summary>
+    /// 节点类型
+    /// </summary>
     public enum FlowNodeType
     {
         INITIAL,
         INTERACTION,
         COMPLETION,
         AND_MERGE,
-        AND_BRANCH ,
+        AND_BRANCH,
         STATIONODE,
         AUTOMATION,
         DUMMY,
@@ -34,8 +37,62 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         OR_MERGE,
         SUBPROCESS,
         VOTE_MERGE,
-        
     }
+    /// <summary>
+    /// 运行模式
+    /// </summary>
+    public enum RunModel
+    {
+        /// <summary>
+        /// 普通
+        /// </summary>
+        Ordinary = 0,
+        /// <summary>
+        /// 合流
+        /// </summary>
+        HL = 1,
+        /// <summary>
+        /// 分流
+        /// </summary>
+        FL = 2,
+        /// <summary>
+        /// 分合流
+        /// </summary>
+        FHL
+    }
+    /// <summary>
+    /// 节点位置类型
+    /// </summary>
+    public enum FlowNodePosType
+    {
+        /// <summary>
+        /// 开始节点
+        /// </summary>
+        Start,
+        /// <summary>
+        /// 中间点
+        /// </summary>
+        Mid,
+        /// <summary>
+        /// 结束点
+        /// </summary>
+        End
+    }
+    //public enum FlowNodeType
+    //{
+    //    INITIAL,
+    //    INTERACTION,
+    //    COMPLETION,
+    //    AND_MERGE,
+    //    AND_BRANCH ,
+    //    STATIONODE,
+    //    AUTOMATION,
+    //    DUMMY,
+    //    OR_BRANCH,
+    //    OR_MERGE,
+    //    SUBPROCESS,
+    //    VOTE_MERGE,
+    //}
     
     public enum WorkFlowElementType
     {
