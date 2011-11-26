@@ -29,6 +29,7 @@ public partial class Comm_SelectMVals : WebPage
     {
         this.Title = "选择范围";
 
+
         UserRegedit ur = new UserRegedit();
         ur.MyPK = this.MyPK;
         if (ur.RetrieveFromDBSources() == 0)
@@ -36,7 +37,6 @@ public partial class Comm_SelectMVals : WebPage
             ur.MyPK = this.MyPK;
             ur.FK_Emp = WebUser.No;
             ur.CfgKey = this.EnsName + "_SearchAttrs";
-            //  ur.CfgKey = "SearchAttrs";
             ur.Insert();
         }
 

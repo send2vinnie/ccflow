@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Comm/WinOpen.master" AutoEventWireup="true" CodeFile="SelectMVals.aspx.cs" Inherits="Comm_SelectMVals" %>
-
 <%@ Register src="UC/Pub.ascx" tagname="Pub" tagprefix="uc1" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server"  >
 <script type="text/javascript">
     function SelectAll() {
