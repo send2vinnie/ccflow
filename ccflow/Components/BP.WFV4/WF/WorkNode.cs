@@ -2737,19 +2737,9 @@ namespace BP.WF
             {
                 if (this.HisNode.IsStartNode)
                 {
-                   
-
                     this.InitStartWorkData();
                     this.rptGe = this.HisNode.HisFlow.HisFlowData;
-                    rptGe.SetValByKey("OID", this.WorkID);
-                    rptGe.Delete();
-                    rptGe.SetValByKey(GERptAttr.FlowEmps, "@" + WebUser.No + "," + WebUser.Name);
-                    rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No);
-                    rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
-                    rptGe.SetValByKey(GERptAttr.WFState, 0);
-                    rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
-                    rptGe.Copy(this.HisWork);
- 
+                  
                 }
                 else
                 {
@@ -2785,6 +2775,13 @@ namespace BP.WF
                 rptGe.SetValByKey("OID", this.WorkID);
                 if (this.HisNode.IsStartNode)
                 {
+                    rptGe.SetValByKey("OID", this.WorkID);
+                    rptGe.DirectDelete();
+                    rptGe.SetValByKey(GERptAttr.FlowEmps, "@" + WebUser.No + "," + WebUser.Name);
+                    rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No);
+                    rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
+                    rptGe.SetValByKey(GERptAttr.WFState, 0);
+                    rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
                     rptGe.Copy(this.HisWork);
                     rptGe.Insert();
                 }

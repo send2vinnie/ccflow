@@ -2417,41 +2417,6 @@ namespace BP.WF
 
             return base.beforeDelete();
         }
-        public void RepariMap()
-        {
-            
-            BP.Sys.MapData md = new BP.Sys.MapData();
-            md.No = "ND" + this.NodeID;
-            if (md.RetrieveFromDBSources() == 1)
-            {
-            }
-            else
-            {
-                md.Name = this.Name;
-                md.Insert();
-            }
-
-            Map map = md.GenerHisMap();
-            if (md.No == "ND101")
-            {
-                int Y = 0;
-            }
-            if (map.Attrs.Contains(WorkAttr.FID) == false)
-            {
-                BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
-                attr.FK_MapData = md.No;
-                attr.HisEditType = BP.En.EditType.Readonly;
-                attr.KeyOfEn = "FID";
-                attr.Name = "FID";
-                attr.MyDataType = BP.DA.DataType.AppInt;
-                attr.UIContralType = UIContralType.TB;
-                attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = false;
-                attr.UIIsEnable = false;
-                attr.DefVal = "0";
-                attr.Insert();
-            }
-        }
         /// <summary>
         /// 文书流程
         /// </summary>

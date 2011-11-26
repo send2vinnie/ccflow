@@ -645,7 +645,6 @@ namespace BP.WF
             DBAccess.RunSQL("UPDATE WF_Node SET FlowName = (SELECT Name FROM WF_Flow WHERE NO=WF_Node.FK_Flow)");
             this.NumOfBill = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM WF_BillTemplate WHERE NodeID IN (select NodeID from WF_Flow where no='" + this.No + "')");
             this.NumOfDtl = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM Sys_MapDtl WHERE FK_MapData='ND" + int.Parse(this.No) + "Rpt'");
-
             this.DirectUpdate();
 
             string msg = "<font color=blue>" + this.ToE("About", "关于") + "《" + this.Name + " 》 " + this.ToE("FlowCheckInfo", "流程检查信息") + "</font><hr>";
@@ -666,6 +665,8 @@ namespace BP.WF
             #region 对节点进行检查
             foreach (Node nd in nds)
             {
+                nd.RepareMap();
+
                 DBAccess.RunSQL("UPDATE Sys_MapData SET Name='" + nd.Name + "' WHERE No='ND" + nd.NodeID + "'");
                 try
                 {
@@ -678,12 +679,14 @@ namespace BP.WF
 
                 rpt += "<hr><b>" + this.ToEP1("NStep", "@第{0}步", nd.Step.ToString()) + "：" + nd.Name + "：</b><br>";
                 rpt += this.ToE("Info", "信息") + "：";
-
+                 
                 BP.Sys.MapAttrs attrs = new BP.Sys.MapAttrs("ND" + nd.NodeID);
+
                 foreach (BP.Sys.MapAttr attr in attrs)
                 {
                     rpt += attr.KeyOfEn + " " + attr.Name + "、";
                 }
+
                 // 明细表检查。
                 Sys.MapDtls dtls = new BP.Sys.MapDtls("ND" + nd.NodeID);
                 foreach (Sys.MapDtl dtl in dtls)

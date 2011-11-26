@@ -16,6 +16,7 @@ namespace BP.WF
 		/// <param name="workId"></param>
         public static void DeleteByWorkID(Int64 workId)
 		{
+             
 			System.Web.HttpContext.Current.Application.Lock();
 			Msgs msgs= (Msgs)System.Web.HttpContext.Current.Application["WFMsgs"];	
 			if (msgs==null)
