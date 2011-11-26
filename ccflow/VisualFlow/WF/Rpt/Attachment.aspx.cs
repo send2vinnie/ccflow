@@ -47,7 +47,7 @@ public partial class WF_Rpt_Attachment : WebPage
         #endregion 处理风格
 
         string flowID = int.Parse(this.FK_Flow).ToString();
-        string sql = "SELECT * FROM Sys_FrmAttachmentDB WHERE FK_FrmAttachment IN (SELECT MyPK FROM Sys_FrmAttachment WHERE FK_MapData LIKE 'ND" + flowID + "%' AND IsUpload=1) AND RefPKVal='" + this.OID + "'";
+        string sql = "SELECT * FROM Sys_FrmAttachmentDB WHERE FK_FrmAttachment IN (SELECT MyPK FROM Sys_FrmAttachment WHERE FK_MapData LIKE 'ND" + flowID + "%' AND IsUpload=1) AND RefPKVal='" + this.OID + "' ORDER BY RDT";
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
         if (dt.Rows.Count == 0)
         {
@@ -56,7 +56,7 @@ public partial class WF_Rpt_Attachment : WebPage
         }
 
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeft("附件");
+        this.Pub1.AddCaptionLeft("流程附件");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle("附件编号");

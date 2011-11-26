@@ -146,24 +146,7 @@ namespace BP.Web
                 return "Error:" + ex.Message;
             }
         }
-        ///// <summary>
-        ///// 运行sql返回table.
-        ///// </summary>
-        ///// <param name="sql"></param>
-        ///// <returns></returns>
-        //[WebMethod]
-        //public string RunSQLReturnTable(string sql)
-        //{
-        //    DataSet ds = new DataSet();
-        //    ds.Tables.Add(BP.DA.DBAccess.RunSQLReturnTable(sql));
-        //    return Connector.ToXml(ds);
-        //}
-        /// <summary>
-        /// 运行sql返回table.
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        [WebMethod]
+       
         public string RunSQLReturnTableS(string[] sqls)
         {
             DataSet ds = new DataSet();
@@ -172,6 +155,7 @@ namespace BP.Web
             {
                 if (string.IsNullOrEmpty(sql))
                     continue;
+
                 DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 dt.TableName = "DT" + i;
                 ds.Tables.Add(dt);

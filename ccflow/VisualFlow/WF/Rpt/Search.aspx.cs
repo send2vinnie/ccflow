@@ -229,6 +229,7 @@ public partial class WF_Rpt_Search : WebPage
     public void BindEns(Entities ens, string ctrlId)
     {
         MapData md = new MapData(this.EnsName);
+        this.Title = md.Name + " - 流程通用查询";
 
         this.UCSys1.Controls.Clear();
         Entity myen = ens.GetNewEntity;
@@ -256,7 +257,6 @@ public partial class WF_Rpt_Search : WebPage
             selectedAttrs.Add(attr);
         }
         #endregion 求出可显示的属性.
-
 
         #region  生成标题
         this.UCSys1.Add("<Table border='1' width='20%' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0'>");

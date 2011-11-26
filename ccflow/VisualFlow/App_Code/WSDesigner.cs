@@ -71,7 +71,7 @@ public class WSDesigner : WSBase
         {
             string sql = " SELECT A.FK_Node, A.RDT,A.SDT,A.FK_Emp,b.Name as EmpName";
             sql += " FROM WF_GenerWorkerList A, WF_Emp B WHERE A.FK_Emp=b.No AND A.IsEnable=1 AND A.WorkID=" + workid + " Order by A.SDT";
-
+            
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
             if (dt.Rows.Count == 0)
             {
@@ -207,22 +207,15 @@ public class WSDesigner : WSBase
         }
         return url;
     }
-    
-    [WebMethod(EnableSession = true)]
-    public DataTable RunSQLReturnTablePeng(string sql)
-    {
-        return BP.DA.DBAccess.RunSQLReturnTable(sql);
-    }
 
     [WebMethod(EnableSession = true)]
-    public string RunSQLReturnTable(string sql,bool isLogin)
+    public string RunSQLReturnTable(string sql, bool isLogin)
     {
         try
         {
             LetAdminLogin("CH", isLogin);
-            DataSet ds =  BP.DA.DBAccess.RunSQLReturnDataSet(sql);
+            DataSet ds = BP.DA.DBAccess.RunSQLReturnDataSet(sql);
             return Connector.ToXml(ds);
-
         }
         catch (Exception ex)
         {
@@ -231,37 +224,6 @@ public class WSDesigner : WSBase
         return string.Empty;
     }
 
-    /// <summary>
-    /// 运行sql返回table.
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <returns></returns>
-    [WebMethod]
-    public string RunSQLReturnTableS(string[] sqls)
-    {
-        try
-        {
-            DataSet ds = new DataSet();
-            int i = 0;
-            foreach (string sql in sqls)
-            {
-                if (string.IsNullOrEmpty(sql))
-                    continue;
-                DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-                dt.TableName = "DT" + i;
-                ds.Tables.Add(dt);
-                i++;
-            }
-            return Connector.ToXml(ds);
-        }
-        catch (Exception ex)
-        {
-            BP.DA.Log.DefaultLogWriteLineError("RunSqlReturnTableS返回了错误, para:\t" + sqls.ToString()+ex.Message);
-        }
-        return string.Empty;
-
-    }
-    
     [WebMethod(EnableSession = true)]
     [Obsolete]
     public string GetFlowBySort(string sort)
@@ -270,8 +232,6 @@ public class WSDesigner : WSBase
         ds = BP.DA.DBAccess.RunSQLReturnDataSet("select No,Name,FK_FlowSort from WF_Flow");
         return Connector.ToXml(ds);
     }
-
-   
     /// <summary>
     /// 岗位人员
     /// </summary>
@@ -508,8 +468,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 {
                     var sqls = new string[] { "select NO,NAME from WF_FlowSort", "select No,Name,FK_FlowSort from WF_Flow " };
                     return RunSQLReturnTableS(sqls);
-                    break;
-
                 }
                 catch (Exception ex)
                 {

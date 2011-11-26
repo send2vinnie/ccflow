@@ -61,7 +61,7 @@
     <form id="form1" runat="server" style="height:100%">
     <div id="silverlightControlHost">
 		<object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="100%" height="100%">
-			<param name="source" value="../ClientBin/WF.xap"/>
+			<param name="source" value="../ClientBin/CCFlowDesigner.xap"/>
 			<param name="onerror" value="onSilverlightError" />
 			<param name="background" value="white" />
 			<param name="minRuntimeVersion" value="2.0.31005.0" />
