@@ -178,11 +178,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStringByKey(FrmEventAttr.DoDoc).Replace("~","'");
+                return this.GetValStringByKey(FrmEventAttr.DoDoc).Replace("~", "'");
             }
             set
             {
-                string doc = value.Replace("'","~");
+                string doc = value.Replace("'", "~");
                 this.SetValByKey(FrmEventAttr.DoDoc, doc);
             }
         }
@@ -246,7 +246,7 @@ namespace BP.Sys
             }
             return val;
         }
- 
+
         public string FK_Event
         {
             get
@@ -297,7 +297,7 @@ namespace BP.Sys
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.AddMyPK();
-                 
+
                 map.AddTBString(FrmEventAttr.FK_Event, null, "ÊÂ¼þÃû³Æ", true, true, 0, 400, 10);
                 map.AddTBString(FrmEventAttr.FK_MapData, null, "FK_MapData", true, true, 0, 400, 10);
 
