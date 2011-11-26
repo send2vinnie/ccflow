@@ -272,7 +272,7 @@ namespace BP
             sqls += "@SELECT MyPK,Name,FK_Flow,X,Y FROM WF_LabNote WHERE FK_Flow='" + flowID + "'";
             sqls += "@SELECT Node,ToNode FROM WF_Direction ";
             WSDesignerSoapClient ws = BP.Glo.GetDesignerServiceInstance();
-            ws.RunSQLReturnTableSAsync(sqls.Split('@'));
+            ws.RunSQLReturnTableSAsync(sqls);
             ws.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(ws_RunSQLReturnTableSCompleted);
         }
         void ws_RunSQLReturnTableSCompleted(object sender, RunSQLReturnTableSCompletedEventArgs e)
