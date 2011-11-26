@@ -716,7 +716,7 @@ namespace CCForm
             //sqls += "@SELECT No,Name,FK_MapData,PTable,IsUpdate FROM Sys_MapDtl WHERE  FK_MapData IN( SELECT No FROM WF_Frm WHERE FK_Flow='" + Glo.FK_Flow + "')";
 
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-            da.RunSQLReturnTableSAsync(sqls.Split('@'));
+            da.RunSQLReturnTableSAsync(sqls);
             da.RunSQLReturnTableSCompleted += new EventHandler<FF.RunSQLReturnTableSCompletedEventArgs>(BindTreeView_RunSQLReturnTableCompleted);
 
             //sqls = "SELECT * FROM WF_Frm WHERE FK_Flow='" + Glo.FK_Flow + "'";

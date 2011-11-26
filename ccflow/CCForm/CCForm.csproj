@@ -391,22 +391,22 @@
     <Compile Include="Ctrl\BPDir.cs" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
-    <None Include="Service References\FF\CCForm.disco" />
     <None Include="Service References\FF\CCForm.FF.LoadFrmTempleteResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\FF\CCForm.FF.UploadFileResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\FF\CCForm.wsdl" />
+    <Resource Include="Img\Menu\Hidden.png" />
+    <None Include="Service References\FF\CCForm.disco" />
     <None Include="Service References\FF\configuration91.svcinfo" />
     <None Include="Service References\FF\configuration.svcinfo" />
     <None Include="Service References\FF\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Resource Include="Img\Menu\Hidden.png" />
     <Content Include="ServiceReferences.ClientConfig" />
-    <None Include="Service References\FF\CCForm.wsdl" />
     <Resource Include="Img\Alignment_Center.png" />
     <Resource Include="Img\Alignment_Down.png" />
     <Resource Include="Img\Alignment_Left.png" />

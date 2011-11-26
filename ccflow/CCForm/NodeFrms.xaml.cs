@@ -30,7 +30,7 @@ namespace CCForm
             sqls += "@SELECT * FROM WF_FrmNode WHERE FK_Node=" + this.FK_Node;
 
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-            da.RunSQLReturnTableSAsync(sqls.Split('@'));
+            da.RunSQLReturnTableSAsync(sqls);
             da.RunSQLReturnTableSCompleted += new EventHandler<FF.RunSQLReturnTableSCompletedEventArgs>(da_RunSQLReturnTableSCompleted);
             base.OnOpened();
         }

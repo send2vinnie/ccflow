@@ -16,20 +16,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="BackUpFrm_del">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="fk_mapdata" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="BackUpFrm_delResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="BackUpFrm_delResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="LoadFrmTemplete">
         <s:complexType>
           <s:sequence>
@@ -77,20 +63,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="RunSQLs">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="sqls" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="RunSQLsResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="RunSQLsResult" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="DoType">
         <s:complexType>
           <s:sequence>
@@ -124,20 +96,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="RunSQLReturnTable">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="sql" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="RunSQLReturnTableResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="RunSQLReturnTableResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="FtpMethod">
         <s:complexType>
           <s:sequence>
@@ -152,25 +110,6 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="FtpMethodResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="RunSQLReturnTableS">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="sqls" type="tns:ArrayOfString" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ArrayOfString">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="RunSQLReturnTableSResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="RunSQLReturnTableSResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -264,6 +203,62 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="RunSQL">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sql" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RunSQLResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLs">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sqls" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RunSQLsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLReturnTable">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sql" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLReturnTableResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RunSQLReturnTableResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLReturnTableS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sqls" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLReturnTableSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RunSQLReturnTableSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="string" nillable="true" type="s:string" />
       <s:element name="int" type="s:int" />
     </s:schema>
@@ -286,12 +281,6 @@
   <wsdl:message name="CfgKeySoapOut">
     <wsdl:part name="parameters" element="tns:CfgKeyResponse" />
   </wsdl:message>
-  <wsdl:message name="BackUpFrm_delSoapIn">
-    <wsdl:part name="parameters" element="tns:BackUpFrm_del" />
-  </wsdl:message>
-  <wsdl:message name="BackUpFrm_delSoapOut">
-    <wsdl:part name="parameters" element="tns:BackUpFrm_delResponse" />
-  </wsdl:message>
   <wsdl:message name="LoadFrmTempleteSoapIn">
     <wsdl:part name="parameters" element="tns:LoadFrmTemplete" />
   </wsdl:message>
@@ -310,12 +299,6 @@
   <wsdl:message name="UploadFileSoapOut">
     <wsdl:part name="parameters" element="tns:UploadFileResponse" />
   </wsdl:message>
-  <wsdl:message name="RunSQLsSoapIn">
-    <wsdl:part name="parameters" element="tns:RunSQLs" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLsSoapOut">
-    <wsdl:part name="parameters" element="tns:RunSQLsResponse" />
-  </wsdl:message>
   <wsdl:message name="DoTypeSoapIn">
     <wsdl:part name="parameters" element="tns:DoType" />
   </wsdl:message>
@@ -328,23 +311,11 @@
   <wsdl:message name="SaveEnSoapOut">
     <wsdl:part name="parameters" element="tns:SaveEnResponse" />
   </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableSoapIn">
-    <wsdl:part name="parameters" element="tns:RunSQLReturnTable" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableSoapOut">
-    <wsdl:part name="parameters" element="tns:RunSQLReturnTableResponse" />
-  </wsdl:message>
   <wsdl:message name="FtpMethodSoapIn">
     <wsdl:part name="parameters" element="tns:FtpMethod" />
   </wsdl:message>
   <wsdl:message name="FtpMethodSoapOut">
     <wsdl:part name="parameters" element="tns:FtpMethodResponse" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableSSoapIn">
-    <wsdl:part name="parameters" element="tns:RunSQLReturnTableS" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableSSoapOut">
-    <wsdl:part name="parameters" element="tns:RunSQLReturnTableSResponse" />
   </wsdl:message>
   <wsdl:message name="ParseStringToPinyinSoapIn">
     <wsdl:part name="parameters" element="tns:ParseStringToPinyin" />
@@ -382,16 +353,34 @@
   <wsdl:message name="SaveEnumSoapOut">
     <wsdl:part name="parameters" element="tns:SaveEnumResponse" />
   </wsdl:message>
+  <wsdl:message name="RunSQLSoapIn">
+    <wsdl:part name="parameters" element="tns:RunSQL" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLSoapOut">
+    <wsdl:part name="parameters" element="tns:RunSQLResponse" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLsSoapIn">
+    <wsdl:part name="parameters" element="tns:RunSQLs" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLsSoapOut">
+    <wsdl:part name="parameters" element="tns:RunSQLsResponse" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableSoapIn">
+    <wsdl:part name="parameters" element="tns:RunSQLReturnTable" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableSoapOut">
+    <wsdl:part name="parameters" element="tns:RunSQLReturnTableResponse" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableSSoapIn">
+    <wsdl:part name="parameters" element="tns:RunSQLReturnTableS" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableSSoapOut">
+    <wsdl:part name="parameters" element="tns:RunSQLReturnTableSResponse" />
+  </wsdl:message>
   <wsdl:message name="CfgKeyHttpGetIn">
     <wsdl:part name="kev" type="s:string" />
   </wsdl:message>
   <wsdl:message name="CfgKeyHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="BackUpFrm_delHttpGetIn">
-    <wsdl:part name="fk_mapdata" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="BackUpFrm_delHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="LoadFrmTempleteHttpGetIn">
@@ -417,12 +406,6 @@
   <wsdl:message name="UploadFileHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="RunSQLsHttpGetIn">
-    <wsdl:part name="sqls" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLsHttpGetOut">
-    <wsdl:part name="Body" element="tns:int" />
-  </wsdl:message>
   <wsdl:message name="DoTypeHttpGetIn">
     <wsdl:part name="dotype" type="s:string" />
     <wsdl:part name="v1" type="s:string" />
@@ -440,12 +423,6 @@
   <wsdl:message name="SaveEnHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableHttpGetIn">
-    <wsdl:part name="sql" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
   <wsdl:message name="FtpMethodHttpGetIn">
     <wsdl:part name="doType" type="s:string" />
     <wsdl:part name="v1" type="s:string" />
@@ -453,12 +430,6 @@
     <wsdl:part name="v3" type="s:string" />
   </wsdl:message>
   <wsdl:message name="FtpMethodHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableSHttpGetIn">
-    <wsdl:part name="sqls" type="s1:StringArray" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableSHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="ParseStringToPinyinHttpGetIn">
@@ -503,16 +474,34 @@
   <wsdl:message name="SaveEnumHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
+  <wsdl:message name="RunSQLHttpGetIn">
+    <wsdl:part name="sql" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLsHttpGetIn">
+    <wsdl:part name="sqls" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLsHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableHttpGetIn">
+    <wsdl:part name="sql" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableSHttpGetIn">
+    <wsdl:part name="sqls" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableSHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
   <wsdl:message name="CfgKeyHttpPostIn">
     <wsdl:part name="kev" type="s:string" />
   </wsdl:message>
   <wsdl:message name="CfgKeyHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="BackUpFrm_delHttpPostIn">
-    <wsdl:part name="fk_mapdata" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="BackUpFrm_delHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="LoadFrmTempleteHttpPostIn">
@@ -538,12 +527,6 @@
   <wsdl:message name="UploadFileHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="RunSQLsHttpPostIn">
-    <wsdl:part name="sqls" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLsHttpPostOut">
-    <wsdl:part name="Body" element="tns:int" />
-  </wsdl:message>
   <wsdl:message name="DoTypeHttpPostIn">
     <wsdl:part name="dotype" type="s:string" />
     <wsdl:part name="v1" type="s:string" />
@@ -561,12 +544,6 @@
   <wsdl:message name="SaveEnHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableHttpPostIn">
-    <wsdl:part name="sql" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
   <wsdl:message name="FtpMethodHttpPostIn">
     <wsdl:part name="doType" type="s:string" />
     <wsdl:part name="v1" type="s:string" />
@@ -574,12 +551,6 @@
     <wsdl:part name="v3" type="s:string" />
   </wsdl:message>
   <wsdl:message name="FtpMethodHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableSHttpPostIn">
-    <wsdl:part name="sqls" type="s1:StringArray" />
-  </wsdl:message>
-  <wsdl:message name="RunSQLReturnTableSHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="ParseStringToPinyinHttpPostIn">
@@ -624,14 +595,34 @@
   <wsdl:message name="SaveEnumHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
+  <wsdl:message name="RunSQLHttpPostIn">
+    <wsdl:part name="sql" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLsHttpPostIn">
+    <wsdl:part name="sqls" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLsHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableHttpPostIn">
+    <wsdl:part name="sql" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableSHttpPostIn">
+    <wsdl:part name="sqls" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnTableSHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
   <wsdl:portType name="CCFormSoap">
     <wsdl:operation name="CfgKey">
       <wsdl:input message="tns:CfgKeySoapIn" />
       <wsdl:output message="tns:CfgKeySoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="BackUpFrm_del">
-      <wsdl:input message="tns:BackUpFrm_delSoapIn" />
-      <wsdl:output message="tns:BackUpFrm_delSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="LoadFrmTemplete">
       <wsdl:input message="tns:LoadFrmTempleteSoapIn" />
@@ -645,10 +636,6 @@
       <wsdl:input message="tns:UploadFileSoapIn" />
       <wsdl:output message="tns:UploadFileSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="RunSQLs">
-      <wsdl:input message="tns:RunSQLsSoapIn" />
-      <wsdl:output message="tns:RunSQLsSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="DoType">
       <wsdl:input message="tns:DoTypeSoapIn" />
       <wsdl:output message="tns:DoTypeSoapOut" />
@@ -657,17 +644,9 @@
       <wsdl:input message="tns:SaveEnSoapIn" />
       <wsdl:output message="tns:SaveEnSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTable">
-      <wsdl:input message="tns:RunSQLReturnTableSoapIn" />
-      <wsdl:output message="tns:RunSQLReturnTableSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="FtpMethod">
       <wsdl:input message="tns:FtpMethodSoapIn" />
       <wsdl:output message="tns:FtpMethodSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTableS">
-      <wsdl:input message="tns:RunSQLReturnTableSSoapIn" />
-      <wsdl:output message="tns:RunSQLReturnTableSSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ParseStringToPinyin">
       <wsdl:input message="tns:ParseStringToPinyinSoapIn" />
@@ -693,15 +672,27 @@
       <wsdl:input message="tns:SaveEnumSoapIn" />
       <wsdl:output message="tns:SaveEnumSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="RunSQL">
+      <wsdl:input message="tns:RunSQLSoapIn" />
+      <wsdl:output message="tns:RunSQLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLs">
+      <wsdl:input message="tns:RunSQLsSoapIn" />
+      <wsdl:output message="tns:RunSQLsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTable">
+      <wsdl:input message="tns:RunSQLReturnTableSoapIn" />
+      <wsdl:output message="tns:RunSQLReturnTableSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTableS">
+      <wsdl:input message="tns:RunSQLReturnTableSSoapIn" />
+      <wsdl:output message="tns:RunSQLReturnTableSSoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="CCFormHttpGet">
     <wsdl:operation name="CfgKey">
       <wsdl:input message="tns:CfgKeyHttpGetIn" />
       <wsdl:output message="tns:CfgKeyHttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="BackUpFrm_del">
-      <wsdl:input message="tns:BackUpFrm_delHttpGetIn" />
-      <wsdl:output message="tns:BackUpFrm_delHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="LoadFrmTemplete">
       <wsdl:input message="tns:LoadFrmTempleteHttpGetIn" />
@@ -715,10 +706,6 @@
       <wsdl:input message="tns:UploadFileHttpGetIn" />
       <wsdl:output message="tns:UploadFileHttpGetOut" />
     </wsdl:operation>
-    <wsdl:operation name="RunSQLs">
-      <wsdl:input message="tns:RunSQLsHttpGetIn" />
-      <wsdl:output message="tns:RunSQLsHttpGetOut" />
-    </wsdl:operation>
     <wsdl:operation name="DoType">
       <wsdl:input message="tns:DoTypeHttpGetIn" />
       <wsdl:output message="tns:DoTypeHttpGetOut" />
@@ -727,17 +714,9 @@
       <wsdl:input message="tns:SaveEnHttpGetIn" />
       <wsdl:output message="tns:SaveEnHttpGetOut" />
     </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTable">
-      <wsdl:input message="tns:RunSQLReturnTableHttpGetIn" />
-      <wsdl:output message="tns:RunSQLReturnTableHttpGetOut" />
-    </wsdl:operation>
     <wsdl:operation name="FtpMethod">
       <wsdl:input message="tns:FtpMethodHttpGetIn" />
       <wsdl:output message="tns:FtpMethodHttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTableS">
-      <wsdl:input message="tns:RunSQLReturnTableSHttpGetIn" />
-      <wsdl:output message="tns:RunSQLReturnTableSHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="ParseStringToPinyin">
       <wsdl:input message="tns:ParseStringToPinyinHttpGetIn" />
@@ -763,15 +742,27 @@
       <wsdl:input message="tns:SaveEnumHttpGetIn" />
       <wsdl:output message="tns:SaveEnumHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="RunSQL">
+      <wsdl:input message="tns:RunSQLHttpGetIn" />
+      <wsdl:output message="tns:RunSQLHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLs">
+      <wsdl:input message="tns:RunSQLsHttpGetIn" />
+      <wsdl:output message="tns:RunSQLsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTable">
+      <wsdl:input message="tns:RunSQLReturnTableHttpGetIn" />
+      <wsdl:output message="tns:RunSQLReturnTableHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTableS">
+      <wsdl:input message="tns:RunSQLReturnTableSHttpGetIn" />
+      <wsdl:output message="tns:RunSQLReturnTableSHttpGetOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="CCFormHttpPost">
     <wsdl:operation name="CfgKey">
       <wsdl:input message="tns:CfgKeyHttpPostIn" />
       <wsdl:output message="tns:CfgKeyHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="BackUpFrm_del">
-      <wsdl:input message="tns:BackUpFrm_delHttpPostIn" />
-      <wsdl:output message="tns:BackUpFrm_delHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="LoadFrmTemplete">
       <wsdl:input message="tns:LoadFrmTempleteHttpPostIn" />
@@ -785,10 +776,6 @@
       <wsdl:input message="tns:UploadFileHttpPostIn" />
       <wsdl:output message="tns:UploadFileHttpPostOut" />
     </wsdl:operation>
-    <wsdl:operation name="RunSQLs">
-      <wsdl:input message="tns:RunSQLsHttpPostIn" />
-      <wsdl:output message="tns:RunSQLsHttpPostOut" />
-    </wsdl:operation>
     <wsdl:operation name="DoType">
       <wsdl:input message="tns:DoTypeHttpPostIn" />
       <wsdl:output message="tns:DoTypeHttpPostOut" />
@@ -797,17 +784,9 @@
       <wsdl:input message="tns:SaveEnHttpPostIn" />
       <wsdl:output message="tns:SaveEnHttpPostOut" />
     </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTable">
-      <wsdl:input message="tns:RunSQLReturnTableHttpPostIn" />
-      <wsdl:output message="tns:RunSQLReturnTableHttpPostOut" />
-    </wsdl:operation>
     <wsdl:operation name="FtpMethod">
       <wsdl:input message="tns:FtpMethodHttpPostIn" />
       <wsdl:output message="tns:FtpMethodHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTableS">
-      <wsdl:input message="tns:RunSQLReturnTableSHttpPostIn" />
-      <wsdl:output message="tns:RunSQLReturnTableSHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="ParseStringToPinyin">
       <wsdl:input message="tns:ParseStringToPinyinHttpPostIn" />
@@ -833,20 +812,27 @@
       <wsdl:input message="tns:SaveEnumHttpPostIn" />
       <wsdl:output message="tns:SaveEnumHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="RunSQL">
+      <wsdl:input message="tns:RunSQLHttpPostIn" />
+      <wsdl:output message="tns:RunSQLHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLs">
+      <wsdl:input message="tns:RunSQLsHttpPostIn" />
+      <wsdl:output message="tns:RunSQLsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTable">
+      <wsdl:input message="tns:RunSQLReturnTableHttpPostIn" />
+      <wsdl:output message="tns:RunSQLReturnTableHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTableS">
+      <wsdl:input message="tns:RunSQLReturnTableSHttpPostIn" />
+      <wsdl:output message="tns:RunSQLReturnTableSHttpPostOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CCFormSoap" type="tns:CCFormSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="CfgKey">
       <soap:operation soapAction="http://tempuri.org/CfgKey" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="BackUpFrm_del">
-      <soap:operation soapAction="http://tempuri.org/BackUpFrm_del" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -881,15 +867,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RunSQLs">
-      <soap:operation soapAction="http://tempuri.org/RunSQLs" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="DoType">
       <soap:operation soapAction="http://tempuri.org/DoType" style="document" />
       <wsdl:input>
@@ -908,26 +885,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTable">
-      <soap:operation soapAction="http://tempuri.org/RunSQLReturnTable" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="FtpMethod">
       <soap:operation soapAction="http://tempuri.org/FtpMethod" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTableS">
-      <soap:operation soapAction="http://tempuri.org/RunSQLReturnTableS" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -989,20 +948,47 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="RunSQL">
+      <soap:operation soapAction="http://tempuri.org/RunSQL" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLs">
+      <soap:operation soapAction="http://tempuri.org/RunSQLs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTable">
+      <soap:operation soapAction="http://tempuri.org/RunSQLReturnTable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTableS">
+      <soap:operation soapAction="http://tempuri.org/RunSQLReturnTableS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="CCFormSoap12" type="tns:CCFormSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="CfgKey">
       <soap12:operation soapAction="http://tempuri.org/CfgKey" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="BackUpFrm_del">
-      <soap12:operation soapAction="http://tempuri.org/BackUpFrm_del" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1037,15 +1023,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RunSQLs">
-      <soap12:operation soapAction="http://tempuri.org/RunSQLs" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="DoType">
       <soap12:operation soapAction="http://tempuri.org/DoType" style="document" />
       <wsdl:input>
@@ -1064,26 +1041,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTable">
-      <soap12:operation soapAction="http://tempuri.org/RunSQLReturnTable" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="FtpMethod">
       <soap12:operation soapAction="http://tempuri.org/FtpMethod" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTableS">
-      <soap12:operation soapAction="http://tempuri.org/RunSQLReturnTableS" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1145,20 +1104,47 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="RunSQL">
+      <soap12:operation soapAction="http://tempuri.org/RunSQL" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLs">
+      <soap12:operation soapAction="http://tempuri.org/RunSQLs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTable">
+      <soap12:operation soapAction="http://tempuri.org/RunSQLReturnTable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTableS">
+      <soap12:operation soapAction="http://tempuri.org/RunSQLReturnTableS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="CCFormHttpGet" type="tns:CCFormHttpGet">
     <http:binding verb="GET" />
     <wsdl:operation name="CfgKey">
       <http:operation location="/CfgKey" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="BackUpFrm_del">
-      <http:operation location="/BackUpFrm_del" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -1193,15 +1179,6 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RunSQLs">
-      <http:operation location="/RunSQLs" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="DoType">
       <http:operation location="/DoType" />
       <wsdl:input>
@@ -1220,26 +1197,8 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTable">
-      <http:operation location="/RunSQLReturnTable" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="FtpMethod">
       <http:operation location="/FtpMethod" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTableS">
-      <http:operation location="/RunSQLReturnTableS" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -1294,6 +1253,42 @@
     </wsdl:operation>
     <wsdl:operation name="SaveEnum">
       <http:operation location="/SaveEnum" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQL">
+      <http:operation location="/RunSQL" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLs">
+      <http:operation location="/RunSQLs" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTable">
+      <http:operation location="/RunSQLReturnTable" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTableS">
+      <http:operation location="/RunSQLReturnTableS" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -1313,15 +1308,6 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="BackUpFrm_del">
-      <http:operation location="/BackUpFrm_del" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="LoadFrmTemplete">
       <http:operation location="/LoadFrmTemplete" />
       <wsdl:input>
@@ -1349,15 +1335,6 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RunSQLs">
-      <http:operation location="/RunSQLs" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="DoType">
       <http:operation location="/DoType" />
       <wsdl:input>
@@ -1376,26 +1353,8 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTable">
-      <http:operation location="/RunSQLReturnTable" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="FtpMethod">
       <http:operation location="/FtpMethod" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RunSQLReturnTableS">
-      <http:operation location="/RunSQLReturnTableS" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -1450,6 +1409,42 @@
     </wsdl:operation>
     <wsdl:operation name="SaveEnum">
       <http:operation location="/SaveEnum" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQL">
+      <http:operation location="/RunSQL" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLs">
+      <http:operation location="/RunSQLs" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTable">
+      <http:operation location="/RunSQLReturnTable" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnTableS">
+      <http:operation location="/RunSQLReturnTableS" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

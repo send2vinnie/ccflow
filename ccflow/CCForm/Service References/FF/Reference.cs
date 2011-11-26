@@ -24,12 +24,6 @@ namespace CCForm.FF {
         
         string EndCfgKey(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BackUpFrm_del", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginBackUpFrm_del(string fk_mapdata, System.AsyncCallback callback, object asyncState);
-        
-        string EndBackUpFrm_del(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoadFrmTemplete", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.IAsyncResult BeginLoadFrmTemplete(CCForm.FF.LoadFrmTempleteRequest request, System.AsyncCallback callback, object asyncState);
@@ -48,12 +42,6 @@ namespace CCForm.FF {
         
         CCForm.FF.UploadFileResponse EndUploadFile(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQLs", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginRunSQLs(string sqls, System.AsyncCallback callback, object asyncState);
-        
-        int EndRunSQLs(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DoType", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.IAsyncResult BeginDoType(string dotype, string v1, string v2, string v3, string v4, string v5, System.AsyncCallback callback, object asyncState);
@@ -66,23 +54,11 @@ namespace CCForm.FF {
         
         string EndSaveEn(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQLReturnTable", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginRunSQLReturnTable(string sql, System.AsyncCallback callback, object asyncState);
-        
-        string EndRunSQLReturnTable(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/FtpMethod", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.IAsyncResult BeginFtpMethod(string doType, string v1, string v2, string v3, System.AsyncCallback callback, object asyncState);
         
         string EndFtpMethod(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQLReturnTableS", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginRunSQLReturnTableS(string[] sqls, System.AsyncCallback callback, object asyncState);
-        
-        string EndRunSQLReturnTableS(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ParseStringToPinyin", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -119,6 +95,30 @@ namespace CCForm.FF {
         System.IAsyncResult BeginSaveEnum(string enumKey, string enumLab, string cfg, System.AsyncCallback callback, object asyncState);
         
         string EndSaveEnum(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQL", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.IAsyncResult BeginRunSQL(string sql, System.AsyncCallback callback, object asyncState);
+        
+        int EndRunSQL(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQLs", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.IAsyncResult BeginRunSQLs(string sqls, System.AsyncCallback callback, object asyncState);
+        
+        int EndRunSQLs(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQLReturnTable", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.IAsyncResult BeginRunSQLReturnTable(string sql, System.AsyncCallback callback, object asyncState);
+        
+        string EndRunSQLReturnTable(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQLReturnTableS", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.IAsyncResult BeginRunSQLReturnTableS(string sqls, System.AsyncCallback callback, object asyncState);
+        
+        string EndRunSQLReturnTableS(System.IAsyncResult result);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -228,25 +228,6 @@ namespace CCForm.FF {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class BackUpFrm_delCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public BackUpFrm_delCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class LoadFrmTempleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -304,25 +285,6 @@ namespace CCForm.FF {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RunSQLsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public RunSQLsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public int Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((int)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class DoTypeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -361,49 +323,11 @@ namespace CCForm.FF {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RunSQLReturnTableCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public RunSQLReturnTableCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class FtpMethodCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
         public FtpMethodCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RunSQLReturnTableSCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public RunSQLReturnTableSCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -532,6 +456,82 @@ namespace CCForm.FF {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RunSQLCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RunSQLCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public int Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RunSQLsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RunSQLsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public int Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RunSQLReturnTableCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RunSQLReturnTableCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RunSQLReturnTableSCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RunSQLReturnTableSCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class CCFormSoapClient : System.ServiceModel.ClientBase<CCForm.FF.CCFormSoap>, CCForm.FF.CCFormSoap {
         
         private BeginOperationDelegate onBeginCfgKeyDelegate;
@@ -539,12 +539,6 @@ namespace CCForm.FF {
         private EndOperationDelegate onEndCfgKeyDelegate;
         
         private System.Threading.SendOrPostCallback onCfgKeyCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginBackUpFrm_delDelegate;
-        
-        private EndOperationDelegate onEndBackUpFrm_delDelegate;
-        
-        private System.Threading.SendOrPostCallback onBackUpFrm_delCompletedDelegate;
         
         private BeginOperationDelegate onBeginLoadFrmTempleteDelegate;
         
@@ -564,12 +558,6 @@ namespace CCForm.FF {
         
         private System.Threading.SendOrPostCallback onUploadFileCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRunSQLsDelegate;
-        
-        private EndOperationDelegate onEndRunSQLsDelegate;
-        
-        private System.Threading.SendOrPostCallback onRunSQLsCompletedDelegate;
-        
         private BeginOperationDelegate onBeginDoTypeDelegate;
         
         private EndOperationDelegate onEndDoTypeDelegate;
@@ -582,23 +570,11 @@ namespace CCForm.FF {
         
         private System.Threading.SendOrPostCallback onSaveEnCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRunSQLReturnTableDelegate;
-        
-        private EndOperationDelegate onEndRunSQLReturnTableDelegate;
-        
-        private System.Threading.SendOrPostCallback onRunSQLReturnTableCompletedDelegate;
-        
         private BeginOperationDelegate onBeginFtpMethodDelegate;
         
         private EndOperationDelegate onEndFtpMethodDelegate;
         
         private System.Threading.SendOrPostCallback onFtpMethodCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginRunSQLReturnTableSDelegate;
-        
-        private EndOperationDelegate onEndRunSQLReturnTableSDelegate;
-        
-        private System.Threading.SendOrPostCallback onRunSQLReturnTableSCompletedDelegate;
         
         private BeginOperationDelegate onBeginParseStringToPinyinDelegate;
         
@@ -635,6 +611,30 @@ namespace CCForm.FF {
         private EndOperationDelegate onEndSaveEnumDelegate;
         
         private System.Threading.SendOrPostCallback onSaveEnumCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRunSQLDelegate;
+        
+        private EndOperationDelegate onEndRunSQLDelegate;
+        
+        private System.Threading.SendOrPostCallback onRunSQLCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRunSQLsDelegate;
+        
+        private EndOperationDelegate onEndRunSQLsDelegate;
+        
+        private System.Threading.SendOrPostCallback onRunSQLsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRunSQLReturnTableDelegate;
+        
+        private EndOperationDelegate onEndRunSQLReturnTableDelegate;
+        
+        private System.Threading.SendOrPostCallback onRunSQLReturnTableCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRunSQLReturnTableSDelegate;
+        
+        private EndOperationDelegate onEndRunSQLReturnTableSDelegate;
+        
+        private System.Threading.SendOrPostCallback onRunSQLReturnTableSCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -690,25 +690,17 @@ namespace CCForm.FF {
         
         public event System.EventHandler<CfgKeyCompletedEventArgs> CfgKeyCompleted;
         
-        public event System.EventHandler<BackUpFrm_delCompletedEventArgs> BackUpFrm_delCompleted;
-        
         public event System.EventHandler<LoadFrmTempleteCompletedEventArgs> LoadFrmTempleteCompleted;
         
         public event System.EventHandler<LoadFrmTempleteFileCompletedEventArgs> LoadFrmTempleteFileCompleted;
         
         public event System.EventHandler<UploadFileCompletedEventArgs> UploadFileCompleted;
         
-        public event System.EventHandler<RunSQLsCompletedEventArgs> RunSQLsCompleted;
-        
         public event System.EventHandler<DoTypeCompletedEventArgs> DoTypeCompleted;
         
         public event System.EventHandler<SaveEnCompletedEventArgs> SaveEnCompleted;
         
-        public event System.EventHandler<RunSQLReturnTableCompletedEventArgs> RunSQLReturnTableCompleted;
-        
         public event System.EventHandler<FtpMethodCompletedEventArgs> FtpMethodCompleted;
-        
-        public event System.EventHandler<RunSQLReturnTableSCompletedEventArgs> RunSQLReturnTableSCompleted;
         
         public event System.EventHandler<ParseStringToPinyinCompletedEventArgs> ParseStringToPinyinCompleted;
         
@@ -721,6 +713,14 @@ namespace CCForm.FF {
         public event System.EventHandler<SaveFrmCompletedEventArgs> SaveFrmCompleted;
         
         public event System.EventHandler<SaveEnumCompletedEventArgs> SaveEnumCompleted;
+        
+        public event System.EventHandler<RunSQLCompletedEventArgs> RunSQLCompleted;
+        
+        public event System.EventHandler<RunSQLsCompletedEventArgs> RunSQLsCompleted;
+        
+        public event System.EventHandler<RunSQLReturnTableCompletedEventArgs> RunSQLReturnTableCompleted;
+        
+        public event System.EventHandler<RunSQLReturnTableSCompletedEventArgs> RunSQLReturnTableSCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -770,52 +770,6 @@ namespace CCForm.FF {
             }
             base.InvokeAsync(this.onBeginCfgKeyDelegate, new object[] {
                         kev}, this.onEndCfgKeyDelegate, this.onCfgKeyCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult CCForm.FF.CCFormSoap.BeginBackUpFrm_del(string fk_mapdata, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginBackUpFrm_del(fk_mapdata, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string CCForm.FF.CCFormSoap.EndBackUpFrm_del(System.IAsyncResult result) {
-            return base.Channel.EndBackUpFrm_del(result);
-        }
-        
-        private System.IAsyncResult OnBeginBackUpFrm_del(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string fk_mapdata = ((string)(inValues[0]));
-            return ((CCForm.FF.CCFormSoap)(this)).BeginBackUpFrm_del(fk_mapdata, callback, asyncState);
-        }
-        
-        private object[] OnEndBackUpFrm_del(System.IAsyncResult result) {
-            string retVal = ((CCForm.FF.CCFormSoap)(this)).EndBackUpFrm_del(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnBackUpFrm_delCompleted(object state) {
-            if ((this.BackUpFrm_delCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.BackUpFrm_delCompleted(this, new BackUpFrm_delCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void BackUpFrm_delAsync(string fk_mapdata) {
-            this.BackUpFrm_delAsync(fk_mapdata, null);
-        }
-        
-        public void BackUpFrm_delAsync(string fk_mapdata, object userState) {
-            if ((this.onBeginBackUpFrm_delDelegate == null)) {
-                this.onBeginBackUpFrm_delDelegate = new BeginOperationDelegate(this.OnBeginBackUpFrm_del);
-            }
-            if ((this.onEndBackUpFrm_delDelegate == null)) {
-                this.onEndBackUpFrm_delDelegate = new EndOperationDelegate(this.OnEndBackUpFrm_del);
-            }
-            if ((this.onBackUpFrm_delCompletedDelegate == null)) {
-                this.onBackUpFrm_delCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnBackUpFrm_delCompleted);
-            }
-            base.InvokeAsync(this.onBeginBackUpFrm_delDelegate, new object[] {
-                        fk_mapdata}, this.onEndBackUpFrm_delDelegate, this.onBackUpFrm_delCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -996,52 +950,6 @@ namespace CCForm.FF {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult CCForm.FF.CCFormSoap.BeginRunSQLs(string sqls, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRunSQLs(sqls, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        int CCForm.FF.CCFormSoap.EndRunSQLs(System.IAsyncResult result) {
-            return base.Channel.EndRunSQLs(result);
-        }
-        
-        private System.IAsyncResult OnBeginRunSQLs(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string sqls = ((string)(inValues[0]));
-            return ((CCForm.FF.CCFormSoap)(this)).BeginRunSQLs(sqls, callback, asyncState);
-        }
-        
-        private object[] OnEndRunSQLs(System.IAsyncResult result) {
-            int retVal = ((CCForm.FF.CCFormSoap)(this)).EndRunSQLs(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnRunSQLsCompleted(object state) {
-            if ((this.RunSQLsCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RunSQLsCompleted(this, new RunSQLsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RunSQLsAsync(string sqls) {
-            this.RunSQLsAsync(sqls, null);
-        }
-        
-        public void RunSQLsAsync(string sqls, object userState) {
-            if ((this.onBeginRunSQLsDelegate == null)) {
-                this.onBeginRunSQLsDelegate = new BeginOperationDelegate(this.OnBeginRunSQLs);
-            }
-            if ((this.onEndRunSQLsDelegate == null)) {
-                this.onEndRunSQLsDelegate = new EndOperationDelegate(this.OnEndRunSQLs);
-            }
-            if ((this.onRunSQLsCompletedDelegate == null)) {
-                this.onRunSQLsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRunSQLsCompleted);
-            }
-            base.InvokeAsync(this.onBeginRunSQLsDelegate, new object[] {
-                        sqls}, this.onEndRunSQLsDelegate, this.onRunSQLsCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult CCForm.FF.CCFormSoap.BeginDoType(string dotype, string v1, string v2, string v3, string v4, string v5, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginDoType(dotype, v1, v2, v3, v4, v5, callback, asyncState);
         }
@@ -1144,52 +1052,6 @@ namespace CCForm.FF {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult CCForm.FF.CCFormSoap.BeginRunSQLReturnTable(string sql, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRunSQLReturnTable(sql, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string CCForm.FF.CCFormSoap.EndRunSQLReturnTable(System.IAsyncResult result) {
-            return base.Channel.EndRunSQLReturnTable(result);
-        }
-        
-        private System.IAsyncResult OnBeginRunSQLReturnTable(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string sql = ((string)(inValues[0]));
-            return ((CCForm.FF.CCFormSoap)(this)).BeginRunSQLReturnTable(sql, callback, asyncState);
-        }
-        
-        private object[] OnEndRunSQLReturnTable(System.IAsyncResult result) {
-            string retVal = ((CCForm.FF.CCFormSoap)(this)).EndRunSQLReturnTable(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnRunSQLReturnTableCompleted(object state) {
-            if ((this.RunSQLReturnTableCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RunSQLReturnTableCompleted(this, new RunSQLReturnTableCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RunSQLReturnTableAsync(string sql) {
-            this.RunSQLReturnTableAsync(sql, null);
-        }
-        
-        public void RunSQLReturnTableAsync(string sql, object userState) {
-            if ((this.onBeginRunSQLReturnTableDelegate == null)) {
-                this.onBeginRunSQLReturnTableDelegate = new BeginOperationDelegate(this.OnBeginRunSQLReturnTable);
-            }
-            if ((this.onEndRunSQLReturnTableDelegate == null)) {
-                this.onEndRunSQLReturnTableDelegate = new EndOperationDelegate(this.OnEndRunSQLReturnTable);
-            }
-            if ((this.onRunSQLReturnTableCompletedDelegate == null)) {
-                this.onRunSQLReturnTableCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRunSQLReturnTableCompleted);
-            }
-            base.InvokeAsync(this.onBeginRunSQLReturnTableDelegate, new object[] {
-                        sql}, this.onEndRunSQLReturnTableDelegate, this.onRunSQLReturnTableCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult CCForm.FF.CCFormSoap.BeginFtpMethod(string doType, string v1, string v2, string v3, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginFtpMethod(doType, v1, v2, v3, callback, asyncState);
         }
@@ -1239,52 +1101,6 @@ namespace CCForm.FF {
                         v1,
                         v2,
                         v3}, this.onEndFtpMethodDelegate, this.onFtpMethodCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult CCForm.FF.CCFormSoap.BeginRunSQLReturnTableS(string[] sqls, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRunSQLReturnTableS(sqls, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string CCForm.FF.CCFormSoap.EndRunSQLReturnTableS(System.IAsyncResult result) {
-            return base.Channel.EndRunSQLReturnTableS(result);
-        }
-        
-        private System.IAsyncResult OnBeginRunSQLReturnTableS(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string[] sqls = ((string[])(inValues[0]));
-            return ((CCForm.FF.CCFormSoap)(this)).BeginRunSQLReturnTableS(sqls, callback, asyncState);
-        }
-        
-        private object[] OnEndRunSQLReturnTableS(System.IAsyncResult result) {
-            string retVal = ((CCForm.FF.CCFormSoap)(this)).EndRunSQLReturnTableS(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnRunSQLReturnTableSCompleted(object state) {
-            if ((this.RunSQLReturnTableSCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RunSQLReturnTableSCompleted(this, new RunSQLReturnTableSCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RunSQLReturnTableSAsync(string[] sqls) {
-            this.RunSQLReturnTableSAsync(sqls, null);
-        }
-        
-        public void RunSQLReturnTableSAsync(string[] sqls, object userState) {
-            if ((this.onBeginRunSQLReturnTableSDelegate == null)) {
-                this.onBeginRunSQLReturnTableSDelegate = new BeginOperationDelegate(this.OnBeginRunSQLReturnTableS);
-            }
-            if ((this.onEndRunSQLReturnTableSDelegate == null)) {
-                this.onEndRunSQLReturnTableSDelegate = new EndOperationDelegate(this.OnEndRunSQLReturnTableS);
-            }
-            if ((this.onRunSQLReturnTableSCompletedDelegate == null)) {
-                this.onRunSQLReturnTableSCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRunSQLReturnTableSCompleted);
-            }
-            base.InvokeAsync(this.onBeginRunSQLReturnTableSDelegate, new object[] {
-                        sqls}, this.onEndRunSQLReturnTableSDelegate, this.onRunSQLReturnTableSCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1575,6 +1391,190 @@ namespace CCForm.FF {
                         cfg}, this.onEndSaveEnumDelegate, this.onSaveEnumCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult CCForm.FF.CCFormSoap.BeginRunSQL(string sql, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRunSQL(sql, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        int CCForm.FF.CCFormSoap.EndRunSQL(System.IAsyncResult result) {
+            return base.Channel.EndRunSQL(result);
+        }
+        
+        private System.IAsyncResult OnBeginRunSQL(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string sql = ((string)(inValues[0]));
+            return ((CCForm.FF.CCFormSoap)(this)).BeginRunSQL(sql, callback, asyncState);
+        }
+        
+        private object[] OnEndRunSQL(System.IAsyncResult result) {
+            int retVal = ((CCForm.FF.CCFormSoap)(this)).EndRunSQL(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRunSQLCompleted(object state) {
+            if ((this.RunSQLCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RunSQLCompleted(this, new RunSQLCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RunSQLAsync(string sql) {
+            this.RunSQLAsync(sql, null);
+        }
+        
+        public void RunSQLAsync(string sql, object userState) {
+            if ((this.onBeginRunSQLDelegate == null)) {
+                this.onBeginRunSQLDelegate = new BeginOperationDelegate(this.OnBeginRunSQL);
+            }
+            if ((this.onEndRunSQLDelegate == null)) {
+                this.onEndRunSQLDelegate = new EndOperationDelegate(this.OnEndRunSQL);
+            }
+            if ((this.onRunSQLCompletedDelegate == null)) {
+                this.onRunSQLCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRunSQLCompleted);
+            }
+            base.InvokeAsync(this.onBeginRunSQLDelegate, new object[] {
+                        sql}, this.onEndRunSQLDelegate, this.onRunSQLCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult CCForm.FF.CCFormSoap.BeginRunSQLs(string sqls, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRunSQLs(sqls, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        int CCForm.FF.CCFormSoap.EndRunSQLs(System.IAsyncResult result) {
+            return base.Channel.EndRunSQLs(result);
+        }
+        
+        private System.IAsyncResult OnBeginRunSQLs(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string sqls = ((string)(inValues[0]));
+            return ((CCForm.FF.CCFormSoap)(this)).BeginRunSQLs(sqls, callback, asyncState);
+        }
+        
+        private object[] OnEndRunSQLs(System.IAsyncResult result) {
+            int retVal = ((CCForm.FF.CCFormSoap)(this)).EndRunSQLs(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRunSQLsCompleted(object state) {
+            if ((this.RunSQLsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RunSQLsCompleted(this, new RunSQLsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RunSQLsAsync(string sqls) {
+            this.RunSQLsAsync(sqls, null);
+        }
+        
+        public void RunSQLsAsync(string sqls, object userState) {
+            if ((this.onBeginRunSQLsDelegate == null)) {
+                this.onBeginRunSQLsDelegate = new BeginOperationDelegate(this.OnBeginRunSQLs);
+            }
+            if ((this.onEndRunSQLsDelegate == null)) {
+                this.onEndRunSQLsDelegate = new EndOperationDelegate(this.OnEndRunSQLs);
+            }
+            if ((this.onRunSQLsCompletedDelegate == null)) {
+                this.onRunSQLsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRunSQLsCompleted);
+            }
+            base.InvokeAsync(this.onBeginRunSQLsDelegate, new object[] {
+                        sqls}, this.onEndRunSQLsDelegate, this.onRunSQLsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult CCForm.FF.CCFormSoap.BeginRunSQLReturnTable(string sql, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRunSQLReturnTable(sql, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string CCForm.FF.CCFormSoap.EndRunSQLReturnTable(System.IAsyncResult result) {
+            return base.Channel.EndRunSQLReturnTable(result);
+        }
+        
+        private System.IAsyncResult OnBeginRunSQLReturnTable(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string sql = ((string)(inValues[0]));
+            return ((CCForm.FF.CCFormSoap)(this)).BeginRunSQLReturnTable(sql, callback, asyncState);
+        }
+        
+        private object[] OnEndRunSQLReturnTable(System.IAsyncResult result) {
+            string retVal = ((CCForm.FF.CCFormSoap)(this)).EndRunSQLReturnTable(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRunSQLReturnTableCompleted(object state) {
+            if ((this.RunSQLReturnTableCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RunSQLReturnTableCompleted(this, new RunSQLReturnTableCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RunSQLReturnTableAsync(string sql) {
+            this.RunSQLReturnTableAsync(sql, null);
+        }
+        
+        public void RunSQLReturnTableAsync(string sql, object userState) {
+            if ((this.onBeginRunSQLReturnTableDelegate == null)) {
+                this.onBeginRunSQLReturnTableDelegate = new BeginOperationDelegate(this.OnBeginRunSQLReturnTable);
+            }
+            if ((this.onEndRunSQLReturnTableDelegate == null)) {
+                this.onEndRunSQLReturnTableDelegate = new EndOperationDelegate(this.OnEndRunSQLReturnTable);
+            }
+            if ((this.onRunSQLReturnTableCompletedDelegate == null)) {
+                this.onRunSQLReturnTableCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRunSQLReturnTableCompleted);
+            }
+            base.InvokeAsync(this.onBeginRunSQLReturnTableDelegate, new object[] {
+                        sql}, this.onEndRunSQLReturnTableDelegate, this.onRunSQLReturnTableCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult CCForm.FF.CCFormSoap.BeginRunSQLReturnTableS(string sqls, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRunSQLReturnTableS(sqls, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string CCForm.FF.CCFormSoap.EndRunSQLReturnTableS(System.IAsyncResult result) {
+            return base.Channel.EndRunSQLReturnTableS(result);
+        }
+        
+        private System.IAsyncResult OnBeginRunSQLReturnTableS(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string sqls = ((string)(inValues[0]));
+            return ((CCForm.FF.CCFormSoap)(this)).BeginRunSQLReturnTableS(sqls, callback, asyncState);
+        }
+        
+        private object[] OnEndRunSQLReturnTableS(System.IAsyncResult result) {
+            string retVal = ((CCForm.FF.CCFormSoap)(this)).EndRunSQLReturnTableS(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRunSQLReturnTableSCompleted(object state) {
+            if ((this.RunSQLReturnTableSCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RunSQLReturnTableSCompleted(this, new RunSQLReturnTableSCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RunSQLReturnTableSAsync(string sqls) {
+            this.RunSQLReturnTableSAsync(sqls, null);
+        }
+        
+        public void RunSQLReturnTableSAsync(string sqls, object userState) {
+            if ((this.onBeginRunSQLReturnTableSDelegate == null)) {
+                this.onBeginRunSQLReturnTableSDelegate = new BeginOperationDelegate(this.OnBeginRunSQLReturnTableS);
+            }
+            if ((this.onEndRunSQLReturnTableSDelegate == null)) {
+                this.onEndRunSQLReturnTableSDelegate = new EndOperationDelegate(this.OnEndRunSQLReturnTableS);
+            }
+            if ((this.onRunSQLReturnTableSCompletedDelegate == null)) {
+                this.onRunSQLReturnTableSCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRunSQLReturnTableSCompleted);
+            }
+            base.InvokeAsync(this.onBeginRunSQLReturnTableSDelegate, new object[] {
+                        sqls}, this.onEndRunSQLReturnTableSDelegate, this.onRunSQLReturnTableSCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1664,19 +1664,6 @@ namespace CCForm.FF {
                 return _result;
             }
             
-            public System.IAsyncResult BeginBackUpFrm_del(string fk_mapdata, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = fk_mapdata;
-                System.IAsyncResult _result = base.BeginInvoke("BackUpFrm_del", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndBackUpFrm_del(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("BackUpFrm_del", _args, result)));
-                return _result;
-            }
-            
             public System.IAsyncResult BeginLoadFrmTemplete(CCForm.FF.LoadFrmTempleteRequest request, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = request;
@@ -1718,19 +1705,6 @@ namespace CCForm.FF {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRunSQLs(string sqls, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = sqls;
-                System.IAsyncResult _result = base.BeginInvoke("RunSQLs", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public int EndRunSQLs(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                int _result = ((int)(base.EndInvoke("RunSQLs", _args, result)));
-                return _result;
-            }
-            
             public System.IAsyncResult BeginDoType(string dotype, string v1, string v2, string v3, string v4, string v5, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[6];
                 _args[0] = dotype;
@@ -1762,19 +1736,6 @@ namespace CCForm.FF {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRunSQLReturnTable(string sql, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = sql;
-                System.IAsyncResult _result = base.BeginInvoke("RunSQLReturnTable", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndRunSQLReturnTable(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("RunSQLReturnTable", _args, result)));
-                return _result;
-            }
-            
             public System.IAsyncResult BeginFtpMethod(string doType, string v1, string v2, string v3, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[4];
                 _args[0] = doType;
@@ -1788,19 +1749,6 @@ namespace CCForm.FF {
             public string EndFtpMethod(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 string _result = ((string)(base.EndInvoke("FtpMethod", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginRunSQLReturnTableS(string[] sqls, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = sqls;
-                System.IAsyncResult _result = base.BeginInvoke("RunSQLReturnTableS", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndRunSQLReturnTableS(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("RunSQLReturnTableS", _args, result)));
                 return _result;
             }
             
@@ -1885,6 +1833,58 @@ namespace CCForm.FF {
             public string EndSaveEnum(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 string _result = ((string)(base.EndInvoke("SaveEnum", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRunSQL(string sql, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = sql;
+                System.IAsyncResult _result = base.BeginInvoke("RunSQL", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public int EndRunSQL(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                int _result = ((int)(base.EndInvoke("RunSQL", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRunSQLs(string sqls, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = sqls;
+                System.IAsyncResult _result = base.BeginInvoke("RunSQLs", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public int EndRunSQLs(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                int _result = ((int)(base.EndInvoke("RunSQLs", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRunSQLReturnTable(string sql, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = sql;
+                System.IAsyncResult _result = base.BeginInvoke("RunSQLReturnTable", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndRunSQLReturnTable(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("RunSQLReturnTable", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRunSQLReturnTableS(string sqls, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = sqls;
+                System.IAsyncResult _result = base.BeginInvoke("RunSQLReturnTableS", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndRunSQLReturnTableS(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("RunSQLReturnTableS", _args, result)));
                 return _result;
             }
         }

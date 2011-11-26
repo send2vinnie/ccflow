@@ -39,7 +39,7 @@ namespace CCForm
             //   sql += "@SELECT No, Name FROM Sys_MapData WHERE FK_Flow='" + Glo.FK_Flow + "'";
 
             CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-            da.RunSQLReturnTableSAsync(sql.Split('@'));
+            da.RunSQLReturnTableSAsync(sql);
             da.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(da_RunSQLReturnTableSCompleted);
 
             if (this.canvas1.Children.Count == 0)
