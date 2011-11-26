@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
+using System.Data;
+using BP.Web.Controls;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.DA;
@@ -15,13 +17,23 @@ using BP.Web.Comm;
 public partial class WF_Rpt_Search : WebPage
 {
     #region 属性.
+    public string FK_Flow
+    {
+        get
+        {
+            string s = this.Request.QueryString["FK_Flow"];
+            if (s == null)
+                s = "010";
+            return s;
+        }
+    }
     public string EnsName
     {
         get
         {
             string s= this.Request.QueryString["EnsName"];
             if (s == null)
-                s = "ND11Rpt";
+                s = "ND10Rpt";
             return s;
         }
     }
@@ -45,19 +57,19 @@ public partial class WF_Rpt_Search : WebPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        #region 处理风格。
+        #region 处理风格
         this.Page.RegisterClientScriptBlock("s",
          "<link href='./../../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
         if (this.Request.QueryString["PageIdx"] == null)
             this.PageIdx = 1;
         else
             this.PageIdx = int.Parse(this.Request.QueryString["PageIdx"]);
-        #endregion 处理风格。
+        #endregion 处理风格
 
-        #region 处理查询。
+        #region 处理查询设的默认.
         Entity en = this.HisEns.GetNewEntity;
         Map map = en.EnMap;
-        this.ToolBar1.InitByMapV2(map, 1);
+        this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
         AttrSearchs searchs = map.SearchAttrs;
         foreach (AttrSearch attr in searchs)
         {
@@ -67,21 +79,53 @@ public partial class WF_Rpt_Search : WebPage
             else
                 this.ToolBar1.GetDDLByKey("DDL_" + attr.Key).SetSelectItem(mykey, attr.HisAttr);
         }
-
         if (this.Request.QueryString["Key"] != null)
         {
             this.ToolBar1.GetTBByID("TB_Key").Text = this.Request.QueryString["Key"];
         }
-        #endregion 处理查询。
+        #endregion 处理查询设的默认。
 
+        #region 处理查询权限
+        string defVal = "";
+        System.Data.DataTable dt = null;
+        foreach (AttrSearch attr in searchs)
+        {
+            switch (attr.Key)
+            {
+                case "FK_NY":
+                    DDL ddl_NY = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
+                    defVal = ddl_NY.SelectedItemStringVal;
+                    dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM " + this.EnsName + " WHERE FK_NY!='' ORDER BY FK_NY");
+                    ddl_NY.Items.Clear();
+                    ddl_NY.Items.Add(new ListItem("=>月份", "all"));
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        ddl_NY.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
+                    }
+                    ddl_NY.SetSelectItem(defVal);
+                    break;
+                case "FlowStarter":
+                    DDL ddl_FlowStarter = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
+                    defVal = ddl_FlowStarter.SelectedItemStringVal;
+                    dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!=''");
+                    ddl_FlowStarter.Items.Clear();
+                    ddl_FlowStarter.Items.Add(new ListItem("=>发起人", "all"));
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        ddl_FlowStarter.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
+                    }
+                    ddl_FlowStarter.SetSelectItem(defVal);
+                    break;
+                default:
+                    break;
+            }
+        }
+        #endregion 处理查询权限
 
-        #region 查询权限判断
-
-        #endregion 查询权限判断
-
+        //处理按钮.
+        this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
         this.SetDGData();
     }
-
     public Entities SetDGData()
     {
         return this.SetDGData(this.PageIdx);
@@ -98,7 +142,6 @@ public partial class WF_Rpt_Search : WebPage
         if (maxPageNum > 1)
             this.Pub2.Add("翻页键:← → PageUp PageDown");
         qo.DoQuery(en.PK, SystemConfig.PageSize, pageIdx);
-
         if (en.EnMap.IsShowSearchKey)
         {
             string keyVal = this.ToolBar1.GetTBByID("TB_Key").Text.Trim();
@@ -114,7 +157,6 @@ public partial class WF_Rpt_Search : WebPage
 
                         if (attr.IsPK)
                             continue;
-
                         switch (attr.MyDataType)
                         {
                             case DataType.AppRate:
@@ -132,13 +174,11 @@ public partial class WF_Rpt_Search : WebPage
                 }
             }
         }
-
-        this.DataPanelDtl(ens, null);
+        this.BindEns(ens, null);
 
         #region 生成js
         int ToPageIdx = this.PageIdx + 1;
         int PPageIdx = this.PageIdx - 1;
-
         this.UCSys1.Add("<SCRIPT language=javascript>");
         this.UCSys1.Add("\t\n document.onkeydown = chang_page;");
         this.UCSys1.Add("\t\n function chang_page() { ");
@@ -186,19 +226,15 @@ public partial class WF_Rpt_Search : WebPage
         }
         return url;
     }
-    public void DataPanelDtl(Entities ens, string ctrlId)
+    public void BindEns(Entities ens, string ctrlId)
     {
-        MapData md = new MapData();
-        md.CheckPhysicsTable();
-
+        MapData md = new MapData(this.EnsName);
 
         this.UCSys1.Controls.Clear();
         Entity myen = ens.GetNewEntity;
         string pk = myen.PK;
         string clName = myen.ToString();
         Attrs attrs = myen.EnMap.Attrs;
-
-        // Attrs selectedAttrs = myen.EnMap.GetChoseAttrs(ens);
 
         #region 求出可显示的属性。
         Attrs selectedAttrs = new Attrs();
@@ -241,11 +277,12 @@ public partial class WF_Rpt_Search : WebPage
         bool is1 = false;
 
         #region 用户界面属性设置
-        string FocusField = "Title";
+        string focusField = "Title";
         int WinCardH = 500;
         int WinCardW = 400;
         #endregion 用户界面属性设置
 
+        #region 数据输出.
         this.UCSys1.AddTDTitle("功能");
         this.UCSys1.AddTREnd();
         string urlExt = "";
@@ -256,7 +293,7 @@ public partial class WF_Rpt_Search : WebPage
             string url = this.GenerEnUrl(en, attrs);
             #endregion
 
-            urlExt = "\"javascript:ShowEn('UIEn.aspx?EnsName=" + ens.ToString() + "&PK=" + en.GetValByKey(pk) + url + "', 'cd','" + WinCardH + "','" + WinCardW + "');\"";
+            urlExt = "\"javascript:ShowEn('../../Comm/UIEn.aspx?EnsName=" + ens.ToString() + "&PK=" + en.GetValByKey(pk) + url + "', 'cd','" + WinCardH + "','" + WinCardW + "');\"";
             is1 = this.UCSys1.AddTR(is1, "ondblclick=" + urlExt);
 
             #region 输出字段。
@@ -270,7 +307,7 @@ public partial class WF_Rpt_Search : WebPage
                 if (attr.UIContralType == UIContralType.DDL)
                 {
                     this.UCSys1.AddTD(en.GetValRefTextByKey(attr.Key));
-                    return;
+                    continue;
                 }
 
                 if (attr.UIHeight != 0)
@@ -280,8 +317,8 @@ public partial class WF_Rpt_Search : WebPage
                 }
 
                 string str = en.GetValStrByKey(attr.Key);
-                if (FocusField == attr.Key)
-                    str = "<a href=" + urlExt + ">" + str + "</a>";
+                if (focusField == attr.Key)
+                    str = "<b><font color='blue' ><a href=" + urlExt + ">" + str + "</font></b></a>";
                 switch (attr.MyDataType)
                 {
                     case DataType.AppDate:
@@ -320,8 +357,15 @@ public partial class WF_Rpt_Search : WebPage
             }
             #endregion 输出字段。
 
+            // this.UCSys1.AddTD("<a href=\"javascript:WinOpen('../Chart.aspx?FK_Flow=" + this.FK_Flow + "&OID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "');\">轨迹图</a>");
+
+            string ext = "<a href=\"javascript:WinOpen('../Chart.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >轨迹图</a>";
+            ext += " - <a href=\"javascript:WinOpen('Attachment.aspx?FK_Flow=" + this.FK_Flow + "&OID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >附件</a>";
+
+            this.UCSys1.AddTD(ext);
             this.UCSys1.AddTREnd();
         }
+        #endregion 数据输出.
 
         #region  求合计代码写在这里。
         bool IsHJ = false;
@@ -359,10 +403,10 @@ public partial class WF_Rpt_Search : WebPage
                 if (attr.Key == "MyNum")
                     continue;
 
-                if (attr.UIVisible ==false)
+                if (attr.UIVisible == false)
                     continue;
 
-                if (attr.MyDataType == DataType.AppBoolean 
+                if (attr.MyDataType == DataType.AppBoolean
                     || attr.UIContralType == UIContralType.DDL
                     || attr.MyFieldType == FieldType.RefText)
                 {
@@ -399,6 +443,75 @@ public partial class WF_Rpt_Search : WebPage
             this.UCSys1.AddTREnd();
         }
         #endregion
+
         this.UCSys1.AddTableEnd();
+    }
+
+    private void ToolBar1_ButtonClick(object sender, System.EventArgs e)
+    {
+        try
+        {
+            Btn btn = (Btn)sender;
+            switch (btn.ID)
+            {
+                case NamesOfBtn.Insert: //数据导出
+                    this.Response.Redirect("UIEn.aspx?EnName=" + this.HisEn.ToString(), true);
+                    return;
+                case NamesOfBtn.Excel: //数据导出
+                    Entities ens = this.HisEns;
+                    Entity en = ens.GetNewEntity;
+                    QueryObject qo = new QueryObject(ens);
+                    qo = this.ToolBar1.GetnQueryObject(ens, en);
+                    qo.DoQuery();
+                    string file = "";
+                    try
+                    {
+                        //this.ExportDGToExcel(ens.ToDataTableDescField(), this.HisEn.EnDesc);
+                        file = this.ExportDGToExcel(ens.ToDataTableDesc(), this.HisEn.EnDesc);
+                    }
+                    catch (Exception ex)
+                    {
+                        try
+                        {
+                            file = this.ExportDGToExcel(ens.ToDataTableDescField(), this.HisEn.EnDesc);
+                        }
+                        catch
+                        {
+                            throw new Exception("数据没有正确导出可能的原因之一是:系统管理员没正确的安装Excel组件，请通知他，参考安装说明书解决。@系统异常信息：" + ex.Message);
+                        }
+                    }
+                    this.SetDGData();
+                    return;
+                case NamesOfBtn.Excel_S: //数据导出.
+                    Entities ens1 = this.SetDGData();
+                    try
+                    {
+                        this.ExportDGToExcel(ens1.ToDataTableDesc(), this.HisEn.EnDesc);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("数据没有正确导出可能的原因之一是:系统管理员没正确的安装Excel组件，请通知他，参考安装说明书解决。@系统异常信息：" + ex.Message);
+                    }
+                    this.SetDGData();
+                    return;
+                case NamesOfBtn.Xml: //数据导出
+                    return;
+                case "Btn_Print":  //数据导出.
+                    return;
+                default:
+                    this.PageIdx = 1;
+                    this.SetDGData(1);
+                    this.ToolBar1.SaveSearchState(this.EnsName, null);
+                    return;
+            }
+        }
+        catch (Exception ex)
+        {
+            if (!(ex is System.Threading.ThreadAbortException))
+            {
+                this.ResponseWriteRedMsg(ex);
+                //在这里显示错误
+            }
+        }
     }
 }
