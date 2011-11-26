@@ -117,7 +117,7 @@ namespace BP.Web
                 AtPara ap = new AtPara(vals);
                 string enName = ap.GetValStrByKey("EnName");
                 string pk = ap.GetValStrByKey("PKVal");
-                  en = ClassFactory.GetEn(enName);
+                en = ClassFactory.GetEn(enName);
                 en.ResetDefaultVal();
 
                 if (en == null)
@@ -146,7 +146,12 @@ namespace BP.Web
                 return "Error:" + ex.Message;
             }
         }
-       
+        /// <summary>
+        /// 运行sql返回table.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        [WebMethod]
         public string RunSQLReturnTableS(string[] sqls)
         {
             DataSet ds = new DataSet();
@@ -155,7 +160,6 @@ namespace BP.Web
             {
                 if (string.IsNullOrEmpty(sql))
                     continue;
-
                 DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 dt.TableName = "DT" + i;
                 ds.Tables.Add(dt);
