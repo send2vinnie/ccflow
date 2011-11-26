@@ -728,12 +728,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         string FX = this.ToE("FX", "分析");
         string myWork = this.ToE("MyWork", "我的工作");
         string BPR = this.ToE("BPR", "成本分析");
-
-      //  DataTable dt = DBAccess.RunSQLReturnTable("SELECT FK_Flow , count(FK_Flow) as Num FROM WF_GenerWorkflow GROUP BY FK_Flow");
         foreach (FlowSort fs in fss)
         {
-            //if (fs.No == "01")
-            //    continue;
             foreach (Flow fl in fls)
             {
                 if (fl.FK_FlowSort != fs.No)
@@ -753,24 +749,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 else
                     this.Pub1.AddTD(fl.Name);
 
-                // int mynum = 0;
-                //foreach (DataRow dr in dt.Rows)
-                //{
-                //    if (dr["FK_Flow"].ToString() == fl.No)
-                //    {
-                //        mynum = int.Parse(dr["Num"].ToString());
-                //        break;
-                //    }
-                //}
-                //if (mynum == 0)
-                //{
-                //    this.Pub1.AddTD();
-                //}
-                //else
-                //{
-                //    this.Pub1.AddTD("<a href=\"javascript:WinOpen('Warning.aspx?FK_Flow=" + fl.No + "&DoType=Chart','sd');\"  >预警(" + mynum + ")</a>");
-                //}
-
 
                 if (fl.NumOfBill == 0)
                     this.Pub1.AddTD("...");
@@ -780,10 +758,11 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                     this.Pub1.AddTD("<a href=\"javascript:WinOpen('" + src + "');\"  ><img src='./../Images/Btn/Word.gif' border=0/>" + bill + "</a>");
                 }
 
-
                 this.Pub1.AddTDBegin();
                 string src1 = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";
-                this.Pub1.Add("<a href=\"javascript:WinOpen('" + src1 + "');\" >" + search + "</a>");
+
+                string src2 = this.Request.ApplicationPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt&FK_Flow="+fl.No;
+                this.Pub1.Add("<a href=\"javascript:WinOpen('" + src2 + "');\" >" + search + " NewVer</a>-<a href=\"javascript:WinOpen('" + src1 + "');\" >" + search + "</a>");
 
                 if (fl.NumOfDtl != 0)
                     this.Pub1.Add("-<a href=\"javascript:Dtl('" + fl.No + "');\" >" + dtl + "</a>");
@@ -794,7 +773,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 this.Pub1.Add("-<a href=\"javascript:WinOpen('" + url2 + "');\" >" + myWork + "</a>");
                 this.Pub1.AddTDEnd();
                 this.Pub1.AddTD("<a href='FlowSearch" + this.PageSmall + ".aspx?FK_Flow=" + fl.No + "'>" + nodeSearch + "</a>");
-                this.Pub1.AddTD("<a href=\"javascript:WinOpen('BPR.aspx?FK_Flow="+fl.No+"');\"  >" + BPR + "</a>");
+                this.Pub1.AddTD("<a href=\"javascript:WinOpen('BPR.aspx?FK_Flow=" + fl.No + "');\"  >" + BPR + "</a>");
                 this.Pub1.AddTREnd();
             }
         }

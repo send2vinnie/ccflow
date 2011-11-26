@@ -96,9 +96,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
     public void BindWap()
     {
         this.Clear();
-
         this.AddFieldSet("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>-<img src='./Img/EmpWorks.gif' >" + this.ToE("OnTheWayWork", "在途工作"));
-
         string sql = " SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B  WHERE A.WorkID=B.WorkID   AND B.FK_EMP='" + BP.Web.WebUser.No + "' AND B.IsEnable=1";
         GenerWorkFlows gwfs = new GenerWorkFlows();
         gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
