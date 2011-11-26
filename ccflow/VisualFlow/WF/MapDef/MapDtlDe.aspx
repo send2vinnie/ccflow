@@ -5,9 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head id="Head1" runat="server">
     <title>表单设计</title>
-     
 	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
-   <script language="JavaScript" src="./../../Comm/JS/Calendar/WdatePicker.js" ></script>
+    <script language="JavaScript" src="./../../Comm/JS/Calendar/WdatePicker.js" ></script>
 	<base target="_self" />
 	<script language="javascript">
 	function Insert(mypk,IDX)
@@ -28,14 +27,15 @@
         window.location.href = window.location.href;
     }
     function CopyF(mypk) {
-        var url='CopyDtlField.aspx?MyPK='+mypk;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 600px; dialogWidth: 800px;center: yes; help: no'); 
+        var url = 'CopyDtlField.aspx?MyPK=' + mypk;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 600px; dialogWidth: 800px;center: yes; help: no');
         window.location.href = window.location.href;
     }
+
     function HidAttr(mypk) {
         var url = 'HidAttr.aspx?FK_MapData=' + mypk;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 600px; dialogWidth: 800px;center: yes; help: no');
-      //  window.location.href = window.location.href;
+        //  window.location.href = window.location.href;
     }
     function Edit(mypk,refNo, ftype)
     {
