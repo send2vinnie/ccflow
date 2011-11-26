@@ -639,20 +639,12 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             }
         }
 
-        //if (this.Controls.Count != 0)
-        //    this.AddSpt("spt");
-
         if (en.EnMap.Helper.Length > 4)
         {
             //  this.AddSpt("spt");
             //   this.AddBtn(NamesOfBtn.Help);
         }
     }
-    /// <summary>
-    /// 初始化map
-    /// </summary>
-    /// <param name="map">map</param>
-    /// <param name="i">选择的页</param>
     public void InitByMapV2(Map map, int page)
     {
         string str = this.Page.Request.QueryString["EnsName"];
@@ -662,13 +654,19 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         if (str == null)
             return;
 
-        UserRegedit ur = new UserRegedit(WebUser.No, str + "_SearchAttrs");
+        InitByMapV2(map, page, str);
+    }
+    /// <summary>
+    /// 初始化map
+    /// </summary>
+    /// <param name="map">map</param>
+    /// <param name="i">选择的页</param>
+    public void InitByMapV2(Map map, int page,string ensName)
+    {
+        UserRegedit ur = new UserRegedit(WebUser.No, ensName + "_SearchAttrs");
         string cfgKey = ur.Vals;
 
         InitByMapV2(map.IsShowSearchKey, map.AttrsOfSearch, map.SearchAttrs, null, page, ur);
-        // 设置查询默认值，根据上次的配置。
-        //if (cfgKey == "")
-        //    return;
 
         #region 设置默认值
         string[] keys = cfgKey.Split('@');
