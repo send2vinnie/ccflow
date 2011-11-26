@@ -134,7 +134,7 @@ namespace CCForm
             
             this.LoadDtl();
 
-            string url = Glo.BPMHost + "/WF/MapDef/MapDefDtlCCForm.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&FK_MapDtl=" + this.Name;
+            string url = Glo.BPMHost + "/WF/MapDef/MapDefDtlFreeFrm.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&FK_MapDtl=" + this.Name;
             HtmlPage.Window.Eval("window.open('" + url + "','_blank')");
         }
         public DataGrid MyDG = null;

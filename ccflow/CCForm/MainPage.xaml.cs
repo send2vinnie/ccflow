@@ -2133,7 +2133,7 @@ namespace CCForm
                 {
                     IsmuElePanel = false;
                     /* Edit 事件. */
-                    string url = Glo.BPMHost + "/WF/MapDef/MapDefDtlCCForm.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&FK_MapDtl=" + dtl.Name;
+                    string url = Glo.BPMHost + "/WF/MapDef/MapDefDtlFreeFrm.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&FK_MapDtl=" + dtl.Name;
                    HtmlPage.Window.Eval("window.open('" + url + "','_blank')");
 
                 }
