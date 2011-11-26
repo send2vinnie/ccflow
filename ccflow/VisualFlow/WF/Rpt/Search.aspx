@@ -25,15 +25,13 @@
 		        window.location.href = window.location.href;
 		    }
 		    function DDL_mvals_OnChange(ctrl, ensName, attrKey) {
-
 		        var idx_Old = ctrl.selectedIndex;
-
 		        if (ctrl.options[ctrl.selectedIndex].value != 'mvals')
 		            return;
 		        if (attrKey == null)
 		            return;
-
-		        var url = '../../Comm/SelectMVals.aspx?EnsName=' + ensName + '&AttrKey=' + attrKey;
+		        var timestamp = Date.parse(new Date());
+		        var url = '../../Comm/SelectMVals.aspx?EnsName=' + ensName + '&AttrKey=' + attrKey + '&D=' + timestamp;
 		        var val = window.showModalDialog(url, 'dg', 'dialogHeight: 450px; dialogWidth: 450px; center: yes; help: no');
 		        if (val == '' || val == null) {
 		            // if (idx_Old==ctrl.options.cont
