@@ -87,7 +87,7 @@ public partial class WF_WorkOpt_PrintDoc : BP.Web.WebPage
         string msg = "";
         string file = DataType.CurrentYear + "_" + WebUser.FK_Dept + "_" + en.No + "_" + this.WorkID + ".doc";
         BP.Rpt.RTF.RTFEngine rtf = new BP.Rpt.RTF.RTFEngine();
-        Works works;
+//        Works works;
         string[] paths;
         string path;
         try

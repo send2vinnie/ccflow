@@ -632,6 +632,12 @@ public partial class Comm_Dtl : WebPage
                     {
                         switch (me.ExtType)
                         {
+                            case MapExtXmlList.DDLFullCtrl: // 自动填充.
+                                DDL ddlOper = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper);
+                                if (ddlOper == null)
+                                    continue;
+                                ddlOper.Attributes["onchange"] = "DDLFullCtrl(this.value,\'" + ddlOper.ClientID + "\', \'" + me.MyPK + "\')";
+                                break;
                             case MapExtXmlList.ActiveDDL:
                                 DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + mydtl.OID);
                                 string val, valC;
@@ -686,7 +692,7 @@ public partial class Comm_Dtl : WebPage
                                 }
                                 ddlFull.Attributes["onchange"] = " isChange=true;";
                                 break;
-                            case MapExtXmlList.FullCtrl: // 自动填充.
+                            case MapExtXmlList.TBFullCtrl: // 自动填充.
                                 TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + mydtl.OID);
                                 if (tbAuto == null)
                                     continue;

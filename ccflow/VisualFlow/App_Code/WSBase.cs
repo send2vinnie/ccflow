@@ -23,6 +23,7 @@ namespace BP.Web
     // [System.Web.Script.Services.ScriptService]
     public class WSBase : System.Web.Services.WebService
     {
+      
         public DataSet TurnXmlDataSet2SLDataSet(DataSet ds)
         {
             DataSet myds = new DataSet();
@@ -185,6 +186,11 @@ namespace BP.Web
             }
             return Connector.ToXml(ds);
         }
+          /// <summary>
+        /// 将中文转化成拼音.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [WebMethod]
         public string ParseStringToPinyin(string name)
         {
@@ -197,6 +203,11 @@ namespace BP.Web
                 return null;
             }
         }
+        /// <summary>
+        /// 获取自定义表
+        /// </summary>
+        /// <param name="ensName"></param>
+        /// <returns></returns>
         [WebMethod]
         public string RequestSFTable(string ensName)
         {

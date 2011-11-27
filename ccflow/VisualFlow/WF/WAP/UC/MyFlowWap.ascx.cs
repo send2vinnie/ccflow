@@ -517,7 +517,6 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
                 return;
             default:
                 throw new Exception("@没有涉及到的扩充。");
-                break;
         }
     }
     public void OutJSAuto(Entity en)
@@ -1033,7 +1032,7 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
         //    this.UCEn1.Add(work.WorkEndInfo);
         //}
 
-        bool isCanDoNextWork = true;
+  //      bool isCanDoNextWork = true;
         //能不能执行下一步工作
         this.WorkID = firstwn.HisWork.OID;
         this.FK_Node = firstwn.HisNode.NodeID;
@@ -1250,7 +1249,6 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
             this.FlowMsg.AddMsgOfWarning("<a href=Home.aspx >Home</a> - " + this.ToE("Note", "操作提示："), this.ToE("WhenSeleWorkErr", "处理选择工作出现错误") + ex.Message);
             return null;
         }
-        return wn.HisWork;
     }
     #endregion
 }

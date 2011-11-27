@@ -822,6 +822,12 @@ namespace BP.Web.Comm.UC.WF
                 {
                     switch (me.ExtType)
                     {
+                        case MapExtXmlList.DDLFullCtrl: // 自动填充.
+                            DDL ddlOper = this.GetDDLByID("DDL_" + me.AttrOfOper);
+                            if (ddlOper == null )
+                                continue;
+                            ddlOper.Attributes["onchange"] = "DDLFullCtrl(this.value,\'" + ddlOper.ClientID + "\', \'" + me.MyPK + "\')";
+                            break;
                         case MapExtXmlList.ActiveDDL:
                             DDL ddlPerant = this.GetDDLByID("DDL_" + me.AttrOfOper);
                             DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
@@ -842,7 +848,7 @@ namespace BP.Web.Comm.UC.WF
                             break;
                         case MapExtXmlList.AutoFullDLL: // 自动填充下拉框.
                             continue; //已经处理了。
-                        case MapExtXmlList.FullCtrl: // 自动填充.
+                        case MapExtXmlList.TBFullCtrl: // 自动填充.
                             TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
                             if (tbAuto == null)
                                 continue;
@@ -1232,11 +1238,11 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
                 if (string.IsNullOrEmpty(img.LinkURL) == false)
                 {
-                    this.Add("\t\n<a href='" + img.LinkURL + "' target=" + img.LinkTarget + " ><img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' /></a>");
+                    this.Add("\t\n<a href='" + img.LinkURL + "' target=" + img.LinkTarget + " ><img src='./../DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' /></a>");
                 }
                 else
                 {
-                    this.Add("\t\n<img src='/Flow/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' />");
+                    this.Add("\t\n<img src='./../DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' />");
 
                 }
                 this.Add("\t\n</DIV>");

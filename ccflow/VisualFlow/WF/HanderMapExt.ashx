@@ -29,12 +29,17 @@ public class Handler : IHttpHandler
         string key = context.Request.QueryString["Key"];
         switch (me.ExtType)
         {
+            case BP.Sys.MapExtXmlList.DDLFullCtrl: // 级连菜单。
+                sql = this.DealSQL(me.Doc, key);
+                dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+                context.Response.Write(JSONTODT(dt));
+                return;
             case BP.Sys.MapExtXmlList.ActiveDDL: // 级连菜单。
                 sql = this.DealSQL(me.Doc, key);
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 context.Response.Write(JSONTODT(dt));
                 return;
-            case BP.Sys.MapExtXmlList.FullCtrl: // 自动完成。
+            case BP.Sys.MapExtXmlList.TBFullCtrl: // 自动完成。
                 switch (context.Request.QueryString["DoType"])
                 {
                     case "ReqCtrl":

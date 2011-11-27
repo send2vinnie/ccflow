@@ -50,24 +50,24 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
     #region 属性
     public void BindTop()
     {
-        this.Pub1.Add("\t\n<div id='tabsJ'  align='center'>");
+       // this.Pub1.Add("\t\n<div id='tabsJ'  align='center'>");
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
 
-        this.Pub1.AddUL();
+        this.Left.AddUL();
         foreach (MapExtXml fs in fss)
         {
             if (this.PageID == fs.No)
             {
-                this.Pub1.AddLiB(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
+                this.Left.AddLiB(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
             }
             else
-                this.Pub1.AddLi(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
+                this.Left.AddLi(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
         }
-        this.Pub1.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'><span>帮助</span></a>");
+        this.Left.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'><span>帮助</span></a>");
         // this.Pub1.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo = " + this.RefNo + "' ><span>帮助</span></a>");
-        this.Pub1.AddULEnd();
-        this.Pub1.AddDivEnd();
+        this.Left.AddULEnd();
+       // this.Pub1.AddDivEnd();
     }
     #endregion 属性
 
@@ -123,7 +123,8 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
     }
     public void BindNumType(MapAttr mattr)
     {
-        this.Pub1.AddTable();
+        this.Pub1.AddTable("align=left");
+        this.Pub1.AddCaptionLeft("数据获取 - 当一个字段值需要从其它表中得到时，请设置此功能。");
         this.Pub1.AddTR();
         this.Pub1.Add("<TD>");
         RadioBtn rb = new RadioBtn();

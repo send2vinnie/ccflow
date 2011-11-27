@@ -335,6 +335,12 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             {
                 switch (me.ExtType)
                 {
+                    case MapExtXmlList.DDLFullCtrl: // 自动填充.
+                        DDL ddlOper = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper);
+                        if (ddlOper == null)
+                            continue;
+                        ddlOper.Attributes["onchange"] = "DDLFullCtrl(this.value,\'" + ddlOper.ClientID + "\', \'" + me.MyPK + "\')";
+                        break;
                     case MapExtXmlList.ActiveDDL:
                         DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + i);
                         if (ddlPerant == null)
@@ -385,7 +391,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         ddlFull.Bind(DBAccess.RunSQLReturnTable(fullSQL), "No", "Name");
                         ddlFull.SetSelectItem(valOld);
                         break;
-                    case MapExtXmlList.FullCtrl: // 自动填充.
+                    case MapExtXmlList.TBFullCtrl: // 自动填充.
                         TextBox tbAuto = this.Pub1.GetTextBoxByID("TB_" + me.AttrOfOper + "_" + i);
                         if (tbAuto == null)
                         {

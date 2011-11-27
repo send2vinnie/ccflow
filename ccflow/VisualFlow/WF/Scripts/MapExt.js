@@ -1,4 +1,41 @@
-﻿function DDLAnsc(e, ddlChild, fk_mapExt) {
+﻿/* 自动填充 */
+function DDLFullCtrl(e, ddlChild, fk_mapExt) {
+    var json_data = { "Key": e, "FK_MapExt": fk_mapExt };
+    $.ajax({
+        type: "get",
+        url: "HanderMapExt.ashx",
+        data: json_data,
+        beforeSend: function (XMLHttpRequest) {
+            //ShowLoading();
+        },
+        success: function (data, textStatus) {
+            var dataObj = eval("(" + data + ")"); //转换为json对象 
+
+            var beforeID = ddlChild.substring(0, ddlChild.indexOf('DDL_'));
+            var endId = ddlChild.substring(ddlChild.lastIndexOf('_'));
+            for (var i in dataObj.Head) {
+                if (typeof (i) == "function")
+                    continue;
+
+                for (var k in dataObj.Head[i]) {
+                    if (k == 'No' || k == 'Name')
+                        continue;
+
+                    $("#" + beforeID + 'TB_' + k).val(dataObj.Head[i][k]);
+                    $("#" + beforeID + 'TB_' + k + endId).val(dataObj.Head[i][k]);
+                }
+            }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+            //HideLoading();
+        },
+        error: function () {
+            //请求出错处理
+        }
+    });
+}
+/* 级联下拉框*/
+function DDLAnsc(e, ddlChild, fk_mapExt) {
     var json_data = { "Key": e, "FK_MapExt": fk_mapExt };
     $.ajax({
         type: "get",

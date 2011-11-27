@@ -51,33 +51,53 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     /// </summary>
     public void BindLeft()
     {
-        this.Pub1.Add("\t\n<div id='tabsJ'  align='center'>");
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
-
-        this.Pub1.AddUL();
+        this.Left.AddUL();
         foreach (MapExtXml fs in fss)
         {
             if (this.ExtType == fs.No)
             {
                 this.Lab = fs.Name;
-                this.Pub1.AddLiB(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No+"&RefNo="+this.RefNo, "<span>" + fs.Name + "</span>");
+                this.Left.AddLiB(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
             }
             else
-                this.Pub1.AddLi(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
+                this.Left.AddLi(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
         }
-        this.Pub1.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo="+this.RefNo+"'><span>帮助</span></a>");
-        this.Pub1.AddULEnd();
-        this.Pub1.AddDivEnd();
+        this.Left.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'><span>帮助</span></a>");
+        this.Left.AddULEnd();
     }
-    public void EditAutoFullDtl()
+    public void BindLeftV1()
+    {
+        this.Left.Add("\t\n<div id='tabsJ'  align='center'>");
+        MapExtXmls fss = new MapExtXmls();
+        fss.RetrieveAll();
+
+        this.Left.AddUL();
+        foreach (MapExtXml fs in fss)
+        {
+            if (this.ExtType == fs.No)
+            {
+                this.Lab = fs.Name;
+                this.Left.AddLiB(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
+            }
+            else
+                this.Left.AddLi(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
+        }
+        this.Left.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'><span>帮助</span></a>");
+        this.Left.AddULEnd();
+        this.Left.AddDivEnd();
+    }
+    /// <summary>
+    /// 新建文本框自动完成
+    /// </summary>
+    public void EditAutoFullDtl_TB()
     {
         this.Pub2.AddFieldSet("<a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData +"&RefNo="+this.RefNo+"'>返回</a> -设置自动填充明细表");
         MapExt myme = new MapExt(this.MyPK);
         MapDtls dtls = new MapDtls(myme.FK_MapData);
         string[] strs = myme.Tag1.Split('$');
-
-        this.Pub2.AddTable("border=0  width='300px' ");
+        this.Pub2.AddTable("border=0  align=left ");
         bool is1 = false;
         foreach (MapDtl dtl in dtls)
         {
@@ -107,7 +127,56 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Pub2.AddTREnd();
         }
         this.Pub2.AddTableEnd();
+        Button mybtn = new Button();
+        mybtn.ID = "Btn_Save";
+        mybtn.Text = "保存";
+        mybtn.Click += new EventHandler(mybtn_SaveAutoFullDtl_Click);
+        this.Pub2.Add(mybtn);
 
+        mybtn = new Button();
+        mybtn.ID = "Btn_Cancel";
+        mybtn.Text = "取消";
+        mybtn.Click += new EventHandler(mybtn_SaveAutoFullDtl_Click);
+        this.Pub2.Add(mybtn);
+        this.Pub2.AddFieldSetEnd();
+    }
+    /// <summary>
+    /// 新建文本框自动完成
+    /// </summary>
+    public void EditAutoFullDtl_DDL()
+    {
+        this.Pub2.AddFieldSet("<a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a> -设置自动填充明细表");
+        MapExt myme = new MapExt(this.MyPK);
+        MapDtls dtls = new MapDtls(myme.FK_MapData);
+        string[] strs = myme.Tag1.Split('$');
+        this.Pub2.AddTable("border=0  align=left ");
+        bool is1 = false;
+        foreach (MapDtl dtl in dtls)
+        {
+            is1 = this.AddTR(is1);
+            TextBox tb = new TextBox();
+            tb.ID = "TB_" + dtl.No;
+            tb.Columns = 50;
+            tb.TextMode = TextBoxMode.MultiLine;
+            foreach (string s in strs)
+            {
+                if (s == null)
+                    continue;
+
+                if (s.Contains(dtl.No + ":") == false)
+                    continue;
+                string[] ss = s.Split(':');
+                tb.Text = ss[1];
+            }
+
+            this.Pub2.AddTDBegin();
+            this.Pub2.AddB("&nbsp;&nbsp;" + dtl.Name + "-明细表");
+            this.Pub2.AddBR();
+            this.Pub2.Add(tb);
+            this.Pub2.AddTDEnd();
+            this.Pub2.AddTREnd();
+        }
+        this.Pub2.AddTableEnd();
         Button mybtn = new Button();
         mybtn.ID = "Btn_Save";
         mybtn.Text = "保存";
@@ -124,12 +193,13 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
     public void EditAutoJL()
     {
-        this.Pub2.AddFieldSet("<a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a> -设置级连菜单");
         MapExt myme = new MapExt(this.MyPK);
         MapAttrs attrs = new MapAttrs(myme.FK_MapData);
         string[] strs = myme.Tag.Split('$');
 
-        this.Pub2.AddTable("border=0 width='70%'");
+        this.Pub2.AddTable("border=0 width='70%' align=left");
+        this.Pub2.AddCaptionLeft("<a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a> -设置级连菜单");
+
         bool is1 = false;
         foreach (MapAttr attr in attrs)
         {
@@ -181,10 +251,11 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.Add(mybtn);
         this.Pub2.Add("</div>");
 
-        this.Pub2.AddFieldSetEnd();
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        this.BindLeft();
+
         this.Page.Title = "表单扩展设置";
         switch (this.DoType)
         {
@@ -195,7 +266,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 {
                     mm.Retrieve();
                 }
-
                 mm.Delete();
                 this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo, true);
                 return;
@@ -204,12 +274,10 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 break;
         }
 
-        this.BindLeft();
         if (this.ExtType == null)
         {
             this.Pub2.AddFieldSet("Help");
             this.Pub2.Add("<a href='http://ccflow.org/Help.aspx' target=_blank>官网帮助..</a>");
-            //this.Pub2.Add(BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfData + "\\HelpDesc\\MapExt_" + BP.Web.WebUser.SysLang + ".txt"));
             this.Pub2.AddFieldSetEnd();
             return;
         }
@@ -230,20 +298,30 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                     MapExtAttr.FK_MapData, this.FK_MapData);
                 this.MapExtList(mes);
                 break;
-            case MapExtXmlList.FullCtrl: //自动完成.
-                if (this.DoType == "EditAutoJL")
-                {
-                    this.EditAutoJL();
-                    return;
-                }
+            case MapExtXmlList.TBFullCtrl:  //自动完成.
                 if (this.DoType == "EditAutoFullDtl")
                 {
-                    this.EditAutoFullDtl();
+                    this.EditAutoFullDtl_TB();
                     return;
                 }
                 if (this.MyPK != null || this.DoType == "New")
                 {
-                    Edit_AutoFull();
+                    this.EditAutoFull_TB();
+                    return;
+                }
+                mes.Retrieve(MapExtAttr.ExtType, this.ExtType,
+                    MapExtAttr.FK_MapData, this.FK_MapData);
+                this.MapExtList(mes);
+                break;
+            case MapExtXmlList.DDLFullCtrl:  //DDL自动完成.
+                if (this.DoType == "EditAutoFullDtl")
+                {
+                    this.EditAutoFullDtl_DDL();
+                    return;
+                }
+                if (this.MyPK != null || this.DoType == "New")
+                {
+                    this.EditAutoFull_DDL();
                     return;
                 }
                 mes.Retrieve(MapExtAttr.ExtType, this.ExtType,
@@ -288,28 +366,27 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         MapAttrs attrs = new MapAttrs();
         attrs.Retrieve(MapAttrAttr.FK_MapData, this.FK_MapData,
-            MapAttrAttr.UIContralType, 1,
+            MapAttrAttr.UIContralType, (int)BP.En.UIContralType.DDL,
             MapAttrAttr.UIVisible, 1, MapAttrAttr.UIIsEnable, 1);
 
         if (attrs.Count == 0)
         {
-            this.Pub2.AddMsgOfWarning("提示", "此表单中没有可设置的自动填充内容。<br>只有满足，是外键字段，可见，被启用。");
+            this.Pub2.AddMsgOfWarning("提示",
+                "此表单中没有可设置的自动填充内容。<br>只有满足，可见，被启用，是外键字段，才可以设置。");
             return;
         }
 
-       
-         
-
         MapExts mes = new MapExts();
         mes.Retrieve(MapExtAttr.FK_MapData, this.FK_MapData, MapExtAttr.ExtType, MapExtXmlList.AutoFullDLL);
-        this.Pub1.AddTable("width=80%");
-        this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("序号");
-        this.Pub1.AddTDTitle("字段");
-        this.Pub1.AddTDTitle("中文名");
-        this.Pub1.AddTDTitle("绑定源");
-        this.Pub1.AddTDTitle("操作");
-        this.Pub1.AddTREnd();
+        this.Pub2.AddTable("align=left width='60%'");
+        this.Pub2.AddCaptionLeft(this.Lab);
+        this.Pub2.AddTR();
+        this.Pub2.AddTDTitle("序号");
+        this.Pub2.AddTDTitle("字段");
+        this.Pub2.AddTDTitle("中文名");
+        this.Pub2.AddTDTitle("绑定源");
+        this.Pub2.AddTDTitle("操作");
+        this.Pub2.AddTREnd();
         string fk_attr = this.Request.QueryString["FK_Attr"];
         int idx = 0;
         MapAttr attrOper = null;
@@ -318,28 +395,28 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             if (attr.KeyOfEn == fk_attr)
                 attrOper = attr;
 
-            this.Pub1.AddTR();
-            this.Pub1.AddTDIdx(idx++);
-            this.Pub1.AddTD(attr.KeyOfEn);
-            this.Pub1.AddTD(attr.Name);
-            this.Pub1.AddTD(attr.UIBindKey);
+            this.Pub2.AddTR();
+            this.Pub2.AddTDIdx(idx++);
+            this.Pub2.AddTD(attr.KeyOfEn);
+            this.Pub2.AddTD(attr.Name);
+            this.Pub2.AddTD(attr.UIBindKey);
             MapExt me = mes.GetEntityByKey(MapExtAttr.AttrOfOper, attr.KeyOfEn) as MapExt;
             if (me == null)
-                this.Pub1.AddTD("<a href='?FK_MapData=" + this.FK_MapData + "&FK_Attr=" + attr.KeyOfEn + "&ExtType=" + MapExtXmlList.AutoFullDLL + "' >设置</a>");
+                this.Pub2.AddTD("<a href='?FK_MapData=" + this.FK_MapData + "&FK_Attr=" + attr.KeyOfEn + "&ExtType=" + MapExtXmlList.AutoFullDLL + "' >设置</a>");
             else
-                this.Pub1.AddTD("<a href='?FK_MapData=" + this.FK_MapData + "&FK_Attr=" + attr.KeyOfEn + "&ExtType=" + MapExtXmlList.AutoFullDLL + "' >编辑</a> - <a href=\"javascript:DoDel('" + me.MyPK + "','" + this.FK_MapData + "','" + MapExtXmlList.AutoFullDLL + "')\" >删除</a>");
-            this.Pub1.AddTREnd();
+                this.Pub2.AddTD("<a href='?FK_MapData=" + this.FK_MapData + "&FK_Attr=" + attr.KeyOfEn + "&ExtType=" + MapExtXmlList.AutoFullDLL + "' >编辑</a> - <a href=\"javascript:DoDel('" + me.MyPK + "','" + this.FK_MapData + "','" + MapExtXmlList.AutoFullDLL + "')\" >删除</a>");
+            this.Pub2.AddTREnd();
         }
-        this.Pub1.AddTableEnd();
 
         if (fk_attr != null)
         {
-
             MapExt me = new MapExt();
             me.MyPK = MapExtXmlList.AutoFullDLL + "_" + this.FK_MapData + "_" + fk_attr;
             me.RetrieveFromDBSources();
 
-            this.Pub2.AddFieldSet("编辑:" + attrOper.KeyOfEn + " - " + attrOper.Name);
+            this.Pub2.AddTR();
+            this.Pub2.AddTDBegin("colspan=5");
+            this.Pub2.AddFieldSet("设置:(" + attrOper.KeyOfEn + " - " + attrOper.Name+")运行时自动填充数据");
             TextBox tb = new TextBox();
             tb.TextMode = TextBoxMode.MultiLine;
             tb.Columns = 80;
@@ -354,7 +431,16 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             btn.Click += new EventHandler(btn_Save_AutoFullDLL_Click);
             this.Pub2.Add(btn);
             this.Pub2.Add("<br>事例:SELECT No,Name FROM Port_Emp WHERE FK_Dept LIKE '@WebUser.FK_Dept%' <br>您可以用@符号取本表单中的字段变量，或者全局变量，更多的信息请参考说明书。");
+            this.Pub2.Add("<br>数据源必须具有No,Name两个列。");
+
             this.Pub2.AddFieldSetEnd();
+            this.Pub2.AddTDEnd();
+            this.Pub2.AddTREnd();
+            this.Pub2.AddTableEnd();
+        }
+        else
+        {
+            this.Pub2.AddTableEnd();
         }
     }
     void btn_Save_AutoFullDLL_Click(object sender, EventArgs e)
@@ -404,7 +490,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         Button btn = sender as Button;
         if (btn.ID.Contains("Cancel"))
         {
-            this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK+"&RefNo="+this.RefNo, true);
+            this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo, true);
             return;
         }
 
@@ -431,7 +517,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         myme.Tag1 = info;
         myme.Update();
-        this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK+"&RefNo="+this.RefNo, true);
+        this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo, true);
     }
 
     void mybtn_SaveAutoFullJilian_Click(object sender, EventArgs e)
@@ -478,21 +564,20 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
     public void Edit_PopVal()
     {
+        this.Pub2.AddTable("border=0");
         MapExt me = null;
         if (this.MyPK == null)
         {
             me = new MapExt();
-            this.Pub2.AddFieldSet("新建:" + this.Lab);
+            this.Pub2.AddCaptionLeft("新建:" + this.Lab);
         }
         else
         {
             me = new MapExt(this.MyPK);
-            this.Pub2.AddFieldSet("编辑:" + this.Lab);
+            this.Pub2.AddCaptionLeft("编辑:" + this.Lab);
         }
 
         me.FK_MapData = this.FK_MapData;
-
-        this.Pub2.AddTable("border=0");
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("项目");
         this.Pub2.AddTDTitle("采集");
@@ -544,7 +629,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTD("colspan=3", btn);
         this.Pub2.AddTREnd();
         this.Pub2.AddTableEnd();
-        this.Pub2.AddFieldSetEnd();
     }
     public string EventName
     {
@@ -676,22 +760,19 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             }
         }
     }
-    public void Edit_AutoFull()
+    public void EditAutoFull_TB()
     {
         MapExt me = null;
         if (this.MyPK == null)
-        {
             me = new MapExt();
-            this.Pub2.AddFieldSet("新建:" + this.Lab);
-        }
         else
-        {
             me = new MapExt(this.MyPK);
-            this.Pub2.AddFieldSet("编辑:" + this.Lab);
-        }
+
         me.FK_MapData = this.FK_MapData;
 
         this.Pub2.AddTable("border=0  width='70%' ");
+        this.Pub2.AddCaptionLeft("新建:" + this.Lab);
+
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("项目");
         this.Pub2.AddTDTitle("采集");
@@ -747,37 +828,114 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Pub2.AddTD();
         else
             this.Pub2.AddTD("<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo = " + this.RefNo + "&ExtType=" + this.ExtType + "&DoType=EditAutoJL\" >级连下拉框</a>-<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo + "&DoType=EditAutoFullDtl\" >填充明细表</a>");
-
         this.Pub2.AddTREnd();
 
-
         #region 输出事例
-
         this.Pub2.AddTRSum();
-
         this.Pub2.AddTDBegin("colspan=3");
 
-        this.Pub2.AddFieldSet("填充事例:");
+        this.Pub2.AddFieldSet("文本框自动完成填充事例: 必须有No,Name两列，其它的列如果与本表单的字段名相同则可自动填充。");
         this.Pub2.AddB("For oracle:");
-        string sql = "SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM Port_Emp WHERE No LIKE '@Key%' AND ROWNUM<=15";
+        string sql = "SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM WF_Emp WHERE No LIKE '@Key%' AND ROWNUM<=15";
         this.Pub2.AddBR(sql.Replace("~", "\""));
 
         this.Pub2.AddBR();
         this.Pub2.AddB("For sqlserver:");
-        sql = "SELECT TOP 15 No, Name , Name as mingcheng FROM Port_Emp WHERE No LIKE '@Key%'";
+        sql = "SELECT TOP 15 No, Name , Name as mingcheng FROM WF_Emp WHERE No LIKE '@Key%'";
         this.Pub2.AddBR(sql.Replace("~", "\""));
 
         this.Pub2.AddFieldSetEnd();
         this.Pub2.AddTDEnd();
-
         this.Pub2.AddTREnd();
-
         this.Pub2.AddTableEnd();
         #endregion 输出事例
-
-        this.Pub2.AddFieldSetEnd();
     }
+    public void EditAutoFull_DDL()
+    {
+        MapExt me = null;
+        if (this.MyPK == null)
+            me = new MapExt();
+        else
+            me = new MapExt(this.MyPK);
 
+        me.FK_MapData = this.FK_MapData;
+
+        this.Pub2.AddTable("align=left");
+        this.Pub2.AddCaptionLeft("新建:" + this.Lab);
+        this.Pub2.AddTR();
+        this.Pub2.AddTDTitle("项目");
+        this.Pub2.AddTDTitle("采集");
+        this.Pub2.AddTDTitle("说明");
+        this.Pub2.AddTREnd();
+
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("输入文本框");
+        BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
+        ddl.ID = "DDL_Oper";
+        MapAttrs attrs = new MapAttrs(this.FK_MapData);
+        foreach (MapAttr attr in attrs)
+        {
+            if (attr.UIVisible == false)
+                continue;
+
+            if (attr.UIIsEnable == false)
+                continue;
+
+            if (attr.UIContralType == UIContralType.DDL)
+            {
+                ddl.Items.Add(new ListItem(attr.KeyOfEn + " - " + attr.Name, attr.KeyOfEn));
+                continue;
+            }
+        }
+        ddl.SetSelectItem(me.AttrOfOper);
+
+        this.Pub2.AddTD(ddl);
+        this.Pub2.AddTD("输入项");
+        this.Pub2.AddTREnd();
+
+        this.Pub2.AddTR();
+        this.Pub2.AddTDTitle("colspan=3", "自动填充SQL:");
+        this.Pub2.AddTREnd();
+
+        this.Pub2.AddTR();
+        TextBox tb = new TextBox();
+        tb.ID = "TB_Doc";
+        tb.Text = me.Doc;
+        tb.TextMode = TextBoxMode.MultiLine;
+        tb.Rows = 5;
+        tb.Columns = 80;
+        this.Pub2.AddTD("colspan=3", tb);
+        this.Pub2.AddTREnd();
+
+        this.Pub2.AddTRSum();
+        Button btn = new Button();
+        btn.ID = "BtnSave";
+        btn.Text = this.ToE("Save", "保存");
+        btn.Click += new EventHandler(btn_SaveAutoFull_Click);
+        this.Pub2.AddTD("colspan=2", btn);
+        if (this.MyPK == null)
+            this.Pub2.AddTD();
+        else
+            this.Pub2.AddTD("<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo = " + this.RefNo + "&ExtType=" + this.ExtType + "&DoType=EditAutoJL\" >级连下拉框</a>-<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo + "&DoType=EditAutoFullDtl\" >填充明细表</a>");
+        this.Pub2.AddTREnd();
+
+        #region 输出事例
+        this.Pub2.AddTRSum();
+        this.Pub2.Add("\n<TD class='BigDoc' valign=top colspan=3>");
+
+        this.Pub2.AddFieldSet("填充事例:");
+        string sql = "SELECT dizhi as Addr, fuzeren as Manager FROM Prj_Main WHERE No = '@Key'";
+        this.Pub2.Add(sql.Replace("~", "\""));
+        this.Pub2.AddBR("<hr><b>说明：</b>根据用户当前选择下拉框的实例（比如:选择一个工程）把相关此实例的其它属性放在控件中");
+        this.Pub2.Add("（比如：工程的地址，负责人。）");
+        this.Pub2.AddBR("<b>备注：</b><br>1.只有列名与本表单中字段名称匹配才能自动填充上去。<br>2.sql查询出来的是一行数据，@Key 是当前选择的值。");
+        this.Pub2.AddFieldSetEnd();
+
+        this.Pub2.AddTDEnd();
+        this.Pub2.AddTREnd();
+        this.Pub2.AddTableEnd();
+        #endregion 输出事例
+    }
     public void Edit_ActiveDDL()
     {
         MapExt me = null;
@@ -793,7 +951,8 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         me.FK_MapData = this.FK_MapData;
 
-        this.Pub2.AddTable("border=0  width='300px' ");
+        this.Pub2.AddTable("border=0  width='300px' align=left ");
+        this.Pub2.AddCaptionLeft(this.Lab);
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("项目");
         this.Pub2.AddTDTitle("采集");
@@ -1058,8 +1217,12 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         try
         {
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(me.Doc);
-            if (dt.Columns.Contains("Name") == false || dt.Columns.Contains("No") == false)
-                throw new Exception("在您的sql表达式里，必须有No,Name 还两个列。");
+
+            if (this.ExtType == MapExtXmlList.TBFullCtrl)
+            {
+                if (dt.Columns.Contains("Name") == false || dt.Columns.Contains("No") == false)
+                    throw new Exception("在您的sql表达式里，必须有No,Name 还两个列。");
+            }
 
             MapAttrs attrs = new MapAttrs(this.FK_MapData);
             foreach (DataColumn dc in dt.Columns)
@@ -1082,15 +1245,13 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     }
     public void MapExtList(MapExts ens)
     {
-        //  this.Pub2.AddFieldSet("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&DoType=New&RefNo="+this.RefNo+"' >新建:" + this.Lab + "</a>");
-        this.Pub2.AddBR();
-        this.Pub2.AddBR();
-        this.Pub2.AddTable("border=0 width='60%'");
+        this.Pub2.AddTable("border=0 width='80%' align=left ");
         this.Pub2.AddCaptionLeft("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&DoType=New&RefNo=" + this.RefNo + "' ><img src='./../../Images/Btn/New.gif' border=0/>新建:" + this.Lab + "</a>");
 
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle(this.ToE("Sort", "类型"));
         this.Pub2.AddTDTitle(this.ToE("Desc", "描述"));
+        this.Pub2.AddTDTitle(this.ToE("Field", "字段"));
         this.Pub2.AddTDTitle(this.ToE("Oper", "删除"));
         this.Pub2.AddTREnd();
         foreach (MapExt en in ens)
@@ -1098,6 +1259,10 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Pub2.AddTR();
             this.Pub2.AddTD(en.ExtType);
             this.Pub2.AddTDA("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + en.MyPK + "&RefNo=" + this.RefNo, en.ExtDesc);
+
+            MapAttr ma = new MapAttr(this.FK_MapData + "_" + en.AttrOfOper);
+            this.Pub2.AddTD(en.AttrOfOper+" "+ma.Name);
+
             this.Pub2.AddTD("<a href=\"javascript:DoDel('" + en.MyPK + "','" + this.FK_MapData + "','" + this.ExtType + "');\" >删除</a>");
             this.Pub2.AddTREnd();
         }

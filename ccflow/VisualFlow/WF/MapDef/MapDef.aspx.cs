@@ -454,13 +454,19 @@ public partial class WF_MapDef_MapDef : WebPage
         {
             switch (me.ExtType)
             {
+                case MapExtXmlList.DDLFullCtrl: // 自动填充.
+                    DDL ddlOper = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper);
+                    if (ddlOper == null)
+                        continue;
+                    ddlOper.Attributes["onchange"] = "DDLFullCtrl(this.value,\'" + ddlOper.ClientID + "\', \'" + me.MyPK + "\')";
+                    break;
                 case MapExtXmlList.ActiveDDL:
                     DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper);
                     DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive);
                     ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
                     // ddlChild.Attributes["onchange"] = "ddlCity_onchange(this.value,'" + me.MyPK + "')";
                     break;
-                case MapExtXmlList.FullCtrl: // 自动填充.
+                case MapExtXmlList.TBFullCtrl: // 自动填充.
                     TB tbAuto = this.Pub1.GetTBByID("TB_" + me.AttrOfOper);
                     if (tbAuto == null)
                     {
@@ -469,9 +475,6 @@ public partial class WF_MapDef_MapDef : WebPage
                     }
                     tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                     tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
-                    //AUTOCOMPLETE="OFF">
-                    // tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value);";
-                    //    tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                     break;
                 case MapExtXmlList.InputCheck: /*js 检查 */
                     TB tbJS = this.Pub1.GetTBByID("TB_" + me.AttrOfOper);

@@ -4,5 +4,10 @@
     <link href="../../Comm/Style/Table0.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <uc1:Pub ID="Pub1" runat="server" />
+<table width='100%' >
+<tr>
+<td valign=top ><uc1:Pub ID="Left" runat="server" /></td>
+<td  valign=top  align=left><uc1:Pub ID="Pub1" runat="server" /></td>
+</tr>
+</table>
 </asp:Content>

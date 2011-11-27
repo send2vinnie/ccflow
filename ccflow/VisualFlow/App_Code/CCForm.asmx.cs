@@ -514,18 +514,7 @@ namespace BP.Web
                 return "Error:"+ex.Message;
             }
         }
-        [WebMethod]
-        public string ParseStringToPinyin(string name)
-        {
-            try
-            {
-                return BP.DA.DataType.ParseStringToPinyin(name);
-            }
-            catch
-            {
-                return null;
-            }
-        }
+      
         [WebMethod]
         public string RequestSFTable(string ensName)
         {

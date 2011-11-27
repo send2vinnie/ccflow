@@ -34,6 +34,10 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion 测试数据库是否连接成功。
 
+            //保障升级后的数据完整性. 2011-11-26.
+            sql = "UPDATE SYS_MAPEXT SET ExtType='TBFullCtrl' WHERE ExtType='FullCtrl'";
+            DBAccess.RunSQL(sql);
+
             #region 手动升级. 2011-07-08 补充节点字段分组.
             //string sql = "DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
             //BP.DA.DBAccess.RunSQL(sql);
@@ -42,9 +46,9 @@ public partial class Designer : System.Web.UI.Page
             //BP.DA.DBAccess.RunSQL(sql);
             #endregion 手动升级. 2011-07-08 补充节点字段分组.
 
-            #region 升级基础信息。 2011-11-02
+            #region 升级基础信息。 2011-11-02。 在过1个月去掉它。
             sql = "SELECT count(*) FROM CN_City ";
-            if (BP.DA.DBAccess.RunSQLReturnValInt(sql) == 0)
+            if (BP.DA.DBAccess.RunSQLReturnValInt(sql) == 0  )
             {
                 string scrpts = BP.DA.DataType.ReadTextFile(BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql");
                 BP.DA.DBAccess.RunSQLs(scrpts);
