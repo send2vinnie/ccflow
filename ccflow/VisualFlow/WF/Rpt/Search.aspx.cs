@@ -107,12 +107,12 @@ public partial class WF_Rpt_Search : WebPage
                 case "FlowStarter":
                     DDL ddl_FlowStarter = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
                     defVal = ddl_FlowStarter.SelectedItemStringVal;
-                    dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!=''");
+                    dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
                     ddl_FlowStarter.Items.Clear();
                     ddl_FlowStarter.Items.Add(new ListItem("=>发起人", "all"));
                     foreach (DataRow dr in dt.Rows)
                     {
-                        ddl_FlowStarter.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
+                        ddl_FlowStarter.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
                     }
                     ddl_FlowStarter.SetSelectItem(defVal);
                     break;
