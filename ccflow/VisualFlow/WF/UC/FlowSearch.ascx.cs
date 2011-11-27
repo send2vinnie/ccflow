@@ -708,8 +708,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle(this.ToE("Name", "名称"));
         this.Pub1.AddTDTitle( this.ToE("Bill", "单据"));
         this.Pub1.AddTDTitle(this.ToE("FlowSearch", "流程查询-分析") );
-        this.Pub1.AddTDTitle(this.ToE("Node", "节点") );
-        this.Pub1.AddTDTitle(this.ToE("BPR", "成本分析"));
+        //this.Pub1.AddTDTitle(this.ToE("Node", "节点") );
+        //this.Pub1.AddTDTitle(this.ToE("BPR", "成本分析"));
         this.Pub1.AddTREnd();
 
         string sql = ""; // "SELECT FK_Flow FROM WF_Node ";
@@ -726,8 +726,10 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         string bill = this.ToE("Bill", "单据");
         string nodeSearch = this.ToE("Node", "节点");
         string FX = this.ToE("FX", "分析");
+
         string myWork = this.ToE("MyWork", "我的工作");
         string BPR = this.ToE("BPR", "成本分析");
+
         foreach (FlowSort fs in fss)
         {
             foreach (Flow fl in fls)
@@ -770,8 +772,10 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 //string url2 = this.Request.ApplicationPath + "/WF/FlowSearchMyWork.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt&FK_Flow=" + fl.No;
                 //this.Pub1.Add("-<a href=\"javascript:WinOpen('" + url2 + "');\" >" + myWork + "</a>");
                 this.Pub1.AddTDEnd();
-                this.Pub1.AddTD("<a href='FlowSearch" + this.PageSmall + ".aspx?FK_Flow=" + fl.No + "'>" + nodeSearch + "</a>");
-                this.Pub1.AddTD("<a href=\"javascript:WinOpen('BPR.aspx?FK_Flow=" + fl.No + "');\"  >" + BPR + "</a>");
+
+                //this.Pub1.AddTD("<a href='FlowSearch" + this.PageSmall + ".aspx?FK_Flow=" + fl.No + "'>" + nodeSearch + "</a>");
+                //this.Pub1.AddTD("<a href=\"javascript:WinOpen('BPR.aspx?FK_Flow=" + fl.No + "');\"  >" + BPR + "</a>");
+
                 this.Pub1.AddTREnd();
             }
         }
