@@ -763,13 +763,12 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 string src2 = this.Request.ApplicationPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt&FK_Flow=" + fl.No;
                 this.Pub1.Add("<a href=\"javascript:WinOpen('" + src2 + "');\" >" + search + "</a>");
 
-                if (fl.NumOfDtl != 0)
-                    this.Pub1.Add("-<a href=\"javascript:Dtl('" + fl.No + "');\" >" + dtl + "</a>");
-
-                string src1 = this.Request.ApplicationPath + "/Comm/GroupEnsMNum.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";
-                this.Pub1.Add("-<a href=\"javascript:WinOpen('" + src1 + "');\" >" + FX + "</a>");
-                string url2 = this.Request.ApplicationPath + "/WF/FlowSearchMyWork.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt&FK_Flow=" + fl.No;
-                this.Pub1.Add("-<a href=\"javascript:WinOpen('" + url2 + "');\" >" + myWork + "</a>");
+                //if (fl.NumOfDtl != 0)
+                //    this.Pub1.Add("-<a href=\"javascript:Dtl('" + fl.No + "');\" >" + dtl + "</a>");
+                //string src1 = this.Request.ApplicationPath + "/Comm/GroupEnsMNum.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";
+                //this.Pub1.Add("-<a href=\"javascript:WinOpen('" + src1 + "');\" >" + FX + "</a>");
+                //string url2 = this.Request.ApplicationPath + "/WF/FlowSearchMyWork.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt&FK_Flow=" + fl.No;
+                //this.Pub1.Add("-<a href=\"javascript:WinOpen('" + url2 + "');\" >" + myWork + "</a>");
                 this.Pub1.AddTDEnd();
                 this.Pub1.AddTD("<a href='FlowSearch" + this.PageSmall + ".aspx?FK_Flow=" + fl.No + "'>" + nodeSearch + "</a>");
                 this.Pub1.AddTD("<a href=\"javascript:WinOpen('BPR.aspx?FK_Flow=" + fl.No + "');\"  >" + BPR + "</a>");
