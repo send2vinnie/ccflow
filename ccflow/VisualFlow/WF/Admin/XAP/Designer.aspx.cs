@@ -48,7 +48,7 @@ public partial class Designer : System.Web.UI.Page
 
             #region 升级基础信息。 2011-11-02。 在过1个月去掉它。
             sql = "SELECT count(*) FROM CN_City ";
-            if (BP.DA.DBAccess.RunSQLReturnValInt(sql) == 0  )
+            if (BP.DA.DBAccess.RunSQLReturnValInt(sql) == 0)
             {
                 string scrpts = BP.DA.DataType.ReadTextFile(BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql");
                 BP.DA.DBAccess.RunSQLs(scrpts);
@@ -83,7 +83,11 @@ public partial class Designer : System.Web.UI.Page
             BP.DA.DBAccess.RunSQLs(sql);
 
             // 更新老版本的字段长度。
-            sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
+            if (DBAccess.AppCenterDBType == DBType.Oracle9i)
+                sql = "ALTER TABLE WF_Track modify COLUMN RDT varchar(20)";
+            else
+                sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
+
             BP.DA.DBAccess.RunSQLs(sql);
             #endregion 更新 WF_EmpWorks. 2011-11-09
 
