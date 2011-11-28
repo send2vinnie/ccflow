@@ -53,6 +53,7 @@ public partial class Designer : System.Web.UI.Page
                 string scrpts = BP.DA.DataType.ReadTextFile(BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql");
                 BP.DA.DBAccess.RunSQLs(scrpts);
             }
+
             // 升级退回规则。
             try
             {
@@ -72,7 +73,7 @@ public partial class Designer : System.Web.UI.Page
 
             #region 更新 WF_EmpWorks. 2011-11-09
             try
-            {
+            {   
                 sql = "DROP VIEW WF_EmpWorks";
                 BP.DA.DBAccess.RunSQLs(sql);
             }
@@ -103,7 +104,6 @@ public partial class Designer : System.Web.UI.Page
                 throw new Exception("admin 用户丢失，请注意大小写。");
             }
             #endregion 执行admin登陆.
-
         }
         catch (Exception ex)
         {
