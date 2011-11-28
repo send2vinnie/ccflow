@@ -48,11 +48,11 @@ namespace BP.WF
         /// </summary>
         BySQL = 2,
         /// <summary>
-        /// 按指定的人员
+        /// 按本节点设置的指定人员
         /// </summary>
         BySpcEmp=3,
         /// <summary>
-        /// 由发送人选择
+        /// 由上一步发送人选择
         /// </summary>
         BySelected=4,
         /// <summary>

@@ -40,7 +40,11 @@ namespace BP.WF
         /// <summary>
         /// 合流前进
         /// </summary>
-        ForwardHL
+        ForwardHL,
+        /// <summary>
+        /// 流程结束
+        /// </summary>
+        FlowOver
     }
     /// <summary>
     ///  属性
@@ -278,6 +282,8 @@ namespace BP.WF
                         return " -前进(分流点)";
                     case ActionType.ForwardHL:
                         return " -向合流点发送";
+                    case ActionType.FlowOver:
+                        return "流程结束";
                     default:
                         return "未知";
                 }

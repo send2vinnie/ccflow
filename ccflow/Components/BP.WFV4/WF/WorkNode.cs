@@ -461,11 +461,11 @@ namespace BP.WF
             //首先判断是否配置了获取下一步接受人员的sql.
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySQL)
             {
-                if (this.HisNode.RecipientSQL.Length < 4)
+                if (town.HisNode.RecipientSQL.Length < 4)
                     throw new Exception("@您设置的当前节点按照sql，决定下一步的接受人员，但是你没有设置sql.");
 
                 Attrs attrs = this.HisWork.EnMap.Attrs;
-                sql = this.HisNode.RecipientSQL;
+                sql = town.HisNode.RecipientSQL;
                 foreach (Attr attr in attrs)
                 {
                     if (attr.MyDataType == DataType.AppString)
@@ -2605,11 +2605,15 @@ namespace BP.WF
             }
             #endregion 获取能够通过的节点集合，如果没有设置方向条件就默认通过.
 
-            if (myNodes.Count==0)
-                 throw new Exception(string.Format(this.ToE("WN10_1",
-                     "@定义节点的方向条件错误:没有给从{0}节点到其它节点,定义转向条件."), this.HisNode.NodeID + this.HisNode.Name));
-           
-            return msg;
+            if (myNodes.Count == 0)
+            {
+                throw new Exception(string.Format(this.ToE("WN10_1",
+                    "@定义节点的方向条件错误:没有给从{0}节点到其它节点,定义转向条件."), this.HisNode.NodeID + this.HisNode.Name));
+            }
+            else
+            {
+                return msg + StartNextNode(myNodes);
+            }
         }
         #endregion
 
@@ -3236,6 +3240,7 @@ namespace BP.WF
                     /* 如果流程完成 */
                     string overMsg = this.HisWorkFlow.DoFlowOver();
                     this.IsStopFlow = true;
+                    this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, this.HisNode.NodeID, this.HisNode.Name, "流程结束");
                     return "工作已经成功处理(一个流程的工作)。";
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
                     // return msg + "@符合工作流程完成条件" + this.HisFlowCompleteConditions.ConditionDesc + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
@@ -3246,6 +3251,8 @@ namespace BP.WF
                     /* 如果流程完成 */
                     string overMsg = this.HisWorkFlow.DoFlowOver();
                     this.IsStopFlow = true;
+
+                    this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, this.HisNode.NodeID, this.HisNode.Name, "流程结束");
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
                     return msg + "@符合工作流程完成条件" + this.HisFlowCompleteConditions.ConditionDesc + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
                 }
@@ -3394,11 +3401,28 @@ namespace BP.WF
         /// <returns></returns>
         public string StartNextNode(Nodes nds)
         {
+            /* 分流点 */
+            foreach (Node nd in nds)
+            {
+                if (nd.IsHL == true)
+                {
+                    /* 如果其中的一个点到达了合流点，就让它发起合流点。*/
+                    if (nds.Count != 1)
+                    {
+                        throw new Exception("@在遇到混合流程节点发送时错误，你不能同时启动分流与干流。");
+                    }
+                    else
+                    {
+                        return StartNextNode(nd);
+                    }
+                }
+            }
+
+
             /*分别启动每个节点的信息.*/
             string msg = "";
 
             //查询出来上一个节点的
-           // FrmAttachments aths = new FrmAttachments("ND" + this.HisNode.NodeID);
             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                        this.WorkID.ToString());
             foreach (Node nd in nds)
@@ -3481,13 +3505,17 @@ namespace BP.WF
         /// <param name="nd">要启动的节点</param>
         public string StartNextNode(Node nd)
         {
+            /*如果当前节点是分流，下一个节点是合流，就按普通节点启动它。*/
+            if (this.HisNode.IsFL && nd.IsHL)
+                return StartNextWorkNodeOrdinary(nd);  /* 普通节点 */
+
             string msg = "";
             try
             {
                 switch (nd.HisNodeWorkType)
                 {
                     case NodeWorkType.WorkHL:
-                    case NodeWorkType.WorkFHL:  // 如果下一个节点是合流节点，或者是分合流节点。
+                    case NodeWorkType.WorkFHL: // 如果下一个节点是合流节点，或者是分合流节点。
                         // 判断当前节点的类型是什么.
                         switch (this.HisNode.HisNodeWorkType)
                         {
@@ -3558,7 +3586,6 @@ namespace BP.WF
                     msg += "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + nd.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
             }
  
-
             string str = "";
             DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + nd.NodeID + " WHERE WorkID=" + this.HisWork.OID);
 
@@ -3760,8 +3787,8 @@ namespace BP.WF
                 #region  初始化发起的工作节点。
                 Work wk = nd.HisWork;
                 wk.SetValByKey("OID", this.HisWork.OID); //设定它的ID.
-                if (this.HisNode.IsStartNode==false)
-                   wk.Copy(this.rptGe);
+                if (this.HisNode.IsStartNode == false)
+                    wk.Copy(this.rptGe);
 
                 wk.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
                 wk.NodeState = NodeState.Init; //节点状态。
@@ -3782,6 +3809,7 @@ namespace BP.WF
                         throw new Exception(ex.Message + " == " + ex11.Message);
                     }
                 }
+
                 #region 复制附件。
                 FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                       this.WorkID.ToString());
@@ -3956,7 +3984,6 @@ namespace BP.WF
                 }
                 #endregion 复制明细数据
                 //  wk.CopyCellsData("ND" + this.HisNode.NodeID + "_" + this.HisWork.OID);
-
                 #endregion
 
                 try

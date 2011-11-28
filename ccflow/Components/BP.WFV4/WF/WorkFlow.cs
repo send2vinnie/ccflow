@@ -561,8 +561,7 @@ namespace BP.WF
         /// <returns></returns>
         public string DoFlowOver()
         {
-          //  return "工作已完成.";
-            // 建立流程事例。
+           
             GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
             Node nd = new Node(gwf.FK_Node);
             string msg = this.BeforeFlowOver();
@@ -656,21 +655,7 @@ namespace BP.WF
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + ")  AND FK_Node IN (SELECT NodeId FROM WF_Node WHERE FK_Flow='" + this.HisFlow.No + "') ");
             return msg;
 
-            //switch (nd.HisFNType)
-            //{
-            //    case FNType.Plane:
-            //        msg += this.DoFlowOverPlane(nd);
-            //        break;
-            //    case FNType.River: // 干流流程结束。
-            //        msg += this.DoFlowOverRiver(nd);
-            //        break;
-            //    case FNType.Branch:
-            //        msg += this.DoFlowOverBranch(nd);
-            //        break;
-            //    default:
-            //        throw new Exception("@没有判断的情况。");
-            //        break;
-            //}
+         
         }
         /// <summary>
         /// 在分流上结束流程。

@@ -158,11 +158,11 @@ namespace BP.WF
         /// <summary>
         /// 节点工作岗位
         /// </summary>
-        /// <param name="NodeID">节点ID</param>
-        public NodeStations(int NodeID)
+        /// <param name="nodeID">节点ID</param>
+        public NodeStations(int nodeID)
         {
             QueryObject qo = new QueryObject(this);
-            qo.AddWhere(NodeStationAttr.FK_Node, NodeID);
+            qo.AddWhere(NodeStationAttr.FK_Node, nodeID);
             qo.DoQuery();
         }
         /// <summary>
