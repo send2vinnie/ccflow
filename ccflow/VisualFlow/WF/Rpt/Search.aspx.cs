@@ -293,8 +293,9 @@ public partial class WF_Rpt_Search : WebPage
             string url = this.GenerEnUrl(en, attrs);
             #endregion
 
-            urlExt = "\"javascript:ShowEn('../../Comm/UIEn.aspx?EnsName=" + ens.ToString() + "&PK=" + en.GetValByKey(pk) + url + "', 'cd','" + WinCardH + "','" + WinCardW + "');\"";
-            is1 = this.UCSys1.AddTR(is1, "ondblclick=" + urlExt);
+            //urlExt = "\"javascript:ShowEn('../../Comm/UIEn.aspx?EnsName=" + ens.ToString() + "&PK=" + en.GetValByKey(pk) + url + "', 'cd','" + WinCardH + "','" + WinCardW + "');\"";
+            //is1 = this.UCSys1.AddTR(is1, "ondblclick=" + urlExt);
+            this.UCSys1.AddTR();
 
             #region 输出字段。
             idx++;
@@ -318,7 +319,11 @@ public partial class WF_Rpt_Search : WebPage
 
                 string str = en.GetValStrByKey(attr.Key);
                 if (focusField == attr.Key)
-                    str = "<b><font color='blue' ><a href=" + urlExt + ">" + str + "</font></b></a>";
+                {
+                    //str = "<b><font color='blue' ><a href=" + urlExt + ">" + str + "</font></b></a>";
+                    str = "<b><font color='blue' >" + str + "</font></a>";
+
+                }
                 switch (attr.MyDataType)
                 {
                     case DataType.AppDate:
@@ -360,7 +365,7 @@ public partial class WF_Rpt_Search : WebPage
             //相关功能.
             string ext = "<a href=\"javascript:WinOpen('../Chart.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >轨迹图</a>";
             ext += "-<a href=\"javascript:WinOpen('Attachment.aspx?FK_Flow=" + this.FK_Flow + "&OID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >附件</a>";
-            ext += "-<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >工作报告</a>";
+            ext += "-<a href=\"javascript:WinOpen('./../WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tdr');\" >工作报告</a>";
 
             this.UCSys1.AddTD(ext);
             this.UCSys1.AddTREnd();
