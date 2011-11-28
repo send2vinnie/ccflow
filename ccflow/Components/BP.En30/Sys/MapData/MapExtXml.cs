@@ -19,9 +19,9 @@ namespace BP.Sys
         /// </summary>
         public const string InputCheck = "InputCheck";
         /// <summary>
-        /// 自动完成
+        /// 文本框自动填充
         /// </summary>
-        public const string FullCtrl = "FullCtrl";
+        public const string TBFullCtrl = "TBFullCtrl";
         /// <summary>
         /// Pop返回值
         /// </summary>
@@ -34,6 +34,10 @@ namespace BP.Sys
         /// (动态的)填充下拉框
         /// </summary>
         public const string AutoFullDLL = "AutoFullDLL";
+        /// <summary>
+        /// 下拉框自动填充
+        /// </summary>
+        public const string DDLFullCtrl = "DDLFullCtrl";
     }
 	public class MapExtXml:XmlEnNoName
 	{

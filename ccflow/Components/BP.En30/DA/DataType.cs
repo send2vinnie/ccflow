@@ -565,12 +565,34 @@ namespace BP.DA
             val = val.Replace("\r", "");
             return val;
         }
-
+        /// <summary>
+        /// 将中文转化成拼音
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <returns></returns>
         public static string ParseStringToPinyin(string exp)
         {
-            return BP.DA.chs2py.convert(exp);
+            string pinYin = "", str = null;
+            char[] chars = exp.ToCharArray();
+            foreach (char c in chars)
+            {
+                try
+                {
+                    str = BP.DA.chs2py.convert(c.ToString());
+                    pinYin += str.Substring(0, 1).ToUpper() + str.Substring(1);
+                }
+                catch
+                {
+                    pinYin += c;
+                }
+            }
+            return pinYin;
         }
-         
+        /// <summary>
+        /// 转化成 decimal
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <returns></returns>
 		public static decimal ParseExpToDecimal(string exp)
 		{
             if (exp.Trim() == "")
@@ -593,23 +615,6 @@ namespace BP.DA
 
             exp = exp.Replace("--", "- -");
 
-			//exp=exp+"#";
-
-
-			//exp=exp.Replace("-","+");
-//			clsStack s = new clsStack();
-//			string[] exps = exp.Split('+') ;
-//			Calculate c = new Calculate();
-//			string str = c.Run( exps ).ToString();
-//			 
-//			try
-//			{
-//				return  decimal.Parse(	str );
-//			}
-//			catch(Exception ex)
-//			{
-//				throw new Exception(ex.Message+ "  "+str.ToString() +" exps="+exps+" exp="+exp) ; 
-//			}
 
 			if (exp.IndexOf("@")!=-1)
 				return 0;
