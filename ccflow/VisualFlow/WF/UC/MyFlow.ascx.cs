@@ -569,7 +569,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             case NodeWorkType.WorkFHL:
             case NodeWorkType.WorkFL:
             case NodeWorkType.WorkHL:
-                if (this.FID != 0)
+                if (this.FID != 0 && this.FID!=this.WorkID)
                 {
                     /* 这种情况是分流节点向退回到了分河流。*/
                     this.UCEn1.AddFieldSet("分流节点退回信息");
