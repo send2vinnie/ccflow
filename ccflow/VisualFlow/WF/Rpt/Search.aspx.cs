@@ -361,6 +361,7 @@ public partial class WF_Rpt_Search : WebPage
 
             string ext = "<a href=\"javascript:WinOpen('../Chart.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >轨迹图</a>";
             ext += " - <a href=\"javascript:WinOpen('Attachment.aspx?FK_Flow=" + this.FK_Flow + "&OID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >附件</a>";
+            ext += " - <a href=\"javascript:WinOpen('./../WFRpt.aspx?&FK_Flow=" + this.FK_Flow + "&WorkID=" + en.GetValStrByKey("OID") + "&FID=" + en.GetValStrByKey("FID") + "','tr');\" >工作报告</a>";
 
             this.UCSys1.AddTD(ext);
             this.UCSys1.AddTREnd();
