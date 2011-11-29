@@ -14,68 +14,61 @@ namespace BP.PRJ
     public class FileDataAttr : EntityNoNameAttr
     {
         /// <summary>
-        /// 
+        /// My_PK
         /// </summary>
         public const string My_PK = "My_PK";
-
         /// <summary>
         /// 编号
         /// </summary>
         public const string OID = "OID";
-
         /// <summary>
         /// 文件类型
         /// </summary>
         public const string FileType = "FileType";
-
         /// <summary>
         /// 文件名
         /// </summary>
         public const string FileName = "FileName";
-
         /// <summary>
         /// 路径
         /// </summary>
         public const string AbsolutionPath = "AbsolutionPath";
-
         /// <summary>
         /// 文件格式
         /// </summary>
         public const string FileFormat = "FileFormat";
-
         /// <summary>
         /// 文件大小
         /// </summary>
         public const string FileSize = "FileSize";
-
         /// <summary>
         /// 上传日期
         /// </summary>
         public const string UpLoadDate = "UpLoadDate";
-
         /// <summary>
         /// 上传人
         /// </summary>
         public const string UpLoadPerson = "UpLoadPerson";
-
         /// <summary>
         /// 上传节点名称
         /// </summary>
         public const string NodeAttrbute = "NodeAttrbute";
-
         /// <summary>
         /// 流程ID
         /// </summary>
         public const string FlowID = "FlowID";
     }
-
     /// <summary>
     /// 文件数据表
     /// </summary>
     public class FileData : EntityNoName
     {
-
-             public FileData() { }
+        /// <summary>
+        /// FileData
+        /// </summary>
+        public FileData()
+        {
+        }
         /// <summary>
         /// 文件描述
         /// </summary>

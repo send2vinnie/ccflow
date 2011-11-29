@@ -122,7 +122,6 @@ namespace BP.PRJ
 
                 map.AddTBStringPK(RuleAttr.No, null, "编号", true, false, 3, 3, 3);
                 map.AddTBString(RuleAttr.Name, null, "名称", true, false, 2, 60, 500);
-
                 map.AddBoolean(RuleAttr.IsMultityFile, false, "是否多文件", true, false);
                 map.AddTBString(RuleAttr.CanDownSQL, null, "可下载的人员", true, false, 0, 60, 500);
                 map.AddTBString(RuleAttr.FileFormat, null, "格式要求", true, false, 0, 60, 500);

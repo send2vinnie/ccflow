@@ -37,23 +37,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Doc\Dir.cs" />
     <Compile Include="EmpPrj.cs" />
     <Compile Include="FileData.cs" />
     <Compile Include="Doc\DTSGenerDir.cs" />
-    <Compile Include="Doc\NodeRule.cs" />
+    <Compile Include="Doc\NodeAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prj.cs" />
     <Compile Include="EmpPrjStation.cs" />
     <Compile Include="EmpPrjExt.cs" />
-    <Compile Include="Rule.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Components\BP.En30\BP.En30.csproj">
+    <ProjectReference Include="..\..\..\..\Components\BP.En30\BP.En30.csproj">
       <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
       <Name>BP.En30</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Components\BP.WFV4\BP.WFV4.csproj">
+    <ProjectReference Include="..\..\..\..\Components\BP.WFV4\BP.WFV4.csproj">
       <Project>{51C1DADA-1B9A-41CC-B731-FDE1196778F2}</Project>
       <Name>BP.WFV4</Name>
     </ProjectReference>

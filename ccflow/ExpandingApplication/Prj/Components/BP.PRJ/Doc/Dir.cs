@@ -12,8 +12,17 @@ namespace BP.PRJ
 	/// </summary>
     public class DirAttr : EntityNoNameAttr
     {
+        /// <summary>
+        /// ÎÄ¼þÄ¿Â¼
+        /// </summary>
         public const string DirPath = "DirPath";
+        /// <summary>
+        /// ID
+        /// </summary>
         public const string ID = "ID";
+        /// <summary>
+        /// PID
+        /// </summary>
         public const string PID = "PID";
     }
 	/// <summary>

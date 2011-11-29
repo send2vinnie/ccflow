@@ -28,7 +28,6 @@ namespace BP.PRJ
         /// <returns></returns>
         public override void Init()
         {
-             
         }
         /// <summary>
         /// 当前的操纵员是否可以执行这个方法
@@ -46,19 +45,19 @@ namespace BP.PRJ
         /// <returns>返回执行结果</returns>
         public override object Do()
         {
-            Dirs dirs = new Dirs();
-            dirs.ClearTable();
+            //Dirs dirs = new Dirs();
+            //dirs.ClearTable();
 
-            string path = @"D:\ccflow\VisualFlow\ExpandingApplication\";
-            string[] strs = Directory.GetDirectories(path);
-            foreach (string str in strs)
-            {
-                Dir dir = new Dir();
-                dir.No = str.Substring(0, 2);
-                dir.Name = str.Substring(3);
-                dir.DirPath = str;
-                dir.Insert();
-            }
+            //string path = @"D:\ccflow\VisualFlow\Data\PrjData\Templete";
+            //string[] strs = Directory.GetDirectories(path);
+            //foreach (string str in strs)
+            //{
+            //    Dir dir = new Dir();
+            //    dir.No = str.Substring(0, 2);
+            //    dir.Name = str.Substring(3);
+            //    dir.DirPath = str;
+            //    dir.Insert();
+            //}
             return "执行成功...";
         }
         private void GetFolder(string pPath)

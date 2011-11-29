@@ -61,6 +61,10 @@ namespace BP.PRJ
         /// 部门
         /// </summary>
         public const string FK_Dept = "FK_Dept";
+        /// <summary>
+        /// 文件
+        /// </summary>
+        public const string Files = "Files";
     }
 	/// <summary>
 	/// 项目
@@ -80,6 +84,17 @@ namespace BP.PRJ
             set
             {
                 this.SetValByKey(PrjAttr.PrjState, (int)value);
+            }
+        }
+        public string Files
+        {
+            get
+            {
+                return this.GetValStrByKey(PrjAttr.Files);
+            }
+            set
+            {
+                this.SetValByKey(PrjAttr.Files, value);
             }
         }
         /// <summary>
@@ -242,7 +257,6 @@ namespace BP.PRJ
                 map.AddTBStringPK(PrjAttr.No, null, "编号", true, true, 4, 4, 4);
                 map.AddTBString(PrjAttr.Name, null, "名称", true, false, 0, 60, 500);
                 map.AddDDLEntities(PrjAttr.FK_Dept, null, this.ToE("Dept", "部门"), new Port.Depts(), true);
-
                
                 map.AddDDLSysEnum(PrjAttr.PrjState, 0, "项目状态", true, true, PrjAttr.PrjState,
                     "@0=新建@1=运行中@2=备案");
@@ -250,12 +264,13 @@ namespace BP.PRJ
                 map.AddTBString(PrjAttr.DW, null, "单位", true, false, 0, 60, 500,true);
                 map.AddTBString(PrjAttr.Addr, null, "地址", true, false, 0, 60, 500, true);
 
+                map.AddTBString(PrjAttr.Files, null, "文件s", false, false, 0, 3000, 500, true);
+
                 map.AttrsOfOneVSM.Add(new EmpPrjs(), new Emps(), EmpPrjAttr.FK_Prj, EmpPrjAttr.FK_Emp,
                     DeptAttr.Name, DeptAttr.No, "成员");
 
                 map.AddSearchAttr(PrjAttr.FK_Dept);
                 map.AddSearchAttr(PrjAttr.PrjState);
-
 
                 RefMethod rm = new RefMethod();
                 rm.Title = "成员岗位";
@@ -290,7 +305,7 @@ namespace BP.PRJ
       
         public string DoDocTree()
         {
-            PubClass.WinOpen("../ExpandingApplication/PRJ/DocTree.aspx?No=" + this.No, 500, 500);
+            PubClass.WinOpen("../PRJ/DocTree.aspx?No=" + this.No, 500, 500);
             return null;
         }
         protected override bool beforeInsert()
