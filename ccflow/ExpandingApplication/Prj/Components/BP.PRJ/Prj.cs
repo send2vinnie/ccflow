@@ -284,6 +284,12 @@ namespace BP.PRJ
                 rm.IsCanBatch = true;
                 map.AddRefMethod(rm);
 
+                rm = new RefMethod();
+                rm.Title = "节点上传规则";
+                rm.ClassMethodName = this.ToString() + ".DoNodeAccess";
+                rm.IsCanBatch = true;
+                map.AddRefMethod(rm);
+
                 //rm = new RefMethod();
                 //rm.Title = "执行罚款";
                 //rm.ClassMethodName = this.ToString() + ".DoFK";
@@ -296,6 +302,12 @@ namespace BP.PRJ
         }
         #endregion
 
+        public string DoNodeAccess()
+        {
+            PubClass.WinOpen("../PRJ/NodeAccess.aspx?FK_Prj=" + this.No, 500, 500);
+            return null;
+        }
+        
 
         public string DoEmpPrjStations()
         {
