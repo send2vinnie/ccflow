@@ -378,6 +378,21 @@ namespace BP.Web.Comm.UC.WF
 
         public void BindColumn4(Entity en, string enName)
         {
+            #region 处理事件.
+            fes = new FrmEvents(enName);
+            try
+            {
+                string msg = fes.DoEventNode(EventListFrm.FrmLoadBefore, en);
+                if (msg != null)
+                    this.Alert(msg);
+            }
+            catch (Exception ex)
+            {
+                this.Alert(ex.Message);
+                return;
+            }
+            #endregion 处理事件.
+
             this.HisEn = en;
             currGF = new GroupField();
             MapAttrs mattrs = new MapAttrs(enName);
@@ -385,6 +400,8 @@ namespace BP.Web.Comm.UC.WF
             dtls = new MapDtls(enName);
             frames = new MapFrames(enName);
             m2ms = new MapM2Ms(enName);
+ 
+
 
             this.Add("<table id=tabForm width='500px' align=center >");
             string appPath = this.Page.Request.ApplicationPath;
@@ -761,6 +778,21 @@ namespace BP.Web.Comm.UC.WF
         }
         private void AfterBindEn_DealMapExt(string enName, MapAttrs mattrs,Entity en)
         {
+            #region 处理事件.
+            fes = new FrmEvents(enName);
+            try
+            {
+                string msg = fes.DoEventNode(EventListFrm.FrmLoadAfter, en);
+                if (msg != null)
+                    this.Alert(msg);
+            }
+            catch (Exception ex)
+            {
+                this.Alert("载入之前错误:" + ex.Message);
+                return;
+            }
+            #endregion 处理事件.
+
             #region 处理扩展设置
             MapExts mes = new MapExts(enName);
             if (mes.Count != 0)
@@ -1678,20 +1710,7 @@ namespace BP.Web.Comm.UC.WF
             if (isReadonly == false)
                 this.AfterBindEn_DealMapExt(enName, mattrs, en);
 
-            #region 处理事件.
-            fes = new FrmEvents(enName);
-            try
-            {
-                string msg = fes.DoEventNode(EventListFrm.FrmLoadAfter, en);
-                if (msg != null)
-                    this.Alert(msg);
-            }
-            catch (Exception ex)
-            {
-                this.Alert("载入之前错误:" + ex.Message);
-                return;
-            }
-            #endregion 处理事件.
+           
             return;
         }
 
