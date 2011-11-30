@@ -607,9 +607,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public string DoNewLabel(string fk_flow, int x, int y, string name, string lableId)
     {
-      
         LabNote lab = new LabNote();
-
         lab.FK_Flow = fk_flow;
         lab.X = x;
         lab.Y = y;
@@ -624,21 +622,10 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         {
             lab.Save();
         }
-        catch { }
+        catch 
+        {
+        }
         return lab.MyPK;
-    }
-
-    /// <summary>
-    /// 产生流程模板
-    /// </summary>
-    /// <param name="fk_flow">流程编号</param>
-    /// <returns>流程模板路径</returns>
-    [WebMethod(EnableSession = true)]
-    public string FlowTemplete_Gener(string fk_flow, bool islogin)
-    {
-        LetAdminLogin("CH", islogin);
-        Flow fl = new Flow(fk_flow);
-        return fl.GenerFlowXmlTemplete();
     }
     /// <summary>
     /// load flow templete.
@@ -652,17 +639,13 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         {
             LetAdminLogin("CH", islogin);
             var result = Flow.DoLoadFlowTemplate(fk_flowSort, path);
-
             return string.Format("{0},{1},{2}", fk_flowSort, result.No, result.Name);
         }
         catch (Exception ex)
         {
-
             return ex.Message;
         }
-     
     }
-
     /// <summary>
     /// 根据工作流取连线
     /// </summary>
