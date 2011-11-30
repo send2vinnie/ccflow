@@ -326,10 +326,11 @@ namespace BP.PRJ
             this.SBRQ = DataType.CurrentData;
             
        //     string root=BP.Syscon
-            if (System.IO.Directory.
+        //    if (System.IO.Directory.
             //this.PrjState = 1;
             //if (this.DW.Length < 1)
             //    throw new Exception("@dsdafasdfadsfsd");
+
             return base.beforeInsert();
         }
     }
