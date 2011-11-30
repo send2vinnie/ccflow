@@ -6,6 +6,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <table width="100%">
+<caption class=Caption>资料树节点访问控制</caption>
 <tr>
 <td align="left" valign=top >
     <uc1:Pub ID="Pub1" runat="server" />

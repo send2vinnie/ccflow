@@ -90,7 +90,25 @@ public partial class ExpandingApplication_PRJ_DocTree : WebPage
         Prj prj = new Prj(this.FK_Prj);
         AtPara ap = new AtPara(prj.Files);
         string file = ap.GetValStrByKey(this.IDX.ToString());
-        fu.SaveAs(file);
+        try
+        {
+            fu.SaveAs(file);
+        }
+        catch
+        {
+            string root = BP.SystemConfig.PathOfDataUser + "\\PrjData\\Templete\\" + this.FK_Prj;
+            string rootData = BP.SystemConfig.PathOfDataUser + "\\PrjData\\Data\\" + this.FK_Prj;
+            if (Directory.Exists(rootData) == false)
+                Directory.CreateDirectory(rootData);
+            string[] strs = System.IO.Directory.GetDirectories(root);
+            foreach (string str in strs)
+            {
+                DirectoryInfo info = new DirectoryInfo(str);
+                if (Directory.Exists(rootData + "\\" + info.Name) == false)
+                    Directory.CreateDirectory(rootData + "\\" + info.Name);
+            }
+            fu.SaveAs(file);
+        }
         this.WinClose();
     }
     protected void Page_Load(object sender, EventArgs e)

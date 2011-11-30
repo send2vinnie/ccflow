@@ -55,9 +55,9 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
         if (this.FK_Flow == null)
         {
             Flows fls = new Flows();
-            fls.RetrieveAll();
+            fls.Retrieve(FlowAttr.FlowType, (int)FlowAppType.PRJ);
             Flow fl = fls[0] as Flow;
-            this.Response.Redirect("NodeAccess.aspx?FK_Flow=" + fl.No, true);
+            this.Response.Redirect("NodeAccess.aspx?FK_Flow=" + fl.No + "&FK_Prj=" + this.FK_Prj, true);
             return;
         }
         this.BindLeft();
@@ -68,7 +68,8 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
         FlowSorts sorts = new FlowSorts();
         sorts.RetrieveAll();
         Flows fls = new Flows();
-        fls.RetrieveAll();
+        fls.Retrieve(FlowAttr.FlowType, (int)FlowAppType.PRJ);
+
         foreach (FlowSort fs in sorts)
         {
             this.Pub1.AddB(fs.Name);
@@ -80,9 +81,9 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
                     continue;
 
                 if (this.FK_Flow == fl.No)
-                    this.Pub1.AddLi("<a href='NodeAccess.aspx?FK_Flow=" + fl.No + "'><b>" + fl.Name + "</b></a>");
+                    this.Pub1.AddLi("<a href='NodeAccess.aspx?FK_Flow=" + fl.No + "&FK_Prj=" + this.FK_Prj + "' ><b>" + fl.Name + "</b></a>");
                 else
-                    this.Pub1.AddLi("<a href='NodeAccess.aspx?FK_Flow=" + fl.No + "'>" + fl.Name + "</a>");
+                    this.Pub1.AddLi("<a href='NodeAccess.aspx?FK_Flow=" + fl.No + "&FK_Prj=" + this.FK_Prj + "' >" + fl.Name + "</a>");
             }
             this.Pub1.AddULEnd();
         }
@@ -93,7 +94,7 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
         this.Pub2.AddUL();
         foreach (Node nd in nds)
         {
-            this.Pub2.AddLi("<a href=\"javascript:window.showModalDialog('NodeAccess.aspx?FK_Node=" + nd.NodeID + "', 'ds', 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no');\" >" + nd.Name + "</a>");
+            this.Pub2.AddLi("<a href=\"javascript:window.showModalDialog('NodeAccess.aspx?FK_Node=" + nd.NodeID + "&FK_Prj="+this.FK_Prj+"', 'ds', 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no');\" >" + nd.Name + "</a>");
         }
         this.Pub2.AddULEnd();
     }
@@ -103,6 +104,7 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
         nrs.Retrieve(NodeAccessAttr.FK_Node, this.FK_Node, NodeAccessAttr.FK_Prj, this.FK_Prj);
 
         string root = BP.SystemConfig.PathOfDataUser + "\\PrjData\\Templete\\"+this.FK_Prj;
+
         this.Pub2.AddTable();
         this.Pub2.AddCaptionLeft("节点与资料树访问权限");
         string[] dirs = System.IO.Directory.GetDirectories(root);
