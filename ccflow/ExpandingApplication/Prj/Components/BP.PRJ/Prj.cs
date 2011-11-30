@@ -324,6 +324,9 @@ namespace BP.PRJ
         {
             this.No = this.GenerNewNo;
             this.SBRQ = DataType.CurrentData;
+            
+       //     string root=BP.Syscon
+            if (System.IO.Directory.
             //this.PrjState = 1;
             //if (this.DW.Length < 1)
             //    throw new Exception("@dsdafasdfadsfsd");

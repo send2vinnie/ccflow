@@ -150,7 +150,7 @@ namespace BP.PRJ
                 map.EnType = EnType.Dot2Dot;
 
                 map.AddTBString(EmpPrjAttr.MyPK, null, "MyPK", true, true, 0, 20, 20);
-                map.AddTBString(EmpPrjAttr.Name, null, "Name", true, true, 0, 200, 20);
+                map.AddTBString(EmpPrjAttr.Name, null, "Name", true, true, 0, 3000, 20);
 
                 map.AddDDLEntitiesPK(EmpPrjAttr.FK_Emp, null, "操作员", new BP.WF.Port.WFEmps(), true);
                 map.AddDDLEntitiesPK(EmpPrjAttr.FK_Prj, null, "项目组", new Prjs(), true);

@@ -148,13 +148,13 @@ namespace BP.PRJ
                 map.EnType = EnType.Dot2Dot;
 
                 map.AddMyPK();
-                map.AddTBString(EmpPrjExtAttr.Name, null, "Name", false, false, 0, 200, 20);
+                map.AddTBString(EmpPrjExtAttr.Name, null, "Name", false, false, 0, 3000, 20);
 
                 map.AddDDLEntities(EmpPrjExtAttr.FK_Prj, null, "项目组", new Prjs(), true);
                 map.AddDDLEntities(EmpPrjExtAttr.FK_Emp, null, "成员", new BP.WF.Port.WFEmps(), true);
 
 
-                map.AddTBString(EmpPrjExtAttr.StationStrs, null, "岗位集合", true, true, 0, 200, 20);
+                map.AddTBString(EmpPrjExtAttr.StationStrs, null, "岗位集合", true, true, 0, 4000, 20);
 
                 map.AddSearchAttr(EmpPrjExtAttr.FK_Prj);
 
