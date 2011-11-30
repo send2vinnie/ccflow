@@ -99,12 +99,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         #endregion
 
         #region 属性
-
         /// <summary>
         /// 当前是否有节点在编辑状态
         /// </summary>
         public bool IsSomeChildEditing { get; set; }
-
         /// <summary>
         /// 流程当前是否保存
         /// </summary>
@@ -115,7 +113,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             set
             {
                 isNeedSave = value;
-
                 //如果需要保存变化时，将流程名称加粗并在前面加一个星号，反之则恢复正常模式
                 if( null != this.Designer)
                 {
@@ -143,14 +140,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
         public string FK_Flow
         {
-            get { return ""; }
+            get
+            {
+                return this.FlowID;
+            }
         }
         public string FlowID
         {
             get;
             set;
         }
-
         public string WorkID
         {
             get { return ""; }
@@ -188,7 +187,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return max + 1;
             }
         }
-
         public int NextNewDirectionIndex
         {
             get
@@ -196,7 +194,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return ++nextNewDirectionIndex;
             }
         }
-
         public int NextNewLabelIndex
         {
             get
@@ -209,15 +206,15 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     {
                         if (ele.IsDeleted)
                             continue;
-                        
+
                         if (ele.ElementType == WorkFlowElementType.Label)
                         {
                             NodeLabel l = ele as NodeLabel;
-                            if(l != null && !string.IsNullOrEmpty(l.LabelName))
+                            if (l != null && !string.IsNullOrEmpty(l.LabelName))
                             {
                                 int index = 0;
                                 int.TryParse(l.LabelName.Substring(l.LabelName.Length - 1, 1), out index);
-                                if(index > max)
+                                if (index > max)
                                 {
                                     max = index;
                                 }
@@ -228,7 +225,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return max + 1;
             }
         }
-
         public Double ContainerWidth
         {
             get
@@ -629,7 +625,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         
         public void getFlows()
         {
-            getFlows(FlowID);
+            getFlows(this.FlowID);
 
         }
       
@@ -640,9 +636,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <param name="e"></param>
         public void btnDesignerTable()
         {
-            Glo.WinOpenByDoType("CH", "WFRpt", FlowID, null, null);
+            Glo.WinOpenByDoType("CH", "WFRpt", this.FlowID, null, null);
         }
-
         /// <summary>
         /// 检查
         /// </summary>
@@ -652,7 +647,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             Glo.WinOpenByDoType("CH", "FlowCheck", FlowID, null, null);
         }
-
         /// <summary>
         /// 试运行
         /// </summary>
@@ -662,11 +656,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             Glo.WinOpenByDoType("CH", "RunFlow", FlowID, null, null);
         }
-
         public void ShowFlowNodeSetting(FlowNode fn)
         {
             this.f = fn;
-
             fn.sdPicture.tbNodeName.Visibility = Visibility.Visible;
             fn.sdPicture.tbNodeName.Focus();
             fn.sdPicture.txtFlowNodeName.Visibility = Visibility.Collapsed;

@@ -14,7 +14,7 @@
         <Button x:Name="OKButton" Content="确定" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="1" />
         <controls:TabControl Height="220" HorizontalAlignment="Left" Margin="0,6,0,0" Name="tabControl1" VerticalAlignment="Top" Width="378">
             <controls:TabItem Header="导出流程模板到本机" Name="tabItem1">
-                <Grid />
+            <Grid />
             </controls:TabItem>
             <controls:TabItem Header="共享流程模板到ccflow资源网" Name="tabItem2">
                 <Grid />

@@ -89,39 +89,51 @@ namespace BP
         public static void WinOpenByDoType(string lang, string dotype, string fk_flow, string node1, string node2)
         {
             Glo.DoTypeNow = dotype;
-            WSDesignerSoapClient ws = Glo.GetDesignerServiceInstance();
-            ws.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
-            ws.GetRelativeUrlCompleted += new EventHandler<GetRelativeUrlCompletedEventArgs>(ws_GetRelativeUrlCompleted);
-        }
-        private static string DoTypeNow = "";
-        public static void ws_GetRelativeUrlCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
-        {
-            if (e.Result == null)
-            {
-                MessageBox.Show("执行标记错误,没有获得到它的url。", "error", MessageBoxButton.OK);
-                return;
-            }
-
+            string url = "";
             switch (Glo.DoTypeNow)
             {
                 case UrlFlag.StaDef:
-                    Glo.WinOpen(Glo.BPMHost + e.Result, "节点表单设计", 850, 990);
-                    break;
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=StaDef&PK=" + node1 + "&Lang=CH";
+                    Glo.OpenDialog(Glo.BPMHost + url, "执行", 500, 400);
+                    return;
                 case UrlFlag.NodeP:
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=En&EnName=BP.WF.Node&PK=" + node1 + "&Lang=CH";
+                    Glo.OpenDialog(Glo.BPMHost + url, "执行", 500, 400);
+                    return;
                 case UrlFlag.FlowP: // 节点属性与流程属性。
-                    Glo.OpenDialog(Glo.BPMHost + e.Result, "执行", 500, 400);
-                    break;
+                    MessageBox.Show(fk_flow);
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=En&EnName=BP.WF.Flow&PK=" + fk_flow + "&Lang=CH";
+                    Glo.OpenDialog(Glo.BPMHost + url, "执行", 500, 400);
+                    return;
                 case UrlFlag.MapDef: // 节点表单设计。
-                    Glo.WinOpen(Glo.BPMHost + e.Result, "节点表单设计", 850, 990);
-                    break;
+                    //  url = "/WF/MapDef/MapDef.aspx?PK=ND" + node1 + "&FK_Node=" + node1;
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDef&PK=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH";
+                    Glo.WinOpen(Glo.BPMHost + url, "节点表单设计", 850, 990);
+                    return;
                 case UrlFlag.Dir: // 方向条件。
-                    Glo.WinOpen(Glo.BPMHost + e.Result, "方向条件", 550, 500);
-                    break;
+                    url = "/WF/Admin/Cond.aspx?FK_Flow=" + fk_flow + "&FK_MainNode=" + node1 + "&FK_Node=" + node1 + "&ToNodeID=" + node2 + "&CondType=2" + "&Lang=CH";
+                    Glo.WinOpen(Glo.BPMHost + url, "方向条件", 550, 500);
+                    return;
+                case "RunFlow": // 运行流程。
+                    url = "/WF/Admin/TestFlow.aspx?FK_Flow=" + fk_flow + "&Lang=CH";
+                    Glo.WinOpen(Glo.BPMHost + url, "运行流程", 850, 990);
+                    return;
+                case "FlowCheck": // 流程设计。
+                    url = "/WF/Admin/DoType.aspx?RefNo=" + fk_flow + "&DoType=" + dotype + "&Lang=CH";
+                    Glo.WinOpen(Glo.BPMHost + url, "运行流程", 850, 990);
+                    return;
+                case "LoginPage": // 流程设计。
+                    url = @"/WF/Login.aspx?Lang=CH";
+                    Glo.WinOpen(Glo.BPMHost + url, "运行流程", 850, 990);
+                    return;
                 default:
-                    Glo.WinOpen(Glo.BPMHost + e.Result, "执行", 850, 990);
-                    break;
+                    MessageBox.Show("没有判断的url执行标记:" + dotype);
+                    return;
             }
+            Glo.WinOpen(Glo.BPMHost + "/WF/Admin/XAP/DoType=" + dotype + "&FK_Flow=" + fk_flow + "&FK_Node1=" + node1 + "&Lang=CH", "节点表单设计", 850, 990);
+            return;
         }
+        private static string DoTypeNow = "";
         public static void OpenDialog(string url, string title, int h, int w)
         {
             OpenWindowOrDialog(url, title, string.Format("dialogHeight:{0}px;dialogWidth:{1}px", h, w), WindowModelEnum.Dialog);
@@ -169,10 +181,8 @@ namespace BP
             if (WindowModelEnum.Dialog == windowModel)
             {
                 HtmlPage.Window.Eval(
-                    string.Format(
-                        "window.showModalDialog('{0}',window,'dialogHeight:600px;dialogWidth:800px;help:no;scroll:auto;resizable:yes;status:no;');",
+                    string.Format("window.showModalDialog('{0}',window,'dialogHeight:600px;dialogWidth:800px;help:no;scroll:auto;resizable:yes;status:no;');",
                         url));
-
             }
             else
             {

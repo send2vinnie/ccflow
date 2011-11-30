@@ -56,7 +56,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             set { _service = value; }
         }
 
-        public string FlowID { get; set; }
 
         private Container SelectedContainer
         {
@@ -388,10 +387,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             if (SelectedContainer == null)
                 return;
+
             var result = SnapshotCapturer.SaveScreenToString();
             _service = Glo.GetDesignerServiceInstance();
-            var sortId = SelectedContainer.FK_Flow;
-            _Service.DoAsync("ReleaseToFTP", SelectedContainer.FlowID + "," +  result, true);
+            var sortId = SelectedContainer.FlowID;
+            _Service.DoAsync("ReleaseToFTP", SelectedContainer.FlowID + "," + result, true);
             _Service.DoCompleted += _service_ReleaseToFTPCompleted;
         }
         private void _service_ReleaseToFTPCompleted(object sender, DoCompletedEventArgs e)
@@ -407,7 +407,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             _doubleClickTimer.Stop();
         }
-       
         /// <summary>
         /// 绑定工作流树
         /// </summary>
@@ -416,8 +415,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _service = Glo.GetDesignerServiceInstance();
             _Service.DoAsync("GetFlows", string.Empty, true);
             _Service.DoCompleted += _service_GetFlowsCompleted;
-         }
-       
+        }
         /// <summary>
         /// 获取工作流类型事件
         /// </summary>
@@ -439,7 +437,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     "错误", MessageBoxButton.OK);
                 return;
             }
-           
+
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 var node = new TreeNode();
@@ -726,7 +724,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 SelectedContainer.btnDesignerTable();
             }
         }
-       
         private void _service_FlowTemplete_GenerCompleted(object sender, FlowTemplete_GenerCompletedEventArgs e)
         {
             try
@@ -741,7 +738,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             _service.FlowTemplete_GenerCompleted -= _service_FlowTemplete_GenerCompleted;
         }
-
         private void getUploadedFileUriCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
         {
             string url = Glo.BPMHost + e.Result;
@@ -769,9 +765,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             if (TvwFlow.Selected != null &&  ((TreeNode)TvwFlow.Selected).IsFlowSort)
             {
                 fu.CurrentFlowSortName = TvwFlow.Selected.Title;
-
             }
-
             fu.FlowTempleteLoadCompeletedEventHandler += (eSender, eArgs) =>
             {
                 try
@@ -845,12 +839,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return;
             }
             string[] flow = e.Result.Split(';');
-            FlowID = flow[0];
+          //  FlowID = flow[0];
             _Service.DoCompleted -= _service_DoCompleted;
             this.BindFlowAndFlowSort();
             OpenFlow(flow[0], flow[1]);
         }
-
         /// <summary>
         /// Asp.net网页关闭时要执行的事件
         /// </summary>
@@ -888,7 +881,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     {
                         Container ct = t.Content as Container;
                         oldValue = (t as TabItemEx).Title;
-                        if(paras[0] == ct.FlowID && paras[1] != oldValue)
+                        if (paras[0] == ct.FlowID && paras[1] != oldValue)
                         {
                             var tabItem = tbDesigner.Items[index] as TabItemEx;
                             Button btnClose = new Button();
@@ -1037,7 +1030,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 case "Btn_ToolBarNewLabel": // 添加标签。
                     if (null != SelectedContainer)
                     {
-                        SelectedContainer.AddLabel( 10,10);
+                        SelectedContainer.AddLabel(10, 10);
                         SelectedContainer.IsNeedSave = true;
                     }
                     break;
@@ -1045,11 +1038,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     if (SelectedContainer != null)
                     {
                         var passed = SelectedContainer.Save();
-
                         if (passed)
-                        {
                             SelectedContainer.IsNeedSave = false;
-                        }
                     }
                     break;
                 case "Btn_ToolBarDesignReport":
@@ -1064,22 +1054,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         SelectedContainer.btnRun();
                     break;
                 case "Btn_ToolBarEditFlow":
-                    if (SelectedContainer != null)
-                        Glo.WinOpenByDoType("CH", "FlowP", FlowID, null, null);
+                    Glo.WinOpenByDoType("CH", "FlowP", SelectedContainer.FlowID, null, null);
                     break;
                 case "Btn_ToolBarDeleteFlow":
-                    if (SelectedContainer != null)
-                        DeleteFlow(SelectedContainer.FlowID);
+                    DeleteFlow(SelectedContainer.FlowID);
                     break;
                 case "Btn_ToolBarHelp":
-                    Glo.WinOpen("http://ccflow.org/Help.aspx","Help", 1000, 1200);
+                    Glo.WinOpen("http://ccflow.org/Help.aspx", "Help", 1000, 1200);
                     break;
                 case "Btn_ToolBarGenerateModel":
-                    if (SelectedContainer != null)
-                    {
-                        _Service.FlowTemplete_GenerAsync(SelectedContainer.FlowID, true);
-                        _service.FlowTemplete_GenerCompleted += _service_FlowTemplete_GenerCompleted;
-                    }
+                    Glo.WinOpen("/WF/Admin/XAP/DoPort.aspx?DoType=ExpFlowTemplete&FK_Flow=" + SelectedContainer.FlowID + "&Lang=CH", "Help", 50, 50);
                     break;
                 case "Btn_ToolBarLoadModel":
                     NewFlowHandler(0);
@@ -1089,7 +1073,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
             }
         }
-
         void client_GetRelativeUrlCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
         {
             string suburl = HtmlPage.Document.DocumentUri.ToString();
