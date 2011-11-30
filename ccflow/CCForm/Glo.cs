@@ -53,11 +53,9 @@ namespace CCForm
         public static bool IsMouseDown = false;
         public static bool IsDtlFrm = false;
         public static string BPMHost = null;
-
         public static void BindComboBoxFrontName(ComboBox cb, string selectVal)
         {
             cb.Items.Clear();
-
             ComboBoxItem cbi = new ComboBoxItem();
             cbi.Content = "宋体";
             cbi.Tag = "宋体";
@@ -90,7 +88,6 @@ namespace CCForm
             {
                 item.IsSelected = false;
             }
-
             foreach (ComboBoxItem item in cb.Items)
             {
                 if (item.Tag.ToString() == val)
@@ -123,10 +120,8 @@ namespace CCForm
             cbi.Tag = "def";
             cbi.IsSelected = true;
             cb.Items.Add(cbi);
-
             SetComboBoxSelected(cb, taget);
         }
-
         public static void BindComboBoxFontSize(ComboBox cb, double selectDB)
         {
             cb.Items.Clear();
@@ -291,7 +286,16 @@ namespace CCForm
         {
             HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:600px;dialogWidth:800px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
         }
-
+        public static void WinOpenModalDialog(string url, int h, int w)
+        {
+            HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:" + h + "px;dialogWidth:" + w + "px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
+        }
+        public static void WinOpen(string url, int h, int w)
+        {
+            string p = "dialogHeight:" + h + "px;dialogWidth:" + w + "px";
+            HtmlPage.Window.Eval(string.Format("window.open('{0}','{1}','{2};help=no,resizable=yes,status=no,scrollbars=1');", url,
+                      "Title", p));
+        }
         public static void IE_ShowAddFGuide()
         {
             Glo.WinOpen(Glo.BPMHost + "/WF/MapDef/Do.aspx?DoType=AddF&MyPK=" + Glo.FK_MapData);

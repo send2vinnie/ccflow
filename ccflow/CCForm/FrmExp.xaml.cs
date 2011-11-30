@@ -34,10 +34,9 @@ namespace CCForm
                 MessageBox.Show(e.Result, "执行失败", MessageBoxButton.OK);
                 return;
             }
-
             //Glo.WinOpen(Glo.BPMHost + "/WF/MapDef/Handler.ashx?DoType=DownTempFrm&FK_MapData=" + Glo.FK_MapData);
-            
-            Glo.WinOpen(Glo.BPMHost + "/Temp/" + Glo.FK_MapData+".xml");
+            Glo.WinOpen(Glo.BPMHost + "/WF/Admin/XAP/DoPort.aspx?DoType=DownFormTemplete&FK_MapData=" + Glo.FK_MapData,
+                100, 100);
             this.DialogResult = true;
         }
         private void CancelButton_Click(object sender, RoutedEventArgs e)

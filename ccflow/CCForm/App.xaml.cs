@@ -32,19 +32,19 @@ namespace CCForm
             bool registerResult = WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
             bool httpsResult = WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
 
-            //设置当前线程的culture,以加载指定语言的字符
+            //设置当前线程的culture,以加载指定语言的字符.
             var culture = new CultureInfo("zh-cn");
             Thread.CurrentThread.CurrentUICulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
 
-            //获取bmpHost.
+            //获取bmpHost. 
             var location = (HtmlPage.Window.GetProperty("location")) as ScriptObject;
             var hrefObject = location.GetProperty("href");
             string url = hrefObject.ToString();
             string[] strs = url.Split('/');
             Glo.BPMHost = strs[0] + "//" + strs[1] + strs[2] + "/" + strs[3];
 
-            //启动主界面。
+            //启动主界面。 
             this.RootVisual = new MainPage();
         }
         private void Application_Exit(object sender, EventArgs e)
@@ -53,11 +53,10 @@ namespace CCForm
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             // 如果应用程序是在调试器外运行的，则使用浏览器的
-            // 异常机制报告该异常。在 IE 上，将在状态栏中用一个 
+            // 异常机制报告该异常。在 IE 上，将在状态栏中用一个.
             // 黄色警报图标来显示该异常，而 Firefox 则会显示一个脚本错误。
             if (!System.Diagnostics.Debugger.IsAttached)
             {
-
                 // 注意: 这使应用程序可以在已引发异常但尚未处理该异常的情况下
                 // 继续运行。 
                 // 对于生产应用程序，此错误处理应替换为向网站报告错误
@@ -66,21 +65,11 @@ namespace CCForm
                 Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
             }
         }
-
         private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)
         {
-            try
-            {
-                string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
-                MessageBox.Show(errorMsg);
-                return;
-
-                //errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
-                //System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
-            }
-            catch (Exception)
-            {
-            }
+            string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
+            MessageBox.Show(errorMsg);
+            return;
         }
     }
 }
