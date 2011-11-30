@@ -652,14 +652,9 @@ public partial class Comm_RefFunc_Dot2Dot : BP.Web.UC.UCBase3
             Entity en1 = ensOfMM.GetNewEntity;
             en1.SetValByKey(attr.AttrOfOneInMM, this.PK);
             en1.SetValByKey(attr.AttrOfMInMM, pk);
-            try
-            {
-                en1.Insert();
-            }
-            catch (Exception ex)
-            {
-                msg += "执行插入错误：" + en1.EnDesc + " " + ex.Message;
-            }
+            en1.Insert();
+
+            //   msg += "执行插入错误：" + en1.EnDesc + " " + ex.Message;
         }
 
         Entity enP = ClassFactory.GetEn(this.EnName);

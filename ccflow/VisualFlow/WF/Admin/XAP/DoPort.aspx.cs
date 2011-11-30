@@ -9,11 +9,13 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using BP.WF;
+using BP.Web;
 using BP.DA;
 using BP.En;
 
-public partial class DoPort : System.Web.UI.Page
+public partial class DoPort : WebPage
 {
+    #region 属性。
     /// <summary>
     /// DoType
     /// </summary>
@@ -64,6 +66,8 @@ public partial class DoPort : System.Web.UI.Page
             return this.Request.QueryString["Lang"];
         }
     }
+    #endregion 属性。   
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Request.Browser.Cookies == false)
@@ -75,36 +79,44 @@ public partial class DoPort : System.Web.UI.Page
         if (this.PassKey != BP.SystemConfig.AppSettings["PassKey"])
             return;
 
-        if (this.Lang == null || this.Lang == "")
-            throw new Exception("语言编号错误。");
+        //if (this.Lang == null || this.Lang == "")
+        //    throw new Exception("语言编号错误。");
 
-        BP.SystemConfig.DoClearCash();
-
+        BP.SystemConfig.DoClearCash(); 
         BP.Port.Emp emp = new BP.Port.Emp("admin");
-        BP.Web.WebUser.SignInOfGenerLang(emp, this.Lang);
+        BP.Web.WebUser.SignInOfGenerLang(emp, "CH");
 
         string fk_flow = this.Request.QueryString["FK_Flow"];
+        string FK_MapData = this.Request.QueryString["FK_MapData"];
+
         switch (this.DoType)
         {
+            case "DownFormTemplete":
+                BP.Sys.MapData md = new BP.Sys.MapData(FK_MapData);
+                string file = BP.SystemConfig.PathOfTemp + md.No+".xml";
+                System.IO.FileInfo f = new System.IO.FileInfo(file);
+                BP.PubClass.DownloadFile(f.FullName, md.Name + ".xml");
+                BP.PubClass.WinClose();
+                return;
             case "Ens": // 实体编辑.
                 this.Response.Redirect("../../Comm/Batch.aspx?EnsName=" + this.EnsName, true);
                 break;
-            case "En": // 单个实体编辑.
+            case "En": // 单个实体编辑. 
                 switch (this.EnName)
                 {
                     case "BP.WF.Flow":
                         Flow fl = new Flow(this.PK);
                         if (fl.HisFlowSheetType == FlowSheetType.DocFlow)
-                            this.Response.Redirect("../../Comm/RefFunc/UIEn.aspx?EnName=BP.WF.Ext.FlowDoc&PK=" + this.PK, true);
+                            this.Response.Redirect("../../../Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Ext.FlowDocs&No=" + this.PK, true);
                         else
-                            this.Response.Redirect("../../Comm/RefFunc/UIEn.aspx?EnName=BP.WF.Ext.FlowSheet&PK=" + this.PK, true);
+                            this.Response.Redirect("../../../Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Ext.FlowSheets&No=" + this.PK, true);
                         break;
                     case "BP.WF.Node":
                         Node nd = new Node(this.PK);
-                        this.Response.Redirect("../../Comm/RefFunc/UIEn.aspx?EnName=BP.WF.Ext.NodeO&PK=" + this.PK, true);
+                        this.Response.Redirect("../../../Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Ext.NodeOs&PK=" + this.PK, true);
                         break;
                     default:
-                        this.Response.Redirect("../../Comm/RefFunc/UIEn.aspx?EnName=" + this.EnName + "&PK=" + this.PK, true);
+                        this.Response.Redirect("../../../Comm/RefFunc/UIEn.aspx?EnsName=" + this.EnsName + "&No=" + this.PK, true);
                         break;
                 }
                 break;
@@ -112,7 +124,7 @@ public partial class DoPort : System.Web.UI.Page
                 this.Response.Redirect("./../../../Comm/UIEn1ToM.aspx?EnName=BP.WF.Ext.NodeO&AttrKey=BP.WF.NodeStations&PK=" + this.PK + "&NodeID=" + this.PK + "&RunModel=0&FLRole=0&FJOpen=0&r=" + this.PK, true);
                 break;
             case "WFRpt": // 报表设计.
-                this.Response.Redirect("../MapDef/WFRpt.aspx?PK=" + this.PK, true);
+                this.Response.Redirect("../../MapDef/WFRpt.aspx?PK=" + this.PK, true);
                 break;
             case "MapDef": //表单定义.
                 int nodeid = int.Parse(this.PK.Replace("ND", ""));
@@ -120,9 +132,9 @@ public partial class DoPort : System.Web.UI.Page
                 nd1.NodeID = nodeid;
                 nd1.RetrieveFromDBSources();
                 if (nd1.HisFormType == FormType.FreeForm)
-                    this.Response.Redirect("../MapDef/CCForm/Frm.aspx?FK_MapData=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
+                    this.Response.Redirect("../../MapDef/CCForm/Frm.aspx?FK_MapData=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
                 else
-                    this.Response.Redirect("../MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
+                    this.Response.Redirect("../../MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
                 break;
             case "MapDefFree": //表单定义.
                 int nodeidFree = int.Parse(this.PK.Replace("ND", ""));
@@ -132,7 +144,7 @@ public partial class DoPort : System.Web.UI.Page
             case "MapDefF4": //表单定义.
                 int nodeidF4 = int.Parse(this.PK.Replace("ND", ""));
                 Node ndF4 = new Node(nodeidF4);
-                this.Response.Redirect("../MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + ndF4.FK_Flow, true);
+                this.Response.Redirect("../../MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + ndF4.FK_Flow, true);
                 break;
             case "Dir": // 方向。
                 this.Response.Redirect("../Admin/Cond.aspx?CondType=" + this.Request.QueryString["CondType"] + "&FK_Flow=" + this.Request.QueryString["FK_Flow"] + "&FK_MainNode=" + this.Request.QueryString["FK_MainNode"] + "&FK_Node=" + this.Request.QueryString["FK_Node"] + "&FK_Attr=" + this.Request.QueryString["FK_Attr"] + "&DirType=" + this.Request.QueryString["DirType"] + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);
@@ -146,12 +158,11 @@ public partial class DoPort : System.Web.UI.Page
             case "ExpFlowTemplete": //流程设计.
                 Flow flT = new Flow(this.Request.QueryString["FK_Flow"]);
                 string fileXml = flT.GenerFlowXmlTemplete();
-
-                BP.PubClass.DownloadFile(fileXml+flT.Name+".xml", flT.Name);
+                BP.PubClass.DownloadFile(fileXml+flT.Name+".xml", flT.Name+".xml");
                 BP.PubClass.WinClose();
                 break;
             default:
-                break;
+                throw new Exception("Error:"+this.DoType);
         }
     }
 }

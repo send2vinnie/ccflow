@@ -17,7 +17,6 @@ public class WebClientDownloadHandler : IHttpHandler {
             {
                 byte[] buffer = new byte[102400];
                 context.Response.Clear();
-
                 using (FileStream iStream = File.OpenRead(fileFullName))
                 {
                     long dataLengthToRead = iStream.Length; //获取下载的文件总大小

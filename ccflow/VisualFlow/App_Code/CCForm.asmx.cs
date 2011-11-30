@@ -269,6 +269,8 @@ namespace BP.Web
                         if (System.IO.File.Exists(file))
                             System.IO.File.Delete(file);
                         ds.WriteXml(file);
+
+                       // BP.PubClass.DownloadFile(file, mdfrmtem.Name + ".xml");
                         //this.DownLoadFile(System.Web.HttpContext.Current, file, mdfrmtem.Name);
                         return null;
                     case "FrmTempleteImp": //导入表单.
