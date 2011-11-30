@@ -197,7 +197,7 @@ public class WSDesigner : WSBase
                 url = @"/Comm/PanelEns.aspx?EnsName=BP.Port.Emps";
                 break;
             case "FileHandler": //模板导出用到
-                url = @"/WebClientDownloadHandler.ashx";
+                url = @"/WF/Admin/XAP/WebClientDownloadHandler.ashx";
                 break;
             case "LoginPage":
                 url = @"/WF/Login.aspx";
