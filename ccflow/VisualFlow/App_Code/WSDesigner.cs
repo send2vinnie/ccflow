@@ -230,40 +230,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         return Connector.ToXml(ds);
     }
 
-    /// <summary>
-    /// 岗位维护
-    /// </summary>
-    [WebMethod(EnableSession = true)]
-    public string MaintainStation( string pk    )
-    {
-        string url = "http://localhost/Flow/Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Port.Stations&PK=" + pk + "&rowUrl=1";
-        return url;
-    }
-
-    /// <summary>
-    /// 部门维护
-    /// </summary>
-    [WebMethod(EnableSession = true)]
-    public string MaintainDept(string pk)
-    {
-        string url = "http://localhost/Flow/Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Port.Depts&PK=" + pk + "&rowUrl=1";
-        return url;
-    }
-
-    /// <summary>
-    /// 人员维护
-    /// </summary>
-    /// <param name="pk"></param>
-    /// <returns></returns>
-   [WebMethod(EnableSession = true)]
-    public string MaintainEmp(string pk)
-    {
-        string url = "http://localhost/Flow/Comm/RefFunc/UIEn.aspx?EnsName=BP.WF.Port.Emps&PK="+pk;
-        return url;
-    }
-
-  
-
     [WebMethod(EnableSession = true)]
     public string Do(string doWhat, string para1, bool isLogin)
     {
@@ -769,7 +735,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         try
         {
             //文件存放路径
-            string filepath = Server.MapPath(@".\Temp") + "\\" + fileName;
+            string filepath = BP.SystemConfig.PathOfTemp  + "\\" + fileName;
             //如果文件已经存在则删除
             if (File.Exists(filepath))
                 File.Delete(filepath);
@@ -782,7 +748,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         }
         catch (Exception exception)
         {
-            return "Error:Error Occured on upload the file. Error Message is :\n" + exception.Message;
+            return "Error: Occured on upload the file. Error Message is :\n" + exception.Message;
         }
         
     }

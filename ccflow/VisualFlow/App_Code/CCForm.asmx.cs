@@ -122,7 +122,6 @@ namespace BP.Web
                         dtlN.No = v1;
                         if (dtlN.RetrieveFromDBSources() != 0)
                             return "明细表已存在";
-
                         dtlN.Name = v1;
                         dtlN.FK_MapData = v2;
                         dtlN.PTable = v1;
