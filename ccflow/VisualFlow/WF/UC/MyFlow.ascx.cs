@@ -1245,9 +1245,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     if (myurl.Contains("&") == false)
                         myurl += "?1=1";
                     Attrs myattrs = firstwn.HisWork.EnMap.Attrs;
+                    Work hisWK = firstwn.HisWork;
                     foreach (Attr attr in myattrs)
                     {
-                        myurl = myurl.Replace("@" + attr.Key, firstwn.HisWork.GetValStrByKey(attr.Key));
+                        if (myurl.Contains("@") == false)
+                            break;
+                        myurl = myurl.Replace("@" + attr.Key, hisWK.GetValStrByKey(attr.Key));
                     }
                     myurl += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID=" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
                     this.Response.Redirect(myurl, true);
@@ -1265,9 +1268,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                             if (url.Contains("&") == false)
                                 url += "?1=1";
                             Attrs attrs = firstwn.HisWork.EnMap.Attrs;
+                            Work hisWK1 = firstwn.HisWork;
                             foreach (Attr attr in attrs)
                             {
-                                url = url.Replace("@" + attr.Key, firstwn.HisWork.GetValStrByKey(attr.Key));
+                                if (url.Contains("@") == false)
+                                    break;
+                                url = url.Replace("@" + attr.Key, hisWK1.GetValStrByKey(attr.Key));
                             }
                             url += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
                             this.Response.Redirect(url, true);

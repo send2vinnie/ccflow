@@ -71,7 +71,6 @@ public partial class WF_Admin_TitleSet : BP.Web.WebPage
     void btn_AdminSet_Click(object sender, EventArgs e)
     {
         FileUpload f = (FileUpload)this.Pub1.FindControl("F");
-
         throw new Exception("@ddddddd");
 
         //if (f.HasFile == false)
