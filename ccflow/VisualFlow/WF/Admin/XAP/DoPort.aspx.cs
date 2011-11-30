@@ -143,6 +143,13 @@ public partial class DoPort : System.Web.UI.Page
             case "FlowCheck": // 流程设计
                 this.Response.Redirect("../Admin/DoType.aspx?RefNo=" + this.Request.QueryString["RefNo"] + "&DoType=" + this.DoType, true);
                 break;
+            case "ExpFlowTemplete": //流程设计.
+                Flow flT = new Flow(this.Request.QueryString["FK_Flow"]);
+                string fileXml = flT.GenerFlowXmlTemplete();
+
+                BP.PubClass.DownloadFile(fileXml+flT.Name+".xml", flT.Name);
+                BP.PubClass.WinClose();
+                break;
             default:
                 break;
         }
