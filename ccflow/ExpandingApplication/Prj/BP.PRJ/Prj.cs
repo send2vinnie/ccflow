@@ -257,11 +257,11 @@ namespace BP.PRJ
                 map.AddTBStringPK(PrjAttr.No, null, "编号", true, true, 4, 4, 4);
                 map.AddTBString(PrjAttr.Name, null, "名称", true, false, 0, 60, 500);
                 map.AddDDLEntities(PrjAttr.FK_Dept, null, this.ToE("Dept", "部门"), new Port.Depts(), true);
-               
+
                 map.AddDDLSysEnum(PrjAttr.PrjState, 0, "项目状态", true, true, PrjAttr.PrjState,
                     "@0=新建@1=运行中@2=备案");
 
-                map.AddTBString(PrjAttr.DW, null, "单位", true, false, 0, 60, 500,true);
+                map.AddTBString(PrjAttr.DW, null, "单位", true, false, 0, 60, 500, true);
                 map.AddTBString(PrjAttr.Addr, null, "地址", true, false, 0, 60, 500, true);
 
                 map.AddTBString(PrjAttr.Files, null, "文件s", false, false, 0, 3000, 500, true);
@@ -307,14 +307,14 @@ namespace BP.PRJ
             PubClass.WinOpen("../PRJ/NodeAccess.aspx?FK_Prj=" + this.No, 500, 500);
             return null;
         }
-        
+
 
         public string DoEmpPrjStations()
         {
             PubClass.WinOpen("../Comm/PanelEns.aspx?EnsName=BP.PRJ.EmpPrjExts&FK_Prj=" + this.No, 800, 500);
             return null;
         }
-      
+
         public string DoDocTree()
         {
             PubClass.WinOpen("../PRJ/DocTree.aspx?No=" + this.No, 500, 500);
@@ -324,12 +324,24 @@ namespace BP.PRJ
         {
             this.No = this.GenerNewNo;
             this.SBRQ = DataType.CurrentData;
-            
-       //     string root=BP.Syscon
-        //    if (System.IO.Directory.
-            //this.PrjState = 1;
-            //if (this.DW.Length < 1)
-            //    throw new Exception("@dsdafasdfadsfsd");
+
+            string root = BP.SystemConfig.PathOfDataUser + "\\PrjData\\Templete";
+            if (System.IO.Directory.Exists(root) == false)
+                System.IO.Directory.CreateDirectory(root);
+
+            root += "\\" + this.No;
+            if (System.IO.Directory.Exists(root) == false)
+                System.IO.Directory.CreateDirectory(root);
+
+
+            if (System.IO.Directory.Exists(root + "\\01.资料目录1") == false)
+                System.IO.Directory.CreateDirectory(root + "\\01.资料目录1");
+
+            if (System.IO.Directory.Exists(root + "\\02.资料目录2") == false)
+                System.IO.Directory.CreateDirectory(root + "\\02.资料目录2");
+
+            if (System.IO.Directory.Exists(root + "\\03.资料目录3") == false)
+                System.IO.Directory.CreateDirectory(root + "\\03.资料目录3");
 
             return base.beforeInsert();
         }
