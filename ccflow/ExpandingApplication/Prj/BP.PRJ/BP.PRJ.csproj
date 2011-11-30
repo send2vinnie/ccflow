@@ -39,8 +39,8 @@
   <ItemGroup>
     <Compile Include="EmpPrj.cs" />
     <Compile Include="FileData.cs" />
-    <Compile Include="Doc\DTSGenerDir.cs" />
-    <Compile Include="Doc\NodeAccess.cs" />
+    <Compile Include="DTSGenerDir.cs" />
+    <Compile Include="NodeAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prj.cs" />
     <Compile Include="EmpPrjStation.cs" />
