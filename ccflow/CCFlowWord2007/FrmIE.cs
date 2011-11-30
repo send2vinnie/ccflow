@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO.Compression;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using BP.Port;
-using BP.En;
-using System.IO;
+using BP.DA;
+using BP.WF;
 using Office = Microsoft.Office.Core;
-using Microsoft.Office.Core;
-using Word = Microsoft.Office.Interop.Word;
 using CCFlowWord2007;
 
 namespace BP.Comm
@@ -23,6 +20,90 @@ namespace BP.Comm
         {
             InitializeComponent();
         }
+
+        public Ribbon1 HisRibbon1;
+
+        #region Load
+
+        private void FrmIE_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region Control Events
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            string url = e.Url.AbsoluteUri;
+            this.statusStrip1.Text = url;
+            string pageID = url.Substring(url.LastIndexOf('/') + 1);
+
+            this.toolStripStatusLabel1.Text = url;
+
+            if (pageID.IndexOf(".aspx") != -1)
+            {
+                pageID = pageID.Substring(0, pageID.IndexOf(".aspx"));
+                url = url.Substring(url.IndexOf(".aspx"));
+                url = url.Replace("?", "@");
+                url = url.Replace("&", "@");
+                url = url.Replace(".aspx", "");
+
+
+                var para = new AtPara(url);
+                switch (pageID)
+                {
+                    case "DoClient":
+                        try
+                        {
+                            switch (para.DoType)
+                            {
+                                case DoTypeConst.DoStartFlow: //发起流程
+                                    this.DoStartFlow(para);
+                                    break;
+                                case DoTypeConst.DoStartFlowByTemple: //启动流程
+                                    this.DoStartFlowByTemple(para);
+                                    break;
+                                case DoTypeConst.OpenFlow: //打开流程
+                                    this.DoOpenFlow(para);
+                                    break;
+                                case DoTypeConst.OpenDoc:
+                                    this.DoOpenDoc(para);
+                                    break;
+                                case DoTypeConst.Send: //执行发送
+                                    this.DoSend(para);
+                                    break;
+                                case DoTypeConst.UnSend:    //发送完成后，用户真接在发送成功的界面上执行撤消发送，则执行此步
+
+                                    break;
+                                case DoTypeConst.DelFlow: //执行删除流程。
+                                    WebUser.FK_Flow = null;
+                                    WebUser.FK_Node = 0;
+                                    WebUser.WorkID = 0;
+                                    this.Close();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("@错误：" + ex.Message + " PageID=" + pageID + "  DoType=" + para.DoType, "错误",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// 显示url
         /// </summary>
@@ -31,88 +112,75 @@ namespace BP.Comm
         {
             this.webBrowser1.Url = new Uri(url);
         }
-        public void OpenDoc(string file, bool _isReadonly)
+
+        /// <summary>
+        /// 打开文档
+        /// </summary>
+        /// <param name="file">文档地址</param>
+        /// <param name="_isReadonly">是否以只读方式打开</param>
+        public void OpenDoc(string file, object _isReadonly)
         {
-            _isReadonly = false;
-            try
-            {
-                object obj = Type.Missing;
+            if (Globals.ThisAddIn.Application.Documents.Count > 0 &&
+                Globals.ThisAddIn.Application.ActiveDocument != null)
                 Globals.ThisAddIn.Application.ActiveDocument.Close();
-            }
-            catch
-            {
-            }
 
             if (string.IsNullOrEmpty(file))
             {
-                file = BP.WF.Glo.PathOfTInstall + "\\" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".doc";
-                StreamWriter sr;
+                file = Path.Combine(Glo.PathOfTInstall, DateTime.Now.ToString("yyyyMMddhhmmss") + ".doc");
                 if (File.Exists(file))
                     File.Delete(file);
-                sr = new StreamWriter(file, false, System.Text.Encoding.GetEncoding("GB2312"));
-                sr.Write(DateTime.Now.ToString("yyyy年MM月dd日") + " 无公文模板");
-                sr.Close();
+
+                var doc = Globals.ThisAddIn.Application.Documents.Add(Visible: true);
+                doc.Activate();
+
+                Globals.ThisAddIn.Application.Selection.TypeText(DateTime.Now.ToString("yyyy年MM月dd日") + " 无公文模板");
+                doc.SaveAs(file);
+
+                return;
             }
 
             object fileName = file;
-            object readOnly = _isReadonly;
             object missing = Type.Missing;
-            
+
             try
             {
-                Globals.ThisAddIn.Application.Documents.Open(ref fileName, ref missing, ref readOnly);
-                return;
+                Globals.ThisAddIn.Application.Documents.Open(ref fileName, ref missing, ref _isReadonly);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("打开文件期间异常：" + ex.Message);
-                return;
             }
-
-            // object isReadonly = _isReadonly;
-            // object ConfirmConversions = false;
-            // object addtoreconfiles = false;
-            // object passwordDocument = false;
-            // object paaawordTempleate = false;
-            // object revert = false;
-            // object writepassword = "";
-            //// object FileFormat = Word.WdSaveFormat.wdFormatDocument;
-
-            // object waritepasswordtemplate = "";
-            // object format = false;
-            // object encoding = false;
-            // object visible = false;
-            // object openandrepair = false;
-            // object documentDirection = false;
-            // object noEncodingDialog = true;
-            // object xmltransfrom = false;
-            // CCFlowWord2007.Globals.ThisAddIn.Application.Documents.Open(ref fileName, ref  ConfirmConversions, ref isReadonly, ref addtoreconfiles,
-            //     ref passwordDocument, ref paaawordTempleate, ref revert, ref writepassword, ref waritepasswordtemplate, ref format,
-            //     ref encoding, ref visible, ref openandrepair, ref documentDirection, ref noEncodingDialog, ref xmltransfrom);
         }
+
+        #endregion
+
+        #region Flow Methods
+
         /// <summary>
         /// 执行发送
         /// </summary>
         /// <param name="para"></param>
-        public void DoSend(BP.DA.AtPara para)
+        public void DoSend(AtPara para)
         {
-            CCFlowWord2007.Globals.ThisAddIn.DoSave();
+            Globals.ThisAddIn.DoSave();
             object obj = Type.Missing;
-            CCFlowWord2007.Globals.ThisAddIn.Application.ActiveDocument.Close(ref obj, ref obj, ref obj);
+            Globals.ThisAddIn.Application.ActiveDocument.Close(ref obj, ref obj, ref obj);
+
         }
-        public void DoOpenDoc(BP.DA.AtPara para)
+
+        public void DoOpenDoc(AtPara para)
         {
             string fk_flow = para.GetValStrByKey("FK_Flow");
             int workid = para.GetValIntByKey("WorkID");
             int fk_node = para.GetValIntByKey("FK_Node");
 
-            string file = BP.WF.Glo.PathOfTInstall + workid + "@" + WebUser.No + ".doc";
-            if (System.IO.File.Exists(file) == false)
+            string file = Glo.PathOfTInstall + workid + "@" + WebUser.No + ".doc";
+            if (File.Exists(file) == false)
             {
                 try
                 {
-                    FtpSupport.FtpConnection conn = BP.WF.Glo.HisFtpConn;
-                    if (conn.DirectoryExist("/DocFlow/" + fk_flow + "/" + workid) == true)
+                    FtpSupport.FtpConnection conn = Glo.HisFtpConn;
+                    if (conn.DirectoryExist("/DocFlow/" + fk_flow + "/" + workid))
                     {
                         conn.SetCurrentDirectory("/DocFlow/" + fk_flow + "/" + workid);
                         conn.GetFile(workid + ".doc", file, true, FileAttributes.Archive);
@@ -134,18 +202,21 @@ namespace BP.Comm
             WebUser.FK_Node = fk_node;
             WebUser.WorkID = workid;
 
+            WebUser.RetrieveWFNode(WebUser.FK_Node);
+
             /*如果存在这个文件，就激活它。*/
-            WebUser.WriterIt(BP.WF.StartFlag.DoOpenDoc, fk_flow, fk_node, workid);
+            WebUser.WriterIt(StartFlag.DoOpenDoc, fk_flow, fk_node, workid);
 
             this.OpenDoc(file, false);
-            this.HisRibbon1.ReSetState();
+            this.HisRibbon1.SetState();
             this.Close();
         }
+
         /// <summary>
         /// 打开流程
         /// </summary>
         /// <param name="para"></param>
-        public void DoOpenFlow(BP.DA.AtPara para)
+        public void DoOpenFlow(AtPara para)
         {
             string fk_flow = para.GetValStrByKey("FK_Flow");
             int workid = para.GetValIntByKey("WorkID");
@@ -153,7 +224,6 @@ namespace BP.Comm
 
             if (WebUser.WorkID == workid && WebUser.FK_Node == fk_node)
             {
-                // return;
                 if (MessageBox.Show("当前流程已经打开，您想重新加载吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
                 {
                     this.webBrowser1.GoBack();
@@ -161,13 +231,13 @@ namespace BP.Comm
                 }
             }
 
-            string file = BP.WF.Glo.PathOfTInstall + workid + "@" + WebUser.No + ".doc";
-            if (System.IO.File.Exists(file) == false)
+            string file = Glo.PathOfTInstall + workid + "@" + WebUser.No + ".doc";
+            if (File.Exists(file) == false)
             {
                 try
                 {
-                    FtpSupport.FtpConnection conn = BP.WF.Glo.HisFtpConn;
-                    if (conn.DirectoryExist("/DocFlow/" + fk_flow + "/" + workid) == true)
+                    FtpSupport.FtpConnection conn = Glo.HisFtpConn;
+                    if (conn.DirectoryExist("/DocFlow/" + fk_flow + "/" + workid))
                     {
                         conn.SetCurrentDirectory("/DocFlow/" + fk_flow + "/" + workid);
                         conn.GetFile(workid + ".doc", file, true, FileAttributes.Archive);
@@ -189,30 +259,33 @@ namespace BP.Comm
             WebUser.FK_Node = fk_node;
             WebUser.WorkID = workid;
 
+            WebUser.RetrieveWFNode(WebUser.FK_Node);
+
             /*如果存在这个文件，就激活它。*/
-            WebUser.WriterIt(BP.WF.StartFlag.DoOpenFlow, fk_flow, fk_node, workid);
+            WebUser.WriterIt(StartFlag.DoOpenFlow, fk_flow, fk_node, workid);
             this.OpenDoc(file, false);
             this.Close();
         }
+
         /// <summary>
         /// 发起流程
         /// </summary>
         /// <param name="para"></param>
-        public void DoStartFlow(BP.DA.AtPara para)
+        public void DoStartFlow(AtPara para)
         {
             string fk_flow = para.GetValStrByKey("FK_Flow");
             string workid = para.GetValStrByKey("WorkID");
-            string file = BP.WF.Glo.PathOfTInstall + workid + "@" + WebUser.No + ".doc";
+            string file = Glo.PathOfTInstall + workid + "@" + WebUser.No + ".doc";
 
-            if (System.IO.File.Exists(file) == false)
+            if (File.Exists(file) == false)
             {
                 try
                 {
-                    FtpSupport.FtpConnection conn = BP.WF.Glo.HisFtpConn;
-                    if (conn.DirectoryExist("/DocFlow/" + fk_flow + "/" + workid) == true)
+                    FtpSupport.FtpConnection conn = Glo.HisFtpConn;
+                    if (conn.DirectoryExist("/DocFlow/" + fk_flow + "/" + workid))
                     {
                         conn.SetCurrentDirectory("/DocFlow/" + fk_flow + "/" + workid);
-                        if (conn.FileExist(WebUser.FK_Node + "@" + WebUser.No + ".doc") == true)
+                        if (conn.FileExist(WebUser.FK_Node + "@" + WebUser.No + ".doc"))
                             conn.GetFile(WebUser.FK_Node + "@" + WebUser.No + ".doc", file, true, FileAttributes.Archive);
                         else
                             file = null;
@@ -231,23 +304,24 @@ namespace BP.Comm
             }
 
             WebUser.FK_Flow = fk_flow;
-            WebUser.WorkID = int.Parse( workid);
+            WebUser.WorkID = int.Parse(workid);
 
             /*如果存在这个文件，就激活它。*/
-            WebUser.WriterIt(BP.WF.StartFlag.DoNewFlow, fk_flow, int.Parse(fk_flow + "01"), int.Parse(workid));
+            WebUser.WriterIt(StartFlag.DoNewFlow, fk_flow, int.Parse(fk_flow + "01"), int.Parse(workid));
             this.OpenDoc(file, false);
             this.Close();
         }
+
         /// <summary>
-        /// 生成模板按照
+        /// 按照模板生成公文
         /// </summary>
         /// <param name="para"></param>
-        public void DoStartFlowByTemple(BP.DA.AtPara para)
+        public void DoStartFlowByTemple(AtPara para)
         {
             string fk_flow = para.GetValStrByKey("FK_Flow");
             // 下载流程模板 
-            FtpSupport.FtpConnection conn = BP.WF.Glo.HisFtpConn;
-            string file = BP.WF.Glo.PathOfTInstall + fk_flow + "@" + DateTime.Now.ToString("MM月dd日hh时mm分ss秒") + ".doc";
+            FtpSupport.FtpConnection conn = Glo.HisFtpConn;
+            string file = Glo.PathOfTInstall + fk_flow + "@" + DateTime.Now.ToString("MM月dd日hh时mm分ss秒") + ".doc";
             try
             {
 
@@ -268,73 +342,15 @@ namespace BP.Comm
             WebUser.WorkID = 0;
             WebUser.FK_Flow = fk_flow;
             WebUser.FK_Node = int.Parse(fk_flow + "01");
-            this.HisRibbon1.ReSetState();
-            WebUser.WriterIt(BP.WF.StartFlag.DoNewFlow, fk_flow, int.Parse(fk_flow + "01"), 0);
+
+            WebUser.RetrieveWFNode(WebUser.FK_Node);
+
+            this.HisRibbon1.SetState();
+            WebUser.WriterIt(StartFlag.DoNewFlow, fk_flow, int.Parse(fk_flow + "01"), 0);
             this.OpenDoc(file, false);
             this.Close();
         }
-        public CCFlowWord2007.Ribbon1 HisRibbon1 = null;
-        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-            string url = e.Url.AbsoluteUri;
-            this.statusStrip1.Text = url;
-            string pageID = url.Substring(url.LastIndexOf('/') + 1);
 
-            this.toolStripStatusLabel1.Text = url;
-
-            pageID = pageID.Substring(0, pageID.IndexOf(".aspx"));
-            url = url.Substring(url.IndexOf(".aspx"));
-            url = url.Replace("?", "@");
-            url = url.Replace("&", "@");
-            url = url.Replace(".aspx", "");
-
-            BP.DA.AtPara para = new BP.DA.AtPara(url);
-            switch (pageID)
-            {
-                case "DoClient":
-                    try
-                    {
-                        switch (para.DoType)
-                        {
-                            case BP.WF.DoType.DoStartFlow:
-                                this.DoStartFlow(para);
-                                break;
-                            case BP.WF.DoType.DoStartFlowByTemple:
-                                this.DoStartFlowByTemple(para);
-                                break;
-                            case BP.WF.DoType.OpenFlow:
-                                this.DoOpenFlow(para);
-                                break;
-                            case BP.WF.DoType.OpenDoc:
-                                this.DoOpenDoc(para);
-                                break;
-                            case BP.WF.DoType.Send: //执行发送
-                                this.DoSend(para);
-                                break;
-                            case BP.WF.DoType.DelFlow: //执行删除流程。
-                                WebUser.FK_Flow = null;
-                                WebUser.FK_Node = 0;
-                                WebUser.WorkID = 0;
-                                this.Close();
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("@错误：" + ex.Message + " PageID=" + pageID + "  DoType=" + para.DoType, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        this.Close();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void FrmIE_Load(object sender, EventArgs e)
-        {
-
-        }
+        #endregion
     }
 }

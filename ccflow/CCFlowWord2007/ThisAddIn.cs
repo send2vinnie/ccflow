@@ -16,30 +16,11 @@ namespace CCFlowWord2007
         {
             try
             {
-                WebUser.HisRib.ReSetState();
+                WebUser.HisRib.SetState();
             }
             catch (Exception ex)
             {
             }
-            //  this.HisRibbon1.ReSetState();
-            //object index = 1;
-            //Word.Bookmark firstBookmark = this.Application.ActiveDocument.Bookmarks.get_Item(ref index);
-            //Document extendedDocument = this.Application.ActiveDocument.GetVstoObject();
-            //Bookmark vstoBookmark = extendedDocument.Controls.AddBookmark(
-            //        firstBookmark, "VSTOBookmark");
-            //Microsoft.Office.Tools.Word.Bookmark firstParagraph;
-            //firstParagraph = this.Controls.AddBookmark(this.Paragraphs[1].Range,
-            //    "FirstParagraph");
-            //    Globals.ThisAddIn.Application.DocumentOpen += new Microsoft.Office.Interop.Word.ApplicationEvents4_DocumentOpenEventHandler(Application_DocumentOpen);
-            //  this.HisRibbon1 = this.CreateRibbonObjects();
-            //Ribbon1 rb = new Ribbon1();
-            //rb.ReSetState();
-        }
-
-        void Application_DocumentOpen(Microsoft.Office.Interop.Word.Document Doc)
-        {
-            MessageBox.Show(Doc.Name + " is open");
-            //HisRibbon1.ReSetState();
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
@@ -47,15 +28,13 @@ namespace CCFlowWord2007
             if (Profile.IsExitProfile == false)
                 return;
 
-            //DialogResult dl = MessageBox.Show("您要安全退出吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            //if (dl == DialogResult.OK)
-            //{
-            //    System.IO.File.Delete("C:\\WF\\Profile.txt");
-            //    BP.Port.WebUser.WriterCookes();
-            //}
+            var dr = MessageBox.Show("您要安全退出吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (dr == DialogResult.OK)
+                WebUser.SignOut();
         }
 
-        #region 共用方法
+        #region Methods
+
         public void DoSave()
         {
             if (WebUser.FK_Flow == null)
@@ -63,9 +42,6 @@ namespace CCFlowWord2007
                 MessageBox.Show("您没有选择流程您不能存盘。");
                 return;
             }
-
-
-
 
             if (WebUser.WorkID == 0)
             {
@@ -126,6 +102,16 @@ namespace CCFlowWord2007
             System.IO.File.Delete("c:\\Tmp.doc");
             MessageBox.Show("您的文件已经保存到服务器上", "保存成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        public static void SaveAs(string file)
+        {
+            object FileName = file;
+            object FileFormat = Word.WdSaveFormat.wdFormatDocument;
+
+            Globals.ThisAddIn.Application.ActiveWindow.Document.Save();
+            Globals.ThisAddIn.Application.ActiveWindow.Document.SaveAs(ref FileName, ref FileFormat);
+        }
+
         #endregion
 
         #region VSTO generated code
@@ -138,63 +124,6 @@ namespace CCFlowWord2007
         {
             this.Startup += new System.EventHandler(ThisAddIn_Startup);
             this.Shutdown += new System.EventHandler(ThisAddIn_Shutdown);
-            this.Application.DocumentChange += new Microsoft.Office.Interop.Word.ApplicationEvents4_DocumentChangeEventHandler(Application_DocumentChange);
-        }
-        void Application_DocumentChange()
-        {
-            // System.Windows.Forms.MessageBox.Show("Application_DocumentChange");
-            //  WebUser.HisRib.ReSetState();
-        }
-
-        public static void SaveAs(string file)
-        {
-            object missing = Type.Missing;
-            object FileName = file;
-            object FileFormat = Word.WdSaveFormat.wdFormatDocument;
-            object LockComments = missing;
-            object AddToRecentFiles = missing;
-            object ReadOnlyRecommended = missing;
-            object EmbedTrueTypeFonts = missing;
-            object SaveNativePictureFormat = missing;
-            object SaveFormsData = missing;
-            object SaveAsAOCELetter = missing;
-            object Encoding = missing;
-            object InsertLineBreaks = missing;
-            object AllowSubstitutions = missing;
-            object LineEnding = missing;
-            object AddBiDiMarks = missing;
-
-            Globals.ThisAddIn.Application.ActiveWindow.Document.Save();
-            Globals.ThisAddIn.Application.ActiveWindow.Document.SaveAs(ref FileName, ref FileFormat, ref
-            LockComments, ref missing, ref AddToRecentFiles, ref missing, ref
-            ReadOnlyRecommended, ref EmbedTrueTypeFonts, ref SaveNativePictureFormat, ref
-            SaveFormsData, ref SaveAsAOCELetter, ref Encoding, ref InsertLineBreaks, ref
-            AllowSubstitutions, ref LineEnding, ref AddBiDiMarks);
-        }
-
-        public static void SaveAs_bak(string file)
-        {
-            object FileName = file;
-            object FileFormat = Word.WdSaveFormat.wdFormatDocument;
-            object LockComments = false;
-            object AddToRecentFiles = true;
-            object ReadOnlyRecommended = true;
-            object EmbedTrueTypeFonts = true;
-            object SaveNativePictureFormat = true;
-            object SaveFormsData = false;
-            object SaveAsAOCELetter = false;
-            object Encoding = 20127;
-            object InsertLineBreaks = false;
-            object AllowSubstitutions = false;
-            object LineEnding = Word.WdLineEndingType.wdCRLF;
-            object AddBiDiMarks = false;
-            object missing = Type.Missing;
-
-            Globals.ThisAddIn.Application.ActiveWindow.Document.SaveAs(ref FileName, ref FileFormat, ref
-            LockComments, ref missing, ref AddToRecentFiles, ref missing, ref
-            ReadOnlyRecommended, ref EmbedTrueTypeFonts, ref SaveNativePictureFormat, ref
-            SaveFormsData, ref SaveAsAOCELetter, ref Encoding, ref InsertLineBreaks, ref
-            AllowSubstitutions, ref LineEnding, ref AddBiDiMarks);
         }
         #endregion
     }

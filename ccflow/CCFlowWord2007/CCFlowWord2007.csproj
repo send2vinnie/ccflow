@@ -247,6 +247,7 @@
     <Compile Include="WorkFlow\Glo.cs" />
     <Compile Include="WorkFlow\Profile.cs" />
     <Compile Include="WorkFlow\WebUser.cs" />
+    <Compile Include="WorkFlow\WFNode.cs" />
     <Compile Include="WorkFlow\Work.cs" />
     <Compile Include="WorkFlow\Xml\Func.cs" />
     <Compile Include="WorkFlow\Xml\GroupFunc.cs" />

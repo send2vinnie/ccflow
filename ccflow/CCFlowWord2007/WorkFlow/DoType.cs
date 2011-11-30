@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BP.WF
 {
-    public class DoType
+    public class DoTypeConst
     {
         public const string OpenDoc = "OpenDoc";
         /// <summary>
@@ -20,10 +20,18 @@ namespace BP.WF
         /// 打开流程
         /// </summary>
         public const string OpenFlow = "OpenFlow";
+        /// <summary>
+        /// 发送
+        /// </summary>
         public const string Send = "Send";
+        /// <summary>
+        /// 撤消发送
+        /// </summary>
+        public const string UnSend = "UnSend";
+        /// <summary>
+        /// 删除流程
+        /// </summary>
         public const string DelFlow = "DelFlow";
-
-        
     }
     /// <summary>
     /// 启动标记

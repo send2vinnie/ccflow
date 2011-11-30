@@ -13,6 +13,7 @@ namespace CCFlowWord2007
         public AboutBox()
         {
             InitializeComponent();
+
             this.Text = String.Format("关于 {0} {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("版本 {0} {0}", AssemblyVersion);

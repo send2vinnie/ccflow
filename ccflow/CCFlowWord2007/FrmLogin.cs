@@ -12,12 +12,20 @@ namespace BP.Comm
 {
     public partial class FrmLogin : Form
     {
-        public int TT = 0;
         public FrmLogin()
         {
             InitializeComponent();
-            this.TB_User.Text = BP.WF.Profile.GetLoginNo();
-            if (this.TB_User.Text == "" || this.TB_User.Text == null)
+        }
+
+        public int loginNum;
+
+        #region Load
+
+        private void FrmLogin_Load(object sender, EventArgs e)
+        {
+            var user = BP.WF.Profile.GetLoginNo();
+
+            if (string.IsNullOrEmpty(user))
             {
                 this.CB_SaveInfo.Checked = false;
             }
@@ -27,18 +35,24 @@ namespace BP.Comm
                 this.TB_Pass.Text = "pub";
             }
         }
+
+        #endregion
+
+        #region btn Events
+
         private void Btn_OK_Click(object sender, EventArgs e)
         {
+            WebUser.SignOut();
+
             try
             {
-                TT++;
-                if (TT > 5)
+                loginNum++;
+                if (loginNum > 5)
                     throw new Exception("@您频繁的输入错误的密码，系统拒绝您重试，请联系管理员解决此问题。");
 
                 Emp ue = new Emp(this.TB_User.Text);
                 if (ue.Pass.Equals(this.TB_Pass.Text) == false)
                     throw new Exception("@您输入的密码不正确。 \t\n@注意密码区分大小写。");
-
 
                 WebUser.IsSaveInfo = this.CB_SaveInfo.Checked;
                 WebUser.IsSavePass = this.CB_SavePass.Checked;
@@ -57,16 +71,16 @@ namespace BP.Comm
                 return;
             }
         }
+
         private void Btn_C_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
+        #endregion
 
-        }
+        #region Control Events
 
         private void CB_SavePass_CheckedChanged(object sender, EventArgs e)
         {
@@ -77,14 +91,10 @@ namespace BP.Comm
             }
             else
             {
-            //    this.CB_SaveInfo.Checked = true;
                 this.CB_SaveInfo.Enabled = true;
             }
         }
 
-        private void FrmLogin_Load(object sender, EventArgs e)
-        {
-
-        }
+        #endregion
     }
 }

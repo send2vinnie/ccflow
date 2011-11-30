@@ -3,15 +3,22 @@ using BP.Port;
 using System.Windows.Forms;
 using BP.WF;
 using BP.Comm;
+using Microsoft.Office.Tools.Ribbon;
+
 namespace CCFlowWord2007
 {
-    partial class Ribbon1 : Microsoft.Office.Tools.Ribbon.RibbonBase
+    partial class Ribbon1 : RibbonBase
     {
         /// <summary>
         /// 必需的设计器变量。
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        #region Methods
+
+        /// <summary>
+        /// 加载XML，创建导航
+        /// </summary>
         public void LoadXml()
         {
             BP.WF.Tabs tabs = new BP.WF.Tabs();
@@ -29,13 +36,13 @@ namespace CCFlowWord2007
             foreach (BP.WF.Tab tb in tabs)
             {
                 i++;
-                Microsoft.Office.Tools.Ribbon.RibbonTab mytab = Factory.CreateRibbonTab();
+                RibbonTab mytab = Factory.CreateRibbonTab();
                 mytab.Label = tb.Name;
                 mytab.Name = "t" + tb.No + i;
                 if (i == 2)
-                    mytab.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Custom;
+                    mytab.ControlId.ControlIdType = RibbonControlIdType.Custom;
                 else
-                    mytab.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
+                    mytab.ControlId.ControlIdType = RibbonControlIdType.Office;
 
                 mytab.SuspendLayout();
 
@@ -44,10 +51,10 @@ namespace CCFlowWord2007
                     if (g.FK_Tab != tb.No)
                         continue;
 
-                    Microsoft.Office.Tools.Ribbon.RibbonGroup group = Factory.CreateRibbonGroup();
+                    RibbonGroup group = Factory.CreateRibbonGroup();
                     group.Name = "s" + g.No;
                     group.Label = g.Name;
-                    group.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(Btn_Click);
+                    group.DialogLauncherClick += new RibbonControlEventHandler(Btn_Click);
                     group.SuspendLayout();
 
                     foreach (BP.WF.Func f in fs)
@@ -58,7 +65,7 @@ namespace CCFlowWord2007
                         switch (f.CtlType)
                         {
                             case "Btn":
-                                Microsoft.Office.Tools.Ribbon.RibbonButton btn = Factory.CreateRibbonButton();
+                                RibbonButton btn = Factory.CreateRibbonButton();
                                 btn.Name = "Btn_" + f.No;
                                 btn.Label = f.Name;
                                 btn.Tag = f;
@@ -73,11 +80,11 @@ namespace CCFlowWord2007
                                 catch
                                 {
                                 }
-                                btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(Btn_Click);
+                                btn.Click += new RibbonControlEventHandler(Btn_Click);
                                 group.Items.Add(btn);
                                 break;
                             default:
-                                Microsoft.Office.Tools.Ribbon.RibbonLabel lab = Factory.CreateRibbonLabel();
+                                RibbonLabel lab = Factory.CreateRibbonLabel();
                                 lab.Name = "Lab_" + f.No;
                                 lab.Label = f.Name;
                                 lab.Tag = f;
@@ -98,14 +105,105 @@ namespace CCFlowWord2007
             this.ResumeLayout(false);
             this.RibbonType = "Microsoft.Word.Document";
             //  this.RibbonType = "Microsoft.PowerPoint.Presentation";
-            this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(Ribbon1_Load);
+            this.Load += new RibbonUIEventHandler(Ribbon1_Load);
         }
 
-        void Btn_Click(object sender, Microsoft.Office.Tools.Ribbon.RibbonControlEventArgs e)
+        /// <summary>
+        /// 执行btn本地事件
+        /// </summary>
+        /// <param name="func"></param>
+        /// <param name="btn"></param>
+        public void Do(BP.WF.Func func, RibbonButton btn)
+        {
+            switch (func.No)
+            {
+                case "LogOut":
+                    if (MessageBox.Show("您确定要注销吗？", "执行确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+                        return;
+
+                    WebUser.SignOut();
+
+                    this.SetState();
+                    break;
+                case "Login":
+                    FrmLogin fl = new FrmLogin();
+                    fl.ShowDialog();
+                    this.SetState();
+                    break;
+                case "ChUser":
+                    FrmLogin fm = new FrmLogin();
+                    fm.ShowDialog();
+                    break;
+                case "WKInfo":
+                    string msg = "\t\n No=" + WebUser.No;
+                    msg += "\t\n FK_Flow=" + WebUser.FK_Flow;
+                    msg += "\t\n FK_Node=" + WebUser.FK_Node;
+                    msg += "\t\n WorkID=" + WebUser.WorkID;
+                    MessageBox.Show(msg);
+                    break;
+                case "About":
+                    AboutBox ab = new AboutBox();
+                    ab.ShowDialog();
+                    break;
+                case "Save":
+                    this.DoSave();
+                    break;
+                case "SaveTo":
+                default:
+                    MessageBox.Show("功能未实现：" + func.No + " " + func.Name);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 获得指定名称的RibbonBtn
+        /// </summary>
+        /// <param name="name">名称</param>
+        /// <returns></returns>
+        public RibbonButton GetBtn(string name)
+        {
+            foreach (RibbonTab tab in this.Tabs)
+            {
+                foreach (RibbonGroup g in tab.Groups)
+                {
+                    RibbonButton btn;
+                    for (int i = 0; i <= g.Items.Count; i++)
+                    {
+                        try
+                        {
+                            btn = g.Items[i] as RibbonButton;
+                            if (btn == null)
+                                continue;
+
+                            if (btn.Name == name)
+                                return btn;
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+            }
+            MessageBox.Show("@没有找到Name=" + name + " 的按钮");
+            return null;
+        }
+
+        /// <summary>
+        /// 执行保存公文
+        /// </summary>
+        public void DoSave()
+        {
+            Globals.ThisAddIn.DoSave();
+        }
+        #endregion
+
+        #region btn Events
+
+        void Btn_Click(object sender, RibbonControlEventArgs e)
         {
             try
             {
-                Microsoft.Office.Tools.Ribbon.RibbonButton btn = (Microsoft.Office.Tools.Ribbon.RibbonButton)sender;
+                RibbonButton btn = (RibbonButton)sender;
                 BP.WF.Func func = (BP.WF.Func)btn.Tag;
                 switch (func.DoType)
                 {
@@ -136,8 +234,8 @@ namespace CCFlowWord2007
                                 else
                                 {
                                     /*判断是否已经处理了。*/
-                                    Work wk1 = new Work(WebUser.FK_Node, WebUser.WorkID);
-                                    switch (wk1.HisNodeState)
+                                    WebUser.HisWork = new Work(WebUser.FK_Node, WebUser.WorkID);
+                                    switch (WebUser.HisWork.HisNodeState)
                                     {
                                         case NodeState.Init:
                                         case NodeState.Back:
@@ -173,7 +271,7 @@ namespace CCFlowWord2007
                         ie.ShowInTaskbar = false;
                         ie.HisRibbon1 = this;
                         ie.ShowDialog();
-                        this.ReSetState();
+                        this.SetState();
                         return;
                     default:
                         try
@@ -187,134 +285,90 @@ namespace CCFlowWord2007
                         break;
                 }
 
-                this.ReSetState();
+                this.SetState();
             }
             catch (Exception ex)
             {
-                ReSetState();
+                SetState();
                 MessageBox.Show(ex.Message);
             }
         }
 
-        #region 处理状态
-        public void ReSetState()
+        #endregion
+
+        #region 设置 btn 状态
+
+        /// <summary>
+        /// 设置按钮状态
+        /// </summary>
+        public void SetState()
         {
-            this.Btn_Del.Enabled = true;
-            this.Btn_Start.Enabled = true;
-            this.Btn_Send.Enabled = true;
-            this.Btn_Return.Enabled = true;
-            this.Btn_FW.Enabled = true;
-            this.Btn_UnSend.Enabled = true;
-            this.Btn_Rpt.Enabled = true;
-            this.Btn_Save.Enabled = true;
-            this.Btn_Start.Enabled = true;
+            //功能按钮
+            this.Btn_Start.Enabled = false;
+            this.Btn_Send.Enabled = false;
+            this.Btn_Return.Enabled = false;
+            this.Btn_Del.Enabled = false;
+            this.Btn_FW.Enabled = false;
+            this.Btn_UnSend.Enabled = false;    //Node中未有
+            this.Btn_Rpt.Enabled = false;
+            this.Btn_Save.Enabled = false;
+            this.Btn_Attachment.Enabled = false;
 
+            //流程按钮
+            this.Btn_EmpWorks.Enabled = false;
+            this.Btn_Runing.Enabled = false;
+            this.Btn_View.Enabled = false;
 
-            //保存选项
-            this.Btn_SaveAs.Enabled = true;
-            this.Btn_SaveAsPDF.Enabled = true;
-            this.Btn_SaveToU.Enabled = true;
-            this.Btn_SendToMail.Enabled = true;
+            this.Btn_Login.Label = "登录";
 
-            //流程功能
-            this.Btn_EmpWorks.Enabled = true;
-            this.Btn_Runing.Enabled = true;
-            this.Btn_View.Enabled = true;
-
-
-
-            switch (WebUser.DoWhat)
-            {
-                case "":
-                    break;
-                default:
-                    break;
-            }
-
-            if (WebUser.No == null)
-            {
-                this.Btn_EmpWorks.Enabled = false;
-                this.Btn_Runing.Enabled = false;
-                this.Btn_View.Enabled = false;
-                this.Btn_Start.Enabled = false;
-            }
-
-            if (Globals.ThisAddIn.Application.Documents.Count == 0)
+            if (!string.IsNullOrEmpty(WebUser.No))
             {
                 this.Btn_Start.Enabled = true;
-                this.Btn_Send.Enabled = false;
-                this.Btn_Return.Enabled = false;
-                this.Btn_FW.Enabled = false;
-                this.Btn_UnSend.Enabled = false;
-                this.Btn_Rpt.Enabled = false;
-                this.Btn_Save.Enabled = false;
-                this.Btn_SaveAs.Enabled = false;
-                this.Btn_SaveAsPDF.Enabled = false;
-                this.Btn_SaveToU.Enabled = false;
-                this.Btn_SendToMail.Enabled = false;
-                this.Btn_Del.Enabled = false;
-                return;
-            }
 
-            if (WebUser.FK_Flow == null)
-            {
-                this.Btn_Save.Enabled = false;
-                this.Btn_Send.Enabled = false;
-                this.Btn_Del.Enabled = false;
-            }
+                this.Btn_EmpWorks.Enabled = true;
+                this.Btn_Runing.Enabled = true;
+                this.Btn_View.Enabled = true;
 
-            if (WebUser.WorkID == 0)
-            {
-                this.Btn_FW.Enabled = false;
-                this.Btn_UnSend.Enabled = false;
-                this.Btn_Rpt.Enabled = false;
-                this.Btn_Return.Enabled = false;
-                this.Btn_Del.Enabled = false;
-            }
-            else
-            {
-                if (WebUser.IsStartNode)
+                this.Btn_Login.Label = "更换用户";
+
+                if (WebUser.CurrentNode != null)
                 {
-                    this.Btn_UnSend.Enabled = false;
-                    this.Btn_Rpt.Enabled = false;
-                    this.Btn_Return.Enabled = false;
-                    this.Btn_FW.Enabled = false;
-                    this.Btn_Del.Enabled = true;
-                }
-                else
-                {
-                    this.Btn_Del.Enabled = false;
-                    if (WebUser.HisWork == null)
-                    {
-                        this.Btn_UnSend.Enabled = false;
-                        this.Btn_Rpt.Enabled = false;
-                        this.Btn_Return.Enabled = false;
-                        this.Btn_FW.Enabled = false;
-                    }
-                    else
-                    {
-                        if (WebUser.HisWork.Rec != WebUser.No)
-                        {
-                            this.Btn_UnSend.Enabled = false;
-                            //  this.Btn_Rpt.Enabled = false;
-                            this.Btn_Return.Enabled = false;
-                            this.Btn_FW.Enabled = false;
-                        }
-                    }
+                    this.Btn_Del.Enabled = WebUser.CurrentNode.DelEnable.HasValue && WebUser.CurrentNode.DelEnable.Value;
+                    this.Btn_Send.Enabled = WebUser.CurrentNode.SendEnable.HasValue &&
+                                            WebUser.CurrentNode.SendEnable.Value;
+                    this.Btn_Return.Enabled = WebUser.CurrentNode.ReturnRole != WorkFlow.ReturnRoleKind.UnEnable;
+                    this.Btn_FW.Enabled = WebUser.CurrentNode.ShiftEnable.HasValue &&
+                                          WebUser.CurrentNode.ShiftEnable.Value;
+                    this.Btn_Rpt.Enabled = WebUser.CurrentNode.TrackEnable.HasValue &&
+                                           WebUser.CurrentNode.TrackEnable.Value;
+                    this.Btn_Save.Enabled = WebUser.CurrentNode.SaveEnable.HasValue &&
+                                            WebUser.CurrentNode.SaveEnable.Value;
+                    this.Btn_Attachment.Enabled = WebUser.CurrentNode.FJOpen != WorkFlow.AttachmentRoleKind.Close;
+
+                    this.Btn_UnSend.Enabled = WebUser.HisWork != null && WebUser.HisWork.HisNodeState == NodeState.Complete;
                 }
             }
         }
 
+        #endregion
+
         #region RibbonBtn
 
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_Rpt
+        /// <summary>
+        /// 流程轨迹
+        /// </summary>
+        public RibbonButton Btn_Rpt
         {
             get
             {
                 return this.GetBtn("Btn_Rpt");
             }
         }
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_UnSend
+
+        /// <summary>
+        /// 撤消发送
+        /// </summary>
+        public RibbonButton Btn_UnSend
         {
             get
             {
@@ -322,7 +376,10 @@ namespace CCFlowWord2007
             }
         }
 
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_Del
+        /// <summary>
+        /// 删除流程
+        /// </summary>
+        public RibbonButton Btn_Del
         {
             get
             {
@@ -330,14 +387,21 @@ namespace CCFlowWord2007
             }
         }
 
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_EmpWorks
+        /// <summary>
+        /// 待办公文
+        /// </summary>
+        public RibbonButton Btn_EmpWorks
         {
             get
             {
                 return this.GetBtn("Btn_EmpWorks");
             }
         }
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_Runing
+
+        /// <summary>
+        /// 在途公文
+        /// </summary>
+        public RibbonButton Btn_Runing
         {
             get
             {
@@ -345,8 +409,10 @@ namespace CCFlowWord2007
             }
         }
 
-
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_View
+        /// <summary>
+        /// 公文查询
+        /// </summary>
+        public RibbonButton Btn_View
         {
             get
             {
@@ -354,26 +420,32 @@ namespace CCFlowWord2007
             }
         }
 
-
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_Reg
+        /// <summary>
+        /// 附件
+        /// </summary>
+        public RibbonButton Btn_Attachment
         {
             get
             {
-                return this.GetBtn("Btn_Reg");
+                return this.GetBtn("Btn_Ath");
             }
         }
 
-
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_ReLogin
+        /// <summary>
+        /// 登录/更换用户
+        /// </summary>
+        public RibbonButton Btn_Login
         {
             get
             {
-                return this.GetBtn("Btn_ReLogin");
+                return this.GetBtn("Btn_Login");
             }
         }
 
-
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_LogOut
+        /// <summary>
+        /// 注销
+        /// </summary>
+        public RibbonButton Btn_LogOut
         {
             get
             {
@@ -381,49 +453,76 @@ namespace CCFlowWord2007
             }
         }
 
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_Return
+        /// <summary>
+        /// 退回
+        /// </summary>
+        public RibbonButton Btn_Return
         {
             get
             {
                 return this.GetBtn("Btn_Return");
             }
         }
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_FW
+
+        /// <summary>
+        /// 移交
+        /// </summary>
+        public RibbonButton Btn_FW
         {
             get
             {
                 return this.GetBtn("Btn_FW");
             }
         }
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_Send
+
+        /// <summary>
+        /// 发送
+        /// </summary>
+        public RibbonButton Btn_Send
         {
             get
             {
                 return this.GetBtn("Btn_Send");
             }
         }
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_Save
+
+        /// <summary>
+        /// 保存到网络
+        /// </summary>
+        public RibbonButton Btn_Save
         {
             get
             {
                 return this.GetBtn("Btn_Save");
             }
         }
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_SendToMail
+
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
+        public RibbonButton Btn_SendToMail
         {
             get
             {
                 return this.GetBtn("Btn_SendToMail");
             }
         }
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_SaveAs
+
+        /// <summary>
+        /// 另存为
+        /// </summary>
+        public RibbonButton Btn_SaveAs
         {
             get
             {
                 return this.GetBtn("Btn_SaveAs");
             }
         }
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_SaveAsPDF
+
+        /// <summary>
+        /// 另存为PDF
+        /// </summary>
+        public RibbonButton Btn_SaveAsPDF
         {
             get
             {
@@ -431,7 +530,10 @@ namespace CCFlowWord2007
             }
         }
 
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_Start
+        /// <summary>
+        /// 拟定公文
+        /// </summary>
+        public RibbonButton Btn_Start
         {
             get
             {
@@ -439,130 +541,19 @@ namespace CCFlowWord2007
             }
         }
 
-
-        public Microsoft.Office.Tools.Ribbon.RibbonButton Btn_SaveToU
+        /// <summary>
+        /// 发送到U盘
+        /// </summary>
+        public RibbonButton Btn_SaveToU
         {
             get
             {
                 return this.GetBtn("Btn_SaveToU");
             }
         }
+
         #endregion
 
-        #endregion 处理状态
-
-        public Microsoft.Office.Tools.Ribbon.RibbonButton GetBtn(string key)
-        {
-            foreach (Microsoft.Office.Tools.Ribbon.RibbonTab tab in this.Tabs)
-            {
-                foreach (Microsoft.Office.Tools.Ribbon.RibbonGroup g in tab.Groups)
-                {
-                    Microsoft.Office.Tools.Ribbon.RibbonButton btn;
-                    for (int i = 0; i <= g.Items.Count; i++)
-                    {
-                        try
-                        {
-                            btn = g.Items[i] as Microsoft.Office.Tools.Ribbon.RibbonButton;
-                            if (btn == null)
-                                continue;
-
-                            if (btn.Name == key)
-                                return btn;
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
-            }
-            MessageBox.Show("@没有找到ID=" + key + " 的 btn");
-            return null;
-        }
-
-        /// <summary>
-        /// 执行
-        /// </summary>
-        /// <param name="func"></param>
-        /// <param name="btn"></param>
-        public void Do(BP.WF.Func func, Microsoft.Office.Tools.Ribbon.RibbonButton btn)
-        {
-            switch (func.No)
-            {
-                case "LogOut":
-                    if (MessageBox.Show("您确定要注销吗？", "执行确认", 
-                        MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
-                        return;
-                    WebUser.No = null;
-                    WebUser.Name = null;
-                    WebUser.Pass = null;
-                    WebUser.WorkID = 0;
-                    WebUser.FK_Dept = null;
-                    WebUser.FK_DeptName = null;
-                    WebUser.FK_Flow = null;
-                    WebUser.FK_Node = 0;
-                    WebUser.HisDept = null;
-                    WebUser.isLogin = false;
-                    WebUser.IsSaveInfo = false;
-                    WebUser.IsSavePass = false;
-                    WebUser.SID = null;
-                    try
-                    {
-                        System.IO.File.Delete(Glo.Profile);
-                    }
-                    catch
-                    {
-                    }
-                    this.ReSetState();
-                    break;
-                case "ReLogin":
-                    FrmLogin fl = new FrmLogin();
-                    fl.ShowDialog();
-                    this.ReSetState();
-                    break;
-                case "Exit":
-                    DialogResult dl = MessageBox.Show("您已经安全退出。", "您确定退出吗？", MessageBoxButtons.OKCancel);
-                    if (dl != DialogResult.OK)
-                        return;
-
-                    System.IO.File.Delete(Glo.Profile);
-                    btn.Enabled = false;
-                    break;
-                case "ChUser": // 切换用户.
-                    FrmLogin fm = new FrmLogin();
-                    fm.ShowDialog();
-                    break;
-                case "UploadKJ": // 课件.
-                case "Upload":   // 课件.
-                    //FrmUpload fm1 = new FrmUpload();
-                    //fm1.ShowDialog();
-                    break;
-                case "WKInfo":
-                    string msg = "\t\n No=" + WebUser.No;
-                    msg += "\t\n FK_Flow=" + WebUser.FK_Flow;
-                    msg += "\t\n FK_Node=" + WebUser.FK_Node;
-                    msg += "\t\n WorkID=" + WebUser.WorkID;
-                    MessageBox.Show(msg);
-                    break;
-                case "About":
-                    AboutBox ab = new AboutBox();
-                    ab.ShowDialog();
-                    break;
-                case "Save":
-                    this.DoSave();
-                    break;
-                case "SaveTo":
-                default:
-                    MessageBox.Show("功能未实现：" + func.No + " " + func.Name);
-                    break;
-            }
-        }
-        /// <summary>
-        /// 执行保存公文
-        /// </summary>
-        public void DoSave()
-        {
-            CCFlowWord2007.Globals.ThisAddIn.DoSave();
-        }
 
         public Ribbon1()
             : base(Globals.Factory.GetRibbonFactory())
@@ -615,7 +606,7 @@ namespace CCFlowWord2007
 
         #endregion
 
-        //internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
+        //internal RibbonTab tab1;
     }
 
     partial class ThisRibbonCollection
