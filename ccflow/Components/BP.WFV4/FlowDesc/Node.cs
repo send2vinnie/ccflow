@@ -1159,7 +1159,7 @@ namespace BP.WF
         {
             foreach (Node mynd in nds)
             {
-                if (mynd.IsHL)
+                if (mynd.IsFL)
                     return mynd;
                 else
                     return _GetHisPriFLNode(mynd.HisFromNodes);
@@ -1908,9 +1908,8 @@ namespace BP.WF
             {
                 switch (this.HisNodeWorkType)
                 {
-                    case NodeWorkType.WorkFL:
+                    case NodeWorkType.WorkHL:
                     case NodeWorkType.WorkFHL:
-                    case NodeWorkType.StartWorkFL:
                         return true;
                     default:
                         return false;

@@ -561,7 +561,6 @@ namespace BP.WF
         /// <returns></returns>
         public string DoFlowOver()
         {
-           
             GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
             Node nd = new Node(gwf.FK_Node);
             string msg = this.BeforeFlowOver();
@@ -587,7 +586,6 @@ namespace BP.WF
                 geRpt.SetValByKey("FK_NY", DataType.CurrentYearMonth);
 
                 string emps ="";
-
                 WorkerLists wlss = new WorkerLists();
                 QueryObject qo = new QueryObject(wlss);
                 qo.AddWhere(WorkerListAttr.WorkID, this.WorkID);
@@ -1177,8 +1175,6 @@ namespace BP.WF
         {
             GenerWorkFlow gwf = new GenerWorkFlow(wkid);
             this._FID = gwf.FID;
-
-
 
             if (wkid == 0)
                 throw new Exception("@没有指定工作ID, 不能创建工作流程.");

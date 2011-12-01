@@ -3281,7 +3281,6 @@ namespace BP.WF
             {
                 case NodeWorkType.WorkHL:
                 case NodeWorkType.WorkFHL:
-
                     if (this.HisNode.IsForceKill)
                     {
                         // 检查是否还有没有完成的进程。
@@ -3304,13 +3303,23 @@ namespace BP.WF
                         DataTable dt = DBAccess.RunSQLReturnTable("SELECT b.No,b.Name FROM WF_GenerWorkerList a,Port_Emp b WHERE a.FK_Emp=b.No AND IsPass=0 AND FID=" + this.HisWork.OID);
                         if (dt.Rows.Count != 0)
                         {
-                            msg = "@执行完成错误，有如下人员没有完成工作。";
-                            foreach (DataRow dr in dt.Rows)
+                           int i=  BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET FID=0 WHERE FID=WorkID AND WorkID="+this.WorkID);
+                           if (i == 1)
+                           {
+                               //  this.HisWorkFlow.FID = 0;
+                           }
+
+                            dt = DBAccess.RunSQLReturnTable("SELECT b.No,b.Name FROM WF_GenerWorkerList a,Port_Emp b WHERE a.FK_Emp=b.No AND IsPass=0 AND FID=" + this.HisWork.OID);
+                            if (dt.Rows.Count != 0)
                             {
-                                msg += "@" + dr[0].ToString() + " - " + dr[1].ToString();
+                                msg = "@执行完成错误，有如下人员没有完成工作。";
+                                foreach (DataRow dr in dt.Rows)
+                                {
+                                    msg += "@" + dr[0].ToString() + " - " + dr[1].ToString();
+                                }
+                                msg += "@以上每个成员都完成后，才可以执行此操作。";
+                                throw new Exception(msg);
                             }
-                            msg += "@以上每个成员都完成后，才可以执行此操作。";
-                            throw new Exception(msg);
                         }
                     }
                     break;
@@ -3328,7 +3337,7 @@ namespace BP.WF
             Nodes toNodes = this.HisNode.HisToNodes;
             if (toNodes.Count == 0)
             {
-                /* 如果是最后一个节点，就设置流程结束。*/
+                /* 如果是最后一个节点，就设置流程结束。*/              
                 string ovrMsg = this.HisWorkFlow.DoFlowOver();
                 if (this.HisNode.HisFormType == FormType.SDKForm)
                     return ovrMsg + this.ToE("WN0", "@此工作流程运行到最后一个环节，工作成功结束！");
@@ -3339,8 +3348,6 @@ namespace BP.WF
             // 如果只有一个转向节点, 就不用判断条件了,直接转向他.
             if (toNodes.Count == 1)
                 return msg + StartNextNode((Node)toNodes[0]);
-
-         
 
             Node toNode = null;
             int numOfWay = 0;
@@ -3417,7 +3424,6 @@ namespace BP.WF
                     }
                 }
             }
-
 
             /*分别启动每个节点的信息.*/
             string msg = "";
@@ -3708,7 +3714,6 @@ namespace BP.WF
             * 不让当前的操作员能看到自己的工作。
             */
 
-
             #region 设置父流程状态 设置当前的节点为:
             myfh.Update(GenerFHAttr.FK_Node, nd.NodeID,
                 GenerFHAttr.ToEmpsMsg, toEmpsStr);
@@ -3790,6 +3795,7 @@ namespace BP.WF
                 if (this.HisNode.IsStartNode == false)
                     wk.Copy(this.rptGe);
 
+                wk.FID = 0;
                 wk.Copy(this.HisWork); // 执行 copy 上一个节点的数据。
                 wk.NodeState = NodeState.Init; //节点状态。
                 wk.Rec = BP.Web.WebUser.No;
@@ -3983,6 +3989,7 @@ namespace BP.WF
                     }
                 }
                 #endregion 复制明细数据
+
                 //  wk.CopyCellsData("ND" + this.HisNode.NodeID + "_" + this.HisWork.OID);
                 #endregion
 

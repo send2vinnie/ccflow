@@ -999,7 +999,7 @@ namespace BP.WF
 
         public string GenerFlowXmlTemplete()
         {
-            string path = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No + "." + this.Name + "\\";
+            string path = SystemConfig.PathOfDataUser + @"\FlowDesc\" + this.No + "." + this.Name + "\\";
             if (System.IO.Directory.Exists(path) == false)
                 System.IO.Directory.CreateDirectory(path);
 
@@ -1007,7 +1007,7 @@ namespace BP.WF
             DataSet ds = new DataSet();
 
             // 流程信息。
-            string sql = "SELECT * FROM WF_Flow WHERE No='"+this.No+"'";
+            string sql = "SELECT * FROM WF_Flow WHERE No='" + this.No + "'";
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "WF_Flow";
             ds.Tables.Add(dt);
@@ -1134,7 +1134,6 @@ namespace BP.WF
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_MapAttr";
             ds.Tables.Add(dt);
-
 
             // Sys_EnumMain
             sql = "SELECT * FROM Sys_EnumMain WHERE No IN (SELECT KeyOfEn from Sys_MapAttr WHERE FK_MapData LIKE 'ND" + flowID + "%' )";
@@ -1832,19 +1831,17 @@ namespace BP.WF
             }
 
             //  dtlsDtl.Delete(MapDtlAttr.FK_MapData, "ND" + int.Parse(this.No) + "Rpt");
-
             foreach (Node nd in nds)
             {
                 if (nd.IsEndNode == false)
                     continue;
 
-                // 取出来明细表
+                // 取出来明细表.
                 MapDtls dtls = new MapDtls("ND" + nd.NodeID);
                 if (dtls.Count == 0)
                     continue;
 
                 string rpt = "ND" + int.Parse(this.No) + "Rpt";
-
                 int i = 0;
                 foreach (MapDtl dtl in dtls)
                 {
@@ -2853,6 +2850,7 @@ namespace BP.WF
                 fl.DoDelete();
 
                 int flowID = int.Parse(fl.No);
+
                 #region 处理流程表数据
                 foreach (DataColumn dc in dtFlow.Columns)
                 {
@@ -2863,7 +2861,7 @@ namespace BP.WF
                         case "FK_FlowSort":
                             continue;
                         case "Name":
-                            val = "Copy of " + val;
+                            val = "Copy of " + val + "_" + DateTime.Now.ToString("MM月dd日hh时mm分");
                             break;
                         default:
                             break;
@@ -3047,7 +3045,7 @@ namespace BP.WF
                             }
                             break;
                         case "WF_TurnTo": //转向规则.
-                               foreach (DataRow dr in dt.Rows)
+                            foreach (DataRow dr in dt.Rows)
                             {
                                 TurnTo fs = new TurnTo();
 
@@ -3072,7 +3070,6 @@ namespace BP.WF
                                 fs.FK_Flow = fl.No;
                                 fs.Save();
                             }
-                            break;
                             break;
                         case "WF_FAppSet": //FAppSets.xml。
                             foreach (DataRow dr in dt.Rows)
@@ -3126,6 +3123,7 @@ namespace BP.WF
                             }
                             break;
                         case "WF_LabNote": //LabNotes.xml。
+                            idx = 0;
                             foreach (DataRow dr in dt.Rows)
                             {
                                 LabNote ln = new LabNote();
@@ -3136,8 +3134,9 @@ namespace BP.WF
                                         continue;
                                     ln.SetValByKey(dc.ColumnName, val);
                                 }
-                                ln.MyPK = ln.FK_Flow + "_" + ln.X + "_" + ln.Y;
+                                idx++;
                                 ln.FK_Flow = fl.No;
+                                ln.MyPK = ln.FK_Flow + "_" + ln.X + "_" + ln.Y + "_" + idx;
                                 ln.DirectInsert();
                             }
                             break;
@@ -3527,6 +3526,24 @@ namespace BP.WF
                             {
                                 idx++;
                                 FrmEvent en = new FrmEvent();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                    en.SetValByKey(dc.ColumnName, val);
+                                }
+                                en.Save();
+                            }
+                            break;
+                        case "Sys_FrmRB": //Sys_FrmRB.
+                            idx = 0;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                idx++;
+                                FrmRB en = new FrmRB();
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
