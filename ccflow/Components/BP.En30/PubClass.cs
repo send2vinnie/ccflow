@@ -1581,18 +1581,45 @@ namespace BP
         }
         public static void DownloadFile(string filepath, string tempName)
         {
-           // tempName = System.Server.UrlEncode(tempName);
             tempName = HttpUtility.UrlEncode(tempName);
             HttpContext.Current.Response.Charset = "GB2312";
             HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=" + tempName);
             HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.GetEncoding("GB2312");
 
-            //  HttpContext.Current.Response.ContentType = "application/ms-msword";  //image/JPEG;text/HTML;image/GIF;application/ms-excel
+            //HttpContext.Current.Response.ContentType = "application/ms-msword";  //image/JPEG;text/HTML;image/GIF;application/ms-excel
             //HttpContext.Current.EnableViewState =false;
 
             HttpContext.Current.Response.WriteFile(filepath);
             HttpContext.Current.Response.End();
             HttpContext.Current.Response.Close();
+        }
+        public static void DownloadFileV2(string filepath, string tempName)
+        {
+             
+            FileInfo fileInfo = new FileInfo(filepath);
+            if (fileInfo.Exists)
+            {
+                byte[] buffer = new byte[102400];
+                HttpContext.Current.Response.Clear();
+                using (FileStream iStream = File.OpenRead(fileInfo.FullName))
+                {
+                    long dataLengthToRead = iStream.Length; //获取下载的文件总大小
+
+                    HttpContext.Current.Response.ContentType = "application/octet-stream";
+                    HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;  filename=" +
+                                       HttpUtility.UrlEncode(tempName, System.Text.Encoding.UTF8));
+                    while (dataLengthToRead > 0 && HttpContext.Current.Response.IsClientConnected)
+                    {
+                        int lengthRead = iStream.Read(buffer, 0, Convert.ToInt32(102400));//'读取的大小
+
+                        HttpContext.Current.Response.OutputStream.Write(buffer, 0, lengthRead);
+                        HttpContext.Current.Response.Flush();
+                        dataLengthToRead = dataLengthToRead - lengthRead;
+                    }
+                    HttpContext.Current.Response.Close();
+                    HttpContext.Current.Response.End();
+                }
+            }
         }
         public static void OpenWordDoc(string filepath, string tempName)
         {
