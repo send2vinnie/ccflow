@@ -232,8 +232,8 @@
     <Compile Include="SelectTB.xaml.cs">
       <DependentUpon>SelectTB.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SelectAttachmentM.xaml.cs">
-      <DependentUpon>SelectAttachmentM.xaml</DependentUpon>
+    <Compile Include="FrmAttachmentM.xaml.cs">
+      <DependentUpon>FrmAttachmentM.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service References\FF\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -382,7 +382,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SelectAttachmentM.xaml">
+    <Page Include="FrmAttachmentM.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -486,13 +486,13 @@
     <Resource Include="Img\menuBK.png" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\FF\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Components\BP.SL\BP.SL.csproj">
       <Project>{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}</Project>
       <Name>BP.SL</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\FF\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

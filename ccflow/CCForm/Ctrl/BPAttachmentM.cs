@@ -20,7 +20,7 @@ using Silverlight;
 
 namespace CCForm
 {
-    public class BPAttachmentM : System.Windows.Controls.HyperlinkButton
+    public class BPAttachmentM : System.Windows.Controls.Button
     {
         #region 处理选中.
         private bool _IsSelected = false;
@@ -74,83 +74,12 @@ namespace CCForm
             this.Width = 500;
             this.Height = 200;
             this.BorderThickness = new Thickness(5);
-
-            DataGrid dg = new DataGrid();
-            dg.Name = "DG" + this.Name;
-            DataGridTextColumn mycol = new DataGridTextColumn();
-            mycol.Header = "提示:aswd键改变位置，shift+方向键调整大小，双击或右键修改属性。";
-            dg.Columns.Add(mycol);
-            dg.Width = this.Width;
-            dg.Height = this.Height;
-            this.Content = dg;
-            this.MyDG = dg;
         }
-        /// <summary>
-        /// Dtl
-        /// </summary>
-        public BPAttachmentM(string name)
-        {
-            this.Name = name;
-            this.Foreground = new SolidColorBrush(Colors.Green);
-            this.FontStyle = FontStyles.Normal;
-            this.Width = 400;
-            this.Height = 200;
-            this.BorderThickness = new Thickness(5);
-
-            this.LoadDtl();
-        }
-        public void LoadDtl()
-        {
-            FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-             da.RunSQLReturnTableAsync("SELECT * FROM Sys_FrmAttachment WHERE MyPK='" + this.Name + "'");
-             da.RunSQLReturnTableCompleted += new EventHandler<FF.RunSQLReturnTableCompletedEventArgs>(da_RunSQLReturnTableCompleted);
-        }
-        void da_RunSQLReturnTableCompleted(object sender, FF.RunSQLReturnTableCompletedEventArgs e)
-        {
-            DataSet ds = new DataSet();
-            ds.FromXml(e.Result);
-            if (ds.Tables[0].Rows.Count == 0)
-            {
-               //this.NewM2M();
-                return;
-            }
-
-            //this.Content = "提示:aswd键改变位置，shift+方向键调整大小，双击或右键修改属性。";
-
-            DataGrid dg = new DataGrid();
-            dg.Name = "DG" + this.Name;
-            DataGridTextColumn mycol = new DataGridTextColumn();
-            mycol.Header = "多附件上传组件提示:aswd键改变位置，shift+方向键调整大小。";
-            dg.Columns.Add(mycol);
-            dg.Width = this.Width;
-            dg.Height = this.Height;
-            this.Content = dg;
-            this.MyDG = dg;
-        }
-        public void New(double x, double y)
-        {
-            FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-            da.DoTypeAsync("NewAthM", Glo.FK_MapData, this.Name, x.ToString(), y.ToString(), null);
-            da.DoTypeCompleted += new EventHandler<FF.DoTypeCompletedEventArgs>(da_New_DoTypeCompleted);
-        }
-
-        void da_New_DoTypeCompleted(object sender, FF.DoTypeCompletedEventArgs e)
-        {
-            if (e.Result != null)
-            {
-                MessageBox.Show(e.Result, "新建错误", MessageBoxButton.OK);
-                return;
-            }
-            //  string url = Glo.BPMHost + "/WF/MapDef/MapM2M.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&FK_MapM2M=" + this.Name;
-            //  HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:450px;dialogWidth:500px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
-        }
-        public DataGrid MyDG = null;
+         
         public void UpdatePos()
         {
             if (Keyboard.Modifiers == ModifierKeys.Shift)
             {
-                MyDG.Width = this.Width;
-                MyDG.Height = this.Height;
             }
         }
 
@@ -184,13 +113,11 @@ namespace CCForm
                     {
                         if (this.Height > 5)
                             this.Height = this.Height + 1;
-
                     }
                     else
                     {
                         this.SetValue(Canvas.TopProperty, y + 1);
                         this.Y = y + 1;
-
                     }
                     this.UpdatePos();
                     break;
@@ -200,7 +127,6 @@ namespace CCForm
                     {
                         if (this.Width > 5)
                             this.Width = this.Width - 1;
-
                     }
                     else
                     {
@@ -224,7 +150,7 @@ namespace CCForm
                     this.UpdatePos();
                     break;
                 case Key.Delete:
-                    DeleteIt();
+                    this.DeleteIt();
                     Canvas c = this.Parent as Canvas;
                     c.Children.Remove(this);
                     break;
@@ -246,17 +172,13 @@ namespace CCForm
                 return;
 
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-            da.RunSQLsAsync("DELETE Sys_FrmAttachment WHERE MYPK='"+this.Name+"'");
+            da.RunSQLsAsync("DELETE Sys_FrmAttachment WHERE NoOfAth='" + this.Name + "' AND FK_MapData='" + Glo.FK_MapData + "'");
             da.RunSQLsCompleted += new EventHandler<FF.RunSQLsCompletedEventArgs>(da_RunSQLsCompleted);
         }
-
         void da_RunSQLsCompleted(object sender, FF.RunSQLsCompletedEventArgs e)
         {
-            if (e.Result != null)
-            {
-                //   MessageBox.Show(e.Result, "删除错误", MessageBoxButton.OK)
+            if (e.Result != 1)
                 return;
-            }
             Canvas c = this.Parent as Canvas;
             if (c != null)
                 c.Children.Remove(this);
@@ -269,16 +191,6 @@ namespace CCForm
         public void HidIt()
         {
             this.Visibility = System.Windows.Visibility.Collapsed;
-            //FF.CCFormSoapClient hidDA = Glo.GetCCFormSoapClientServiceInstance();
-            //hidDA.RunSQLsAsync("UPDATE Sys_MapDtl SET IsView=0 WHERE No='" + Glo.FK_MapData + "'");
-            //hidDA.RunSQLsCompleted += new EventHandler<FF.RunSQLsCompletedEventArgs>(hidDA_RunSQLsCompleted);
         }
-        void hidDA_RunSQLsCompleted(object sender, FF.RunSQLsCompletedEventArgs e)
-        {
-            this.Visibility = System.Windows.Visibility.Collapsed;
-        }
-
-        
-
     }
 }

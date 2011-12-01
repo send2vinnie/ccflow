@@ -52,7 +52,7 @@ namespace CCForm
         public FrmImg winFrmImg = new FrmImg();
         public NodeFrms winNodeFrms = new NodeFrms();
         public SelectAttachment winSelectAttachment = new SelectAttachment();
-        public SelectAttachmentM winSelectAttachmentM = new SelectAttachmentM();
+        public FrmAttachmentM winFrmAttachmentM = new FrmAttachmentM();
 
         public double X = 0;
         public double Y = 0;
@@ -65,7 +65,6 @@ namespace CCForm
         bool btxt = false;
         string selectType = ToolBox.Mouse; // 当前工具选择类型 hand line1 line2 label txt cannel
 
-        BPAttachmentM currBPAttachmentM;   //当前currM2M
         BPM2M currM2M;   //当前currM2M
         BPImgAth currImgAth; //当前 currDtl
         BPDtl currDtl; //当前 currDtl
@@ -78,6 +77,7 @@ namespace CCForm
         BPLine currLine;  //当前 Line
         BPImg currImg;   //当前Img
         BPAttachment currAth;   //当前Ath
+        BPAttachmentM currAthM;   //当前currAthM
         BPTextBox currTB;    //当前textbox
         BPDatePicker currDP;    //当前textbox
         BPDDL currDDL;   //当前标签
@@ -87,7 +87,6 @@ namespace CCForm
         Grid g = new Grid();//遮罩图层
         private DateTime _lastTime;//获取双击label的时间间隔
         #endregion
-
 
         public void SetGridLines()
         {
@@ -175,9 +174,10 @@ namespace CCForm
                 y += stepLength;
             }
         }
-
         void WindowDilag_Closed(object sender, EventArgs e)
         {
+            this.SetSelectedTool(ToolBox.Mouse);
+
             ChildWindow c = sender as ChildWindow;
             if (c.DialogResult == false)
                 return;
@@ -357,40 +357,37 @@ namespace CCForm
                 this.SetSelectedTool(ToolBox.Mouse);
             }
 
-            if (c.Name == "winAttachmentM")
+            if (c.Name == "winFrmAttachmentM")
             {
-                BPAttachmentM atth = this.winSelectAttachmentM.HisBPAttachment;
+                BPAttachmentM atth = this.winFrmAttachmentM.HisBPAttachment;
                 if (this.canvasMain.Children.Contains(atth) == true)
                     return;
 
-                atth.Label = this.winSelectAttachmentM.TB_Name.Text;
-             //   atth.Exts = this.winSelectAttachmentM.TB_Exts.Text;
-                atth.SaveTo = this.winSelectAttachmentM.TB_SaveTo.Text;
-
-                atth.Cursor = Cursors.Hand;
+                atth.Label = this.winFrmAttachmentM.TB_Name.Text;
+                atth.SaveTo = this.winFrmAttachmentM.TB_SaveTo.Text;
+                atth.Cursor = Cursors.Hand; 
                 atth.SetValue(Canvas.LeftProperty, X);
                 atth.SetValue(Canvas.TopProperty, Y);
-                this.canvasMain.Children.Add(atth);
+
+                try
+                {
+                    this.canvasMain.Children.Add(atth);
+                }
+                catch(Exception ex)
+                {
+
+                    MessageBox.Show("增加附件控件时出现异常系统要求重新加载。异常信息:\t\n"+ex.Message);
+                    this.BindFrm();
+                    return;
+                }
 
                 MouseDragElementBehavior mymdeE = new MouseDragElementBehavior();
                 Interaction.GetBehaviors(atth).Add(mymdeE);
+
                 atth.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                 atth.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-
-                /*要生成标签*/
-                BPLabel lab = new BPLabel();
-                lab.Content = this.winSelectAttachment.TB_Name.Text;
-                lab.Cursor = Cursors.Hand;
-                lab.SetValue(Canvas.LeftProperty, X - 20);
-                lab.SetValue(Canvas.TopProperty, Y);
-                this.canvasMain.Children.Add(lab);
-                MouseDragElementBehavior DragBehavior = new MouseDragElementBehavior();
-                Interaction.GetBehaviors(lab).Add(DragBehavior);
-                lab.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                lab.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
                 this.SetSelectedTool(ToolBox.Mouse);
             }
-
 
             if (c.Name == "winSelectAttachment")
             {
@@ -423,6 +420,7 @@ namespace CCForm
                 lab.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                 lab.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
                 this.SetSelectedTool(ToolBox.Mouse);
+                this.BindFrm();
             }
 
 
@@ -595,6 +593,8 @@ namespace CCForm
             winFrmBtn.Name = "winFrmBtn";
             winFlowFrm.Name = "winFlowFrm";
             winNodeFrms.Name = "winNodeFrms";
+            winFrmAttachmentM.Name = "winFrmAttachmentM";
+
 
             winFrmImg.Closed += new EventHandler(WindowDilag_Closed);
             winFrmLab.Closed += new EventHandler(WindowDilag_Closed);
@@ -609,6 +609,7 @@ namespace CCForm
             winSelectAttachment.Closed += new EventHandler(WindowDilag_Closed);
             winFrmOp.Closed += new EventHandler(WindowDilag_Closed);
             winFlowFrm.Closed += new EventHandler(WindowDilag_Closed);
+            winFrmAttachmentM.Closed += new EventHandler(WindowDilag_Closed);
             #endregion chinwin.
 
             #region 构造
@@ -825,7 +826,6 @@ namespace CCForm
             }
             this.BindFrm();
         }
-
         void muItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.IsmuElePanel = true;
@@ -1247,7 +1247,7 @@ namespace CCForm
                             img.SetValue(Canvas.LeftProperty, double.Parse(dr["X"].ToString()));
                             img.SetValue(Canvas.TopProperty, double.Parse(dr["Y"].ToString()));
 
-                            img.Width  = double.Parse(dr["W"].ToString());
+                            img.Width = double.Parse(dr["W"].ToString());
                             img.Height = double.Parse(dr["H"].ToString());
 
                             MouseDragElementBehavior mdeImg = new MouseDragElementBehavior();
@@ -1480,15 +1480,20 @@ namespace CCForm
                             AttachmentUploadType uploadType = (AttachmentUploadType)int.Parse(uploadTypeInt);
                             if (uploadType == AttachmentUploadType.Single)
                             {
+                                
                                 BPAttachment ath = new BPAttachment(dr["NoOfAth"],
-                                    dr["Name"],
-                                    dr["Exts"], double.Parse(dr["W"]), dr["SaveTo"].ToString());
+                                    dr["Name"],dr["Exts"],
+                                    double.Parse(dr["W"]),dr["SaveTo"].ToString());
 
                                 ath.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
                                 ath.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
+
                                 ath.Label = dr["Name"] as string;
                                 ath.Exts = dr["Exts"] as string;
                                 ath.SaveTo = dr["SaveTo"] as string;
+
+                                ath.X = double.Parse(dr["X"]);
+                                ath.Y = double.Parse(dr["Y"]);
 
                                 if (dr["IsUpload"] == "1")
                                     ath.IsUpload = true;
@@ -1508,28 +1513,32 @@ namespace CCForm
                                 MouseDragElementBehavior mde = new MouseDragElementBehavior();
                                 Interaction.GetBehaviors(ath).Add(mde);
                                 this.canvasMain.Children.Add(ath);
-                                ath.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+
                                 ath.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                                ath.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                                 continue;
                             }
 
                             if (uploadType == AttachmentUploadType.Multi)
                             {
-                                BPAttachmentM athM = new BPAttachmentM(dr["MyPK"].ToString());
+                                BPAttachmentM athM = new BPAttachmentM();
                                 athM.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
                                 athM.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
-
+                                athM.Name = dr["NoOfAth"];
                                 athM.Width = double.Parse(dr["W"]);
                                 athM.Height = double.Parse(dr["H"]);
-
+                                athM.X = double.Parse(dr["X"]);
+                                athM.Y = double.Parse(dr["Y"]);
+                                athM.SaveTo = dr["SaveTo"];
+                                athM.Content = dr["Name"];
+                                athM.Label = dr["Name"];
+                              
                                 MouseDragElementBehavior mde = new MouseDragElementBehavior();
                                 Interaction.GetBehaviors(athM).Add(mde);
                                 this.canvasMain.Children.Add(athM);
 
-                               
-
-                                athM.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                                 athM.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                                athM.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                                 continue;
                             }
                         }
@@ -1561,7 +1570,7 @@ namespace CCForm
             //是否拖拽了?
             this.IsDrog = false;
             origPoint = e.GetPosition(canvasMain);
-             
+
             Glo.IsMouseDown = true;
             delPoint();
             switch (selectType)
@@ -1682,24 +1691,14 @@ namespace CCForm
                     this.SetSelectedTool(ToolBox.Mouse);
                     break;
                 case ToolBox.Attachment:  // 附件
-                    BPAttachment bpAth = new BPAttachment();
-                    this.winSelectAttachment.BindIt(bpAth);
-                    this.winSelectAttachment.Show();
                     X = e.GetPosition(this.canvasMain).X;
                     Y = e.GetPosition(this.canvasMain).Y;
-                    
-                    //if (this.winSelectAttachment.TB_No.Text.Trim().Length > 2)
-                    //    return;
-                    //X = e.GetPosition(this.canvasMain).X;
-                    //Y = e.GetPosition(this.canvasMain).Y;
-                    //bpAth.Cursor = Cursors.Hand;
-                    //bpAth.SetValue(Canvas.LeftProperty, X);
-                    //bpAth.SetValue(Canvas.TopProperty, Y);
-                    //this.canvasMain.Children.Add(bpAth);
-                    //MouseDragElementBehavior myBPAth = new MouseDragElementBehavior();
-                    //Interaction.GetBehaviors(bpAth).Add(myBPAth);
-                    //bpAth.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                    //bpAth.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+
+                    BPAttachment bpAth = new BPAttachment();
+                    bpAth.X = X;
+                    bpAth.Y = Y;
+                    this.winSelectAttachment.BindIt(bpAth);
+                    this.winSelectAttachment.Show();
 
                     this.SetSelectedTool(ToolBox.Mouse);
                     break;
@@ -1713,20 +1712,36 @@ namespace CCForm
                         numAthM++;
                     }
 
+                    X = e.GetPosition(this.canvasMain).X;
+                    Y = e.GetPosition(this.canvasMain).Y;
+
                     BPAttachmentM myAthM = new BPAttachmentM();
-                    myAthM.Name = "AthM"+Glo.FK_MapData+numAthM ;
+                    myAthM.X = e.GetPosition(this.canvasMain).X;
+                    myAthM.Y = e.GetPosition(this.canvasMain).Y;
+                    myAthM.Name = "";
+                    myAthM.Label = "";
+                    myAthM.SaveTo = @"D:\ccflow\VisualFlow\DataUser\UploadFile\";
+                    myAthM.IsDelete = true;
+                    myAthM.IsDownload = true;
+                    myAthM.IsUpload = true;
+                    myAthM.Width = 400;
+                    myAthM.Height = 100;
 
-                    myAthM.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
-                    myAthM.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
-                    myAthM.New(e.GetPosition(this.canvasMain).X, e.GetPosition(this.canvasMain).Y);
 
-                    myAthM.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                    myAthM.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                    this.winFrmAttachmentM.BindIt(myAthM);
+                    this.winFrmAttachmentM.Show();
 
-                    this.SetSelectedTool(ToolBox.Mouse);
-                    this.canvasMain.Children.Add(myAthM);
-                    Glo.currEle = myAthM;
-                    this.currBPAttachmentM = myAthM;
+                    //  if (this.winFrmAttachmentM.DialogResult == false)
+                    //    return;
+                    //  myAthM = this.winFrmAttachmentM.HisBPAttachment;
+                    //myAthM.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
+                    //myAthM.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
+                    //myAthM.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                    //myAthM.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                    //this.SetSelectedTool(ToolBox.Mouse);
+                    //this.canvasMain.Children.Add(myAthM);
+                    //Glo.currEle = myAthM;
+                    //this.currBPAttachmentM = myAthM;
                     break;
                 case ToolBox.TextBox:  // 文本框
                     this.winSelectTB.Show();
@@ -2134,8 +2149,8 @@ namespace CCForm
                     IsmuElePanel = false;
                     /* Edit 事件. */
                     string url = Glo.BPMHost + "/WF/MapDef/MapDefDtlFreeFrm.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&FK_MapDtl=" + dtl.Name;
-                   HtmlPage.Window.Eval("window.open('" + url + "','_blank')");
-
+                     HtmlPage.Window.Eval("window.open('" + url + "','_blank')");
+                   // Glo.WinOpenModalDialog(url, 400, 500);
                 }
                 _lastTime = DateTime.Now;
                 return;
@@ -2172,31 +2187,38 @@ namespace CCForm
                 if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300 || IsmuElePanel == true)
                 {
                     IsmuElePanel = false;
-                    this.winSelectAttachment.BindIt(ath);
+                    //this.winSelectAttachment.BindIt(ath);
+                    string url = Glo.BPMHost + "/WF/MapDef/Attachment.aspx?FK_MapData=" + Glo.FK_MapData + "&Ath=" + ath.Name;
+                //    HtmlPage.Window.Eval("window.open('" + url + "','_blank')");
+                    Glo.WinOpenModalDialog(url, 400, 500);
                 }
                 _lastTime = DateTime.Now;
                 return;
             }
             #endregion 处理 BPAttachment
 
-            #region 处理 BPAttachment
+            #region 处理 BPAttachmentM
             BPAttachmentM athm = sender as BPAttachmentM;
             if (athm != null)
             {
-                this.currBPAttachmentM = athm;
+                this.currAthM = athm;
                 Glo.currEle = athm;
-                this.currAth.IsSelected = true;
-                this.currAth.SetUnSelectedState();
+                this.currAthM.IsSelected = true;
+                this.currAthM.SetUnSelectedState();
                 if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300 || IsmuElePanel == true)
                 {
                     IsmuElePanel = false;
-                    this.winSelectAttachmentM.BindIt(athm);
+                    //this.winFrmAttachmentM.BindIt(athm);
+                    //this.winFrmAttachmentM.Show();
+
+                    string url = Glo.BPMHost + "/WF/MapDef/Attachment.aspx?FK_MapData=" + Glo.FK_MapData + "&Ath=" + athm.Name;
+                   // HtmlPage.Window.Eval("window.open('" + url + "','_blank')");
+                    Glo.WinOpenModalDialog(url, 400, 500);
                 }
                 _lastTime = DateTime.Now;
                 return;
             }
             #endregion 处理 BPAttachment
-
 
             #region 处理 Img
             BPImg img = sender as BPImg;
@@ -3060,12 +3082,21 @@ namespace CCForm
                         this.IsmuElePanel = true;
                         UIElement_Click(bpImgAth, e);
                     }
+
                     BPAttachment ath = Glo.currEle as BPAttachment;
                     if (ath != null)
                     {
                         this.IsmuElePanel = true;
                         UIElement_Click(ath, e);
                     }
+
+                    BPAttachmentM athM = Glo.currEle as BPAttachmentM;
+                    if (athM != null)
+                    {
+                        this.IsmuElePanel = true;
+                        UIElement_Click(athM, e);
+                    }
+
 
                     Image img = Glo.currEle as Image;
                     if (img != null)
@@ -4091,7 +4122,7 @@ namespace CCForm
                     mapAth["FK_MapData"] = Glo.FK_MapData;
                     mapAth["NoOfAth"] = athM.Name;
                     mapAth["Name"] = athM.Label;
-                   // mapAth["Exts"] = athM.Exts;
+
                     mapAth["SaveTo"] = athM.SaveTo;
                     mapAth["UploadType"] = "1";
 

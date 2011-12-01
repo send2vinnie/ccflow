@@ -33,6 +33,8 @@ namespace CCForm
     {
 
         #region 属性.
+        public double X = 100;
+        public double Y = 100;
         /// <summary>
         /// 是否可以上传
         /// </summary>

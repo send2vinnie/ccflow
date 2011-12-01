@@ -29,7 +29,6 @@ namespace CCForm
             this.CB_IsDelete.IsChecked = ment.IsDelete;
             this.CB_IsDownload.IsChecked = ment.IsDownload;
             this.CB_IsUpload.IsChecked = ment.IsUpload;
-            this.Show();
         }
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
@@ -45,6 +44,8 @@ namespace CCForm
             string vals = "@EnName=BP.Sys.FrmAttachment@MyPK=" +Glo.FK_MapData +"_" + mypk + "@FK_MapData=" + Glo.FK_MapData + "@Name=" + this.TB_Name.Text + "@Exts=" + this.TB_Exts.Text + "@NoOfAth=" + mypk;
 
             vals += "@SaveTo=" + this.TB_SaveTo.Text.Trim();
+            vals += "@X=" +this.HisBPAttachment.X;
+            vals += "@Y=" + this.HisBPAttachment.Y;
 
             if (this.CB_IsDelete.IsChecked == true)
                 vals += "@IsDelete=1";

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCForm", "CCForm.csproj", "{83D53118-9A8D-4970-9A88-A2909B13FF64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.SL", "..\Components\BP.SL\BP.SL.csproj", "{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.En30", "..\Components\BP.En30\BP.En30.csproj", "{247F7483-86B3-442E-B8B1-2FCFB432BD75}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.WFV4", "..\Components\BP.WFV4\BP.WFV4.csproj", "{51C1DADA-1B9A-41CC-B731-FDE1196778F2}"
@@ -34,10 +32,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ccflow", "http://localhost/
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		SlnRelativePath = "..\VisualFlow\"
-		ProjOutputReferences = "{83D53118-9A8D-4970-9A88-A2909B13FF64}|ClientBin|false;{F55B885C-F362-4F08-BCAA-9CDEFE4A42AC}|ClientBin|false;"
+		ProjOutputReferences = "{83D53118-9A8D-4970-9A88-A2909B13FF64}|ClientBin|false;"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCFlowDesigner", "..\CCFlowWebDesigner\CCFlowDesigner.csproj", "{F55B885C-F362-4F08-BCAA-9CDEFE4A42AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.SL", "..\Components\BP.SL\BP.SL.csproj", "{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +47,6 @@ Global
 		{83D53118-9A8D-4970-9A88-A2909B13FF64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D53118-9A8D-4970-9A88-A2909B13FF64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D53118-9A8D-4970-9A88-A2909B13FF64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{247F7483-86B3-442E-B8B1-2FCFB432BD75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{247F7483-86B3-442E-B8B1-2FCFB432BD75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{247F7483-86B3-442E-B8B1-2FCFB432BD75}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,10 +63,10 @@ Global
 		{0FEB1C07-3C75-47BB-9F76-398529274E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FEB1C07-3C75-47BB-9F76-398529274E73}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{0FEB1C07-3C75-47BB-9F76-398529274E73}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{F55B885C-F362-4F08-BCAA-9CDEFE4A42AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F55B885C-F362-4F08-BCAA-9CDEFE4A42AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F55B885C-F362-4F08-BCAA-9CDEFE4A42AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F55B885C-F362-4F08-BCAA-9CDEFE4A42AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{107F990E-3963-4D97-AAE4-8DCCBD24FCD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

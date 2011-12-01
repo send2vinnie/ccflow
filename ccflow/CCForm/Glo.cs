@@ -276,7 +276,6 @@ namespace CCForm
 
                 if (cbi.Content.ToString() == selectDB || cbi.Tag.ToString() == selectDB)
                     cbi.IsSelected = true;
-
                 cb.Items.Add(cbi);
             }
             if (cb.SelectedIndex < 0)
@@ -305,7 +304,7 @@ namespace CCForm
             get
             {
                 if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow") == false)
-                    return "001";
+                    return "004";
                 return System.Windows.Browser.HtmlPage.Document.QueryString["FK_Flow"];
             }
         }
@@ -336,7 +335,7 @@ namespace CCForm
                     return _FK_MapData;
 
                 if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_MapData") == false)
-                    return "ND101";
+                    return "ND401";
                 return System.Windows.Browser.HtmlPage.Document.QueryString["FK_MapData"];
             }
             set

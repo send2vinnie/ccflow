@@ -12,9 +12,9 @@ using System.Windows.Shapes;
 
 namespace CCForm
 {
-    public partial class SelectAttachmentM : ChildWindow
+    public partial class FrmAttachmentM : ChildWindow
     {
-        public SelectAttachmentM()
+        public FrmAttachmentM()
         {
             InitializeComponent();
         }
@@ -23,12 +23,16 @@ namespace CCForm
         {
             this.HisBPAttachment = ment;
             this.TB_No.Text = ment.Name;
+            if (string.IsNullOrEmpty(this.TB_No.Text.Trim() ) )
+                this.TB_No.IsEnabled = true;
+            else
+                this.TB_No.IsEnabled = false;
+
             this.TB_Name.Text = ment.Label;
             this.TB_SaveTo.Text = ment.SaveTo;
             this.CB_IsDelete.IsChecked = ment.IsDelete;
             this.CB_IsDownload.IsChecked = ment.IsDownload;
             this.CB_IsUpload.IsChecked = ment.IsUpload;
-            this.Show();
         }
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
@@ -41,9 +45,18 @@ namespace CCForm
 
             #region 属性.
             string mypk = this.TB_No.Text.Trim();
-            string vals = "@EnName=BP.Sys.FrmAttachment@MyPK=" +Glo.FK_MapData +"_" + mypk + "@FK_MapData=" + Glo.FK_MapData + "@Name=" + this.TB_Name.Text + "@UploadType=1@NoOfAth=" + mypk;
+            string vals = "@EnName=BP.Sys.FrmAttachment@MyPK=" + Glo.FK_MapData + "_" + mypk + "@UploadType=1";
 
+            vals += "@FK_MapData=" + Glo.FK_MapData;
+            vals += "@NoOfAth=" + this.TB_No.Text.Trim();
+            vals += "@Name=" + this.TB_Name.Text;
             vals += "@SaveTo=" + this.TB_SaveTo.Text.Trim();
+
+            vals += "@H=" + this.HisBPAttachment.Height;
+            vals += "@W=" + this.HisBPAttachment.Width;
+
+            vals += "@X=" + this.HisBPAttachment.X;
+            vals += "@Y=" + this.HisBPAttachment.Y;
 
             if (this.CB_IsDelete.IsChecked == true)
                 vals += "@IsDelete=1";
@@ -59,7 +72,6 @@ namespace CCForm
                 vals += "@IsUpload=1";
             else
                 vals += "@IsUpload=0";
-
             #endregion 属性.
 
             FF.CCFormSoapClient daSaveFile = Glo.GetCCFormSoapClientServiceInstance();
@@ -77,9 +89,8 @@ namespace CCForm
             if (this.HisBPAttachment == null)
                 this.HisBPAttachment = new BPAttachmentM();
 
-
             this.HisBPAttachment.Label = this.TB_Name.Text;
-          //  this.HisBPAttachment.Exts = this.TB_Exts.Text;
+            //  this.HisBPAttachment.Exts = this.TB_Exts.Text;
             this.HisBPAttachment.IsDelete = (bool)this.CB_IsDelete.IsChecked;
             this.HisBPAttachment.IsDownload = (bool)this.CB_IsDownload.IsChecked;
             this.HisBPAttachment.IsUpload = (bool)this.CB_IsUpload.IsChecked;
@@ -95,6 +106,9 @@ namespace CCForm
 
         private void TB_Name_LostFocus(object sender, RoutedEventArgs e)
         {
+            if (this.TB_No.IsEnabled == false)
+                return;
+
             FF.CCFormSoapClient ff = Glo.GetCCFormSoapClientServiceInstance();
             ff.ParseStringToPinyinAsync(this.TB_Name.Text);
             ff.ParseStringToPinyinCompleted += new EventHandler<FF.ParseStringToPinyinCompletedEventArgs>(ff_ParseStringToPinyinCompleted);
