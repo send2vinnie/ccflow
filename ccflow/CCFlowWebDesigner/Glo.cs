@@ -106,9 +106,8 @@ namespace BP
                     Glo.OpenDialog(Glo.BPMHost + url, "执行", 500, 400);
                     return;
                 case UrlFlag.MapDef: // 节点表单设计。
-                    //  url = "/WF/MapDef/MapDef.aspx?PK=ND" + node1 + "&FK_Node=" + node1;
                     url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDef&PK=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH";
-                    Glo.WinOpen(Glo.BPMHost + url, "节点表单设计", 850, 990);
+                    Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计","Height:600px;Width:800px;",WindowModelEnum.Window);
                     return;
                 case UrlFlag.Dir: // 方向条件。
                     url = "/WF/Admin/Cond.aspx?FK_Flow=" + fk_flow + "&FK_MainNode=" + node1 + "&FK_Node=" + node1 + "&ToNodeID=" + node2 + "&CondType=2" + "&Lang=CH";
@@ -186,10 +185,11 @@ namespace BP
             }
             else
             {
-                HtmlPage.Window.Eval(
-                    string.Format(
-                        "window.open('{0}','{1}','{2};help=no,resizable=yes,status=no,scrollbars=1');", url,
-                        title, property));
+                HtmlPage.Window.Eval("window.open('" + url + "','_blank')");
+                //HtmlPage.Window.Eval(
+                //    string.Format(
+                //        "window.open('{0}','{1}','{2};help=no,resizable=yes,status=no,scrollbars=1');", url,
+                //        title, property));
             }
         }
     }
