@@ -70,14 +70,29 @@ namespace BP.Web
             {
                 DataSet ds = new DataSet();
                 ds.ReadXml(file);
-
                 MapData.ImpMapData(fk_mapData, ds);
+
+                if (fk_mapData.Contains("ND"))
+                {
+                    /* 判断是否是节点表单 */
+                    int nodeID = 0;
+                    try
+                    {
+                        nodeID = int.Parse(fk_mapData.Replace("ND", ""));
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                    Node nd = new Node(nodeID);
+                    nd.RepareMap();
+                }
                 return null;
             }
             catch (Exception ex)
             {
                 return ex.Message;
-            } 
+            }
         }
         /// <summary>
         /// 上传文件
@@ -561,148 +576,14 @@ namespace BP.Web
         /// <summary>
         /// 获取一个Frm
         /// </summary>
-        /// <param name="fk_mapdata"></param>
-        /// <param name="workID"></param>
-        /// <returns></returns>
+        /// <param name="fk_mapdata">map</param>
+        /// <param name="workID">可以为0</param>
+        /// <returns>form描述</returns>
         [WebMethod]
-        public string GenerFrm(string fk_mapdata,int workID)
+        public string GenerFrm(string fk_mapdata, int workID)
         {
-            return _GenerFrm(fk_mapdata, workID);
-        }
-        private string _GenerFrm(string fk_mapdata,int workID)
-        {
-            ds = new DataSet();
-            // line.
-            BP.Sys.FrmLines lins = new BP.Sys.FrmLines();
-            lins.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-            DataTable dt = lins.ToDataTableField();
-            dt.TableName = "Sys_FrmLine";
-            ds.Tables.Add(dt);
-
-            //if (lins.Count == 0)
-            //{
-            //    this.InitFrm(fk_mapdata);
-            //    return _GenerFrm(fk_mapdata,workID);
-            //}
-           // MapData md = new MapData(fk_mapdata);
-           // ds= md.GenerHisDataSet();
-
-            // link.
-            BP.Sys.FrmLinks liks = new BP.Sys.FrmLinks();
-            liks.Retrieve(FrmLinkAttr.FK_MapData, fk_mapdata);
-            DataTable dtLink = liks.ToDataTableField();
-            dtLink.TableName = "Sys_FrmLink";
-            ds.Tables.Add(dtLink);
-
-            // btn.
-            BP.Sys.FrmBtns btns = new BP.Sys.FrmBtns();
-            btns.Retrieve(BP.Sys.FrmBtnAttr.FK_MapData, fk_mapdata);
-            DataTable btnDT = btns.ToDataTableField();
-            btnDT.TableName = "Sys_FrmBtn";
-            ds.Tables.Add(btnDT);
-
-            // Img
-            BP.Sys.FrmImgs imgs = new BP.Sys.FrmImgs();
-            imgs.Retrieve(FrmImgAttr.FK_MapData, fk_mapdata);
-            DataTable imgDt = imgs.ToDataTableField();
-            imgDt.TableName = "Sys_FrmImg";
-            ds.Tables.Add(imgDt);
-
-            // Sys_FrmLab
-            BP.Sys.FrmLabs labs = new BP.Sys.FrmLabs(fk_mapdata);
-            labs.Retrieve(FrmLabAttr.FK_MapData, fk_mapdata);
-            DataTable dtlabs = labs.ToDataTableField();
-            dtlabs.TableName = "Sys_FrmLab";
-            ds.Tables.Add(dtlabs);
-
-            // Sys_FrmRB
-            BP.Sys.FrmRBs rbs = new BP.Sys.FrmRBs(fk_mapdata);
-            rbs.Retrieve(FrmRBAttr.FK_MapData, fk_mapdata);
-            DataTable dtRB = rbs.ToDataTableField();
-            dtRB.TableName = "Sys_FrmRB";
-            ds.Tables.Add(dtRB);
-
-            // MapAttrs
-            BP.Sys.MapAttrs attrs = new BP.Sys.MapAttrs();
-            QueryObject qo = new QueryObject(attrs);
-            qo.AddWhere(BP.Sys.MapAttrAttr.FK_MapData, fk_mapdata);
-            qo.addAnd();
-            qo.AddWhere(BP.Sys.MapAttrAttr.UIVisible, 1);
-            qo.addAnd();
-            qo.AddWhereNotIn(BP.Sys.MapAttrAttr.KeyOfEn,
-                "'BillNo','CDT','Emps','FID','FK_NY','MyNum','NodeState','OID','RDT','Rec','WFLog','WFState'");
-            qo.DoQuery();
-            ds.Tables.Add(attrs.ToDataTableField("Sys_MapAttr"));
-
-            // MapDtl
-            BP.Sys.MapDtls dtls = new BP.Sys.MapDtls();
-            dtls.Retrieve(MapDtlAttr.FK_MapData, fk_mapdata);
-            ds.Tables.Add(dtls.ToDataTableField("Sys_MapDtl"));
-
-            // Map2m
-            BP.Sys.MapM2Ms m2ms = new BP.Sys.MapM2Ms();
-            m2ms.Retrieve(MapM2MAttr.FK_MapData, fk_mapdata);
-            ds.Tables.Add(m2ms.ToDataTableField("Sys_MapM2M"));
-
-            // FrmAttachments
-            BP.Sys.FrmAttachments fjs = new BP.Sys.FrmAttachments();
-            fjs.Retrieve(MapM2MAttr.FK_MapData, fk_mapdata);
-            ds.Tables.Add(fjs.ToDataTableField("Sys_FrmAttachment"));
-
-            // FrmImgAth
-            BP.Sys.FrmImgAths imgaths = new BP.Sys.FrmImgAths();
-            imgaths.Retrieve(MapM2MAttr.FK_MapData, fk_mapdata);
-            ds.Tables.Add(imgaths.ToDataTableField("Sys_FrmImgAth"));
-
-            // MapExt
-            BP.Sys.MapExts exts = new BP.Sys.MapExts();
-            exts.Retrieve(MapM2MAttr.FK_MapData, fk_mapdata);
-            ds.Tables.Add(exts.ToDataTableField("Sys_MapExt"));
-
-            // MapData
-            BP.Sys.MapDatas mdatas = new BP.Sys.MapDatas();
-            int i=mdatas.Retrieve(MapDataAttr.No, fk_mapdata);
-            if (i == 0)
-            {
-                Pack pk = new Pack();
-                pk.Do();
-                i = mdatas.Retrieve(MapDataAttr.No, fk_mapdata);
-                //                throw new Exception("请调用省级包进行更新.");
-            }
-
-            DataTable DTmdatas = mdatas.ToDataTableField("Sys_MapData");
-            ds.Tables.Add(DTmdatas);
-
-            //if (fk_mapdata.Contains("ND") && fk_mapdata.Contains("Dtl") && i == 0)
-            //{
-            //    BP.Sys.MapDtls mdtls = new BP.Sys.MapDtls();
-            //    i = mdtls.Retrieve(MapDtlAttr.No, fk_mapdata);
-            //    if (i != 0)
-            //    {
-            //        DataTable DTmdtls = mdtls.ToDataTableField("Sys_MapDataDtl");
-            //        ds.Tables.Add(DTmdtls);
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("异常信息:");
-            //    }
-            //}
-            //if (i != 0)
-            //{
-            //    DataTable DTmdatas = mdatas.ToDataTableField("Sys_MapData");
-            //    ds.Tables.Add(DTmdatas);
-            //}
-            //else
-            //{
-            //    //else
-            //    //{
-            //    //}
-            //}
-
-            //// MapData
-            //BP.Sys.MapDatas enData = new BP.Sys.MapDatas();
-            //mdatas.Retrieve(MapDataAttr.No, fk_mapdata);
-            //ds.Tables.Add(mdatas.ToDataTableField("Sys_MapData"));
+            MapData md = new MapData(fk_mapdata);
+            this.ds = md.GenerHisDataSet();
             return Connector.ToXml(ds);
         }
         #endregion 产生 frm
@@ -836,7 +717,6 @@ namespace BP.Web
                     toItem.Update();
                 }
             }
-
 
             // MapAttrs
             BP.Sys.MapAttrs attrs = new BP.Sys.MapAttrs();

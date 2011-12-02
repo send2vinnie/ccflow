@@ -93,10 +93,16 @@ public partial class DoPort : WebPage
         {
             case "DownFormTemplete":
                 BP.Sys.MapData md = new BP.Sys.MapData(FK_MapData);
+                DataSet ds = md.GenerHisDataSet();
                 string file = BP.SystemConfig.PathOfTemp + md.No+".xml";
+                ds.WriteXml(file);
                 System.IO.FileInfo f = new System.IO.FileInfo(file);
                 BP.PubClass.DownloadFile(f.FullName, md.Name + ".xml");
-                BP.PubClass.WinClose();
+                this.Pub1.AddFieldSet("下载提示");
+                string url = "../../../Temp/" + md.No + ".xml";
+                this.Pub1.AddH2("ccflow 已经完成模板的生成了，正在执行下载如果您的浏览器没有反应请<a href='"+url+"' >点这里进行下载</a>。");
+                this.Pub1.Add("如果该xml文件是在ie里直接打开的，请把鼠标放在连接上右键目标另存为，保存该模板。");
+                this.Pub1.AddFieldSetEnd();
                 return;
             case "Ens": // 实体编辑.
                 this.Response.Redirect("../../Comm/Batch.aspx?EnsName=" + this.EnsName, true);
