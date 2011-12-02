@@ -1766,7 +1766,7 @@ namespace BP.DA
                     msg += "@" + pa.ParaName + "=" + pa.val;
                 }
                 Log.DebugWriteError(msg);
-                 throw new Exception(msg);
+                throw new Exception(msg);
             }
             finally
             {

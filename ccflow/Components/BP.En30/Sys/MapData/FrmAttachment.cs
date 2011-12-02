@@ -97,7 +97,7 @@ namespace BP.Sys
             }
             set
             {
-                this.SetValByKey(FrmAttachmentAttr.UploadType, value);
+                this.SetValByKey(FrmAttachmentAttr.UploadType, (int)value);
             }
         }
         /// <summary>
@@ -176,7 +176,7 @@ namespace BP.Sys
             {
                 string s = this.GetValStringByKey(FrmAttachmentAttr.SaveTo);
                 if (s == "" || s == null)
-                    s = @"D:\ccflow\VisualFlow\DataUser\UploadFile\"+this.FK_MapData+"\\";
+                    s = @"D:\ccflow\VisualFlow\DataUser\UploadFile\" + this.FK_MapData + "\\";
                 return s;
             }
             set
@@ -192,6 +192,10 @@ namespace BP.Sys
             get
             {
                 return this.GetValStringByKey(FrmAttachmentAttr.NoOfAth);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.NoOfAth, value);
             }
         }
         /// <summary>
@@ -300,10 +304,10 @@ namespace BP.Sys
                 map.AddMyPK();
 
                 map.AddTBString(FrmAttachmentAttr.FK_MapData, null,"FK_MapData", true, false, 1, 30, 20);
-
                 map.AddTBString(FrmAttachmentAttr.NoOfAth, null, "附件编号", true, false, 0, 50, 20);
+
                 map.AddTBString(FrmAttachmentAttr.Name, null,"名称", true, false, 0, 50, 20);
-                map.AddTBString(FrmAttachmentAttr.Exts, null, "扩展", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentAttr.Exts, null, "扩展名", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentAttr.SaveTo, null, "保存到", true, false, 0, 150, 20);
 
                 map.AddTBFloat(FrmAttachmentAttr.X, 5, "X", true, false);
@@ -311,32 +315,21 @@ namespace BP.Sys
                 map.AddTBFloat(FrmAttachmentAttr.W, 40, "TBWidth", false, false);
                 map.AddTBFloat(FrmAttachmentAttr.H, 150, "H", false, false);
 
-                map.AddTBInt(FrmAttachmentAttr.IsUpload, 1, "是否可以上传", false, false);
-                map.AddTBInt(FrmAttachmentAttr.IsDelete, 1, "是否可以删除", false, false);
-                map.AddTBInt(FrmAttachmentAttr.IsDownload, 1, "是否可以下载", false, false);
+                map.AddBoolean(FrmAttachmentAttr.IsUpload, true, "是否可以上传", false, false);
+                map.AddBoolean(FrmAttachmentAttr.IsDelete, true, "是否可以删除", false, false);
+                map.AddBoolean(FrmAttachmentAttr.IsDownload, true, "是否可以下载", false, false);
                 map.AddTBInt(FrmAttachmentAttr.UploadType, 0, "上传类型0单个1多个2指定", false, false);
 
                 this._enMap = map;
                 return this._enMap;
             }
         }
-        //protected override bool beforeUpdateInsertAction()
-        //{
-        //    throw new Exception("sss 为错误。");
-        //    return base.beforeUpdateInsertAction();
-        //}
-
-        //public override void DirectInsert()
-        //{
-        //    throw new Exception("sss sdsd为错误。");
-        //    base.DirectInsert();
-        //}
-        //public override int Save()
-        //{
-        //    throw new Exception("Save sdsd为错误。");
-        //    return base.Save();
-        //}
         #endregion
+        protected override bool beforeUpdateInsertAction()
+        {
+            this.MyPK = this.FK_MapData + "_" + this.NoOfAth;
+            return base.beforeUpdateInsertAction();
+        }
     }
     /// <summary>
     /// 附件s
