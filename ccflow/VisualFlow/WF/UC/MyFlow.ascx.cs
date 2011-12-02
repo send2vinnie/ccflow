@@ -1147,6 +1147,18 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 case FormType.FixForm:
                 case FormType.FreeForm:
                     currWK = (Work)this.UCEn1.Copy(this.currWK);
+                     // 设置默认值
+                    MapAttrs mattrs = new MapAttrs("ND" + this.FK_Node);
+                    foreach (MapAttr attr in mattrs)
+                    {
+                        if (attr.UIIsEnable)
+                            continue;
+
+                        if (attr.DefValReal.Contains("@") == false)
+                            continue;
+
+                        currWK.SetValByKey(attr.KeyOfEn, attr.DefVal);
+                    }
                     break;
                 case FormType.DisableIt:
                     break;
@@ -1175,9 +1187,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     else
                         throw new Exception("您属于这个项目(" + prjNo + "," + prjName + ")，但是在此项目下您没有发起改流程的岗位。");
                 }
-                //if (DBAccess.RunSQLReturnTable("SELECT * FROM Prj_EmpPrj WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "'").Rows.Count == 0)
-                //{
-                //}
             }
         }
         #endregion 判断特殊的业务逻辑。
@@ -1190,7 +1199,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         {
             if (BP.SystemConfig.IsDebug)
                 currWK.CheckPhysicsTable();
-            // this.Btn_Send.Enabled = true;
             throw new Exception("@在保存前执行逻辑检查错误。@技术信息:" + ex.Message);
         }
 
@@ -1224,9 +1232,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         if (isSave)
         {
             if (string.IsNullOrEmpty(this.Request.QueryString["WorkID"]))
-            {
                 return;
-            }
+
             currWK.RetrieveFromDBSources();
             this.UCEn1.ResetEnVal(currWK);
             return;
