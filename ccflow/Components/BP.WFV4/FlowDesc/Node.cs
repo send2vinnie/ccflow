@@ -26,7 +26,7 @@ namespace BP.WF
         /// </summary>
         SpecUrl,
         /// <summary>
-        /// 按指定的人员
+        /// 按条件转向
         /// </summary>
         TurnToByCond
     }
@@ -38,11 +38,11 @@ namespace BP.WF
         /// <summary>
         /// 按岗位
         /// </summary>
-        ByStation=0,
+        ByStation = 0,
         /// <summary>
         /// 按部门
         /// </summary>
-        ByDept=1,
+        ByDept = 1,
         /// <summary>
         /// 按SQL
         /// </summary>
@@ -50,15 +50,23 @@ namespace BP.WF
         /// <summary>
         /// 按本节点设置的指定人员
         /// </summary>
-        BySpcEmp=3,
+        BySpcEmp = 3,
         /// <summary>
         /// 由上一步发送人选择
         /// </summary>
-        BySelected=4,
+        BySelected = 4,
         /// <summary>
-        /// 按人员
+        /// 按表单选择人员
         /// </summary>
-        ByEmp=5
+        ByEmp = 5,
+        /// <summary>
+        /// 按上一步操作人员
+        /// </summary>
+        ByPreviousOper=6,
+        /// <summary>
+        /// 按上一步操作人员并自动跳转
+        /// </summary>
+        ByPreviousOperSkip=7
     }
     /// <summary>
     /// 节点工作退回规则

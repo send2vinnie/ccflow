@@ -245,6 +245,16 @@ namespace BP.WF
             }
             #endregion
 
+            // 按上一节点发送人处理。
+            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOper
+                || town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
+            {
+                DataRow dr = dt.NewRow();
+                dr[0] = Web.WebUser.No;
+                dt.Rows.Add(dr);
+                return WorkerListWayOfDept(town, dt);
+            }
+
             // 按照选择的人员处理。
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySelected)
             {
@@ -442,10 +452,6 @@ namespace BP.WF
             }
             #endregion  按照岗位来执行。
         }
-
-       //private WorkerLists GenerWorkerLists(WorkNode town)
-       //{
-       //}
         public WorkerLists GenerWorkerLists(WorkNode town)
         {
             this.town = town;
@@ -458,6 +464,15 @@ namespace BP.WF
             // 如果执行了两次发送，那前一次的轨迹就需要被删除。这里是为了避免错误。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node =" + town.HisNode.NodeID);
 
+            // 按上一节点发送人处理。
+            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOper
+                || town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
+            {
+                DataRow dr = dt.NewRow();
+                dr[0] = Web.WebUser.No;
+                dt.Rows.Add(dr);
+                return WorkerListWayOfDept(town, dt);
+            }
             //首先判断是否配置了获取下一步接受人员的sql.
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySQL)
             {
@@ -2122,6 +2137,11 @@ namespace BP.WF
                     }
                     return msgOfSend;
                 }
+
+                // 如果需要跳转.
+                if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
+                    return town.AfterNodeSave();
+
                 return msg;
             }
             catch (Exception ex)

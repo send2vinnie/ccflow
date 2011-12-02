@@ -399,27 +399,45 @@ namespace BP.Sys
             mdOld.No = fk_mapdata;
             mdOld.Delete();
 
-            string timeKey = DateTime.Now.ToString("yyyyMMddhhmmss");
+            // Çó³ödatasetµÄmap.
+            string oldMapID = "";
+            DataTable dtMap = ds.Tables["Sys_MapData"];
+            foreach (DataRow dr in dtMap.Rows)
+            {
+                if (dr["No"].ToString().Contains("Dtl"))
+                    continue;
+                oldMapID = dr["No"].ToString();
+            }
+
+            string timeKey = DateTime.Now.ToString("yyMMddhhmm");
             foreach (DataTable dt in ds.Tables)
             {
                 int idx = 0;
                 switch (dt.TableName)
                 {
-                    case "Sys_MapData":
-                        DataRow drMD = dt.Rows[0];
-                        MapData md = new MapData();
-                        foreach (Attr attr in md.EnMap.Attrs)
+                    case "Sys_MapDtl":
+                        foreach (DataRow dr in dt.Rows)
                         {
-                            try
+                            MapDtl dtl = new MapDtl();
+                            foreach (DataColumn dc in dt.Columns)
                             {
-                                md.SetValByKey(attr.Key, drMD[attr.Key]);
+                                string val =dr[dc.ColumnName].ToString().Replace(oldMapID, fk_mapdata);
+                                dtl.SetValByKey(dc.ColumnName, val);
                             }
-                            catch
-                            {
-                            }
+                            dtl.Insert();
                         }
-                        md.No = fk_mapdata;
-                        md.Insert();
+                        break;
+                    case "Sys_MapData":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            MapData md = new MapData();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName].ToString().Replace(oldMapID, fk_mapdata);
+                                md.SetValByKey(dc.ColumnName, val);
+                            }
+                            md.Insert();
+                        }
                         break;
                     case "Sys_FrmBtn":
                         foreach (DataRow dr in dt.Rows)
@@ -429,10 +447,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+
                             en.MyPK = "Btn" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -445,10 +462,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            //   en.FK_MapData = fk_mapdata;
                             en.MyPK = "LE" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -461,9 +477,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            //  en.FK_MapData = fk_mapdata;
                             en.MyPK = "LB" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -476,9 +492,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            //en.FK_MapData = fk_mapdata;
                             en.MyPK = "LK" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -491,9 +507,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            //en.FK_MapData = fk_mapdata;
                             en.MyPK = "Img" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -506,9 +522,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            // en.FK_MapData = fk_mapdata;
                             en.MyPK = "ImgA" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -521,9 +537,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            //en.FK_MapData = fk_mapdata;
                             try
                             {
                                 en.Save();
@@ -542,9 +558,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            // en.FK_MapData = fk_mapdata;
                             en.MyPK = "Ath" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -557,9 +573,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            // en.FK_MapData = fk_mapdata;
                             en.No = "D" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -572,9 +588,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            // en.FK_MapData = fk_mapdata;
                             en.No = "Fra" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -587,9 +603,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            //en.FK_MapData = fk_mapdata;
                             en.MyPK = "Ext" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -602,9 +618,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                            //  en.FK_MapData = fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -616,9 +632,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
-                                en.SetValByKey(dc.ColumnName, val);
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.EnName = fk_mapdata;
                             en.OID = 0;
                             en.Insert();
                         }
@@ -653,6 +668,9 @@ namespace BP.Sys
             sql += "@DELETE Sys_MapExt WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_MapAttr WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_GroupField WHERE EnName='" + this.No + "'";
+            sql += "@DELETE Sys_MapDtl WHERE FK_MapData='" + this.No + "'";
+
+
             DBAccess.RunSQLs(sql);
 
             MapDtls dtls = new MapDtls(this.No);
@@ -665,50 +683,97 @@ namespace BP.Sys
         public System.Data.DataSet GenerHisDataSet()
         {
             DataSet ds = new DataSet();
-            ds.Namespace = "ccFlowFrm";
+            string sql = "";
 
-            FrmLines lins = new FrmLines(this.No);
-            ds.Tables.Add(lins.ToDataTableField("Sys_FrmLine"));
+            // Sys_MapDtl.
+            sql = "SELECT * FROM Sys_MapDtl WHERE FK_MapData ='" + this.No + "'";
+            DataTable Sys_MapDtl = DBAccess.RunSQLReturnTable(sql);
+            Sys_MapDtl.TableName = "Sys_MapDtl";
+            ds.Tables.Add(Sys_MapDtl);
+            string ids = "'" + this.No + "'";
+            foreach (DataRow dr in Sys_MapDtl.Rows)
+            {
+                ids += ",'" + dr["No"] + "'";
+            }
+            string where = " FK_MapData IN (" + ids + ")";
 
-            FrmLabs labs = new FrmLabs(this.No);
-            ds.Tables.Add(labs.ToDataTableField("Sys_FrmLab"));
+            // Sys_MapData.
+            sql = "SELECT * FROM Sys_MapData WHERE No IN (" + ids + ")";
+            DataTable Sys_MapData = DBAccess.RunSQLReturnTable(sql);
+            Sys_MapData.TableName = "Sys_MapData";
+            ds.Tables.Add(Sys_MapData);
 
-            FrmLinks links = new FrmLinks(this.No);
-            ds.Tables.Add(links.ToDataTableField("Sys_FrmLink"));
+            // line.
+            sql = "SELECT * FROM Sys_FrmLine WHERE " + where;
+            DataTable dtLine = DBAccess.RunSQLReturnTable(sql);
+            dtLine.TableName = "Sys_FrmLine";
+            ds.Tables.Add(dtLine);
 
-            MapAttrs attrs = new MapAttrs(this.No);
-            ds.Tables.Add(attrs.ToDataTableField("Sys_MapAttr"));
+            // link.
+            sql = "SELECT * FROM Sys_FrmLink WHERE " + where;
+            DataTable dtLink = DBAccess.RunSQLReturnTable(sql);
+            dtLink.TableName = "Sys_FrmLink";
+            ds.Tables.Add(dtLink);
 
-            MapDtls dtls = new MapDtls(this.No);
-            ds.Tables.Add(dtls.ToDataTableField("Sys_MapDtl"));
+            // btn.
+            sql = "SELECT * FROM Sys_FrmBtn WHERE " + where;
+            DataTable dtBtn = DBAccess.RunSQLReturnTable(sql);
+            dtBtn.TableName = "Sys_FrmBtn";
+            ds.Tables.Add(dtBtn);
 
-            MapExts exts = new MapExts(this.No);
-            ds.Tables.Add(exts.ToDataTableField("Sys_MapExt"));
+            // Sys_FrmImg.
+            sql = "SELECT * FROM Sys_FrmImg WHERE " + where;
+            DataTable dtFrmImg = DBAccess.RunSQLReturnTable(sql);
+            dtFrmImg.TableName = "Sys_FrmImg";
+            ds.Tables.Add(dtFrmImg);
 
-            MapFrames frms = new MapFrames(this.No);
-            ds.Tables.Add(frms.ToDataTableField("Sys_MapFrame"));
+            // Sys_FrmLab.
+            sql = "SELECT * FROM Sys_FrmLab WHERE " + where;
+            DataTable Sys_FrmLab = DBAccess.RunSQLReturnTable(sql);
+            Sys_FrmLab.TableName = "Sys_FrmLab";
+            ds.Tables.Add(Sys_FrmLab);
 
-            MapM2Ms m2ms = new MapM2Ms(this.No);
-            ds.Tables.Add(m2ms.ToDataTableField("Sys_MapM2M"));
+            // Sys_FrmLab.
+            sql = "SELECT * FROM Sys_FrmRB WHERE " + where;
+            DataTable Sys_FrmRB = DBAccess.RunSQLReturnTable(sql);
+            Sys_FrmRB.TableName = "Sys_FrmRB";
+            ds.Tables.Add(Sys_FrmRB);
 
-            MapDatas mds = new MapDatas();
-            mds.AddEntity(this);
-            ds.Tables.Add(mds.ToDataTableField("Sys_MapData"));
+            // Sys_MapAttr.
+            sql = "SELECT * FROM Sys_MapAttr WHERE " + where + " AND KeyOfEn NOT IN('WFState','WFLog')";
+            DataTable Sys_MapAttr = DBAccess.RunSQLReturnTable(sql);
+            Sys_MapAttr.TableName = "Sys_MapAttr";
+            ds.Tables.Add(Sys_MapAttr);
 
-            FrmAttachments aths = new FrmAttachments(this.No);
-            ds.Tables.Add(aths.ToDataTableField("Sys_FrmAttachment"));
+            // Sys_MapM2M.
+            sql = "SELECT * FROM Sys_MapM2M WHERE " + where;
+            DataTable Sys_MapM2M = DBAccess.RunSQLReturnTable(sql);
+            Sys_MapM2M.TableName = "Sys_MapM2M";
+            ds.Tables.Add(Sys_MapM2M);
 
-            FrmImgs imgs = new FrmImgs(this.No);
-            ds.Tables.Add(imgs.ToDataTableField("Sys_FrmImg"));
+            // Sys_FrmAttachment.
+            sql = "SELECT * FROM Sys_FrmAttachment WHERE " + where;
+            DataTable Sys_FrmAttachment = DBAccess.RunSQLReturnTable(sql);
+            Sys_FrmAttachment.TableName = "Sys_FrmAttachment";
+            ds.Tables.Add(Sys_FrmAttachment);
 
-            FrmRBs rbs = new FrmRBs(this.No);
-            ds.Tables.Add(rbs.ToDataTableField("Sys_FrmRB"));
+            // Sys_FrmImgAth.
+            sql = "SELECT * FROM Sys_FrmImgAth WHERE " + where;
+            DataTable Sys_FrmImgAth = DBAccess.RunSQLReturnTable(sql);
+            Sys_FrmImgAth.TableName = "Sys_FrmImgAth";
+            ds.Tables.Add(Sys_FrmImgAth);
 
-            FrmBtns btns = new FrmBtns(this.No);
-            ds.Tables.Add(btns.ToDataTableField("Sys_FrmBtn"));
+            // Sys_MapExt.
+            sql = "SELECT * FROM Sys_MapExt WHERE " + where;
+            DataTable Sys_MapExt = DBAccess.RunSQLReturnTable(sql);
+            Sys_MapExt.TableName = "Sys_MapExt";
+            ds.Tables.Add(Sys_MapExt);
 
-            GroupFields gfs = new GroupFields(this.No);
-            ds.Tables.Add(gfs.ToDataTableField("Sys_GroupField"));
+            // Sys_GroupField.
+            sql = "SELECT * FROM Sys_GroupField WHERE  EnName IN (" + ids + ")";
+            DataTable Sys_GroupField = DBAccess.RunSQLReturnTable(sql);
+            Sys_GroupField.TableName = "Sys_GroupField";
+            ds.Tables.Add(Sys_GroupField);
             return ds;
         }
         /// <summary>

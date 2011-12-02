@@ -4,7 +4,6 @@ using BP.DA;
 using BP.Sys;
 using BP.En;
 using BP.WF.Port;
-//using BP.ZHZS.Base;
 
 namespace BP.WF
 {
@@ -33,7 +32,6 @@ namespace BP.WF
         /// 保存标签
         /// </summary>
         public const string SaveLab = "SaveLab";
-
         /// <summary>
         /// 退回是否启用
         /// </summary>
@@ -42,8 +40,6 @@ namespace BP.WF
         /// 退回标签
         /// </summary>
         public const string ReturnLab = "ReturnLab";
-
-
         /// <summary>
         /// 打印单据标签
         /// </summary>
@@ -52,7 +48,6 @@ namespace BP.WF
         /// 打印单据是否起用
         /// </summary>
         public const string PrintDocEnable = "PrintDocEnable";
-
         /// <summary>
         /// 移交是否启用
         /// </summary>
@@ -61,7 +56,6 @@ namespace BP.WF
         /// 移交标签
         /// </summary>
         public const string ShiftLab = "ShiftLab";
-
 
         public const string RptLab = "RptLab";
         public const string RptEnable = "RptEnable";
@@ -87,7 +81,6 @@ namespace BP.WF
         /// 结束流程
         /// </summary>
         public const string EndFlowEnable = "EndFlowEnable";
-
         /// <summary>
         /// AthLab
         /// </summary>
