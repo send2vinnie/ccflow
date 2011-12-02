@@ -3463,6 +3463,25 @@ namespace BP.WF
                                 en.Insert();
                             }
                             break;
+                        case  "Sys_FrmImg":
+                              idx = 0;
+                              foreach (DataRow dr in dt.Rows)
+                              {
+                                  idx++;
+                                  FrmImg en = new FrmImg();
+                                  foreach (DataColumn dc in dt.Columns)
+                                  {
+                                      string val = dr[dc.ColumnName] as string;
+                                      if (val == null)
+                                          continue;
+
+                                      val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                      en.SetValByKey(dc.ColumnName, val);
+                                  }
+                                  en.MyPK = "Img" + timeKey + "_" + idx;
+                                  en.Insert();
+                              }
+                            break;
                         case "Sys_FrmLab":
                             idx = 0;
                             foreach (DataRow dr in dt.Rows)
