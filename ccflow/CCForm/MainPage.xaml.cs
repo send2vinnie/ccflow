@@ -2956,8 +2956,13 @@ namespace CCForm
                     break;
                 case "FrmTempleteExp": //导出表单模版.
                 case "FrmTempleteExp_Ext": //导出表单模版.
-                    FrmExp expfrm = new FrmExp();
-                    expfrm.Show();
+                    //Glo.WinOpen(Glo.BPMHost + "/WF/MapDef/Handler.ashx?DoType=DownTempFrm&FK_MapData=" + Glo.FK_MapData);
+                    Glo.WinOpen(Glo.BPMHost + "/WF/Admin/XAP/DoPort.aspx?DoType=DownFormTemplete&FK_MapData=" + Glo.FK_MapData,
+                        100, 100);
+                    return;
+
+                    //FrmExp expfrm = new FrmExp();
+                    //expfrm.Show();
                     break;
                 case "FrmTempleteImp": //导入表单模版
                 case "FrmTempleteImp_Ext": //导入表单模版
@@ -3369,8 +3374,12 @@ namespace CCForm
                     da.UploadFileCompleted += new EventHandler<FF.UploadFileCompletedEventArgs>(da_UploadFileCompleted);
                     break;
                 case "Btn_Exp":
-                    FrmExp back = new FrmExp();
-                    back.Show();
+                    //Glo.WinOpen(Glo.BPMHost + "/WF/MapDef/Handler.ashx?DoType=DownTempFrm&FK_MapData=" + Glo.FK_MapData);
+                    Glo.WinOpen(Glo.BPMHost + "/WF/Admin/XAP/DoPort.aspx?DoType=DownFormTemplete&FK_MapData=" + Glo.FK_MapData,
+                        100, 100);
+                    return;
+                    //FrmExp back = new FrmExp();
+                    //back.Show();
                     break;
                 case "Btn_Imp":
                     FrmImp imp = new FrmImp();

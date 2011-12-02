@@ -60,12 +60,6 @@ namespace CCForm.FF {
         
         string EndFtpMethod(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ParseStringToPinyin", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginParseStringToPinyin(string name, System.AsyncCallback callback, object asyncState);
-        
-        string EndParseStringToPinyin(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RequestSFTable", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.IAsyncResult BeginRequestSFTable(string ensName, System.AsyncCallback callback, object asyncState);
@@ -119,6 +113,12 @@ namespace CCForm.FF {
         System.IAsyncResult BeginRunSQLReturnTableS(string sqls, System.AsyncCallback callback, object asyncState);
         
         string EndRunSQLReturnTableS(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ParseStringToPinyin", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.IAsyncResult BeginParseStringToPinyin(string name, System.AsyncCallback callback, object asyncState);
+        
+        string EndParseStringToPinyin(System.IAsyncResult result);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -342,25 +342,6 @@ namespace CCForm.FF {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ParseStringToPinyinCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public ParseStringToPinyinCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RequestSFTableCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -532,6 +513,25 @@ namespace CCForm.FF {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ParseStringToPinyinCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public ParseStringToPinyinCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class CCFormSoapClient : System.ServiceModel.ClientBase<CCForm.FF.CCFormSoap>, CCForm.FF.CCFormSoap {
         
         private BeginOperationDelegate onBeginCfgKeyDelegate;
@@ -575,12 +575,6 @@ namespace CCForm.FF {
         private EndOperationDelegate onEndFtpMethodDelegate;
         
         private System.Threading.SendOrPostCallback onFtpMethodCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginParseStringToPinyinDelegate;
-        
-        private EndOperationDelegate onEndParseStringToPinyinDelegate;
-        
-        private System.Threading.SendOrPostCallback onParseStringToPinyinCompletedDelegate;
         
         private BeginOperationDelegate onBeginRequestSFTableDelegate;
         
@@ -635,6 +629,12 @@ namespace CCForm.FF {
         private EndOperationDelegate onEndRunSQLReturnTableSDelegate;
         
         private System.Threading.SendOrPostCallback onRunSQLReturnTableSCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginParseStringToPinyinDelegate;
+        
+        private EndOperationDelegate onEndParseStringToPinyinDelegate;
+        
+        private System.Threading.SendOrPostCallback onParseStringToPinyinCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -702,8 +702,6 @@ namespace CCForm.FF {
         
         public event System.EventHandler<FtpMethodCompletedEventArgs> FtpMethodCompleted;
         
-        public event System.EventHandler<ParseStringToPinyinCompletedEventArgs> ParseStringToPinyinCompleted;
-        
         public event System.EventHandler<RequestSFTableCompletedEventArgs> RequestSFTableCompleted;
         
         public event System.EventHandler<GenerFrmCompletedEventArgs> GenerFrmCompleted;
@@ -721,6 +719,8 @@ namespace CCForm.FF {
         public event System.EventHandler<RunSQLReturnTableCompletedEventArgs> RunSQLReturnTableCompleted;
         
         public event System.EventHandler<RunSQLReturnTableSCompletedEventArgs> RunSQLReturnTableSCompleted;
+        
+        public event System.EventHandler<ParseStringToPinyinCompletedEventArgs> ParseStringToPinyinCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -1101,52 +1101,6 @@ namespace CCForm.FF {
                         v1,
                         v2,
                         v3}, this.onEndFtpMethodDelegate, this.onFtpMethodCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult CCForm.FF.CCFormSoap.BeginParseStringToPinyin(string name, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginParseStringToPinyin(name, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string CCForm.FF.CCFormSoap.EndParseStringToPinyin(System.IAsyncResult result) {
-            return base.Channel.EndParseStringToPinyin(result);
-        }
-        
-        private System.IAsyncResult OnBeginParseStringToPinyin(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string name = ((string)(inValues[0]));
-            return ((CCForm.FF.CCFormSoap)(this)).BeginParseStringToPinyin(name, callback, asyncState);
-        }
-        
-        private object[] OnEndParseStringToPinyin(System.IAsyncResult result) {
-            string retVal = ((CCForm.FF.CCFormSoap)(this)).EndParseStringToPinyin(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnParseStringToPinyinCompleted(object state) {
-            if ((this.ParseStringToPinyinCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.ParseStringToPinyinCompleted(this, new ParseStringToPinyinCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void ParseStringToPinyinAsync(string name) {
-            this.ParseStringToPinyinAsync(name, null);
-        }
-        
-        public void ParseStringToPinyinAsync(string name, object userState) {
-            if ((this.onBeginParseStringToPinyinDelegate == null)) {
-                this.onBeginParseStringToPinyinDelegate = new BeginOperationDelegate(this.OnBeginParseStringToPinyin);
-            }
-            if ((this.onEndParseStringToPinyinDelegate == null)) {
-                this.onEndParseStringToPinyinDelegate = new EndOperationDelegate(this.OnEndParseStringToPinyin);
-            }
-            if ((this.onParseStringToPinyinCompletedDelegate == null)) {
-                this.onParseStringToPinyinCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnParseStringToPinyinCompleted);
-            }
-            base.InvokeAsync(this.onBeginParseStringToPinyinDelegate, new object[] {
-                        name}, this.onEndParseStringToPinyinDelegate, this.onParseStringToPinyinCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1575,6 +1529,52 @@ namespace CCForm.FF {
                         sqls}, this.onEndRunSQLReturnTableSDelegate, this.onRunSQLReturnTableSCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult CCForm.FF.CCFormSoap.BeginParseStringToPinyin(string name, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginParseStringToPinyin(name, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string CCForm.FF.CCFormSoap.EndParseStringToPinyin(System.IAsyncResult result) {
+            return base.Channel.EndParseStringToPinyin(result);
+        }
+        
+        private System.IAsyncResult OnBeginParseStringToPinyin(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string name = ((string)(inValues[0]));
+            return ((CCForm.FF.CCFormSoap)(this)).BeginParseStringToPinyin(name, callback, asyncState);
+        }
+        
+        private object[] OnEndParseStringToPinyin(System.IAsyncResult result) {
+            string retVal = ((CCForm.FF.CCFormSoap)(this)).EndParseStringToPinyin(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnParseStringToPinyinCompleted(object state) {
+            if ((this.ParseStringToPinyinCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ParseStringToPinyinCompleted(this, new ParseStringToPinyinCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ParseStringToPinyinAsync(string name) {
+            this.ParseStringToPinyinAsync(name, null);
+        }
+        
+        public void ParseStringToPinyinAsync(string name, object userState) {
+            if ((this.onBeginParseStringToPinyinDelegate == null)) {
+                this.onBeginParseStringToPinyinDelegate = new BeginOperationDelegate(this.OnBeginParseStringToPinyin);
+            }
+            if ((this.onEndParseStringToPinyinDelegate == null)) {
+                this.onEndParseStringToPinyinDelegate = new EndOperationDelegate(this.OnEndParseStringToPinyin);
+            }
+            if ((this.onParseStringToPinyinCompletedDelegate == null)) {
+                this.onParseStringToPinyinCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnParseStringToPinyinCompleted);
+            }
+            base.InvokeAsync(this.onBeginParseStringToPinyinDelegate, new object[] {
+                        name}, this.onEndParseStringToPinyinDelegate, this.onParseStringToPinyinCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1752,19 +1752,6 @@ namespace CCForm.FF {
                 return _result;
             }
             
-            public System.IAsyncResult BeginParseStringToPinyin(string name, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = name;
-                System.IAsyncResult _result = base.BeginInvoke("ParseStringToPinyin", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndParseStringToPinyin(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("ParseStringToPinyin", _args, result)));
-                return _result;
-            }
-            
             public System.IAsyncResult BeginRequestSFTable(string ensName, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = ensName;
@@ -1885,6 +1872,19 @@ namespace CCForm.FF {
             public string EndRunSQLReturnTableS(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 string _result = ((string)(base.EndInvoke("RunSQLReturnTableS", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginParseStringToPinyin(string name, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = name;
+                System.IAsyncResult _result = base.BeginInvoke("ParseStringToPinyin", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndParseStringToPinyin(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("ParseStringToPinyin", _args, result)));
                 return _result;
             }
         }

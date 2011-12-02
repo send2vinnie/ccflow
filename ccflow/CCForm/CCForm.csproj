@@ -173,9 +173,6 @@
     <Compile Include="FrmEvent.xaml.cs">
       <DependentUpon>FrmEvent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FrmExp.xaml.cs">
-      <DependentUpon>FrmExp.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FrmHiddenField.xaml.cs">
       <DependentUpon>FrmHiddenField.xaml</DependentUpon>
     </Compile>
@@ -303,10 +300,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FrmEvent.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FrmExp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
