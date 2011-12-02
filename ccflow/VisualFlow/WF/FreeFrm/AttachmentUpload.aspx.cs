@@ -134,6 +134,9 @@ public partial class WF_FreeFrm_UploadFile : WebPage
             System.IO.Directory.CreateDirectory(athDesc.SaveTo);
 
         int oid = BP.DA.DBAccess.GenerOID();
+
+        string exp = "";
+
         string saveTo = athDesc.SaveTo + "\\" + oid + "." + fu.FileName.Substring(fu.FileName.LastIndexOf('.') + 1);
         fu.SaveAs(saveTo);
 

@@ -57,7 +57,7 @@ public partial class Designer : System.Web.UI.Page
             // 升级退回规则。
             try
             {
-                sql = "SELECT FK_Node FROM WF_ReturnWork";
+                sql = "SELECT ReturnToNode FROM WF_ReturnWork";
                 /*如果有这个列说明是未升级的 , 让它删除重建。*/
                 BP.DA.DBAccess.RunSQLReturnTable(sql);
             }

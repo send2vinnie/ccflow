@@ -15,6 +15,7 @@
         window.location.href = window.location.href;
     }
     </script>
+    <base target=_self />
 </head>
 <body class="Body<%=BP.Web.WebUser.Style%>"   leftMargin=0  topMargin=0>
     <form id="form1" runat="server">
