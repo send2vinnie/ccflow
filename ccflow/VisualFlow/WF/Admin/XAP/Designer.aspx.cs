@@ -38,6 +38,10 @@ public partial class Designer : System.Web.UI.Page
             sql = "UPDATE SYS_MAPEXT SET ExtType='TBFullCtrl' WHERE ExtType='FullCtrl'";
             DBAccess.RunSQL(sql);
 
+            #region 2011-12-01 升级投递规则.
+            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DeliveryWay'");
+            #endregion
+
             #region 手动升级. 2011-07-08 补充节点字段分组.
             //string sql = "DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
             //BP.DA.DBAccess.RunSQL(sql);

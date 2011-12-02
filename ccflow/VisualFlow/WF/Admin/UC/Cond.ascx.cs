@@ -219,7 +219,9 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
         this.AddTREnd();
 
         // 属性/字段
-        MapAttrs attrs = new MapAttrs("ND" + ddl.SelectedItemStringVal);
+        MapAttrs attrs = new MapAttrs();
+        attrs.Retrieve(MapAttrAttr.FK_MapData, "ND" + ddl.SelectedItemStringVal);
+
         MapAttrs attrNs = new MapAttrs();
         foreach (MapAttr attr in attrs)
         {
@@ -248,23 +250,25 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             }
             attrNs.AddEntity(attr);
         }
-
         ddl = new DDL();
         ddl.ID = "DDL_Attr";
-        ddl.BindEntities(attrNs, MapAttrAttr.MyPK, MapAttrAttr.Name);
-        ddl.AutoPostBack = true;
-        ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
-        ddl.SetSelectItem(cond.FK_Attr);
-
         if (attrNs.Count == 0)
         {
             BP.WF.Node nd = new BP.WF.Node(cond.FK_Node);
-            nd.CreateMap();
+            nd.RepareMap();
             this.AddTR();
             this.AddTD("");
             this.AddTD("colspan=2", "节点没有找到合适的条件");
             this.AddTREnd();
+            this.AddTableEnd();
             return;
+        }
+        else
+        {
+            ddl.BindEntities(attrNs, MapAttrAttr.MyPK, MapAttrAttr.Name);
+            ddl.AutoPostBack = true;
+            ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
+            ddl.SetSelectItem(cond.FK_Attr);
         }
 
         this.AddTR();
