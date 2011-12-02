@@ -14,9 +14,9 @@
   <Menu No="0202" Name="" CH="岗位维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Stations" Icon=""  />
   <Menu No="0203" Name="" CH="操作员维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.Port.Emps" Icon=""  />
 
-  <Menu No="03" Name="" CH="项目管理"  W="700" H="800" Url=""    Icon="../Images/TreeMenu/Org.png"  />
+  <Menu No="03" Name="" CH="项目管理(需要引用BP.Prj)"  W="700" H="800" Url=""    Icon="../Images/TreeMenu/Org.png"  />
   <Menu No="0301" Name="" CH="项目维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.PRJ.Prjs"  Icon="" />
-  <Menu No="0302" Name="" CH="节点规则"  W="700" H="800" Url="/ExpandingApplication/PRJ/NodeRule.aspx"  Icon="" />
+  <Menu No="0302" Name="" CH="资料树节点访问规则"  W="700" H="800" Url="/ExpandingApplication/PRJ/NodeAccess.aspx"  Icon="" />
 
   <!-- 流程数据  -->
   <FlowData No="01" Name="" CH="流程优化"  W="700" H="800" Url="" Icon="../Images/TreeMenu/FlowOrg.png"  />

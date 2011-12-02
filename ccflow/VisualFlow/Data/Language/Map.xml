@@ -13,7 +13,7 @@
   <Item No="TInt" CH="整数型" RU="Целый тип" EN="Integer" JP="整数型" />
   <Item No="TMoney" CH="金额型" RU="Сумма типа" EN="Currency" JP="タイプの量" />
   <Item No="TFloat" CH="浮点型" RU="С плавающей точкой типа" EN="Floating-point" JP="浮動小数点型" />
-  <Item No="TDate" CH="日期型" RU="Дата Тип" EN="Date" JP="日付型" />
+  <Item No="TDate" CH="日期型" RU="Дата Тип" EN="Date" JP="日付型" /> 
   <Item No="TDateTime" CH="日期时间型" RU="Дата Время Тип" EN="Date Time" JP="日付時刻型" />
   <Item No="TBool" CH="Boole型(是/否)" RU="Boole типа (да / нет)" EN="Boolean (Yes / No)" JP="ブール型（はい/いいえ）" />
   <Item No="TEnum" CH="枚举型" RU="Перечисление типа" EN="Enumeration" JP="列挙型" />

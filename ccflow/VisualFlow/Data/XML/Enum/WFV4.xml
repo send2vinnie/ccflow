@@ -1,14 +1,11 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
- 
- 
   <Item Key="DeliveryWay"
-    CH="@0=按岗位@1=按部门@2=按SQL@3=按指定的人员@4=由发送人选择@5=按表单人员"
+    CH="@0=按岗位计算@1=按部门计算@2=按SQL计算@3=按设置的人员计算@4=由上一步发送人选择@5=按上一节点表单FK_Emp字段计算@6=按上一步操作人员@7=按上一步操作人员并自动跳转"
     EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
     JP="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
     RU="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
         />
- 
     
     <Item Key="ReturnRole"
     CH="@0=不能退回@1=只能退回上一个节点@2=可退回以前任意节点@3=可退回指定的节点"
@@ -93,9 +90,6 @@
   EN="@0=Url@1=exe"
   JP="@0=Url@1=exe"
   RU="@0=Url@1=exe" />
- 
-     
-
   <!-- 提示信息类型  -->
 <Item Key="AlertType"
 CH="@0=短信@1=邮件@2=邮件与短信@3=系统(内部)消息"
