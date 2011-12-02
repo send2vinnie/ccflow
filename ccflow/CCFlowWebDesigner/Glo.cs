@@ -101,17 +101,16 @@ namespace BP
                     Glo.OpenDialog(Glo.BPMHost + url, "执行", 500, 400);
                     return;
                 case UrlFlag.FlowP: // 节点属性与流程属性。
-                    MessageBox.Show(fk_flow);
                     url = "/WF/Admin/XAP/DoPort.aspx?DoType=En&EnName=BP.WF.Flow&PK=" + fk_flow + "&Lang=CH";
                     Glo.OpenDialog(Glo.BPMHost + url, "执行", 500, 400);
                     return;
                 case UrlFlag.MapDef: // 节点表单设计。
                     url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDef&PK=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH";
-                    Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计","Height:600px;Width:800px;",WindowModelEnum.Window);
+                    Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计", "Height:600px;Width:800px;", WindowModelEnum.Window);
                     return;
                 case UrlFlag.Dir: // 方向条件。
                     url = "/WF/Admin/Cond.aspx?FK_Flow=" + fk_flow + "&FK_MainNode=" + node1 + "&FK_Node=" + node1 + "&ToNodeID=" + node2 + "&CondType=2" + "&Lang=CH";
-                    Glo.WinOpen(Glo.BPMHost + url, "方向条件", 550, 500);
+                    Glo.OpenDialog(Glo.BPMHost + url, "方向条件", 550, 500);
                     return;
                 case "RunFlow": // 运行流程。
                     url = "/WF/Admin/TestFlow.aspx?FK_Flow=" + fk_flow + "&Lang=CH";
@@ -137,12 +136,10 @@ namespace BP
         {
             OpenWindowOrDialog(url, title, string.Format("dialogHeight:{0}px;dialogWidth:{1}px", h, w), WindowModelEnum.Dialog);
         }
-
         public static void WinOpen(string url, string title, int h, int w)
         {
             OpenWindowOrDialog(url, title, string.Format("height={0},width={1}", h, w), WindowModelEnum.Window);
         }
-
         public static void OpenDialog(string url, string title)
         {
             OpenWindowOrDialog(url, title, "dialogHeight:600px;dialogWidth:800px", WindowModelEnum.Dialog);
@@ -159,7 +156,6 @@ namespace BP
                 MaxReceivedMessageSize = 2147483647,
                 Name = "WSDesignerSoap"
             };
-
             basicBinding.Security.Mode = BasicHttpSecurityMode.None;
             var endPoint = new EndpointAddress(Glo.BPMHost + "/WF/Admin/XAP/WebService.asmx");
             var ctor =
