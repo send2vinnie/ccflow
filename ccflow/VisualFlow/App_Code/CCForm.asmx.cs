@@ -264,7 +264,7 @@ namespace BP.Web
                         }
                         return null; /*创建成功后返回空值*/
                     case "FrmTempleteExp":  //导出表单.
-                        MapData mdfrmtem = new MapData(v1);
+                        MapData mdfrmtem = new MapData();
                         mdfrmtem.No = v1;
                         if (mdfrmtem.RetrieveFromDBSources() == 0)
                         {
@@ -481,7 +481,7 @@ namespace BP.Web
                 switch (doType)
                 {
                     case "ShareFrm": /*共享模板*/
-                        MapData md = new MapData(v1);
+                        MapData md = new MapData();
                         DataSet ds = md.GenerHisDataSet();
                         string file =  BP.SystemConfig.PathOfTemp + v1 + "_" + v2 +"_"+DateTime.Now.ToString("MM-dd hh-mm")+ ".xml";
                         ds.WriteXml(file);
@@ -604,11 +604,6 @@ namespace BP.Web
         public string CopyFrm(string fromMapData, string fk_mapdata, bool isClear)
         {
             this.LetAdminLogin();
-
-            //string path = System.Web.HttpContext.Current.Request.ApplicationPath + "\\Temp\\";
-            //MapData md = new MapData();
-            //DataSet ds= md.GenerHisDataSet();
-            //ds.WriteXml(path+"\\tt.xml");
 
             string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
 
@@ -873,8 +868,6 @@ namespace BP.Web
             }
                 DBAccess.RunSQL("UPDATE Sys_MapAttr SET Name='' WHERE Name IS NULL ");
             #endregion 处理数据库兼容的问题
-
-
 
             this.RunSQLs(sqls);
             if (string.IsNullOrEmpty(str))

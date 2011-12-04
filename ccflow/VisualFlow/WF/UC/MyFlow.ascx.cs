@@ -1036,8 +1036,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     #region toolbar 2
     private void ToolBar1_ButtonClick(object sender, System.EventArgs e)
     {
-        try
-        {
+        //try
+        //{
             Btn btn = (Btn)sender;
             switch (btn.ID)
             {
@@ -1113,11 +1113,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 default:
                     break;
             }
-        }
-        catch (Exception ex)
-        {
-            this.FlowMsg.AlertMsg_Warning("信息提示", ex.Message);
-        }
+        //}
+        //catch (Exception ex)
+        //{
+        //    this.FlowMsg.AlertMsg_Warning("信息提示", ex.Message);
+        //}
     }
     #region 按钮事件
     /// <summary>
@@ -1240,8 +1240,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
 
         WorkNode firstwn = new WorkNode(this.currWK, this.currND);
-        try
-        {
+       
             msg = firstwn.AfterNodeSave();
             this.Btn_Send.Enabled = false;
             /*处理转向问题.*/
@@ -1293,15 +1292,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     break;
             }
             return;
-        }
-        catch (Exception ex)
-        {
-            msg = ex.Message.Replace("'", "’");
-            msg = ex.Message.Replace("<br>", "\r\n");
-            this.Btn_Send.Enabled = true;
-            this.Pub1.AlertMsg_Warning("错误", msg);
-            return;
-        }
+        //}
+        //catch (Exception ex)
+        //{
+        //    msg = ex.Message.Replace("'", "’");
+        //    msg = ex.Message.Replace("<br>", "\r\n");
+        //    this.Btn_Send.Enabled = true;
+        //    this.Pub1.AlertMsg_Warning("错误", msg);
+        //    return;
+        //}
 
         //bool isCanDoNextWork = true;
         ////能不能执行下一步工作

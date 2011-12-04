@@ -11,8 +11,10 @@ public partial class Designer : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         string sql = "";
+        string msg = "";
         try
         {
+            msg = "@在检查数据库连接出现错误。";
             #region 测试数据库是否连接成功。
             try
             {
@@ -34,6 +36,7 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion 测试数据库是否连接成功。
 
+            msg = "@执行升级出现错误。";
             //保障升级后的数据完整性. 2011-11-26.
             sql = "UPDATE SYS_MAPEXT SET ExtType='TBFullCtrl' WHERE ExtType='FullCtrl'";
             DBAccess.RunSQL(sql);
@@ -51,13 +54,18 @@ public partial class Designer : System.Web.UI.Page
             #endregion 手动升级. 2011-07-08 补充节点字段分组.
 
             #region 升级基础信息。 2011-11-02。 在过1个月去掉它。
-            sql = "SELECT count(*) FROM CN_City ";
+
+            msg = "@补充数据时出现错误。";
+            sql = "SELECT count(*) FROM CN_City";
             if (BP.DA.DBAccess.RunSQLReturnValInt(sql) == 0)
             {
-                string scrpts = BP.DA.DataType.ReadTextFile(BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql");
+                msg = "@补充数据时出现错误，获得文件。";
+                string fileOfSQL=BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql";
+                string scrpts = BP.DA.DataType.ReadTextFile(fileOfSQL);
                 BP.DA.DBAccess.RunSQLs(scrpts);
             }
 
+            msg = "@升级退回规则。";
             // 升级退回规则。
             try
             {
@@ -76,6 +84,8 @@ public partial class Designer : System.Web.UI.Page
             #endregion 升级基础信息。
 
             #region 更新 WF_EmpWorks. 2011-11-09
+            msg = "@更新视图出现错误。";
+
             try
             {   
                 sql = "DROP VIEW WF_EmpWorks";
@@ -96,6 +106,9 @@ public partial class Designer : System.Web.UI.Page
             BP.DA.DBAccess.RunSQLs(sql);
             #endregion 更新 WF_EmpWorks. 2011-11-09
 
+
+            msg = "@登陆时间错误。。";
+
             #region 执行admin登陆.
             Emp emp = new Emp();
             emp.No = "admin";
@@ -111,7 +124,7 @@ public partial class Designer : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            this.Response.Write(ex.Message + "<br>@<a href='../DBInstall.aspx' >点这里到系统升级界面。</a>");
+            this.Response.Write("问题出处:"+msg+"<br>详细信息:@"+ex.Message + "<br>@<a href='../DBInstall.aspx' >点这里到系统升级界面。</a>");
             return;
         }
     }

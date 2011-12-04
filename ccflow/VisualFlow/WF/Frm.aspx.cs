@@ -87,9 +87,7 @@ public partial class WF_Frm : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Request.QueryString["IsTest"] == "1")
-        {
-           BP.SystemConfig.DoClearCash();
-        }
+            BP.SystemConfig.DoClearCash();
 
         MapData md = new MapData();
         md.No = this.FK_MapData;

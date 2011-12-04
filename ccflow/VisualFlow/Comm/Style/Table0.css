@@ -293,18 +293,7 @@ legend
     font-weight: bold;
 }
 
-
-a:link, a:visited, a:active
-{
-    color: black;
-    text-decoration: none;
-}
-
-a:hover
-{
-    text-decoration: underline;
-}
-
+ 
 ul
 {
    
@@ -313,8 +302,12 @@ ul
 
 li
 {
-     
-    
+    margin-bottom:3px;
+}
+
+Img
+{
+    border:0px;
 }
  
 

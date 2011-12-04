@@ -171,9 +171,10 @@ public partial class WF_Admin_TestFlow : WebPage
             return;
         }
 
+
         this.Ucsys1.AddFieldSet(this.ToE("ChoseStarter", "可发起(<font color=red>" + fl.Name + "</font>)流程的人员"));
         this.Ucsys1.AddTable("border=0");
-        this.Ucsys1.AddCaptionLeft("<a href='../Login.aspx'>直接登陆</a>");
+        this.Ucsys1.AddCaptionLeft("流程编号:"+fl.No+" 名称:"+fl.Name+"  - <a href='../Login.aspx'>直接登陆</a>");
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("Users");
         this.Ucsys1.AddTDTitle("独立模式");

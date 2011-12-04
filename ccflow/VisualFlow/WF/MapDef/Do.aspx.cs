@@ -487,7 +487,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
     {
         this.Title = this.ToE("GuideNewField", "增加新字段向导");
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeftTX("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='SysEnum.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' >" + this.ToE("NewEnum", "新建枚举") + "</a>");
+        this.Pub1.AddCaptionLeft("<a href='Do.aspx?DoType=AddF&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "'>" + this.ToE("GuideNewField", "增加新字段向导") + "</a> - <a href='SysEnum.aspx?DoType=New&MyPK=" + this.MyPK + "&IDX=" + this.IDX + "' ><img src='../../Images/Btn/New.gif' />" + this.ToE("NewEnum", "新建枚举") + "</a>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle(this.ToE("No", "编号") + "(" + this.ToE("ClickToAdd", "点击增加到表单") + ")");

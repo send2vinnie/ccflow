@@ -3,6 +3,7 @@
  <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<base target=_self />
 <script language=javascript>
 
 	function HelpGroup()
@@ -228,7 +229,6 @@
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
-</script>
 </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">

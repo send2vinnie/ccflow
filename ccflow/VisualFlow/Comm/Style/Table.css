@@ -261,23 +261,21 @@ legend
 	vertical-align: middle;
 	padding: 1px;
 }
-
-
-a:link, a:visited, a:active
-{
-	color: blue;
-	text-decoration: none;
-}
-
-a:hover
-{
-	text-decoration: underline;
-}
-
+  
 ul
 {
 	border-right-style: 0;
 	border-left-style: 0;
 	left: 2px;
 	clip: rect(auto, auto, auto, 2px);
+}
+
+li
+{
+    margin-bottom:3px;
+}
+
+Img
+{
+    border:0px;
 }
