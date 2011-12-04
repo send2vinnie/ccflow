@@ -1082,41 +1082,33 @@ namespace CCForm
             {
                 switch (dt.TableName)
                 {
-                    case "Sys_MapDataDtl":
-                        if (dt.Rows.Count == 0)
-                            continue;
-
-                        Glo.HisMapData = new MapData();
-                        Glo.HisMapData.FrmH = double.Parse(dt.Rows[0]["FrmH"]);
-                        Glo.HisMapData.FrmW = double.Parse(dt.Rows[0]["FrmW"]);
-
-                        Glo.HisMapData.No = (string)dt.Rows[0]["No"];
-                        Glo.HisMapData.Name = (string)dt.Rows[0]["Name"];
-                        Glo.IsDtlFrm = false;
-                        this.canvasMain.Width = Glo.HisMapData.FrmW;
-                        this.canvasMain.Height = Glo.HisMapData.FrmH;
-                        this.scrollViewer1.Width = Glo.HisMapData.FrmW;
-                        break;
+                   
                     case "Sys_MapData":
                         if (dt.Rows.Count == 0)
                             continue;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            if (dr["No"] != Glo.FK_MapData)
+                                continue;
 
-                        Glo.HisMapData = new MapData();
-                        Glo.HisMapData.FrmH = double.Parse(dt.Rows[0]["FrmH"]);
-                        Glo.HisMapData.FrmW = double.Parse(dt.Rows[0]["FrmW"]);
+                            Glo.HisMapData = new MapData();
+                            Glo.HisMapData.FrmH = double.Parse(dt.Rows[0]["FrmH"]);
+                            Glo.HisMapData.FrmW = double.Parse(dt.Rows[0]["FrmW"]);
+                            Glo.HisMapData.No = (string)dt.Rows[0]["No"];
+                            Glo.HisMapData.Name = (string)dt.Rows[0]["Name"];
+                            Glo.IsDtlFrm = false;
 
-                        Glo.HisMapData.No = (string)dt.Rows[0]["No"];
-                        Glo.HisMapData.Name = (string)dt.Rows[0]["Name"];
-
-                        Glo.IsDtlFrm = false;
-
-                        this.canvasMain.Width = Glo.HisMapData.FrmW;
-                        this.canvasMain.Height = Glo.HisMapData.FrmH;
-                        this.scrollViewer1.Width = Glo.HisMapData.FrmW;
+                            this.canvasMain.Width = Glo.HisMapData.FrmW;
+                            this.canvasMain.Height = Glo.HisMapData.FrmH;
+                            this.scrollViewer1.Width = Glo.HisMapData.FrmW;
+                        }
                         break;
                     case "Sys_FrmBtn":
                         foreach (DataRow dr in dt.Rows)
                         {
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
+
                             BPBtn btn = new BPBtn();
                             btn.Name = dr["MyPK"];
                             btn.Content = dr["Text"].Replace("&nbsp;", " ");
@@ -1142,6 +1134,9 @@ namespace CCForm
                     case "Sys_FrmLine":
                         foreach (DataRow dr in dt.Rows)
                         {
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
+
                             string color = dr["BorderColor"];
                             if (string.IsNullOrEmpty(color))
                                 color = "Black";
@@ -1175,6 +1170,9 @@ namespace CCForm
                     case "Sys_FrmLab":
                         foreach (DataRow dr in dt.Rows)
                         {
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
+
                             BPLabel lab = new BPLabel();
                             lab.Name = dr["MyPK"];
                             string text = dr["Text"].Replace("&nbsp;", " ");
@@ -1203,6 +1201,9 @@ namespace CCForm
                     case "Sys_FrmLink":
                         foreach (DataRow dr in dt.Rows)
                         {
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
+
                             BPLink link = new BPLink();
                             link.Name = dr["MyPK"];
                             link.Content = dr["Text"];
@@ -1233,13 +1234,9 @@ namespace CCForm
                     case "Sys_FrmImg":
                         foreach (DataRow dr in dt.Rows)
                         {
-                            //BitmapImage png = new BitmapImage(new Uri(dr["URL"], UriKind.Relative));  //= @"\\Img\\LogBig.png";
-                            //BPImg img = new BPImg(dr["MyPK"], double.Parse(dr["W"].ToString()),
-                            //    double.Parse(dr["H"].ToString()));
-                            //img.Name = dr["MyPK"];
-                            //img.MyImg.Source = png;
-                            ////img.Width = double.Parse(dr["W"].ToString());
-                            ////img.Height = double.Parse(dr["H"].ToString());
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
+                             
 
                             BPImg img = new BPImg();
                             img.Name = dr["MyPK"];
@@ -1261,6 +1258,9 @@ namespace CCForm
                     case "Sys_FrmImgAth":
                         foreach (DataRow dr in dt.Rows)
                         {
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
+
                             BPImgAth ath = new BPImgAth();
                             ath.Name = dr["MyPK"];
                             ath.Cursor = Cursors.Hand;
@@ -1282,6 +1282,9 @@ namespace CCForm
                         DataTable dtRB = this.FrmDS.Tables["Sys_FrmRB"];
                         foreach (DataRow dr in dtRB.Rows)
                         {
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
+
                             BPRadioBtn btn = new BPRadioBtn();
                             btn.Name = dr["MyPK"];
                             btn.GroupName = dr["KeyOfEn"];
@@ -1302,9 +1305,12 @@ namespace CCForm
                     case "Sys_MapAttr":
                         foreach (DataRow dr in dt.Rows)
                         {
-                            if (dr["UIVisible"] == "0"
-                                && dr["UIContralType"] != CtrlType.DDL)
+                            if (dr["UIVisible"] == "0" )
                                 continue;
+
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
+
                             string myPk = dr["MyPK"];
                             string FK_MapData = dr["FK_MapData"];
                             string keyOfEn = dr["KeyOfEn"];
@@ -1363,7 +1369,6 @@ namespace CCForm
                                     if (this.canvasMain.FindName(tb.Name) != null)
                                     {
                                         MessageBox.Show("已经存在" + tb.Name);
-                                        //throw new Exception("@sdsdsd");
                                         continue;
                                     }
 
@@ -1436,8 +1441,10 @@ namespace CCForm
                     case "Sys_MapM2M":
                         foreach (DataRow dr in dt.Rows)
                         {
-                            BPM2M m2m = new BPM2M(dr["No"]);
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
 
+                            BPM2M m2m = new BPM2M(dr["No"]);
                             m2m.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
                             m2m.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
 
@@ -1455,6 +1462,8 @@ namespace CCForm
                     case "Sys_MapDtl":
                         foreach (DataRow dr in dt.Rows)
                         {
+                     
+
                             BPDtl dtl = new BPDtl(dr["No"]);
 
                             dtl.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
@@ -1473,6 +1482,9 @@ namespace CCForm
                     case "Sys_FrmAttachment":
                         foreach (DataRow dr in dt.Rows)
                         {
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
+
                             string uploadTypeInt = dr["UploadType"].ToString();
                             if (uploadTypeInt == null)
                                 uploadTypeInt = "0";
@@ -3690,7 +3702,7 @@ namespace CCForm
             mapAttrDT.Columns.Add(new DataColumn("UIBindKey", typeof(string)));
             mapAttrDT.Columns.Add(new DataColumn("UIRefKey", typeof(string)));
             mapAttrDT.Columns.Add(new DataColumn("UIRefKeyText", typeof(string)));
-         //   mapAttrDT.Columns.Add(new DataColumn("UIVisible", typeof(string)));
+            //   mapAttrDT.Columns.Add(new DataColumn("UIVisible", typeof(string)));
             mapAttrDT.Columns.Add(new DataColumn("X", typeof(double)));
             mapAttrDT.Columns.Add(new DataColumn("Y", typeof(double)));
             #endregion mapAttrDT
@@ -3861,7 +3873,7 @@ namespace CCForm
                     drLink["FontStyle"] = link.FontStyle.ToString();
                     drLink["FontSize"] = link.FontSize.ToString();
                     drLink["URL"] = link.URL;
-                    drLink["Target"] =  link.WinTarget;
+                    drLink["Target"] = link.WinTarget;
 
                     if (link.FontWeight == FontWeights.Normal)
                         drLink["IsBold"] = "0";
@@ -3946,7 +3958,7 @@ namespace CCForm
 
                     mapAttrDR["X"] = x.ToString("0.00"); // Canvas.GetLeft(ctl).ToString("0.00");
                     mapAttrDR["Y"] = y.ToString("0.00"); // Canvas.GetTop(ctl).ToString("0.00");
-                   // mapAttrDR["UIVisible"] = "1";
+                    // mapAttrDR["UIVisible"] = "1";
                     mapAttrDT.Rows.Add(mapAttrDR);
                     continue;
                 }
@@ -3968,7 +3980,7 @@ namespace CCForm
                     mapAttrDR["X"] = dX.ToString("0.00");
                     mapAttrDR["Y"] = dY.ToString("0.00");
 
-                   // mapAttrDR["UIVisible"] = "1";
+                    // mapAttrDR["UIVisible"] = "1";
                     mapAttrDR["UIWidth"] = "50";
                     mapAttrDR["UIHeight"] = "23";
 
@@ -4003,7 +4015,7 @@ namespace CCForm
                     mapAttrDR["UIBindKey"] = ddl.UIBindKey;
                     mapAttrDR["UIRefKey"] = "No";
                     mapAttrDR["UIRefKeyText"] = "Name";
-               //     mapAttrDR["UIVisible"] = "1";
+                    //     mapAttrDR["UIVisible"] = "1";
                     mapAttrDT.Rows.Add(mapAttrDR);
                     continue;
                 }
@@ -4022,7 +4034,7 @@ namespace CCForm
                     mapAttrDR["LGType"] = LGType.Normal;
                     mapAttrDR["X"] = dX.ToString("0.00");
                     mapAttrDR["Y"] = dY.ToString("0.00");
-                 //   mapAttrDR["UIVisible"] = "1";
+                    //   mapAttrDR["UIVisible"] = "1";
                     mapAttrDR["UIWidth"] = "100"; // cb.Width.ToString("0.00");
                     mapAttrDR["UIHeight"] = "23"; // cb.Height.ToString("0.00");
 
@@ -4102,7 +4114,7 @@ namespace CCForm
                 if (athCtl != null)
                 {
                     DataRow mapAth = athDT.NewRow();
-                    mapAth["MyPK"] = Glo.FK_MapData+"_"+athCtl.Name;
+                    mapAth["MyPK"] = Glo.FK_MapData + "_" + athCtl.Name;
                     mapAth["FK_MapData"] = Glo.FK_MapData;
                     mapAth["NoOfAth"] = athCtl.Name;
                     mapAth["Name"] = athCtl.Label;
@@ -4194,7 +4206,7 @@ namespace CCForm
                 mapAttrDR["UIContralType"] = CtrlType.RB;
                 mapAttrDR["MyDataType"] = DataType.AppInt;
                 mapAttrDR["LGType"] = LGType.Enum;
-              //  mapAttrDR["IntKey"] = dr["IntKey"];
+                //  mapAttrDR["IntKey"] = dr["IntKey"];
 
                 mapAttrDR["X"] = "0";
                 mapAttrDR["Y"] = "0";
@@ -4202,7 +4214,7 @@ namespace CCForm
                 mapAttrDR["UIBindKey"] = enumKey;
                 mapAttrDR["UIRefKey"] = "No";
                 mapAttrDR["UIRefKeyText"] = "Name";
-          //      mapAttrDR["UIVisible"] = "1";
+                //      mapAttrDR["UIVisible"] = "1";
                 mapAttrDR["UIWidth"] = "30";
                 mapAttrDR["UIHeight"] = "23";
                 mapAttrDT.Rows.Add(mapAttrDR);
@@ -4258,6 +4270,11 @@ namespace CCForm
 
                 foreach (DataRow dr in ysdt.Rows)
                 {
+                    if (ysdt.TableName == "Sys_MapData")
+                        continue;
+                    if (dr["FK_MapData"] != Glo.FK_MapData)
+                        continue;
+
                     string pkVal = dr[pk].ToString();
                     bool isHave = false;
                     foreach (DataRow newDr in newDt.Rows)
@@ -4323,19 +4340,12 @@ namespace CCForm
                     sqls += "@UPDATE Sys_MapAttr SET Name='" + rb.KeyName + "' WHERE MyPK='" + Glo.FK_MapData + "_" + rb.GroupName + "' AND LEN(Name)=0";
                     continue;
                 }
-
-                //BPDtl dtl = ctl as BPDtl;
-                //if (dtl != null)
-                //{
-                //  //  sqls += "@UPDATE Sys_MapDtl SET Name='" + dtl.Name + "',PTable='" + dtl.Name + "'  WHERE No='" + dtl.Name + "' AND LEN(Name)=0";
-                //    continue;
-                //}
             }
             #endregion save  label.
 
             sqls += "@UPDATE Sys_MapAttr SET UIVisible=1 WHERE FK_MapData='" + Glo.FK_MapData + "' AND UIVisible is null";
 
-            this.loadingWindow.Title="正在保存数据...";
+            this.loadingWindow.Title = "正在保存数据...";
             this.loadingWindow.Show();
 
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();

@@ -322,8 +322,18 @@ namespace BP.WF
 
             //从草稿里看看是否有新工作？
             StartWork wk = (StartWork)nd.HisWork;
-            int num = wk.Retrieve(StartWorkAttr.NodeState, 0,
-                StartWorkAttr.Rec, WebUser.No);
+            int num = 0;
+            try
+            {
+                num = wk.Retrieve(StartWorkAttr.NodeState, 0,
+                   StartWorkAttr.Rec, WebUser.No);
+            }
+            catch
+            {
+                wk.CheckPhysicsTable();
+                num = wk.Retrieve(StartWorkAttr.NodeState, 0,
+                   StartWorkAttr.Rec, WebUser.No);
+            }
 
             if (num == 0)
             {
@@ -643,7 +653,7 @@ namespace BP.WF
         public string DoCheck()
         {
             DBAccess.RunSQL("UPDATE WF_Node SET FlowName = (SELECT Name FROM WF_Flow WHERE NO=WF_Node.FK_Flow)");
-            this.NumOfBill = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM WF_BillTemplate WHERE NodeID IN (select NodeID from WF_Flow where no='" + this.No + "')");
+            this.NumOfBill = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM WF_BillTemplate WHERE NodeID IN (select NodeID from WF_Flow WHERE no='" + this.No + "')");
             this.NumOfDtl = DBAccess.RunSQLReturnValInt("SELECT count(*) FROM Sys_MapDtl WHERE FK_MapData='ND" + int.Parse(this.No) + "Rpt'");
             this.DirectUpdate();
 
@@ -2023,7 +2033,7 @@ namespace BP.WF
                 switch (attr.KeyOfEn)
                 {
                     case StartWorkAttr.NodeState:
-                        attr.Delete();
+                        attr.DirectDelete();
                         break;
                     case StartWorkAttr.WFState:
                         if (attr.UIBindKey.Length > 3)

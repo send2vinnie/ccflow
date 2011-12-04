@@ -175,13 +175,16 @@ namespace BP.En
 
             foreach (Attr attr in en.EnMap.Attrs)
             {
-                if (attr.MyFieldType == FieldType.PK || attr.MyFieldType == FieldType.PKFK || attr.MyFieldType == FieldType.PKEnum)
+                if (attr.MyFieldType == FieldType.PK 
+                    || attr.MyFieldType == FieldType.PKFK 
+                    || attr.MyFieldType == FieldType.PKEnum)
                 {
                     if (attr.MyDataType == DataType.AppString)
                     {
                         paras.Add(attr.Key, en.GetValByKey(attr.Key).ToString());
                         continue;
                     }
+
                     if (attr.MyDataType == DataType.AppInt)
                     {
                         paras.Add(attr.Key, en.GetValIntByKey(attr.Key));
@@ -191,7 +194,6 @@ namespace BP.En
             }
             return paras;
         }
-
         public static String GetKeyConditionOfOraForPara(Entity en)
         {
             // 不能删除物理表名称，会引起未定义列。
@@ -298,7 +300,6 @@ namespace BP.En
             {
                 case DBType.SQL2000:
                 case DBType.Access:
-
                     if (en.EnMap.HisFKAttrs.Count == 0)
                         return SqlBuilder.SelectSQLOfMS(en, 1) + SqlBuilder.GetKeyConditionOfOraForPara(en);
                     else
@@ -725,11 +726,16 @@ namespace BP.En
                 return from + " WHERE (1=1)";
 
             string mytable = en.EnMap.PhysicsTable;
-            Attrs fkAttrs = en.EnMap.HisFKAttrs;
+            Attrs fkAttrs = en.EnMap.Attrs;
             foreach (Attr attr in fkAttrs)
             {
+
+                if (attr.IsFK==false)
+                    continue;
+
                 if (attr.MyFieldType == FieldType.RefText)
                     continue;
+
 
                 string fktable = attr.HisFKEn.EnMap.PhysicsTable;
                 Attr refAttr = attr.HisFKEn.EnMap.GetAttrByKey(attr.UIRefKeyValue);
@@ -1149,9 +1155,14 @@ namespace BP.En
                         attr.DefaultVal + ")   " + attr.Key + "";
                         if (attr.MyFieldType == FieldType.Enum || attr.MyFieldType == FieldType.PKEnum)
                         {
+#warning 20111-12-03 不应出现异常。
+                            if (attr.UIBindKey.Contains("."))
+                                throw new Exception("@" + en.ToString() + " &UIBindKey=" + attr.UIBindKey + " @Key=" + attr.Key);
+
                             Sys.SysEnums ses = new BP.Sys.SysEnums(attr.UIBindKey, attr.UITag);
                             val = val + "," + ses.GenerCaseWhenForOracle(mainTable, attr.Key, attr.Field, attr.UIBindKey, int.Parse(attr.DefaultVal.ToString()));
                         }
+
                         if (attr.MyFieldType == FieldType.FK || attr.MyFieldType == FieldType.PKFK)
                         {
                             Map map = attr.HisFKEn.EnMap;

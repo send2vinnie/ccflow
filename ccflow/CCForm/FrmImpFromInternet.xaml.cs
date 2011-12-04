@@ -45,7 +45,7 @@ namespace CCForm
             this.OKButton.Visibility = System.Windows.Visibility.Collapsed;
 
             /*连接网络*/
-            FF.CCFormSoapClient da = new CCFormSoapClient();
+            FF.CCFormSoapClient da =Glo.GetCCFormSoapClientServiceInstance();
             da.FtpMethodAsync("GetDirs", "/Form.表单模版/", null, null);
             da.FtpMethodCompleted += new EventHandler<FtpMethodCompletedEventArgs>(da_FtpMethodCompleted);
 
@@ -96,7 +96,7 @@ namespace CCForm
                 Dir dir = sender as Dir;
                 if (dir != null)
                 {
-                    FF.CCFormSoapClient da = new CCFormSoapClient();
+                    FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
                     da.FtpMethodAsync("GetFls", this.PathOfFtp + "/" + dir.Tag.ToString(), null, null);
                     this.PathOfFtpCurrDir = dir.Tag.ToString();
 
@@ -156,7 +156,7 @@ namespace CCForm
                != MessageBoxResult.OK)
                         return;
 
-                    FF.CCFormSoapClient loadTemplete = new CCFormSoapClient();
+                    FF.CCFormSoapClient loadTemplete = Glo.GetCCFormSoapClientServiceInstance();
                     loadTemplete.FtpMethodAsync("LoadTempleteFile" ,fl.Tag.ToString(), Glo.FK_MapData, this.PathOfFtpCurrDir);
                     loadTemplete.FtpMethodCompleted += new EventHandler<FtpMethodCompletedEventArgs>(loadTemplete_FtpMethodCompleted);
                     this.loadingWindow.Title = "正在装载模板请稍候。。。";

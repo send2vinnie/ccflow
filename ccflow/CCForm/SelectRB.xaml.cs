@@ -40,7 +40,7 @@ namespace CCForm
             this.listBox2.Items.Clear();
 
             string sql = "SELECT No,Name,CfgVal FROM Sys_EnumMain";
-            CCFormSoapClient da = new CCFormSoapClient();
+            CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
             da.RunSQLReturnTableAsync(sql);
             da.RunSQLReturnTableCompleted += new EventHandler<FF.RunSQLReturnTableCompletedEventArgs>(da_RunSQLReturnTableCompleted);
             this.listBox1.SelectionChanged += new SelectionChangedEventHandler(listBox1_SelectionChanged);
@@ -100,10 +100,7 @@ namespace CCForm
             }
             this.DialogResult = true;
 
-
-            //FF.CCFormSoapClient da = new CCFormSoapClient();
-            //da.NewFieldsAsync(this.TB_KeyOfEn.Text, this.TB_KeyOfName.Text, Glo.FK_MapData);
-            //da.NewFieldsCompleted += new EventHandler<NewFieldsCompletedEventArgs>(da_NewFieldsCompleted);
+             
         }
 
         //void da_NewFieldsCompleted(object sender, NewFieldsCompletedEventArgs e)
@@ -212,7 +209,7 @@ namespace CCForm
                 keys += "@" + idx + "=" + tb.Text;
                 idx++;
             }
-            FF.CCFormSoapClient da = new CCFormSoapClient();
+            FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
             da.SaveEnumAsync(this.TB_No.Text, this.TB_Name.Text, keys);
             da.SaveEnumCompleted += new EventHandler<SaveEnumCompletedEventArgs>(da_SaveEnumCompleted);
         }
@@ -231,7 +228,7 @@ namespace CCForm
                 MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
                 return;
 
-            FF.CCFormSoapClient da = new CCFormSoapClient();
+            FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
             da.DoTypeAsync("DelEnum", this.TB_No.Text.Trim(), null, null, null, null);
             da.DoTypeCompleted += new EventHandler<DoTypeCompletedEventArgs>(da_DoTypeCompleted);
         }
@@ -261,7 +258,7 @@ namespace CCForm
             if (this.TB_Name.Text.Trim().Length == 0)
                 return;
 
-            FF.CCFormSoapClient ff = new CCFormSoapClient();
+            FF.CCFormSoapClient ff = Glo.GetCCFormSoapClientServiceInstance();
             ff.ParseStringToPinyinAsync(this.TB_Name.Text.Trim());
             ff.ParseStringToPinyinCompleted += new EventHandler<ParseStringToPinyinCompletedEventArgs>(ff_ParseStringToPinyinCompleted);
         }

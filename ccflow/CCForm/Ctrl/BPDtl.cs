@@ -94,7 +94,7 @@ namespace CCForm
             ds.FromXml(e.Result);
             if (ds.Tables[0].Rows.Count == 0)
             {
-                this.NewDtl();
+               // this.NewDtl();
                 return;
             }
          
@@ -131,11 +131,12 @@ namespace CCForm
                 MessageBox.Show(e.Result, "提示", MessageBoxButton.OK);
                 return;
             }
-            
+
             this.LoadDtl();
 
             string url = Glo.BPMHost + "/WF/MapDef/MapDefDtlFreeFrm.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&FK_MapDtl=" + this.Name;
-            HtmlPage.Window.Eval("window.open('" + url + "','_blank')");
+            Glo.WinOpen(url, 700, 1100);
+            //   HtmlPage.Window.Eval("window.open('" + url + "','_blank')");
         }
         public DataGrid MyDG = null;
         public void UpdatePos()

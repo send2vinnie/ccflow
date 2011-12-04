@@ -433,10 +433,6 @@ namespace BP.WF
         /// </summary>
         public const string SignType = "SignType";
         /// <summary>
-        /// 
-        /// </summary>
-        public const string DoWhat = "DoWhat";
-        /// <summary>
         /// 显示的表单
         /// </summary>
         public const string ShowSheets = "ShowSheets";
@@ -1182,17 +1178,6 @@ namespace BP.WF
             get
             {
                 return _GetHisPriFLNode(this.HisFromNodes);
-            }
-        }
-        public string DoWhat
-        {
-            get
-            {
-                return this.GetValStrByKey(NodeAttr.DoWhat);
-            }
-            set
-            {
-                SetValByKey(NodeAttr.DoWhat, value);
             }
         }
         public string TurnToDealDoc
@@ -2178,7 +2163,8 @@ namespace BP.WF
 
 
                 map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10);
-                map.AddTBString(NodeAttr.DoWhat, null, "完成后处理SQL", true, false, 0, 500, 10);
+                
+
                 map.AddTBString(NodeAttr.Doc, null, BP.Sys.Language.GetValByUserLang("Desc", "描述"), true, false, 0, 100, 10);
                 map.AddBoolean(NodeAttr.IsTask, true, "允许分配工作否?", true, true);
 
@@ -2940,14 +2926,7 @@ namespace BP.WF
         {
             BP.Sys.MapData md = new BP.Sys.MapData();
             md.No = "ND" + this.NodeID;
-
-            string sqls = "DELETE Sys_MapData WHERE No='" + md.No + "'";
-            sqls += "@DELETE Sys_MapAttr WHERE FK_MapData='" + md.No + "'";
-            sqls += "@DELETE Sys_MapFrame WHERE FK_MapData='" + md.No + "'";
-            sqls += "@DELETE Sys_MapExt WHERE FK_MapData='" + md.No + "'";
-            sqls += "@DELETE Sys_MapDtl WHERE FK_MapData='" + md.No + "'";
-            BP.DA.DBAccess.RunSQLs(sqls);
-            
+            md.Delete();
             md.Name = this.Name;
             md.Insert();
 
@@ -3066,9 +3045,9 @@ namespace BP.WF
             attr.KeyOfEn = StartWorkAttr.FK_Dept;
             attr.Name = BP.Sys.Language.GetValByUserLang("OperDept", "操作员部门"); //"操作员部门";
             attr.MyDataType = BP.DA.DataType.AppString;
-            attr.UIContralType = UIContralType.DDL;
-            attr.LGType = FieldTypeS.FK;
-            attr.UIBindKey = "BP.Port.Depts";
+            attr.UIContralType = UIContralType.TB;
+            attr.LGType = FieldTypeS.Normal;
+         //   attr.UIBindKey = "BP.Port.Depts";
             attr.UIVisible = false;
             attr.UIIsEnable = false;
             attr.MinLen = 0;
@@ -3077,7 +3056,7 @@ namespace BP.WF
 
             if (this.NodePosType == NodePosType.Start)
             {
-                //开始节点信息 
+                //开始节点信息.
                 attr = new BP.Sys.MapAttr();
                 attr.FK_MapData = md.No;
                 attr.HisEditType = BP.En.EditType.Readonly;

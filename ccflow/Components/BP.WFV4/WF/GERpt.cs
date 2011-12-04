@@ -128,7 +128,10 @@ namespace BP.WF
                     return emp.EnMap;
                 }
 
-                MapData md = new MapData(RptName);
+                MapData md = new MapData( );
+                md.No = RptName;
+                md.Retrieve();
+
                 this._enMap = md.GenerHisMap();
                 return this._enMap;
             }

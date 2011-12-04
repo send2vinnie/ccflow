@@ -229,7 +229,6 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true);
 
                 map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 500, 10, true);
-                map.AddTBString(NodeAttr.DoWhat, null, this.ToE("DoWhat", "完成后处理SQL"), false, false, 0, 500, 10, false);
 
                 map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 500, 10, false);
 

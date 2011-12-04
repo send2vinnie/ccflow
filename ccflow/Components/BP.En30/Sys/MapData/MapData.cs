@@ -323,7 +323,10 @@ namespace BP.Sys
         {
             if (SystemConfig.IsDebug)
             {
-                MapData md = new MapData(no);
+                MapData md = new MapData();
+                md.No = no;
+                md.Retrieve();
+
                 return md.GenerHisMap();
             }
             else
@@ -331,7 +334,10 @@ namespace BP.Sys
                 Map map = BP.DA.Cash.GetMap(no);
                 if (map == null)
                 {
-                    MapData md = new MapData(no);
+                    MapData md = new MapData();
+                    md.No = no;
+                    md.Retrieve();
+
                     map = md.GenerHisMap();
                     BP.DA.Cash.SetMap(no, map);
                 }
@@ -344,10 +350,12 @@ namespace BP.Sys
         public MapData()
         {
         }
-        public MapData(string mypk)
+        /// <summary>
+        /// 映射基础
+        /// </summary>
+        /// <param name="no"></param>
+        public MapData(string no):base(no)
         {
-            this.No = mypk;
-            this.Retrieve();
         }
         /// <summary>
         /// EnMap
@@ -382,7 +390,6 @@ namespace BP.Sys
 
                 // 可以为空这个字段。
                 map.AddTBString(MapDataAttr.FK_FrmSort, null, "表单类别", true, false, 0, 500, 20);
-
                 map.AddTBString(MapDataAttr.ShowAttrs, null, "显示的列", true, false, 0, 3800, 20);
 
                 // map.AddTBInt(MapDataAttr.FrmFrom, 0, "来源", true, true);
@@ -646,6 +653,7 @@ namespace BP.Sys
         protected override bool beforeDelete()
         {
             MapAttrs attrs = new MapAttrs();
+            string sql = "";
             attrs.Delete(MapAttrAttr.FK_MapData, this.No);
             try
             {
@@ -655,29 +663,31 @@ namespace BP.Sys
             {
             }
 
-            string sql = "";
-            sql += "@DELETE Sys_FrmLine WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmLab WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmLink WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmImg WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmImgAth WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmRB WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmAttachment WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_MapM2M WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_MapFrame WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_MapExt WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_MapAttr WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_GroupField WHERE EnName='" + this.No + "'";
-            sql += "@DELETE Sys_MapDtl WHERE FK_MapData='" + this.No + "'";
-
-
-            DBAccess.RunSQLs(sql);
-
-            MapDtls dtls = new MapDtls(this.No);
-            foreach (MapDtl dtl in dtls)
+            // Sys_MapDtl.
+            sql = "SELECT * FROM Sys_MapDtl WHERE FK_MapData ='" + this.No + "'";
+            DataTable Sys_MapDtl = DBAccess.RunSQLReturnTable(sql);
+            string ids = "'" + this.No + "'";
+            foreach (DataRow dr in Sys_MapDtl.Rows)
             {
-                dtl.Delete();
+                ids += ",'" + dr["No"] + "'";
             }
+
+            string where = " FK_MapData IN (" + ids + ")";
+            sql += "@DELETE Sys_FrmLine WHERE " + where;
+            sql += "@DELETE Sys_FrmBtn WHERE " + where;
+            sql += "@DELETE Sys_FrmLab WHERE " + where;
+            sql += "@DELETE Sys_FrmLink WHERE " + where;
+            sql += "@DELETE Sys_FrmImg WHERE " + where;
+            sql += "@DELETE Sys_FrmImgAth WHERE " + where;
+            sql += "@DELETE Sys_FrmRB WHERE " + where;
+            sql += "@DELETE Sys_FrmAttachment WHERE " + where;
+            sql += "@DELETE Sys_MapM2M WHERE " + where;
+            sql += "@DELETE Sys_MapFrame WHERE " + where;
+            sql += "@DELETE Sys_MapExt WHERE " + where;
+            sql += "@DELETE Sys_MapAttr WHERE " + where;
+            sql += "@DELETE Sys_GroupField WHERE EnName IN (" + ids + ")";
+            sql += "@DELETE Sys_MapData WHERE No IN (" + ids + ")";
+            DBAccess.RunSQLs(sql);
             return base.beforeDelete();
         }
         public System.Data.DataSet GenerHisDataSet()

@@ -448,14 +448,13 @@ namespace BP.En
                         if (attr.MyFieldType == FieldType.FK
                             || attr.MyFieldType == FieldType.PKFK)
                         {
-                            _HisFKAttrs.Add(attr, true, false);
+                            _HisFKAttrs.Add(attr, false, false);
                         }
                     }
                 }
                 return _HisFKAttrs;
             }
         }
-
         private int _isFull = -1;
         /// <summary>
         /// 是否有自动计算

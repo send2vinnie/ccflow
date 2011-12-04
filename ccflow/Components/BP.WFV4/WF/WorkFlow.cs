@@ -623,7 +623,7 @@ namespace BP.WF
                     dtlDatas.Retrieve(GEDtlAttr.RefPK, this.WorkID);
 
                     // 创建一个Rpt对象。
-                    GEEntity geDtl = new GEEntity("ND" + int.Parse(this.HisFlow.No) + "RptDtl" + i.ToString());
+                    GEDtl geDtl = new GEDtl("ND" + int.Parse(this.HisFlow.No) + "RptDtl" + i.ToString());
                     // 复制到指定的报表中。
                     foreach (GEDtl dtlData in dtlDatas)
                     {

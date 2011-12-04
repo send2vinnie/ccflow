@@ -922,7 +922,10 @@ namespace BP.DA
         #region index
         public static void CreatIndex(string table, string pk)
         {
-            DBAccess.RunSQL("CREATE INDEX " + table + "ID ON " + table + " (" + pk + ")");
+            string sql = "";
+            sql = "DROP INDEX " + table + "." + table + "ID";
+            sql += "@CREATE INDEX " + table + "ID ON " + table + " (" + pk + ")";
+            DBAccess.RunSQLs(sql);
         }
         public static void CreatIndex(string table, string pk1, string pk2)
         {
@@ -1725,7 +1728,7 @@ namespace BP.DA
         /// </summary>
         /// <param name="selectSQL">要执行的sql</param>
         /// <returns>返回table</returns>
-        private static DataTable RunSQLReturnTable_200705_SQL(string selectSQL,Paras paras)
+        private static DataTable RunSQLReturnTable_200705_SQL_bak(string selectSQL, Paras paras)
         {
             ConnOfSQL connofObj = GetAppCenterDBConn as ConnOfSQL;
             connofObj.AddSQL(selectSQL);
@@ -1743,10 +1746,8 @@ namespace BP.DA
                 {
                     SqlParameter myParameter = new SqlParameter(para.ParaName, para.val);
                     myParameter.Size = para.Size;
-                    // myParameter.Value = para.val;
                     ada.SelectCommand.Parameters.Add(myParameter);
                 }
-
 
                 DataTable oratb = new DataTable("otb");
                 ada.Fill(oratb);
@@ -1772,6 +1773,34 @@ namespace BP.DA
             {
                 HisConnOfSQLs.PutPool(connofObj);
             }
+        }
+        /// <summary>
+        /// RunSQLReturnTable_200705_SQL
+        /// </summary>
+        /// <param name="selectSQL">要执行的sql</param>
+        /// <returns>返回table</returns>
+        private static DataTable RunSQLReturnTable_200705_SQL(string selectSQL, Paras paras)
+        {
+            SqlConnection conn = new SqlConnection(SystemConfig.AppCenterDSN);
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
+
+            SqlDataAdapter ada = new SqlDataAdapter(selectSQL, conn);
+            ada.SelectCommand.CommandType = CommandType.Text;
+
+            // 加入参数
+            foreach (Para para in paras)
+            {
+                SqlParameter myParameter = new SqlParameter(para.ParaName, para.val);
+                myParameter.Size = para.Size;
+                ada.SelectCommand.Parameters.Add(myParameter);
+            }
+
+            DataTable oratb = new DataTable("otb");
+            ada.Fill(oratb);
+            ada.Dispose();
+            conn.Close();
+            return oratb;
         }
         /// <summary>
         /// RunSQLReturnTable_200705_SQL
@@ -2058,15 +2087,19 @@ namespace BP.DA
             {
                 return int.Parse(str);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception("@"+ps.SQL +"Val="+str +ex.Message );
+                throw new Exception("@" + ps.SQL + "Val=" + str + ex.Message);
             }
         }
 
         public static int RunSQLReturnValInt(string sql)
         {
-            return int.Parse(DA.DBAccess.RunSQLReturnVal(sql).ToString());
+            object obj = DBAccess.RunSQLReturnVal(sql);
+            if (obj == null)
+                throw new Exception("@没有获取您要查询的数据,请检查SQL:"+sql+" @关于查询出来的详细信息已经记录日志文件，请处理。");
+
+            return int.Parse(obj.ToString());
         }
         public static int RunSQLReturnValInt(string sql,Paras paras)
         {
@@ -2291,16 +2324,14 @@ namespace BP.DA
         public static object RunSQLReturnVal(string sql)
         {
             RunSQLReturnTableCount++;
-          //  Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "===RunSQLReturnTable sql=" + sql);
-
             DataTable dt = null;
             switch (SystemConfig.AppCenterDBType)
             {
                 case DBType.Oracle9i:
-                    dt = DBAccess.RunSQLReturnTable_200705_Ora(sql,new Paras() );
+                    dt = DBAccess.RunSQLReturnTable_200705_Ora(sql, new Paras());
                     break;
                 case DBType.SQL2000:
-                    dt = DBAccess.RunSQLReturnTable_200705_SQL(sql,new Paras());
+                    dt = DBAccess.RunSQLReturnTable_200705_SQL(sql, new Paras());
                     break;
                 case DBType.Access:
                     dt = DBAccess.RunSQLReturnTable_200705_OLE(sql, new Paras());
@@ -2308,9 +2339,17 @@ namespace BP.DA
                 default:
                     throw new Exception("@没有判断的数据库类型");
             }
-
             if (dt.Rows.Count == 0)
+            {
+             
+#warning 不应该出现的异常 2011-12-03 
+                string cols = "";
+                foreach (DataColumn dc in dt.Columns)
+                    cols += " , " + dc.ColumnName;
+
+                BP.DA.Log.DebugWriteInfo("@SQL="+sql+" . 列="+cols);
                 return null;
+            }
             return dt.Rows[0][0];
         }
         #endregion

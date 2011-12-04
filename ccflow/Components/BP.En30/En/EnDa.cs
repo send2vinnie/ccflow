@@ -214,36 +214,30 @@ namespace BP.DA
         }
         public static int Retrieve(Entity en, string sql, Paras paras)
         {
-            try
-            {
-                DataTable dt = new DataTable();
-                switch (en.EnMap.EnDBUrl.DBUrlType)
-                {
-                    case DBUrlType.AppCenterDSN:
-                        dt = DBAccess.RunSQLReturnTable(sql, paras);
-                        break;
-                    case DBUrlType.DBAccessOfMSSQL2000:
-                        dt = DBAccessOfMSSQL2000.RunSQLReturnTable(sql);
-                        break;
-                    case DBUrlType.DBAccessOfOracle9i:
-                        dt = DBAccessOfOracle9i.RunSQLReturnTable(sql);
-                        break;
-                    default:
-                        throw new Exception("@没有设置DB类型。");
-                }
 
-                if (dt.Rows.Count == 0)
-                    return 0;
-                Attrs attrs = en.EnMap.Attrs;
-                EnDA.fullDate(dt, en, attrs);
-                int i = dt.Rows.Count;
-                dt.Dispose();
-                return i;
-            }
-            catch (System.Exception ex)
+            DataTable dt ;
+            switch (en.EnMap.EnDBUrl.DBUrlType)
             {
-                throw ex;
+                case DBUrlType.AppCenterDSN:
+                    dt = DBAccess.RunSQLReturnTable(sql, paras);
+                    break;
+                case DBUrlType.DBAccessOfMSSQL2000:
+                    dt = DBAccessOfMSSQL2000.RunSQLReturnTable(sql);
+                    break;
+                case DBUrlType.DBAccessOfOracle9i:
+                    dt = DBAccessOfOracle9i.RunSQLReturnTable(sql);
+                    break;
+                default:
+                    throw new Exception("@没有设置DB类型。");
             }
+
+            if (dt.Rows.Count == 0)
+                return 0;
+            Attrs attrs = en.EnMap.Attrs;
+            EnDA.fullDate(dt, en, attrs);
+            int i = dt.Rows.Count;
+            dt.Dispose();
+            return i;
         }
 		/// <summary>
 		/// 查询
@@ -289,25 +283,6 @@ namespace BP.DA
             foreach (Attr attr in attrs)
             {
                 en.Row.SetValByKey(attr.Key, dt.Rows[0][attr.Key]);
-                /*
-                switch(attr.MyDataType)
-                {
-                    case DataType.AppMoney:					
-                        //en.Row.SetValByKey(attr.Key,decimal.Round(decimal.Parse( dt.Rows[0][attr.Key].ToString()),2 ));
-                        decimal val1= (decimal)dt.Rows[0][attr.Key];
-                        en.Row.SetValByKey(attr.Key, decimal.Round(val1,2) );
-                        break;
-                    case DataType.AppFloat:
-                    case DataType.AppDouble:
-                    case DataType.AppRate:
-                        decimal val= (decimal)dt.Rows[0][attr.Key];
-                        en.Row.SetValByKey(attr.Key, decimal.Round(val,4) );
-                        break;					 
-                    default:
-                        en.Row.SetValByKey(attr.Key,dt.Rows[0][attr.Key]);
-                        break;
-                }
-                */
             }
 		}
         public static int Retrieve(Entities ens, string sql)
@@ -357,57 +332,43 @@ namespace BP.DA
             }
             catch (System.Exception ex)
             {
-                ens.GetNewEntity.CheckPhysicsTable();
+                // ens.GetNewEntity.CheckPhysicsTable();
                 throw new Exception("@在[" + ens.GetNewEntity.EnDesc + "]查询时出现错误:" + ex.Message);
             }
         }
-        public static int Retrieve(Entities ens, string sql,Paras paras,string[] fullAttrs)
+        public static int Retrieve(Entities ens, string sql, Paras paras, string[] fullAttrs)
         {
-            
-            try
+            DataTable dt =null;
+            switch (ens.GetNewEntity.EnMap.EnDBUrl.DBUrlType)
             {
-                DataTable dt = new DataTable();
-                switch (ens.GetNewEntity.EnMap.EnDBUrl.DBUrlType)
-                {
-                    case DBUrlType.AppCenterDSN:
-                        dt = DBAccess.RunSQLReturnTable(sql, paras);
-                        break;
-                    case DBUrlType.DBAccessOfMSSQL2000:
-                        dt = DBAccessOfMSSQL2000.RunSQLReturnTable(sql);
-                        break;
-                    case DBUrlType.DBAccessOfOracle9i:
-                        dt = DBAccessOfOracle9i.RunSQLReturnTable(sql);
-                        break;
-                    case DBUrlType.DBAccessOfOLE:
-                        dt = DBAccessOfOLE.RunSQLReturnTable(sql);
-                        break;
-                    default:
-                        throw new Exception("@没有设置DB类型。");
-                }
+                case DBUrlType.AppCenterDSN:
+                    dt = DBAccess.RunSQLReturnTable(sql, paras);
+                    break;
+                case DBUrlType.DBAccessOfMSSQL2000:
+                    dt = DBAccessOfMSSQL2000.RunSQLReturnTable(sql);
+                    break;
+                case DBUrlType.DBAccessOfOracle9i:
+                    dt = DBAccessOfOracle9i.RunSQLReturnTable(sql);
+                    break;
+                case DBUrlType.DBAccessOfOLE:
+                    dt = DBAccessOfOLE.RunSQLReturnTable(sql);
+                    break;
+                default:
+                    throw new Exception("@没有设置DB类型。");
+            }
 
-                if (dt.Rows.Count == 0)
-                    return 0;
+            if (dt.Rows.Count == 0)
+                return 0;
 
-                if (fullAttrs != null)
+            if (fullAttrs == null)
+            {
+                Map enMap = ens.GetNewEntity.EnMap;
+                Attrs attrs = enMap.Attrs;
+                try
                 {
                     foreach (DataRow dr in dt.Rows)
                     {
                         Entity en = ens.GetNewEntity;
-                        foreach (string str in fullAttrs)
-                        {
-                            en.Row.SetValByKey(str, dr[str]);
-                        }
-                        ens.AddEntity(en);
-                    }
-                }
-                else
-                {
-                    Map enMap = ens.GetNewEntity.EnMap;
-                    Attrs attrs = enMap.Attrs;
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        Entity en = ens.GetNewEntity;
-                        //Entity  en = en1.CreateInstance();
                         foreach (Attr attr in attrs)
                         {
                             en.Row.SetValByKey(attr.Key, dr[attr.Key]);
@@ -415,16 +376,32 @@ namespace BP.DA
                         ens.AddEntity(en);
                     }
                 }
-                int i = dt.Rows.Count;
-                dt.Dispose();
-                return i;
-                //return dt.Rows.Count;
+                catch(Exception ex)
+                {
+                    #warning 不应该出现的错误. 2011-12-03 add
+                    string cols = "";
+                    foreach (DataColumn dc in dt.Columns)
+                    {
+                        cols += " , " + dc.ColumnName;
+                    }
+                    throw new Exception("Columns="+cols+"@Ens=" + ens.ToString() + "@SQL=" + sql + ". @异常信息:" + ex.Message);
+                }
             }
-            catch (System.Exception ex)
+            else
             {
-                ens.GetNewEntity.CheckPhysicsTable();
-                throw new Exception("@在[" + ens.GetNewEntity.EnDesc + "]查询时出现错误:" + ex.Message);
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Entity en = ens.GetNewEntity;
+                    foreach (string str in fullAttrs)
+                        en.Row.SetValByKey(str, dr[str]);
+                    ens.AddEntity(en);
+                }
             }
+            int i = dt.Rows.Count;
+            dt.Dispose();
+            return i;
+            //return dt.Rows.Count;
         }
 		public static void DoCheckSession()
 		{

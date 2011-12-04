@@ -292,7 +292,7 @@ namespace CCForm
         public static void WinOpen(string url, int h, int w)
         {
             string p = "dialogHeight:" + h + "px;dialogWidth:" + w + "px";
-            HtmlPage.Window.Eval(string.Format("window.open('{0}','{1}','{2};help=no,resizable=yes,status=no,scrollbars=1');", url,
+            HtmlPage.Window.Eval(string.Format("window.open('{0}','{1}','{2};scrollbars=yes,resizable=yes,toolbar=false,location=false,center=yes,center: yes;');", url,
                       "Title", p));
         }
         public static void IE_ShowAddFGuide()

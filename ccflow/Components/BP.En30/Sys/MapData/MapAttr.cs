@@ -1118,17 +1118,6 @@ namespace BP.Sys
             this.MyPK = this.FK_MapData + "_" + this.KeyOfEn;
             return base.beforeUpdate();
         }
-        protected override bool beforeDelete()
-        {
-            try
-            {
-                BP.DA.DBAccess.RunSQL("alter table " + this.FK_MapData + " drop column " + this.KeyOfEn);
-            }
-            catch
-            {
-            }
-            return base.beforeDelete();
-        }
         protected override bool beforeInsert()
         {
             if (this.KeyOfEn == null || this.KeyOfEn.Trim() == "")
@@ -1170,13 +1159,6 @@ namespace BP.Sys
             {
                 throw new Exception("@已经存在字段名称(" + this.Name + ")字段(" + this.KeyOfEn + ")");
             }
-
-            //int i = 0;
-            //while ()
-            //{
-            //    this.KeyOfEn = this.KeyOfEn + i;
-            //    i++;
-            //}
 
             this.IDX = 999; // BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapAttr WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
             this.MyPK = this.FK_MapData + "_" + this.KeyOfEn;

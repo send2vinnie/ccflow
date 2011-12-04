@@ -9,6 +9,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Silverlight;
+using BP.DA;
+using BP.Frm;
+using BP;
 
 namespace WF.Controls
 {
@@ -57,7 +60,7 @@ namespace WF.Controls
             strs += "@FK_Flow=" + string.Empty;
             strs += "@URL=" + this.TB_URL.Text;
             strs += "@DBURL=" + this.DDL_DBUrl.SelectedIndex;
-            var client = new WS.WSDesignerSoapClient();
+            var client =   Glo.GetDesignerServiceInstance();
             client.DoAsync("SaveFlowFrm", strs, true);
             client.DoCompleted += client_DoTypeCompleted ;
         }
@@ -127,7 +130,7 @@ namespace WF.Controls
             if(!string.IsNullOrEmpty(FlowFormId))
             {
                 var sql = "select * from Sys_MapData";
-                var client = new WS.WSDesignerSoapClient();
+                var client = Glo.GetDesignerServiceInstance();
                 client.RunSQLReturnTableCompleted += new EventHandler<WS.RunSQLReturnTableCompletedEventArgs>(client_RunSQLReturnTableCompleted );
                 client.RunSQLReturnTableAsync(sql, true);
             }

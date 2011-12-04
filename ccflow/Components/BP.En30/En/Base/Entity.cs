@@ -634,20 +634,25 @@ namespace BP.En
         public virtual int RetrieveFromDBSources()
         {
             int i = 0;
-            try
-            {
+            //try
+            //{
                 i = EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("@无法执行对:" + this.ToString() + "的查询，可能是它的字段属性清除了，请检查map文件。" + this.EnMap.PhysicsTable + "。@异常信息:" + ex.Message);
-                Log.DebugWriteWarning(ex.Message);
-                this.CheckPhysicsTable();
-                throw ex;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("@无法执行对:" + this.ToString() + "的查询，可能是它的字段属性清除了，请检查map文件。" + this.EnMap.PhysicsTable + "。@异常信息:" + ex.Message);
+            //    Log.DebugWriteWarning(ex.Message);
+            //    this.CheckPhysicsTable();
+            //    throw ex;
+            //}
             return i;
         }
-
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
         public int Retrieve(string key, object val)
         {
             QueryObject qo = new QueryObject(this);
@@ -675,6 +680,11 @@ namespace BP.En
             return qo.DoQuery();
         }
         public virtual int Retrieve()
+        {
+                return this.RetrieveIt();
+           
+        }
+        public virtual int Retrieve_del()
         {
             try
             {
@@ -1876,7 +1886,7 @@ namespace BP.En
                             DBAccess.CreatePK(this.EnMap.PhysicsTable, this.PKField);
                             DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
                         }
-                        catch
+                        catch(Exception ex)
                         {
                         }
                     }
@@ -1979,13 +1989,16 @@ namespace BP.En
             #endregion
 
             #region 检查字段是否存在
-            string sql = "SELECT * from " + this.EnMap.PhysicsTable + " where 1=2";
+            string sql = "SELECT *  FROM " + this.EnMap.PhysicsTable + " WHERE 1=2";
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
             // 如果不存在。
             foreach (Attr attr in this.EnMap.Attrs)
             {
                 if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+
+                if (attr.IsPK)
                     continue;
 
                 if (dt.Columns.Contains(attr.Key) == true)

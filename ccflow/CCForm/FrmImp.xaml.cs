@@ -145,7 +145,7 @@ namespace CCForm
                     loadingWindow.Title = "正在装载节点表单请稍后...";
                     loadingWindow.Show();
                     ListBoxItem lb = this.listBox1.SelectedItem as ListBoxItem;
-                    CCFormSoapClient fda = new CCFormSoapClient();
+                    CCFormSoapClient fda = Glo.GetCCFormSoapClientServiceInstance();
                     fda.CopyFrmAsync(lb.Tag.ToString(), Glo.FK_MapData, isClear);
                     fda.CopyFrmCompleted += new EventHandler<CopyFrmCompletedEventArgs>(da_CopyFrmCompleted);
                     break;
@@ -153,7 +153,7 @@ namespace CCForm
                     loadingWindow.Title = "正在装载流程表单请稍后...";
                     loadingWindow.Show();
                     ListBoxItem lb44 = this.listBox1.SelectedItem as ListBoxItem;
-                    CCFormSoapClient fdaa = new CCFormSoapClient();
+                    CCFormSoapClient fdaa = Glo.GetCCFormSoapClientServiceInstance();
                     fdaa.CopyFrmAsync(lb44.Tag.ToString(), Glo.FK_MapData, isClear);
                     fdaa.CopyFrmCompleted += new EventHandler<CopyFrmCompletedEventArgs>(da_CopyFrmCompleted);
                     break;
@@ -165,8 +165,8 @@ namespace CCForm
         {
             if (e.Result != null)
             {
-                loadingWindow.DialogResult = false;
                 MessageBox.Show(e.Result, "错误", MessageBoxButton.OK);
+                loadingWindow.DialogResult = false;
                 return;
             }
             this.DialogResult = true;

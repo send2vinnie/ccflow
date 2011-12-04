@@ -39,11 +39,6 @@ namespace BP.Sys
         /// </summary>
         public const string BorderColor = "BorderColor";
         /// <summary>
-        /// 风格
-        /// </summary>
-        public const string BorderStyle = "BorderStyle";
-
-        /// <summary>
         /// X
         /// </summary>
         public const string X = "X";
@@ -78,17 +73,7 @@ namespace BP.Sys
                 this.SetValByKey(FrmLineAttr.BorderColor, value);
             }
         }
-        public string BorderStyle
-        {
-            get
-            {
-                return this.GetValStringByKey(FrmLineAttr.BorderStyle);
-            }
-            set
-            {
-                this.SetValByKey(FrmLineAttr.BorderStyle, value);
-            }
-        }
+        
         public float BorderWidth
         {
             get
@@ -196,7 +181,8 @@ namespace BP.Sys
 
                 map.AddTBFloat(FrmLineAttr.BorderWidth, 1, "宽度", false, false);
                 map.AddTBString(FrmLineAttr.BorderColor, "black", "颜色", true, false, 0, 30, 20);
-                map.AddTBString(FrmLineAttr.BorderStyle, "dot", "边框风格", true, false, 0, 30, 20);
+
+                //map.AddTBString(FrmLineAttr.BorderStyle, "dot", "边框风格", true, false, 0, 30, 20);
 
                 this._enMap = map;
                 return this._enMap;

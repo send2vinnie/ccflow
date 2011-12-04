@@ -159,6 +159,16 @@ namespace BP.En
                 }
             }
         }
+        public bool IsFK
+        {
+            get
+            {
+                if (this.MyFieldType == FieldType.FK || this.MyFieldType == FieldType.PKFK)
+                    return true;
+                else
+                    return false;
+            }
+        }
         public bool IsFKorEnum
         {
             get
@@ -1364,15 +1374,14 @@ namespace BP.En
 		/// <param name="isAddHisRefText">isAddHisRefText</param>
 		public void Add(Attr attr, bool isAddHisRefText, bool isAddHisRefName )
 		{
-            foreach (Attr thisattr in this)
+            foreach (Attr myattr in this)
             {
-                if (thisattr.Key == attr.Key)
-                {
+                if (myattr.Key == attr.Key)
                     return;
-                }
             }
 
 			this.InnerList.Add(attr);
+
 			if (isAddHisRefText)
 				this.AddRefAttrText(attr);
 

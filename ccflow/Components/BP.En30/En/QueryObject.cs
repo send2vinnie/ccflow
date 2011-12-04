@@ -809,6 +809,13 @@ namespace BP.En
 		/// <returns></returns>
         public int DoQuery()
         {
+            if (this._en == null)
+                return this.doEntitiesQuery();
+            else
+                return this.doEntityQuery();
+        }
+        public int DoQueryBak20111203()
+        {
             try
             {
                 if (this._en == null)

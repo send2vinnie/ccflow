@@ -2079,35 +2079,10 @@ namespace BP.WF
 
             // 调用发送前的接口。
             string msg = this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
-
+            msg += AfterNodeSave_Do();
             try
             {
-                msg += AfterNodeSave_Do();
-
-                #region 调用接口
-                string doc = this.HisNode.DoWhat;
-                if (doc.Length > 10)
-                {
-                    Attrs attrs = this.HisWork.EnMap.Attrs;
-                    foreach (Attr attr in attrs)
-                    {
-                        if (doc.Contains("@" + attr.Key) == false)
-                            continue;
-                        switch (attr.MyDataType)
-                        {
-                            case BP.DA.DataType.AppString:
-                                doc = doc.Replace("@" + attr.Key, "'" + this.HisWork.GetValStrByKey(attr.Key) + "'");
-                                break;
-                            default:
-                                doc = doc.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
-                                break;
-                        }
-                    }
-
-                    BP.DA.DBAccess.RunSQL(doc);
-                }
-                #endregion 调用接口
-
+                DBAccess.DoTransactionCommit(); // 提交事务.
                 try
                 {
                     // 调起发送成功后的事务。
@@ -2117,13 +2092,7 @@ namespace BP.WF
                 {
                     msg += ex.Message;
                 }
-                try
-                {
-                    DBAccess.DoTransactionCommit(); // 提交事务.
-                }
-                catch
-                {
-                }
+              
                 string msgOfSend = this.HisNode.TurnToDealDoc;
                 if (msgOfSend.Length > 3)
                 {
@@ -2139,45 +2108,27 @@ namespace BP.WF
                 }
 
                 // 如果需要跳转.
-                if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
-                    return town.AfterNodeSave();
+                if (town != null)
+                {
+                    if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
+                        return town.AfterNodeSave();
+                }
 
                 return msg;
             }
             catch (Exception ex)
             {
-                try
-                {
-                    // 回滚。
-                    DBAccess.DoTransactionRollback();
-                    this.HisNode.HisFlow.DoCheck();
-                    throw ex;
-                }
-                catch (Exception exE)
-                {
-                    try
-                    {
-                        this.WhenTranscactionRollbackError();
-                    }
-                    catch (Exception ex11)
-                    {
-                        throw ex;
-                        //   throw new Exception(ex.Message + " @DoTransactionRollback=" + exE.Message + "" + ex11.Message);
-                    }
-                    throw ex;
-                    //throw new Exception(ex.Message + " @DoTransactionRollback=" + exE.Message);
-                    //throw new Exception(ex.Message + " @DoTransactionRollback=" + exE.Message);
-                }
+                this.WhenTranscactionRollbackError();
+                DBAccess.DoTransactionRollback();
+                throw ex;
             }
         }
         private void WhenTranscactionRollbackError()
         {
-            #region 以下代码不在使用。
+
             /*在提交错误的情况下，回滚数据。*/
             try
             {
-                this.HisNode.HisFlow.DoCheck();
-
                 // 把工作的状态设置回来。
                 this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Init);
 
@@ -2191,7 +2142,6 @@ namespace BP.WF
                     gwf.WFState = 0;
                     gwf.Update();
                 }
-
 
                 Node startND = this.HisNode.HisFlow.HisStartNode;
                 StartWork wk = startND.HisWork as StartWork;
@@ -2225,7 +2175,6 @@ namespace BP.WF
                     this.rptGe.CheckPhysicsTable();
                 throw new Exception(ex1.Message + "@回滚发送失败数据出现错误：" + ex1.Message + "@有可能系统已经自动修复错误，请您在重新执行一次。");
             }
-            #endregion 以下代码不在使用。
         }
         #region 用户到的变量
         public WorkerLists HisWorkerLists = null;
@@ -2757,8 +2706,7 @@ namespace BP.WF
         /// <returns>执行后的内容</returns>
         private string AfterNodeSave_Do()
         {
-            try
-            {
+           
                 if (this.HisNode.IsStartNode)
                 {
                     this.InitStartWorkData();
@@ -3056,29 +3004,7 @@ namespace BP.WF
                // this.HisWork.DoCopy(); // copy 本地的数据到指定的系统.
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=1 WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID);
                 return msg;
-            }
-            catch (Exception ex)  // 如果抛出异常，说明没有正确的执行。当前的工作，不能完成。工作流程不能完成。
-            {
-                try
-                {
-                    if (this.HisWork.FID == 0)
-                    {
-                        WorkNode wn = this.HisWorkFlow.HisStartWorkNode;
-                        wn.HisWork.Update("WFState", (int)WFState.Runing);
-                        this.HisWork.NodeState = NodeState.Init;
-                        this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Init);
-
-                        // 更新当前的节点信息。
-                        this.HisGenerWorkFlow.Update(GenerWorkFlowAttr.FK_Node, this.HisNode.NodeID);
-                    }
-                }
-                catch (Exception ex1)
-                {
-                    throw new Exception(ex.Message + " - @回滚出现的错误:" + ex1.Message);
-                }
-                throw ex;
-                //throw new Exception("@回滚数据期间发生错误:" + ex1.Message + ex.Message);
-            }
+            
         }
        
         /// <summary>
