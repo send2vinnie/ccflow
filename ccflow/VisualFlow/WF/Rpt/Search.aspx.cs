@@ -157,6 +157,16 @@ public partial class WF_Rpt_Search : WebPage
                             foreach (DataRow dr in dt.Rows)
                                 ddl_Dept.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
                         }
+
+                        if (ddl_Dept.Items.Count >= 2)
+                        {
+                            ListItem liMvals = new ListItem("*多项组合..", "mvals");
+                            liMvals.Attributes.CssStyle.Add("style", "color:green");
+                            liMvals.Attributes.Add("color", "green");
+                            liMvals.Attributes.Add("style", "color:green");
+                            ddl_Dept.Items.Add(liMvals);
+                        }
+
                         ddl_Dept.SetSelectItem(defVal);
                         break;
                     default:
