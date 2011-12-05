@@ -34,6 +34,8 @@ public partial class WF_Rpt_Search : WebPage
             string s = this.Request.QueryString["FK_Flow"];
             if (s == null)
                 s = "021";
+            s = s.Replace("ND", "");
+            s = s.Replace("Rpt", "");
             return s;
         }
     }
@@ -41,10 +43,7 @@ public partial class WF_Rpt_Search : WebPage
     {
         get
         {
-            string s= this.Request.QueryString["EnsName"];
-            if (s == null)
-                s = "ND21Rpt";
-            return s;
+            return "ND" + int.Parse(this.FK_Flow) + "Rpt";
         }
     }
     public Entities _HisEns = null;
