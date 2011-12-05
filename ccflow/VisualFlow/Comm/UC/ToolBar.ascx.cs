@@ -935,10 +935,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             keysNum++;
             //if (keysNum == 3 || keysNum == 6 || keysNum == 9)
             //    this.AddBR("b_" + keysNum);
-
-          
-
-
             if (attr.MyFieldType == FieldType.Enum)
             {
                 this.GetDDLByKey("DDL_" + attr.Key).BindSysEnum(attr.UIBindKey, false, AddAllLocation.TopAndEndWithMVal);
@@ -974,7 +970,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                         if (depts.Count > SystemConfig.MaxDDLNum)
                             this.AddLab("lD", "<a href=\"javascript:onDDLSelectedMore('DDL_" + attr.Key + "', '" + this.EnsName + "', 'BP.Port.Depts', 'No','Name')\" >...</a>");
 
-                        if (ddl.Items.Count >= 4)
+                        if (ddl.Items.Count >= 2)
                             ddl.Items.Add(liMvals);
 
                         ddl.Attributes["onchange"] = "DDL_mvals_OnChange(this,'" + ensName + "','" + attr.Key + "')";
