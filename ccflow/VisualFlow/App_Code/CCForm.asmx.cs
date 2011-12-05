@@ -600,11 +600,25 @@ namespace BP.Web
             BP.Port.Emp emp = new BP.Port.Emp("admin");
             BP.Web.WebUser.SignInOfGener(emp);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fromMapData"></param>
+        /// <param name="fk_mapdata"></param>
+        /// <param name="isClear"></param>
+        /// <returns></returns>
         [WebMethod(EnableSession = true)]
         public string CopyFrm(string fromMapData, string fk_mapdata, bool isClear)
         {
             this.LetAdminLogin();
-
+            MapData md = new MapData(fromMapData);
+            MapData.ImpMapData(fk_mapdata, md.GenerHisDataSet());
+            return null;
+        }
+        [WebMethod(EnableSession = true)]
+        public string CopyFrm_bak(string fromMapData, string fk_mapdata, bool isClear)
+        {
+            this.LetAdminLogin();
             string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
 
             #region 删除现有的当前节点数据, 并查询出来from节点数据.
