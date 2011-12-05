@@ -1451,14 +1451,14 @@ namespace BP.Web.Comm.UC
             Entity myen = ens.GetNewEntity;
             string pk = myen.PK;
             string clName = myen.ToString();
+
             Attrs attrs = myen.EnMap.Attrs;
-         
             Attrs selectedAttrs = myen.EnMap.GetChoseAttrs(ens);
             BP.Sys.Xml.PanelEnss cfgs = new BP.Sys.Xml.PanelEnss();
             cfgs.RetrieveBy(BP.Sys.Xml.PanelEnsAttr.For, ens.ToString());
 
             // 生成标题
-            this.Add("<Table border='1' width='20%' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0'>");
+            this.Add("<Table border='1' width='20%' align=left cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0'>");
            // this.AddTable("");
             this.AddTR();
             this.AddTDTitle("序");

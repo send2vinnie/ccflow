@@ -2,7 +2,6 @@
 <%@ Register src="../Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc2" %>
 <%@ Register src="../../Comm/UC/UCSys.ascx" tagname="UCSys" tagprefix="uc3" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 		<script language="JavaScript" src="../../Comm/JScript.js"></script>
 		<script language="JavaScript" src="../../Comm/ActiveX.js"></script>
@@ -16,6 +15,7 @@
 		        var val = window.showModalDialog(url, null, s);
 		        window.location.href = window.location.href;
 		    }
+
 		    function ImgClick() {
 		    }
 		    function OpenAttrs(ensName) {
@@ -31,20 +31,20 @@
 		        if (attrKey == null)
 		            return;
 		        var timestamp = Date.parse(new Date());
-		        var url = '../../Comm/SelectMVals.aspx?EnsName=' + ensName + '&AttrKey=' + attrKey + '&D=' + timestamp;
+		        var url = 'SelectMVals.aspx?EnsName=' + ensName + '&AttrKey=' + attrKey + '&D=' + timestamp;
 		        var val = window.showModalDialog(url, 'dg', 'dialogHeight: 450px; dialogWidth: 450px; center: yes; help: no');
 		        if (val == '' || val == null) {
-		            // if (idx_Old==ctrl.options.cont
 		            ctrl.selectedIndex = 0;
-		            //    ctrl.options[0].selected = true;
 		        }
 		    }
 	</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
 <table width='100%' border=0>
 <tr>
 <td  align=left class='ToolBar'  >
+    <uc1:Pub ID="Pub1" runat="server" />
     <uc2:ToolBar ID="ToolBar1" runat="server" />
     </td>
     </tr>

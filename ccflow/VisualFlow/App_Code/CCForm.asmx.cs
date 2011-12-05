@@ -431,7 +431,6 @@ namespace BP.Web
         [WebMethod]
         public string SaveEn(string vals)
         {
-          //  vals = vals.Replace("^", "@");
             Entity en = null;
             try
             {
@@ -613,237 +612,22 @@ namespace BP.Web
             this.LetAdminLogin();
             MapData md = new MapData(fromMapData);
             MapData.ImpMapData(fk_mapdata, md.GenerHisDataSet());
-            return null;
-        }
-        [WebMethod(EnableSession = true)]
-        public string CopyFrm_bak(string fromMapData, string fk_mapdata, bool isClear)
-        {
-            this.LetAdminLogin();
-            string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
 
-            #region 删除现有的当前节点数据, 并查询出来from节点数据.
-            // line
-            BP.Sys.FrmLines lins = new BP.Sys.FrmLines();
-            if (isClear)
-                lins.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-
-            lins.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
-            int i = 0;
-            foreach (BP.Sys.FrmLine item in lins)
+            // 如果是节点表单，就要执行一次修复，以免漏掉应该有的系统字段。
+            if (fk_mapdata.Contains("ND") == true)
             {
-                BP.Sys.FrmLine toItem = new BP.Sys.FrmLine();
-                toItem.Copy(item);
-                toItem.MyPK = "Line" + timeKey + i;
-                toItem.FK_MapData = fk_mapdata;
-                toItem.DirectInsert();
-                i++;
-            }
-
-            // link.
-            BP.Sys.FrmLinks liks = new BP.Sys.FrmLinks();
-            if (isClear)
-                liks.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-            liks.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
-            i = 0;
-            foreach (BP.Sys.FrmLink item in liks)
-            {
-                BP.Sys.FrmLink toItem = new BP.Sys.FrmLink();
-                toItem.Copy(item);
-                toItem.MyPK = "Lik" + timeKey + i;
-                //this.DealPK(item.MyPK, fromMapData, fk_mapdata);
-                toItem.FK_MapData = fk_mapdata;
-                toItem.DirectInsert();
-                i++;
-            }
-
-            // Btn
-            i = 0;
-            BP.Sys.FrmBtns btns = new BP.Sys.FrmBtns();
-            if (isClear)
-                btns.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-            btns.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
-            foreach (BP.Sys.FrmBtn item in btns)
-            {
-                BP.Sys.FrmBtn toItem = new BP.Sys.FrmBtn();
-                toItem.Copy(item);
-                toItem.MyPK = "Btn" + timeKey + i;
-                toItem.FK_MapData = fk_mapdata;
-                toItem.DirectInsert();
-                i++;
-            }
-
-            // Img
-            i = 0;
-            BP.Sys.FrmImgs imgs = new BP.Sys.FrmImgs();
-            if (isClear)
-                imgs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-            imgs.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
-            foreach (BP.Sys.FrmImg item in imgs)
-            {
-                BP.Sys.FrmImg toItem = new BP.Sys.FrmImg();
-                toItem.Copy(item);
-                toItem.MyPK = "Img" + timeKey + i;
-                //this.DealPK(item.MyPK, fromMapData, fk_mapdata);
-                toItem.FK_MapData = fk_mapdata;
-                toItem.DirectInsert();
-                i++;
-            }
-
-            // Sys_FrmLab
-            BP.Sys.FrmLabs labs = new BP.Sys.FrmLabs();
-            if (isClear)
-                labs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-            labs.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
-            i = 0;
-            foreach (BP.Sys.FrmLab item in labs)
-            {
-                BP.Sys.FrmLab toItem = new BP.Sys.FrmLab();
-                toItem.Copy(item);
-                toItem.MyPK = "Lab" + timeKey + i;
-                //this.DealPK(item.MyPK, fromMapData, fk_mapdata);
-                toItem.FK_MapData = fk_mapdata;
-                toItem.DirectInsert();
-                i++;
-            }
-
-            // Sys_FrmRB
-            BP.Sys.FrmRBs rbs = new BP.Sys.FrmRBs();
-            if (isClear)
-                rbs.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-            rbs.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
-            foreach (BP.Sys.FrmRB item in rbs)
-            {
-                BP.Sys.FrmRB toItem = new BP.Sys.FrmRB();
-                toItem.Copy(item);
-                toItem.MyPK = this.DealPK(item.MyPK, fromMapData, fk_mapdata);
-                toItem.FK_MapData = fk_mapdata;
                 try
                 {
-                    toItem.DirectInsert();
+                    string fk_node = fk_mapdata.Replace("ND", "");
+                    Node nd = new Node(int.Parse(fk_node));
+                    nd.RepareMap();
                 }
                 catch
                 {
-                    toItem.Update();
+                    // 不处理异常。
                 }
             }
-
-            // MapAttrs
-            BP.Sys.MapAttrs attrs = new BP.Sys.MapAttrs();
-            QueryObject qo = new QueryObject(attrs);
-            qo.AddWhere(BP.Sys.MapAttrAttr.FK_MapData, fk_mapdata);
-            qo.addAnd();
-            qo.AddWhereNotIn(BP.Sys.MapAttrAttr.KeyOfEn,
-                "'BillNo','CDT','Emps','FID','FK_Dept','FK_NY','MyNum','NodeState','OID','RDT','Rec','WFLog','WFState'");
-            qo.DoQuery();
-            attrs.Delete();
-            qo.clear();
-            qo.AddWhere(BP.Sys.MapAttrAttr.FK_MapData, fromMapData);
-            qo.addAnd();
-            qo.AddWhereNotIn(BP.Sys.MapAttrAttr.KeyOfEn,
-                "'BillNo','CDT','Emps','FID','FK_Dept','FK_NY','MyNum','NodeState','OID','RDT','Rec','WFLog','WFState'");
-            qo.DoQuery();
-            foreach (BP.Sys.MapAttr attr in attrs)
-            {
-                BP.Sys.MapAttr attrNew = new BP.Sys.MapAttr();
-                attrNew.Copy(attr);
-                attrNew.FK_MapData = fk_mapdata;
-                attrNew.UIIsEnable = false;
-                if (attrNew.DefValReal.Contains("@"))
-                    attrNew.DefValReal = "";
-                attrNew.HisEditType = EditType.Edit;
-                attrNew.Insert();
-            }
-
-            // MapDtl
-            BP.Sys.MapDtls dtls = new BP.Sys.MapDtls();
-            if (isClear)
-                dtls.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-            dtls.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
-            // 复制明细表.
-            foreach (MapDtl dtl in dtls)
-            {
-                MapDtl dtlNew = new MapDtl();
-                dtlNew.Copy(dtl);
-                dtlNew.FK_MapData = fk_mapdata;
-                dtlNew.No = dtl.No.Replace(fromMapData, fk_mapdata);
-
-                dtlNew.IsInsert = false;
-                dtlNew.IsUpdate = false;
-                dtlNew.IsDelete = false;
-                dtlNew.GroupID = 0;
-                dtlNew.PTable = dtlNew.No;
-                dtlNew.Insert();
-
-                // 复制明细表里面的明细。
-                int idx = 0;
-                MapAttrs mattrs = new MapAttrs(dtl.No);
-                mattrs.Delete(MapAttrAttr.FK_MapData, dtlNew.No);
-                foreach (MapAttr attr in mattrs)
-                {
-                    MapAttr attrNew = new MapAttr();
-                    attrNew.Copy(attr);
-                    attrNew.FK_MapData = dtlNew.No;
-                    attrNew.UIIsEnable = false;
-                    if (attrNew.DefValReal.Contains("@"))
-                        attrNew.DefValReal = "";
-
-                    dtlNew.RowIdx = idx;
-                    attrNew.HisEditType = EditType.Edit;
-                    attrNew.Insert();
-                }
-            }
-
-            // Map2m
-            BP.Sys.MapM2Ms m2ms = new BP.Sys.MapM2Ms();
-            if (isClear)
-                m2ms.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-            m2ms.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
-            i = 0;
-            foreach (MapM2M m2m in m2ms)
-            {
-                MapM2M mym2m = new MapM2M();
-                mym2m.No = "M" + timeKey + i;
-                mym2m.Copy(m2m);
-                mym2m.FK_MapData = fk_mapdata;
-                mym2m.GroupID = 0;
-                mym2m.No = m2m.No.Replace(fromMapData, fk_mapdata);
-                mym2m.Insert();
-                i++;
-            }
-
-
-            // FrmAttachments
-            BP.Sys.FrmAttachments aths = new BP.Sys.FrmAttachments();
-            if (isClear)
-                aths.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-            aths.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
-            i = 0;
-            foreach (FrmAttachment ath in aths)
-            {
-                FrmAttachment myath = new FrmAttachment();
-                myath.Copy(ath);
-                myath.FK_MapData = fk_mapdata;
-                myath.MyPK = "Ath" + timeKey + i;
-                myath.Insert();
-            }
-
-            // FrmImgAth
-            BP.Sys.FrmImgAths imgAths = new BP.Sys.FrmImgAths();
-            if (isClear)
-                imgAths.Delete(BP.Sys.FrmLineAttr.FK_MapData, fk_mapdata);
-            imgAths.Retrieve(BP.Sys.FrmLineAttr.FK_MapData, fromMapData);
-            i = 0;
-            foreach (FrmImgAth ath in imgAths)
-            {
-                FrmImgAth myath = new FrmImgAth();
-                myath.Copy(ath);
-                myath.FK_MapData = fk_mapdata;
-                myath.MyPK = "ImgAth" + timeKey + i;
-                myath.Insert();
-            }
-            #endregion 删除现有的当前节点数据. 并查询出来from节点数据.
-
-            return "复制成功.";
+            return null;
         }
         [WebMethod]
         public string SaveFrm(string xml, string sqls)

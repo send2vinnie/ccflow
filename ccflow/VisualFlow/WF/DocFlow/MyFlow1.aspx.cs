@@ -846,33 +846,11 @@ namespace BP.Web.WF
 
                 this.UCEn1.Bind(work, "ND" + this.FK_Node , false, false, "FK_Taxpayer");
                 string hzStr = this.GenerHZ(work, currNd);
-
                 this.OutJSAuto(work);
                 //work.DoCopy(); // 执行数据copy.
                 this.UCEn1.Add(work.WorkEndInfo + hzStr);
                 return;
             }
-
-            //if (currNd.IsCheckNode)
-            //{
-            //    if (work.GetValIntByKey(CheckWorkAttr.CheckState) == 2)
-            //    {
-            //        this.ResponseWriteBlueMsg(this.ToE("FlowHup", "流程挂起"));
-            //        return;
-            //    }
-            //}
-
-            try
-            {
-                work.BeforeSend(); // 发送前作逻辑检查。
-            }
-            catch (Exception ex)
-            {
-                if (BP.SystemConfig.IsDebug )
-                    work.CheckPhysicsTable();
-                throw ex;
-            }
-
 
             WorkNode firstwn = new WorkNode(work, currNd);
             msg = firstwn.AfterNodeSave();

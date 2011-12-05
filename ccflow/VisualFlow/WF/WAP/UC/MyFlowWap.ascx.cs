@@ -1002,17 +1002,6 @@ public partial class WF_UC_MyFlowWap : BP.Web.UC.UCBase3
             return;
         }
 
-        try
-        {
-            work.BeforeSend(); // 发送前作逻辑检查。
-        }
-        catch (Exception ex)
-        {
-            if (BP.SystemConfig.IsDebug )
-                work.CheckPhysicsTable();
-            throw ex;
-        }
-
 
         WorkNode firstwn = new WorkNode(work, currNd);
         try

@@ -17,13 +17,23 @@ using BP.Web.Comm;
 public partial class WF_Rpt_Search : WebPage
 {
     #region 属性.
+    public string DoType
+    {
+        get
+        {
+            string s = this.Request.QueryString["DoType"];
+            if (s == null)
+                s = "My";
+            return s;
+        }
+    }
     public string FK_Flow
     {
         get
         {
             string s = this.Request.QueryString["FK_Flow"];
             if (s == null)
-                s = "010";
+                s = "021";
             return s;
         }
     }
@@ -33,7 +43,7 @@ public partial class WF_Rpt_Search : WebPage
         {
             string s= this.Request.QueryString["EnsName"];
             if (s == null)
-                s = "ND10Rpt";
+                s = "ND21Rpt";
             return s;
         }
     }
@@ -66,64 +76,100 @@ public partial class WF_Rpt_Search : WebPage
             this.PageIdx = int.Parse(this.Request.QueryString["PageIdx"]);
         #endregion 处理风格
 
+        this.Pub1.Add("<a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
+        this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
+
         #region 处理查询设的默认.
-        Entity en = this.HisEns.GetNewEntity;
-        Map map = en.EnMap;
-        this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
-        AttrSearchs searchs = map.SearchAttrs;
-        foreach (AttrSearch attr in searchs)
+        if (this.DoType == "My")
         {
-            string mykey = this.Request.QueryString[attr.Key];
-            if (mykey == "" || mykey == null)
-                continue;
-            else
-                this.ToolBar1.GetDDLByKey("DDL_" + attr.Key).SetSelectItem(mykey, attr.HisAttr);
+            Entity en = this.HisEns.GetNewEntity;
+            Map map = en.EnMap;
+            AttrSearchs searchs = map.SearchAttrs;
+           
+
+            //if (this.ToolBar1.IsExit("DDL_FK_Dept"))
+            //{
+            //    //this.ToolBar1.Controls.Remove
+            //}
+            //AttrSearchs searchs = map.SearchAttrs;
+            //foreach (AttrSearch attr in searchs)
+            //{
+            //    string mykey = this.Request.QueryString[attr.Key];
+            //    if (mykey == "" || mykey == null)
+            //        continue;
+            //    else
+            //        this.ToolBar1.GetDDLByKey("DDL_" + attr.Key).SetSelectItem(mykey, attr.HisAttr);
+            //}
+            //if (this.Request.QueryString["Key"] != null)
+            //{
+            //    this.ToolBar1.GetTBByID("TB_Key").Text = this.Request.QueryString["Key"];
+            //}
         }
-        if (this.Request.QueryString["Key"] != null)
+        else
         {
-            this.ToolBar1.GetTBByID("TB_Key").Text = this.Request.QueryString["Key"];
+            #region 处理查询权限
+            Entity en = this.HisEns.GetNewEntity;
+            Map map = en.EnMap;
+            this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
+            AttrSearchs searchs = map.SearchAttrs;
+            string defVal = "";
+            System.Data.DataTable dt = null;
+            foreach (AttrSearch attr in searchs)
+            {
+                switch (attr.Key)
+                {
+                    case "FK_NY":
+                        DDL ddl_NY = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
+                        defVal = ddl_NY.SelectedItemStringVal;
+                        dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM " + this.EnsName + " WHERE FK_NY!='' ORDER BY FK_NY");
+                        ddl_NY.Items.Clear();
+                        ddl_NY.Items.Add(new ListItem("=>月份", "all"));
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            ddl_NY.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
+                        }
+                        ddl_NY.SetSelectItem(defVal);
+                        break;
+                    case "FlowStarter":
+                        DDL ddl_FlowStarter = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
+                        defVal = ddl_FlowStarter.SelectedItemStringVal;
+                        dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptSearchScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
+                        ddl_FlowStarter.Items.Clear();
+                        ddl_FlowStarter.Items.Add(new ListItem("=>发起人", "all"));
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            ddl_FlowStarter.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                        }
+                        ddl_FlowStarter.SetSelectItem(defVal);
+                        break;
+                    case "FK_Dept":
+                        DDL ddl_Dept = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
+                        defVal = ddl_Dept.SelectedItemStringVal;
+                        if (WebUser.No != "admin")
+                        {
+                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptSearchScorp WHERE FK_Emp='" + WebUser.No + "')");
+                            if (dt.Rows.Count == 0)
+                            {
+                                this.Pub2.AddMsgOfWarning("提示", "<h2>系统管理员没有给您设置查询权限。</h2>");
+                                this.ToolBar1.Controls.Clear();
+                                return;
+                            }
+                            ddl_Dept.Items.Clear();
+                            foreach (DataRow dr in dt.Rows)
+                                ddl_Dept.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                        }
+                        ddl_Dept.SetSelectItem(defVal);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            #endregion 处理查询权限
+            this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
         }
         #endregion 处理查询设的默认。
 
-        #region 处理查询权限
-        string defVal = "";
-        System.Data.DataTable dt = null;
-        foreach (AttrSearch attr in searchs)
-        {
-            switch (attr.Key)
-            {
-                case "FK_NY":
-                    DDL ddl_NY = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
-                    defVal = ddl_NY.SelectedItemStringVal;
-                    dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM " + this.EnsName + " WHERE FK_NY!='' ORDER BY FK_NY");
-                    ddl_NY.Items.Clear();
-                    ddl_NY.Items.Add(new ListItem("=>月份", "all"));
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        ddl_NY.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
-                    }
-                    ddl_NY.SetSelectItem(defVal);
-                    break;
-                case "FlowStarter":
-                    DDL ddl_FlowStarter = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
-                    defVal = ddl_FlowStarter.SelectedItemStringVal;
-                    dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
-                    ddl_FlowStarter.Items.Clear();
-                    ddl_FlowStarter.Items.Add(new ListItem("=>发起人", "all"));
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        ddl_FlowStarter.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
-                    }
-                    ddl_FlowStarter.SetSelectItem(defVal);
-                    break;
-                default:
-                    break;
-            }
-        }
-        #endregion 处理查询权限
-
         //处理按钮.
-        this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
         this.SetDGData();
     }
     public Entities SetDGData()
@@ -135,14 +181,21 @@ public partial class WF_Rpt_Search : WebPage
         Entities ens = this.HisEns;
         Entity en = ens.GetNewEntity;
         QueryObject qo = new QueryObject(ens);
-        qo = this.ToolBar1.GetnQueryObject(ens, en);
+        if (this.DoType == "My")
+        {
+            qo.AddWhere("FlowEmps", " LIKE ", "%" + WebUser.No + ",%");
+        }
+        else
+        {
+            qo = this.ToolBar1.GetnQueryObject(ens, en);
+        }
 
         this.Pub2.Clear();
-        int maxPageNum = this.Pub2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, "Search.aspx?EnsName=" + this.EnsName);
+        int maxPageNum = this.Pub2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, "Search.aspx?FK_Flow=" + this.FK_Flow + "&DoType=" + this.DoType);
         if (maxPageNum > 1)
             this.Pub2.Add("翻页键:← → PageUp PageDown");
         qo.DoQuery(en.PK, SystemConfig.PageSize, pageIdx);
-        if (en.EnMap.IsShowSearchKey)
+        if (this.DoType == "Dept" && en.EnMap.IsShowSearchKey)
         {
             string keyVal = this.ToolBar1.GetTBByID("TB_Key").Text.Trim();
             if (keyVal.Length >= 1)
@@ -259,7 +312,7 @@ public partial class WF_Rpt_Search : WebPage
         #endregion 求出可显示的属性.
 
         #region  生成标题
-        this.UCSys1.Add("<Table border='1' width='20%' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0'>");
+        this.UCSys1.Add("<Table border='1' align=left width='20%' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#C0C0C0'>");
         this.UCSys1.AddTR();
         this.UCSys1.AddTDTitle("序");
         foreach (Attr attr in selectedAttrs)
@@ -448,7 +501,6 @@ public partial class WF_Rpt_Search : WebPage
             this.UCSys1.AddTREnd();
         }
         #endregion
-
         this.UCSys1.AddTableEnd();
     }
     private void ToolBar1_ButtonClick(object sender, System.EventArgs e)

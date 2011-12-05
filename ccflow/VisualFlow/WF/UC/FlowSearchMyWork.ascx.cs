@@ -76,9 +76,7 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
             }
             throw ex;
         }
-
      //  this.Response.Write(qo.SQL);
-
         // 生成页面数据。
         Attrs attrs = BP.WF.Glo.AttrsOfRpt; // rpt.EnMap.Attrs;
         int colspan = 2;

@@ -1127,10 +1127,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     private void Send(bool isSave)
     {
         // 判断当前人员是否有执行该人员的权限。
-        string sql = "SELECT FK_Emp FROM WF_GenerWorkerlist WHERE FK_Node='"+this.FK_Node+"' AND WorkID="+this.WorkID+" AND FK_Emp='"+WebUser.No+"' AND IsEnable=1 AND IsPass=0";
-        if (DBAccess.RunSQLReturnTable(sql).Rows.Count != 1  && currND.IsStartNode==false)
+        string sql = "SELECT FK_Emp FROM WF_GenerWorkerlist WHERE FK_Node='" + this.FK_Node + "' AND WorkID=" + this.WorkID + " AND FK_Emp='" + WebUser.No + "' AND IsEnable=1 AND IsPass=0";
+        if (DBAccess.RunSQLReturnTable(sql).Rows.Count != 1 && currND.IsStartNode == false)
         {
-            this.ToMsg("保存或发送错误","您好：" + WebUser.No + "," + WebUser.Name + "：<br> 当前工作已经被其它人处理，您不能在执行保存或者发送!!!");
+            this.ToMsg("保存或发送错误", "您好：" + WebUser.No + "," + WebUser.Name + "：<br> 当前工作已经被其它人处理，您不能在执行保存或者发送!!!");
             return;
         }
 
@@ -1147,7 +1147,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 case FormType.FixForm:
                 case FormType.FreeForm:
                     currWK = (Work)this.UCEn1.Copy(this.currWK);
-                     // 设置默认值
+                    // 设置默认值
                     MapAttrs mattrs = new MapAttrs("ND" + this.FK_Node);
                     foreach (MapAttr attr in mattrs)
                     {
@@ -1179,7 +1179,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 /*对特殊的流程进行检查，检查是否有权限。*/
                 string prjNo = currWK.GetValStringByKey("PrjNo");
-                if (DBAccess.RunSQLReturnTable("SELECT * FROM WF_NodeStation WHERE FK_Station IN ( SELECT FK_Station FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "' )  AND  FK_Node=" + this.FK_Node ).Rows.Count == 0)
+                if (DBAccess.RunSQLReturnTable("SELECT * FROM WF_NodeStation WHERE FK_Station IN ( SELECT FK_Station FROM Prj_EmpPrjStation WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "' )  AND  FK_Node=" + this.FK_Node).Rows.Count == 0)
                 {
                     string prjName = currWK.GetValStringByKey("PrjName");
                     if (DBAccess.RunSQLReturnTable("SELECT * FROM Prj_EmpPrj WHERE FK_Prj='" + prjNo + "' AND FK_Emp='" + WebUser.No + "'").Rows.Count == 0)
@@ -1240,114 +1240,68 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
 
         WorkNode firstwn = new WorkNode(this.currWK, this.currND);
-       
-            msg = firstwn.AfterNodeSave();
-            this.Btn_Send.Enabled = false;
-            /*处理转向问题.*/
-            switch (firstwn.HisNode.HisTurnToDeal)
-            {
-                case TurnToDeal.SpecUrl:
-                    string myurl = firstwn.HisNode.TurnToDealDoc.Clone().ToString();
-                    if (myurl.Contains("&") == false)
-                        myurl += "?1=1";
-                    Attrs myattrs = firstwn.HisWork.EnMap.Attrs;
-                    Work hisWK = firstwn.HisWork;
-                    foreach (Attr attr in myattrs)
-                    {
-                        if (myurl.Contains("@") == false)
-                            break;
-                        myurl = myurl.Replace("@" + attr.Key, hisWK.GetValStrByKey(attr.Key));
-                    }
-                    myurl += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID=" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
-                    this.Response.Redirect(myurl, true);
-                    return;
-                case TurnToDeal.TurnToByCond:
-                    TurnTos tts = new TurnTos(this.FK_Flow);
-                    if (tts.Count == 0)
-                        throw new Exception("@您没有设置节点完成后的转向条件。");
-                    foreach (TurnTo tt in tts)
-                    {
-                        tt.HisWork = firstwn.HisWork;
-                        if (tt.IsPassed == true)
-                        {
-                            string url = tt.TurnToURL.Clone().ToString();
-                            if (url.Contains("&") == false)
-                                url += "?1=1";
-                            Attrs attrs = firstwn.HisWork.EnMap.Attrs;
-                            Work hisWK1 = firstwn.HisWork;
-                            foreach (Attr attr in attrs)
-                            {
-                                if (url.Contains("@") == false)
-                                    break;
-                                url = url.Replace("@" + attr.Key, hisWK1.GetValStrByKey(attr.Key));
-                            }
-                            url += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
-                            this.Response.Redirect(url, true);
-                            return;
-                        }
-                    }
-                    throw new Exception("您定义的转向条件不成立，没有出口。");
-                default:
-                    this.ToMsg(msg, "info");
-                    break;
-            }
-            return;
-        //}
-        //catch (Exception ex)
-        //{
-        //    msg = ex.Message.Replace("'", "’");
-        //    msg = ex.Message.Replace("<br>", "\r\n");
-        //    this.Btn_Send.Enabled = true;
-        //    this.Pub1.AlertMsg_Warning("错误", msg);
-        //    return;
-        //}
-
-        //bool isCanDoNextWork = true;
-        ////能不能执行下一步工作
-        //this.WorkID = firstwn.HisWork.OID;
-        //this.FK_Node = firstwn.HisNode.NodeID;
-        ////    this.BPTabStrip1.SelectedIndex = 0;
-        //if (firstwn.IsComplete == false)
-        //{
-        //    this.Btn_Send.Enabled = false;
-        //    /* 如果当前得节点任务还没有完成 */
-        //    this.ToMsg(msg, "info");
-        //    return;
-        //}
-
-        ////判断流程得任务是不是完成？如果流程得任务完成，就不向下执行。
-        //if (firstwn.HisWorkFlow.IsComplete)
-        //{
-        //    /* 如果工作已经完成 */
-        //    this.Btn_Send.Enabled = false;
-        //    this.Btn_Save.Enabled = false;
-        //    msg += "@" + this.ToE("FlowOver", "此流程已经完成");
-        //    this.ToMsg(msg, "info");
-        //    return;
-        //}
-        //else
-        //{
-        //    this.Btn_Send.Enabled = false;
-        //    this.ToMsg(msg, "info");
-        //    return;
-        //}
-
-        /*
-        // 取出他得下一个节点信息。判断是不是能够执行他。
-        WorkNode secondwn = firstwn.GetNextWorkNode();
-        //WorkFlow wf = new WorkFlow(this.CurrentFlow,this.FK_Node);
-        if ( secondwn.HisWorkFlow.IsCanDoCurrentWork(WebUser.No)==false)
+        try
         {
-            msg+="@您没有处理下个工作的权限。";
-            this.ResponseWriteBlueMsg(msg);
-            return ;
+            msg = firstwn.AfterNodeSave();
         }
-        else
-        {		
-            this.ResponseWriteBlueMsg(msg+"@下一步工作你有权限处理,点[下一步]或[当前]按钮处理下一步工作.");
+        catch(Exception exSend)
+        {
+            this.FlowMsg.AddFieldSetGreen("错误");
+            this.FlowMsg.Add( exSend.Message.Replace("@@","@").Replace("@","<BR>@"));
+            this.FlowMsg.AddFieldSetEnd();
             return;
-        } 
-        */
+        }
+
+        this.Btn_Send.Enabled = false;
+        /*处理转向问题.*/
+        switch (firstwn.HisNode.HisTurnToDeal)
+        {
+            case TurnToDeal.SpecUrl:
+                string myurl = firstwn.HisNode.TurnToDealDoc.Clone().ToString();
+                if (myurl.Contains("&") == false)
+                    myurl += "?1=1";
+                Attrs myattrs = firstwn.HisWork.EnMap.Attrs;
+                Work hisWK = firstwn.HisWork;
+                foreach (Attr attr in myattrs)
+                {
+                    if (myurl.Contains("@") == false)
+                        break;
+                    myurl = myurl.Replace("@" + attr.Key, hisWK.GetValStrByKey(attr.Key));
+                }
+                myurl += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID=" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
+                this.Response.Redirect(myurl, true);
+                return;
+            case TurnToDeal.TurnToByCond:
+                TurnTos tts = new TurnTos(this.FK_Flow);
+                if (tts.Count == 0)
+                    throw new Exception("@您没有设置节点完成后的转向条件。");
+                foreach (TurnTo tt in tts)
+                {
+                    tt.HisWork = firstwn.HisWork;
+                    if (tt.IsPassed == true)
+                    {
+                        string url = tt.TurnToURL.Clone().ToString();
+                        if (url.Contains("&") == false)
+                            url += "?1=1";
+                        Attrs attrs = firstwn.HisWork.EnMap.Attrs;
+                        Work hisWK1 = firstwn.HisWork;
+                        foreach (Attr attr in attrs)
+                        {
+                            if (url.Contains("@") == false)
+                                break;
+                            url = url.Replace("@" + attr.Key, hisWK1.GetValStrByKey(attr.Key));
+                        }
+                        url += "&FromFlow=" + this.FK_Flow + "&FromNode=" + this.FK_Node + "&FromWorkID" + this.WorkID + "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
+                        this.Response.Redirect(url, true);
+                        return;
+                    }
+                }
+                throw new Exception("您定义的转向条件不成立，没有出口。");
+            default:
+                this.ToMsg(msg, "info");
+                break;
+        }
+        return;
     }
     public void ToMsg(string msg, string type)
     {

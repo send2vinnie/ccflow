@@ -666,7 +666,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
         UserRegedit ur = new UserRegedit(WebUser.No, ensName + "_SearchAttrs");
         string cfgKey = ur.Vals;
 
-        InitByMapV2(map.IsShowSearchKey, map.AttrsOfSearch, map.SearchAttrs, null, page, ur);
+        this.InitByMapV2(map.IsShowSearchKey, map.AttrsOfSearch, map.SearchAttrs, null, page, ur);
 
         #region 设置默认值
         string[] keys = cfgKey.Split('@');
@@ -751,7 +751,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             // ddl.Attributes["onchange"] = "Redirect" + attr.Key + "(this.options.selectedIndex)";
 
             ddl.Attributes["onchange"] = "Redirect" + attr.Key + "()";
-
 
             DDL ddlSmil = this.GetDDLByID("DDL_" + attr.RelationalDtlKey);
 
@@ -844,9 +843,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             this.AddLab("Lab_" + attr.Key, attr.Lab);
             keysNum++;
 
-            //if (keysNum==3 || keysNum==6 || keysNum==9)
-            //    this.AddBR("b_"+keysNum);
-
             if (attr.SymbolEnable == true)
             {
                 DDL ddl = new DDL();
@@ -868,13 +864,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             {
                 DateTime mydt = BP.DA.DataType.ParseSysDate2DateTime(attr.DefaultVal);
 
-                /*可能是日期时间类型。*/
-                //					Map map = new Map();
-                //					map.AddDDLEntities(attr.Key, mydt.ToString("yyyy"),"年",  new BP.Pub.NDs(),false);
-                //					map.AddDDLEntities(attr.Key, mydt.ToString("MM"),"月",  new BP.Pub.YFs(),false);
-                //					map.AddDDLEntities(attr.Key, mydt.ToString("dd"),"日",  new BP.Pub.YFs(),false);
-
-
                 DDL ddl = new DDL();
                 ddl.ID = "DDL_" + attr.Key + "_Year";
                 ddl.SelfShowType = DDLShowType.Ens;
@@ -887,7 +876,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                 this.AddDDL(ddl);
                 ddl.SelfBind();
                 //ddl.SelfBind();
-
 
                 ddl = new DDL();
                 ddl.ID = "DDL_" + attr.Key + "_Month";
@@ -931,12 +919,6 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
 
         cfgVal = ur.Vals;
 
-        //if (className != null)
-        //{
-        //    UserRegedit ur = new UserRegedit(WebUser.No, className + "_SearchAttrs");
-        //    ur.FK_Emp = WebUser.No;
-        //    cfgVal = ur.Vals;
-        //}
 
         // 外键属性查询。			 
         bool isfirst = true;

@@ -485,7 +485,7 @@ public partial class WF_MapDef_WFRpt : WebPage
         #endregion 处理隐藏字段。
 
         #region 查询条件定义
-        this.Pub1.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义") + " - <a href=\"javascript:WinOpen('../../Comm/PanelEns.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt2r", "查询预览") + "</a>-<a href=\"javascript:WinOpen('../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt3r", "分析预览") + "</a>");
+        this.Pub1.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义") + " - <a href=\"javascript:WinOpen('../Rpt/Search.aspx?FK_Flow=" + this.MyPK + "')\">" + this.ToE("WFRpt2r", "查询预览") + "</a>-<a href=\"javascript:WinOpen('../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt3r", "分析预览") + "</a>");
         foreach (MapAttr mattr in mattrs)
         {
             if (mattr.UIContralType != UIContralType.DDL)
