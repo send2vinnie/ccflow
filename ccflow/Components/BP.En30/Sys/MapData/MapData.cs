@@ -428,8 +428,10 @@ namespace BP.Sys
                             MapDtl dtl = new MapDtl();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val =dr[dc.ColumnName].ToString().Replace(oldMapID, fk_mapdata);
-                                dtl.SetValByKey(dc.ColumnName, val);
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+                                dtl.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             dtl.Insert();
                         }
@@ -440,8 +442,11 @@ namespace BP.Sys
                             MapData md = new MapData();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName].ToString().Replace(oldMapID, fk_mapdata);
-                                md.SetValByKey(dc.ColumnName, val);
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+                                md.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
+                                //md.SetValByKey(dc.ColumnName, val);
                             }
                             md.Insert();
                         }
@@ -454,6 +459,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
 
@@ -469,6 +476,9 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             //   en.FK_MapData = fk_mapdata;
@@ -484,6 +494,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             //  en.FK_MapData = fk_mapdata;
@@ -499,6 +511,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             //en.FK_MapData = fk_mapdata;
@@ -514,6 +528,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             //en.FK_MapData = fk_mapdata;
@@ -529,6 +545,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             // en.FK_MapData = fk_mapdata;
@@ -544,6 +562,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             //en.FK_MapData = fk_mapdata;
@@ -565,6 +585,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             // en.FK_MapData = fk_mapdata;
@@ -580,6 +602,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             // en.FK_MapData = fk_mapdata;
@@ -595,6 +619,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             // en.FK_MapData = fk_mapdata;
@@ -610,6 +636,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             //en.FK_MapData = fk_mapdata;
@@ -625,6 +653,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             //  en.FK_MapData = fk_mapdata;
@@ -639,6 +669,8 @@ namespace BP.Sys
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             en.OID = 0;
