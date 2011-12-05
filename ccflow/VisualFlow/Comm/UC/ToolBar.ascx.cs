@@ -989,7 +989,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                         if (units.Count > SystemConfig.MaxDDLNum)
                             this.AddLab("lD", "<a href=\"javascript:onDDLSelectedMore('DDL_" + attr.Key + "', '" + this.EnsName + "', 'BP.Port.Units', 'No','Name')\" >...</a>");
 
-                        if (ddl.Items.Count >= 4)
+                        if (ddl.Items.Count >= 2)
                             ddl.Items.Add(liMvals);
 
                         ddl.Attributes["onchange"] = "DDL_mvals_OnChange(this,'" + ensName + "','" + attr.Key + "')";
@@ -1009,7 +1009,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
                         foreach (Entity en in ens)
                             ddl.Items.Add(new ListItem(en.GetValStrByKey("Name"), en.GetValStrByKey("No")));
 
-                        if (ddl.Items.Count >= 4)
+                        if (ddl.Items.Count >= 2)
                             ddl.Items.Add(liMvals);
 
                         ddl.Attributes["onchange"] = "DDL_mvals_OnChange(this,'" + ensName + "','" + attr.Key + "')";
