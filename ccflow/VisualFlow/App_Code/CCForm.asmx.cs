@@ -71,7 +71,6 @@ namespace BP.Web
                 DataSet ds = new DataSet();
                 ds.ReadXml(file);
                 MapData.ImpMapData(fk_mapData, ds);
-
                 if (fk_mapData.Contains("ND"))
                 {
                     /* 判断是否是节点表单 */
@@ -123,7 +122,6 @@ namespace BP.Web
                 return ex.Message;
             }
         }
-       
         [WebMethod]
         public string DoType(string dotype, string v1, string v2, string v3, string v4,string v5)
         {
@@ -285,7 +283,7 @@ namespace BP.Web
                             System.IO.File.Delete(file);
                         ds.WriteXml(file);
 
-                       // BP.PubClass.DownloadFile(file, mdfrmtem.Name + ".xml");
+                        // BP.PubClass.DownloadFile(file, mdfrmtem.Name + ".xml");
                         //this.DownLoadFile(System.Web.HttpContext.Current, file, mdfrmtem.Name);
                         return null;
                     case "FrmTempleteImp": //导入表单.
@@ -345,13 +343,11 @@ namespace BP.Web
 
                         bool isReadonly = false;
                         if (v4 == "1")
-                            isReadonly = true; 
+                            isReadonly = true;
 
                         string msg = this.SaveEn(vals);
                         if (msg.Contains("Error"))
                             return msg;
-
-                       //BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
 
                         string fk_frm = msg;
                         Frm fm = new Frm();
@@ -365,7 +361,6 @@ namespace BP.Web
                             fn.IsReadonly = isReadonly;
                             fn.IsPrint = isPrint;
                             fn.Update();
-                        //    BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
                             return fk_frm;
                         }
 
@@ -382,7 +377,6 @@ namespace BP.Web
                         if (md.RetrieveFromDBSources() == 0)
                         {
                             md.Name = fm.Name;
-                            //  md.PTable = "T" + md.No;
                             md.EnPK = "OID";
                             md.Insert();
                         }
@@ -412,7 +406,19 @@ namespace BP.Web
                         attr.DefVal = "0";
                         attr.HisEditType = BP.En.EditType.Readonly;
                         attr.Insert();
-                       // BP.DA.DBAccess.RunSQL("update sys_mapdata set PTable=(select PTable from wf_frm where wf_frm.no=sys_mapdata.no)");
+
+                        attr = new MapAttr();
+                        attr.FK_MapData = md.No;
+                        attr.KeyOfEn = "RDT";
+                        attr.Name = "记录日期";
+                        attr.MyDataType = BP.DA.DataType.AppDateTime;
+                        attr.UIContralType = UIContralType.TB;
+                        attr.LGType = FieldTypeS.Normal;
+                        attr.UIVisible = false;
+                        attr.UIIsEnable = false;
+                        attr.DefVal = "@RDT";
+                        attr.HisEditType = BP.En.EditType.Readonly;
+                        attr.Insert();
                         return fk_frm;
                     default:
                         return "Error:";
