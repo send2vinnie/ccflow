@@ -611,6 +611,7 @@ namespace BP.Web
         public string CopyFrm(string fromMapData, string fk_mapdata, bool isClear)
         {
             this.LetAdminLogin();
+
             MapData md = new MapData(fromMapData);
             MapData.ImpMapData(fk_mapdata, md.GenerHisDataSet());
 
