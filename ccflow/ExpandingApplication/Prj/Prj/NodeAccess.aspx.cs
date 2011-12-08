@@ -105,25 +105,26 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
 
         string root = BP.SystemConfig.PathOfDataUser + "\\PrjData\\Templete\\"+this.FK_Prj;
 
-        this.Pub2.AddTable();
-        this.Pub2.AddCaptionLeft("节点与资料树访问权限");
+        this.Pub3.AddTable("width=100%");
+        this.Pub3.AddCaptionLeft("节点与资料树访问权限 - <a href=\"javascript:AddDir()\" >增加文件夹</a>");
         string[] dirs = System.IO.Directory.GetDirectories(root);
         int idx = 0;
         foreach (string dir in dirs)
         {
             idx++;
             DirectoryInfo dirInfo = new DirectoryInfo(dir);
-            this.Pub2.AddTR();
-            this.Pub2.AddTDIdx(idx);
-            this.Pub2.AddTD("colspan=5", "<img src='./../Images/Btn/open.gif'>" + dirInfo.Name);
-            this.Pub2.AddTREnd();
+            this.Pub3.AddTR();
+            this.Pub3.AddTDIdx(idx);
+            this.Pub3.AddTD("colspan=5", "<img src='./../Images/Btn/open.gif'>" + dirInfo.Name);
+            this.Pub3.AddTD("<a href=\"javascript:AddFile('" + idx + "')\" >增加模板</a>");
+            this.Pub3.AddTREnd();
             FileInfo[] fls = dirInfo.GetFiles();
             foreach (FileInfo fl in fls)
             {
                 idx++;
-                this.Pub2.AddTR();
-                this.Pub2.AddTDIdx(idx);
-                this.Pub2.AddTD("<img src='./../Images/FileType/" + fl.Extension.Replace(".", "") + ".gif'>" + fl.Name);
+                this.Pub3.AddTR();
+                this.Pub3.AddTDIdx(idx);
+                this.Pub3.AddTD("<img src='./../Images/FileType/" + fl.Extension.Replace(".", "") + ".gif'>" + fl.Name);
                 NodeAccess rl = nrs.GetEntityByKey(NodeAccessAttr.FileFullName, fl.FullName) as NodeAccess;
                 if (rl == null)
                 {
@@ -134,39 +135,41 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
                 }
 
                 CheckBox cb = new CheckBox();
-                cb.ID = "CB_" + NodeAccessAttr.IsView+"_"+idx;
+                cb.ID = "CB_" + NodeAccessAttr.IsView + "_" + idx;
                 cb.Text = "可见";
                 cb.Checked = rl.IsView;
-                this.Pub2.AddTD(cb);
+                this.Pub3.AddTD(cb);
 
                 cb = new CheckBox();
                 cb.ID = "CB_" + NodeAccessAttr.IsDown + "_" + idx;
                 cb.Text = "可下载";
                 cb.Checked = rl.IsDown;
-                this.Pub2.AddTD(cb);
+                this.Pub3.AddTD(cb);
 
                 cb = new CheckBox();
                 cb.ID = "CB_" + NodeAccessAttr.IsUpload + "_" + idx;
                 cb.Text = "可上传";
                 cb.Checked = rl.IsUpload;
-                this.Pub2.AddTD(cb);
+                this.Pub3.AddTD(cb);
 
                 cb = new CheckBox();
                 cb.ID = "CB_" + NodeAccessAttr.IsDelete + "_" + idx;
                 cb.Text = "可删除";
                 cb.Checked = rl.IsDelete;
-                this.Pub2.AddTD(cb);
-                this.Pub2.AddTREnd();
+                this.Pub3.AddTD(cb);
+
+                this.Pub3.AddTD("<a href=\"javascript:DelFile('" + idx + "')\" >删除</a>");
+                this.Pub3.AddTREnd();
             }
         }
-        this.Pub2.AddTableEnd();
+        this.Pub3.AddTableEnd();
 
-        this.Pub2.AddHR();
+        this.Pub3.AddHR();
         Button btn = new Button();
         btn.Text = " Save  ";
         btn.ID = "Btn_Save";
         btn.Click += new EventHandler(btn_Click);
-        this.Pub2.Add(btn);
+        this.Pub3.Add(btn);
     }
     void btn_Click(object sender, EventArgs e)
     {
@@ -175,8 +178,8 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
         nrs.Retrieve(NodeAccessAttr.FK_Node, this.FK_Node, NodeAccessAttr.FK_Prj,this.FK_Prj);
 
         string root = BP.SystemConfig.PathOfDataUser + "\\PrjData\\Templete\\" + this.FK_Prj;
-        this.Pub2.AddTable();
-        this.Pub2.AddCaptionLeft("节点与资料树访问权限");
+        this.Pub3.AddTable();
+        this.Pub3.AddCaptionLeft("节点与资料树访问权限");
         string[] dirs = System.IO.Directory.GetDirectories(root);
         int idx = 0;
         foreach (string dir in dirs)
@@ -194,10 +197,10 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
                 rl.FK_Node = this.FK_Node;
                 rl.FK_Prj = this.FK_Prj;
                  
-                rl.IsView = this.Pub2.GetCBByID("CB_" + NodeAccessAttr.IsView + "_" + idx).Checked;
-                rl.IsDown = this.Pub2.GetCBByID("CB_" + NodeAccessAttr.IsDown + "_" + idx).Checked;
-                rl.IsUpload = this.Pub2.GetCBByID("CB_" + NodeAccessAttr.IsUpload + "_" + idx).Checked;
-                rl.IsDelete = this.Pub2.GetCBByID("CB_" + NodeAccessAttr.IsDelete + "_" + idx).Checked;
+                rl.IsView = this.Pub3.GetCBByID("CB_" + NodeAccessAttr.IsView + "_" + idx).Checked;
+                rl.IsDown = this.Pub3.GetCBByID("CB_" + NodeAccessAttr.IsDown + "_" + idx).Checked;
+                rl.IsUpload = this.Pub3.GetCBByID("CB_" + NodeAccessAttr.IsUpload + "_" + idx).Checked;
+                rl.IsDelete = this.Pub3.GetCBByID("CB_" + NodeAccessAttr.IsDelete + "_" + idx).Checked;
                 rl.MyPK = rl.FileFullName + "_" + this.FK_Node + "_" + this.FK_Prj;
                 rl.Save();
             }

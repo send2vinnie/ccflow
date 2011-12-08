@@ -14,9 +14,13 @@
 <td  align="left" valign="top" width="70%">
     <uc1:Pub ID="Pub2" runat="server" />
     </td>
-
 </tr>
 
+<tr>
+<td align="left" valign=top colspan=2 >
+    <uc1:Pub ID="Pub3" runat="server" />
+     </td>
+</tr>
 </table>
 </asp:Content>
 
