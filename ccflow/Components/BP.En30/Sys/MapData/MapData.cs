@@ -431,7 +431,7 @@ namespace BP.Sys
                             MapDtl dtl = new MapDtl();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 dtl.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
@@ -445,7 +445,7 @@ namespace BP.Sys
                             MapData md = new MapData();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 md.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
@@ -461,7 +461,7 @@ namespace BP.Sys
                             FrmBtn en = new FrmBtn();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
@@ -478,13 +478,12 @@ namespace BP.Sys
                             FrmLine en = new FrmLine();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
 
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            //   en.FK_MapData = fk_mapdata;
                             en.MyPK = "LE" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -496,7 +495,7 @@ namespace BP.Sys
                             FrmLab en = new FrmLab();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
@@ -513,12 +512,11 @@ namespace BP.Sys
                             FrmLink en = new FrmLink();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            //en.FK_MapData = fk_mapdata;
                             en.MyPK = "LK" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -530,9 +528,10 @@ namespace BP.Sys
                             FrmImg en = new FrmImg();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
+
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             //en.FK_MapData = fk_mapdata;
@@ -547,7 +546,7 @@ namespace BP.Sys
                             FrmImgAth en = new FrmImgAth();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
@@ -564,7 +563,7 @@ namespace BP.Sys
                             FrmRB en = new FrmRB();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
@@ -587,12 +586,11 @@ namespace BP.Sys
                             FrmAttachment en = new FrmAttachment();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            // en.FK_MapData = fk_mapdata;
                             en.MyPK = "Ath" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -604,12 +602,11 @@ namespace BP.Sys
                             MapM2M en = new MapM2M();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            // en.FK_MapData = fk_mapdata;
                             en.No = "D" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -621,12 +618,11 @@ namespace BP.Sys
                             MapFrame en = new MapFrame();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            // en.FK_MapData = fk_mapdata;
                             en.No = "Fra" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -638,12 +634,11 @@ namespace BP.Sys
                             MapExt en = new MapExt();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            //en.FK_MapData = fk_mapdata;
                             en.MyPK = "Ext" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -655,12 +650,11 @@ namespace BP.Sys
                             MapAttr en = new MapAttr();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            //  en.FK_MapData = fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -671,7 +665,7 @@ namespace BP.Sys
                             GroupField en = new GroupField();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                string val = dr[dc.ColumnName] as string;
+                                object val = dr[dc.ColumnName] as object;
                                 if (val == null)
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
