@@ -330,7 +330,7 @@ namespace BP.En
         /// <returns></returns>		
         public string GenerNewNoByKey(int nolength, string attrKey, string attrGroupKey, string attrGroupVal)
         {
-            if (attrGroupKey == null || attrGroupVal==null )
+            if (attrGroupKey == null || attrGroupVal == null)
                 throw new Exception("@分组字段attrGroupKey attrGroupVal 不能为空");
 
             Paras ps = new Paras();
@@ -425,7 +425,7 @@ namespace BP.En
         #region 排序操作
         protected void DoOrderUp(string groupKeyAttr, string groupKeyVal, string idxAttr)
         {
-          //  string pkval = this.PKVal as string;
+            //  string pkval = this.PKVal as string;
             string pkval = this.PKVal.ToString();
             string pk = this.PK;
             string table = this.EnMap.PhysicsTable;
@@ -636,7 +636,7 @@ namespace BP.En
             int i = 0;
             //try
             //{
-                i = EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
+            i = EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
             //}
             //catch (Exception ex)
             //{
@@ -681,8 +681,8 @@ namespace BP.En
         }
         public virtual int Retrieve()
         {
-                return this.RetrieveIt();
-           
+            return this.RetrieveIt();
+
         }
         public virtual int Retrieve_del()
         {
@@ -1156,7 +1156,7 @@ namespace BP.En
 
 
         #region 通用方法
-       
+
         #endregion
 
         #region insert
@@ -1198,7 +1198,7 @@ namespace BP.En
                         this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
                         break;
                     default:
-                        this.RunSQL(this.SQLCash.Insert.Replace("[","").Replace("]",""), SqlBuilder.GenerParas(this, null));
+                        this.RunSQL(this.SQLCash.Insert.Replace("[", "").Replace("]", ""), SqlBuilder.GenerParas(this, null));
                         break;
                 }
             }
@@ -1323,7 +1323,7 @@ namespace BP.En
             }
             return refDoc;
         }
-       
+
 
         public void Copy()
         {
@@ -1623,8 +1623,8 @@ namespace BP.En
                     string pk = this.GetValStrByKey(this.PK);
                     if (pk == "" || pk == null)
                     {
-                         this.Insert();
-                         return 1;
+                        this.Insert();
+                        return 1;
                     }
                     else
                     {
@@ -1873,109 +1873,6 @@ namespace BP.En
             if (this._enMap.EnDBUrl.DBUrlType != DBUrlType.AppCenterDSN)
                 return;
 
-            #region 建立主键
-            if (DBAccess.IsExitsTabPK(this.EnMap.PhysicsTable) == false)
-            {
-                try
-                {
-                    int pkconut = this.PKCount;
-                    if (pkconut == 1)
-                    {
-                        try
-                        {
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, this.PKField);
-                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
-                        }
-                        catch(Exception ex)
-                        {
-                        }
-                    }
-                    else if (pkconut == 2)
-                    {
-                        try
-                        {
-                            string pk0 = this.PKs[0];
-                            string pk1 = this.PKs[1];
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1);
-                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
-                        }
-                        catch
-                        {
-                        }
-                    }
-                    else if (pkconut == 3)
-                    {
-                        try
-                        {
-                            string pk0 = this.PKs[0];
-                            string pk1 = this.PKs[1];
-                            string pk2 = this.PKs[2];
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, pk2);
-                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.DefaultLogWriteLineError(ex.Message);
-                    throw ex;
-                }
-            }
-            #endregion
-
-            #region 建立索引
-            try
-            {
-                int pkconut = this.PKCount;
-                if (pkconut == 1)
-                {
-                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
-                }
-                else if (pkconut == 2)
-                {
-                    string pk0 = this.PKs[0];
-                    string pk1 = this.PKs[1];
-                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
-                }
-                else if (pkconut == 3)
-                {
-                    try
-                    {
-                        string pk0 = this.PKs[0];
-                        string pk1 = this.PKs[1];
-                        string pk2 = this.PKs[2];
-                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
-                    }
-                    catch
-                    {
-                    }
-                }
-                else if (pkconut == 4)
-                {
-                    try
-                    {
-                        string pk0 = this.PKs[0];
-                        string pk1 = this.PKs[1];
-                        string pk2 = this.PKs[2];
-                        string pk3 = this.PKs[3];
-                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2, pk3);
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.DefaultLogWriteLineError(ex.Message);
-                throw ex;
-                //throw new Exception("create pk error :"+ex.Message );
-            }
-            #endregion
-
             #region 检查字段是否存在
             string sql = "SELECT *  FROM " + this.EnMap.PhysicsTable + " WHERE 1=2";
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
@@ -2170,7 +2067,110 @@ namespace BP.En
             }
             #endregion
 
-            // 增加注释.
+            #region 建立索引
+            try
+            {
+                int pkconut = this.PKCount;
+                if (pkconut == 1)
+                {
+                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
+                }
+                else if (pkconut == 2)
+                {
+                    string pk0 = this.PKs[0];
+                    string pk1 = this.PKs[1];
+                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
+                }
+                else if (pkconut == 3)
+                {
+                    try
+                    {
+                        string pk0 = this.PKs[0];
+                        string pk1 = this.PKs[1];
+                        string pk2 = this.PKs[2];
+                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                    }
+                    catch
+                    {
+                    }
+                }
+                else if (pkconut == 4)
+                {
+                    try
+                    {
+                        string pk0 = this.PKs[0];
+                        string pk1 = this.PKs[1];
+                        string pk2 = this.PKs[2];
+                        string pk3 = this.PKs[3];
+                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2, pk3);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.DefaultLogWriteLineError(ex.Message);
+                throw ex;
+                //throw new Exception("create pk error :"+ex.Message );
+            }
+            #endregion
+
+            #region 建立主键
+            if (DBAccess.IsExitsTabPK(this.EnMap.PhysicsTable) == false)
+            {
+                try
+                {
+                    int pkconut = this.PKCount;
+                    if (pkconut == 1)
+                    {
+                        try
+                        {
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, this.PKField);
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                    else if (pkconut == 2)
+                    {
+                        try
+                        {
+                            string pk0 = this.PKs[0];
+                            string pk1 = this.PKs[1];
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1);
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    else if (pkconut == 3)
+                    {
+                        try
+                        {
+                            string pk0 = this.PKs[0];
+                            string pk1 = this.PKs[1];
+                            string pk2 = this.PKs[2];
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.DefaultLogWriteLineError(ex.Message);
+                    throw ex;
+                }
+            }
+            #endregion
+
+            //增加注释.
         }
         #endregion
 
@@ -2215,16 +2215,16 @@ namespace BP.En
                         }
 
                         //sql = sql.Replace("''", "'");
-                      //  sql = sql.Replace("'''", "''");
+                        //  sql = sql.Replace("'''", "''");
 
-                        string val="";
+                        string val = "";
                         try
                         {
                             val = DBAccess.RunSQLReturnString(sql);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
-                            throw new Exception("@自动获取数据期间错误:" + sql.Replace("'", "“") + " @Tech Info:" + ex.Message.Replace("'", "“")+"@"+ sql);
+                            throw new Exception("@自动获取数据期间错误:" + sql.Replace("'", "“") + " @Tech Info:" + ex.Message.Replace("'", "“") + "@" + sql);
                         }
 
                         if (attr.IsNum)
@@ -2262,7 +2262,7 @@ namespace BP.En
 
                                         //throw new Exception("@自动获取值信息不完整,Map 中已经不包含Key=" + ss[1] + "的属性。");
                                         sqlfk = sqlfk.Replace('@' + ss[0], "'@xxx'");
-                                        Log.DefaultLogWriteLineWarning("@在自动取值期间出现错误:"+this.ToString()+" , "+this.PKVal +"没有自动获取到信息。");
+                                        Log.DefaultLogWriteLineWarning("@在自动取值期间出现错误:" + this.ToString() + " , " + this.PKVal + "没有自动获取到信息。");
                                     }
                                     else
                                     {
@@ -2276,7 +2276,7 @@ namespace BP.En
                             }
 
                             sqlfk = sqlfk.Replace("''", "'");
-                            this.SetValByKey(attr.Key, DBAccess.RunSQLReturnStringIsNull(sqlfk,null) );
+                            this.SetValByKey(attr.Key, DBAccess.RunSQLReturnStringIsNull(sqlfk, null));
                         }
                         catch (Exception ex)
                         {
@@ -2346,7 +2346,6 @@ namespace BP.En
         #endregion
 
     }
-
     /// <summary>
     /// 数据实体集合
     /// </summary>
