@@ -425,6 +425,7 @@ namespace BP.Web
         }
         /// <summary>
         /// 保存entity.
+        /// 事例: @EnName=BP.Sys.FrmLabel@PKVal=Lin13b@X=100@Y=299@Text=我的标签
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
