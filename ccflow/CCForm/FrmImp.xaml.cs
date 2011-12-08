@@ -174,10 +174,15 @@ namespace CCForm
         }
         void da_CopyFrmCompleted(object sender, CopyFrmCompletedEventArgs e)
         {
-
-            MessageBox.Show(e.Result);
-            this.DialogResult = true;
-            loadingWindow.DialogResult = false;
+            if (e.Result == null)
+            {
+                this.DialogResult = true;
+                loadingWindow.DialogResult = false;
+            }
+            else
+            {
+                MessageBox.Show(e.Result);
+            }
         }
         void da_DoTypeCompleted(object sender, FF.DoTypeCompletedEventArgs e)
         {

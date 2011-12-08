@@ -399,7 +399,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ServiceReferences.ClientConfig" />
     <Resource Include="Img\Alignment_Center.png" />
     <Resource Include="Img\Alignment_Down.png" />
     <Resource Include="Img\Alignment_Left.png" />

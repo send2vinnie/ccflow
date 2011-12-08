@@ -862,11 +862,14 @@ namespace CCForm
                     this.winNodeFrms.Show();
                     break;
                 case "NewFrm":
+                   // BP.WF.FrmNode fn = new BP.WF.FrmNode(li.Tag.ToString());
+
                     this.winFlowFrm.TB_No.Text = "";
                     this.winFlowFrm.TB_No.IsEnabled = true;
                     this.winFlowFrm.TB_Name.Text = "";
                     this.winFlowFrm.TB_PTable.Text = "";
                     this.winFlowFrm.TB_URL.Text = "";
+                    this.winFlowFrm.NodeID = int.Parse(li.Name.Replace("ND", ""));
                     this.winFlowFrm.Show();
                     break;
                 case "DeleteFrm":
@@ -1145,26 +1148,12 @@ namespace CCForm
                                 double.Parse(dr["X1"]), double.Parse(dr["Y1"]), double.Parse(dr["X2"]),
                                 double.Parse(dr["Y2"]));
 
-                            //Line myline = new Line();
-                            //myline.Name = dr["MyPK"];
-                            //myline.X1 = double.Parse(dr["X1"]);
-                            //myline.Y1 = double.Parse(dr["Y1"]);
-                            //myline.X2 = double.Parse(dr["X2"]);
-                            //myline.Y2 = double.Parse(dr["Y2"]);
-                            //myline.StrokeThickness = double.Parse(dr["BorderWidth"]);
-
                             myline.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
                             myline.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
 
                             this.canvasMain.Children.Add(myline);
-
-                            //MouseDragElementBehavior mdeLine = new MouseDragElementBehavior();
-                            //Interaction.GetBehaviors(myline).Add(mdeLine);
-
                             myline.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                             myline.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                            //myline.MouseLeftButtonUp += new MouseButtonEventHandler(myline_MouseLeftButtonUp);
-
                         }
                         continue;
                     case "Sys_FrmLab":
@@ -1219,10 +1208,6 @@ namespace CCForm
 
                             link.Foreground = new SolidColorBrush(Glo.ToColor(color));
 
-                            //Label cbLab = new Label();
-                            //cbLab.Name = "LinkLab" + link.Name;
-                            //cbLab.Content = dr["Text"];
-                            //link.Content = cbLab;
                             this.canvasMain.Children.Add(link);
                             link.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                             link.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
@@ -1236,7 +1221,6 @@ namespace CCForm
                         {
                             if (dr["FK_MapData"] != Glo.FK_MapData)
                                 continue;
-                             
 
                             BPImg img = new BPImg();
                             img.Name = dr["MyPK"];
@@ -4272,6 +4256,7 @@ namespace CCForm
                 {
                     if (ysdt.TableName == "Sys_MapData")
                         continue;
+
                     if (dr["FK_MapData"] != Glo.FK_MapData)
                         continue;
 
@@ -4279,6 +4264,21 @@ namespace CCForm
                     bool isHave = false;
                     foreach (DataRow newDr in newDt.Rows)
                     {
+                        if (ysdt.TableName == "Sys_MapAttr")
+                        {
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                            {
+                                isHave = true;
+                                break;
+                            }
+
+                            if (dr["UIVisible"] == "0" && dr["FK_MapData"] == Glo.FK_MapData)
+                            {
+                                isHave = true;
+                                break;
+                            }
+                        }
+
                         if (newDr[pk].ToString() == pkVal)
                         {
                             isHave = true;

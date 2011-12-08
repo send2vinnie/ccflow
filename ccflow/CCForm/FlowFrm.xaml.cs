@@ -13,12 +13,13 @@ namespace CCForm
 {
     public partial class FlowFrm : ChildWindow
     {
+        public int NodeID = 0;
         public Boolean IsNew = false;
         public FlowFrm()
         {
             InitializeComponent();
         }
-        public int NodeID = 0;
+
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             string pk = this.TB_No.Text;
@@ -57,13 +58,25 @@ namespace CCForm
             if (this.CB_IsPrint.IsChecked == true)
                 isPrint = "1";
 
-            //strs += "@IsPrint=" + this.TB_URL.Text;
+            //FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
+            //da.SaveEnAsync(strs);
+            //da.SaveEnCompleted += new EventHandler<FF.SaveEnCompletedEventArgs>(da_SaveEnCompleted);
 
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-            da.DoTypeAsync("SaveFlowFrm", strs, Glo.FK_Node.ToString(), Glo.FK_Flow,
-                isReadonly, isPrint);
+            da.DoTypeAsync("SaveFlowFrm", strs, this.NodeID.ToString(), Glo.FK_Flow,
+             isReadonly, isPrint);
             da.DoTypeCompleted += new EventHandler<FF.DoTypeCompletedEventArgs>(da_DoTypeCompleted);
         }
+        //void da_SaveEnCompleted(object sender, FF.SaveEnCompletedEventArgs e)
+        //{
+        //    if (e.Result == null)
+        //    {
+        //        this.TB_No.Text = e.Result;
+        //        this.DialogResult = true;
+        //        return;
+        //    }
+        //    MessageBox.Show(e.Result);
+        //}
         void da_DoTypeCompleted(object sender, FF.DoTypeCompletedEventArgs e)
         {
             if (e.Result.Contains("Error:"))

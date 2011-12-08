@@ -67,47 +67,29 @@ namespace CCForm
         }
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            string sqls = "";
+            string sqls = "@DELETE WF_FrmNode WHERE FK_Node='" + this.FK_Node + "'";
             foreach (CheckBox cb in this.listBox1.Items)
             {
-                if (cb.IsChecked == true
-                    && cb.Tag.ToString() == "0")
+                if (cb.IsChecked == true)
                 {
                     sqls += "@INSERT INTO WF_FrmNode (MyPK,FK_Flow,FK_Node,FK_Frm)VALUES('" + cb.Name + "_" + this.FK_Node + "','" + Glo.FK_Flow + "','" + this.FK_Node + "','" + cb.Name + "')";
                     continue;
                 }
-
-                if (cb.IsChecked == false
-                   && cb.Tag.ToString() == "1")
-                {
-                    sqls += "@DELETE WF_FrmNode WHERE MyPK='" + cb.Name + "_" + this.FK_Node + "'";
-                    continue;
-                }
             }
-            if (sqls == "")
-            {
-                this.DialogResult = true;
-                return;
-            }
-
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
             da.RunSQLsAsync(sqls);
             da.RunSQLsCompleted += new EventHandler<FF.RunSQLsCompletedEventArgs>(da_RunSQLsCompleted);
         }
-
         void da_RunSQLsCompleted(object sender, FF.RunSQLsCompletedEventArgs e)
         {
             this.DialogResult = true;
         }
-
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
         }
-
         private void listBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
     }
 }
