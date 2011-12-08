@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<preserve resultType="8" virtualPath="/Flow/global.asax" hash="24dcbf8f" filehash="2eaaa7f64160" flags="150000" assembly="App_global.asax" type="ASP.global_asax">
-    <filedeps>
-        <filedep name="/Flow/global.asax" />
-    </filedeps>
-</preserve>
