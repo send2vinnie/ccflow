@@ -749,7 +749,7 @@ namespace BP.En
                 }
                 catch (Exception ex)
                 {
-                    if (SystemConfig.IsDebug)
+                    if (ex.Message.Contains("ÎÞÐ§"))
                         this.CheckPhysicsTable();
                     throw ex;
                 }
@@ -1932,25 +1932,13 @@ namespace BP.En
                 int pkconut = this.PKCount;
                 if (pkconut == 1)
                 {
-                    try
-                    {
-                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
-                    }
-                    catch
-                    {
-                    }
+                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
                 }
                 else if (pkconut == 2)
                 {
-                    try
-                    {
-                        string pk0 = this.PKs[0];
-                        string pk1 = this.PKs[1];
-                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
-                    }
-                    catch
-                    {
-                    }
+                    string pk0 = this.PKs[0];
+                    string pk1 = this.PKs[1];
+                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
                 }
                 else if (pkconut == 3)
                 {

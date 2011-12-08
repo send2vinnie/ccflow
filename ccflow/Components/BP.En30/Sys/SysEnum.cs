@@ -376,6 +376,33 @@ namespace BP.Sys
             }
             return ens;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public int Delete(string key, object val)
+        {
+            try
+            {
+                Entity en = this.GetNewEntity;
+                Paras ps = new Paras();
+                ps.SQL = "DELETE FROM " + en.EnMap.PhysicsTable + " WHERE " + key + "=" + en.HisDBVarStr + "p";
+                ps.Add("p", val);
+                return en.RunSQL(ps);
+            }
+            catch
+            {
+                Entity en = this.GetNewEntity;
+                en.CheckPhysicsTable();
+
+                Paras ps = new Paras();
+                ps.SQL = "DELETE FROM " + en.EnMap.PhysicsTable + " WHERE " + key + "=" + en.HisDBVarStr + "p";
+                ps.Add("p", val);
+                return en.RunSQL(ps);
+            }
+        }
 		/// <summary>
 		/// SysEnums
 		/// </summary>

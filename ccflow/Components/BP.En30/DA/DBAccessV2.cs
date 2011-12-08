@@ -924,12 +924,25 @@ namespace BP.DA
         {
             string sql = "";
             sql = "DROP INDEX " + table + "." + table + "ID";
-            sql += "@CREATE INDEX " + table + "ID ON " + table + " (" + pk + ")";
-            DBAccess.RunSQLs(sql);
+            try
+            {
+                DBAccess.RunSQL(sql);
+            }
+            catch
+            {
+            }
+            sql = "CREATE INDEX " + table + "ID ON " + table + " (" + pk + ")";
+            DBAccess.RunSQL(sql);
         }
         public static void CreatIndex(string table, string pk1, string pk2)
         {
-            DBAccess.RunSQL("CREATE INDEX " + table + "ID ON " + table + " (" + pk1 + "," + pk2 + ")");
+            try
+            {
+                DBAccess.RunSQL("CREATE INDEX " + table + "ID ON " + table + " (" + pk1 + "," + pk2 + ")");
+            }
+            catch
+            {
+            }
         }
         public static void CreatIndex(string table, string pk1, string pk2, string pk3)
         {
@@ -1779,15 +1792,14 @@ namespace BP.DA
         /// </summary>
         /// <param name="selectSQL">要执行的sql</param>
         /// <returns>返回table</returns>
-        private static DataTable RunSQLReturnTable_200705_SQL(string selectSQL, Paras paras)
+        private static DataTable RunSQLReturnTable_200705_SQL(string sql, Paras paras)
         {
             SqlConnection conn = new SqlConnection(SystemConfig.AppCenterDSN);
             if (conn.State != ConnectionState.Open)
                 conn.Open();
-
-            SqlDataAdapter ada = new SqlDataAdapter(selectSQL, conn);
+            SqlDataAdapter ada = new SqlDataAdapter(sql, conn);
             ada.SelectCommand.CommandType = CommandType.Text;
-
+            
             // 加入参数
             foreach (Para para in paras)
             {
@@ -1796,11 +1808,20 @@ namespace BP.DA
                 ada.SelectCommand.Parameters.Add(myParameter);
             }
 
-            DataTable oratb = new DataTable("otb");
-            ada.Fill(oratb);
-            ada.Dispose();
-            conn.Close();
-            return oratb;
+            try
+            {
+                DataTable oratb = new DataTable("otb");
+                ada.Fill(oratb);
+                ada.Dispose();
+                conn.Close();
+                return oratb;
+            }
+            catch (Exception ex)
+            {
+                ada.Dispose();
+                conn.Close();
+                throw new  Exception("SQL="+sql+" Exception="+ ex.Message);
+            }
         }
         /// <summary>
         /// RunSQLReturnTable_200705_SQL

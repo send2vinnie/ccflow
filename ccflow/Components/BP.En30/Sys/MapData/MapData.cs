@@ -49,9 +49,9 @@ namespace BP.Sys
         /// </summary>
         public const string FK_FrmSort = "FK_FrmSort";
         /// <summary>
-        /// 显示的列
+        /// 在表格中显示的列
         /// </summary>
-        public const string ShowAttrs = "ShowAttrs";
+        public const string AttrsInTable = "AttrsInTable";
     }
 	/// <summary>
 	/// 映射基础
@@ -196,17 +196,20 @@ namespace BP.Sys
             }
         }
         /// <summary>
-        /// 显示的列
+        /// 在表格中显示的列
         /// </summary>
-        public string ShowAttrs
+        public string AttrsInTable
         {
             get
             {
-                return this.GetValStrByKey(MapDataAttr.ShowAttrs);
+                string s = this.GetValStrByKey(MapDataAttr.AttrsInTable);
+                if (string.IsNullOrEmpty(s))
+                    s = "@WFState=流程状态@Title=标题@FK_Dept=发起人部门@FlowStarter=发起人@FlowStartRDT=发起时间@FlowEmps=参与人@FlowDaySpan=时间跨度@FlowEnder=结束人@FlowEnderRDT=流程结束时间@FK_NY=年月@BillNo=编号";
+                return s;
             }
             set
             {
-                this.SetValByKey(MapDataAttr.ShowAttrs, value);
+                this.SetValByKey(MapDataAttr.AttrsInTable, value);
             }
         }
         public float FrmW
@@ -390,7 +393,7 @@ namespace BP.Sys
 
                 // 可以为空这个字段。
                 map.AddTBString(MapDataAttr.FK_FrmSort, null, "表单类别", true, false, 0, 500, 20);
-                map.AddTBString(MapDataAttr.ShowAttrs, null, "显示的列", true, false, 0, 3800, 20);
+                map.AddTBString(MapDataAttr.AttrsInTable, null, "在表格中显示的列", true, false, 0, 3800, 20);
 
                 // map.AddTBInt(MapDataAttr.FrmFrom, 0, "来源", true, true);
 
