@@ -931,8 +931,15 @@ namespace BP.DA
             catch
             {
             }
-            sql = "CREATE INDEX " + table + "ID ON " + table + " (" + pk + ")";
-            DBAccess.RunSQL(sql);
+
+            try
+            {
+                sql = "CREATE INDEX " + table + "ID ON " + table + " (" + pk + ")";
+                DBAccess.RunSQL(sql);
+            }
+            catch
+            {
+            }
         }
         public static void CreatIndex(string table, string pk1, string pk2)
         {
