@@ -200,6 +200,7 @@
     <Compile Include="Port\EmpDept.cs" />
     <Compile Include="Port\EmpStation.cs" />
     <Compile Include="Port\Station.cs" />
+    <Compile Include="Port\DeptSearchScorp.cs" />
     <Compile Include="RunRecorde.cs">
       <SubType>Code</SubType>
     </Compile>

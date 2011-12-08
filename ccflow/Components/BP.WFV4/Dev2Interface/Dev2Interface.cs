@@ -286,7 +286,6 @@ namespace BP.WF
             sw.SetValByKey("Rec", WebUser.No);
             sw.SetValByKey("Emps", WebUser.No);
             sw.SetValByKey("FK_Dept", WebUser.FK_Dept);
-            sw.BeforeSend();
             sw.InsertAsOID(BP.DA.DBAccess.GenerOID());
 
             WorkNode wn = new WorkNode(sw, nd);
@@ -327,7 +326,6 @@ namespace BP.WF
             //sw.RDT = DataType.CurrentDataTime;
             //sw.CDT = DataType.CurrentDataTime;
             //sw.Title = sw.Title + "(自动发起)";
-            sw.BeforeSend();
             sw.Save();
             WorkNode wn = new WorkNode(sw, nd);
             return wn.AfterNodeSave();

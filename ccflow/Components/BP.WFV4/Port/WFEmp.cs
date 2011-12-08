@@ -307,29 +307,16 @@ namespace BP.WF.Port
                 map.AddTBString(WFEmpAttr.Tel, null, "Tel", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.FK_Dept, null, "FK_Dept", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.Email, null, "Email", true, true, 0, 50, 20);
-
                 map.AddTBString(WFEmpAttr.TM, null, "即时通讯号", true, true, 0, 50, 20);
-
-               // map.AddTBInt(WFEmpAttr.AlertWay, 0, "AlertWay", true, true);
-
                 map.AddDDLSysEnum(WFEmpAttr.AlertWay, 3, "收听方式", true, true, WFEmpAttr.AlertWay);
                 map.AddTBString(WFEmpAttr.Author, null, "授权人", true, true, 0, 50, 20);
-
                 map.AddTBString(WFEmpAttr.AuthorDate, null, "授权日期", true, true, 0, 50, 20);
                 map.AddTBInt(WFEmpAttr.AuthorIsOK, 0, "是否授权成功", true, true);
-
                 map.AddTBString(WFEmpAttr.Stas, null, "岗位s", true, true, 0, 3000, 20);
-
-
                 map.AddTBString(WFEmpAttr.FtpUrl, null, "FtpUrl", true, true, 0, 50, 20);
-
-
                 map.AddTBString(WFEmpAttr.Msg, null, "Msg", true, true, 0, 4000, 20);
-
-
-                map.AddTBInt(WFEmpAttr.Idx, 0, "Idx", false, false);
                 map.AddTBInt(WFEmpAttr.Style, 0, "Style", false, false);
-
+                map.AddTBInt(WFEmpAttr.Idx, 0, "Idx", false, false);
 
                 this._enMap = map;
                 return this._enMap;

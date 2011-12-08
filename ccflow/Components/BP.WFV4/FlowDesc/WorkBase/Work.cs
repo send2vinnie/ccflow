@@ -777,22 +777,6 @@ namespace BP.WF
             }
             return "";
         }
-        /// <summary>
-        /// 发送前要执行的动作
-        /// </summary>
-        /// <returns></returns>
-        public virtual string BeforeSend()
-        {
-            //if (this.HisNode.HisDeliveryWay == DeliveryWay.BySelected)
-            //{
-            //    SelectAccpers accps = new SelectAccpers();
-            //    int i = accps.Retrieve(SelectAccperAttr.FK_Node, this.NodeID,
-            //        SelectAccperAttr.WorkID, this.OID);
-            //    if (i == 0)
-            //        throw new Exception("@请在表单下面选择下一步工作需要接受的人员。");
-            //}
-            return "";
-        }
         public void DoAutoFull(Attr attr)
         {
             if (this.OID == 0)

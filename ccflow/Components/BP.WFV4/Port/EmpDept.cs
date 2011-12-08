@@ -8,7 +8,7 @@ namespace BP.WF.Port
 {
 	
 	/// <summary>
-	/// 节点属性
+    /// 操作员与工作部门
 	/// </summary>
 	public class EmpDeptAttr  
 	{
@@ -24,7 +24,7 @@ namespace BP.WF.Port
 		#endregion	
 	}
 	/// <summary>
-	/// EmpDept 的摘要说明。
+    /// 操作员与工作部门 的摘要说明。
 	/// </summary>
 	public class EmpDept :Entity
 	{
@@ -117,19 +117,11 @@ namespace BP.WF.Port
 					return this._enMap;
 				
 				Map map = new Map("Port_EmpDept");
-				map.EnDesc="工作人员部门对应信息";	
-				map.EnType=EnType.Dot2Dot; //实体类型，admin 系统管理员表，PowerAble 权限管理表,也是用户表,你要想把它加入权限管理里面请在这里设置。。
-
-                //map.AddTBStringPK(EmpDeptAttr.FK_Emp, null, "Emp", false, false, 1, 15,1);
-                //map.AddTBStringPK(EmpDeptAttr.FK_Dept, null, "Dept", false, false, 1, 15,1);
+				map.EnDesc="操作员与工作部门";	
+				map.EnType=EnType.Dot2Dot;
 
 				map.AddDDLEntitiesPK(EmpDeptAttr.FK_Emp,null,"操作员",new Emps(),true);
 				map.AddDDLEntitiesPK(EmpDeptAttr.FK_Dept,null,"部门",new Depts(),true);
-
-
-                //map.AddDDLEntitiesPK(EmpDeptAttr.FK_Emp,0, DataType.AppInt,"操作员",new 县局(),"OID","Name",true);
-				//map.AddSearchAttr(EmpDeptAttr.FK_Emp);
-				//map.AddSearchAttr(EmpDeptAttr.FK_Dept);
 
 				this._enMap=map;
 				return this._enMap;
@@ -166,7 +158,7 @@ namespace BP.WF.Port
 	
 	}
 	/// <summary>
-	/// 节点集合 
+	/// 操作员与工作部门 
 	/// </summary>
 	public class EmpDepts : Entities
 	{
@@ -201,41 +193,7 @@ namespace BP.WF.Port
 		#endregion 
 
 		#region 查询方法
-		/// <summary>
-		/// 部门对应的节点
-		/// </summary>
-		/// <param name="stationNo">部门编号</param>
-		/// <returns>节点s</returns>
-		public Emps GetHisEmps(string stationNo)
-		{
-			QueryObject qo = new QueryObject(this);
-			qo.AddWhere(EmpDeptAttr.FK_Dept, stationNo );
-			qo.DoQuery();
-
-			Emps ens = new Emps();
-			foreach(EmpDept en in this)
-			{
-				ens.AddEntity( new Emp(en.FK_Emp )) ;
-			}
-			return ens;
-		}
-		/// <summary>
-		/// 得到他的部门权限
-		/// </summary>
-		/// <param name="empid">empid </param>
-		/// <returns>Depts</returns> 
-		public Depts GetHisDepts(string empid)
-		{
-			QueryObject qo = new QueryObject(this);
-			qo.AddWhere(EmpDeptAttr.FK_Emp,empid);
-			qo.DoQuery();
-			Depts ens = new Depts();
-			foreach(EmpDept en in this)
-			{				 
-				ens.AddEntity( new Dept(en.FK_Dept) ) ;				 
-			}			 
-			return ens;
-		}
+	 
 		#endregion
 				
 	}

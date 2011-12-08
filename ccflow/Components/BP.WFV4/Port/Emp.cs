@@ -75,18 +75,6 @@ namespace BP.WF.Port
             }
         }
         /// <summary>
-        /// 工作部门集合
-        /// </summary>
-        public Depts HisDepts
-        {
-            get
-            {
-                EmpDepts sts = new EmpDepts();
-                Depts dpts = sts.GetHisDepts(this.No);
-                return dpts;
-            }
-        }
-        /// <summary>
         /// 部门
         /// </summary>
         public string FK_Dept
@@ -194,15 +182,16 @@ namespace BP.WF.Port
                 map.AddTBString(EmpAttr.Name, null, "名称", true, false, 0, 100, 100);
                 map.AddTBString(EmpAttr.Pass, "pub", "密码", false, false, 0, 20, 10);
                 map.AddDDLEntities(EmpAttr.FK_Dept, null, "部门", new BP.Port.Depts(), true);
-                // map.AddDDLSysEnum("Sex", 0, "性别", "@0=女@1=男");
                 #endregion 字段
 
                 map.AddSearchAttr(EmpAttr.FK_Dept);
 
                 #region 增加点对多属性
                 //他的部门权限
-                map.AttrsOfOneVSM.Add(new EmpDepts(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "部门权限");
                 map.AttrsOfOneVSM.Add(new EmpStations(), new Stations(), EmpStationAttr.FK_Emp, EmpStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "岗位权限");
+                map.AttrsOfOneVSM.Add(new EmpDepts(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "工作部门");
+                map.AttrsOfOneVSM.Add(new DeptSearchScorps(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "查询权限");
+
                 #endregion
 
                 this._enMap = map;

@@ -195,23 +195,28 @@ namespace BP.WF
                     case "WF_GenerEmpWorks":
                     case "WF_NodeExt":
                         continue;
+                    case "Sys_Enum":
+                        en.CheckPhysicsTable();
+                        break;
                     default:
                         en.CheckPhysicsTable();
                         break;
                 }
+
                 en.PKVal = "123";
                 try
                 {
                     en.RetrieveFromDBSources();
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    Log.DebugWriteWarning(ex.Message);
+                    en.CheckPhysicsTable();
                 }
             }
             #endregion 修复
 
-            #region 2,  注册枚举类型 sql
+            #region 2, 注册枚举类型 sql
             // 2, 注册枚举类型。
             BP.Sys.Xml.EnumInfoXmls xmls = new BP.Sys.Xml.EnumInfoXmls();
             xmls.RetrieveAll();

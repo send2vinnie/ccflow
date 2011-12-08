@@ -2064,24 +2064,12 @@ namespace BP.WF
             this.HisWork.Rec = Web.WebUser.No;
             this.WorkID = this.HisWork.OID;
 
-            #region 发送前的逻辑检查
-            try
-            {
-                this.HisWork.BeforeSend();  //发送前作逻辑检查.
-            }
-            catch (Exception ex)
-            {
-                if (BP.SystemConfig.IsDebug)
-                    this.HisWork.CheckPhysicsTable();
-                throw ex;
-            }
-            #endregion 发送前的逻辑检查
-
             // 调用发送前的接口。
-            string msg = this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
-            msg += AfterNodeSave_Do();
             try
             {
+                string msg = this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
+                msg += AfterNodeSave_Do();
+
                 DBAccess.DoTransactionCommit(); // 提交事务.
                 try
                 {
@@ -2092,7 +2080,7 @@ namespace BP.WF
                 {
                     msg += ex.Message;
                 }
-              
+
                 string msgOfSend = this.HisNode.TurnToDealDoc;
                 if (msgOfSend.Length > 3)
                 {

@@ -395,9 +395,6 @@ namespace BP.WF
                 }
                 #endregion 处理删除草稿的需求。
 
-
-
-
                 #region 处理流程之间的数据传递。
                 if (System.Web.HttpContext.Current.Request.QueryString["FromWorkID"] != null)
                 {
@@ -482,6 +479,7 @@ namespace BP.WF
                 msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
 
             string title = wk.GetValStringByKey("Title");
+
             if (string.IsNullOrEmpty(title))
                 wk.Title = msg;
             else if (title.Contains("在") == true)
@@ -517,17 +515,27 @@ namespace BP.WF
 
             if (nd.IsStartNode)
             {
-                string msg = "";
-                if (WebUser.SysLang == "CH")
-                    msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
-                else
-                    msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
-
-                wk.SetValByKey("Title", msg);
+                try
+                {
+                    if (wk.GetValByKey("Title").ToString().Length <= 0)
+                    {
+                        string msg = "";
+                        if (WebUser.SysLang == "CH")
+                            msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
+                        else
+                            msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
+                    }
+                }
+                catch
+                {
+                    if (wk.EnMap.Attrs.Contains("Title") == false)
+                    {
+                        nd.RepareMap();
+                        string msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
+                        wk.SetValByKey("Title", msg);
+                    }
+                }
             }
-
-          
-
             return wk;
         }
         #endregion 业务处理

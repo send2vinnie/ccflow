@@ -2606,14 +2606,14 @@ namespace BP.WF
         /// <summary>
         /// 修复map
         /// </summary>
-        public void RepareMap()
+        public string RepareMap()
         {
             BP.Sys.MapData md = new BP.Sys.MapData();
             md.No = "ND" + this.NodeID;
             if (md.RetrieveFromDBSources() == 0)
             {
                 this.CreateMap();
-                return;
+                return "";
             }
 
             BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
@@ -2918,6 +2918,17 @@ namespace BP.WF
                     attr.Insert();
                 }
             }
+            string msg = "";
+            if (this.FocusField != "")
+            {
+                if (attr.IsExit(MapAttrAttr.KeyOfEn, this.FocusField, MapAttrAttr.FK_MapData, md.No) == false)
+                {
+                    msg += "@焦点字段 " + this.FocusField + " 被非法删除了.";
+                    this.FocusField = "";
+                    this.DirectUpdate();
+                }
+            }
+            return msg;
         }
         /// <summary>
         /// 建立map

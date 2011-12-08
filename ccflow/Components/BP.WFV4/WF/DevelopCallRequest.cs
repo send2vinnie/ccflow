@@ -35,17 +35,7 @@ namespace BP.WF
             wk.OID = workid;
             wk.Retrieve();
 
-
             WorkNode wn = new WorkNode(wk, nd);
-            try
-            {
-                wk.BeforeSend(); // 发送前作逻辑检查。
-            }
-            catch (Exception ex)
-            {
-                wk.CheckPhysicsTable();
-                throw ex;
-            }
 
             //返回调的信息，注意：这里有可能会抛出异常。
             return wn.AfterNodeSave();

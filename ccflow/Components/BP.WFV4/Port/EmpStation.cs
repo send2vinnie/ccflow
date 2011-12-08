@@ -7,7 +7,6 @@ using BP.En;
 
 namespace BP.WF.Port
 {
-	
 	/// <summary>
 	/// 人员岗位
 	/// </summary>
@@ -112,8 +111,6 @@ namespace BP.WF.Port
                 Map map = new Map("Port_EmpStation");
                 map.EnDesc = "人员岗位";
                 map.EnType = EnType.Dot2Dot; //实体类型，admin 系统管理员表，PowerAble 权限管理表,也是用户表,你要想把它加入权限管理里面请在这里设置。。
-
-                //map.AddDDLEntitiesPK(EmpStationAttr.FK_Emp,null, DataType.AppInt,"操作员",new 县局(),"OID","Name",true);
 
                 map.AddDDLEntitiesPK(EmpStationAttr.FK_Emp, null, "操作员", new Emps(), true);
                 map.AddDDLEntitiesPK(EmpStationAttr.FK_Station, null, "工作岗位", new Stations(), true);
