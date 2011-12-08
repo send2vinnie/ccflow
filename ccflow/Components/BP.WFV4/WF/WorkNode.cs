@@ -503,7 +503,7 @@ namespace BP.WF
             // 按照选择的人员处理。
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySelected)
             {
-                sql = "SELECT  FK_Emp  FROM WF_SelectAccper WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID;
+                sql = "SELECT FK_Emp FROM WF_SelectAccper WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID;
                 dt = DBAccess.RunSQLReturnTable(sql);
                 if (dt.Rows.Count == 0)
                     throw new Exception("请选择下一步骤工作(" + town.HisNode.Name + ")接受人员。");
@@ -1672,7 +1672,6 @@ namespace BP.WF
                         wl.FID = town.HisWork.FID;
                         wl.Sender = WebUser.No;
 
-
                         //if (wl.FID == 0)
                         //    wl.FID = this.WorkID;
                         try
@@ -1810,9 +1809,19 @@ namespace BP.WF
                 default:
                     break;
             }
-            foreach (WorkerList wl in this.HisWorkerLists)
+            if (this.HisWorkerLists.Count == 1)
             {
+                WorkerList wl = this.HisWorkerLists[0] as WorkerList;
                 this.AddToTrack(at, wl.FK_Emp, wl.FK_EmpText, wl.FK_Node, wl.FK_NodeText, null);
+            }
+            else
+            {
+                string info = "多人接收";
+                foreach (WorkerList wl in this.HisWorkerLists)
+                {
+                    info += wl.FK_Emp + "," + wl.FK_EmpText + "\t\n";
+                }
+                this.AddToTrack(at, WebUser.No, WebUser.No, town.HisNode.NodeID, town.HisNode.Name, info);
             }
             return this.HisWorkerLists;
         }
@@ -3276,6 +3285,7 @@ namespace BP.WF
 
                 /* 如果是最后一个节点，就设置流程结束。*/
                 string ovrMsg = this.HisWorkFlow.DoFlowOver();
+                
                 this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
                     this.HisNode.NodeID, this.HisNode.Name, "流程结束");
 
