@@ -428,7 +428,7 @@ public partial class WF_MapDef_WFRpt : WebPage
         #endregion 处理iFrom 的自适应的问题。
 
         #region 处理隐藏字段。
-        //string SysFields = "OID,FID,FK_NY,Emps,FK_Dept,NodeState,WFState,BillNo,RDT,MyNum,WFLog,";
+        //string SysFields = "OID,FID,FK_NY,Emps,FK_Dept,NodeState,WFState,BillNo,RDT,MyNum,";
         string msg = ""; // +++++++ 编辑隐藏字段 +++++++++ <br>";
         foreach (MapAttr attr in mattrs)
         {
@@ -446,7 +446,6 @@ public partial class WF_MapDef_WFRpt : WebPage
                 case "BillNo":
                 case "RDT":
                 case "MyNum":
-                case "WFLog":
                 case "Rec":
                 case "CDT":
                     continue;

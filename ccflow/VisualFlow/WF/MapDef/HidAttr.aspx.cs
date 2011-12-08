@@ -49,7 +49,6 @@ public partial class WF_MapDef_HidAttr : WebPage
                 case "BillNo":
                 case "RDT":
                 case "MyNum":
-                case "WFLog":
                 case "Rec":
                 case "CDT":
                     continue;

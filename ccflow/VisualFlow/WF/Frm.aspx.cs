@@ -91,13 +91,19 @@ public partial class WF_Frm : WebPage
 
         MapData md = new MapData();
         md.No = this.FK_MapData;
-        try
-        {
+        //try
+        //{
             if (md.RetrieveFromDBSources() == 0 && md.Name.Length > 3)
             {
                 MapDtl dtl = new MapDtl(this.FK_MapData);
                 GEDtl dtlEn = dtl.HisGEDtl;
                 dtlEn.SetValByKey("OID", this.FID);
+
+                if (dtlEn.EnMap.Attrs.Count <= 1)
+                {
+                    this.UCEn1.AddMsgOfWarning("提示", "<h2>表单没有字段无法预览。</h2>");
+                    return;
+                }
                 int i = dtlEn.RetrieveFromDBSources();
                 this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
             }
@@ -105,51 +111,49 @@ public partial class WF_Frm : WebPage
             {
                 GEEntity en = md.HisGEEn;
                 en.SetValByKey("OID", this.FID);
+                if (en.EnMap.Attrs.Count <= 1)
+                {
+                    this.UCEn1.AddMsgOfWarning("提示", "<h2>表单没有字段无法预览。</h2>");
+                    return;
+                }
+
                 int i = en.RetrieveFromDBSources();
                 if (i == 0 && this.FID != 0)
                     en.DirectInsert();
                 this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
             }
             Session["Count"] = null;
-        }
-        catch (Exception ex)
-        {
-            try
-            {
-                GEEntity en = md.HisGEEn;
-                en.CheckPhysicsTable();
-            }
-            catch (Exception exE)
-            {
-                this.UCEn1.AddMsgOfWarning("异常错误,有可能是您的字段名称命名不符合规范，造成数据表无法创建，请删除它。",
-                    exE.Message);
-            }
-
-            if (Session["Count"] == null)
-            {
-                Session["Count"] = "1";
-                this.Response.Redirect(this.Request.RawUrl, true);
-            }
-            else
-            {
-                Session["Count"] = null;
-                this.UCEn1.AddMsgOfWarning("异常错误,有可能是您的字段名称命名不符合规范，造成数据表无法创建，请删除它。", ex.Message + "<hr><a href='" + this.Request.RawUrl + "'><h2>点这里刷新。。。。</h2></a>");
-            }
-            return;
-        }
-
-        //FrmBtns btns = new FrmBtns(this.FK_MapData);
-        //foreach (FrmBtn btn in btns)
+        //}
+        //catch (Exception ex)
         //{
+        //    try
+        //    {
+        //        GEEntity en = md.HisGEEn;
+        //        en.CheckPhysicsTable();
+        //    }
+        //    catch (Exception exE)
+        //    {
+        //        this.UCEn1.AddMsgOfWarning("异常错误,有可能是您的字段名称命名不符合规范，造成数据表无法创建，请删除它。",
+        //            exE.Message);
+        //    }
+
+        //    if (Session["Count"] == null)
+        //    {
+        //        Session["Count"] = "1";
+        //        this.Response.Redirect(this.Request.RawUrl, true);
+        //    }
+        //    else
+        //    {
+        //        Session["Count"] = null;
+        //        this.UCEn1.AddMsgOfWarning("异常错误,有可能是您的字段名称命名不符合规范，造成数据表无法创建，请删除它。", ex.Message + "<hr><a href='" + this.Request.RawUrl + "'><h2>点这里刷新。。。。</h2></a>");
+        //    }
+        //    return;
         //}
 
         this.Btn_Save.Visible = !this.IsReadonly;
         this.Btn_Save.Enabled = !this.IsReadonly;
         this.Btn_Print.Visible = true;
         this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData + "&WorkID=" + this.WorkID + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
-        //this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "', '', 'dialogHeight: 550px; dialogWidth:950px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no'); return false;";
-        //this.IsPrint;
-        //  this.Button1.Enabled = this.IsReadonly;
     }
     /// <summary>
     /// 保存点

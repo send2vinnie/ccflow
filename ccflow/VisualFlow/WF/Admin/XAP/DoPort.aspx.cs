@@ -130,7 +130,7 @@ public partial class DoPort : WebPage
                 this.Response.Redirect("./../../../Comm/UIEn1ToM.aspx?EnName=BP.WF.Ext.NodeO&AttrKey=BP.WF.NodeStations&PK=" + this.PK + "&NodeID=" + this.PK + "&RunModel=0&FLRole=0&FJOpen=0&r=" + this.PK, true);
                 break;
             case "WFRpt": // 报表设计.r
-                this.Response.Redirect("../../MapDef/Rpt/Home.aspx?FK_MapData=ND" + this.PK+"Rpt&FK_Flow="+this.PK, true);
+                this.Response.Redirect("../../MapDef/Rpt/Home.aspx?FK_MapData=ND" + int.Parse( this.PK) +"Rpt&FK_Flow="+this.PK, true);
                 break;
             case "MapDef": //表单定义.
                 int nodeid = int.Parse(this.PK.Replace("ND", ""));

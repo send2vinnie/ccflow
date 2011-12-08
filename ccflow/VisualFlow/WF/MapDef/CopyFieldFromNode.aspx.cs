@@ -151,13 +151,12 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     case BP.WF.GEStartWorkAttr.WFState:
                     case BP.WF.GEStartWorkAttr.Sender:
                     case BP.WF.GEStartWorkAttr.MyNum:
-                    case BP.WF.GEStartWorkAttr.WFLog:
                     case BP.WF.GEStartWorkAttr.FK_Dept:
                     case BP.WF.GEStartWorkAttr.FK_DeptText:
                         //case "FK_Dept":
                         //case "FK_DeptText":
                         //case "MyNum":
-                        //case "WFLog":
+                       
                         continue;
                     default:
                         break;

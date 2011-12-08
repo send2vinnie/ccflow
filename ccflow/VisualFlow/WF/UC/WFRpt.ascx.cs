@@ -133,19 +133,31 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         wk.OID = tk.WorkID;
         wk.Retrieve();
 
-        this.AddFieldSet(wk.EnDesc);
         if (wk.NodeState != NodeState.Complete)
-            this.AddH1("当工作(" + nd.Name + ")未完成，您不能查看它的工作日志。");
+        {
+            this.UCEn1.AddFieldSet(wk.EnDesc);
+            this.UCEn1.AddH1("当工作(" + nd.Name + ")未完成，您不能查看它的工作日志。");
+            this.UCEn1.AddFieldSetEnd();
+        }
         else
         {
-            ReturnWorks rws = new ReturnWorks();
-            rws.Retrieve(ReturnWorkAttr.ReturnNode, nd.NodeID, ReturnWorkAttr.WorkID, wk.OID);
+            this.UCEn1.IsReadonly = true;
+            switch (nd.HisFormType)
+            {
+                case FormType.FreeForm:
+                    this.UCEn1.BindFreeFrm(wk, "ND" + tk.NDFrom, false);
+                    break;
+                default:
+                    this.UCEn1.BindColumn4(wk, "ND" + tk.NDFrom);
+                    break;
+            }
 
-            ForwardWorks fws = new ForwardWorks();
-            fws.Retrieve(ForwardWorkAttr.FK_Node, nd.NodeID, ReturnWorkAttr.WorkID, wk.OID);
-            this.ADDWork(wk, rws, fws, tk.NDFrom);
+            //ReturnWorks rws = new ReturnWorks();
+            //rws.Retrieve(ReturnWorkAttr.ReturnNode, nd.NodeID, ReturnWorkAttr.WorkID, wk.OID);
+            //ForwardWorks fws = new ForwardWorks();
+            //fws.Retrieve(ForwardWorkAttr.FK_Node, nd.NodeID, ReturnWorkAttr.WorkID, wk.OID);
+            //this.ADDWork(wk, rws, fws, tk.NDFrom);
         }
-        this.AddFieldSetEnd();
     }
     public void BindTrack()
     {

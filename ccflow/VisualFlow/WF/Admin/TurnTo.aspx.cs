@@ -125,7 +125,6 @@ public partial class WF_Admin_TurnTo : WebPage
                 case WorkAttr.Emps:
                 case WorkAttr.OID:
                 case StartWorkAttr.Rec:
-                case StartWorkAttr.WFLog:
                 case StartWorkAttr.WFState:
                 case StartWorkAttr.FID:
                     continue;
