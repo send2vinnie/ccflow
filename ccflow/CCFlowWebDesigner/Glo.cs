@@ -123,6 +123,10 @@ namespace BP
                     url = @"/WF/Login.aspx?Lang=CH";
                     Glo.WinOpen(Glo.BPMHost + url, "运行流程", 850, 990);
                     return;
+                case "WFRpt": // 流程设计。
+                    url = "/WF/Admin/XAP/DoPort.aspx?RefNo=" + fk_flow + "&DoType=" + dotype + "&Lang=CH&PK="+fk_flow;
+                    Glo.WinOpen(Glo.BPMHost + url, "运行流程", 850, 990);
+                    return;
                 default:
                     MessageBox.Show("没有判断的url执行标记:" + dotype);
                     return;
