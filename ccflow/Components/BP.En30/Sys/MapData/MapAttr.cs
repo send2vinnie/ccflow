@@ -1185,22 +1185,7 @@ namespace BP.Sys
             QueryObject qo = new QueryObject(this);
             qo.AddWhere(MapAttrAttr.FK_MapData, fk_map);
             qo.addOrderBy(MapAttrAttr.IDX);
-            if (qo.DoQuery() == 0)
-            {
-                BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
-                attr.FK_MapData = fk_map;
-                attr.KeyOfEn = "OID";
-                attr.Name = "OID";
-                attr.MyDataType = BP.DA.DataType.AppInt;
-                attr.UIContralType = UIContralType.TB;
-                attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = false;
-                attr.UIIsEnable = false;
-                attr.DefVal = "0";
-                attr.HisEditType = BP.En.EditType.Readonly;
-                attr.Insert();
-                this.AddEntity(attr);
-            }
+            qo.DoQuery();
         }
         public int SearchMapAttrsYesVisable(string fk_map)
         {

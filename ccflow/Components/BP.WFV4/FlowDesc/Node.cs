@@ -2182,10 +2182,8 @@ namespace BP.WF
                 map.AddBoolean(NodeAttr.IsCanDelFlow, false, "是否可以删除流程", true, true);
                 map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除了流程(对合流点有效)", true, true);
 
-
                 map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交", true, true);
                 map.AddTBInt(NodeAttr.PassRate, 100, "通过率", true, true);
-
 
                 map.AddDDLSysEnum(NodeAttr.SignType, 0, "审核模式(对审核节点有效)", true, true, 
                     NodeAttr.SignType, "@0=单签@1=汇签");
@@ -2779,23 +2777,6 @@ namespace BP.WF
                     attr.Insert();
                 }
 
-                if (attr.IsExit(MapAttrAttr.KeyOfEn, StartWorkAttr.WFLog, MapAttrAttr.FK_MapData, md.No) == false)
-                {
-                    attr = new BP.Sys.MapAttr();
-                    attr.FK_MapData = md.No;
-                    attr.HisEditType = BP.En.EditType.Readonly;
-                    attr.KeyOfEn = StartWorkAttr.WFLog;
-                    attr.Name = BP.Sys.Language.GetValByUserLang("Log", "日志"); //"日志";
-                    attr.MyDataType = BP.DA.DataType.AppString;
-                    attr.UIContralType = UIContralType.TB;
-                    attr.LGType = FieldTypeS.Normal;
-                    attr.UIVisible = false;
-                    attr.UIIsEnable = true;
-                    attr.MinLen = 0;
-                    attr.MaxLen = 3000;
-                    attr.Insert();
-                }
-
 
                 if (attr.IsExit(MapAttrAttr.KeyOfEn, StartWorkAttr.BillNo, MapAttrAttr.FK_MapData, md.No) == false)
                 {
@@ -3079,20 +3060,6 @@ namespace BP.WF
                 attr.UIBindKey = attr.KeyOfEn;
                 attr.UIVisible = false;
                 attr.UIIsEnable = false;
-                attr.Insert();
-
-                attr = new BP.Sys.MapAttr();
-                attr.FK_MapData = md.No;
-                attr.HisEditType = BP.En.EditType.Readonly;
-                attr.KeyOfEn = StartWorkAttr.WFLog;
-                attr.Name = BP.Sys.Language.GetValByUserLang("Log", "日志"); //"日志";
-                attr.MyDataType = BP.DA.DataType.AppString;
-                attr.UIContralType = UIContralType.TB;
-                attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = false;
-                attr.UIIsEnable = true;
-                attr.MinLen = 0;
-                attr.MaxLen = 3000;
                 attr.Insert();
 
                 attr = new BP.Sys.MapAttr();

@@ -37,10 +37,6 @@ namespace BP.WF
         /// 工作流程状态( 0, 进行中,1 完成任务, 2强制终止) 
         /// </summary>
         public const string WFState = "WFState";
-        /// <summary>
-        /// 日志
-        /// </summary>
-        public const string WFLog = "WFLog";
     }
 	/// <summary>	 
 	/// 开始工作基类,所有开始工作都要从这里继承
@@ -121,20 +117,6 @@ namespace BP.WF
 		#endregion
 
 		#region 基本属性
-		/// <summary>
-		/// 日志
-		/// </summary>
-		public string WFLog
-		{
-			get
-			{
-				return this.GetValStringByKey(StartWorkAttr.WFLog);
-			}
-			set
-			{
-				this.SetValByKey(StartWorkAttr.WFLog,value);
-			} 
-		}
 		/// <summary>
 		/// 工作内容标题
 		/// </summary>

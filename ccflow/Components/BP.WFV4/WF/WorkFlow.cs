@@ -289,7 +289,6 @@ namespace BP.WF
                 //设置当前的工作节点是强制终止状态
                 StartWork sw = this.HisStartWork;
                 sw.WFState = BP.WF.WFState.Delete;
-                sw.WFLog += "\n@" + Web.WebUser.No + " " + Web.WebUser.Name + "在" + DataType.CurrentDataTime + " 逻辑删除,原因如下:" + msg;
                 sw.DirectUpdate();
                 //设置产生的工作流程为.
                 GenerWorkFlow gwf = new GenerWorkFlow(sw.OID);
@@ -306,18 +305,7 @@ namespace BP.WF
             }
         }
 
-        #region 日志操作
-        /// <summary>
-        /// 写入流程日志[已经包含了记录时间]
-        /// </summary>
-        /// <param name="doc"></param>
-        public void WritLog(string doc)
-        {
-            StartWork sw = this.HisStartWork;
-            sw.WFLog += "\n@" + BP.DA.DataType.CurrentData + "  " + doc;
-            sw.DirectUpdate();
-        }
-        #endregion 日志操作
+       
 
         #region 流程的强制终止\删除 或者恢复使用流程,
         /// <summary>
@@ -341,7 +329,6 @@ namespace BP.WF
                 StartWork sw = this.HisStartWork;
                 sw.WFState = BP.WF.WFState.Stop;
                 //sw.NodeState=4;
-                sw.WFLog += "\n@" + Web.WebUser.No + " " + Web.WebUser.Name + "在" + DateTime.Now.ToString(DataType.SysDataTimeFormat) + " 强制终止工作,原因如下:" + msg;
                 sw.DirectUpdate();
 
                 //设置产生的工作流程为
@@ -430,7 +417,6 @@ namespace BP.WF
                 // 设置当前的工作节点是强制终止状态
                 StartWork sw = this.HisStartWork;
                 sw.WFState = 0;
-                sw.WFLog += "\n@" + Web.WebUser.No + " " + Web.WebUser.Name + "在" + DateTime.Now.ToString(DataType.SysDataTimeFormat) + " 回复使用流程,原因如下:" + msg;
                 sw.DirectUpdate();
 
                 //设置产生的工作流程为

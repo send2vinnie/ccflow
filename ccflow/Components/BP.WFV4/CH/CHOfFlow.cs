@@ -29,10 +29,6 @@ namespace BP.WF
 		/// </summary>
 		public const  string Title="Title";
 		/// <summary>
-		/// 流程日至
-		/// </summary>
-		public const  string WFLog="WFLog";
-		/// <summary>
 		/// 流程
 		/// </summary>
 		public const  string FK_Flow="FK_Flow";
@@ -184,20 +180,6 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 日志
-        /// </summary>
-        public string WFLog
-        {
-            get
-            {
-                return this.GetValStringByKey(CHOfFlowAttr.WFLog);
-            }
-            set
-            {
-                this.SetValByKey(CHOfFlowAttr.WFLog, value);
-            }
-        }
-        /// <summary>
         /// 部门
         /// </summary>
         public string FK_Dept
@@ -337,7 +319,6 @@ namespace BP.WF
 
                 map.AddDDLEntities(CHOfFlowAttr.FK_Dept, null, "部门", new Depts(), false);
                 map.AddDDLEntities(CHOfFlowAttr.FK_NY, DataType.CurrentYearMonth, "隶书年月", new BP.Pub.NYs(), false);
-                map.AddTBStringDoc(CHOfFlowAttr.WFLog, "无", "日志", false, false, 0, 2000, 10, 5);
                 map.AddTBIntMyNum();
 
                 map.AddSearchAttr(CHOfFlowAttr.WFState);

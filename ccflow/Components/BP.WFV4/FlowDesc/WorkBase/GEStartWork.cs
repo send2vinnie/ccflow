@@ -51,10 +51,6 @@ namespace BP.WF
         /// 部门text
         /// </summary>
         public const string FK_DeptText = "FK_DeptText";
-        /// <summary>
-        /// 日志
-        /// </summary>
-        public const string WFLog = "WFLog";
 	}
     /// <summary>
     /// 开始工作节点

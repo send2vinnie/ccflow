@@ -633,19 +633,15 @@ namespace BP.En
         /// <returns>查询的个数</returns>
         public virtual int RetrieveFromDBSources()
         {
-            int i = 0;
-            //try
-            //{
-            i = EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new Exception("@无法执行对:" + this.ToString() + "的查询，可能是它的字段属性清除了，请检查map文件。" + this.EnMap.PhysicsTable + "。@异常信息:" + ex.Message);
-            //    Log.DebugWriteWarning(ex.Message);
-            //    this.CheckPhysicsTable();
-            //    throw ex;
-            //}
-            return i;
+            try
+            {
+               return EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
+            }
+            catch
+            {
+                this.CheckPhysicsTable();
+                return EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
+            }
         }
         /// <summary>
         /// 查询
