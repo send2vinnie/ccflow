@@ -216,7 +216,6 @@ public partial class WF_Rpt_Search : WebPage
                     {
                         if (attr.IsFKorEnum)
                             continue;
-
                         if (attr.IsPK)
                             continue;
                         switch (attr.MyDataType)
@@ -301,22 +300,14 @@ public partial class WF_Rpt_Search : WebPage
 
         #region 求出可显示的属性。
         Attrs selectedAttrs = new Attrs();
-        string attrKeyShow = md.ShowAttrs;
+        string attrKeyShow = md.AttrsInTable;
         if (attrKeyShow == "")
-            attrKeyShow = ",BillNo,CDT,Emps,FID,FK_Dept,FK_NY,FlowDaySpan,FlowEmps,FlowEnder,FlowEnderRDT,FlowStarter,FlowStartRDT,MyNum,OID,RDT,Rec,Title,WFState,";
-        foreach (Attr attr in myen.EnMap.Attrs)
+            attrKeyShow = "@WFState=流程状态@Title=标题@FK_Dept=发起人部门@FlowStarter=发起人@FlowStartRDT=发起时间@FlowEmps=参与人@FlowDaySpan=时间跨度@FlowEnder=结束人@FlowEnderRDT=流程结束时间@FK_NY=年月@BillNo=编号";
+
+        AtPara ap = new AtPara(attrKeyShow);
+        foreach (string s in ap.HisHT.Keys)
         {
-            if (attr.Key == "Title")
-                attr.UIVisible = true;
-
-            if (attrKeyShow.Contains("," + attr.Key + ",") == false)
-                continue;
-            if (attr.Key == "MyNum")
-                continue;
-            if (attr.UIVisible == false)
-                continue;
-
-            selectedAttrs.Add(attr);
+            selectedAttrs.Add(myen.EnMap.GetAttrByKey(s) );
         }
         #endregion 求出可显示的属性.
 
@@ -355,8 +346,6 @@ public partial class WF_Rpt_Search : WebPage
             string url = this.GenerEnUrl(en, attrs);
             #endregion
 
-            //urlExt = "\"javascript:ShowEn('../../Comm/UIEn.aspx?EnsName=" + ens.ToString() + "&PK=" + en.GetValByKey(pk) + url + "', 'cd','" + WinCardH + "','" + WinCardW + "');\"";
-            //is1 = this.UCSys1.AddTR(is1, "ondblclick=" + urlExt);
             this.UCSys1.AddTR();
 
             #region 输出字段。
@@ -444,7 +433,8 @@ public partial class WF_Rpt_Search : WebPage
             if (attr.UIContralType == UIContralType.DDL)
                 continue;
 
-            if (attr.Key == "OID" || attr.Key == "MID"
+            if (attr.Key == "OID" ||
+                attr.Key == "MID"
                 || attr.Key == "FID"
                 || attr.Key.ToUpper() == "WORKID")
                 continue;

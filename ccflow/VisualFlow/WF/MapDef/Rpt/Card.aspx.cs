@@ -16,20 +16,20 @@ using BP.Web;
 
 public partial class WF_MapDef_WFRpt : WebPage
 {
-    public new string MyPK
+    public new string FK_MapData
     {
         get
         {
-            string key = this.Request.QueryString["MyPK"];
-            if (key == null)
-                key = this.Request.QueryString["PK"];
-            if (key == null)
-                key = "ND1601";
-            key = key.Replace("ND0", "ND");
-            key = key.Replace("ND0", "ND");
-            return key;
+            return this.Request.QueryString["FK_MapData"];
         }
     }
+    public new string FK_Flow
+    {
+        get
+        {
+            return this.Request.QueryString["FK_Flow"];
+        }
+    } 
     /// <summary>
     /// IsEditMapData
     /// </summary>
@@ -43,23 +43,6 @@ public partial class WF_MapDef_WFRpt : WebPage
             return false;
         }
     }
-    public string FK_Flow
-    {
-        get
-        {
-            string flowNo = this.MyPK.Replace("ND", "");
-
-            flowNo = flowNo.Replace("Rpt", "");
-            flowNo = flowNo.Replace("Dtl1", "");
-            flowNo = flowNo.Replace("Dtl2", "");
-            flowNo = flowNo.Replace("Dtl3", "");
-            flowNo = flowNo.Replace("Dtl4", "");
-            flowNo = flowNo.Replace("Dtl", "");
-
-            flowNo = flowNo.PadLeft(3, '0');
-            return flowNo;
-        }
-    }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = this.ToE("FlowRptDef", "流程报表定义");
@@ -68,16 +51,15 @@ public partial class WF_MapDef_WFRpt : WebPage
             case "Reset":
                 BP.WF.Flow fl = new BP.WF.Flow(this.FK_Flow);
                 fl.CheckRptOfReset();
-                this.Response.Redirect("WFRpt.aspx?PK=" + this.MyPK, true);
+                this.Response.Redirect("WFRpt.aspx?FK_MapData=" + this.FK_MapData, true);
                 return;
             default:
                 break;
         }
 
-        Cash.Map_Cash.Remove(this.MyPK);
+        Cash.Map_Cash.Remove(this.FK_MapData);
 
-        MapData md = new MapData(this.MyPK);
-        // Attrs attrs = md.GenerHisMap().Attrs;
+        MapData md = new MapData(this.FK_MapData);
         MapAttrs mattrs = new MapAttrs(md.No);
         int count = mattrs.Count;
         if (mattrs.Count == 0)
@@ -99,12 +81,12 @@ public partial class WF_MapDef_WFRpt : WebPage
         }
 
         this.Pub1.AddB(this.Title + "&nbsp;&nbsp;<a href=\"javascript:GroupFieldNew('" + md.No + "')\">" + this.ToE("FieldGroup", "字段分组") + "</a>");
-        //  this.Pub1.AddB("-<a href=\"javascript:WinOpen('../../Comm/PanelEns.aspx?EnsName=" + this.MyPK + "')\">查询预览</a>");
-        // this.Pub1.AddB("-<a href=\"javascript:WinOpen('../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">分析预览</a>");
+        //  this.Pub1.AddB("-<a href=\"javascript:WinOpen('../../../Comm/PanelEns.aspx?EnsName=" + this.MyPK + "')\">查询预览</a>");
+        // this.Pub1.AddB("-<a href=\"javascript:WinOpen('../../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">分析预览</a>");
 
-        if (this.MyPK.Contains("RptDtl") == false)
+        if (this.FK_MapData.Contains("RptDtl") == false)
         {
-            this.Pub1.AddB("-<a href=\"javascript:DoReset('" + this.MyPK + "')\">" + this.ToE("ResetFields", "重设字段") + "</a>");
+            this.Pub1.AddB("-<a href=\"javascript:DoReset('"+this.FK_Flow+"','" + this.FK_MapData + "')\">" + this.ToE("ResetFields", "重设字段") + "</a>");
 
             /* 说明是主表：判断它是否有明细表。*/
             string sql = "SELECT COUNT(*) FROM Sys_MapDtl WHERE No LIKE 'ND" + int.Parse(this.FK_Flow) + "%'";
@@ -143,9 +125,9 @@ public partial class WF_MapDef_WFRpt : WebPage
             currGF = gf;
             this.Pub1.AddTR(gfAttr);
             if (gfs.Count == 1)
-                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' align:left style='height: 24px;align:left' ", "<div style='text-align:left; float:left'>&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'></div>");
+                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' align:left style='height: 24px;align:left' ", "<div style='text-align:left; float:left'>&nbsp;<a href=\"javascript:GroupField('" + this.FK_MapData + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'></div>");
             else
-                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' align:left style='height: 24px;align:left' ", "<div style='text-align:left; float:left'><img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.MyPK + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../Images/Btn/Up.gif' class='Arrow' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../Images/Btn/Down.gif' class='Arrow' border=0/></a></div>");
+                this.Pub1.AddTD("colspan=4 class=GroupField valign='top' align:left style='height: 24px;align:left' ", "<div style='text-align:left; float:left'><img src='../Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;<a href=\"javascript:GroupField('" + this.FK_MapData + "','" + gf.OID + "')\" >" + gf.Lab + "</a></div><div style='text-align:right; float:right'> <a href=\"javascript:GFDoUp('" + gf.OID + "')\" ><img src='../../../Images/Btn/Up.gif' class='Arrow' border=0/></a> <a href=\"javascript:GFDoDown('" + gf.OID + "')\" ><img src='../../../Images/Btn/Down.gif' class='Arrow' border=0/></a></div>");
 
             this.Pub1.AddTREnd();
             int i = -1;
@@ -287,7 +269,7 @@ public partial class WF_MapDef_WFRpt : WebPage
                                 else
                                 {
                                     if (attr.IsSigan)
-                                        this.Pub1.AddTD("colspan=" + colspanOfCtl, "<img src='../../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../../DataUser/Siganture/UnName.jpg'\"/>");
+                                        this.Pub1.AddTD("colspan=" + colspanOfCtl, "<img src='../../../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../../../DataUser/Siganture/UnName.jpg'\"/>");
                                     else
                                         this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, tb);
                                 }
@@ -445,7 +427,6 @@ public partial class WF_MapDef_WFRpt : WebPage
         this.Pub1.Add(js);
         #endregion 处理iFrom 的自适应的问题。
 
-
         #region 处理隐藏字段。
         //string SysFields = "OID,FID,FK_NY,Emps,FK_Dept,NodeState,WFState,BillNo,RDT,MyNum,WFLog,";
         string msg = ""; // +++++++ 编辑隐藏字段 +++++++++ <br>";
@@ -472,7 +453,7 @@ public partial class WF_MapDef_WFRpt : WebPage
                 default:
                     break;
             }
-            msg += "<a href=\"javascript:Edit('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
+            msg += "<a href=\"javascript:Edit('" + this.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
         }
 
         if (msg.Length > 10)
@@ -485,7 +466,7 @@ public partial class WF_MapDef_WFRpt : WebPage
         #endregion 处理隐藏字段。
 
         #region 查询条件定义
-        this.Pub1.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义") + " - <a href=\"javascript:WinOpen('../Rpt/Search.aspx?FK_Flow=" + this.MyPK + "')\">" + this.ToE("WFRpt2r", "查询预览") + "</a>-<a href=\"javascript:WinOpen('../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt3r", "分析预览") + "</a>");
+        this.Pub1.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义") + " - <a href=\"javascript:WinOpen('../Rpt/Search.aspx?FK_Flow=" + this.FK_Flow + "')\">" + this.ToE("WFRpt2r", "查询预览") + "</a>-<a href=\"javascript:WinOpen('../../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt3r", "分析预览") + "</a>");
         foreach (MapAttr mattr in mattrs)
         {
             if (mattr.UIContralType != UIContralType.DDL)
@@ -513,7 +494,7 @@ public partial class WF_MapDef_WFRpt : WebPage
 
     void btn_Click(object sender, EventArgs e)
     {
-        MapData md = new MapData(this.MyPK);
+        MapData md = new MapData(this.FK_MapData);
         MapAttrs mattrs = new MapAttrs(md.No);
         string keys = "";
         foreach (MapAttr mattr in mattrs)
@@ -528,7 +509,7 @@ public partial class WF_MapDef_WFRpt : WebPage
         md.SearchKeys = keys;
         md.Update();
 
-        Cash.Map_Cash.Remove(this.MyPK);
+        Cash.Map_Cash.Remove(this.FK_MapData);
     }
 
     public void InsertObjects(bool isJudgeRowIdx)
@@ -563,13 +544,13 @@ public partial class WF_MapDef_WFRpt : WebPage
             dtl.IsUse = true;
             int myidx = rowIdx + 10;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditDtl('" + this.MyPK + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("Insert", "插入列") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("Copy", "复制列") + "</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditDtl('" + this.FK_MapData + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../../Images/Btn/New.gif' border=0/>" + this.ToE("Insert", "插入列") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../../Images/Btn/Copy.gif' border=0/>" + this.ToE("Copy", "复制列") + "</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../../Images/Btn/Down.gif' border=0/></a></div></td>");
             this.Pub1.AddTREnd();
 
             myidx++;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
             this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' width='1000px'>");
-            string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.MyPK + "&FK_MapDtl=" + dtl.No;
+            string src = "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapDtl=" + dtl.No;
             this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();
@@ -584,7 +565,7 @@ public partial class WF_MapDef_WFRpt : WebPage
         get
         {
             if (_dtls == null)
-                _dtls = new MapDtls(this.MyPK);
+                _dtls = new MapDtls(this.FK_MapData);
 
             return _dtls;
         }
@@ -595,7 +576,7 @@ public partial class WF_MapDef_WFRpt : WebPage
         get
         {
             if (_gfs == null)
-                _gfs = new GroupFields(this.MyPK);
+                _gfs = new GroupFields(this.FK_MapData);
 
             return _gfs;
         }
@@ -620,13 +601,13 @@ public partial class WF_MapDef_WFRpt : WebPage
             switch (attr.LGType)
             {
                 case FieldTypeS.Normal:
-                    lab = "<a  href=\"javascript:Edit('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
+                    lab = "<a  href=\"javascript:Edit('" + this.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
                     break;
                 case FieldTypeS.FK:
-                    lab = "<a  href=\"javascript:EditTable('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
+                    lab = "<a  href=\"javascript:EditTable('" + this.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
                     break;
                 case FieldTypeS.Enum:
-                    lab = "<a  href=\"javascript:EditEnum('" + this.MyPK + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
+                    lab = "<a  href=\"javascript:EditEnum('" + this.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + lab + "</a>";
                     break;
                 default:
                     break;
@@ -640,14 +621,14 @@ public partial class WF_MapDef_WFRpt : WebPage
         if (idx == 0)
         {
             /*第一个。*/
-            return "<div " + divAttr + " >" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Right.gif' class='Arrow' alt='向右动顺序' border=0/></a></div>";
+            return "<div " + divAttr + " >" + lab + "<a href=\"javascript:Down('" + this.FK_MapData + "','" + attr.MyPK + "','1');\" ><img src='../../../Images/Btn/Right.gif' class='Arrow' alt='向右动顺序' border=0/></a></div>";
         }
 
         if (idx == count - 1)
         {
             /*到数第一个。*/
-            return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向左移动顺序' class='Arrow' border=0/></a>" + lab + "</div>";
+            return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.FK_MapData + "','" + attr.MyPK + "','1');\" ><img src='../../../Images/Btn/Left.gif' alt='向左移动顺序' class='Arrow' border=0/></a>" + lab + "</div>";
         }
-        return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Left.gif' alt='向下移动顺序' class='Arrow' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "','1');\" ><img src='../../Images/Btn/Right.gif' alt='向右移动顺序' class='Arrow' border=0/></a></div>";
+        return "<div " + divAttr + " ><a href=\"javascript:Up('" + this.FK_MapData + "','" + attr.MyPK + "','1');\" ><img src='../../../Images/Btn/Left.gif' alt='向下移动顺序' class='Arrow' border=0/></a>" + lab + "<a href=\"javascript:Down('" + this.FK_MapData + "','" + attr.MyPK + "','1');\" ><img src='../../../Images/Btn/Right.gif' alt='向右移动顺序' class='Arrow' border=0/></a></div>";
     }
 }

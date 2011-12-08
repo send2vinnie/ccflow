@@ -1191,16 +1191,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         #endregion 判断特殊的业务逻辑。
 
-        try
-        {
-            currWK.BeforeSave(); //调用业务逻辑检查。
-        }
-        catch (Exception ex)
-        {
-            if (BP.SystemConfig.IsDebug)
-                currWK.CheckPhysicsTable();
-            throw new Exception("@在保存前执行逻辑检查错误。@技术信息:" + ex.Message);
-        }
+    
 
         currWK.NodeState = NodeState.Init;
         currWK.Rec = WebUser.No;
