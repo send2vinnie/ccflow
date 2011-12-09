@@ -77,8 +77,8 @@ namespace BP.DA
         public void SetVal(string key, string val)
         {
             this.HisHT.Add(key, val);
+           
         }
-
         public string GetValStrByKey(string key)
         {
             try
@@ -90,7 +90,6 @@ namespace BP.DA
                 return null;
             }
         }
-
         public int GetValIntByKey(string key)
         {
             try
@@ -102,7 +101,6 @@ namespace BP.DA
                 return 0;
             }
         }
-
         private Hashtable _HisHT = null;
         public Hashtable HisHT
         {
