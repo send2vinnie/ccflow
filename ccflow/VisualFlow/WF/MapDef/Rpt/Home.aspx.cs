@@ -54,17 +54,74 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
             case "Left":
                 if (this.Idx == 0)
                     break;
-
-                MapData md = new MapData(this.FK_MapData);
-                AtPara ap = new AtPara(md.AttrsInTable);
-                int i = 0;
-                foreach (string s in ap.HisHT.Keys)
+                MapData md = new MapData();
+                md.No = this.FK_MapData;
+                md.RetrieveFromDBSources();
+                int i = -1;
+                string attrs = "";
+                string p = "";
+                string[] strs = md.AttrsInTable.Split('@');
+                foreach (string str in strs)
                 {
+                    if (str == null || str == "")
+                        continue;
+                    string[] kv = str.Split('=');
+                    string key = kv[0];
+                    string val = kv[1];
+
                     i++;
-                    //if (i==
+                    if (this.Idx - 1 == i)
+                    {
+                        p = "@" + key + "=" + val;
+                        continue;
+                    }
+
+                    if (this.Idx == i)
+                    {
+                        attrs += "@" + key + "=" + val + p;
+                        continue;
+                    }
+
+                    attrs += "@" + key + "=" + val;
                 }
+                md.AttrsInTable = attrs;
+                md.DirectUpdate();
                 break;
             case "Right":
+                MapData mdR = new MapData();
+                mdR.No = this.FK_MapData;
+                mdR.RetrieveFromDBSources();
+                int iR = -1;
+                string attrsR = "";
+                string pR = "";
+                string[] strsR = mdR.AttrsInTable.Split('@');
+              
+
+                foreach (string str in strsR)
+                {
+                    if (str == null || str == "")
+                        continue;
+                    string[] kv = str.Split('=');
+                    string key = kv[0];
+                    string val = kv[1];
+
+                    iR++;
+
+                    if (this.Idx == iR)
+                    {
+                        pR = "@" + key + "=" + val;
+                        continue;
+                    }
+
+                    if (this.Idx + 1 == iR)
+                    {
+                        attrsR += "@" + key + "=" + val + pR;
+                        continue;
+                    }
+                    attrsR += "@" + key + "=" + val;
+                }
+                mdR.AttrsInTable = attrsR;
+                mdR.DirectUpdate();
                 break;
             default:
                 break;
@@ -89,27 +146,52 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
     #region 显示顺序
     public void ColumnsOrder()
     {
-        MapData md = new MapData(this.FK_MapData);
-        AtPara ap = new AtPara(md.AttrsInTable);
+        MapData md = new MapData();
+        md.No = this.FK_MapData;
+        md.RetrieveFromDBSources();
 
-        this.Pub2.AddTable();
+        MapAttrs attrs=new MapAttrs(this.FK_MapData);
+      
+        MapAttrs attrsOfSearch = new MapAttrs();
+        string[] strs = md.AttrsInTable.Split('@');
+        foreach (string str in strs)
+        {
+            if (str == null || str == "")
+                continue;
+            string[] kv = str.Split('=');
+
+            MapAttr myattr = attrs.GetEntityByKey(MapAttrAttr.KeyOfEn, kv[0]) as MapAttr;
+            if (myattr == null)
+                continue;
+            attrsOfSearch.AddEntity(myattr);
+        }
+
+        this.Pub2.AddTable("align=left");
         this.Pub2.AddCaptionLeft("移动箭头改变顺序");
-
         this.Pub2.AddTR();
         int idx = -1;
-        foreach (string key in ap.HisHT.Keys)
+        foreach (MapAttr attr in attrsOfSearch)
         {
             idx++;
-            this.Pub2.AddTDTitle("<a href=\"javascript:DoLeft('" + FK_Flow + "','" + FK_MapData + "','" + idx + "')\" ><img src='../../../Images/Arrowhead_Previous_S.gif' ></a>" + ap.GetValStrByKey(key) + "<a href=\"javascript:DoRight('" + FK_Flow + "','" + FK_MapData + "','" + idx + "')\" ><img src='../../../Images/Arrowhead_Next_S.gif' ></a>");
+            this.Pub2.Add("<TD class=Title>");
+            if (idx != 0)
+                this.Pub2.Add("<a href=\"javascript:DoLeft('" + FK_Flow + "','" + FK_MapData + "','" + idx + "')\" ><img src='../../../Images/Arrowhead_Previous_S.gif' ></a>");
+
+            this.Pub2.Add(attr.Name);
+            if (idx != strs.Length-2)
+                this.Pub2.Add("<a href=\"javascript:DoRight('" + FK_Flow + "','" + FK_MapData + "','" + idx + "')\" ><img src='../../../Images/Arrowhead_Next_S.gif' ></a>");
+
+            this.Pub2.Add("</TD>");
         }
         this.Pub2.AddTREnd();
+
+       // AtPara ap=new AtPara(
 
         for (int i = 0; i < 12; i++)
         {
             this.Pub2.AddTR();
-            foreach (string key in ap.HisHT.Keys)
+            foreach (MapAttr attr in attrsOfSearch)
                 this.Pub2.AddTD();
-
             this.Pub2.AddTREnd();
         }
         this.Pub2.AddTableEnd();
@@ -138,7 +220,7 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
     #region 查询列表字段筛选
     public void SelectColumns()
     {
-        this.Pub2.AddTable("width=90%");
+        this.Pub2.AddTable("width=90% align=left");
         GroupFields gfs = new GroupFields(this.FK_Flow);
         MapAttrs mattrs = new MapAttrs(this.FK_MapData);
         MapData md = new MapData(this.FK_MapData);
@@ -162,10 +244,9 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
 
                 CheckBox cb = new CheckBox();
                 cb.ID = "CB_" + attr.KeyOfEn;
-                cb.Text = attr.Name;
+                cb.Text = attr.Name+"("+attr.KeyOfEn+")";
                 cb.Checked = attrInTable.Contains("@" + attr.KeyOfEn + "=");
                  
-
                 if (isBr == false)
                     this.Pub2.AddTR();
                 this.Pub2.AddTD(cb);
@@ -195,7 +276,8 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
 
             CheckBox cb = new CheckBox();
             cb.ID = "CB_" + attr.KeyOfEn;
-            cb.Text = attr.Name;
+            cb.Text = attr.Name + "(" + attr.KeyOfEn + ")";
+
             cb.Checked = attrInTable.Contains("@" + attr.KeyOfEn + "=");
 
             if (isBr == false)
@@ -222,7 +304,6 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
 
         this.Pub2.AddTDEnd();
         this.Pub2.AddTREnd();
-
         this.Pub2.AddTableEnd();
     }
 
@@ -242,7 +323,7 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         }
         md.AttrsInTable = keys;
         md.DirectUpdate();
-        this.Alert("保存成功.");
+        this.Response.Redirect("Home.aspx?FK_MapData=" + this.FK_MapData + "&FK_Flow=" + this.FK_Flow + "&DoType=ColumnsOrder", true);
     }
     #endregion
 
@@ -253,7 +334,9 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         MapData md = new MapData(this.FK_MapData);
 
         #region 查询条件定义
-        this.Pub2.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义") + " - <a href=\"javascript:WinOpen('../Rpt/Search.aspx?FK_Flow=" + this.FK_Flow + "')\">" + this.ToE("WFRpt2r", "查询预览") + "</a>-<a href=\"javascript:WinOpen('../../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt3r", "分析预览") + "</a>");
+//        this.Pub2.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义") + " - <a href=\"javascript:WinOpen('../Rpt/Search.aspx?FK_Flow=" + this.FK_Flow + "')\">" + this.ToE("WFRpt2r", "查询预览") + "</a>-<a href=\"javascript:WinOpen('../../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt3r", "分析预览") + "</a>");
+        this.Pub2.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义")  );
+
         foreach (MapAttr mattr in mattrs)
         {
             if (mattr.UIContralType != UIContralType.DDL)
@@ -264,12 +347,12 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
             if (md.SearchKeys.Contains("@" + mattr.KeyOfEn))
                 cb.Checked = true;
 
-            cb.Text = mattr.Name;
+            cb.Text = mattr.Name + "(" + mattr.KeyOfEn + ")";
             this.Pub2.Add(cb);
             this.Pub2.AddBR();
         }
 
-        this.Pub1.AddHR();
+        this.Pub2.AddHR();
         Button btn = new Button();
         btn.Text = this.ToE("Save", "保存");
         btn.ID = "Btn_Save";
@@ -306,7 +389,10 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
 
     public void BindLeft(Flow fl)
     {
-        this.Pub1.AddH2(fl.Name + " - 查询设计");
+       // this.Pub1.AddH2(fl.Name + " - 查询设计");
+
+        this.Pub1.Add("<img src='../../../DataUser/LogBiger.png' border=0/>");
+        
         this.Pub1.AddHR();
 
         this.Pub1.AddUL();
