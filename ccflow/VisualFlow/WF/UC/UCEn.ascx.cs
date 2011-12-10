@@ -914,8 +914,8 @@ namespace BP.Web.Comm.UC.WF
                                     sql = sql.Replace("@WebUser.Name", WebUser.Name);
                                     sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
                                     sql = sql.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
-
                                     sql = sql.Replace("@Key", tbAuto.Text.Trim());
+
                                     dt = DBAccess.RunSQLReturnTable(sql);
                                     string valC1 = ddlC1.SelectedItemStringVal;
                                     ddlC1.Items.Clear();
