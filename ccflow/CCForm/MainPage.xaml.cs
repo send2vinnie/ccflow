@@ -818,8 +818,8 @@ namespace CCForm
             foreach (DataRow drFrm in dtFrm.Rows)
             {
                 TreeViewItem li = new TreeViewItem();
-                string no = drFrm["No"].ToString();
-                string name = drFrm["Name"].ToString();
+                string no = drFrm["No"] as string;
+                string name = drFrm["Name"] as string;
                 li.Header = "编号:" + no + "名称:" + name;
                 li.Tag = no;
                 this.treeView_Flow.Items.Add(li);
