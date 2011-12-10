@@ -16,10 +16,7 @@ public class Handler : IHttpHandler
         sql = sql.Replace("@Val", key);
         sql = sql.Replace("@val", key);
 
-        sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
-        sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
-        sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
-        sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
+     
         
         return sql;
     }
@@ -36,12 +33,12 @@ public class Handler : IHttpHandler
         switch (me.ExtType)
         {
             case BP.Sys.MapExtXmlList.DDLFullCtrl: // 级连菜单。
-                sql = this.DealSQL(me.Doc, key);
+                sql = this.DealSQL(me.DocOfSQLDeal, key);
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 context.Response.Write(JSONTODT(dt));
                 return;
             case BP.Sys.MapExtXmlList.ActiveDDL: // 级连菜单。
-                sql = this.DealSQL(me.Doc, key);
+                sql = this.DealSQL(me.DocOfSQLDeal, key);
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 context.Response.Write(JSONTODT(dt));
                 return;
@@ -50,7 +47,7 @@ public class Handler : IHttpHandler
                 {
                     case "ReqCtrl":
                         // 获取填充 ctrl 值的信息.
-                        sql = this.DealSQL(me.Doc, key);
+                        sql = this.DealSQL(me.DocOfSQLDeal, key);
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;
@@ -113,7 +110,7 @@ public class Handler : IHttpHandler
                         context.Response.Write(JSONTODT(dt));
                         break;
                     default:
-                        sql = this.DealSQL(me.Doc, key);
+                        sql = this.DealSQL(me.DocOfSQLDeal, key);
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;
