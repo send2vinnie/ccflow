@@ -377,7 +377,9 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         string valOld = ddlFull.SelectedItemStringVal;
                         ddlFull.Items.Clear();
                         string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
-                        fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                        fullSQL = fullSQL.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                        fullSQL = fullSQL.Replace("@WebUser.Name", WebUser.Name);
+
                         if (fullSQL.Contains("@"))
                         {
                             //Attrs attrsFull = mydtl.EnMap.Attrs;
@@ -416,6 +418,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
 
                                 string sql = myCtl[1].Replace("~", "'");
                                 sql = sql.Replace("@WebUser.No", WebUser.No);
+                                sql = sql.Replace("@WebUser.Name", WebUser.Name);
                                 sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
                                 sql = sql.Replace("@Key", tbAuto.Text.Trim());
                                 dt = DBAccess.RunSQLReturnTable(sql);

@@ -14,6 +14,11 @@
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 900px;center: yes; help: no');
         window.location.href = window.location.href;
     }
+    function DoReSet(fk_flow, fk_MapData, idx) {
+        if (window.confirm('您确定要重新设置吗？') == false)
+            return;
+        window.location.href = 'Home.aspx?DoType=ColumnsOrder&ActionType=Reset&FK_Flow=' + fk_flow + '&FK_MapData=' + fk_MapData + '&Idx=' + idx;
+    }
     function View(fk_flow, fk_MapData) {
         var url = '../../Rpt/Search.aspx?FK_MapData=' + fk_MapData + '&FK_Flow=' + fk_flow;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 900px;center: yes; help: no');

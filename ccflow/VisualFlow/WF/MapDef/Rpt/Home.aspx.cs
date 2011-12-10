@@ -51,6 +51,15 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         {
             case null:
                 break;
+            case "Reset":
+                 MapData mdReset = new MapData();
+                 mdReset.No = this.FK_MapData;
+                 mdReset.RetrieveFromDBSources();
+                 mdReset.SearchKeys = "@FK_Dept@WFState@FK_NY@";
+                 mdReset.AttrsInTable = "";
+                 mdReset.DirectUpdate();
+                 this.Pub2.AddFieldSet("提示","<h2>重设置成功，<a href='./../../Rpt/Search.aspx?FK_Flow="+this.FK_Flow+"&DoType=Dept' target=_v >点这里预览</a>。</h2>");
+                 break;
             case "Left":
                 if (this.Idx == 0)
                     break;
@@ -95,8 +104,6 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
                 string attrsR = "";
                 string pR = "";
                 string[] strsR = mdR.AttrsInTable.Split('@');
-              
-
                 foreach (string str in strsR)
                 {
                     if (str == null || str == "")
@@ -389,10 +396,10 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
 
     public void BindLeft(Flow fl)
     {
-       // this.Pub1.AddH2(fl.Name + " - 查询设计");
+        // this.Pub1.AddH2(fl.Name + " - 查询设计");
 
         this.Pub1.Add("<img src='../../../DataUser/LogBiger.png' border=0/>");
-        
+
         this.Pub1.AddHR();
 
         this.Pub1.AddUL();
@@ -406,14 +413,14 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         this.Pub1.AddLi("<a href=\"Home.aspx?DoType=SearchCond&FK_Flow=" + this.FK_Flow + "&FK_MapData=" + this.FK_MapData + "\"><b>查询条件设计</b></a>");
         this.Pub1.Add("为查询功能设计查询条件。<br><br>");
 
-        this.Pub1.AddLi("<a href=\"javascript:Card('" + this.FK_Flow + "','" + this.FK_MapData + "');\"><b>重设查询列表默认值</b></a>");
+        this.Pub1.AddLi("<a href=\"javascript:DoReSet('" + this.FK_Flow + "','" + this.FK_MapData + "');\"><b>重设查询列表默认值</b></a>");
         this.Pub1.Add("按ccflow的默认值显示给用户。<br><br>");
 
-        this.Pub1.AddLi("<a href=\"javascript:Card('" + this.FK_Flow + "','" + this.FK_MapData + "');\"><b>显示卡片</b></a>");
-        this.Pub1.Add("对卡片显示出来的流程详细信息内容进行设计。<br><br>");
+        //this.Pub1.AddLi("<a href=\"javascript:Card('" + this.FK_Flow + "','" + this.FK_MapData + "');\"><b>显示卡片</b></a>");
+        //this.Pub1.Add("对卡片显示出来的流程详细信息内容进行设计。<br><br>");
 
-        this.Pub1.AddLi("<a href=\"javascript:View('" + this.FK_Flow + "','" + this.FK_MapData + "');\"><b>查询预览</b></a>");
-        this.Pub1.Add("预览设计结果。<br><br>");
+        this.Pub1.AddLi("<a href='./../../Rpt/Search.aspx?FK_Flow=" + this.FK_Flow + "&DoType=Dept' target=_sar ><b>查询预览</b></a> -  <a href='./../../Rpt/Group.aspx?FK_Flow=" + this.FK_Flow + "&DoType=Dept' target=_sar ><b>统计预览</b></a>");
+        this.Pub1.Add("预览查询与统计的设计结果。<br><br>");
 
         this.Pub1.AddULEnd();
     }

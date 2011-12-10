@@ -826,7 +826,8 @@ namespace BP.Web.Comm.UC.WF
                             string valOld = ddlFull.SelectedItemStringVal;
 
                             string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
-                            fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                            fullSQL = fullSQL.Replace("@WebUser.Name", WebUser.Name);
+                            fullSQL = fullSQL.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
 
                             if (fullSQL.Contains("@"))
                             {
@@ -870,7 +871,13 @@ namespace BP.Web.Comm.UC.WF
                             // 处理默认选择。
                             string val = ddlPerant.SelectedItemStringVal;
                             string valClient = ddlChild.SelectedItemStringVal;
-                            DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
+
+                             string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
+                            fullSQL = fullSQL.Replace("@WebUser.Name", WebUser.Name);
+                            fullSQL = fullSQL.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                            fullSQL = fullSQL.Replace("@Key", val);
+
+                            DataTable dt = DBAccess.RunSQLReturnTable(fullSQL);
                             // ddlChild.Items.Clear();
                             foreach (DataRow dr in dt.Rows)
                             {
@@ -904,7 +911,10 @@ namespace BP.Web.Comm.UC.WF
 
                                     string sql = myCtl[1].Replace("~", "'");
                                     sql = sql.Replace("@WebUser.No", WebUser.No);
+                                    sql = sql.Replace("@WebUser.Name", WebUser.Name);
                                     sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                                    sql = sql.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+
                                     sql = sql.Replace("@Key", tbAuto.Text.Trim());
                                     dt = DBAccess.RunSQLReturnTable(sql);
                                     string valC1 = ddlC1.SelectedItemStringVal;
@@ -1709,8 +1719,6 @@ namespace BP.Web.Comm.UC.WF
             // 处理扩展.
             if (isReadonly == false)
                 this.AfterBindEn_DealMapExt(enName, mattrs, en);
-
-           
             return;
         }
 
@@ -1799,6 +1807,7 @@ namespace BP.Web.Comm.UC.WF
             }
             doc = doc.Replace("@FK_Dept", WebUser.FK_Dept);
             doc = doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+            doc = doc.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
             doc = doc.Replace("@WebUser.No", WebUser.No);
             doc = doc.Replace("@WebUser.Name", WebUser.Name);
             doc = doc.Replace("@MyPK", this.HisEn.PKVal.ToString());

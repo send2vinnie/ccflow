@@ -75,8 +75,8 @@ public partial class WF_Rpt_Search : WebPage
             this.PageIdx = int.Parse(this.Request.QueryString["PageIdx"]);
         #endregion 处理风格
 
-        this.Pub1.Add("<a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
-        this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
+        this.Pub1.Add("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
+        this.Pub1.Add(" - <a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
 
         #region 处理查询设的默认.
         if (this.DoType == "My")
@@ -84,25 +84,6 @@ public partial class WF_Rpt_Search : WebPage
             Entity en = this.HisEns.GetNewEntity;
             Map map = en.EnMap;
             AttrSearchs searchs = map.SearchAttrs;
-           
-
-            //if (this.ToolBar1.IsExit("DDL_FK_Dept"))
-            //{
-            //    //this.ToolBar1.Controls.Remove
-            //}
-            //AttrSearchs searchs = map.SearchAttrs;
-            //foreach (AttrSearch attr in searchs)
-            //{
-            //    string mykey = this.Request.QueryString[attr.Key];
-            //    if (mykey == "" || mykey == null)
-            //        continue;
-            //    else
-            //        this.ToolBar1.GetDDLByKey("DDL_" + attr.Key).SetSelectItem(mykey, attr.HisAttr);
-            //}
-            //if (this.Request.QueryString["Key"] != null)
-            //{
-            //    this.ToolBar1.GetTBByID("TB_Key").Text = this.Request.QueryString["Key"];
-            //}
         }
         else
         {
@@ -110,40 +91,42 @@ public partial class WF_Rpt_Search : WebPage
             Entity en = this.HisEns.GetNewEntity;
             Map map = en.EnMap;
             this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
+            this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
             AttrSearchs searchs = map.SearchAttrs;
             string defVal = "";
             System.Data.DataTable dt = null;
             foreach (AttrSearch attr in searchs)
             {
+                DDL mydll = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
+                if (mydll == null)
+                    continue;
+                defVal = mydll.SelectedItemStringVal;
+                mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'"+this.EnsName+"','" + attr.Key + "')";
                 switch (attr.Key)
                 {
                     case "FK_NY":
-                        DDL ddl_NY = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
-                        defVal = ddl_NY.SelectedItemStringVal;
                         dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM " + this.EnsName + " WHERE FK_NY!='' ORDER BY FK_NY");
-                        ddl_NY.Items.Clear();
-                        ddl_NY.Items.Add(new ListItem("=>月份", "all"));
+                        mydll.Items.Clear();
+                        mydll.Items.Add(new ListItem("=>月份", "all"));
                         foreach (DataRow dr in dt.Rows)
                         {
-                            ddl_NY.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
+                            mydll.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
                         }
-                        ddl_NY.SetSelectItem(defVal);
+                        mydll.SetSelectItem(defVal);
                         break;
                     case "FlowStarter":
-                        DDL ddl_FlowStarter = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
-                        defVal = ddl_FlowStarter.SelectedItemStringVal;
                         dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptSearchScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
-                        ddl_FlowStarter.Items.Clear();
-                        ddl_FlowStarter.Items.Add(new ListItem("=>发起人", "all"));
+                        mydll.Items.Clear();
+                        mydll.Items.Add(new ListItem("=>发起人", "all"));
                         foreach (DataRow dr in dt.Rows)
                         {
-                            ddl_FlowStarter.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                            mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
                         }
-                        ddl_FlowStarter.SetSelectItem(defVal);
+                        mydll.SetSelectItem(defVal);
+                        mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'ND" + int.Parse(this.FK_Flow) + "Rpt','" + attr.Key + "')";
                         break;
                     case "FK_Dept":
-                        DDL ddl_Dept = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
-                        defVal = ddl_Dept.SelectedItemStringVal;
+
                         if (WebUser.No != "admin")
                         {
                             dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptSearchScorp WHERE FK_Emp='" + WebUser.No + "')");
@@ -153,21 +136,19 @@ public partial class WF_Rpt_Search : WebPage
                                 this.ToolBar1.Controls.Clear();
                                 return;
                             }
-                            ddl_Dept.Items.Clear();
+                            mydll.Items.Clear();
                             foreach (DataRow dr in dt.Rows)
-                                ddl_Dept.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                                mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
                         }
 
-                        if (ddl_Dept.Items.Count >= 2)
+                        if (mydll.Items.Count >= 2)
                         {
                             ListItem liMvals = new ListItem("*多项组合..", "mvals");
                             liMvals.Attributes.CssStyle.Add("style", "color:green");
                             liMvals.Attributes.Add("color", "green");
                             liMvals.Attributes.Add("style", "color:green");
-                            ddl_Dept.Items.Add(liMvals);
                         }
-
-                        ddl_Dept.SetSelectItem(defVal);
+                        mydll.SetSelectItem(defVal);
                         break;
                     default:
                         break;
@@ -175,6 +156,7 @@ public partial class WF_Rpt_Search : WebPage
             }
             #endregion 处理查询权限
             this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            this.ToolBar1.GetBtnByID(BP.Web.Controls.NamesOfBtn.Export).Click += new System.EventHandler(this.ToolBar1_ButtonClick);
         }
         #endregion 处理查询设的默认。
 
@@ -250,7 +232,7 @@ public partial class WF_Rpt_Search : WebPage
         else
         {
             this.UCSys1.Add("\t\n if (event.keyCode == 37  || event.keyCode == 38 || event.keyCode == 33) ");
-            this.UCSys1.Add("\t\n     location='Search.aspx?EnsName=" + this.EnsName + "&PageIdx=" + PPageIdx + "';");
+            this.UCSys1.Add("\t\n     location='Search.aspx?DoType="+this.DoType+"&FK_Flow=" + this.FK_Flow + "&PageIdx=" + PPageIdx + "';");
         }
 
         if (this.PageIdx == maxPageNum)
@@ -260,7 +242,7 @@ public partial class WF_Rpt_Search : WebPage
         else
         {
             this.UCSys1.Add("\t\n if (event.keyCode == 39 || event.keyCode == 40 || event.keyCode == 34) ");
-            this.UCSys1.Add("\t\n     location='Search.aspx?EnsName=" + this.EnsName + "&PageIdx=" + ToPageIdx + "';");
+            this.UCSys1.Add("\t\n     location='Search.aspx?DoType=" + this.DoType + "&FK_Flow=" + this.FK_Flow + "&PageIdx=" + ToPageIdx + "';");
         }
 
         this.UCSys1.Add("\t\n } ");
@@ -301,13 +283,17 @@ public partial class WF_Rpt_Search : WebPage
         #region 求出可显示的属性。
         Attrs selectedAttrs = new Attrs();
         string attrKeyShow = md.AttrsInTable;
-        if (attrKeyShow == "")
-            attrKeyShow = "@WFState=流程状态@Title=标题@FK_Dept=发起人部门@FlowStarter=发起人@FlowStartRDT=发起时间@FlowEmps=参与人@FlowDaySpan=时间跨度@FlowEnder=结束人@FlowEnderRDT=流程结束时间@FK_NY=年月@BillNo=编号";
-
-        AtPara ap = new AtPara(attrKeyShow);
-        foreach (string s in ap.HisHT.Keys)
+        string[] strs = md.AttrsInTable.Split('@');
+        foreach (string str in strs)
         {
-            selectedAttrs.Add(myen.EnMap.GetAttrByKey(s) );
+            if (str == null || str == "")
+                continue;
+
+            string[] kv = str.Split('=');
+            if (kv[0] == "MyNum")
+                continue;
+
+            selectedAttrs.Add(myen.EnMap.GetAttrByKey(kv[0]));
         }
         #endregion 求出可显示的属性.
 
@@ -354,8 +340,11 @@ public partial class WF_Rpt_Search : WebPage
             string val = "";
             foreach (Attr attr in selectedAttrs)
             {
-                if (attr.UIVisible == false || attr.Key == "MyNum")
+                if (attr.IsRefAttr || attr.Key == "MyNum")
                     continue;
+
+         
+
                 if (attr.UIContralType == UIContralType.DDL)
                 {
                     this.UCSys1.AddTD(en.GetValRefTextByKey(attr.Key));
@@ -512,23 +501,45 @@ public partial class WF_Rpt_Search : WebPage
                 case NamesOfBtn.Insert: //数据导出
                     this.Response.Redirect("UIEn.aspx?EnName=" + this.HisEn.ToString(), true);
                     return;
+                case BP.Web.Controls.NamesOfBtn.Export:
                 case NamesOfBtn.Excel: //数据导出
-                    Entities ens = this.HisEns;
+                    MapData md = new MapData(this.EnsName);
+                    Entities ens = md.HisEns;
                     Entity en = ens.GetNewEntity;
                     QueryObject qo = new QueryObject(ens);
-                    qo = this.ToolBar1.GetnQueryObject(ens, en);
-                    qo.DoQuery();
+                    if (this.DoType == "My")
+                        qo.AddWhere("FlowEmps", " LIKE ", "%" + WebUser.No + ",%");
+                    else
+                        qo = this.ToolBar1.GetnQueryObject(ens, en);
+
+                    DataTable dt= qo.DoQueryToTable();
+                    DataTable myDT = new DataTable();
+                    Attrs attrs = md.AttrsInTableEns;
+                    foreach (Attr attr in attrs)
+                    {
+                        myDT.Columns.Add(new DataColumn(attr.Desc, typeof(string)));
+                    }
+
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        DataRow myDR = myDT.NewRow();
+                        foreach (Attr attr in attrs)
+                        {
+                            myDR[attr.Desc] = dr[attr.Key];
+                        }
+                        myDT.Rows.Add(myDR);
+                    }
+
                     string file = "";
                     try
                     {
-                        //this.ExportDGToExcel(ens.ToDataTableDescField(), this.HisEn.EnDesc);
-                        file = this.ExportDGToExcel(ens.ToDataTableDesc(), this.HisEn.EnDesc);
+                        file = this.ExportDGToExcel(myDT, en.EnDesc);
                     }
                     catch (Exception ex)
                     {
                         try
                         {
-                            file = this.ExportDGToExcel(ens.ToDataTableDescField(), this.HisEn.EnDesc);
+                            file = this.ExportDGToExcel(ens.ToDataTableDescField(), en.EnDesc);
                         }
                         catch
                         {

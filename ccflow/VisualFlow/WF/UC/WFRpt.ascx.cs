@@ -629,6 +629,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                     string url = s.DoWhat;
                     url = url.Replace("@WebUser.No", WebUser.No);
                     url = url.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+
                     url = url.Replace("@FK_Node", s.NodeID.ToString());
                     url = url.Replace("@FK_Flow", s.FK_Flow.ToString());
                     if (url.Contains("@"))

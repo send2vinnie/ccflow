@@ -177,6 +177,7 @@ public partial class Comm_Dtl : WebPage
             BP.DA.Cash.SetMap(this.EnsName, null);
 
         GEDtls dtls = new GEDtls(this.EnsName);
+
         #region 处理设计时自动填充明细表.
         if (this.Key != null && this.IsReadonly == 0)
         {
@@ -406,7 +407,6 @@ public partial class Comm_Dtl : WebPage
             }
             #endregion 处理
 
-
             #region 增加rows
             foreach (MapAttr attr in attrs)
             {
@@ -425,7 +425,6 @@ public partial class Comm_Dtl : WebPage
                         //  tb.Enabled = attr.UIIsEnable;
                         if (attr.UIIsEnable == false)
                         {
-                          //  tb.ReadOnly = true;
                             tb.Enabled = true;
                         }
 
@@ -672,7 +671,10 @@ public partial class Comm_Dtl : WebPage
                                 string valOld =  ddlFull.SelectedItemStringVal;
 
                                 string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
-                                fullSQL = me.Doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                                fullSQL = fullSQL.Replace("@WebUser.Name", WebUser.Name);
+                                fullSQL = fullSQL.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                                fullSQL = fullSQL.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+
                                 if (fullSQL.Contains("@"))
                                 {
                                     Attrs attrsFull = mydtl.EnMap.Attrs;
@@ -717,6 +719,7 @@ public partial class Comm_Dtl : WebPage
 
                                         string sql = myCtl[1].Replace("~", "'");
                                         sql = sql.Replace("@WebUser.No", WebUser.No);
+                                        sql = sql.Replace("@WebUser.Name", WebUser.Name);
                                         sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
                                         sql = sql.Replace("@Key", tbAuto.Text.Trim());
                                         dt = DBAccess.RunSQLReturnTable(sql);
