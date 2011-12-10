@@ -1966,7 +1966,7 @@ namespace BP.WF
             string flowId = int.Parse(this.No).ToString();
 
             #region 插入字段。
-            string sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " +SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            string sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
             string sql2 = "DELETE FROM Sys_MapAttr WHERE KeyOfEn NOT IN (" + sql + ") AND FK_MapData='ND" + flowId + "Rpt' ";
             DBAccess.RunSQL(sql2); // 删除不存在的字段.
 
@@ -1979,13 +1979,13 @@ namespace BP.WF
             string pks = "@";
             foreach (DataRow dr in dtExits.Rows)
                 pks += dr[0] + "@";
-            
+
             foreach (DataRow dr in dt.Rows)
             {
                 string mypk = dr["MyPK"].ToString();
                 if (pks.Contains("@" + dr["KeyOfEn"].ToString() + "@"))
                     continue;
-                
+
                 pks += dr["KeyOfEn"].ToString() + "@";
                 BP.Sys.MapAttr ma = new BP.Sys.MapAttr(mypk);
                 ma.MyPK = "ND" + flowId + "Rpt" + "_" + ma.KeyOfEn;
@@ -2044,9 +2044,8 @@ namespace BP.WF
                         attr.DirectDelete();
                         break;
                     case StartWorkAttr.WFState:
-                        if (attr.UIBindKey.Length > 3)
-                            continue;
-                        if (attr.UIContralType != UIContralType.DDL)
+                        
+                        if (attr.UIContralType != UIContralType.DDL || attr.UIBindKey!="WFState" )
                         {
                             attr.UIBindKey = attr.KeyOfEn;
                             attr.UIContralType = UIContralType.DDL;
@@ -2074,7 +2073,7 @@ namespace BP.WF
                         attr.LGType = FieldTypeS.FK;
                         attr.UIVisible = true;
                         attr.UIIsEnable = false;
-                        attr.GroupID = groupID; 
+                        attr.GroupID = groupID;
                         attr.Update();
                         break;
                     case "FK_Emp":
@@ -2245,7 +2244,8 @@ namespace BP.WF
             BP.Sys.GEEntity sw = this.HisFlowData;
             sw.CheckPhysicsTable();
 
-            DBAccess.RunSQL("DELETE FROM Sys_GroupField WHERE EnName='" + fk_mapData + "' AND OID NOT IN (SELECT GroupID FROM sys_mapattr where fk_mapdata like '" + fk_mapData + "')");
+#warning 估计有问题。
+            DBAccess.RunSQL("DELETE FROM Sys_GroupField WHERE EnName='" + fk_mapData + "' AND OID NOT IN (SELECT GroupID FROM Sys_MapAttr WHERE FK_MapData = '" + fk_mapData + "')");
             DBAccess.RunSQL("UPDATE ND" + flowId + "Rpt SET MyNum=1");
         }
 
@@ -3715,7 +3715,6 @@ namespace BP.WF
             this.Save();
             #endregion 删除有可能存在的历史数据.
 
-
             Node nd = new Node();
             nd.NodeID = int.Parse(this.No + "01");
             nd.Name = BP.Sys.Language.GetValByUserLang("StartNode", "开始节点");//  "开始节点"; 
@@ -3751,7 +3750,6 @@ namespace BP.WF
             md.Save();
 
             #region 生成freeFrm 的装饰.
-
             FrmImg img = new FrmImg();
             img.MyPK = "Img" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
             img.FK_MapData = "ND" + int.Parse(this.No + "01");

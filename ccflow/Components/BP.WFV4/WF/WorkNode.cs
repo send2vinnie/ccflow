@@ -2825,10 +2825,14 @@ namespace BP.WF
 
                         title = title.Replace("@WebUser.No", WebUser.No);
                         title = title.Replace("@WebUser.Name", WebUser.Name);
+                        title = title.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                        title = title.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
 
                         string doc = lt.Doc.Clone() as string;
                         doc = doc.Replace("@WebUser.No", WebUser.No);
                         doc = doc.Replace("@WebUser.Name", WebUser.Name);
+                        doc = doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                        doc = doc.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
 
                         Attrs attrs = this.rptGe.EnMap.Attrs;
                         foreach (Attr attr in attrs)

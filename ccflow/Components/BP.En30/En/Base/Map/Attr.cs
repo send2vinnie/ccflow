@@ -1353,6 +1353,16 @@ namespace BP.En
 			}
 			return -1;
 		}
+        public Attr GetAttrByKey(string key)
+		{
+            foreach (Attr  item in this)
+            {
+                if (item.Key == key)
+                    return item;
+            }
+            return null;
+        }
+        
 		 
 		/// <summary>
 		///  Ù–‘ºØ∫œ

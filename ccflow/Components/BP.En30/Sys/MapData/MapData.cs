@@ -204,12 +204,63 @@ namespace BP.Sys
             {
                 string s = this.GetValStrByKey(MapDataAttr.AttrsInTable);
                 if (string.IsNullOrEmpty(s))
-                    s = "@WFState=流程状态@Title=标题@FK_Dept=发起人部门@FlowStarter=发起人@FlowStartRDT=发起时间@FlowEmps=参与人@FlowDaySpan=时间跨度@FlowEnder=结束人@FlowEnderRDT=流程结束时间@FK_NY=年月@BillNo=编号";
+                    s = "@FK_Dept=发起人部门@FlowStarter=发起人@WFState=状态@Title=标题@FlowStartRDT=发起时间@FlowEmps=参与人@FlowDaySpan=时间跨度@FlowEnder=结束人@FlowEnderRDT=流程结束时间@FK_NY=年月@BillNo=编号";
                 return s;
             }
             set
             {
                 this.SetValByKey(MapDataAttr.AttrsInTable, value);
+            }
+        }
+        public Entities _HisEns = null;
+        public new Entities HisEns
+        {
+            get
+            {
+                if (_HisEns == null)
+                {
+                    _HisEns = BP.DA.ClassFactory.GetEns(this.No);
+                }
+                return _HisEns;
+            }
+        }
+        public Entity HisEn
+        {
+            get
+            {
+                return this.HisEns.GetNewEntity;
+            }
+        }
+        /// <summary>
+        /// 在列表中显示的属性
+        /// </summary>
+        private Attrs _AttrsInTableEns = null;
+        /// <summary>
+        /// 在列表中显示的属性
+        /// </summary>
+        public Attrs AttrsInTableEns
+        {
+            get
+            {
+                if (_AttrsInTableEns == null)
+                {
+                    _AttrsInTableEns = new Attrs();
+                    string attrKeyShow = this.AttrsInTable;
+                    string[] strs = this.AttrsInTable.Split('@');
+                    Map mp = this.HisEn.EnMap;
+                    foreach (string str in strs)
+                    {
+                        if (str == null || str == "")
+                            continue;
+
+                        string[] kv = str.Split('=');
+                        if (kv[0] == "MyNum")
+                            continue;
+
+                        _AttrsInTableEns.Add(mp.GetAttrByKey(kv[0]));
+                    }
+                }
+                return _AttrsInTableEns;
             }
         }
         public float FrmW
@@ -396,7 +447,6 @@ namespace BP.Sys
                 map.AddTBString(MapDataAttr.AttrsInTable, null, "在表格中显示的列", true, false, 0, 3800, 20);
 
                 // map.AddTBInt(MapDataAttr.FrmFrom, 0, "来源", true, true);
-
                 this._enMap = map;
                 return this._enMap;
             }
