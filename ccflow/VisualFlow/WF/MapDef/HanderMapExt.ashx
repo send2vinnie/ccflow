@@ -6,8 +6,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using System.Configuration;
+using System.Web.SessionState;
 
-public class Handler : IHttpHandler
+public class Handler : IHttpHandler, IRequiresSessionState  
 {
     public string DealSQL(string sql, string key)
     {
@@ -15,6 +16,7 @@ public class Handler : IHttpHandler
         sql = sql.Replace("@key", key);
         sql = sql.Replace("@Val", key);
         sql = sql.Replace("@val", key);
+        
         sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
         sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
         sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);

@@ -1,8 +1,7 @@
-<%@ Register TagPrefix="uc1" TagName="UCSys" Src="UC/UCSys.ascx" %>
+<%@ Register TagPrefix="uc1" TagName="UCSys" Src="../../Comm/UC/UCSys.ascx" %>
 <%@ Page language="c#" Inherits="BP.Web.WF.Comm.UIContrastDtl" CodeFile="GroupDtl.aspx.cs" %>
 <%@ Register TagPrefix="cc1" Namespace="BP.Web.Controls" Assembly="BP.Web.Controls" %>
 <%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
-
 <!DocType HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>
@@ -11,9 +10,9 @@
 		<meta name="CODE_LANGUAGE" Content="C#">
 		<meta name="vs_defaultClientScript" content="JavaScript">
 		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
-		<script language="JavaScript" src="Menu.js"></script>
-		<script language="JavaScript" src="JScript.js"></script>
-		<LINK href="./Style/Table0.css" type="text/css" rel="stylesheet">
+		<script language="JavaScript" src="../../Comm/Menu.js"></script>
+		<script language="JavaScript" src="../../Comm/JScript.js"></script>
+		<LINK href="../../Comm/Style/Table0.css" type="text/css" rel="stylesheet">
 		 <script language="javascript">
     function ShowEn(url, wName)
     {

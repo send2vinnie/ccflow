@@ -1028,10 +1028,10 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         TextBox tb = new TextBox();
         tb.ID = "TB_Doc";
         tb.Text = me.Doc;
-        tb.Columns = 70;
+        tb.Columns = 80;
         tb.CssClass = "TH";
         tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 3;
+        tb.Rows = 7;
         this.Pub2.Add( tb);
         this.Pub2.Add("说明:@Key是ccflow约定的关键字，是主下拉框传递过来的值");
         this.Pub2.AddFieldSetEnd();

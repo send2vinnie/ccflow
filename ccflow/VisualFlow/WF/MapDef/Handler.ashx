@@ -3,8 +3,10 @@
 using System;
 using System.Web;
 using System.IO;
+using System.Web.SessionState;
 
-public class Handler : IHttpHandler {
+public class Handler : IHttpHandler, IRequiresSessionState  
+{
 
     public void ProcessRequest(HttpContext context)
     {

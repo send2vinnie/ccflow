@@ -5,10 +5,15 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using BP.Web;
 using System.Configuration;
+using System.Web.SessionState;
 
-public class Handler : IHttpHandler
+public class Handler : IHttpHandler, IRequiresSessionState  
 {
+    string no;
+    string name;
+    string fk_dept;
     public string DealSQL(string sql, string key)
     {
         sql = sql.Replace("@Key", key);
@@ -16,8 +21,13 @@ public class Handler : IHttpHandler
         sql = sql.Replace("@Val", key);
         sql = sql.Replace("@val", key);
 
-     
-        
+        //sql = sql.Replace("@WebUser.No", no);
+        //sql = sql.Replace("@WebUser.Name", name);
+        //sql = sql.Replace("@WebUser.FK_Dept", fk_dept);
+
+        sql = sql.Replace("@WebUser.No", WebUser.No);
+        sql = sql.Replace("@WebUser.Name", WebUser.Name);
+        sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
         return sql;
     }
     public void ProcessRequest(HttpContext context)
@@ -25,6 +35,11 @@ public class Handler : IHttpHandler
         string fk_mapExt = context.Request.QueryString["FK_MapExt"].ToString();
         if (context.Request.QueryString["Key"] == null)
             return;
+
+        no=context.Request.QueryString["WebUserNo"];
+        name = context.Request.QueryString["WebUserName"];
+        fk_dept = context.Request.QueryString["WebUserFK_Dept"];
+        
 
         BP.Sys.MapExt me = new BP.Sys.MapExt(fk_mapExt);
         DataTable dt = null;
