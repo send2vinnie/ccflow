@@ -8,6 +8,12 @@
 <head runat="server">
     <title>无标题页</title>
     <base target=_blank />
+    <style type="text/css">
+        .style1
+        {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -16,8 +22,14 @@
             <tr>
                 <td style="width: 200px">
                 </td>
-                <td valign=top>
+                <td valign=top style="text-decoration: underline; font-style: italic">
         <uc1:ucsys ID="Ucsys1" runat="server" />
+                    <asp:AdRotator ID="AdRotator1" runat="server" />
+                    dddd<asp:GridView ID="GridView1" runat="server">
+                    </asp:GridView>
+                    <br />
+                    dwe<span class="style1">wsdsdewe<asp:CheckBox ID="CheckBox1" runat="server" />
+                    </span>
                 </td>
             </tr>
         </table>
