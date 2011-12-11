@@ -64,12 +64,11 @@ public partial class WF_FreeFrm_UploadFile : WebPage
 
         this.Pub1.AddTable("width='100%'");
         this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("IDX");
-        this.Pub1.AddTDTitle("文件名");
-        this.Pub1.AddTDTitle("大小KB");
-        this.Pub1.AddTDTitle("上传日期");
-        this.Pub1.AddTDTitle("上传人");
-        this.Pub1.AddTDTitle("操作");
+        this.Pub1.AddTD("文件名");
+        this.Pub1.AddTD("大小KB");
+        this.Pub1.AddTD("上传日期");
+        this.Pub1.AddTD("上传人");
+        this.Pub1.AddTD("操作");
         this.Pub1.AddTREnd();
 
         BP.Sys.FrmAttachmentDBs dbs = new BP.Sys.FrmAttachmentDBs();
@@ -81,15 +80,11 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         foreach (FrmAttachmentDB db in dbs)
         {
             this.Pub1.AddTR();
-            this.Pub1.AddTDIdx(i++);
+           // this.Pub1.AddTDIdx(i++);
             if (athDesc.IsDownload)
-            {
                 this.Pub1.AddTD("<a href='AttachmentUpload.aspx?DoType=Down&MyPK=" + db.MyPK + "' target=_blank><img src='../../Images/FileType/" + db.FileExts + ".gif' border=0 onerror=\"src='../../Images/FileType/Undefined.gif'\" />" + db.FileName + "</a>");
-            }
             else
-            {
                 this.Pub1.AddTD(db.FileName);
-            }
 
             this.Pub1.AddTD(db.FileSize);
             this.Pub1.AddTD(db.RDT);

@@ -40,6 +40,8 @@ public partial class WF_MapDef_FrmAttachment : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         FrmAttachment ath = new FrmAttachment();
+        ath.CheckPhysicsTable();
+
         ath.MyPK = this.FK_MapData + "_" + this.Ath;
         if (this.Ath != null)
             ath.RetrieveFromDBSources();
@@ -88,6 +90,20 @@ public partial class WF_MapDef_FrmAttachment : WebPage
         tb.Columns = 60;
         this.Pub1.AddTD("colspan=2",tb);
         this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("类别");
+        tb = new TextBox();
+        tb.ID = "TB_" + FrmAttachmentAttr.Sort;
+        tb.Text = ath.Sort;
+        tb.Columns = 60;
+        this.Pub1.AddTD("colspan=2", tb);
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("colspan=3", "类别可以为空,设置的格式为:@类别名1@类别名2");
+        this.Pub1.AddTREnd();
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTD("");
