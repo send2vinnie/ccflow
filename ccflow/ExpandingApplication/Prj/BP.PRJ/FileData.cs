@@ -89,7 +89,7 @@ namespace BP.PRJ
 
                 Map map = new Map("PRJ_FileData");
                 map.EnDesc = "文件数据表";
-                map.DepositaryOfEntity = Depositary.Application;
+                map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.CodeStruct = "2";
                 map.IsAutoGenerNo = true;
