@@ -62,8 +62,12 @@ public partial class WF_FreeFrm_UploadFile : WebPage
             return;
         }
 
+        BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment(this.FK_FrmAttachment);
+
         this.Pub1.AddTable("width='100%'");
         this.Pub1.AddTR();
+        if (athDesc.Sort.Contains("@"))
+            this.Pub1.AddTD("类别");
         this.Pub1.AddTD("文件名");
         this.Pub1.AddTD("大小KB");
         this.Pub1.AddTD("上传日期");
@@ -75,12 +79,15 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         dbs.Retrieve(FrmAttachmentDBAttr.FK_FrmAttachment, this.FK_FrmAttachment,
             FrmAttachmentDBAttr.RefPKVal, this.PKVal);
 
-        BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment(this.FK_FrmAttachment);
+      
         int i = 1;
         foreach (FrmAttachmentDB db in dbs)
         {
             this.Pub1.AddTR();
-           // this.Pub1.AddTDIdx(i++);
+            if (athDesc.Sort.Contains("@"))
+                this.Pub1.AddTD(db.Sort);
+
+            // this.Pub1.AddTDIdx(i++);
             if (athDesc.IsDownload)
                 this.Pub1.AddTD("<a href='AttachmentUpload.aspx?DoType=Down&MyPK=" + db.MyPK + "' target=_blank><img src='../../Images/FileType/" + db.FileExts + ".gif' border=0 onerror=\"src='../../Images/FileType/Undefined.gif'\" />" + db.FileName + "</a>");
             else
@@ -97,6 +104,18 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         }
         if (athDesc.IsUpload)
         {
+            if (athDesc.Sort.Contains("@"))
+            {
+                string[] strs = athDesc.Sort.Split('@');
+                BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
+                ddl.ID = "ddl";
+                foreach (string str in strs)
+                {
+                    ddl.Items.Add(new ListItem(str, str));
+                }
+                this.Pub1.AddTD(ddl);
+            }
+
             this.Pub1.AddTR();
             this.Pub1.AddTD();
             this.Pub1.AddTDBegin("colspan=5");
@@ -150,6 +169,10 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         dbUpload.RDT = DataType.CurrentDataTime;
         dbUpload.Rec = BP.Web.WebUser.No;
         dbUpload.RecName = BP.Web.WebUser.Name;
+
+        if (athDesc.Sort.Contains("@"))
+            dbUpload.Sort = this.Pub1.GetDDLByID("ddl").SelectedItemStringVal;
+
         dbUpload.Insert();
         this.Response.Redirect("AttachmentUpload.aspx?FK_FrmAttachment=" + this.FK_FrmAttachment + "&PKVal=" + this.PKVal, true);
     }
