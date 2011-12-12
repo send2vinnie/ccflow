@@ -1,14 +1,13 @@
 using System;
+using System.Web;
 using System.IO;
 using System.Data;
 using System.Web.UI.WebControls;
 using BP.Web;
-//using BP.Rpt ; 
 using BP.DA;
 using BP.En;
 using System.Reflection;
 using System.Text.RegularExpressions;
-
 
 namespace BP.Web
 {
@@ -583,7 +582,11 @@ namespace BP.Web
             if (Directory.Exists(filepath) == false)
                 Directory.CreateDirectory(filepath);
 
+          
+
             filename = filepath + filename;
+
+            filename = HttpUtility.UrlEncode(filename);
 
             FileStream objFileStream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);
             StreamWriter objStreamWriter = new StreamWriter(objFileStream, System.Text.Encoding.Unicode);
