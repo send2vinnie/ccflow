@@ -76,6 +76,10 @@ namespace BP.Sys
         /// </summary>
         public const string SaveTo = "SaveTo";
         /// <summary>
+        /// 类别
+        /// </summary>
+        public const string Sort = "Sort";
+        /// <summary>
         /// 上传类型
         /// </summary>
         public const string UploadType = "UploadType";
@@ -154,6 +158,17 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(FrmAttachmentAttr.Name, value);
+            }
+        }
+        public string Sort
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttachmentAttr.Sort);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.Sort, value);
             }
         }
         /// <summary>
@@ -309,6 +324,7 @@ namespace BP.Sys
                 map.AddTBString(FrmAttachmentAttr.Name, null,"名称", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentAttr.Exts, null, "扩展名", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentAttr.SaveTo, null, "保存到", true, false, 0, 150, 20);
+                map.AddTBString(FrmAttachmentAttr.Sort, null, "类别(可为空)", true, false, 0, 500, 20);
 
                 map.AddTBFloat(FrmAttachmentAttr.X, 5, "X", true, false);
                 map.AddTBFloat(FrmAttachmentAttr.Y, 5, "Y", false, false);

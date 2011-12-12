@@ -809,10 +809,21 @@ namespace BP.En
 		/// <returns></returns>
         public int DoQuery()
         {
-            if (this._en == null)
-                return this.doEntitiesQuery();
-            else
-                return this.doEntityQuery();
+            try
+            {
+                if (this._en == null)
+                    return this.doEntitiesQuery();
+                else
+                    return this.doEntityQuery();
+            }
+            catch(Exception ex)
+            {
+                if (this._en == null)
+                    this._ens.GetNewEntity.CheckPhysicsTable();
+                else
+                    this._en.CheckPhysicsTable();
+                throw ex;
+            }
         }
         public int DoQueryBak20111203()
         {

@@ -49,6 +49,10 @@ namespace BP.Sys
         /// 记录人名字
         /// </summary>
         public const string RecName = "RecName";
+        /// <summary>
+        /// 类别
+        /// </summary>
+        public const string Sort = "Sort";
     }
     /// <summary>
     /// 附件数据存储
@@ -56,6 +60,17 @@ namespace BP.Sys
     public class FrmAttachmentDB : EntityMyPK
     {
         #region 属性
+        public string Sort
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttachmentDBAttr.Sort);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentDBAttr.Sort, value);
+            }
+        }
         public string RDT
         {
             get
@@ -228,6 +243,7 @@ namespace BP.Sys
                 map.AddTBString(FrmAttachmentDBAttr.FK_MapData, null,"FK_MapData", true, false, 1, 30, 20);
                 map.AddTBString(FrmAttachmentDBAttr.FK_FrmAttachment, null, "附件编号", true, false, 1, 50, 20);
                 map.AddTBString(FrmAttachmentDBAttr.RefPKVal, null, "实体主键", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentDBAttr.Sort, null, "类别", true, false, 0, 200, 20);
                 map.AddTBString(FrmAttachmentDBAttr.FileFullName, null, "FileFullName", true, false, 0, 200, 20);
                 map.AddTBString(FrmAttachmentDBAttr.FileName, null,"名称", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentDBAttr.FileExts, null, "扩展", true, false, 0, 50, 20);
