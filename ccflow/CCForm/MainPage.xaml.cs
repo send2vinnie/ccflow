@@ -3594,7 +3594,7 @@ namespace CCForm
 
             lineDT.Columns.Add(new DataColumn("BorderWidth", typeof(string)));
             lineDT.Columns.Add(new DataColumn("BorderColor", typeof(string)));
-            lineDT.Columns.Add(new DataColumn("BorderStyle", typeof(string)));
+           // lineDT.Columns.Add(new DataColumn("BorderStyle", typeof(string)));
             #endregion line
 
             #region btn
