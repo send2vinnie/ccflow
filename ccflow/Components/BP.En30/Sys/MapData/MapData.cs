@@ -455,6 +455,30 @@ namespace BP.Sys
 
         public static void ImpMapData(string fk_mapdata, DataSet ds)
         {
+            #region 检查导入的数据是否完整.
+            string errMsg="";
+            if (ds.Tables.Contains("Sys_MapAttr") == false)
+                errMsg += "@缺少表:Sys_MapAttr";
+
+            if (ds.Tables.Contains("Sys_MapData") == false)
+                errMsg += "@缺少表:Sys_MapData";
+
+            DataTable dtCheck = ds.Tables["Sys_MapAttr"];
+            bool isHave = false;
+            foreach (DataRow dr in dtCheck.Rows)
+            {
+                if (dr["KeyOfEn"].ToString() == "OID")
+                    isHave = true;
+            }
+            if (isHave == false)
+                errMsg += "@缺少列:OID";
+
+            if (errMsg != "")
+                throw new Exception("以下错误不可导入"+errMsg);
+            #endregion
+            //检查是否存在OID字段.
+
+
             MapData mdOld = new MapData();
             mdOld.No = fk_mapdata;
             mdOld.Delete();
@@ -728,6 +752,7 @@ namespace BP.Sys
                         break;
                 }
             }
+
         }
         protected override bool beforeDelete()
         {
@@ -829,7 +854,7 @@ namespace BP.Sys
             ds.Tables.Add(Sys_FrmRB);
 
             // Sys_MapAttr.
-            sql = "SELECT * FROM Sys_MapAttr WHERE " + where + " AND KeyOfEn NOT IN('WFState','WFLog')";
+            sql = "SELECT * FROM Sys_MapAttr WHERE " + where + " AND KeyOfEn NOT IN('WFState','WFLog','NodeState')";
             DataTable Sys_MapAttr = DBAccess.RunSQLReturnTable(sql);
             Sys_MapAttr.TableName = "Sys_MapAttr";
             ds.Tables.Add(Sys_MapAttr);

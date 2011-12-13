@@ -1143,7 +1143,7 @@ namespace BP.Sys
                     System.Text.RegularExpressions.Regex reg1 = new System.Text.RegularExpressions.Regex(@"^[A-Za-z0-9]+$");
                     if (reg1.IsMatch(this.KeyOfEn) == false)
                     {
-                        throw new Exception("您输入的字段英文名[" + this.KeyOfEn + "]不符合要求，请按英文、拼音缩写填写或者由系统写完成。");
+                    // throw new Exception("您输入的字段英文名[" + this.KeyOfEn + "]不符合要求，请按英文、拼音缩写填写或者由系统写完成。");
                     }
                 }
             }

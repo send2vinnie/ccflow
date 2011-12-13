@@ -26,6 +26,13 @@ namespace BP.WF.XML
                 return this.GetValStringByKey(BP.Web.WebUser.SysLang);
             }
         }
+        public string EventDesc
+        {
+            get
+            {
+                return this.GetValStringByKey("EventDesc");
+            }
+        }
         #endregion
 
         #region ππ‘Ï
