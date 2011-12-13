@@ -51,10 +51,9 @@ namespace CCForm
             vals += "@NoOfAth=" + this.TB_No.Text.Trim();
             vals += "@Name=" + this.TB_Name.Text;
             vals += "@SaveTo=" + this.TB_SaveTo.Text.Trim();
-
+            vals += "@Sort=" + this.TB_Sort.Text.Trim();
             vals += "@H=" + this.HisBPAttachment.Height;
             vals += "@W=" + this.HisBPAttachment.Width;
-
             vals += "@X=" + this.HisBPAttachment.X;
             vals += "@Y=" + this.HisBPAttachment.Y;
 

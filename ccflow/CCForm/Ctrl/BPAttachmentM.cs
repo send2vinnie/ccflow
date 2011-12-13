@@ -20,7 +20,7 @@ using Silverlight;
 
 namespace CCForm
 {
-    public class BPAttachmentM : System.Windows.Controls.Button
+    public class BPAttachmentM : System.Windows.Controls.TextBox
     {
         #region 处理选中.
         private bool _IsSelected = false;

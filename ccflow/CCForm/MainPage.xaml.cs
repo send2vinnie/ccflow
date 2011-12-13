@@ -1526,7 +1526,7 @@ namespace CCForm
                                 athM.X = double.Parse(dr["X"]);
                                 athM.Y = double.Parse(dr["Y"]);
                                 athM.SaveTo = dr["SaveTo"];
-                                athM.Content = dr["Name"];
+                                athM.Text = dr["Name"];
                                 athM.Label = dr["Name"];
                               
                                 MouseDragElementBehavior mde = new MouseDragElementBehavior();
@@ -3736,8 +3736,8 @@ namespace CCForm
             athDT.TableName = "Sys_FrmAttachment";
             athDT.Columns.Add(new DataColumn("MyPK", typeof(string)));
             athDT.Columns.Add(new DataColumn("FK_MapData", typeof(string)));
-            athDT.Columns.Add(new DataColumn("Name", typeof(string)));
             athDT.Columns.Add(new DataColumn("NoOfAth", typeof(string)));
+            athDT.Columns.Add(new DataColumn("Name", typeof(string)));
             athDT.Columns.Add(new DataColumn("Exts", typeof(string)));
             athDT.Columns.Add(new DataColumn("SaveTo", typeof(string)));
             athDT.Columns.Add(new DataColumn("UploadType", typeof(int)));
@@ -4123,11 +4123,10 @@ namespace CCForm
                 if (athM != null)
                 {
                     DataRow mapAth = athDT.NewRow();
-                    mapAth["MyPK"] = athM.Name;
+                    mapAth["MyPK"] = Glo.FK_MapData + "_" + athM.Name;
                     mapAth["FK_MapData"] = Glo.FK_MapData;
                     mapAth["NoOfAth"] = athM.Name;
                     mapAth["Name"] = athM.Label;
-
                     mapAth["SaveTo"] = athM.SaveTo;
                     mapAth["UploadType"] = "1";
 

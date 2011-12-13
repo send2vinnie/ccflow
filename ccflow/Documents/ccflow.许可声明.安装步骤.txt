@@ -102,7 +102,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 
     2, 请看下面第5步骤, 为数据库配置链接.
 
-    3, 执行修复&安装数据库工具: http://localhost/Flow/WF/Admin/DBInstall.aspx (如果这个网页打不开，这是你的iis配置不正确.)
+    3, 执行修复&安装数据库工具: http://localhost/ccFlow/WF/Admin/DBInstall.aspx (如果这个网页打不开，这是你的iis配置不正确.)
 
 
 5, 修改 D:\ccflow\VisualFlow\web.config Appsetting 节点中的数据库连接。
@@ -121,7 +121,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 
 6, 启动流程设计器
    BS版本流程设计器路径, Silverlight beta版本.
-   http://localhost/Flow/Designer.aspx
+   http://localhost/ccFlow/Designer.aspx
 
 7, 启动流程服务: 用来发短信与邮件的服务. 
     D:\ccflow\VisualWorkFlowServices\bin\Release\VisualWorkFlowServices.exe 
@@ -132,7 +132,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 =======================================================================
 1, 没有把ccflow 作为主目录, 导致一些项目文件找不到位置,强烈建议你放在d:\ccflow 下面.
 
-2, 没有建立应用程序 /Flow . 导致仅仅建立了一个虚拟目录，在脚本与执行权限上没有设置<脚本与可执行程序>
+2, 没有建立应用程序 /ccFlow . 导致仅仅建立了一个虚拟目录，在脚本与执行权限上没有设置<脚本与可执行程序>
 
 3, 在internet 信息服务(iis) 中， web 服务扩展 asp.net v4.xxxxxx 的dll 没有被允许.
 
@@ -162,11 +162,22 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
        扩展名： .xaml   MIME类型：  application/xaml+xml
 
 
-       
-
-6. 出现用户名及密码错误，请在web.config 文件中删除 userName="administrator" password="jiaozi"
+6. 出现用户名及密码错误，请在web.config 文件中.
+    <identity impersonate="true" userName="administrator" password="jiaozi"/>
+   中的 impersonate="true" 修改成 impersonate="false". 
 
 7. silverlight 版本不是 4.0以及4.0以上，请先卸了，重新安装。
+
+
+8. 如果遇到流程设计器打开出错误，请如下方式解决
+    打开:
+    http://localhost/ccflow/WF/Admin/XAP/WebService.asmx?op=CfgKey
+
+    在文本框中输入aaaa ,如果不能正确的返回值，仔细看看错误：
+    就有可能是c:\windows\temp 目录访问权限有限制, 修改一下该目录的访问权限，比如everyone都可以读写试一下(不建议你这样)。
+
+
+
 ==================================================================================================
 =  我们坚持,开源,共享协作. 
 == 始终把: "做最好用的工作流程引擎，工作流程管理系统，奉献社会。" 做为发展目标与理念。
@@ -175,7 +186,6 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 =  济南驰骋信息技术有限公司
 =  qq: hiflow@qq.com
 =  Tel:18660153393.
-=  msn:chichengsoft@hotmail.com
 =  URL: http://ccflow.org
 =
 =  服务内容:
