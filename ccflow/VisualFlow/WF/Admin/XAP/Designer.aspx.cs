@@ -99,13 +99,12 @@ public partial class Designer : System.Web.UI.Page
             sql = "CREATE VIEW  WF_EmpWorks AS SELECT A.WorkID, A.Rec AS Starter, A.RecName as StarterName, A.FK_Flow, A.FlowName,B.FK_Node, B.FK_NodeText AS NodeName, A.Title, A.RDT, B.RDT AS ADT, B.SDT, B.FK_Emp,B.FK_EmpText, B.FID ,A.FK_FlowSort FROM  WF_GenerWorkFlow A, WF_GenerWorkerList B WHERE     (B.IsEnable = 1) AND (B.IsPass = 0) AND A.WorkID = B.WorkID AND A.FK_Node = B.FK_Node ";
             BP.DA.DBAccess.RunSQLs(sql);
 
-            // 更新老版本的字段长度。
-            if (DBAccess.AppCenterDBType == DBType.Oracle9i)
-                sql = "ALTER TABLE WF_Track modify COLUMN RDT varchar(20)";
-            else
-                sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
-
-            BP.DA.DBAccess.RunSQLs(sql);
+            //// 更新老版本的字段长度。
+            //if (DBAccess.AppCenterDBType == DBType.Oracle9i)
+            //    sql = "ALTER TABLE WF_Track modify COLUMN RDT varchar(20)";
+            //else
+            //    sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
+            //BP.DA.DBAccess.RunSQLs(sql);
             #endregion 更新 WF_EmpWorks. 2011-11-09
 
             msg = "@登陆时间错误。。";
