@@ -7,10 +7,14 @@
   <Source No="Flow" CH="流程事件" EN=""/>
   
   <!-- 表单事件 -->
-  <Item No="FrmLoadBefore"  CH="节点表单载入前" EN="When the node before saving" EventType="Frm"  />
-  <Item No="FrmLoadAfter"   CH="节点表单载入后" EN="When the node saved" EventType="Frm"  />
-  <Item No="SaveBefore"  CH="当节点保存前" EN="When the node before saving"  EventType="Frm" />
-  <Item No="SaveAfter" CH="当节点保存后" EN="When the node saved" EventType="Frm" />
+  <Item No="FrmLoadBefore"  CH="节点表单载入前" EN="When the node before saving" EventType="Frm" 
+        EventDesc="在载入前，您可以为表单预先执行一些数据初始化。" />
+  <Item No="FrmLoadAfter"   CH="节点表单载入后" EN="When the node saved" EventType="Frm" 
+        EventDesc="在载入后，执行安全处理。" />
+  <Item No="SaveBefore"  CH="当节点保存前" EN="When the node before saving"  EventType="Frm"
+         EventDesc="可以执行一些数据完整性检查。" />
+  <Item No="SaveAfter" CH="当节点保存后" EN="When the node saved" EventType="Frm" 
+        EventDesc="可以做相应的业务逻辑处理。"/>
 
   <!-- 节点事件类型 -->
   <Item No="SendWhen" CH="当节点发送时" EN="When a node is sent" EventType="Node" />
@@ -29,7 +33,5 @@
 	<Item No="FlowDelBefore" CH="流程删除前" EN="When the node after sending cancellation" EventType="Flow"  />
 	<Item No="FlowDelAfter" CH="流程删除后" EN="When the node after sending cancellation" EventType="Flow"  />
 
-
- 
 
 </NewDataSet>

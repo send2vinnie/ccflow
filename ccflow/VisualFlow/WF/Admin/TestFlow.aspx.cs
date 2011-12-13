@@ -166,7 +166,7 @@ public partial class WF_Admin_TestFlow : WebPage
         if (emps.Count == 0)
         {
             this.Ucsys1.AddMsgOfWarning("Error",
-                this.ToE("StartError", "错误原因 <br>@1，可能是您没有正确的设置岗位、部门、人员。<br>@2，可能是没有给开始节点设置工作岗位。。"));
+                this.ToE("StartError", "错误原因 <h2>@1，可能是您没有正确的设置岗位、部门、人员。<br>@2，可能是没有给开始节点设置工作岗位。</h2>"));
             return;
         }
 

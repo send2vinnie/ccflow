@@ -622,7 +622,7 @@ namespace BP.Web
             MapData.ImpMapData(fk_mapdata, md.GenerHisDataSet());
 
             // 如果是节点表单，就要执行一次修复，以免漏掉应该有的系统字段。
-            if (fk_mapdata.Contains("ND") == true)
+            if (fk_mapdata.Contains("ND") == true )
             {
                 try
                 {

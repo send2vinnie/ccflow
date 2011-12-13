@@ -158,9 +158,7 @@ namespace BP.Web.WF
                     throw new Exception("@开始节点已经物理删除.流程出现错误, 此条流程已经失效, 请你关闭窗口返回系统,刷新记录.");
                 }
                 sw.Retrieve();
-                //string str = sw.WFLog;
-                //str = str.Replace("@", "<BR>@");
-                //this.Label1.Text = "<p align=center><B>流程日志</B></P>" + str;
+                
 
                 // 判断流程能不能够删除的权限.
 

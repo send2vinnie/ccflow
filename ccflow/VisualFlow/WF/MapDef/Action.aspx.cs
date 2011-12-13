@@ -36,10 +36,10 @@ public partial class WF_Admin_Action : WebPage
             delFE.Delete();
         }
 
-        this.Pub3.AddCaptionLeft("节点/流程:事件");
+        this.Pub3.AddCaptionLeft("明细表:事件");
 
 
-        this.Title = "设置:节点事件接口";
+        this.Title = "设置:明细表事件";
         FrmEvents ndevs = new FrmEvents();
         ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_MapData);
         EventLists xmls = new EventLists();

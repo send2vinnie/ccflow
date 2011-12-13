@@ -41,20 +41,23 @@ public partial class Designer : System.Web.UI.Page
             sql = "UPDATE SYS_MAPEXT SET ExtType='TBFullCtrl' WHERE ExtType='FullCtrl'";
             DBAccess.RunSQL(sql);
 
+            #region 2011-12-13 删除了流程日志字段.
+            DBAccess.RunSQL("DELETE Sys_MapAttr WHERE KeyOfEn='WFLog'");
+            #endregion
+
             #region 2011-12-01 升级投递规则.
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DeliveryWay'");
             #endregion
 
+
             #region 手动升级. 2011-07-08 补充节点字段分组.
             //string sql = "DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
             //BP.DA.DBAccess.RunSQL(sql);
-
             //sql = "INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态')";
             //BP.DA.DBAccess.RunSQL(sql);
             #endregion 手动升级. 2011-07-08 补充节点字段分组.
 
             #region 升级基础信息。 2011-11-02。 在过1个月去掉它。
-
             msg = "@补充数据时出现错误。";
             sql = "SELECT count(*) FROM CN_City";
             if (BP.DA.DBAccess.RunSQLReturnValInt(sql) == 0)
@@ -85,7 +88,6 @@ public partial class Designer : System.Web.UI.Page
 
             #region 更新 WF_EmpWorks. 2011-11-09
             msg = "@更新视图出现错误。";
-
             try
             {   
                 sql = "DROP VIEW WF_EmpWorks";
@@ -105,7 +107,6 @@ public partial class Designer : System.Web.UI.Page
 
             BP.DA.DBAccess.RunSQLs(sql);
             #endregion 更新 WF_EmpWorks. 2011-11-09
-
 
             msg = "@登陆时间错误。。";
 

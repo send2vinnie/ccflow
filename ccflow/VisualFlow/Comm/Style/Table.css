@@ -61,7 +61,6 @@ body
     text-align: center;
 }
 
-
 .TitleMsg
 {
 	border-style: none;
@@ -143,11 +142,7 @@ body
 
 .TR
 {
-    
 }
-
-
-
 
 .TRSum
 {
@@ -201,7 +196,6 @@ legend
     font-style: inherit;
     font-weight: bold;
 }
-
 
 .ToolBar,Toolbar,GroupTitle
 {

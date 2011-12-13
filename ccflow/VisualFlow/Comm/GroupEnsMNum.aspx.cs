@@ -178,7 +178,6 @@ namespace BP.Web.Comm
             }
             #endregion 权限问题
 
-
             this.ur = new UserRegedit(WebUser.NoOfSessionID, this.EnsName + "_GroupEnsMNum");
             if (this.IsPostBack)
             {
