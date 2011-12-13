@@ -471,6 +471,11 @@ namespace BP.Sys
                 return dtl;
             }
         }
+        public GEEntity GenerGEMainEntity(string mainPK)
+        {
+            GEEntity en = new GEEntity(this.FK_MapData, mainPK);
+            return en;
+        }
         /// <summary>
         /// Ã÷Ï¸
         /// </summary>
