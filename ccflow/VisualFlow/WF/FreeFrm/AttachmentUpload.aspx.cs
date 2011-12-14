@@ -104,24 +104,31 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         }
         if (athDesc.IsUpload)
         {
-            if (athDesc.Sort.Contains("@"))
-            {
-                string[] strs = athDesc.Sort.Split('@');
-                BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
-                ddl.ID = "ddl";
-                foreach (string str in strs)
-                {
-                    ddl.Items.Add(new ListItem(str, str));
-                }
-                this.Pub1.AddTD(ddl);
-            }
+           
 
             this.Pub1.AddTR();
             this.Pub1.AddTD();
             this.Pub1.AddTDBegin("colspan=5");
+
             System.Web.UI.WebControls.FileUpload fu = new System.Web.UI.WebControls.FileUpload();
             fu.ID = "file";
             this.Pub1.Add(fu);
+
+            if (athDesc.Sort.Contains("@"))
+            {
+                string[] strs = athDesc.Sort.Split('@');
+
+                BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
+                ddl.ID = "ddl";
+                foreach (string str in strs)
+                {
+                    if (str == null || str == "")
+                        continue;
+
+                    ddl.Items.Add(new ListItem(str, str));
+                }
+                this.Pub1.Add(ddl);
+            }
 
             Button btn = new Button();
             btn.Text = "上传";

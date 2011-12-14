@@ -24,7 +24,7 @@ public partial class WF_Admin_Action : WebPage
     {
         get
         {
-            return "ND"+this.Request.QueryString["NodeID"];
+            return this.Request.QueryString["FK_MapData"];
         }
     }
     protected void Page_Load(object sender, EventArgs e)
@@ -36,20 +36,21 @@ public partial class WF_Admin_Action : WebPage
             delFE.Delete();
         }
 
-        this.Pub3.AddCaptionLeft("明细表:事件");
-
+        MapDtl dtl = new MapDtl(this.FK_MapData);
+        this.Pub3.AddCaptionLeft("明细表:"+dtl.Name);
 
         this.Title = "设置:明细表事件";
         FrmEvents ndevs = new FrmEvents();
         ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_MapData);
-        EventLists xmls = new EventLists();
+        EventListDtls xmls = new EventListDtls();
         xmls.RetrieveAll();
 
         string myEvent = this.Event;
-        BP.WF.XML.EventList myEnentXml = null;
+        BP.WF.XML.EventListDtl myEnentXml = null;
 
+        this.Pub1.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' /></a>");
         this.Pub1.AddUL();
-        foreach (BP.WF.XML.EventList xml in xmls)
+        foreach (BP.WF.XML.EventListDtl xml in xmls)
         {
             FrmEvent nde = ndevs.GetEntityByKey(FrmEventAttr.FK_Event, xml.No) as FrmEvent;
             if (nde == null)
@@ -144,9 +145,9 @@ public partial class WF_Admin_Action : WebPage
         fe.MyPK = this.FK_MapData + "_" + this.Event;
         fe.RetrieveFromDBSources();
 
-        EventLists xmls = new EventLists();
+        EventListDtls xmls = new EventListDtls();
         xmls.RetrieveAll();
-        foreach (EventList xml in xmls)
+        foreach (EventListDtl xml in xmls)
         {
             if (xml.No != this.Event)
                 continue;

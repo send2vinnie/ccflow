@@ -5,10 +5,10 @@
     <link href="./../../Comm/Style/Table.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript">
-        function DoDel(fk_mapdata, xmlEvent) {
+        function DoDel(nodeid, xmlEvent) {
             if (window.confirm('您确认要删除吗?') == false)
                 return;
-            window.location.href = 'Action.aspx?FK_MapData=' + fk_mapdata + '&DoType=Del&RefXml=' + xmlEvent;
+            window.location.href = 'Action.aspx?NodeID=' + nodeid + '&DoType=Del&RefXml=' + xmlEvent;
         }
     </script>
 </asp:Content>

@@ -611,10 +611,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         if (nd.IsStartNode)
         {
-          
             /*判断是否来与子流程.*/
             if (string.IsNullOrEmpty(this.Request.QueryString["FK_Node_From"]) == false)
             {
+                if (this.FID == 0)
+                    throw new Exception("流程设计错误，调起子流程时，没有接受到FID参数。");
+
                 /* 如果来自于主流程 */
                 int fk_node_From = int.Parse(this.Request.QueryString["FK_Node_From"]);
                 BP.WF.Node fk_node_From_nd = new BP.WF.Node(fk_node_From);

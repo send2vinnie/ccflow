@@ -494,7 +494,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
     }
     public void btn_Click(object sender, EventArgs e)
     {
-        Btn btn = sender as Btn;
+        Button btn = sender as Button;
         switch (btn.ID)
         {
             case "Btn_New":

@@ -100,11 +100,11 @@ public partial class Designer : System.Web.UI.Page
             BP.DA.DBAccess.RunSQLs(sql);
 
             //// 更新老版本的字段长度。
-            //if (DBAccess.AppCenterDBType == DBType.Oracle9i)
-            //    sql = "ALTER TABLE WF_Track modify COLUMN RDT varchar(20)";
-            //else
-            //    sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
-            //BP.DA.DBAccess.RunSQLs(sql);
+            if (DBAccess.AppCenterDBType == DBType.Oracle9i)
+                sql = "ALTER TABLE WF_Track modify RDT varchar(20)";
+            else
+                sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
+            BP.DA.DBAccess.RunSQLs(sql);
             #endregion 更新 WF_EmpWorks. 2011-11-09
 
             msg = "@登陆时间错误。。";

@@ -11,6 +11,7 @@ using System.Web.UI.HtmlControls;
 using BP.Web;
 using BP.DA;
 using BP.En;
+using BP.WF.XML;
 using BP.Sys;  
 using BP.Web.Controls;
 
@@ -122,7 +123,7 @@ public partial class Comm_Dtl : WebPage
         MapDtl mdtl = new MapDtl(this.EnsName);
         if (mdtl.HisDtlShowModel == DtlShowModel.Card)
         {
-            Response.Redirect("DtlFrm.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal+"&IsWap="+this.IsWap+"&FK_Node="+this.FK_Node, true);
+            this.Response.Redirect("DtlFrm.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal+"&IsWap="+this.IsWap+"&FK_Node="+this.FK_Node, true);
             return;
         }
         this.Bind(mdtl);
@@ -286,19 +287,6 @@ public partial class Comm_Dtl : WebPage
         catch (Exception ex)
         {
             dtls.GetNewEntity.CheckPhysicsTable();
-
-            #region 解决Access 不刷新的问题。
-            string rowUrl = this.Request.RawUrl;
-            if (rowUrl.IndexOf("rowUrl") > 1)
-            {
-                throw ex;
-            }
-            else
-            {
-                this.Response.Redirect(rowUrl + "&rowUrl=1&IsWap=" + this.IsWap, true);
-                return;
-            }
-            #endregion
         }
 
         #region 生成翻页
@@ -335,19 +323,6 @@ public partial class Comm_Dtl : WebPage
         catch (Exception ex)
         {
             dtls.GetNewEntity.CheckPhysicsTable();
-
-            #region 解决Access 不刷新的问题。
-            string rowUrl = this.Request.RawUrl;
-            if (rowUrl.IndexOf("rowUrl") > 1)
-            {
-                throw ex;
-            }
-            else
-            {
-                this.Response.Redirect(rowUrl + "&rowUrl=1&IsWap=" + this.IsWap, true);
-                return;
-            }
-            #endregion
         }
         #endregion 生成翻页
 
@@ -879,6 +854,7 @@ public partial class Comm_Dtl : WebPage
     {
         MapDtl mdtl = new MapDtl(this.EnsName);
         GEDtls dtls = new GEDtls(this.EnsName);
+
         QueryObject qo = new QueryObject(dtls);
         switch (mdtl.DtlOpenType)
         {
@@ -914,6 +890,7 @@ public partial class Comm_Dtl : WebPage
             dt1.OID = mdtl.RowsOfList + 1;
             dtls.AddEntity(dt1);
         }
+      
 
         Map map = dtls.GetNewEntity.EnMap;
         bool isTurnPage = false;
@@ -956,6 +933,26 @@ public partial class Comm_Dtl : WebPage
 
         if (isAddDDLSelectIdxChange == true)
             return;
+
+
+        #region 处理事件,这是仅仅判断了，保存后的处理内容。
+        FrmEvents fes = new FrmEvents(this.EnsName);
+        if (fes.Count > 0)
+        {
+            try
+            {
+                GEEntity mainEn = mdtl.GenerGEMainEntity(this.RefPKVal);
+                string msg = fes.DoEventNode(EventListDtlList.DtlSaveEnd, mainEn);
+                if (msg != null)
+                    this.Alert(msg);
+            }
+            catch (Exception ex)
+            {
+                this.Alert(ex.Message);
+                return;
+            }
+        }
+        #endregion 处理事件.
 
         if (isTurnPage)
         {

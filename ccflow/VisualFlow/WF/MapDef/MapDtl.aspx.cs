@@ -252,6 +252,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
     public void BindEdit(MapData md,MapDtl dtl)
     {
         this.Pub1.AddTable();
+        this.Pub1.AddCaptionLeft("明细表属性");
       //  this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "'>" + this.ToE("Back", "返回") + ":" + md.Name + "</a> -  " + this.ToE("DtlTable", "明细表") + ":（" + dtl.Name + "）");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
@@ -314,109 +315,78 @@ public partial class Comm_MapDef_MapDtl : WebPage
 
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD("");
         CheckBox cb = new CheckBox();
         cb.ID = "CB_IsView";
-        cb.Text = this.ToE("IsView", "是否可见"); // "是否可以修改行";
+        cb.Text = this.ToE("IsView", "是否可见"); 
         cb.Checked = dtl.IsView;
         this.Pub1.AddTD(cb);
-        this.Pub1.AddTD();
-        this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD("");
         cb = new CheckBox();
         cb.ID = "CB_IsUpdate";
         cb.Text = this.ToE("IsUpdateR", "是否可以修改行"); // "是否可以修改行";
         cb.Checked = dtl.IsUpdate;
         this.Pub1.AddTD(cb);
-        this.Pub1.AddTD();
-        this.Pub1.AddTREnd();
 
-
-        this.Pub1.AddTR1();
-        this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD("");
         cb = new CheckBox();
         cb.ID = "CB_IsInsert";
         cb.Text = this.ToE("IsInsertR", "是否可以新增行"); // "是否可以新增行";
         cb.Checked = dtl.IsInsert;
         this.Pub1.AddTD(cb);
-        this.Pub1.AddTD();
         this.Pub1.AddTREnd();
-
+ 
 
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD("");
         cb = new CheckBox();
         cb.ID = "CB_IsDelete";
         cb.Text = this.ToE("IsDeleteR", "是否可以删除行"); // "是否可以删除行";
         cb.Checked = dtl.IsDelete;
         this.Pub1.AddTD(cb);
-        this.Pub1.AddTD();
-        this.Pub1.AddTREnd();
 
-
-        this.Pub1.AddTR1();
-        this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD("");
-        cb =new CheckBox();
+        cb = new CheckBox();
         cb.ID = "CB_IsShowIdx";
         cb.Text = this.ToE("IsShowIdx", "是否显示序号列"); //"是否显示序号列";
         cb.Checked = dtl.IsShowIdx;
-        this.Pub1.AddTD("colspan=2", cb);
-        this.Pub1.AddTREnd();
+        this.Pub1.AddTD( cb);
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD("");
         cb = new CheckBox();
         cb.ID = "CB_IsShowSum";
         cb.Text = this.ToE("IsShowSum", "是否合计行");// "是否合计行";
         cb.Checked = dtl.IsShowSum;
-        this.Pub1.AddTD("colspan=2", cb);
+        this.Pub1.AddTD(cb);
         this.Pub1.AddTREnd();
+
         
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD("");
         cb = new CheckBox();
         cb.ID = "CB_IsShowTitle";
         cb.Text = this.ToE("IsShowTitle", "是否显示标头");// "是否显示标头";
         cb.Checked = dtl.IsShowTitle;
-        this.Pub1.AddTD("colspan=2", cb);
-        this.Pub1.AddTREnd();
+        this.Pub1.AddTD( cb);
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD("");
         cb = new CheckBox();
         cb.ID = "CB_IsExp";
         cb.Text = this.ToE("IsExp", "是否可以导出？");// "是否可以导出";
         cb.Checked = dtl.IsShowTitle;
-        this.Pub1.AddTD("colspan=2", cb);
-        this.Pub1.AddTREnd();
+        this.Pub1.AddTD(cb);
 
-
-
-        this.Pub1.AddTR();
-        this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD("");
         cb = new CheckBox();
         cb.ID = "CB_IsImp";
         cb.Text = this.ToE("IsImp", "是否可以导入？");// "是否可以导出";
         cb.Checked = dtl.IsShowTitle;
-        this.Pub1.AddTD("colspan=2", cb);
+        this.Pub1.AddTD( cb);
         this.Pub1.AddTREnd();
-
-
-
+         
 
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD("");
+        cb = new CheckBox();
+        cb.ID = "CB_IsCopyNDData";
+        cb.Text = this.ToE("IsCopyNDData", "是允许从上一个节点Copy数据");
+        cb.Checked = dtl.IsCopyNDData;
+        this.Pub1.AddTD(cb);
+
         cb = new CheckBox();
         cb.ID = "CB_IsEnablePass";
         cb.Text = this.ToE("IsEnablePass", "是否起用审核字段？");// "是否合计行";
@@ -457,7 +427,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
 
-
         GroupFields gfs = new GroupFields(md.No);
         if (gfs.Count > 1)
         {
@@ -475,43 +444,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
             this.Pub1.AddTR();
         else
             this.Pub1.AddTR1();
-
-        this.Pub1.AddTDIdx(idx++);
-        this.Pub1.AddTD();
-        cb = new CheckBox();
-        cb.ID = "CB_IsCopyNDData";
-        cb.Text =this.ToE("IsCopyNDData","是允许从上一个节点Copy数据");
-        cb.Checked = dtl.IsCopyNDData;
-        this.Pub1.AddTD("colspan=2 nowarp=true ", cb);
-        this.Pub1.AddTREnd();
-
-
-        //#region 字段分组
-        //this.Pub1.AddTR();
-        //this.Pub1.AddTD("字段分组");
-        //DDL ddlGroup = new DDL();
-        //ddlGroup.ID = "DDL_GroupID";
-        //GroupFields gfs = new GroupFields(this.FK_MapData);
-        //ddlGroup.Bind(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab);
-        //if (mapAttr.GroupID == 0)
-        //    mapAttr.GroupID = this.GroupField;
-
-        //ddlGroup.SetSelectItem(mapAttr.GroupID);
-        //this.Pub1.AddTD(ddlGroup);
-        //this.Pub1.AddTD("修改隶属分组");
-        //this.Pub1.AddTREnd();
-        //#endregion 字段分组
-
-
-        //this.Pub1.AddTR();
-        //this.Pub1.AddTD();
-        //cb = new CheckBox();
-        //cb.ID = "CB_IsReadonly";
-        //cb.Text = "所有的列不可编辑时它Readonly.（系统自动计算）";
-        //cb.Enabled = false;
-        //cb.Checked = dtl.IsReadonly;
-        //this.Pub1.AddTD("colspan=2 nowarp=true ", cb);
-        //this.Pub1.AddTREnd();
 
         this.Pub1.AddTRSum();
         this.Pub1.AddTD("");

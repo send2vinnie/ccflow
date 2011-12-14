@@ -53,6 +53,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     {
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
+        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' /></a>");
         this.Left.AddUL();
         foreach (MapExtXml fs in fss)
         {

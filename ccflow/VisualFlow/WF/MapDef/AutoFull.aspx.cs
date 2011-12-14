@@ -50,24 +50,22 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
     #region 属性
     public void BindTop()
     {
-       // this.Pub1.Add("\t\n<div id='tabsJ'  align='center'>");
+        // this.Pub1.Add("\t\n<div id='tabsJ'  align='center'>");
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
+
+        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' /></a>");
 
         this.Left.AddUL();
         foreach (MapExtXml fs in fss)
         {
             if (this.PageID == fs.No)
-            {
                 this.Left.AddLiB(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
-            }
             else
                 this.Left.AddLi(fs.URL + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + fs.No + "&RefNo=" + this.RefNo, "<span>" + fs.Name + "</span>");
         }
         this.Left.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'><span>帮助</span></a>");
-        // this.Pub1.AddLi("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&RefNo = " + this.RefNo + "' ><span>帮助</span></a>");
         this.Left.AddULEnd();
-       // this.Pub1.AddDivEnd();
     }
     #endregion 属性
 

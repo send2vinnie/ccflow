@@ -91,64 +91,37 @@ public partial class WF_Frm : WebPage
 
         MapData md = new MapData();
         md.No = this.FK_MapData;
-        //try
-        //{
-            if (md.RetrieveFromDBSources() == 0 && md.Name.Length > 3)
+
+        if (md.RetrieveFromDBSources() == 0 && md.Name.Length > 3)
+        {
+            MapDtl dtl = new MapDtl(this.FK_MapData);
+            GEDtl dtlEn = dtl.HisGEDtl;
+            dtlEn.SetValByKey("OID", this.FID);
+
+            if (dtlEn.EnMap.Attrs.Count <= 1)
             {
-                MapDtl dtl = new MapDtl(this.FK_MapData);
-                GEDtl dtlEn = dtl.HisGEDtl;
-                dtlEn.SetValByKey("OID", this.FID);
-
-                if (dtlEn.EnMap.Attrs.Count <= 1)
-                {
-                    this.UCEn1.AddMsgOfWarning("提示", "<h2>表单没有字段无法预览。</h2>");
-                    return;
-                }
-                int i = dtlEn.RetrieveFromDBSources();
-                this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
+                this.UCEn1.AddMsgOfWarning("提示", "<h2>明细表单没有字段无法预览。</h2>");
+                return;
             }
-            else
+            int i = dtlEn.RetrieveFromDBSources();
+            this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
+        }
+        else
+        {
+            GEEntity en = md.HisGEEn;
+            en.SetValByKey("OID", this.FID);
+            if (en.EnMap.Attrs.Count <= 1)
             {
-                GEEntity en = md.HisGEEn;
-                en.SetValByKey("OID", this.FID);
-                if (en.EnMap.Attrs.Count <= 1)
-                {
-                    this.UCEn1.AddMsgOfWarning("提示", "<h2>表单没有字段无法预览。</h2>");
-                    return;
-                }
-
-                int i = en.RetrieveFromDBSources();
-                if (i == 0 && this.FID != 0)
-                    en.DirectInsert();
-                this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
+                this.UCEn1.AddMsgOfWarning("提示", "<h2>主表单没有字段无法预览。FK_MapData="+this.FK_MapData+"</h2>");
+                return;
             }
-            Session["Count"] = null;
-        //}
-        //catch (Exception ex)
-        //{
-        //    try
-        //    {
-        //        GEEntity en = md.HisGEEn;
-        //        en.CheckPhysicsTable();
-        //    }
-        //    catch (Exception exE)
-        //    {
-        //        this.UCEn1.AddMsgOfWarning("异常错误,有可能是您的字段名称命名不符合规范，造成数据表无法创建，请删除它。",
-        //            exE.Message);
-        //    }
 
-        //    if (Session["Count"] == null)
-        //    {
-        //        Session["Count"] = "1";
-        //        this.Response.Redirect(this.Request.RawUrl, true);
-        //    }
-        //    else
-        //    {
-        //        Session["Count"] = null;
-        //        this.UCEn1.AddMsgOfWarning("异常错误,有可能是您的字段名称命名不符合规范，造成数据表无法创建，请删除它。", ex.Message + "<hr><a href='" + this.Request.RawUrl + "'><h2>点这里刷新。。。。</h2></a>");
-        //    }
-        //    return;
-        //}
+            int i = en.RetrieveFromDBSources();
+            if (i == 0 && this.FID != 0)
+                en.DirectInsert();
+            this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
+        }
+        Session["Count"] = null;
 
         this.Btn_Save.Visible = !this.IsReadonly;
         this.Btn_Save.Enabled = !this.IsReadonly;

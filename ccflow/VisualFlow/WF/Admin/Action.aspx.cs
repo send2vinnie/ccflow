@@ -20,6 +20,13 @@ public partial class WF_Admin_Action : WebPage
             return this.Request.QueryString["Event"];
         }
     }
+    public string NodeID
+    {
+        get
+        {
+            return this.Request.QueryString["NodeID"];
+        }
+    }
     public string FK_MapData
     {
         get
@@ -60,7 +67,7 @@ public partial class WF_Admin_Action : WebPage
                     this.Pub1.AddLi("<font color=green><b>" + xml.Name + "</b></font>");
                 }
                 else
-                    this.Pub1.AddLi("Action.aspx?FK_MapData=" + this.FK_MapData + "&Event=" + xml.No, xml.Name);
+                    this.Pub1.AddLi("Action.aspx?NodeID=" + this.NodeID + "&Event=" + xml.No, xml.Name);
             }
             else
             {
@@ -71,7 +78,7 @@ public partial class WF_Admin_Action : WebPage
                 }
                 else
                 {
-                    this.Pub1.AddLi("Action.aspx?FK_MapData=" + this.FK_MapData + "&Event=" + xml.No + "&MyPK=" + nde.MyPK, "<b>" + xml.Name + "</b>");
+                    this.Pub1.AddLi("Action.aspx?NodeID=" + this.NodeID + "&Event=" + xml.No + "&MyPK=" + nde.MyPK, "<b>" + xml.Name + "</b>");
                 }
             }
         }
@@ -136,7 +143,7 @@ public partial class WF_Admin_Action : WebPage
         this.Pub2.Add(btn);
 
         if (this.MyPK != null)
-            this.Pub2.Add("&nbsp;&nbsp;<a href=\"javascript:DoDel('" + this.FK_MapData + "','" + this.Event + "')\"><img src='../../Images/Btn/Delete.gif' />删除</a>");
+            this.Pub2.Add("&nbsp;&nbsp;<a href=\"javascript:DoDel('" + this.NodeID + "','" + this.Event + "')\"><img src='../../Images/Btn/Delete.gif' />删除</a>");
     }
     void btn_Click(object sender, EventArgs e)
     {
@@ -167,7 +174,7 @@ public partial class WF_Admin_Action : WebPage
             fe.MsgOKString = this.Pub2.GetTextBoxByID("TB_MsgOK").Text;
             fe.MsgErrorString = this.Pub2.GetTextBoxByID("TB_MsgErr").Text;
             fe.Save();
-            this.Response.Redirect("Action.aspx?FK_MapData=" + this.FK_MapData + "&MyPK=" + fe.MyPK + "&Event=" + xml.No, true);
+            this.Response.Redirect("Action.aspx?NodeID=" + this.NodeID + "&MyPK=" + fe.MyPK + "&Event=" + xml.No, true);
             return;
         }
     }
