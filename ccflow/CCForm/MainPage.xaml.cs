@@ -1209,11 +1209,12 @@ namespace CCForm
                             link.Foreground = new SolidColorBrush(Glo.ToColor(color));
 
                             this.canvasMain.Children.Add(link);
+
                             link.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                             link.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
 
-                            //MouseDragElementBehavior DragBehavior = new MouseDragElementBehavior();
-                            //Interaction.GetBehaviors(lab).Add(DragBehavior);
+                            MouseDragElementBehavior DragBehavior = new MouseDragElementBehavior();
+                            Interaction.GetBehaviors(link).Add(DragBehavior);
                         }
                         continue;
                     case "Sys_FrmImg":
@@ -1998,23 +1999,17 @@ namespace CCForm
             #endregion 处理标签
 
             #region 处理　Link
-            Label linkLab = sender as Label;
             BPLink link = sender as BPLink;
-            if ((link != null)
-                || (linkLab != null && linkLab.Name.Contains("LinkLab")))
+            if (link != null)
             {
                 this.currLink = link;
-                currLink.SetUnSelectedState(); 
-                if (this.currLink == null)
+                this.currLink.IsSelected = false;
+                currLink.SetUnSelectedState();
+                //    if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 500 || IsmuElePanel == true)
+                if (IsmuElePanel == true 
+                    || (DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 500)
                 {
-                    Object obj = this.canvasMain.FindName(linkLab.Name.Replace("LinkLab", ""));
-                    if (obj == null)
-                        throw new Exception("error not find link ctl");
-                    this.currLink = obj as BPLink;
-                }
-
-                if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300 || IsmuElePanel == true)
-                {
+                    IsmuElePanel = false;
                     this.winFrmLink.BindIt(this.currLink);
                 }
                 _lastTime = DateTime.Now;
@@ -4261,27 +4256,39 @@ namespace CCForm
 
                     string pkVal = dr[pk].ToString();
                     bool isHave = false;
-                    foreach (DataRow newDr in newDt.Rows)
+                    if (ysdt.TableName == "Sys_MapAttr")
                     {
-                        if (ysdt.TableName == "Sys_MapAttr")
+                        /* 如果是判断的字段控件 .. */
+                        isHave = false;
+                        foreach (DataRow newDr in newDt.Rows)
                         {
-                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                            if (dr["FK_MapData"] != Glo.FK_MapData || dr["UIVisible"] == "0")
                             {
                                 isHave = true;
                                 break;
                             }
-
-                            if (dr["UIVisible"] == "0" && dr["FK_MapData"] == Glo.FK_MapData)
+                            if (newDr[pk].ToString() == pkVal)
                             {
                                 isHave = true;
                                 break;
                             }
                         }
 
-                        if (newDr[pk].ToString() == pkVal)
+                        if (isHave == false)
                         {
-                            isHave = true;
-                            break;
+                            if (dr["UIVisible"] == "0" || dr["EditType"] != "0")
+                                isHave = true;
+                        }
+                    }
+                    else
+                    {
+                        foreach (DataRow newDr in newDt.Rows)
+                        {
+                            if (newDr[pk].ToString() == pkVal)
+                            {
+                                isHave = true;
+                                break;
+                            }
                         }
                     }
                     if (isHave == false)
@@ -4343,7 +4350,6 @@ namespace CCForm
             #endregion save  label.
 
             sqls += "@UPDATE Sys_MapAttr SET UIVisible=1 WHERE FK_MapData='" + Glo.FK_MapData + "' AND UIVisible is null";
-
             this.loadingWindow.Title = "正在保存数据...";
             this.loadingWindow.Show();
 

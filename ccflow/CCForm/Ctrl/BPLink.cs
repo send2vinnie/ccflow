@@ -66,6 +66,7 @@ namespace CCForm
         /// 窗口目标
         /// </summary>
         public string WinTarget = "_blank";
+
         #region 焦点事件
         //protected override void OnGotFocus(RoutedEventArgs e)
         //{
@@ -80,34 +81,6 @@ namespace CCForm
         #endregion 焦点事件
 
         #region 移动事件
-        bool trackingMouseMove = false;
-        Point mousePosition;
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            mousePosition = e.GetPosition(null);
-            trackingMouseMove = true;
-            base.OnMouseLeftButtonDown(e);
-        }
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            trackingMouseMove = false;
-            base.OnMouseLeftButtonUp(e);
-        }
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            //FrameworkElement element = sender as FrameworkElement;
-            if (trackingMouseMove)
-            {
-                double moveH = e.GetPosition(null).Y - mousePosition.Y;
-                double moveW = e.GetPosition(null).X - mousePosition.X;
-                double newTop = moveH + (double)this.GetValue(Canvas.TopProperty);
-                double newLeft = moveW + (double)this.GetValue(Canvas.LeftProperty);
-                this.SetValue(Canvas.TopProperty, newTop);
-                this.SetValue(Canvas.LeftProperty, newLeft);
-                mousePosition = e.GetPosition(null);
-            }
-            base.OnMouseMove(e);
-        }
         protected override void OnKeyDown(KeyEventArgs e)
         {
             e.Handled = true;

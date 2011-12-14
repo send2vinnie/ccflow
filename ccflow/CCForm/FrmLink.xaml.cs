@@ -27,7 +27,6 @@ namespace CCForm
         {
             this.DialogResult = true;
         }
-
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
@@ -40,30 +39,18 @@ namespace CCForm
         public void BindIt(BPLink link)
         {
             HisLink = link;
-            this.TB_Text.Text = link.Content.ToString().Replace("\n","@");
+            this.TB_Text.Text = link.Content.ToString().Replace("\n", "@");
             string url = link.URL as string;
             if (string.IsNullOrEmpty(url))
                 url = "http://ccflow.org";
 
             this.TB_URL.Text = url;
-
             Glo.BindComboBoxFontSize(this.DDL_FrontSize, link.FontSize);
             Glo.BindComboBoxWinOpenTarget(this.DDL_WinName, link.WinTarget);
             Glo.BindComboBoxFrontName(this.DDL_FrontName, link.FontFamily.Source);
             SolidColorBrush d = (SolidColorBrush)link.Foreground;
-
-            //if (link.FontWeight == FontWeights.Bold)
-            //{
-            //    this.linkWin_CBWight.IsChecked = true;
-            //}
-            //else
-            //{
-            //    this.linkWin_CBWight.IsChecked = false;
-            //}
-
             this.Show();
         }
-
         private void DDL_WinName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem it = (ComboBoxItem)this.DDL_WinName.SelectedItem;
