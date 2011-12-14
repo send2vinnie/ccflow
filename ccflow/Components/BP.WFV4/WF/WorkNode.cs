@@ -1816,7 +1816,7 @@ namespace BP.WF
             }
             else
             {
-                string info = "多人接收\t\n";
+                string info = "共(" + this.HisWorkerLists.Count+ ")人接收\t\n";
                 foreach (WorkerList wl in this.HisWorkerLists)
                 {
                     info += wl.FK_Emp + "," + wl.FK_EmpText + "\t\n";
