@@ -87,7 +87,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
    1, 菜单->工具->Internet 选项-> 隐私 -> 把打开弹出窗口阻止程序 关闭上，否则一些功能就不能使用.
    2, 菜单->工具->Internet 选项-> 常规 -> 浏览历史记录设置-> 选中 () 每次访问此网页时. 单选按钮. 点确定，以避免缓存对程序有影响。 
 
-1，使用 svn下载源程序,请查看如下连接.   
+1，使用 svn下载源程序,请查看如下连接.
    http://ccflow.googlecode.com/svn/ccflow/
 
 2，在IIS里面新建一个应用程序池，应用程序池ID号为：ccflow
