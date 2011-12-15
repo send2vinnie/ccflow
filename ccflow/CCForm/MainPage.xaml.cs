@@ -3722,8 +3722,8 @@ namespace CCForm
             m2mDT.Columns.Add(new DataColumn("X", typeof(double)));
             m2mDT.Columns.Add(new DataColumn("Y", typeof(double)));
 
-            m2mDT.Columns.Add(new DataColumn("Height", typeof(string)));
-            m2mDT.Columns.Add(new DataColumn("Width", typeof(string)));
+            m2mDT.Columns.Add(new DataColumn("H", typeof(string)));
+            m2mDT.Columns.Add(new DataColumn("W", typeof(string)));
             #endregion m2mDT
 
             #region athDT
@@ -3831,7 +3831,6 @@ namespace CCForm
                     continue;
                 }
                 #endregion lab.
-
 
                 #region BPLink.
                 BPLink link = ctl as BPLink;
@@ -4080,8 +4079,8 @@ namespace CCForm
                     rowM2M["X"] = transform.Matrix.OffsetX.ToString("0.00");
                     rowM2M["Y"] = transform.Matrix.OffsetY.ToString("0.00");
 
-                    rowM2M["Width"] = m2mCtl.Width.ToString("0.00");
-                    rowM2M["Height"] = m2mCtl.Height.ToString("0.00");
+                    rowM2M["W"] = m2mCtl.Width.ToString("0.00");
+                    rowM2M["H"] = m2mCtl.Height.ToString("0.00");
 
                     m2mDT.Rows.Add(rowM2M);
                     continue;
