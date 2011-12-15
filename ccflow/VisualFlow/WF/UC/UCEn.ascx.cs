@@ -1573,7 +1573,7 @@ namespace BP.Web.Comm.UC.WF
             foreach (MapM2M M2M in m2ms)
             {
 
-                this.Add("<DIV id='Fd" + M2M.No + "' style='position:absolute; left:" + M2M.X + "px; top:" + M2M.Y + "px; width:" + M2M.Width + "px; height:" + M2M.Height + "px;text-align: left;' >");
+                this.Add("<DIV id='Fd" + M2M.No + "' style='position:absolute; left:" + M2M.X + "px; top:" + M2M.Y + "px; width:" + M2M.W + "px; height:" + M2M.H + "px;text-align: left;' >");
                 this.Add("<span>");
 
                 string src = "M2M.aspx?FK_MapM2M=" + M2M.No;
