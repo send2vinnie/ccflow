@@ -133,6 +133,12 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         wk.OID = tk.WorkID;
         wk.Retrieve();
 
+        //if (wk.RetrieveFromDBSources() == 0)
+        //{
+        //    wk.OID = tk.FID;
+        //    wk.Retrieve();
+        //}
+
         if (wk.NodeState != NodeState.Complete)
         {
             this.UCEn1.AddFieldSet(wk.EnDesc);
@@ -175,7 +181,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         }
 
         this.AddTable("width='100%'");
-        this.AddCaptionLeft("工作日志");
+        this.AddCaptionLeft("工作流程日志");
         this.AddTR();
         this.AddTDTitle("IDX");
         this.AddTDTitle("日期时间");
@@ -192,17 +198,25 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         QueryObject qo = new QueryObject(tks);
         if (this.FID == 0)
         {
+            qo.addLeftBracket();
             qo.AddWhere(TrackAttr.FID, this.WorkID);
             qo.addOr();
             qo.AddWhere(TrackAttr.WorkID, this.WorkID);
+            qo.addRightBracket();
+            qo.addAnd();
+            qo.AddWhere(TrackAttr.FK_Flow, this.FK_Flow);
             qo.addOrderBy(TrackAttr.RDT);
             qo.DoQuery();
         }
         else
         {
+            qo.addLeftBracket();
             qo.AddWhere(TrackAttr.FID, this.FID);
             qo.addOr();
             qo.AddWhere(TrackAttr.WorkID, this.FID);
+            qo.addRightBracket();
+            qo.addAnd();
+            qo.AddWhere(TrackAttr.FK_Flow, this.FK_Flow);
             qo.addOrderBy(TrackAttr.RDT);
             qo.DoQuery();
         }
