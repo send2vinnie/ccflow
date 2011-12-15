@@ -254,14 +254,12 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
 {
     background-color: AliceBlue;
 }
-
-
+ 
 .TRSum
 {
-    background-color: #000000;
-    font-size: 14px;
+	background-color: infobackground;
+	font-size: 14px;
 }
-
 
 .BigDoc
 {
