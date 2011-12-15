@@ -44,7 +44,15 @@ namespace BP.WF
         /// <summary>
         /// 流程结束
         /// </summary>
-        FlowOver
+        FlowOver,
+        /// <summary>
+        /// 调用起子流程
+        /// </summary>
+        CallSubFlow,
+        /// <summary>
+        /// 启动子流程
+        /// </summary>
+        StartSubFlow
     }
     /// <summary>
     ///  属性
@@ -284,6 +292,10 @@ namespace BP.WF
                         return " -向合流点发送";
                     case ActionType.FlowOver:
                         return "流程结束";
+                    case ActionType.CallSubFlow:
+                        return "调用起子流程";
+                    case ActionType.StartSubFlow:
+                        return "子流程发起";
                     default:
                         return "未知";
                 }

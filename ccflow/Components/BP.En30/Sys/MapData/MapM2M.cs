@@ -21,8 +21,6 @@ namespace BP.Sys
         /// GroupID
         /// </summary>
         public const string GroupID = "GroupID";
-        public const string Height = "Height";
-        public const string Width = "Width";
         /// <summary>
         /// 是否可以自适应大小
         /// </summary>
@@ -31,14 +29,10 @@ namespace BP.Sys
         public const string DBOfGroups = "DBOfGroups";
         public const string IsDelete = "IsDelete";
         public const string IsInsert = "IsInsert";
-
-
         public const string W = "W";
         public const string H = "H";
-
         public const string X = "X";
         public const string Y = "Y";
-
         public const string Cols = "Cols";
     }
     /// <summary>
@@ -97,10 +91,6 @@ namespace BP.Sys
             get
             {
                 string sql = this.GetValStrByKey(MapM2MAttr.DBOfObjs);
-                //if (string.IsNullOrEmpty(sql))
-                //{
-                //    return "SELECT No,Name,FK_Dept FROM Port_Emp ";
-                //}
                 sql = sql.Replace("~", "'");
                 return sql;
             }
@@ -194,7 +184,6 @@ namespace BP.Sys
                 this.SetValByKey(MapM2MAttr.Cols, value);
             }
         }
-        
         public int GroupID
         {
             get
@@ -206,26 +195,26 @@ namespace BP.Sys
                 this.SetValByKey(MapM2MAttr.GroupID, value);
             }
         }
-        public int Height
+        public float H
         {
             get
             {
-                return this.GetValIntByKey(MapM2MAttr.Height);
+                return this.GetValFloatByKey(MapM2MAttr.H);
             }
             set
             {
-                this.SetValByKey(MapM2MAttr.Height, value);
+                this.SetValByKey(MapM2MAttr.H, value);
             }
         }
-        public int Width
+        public float W
         {
             get
             {
-                return this.GetValIntByKey(MapM2MAttr.Width);
+                return this.GetValFloatByKey(MapM2MAttr.W);
             }
             set
             {
-                this.SetValByKey(MapM2MAttr.Width, value);
+                this.SetValByKey(MapM2MAttr.W, value);
             }
         }
         public float X
@@ -301,12 +290,8 @@ namespace BP.Sys
                 map.AddTBString(MapM2MAttr.DBOfObjs, null, "DBOfObjs", true, false, 0, 4000, 20);
                 map.AddTBString(MapM2MAttr.DBOfGroups, null, "DBOfGroups", true, false, 0, 4000, 20);
 
-
-                map.AddTBInt(MapM2MAttr.Height, 100, "Height", false, false);
-                map.AddTBInt(MapM2MAttr.Width, 160, "Width", false, false);
-
-                //map.AddTBString(MapM2MAttr.Height, "100%", "Height", true, false, 0, 10, 20);
-                //map.AddTBString(MapM2MAttr.Width, "100%", "Width", true, false, 0, 10, 20);
+                map.AddTBFloat(MapM2MAttr.H, 100, "H", false, false);
+                map.AddTBFloat(MapM2MAttr.W, 160, "W", false, false);
 
 
                 map.AddBoolean(MapM2MAttr.IsAutoSize, true, "是否自动设置大小", false, false);

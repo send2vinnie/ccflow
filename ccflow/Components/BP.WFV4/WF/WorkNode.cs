@@ -2072,14 +2072,58 @@ namespace BP.WF
             DateTime dt = DateTime.Now;
             this.HisWork.Rec = Web.WebUser.No;
             this.WorkID = this.HisWork.OID;
-
+                string msg = this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
             // 调用发送前的接口。
             try
             {
-                string msg = this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
                 msg += AfterNodeSave_Do();
 
-                DBAccess.DoTransactionCommit(); // 提交事务.
+                DBAccess.DoTransactionCommit(); //提交事务.
+                
+                #region 处理调用日志.
+                if (this.HisNode.IsStartNode)
+                {
+                    /*如果是开始流程判断是不是被吊起的流程，如果是就要向父流程写日志。*/
+                    if (SystemConfig.IsBSsystem)
+                    {
+                        string fk_nodeFrom = System.Web.HttpContext.Current.Request.QueryString["FK_Node_From"];
+                        if (string.IsNullOrEmpty(fk_nodeFrom) == false)
+                        {
+                            Node ndFrom = new Node(int.Parse(fk_nodeFrom));
+                            string fid = System.Web.HttpContext.Current.Request.QueryString["FID"];
+
+                            //记录当前流程被调起。
+                            this.AddToTrack(ActionType.StartSubFlow, WebUser.No,
+                                WebUser.Name, ndFrom.NodeID, ndFrom.FlowName+"\t\n"+ndFrom.Name, "被父流程(" + ndFrom.FlowName + ")唤起.");
+
+                            //记录父流程被调起。
+                            Track tkParent = new Track();
+                            tkParent.WorkID = this.HisWork.FID;
+                            tkParent.FID = this.HisWork.FID;
+                            tkParent.RDT = DataType.CurrentDataTimess;
+                            tkParent.HisActionType = ActionType.CallSubFlow;
+                            tkParent.EmpFrom = WebUser.No;
+                            tkParent.EmpFromT = WebUser.Name;
+
+                            tkParent.NDTo = this.HisNode.NodeID;
+                            tkParent.NDToT = this.HisNode.FlowName + " \t\n " + this.HisNode.Name;
+
+                            tkParent.FK_Flow = ndFrom.FK_Flow;
+
+                            tkParent.NDFrom = ndFrom.NodeID;
+                            tkParent.NDFromT = ndFrom.Name;
+
+                            tkParent.EmpTo = WebUser.No;
+                            tkParent.EmpToT = WebUser.Name;
+                            tkParent.Msg = "<a href=WFRpt.aspx?FK_Flow=" + this.HisNode.FK_Flow + "&WorkID=" + this.HisWork.OID + " target=_b >调起子流程(" + this.HisNode.FlowName + ")</a>";
+                            tkParent.MyPK = tkParent.WorkID + "_" + tkParent.FID + "_" + (int)tkParent.HisActionType + "_" + tkParent.NDFrom + "_" + DateTime.Now.ToString("yyMMddhhmmss");
+                            tkParent.Insert();
+                        }
+                    }
+                }
+                #endregion 处理调用日志.
+
+
                 try
                 {
                     // 调起发送成功后的事务。
@@ -2115,14 +2159,13 @@ namespace BP.WF
             }
             catch (Exception ex)
             {
-                this.WhenTranscactionRollbackError();
+                this.WhenTranscactionRollbackError(ex);
                 DBAccess.DoTransactionRollback();
                 throw ex;
             }
         }
-        private void WhenTranscactionRollbackError()
+        private void WhenTranscactionRollbackError(Exception ex)
         {
-
             /*在提交错误的情况下，回滚数据。*/
             try
             {
@@ -2170,7 +2213,7 @@ namespace BP.WF
             {
                 if (this.rptGe != null)
                     this.rptGe.CheckPhysicsTable();
-                throw new Exception(ex1.Message + "@回滚发送失败数据出现错误：" + ex1.Message + "@有可能系统已经自动修复错误，请您在重新执行一次。");
+                throw new Exception(ex.Message + "@回滚发送失败数据出现错误：" + ex1.Message + "@有可能系统已经自动修复错误，请您在重新执行一次。");
             }
         }
         #region 用户到的变量
@@ -2703,317 +2746,315 @@ namespace BP.WF
         /// <returns>执行后的内容</returns>
         private string AfterNodeSave_Do()
         {
-           
-                if (this.HisNode.IsStartNode)
-                {
-                    this.InitStartWorkData();
-                    this.rptGe = this.HisNode.HisFlow.HisFlowData;
-                  
-                }
-                else
-                {
-                    this.rptGe = this.HisNode.HisFlow.HisFlowData;
-                    rptGe.SetValByKey("OID", this.WorkID);
-                    rptGe.RetrieveFromDBSources();
-                }
-
-                string msg = "";
-                switch (this.HisNode.HisNodeWorkType)
-                {
-                    case NodeWorkType.StartWorkFL:
-                    case NodeWorkType.WorkFL:  /* 启动分流 */
-                        this.HisWork.FID = this.HisWork.OID;
-                        msg = this.FeiLiuStartUp();
-                        break;
-                    case NodeWorkType.WorkFHL:   /* 启动分流 */
-                        this.HisWork.FID = this.HisWork.OID;
-                        msg = this.FeiLiuStartUp();
-                        break;
-                    case NodeWorkType.WorkHL:   /* 当前工作节点是合流 */
-                        msg = this.StartupNewNodeWork();
-                        msg += this.DoSetThisWorkOver(); // 执行此工作结束。
-                        break;
-                    default: /* 其他的点的逻辑 */
-                        msg = this.StartupNewNodeWork();
-                        msg += this.DoSetThisWorkOver();
-                        break;
-                }
-
-                #region 把数据放到报表表里面.
+            if (this.HisNode.IsStartNode)
+            {
+                this.InitStartWorkData();
+                this.rptGe = this.HisNode.HisFlow.HisFlowData;
+            }
+            else
+            {
                 this.rptGe = this.HisNode.HisFlow.HisFlowData;
                 rptGe.SetValByKey("OID", this.WorkID);
-                if (this.HisNode.IsStartNode)
-                {
-                    rptGe.SetValByKey("OID", this.WorkID);
-                    rptGe.DirectDelete();
-                    rptGe.SetValByKey(GERptAttr.FlowEmps, "@" + WebUser.No + "," + WebUser.Name);
-                    rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No);
-                    rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
-                    rptGe.SetValByKey(GERptAttr.WFState, 0);
-                    rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
-                    rptGe.Copy(this.HisWork);
-                    rptGe.Insert();
-                }
-                else
-                {
+                rptGe.RetrieveFromDBSources();
+            }
 
-                    foreach (Attr attr in this.HisWork.EnMap.Attrs)
+            string msg = "";
+            switch (this.HisNode.HisNodeWorkType)
+            {
+                case NodeWorkType.StartWorkFL:
+                case NodeWorkType.WorkFL:  /* 启动分流 */
+                    this.HisWork.FID = this.HisWork.OID;
+                    msg = this.FeiLiuStartUp();
+                    break;
+                case NodeWorkType.WorkFHL:   /* 启动分流 */
+                    this.HisWork.FID = this.HisWork.OID;
+                    msg = this.FeiLiuStartUp();
+                    break;
+                case NodeWorkType.WorkHL:   /* 当前工作节点是合流 */
+                    msg = this.StartupNewNodeWork();
+                    msg += this.DoSetThisWorkOver(); // 执行此工作结束。
+                    break;
+                default: /* 其他的点的逻辑 */
+                    msg = this.StartupNewNodeWork();
+                    msg += this.DoSetThisWorkOver();
+                    break;
+            }
+
+            #region 把数据放到报表表里面.
+            this.rptGe = this.HisNode.HisFlow.HisFlowData;
+            rptGe.SetValByKey("OID", this.WorkID);
+            if (this.HisNode.IsStartNode)
+            {
+                rptGe.SetValByKey("OID", this.WorkID);
+                rptGe.DirectDelete();
+                rptGe.SetValByKey(GERptAttr.FlowEmps, "@" + WebUser.No + "," + WebUser.Name);
+                rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No);
+                rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
+                rptGe.SetValByKey(GERptAttr.WFState, 0);
+                rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
+                rptGe.Copy(this.HisWork);
+                rptGe.Insert();
+            }
+            else
+            {
+
+                foreach (Attr attr in this.HisWork.EnMap.Attrs)
+                {
+                    switch (attr.Key)
                     {
-                        switch (attr.Key)
-                        {
-                            case StartWorkAttr.FK_Dept:
-                            case StartWorkAttr.FID:
-                            case StartWorkAttr.CDT:
-                            case StartWorkAttr.RDT:
-                            case StartWorkAttr.Rec:
-                            case StartWorkAttr.Sender:
-                            case StartWorkAttr.NodeState:
-                            case StartWorkAttr.OID:
-                                continue;
-                            default:
-                                break;
-                        }
-                        object obj = this.HisWork.GetValByKey(attr.Key);
-                        if (obj == null)
+                        case StartWorkAttr.FK_Dept:
+                        case StartWorkAttr.FID:
+                        case StartWorkAttr.CDT:
+                        case StartWorkAttr.RDT:
+                        case StartWorkAttr.Rec:
+                        case StartWorkAttr.Sender:
+                        case StartWorkAttr.NodeState:
+                        case StartWorkAttr.OID:
                             continue;
-                        rptGe.SetValByKey(attr.Key, obj);
+                        default:
+                            break;
+                    }
+                    object obj = this.HisWork.GetValByKey(attr.Key);
+                    if (obj == null)
+                        continue;
+                    rptGe.SetValByKey(attr.Key, obj);
+                }
+
+                try
+                {
+                    string str = rptGe.GetValStrByKey(GERptAttr.FlowEmps);
+                    if (str.Contains("@" + WebUser.No + "," + WebUser.Name) == false)
+                    {
+                        rptGe.SetValByKey(GERptAttr.FlowEmps, str + "@" + WebUser.No + "," + WebUser.Name);
+                    }
+                }
+                catch
+                {
+                    this.HisNode.HisFlow.DoCheck();
+                }
+                if (this.HisNode.IsEndNode)
+                    rptGe.SetValByKey(GERptAttr.WFState, 1); // 更新状态。
+                rptGe.DirectUpdate();
+            }
+            #endregion
+
+            #region 处理收听
+            Listens lts = new Listens();
+            lts.RetrieveByLike(ListenAttr.Nodes, "%" + this.HisNode.NodeID + "%");
+
+            foreach (Listen lt in lts)
+            {
+                string sql = "SELECT FK_Emp FROM WF_GenerWorkerList WHERE IsEnable=1 AND IsPass=1 AND FK_Node=" + lt.FK_Node + " AND WorkID=" + this.WorkID;
+                DataTable dtRem = BP.DA.DBAccess.RunSQLReturnTable(sql);
+                foreach (DataRow dr in dtRem.Rows)
+                {
+                    string fk_emp = dr["FK_Emp"] as string;
+                    Port.WFEmp emp = new BP.WF.Port.WFEmp(fk_emp);
+                    if (emp.HisAlertWay == BP.WF.Port.AlertWay.None)
+                    {
+                        // msg += "@<font color=red>此信息无法发送给：" + emp.Name + "，因为他关闭了信息提醒，给他打电话："+emp.Tel+"</font>";
+                        msg += "@<font color=red>" + this.ToEP2("WN25", "此信息无法发送给：{0}，因为他关闭了信息提醒，给他打电话：{1}。", emp.Name, emp.Tel) + "</font>";
+                        continue;
+                    }
+                    else
+                    {
+                        // msg += "@您的操作已经通过（<font color=green><b>" + emp.HisAlertWayT + "</b></font>）的方式发送给：" + emp.Name;
+                        msg += this.ToEP2("WN26", "@您的操作已经通过（<font color=green><b>{0}</b></font>）的方式发送给：{1}", emp.HisAlertWayT, emp.Name);
                     }
 
-                    try
+                    string title = lt.Title.Clone() as string;
+
+                    title = title.Replace("@WebUser.No", WebUser.No);
+                    title = title.Replace("@WebUser.Name", WebUser.Name);
+                    title = title.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                    title = title.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+
+                    string doc = lt.Doc.Clone() as string;
+                    doc = doc.Replace("@WebUser.No", WebUser.No);
+                    doc = doc.Replace("@WebUser.Name", WebUser.Name);
+                    doc = doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                    doc = doc.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+
+                    Attrs attrs = this.rptGe.EnMap.Attrs;
+                    foreach (Attr attr in attrs)
                     {
-                        string str = rptGe.GetValStrByKey(GERptAttr.FlowEmps);
-                        if (str.Contains("@" + WebUser.No + "," + WebUser.Name) == false)
-                        {
-                            rptGe.SetValByKey(GERptAttr.FlowEmps, str + "@" + WebUser.No + "," + WebUser.Name);
-                        }
+                        title = title.Replace("@" + attr.Key, this.rptGe.GetValStrByKey(attr.Key));
+                        doc = doc.Replace("@" + attr.Key, this.rptGe.GetValStrByKey(attr.Key));
                     }
-                    catch
-                    {
-                        this.HisNode.HisFlow.DoCheck();
-                    }
-                    if (this.HisNode.IsEndNode)
-                        rptGe.SetValByKey(GERptAttr.WFState, 1); // 更新状态。
-                    rptGe.DirectUpdate();
+
+                    BP.TA.SMS.AddMsg(lt.OID + "_" + this.WorkID, fk_emp, emp.HisAlertWay, emp.Tel, title, emp.Email, title, doc);
                 }
+            }
+            #endregion
+
+            #region 生成单据
+            BillTemplates reffunc = this.HisNode.HisBillTemplates;
+            if (reffunc.Count > 0)
+            {
+                #region 生成单据信息
+                Int64 workid = this.HisWork.OID;
+                int nodeId = this.HisNode.NodeID;
+                string flowNo = this.HisNode.FK_Flow;
                 #endregion
 
-                #region 处理收听
-                Listens lts = new Listens();
-                lts.RetrieveByLike(ListenAttr.Nodes, "%" + this.HisNode.NodeID + "%");
-
-                foreach (Listen lt in lts)
+                rptGe.RetrieveFromDBSources();
+                DateTime dt = DateTime.Now;
+                string BillNo = this.HisWorkFlow.HisStartWork.BillNo;
+                Flow fl = new Flow(this.HisNode.FK_Flow);
+                string year = dt.Year.ToString();
+                string billInfo = "";
+                foreach (BillTemplate func in reffunc)
                 {
-                    string sql = "SELECT FK_Emp FROM WF_GenerWorkerList WHERE IsEnable=1 AND IsPass=1 AND FK_Node=" + lt.FK_Node + " AND WorkID=" + this.WorkID;
-                    DataTable dtRem = BP.DA.DBAccess.RunSQLReturnTable(sql);
-                    foreach (DataRow dr in dtRem.Rows)
+                    string file = year + "_" + WebUser.FK_Dept + "_" + func.No + "_" + workid + ".doc";
+                    BP.Rpt.RTF.RTFEngine rtf = new BP.Rpt.RTF.RTFEngine();
+
+                    Works works;
+                    string[] paths;
+                    string path;
+                    try
                     {
-                        string fk_emp = dr["FK_Emp"] as string;
-                        Port.WFEmp emp = new BP.WF.Port.WFEmp(fk_emp);
-                        if (emp.HisAlertWay == BP.WF.Port.AlertWay.None)
+                        #region 生成单据
+                        rtf.HisEns.Clear();
+                        rtf.EnsDataDtls.Clear();
+                        if (func.NodeID == 0)
                         {
-                            // msg += "@<font color=red>此信息无法发送给：" + emp.Name + "，因为他关闭了信息提醒，给他打电话："+emp.Tel+"</font>";
-                            msg += "@<font color=red>" + this.ToEP2("WN25", "此信息无法发送给：{0}，因为他关闭了信息提醒，给他打电话：{1}。", emp.Name, emp.Tel) + "</font>";
-                            continue;
+                            // 判断是否是受理回执
+                            //if (fl.DateLit == 0)
+                            //    continue;
+                            //HisCHOfFlow.DateLitFrom = DateTime.Now.AddDays(fl.DateLit).ToString(DataType.SysDataFormat);
+                            //HisCHOfFlow.DateLitTo = DateTime.Now.AddDays(fl.DateLit + 10).ToString(DataType.SysDataFormat);
+                            //HisCHOfFlow.Update();
+                            rtf.AddEn(HisCHOfFlow);
                         }
                         else
                         {
-                            // msg += "@您的操作已经通过（<font color=green><b>" + emp.HisAlertWayT + "</b></font>）的方式发送给：" + emp.Name;
-                            msg += this.ToEP2("WN26", "@您的操作已经通过（<font color=green><b>{0}</b></font>）的方式发送给：{1}", emp.HisAlertWayT, emp.Name);
+                            WorkNodes wns = new WorkNodes();
+                            if (this.HisNode.HisFNType == FNType.River)
+                                wns.GenerByFID(this.HisNode.HisFlow, this.WorkID);
+                            else
+                                wns.GenerByWorkID(this.HisNode.HisFlow, this.WorkID);
+
+                            rtf.HisGEEntity = rptGe;
+                            works = wns.GetWorks;
+                            foreach (Work wk in works)
+                            {
+                                if (wk.OID == 0)
+                                    continue;
+
+                                rtf.AddEn(wk);
+                                rtf.ensStrs += ".ND" + wk.NodeID;
+                                ArrayList al = wk.GetDtlsDatasOfArrayList();
+                                foreach (Entities ens in al)
+                                    rtf.AddDtlEns(ens);
+                            }
+                            //    w = new BP.Port.WordNo(WebUser.FK_DeptOfXJ);
+                            // rtf.AddEn(w);
                         }
 
-                        string title = lt.Title.Clone() as string;
+                        paths = file.Split('_');
+                        path = paths[0] + "/" + paths[1] + "/" + paths[2] + "/";
 
-                        title = title.Replace("@WebUser.No", WebUser.No);
-                        title = title.Replace("@WebUser.Name", WebUser.Name);
-                        title = title.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
-                        title = title.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+                        string billUrl = this.VirPath + "/DataUser/Bill/" + path + file;
 
-                        string doc = lt.Doc.Clone() as string;
-                        doc = doc.Replace("@WebUser.No", WebUser.No);
-                        doc = doc.Replace("@WebUser.Name", WebUser.Name);
-                        doc = doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
-                        doc = doc.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
-
-                        Attrs attrs = this.rptGe.EnMap.Attrs;
-                        foreach (Attr attr in attrs)
+                        if (func.HisBillFileType == BillFileType.PDF)
                         {
-                            title = title.Replace("@" + attr.Key, this.rptGe.GetValStrByKey(attr.Key));
-                            doc = doc.Replace("@" + attr.Key, this.rptGe.GetValStrByKey(attr.Key));
+                            billUrl = billUrl.Replace(".doc", ".pdf");
+                            billInfo += "<img src='" + this.VirPath + "/Images/FileType/PDF.gif' /><a href='" + billUrl + "' target=_blank >" + func.Name + "</a>";
+                        }
+                        else
+                        {
+                            billInfo += "<img src='" + this.VirPath + "/Images/FileType/doc.gif' /><a href='" + billUrl + "' target=_blank >" + func.Name + "</a>";
                         }
 
-                        BP.TA.SMS.AddMsg(lt.OID + "_" + this.WorkID, fk_emp, emp.HisAlertWay, emp.Tel, title, emp.Email, title, doc);
-                    }
-                }
-                #endregion
+                        //  string  = BP.SystemConfig.GetConfig("FtpPath") + file;
+                        path = BP.WF.Glo.FlowFileBill + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
 
-                #region 生成单据
-                BillTemplates reffunc = this.HisNode.HisBillTemplates;
-                if (reffunc.Count > 0)
-                {
-                    #region 生成单据信息
-                    Int64 workid = this.HisWork.OID;
-                    int nodeId = this.HisNode.NodeID;
-                    string flowNo = this.HisNode.FK_Flow;
-                    #endregion
+                        if (System.IO.Directory.Exists(path) == false)
+                            System.IO.Directory.CreateDirectory(path);
 
-                    rptGe.RetrieveFromDBSources();
-                    DateTime dt = DateTime.Now;
-                    string BillNo = this.HisWorkFlow.HisStartWork.BillNo;
-                    Flow fl = new Flow(this.HisNode.FK_Flow);
-                    string year = dt.Year.ToString();
-                    string billInfo = "";
-                    foreach (BillTemplate func in reffunc)
-                    {
-                        string file = year + "_" + WebUser.FK_Dept + "_" + func.No + "_" + workid + ".doc";
-                        BP.Rpt.RTF.RTFEngine rtf = new BP.Rpt.RTF.RTFEngine();
+                        rtf.MakeDoc(func.Url + ".rtf",
+                            path, file, func.ReplaceVal, false);
+                        #endregion
 
-                        Works works;
-                        string[] paths;
-                        string path;
-                        try
+                        #region 转化成pdf.
+                        if (func.HisBillFileType == BillFileType.PDF)
                         {
-                            #region 生成单据
-                            rtf.HisEns.Clear();
-                            rtf.EnsDataDtls.Clear();
-                            if (func.NodeID == 0)
-                            {
-                                // 判断是否是受理回执
-                                //if (fl.DateLit == 0)
-                                //    continue;
-                                //HisCHOfFlow.DateLitFrom = DateTime.Now.AddDays(fl.DateLit).ToString(DataType.SysDataFormat);
-                                //HisCHOfFlow.DateLitTo = DateTime.Now.AddDays(fl.DateLit + 10).ToString(DataType.SysDataFormat);
-                                //HisCHOfFlow.Update();
-                                rtf.AddEn(HisCHOfFlow);
-                            }
-                            else
-                            {
-                                WorkNodes wns = new WorkNodes();
-                                if (this.HisNode.HisFNType == FNType.River)
-                                    wns.GenerByFID(this.HisNode.HisFlow, this.WorkID);
-                                else
-                                    wns.GenerByWorkID(this.HisNode.HisFlow, this.WorkID);
-
-                                rtf.HisGEEntity = rptGe;
-                                works = wns.GetWorks;
-                                foreach (Work wk in works)
-                                {
-                                    if (wk.OID == 0)
-                                        continue;
-
-                                    rtf.AddEn(wk);
-                                    rtf.ensStrs += ".ND" + wk.NodeID;
-                                    ArrayList al = wk.GetDtlsDatasOfArrayList();
-                                    foreach (Entities ens in al)
-                                        rtf.AddDtlEns(ens);
-                                }
-                                //    w = new BP.Port.WordNo(WebUser.FK_DeptOfXJ);
-                                // rtf.AddEn(w);
-                            }
-
-                            paths = file.Split('_');
-                            path = paths[0] + "/" + paths[1] + "/" + paths[2] + "/";
-
-                            string billUrl = this.VirPath + "/DataUser/Bill/" + path + file;
-
-                            if (func.HisBillFileType == BillFileType.PDF)
-                            {
-                                billUrl = billUrl.Replace(".doc", ".pdf");
-                                billInfo += "<img src='" + this.VirPath + "/Images/FileType/PDF.gif' /><a href='" + billUrl + "' target=_blank >" + func.Name + "</a>";
-                            }
-                            else
-                            {
-                                billInfo += "<img src='" + this.VirPath + "/Images/FileType/doc.gif' /><a href='" + billUrl + "' target=_blank >" + func.Name + "</a>";
-                            }
-
-                            //  string  = BP.SystemConfig.GetConfig("FtpPath") + file;
-                            path = BP.WF.Glo.FlowFileBill + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
-
-                            if (System.IO.Directory.Exists(path) == false)
-                                System.IO.Directory.CreateDirectory(path);
-
-                            rtf.MakeDoc(func.Url + ".rtf",
-                                path, file, func.ReplaceVal, false);
-                            #endregion
-
-                            #region 转化成pdf.
-                            if (func.HisBillFileType == BillFileType.PDF)
-                            {
-                                string rtfPath = path + file;
-                                string pdfPath = rtfPath.Replace(".doc", ".pdf");
-                                //  string pdfPath = path + func.Url + ".pdf";
-                                try
-                                {
-                                    Glo.Rtf2PDF(rtfPath, pdfPath);
-                                }
-                                catch (Exception ex)
-                                {
-                                    msg += ex.Message;
-                                }
-                            }
-                            #endregion
-
-                            #region 保存单据
-                            Bill bill = new Bill();
-                            bill.MyPK = this.HisWork.FID + "_" + this.HisWork.OID + "_" + this.HisNode.NodeID + "_" + func.No;
-                            bill.FID = this.HisWork.FID;
-                            bill.WorkID = this.HisWork.OID;
-                            bill.FK_Node = this.HisNode.NodeID;
-                            bill.FK_Bill = func.No;
-                            bill.FK_Dept = WebUser.FK_Dept;
-                            bill.FK_Emp = WebUser.No;
-                            bill.Url = billUrl;
-                            bill.RDT = DataType.CurrentDataTime;
-                            bill.FK_NY = DataType.CurrentYearMonth;
-                            bill.FK_Flow = this.HisNode.FK_Flow;
-                            bill.BillNo = BillNo;
-                            bill.FK_BillType = func.FK_BillType;
-                            bill.FK_Flow = this.HisNode.FK_Flow;
-                            bill.Emps = this.rptGe.GetValStrByKey("Emps");
-                            bill.FK_Starter = this.rptGe.GetValStrByKey("Rec");
-                            bill.StartDT = this.rptGe.GetValStrByKey("RDT");
-                            bill.Title = this.rptGe.GetValStrByKey("Title");
-                            bill.FK_Dept = this.rptGe.GetValStrByKey("FK_Dept");
+                            string rtfPath = path + file;
+                            string pdfPath = rtfPath.Replace(".doc", ".pdf");
+                            //  string pdfPath = path + func.Url + ".pdf";
                             try
                             {
-                                bill.Insert();
+                                Glo.Rtf2PDF(rtfPath, pdfPath);
                             }
-                            catch
+                            catch (Exception ex)
                             {
-                                bill.Update();
+                                msg += ex.Message;
                             }
-                            #endregion
                         }
-                        catch (Exception ex)
+                        #endregion
+
+                        #region 保存单据
+                        Bill bill = new Bill();
+                        bill.MyPK = this.HisWork.FID + "_" + this.HisWork.OID + "_" + this.HisNode.NodeID + "_" + func.No;
+                        bill.FID = this.HisWork.FID;
+                        bill.WorkID = this.HisWork.OID;
+                        bill.FK_Node = this.HisNode.NodeID;
+                        bill.FK_Bill = func.No;
+                        bill.FK_Dept = WebUser.FK_Dept;
+                        bill.FK_Emp = WebUser.No;
+                        bill.Url = billUrl;
+                        bill.RDT = DataType.CurrentDataTime;
+                        bill.FK_NY = DataType.CurrentYearMonth;
+                        bill.FK_Flow = this.HisNode.FK_Flow;
+                        bill.BillNo = BillNo;
+                        bill.FK_BillType = func.FK_BillType;
+                        bill.FK_Flow = this.HisNode.FK_Flow;
+                        bill.Emps = this.rptGe.GetValStrByKey("Emps");
+                        bill.FK_Starter = this.rptGe.GetValStrByKey("Rec");
+                        bill.StartDT = this.rptGe.GetValStrByKey("RDT");
+                        bill.Title = this.rptGe.GetValStrByKey("Title");
+                        bill.FK_Dept = this.rptGe.GetValStrByKey("FK_Dept");
+                        try
                         {
-                            BP.WF.DTS.InitBillDir dir = new BP.WF.DTS.InitBillDir();
-                            dir.Do();
-
-                            path = BP.WF.Glo.FlowFileBill + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
-                            string msgErr = "@" + this.ToE("WN5", "生成单据失败，请让管理员检查目录设置") + "[" + BP.WF.Glo.FlowFileBill + "]。@Err：" + ex.Message + " @File=" + file + " @Path:" + path;
-                            billInfo += "@<font color=red>" + msgErr + "</font>";
-                            throw new Exception(msgErr+"@其它信息:"+ex.Message);
+                            bill.Insert();
                         }
+                        catch
+                        {
+                            bill.Update();
+                        }
+                        #endregion
+                    }
+                    catch (Exception ex)
+                    {
+                        BP.WF.DTS.InitBillDir dir = new BP.WF.DTS.InitBillDir();
+                        dir.Do();
 
-                    } // end 生成循环单据。
+                        path = BP.WF.Glo.FlowFileBill + year + "\\" + WebUser.FK_Dept + "\\" + func.No + "\\";
+                        string msgErr = "@" + this.ToE("WN5", "生成单据失败，请让管理员检查目录设置") + "[" + BP.WF.Glo.FlowFileBill + "]。@Err：" + ex.Message + " @File=" + file + " @Path:" + path;
+                        billInfo += "@<font color=red>" + msgErr + "</font>";
+                        throw new Exception(msgErr + "@其它信息:" + ex.Message);
+                    }
 
-                    if (billInfo != "")
-                        billInfo = "@" + billInfo;
-                    msg += billInfo;
-                }
-                #endregion
+                } // end 生成循环单据。
 
-               // this.HisWork.DoCopy(); // copy 本地的数据到指定的系统.
-                DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=1 WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID);
-                return msg;
-            
+                if (billInfo != "")
+                    billInfo = "@" + billInfo;
+                msg += billInfo;
+            }
+            #endregion
+
+            // this.HisWork.DoCopy(); // copy 本地的数据到指定的系统.
+            DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=1 WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID);
+            return msg;
         }
-       
         /// <summary>
         /// 增加日志
         /// </summary>
         /// <param name="at">类型</param>
         /// <param name="toEmp">到人员</param>
-        /// <param name="toNode">到节点</param>
+        /// <param name="toEmpName">到人员名称</param>
+        /// <param name="toNDid">到节点</param>
+        /// <param name="toNDName">到节点名称</param>
         /// <param name="msg">消息</param>
         public void AddToTrack(ActionType at, string toEmp, string toEmpName, int toNDid, string toNDName, string msg)
         {
@@ -3022,44 +3063,46 @@ namespace BP.WF
             t.FID = this.HisWork.FID;
             t.RDT = DataType.CurrentDataTimess;
             t.HisActionType = at;
-            t.EmpFrom = WebUser.No;
-            t.EmpFromT = WebUser.Name;
-
-            t.FK_Flow = this.HisNode.FK_Flow;
-            t.MyPK = t.WorkID + "_" + t.FID + "_" + "_" + toEmp + "_" + toNDid + DateTime.Now.ToString("yyMMddhhmmss");
-            t.FID = this.HisWork.FID;
-            t.WorkID = this.HisWork.OID;
 
             t.NDFrom = this.HisNode.NodeID;
             t.NDFromT = this.HisNode.Name;
 
+            t.EmpFrom = WebUser.No;
+            t.EmpFromT = WebUser.Name;
+            t.FK_Flow = this.HisNode.FK_Flow;
+
+
             t.NDTo = toNDid;
             t.NDToT = toNDName;
+
             t.EmpTo = toEmp;
             t.EmpToT = toEmpName;
             t.Msg = msg;
-            switch (at)
+            if (string.IsNullOrEmpty(msg))
             {
-                case ActionType.Forward:
-                case ActionType.Start:
-                case ActionType.Undo:
-                case ActionType.ForwardFL:
-                case ActionType.ForwardHL:
-                    //判断是否有焦点字段，如果有就把它记录到日志里。
-                    if (this.HisNode.FocusField.Length > 1)
-                    {
-                        try
+                switch (at)
+                {
+                    case ActionType.Forward:
+                    case ActionType.Start:
+                    case ActionType.Undo:
+                    case ActionType.ForwardFL:
+                    case ActionType.ForwardHL:
+                        //判断是否有焦点字段，如果有就把它记录到日志里。
+                        if (this.HisNode.FocusField.Length > 1)
                         {
-                            t.Msg = this.HisWork.GetValStrByKey(this.HisNode.FocusField);
+                            try
+                            {
+                                t.Msg = this.HisWork.GetValStrByKey(this.HisNode.FocusField);
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.DebugWriteError("@焦点字段被删除了" + ex.Message + "@" + this.HisNode.FocusField);
+                            }
                         }
-                        catch (Exception ex)
-                        {
-                            Log.DebugWriteError("@焦点字段被删除了" + ex.Message + "@" + this.HisNode.FocusField);
-                        }
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
+                }
             }
             if (at == ActionType.Forward)
             {
@@ -3069,6 +3112,7 @@ namespace BP.WF
 
             try
             {
+                t.MyPK = t.WorkID + "_" + t.FID + "_"  + toEmp + "_" + toNDid + DateTime.Now.ToString("yyMMddhhmmss");
                 t.Insert();
             }
             catch
@@ -3514,6 +3558,7 @@ namespace BP.WF
         /// <returns>启动的信息</returns>
         private string beforeStartNode(Work wk, Node nd)
         {
+            // town.
             WorkNode town = new WorkNode(wk, nd);
 
             // 初试化他们的工作人员．

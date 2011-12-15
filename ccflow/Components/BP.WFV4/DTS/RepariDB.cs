@@ -5,6 +5,7 @@ using BP.Web.Controls;
 using System.Reflection;
 using BP.Port;
 using BP.En;
+using BP.Sys;
 namespace BP.WF
 {
     /// <summary>
@@ -60,6 +61,39 @@ namespace BP.WF
             sql = "DELETE Sys_Enum WHERE EnumKey='FormType'";
             BP.DA.DBAccess.RunSQLs(sql);
 
+
+            // 修复因bug丢失的字段.
+            MapDatas mds = new MapDatas();
+            mds.RetrieveAll();
+            foreach (MapData md in mds)
+            {
+                string nodeid = md.No.Replace("ND","");
+                try
+                {
+                    BP.WF.Node nd = new Node(int.Parse(nodeid));
+                    nd.RepareMap();
+                    continue;
+                }
+                catch(Exception ex)
+                {
+                }
+
+                MapAttr attr = new MapAttr();
+                if (attr.IsExit(MapAttrAttr.KeyOfEn, "OID", MapAttrAttr.FK_MapData, md.No) == false)
+                {
+                    attr.FK_MapData = md.No;
+                    attr.KeyOfEn = "OID";
+                    attr.Name = "OID";
+                    attr.MyDataType = BP.DA.DataType.AppInt;
+                    attr.UIContralType = UIContralType.TB;
+                    attr.LGType = FieldTypeS.Normal;
+                    attr.UIVisible = false;
+                    attr.UIIsEnable = false;
+                    attr.DefVal = "0";
+                    attr.HisEditType = BP.En.EditType.Readonly;
+                    attr.Insert();
+                }
+            }
             return "执行成功...";
         }
     }
