@@ -722,7 +722,7 @@ public partial class WF_MapDef_MapDef : WebPage
             if (dtl.IsAutoSize)
                 this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
             else
-                this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + dtl.Width + "' height='" + dtl.Height + "' scrolling=auto  /></iframe>");
+                this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + dtl.W + "' height='" + dtl.H + "' scrolling=auto  /></iframe>");
 
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();

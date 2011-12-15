@@ -1072,7 +1072,7 @@ namespace BP.Web.Comm.UC.WF
                 if (M2M.IsAutoSize)
                     this.Add("<TD colspan=4 ID='TD" + M2M.No + "' height='50px' width='100%'  >");
                 else
-                    this.Add("<TD colspan=4 ID='TD" + M2M.No + "' height='" + M2M.Height + "' width='" + M2M.Width + "'  >");
+                    this.Add("<TD colspan=4 ID='TD" + M2M.No + "' height='" + M2M.H + "' width='" + M2M.W + "'  >");
 
 
                 string src = "M2M.aspx?FK_MapM2M=" + M2M.No;
@@ -1094,7 +1094,7 @@ namespace BP.Web.Comm.UC.WF
                 }
                 else
                 {
-                    this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.Width + "' height='" + M2M.Height + "' scrolling=auto /></iframe>");
+                    this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.W + "' height='" + M2M.H + "' scrolling=auto /></iframe>");
                 }
                 this.AddTDEnd();
                 this.AddTREnd();
