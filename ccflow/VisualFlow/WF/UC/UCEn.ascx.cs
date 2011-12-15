@@ -1592,7 +1592,7 @@ namespace BP.Web.Comm.UC.WF
 
                 src += "&r=q" + paras;
 
-                this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.Width + "' height='" + M2M.Height + "'   scrolling=auto/></iframe>");
+                this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.W + "' height='" + M2M.H + "'   scrolling=auto/></iframe>");
 
                 this.Add("</span>");
                 this.Add("</DIV>");
