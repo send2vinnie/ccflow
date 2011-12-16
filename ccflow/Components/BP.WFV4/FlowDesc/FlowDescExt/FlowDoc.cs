@@ -95,12 +95,12 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(FlowAttr.FlowRunWay, (int)FlowRunWay.HandWork, "运行方式", true, true, FlowAttr.FlowRunWay,
                     "@0=手工启动@1=按月启动@2=按周启动@3=按天启动@4=按小时启动");
                 map.AddTBString(FlowAttr.FlowRunObj, null,  this.ToE("RunDoc", "运行内容"), true, false, 0, 100, 10);
+               
+                map.AddTBString(BP.WF.FlowAttr.Note, null, this.ToE("Note", "备注"), true, false, 0, 100, 10,true);
+                
+                map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
+                map.AddTBString(FlowAttr.TitleRole, null, "标题生成规则", true, false, 0, 500, 10, true);
 
-
-                map.AddTBString(BP.WF.FlowAttr.Note, null, this.ToE("Note", "备注"), true, false, 0, 100, 10);
-
-                Attr attr = map.GetAttrByKey(BP.WF.FlowAttr.Note);
-                attr.UIIsLine = true;
 
 
                 // map.AddBoolean(BP.WF.FlowAttr.CCType, false, "流程完成后抄送参与人员", true, true);

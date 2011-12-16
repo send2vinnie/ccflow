@@ -77,8 +77,10 @@ namespace BP.WF.Ext
                 map.AddTBString(FlowAttr.FlowRunObj, null, this.ToE("RunDoc", "运行内容"), true, false, 0, 100, 10,true);
                 map.AddBoolean(FlowAttr.IsCanStart, true, this.ToE("IsCanRunBySelf", "可以独立启动否？(独立启动的流程可以显示在发起流程列表里)"), true, true, true);
 
-                map.AddTBString(FlowAttr.Note, null, this.ToE("Note", "备注"), true, false, 0, 100, 10, true);
+                map.AddTBStringDoc(FlowAttr.Note, null, this.ToE("Note", "备注"), 
+                    true, false, true);
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
+                map.AddTBString(FlowAttr.TitleRole, null, "标题生成规则", true, false, 0, 500, 10, true);
 
                 map.AddDDLSysEnum(FlowAttr.AppType, (int)FlowAppType.Normal,"流程应用类型",
                   true, true, "FlowAppType", "@0=正常的@1=工程类(具有项目组概念)");

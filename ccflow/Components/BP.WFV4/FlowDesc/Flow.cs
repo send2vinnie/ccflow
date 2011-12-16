@@ -289,6 +289,10 @@ namespace BP.WF
         /// 轨迹字段
         /// </summary>
         public const string AppType = "AppType";
+        /// <summary>
+        /// 标题生成规则
+        /// </summary>
+        public const string TitleRole = "TitleRole";
     }
     /// <summary>
     /// 流程
@@ -298,6 +302,23 @@ namespace BP.WF
     public class Flow : EntityNoName
     {
         #region 业务处理
+        /// <summary>
+        /// 标题规则
+        /// </summary>
+        public string TitleRole
+        {
+            get
+            {
+                string s = this.GetValStrByKey(FlowAttr.TitleRole);
+                if (string.IsNullOrEmpty(s))
+                    return "@WebUser.FK_DeptName - @WebUser.No,@WebUser.Name在@RDT发起.";
+                return s;
+            }
+            set
+            {
+                this.SetValByKey(FlowAttr.TitleRole, value);
+            }
+        }
         /// <summary>
         /// 轨迹字段
         /// </summary>
@@ -2669,6 +2690,7 @@ namespace BP.WF
 
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
 
+                map.AddTBString(FlowAttr.TitleRole, null,"标题生成规则", true, false, 0, 500, 10, true);
 
                 map.AddTBInt(FlowAttr.AppType, 0, "应用类型", false, false);
 
@@ -3765,17 +3787,17 @@ namespace BP.WF
             img.Insert();
 
             FrmLab lab = new FrmLab();
-            lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
-            lab.Text = this.ToE("Title", "流程标题");
-            lab.FK_MapData = "ND" + int.Parse(this.No + "01");
-            lab.X = (float)106.5;
-            lab.Y = (float)59.22;
-            lab.FontSize = 11;
-            lab.FontColor = "black";
-            lab.FontName = "Portable User Interface";
-            lab.FontStyle = "Normal";
-            lab.FontWeight = "normal";
-            lab.Insert();
+            //lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No;
+            //lab.Text = this.ToE("Title", "流程标题");
+            //lab.FK_MapData = "ND" + int.Parse(this.No + "01");
+            //lab.X = (float)106.5;
+            //lab.Y = (float)59.22;
+            //lab.FontSize = 11;
+            //lab.FontColor = "black";
+            //lab.FontName = "Portable User Interface";
+            //lab.FontStyle = "Normal";
+            //lab.FontWeight = "normal";
+            //lab.Insert();
 
             lab = new FrmLab();
             lab.MyPK = "Lab" + DateTime.Now.ToString("yyMMddhhmmss") + WebUser.No + 2;
@@ -3853,7 +3875,6 @@ namespace BP.WF
             line.BorderWidth = (float)2;
             line.BorderColor = "Black";
             line.Insert();
-
 
             line.MyPK = key + "_2";
             line.FK_MapData = "ND" + int.Parse(this.No + "01");

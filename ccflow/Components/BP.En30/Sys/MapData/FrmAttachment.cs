@@ -341,6 +341,8 @@ namespace BP.Sys
             }
         }
         #endregion
+
+
         protected override bool beforeUpdateInsertAction()
         {
             this.MyPK = this.FK_MapData + "_" + this.NoOfAth;

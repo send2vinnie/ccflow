@@ -3084,8 +3084,8 @@ namespace BP.WF
                 attr.MyDataType = BP.DA.DataType.AppString;
                 attr.UIContralType = UIContralType.TB;
                 attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = true;
-                attr.UIIsEnable = true;
+                attr.UIVisible = false;
+                attr.UIIsEnable = false;
                 attr.UIIsLine = true;
                 attr.UIWidth = 251;
 
@@ -3099,7 +3099,7 @@ namespace BP.WF
                 attr = new BP.Sys.MapAttr();
                 attr.FK_MapData = md.No;
                 attr.HisEditType = BP.En.EditType.Edit;
-                attr.KeyOfEn = "faqiren";
+                attr.KeyOfEn = "FaQiRen";
                 attr.Name = BP.Sys.Language.GetValByUserLang("faqiren", "发起人"); // "发起人";
                 attr.MyDataType = BP.DA.DataType.AppString;
                 attr.UIContralType = UIContralType.TB;
@@ -3118,7 +3118,7 @@ namespace BP.WF
                 attr = new BP.Sys.MapAttr();
                 attr.FK_MapData = md.No;
                 attr.HisEditType = BP.En.EditType.Edit;
-                attr.KeyOfEn = "faqishijian";
+                attr.KeyOfEn = "FaQiShiJian";
                 attr.Name = BP.Sys.Language.GetValByUserLang("faqishijian", "发起时间"); //"发起时间";
                 attr.MyDataType = BP.DA.DataType.AppDateTime;
                 attr.UIContralType = UIContralType.TB;

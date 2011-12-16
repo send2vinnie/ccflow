@@ -2072,7 +2072,7 @@ namespace BP.WF
             DateTime dt = DateTime.Now;
             this.HisWork.Rec = Web.WebUser.No;
             this.WorkID = this.HisWork.OID;
-                string msg = this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
+            string msg = this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.SendWhen, this.HisWork);
             // 调用发送前的接口。
             try
             {
@@ -2627,20 +2627,29 @@ namespace BP.WF
         #endregion
 
         public GEEntity rptGe = null;
-        /// <summary>
-        /// 
-        /// </summary>
         private void InitStartWorkData()
         {
             /* 产生开始工作流程记录. */
             GenerWorkFlow gwf = new GenerWorkFlow();
             gwf.WorkID = this.HisWork.OID;
-            string title = this.HisWork.GetValStringByKey(StartWorkAttr.Title);
-            if (title.Trim() == "")
+
+            string title = this.HisFlow.TitleRole;
+            title = title.Replace("@WebUser.No", WebUser.No);
+            title = title.Replace("@WebUser.Name", WebUser.Name);
+            title = title.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+            title = title.Replace("@RDT", DateTime.Now.ToString("MM月dd日hh时mm分"));
+            if (title.Contains("@"))
             {
-                title = WebUser.No + "," + WebUser.Name + " 在 " + DataType.CurrentDataCNOfShort + " 发起.";
-                this.HisWork.SetValByKey(StartWorkAttr.Title, title);
+                foreach (Attr attr in this.HisWork.EnMap.Attrs)
+                {
+                    if (title.Contains("@") == false)
+                        break;
+                    if (attr.IsFKorEnum)
+                        continue;
+                    title = title.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
+                }
             }
+            this.HisWork.SetValByKey(StartWorkAttr.Title, title);
 
             gwf.Title = title;
             gwf.WFState = 0;
@@ -2709,7 +2718,7 @@ namespace BP.WF
             wl.FK_Node = this.HisNode.NodeID;
             wl.FK_NodeText = this.HisNode.Name;
 
-            wl.FK_Emp =WebUser.No;
+            wl.FK_Emp = WebUser.No;
             wl.FK_EmpText = WebUser.Name;
 
             wl.FK_Flow = this.HisNode.FK_Flow;
