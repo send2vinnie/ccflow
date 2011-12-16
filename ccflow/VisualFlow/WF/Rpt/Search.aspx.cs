@@ -76,7 +76,7 @@ public partial class WF_Rpt_Search : WebPage
         #endregion 处理风格
 
         this.Pub1.Add("<a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
-        this.Pub1.Add(" - <a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
+        this.Pub1.Add(" - <a href='Search.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
 
         #region 处理查询设的默认.
         if (this.DoType == "My")
@@ -485,6 +485,8 @@ public partial class WF_Rpt_Search : WebPage
                         break;
                 }
             }
+            this.UCSys1.AddTD();
+            this.UCSys1.AddTD();
             this.UCSys1.AddTD();
             this.UCSys1.AddTREnd();
         }

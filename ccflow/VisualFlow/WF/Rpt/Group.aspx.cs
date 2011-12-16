@@ -98,6 +98,16 @@ namespace BP.Web.Comm
                 ViewState["OrderBy"] = value;
             }
         }
+        public string DoType
+        {
+            get
+            {
+                string s = this.Request.QueryString["DoType"];
+                if (s == null)
+                    s = "My";
+                return s;
+            }
+        }
         public string OrderWay
         {
             get
@@ -162,7 +172,12 @@ namespace BP.Web.Comm
             this.Page.RegisterClientScriptBlock("s",
        "<link href='./../../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
+
+            this.Pub1.Add("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
+            this.Pub1.Add(" - <a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
+
             this.HisMD = new MapData(this.EnsName);
+            if (this.DoType=="Dept")
             this.ToolBar1.InitByMapV2(this.HisMD.HisEn.EnMap, 1, this.EnsName);
 
             this.CB_IsShowPict.Text = this.ToE("IsShowPict", "显示图形");
@@ -837,6 +852,7 @@ namespace BP.Web.Comm
                 whereOfLJ = whereOfLJ.Substring(0, whereOfLJ.Length - " AND ".Length) + Condition;
             }
 
+
             string orderByReq = this.Request.QueryString["OrderBy"];
             string orderby = "";
             if (orderByReq != null)
@@ -856,8 +872,8 @@ namespace BP.Web.Comm
             string sql = "";
             sql = selectSQL + groupKey + " FROM " + this.HisMD.PTable + where + groupBy + orderby;
 
-            //  物理表。
-            //  this.ResponseWriteBlueMsg(sql);
+            // 物理表。
+            // this.ResponseWriteBlueMsg(sql);
             myps.SQL = sql;
             DataTable dt2 = DBAccess.RunSQLReturnTable(myps);
             // this.Response.Write(sql);

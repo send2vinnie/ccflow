@@ -7,6 +7,7 @@
  Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.226, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc2" %>
 <%@ Register src="../../Comm/Rpt/ucgraphics.ascx" tagname="ucgraphics" tagprefix="uc3" %>
+<%@ Register src="../Pub.ascx" tagname="Pub" tagprefix="uc4" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
 	<HEAD>
@@ -41,6 +42,7 @@
 			<TABLE height="100%" style="background:none;"  cellPadding=0 width="100%" align=left border=0>
 				<TR>
 					<TD colSpan="2" class=toolbar >
+                    <uc4:Pub ID="Pub1" runat="server" />
                         <uc2:ToolBar ID="ToolBar1" runat="server" />
                     </TD>
 				</TR>
