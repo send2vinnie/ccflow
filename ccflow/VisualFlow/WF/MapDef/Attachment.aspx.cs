@@ -101,7 +101,7 @@ public partial class WF_MapDef_FrmAttachment : WebPage
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.AddTD("colspan=3", "帮助:类别可以为空,设置的格式为:@类别名1@类别名2@类别名3");
+        this.Pub1.AddTD("colspan=3", "帮助:类别可以为空,设置的格式为:类别名1,类别名2,类别名3");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();

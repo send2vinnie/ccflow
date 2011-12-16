@@ -45,7 +45,6 @@ public partial class WF_FreeFrm_UploadFile : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (this.DoType == "Del")
         {
             FrmAttachmentDB delDB = new FrmAttachmentDB();
@@ -66,7 +65,7 @@ public partial class WF_FreeFrm_UploadFile : WebPage
 
         this.Pub1.AddTable("width='100%'");
         this.Pub1.AddTR();
-        if (athDesc.Sort.Contains("@"))
+        if (athDesc.Sort.Contains(","))
             this.Pub1.AddTD("类别");
         this.Pub1.AddTD("文件名");
         this.Pub1.AddTD("大小KB");
@@ -78,13 +77,12 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         BP.Sys.FrmAttachmentDBs dbs = new BP.Sys.FrmAttachmentDBs();
         dbs.Retrieve(FrmAttachmentDBAttr.FK_FrmAttachment, this.FK_FrmAttachment,
             FrmAttachmentDBAttr.RefPKVal, this.PKVal);
-
       
         int i = 1;
         foreach (FrmAttachmentDB db in dbs)
         {
             this.Pub1.AddTR();
-            if (athDesc.Sort.Contains("@"))
+            if (athDesc.Sort.Contains(","))
                 this.Pub1.AddTD(db.Sort);
 
             // this.Pub1.AddTDIdx(i++);
@@ -114,9 +112,9 @@ public partial class WF_FreeFrm_UploadFile : WebPage
             fu.ID = "file";
             this.Pub1.Add(fu);
 
-            if (athDesc.Sort.Contains("@"))
+            if (athDesc.Sort.Contains(","))
             {
-                string[] strs = athDesc.Sort.Split('@');
+                string[] strs = athDesc.Sort.Split(',');
 
                 BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
                 ddl.ID = "ddl";
@@ -177,7 +175,7 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         dbUpload.Rec = BP.Web.WebUser.No;
         dbUpload.RecName = BP.Web.WebUser.Name;
 
-        if (athDesc.Sort.Contains("@"))
+        if (athDesc.Sort.Contains(","))
             dbUpload.Sort = this.Pub1.GetDDLByID("ddl").SelectedItemStringVal;
 
         dbUpload.Insert();

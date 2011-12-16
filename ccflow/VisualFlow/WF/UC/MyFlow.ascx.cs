@@ -1193,8 +1193,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         #endregion 判断特殊的业务逻辑。
 
-    
-
         currWK.NodeState = NodeState.Init;
         currWK.Rec = WebUser.No;
         currWK.SetValByKey("FK_Dept", WebUser.FK_Dept);
