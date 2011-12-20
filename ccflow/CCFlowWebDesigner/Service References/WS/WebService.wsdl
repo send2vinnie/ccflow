@@ -51,44 +51,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="WinOpenEns">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="lang" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="dotype" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="fk_dept" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="fk_emp" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="enName" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="isLogin" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="WinOpenEnsResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="WinOpenEnsResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetRelativeUrl">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="lang" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="dotype" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="fk_flow" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="node1" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="node2" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="isLogin" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetRelativeUrlResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetRelativeUrlResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="GetFlowBySort">
         <s:complexType>
           <s:sequence>
@@ -110,48 +72,6 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="GetStationEmpsResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="MaintainStation">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="pk" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="MaintainStationResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="MaintainStationResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="MaintainDept">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="pk" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="MaintainDeptResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="MaintainDeptResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="MaintainEmp">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="pk" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="MaintainEmpResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="MaintainEmpResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -189,21 +109,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="DoDrewLine">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="from" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="to" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="DoDrewLineResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="DoDrewLineResult" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="DoDropLine">
         <s:complexType>
           <s:sequence>
@@ -234,21 +139,6 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="DoNewLabelResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="FlowTemplete_Gener">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="fk_flow" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="islogin" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="FlowTemplete_GenerResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="FlowTemplete_GenerResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -299,27 +189,19 @@
       <s:element name="DoSaveFlow">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="paras" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fk_flow" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nodes" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dirs" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="labes" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
       <s:element name="DoSaveFlowResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="DoSaveFlowNode">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="nodeID" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="x" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="y" type="s:int" />
-            <s:element minOccurs="0" maxOccurs="1" name="nodeName" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="nodeType" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="islogin" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="DoSaveFlowResult" type="s:string" />
           </s:sequence>
         </s:complexType>
-      </s:element>
-      <s:element name="DoSaveFlowNodeResponse">
-        <s:complexType />
       </s:element>
       <s:element name="Uploadfile">
         <s:complexType>
@@ -514,18 +396,6 @@
   <wsdl:message name="LetAdminLoginSoapOut">
     <wsdl:part name="parameters" element="tns:LetAdminLoginResponse" />
   </wsdl:message>
-  <wsdl:message name="WinOpenEnsSoapIn">
-    <wsdl:part name="parameters" element="tns:WinOpenEns" />
-  </wsdl:message>
-  <wsdl:message name="WinOpenEnsSoapOut">
-    <wsdl:part name="parameters" element="tns:WinOpenEnsResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetRelativeUrlSoapIn">
-    <wsdl:part name="parameters" element="tns:GetRelativeUrl" />
-  </wsdl:message>
-  <wsdl:message name="GetRelativeUrlSoapOut">
-    <wsdl:part name="parameters" element="tns:GetRelativeUrlResponse" />
-  </wsdl:message>
   <wsdl:message name="GetFlowBySortSoapIn">
     <wsdl:part name="parameters" element="tns:GetFlowBySort" />
   </wsdl:message>
@@ -537,24 +407,6 @@
   </wsdl:message>
   <wsdl:message name="GetStationEmpsSoapOut">
     <wsdl:part name="parameters" element="tns:GetStationEmpsResponse" />
-  </wsdl:message>
-  <wsdl:message name="MaintainStationSoapIn">
-    <wsdl:part name="parameters" element="tns:MaintainStation" />
-  </wsdl:message>
-  <wsdl:message name="MaintainStationSoapOut">
-    <wsdl:part name="parameters" element="tns:MaintainStationResponse" />
-  </wsdl:message>
-  <wsdl:message name="MaintainDeptSoapIn">
-    <wsdl:part name="parameters" element="tns:MaintainDept" />
-  </wsdl:message>
-  <wsdl:message name="MaintainDeptSoapOut">
-    <wsdl:part name="parameters" element="tns:MaintainDeptResponse" />
-  </wsdl:message>
-  <wsdl:message name="MaintainEmpSoapIn">
-    <wsdl:part name="parameters" element="tns:MaintainEmp" />
-  </wsdl:message>
-  <wsdl:message name="MaintainEmpSoapOut">
-    <wsdl:part name="parameters" element="tns:MaintainEmpResponse" />
   </wsdl:message>
   <wsdl:message name="DoSoapIn">
     <wsdl:part name="parameters" element="tns:Do" />
@@ -568,12 +420,6 @@
   <wsdl:message name="DoNewNodeSoapOut">
     <wsdl:part name="parameters" element="tns:DoNewNodeResponse" />
   </wsdl:message>
-  <wsdl:message name="DoDrewLineSoapIn">
-    <wsdl:part name="parameters" element="tns:DoDrewLine" />
-  </wsdl:message>
-  <wsdl:message name="DoDrewLineSoapOut">
-    <wsdl:part name="parameters" element="tns:DoDrewLineResponse" />
-  </wsdl:message>
   <wsdl:message name="DoDropLineSoapIn">
     <wsdl:part name="parameters" element="tns:DoDropLine" />
   </wsdl:message>
@@ -585,12 +431,6 @@
   </wsdl:message>
   <wsdl:message name="DoNewLabelSoapOut">
     <wsdl:part name="parameters" element="tns:DoNewLabelResponse" />
-  </wsdl:message>
-  <wsdl:message name="FlowTemplete_GenerSoapIn">
-    <wsdl:part name="parameters" element="tns:FlowTemplete_Gener" />
-  </wsdl:message>
-  <wsdl:message name="FlowTemplete_GenerSoapOut">
-    <wsdl:part name="parameters" element="tns:FlowTemplete_GenerResponse" />
   </wsdl:message>
   <wsdl:message name="FlowTemplete_LoadSoapIn">
     <wsdl:part name="parameters" element="tns:FlowTemplete_Load" />
@@ -615,12 +455,6 @@
   </wsdl:message>
   <wsdl:message name="DoSaveFlowSoapOut">
     <wsdl:part name="parameters" element="tns:DoSaveFlowResponse" />
-  </wsdl:message>
-  <wsdl:message name="DoSaveFlowNodeSoapIn">
-    <wsdl:part name="parameters" element="tns:DoSaveFlowNode" />
-  </wsdl:message>
-  <wsdl:message name="DoSaveFlowNodeSoapOut">
-    <wsdl:part name="parameters" element="tns:DoSaveFlowNodeResponse" />
   </wsdl:message>
   <wsdl:message name="UploadfileSoapIn">
     <wsdl:part name="parameters" element="tns:Uploadfile" />
@@ -713,28 +547,6 @@
   <wsdl:message name="LetAdminLoginHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="WinOpenEnsHttpGetIn">
-    <wsdl:part name="lang" type="s:string" />
-    <wsdl:part name="dotype" type="s:string" />
-    <wsdl:part name="fk_dept" type="s:string" />
-    <wsdl:part name="fk_emp" type="s:string" />
-    <wsdl:part name="enName" type="s:string" />
-    <wsdl:part name="isLogin" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="WinOpenEnsHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="GetRelativeUrlHttpGetIn">
-    <wsdl:part name="lang" type="s:string" />
-    <wsdl:part name="dotype" type="s:string" />
-    <wsdl:part name="fk_flow" type="s:string" />
-    <wsdl:part name="node1" type="s:string" />
-    <wsdl:part name="node2" type="s:string" />
-    <wsdl:part name="isLogin" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="GetRelativeUrlHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
   <wsdl:message name="GetFlowBySortHttpGetIn">
     <wsdl:part name="sort" type="s:string" />
   </wsdl:message>
@@ -743,24 +555,6 @@
   </wsdl:message>
   <wsdl:message name="GetStationEmpsHttpGetIn" />
   <wsdl:message name="GetStationEmpsHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainStationHttpGetIn">
-    <wsdl:part name="pk" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainStationHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainDeptHttpGetIn">
-    <wsdl:part name="pk" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainDeptHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainEmpHttpGetIn">
-    <wsdl:part name="pk" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainEmpHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="DoHttpGetIn">
@@ -781,13 +575,6 @@
   <wsdl:message name="DoNewNodeHttpGetOut">
     <wsdl:part name="Body" element="tns:int" />
   </wsdl:message>
-  <wsdl:message name="DoDrewLineHttpGetIn">
-    <wsdl:part name="from" type="s:string" />
-    <wsdl:part name="to" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="DoDrewLineHttpGetOut">
-    <wsdl:part name="Body" element="tns:boolean" />
-  </wsdl:message>
   <wsdl:message name="DoDropLineHttpGetIn">
     <wsdl:part name="from" type="s:string" />
     <wsdl:part name="to" type="s:string" />
@@ -803,13 +590,6 @@
     <wsdl:part name="lableId" type="s:string" />
   </wsdl:message>
   <wsdl:message name="DoNewLabelHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="FlowTemplete_GenerHttpGetIn">
-    <wsdl:part name="fk_flow" type="s:string" />
-    <wsdl:part name="islogin" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="FlowTemplete_GenerHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="FlowTemplete_LoadHttpGetIn">
@@ -833,18 +613,14 @@
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="DoSaveFlowHttpGetIn">
-    <wsdl:part name="paras" type="s:string" />
+    <wsdl:part name="fk_flow" type="s:string" />
+    <wsdl:part name="nodes" type="s:string" />
+    <wsdl:part name="dirs" type="s:string" />
+    <wsdl:part name="labes" type="s:string" />
   </wsdl:message>
-  <wsdl:message name="DoSaveFlowHttpGetOut" />
-  <wsdl:message name="DoSaveFlowNodeHttpGetIn">
-    <wsdl:part name="nodeID" type="s:string" />
-    <wsdl:part name="x" type="s:string" />
-    <wsdl:part name="y" type="s:string" />
-    <wsdl:part name="nodeName" type="s:string" />
-    <wsdl:part name="nodeType" type="s:string" />
-    <wsdl:part name="islogin" type="s:string" />
+  <wsdl:message name="DoSaveFlowHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="DoSaveFlowNodeHttpGetOut" />
   <wsdl:message name="UploadfileHttpGetIn">
     <wsdl:part name="FileByte" type="s1:StringArray" />
     <wsdl:part name="fileName" type="s:string" />
@@ -940,28 +716,6 @@
   <wsdl:message name="LetAdminLoginHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="WinOpenEnsHttpPostIn">
-    <wsdl:part name="lang" type="s:string" />
-    <wsdl:part name="dotype" type="s:string" />
-    <wsdl:part name="fk_dept" type="s:string" />
-    <wsdl:part name="fk_emp" type="s:string" />
-    <wsdl:part name="enName" type="s:string" />
-    <wsdl:part name="isLogin" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="WinOpenEnsHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="GetRelativeUrlHttpPostIn">
-    <wsdl:part name="lang" type="s:string" />
-    <wsdl:part name="dotype" type="s:string" />
-    <wsdl:part name="fk_flow" type="s:string" />
-    <wsdl:part name="node1" type="s:string" />
-    <wsdl:part name="node2" type="s:string" />
-    <wsdl:part name="isLogin" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="GetRelativeUrlHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
   <wsdl:message name="GetFlowBySortHttpPostIn">
     <wsdl:part name="sort" type="s:string" />
   </wsdl:message>
@@ -970,24 +724,6 @@
   </wsdl:message>
   <wsdl:message name="GetStationEmpsHttpPostIn" />
   <wsdl:message name="GetStationEmpsHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainStationHttpPostIn">
-    <wsdl:part name="pk" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainStationHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainDeptHttpPostIn">
-    <wsdl:part name="pk" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainDeptHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainEmpHttpPostIn">
-    <wsdl:part name="pk" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="MaintainEmpHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="DoHttpPostIn">
@@ -1008,13 +744,6 @@
   <wsdl:message name="DoNewNodeHttpPostOut">
     <wsdl:part name="Body" element="tns:int" />
   </wsdl:message>
-  <wsdl:message name="DoDrewLineHttpPostIn">
-    <wsdl:part name="from" type="s:string" />
-    <wsdl:part name="to" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="DoDrewLineHttpPostOut">
-    <wsdl:part name="Body" element="tns:boolean" />
-  </wsdl:message>
   <wsdl:message name="DoDropLineHttpPostIn">
     <wsdl:part name="from" type="s:string" />
     <wsdl:part name="to" type="s:string" />
@@ -1030,13 +759,6 @@
     <wsdl:part name="lableId" type="s:string" />
   </wsdl:message>
   <wsdl:message name="DoNewLabelHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
-  <wsdl:message name="FlowTemplete_GenerHttpPostIn">
-    <wsdl:part name="fk_flow" type="s:string" />
-    <wsdl:part name="islogin" type="s:string" />
-  </wsdl:message>
-  <wsdl:message name="FlowTemplete_GenerHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="FlowTemplete_LoadHttpPostIn">
@@ -1060,18 +782,14 @@
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="DoSaveFlowHttpPostIn">
-    <wsdl:part name="paras" type="s:string" />
+    <wsdl:part name="fk_flow" type="s:string" />
+    <wsdl:part name="nodes" type="s:string" />
+    <wsdl:part name="dirs" type="s:string" />
+    <wsdl:part name="labes" type="s:string" />
   </wsdl:message>
-  <wsdl:message name="DoSaveFlowHttpPostOut" />
-  <wsdl:message name="DoSaveFlowNodeHttpPostIn">
-    <wsdl:part name="nodeID" type="s:string" />
-    <wsdl:part name="x" type="s:string" />
-    <wsdl:part name="y" type="s:string" />
-    <wsdl:part name="nodeName" type="s:string" />
-    <wsdl:part name="nodeType" type="s:string" />
-    <wsdl:part name="islogin" type="s:string" />
+  <wsdl:message name="DoSaveFlowHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
-  <wsdl:message name="DoSaveFlowNodeHttpPostOut" />
   <wsdl:message name="UploadfileHttpPostIn">
     <wsdl:part name="FileByte" type="s1:StringArray" />
     <wsdl:part name="fileName" type="s:string" />
@@ -1155,14 +873,6 @@
       <wsdl:input message="tns:LetAdminLoginSoapIn" />
       <wsdl:output message="tns:LetAdminLoginSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="WinOpenEns">
-      <wsdl:input message="tns:WinOpenEnsSoapIn" />
-      <wsdl:output message="tns:WinOpenEnsSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetRelativeUrl">
-      <wsdl:input message="tns:GetRelativeUrlSoapIn" />
-      <wsdl:output message="tns:GetRelativeUrlSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="GetFlowBySort">
       <wsdl:input message="tns:GetFlowBySortSoapIn" />
       <wsdl:output message="tns:GetFlowBySortSoapOut" />
@@ -1170,18 +880,6 @@
     <wsdl:operation name="GetStationEmps">
       <wsdl:input message="tns:GetStationEmpsSoapIn" />
       <wsdl:output message="tns:GetStationEmpsSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="MaintainStation">
-      <wsdl:input message="tns:MaintainStationSoapIn" />
-      <wsdl:output message="tns:MaintainStationSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="MaintainDept">
-      <wsdl:input message="tns:MaintainDeptSoapIn" />
-      <wsdl:output message="tns:MaintainDeptSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="MaintainEmp">
-      <wsdl:input message="tns:MaintainEmpSoapIn" />
-      <wsdl:output message="tns:MaintainEmpSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="Do">
       <wsdl:input message="tns:DoSoapIn" />
@@ -1191,10 +889,6 @@
       <wsdl:input message="tns:DoNewNodeSoapIn" />
       <wsdl:output message="tns:DoNewNodeSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="DoDrewLine">
-      <wsdl:input message="tns:DoDrewLineSoapIn" />
-      <wsdl:output message="tns:DoDrewLineSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="DoDropLine">
       <wsdl:input message="tns:DoDropLineSoapIn" />
       <wsdl:output message="tns:DoDropLineSoapOut" />
@@ -1202,10 +896,6 @@
     <wsdl:operation name="DoNewLabel">
       <wsdl:input message="tns:DoNewLabelSoapIn" />
       <wsdl:output message="tns:DoNewLabelSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="FlowTemplete_Gener">
-      <wsdl:input message="tns:FlowTemplete_GenerSoapIn" />
-      <wsdl:output message="tns:FlowTemplete_GenerSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="FlowTemplete_Load">
       <wsdl:input message="tns:FlowTemplete_LoadSoapIn" />
@@ -1222,10 +912,6 @@
     <wsdl:operation name="DoSaveFlow">
       <wsdl:input message="tns:DoSaveFlowSoapIn" />
       <wsdl:output message="tns:DoSaveFlowSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="DoSaveFlowNode">
-      <wsdl:input message="tns:DoSaveFlowNodeSoapIn" />
-      <wsdl:output message="tns:DoSaveFlowNodeSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="Uploadfile">
       <wsdl:input message="tns:UploadfileSoapIn" />
@@ -1285,14 +971,6 @@
       <wsdl:input message="tns:LetAdminLoginHttpGetIn" />
       <wsdl:output message="tns:LetAdminLoginHttpGetOut" />
     </wsdl:operation>
-    <wsdl:operation name="WinOpenEns">
-      <wsdl:input message="tns:WinOpenEnsHttpGetIn" />
-      <wsdl:output message="tns:WinOpenEnsHttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetRelativeUrl">
-      <wsdl:input message="tns:GetRelativeUrlHttpGetIn" />
-      <wsdl:output message="tns:GetRelativeUrlHttpGetOut" />
-    </wsdl:operation>
     <wsdl:operation name="GetFlowBySort">
       <wsdl:input message="tns:GetFlowBySortHttpGetIn" />
       <wsdl:output message="tns:GetFlowBySortHttpGetOut" />
@@ -1300,18 +978,6 @@
     <wsdl:operation name="GetStationEmps">
       <wsdl:input message="tns:GetStationEmpsHttpGetIn" />
       <wsdl:output message="tns:GetStationEmpsHttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="MaintainStation">
-      <wsdl:input message="tns:MaintainStationHttpGetIn" />
-      <wsdl:output message="tns:MaintainStationHttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="MaintainDept">
-      <wsdl:input message="tns:MaintainDeptHttpGetIn" />
-      <wsdl:output message="tns:MaintainDeptHttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="MaintainEmp">
-      <wsdl:input message="tns:MaintainEmpHttpGetIn" />
-      <wsdl:output message="tns:MaintainEmpHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="Do">
       <wsdl:input message="tns:DoHttpGetIn" />
@@ -1321,10 +987,6 @@
       <wsdl:input message="tns:DoNewNodeHttpGetIn" />
       <wsdl:output message="tns:DoNewNodeHttpGetOut" />
     </wsdl:operation>
-    <wsdl:operation name="DoDrewLine">
-      <wsdl:input message="tns:DoDrewLineHttpGetIn" />
-      <wsdl:output message="tns:DoDrewLineHttpGetOut" />
-    </wsdl:operation>
     <wsdl:operation name="DoDropLine">
       <wsdl:input message="tns:DoDropLineHttpGetIn" />
       <wsdl:output message="tns:DoDropLineHttpGetOut" />
@@ -1332,10 +994,6 @@
     <wsdl:operation name="DoNewLabel">
       <wsdl:input message="tns:DoNewLabelHttpGetIn" />
       <wsdl:output message="tns:DoNewLabelHttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="FlowTemplete_Gener">
-      <wsdl:input message="tns:FlowTemplete_GenerHttpGetIn" />
-      <wsdl:output message="tns:FlowTemplete_GenerHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="FlowTemplete_Load">
       <wsdl:input message="tns:FlowTemplete_LoadHttpGetIn" />
@@ -1352,10 +1010,6 @@
     <wsdl:operation name="DoSaveFlow">
       <wsdl:input message="tns:DoSaveFlowHttpGetIn" />
       <wsdl:output message="tns:DoSaveFlowHttpGetOut" />
-    </wsdl:operation>
-    <wsdl:operation name="DoSaveFlowNode">
-      <wsdl:input message="tns:DoSaveFlowNodeHttpGetIn" />
-      <wsdl:output message="tns:DoSaveFlowNodeHttpGetOut" />
     </wsdl:operation>
     <wsdl:operation name="Uploadfile">
       <wsdl:input message="tns:UploadfileHttpGetIn" />
@@ -1415,14 +1069,6 @@
       <wsdl:input message="tns:LetAdminLoginHttpPostIn" />
       <wsdl:output message="tns:LetAdminLoginHttpPostOut" />
     </wsdl:operation>
-    <wsdl:operation name="WinOpenEns">
-      <wsdl:input message="tns:WinOpenEnsHttpPostIn" />
-      <wsdl:output message="tns:WinOpenEnsHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetRelativeUrl">
-      <wsdl:input message="tns:GetRelativeUrlHttpPostIn" />
-      <wsdl:output message="tns:GetRelativeUrlHttpPostOut" />
-    </wsdl:operation>
     <wsdl:operation name="GetFlowBySort">
       <wsdl:input message="tns:GetFlowBySortHttpPostIn" />
       <wsdl:output message="tns:GetFlowBySortHttpPostOut" />
@@ -1430,18 +1076,6 @@
     <wsdl:operation name="GetStationEmps">
       <wsdl:input message="tns:GetStationEmpsHttpPostIn" />
       <wsdl:output message="tns:GetStationEmpsHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="MaintainStation">
-      <wsdl:input message="tns:MaintainStationHttpPostIn" />
-      <wsdl:output message="tns:MaintainStationHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="MaintainDept">
-      <wsdl:input message="tns:MaintainDeptHttpPostIn" />
-      <wsdl:output message="tns:MaintainDeptHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="MaintainEmp">
-      <wsdl:input message="tns:MaintainEmpHttpPostIn" />
-      <wsdl:output message="tns:MaintainEmpHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="Do">
       <wsdl:input message="tns:DoHttpPostIn" />
@@ -1451,10 +1085,6 @@
       <wsdl:input message="tns:DoNewNodeHttpPostIn" />
       <wsdl:output message="tns:DoNewNodeHttpPostOut" />
     </wsdl:operation>
-    <wsdl:operation name="DoDrewLine">
-      <wsdl:input message="tns:DoDrewLineHttpPostIn" />
-      <wsdl:output message="tns:DoDrewLineHttpPostOut" />
-    </wsdl:operation>
     <wsdl:operation name="DoDropLine">
       <wsdl:input message="tns:DoDropLineHttpPostIn" />
       <wsdl:output message="tns:DoDropLineHttpPostOut" />
@@ -1462,10 +1092,6 @@
     <wsdl:operation name="DoNewLabel">
       <wsdl:input message="tns:DoNewLabelHttpPostIn" />
       <wsdl:output message="tns:DoNewLabelHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="FlowTemplete_Gener">
-      <wsdl:input message="tns:FlowTemplete_GenerHttpPostIn" />
-      <wsdl:output message="tns:FlowTemplete_GenerHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="FlowTemplete_Load">
       <wsdl:input message="tns:FlowTemplete_LoadHttpPostIn" />
@@ -1482,10 +1108,6 @@
     <wsdl:operation name="DoSaveFlow">
       <wsdl:input message="tns:DoSaveFlowHttpPostIn" />
       <wsdl:output message="tns:DoSaveFlowHttpPostOut" />
-    </wsdl:operation>
-    <wsdl:operation name="DoSaveFlowNode">
-      <wsdl:input message="tns:DoSaveFlowNodeHttpPostIn" />
-      <wsdl:output message="tns:DoSaveFlowNodeHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="Uploadfile">
       <wsdl:input message="tns:UploadfileHttpPostIn" />
@@ -1561,24 +1183,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="WinOpenEns">
-      <soap:operation soapAction="http://tempuri.org/WinOpenEns" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetRelativeUrl">
-      <soap:operation soapAction="http://tempuri.org/GetRelativeUrl" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetFlowBySort">
       <soap:operation soapAction="http://tempuri.org/GetFlowBySort" style="document" />
       <wsdl:input>
@@ -1590,33 +1194,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetStationEmps">
       <soap:operation soapAction="http://tempuri.org/GetStationEmps" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainStation">
-      <soap:operation soapAction="http://tempuri.org/MaintainStation" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainDept">
-      <soap:operation soapAction="http://tempuri.org/MaintainDept" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainEmp">
-      <soap:operation soapAction="http://tempuri.org/MaintainEmp" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1642,15 +1219,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DoDrewLine">
-      <soap:operation soapAction="http://tempuri.org/DoDrewLine" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="DoDropLine">
       <soap:operation soapAction="http://tempuri.org/DoDropLine" style="document" />
       <wsdl:input>
@@ -1662,15 +1230,6 @@
     </wsdl:operation>
     <wsdl:operation name="DoNewLabel">
       <soap:operation soapAction="http://tempuri.org/DoNewLabel" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="FlowTemplete_Gener">
-      <soap:operation soapAction="http://tempuri.org/FlowTemplete_Gener" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1707,15 +1266,6 @@
     </wsdl:operation>
     <wsdl:operation name="DoSaveFlow">
       <soap:operation soapAction="http://tempuri.org/DoSaveFlow" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DoSaveFlowNode">
-      <soap:operation soapAction="http://tempuri.org/DoSaveFlowNode" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1852,24 +1402,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="WinOpenEns">
-      <soap12:operation soapAction="http://tempuri.org/WinOpenEns" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetRelativeUrl">
-      <soap12:operation soapAction="http://tempuri.org/GetRelativeUrl" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetFlowBySort">
       <soap12:operation soapAction="http://tempuri.org/GetFlowBySort" style="document" />
       <wsdl:input>
@@ -1881,33 +1413,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetStationEmps">
       <soap12:operation soapAction="http://tempuri.org/GetStationEmps" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainStation">
-      <soap12:operation soapAction="http://tempuri.org/MaintainStation" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainDept">
-      <soap12:operation soapAction="http://tempuri.org/MaintainDept" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainEmp">
-      <soap12:operation soapAction="http://tempuri.org/MaintainEmp" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1933,15 +1438,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DoDrewLine">
-      <soap12:operation soapAction="http://tempuri.org/DoDrewLine" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="DoDropLine">
       <soap12:operation soapAction="http://tempuri.org/DoDropLine" style="document" />
       <wsdl:input>
@@ -1953,15 +1449,6 @@
     </wsdl:operation>
     <wsdl:operation name="DoNewLabel">
       <soap12:operation soapAction="http://tempuri.org/DoNewLabel" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="FlowTemplete_Gener">
-      <soap12:operation soapAction="http://tempuri.org/FlowTemplete_Gener" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1998,15 +1485,6 @@
     </wsdl:operation>
     <wsdl:operation name="DoSaveFlow">
       <soap12:operation soapAction="http://tempuri.org/DoSaveFlow" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DoSaveFlowNode">
-      <soap12:operation soapAction="http://tempuri.org/DoSaveFlowNode" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -2143,24 +1621,6 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="WinOpenEns">
-      <http:operation location="/WinOpenEns" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetRelativeUrl">
-      <http:operation location="/GetRelativeUrl" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetFlowBySort">
       <http:operation location="/GetFlowBySort" />
       <wsdl:input>
@@ -2172,33 +1632,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetStationEmps">
       <http:operation location="/GetStationEmps" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainStation">
-      <http:operation location="/MaintainStation" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainDept">
-      <http:operation location="/MaintainDept" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainEmp">
-      <http:operation location="/MaintainEmp" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -2224,15 +1657,6 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DoDrewLine">
-      <http:operation location="/DoDrewLine" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="DoDropLine">
       <http:operation location="/DoDropLine" />
       <wsdl:input>
@@ -2244,15 +1668,6 @@
     </wsdl:operation>
     <wsdl:operation name="DoNewLabel">
       <http:operation location="/DoNewLabel" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="FlowTemplete_Gener">
-      <http:operation location="/FlowTemplete_Gener" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -2292,14 +1707,9 @@
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
-      <wsdl:output />
-    </wsdl:operation>
-    <wsdl:operation name="DoSaveFlowNode">
-      <http:operation location="/DoSaveFlowNode" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output />
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="Uploadfile">
       <http:operation location="/Uploadfile" />
@@ -2430,24 +1840,6 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="WinOpenEns">
-      <http:operation location="/WinOpenEns" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetRelativeUrl">
-      <http:operation location="/GetRelativeUrl" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetFlowBySort">
       <http:operation location="/GetFlowBySort" />
       <wsdl:input>
@@ -2459,33 +1851,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetStationEmps">
       <http:operation location="/GetStationEmps" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainStation">
-      <http:operation location="/MaintainStation" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainDept">
-      <http:operation location="/MaintainDept" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MaintainEmp">
-      <http:operation location="/MaintainEmp" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -2511,15 +1876,6 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DoDrewLine">
-      <http:operation location="/DoDrewLine" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="DoDropLine">
       <http:operation location="/DoDropLine" />
       <wsdl:input>
@@ -2531,15 +1887,6 @@
     </wsdl:operation>
     <wsdl:operation name="DoNewLabel">
       <http:operation location="/DoNewLabel" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="FlowTemplete_Gener">
-      <http:operation location="/FlowTemplete_Gener" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
@@ -2579,14 +1926,9 @@
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
-      <wsdl:output />
-    </wsdl:operation>
-    <wsdl:operation name="DoSaveFlowNode">
-      <http:operation location="/DoSaveFlowNode" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output />
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="Uploadfile">
       <http:operation location="/Uploadfile" />

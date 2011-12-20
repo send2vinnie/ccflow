@@ -514,7 +514,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             return cnsDesignerContainer.Children.Contains(uie);
         }
-        
+
         public CheckResult CheckSave()
         {
             var cr = new CheckResult();
@@ -526,7 +526,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             string msg = "";
 
             // 如果只有两个子元素，且第一个元素是Canvas,则直接返回，因为相当于待检查的流程只有一个“开始节点”
-            if(cnsDesignerContainer.Children.Count == 2 && cnsDesignerContainer.Children[0] is Canvas)
+            if (cnsDesignerContainer.Children.Count == 2 && cnsDesignerContainer.Children[0] is Canvas)
             {
                 return cr;
             }
@@ -565,7 +565,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 cr.IsPass = false;
                 msg += Text.Message_MustHaveOnlyOneBeginFlowNode + "\r\n";
             }
-            if (!hasCompledion )
+            if (!hasCompledion)
             {
                 cr.IsPass = false;
                 msg += Text.Message_MustHaveAtLeastOneEndFlowNode + "\r\n";
@@ -579,11 +579,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             //    }
             //    catch { }
             //}
-            msg += Text.Message_ModifyWorkFlowByTip;
-            cr.Message = msg;
+
+            if (cr.IsPass == false)
+                msg += Text.Message_ModifyWorkFlowByTip;
             return cr;
         }
-
         public void NewFlow(string flowsort)
         {
             if (cnsDesignerContainer.Children.Count > 0)
@@ -662,7 +662,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             fn.sdPicture.tbNodeName.Visibility = Visibility.Visible;
             fn.sdPicture.tbNodeName.Focus();
             fn.sdPicture.txtFlowNodeName.Visibility = Visibility.Collapsed;
-            fn.sdPicture.tbNodeName.LostFocus += new RoutedEventHandler(tbNodeName_LostFocus);
+            //fn.sdPicture.tbNodeName.LostFocus += new RoutedEventHandler(tbNodeName_LostFocus);
             IsSomeChildEditing = true;
         }
         public void ShowDirectionSetting(Direction r)
@@ -849,31 +849,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public void SetProper(string lang, string dotype, string fk_flow, string node1, string node2, string title)
         {
             this.WinTitle = title;
-            _Service.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
-            _Service.GetRelativeUrlCompleted += _Service_GetRelativeUrlCompleted;
-        }
-        /// <summary>
-        /// 打开窗口
-        /// </summary>
-        /// <param name="lang"></param>
-        /// <param name="dotype"></param>
-        /// <param name="fk_flow"></param>
-        /// <param name="node1"></param>
-        /// <param name="node2"></param>
-        /// <param name="title"></param>
-        private void openWindow(string lang, string dotype, string fk_flow, string node1, string node2, string title)
-        {
-            this.WinTitle = title;
-            var serviceProxy = Glo.GetDesignerServiceInstance();
-            serviceProxy.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
-            serviceProxy.GetRelativeUrlCompleted += (s, e) =>
-                                                 {
-                                                     //string suburl = HtmlPage.Document.DocumentUri.ToString();
-                                                     //string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-                                                     Designer.IsRefresh = IsContainerRefresh;
-                                                     Designer.OpenDialog(Glo.BPMHost + e.Result, WinTitle, 600, 800);
-                                                 };
-
+           // _Service.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
+           // _Service.GetRelativeUrlCompleted += _Service_GetRelativeUrlCompleted;
         }
         public string ToXmlString()
         {
@@ -1058,13 +1035,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             SaveChange(HistoryType.New);
         }
 
-        public void AddLabel(int x, int y )
+        public void AddLabel(int x, int y)
         {
             _Service.DoNewLabelAsync(FlowID, x, y, Text.NewLable + NextNewLabelIndex.ToString(), null);
             _Service.DoNewLabelCompleted += _Service_DoNewLabelCompleted;
-            
         }
-
         void _Service_DoNewLabelCompleted(object sender, DoNewLabelCompletedEventArgs e)
         {
             NodeLabel r = new NodeLabel((IContainer)this);
@@ -1076,16 +1051,16 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             isNeedSave = true;
             _Service.DoNewLabelCompleted -= _Service_DoNewLabelCompleted;
         }
-
         public bool Save()
         {
             // 如果没有要保存的内容，则返回促成成功。
-            if(!isNeedSave)
-            {
+            if (!isNeedSave)
                 return true;
-            }
 
-            CheckResult cr = CheckSave();
+            string nodes = "";
+            string dirs = "";
+            string labes = "";
+            CheckResult cr = this.CheckSave();
             if (cr.IsPass)
             {
                 IElement ele;
@@ -1099,48 +1074,32 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         if (ele.ElementType == WorkFlowElementType.FlowNode)
                         {
                             FlowNode f = ele as FlowNode;
-                            try
-                            {
-                                // 如果节点没有进线，并且不是惟一的开始节点，则设节点为结束节点。
-                                if (f.BeginDirectionCollections.Count == 0
-                                    && cnsDesignerContainer.Children.Count != 2 
-                                    )
-                                    f.Type = FlowNodeType.COMPLETION;
-
-                                _Service.DoSaveFlowNodeAsync(int.Parse(f.FlowNodeID), (int)f.CenterPoint.X, (int)f.CenterPoint.Y, f.FlowNodeName, (int)f.Type, true);
-
-                            }
-                            catch { }
+                            // 如果节点没有进线，并且不是惟一的开始节点，则设节点为结束节点。
+                            if (f.BeginDirectionCollections.Count == 0
+                                && cnsDesignerContainer.Children.Count != 2)
+                                f.Type = FlowNodeType.COMPLETION;
+                            nodes += "~@Name=" + f.FlowNodeName + "@X=" + (int)f.CenterPoint.X + "@Y=" + (int)f.CenterPoint.Y + "@NodeID=" + int.Parse(f.FlowNodeID) + "@NodeType=" + (int)f.Type;
                         }
                         else if (ele.ElementType == WorkFlowElementType.Direction)
                         {
-
                             Direction d = ele as Direction;
-
-
                             if (d.EndFlowNode != null)
                             {
-                                try
-                                {
-                                    _Service.DoDrewLineAsync(int.Parse(d.BeginFlowNode.FlowNodeID), int.Parse(d.EndFlowNode.FlowNodeID));
-
-                                }
-                                catch
-                                {
-
-                                }
+                                dirs += "~@Node=" + int.Parse(d.BeginFlowNode.FlowNodeID) + "@ToNode=" + int.Parse(d.EndFlowNode.FlowNodeID);
                             }
-
                         }
                         else if (ele.ElementType == WorkFlowElementType.Label)
                         {
                             NodeLabel l = ele as NodeLabel;
-                            _Service.DoNewLabelAsync(FlowID, (int)l.Position.X, (int)l.Position.Y, l.LabelName, l.LableID);
-
+                            //_Service.DoNewLabelAsync(FlowID, (int)l.Position.X, (int)l.Position.Y, l.LabelName, l.LableID);
+                            labes += "~@FK_Flow=" + FlowID + "@X=" + (int)l.Position.X + "@Y=" + (int)l.Position.Y + "@MyPK=" + l.LableID + "@Label=" + l.LabelName;
                         }
                     }
-                }
+                }  // 结束遍历。
 
+                WSDesignerSoapClient ws = Glo.GetDesignerServiceInstance();
+                ws.DoSaveFlowAsync(FlowID, nodes, dirs, labes);
+                ws.DoSaveFlowCompleted += new EventHandler<DoSaveFlowCompletedEventArgs>(ws_DoSaveFlowCompleted);
                 return true;
             }
             else
@@ -1149,7 +1108,17 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return false;
             }
         }
-
+        void ws_DoSaveFlowCompleted(object sender, DoSaveFlowCompletedEventArgs e)
+        {
+            if (e.Result != null)
+            {
+                this.IsNeedSave = true;
+                MessageBox.Show(e.Result, "保存流程错误", MessageBoxButton.OK);
+                return;
+            }
+            MessageBox.Show("保存成功", "ccflow", MessageBoxButton.OK);
+            this.IsNeedSave = false;
+        }
         FlowNode getFlowNode(string FlowNodeFlowID)
         {
             for (int i = 0; i < FlowNodeCollections.Count; i++)
@@ -1885,16 +1854,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _doubleClickTimer.Stop();
         }
 
-        void tbNodeName_LostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                _Service.DoSaveFlowNodeAsync(int.Parse(f.FlowNodeID), (int)f.CenterPoint.X, (int)f.CenterPoint.Y, f.FlowNodeName, (int) f.Type,true);
-                IsSomeChildEditing = false;
-            }
-            catch { }
-        }
+        
 
         private void Container_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -1998,11 +1958,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             MessageBody.Visibility = Visibility.Collapsed;
             CloseContainerCover();
         }
-        void _Service_GetRelativeUrlCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
-        {
-            WinOpen(e.Result, WinTitle);
-            _Service.GetRelativeUrlCompleted -= _Service_GetRelativeUrlCompleted;
-        }
+      
 
         void _Service_DoNewNodeCompleted(object sender, DoNewNodeCompletedEventArgs e)
         {

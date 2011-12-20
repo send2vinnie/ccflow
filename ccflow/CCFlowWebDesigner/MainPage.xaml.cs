@@ -724,37 +724,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 SelectedContainer.btnDesignerTable();
             }
         }
-        private void _service_FlowTemplete_GenerCompleted(object sender, FlowTemplete_GenerCompletedEventArgs e)
-        {
-            try
-            {
-                FlowTempleteUrl = e.Result;
-                _service.GetRelativeUrlCompleted += getUploadedFileUriCompleted;
-                _service.GetRelativeUrlAsync(string.Empty, "FileHandler", string.Empty, string.Empty, string.Empty, true);
-            }
-            catch
-            {
-                MessageBox.Show("生成失败！");
-            }
-            _service.FlowTemplete_GenerCompleted -= _service_FlowTemplete_GenerCompleted;
-        }
-        private void getUploadedFileUriCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
-        {
-            string url = Glo.BPMHost + e.Result;
-            BP.Glo.WinOpen(url, "", 800, 500);
-            _service.GetRelativeUrlCompleted -= getUploadedFileUriCompleted;
-            return;
-
-            //string suburl = HtmlPage.Document.DocumentUri.ToString();
-            //string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-            //url += e.Result;
-            //string url = Glo.BPMHost+e.Result;
-            //BP.Glo.WinOpen(url);
-
-            var address = new Uri(String.Format("{1}?filePath={0}", FlowTempleteUrl, url), UriKind.RelativeOrAbsolute);
-            HtmlPage.Window.Navigate(address);
-
-        }
+      
         public void NewFlowHandler(int tabIdx)
         {
             latestFlowSortID = TvwFlow.Selected.ID;
@@ -998,16 +968,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 this.toolbar1.AddBtn(btn);
                 ToolBarButtonList.Add(btn);
             }
-
         }
-
         private void ToolBar_Click(object sender, RoutedEventArgs e)
         {
             var control = sender as ToolbarButton;
             if (null == control)
-            {
                 return;
-            }
+
             switch (control.Name)
             {
                 case "Btn_ToolBarLogin":
@@ -1037,9 +1004,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 case "Btn_ToolBarSave":
                     if (SelectedContainer != null)
                     {
-                        var passed = SelectedContainer.Save();
-                        if (passed)
-                            SelectedContainer.IsNeedSave = false;
+                        SelectedContainer.Save();
                     }
                     break;
                 case "Btn_ToolBarDesignReport":
@@ -1047,7 +1012,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
                 case "Btn_ToolBarCheck":
                     if (SelectedContainer != null)
+                    {
                         SelectedContainer.btnCheck();
+                    }
                     break;
                 case "Btn_ToolBarRun":
                     if (SelectedContainer != null)
@@ -1073,12 +1040,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
             }
         }
-        void client_GetRelativeUrlCompleted(object sender, GetRelativeUrlCompletedEventArgs e)
-        {
-            string suburl = HtmlPage.Document.DocumentUri.ToString();
-            string url = suburl.Substring(0, suburl.LastIndexOf('/'));
-            OpenWindow(url + e.Result, title, 600,1024);
-        } 
+       
 
         private void  setToolBarButtonEnableStatus(bool isEnable)
         {

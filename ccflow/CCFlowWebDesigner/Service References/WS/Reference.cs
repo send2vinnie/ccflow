@@ -36,18 +36,6 @@ namespace WF.WS {
         
         string EndLetAdminLogin(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/WinOpenEns", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginWinOpenEns(string lang, string dotype, string fk_dept, string fk_emp, string enName, bool isLogin, System.AsyncCallback callback, object asyncState);
-        
-        string EndWinOpenEns(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetRelativeUrl", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginGetRelativeUrl(string lang, string dotype, string fk_flow, string node1, string node2, bool isLogin, System.AsyncCallback callback, object asyncState);
-        
-        string EndGetRelativeUrl(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetFlowBySort", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.IAsyncResult BeginGetFlowBySort(string sort, System.AsyncCallback callback, object asyncState);
@@ -59,24 +47,6 @@ namespace WF.WS {
         System.IAsyncResult BeginGetStationEmps(System.AsyncCallback callback, object asyncState);
         
         string EndGetStationEmps(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MaintainStation", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginMaintainStation(string pk, System.AsyncCallback callback, object asyncState);
-        
-        string EndMaintainStation(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MaintainDept", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginMaintainDept(string pk, System.AsyncCallback callback, object asyncState);
-        
-        string EndMaintainDept(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MaintainEmp", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginMaintainEmp(string pk, System.AsyncCallback callback, object asyncState);
-        
-        string EndMaintainEmp(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/Do", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -90,12 +60,6 @@ namespace WF.WS {
         
         int EndDoNewNode(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DoDrewLine", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginDoDrewLine(int from, int to, System.AsyncCallback callback, object asyncState);
-        
-        bool EndDoDrewLine(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DoDropLine", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.IAsyncResult BeginDoDropLine(int from, int to, System.AsyncCallback callback, object asyncState);
@@ -107,12 +71,6 @@ namespace WF.WS {
         System.IAsyncResult BeginDoNewLabel(string fk_flow, int x, int y, string name, string lableId, System.AsyncCallback callback, object asyncState);
         
         string EndDoNewLabel(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/FlowTemplete_Gener", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginFlowTemplete_Gener(string fk_flow, bool islogin, System.AsyncCallback callback, object asyncState);
-        
-        string EndFlowTemplete_Gener(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/FlowTemplete_Load", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -134,15 +92,9 @@ namespace WF.WS {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DoSaveFlow", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginDoSaveFlow(string paras, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginDoSaveFlow(string fk_flow, string nodes, string dirs, string labes, System.AsyncCallback callback, object asyncState);
         
-        void EndDoSaveFlow(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DoSaveFlowNode", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        System.IAsyncResult BeginDoSaveFlowNode(int nodeID, int x, int y, string nodeName, int nodeType, bool islogin, System.AsyncCallback callback, object asyncState);
-        
-        void EndDoSaveFlowNode(System.IAsyncResult result);
+        string EndDoSaveFlow(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/Uploadfile", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -352,44 +304,6 @@ namespace WF.WS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class WinOpenEnsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public WinOpenEnsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GetRelativeUrlCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public GetRelativeUrlCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class GetFlowBySortCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -414,63 +328,6 @@ namespace WF.WS {
         private object[] results;
         
         public GetStationEmpsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MaintainStationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public MaintainStationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MaintainDeptCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public MaintainDeptCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MaintainEmpCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public MaintainEmpCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -523,25 +380,6 @@ namespace WF.WS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class DoDrewLineCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public DoDrewLineCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public bool Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class DoDropLineCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -566,25 +404,6 @@ namespace WF.WS {
         private object[] results;
         
         public DoNewLabelCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class FlowTemplete_GenerCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public FlowTemplete_GenerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -642,6 +461,25 @@ namespace WF.WS {
         private object[] results;
         
         public GetLablesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class DoSaveFlowCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public DoSaveFlowCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -885,18 +723,6 @@ namespace WF.WS {
         
         private System.Threading.SendOrPostCallback onLetAdminLoginCompletedDelegate;
         
-        private BeginOperationDelegate onBeginWinOpenEnsDelegate;
-        
-        private EndOperationDelegate onEndWinOpenEnsDelegate;
-        
-        private System.Threading.SendOrPostCallback onWinOpenEnsCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginGetRelativeUrlDelegate;
-        
-        private EndOperationDelegate onEndGetRelativeUrlDelegate;
-        
-        private System.Threading.SendOrPostCallback onGetRelativeUrlCompletedDelegate;
-        
         private BeginOperationDelegate onBeginGetFlowBySortDelegate;
         
         private EndOperationDelegate onEndGetFlowBySortDelegate;
@@ -908,24 +734,6 @@ namespace WF.WS {
         private EndOperationDelegate onEndGetStationEmpsDelegate;
         
         private System.Threading.SendOrPostCallback onGetStationEmpsCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginMaintainStationDelegate;
-        
-        private EndOperationDelegate onEndMaintainStationDelegate;
-        
-        private System.Threading.SendOrPostCallback onMaintainStationCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginMaintainDeptDelegate;
-        
-        private EndOperationDelegate onEndMaintainDeptDelegate;
-        
-        private System.Threading.SendOrPostCallback onMaintainDeptCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginMaintainEmpDelegate;
-        
-        private EndOperationDelegate onEndMaintainEmpDelegate;
-        
-        private System.Threading.SendOrPostCallback onMaintainEmpCompletedDelegate;
         
         private BeginOperationDelegate onBeginDoDelegate;
         
@@ -939,12 +747,6 @@ namespace WF.WS {
         
         private System.Threading.SendOrPostCallback onDoNewNodeCompletedDelegate;
         
-        private BeginOperationDelegate onBeginDoDrewLineDelegate;
-        
-        private EndOperationDelegate onEndDoDrewLineDelegate;
-        
-        private System.Threading.SendOrPostCallback onDoDrewLineCompletedDelegate;
-        
         private BeginOperationDelegate onBeginDoDropLineDelegate;
         
         private EndOperationDelegate onEndDoDropLineDelegate;
@@ -956,12 +758,6 @@ namespace WF.WS {
         private EndOperationDelegate onEndDoNewLabelDelegate;
         
         private System.Threading.SendOrPostCallback onDoNewLabelCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginFlowTemplete_GenerDelegate;
-        
-        private EndOperationDelegate onEndFlowTemplete_GenerDelegate;
-        
-        private System.Threading.SendOrPostCallback onFlowTemplete_GenerCompletedDelegate;
         
         private BeginOperationDelegate onBeginFlowTemplete_LoadDelegate;
         
@@ -986,12 +782,6 @@ namespace WF.WS {
         private EndOperationDelegate onEndDoSaveFlowDelegate;
         
         private System.Threading.SendOrPostCallback onDoSaveFlowCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginDoSaveFlowNodeDelegate;
-        
-        private EndOperationDelegate onEndDoSaveFlowNodeDelegate;
-        
-        private System.Threading.SendOrPostCallback onDoSaveFlowNodeCompletedDelegate;
         
         private BeginOperationDelegate onBeginUploadfileDelegate;
         
@@ -1117,31 +907,17 @@ namespace WF.WS {
         
         public event System.EventHandler<LetAdminLoginCompletedEventArgs> LetAdminLoginCompleted;
         
-        public event System.EventHandler<WinOpenEnsCompletedEventArgs> WinOpenEnsCompleted;
-        
-        public event System.EventHandler<GetRelativeUrlCompletedEventArgs> GetRelativeUrlCompleted;
-        
         public event System.EventHandler<GetFlowBySortCompletedEventArgs> GetFlowBySortCompleted;
         
         public event System.EventHandler<GetStationEmpsCompletedEventArgs> GetStationEmpsCompleted;
-        
-        public event System.EventHandler<MaintainStationCompletedEventArgs> MaintainStationCompleted;
-        
-        public event System.EventHandler<MaintainDeptCompletedEventArgs> MaintainDeptCompleted;
-        
-        public event System.EventHandler<MaintainEmpCompletedEventArgs> MaintainEmpCompleted;
         
         public event System.EventHandler<DoCompletedEventArgs> DoCompleted;
         
         public event System.EventHandler<DoNewNodeCompletedEventArgs> DoNewNodeCompleted;
         
-        public event System.EventHandler<DoDrewLineCompletedEventArgs> DoDrewLineCompleted;
-        
         public event System.EventHandler<DoDropLineCompletedEventArgs> DoDropLineCompleted;
         
         public event System.EventHandler<DoNewLabelCompletedEventArgs> DoNewLabelCompleted;
-        
-        public event System.EventHandler<FlowTemplete_GenerCompletedEventArgs> FlowTemplete_GenerCompleted;
         
         public event System.EventHandler<FlowTemplete_LoadCompletedEventArgs> FlowTemplete_LoadCompleted;
         
@@ -1149,9 +925,7 @@ namespace WF.WS {
         
         public event System.EventHandler<GetLablesCompletedEventArgs> GetLablesCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DoSaveFlowCompleted;
-        
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DoSaveFlowNodeCompleted;
+        public event System.EventHandler<DoSaveFlowCompletedEventArgs> DoSaveFlowCompleted;
         
         public event System.EventHandler<UploadfileCompletedEventArgs> UploadfileCompleted;
         
@@ -1332,118 +1106,6 @@ namespace WF.WS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WF.WS.WSDesignerSoap.BeginWinOpenEns(string lang, string dotype, string fk_dept, string fk_emp, string enName, bool isLogin, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginWinOpenEns(lang, dotype, fk_dept, fk_emp, enName, isLogin, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string WF.WS.WSDesignerSoap.EndWinOpenEns(System.IAsyncResult result) {
-            return base.Channel.EndWinOpenEns(result);
-        }
-        
-        private System.IAsyncResult OnBeginWinOpenEns(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string lang = ((string)(inValues[0]));
-            string dotype = ((string)(inValues[1]));
-            string fk_dept = ((string)(inValues[2]));
-            string fk_emp = ((string)(inValues[3]));
-            string enName = ((string)(inValues[4]));
-            bool isLogin = ((bool)(inValues[5]));
-            return ((WF.WS.WSDesignerSoap)(this)).BeginWinOpenEns(lang, dotype, fk_dept, fk_emp, enName, isLogin, callback, asyncState);
-        }
-        
-        private object[] OnEndWinOpenEns(System.IAsyncResult result) {
-            string retVal = ((WF.WS.WSDesignerSoap)(this)).EndWinOpenEns(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnWinOpenEnsCompleted(object state) {
-            if ((this.WinOpenEnsCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.WinOpenEnsCompleted(this, new WinOpenEnsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void WinOpenEnsAsync(string lang, string dotype, string fk_dept, string fk_emp, string enName, bool isLogin) {
-            this.WinOpenEnsAsync(lang, dotype, fk_dept, fk_emp, enName, isLogin, null);
-        }
-        
-        public void WinOpenEnsAsync(string lang, string dotype, string fk_dept, string fk_emp, string enName, bool isLogin, object userState) {
-            if ((this.onBeginWinOpenEnsDelegate == null)) {
-                this.onBeginWinOpenEnsDelegate = new BeginOperationDelegate(this.OnBeginWinOpenEns);
-            }
-            if ((this.onEndWinOpenEnsDelegate == null)) {
-                this.onEndWinOpenEnsDelegate = new EndOperationDelegate(this.OnEndWinOpenEns);
-            }
-            if ((this.onWinOpenEnsCompletedDelegate == null)) {
-                this.onWinOpenEnsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnWinOpenEnsCompleted);
-            }
-            base.InvokeAsync(this.onBeginWinOpenEnsDelegate, new object[] {
-                        lang,
-                        dotype,
-                        fk_dept,
-                        fk_emp,
-                        enName,
-                        isLogin}, this.onEndWinOpenEnsDelegate, this.onWinOpenEnsCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WF.WS.WSDesignerSoap.BeginGetRelativeUrl(string lang, string dotype, string fk_flow, string node1, string node2, bool isLogin, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetRelativeUrl(lang, dotype, fk_flow, node1, node2, isLogin, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string WF.WS.WSDesignerSoap.EndGetRelativeUrl(System.IAsyncResult result) {
-            return base.Channel.EndGetRelativeUrl(result);
-        }
-        
-        private System.IAsyncResult OnBeginGetRelativeUrl(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string lang = ((string)(inValues[0]));
-            string dotype = ((string)(inValues[1]));
-            string fk_flow = ((string)(inValues[2]));
-            string node1 = ((string)(inValues[3]));
-            string node2 = ((string)(inValues[4]));
-            bool isLogin = ((bool)(inValues[5]));
-            return ((WF.WS.WSDesignerSoap)(this)).BeginGetRelativeUrl(lang, dotype, fk_flow, node1, node2, isLogin, callback, asyncState);
-        }
-        
-        private object[] OnEndGetRelativeUrl(System.IAsyncResult result) {
-            string retVal = ((WF.WS.WSDesignerSoap)(this)).EndGetRelativeUrl(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnGetRelativeUrlCompleted(object state) {
-            if ((this.GetRelativeUrlCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.GetRelativeUrlCompleted(this, new GetRelativeUrlCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void GetRelativeUrlAsync(string lang, string dotype, string fk_flow, string node1, string node2, bool isLogin) {
-            this.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, isLogin, null);
-        }
-        
-        public void GetRelativeUrlAsync(string lang, string dotype, string fk_flow, string node1, string node2, bool isLogin, object userState) {
-            if ((this.onBeginGetRelativeUrlDelegate == null)) {
-                this.onBeginGetRelativeUrlDelegate = new BeginOperationDelegate(this.OnBeginGetRelativeUrl);
-            }
-            if ((this.onEndGetRelativeUrlDelegate == null)) {
-                this.onEndGetRelativeUrlDelegate = new EndOperationDelegate(this.OnEndGetRelativeUrl);
-            }
-            if ((this.onGetRelativeUrlCompletedDelegate == null)) {
-                this.onGetRelativeUrlCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetRelativeUrlCompleted);
-            }
-            base.InvokeAsync(this.onBeginGetRelativeUrlDelegate, new object[] {
-                        lang,
-                        dotype,
-                        fk_flow,
-                        node1,
-                        node2,
-                        isLogin}, this.onEndGetRelativeUrlDelegate, this.onGetRelativeUrlCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult WF.WS.WSDesignerSoap.BeginGetFlowBySort(string sort, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginGetFlowBySort(sort, callback, asyncState);
         }
@@ -1531,144 +1193,6 @@ namespace WF.WS {
                 this.onGetStationEmpsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetStationEmpsCompleted);
             }
             base.InvokeAsync(this.onBeginGetStationEmpsDelegate, null, this.onEndGetStationEmpsDelegate, this.onGetStationEmpsCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WF.WS.WSDesignerSoap.BeginMaintainStation(string pk, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginMaintainStation(pk, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string WF.WS.WSDesignerSoap.EndMaintainStation(System.IAsyncResult result) {
-            return base.Channel.EndMaintainStation(result);
-        }
-        
-        private System.IAsyncResult OnBeginMaintainStation(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string pk = ((string)(inValues[0]));
-            return ((WF.WS.WSDesignerSoap)(this)).BeginMaintainStation(pk, callback, asyncState);
-        }
-        
-        private object[] OnEndMaintainStation(System.IAsyncResult result) {
-            string retVal = ((WF.WS.WSDesignerSoap)(this)).EndMaintainStation(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnMaintainStationCompleted(object state) {
-            if ((this.MaintainStationCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.MaintainStationCompleted(this, new MaintainStationCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void MaintainStationAsync(string pk) {
-            this.MaintainStationAsync(pk, null);
-        }
-        
-        public void MaintainStationAsync(string pk, object userState) {
-            if ((this.onBeginMaintainStationDelegate == null)) {
-                this.onBeginMaintainStationDelegate = new BeginOperationDelegate(this.OnBeginMaintainStation);
-            }
-            if ((this.onEndMaintainStationDelegate == null)) {
-                this.onEndMaintainStationDelegate = new EndOperationDelegate(this.OnEndMaintainStation);
-            }
-            if ((this.onMaintainStationCompletedDelegate == null)) {
-                this.onMaintainStationCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnMaintainStationCompleted);
-            }
-            base.InvokeAsync(this.onBeginMaintainStationDelegate, new object[] {
-                        pk}, this.onEndMaintainStationDelegate, this.onMaintainStationCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WF.WS.WSDesignerSoap.BeginMaintainDept(string pk, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginMaintainDept(pk, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string WF.WS.WSDesignerSoap.EndMaintainDept(System.IAsyncResult result) {
-            return base.Channel.EndMaintainDept(result);
-        }
-        
-        private System.IAsyncResult OnBeginMaintainDept(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string pk = ((string)(inValues[0]));
-            return ((WF.WS.WSDesignerSoap)(this)).BeginMaintainDept(pk, callback, asyncState);
-        }
-        
-        private object[] OnEndMaintainDept(System.IAsyncResult result) {
-            string retVal = ((WF.WS.WSDesignerSoap)(this)).EndMaintainDept(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnMaintainDeptCompleted(object state) {
-            if ((this.MaintainDeptCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.MaintainDeptCompleted(this, new MaintainDeptCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void MaintainDeptAsync(string pk) {
-            this.MaintainDeptAsync(pk, null);
-        }
-        
-        public void MaintainDeptAsync(string pk, object userState) {
-            if ((this.onBeginMaintainDeptDelegate == null)) {
-                this.onBeginMaintainDeptDelegate = new BeginOperationDelegate(this.OnBeginMaintainDept);
-            }
-            if ((this.onEndMaintainDeptDelegate == null)) {
-                this.onEndMaintainDeptDelegate = new EndOperationDelegate(this.OnEndMaintainDept);
-            }
-            if ((this.onMaintainDeptCompletedDelegate == null)) {
-                this.onMaintainDeptCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnMaintainDeptCompleted);
-            }
-            base.InvokeAsync(this.onBeginMaintainDeptDelegate, new object[] {
-                        pk}, this.onEndMaintainDeptDelegate, this.onMaintainDeptCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WF.WS.WSDesignerSoap.BeginMaintainEmp(string pk, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginMaintainEmp(pk, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string WF.WS.WSDesignerSoap.EndMaintainEmp(System.IAsyncResult result) {
-            return base.Channel.EndMaintainEmp(result);
-        }
-        
-        private System.IAsyncResult OnBeginMaintainEmp(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string pk = ((string)(inValues[0]));
-            return ((WF.WS.WSDesignerSoap)(this)).BeginMaintainEmp(pk, callback, asyncState);
-        }
-        
-        private object[] OnEndMaintainEmp(System.IAsyncResult result) {
-            string retVal = ((WF.WS.WSDesignerSoap)(this)).EndMaintainEmp(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnMaintainEmpCompleted(object state) {
-            if ((this.MaintainEmpCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.MaintainEmpCompleted(this, new MaintainEmpCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void MaintainEmpAsync(string pk) {
-            this.MaintainEmpAsync(pk, null);
-        }
-        
-        public void MaintainEmpAsync(string pk, object userState) {
-            if ((this.onBeginMaintainEmpDelegate == null)) {
-                this.onBeginMaintainEmpDelegate = new BeginOperationDelegate(this.OnBeginMaintainEmp);
-            }
-            if ((this.onEndMaintainEmpDelegate == null)) {
-                this.onEndMaintainEmpDelegate = new EndOperationDelegate(this.OnEndMaintainEmp);
-            }
-            if ((this.onMaintainEmpCompletedDelegate == null)) {
-                this.onMaintainEmpCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnMaintainEmpCompleted);
-            }
-            base.InvokeAsync(this.onBeginMaintainEmpDelegate, new object[] {
-                        pk}, this.onEndMaintainEmpDelegate, this.onMaintainEmpCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1776,54 +1300,6 @@ namespace WF.WS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WF.WS.WSDesignerSoap.BeginDoDrewLine(int from, int to, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginDoDrewLine(from, to, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool WF.WS.WSDesignerSoap.EndDoDrewLine(System.IAsyncResult result) {
-            return base.Channel.EndDoDrewLine(result);
-        }
-        
-        private System.IAsyncResult OnBeginDoDrewLine(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            int from = ((int)(inValues[0]));
-            int to = ((int)(inValues[1]));
-            return ((WF.WS.WSDesignerSoap)(this)).BeginDoDrewLine(from, to, callback, asyncState);
-        }
-        
-        private object[] OnEndDoDrewLine(System.IAsyncResult result) {
-            bool retVal = ((WF.WS.WSDesignerSoap)(this)).EndDoDrewLine(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnDoDrewLineCompleted(object state) {
-            if ((this.DoDrewLineCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.DoDrewLineCompleted(this, new DoDrewLineCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void DoDrewLineAsync(int from, int to) {
-            this.DoDrewLineAsync(from, to, null);
-        }
-        
-        public void DoDrewLineAsync(int from, int to, object userState) {
-            if ((this.onBeginDoDrewLineDelegate == null)) {
-                this.onBeginDoDrewLineDelegate = new BeginOperationDelegate(this.OnBeginDoDrewLine);
-            }
-            if ((this.onEndDoDrewLineDelegate == null)) {
-                this.onEndDoDrewLineDelegate = new EndOperationDelegate(this.OnEndDoDrewLine);
-            }
-            if ((this.onDoDrewLineCompletedDelegate == null)) {
-                this.onDoDrewLineCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDoDrewLineCompleted);
-            }
-            base.InvokeAsync(this.onBeginDoDrewLineDelegate, new object[] {
-                        from,
-                        to}, this.onEndDoDrewLineDelegate, this.onDoDrewLineCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult WF.WS.WSDesignerSoap.BeginDoDropLine(int from, int to, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginDoDropLine(from, to, callback, asyncState);
         }
@@ -1923,54 +1399,6 @@ namespace WF.WS {
                         y,
                         name,
                         lableId}, this.onEndDoNewLabelDelegate, this.onDoNewLabelCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WF.WS.WSDesignerSoap.BeginFlowTemplete_Gener(string fk_flow, bool islogin, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginFlowTemplete_Gener(fk_flow, islogin, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string WF.WS.WSDesignerSoap.EndFlowTemplete_Gener(System.IAsyncResult result) {
-            return base.Channel.EndFlowTemplete_Gener(result);
-        }
-        
-        private System.IAsyncResult OnBeginFlowTemplete_Gener(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string fk_flow = ((string)(inValues[0]));
-            bool islogin = ((bool)(inValues[1]));
-            return ((WF.WS.WSDesignerSoap)(this)).BeginFlowTemplete_Gener(fk_flow, islogin, callback, asyncState);
-        }
-        
-        private object[] OnEndFlowTemplete_Gener(System.IAsyncResult result) {
-            string retVal = ((WF.WS.WSDesignerSoap)(this)).EndFlowTemplete_Gener(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnFlowTemplete_GenerCompleted(object state) {
-            if ((this.FlowTemplete_GenerCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.FlowTemplete_GenerCompleted(this, new FlowTemplete_GenerCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void FlowTemplete_GenerAsync(string fk_flow, bool islogin) {
-            this.FlowTemplete_GenerAsync(fk_flow, islogin, null);
-        }
-        
-        public void FlowTemplete_GenerAsync(string fk_flow, bool islogin, object userState) {
-            if ((this.onBeginFlowTemplete_GenerDelegate == null)) {
-                this.onBeginFlowTemplete_GenerDelegate = new BeginOperationDelegate(this.OnBeginFlowTemplete_Gener);
-            }
-            if ((this.onEndFlowTemplete_GenerDelegate == null)) {
-                this.onEndFlowTemplete_GenerDelegate = new EndOperationDelegate(this.OnEndFlowTemplete_Gener);
-            }
-            if ((this.onFlowTemplete_GenerCompletedDelegate == null)) {
-                this.onFlowTemplete_GenerCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnFlowTemplete_GenerCompleted);
-            }
-            base.InvokeAsync(this.onBeginFlowTemplete_GenerDelegate, new object[] {
-                        fk_flow,
-                        islogin}, this.onEndFlowTemplete_GenerDelegate, this.onFlowTemplete_GenerCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2116,37 +1544,41 @@ namespace WF.WS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WF.WS.WSDesignerSoap.BeginDoSaveFlow(string paras, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginDoSaveFlow(paras, callback, asyncState);
+        System.IAsyncResult WF.WS.WSDesignerSoap.BeginDoSaveFlow(string fk_flow, string nodes, string dirs, string labes, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginDoSaveFlow(fk_flow, nodes, dirs, labes, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void WF.WS.WSDesignerSoap.EndDoSaveFlow(System.IAsyncResult result) {
-            base.Channel.EndDoSaveFlow(result);
+        string WF.WS.WSDesignerSoap.EndDoSaveFlow(System.IAsyncResult result) {
+            return base.Channel.EndDoSaveFlow(result);
         }
         
         private System.IAsyncResult OnBeginDoSaveFlow(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string paras = ((string)(inValues[0]));
-            return ((WF.WS.WSDesignerSoap)(this)).BeginDoSaveFlow(paras, callback, asyncState);
+            string fk_flow = ((string)(inValues[0]));
+            string nodes = ((string)(inValues[1]));
+            string dirs = ((string)(inValues[2]));
+            string labes = ((string)(inValues[3]));
+            return ((WF.WS.WSDesignerSoap)(this)).BeginDoSaveFlow(fk_flow, nodes, dirs, labes, callback, asyncState);
         }
         
         private object[] OnEndDoSaveFlow(System.IAsyncResult result) {
-            ((WF.WS.WSDesignerSoap)(this)).EndDoSaveFlow(result);
-            return null;
+            string retVal = ((WF.WS.WSDesignerSoap)(this)).EndDoSaveFlow(result);
+            return new object[] {
+                    retVal};
         }
         
         private void OnDoSaveFlowCompleted(object state) {
             if ((this.DoSaveFlowCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.DoSaveFlowCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.DoSaveFlowCompleted(this, new DoSaveFlowCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void DoSaveFlowAsync(string paras) {
-            this.DoSaveFlowAsync(paras, null);
+        public void DoSaveFlowAsync(string fk_flow, string nodes, string dirs, string labes) {
+            this.DoSaveFlowAsync(fk_flow, nodes, dirs, labes, null);
         }
         
-        public void DoSaveFlowAsync(string paras, object userState) {
+        public void DoSaveFlowAsync(string fk_flow, string nodes, string dirs, string labes, object userState) {
             if ((this.onBeginDoSaveFlowDelegate == null)) {
                 this.onBeginDoSaveFlowDelegate = new BeginOperationDelegate(this.OnBeginDoSaveFlow);
             }
@@ -2157,62 +1589,10 @@ namespace WF.WS {
                 this.onDoSaveFlowCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDoSaveFlowCompleted);
             }
             base.InvokeAsync(this.onBeginDoSaveFlowDelegate, new object[] {
-                        paras}, this.onEndDoSaveFlowDelegate, this.onDoSaveFlowCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult WF.WS.WSDesignerSoap.BeginDoSaveFlowNode(int nodeID, int x, int y, string nodeName, int nodeType, bool islogin, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginDoSaveFlowNode(nodeID, x, y, nodeName, nodeType, islogin, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void WF.WS.WSDesignerSoap.EndDoSaveFlowNode(System.IAsyncResult result) {
-            base.Channel.EndDoSaveFlowNode(result);
-        }
-        
-        private System.IAsyncResult OnBeginDoSaveFlowNode(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            int nodeID = ((int)(inValues[0]));
-            int x = ((int)(inValues[1]));
-            int y = ((int)(inValues[2]));
-            string nodeName = ((string)(inValues[3]));
-            int nodeType = ((int)(inValues[4]));
-            bool islogin = ((bool)(inValues[5]));
-            return ((WF.WS.WSDesignerSoap)(this)).BeginDoSaveFlowNode(nodeID, x, y, nodeName, nodeType, islogin, callback, asyncState);
-        }
-        
-        private object[] OnEndDoSaveFlowNode(System.IAsyncResult result) {
-            ((WF.WS.WSDesignerSoap)(this)).EndDoSaveFlowNode(result);
-            return null;
-        }
-        
-        private void OnDoSaveFlowNodeCompleted(object state) {
-            if ((this.DoSaveFlowNodeCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.DoSaveFlowNodeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void DoSaveFlowNodeAsync(int nodeID, int x, int y, string nodeName, int nodeType, bool islogin) {
-            this.DoSaveFlowNodeAsync(nodeID, x, y, nodeName, nodeType, islogin, null);
-        }
-        
-        public void DoSaveFlowNodeAsync(int nodeID, int x, int y, string nodeName, int nodeType, bool islogin, object userState) {
-            if ((this.onBeginDoSaveFlowNodeDelegate == null)) {
-                this.onBeginDoSaveFlowNodeDelegate = new BeginOperationDelegate(this.OnBeginDoSaveFlowNode);
-            }
-            if ((this.onEndDoSaveFlowNodeDelegate == null)) {
-                this.onEndDoSaveFlowNodeDelegate = new EndOperationDelegate(this.OnEndDoSaveFlowNode);
-            }
-            if ((this.onDoSaveFlowNodeCompletedDelegate == null)) {
-                this.onDoSaveFlowNodeCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDoSaveFlowNodeCompleted);
-            }
-            base.InvokeAsync(this.onBeginDoSaveFlowNodeDelegate, new object[] {
-                        nodeID,
-                        x,
-                        y,
-                        nodeName,
-                        nodeType,
-                        islogin}, this.onEndDoSaveFlowNodeDelegate, this.onDoSaveFlowNodeCompletedDelegate, userState);
+                        fk_flow,
+                        nodes,
+                        dirs,
+                        labes}, this.onEndDoSaveFlowDelegate, this.onDoSaveFlowCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2879,42 +2259,6 @@ namespace WF.WS {
                 return _result;
             }
             
-            public System.IAsyncResult BeginWinOpenEns(string lang, string dotype, string fk_dept, string fk_emp, string enName, bool isLogin, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[6];
-                _args[0] = lang;
-                _args[1] = dotype;
-                _args[2] = fk_dept;
-                _args[3] = fk_emp;
-                _args[4] = enName;
-                _args[5] = isLogin;
-                System.IAsyncResult _result = base.BeginInvoke("WinOpenEns", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndWinOpenEns(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("WinOpenEns", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginGetRelativeUrl(string lang, string dotype, string fk_flow, string node1, string node2, bool isLogin, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[6];
-                _args[0] = lang;
-                _args[1] = dotype;
-                _args[2] = fk_flow;
-                _args[3] = node1;
-                _args[4] = node2;
-                _args[5] = isLogin;
-                System.IAsyncResult _result = base.BeginInvoke("GetRelativeUrl", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndGetRelativeUrl(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("GetRelativeUrl", _args, result)));
-                return _result;
-            }
-            
             public System.IAsyncResult BeginGetFlowBySort(string sort, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = sort;
@@ -2937,45 +2281,6 @@ namespace WF.WS {
             public string EndGetStationEmps(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 string _result = ((string)(base.EndInvoke("GetStationEmps", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginMaintainStation(string pk, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = pk;
-                System.IAsyncResult _result = base.BeginInvoke("MaintainStation", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndMaintainStation(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("MaintainStation", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginMaintainDept(string pk, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = pk;
-                System.IAsyncResult _result = base.BeginInvoke("MaintainDept", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndMaintainDept(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("MaintainDept", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginMaintainEmp(string pk, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = pk;
-                System.IAsyncResult _result = base.BeginInvoke("MaintainEmp", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndMaintainEmp(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("MaintainEmp", _args, result)));
                 return _result;
             }
             
@@ -3011,20 +2316,6 @@ namespace WF.WS {
                 return _result;
             }
             
-            public System.IAsyncResult BeginDoDrewLine(int from, int to, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = from;
-                _args[1] = to;
-                System.IAsyncResult _result = base.BeginInvoke("DoDrewLine", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public bool EndDoDrewLine(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("DoDrewLine", _args, result)));
-                return _result;
-            }
-            
             public System.IAsyncResult BeginDoDropLine(int from, int to, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[2];
                 _args[0] = from;
@@ -3053,20 +2344,6 @@ namespace WF.WS {
             public string EndDoNewLabel(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 string _result = ((string)(base.EndInvoke("DoNewLabel", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginFlowTemplete_Gener(string fk_flow, bool islogin, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = fk_flow;
-                _args[1] = islogin;
-                System.IAsyncResult _result = base.BeginInvoke("FlowTemplete_Gener", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndFlowTemplete_Gener(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("FlowTemplete_Gener", _args, result)));
                 return _result;
             }
             
@@ -3111,33 +2388,20 @@ namespace WF.WS {
                 return _result;
             }
             
-            public System.IAsyncResult BeginDoSaveFlow(string paras, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = paras;
+            public System.IAsyncResult BeginDoSaveFlow(string fk_flow, string nodes, string dirs, string labes, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[4];
+                _args[0] = fk_flow;
+                _args[1] = nodes;
+                _args[2] = dirs;
+                _args[3] = labes;
                 System.IAsyncResult _result = base.BeginInvoke("DoSaveFlow", _args, callback, asyncState);
                 return _result;
             }
             
-            public void EndDoSaveFlow(System.IAsyncResult result) {
+            public string EndDoSaveFlow(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                base.EndInvoke("DoSaveFlow", _args, result);
-            }
-            
-            public System.IAsyncResult BeginDoSaveFlowNode(int nodeID, int x, int y, string nodeName, int nodeType, bool islogin, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[6];
-                _args[0] = nodeID;
-                _args[1] = x;
-                _args[2] = y;
-                _args[3] = nodeName;
-                _args[4] = nodeType;
-                _args[5] = islogin;
-                System.IAsyncResult _result = base.BeginInvoke("DoSaveFlowNode", _args, callback, asyncState);
+                string _result = ((string)(base.EndInvoke("DoSaveFlow", _args, result)));
                 return _result;
-            }
-            
-            public void EndDoSaveFlowNode(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                base.EndInvoke("DoSaveFlowNode", _args, result);
             }
             
             public System.IAsyncResult BeginUploadfile(WF.WS.UploadfileRequest request, System.AsyncCallback callback, object asyncState) {
