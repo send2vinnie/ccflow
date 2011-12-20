@@ -588,6 +588,22 @@ namespace BP.DA
             }
             return pinYin;
         }
+        public static string ParseStringToPinyinWordFirst(string str)
+        {
+            try
+            {
+                String _Temp = null;
+                for (int i = 0; i < str.Length; i++)
+                {
+                    _Temp = _Temp + BP.DA.DataType.ParseStringToPinyin(str.Substring(i, 1));
+                }
+                return _Temp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("@错误：" + str + "，不能转换成拼音。");
+            }
+        }
         /// <summary>
         /// 转化成 decimal
         /// </summary>

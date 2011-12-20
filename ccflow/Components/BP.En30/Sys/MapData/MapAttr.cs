@@ -1120,13 +1120,16 @@ namespace BP.Sys
         }
         protected override bool beforeInsert()
         {
+            if (string.IsNullOrEmpty(this.Name))
+                throw new Exception("@请输入字段名称。");
+
             if (this.KeyOfEn == null || this.KeyOfEn.Trim() == "")
             {
                 try
                 {
-                    this.KeyOfEn = BP.DA.chs2py.convert(this.Name);
+                    this.KeyOfEn = BP.DA.DataType.ParseStringToPinyin(this.Name);
                     if (this.KeyOfEn.Length > 20)
-                        this.KeyOfEn = BP.DA.chs2py.ConvertWordFirst(this.Name);
+                        this.KeyOfEn = BP.DA.DataType.ParseStringToPinyinWordFirst(this.Name);
 
                     if (this.KeyOfEn == null || this.KeyOfEn.Trim() == "")
                         throw new Exception("@请输入字段描述或者字段名称。");
@@ -1143,7 +1146,7 @@ namespace BP.Sys
                     System.Text.RegularExpressions.Regex reg1 = new System.Text.RegularExpressions.Regex(@"^[A-Za-z0-9]+$");
                     if (reg1.IsMatch(this.KeyOfEn) == false)
                     {
-                    // throw new Exception("您输入的字段英文名[" + this.KeyOfEn + "]不符合要求，请按英文、拼音缩写填写或者由系统写完成。");
+                        // throw new Exception("您输入的字段英文名[" + this.KeyOfEn + "]不符合要求，请按英文、拼音缩写填写或者由系统写完成。");
                     }
                 }
             }

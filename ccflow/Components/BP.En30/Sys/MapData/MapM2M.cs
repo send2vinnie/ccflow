@@ -293,7 +293,6 @@ namespace BP.Sys
                 map.AddTBFloat(MapM2MAttr.H, 100, "H", false, false);
                 map.AddTBFloat(MapM2MAttr.W, 160, "W", false, false);
 
-
                 map.AddBoolean(MapM2MAttr.IsAutoSize, true, "是否自动设置大小", false, false);
 
                 map.AddTBInt(MapM2MAttr.RowIdx, 99, "位置", false, false);

@@ -127,13 +127,11 @@ namespace BP.WF
                 throw new Exception("系统错误，想找到退回的原始起点没有找到。");
 
             // 更新当前流程管理表的设置当前的节点。
-            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + wl.FK_Node + " WHERE WorkID=" + this.WorkID);
-
+            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + wl.FK_Node + ", NodeName='" + wl.FK_NodeText + "' WHERE WorkID=" + this.WorkID);
+            
             wl.RDT = DataType.CurrentDataTime;
             wl.IsPass = false;
             wl.Update();
-
-            DBAccess.RunSQL("");
 
             return "工作已经驳回到(" + wl.FK_Emp + " , " + wl.FK_EmpText + ")";
             // wl.HisNode

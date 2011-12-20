@@ -1183,7 +1183,7 @@ namespace BP.WF
             wnOfBackTo.HisWork.DirectUpdate();
 
             // 改变当前待办工作节点。
-            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow   SET FK_Node='" + backtoNodeID + "' WHERE  WorkID=" + this.WorkID);
+            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow   SET FK_Node='" + backtoNodeID + "',NodeName='" + backToNode.Name+ "' WHERE  WorkID=" + this.WorkID);
             DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
 
 
@@ -2123,7 +2123,6 @@ namespace BP.WF
                 }
                 #endregion 处理调用日志.
 
-
                 try
                 {
                     // 调起发送成功后的事务。
@@ -2429,11 +2428,10 @@ namespace BP.WF
                         gwf.FlowName = toNode.FlowName;
 
                         gwf.FK_FlowSort = toNode.HisFlow.FK_FlowSort;
-                        gwf.FK_Node = toNode.NodeID;
+                        gwf.FK_Node =  toNode.NodeID;
                         gwf.NodeName = toNode.Name;
                         gwf.FK_Dept = wl.FK_Dept;
                         gwf.DeptName = wl.FK_DeptT;
-
 
                         // 判断历史轨迹里面是否有这个数据.
                         if (isHaveEmp)
@@ -3339,7 +3337,6 @@ namespace BP.WF
             Nodes toNodes = this.HisNode.HisToNodes;
             if (toNodes.Count == 0)
             {
-
                 /* 如果是最后一个节点，就设置流程结束。*/
                 string ovrMsg = this.HisWorkFlow.DoFlowOver();
                 
@@ -3407,6 +3404,7 @@ namespace BP.WF
             msg += StartNextNode(toNode);
             return msg;
         }
+
         #region 启动审核节点
         /// <summary>
         /// 启动多个节点.
@@ -3480,6 +3478,7 @@ namespace BP.WF
                     gwf.FID = this.WorkID;
                     gwf.WorkID = wk.OID;
 
+                    #warning 需要修改成标题生成规则。
                     if (BP.WF.Glo.IsShowUserNoOnly==false)
                         gwf.Title = WebUser.No + "," + WebUser.Name + " 发起：" + nd.Name + "(分流节点)";
                     else
@@ -3574,7 +3573,7 @@ namespace BP.WF
             WorkerLists gwls = this.GenerWorkerLists(town);
 
             //@加入消息集合里。
-            this.AddIntoWacthDog(gwls); 
+            this.AddIntoWacthDog(gwls);
 
             string msg = "";
             msg = this.ToEP3("TaskAutoSendTo", "@任务自动下达给{0}如下{1}位同事,{2}.", this.nextStationName,
@@ -3599,9 +3598,9 @@ namespace BP.WF
                 else
                     msg += "@<a href='" + this.VirPath + "/" + this.AppType + "/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&WorkID=" + wk.OID + "&FK_Flow=" + nd.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
             }
- 
+
             string str = "";
-            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + nd.NodeID + " WHERE WorkID=" + this.HisWork.OID);
+            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + nd.NodeID + ", NodeName='" + nd.Name + "' WHERE WorkID=" + this.HisWork.OID);
 
             if (this.HisNode.HisFormType == FormType.SDKForm)
                 return msg;
@@ -3654,7 +3653,7 @@ namespace BP.WF
                  */
 
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=1  WHERE WorkID=" + this.WorkID + " AND FID=" + this.HisWork.FID + " AND FK_Node=" + this.HisNode.NodeID);
-                DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + nd.NodeID + " WHERE WorkID=" + this.HisWork.OID);
+                DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + nd.NodeID + ",NodeName='" + nd.Name + "' WHERE WorkID=" + this.HisWork.OID);
 
                 /*
                  * 其次更新当前节点的状态与完成时间.
@@ -3666,7 +3665,9 @@ namespace BP.WF
                 #region 处理完成率
                 string sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID + " AND IsPass=1";
                 decimal ok = (decimal)DBAccess.RunSQLReturnValInt(sql);
-                sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
+
+               // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
+                sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE IsPass=0 AND FID=" + this.HisWork.FID;
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(sql);
                 decimal passRate = ok / all * 100;
                 string numStr = "@您是第(" + ok + ")到达此节点上的同事。";
@@ -3769,7 +3770,8 @@ namespace BP.WF
             /* 
              *  合流点需要等待各个分流点全部处理完后才能看到它。
              */
-            string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
+           // string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
+            string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE  IsPass=0 AND FID=" + this.HisWork.FID;
             decimal numAll1 = (decimal)DBAccess.RunSQLReturnValInt(sql1);
             decimal passRate1 = 1 / numAll1 * 100;
             if (nd.PassRate <= passRate1)
@@ -3782,7 +3784,7 @@ namespace BP.WF
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=3,WorkID=" + this.HisWork.FID + ",FID=0 WHERE FK_Node=" + nd.NodeID + " AND WorkID=" + this.HisWork.OID);
             }
 
-            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + nd.NodeID + " WHERE WorkID=" + this.HisWork.FID);
+            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + nd.NodeID + ",NodeName='" + nd.Name + "' WHERE WorkID=" + this.HisWork.FID);
             #endregion 设置父流程状态
 
             return "@当前工作已经完成，流程已经运行到合流节点[" + nd.Name + "]。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + nd.NodeID + "')\" >短信通知他们</a>。" + "@您是第一个到达此节点的同事.";
