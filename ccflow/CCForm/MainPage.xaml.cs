@@ -1085,7 +1085,6 @@ namespace CCForm
             {
                 switch (dt.TableName)
                 {
-                   
                     case "Sys_MapData":
                         if (dt.Rows.Count == 0)
                             continue;
@@ -3565,6 +3564,7 @@ namespace CCForm
             mapDataDT.Columns.Add(new DataColumn("No", typeof(string)));
             mapDataDT.Columns.Add(new DataColumn("FrmW", typeof(double)));
             mapDataDT.Columns.Add(new DataColumn("FrmH", typeof(double)));
+
             DataRow drMapDR = mapDataDT.NewRow();
             drMapDR["No"] = Glo.FK_MapData;
             drMapDR["FrmW"] = Glo.HisMapData.FrmW.ToString("0.00");
@@ -4199,7 +4199,6 @@ namespace CCForm
             #endregion 处理 RB 枚举值
 
             #region 增加到里面
-
             DataSet myds = new DataSet();
             myds.Tables.Add(labDT);
             myds.Tables.Add(linkDT);
@@ -4213,7 +4212,6 @@ namespace CCForm
             myds.Tables.Add(athDT);
             myds.Tables.Add(mapDataDT);
             myds.Tables.Add(m2mDT);
-
             #endregion 增加到里面
 
             #region 求出已经删除的集合.
@@ -4397,52 +4395,7 @@ namespace CCForm
                     break;
             }
         }
-        /// <summary>
-        /// UI_WinCanvas_Btn_Click
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UI_WinCanvas_Btn_Click(object sender, RoutedEventArgs e)
-        {
-            this.CloseMenum();
-
-            this.textWin.Visibility = Visibility.Collapsed;
-            this.checkBoxWin.Visibility = Visibility.Collapsed;
-
-            Button btn = sender as Button;
-            if (btn == null)
-                return;
-
-            if (btn.Name == "textWin_OK")
-            {
-                BPTextBox tb = this.currTB;
-                try
-                {
-                    tb.NameOfReal = this.textWin_Key.Text;
-                    tb.Name = this.textWin_Key.Text;
-                    tb.KeyName = this.textWin_Name.Text;
-                    tb.Background = new SolidColorBrush(Colors.White);
-                }
-                catch(Exception ex)
-                {
-                    tb.NameOfReal =null;
-                    MessageBox.Show("请检查字段名称是否重复，异常信息:"+ex.Message, "Error", MessageBoxButton.OK);
-                }
-                return;
-            }
- 
-            if (btn.Name.Contains("checkBox"))
-            {
-                if (btn != null && btn.Name == "checkBoxWin_OK")
-                {
-                    this.currCheckBoxLabel.Content = this.checkBoxWin_Text.Text;
-                    this.currCB.KeyName = this.checkBoxWin_Text.Text;
-                    this.RunSQL("UPDATE Sys_MapAttr SET Name='" + this.currCheckBoxLabel.Content + "' WHERE MyPK='" + Glo.FK_MapData + "_" + this.currCB.Name + "'");
-                }
-            }
-             
-          
-        }
+        
         protected override void OnKeyDown(KeyEventArgs e)
         {
             this.delPoint();
@@ -4609,18 +4562,7 @@ namespace CCForm
         }
         #endregion 关于撤销与恢复的处理.
 
-        private void textWin_Name_LostFocus(object sender, RoutedEventArgs e)
-        {
-            FF.CCFormSoapClient ff = Glo.GetCCFormSoapClientServiceInstance();
-            ff.ParseStringToPinyinAsync(this.textWin_Name.Text);
-            ff.ParseStringToPinyinCompleted += new EventHandler<FF.ParseStringToPinyinCompletedEventArgs>(ff_ParseStringToPinyinCompleted);
-        }
-        void ff_ParseStringToPinyinCompleted(object sender, FF.ParseStringToPinyinCompletedEventArgs e)
-        {
-            if (e.Result != null)
-                this.textWin_Key.Text = e.Result;
-        }
-
+        
         private void zz_NodeCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.CloseMenum();

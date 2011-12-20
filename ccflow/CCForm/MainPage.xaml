@@ -58,11 +58,7 @@ xmlns:my="clr-namespace:Toolbar"
                 <Canvas Name="zz_NodeCanvas" 
                         MouseLeftButtonDown="zz_NodeCanvas_MouseLeftButtonDown"
                         MouseLeftButtonUp="zz_NodeCanvas_MouseLeftButtonDown" >
-                    <!--<my1:Tree  Height="1200" HorizontalAlignment="Left"
-                                  Margin="0,0,0,0"
-                                  VerticalAlignment="Top" Width="220" 
-                               Canvas.Left="51" Canvas.Top="280" 
-                                Name="tree1" /> -->
+                     
                     <sdk:TreeView Height="1200" HorizontalAlignment="Left"
                                   Margin="0,0,0,0" 
                                   VerticalAlignment="Top" Width="220" 
@@ -228,107 +224,8 @@ xmlns:my="clr-namespace:Toolbar"
                 <!-- end 画版 -->
             </ScrollViewer.Content>
         </ScrollViewer>
-       
-        <!-- lab 标签. -->
         
-        <!--<Canvas Name="labWin" Visibility="Collapsed" Width="350" Height="152" Opacity="0.8"
-                Background="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                Margin="600,125,125,125">
-            <Canvas.Effect>
-                <DropShadowEffect Color="Gray"></DropShadowEffect>
-            </Canvas.Effect>
-
-            <TextBlock Text="文字:" Canvas.Left="6" Canvas.Top="20" Foreground="White"  />
-            <TextBox Width="330" Name="labWin_Label" Canvas.Left="10" Text="Label" Canvas.Top="40" />
-            <TextBlock Text="@符号表示换行字符." Canvas.Left="6" Canvas.Top="80" Foreground="White"  />
-            <TextBlock Text="X"  Foreground="White" Cursor="Hand" Canvas.Left="340" 
-                           Canvas.Top="2" Name="labWin_Close"
-                           MouseLeftButtonDown="UI_WinCanvas_Btn_Click" />
-
-            <Button Canvas.Left="255" Canvas.Top="109" Content="Cancel" Height="20"
-                        Name="labWin_Cancel" Width="56"  Click="UI_WinCanvas_Btn_Click" />
-            <Button Canvas.Left="196" Canvas.Top="110" Content="OK" Height="20" 
-                        Name="labWin_OK" Width="53"   Click="UI_WinCanvas_Btn_Click" />
-        </Canvas>-->
-      
-        <!-- end labe windows -->
-        
-
-        <!-- BPText  -->
-        <Canvas Name="textWin" Visibility="Collapsed" Width="350" Height="152" Opacity="0.8"
-                Background="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                Margin="600,125,125,125">
-            <Canvas.Effect>
-                <DropShadowEffect Color="Gray"></DropShadowEffect>
-            </Canvas.Effect>
-
-            <TextBlock Text="中文名:" Canvas.Left="12" Canvas.Top="13" Foreground="White"  />
-            <TextBox Width="328" Name="textWin_Name" Canvas.Left="12" Text="" Canvas.Top="33" Height="28" LostFocus="textWin_Name_LostFocus" />
-
-            <TextBlock Text="字段名:" Canvas.Left="11" Canvas.Top="61" Foreground="White"  />
-            <TextBox Width="328" Name="textWin_Key" Canvas.Left="12" Text="" Canvas.Top="83" Height="23" />
-
-            <TextBlock Text="X"  Foreground="White" Cursor="Hand" Canvas.Left="340" 
-                           Canvas.Top="2" Name="textWin_Close"
-                           MouseLeftButtonDown="UI_WinCanvas_Btn_Click" />
-
-            <Button Canvas.Left="174" Canvas.Top="120" Content="Cancel" Height="20"
-                        Name="textWin_Cancel" Width="56"  Click="UI_WinCanvas_Btn_Click" />
-            <Button Canvas.Left="115" Canvas.Top="121" Content="OK" Height="20" 
-                        Name="textWin_OK" Width="53"   Click="UI_WinCanvas_Btn_Click" />
-        </Canvas>
-        <!-- end labe windows -->
-
-        <!--
-        <Canvas Name="linkWin" Visibility="Collapsed" Width="350" Height="152" Opacity="0.8"
-                    Background="Blue"  HorizontalAlignment="Center" VerticalAlignment="Center" 
-                    Margin="125,91,125,57" >
-            <Canvas.Effect>
-                <DropShadowEffect Color="Gray"></DropShadowEffect>
-            </Canvas.Effect>
-
-            <TextBlock Text="文字:" Canvas.Left="6" Canvas.Top="58" Foreground="White"  />
-            <TextBox Width="256" Name="linkWin_Label" Canvas.Left="56" Text="Label" Canvas.Top="53" />
-            <TextBlock Text="字号:" Canvas.Left="17" Canvas.Top="25"  Foreground="White" />
-            <ComboBox Name="linkWin_cbSize" Canvas.Left="52" Canvas.Top="24">
-            </ComboBox>
-            <CheckBox Name="linkWin_CBWight" IsChecked="False" Content="加粗" 
-                          Foreground="White"
-                          Canvas.Left="122" Canvas.Top="25" />
- 
-            <TextBlock Text="X"  Foreground="White" Cursor="Hand" Canvas.Left="340" 
-                           Canvas.Top="2" Name="linkWin_Close"
-                           MouseLeftButtonDown="UI_WinCanvas_Btn_Click" />
-
-            <Button Canvas.Left="255" Canvas.Top="109" Content="Cancel" Height="20"
-                        Name="linkWin_Cancel" Width="56"  Click="UI_WinCanvas_Btn_Click" />
-            <Button Canvas.Left="196" Canvas.Top="110" Content="OK" Height="20" 
-                        Name="linkWin_OK" Width="53"   Click="UI_WinCanvas_Btn_Click" />
-            
-            <TextBlock Canvas.Left="6" Canvas.Top="81" Foreground="White" Text="URL" />
-            <TextBox Canvas.Left="56" Canvas.Top="77" Name="linkWin_Url" Text="http://ccflow.org" Width="256" />
-        </Canvas>
-        -->
-
         <!-- checkBox . -->
-        <Canvas Name="checkBoxWin" Visibility="Collapsed" Width="350" Height="71" Opacity="0.8"
-                    Background="Blue"   HorizontalAlignment="Center" VerticalAlignment="Center" 
-                    Margin="125,132,125,97" >
-            <Canvas.Effect>
-                <DropShadowEffect Color="Gray"></DropShadowEffect>
-            </Canvas.Effect>
-
-            <TextBlock Text="文字:" Canvas.Left="17" Canvas.Top="25"  Foreground="White" FontStyle="Normal" />
-            <TextBox Name="checkBoxWin_Text" Canvas.Left="60" Canvas.Top="25"  Width="200" />
-            <TextBlock Text="X"  Foreground="White" Cursor="Hand" Canvas.Left="340" 
-                           Canvas.Top="2" Name="checkBoxWin_Close"
-                           MouseLeftButtonDown="UI_WinCanvas_Btn_Click" />
-
-            <Button Canvas.Left="196" Canvas.Top="50" Content="Cancel" Height="20"
-                        Name="checkBoxWin_Cancel" Width="56"  Click="UI_WinCanvas_Btn_Click" />
-            <Button Canvas.Left="266" Canvas.Top="26" Content="OK" Height="20" 
-                        Name="checkBoxWin_OK" Width="53"   Click="UI_WinCanvas_Btn_Click" />
-        </Canvas>
         <!-- end checkBox . -->
         
     </Grid>

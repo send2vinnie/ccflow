@@ -28,6 +28,6 @@
         <CheckBox Content="是否可以下载" Height="16" HorizontalAlignment="Right" IsChecked="True" Margin="0,199,0,0" Name="CB_IsDownload" VerticalAlignment="Top" Checked="CB_IsDownload_Checked" />
         <sdk:Label Height="28" HorizontalAlignment="Left" Margin="27,153,0,0" Name="label3" VerticalAlignment="Top" Width="120" Content="附件类别" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="91,0,0,54" Name="TB_Sort" VerticalAlignment="Bottom" Width="284" Grid.ColumnSpan="2" />
-        <sdk:Label Height="28" HorizontalAlignment="Left" Margin="91,178,0,0" Name="label6" VerticalAlignment="Top" Width="273" Grid.ColumnSpan="2" Content="可为空,格式为:@类别1@类别2@类别3" />
+        <sdk:Label Height="28" HorizontalAlignment="Left" Margin="91,178,0,0" Name="label6" VerticalAlignment="Top" Width="273" Grid.ColumnSpan="2" Content="可为空,格式为:类别,类别,类别3,类别4" />
     </Grid>
 </controls:ChildWindow>
