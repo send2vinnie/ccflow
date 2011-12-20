@@ -3770,8 +3770,9 @@ namespace BP.WF
             /* 
              *  合流点需要等待各个分流点全部处理完后才能看到它。
              */
-           // string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
-            string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE  IsPass=0 AND FID=" + this.HisWork.FID;
+           string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
+         //   string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE  IsPass=0 AND FID=" + this.HisWork.FID;
+            
             decimal numAll1 = (decimal)DBAccess.RunSQLReturnValInt(sql1);
             decimal passRate1 = 1 / numAll1 * 100;
             if (nd.PassRate <= passRate1)
