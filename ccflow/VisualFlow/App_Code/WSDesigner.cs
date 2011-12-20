@@ -416,42 +416,20 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         LetAdminLogin("CH", isLogin);
         if (string.IsNullOrEmpty(fk_flow))
             return 0;
+
         Flow fl = new Flow(fk_flow);
-     
         try
         {
-            BP.WF.Node nf = new BP.WF.Node(fl.DoNewNode(x, y).NodeID);
-
+            BP.WF.Node nf =fl.DoNewNode(x, y);
             nf.Name = nodeName;
             nf.Save();
-            return nf.NodeID ;
-        }
-        catch { return 0; }
-    }
-    /// <summary>
-    /// 创建一个连接线
-    /// </summary>
-    /// <param name="from">从节点</param>
-    /// <param name="to">到节点</param>
-    /// <returns></returns>
-    [WebMethod(EnableSession = true)]
-    public bool DoDrewLine(int from, int to)
-    {
-        Direction dir = new Direction();
-        dir.Node = from;
-        dir.ToNode = to;
-        try
-        {
-            dir.Insert();
-
-            return true;
+            return nf.NodeID;
         }
         catch
         {
-            return false;
+            return 0; 
         }
     }
-
     /// <summary>
     /// 删除一个连接线
     /// </summary>
@@ -467,7 +445,6 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         dir.Delete();
         return true;
     }
-
     /// <summary>
     /// 创建一个标签
     /// </summary>
@@ -483,7 +460,9 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         lab.X = x;
         lab.Y = y;
         if (string.IsNullOrEmpty(lableId))
-        { lab.MyPK = BP.DA.DBAccess.GenerOID().ToString(); }
+        {
+            lab.MyPK = BP.DA.DBAccess.GenerOID().ToString();
+        }
         else
         {
             lab.MyPK = lableId;
@@ -493,7 +472,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         {
             lab.Save();
         }
-        catch 
+        catch
         {
         }
         return lab.MyPK;
@@ -546,94 +525,105 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         DataSet ds = lns.ToDataSet();
         return Connector.ToXml(ds);
     }
-
     /// <summary>
     /// 保存流程
     /// </summary>
-    /// <param name="paras">参数@1001,90,23@1002,80,20</param>
-    /// <returns></returns>
+    /// <param name="fk_flow"></param>
+    /// <param name="nodes"></param>
+    /// <param name="dirs"></param>
+    /// <param name="labes"></param>
     [WebMethod(EnableSession = true)]
-    public void DoSaveFlow(string paras)
+    public string DoSaveFlow(string fk_flow,string nodes,string dirs,string labes)
     {
-        string[] strs = paras.Split('@');
-        foreach (string str in strs)
+        LetAdminLogin("CH", true);
+        try
         {
-            string[] ps = str.Split(',');
-            string sql = "update wf_node set X=" + ps[1] + ", y=" + ps[2] + " where nodeid=" + ps[0];
-            BP.DA.DBAccess.RunSQL(sql);
+            //处理方向。
+            string[] mydirs = dirs.Split('~');
+            foreach (string dir in mydirs)
+            {
+                if (string.IsNullOrEmpty(dir))
+                    continue;
+
+                AtPara ap = new AtPara(dir);
+                string sql = "SELECT * FROM WF_Direction WHERE Node=" + ap.GetValIntByKey("Node") + " AND ToNode=" + ap.GetValIntByKey("ToNode");
+                if (DBAccess.RunSQLReturnTable(sql).Rows.Count == 0)
+                {
+                    sql = "INSERT INTO WF_Direction (Node,ToNode) VALUES (" + ap.GetValIntByKey("Node") + "," + ap.GetValIntByKey("ToNode") + ")";
+                    DBAccess.RunSQL(sql);
+                }
+            }
+
+            //处理节点。
+            string[] nds = nodes.Split('~');
+            foreach (string nd in nds)
+            {
+                if (string.IsNullOrEmpty(nd))
+                    continue;
+
+                AtPara ap = new AtPara(nd);
+                Node mynode = new Node(ap.GetValIntByKey("NodeID"));
+                SetNodeProperties(mynode, ap.GetValStrByKey("Name"), ap.GetValIntByKey("X"), ap.GetValIntByKey("Y"), ap.GetValIntByKey("NodeType"));
+                mynode.Save();
+            }
+
+            //处理标签。
+            string[] mylabs = labes.Split('~');
+            foreach (string lab in mylabs)
+            {
+                if (string.IsNullOrEmpty(lab))
+                    continue;
+
+                AtPara ap = new AtPara(lab);
+                LabNote ln = new LabNote();
+                ln.MyPK = ap.GetValStrByKey("MyPK");
+                ln.FK_Flow = fk_flow;
+                ln.Name = ap.GetValStrByKey("Label");
+                ln.X = ap.GetValIntByKey("X");
+                ln.Y = ap.GetValIntByKey("Y");
+                ln.Save();
+            }
         }
+        catch(Exception ex)
+        {
+            return ex.Message;
+        }
+        return null;
     }
-
-    /// <summary>
-    /// 保存结点
-    /// </summary>
-    /// <param name="nodeID"></param>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <param name="nodeName"></param>
-    /// <param name="nodeType"></param>
-    [WebMethod(EnableSession = true)]
-    public void DoSaveFlowNode(int nodeID, int x, int y, string nodeName, int nodeType, bool islogin)
-    {
-        LetAdminLogin("CH", islogin);
-        BP.WF.Node n;
-
-        if (!string.IsNullOrEmpty( nodeID.ToString()) )
-        {
-            n = new BP.WF.Node(nodeID);
-
-            setNodeProperties(n, nodeName, x, y, nodeType);
-
-            n.Save();
-        }
-        else
-        {
-            n = new BP.WF.Node();
-
-            setNodeProperties(n, nodeName, x, y, nodeType);
-             
-            n.Insert();
-        }
-    }
-
-    private void setNodeProperties(Node n, string nodeName, int x, int y, int nodeType)
+    private void SetNodeProperties(Node n, string nodeName, int x, int y, int nodeType)
     {
         n.Name = nodeName;
         n.X = x;
         n.Y = y;
-
-        if(0 == nodeType)
+        if (0 == nodeType)
         {
             n.NodePosType = NodePosType.Start;
         }
-        else if( 2 == nodeType)
+        else if (2 == nodeType)
         {
             n.NodePosType = NodePosType.End;
         }
-        else if( 1 == nodeType)
+        else if (1 == nodeType)
         {
             n.NodePosType = NodePosType.Mid;
             n.HisNodeWorkType = NodeWorkType.Work;
         }
-        else if( 3 == nodeType)
+        else if (3 == nodeType)
         {
             n.NodePosType = NodePosType.Mid;
             n.HisNodeWorkType = NodeWorkType.WorkHL;
         }
-
         else if (4 == nodeType)
         {
             n.NodePosType = NodePosType.Mid;
             n.HisNodeWorkType = NodeWorkType.WorkFL;
         }
-
         else if (5 == nodeType)
         {
             n.NodePosType = NodePosType.Mid;
             n.HisNodeWorkType = NodeWorkType.WorkFHL;
         }
     }
-
     [WebMethod]
     public string Uploadfile(byte[] FileByte, string fileName)
     {
