@@ -360,7 +360,9 @@ namespace BP.Web
                         {
                             fn.IsReadonly = isReadonly;
                             fn.IsPrint = isPrint;
+                            fn.FK_Flow = fk_flow;
                             fn.Update();
+                            BP.DA.DBAccess.RunSQL("UPDATE Sys_MapData SET FK_FrmSort='01' WHERE No='" + fk_frm + "'");
                             return fk_frm;
                         }
 
@@ -370,6 +372,7 @@ namespace BP.Web
                         fn.IsReadonly = isReadonly;
                         fn.IsPrint = isPrint;
                         fn.Idx = 100;
+                        fn.FK_Flow = fk_flow;
                         fn.Insert();
 
                         MapData md = new MapData();
@@ -379,6 +382,7 @@ namespace BP.Web
                             md.Name = fm.Name;
                             md.EnPK = "OID";
                             md.Insert();
+
                         }
 
                         MapAttr attr = new MapAttr();

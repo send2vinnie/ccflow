@@ -565,7 +565,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 Node mynode = new Node(ap.GetValIntByKey("NodeID"));
                 SetNodeProperties(mynode, ap.GetValStrByKey("Name"), ap.GetValIntByKey("X"), ap.GetValIntByKey("Y"), ap.GetValIntByKey("NodeType"));
                 mynode.DirectUpdate();
-             //   mynode.Save();
+                //   mynode.Save();
             }
 
             //处理标签。
