@@ -300,6 +300,8 @@ namespace BP.WF
                         return "调用起子流程";
                     case ActionType.StartSubFlow:
                         return "子流程发起";
+                    case ActionType.SubFlowForward:
+                        return "子流程前进";
                     default:
                         return "未知";
                 }

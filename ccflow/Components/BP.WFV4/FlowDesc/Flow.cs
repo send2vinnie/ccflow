@@ -420,7 +420,6 @@ namespace BP.WF
                 if (System.Web.HttpContext.Current.Request.QueryString["FromWorkID"] != null)
                 {
                     /* 如果是从另外的一个流程上传递过来的，就考虑另外的流程数据。*/
-                    string fromFlow = System.Web.HttpContext.Current.Request.QueryString["FromFlow"];
                     int fromNode = int.Parse(System.Web.HttpContext.Current.Request.QueryString["FromNode"]);
                     Int64 fromWorkID = Int64.Parse(System.Web.HttpContext.Current.Request.QueryString["FromWorkID"]);
                     BP.WF.Node fromNd = new BP.WF.Node(fromNode);

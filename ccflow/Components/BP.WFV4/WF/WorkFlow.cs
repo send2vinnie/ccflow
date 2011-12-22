@@ -539,9 +539,28 @@ namespace BP.WF
                     return "@当前的工作已经完成。";
             }
         }
+        /// <summary>
+        /// 处理子流程完成.
+        /// </summary>
+        /// <returns></returns>
         public string DoFlowSubOver()
         {
+            GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+            Node nd = new Node(gwf.FK_Node);
+            BP.DA.DBAccess.RunSQL("UPDATE  " + nd.PTable + " SET NodeState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
 
+            DBAccess.RunSQL("DELETE WF_GenerWorkFlow   WHERE OID="+this.WorkID);
+            DBAccess.RunSQL("DELETE WF_GenerWorkerlist WHERE WorkID=" + this.WorkID);
+
+
+            //先让它的子流程结束。
+            WorkerLists wls = new WorkerLists();
+            wls.Retrieve(WorkerListAttr.FID, this.FID);
+            foreach (WorkerList wl in wls)
+            {
+                WorkFlow wf = new WorkFlow(wl.FK_Flow, wl.WorkID);
+                wf.DoFlowSubOver();
+            }
             return null;
         }
         /// <summary>
@@ -550,102 +569,106 @@ namespace BP.WF
         /// <returns></returns>
         public string DoFlowOver()
         {
+            string msg = this.BeforeFlowOver();
+
+            if (this.IsMainFlow == false)
+            {
+                /* 处理子流程完成*/
+                return this.DoFlowSubOver();
+            }
+
             GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
             Node nd = new Node(gwf.FK_Node);
-            string msg = this.BeforeFlowOver();
-            if (this.IsMainFlow)
+
+            /* 如果是一个主线程 */
+            BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
+
+            // 查询出来报表的数据（主表的数据），以供明细表复制。 
+            BP.Sys.GEEntity geRpt = new GEEntity("ND" + int.Parse(this.HisFlow.No) + "Rpt");
+            geRpt.SetValByKey("OID", this.WorkID);
+            geRpt.RetrieveFromDBSources();
+            geRpt.SetValByKey("FK_NY", DataType.CurrentYearMonth);
+
+            string emps = "";
+            WorkerLists wlss = new WorkerLists();
+            QueryObject qo = new QueryObject(wlss);
+
+            qo.AddWhere(WorkerListAttr.FID, this.WorkID);
+            qo.addOr();
+            qo.AddWhere(WorkerListAttr.WorkID, this.WorkID);
+
+            qo.addOrderBy(WorkerListAttr.RDT);
+            qo.DoQuery();
+
+            foreach (WorkerList wl in wlss)
             {
-                //先让它的子流程结束。
-                WorkerLists wls = new WorkerLists();
-                wls.Retrieve(WorkerListAttr.FID, this.WorkID);
-                foreach (WorkerList wl in wls)
+                if (wl.IsEnable == false)
+                    continue;
+                string str = "@" + wl.FK_Emp + "," + wl.FK_EmpText;
+                if (emps.Contains(str))
+                    continue;
+                emps += str;
+            }
+
+            geRpt.SetValByKey(GERptAttr.FlowEmps, emps);
+            geRpt.SetValByKey(GERptAttr.FlowEnder, Web.WebUser.No);
+            geRpt.SetValByKey(GERptAttr.FlowEnderRDT, DataType.CurrentDataTime);
+            geRpt.SetValByKey(GERptAttr.WFState, (int)WFState.Complete);
+            geRpt.SetValByKey(GERptAttr.MyNum, 1);
+
+            //设置时间跨度。
+            geRpt.SetValByKey(GERptAttr.FlowDaySpan,
+                DataType.GetSpanDays(geRpt.GetValStringByKey(GERptAttr.FlowStartRDT), DataType.CurrentDataTime));
+
+            geRpt.Save();
+
+            //geRpt.Update("Emps", emps);
+            //处理明细数据的copy问题。 首先检查：当前节点（最后节点）是否有明细表。
+            MapDtls dtls = new MapDtls("ND" + nd.NodeID);
+            int i = 0;
+            foreach (MapDtl dtl in dtls)
+            {
+                i++;
+                // 查询出该明细表中的数据。
+                GEDtls dtlDatas = new GEDtls(dtl.No);
+                dtlDatas.Retrieve(GEDtlAttr.RefPK, this.WorkID);
+
+                // 创建一个Rpt对象。
+                GEDtl geDtl = new GEDtl("ND" + int.Parse(this.HisFlow.No) + "RptDtl" + i.ToString());
+                // 复制到指定的报表中。
+                foreach (GEDtl dtlData in dtlDatas)
                 {
-                    WorkFlow wf = new WorkFlow(wl.FK_Flow, wl.WorkID);
-                    wf.DoFlowSubOver();
-                }
-
-                /* 如果是一个主线程 */
-                BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
-
-                // 查询出来报表的数据（主表的数据），以供明细表复制。 
-                BP.Sys.GEEntity geRpt = new GEEntity("ND" + int.Parse(this.HisFlow.No) + "Rpt");
-                geRpt.SetValByKey("OID", this.WorkID);
-                geRpt.RetrieveFromDBSources();
-                geRpt.SetValByKey("FK_NY", DataType.CurrentYearMonth);
-
-                string emps = "";
-                WorkerLists wlss = new WorkerLists();
-                QueryObject qo = new QueryObject(wlss);
-                qo.AddWhere(WorkerListAttr.WorkID, this.WorkID);
-                qo.addAnd();
-                qo.AddWhere(WorkerListAttr.FK_Flow, this.HisFlow.No);
-                qo.addOrderBy(WorkerListAttr.RDT);
-                qo.DoQuery();
-
-                foreach (WorkerList wl in wlss)
-                {
-                    if (wl.IsEnable == false)
-                        continue;
-                    string str = "@" + wl.FK_Emp + "," + wl.FK_EmpText;
-                    if (emps.Contains(str))
-                        continue;
-                    emps += str;
-                }
-
-                geRpt.SetValByKey(GERptAttr.FlowEmps, emps);
-                geRpt.SetValByKey(GERptAttr.FlowEnder, Web.WebUser.No);
-                geRpt.SetValByKey(GERptAttr.FlowEnderRDT, DataType.CurrentDataTime);
-                geRpt.SetValByKey(GERptAttr.WFState, (int)WFState.Complete);
-                geRpt.SetValByKey(GERptAttr.MyNum, 1);
-                geRpt.Save();
-
-                //geRpt.Update("Emps", emps);
-                //处理明细数据的copy问题。 首先检查：当前节点（最后节点）是否有明细表。
-                MapDtls dtls = new MapDtls("ND" + nd.NodeID);
-                int i = 0;
-                foreach (MapDtl dtl in dtls)
-                {
-                    i++;
-                    // 查询出该明细表中的数据。
-                    GEDtls dtlDatas = new GEDtls(dtl.No);
-                    dtlDatas.Retrieve(GEDtlAttr.RefPK, this.WorkID);
-
-                    // 创建一个Rpt对象。
-                    GEDtl geDtl = new GEDtl("ND" + int.Parse(this.HisFlow.No) + "RptDtl" + i.ToString());
-                    // 复制到指定的报表中。
-                    foreach (GEDtl dtlData in dtlDatas)
+                    geDtl.ResetDefaultVal();
+                    try
                     {
-                        geDtl.ResetDefaultVal();
-                        try
-                        {
-                            geDtl.Copy(geRpt); // 复制主表的数据。
-                            geDtl.Copy(dtlData);
-                            geDtl.SetValByKey("FlowStarterDept", geRpt.GetValStrByKey("FK_Dept")); // 发起人部门.
-                            geDtl.SetValByKey("FlowStartRDT", geRpt.GetValStrByKey("RDT")); //发起时间。
-                            geDtl.Insert();
-                        }
-                        catch
-                        {
-                            geDtl.Update();
-                        }
+                        geDtl.Copy(geRpt); // 复制主表的数据。
+                        geDtl.Copy(dtlData);
+                        geDtl.SetValByKey("FlowStarterDept", geRpt.GetValStrByKey("FK_Dept")); // 发起人部门.
+                        geDtl.SetValByKey("FlowStartRDT", geRpt.GetValStrByKey("RDT")); //发起时间。
+                        geDtl.Insert();
+                    }
+                    catch
+                    {
+                        geDtl.Update();
                     }
                 }
-                this._IsComplete = 1;
-                DBAccess.RunSQL("DELETE FROM WF_GenerFH WHERE FID=" + this.WorkID);
             }
+            this._IsComplete = 1;
+            DBAccess.RunSQL("DELETE FROM WF_GenerFH WHERE FID=" + this.WorkID);
 
             // 清楚流程标记.
             // 清除流程。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + ")  AND FK_Flow='" + this.HisFlow.No + "'");
             // 清除其他的工作者。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + ")  AND FK_Node IN (SELECT NodeId FROM WF_Node WHERE FK_Flow='" + this.HisFlow.No + "') ");
+
             return msg;
         }
         /// <summary>
         /// 在分流上结束流程。
         /// </summary>
         /// <returns></returns>
-        public string DoFlowOverBranch(Node nd)
+        public string DoFlowOverBranch123(Node nd)
         {
             string sql = "";
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET WFState=1 WHERE WorkID=" + this.WorkID);

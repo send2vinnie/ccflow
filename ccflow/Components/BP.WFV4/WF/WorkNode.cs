@@ -2089,11 +2089,11 @@ namespace BP.WF
                     /*如果是开始流程判断是不是被吊起的流程，如果是就要向父流程写日志。*/
                     if (SystemConfig.IsBSsystem)
                     {
-                        string fk_nodeFrom = System.Web.HttpContext.Current.Request.QueryString["FK_Node_From"];
+                        string fk_nodeFrom = System.Web.HttpContext.Current.Request.QueryString["FromNode"];
                         if (string.IsNullOrEmpty(fk_nodeFrom) == false)
                         {
                             Node ndFrom = new Node(int.Parse(fk_nodeFrom));
-                            string fid = System.Web.HttpContext.Current.Request.QueryString["FID"];
+                            string fromWorkID = System.Web.HttpContext.Current.Request.QueryString["FromWorkID"];
 
                             //记录当前流程被调起。
                             this.AddToTrack(ActionType.StartSubFlow, WebUser.No,
@@ -3080,7 +3080,6 @@ namespace BP.WF
             t.EmpFrom = WebUser.No;
             t.EmpFromT = WebUser.Name;
             t.FK_Flow = this.HisNode.FK_Flow;
-
 
             t.NDTo = toNDid;
             t.NDToT = toNDName;
