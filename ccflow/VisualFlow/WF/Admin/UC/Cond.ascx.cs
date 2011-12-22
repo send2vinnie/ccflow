@@ -286,6 +286,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             case BP.En.FieldTypeS.Enum:
             case BP.En.FieldTypeS.FK:
                 ddl.Items.Add(new ListItem("=", "="));
+                ddl.Items.Add(new ListItem("<>", "<>"));
                 break;
             case BP.En.FieldTypeS.Normal:
                 switch (attrS.MyDataType)
@@ -295,6 +296,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
                     case BP.DA.DataType.AppDateTime:
                         ddl.Items.Add(new ListItem("=", "="));
                         ddl.Items.Add(new ListItem("LIKE", "LIKE"));
+                        ddl.Items.Add(new ListItem("<>", "<>"));
                         break;
                     case BP.DA.DataType.AppBoolean:
                         ddl.Items.Add(new ListItem("=", "="));
@@ -305,6 +307,7 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
                         ddl.Items.Add(new ListItem(">=", ">="));
                         ddl.Items.Add(new ListItem("<", "<"));
                         ddl.Items.Add(new ListItem("<=", "<="));
+                        ddl.Items.Add(new ListItem("<>", "<>"));
                         break;
                 }
                 break;

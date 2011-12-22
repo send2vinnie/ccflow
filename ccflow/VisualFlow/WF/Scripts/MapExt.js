@@ -21,6 +21,9 @@ function DDLFullCtrl(e, ddlChild, fk_mapExt) {
                     if (k == 'No' || k == 'Name')
                         continue;
 
+//                    alert(k);
+//                    alert(dataObj.Head[i][k]);
+
                     $("#" + beforeID + 'TB_' + k).val(dataObj.Head[i][k]);
                     $("#" + beforeID + 'TB_' + k + endId).val(dataObj.Head[i][k]);
                 }

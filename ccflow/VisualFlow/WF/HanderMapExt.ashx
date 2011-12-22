@@ -39,7 +39,6 @@ public class Handler : IHttpHandler, IRequiresSessionState
         no=context.Request.QueryString["WebUserNo"];
         name = context.Request.QueryString["WebUserName"];
         fk_dept = context.Request.QueryString["WebUserFK_Dept"];
-        
 
         BP.Sys.MapExt me = new BP.Sys.MapExt(fk_mapExt);
         DataTable dt = null;

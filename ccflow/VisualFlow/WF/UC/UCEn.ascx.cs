@@ -516,9 +516,13 @@ namespace BP.Web.Comm.UC.WF
 
                         // mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
-                        mytbLine.Enabled = attr.UIIsEnable;
+
                         if (mytbLine.Enabled == false)
+                        {
                             mytbLine.Attributes["class"] = "TBReadonly";
+                            mytbLine.Attributes.Add("readonly", "true");
+                        }
+
 
                         this.Add(mytbLine);
                         this.AddTDEnd();
@@ -815,7 +819,6 @@ namespace BP.Web.Comm.UC.WF
                 {
                     switch (me.ExtType)
                     {
-
                         case MapExtXmlList.AutoFullDLL: // 自动填充下拉框.
                             DDL ddlFull = this.GetDDLByID("DDL_" + me.AttrOfOper);
                             if (ddlFull == null)
@@ -823,8 +826,8 @@ namespace BP.Web.Comm.UC.WF
                                 me.Delete();
                                 continue;
                             }
-                            string valOld = ddlFull.SelectedItemStringVal;
 
+                            string valOld = ddlFull.SelectedItemStringVal;
                             string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
                             fullSQL = fullSQL.Replace("@WebUser.Name", WebUser.Name);
                             fullSQL = fullSQL.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
@@ -843,7 +846,6 @@ namespace BP.Web.Comm.UC.WF
                             ddlFull.Bind(DBAccess.RunSQLReturnTable(fullSQL), "No", "Name");
                             ddlFull.SetSelectItem(valOld);
                             break;
-
                         default:
                             break;
                     }
@@ -1303,21 +1305,16 @@ namespace BP.Web.Comm.UC.WF
                 #region add contrals.
                 TB tb = new TB();
                 tb.ID = "TB_" + attr.KeyOfEn;
-                if (attr.UIIsEnable)
-                    tb.Enabled = attr.UIIsEnable;
-                else
-                    tb.ReadOnly = true;
+                if (attr.UIIsEnable == false)
+                    tb.Attributes.Add("readonly", "true");
 
                 tb.Attributes["tabindex"] = attr.IDX.ToString();
                 if (this.IsReadonly)
                     tb.ReadOnly = true;
+
                 switch (attr.LGType)
                 {
                     case FieldTypeS.Normal:
-                        if (attr.UIIsEnable)
-                            tb.Enabled = attr.UIIsEnable;
-                        else
-                            tb.ReadOnly = true;
                         switch (attr.MyDataType)
                         {
                             case BP.DA.DataType.AppString:

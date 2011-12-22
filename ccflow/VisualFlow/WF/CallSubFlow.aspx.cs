@@ -51,7 +51,7 @@ public partial class WF_CallSubFlow : WebPage
         string currNode = BP.DA.DBAccess.RunSQLReturnVal("SELECT FK_Node FROM WF_GenerWorkFlow WHERE WorkID=" + this.FID)  as string;
         if (wks.Count == 0)
         {
-            this.Response.Redirect("MyFlow"+Glo.FromPageType+".aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_Node_From=" + this.Request.QueryString["FK_Node_From"]);
+            this.Response.Redirect("MyFlow"+Glo.FromPageType+".aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FromNode=" + this.Request.QueryString["FromNode"]);
             return;
         }
 
@@ -74,7 +74,7 @@ public partial class WF_CallSubFlow : WebPage
         this.Pub1.AddTREnd();
       
         this.Pub1.AddTR();
-        this.Pub1.Add("<TD class=TitleMsg  align=left colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>您的位置:<a href='MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.FID + "' >流程处理:" + from.Name + "</a> => <a href='MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_Node_From=" + currNode + "'>流程发起</a></b> - <a href=\"javascript:WinOpen('./../Comm/PanelEns.aspx?EnsName=ND"+int.Parse(this.FK_Flow)+"Rpt');\" >流程查询</a></TD>");
+        this.Pub1.Add("<TD class=TitleMsg  align=left colspan=" + colspan + "><img src='./Img/EmpWorks.gif' > <b>您的位置:<a href='MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.FID + "' >流程处理:" + from.Name + "</a> => <a href='MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FromNode=" + currNode + "'>流程发起</a></b> - <a href=\"javascript:WinOpen('./../Comm/PanelEns.aspx?EnsName=ND"+int.Parse(this.FK_Flow)+"Rpt');\" >流程查询</a></TD>");
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();

@@ -410,8 +410,12 @@ public partial class Comm_Dtl : WebPage
                                 tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border-width:0px;";
                                 this.Pub1.AddTD("width='2px'", tb);
                                 tb.Text = val;
-                                if (attr.UIIsEnable==false)
-                                    tb.ReadOnly = true;
+                                if (attr.UIIsEnable == false)
+                                {
+                                    tb.Attributes.Add("readonly", "true");
+                                    tb.CssClass = "TBReadonly";
+                                }
+                                
                                 if (attr.UIHeight > 25)
                                 {
                                     tb.TextMode = TextBoxMode.MultiLine;
@@ -607,7 +611,7 @@ public partial class Comm_Dtl : WebPage
                         switch (me.ExtType)
                         {
                             case MapExtXmlList.DDLFullCtrl: // 自动填充.
-                                DDL ddlOper = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper);
+                                DDL ddlOper = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper + "_" + mydtl.OID);
                                 if (ddlOper == null)
                                     continue;
                                 ddlOper.Attributes["onchange"] = "DDLFullCtrl(this.value,\'" + ddlOper.ClientID + "\', \'" + me.MyPK + "\')";

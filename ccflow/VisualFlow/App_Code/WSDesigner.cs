@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Web;
 using System.Web.Services;
 using BP;
+using BP.Sys;
 using BP.DA;
 using BP.WF;
 using BP.En;
@@ -38,6 +39,10 @@ public class WSDesigner : WSBase
         {
             switch (doType)
             {
+                case "DelFrm":
+                    MapData md = new MapData(v1);
+                    md.Delete();
+                    return null;
                 case "InitDesignerXml":
                     string path = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\Data\\Xml\\Designer.xml";
                     DataSet ds = new DataSet();
@@ -439,7 +444,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     [WebMethod(EnableSession = true)]
     public bool DoDropLine(int from, int to)
     {
-        Direction dir = new Direction();
+        BP.WF.Direction dir = new BP.WF.Direction();
         dir.Node = from;
         dir.ToNode = to;
         dir.Delete();

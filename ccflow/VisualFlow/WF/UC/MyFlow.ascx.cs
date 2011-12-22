@@ -96,11 +96,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return s;
         }
     }
-    public string FK_Node_From
+    public string FromNode
     {
         get
         {
-            return  this.Request.QueryString["FK_Node_From"];
+            return  this.Request.QueryString["FromNode"];
         }
     }
     /// <summary>
@@ -612,15 +612,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         if (nd.IsStartNode)
         {
             /*判断是否来与子流程.*/
-            if (string.IsNullOrEmpty(this.Request.QueryString["FK_Node_From"]) == false)
+            if (string.IsNullOrEmpty(this.Request.QueryString["FromNode"]) == false)
             {
                 if (this.FID == 0)
                     throw new Exception("流程设计错误，调起子流程时，没有接受到FID参数。");
 
                 /* 如果来自于主流程 */
-                int fk_node_From = int.Parse(this.Request.QueryString["FK_Node_From"]);
-                BP.WF.Node fk_node_From_nd = new BP.WF.Node(fk_node_From);
-                Work fromWk = fk_node_From_nd.HisWork;
+                int FromNode = int.Parse(this.Request.QueryString["FromNode"]);
+                BP.WF.Node FromNode_nd = new BP.WF.Node(FromNode);
+                Work fromWk = FromNode_nd.HisWork;
                 fromWk.OID = this.FID;
                 fromWk.RetrieveFromDBSources();
                 wk.Copy(fromWk);
@@ -1089,7 +1089,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     this.Send(true);
                     if (string.IsNullOrEmpty(this.Request.QueryString["WorkID"]))
                     {
-                        this.Response.Redirect(this.PageID + ".aspx?FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "&FK_Node_From=" + this.FK_Node_From, true);
+                        this.Response.Redirect(this.PageID + ".aspx?FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "&FromNode=" + this.FromNode, true);
                         return;
                     }
                     break;
