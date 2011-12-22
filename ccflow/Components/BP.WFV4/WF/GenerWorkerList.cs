@@ -534,6 +534,8 @@ namespace BP.WF
                     return true;
                 case RunModel.FHL:
                     return true;
+                case RunModel.SubThread:
+                    return true;
                 default:
                     break;
             }

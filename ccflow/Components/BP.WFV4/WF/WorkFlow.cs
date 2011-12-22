@@ -539,6 +539,11 @@ namespace BP.WF
                     return "@当前的工作已经完成。";
             }
         }
+        public string DoFlowSubOver()
+        {
+
+            return null;
+        }
         /// <summary>
         /// 结束流程
         /// </summary>
@@ -548,18 +553,17 @@ namespace BP.WF
             GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
             Node nd = new Node(gwf.FK_Node);
             string msg = this.BeforeFlowOver();
-
-            //先让它的子流程结束。
-            WorkerLists wls = new WorkerLists();
-            wls.Retrieve(WorkerListAttr.FID, this.WorkID);
-            foreach (WorkerList wl in wls)
-            {
-                WorkFlow wf = new WorkFlow(wl.FK_Flow, wl.WorkID);
-                wf.DoFlowOver();
-            }
-
             if (this.IsMainFlow)
             {
+                //先让它的子流程结束。
+                WorkerLists wls = new WorkerLists();
+                wls.Retrieve(WorkerListAttr.FID, this.WorkID);
+                foreach (WorkerList wl in wls)
+                {
+                    WorkFlow wf = new WorkFlow(wl.FK_Flow, wl.WorkID);
+                    wf.DoFlowSubOver();
+                }
+
                 /* 如果是一个主线程 */
                 BP.DA.DBAccess.RunSQL("UPDATE ND" + this.StartNodeID + " SET WFState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
 
@@ -569,7 +573,7 @@ namespace BP.WF
                 geRpt.RetrieveFromDBSources();
                 geRpt.SetValByKey("FK_NY", DataType.CurrentYearMonth);
 
-                string emps ="";
+                string emps = "";
                 WorkerLists wlss = new WorkerLists();
                 QueryObject qo = new QueryObject(wlss);
                 qo.AddWhere(WorkerListAttr.WorkID, this.WorkID);
@@ -589,10 +593,10 @@ namespace BP.WF
                 }
 
                 geRpt.SetValByKey(GERptAttr.FlowEmps, emps);
-                geRpt.SetValByKey(GERptAttr.FlowEnder, Web.WebUser.No );
+                geRpt.SetValByKey(GERptAttr.FlowEnder, Web.WebUser.No);
                 geRpt.SetValByKey(GERptAttr.FlowEnderRDT, DataType.CurrentDataTime);
                 geRpt.SetValByKey(GERptAttr.WFState, (int)WFState.Complete);
-                geRpt.SetValByKey(GERptAttr.MyNum,1);
+                geRpt.SetValByKey(GERptAttr.MyNum, 1);
                 geRpt.Save();
 
                 //geRpt.Update("Emps", emps);
@@ -636,8 +640,6 @@ namespace BP.WF
             // 清除其他的工作者。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + ")  AND FK_Node IN (SELECT NodeId FROM WF_Node WHERE FK_Flow='" + this.HisFlow.No + "') ");
             return msg;
-
-         
         }
         /// <summary>
         /// 在分流上结束流程。

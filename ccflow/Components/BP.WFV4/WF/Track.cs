@@ -52,7 +52,11 @@ namespace BP.WF
         /// <summary>
         /// 启动子流程
         /// </summary>
-        StartSubFlow
+        StartSubFlow,
+        /// <summary>
+        /// 子线程前进
+        /// </summary>
+        SubFlowForward
     }
     /// <summary>
     ///  属性

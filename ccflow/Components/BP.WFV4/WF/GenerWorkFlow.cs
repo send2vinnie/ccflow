@@ -335,14 +335,14 @@ namespace BP.WF
 		/// </summary>
 		public GenerWorkFlow()
 		{
-		}		 
-		public GenerWorkFlow(Int64 workId)
-		{
-			QueryObject qo = new QueryObject(this);
-			qo.AddWhere(GenerWorkFlowAttr.WorkID, workId);
-			if (qo.DoQuery()==0)
-				throw new Exception("工作["+workId+"]不存在，可能是已经完成。");
 		}
+        public GenerWorkFlow(Int64 workId)
+        {
+            QueryObject qo = new QueryObject(this);
+            qo.AddWhere(GenerWorkFlowAttr.WorkID, workId);
+            if (qo.DoQuery() == 0)
+                throw new Exception("工作 GenerWorkFlow [" + workId + "]不存在，可能是已经完成。");
+        }
         ///// <summary>
         ///// 产生的工作流程
         ///// </summary>

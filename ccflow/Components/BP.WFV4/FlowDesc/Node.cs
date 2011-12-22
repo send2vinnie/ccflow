@@ -150,7 +150,11 @@ namespace BP.WF
         /// <summary>
         /// 分合流
         /// </summary>
-        FHL
+        FHL = 3,
+        /// <summary>
+        /// 子线程
+        /// </summary>
+        SubThread = 4
     }
     /// <summary>
     /// 节点签字类型
@@ -226,7 +230,11 @@ namespace BP.WF
         /// <summary>
         /// 分合流
         /// </summary>
-        WorkFHL = 5
+        WorkFHL = 5,
+        /// <summary>
+        /// 子流程
+        /// </summary>
+        SubThreadWork=6
     }
     /// <summary>
     /// 流程节点类型
@@ -722,11 +730,13 @@ namespace BP.WF
                     else
                         this.HisNodeWorkType = NodeWorkType.WorkFHL;
                     break;
+                case RunModel.SubThread:
+                    this.HisNodeWorkType = NodeWorkType.SubThreadWork;
+                    break;
                 default:
                     throw new Exception("eeeee");
                     break;
             }
-
 
             #region  判断流程节点类型。
             while (true)
@@ -752,7 +762,6 @@ namespace BP.WF
                     this.HisFNType = FNType.Branch;
                     break;
                 }
-
 
                 // 查看能够转向到他的节点。
                 Nodes fNDs = this.HisFromNodes;
@@ -2189,7 +2198,7 @@ namespace BP.WF
                     NodeAttr.SignType, "@0=单签@1=汇签");
 
                 map.AddDDLSysEnum(NodeAttr.RunModel, 0, "运行模式(对普通节点有效)", true, true,
-                    NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流");
+                    NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流@4=子线程");
 
 
                 //map.AddDDLSysEnum(NodeAttr.FLRole, 0, "分流规则", true, true, 

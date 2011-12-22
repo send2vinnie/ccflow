@@ -196,7 +196,7 @@ namespace BP.WF
             QueryObject qo = new QueryObject(this);
             qo.AddWhere(GenerFHAttr.FID, FID);
             if (qo.DoQuery() == 0)
-                throw new Exception("工作[" + FID + "]不存在，可能是已经完成。");
+                throw new Exception("查询 GenerFH 工作[" + FID + "]不存在，可能是已经完成。");
         }
         /// <summary>
         /// 产生分合流程控制流程
@@ -251,11 +251,11 @@ namespace BP.WF
 
                 map.AddTBString(GenerFHAttr.ToEmpsMsg, null, "接受人员", true, false, 0, 3000, 10);
 
-                
                 map.AddTBInt(GenerFHAttr.FK_Node, 0, "停留节点", true, false);
                 map.AddTBInt(GenerFHAttr.WFState, 0, "WFState", true, false);
 
                 map.AddTBDate(GenerFHAttr.RDT, null, "RDT", true, false);
+
 
                 //RefMethod rm = new RefMethod();
                 //rm.Title = this.ToE("WorkRpt", "工作报告");  // "工作报告";

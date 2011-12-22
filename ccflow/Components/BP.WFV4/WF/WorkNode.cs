@@ -1806,6 +1806,9 @@ namespace BP.WF
                 case NodeWorkType.WorkHL:
                     at = ActionType.ForwardHL;
                     break;
+                case NodeWorkType.SubThreadWork:
+                    at = ActionType.SubFlowForward;
+                    break;
                 default:
                     break;
             }
@@ -3327,6 +3330,8 @@ namespace BP.WF
                 case NodeWorkType.StartWork:
                     // 合理的结束。
                     break;
+                case NodeWorkType.SubThreadWork:
+                    break;
                 default:
                     break;
                 //throw new Exception("@流程设计错误，结束节点的类型不能为:(" + this.HisNode.HisNodeWorkTypeT + ") 类型.");
@@ -3532,7 +3537,8 @@ namespace BP.WF
                         switch (this.HisNode.HisNodeWorkType)
                         {
                             case NodeWorkType.Work:
-                            case NodeWorkType.StartWork:
+                            case NodeWorkType.SubThreadWork:
+                            case NodeWorkType.StartWork: /* 如果当前点是以上类型 */
                                 if (this.HisWork.FID == 0)
                                     msg = StartNextWorkNodeHeLiu_WithOutFID(nd);  /* 没有流程ID,比如: */
                                 else
@@ -3541,13 +3547,13 @@ namespace BP.WF
                             default:
                                 throw new Exception("@没有判断的情况。");
                         }
-
                         msg += "@<a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnSend&FID=" + this.HisWork.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + nd.FK_Flow + "'><img src='" + this.VirPath + "/WF/Img/UnDo.gif' border=0/>" + this.ToE("WN22", "撤销本次发送") + "</a>。";
                         return msg;
                     case NodeWorkType.StartWork:
                     case NodeWorkType.StartWorkFL:
                         throw new Exception("System Error ");
                         break;
+                    case NodeWorkType.SubThreadWork: // 如果是下一个节点是子线程.
                     default:
                         return StartNextWorkNodeOrdinary(nd);  /* 普通节点 */
                 }
@@ -3661,13 +3667,13 @@ namespace BP.WF
                 this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Complete,
                     WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
 
-
                 #region 处理完成率
-                string sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID + " AND IsPass=1";
+                string sql = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID + " AND IsPass=1";
                 decimal ok = (decimal)DBAccess.RunSQLReturnValInt(sql);
 
                 // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
-                sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE IsPass=0 AND FID=" + this.HisWork.FID;
+                //  sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE IsPass=0 AND FID=" + this.HisWork.FID;
+                sql = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID;
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(sql);
                 decimal passRate = ok / all * 100;
                 string numStr = "@您是第(" + ok + ")到达此节点上的同事。";
@@ -3767,12 +3773,14 @@ namespace BP.WF
             }
             #endregion 复制附件。
 
-            /* 
-             *  合流点需要等待各个分流点全部处理完后才能看到它。
-             */
-           string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
-         //   string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE  IsPass=0 AND FID=" + this.HisWork.FID;
+            /* 合流点需要等待各个分流点全部处理完后才能看到它。*/
+
+            string sql1 = "";
+            // "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
+            // string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE  IsPass=0 AND FID=" + this.HisWork.FID;
             
+            #warning 对于多个分合流点可能会有问题。
+            sql1 = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID;
             decimal numAll1 = (decimal)DBAccess.RunSQLReturnValInt(sql1);
             decimal passRate1 = 1 / numAll1 * 100;
             if (nd.PassRate <= passRate1)
@@ -3781,7 +3789,7 @@ namespace BP.WF
             }
             else
             {
-#warning 为了不让其显示在途的工作需要， =3 不是正常的处理模式。
+                #warning 为了不让其显示在途的工作需要， =3 不是正常的处理模式。
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=3,WorkID=" + this.HisWork.FID + ",FID=0 WHERE FK_Node=" + nd.NodeID + " AND WorkID=" + this.HisWork.OID);
             }
 

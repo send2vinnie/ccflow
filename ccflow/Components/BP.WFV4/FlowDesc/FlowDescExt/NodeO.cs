@@ -148,25 +148,12 @@ namespace BP.WF.Ext
         }
         protected override bool beforeUpdate()
         {
-            //if (this.HisReturnRole == ReturnRole.CanNotReturn)
-            //    this.ReturnEnable = false;
-            //else
-            //    this.ReturnEnable = true;
 
-            #region 更新流程判断条件的标记
-            DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0  WHERE FK_Flow='" + this.FK_Flow + "'");
-            DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=1 WHERE NodeID IN (SELECT NodeID FROM WF_Cond WHERE CondType=0) AND FK_Flow='" + this.FK_Flow + "'");
-            DBAccess.RunSQL("UPDATE WF_Node SET IsCCFlow=1 WHERE NodeID IN (SELECT NodeID FROM WF_Cond WHERE CondType=1) AND FK_Flow='" + this.FK_Flow + "'");
-            #endregion 更新流程判断条件的标记
-
-            Flow fl = new Flow();
-            fl.No = this.FK_Flow;
-            fl.RetrieveFromDBSources();
-
-            this.FlowName = fl.Name;
-            //  Node.CheckFlow(fl);
-            DBAccess.RunSQL("UPDATE Sys_MapData SET Name='" + this.Name + "' WHERE No='ND" + this.NodeID + "'");
+            Node nd = new Node(this.NodeID);
+            nd.Update();
             return base.beforeUpdate();
+
+        
         }
 
 
@@ -216,7 +203,7 @@ namespace BP.WF.Ext
                 map.AddTBDecimal(NodeAttr.PassRate, 0, "完成通过率", true, false);
 
                 map.AddDDLSysEnum(NodeAttr.RunModel, 0, this.ToE("RunModel", "运行模式"),
-                    true, true, NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流");
+                    true, true, NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流@4=子线程");
 
                 //map.AddDDLSysEnum(NodeAttr.FLRole, 0, this.ToE("FLRole", "分流规则"), true, true, NodeAttr.FLRole,
                 //    "@0=按接受人@1=按部门@2=按岗位");

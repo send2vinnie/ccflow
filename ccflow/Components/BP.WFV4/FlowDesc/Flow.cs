@@ -869,7 +869,8 @@ namespace BP.WF
                 msg += "<br>";
 
                 #region 检查是否有方向条件
-                if (nd.HisToNodes.Count >= 2 && nd.HisRunModel== RunModel.Ordinary)
+                if (nd.HisToNodes.Count >= 2 
+                    && (nd.HisRunModel== RunModel.Ordinary || nd.HisRunModel== RunModel.SubThread) )
                 {
                     foreach (Node cND in nd.HisToNodes)
                     {
