@@ -40,7 +40,6 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
     {
         GenerWorkFlows gwfs = BP.WF.Dev2Interface.DB_GenerRuningOfEntities();
 
-
         this.Page.Title = this.ToE("OnTheWayWork", "在途工作");
         if (WebUser.IsWap)
         {

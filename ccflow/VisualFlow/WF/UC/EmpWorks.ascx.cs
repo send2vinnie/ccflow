@@ -60,8 +60,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle(this.ToE("Flow", "流程"));
         this.Pub1.AddTDTitle(this.ToE("NodeName", "节点"));
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
-        this.Pub1.AddTDTitle(this.ToE("Starter", "发起"));
+        this.Pub1.AddTDTitle(this.ToE("Starter", "发起人"));
         this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
+      //  this.Pub1.AddTDTitle("发送人");
         this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
         this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));
         this.Pub1.AddTDTitle(this.ToE("Sta", "状态"));
@@ -84,6 +85,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node="+dr["FK_Node"]+"&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
             this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
             this.Pub1.AddTD(dr["RDT"].ToString());
+
+           // this.Pub1.AddTD(dr["Sender"].ToString());
+
             this.Pub1.AddTD(dr["ADT"].ToString());
             this.Pub1.AddTD(dr["SDT"].ToString());
             DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);

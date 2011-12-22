@@ -392,9 +392,7 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
     public void BindHome()
     {
         this.Pub2.AddH3("欢迎使用ccflow报表设计器.");
-
     }
-
     public void BindLeft(Flow fl)
     {
         // this.Pub1.AddH2(fl.Name + " - 查询设计");

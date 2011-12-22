@@ -957,7 +957,7 @@ namespace BP.Web.Comm.UC.WF
                 switch (attr.HisAutoFull)
                 {
                     case AutoFullWay.Way1_JS:
-                        js = "\t\n <script type='text/javascript' >";
+                        js += "\t\n <script type='text/javascript' >";
                         TB tb = this.GetTBByID("TB_" + attr.KeyOfEn);
                         string left = "\n  document.forms[0]." + tb.ClientID + ".value = ";
                         string right = attr.AutoFullDoc;
@@ -988,9 +988,9 @@ namespace BP.Web.Comm.UC.WF
                         js += " \t\n  document.forms[0]." + tb.ClientID + ".value= VirtyMoney(document.forms[0]." + tb.ClientID + ".value ) ;";
                         js += "\t\n } ";
                         js += "\t\n</script>";
-                        break;
+                        continue;
                     default:
-                        break;
+                        continue;
                 }
             }
             this.Add(js);
@@ -1209,7 +1209,7 @@ namespace BP.Web.Comm.UC.WF
                         break;
                     case BtnEventType.RunExe:
                     case BtnEventType.RunJS:
-                        this.Add("<input type=button value='" + btn.Text.Replace("&nbsp;", " ") + "' enable=true onclick=\"" + btn.EventContext.Replace("~", "'") + "\" />");
+                        this.Add("<input type=button value=\"" + btn.Text.Replace("&nbsp;", " ") + "\" enable=true onclick=\"" + btn.EventContext.Replace("~", "'") + "\" />");
                         break;
                     default:
                         Button myBtn = new Button();
@@ -1223,7 +1223,6 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n</span>");
                 this.Add("\t\n</DIV>");
             }
-
             #endregion
 
             #region 输出竖线与标签 & 超连接 Img.

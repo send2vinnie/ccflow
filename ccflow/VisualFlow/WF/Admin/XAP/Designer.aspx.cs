@@ -36,10 +36,19 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion 测试数据库是否连接成功。
 
+            #region 2011-12-21 升级节点属性规则.
+            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='RunModel'");
+            #endregion
+
+
             msg = "@执行升级出现错误。";
             //保障升级后的数据完整性. 2011-11-26.
             sql = "UPDATE SYS_MAPEXT SET ExtType='TBFullCtrl' WHERE ExtType='FullCtrl'";
             DBAccess.RunSQL(sql);
+
+            sql = "UPDATE WF_GenerWorkFlow SET NodeName=(SELECT NAME FROM WF_Node WHERE WF_Node.NodeID=WF_GenerWorkFlow.FK_Node)";
+            DBAccess.RunSQL(sql);
+
 
             #region 2011-12-13 删除了流程日志字段.
             DBAccess.RunSQL("DELETE Sys_MapAttr WHERE KeyOfEn='WFLog'");
@@ -48,6 +57,8 @@ public partial class Designer : System.Web.UI.Page
             #region 2011-12-01 升级投递规则.
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DeliveryWay'");
             #endregion
+
+           
 
 
             #region 手动升级. 2011-07-08 补充节点字段分组.

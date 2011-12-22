@@ -852,7 +852,6 @@ namespace BP.Web.Comm
                 whereOfLJ = whereOfLJ.Substring(0, whereOfLJ.Length - " AND ".Length) + Condition;
             }
 
-
             string orderByReq = this.Request.QueryString["OrderBy"];
             string orderby = "";
             if (orderByReq != null)

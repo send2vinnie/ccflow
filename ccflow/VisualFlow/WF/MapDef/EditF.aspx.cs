@@ -509,7 +509,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             default:
                 break;
         }
-
     }
     /// <summary>
     /// 
@@ -568,7 +567,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         this.Pub1.AddTREnd();
 
-
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("TBWidth", "文本框宽度"));
@@ -592,7 +590,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.AddTREnd();
         this.EditBeforeEnd(mapAttr);
     }
-
     void cb_CheckedChanged_rdt(object sender, EventArgs e)
     {
         CheckBox cb = this.Pub1.GetCBByID("CB_DefVal");
