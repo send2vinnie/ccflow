@@ -362,7 +362,7 @@ namespace BP.Web
                             fn.IsPrint = isPrint;
                             fn.FK_Flow = fk_flow;
                             fn.Update();
-                            BP.DA.DBAccess.RunSQL("UPDATE Sys_MapData SET FK_FrmSort='01' WHERE No='" + fk_frm + "'");
+                            BP.DA.DBAccess.RunSQL("UPDATE Sys_MapData SET FK_FrmSort='01'  WHERE No='" + fk_frm + "'");
                             return fk_frm;
                         }
 

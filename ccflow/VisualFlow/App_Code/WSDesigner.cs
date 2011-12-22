@@ -563,7 +563,11 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
 
                 AtPara ap = new AtPara(nd);
                 Node mynode = new Node(ap.GetValIntByKey("NodeID"));
-                SetNodeProperties(mynode, ap.GetValStrByKey("Name"), ap.GetValIntByKey("X"), ap.GetValIntByKey("Y"), ap.GetValIntByKey("NodeType"));
+                SetNodeProperties(mynode, ap.GetValStrByKey("Name"),
+                    ap.GetValIntByKey("X"),
+                    ap.GetValIntByKey("Y"),
+                    ap.GetValIntByKey("NodeType"));
+
                 mynode.DirectUpdate();
                 //   mynode.Save();
             }
@@ -596,34 +600,39 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         n.Name = nodeName;
         n.X = x;
         n.Y = y;
-        if (0 == nodeType)
-        {
-            n.NodePosType = NodePosType.Start;
-        }
-        else if (2 == nodeType)
-        {
-            n.NodePosType = NodePosType.End;
-        }
-        else if (1 == nodeType)
-        {
-            n.NodePosType = NodePosType.Mid;
-            n.HisNodeWorkType = NodeWorkType.Work;
-        }
-        else if (3 == nodeType)
-        {
-            n.NodePosType = NodePosType.Mid;
-            n.HisNodeWorkType = NodeWorkType.WorkHL;
-        }
-        else if (4 == nodeType)
-        {
-            n.NodePosType = NodePosType.Mid;
-            n.HisNodeWorkType = NodeWorkType.WorkFL;
-        }
-        else if (5 == nodeType)
-        {
-            n.NodePosType = NodePosType.Mid;
-            n.HisNodeWorkType = NodeWorkType.WorkFHL;
-        }
+        //if (0 == nodeType)
+        //{
+        //    n.NodePosType = NodePosType.Start;
+        //}
+        //else if (2 == nodeType)
+        //{
+        //    n.NodePosType = NodePosType.End;
+        //}
+        //else if (1 == nodeType)
+        //{
+        //    n.NodePosType = NodePosType.Mid;
+        //    n.HisNodeWorkType = NodeWorkType.Work;
+        //}
+        //else if (3 == nodeType)
+        //{
+        //    n.NodePosType = NodePosType.Mid;
+        //    n.HisNodeWorkType = NodeWorkType.WorkHL;
+        //}
+        //else if (4 == nodeType)
+        //{
+        //    n.NodePosType = NodePosType.Mid;
+        //    n.HisNodeWorkType = NodeWorkType.WorkFL;
+        //}
+        //else if (5 == nodeType)
+        //{
+        //    n.NodePosType = NodePosType.Mid;
+        //    n.HisNodeWorkType = NodeWorkType.WorkFHL;
+        //}
+        //else if (6 == nodeType)
+        //{
+        //    n.NodePosType = NodePosType.Mid;
+        //    n.HisNodeWorkType = NodeWorkType.SubThreadWork;
+        //}
     }
     [WebMethod]
     public string Uploadfile(byte[] FileByte, string fileName)
