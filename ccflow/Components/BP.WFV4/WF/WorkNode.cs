@@ -2103,8 +2103,7 @@ namespace BP.WF
 
                             //记录父流程被调起。
                             Track tkParent = new Track();
-                            tkParent.WorkID = this.HisWork.FID;
-                            tkParent.FID = this.HisWork.FID;
+                            tkParent.WorkID = Int64.Parse(fromWorkID);
                             tkParent.RDT = DataType.CurrentDataTimess;
                             tkParent.HisActionType = ActionType.CallSubFlow;
                             tkParent.EmpFrom = WebUser.No;

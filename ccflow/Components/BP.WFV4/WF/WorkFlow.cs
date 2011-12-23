@@ -552,7 +552,7 @@ namespace BP.WF
             DBAccess.RunSQL("DELETE WF_GenerWorkFlow   WHERE WorkID=" + this.WorkID);
             DBAccess.RunSQL("DELETE WF_GenerWorkerlist WHERE WorkID=" + this.WorkID);
 
-            string sql = "SELECT count(*) FROM WF_GenerWorkFlow WHERE FID=" + this.WorkID;
+            string sql = "SELECT count(*) FROM WF_GenerWorkFlow WHERE FID=" + this.FID;
             int num = DBAccess.RunSQLReturnValInt(sql);
             if (DBAccess.RunSQLReturnValInt(sql) == 0)
             {
@@ -563,7 +563,7 @@ namespace BP.WF
             }
             else
             {
-                return "@当前子流程已完成，主流程还生于(" + num + ")个子流程未完成。";
+                return "@当前子流程已完成，主流程还有(" + num + ")个子流程未完成。";
             }
         }
         /// <summary>
@@ -573,7 +573,6 @@ namespace BP.WF
         public string DoFlowOver()
         {
             string msg = this.BeforeFlowOver();
-
             if (this.IsMainFlow == false)
             {
                 /* 处理子流程完成*/
