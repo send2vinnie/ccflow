@@ -447,24 +447,26 @@ namespace BP.WF
 
                     switch (this.FK_Operator.Trim().ToLower())
                     {
+                        case "<>":
+                            if (en.GetValStringByKey(this.AttrKey) != this.OperatorValue.ToString())
+                                return true;
+                            else
+                                return false;
                         case "=":  // 如果是 = 
                             if (en.GetValStringByKey(this.AttrKey) == this.OperatorValue.ToString())
                                 return true;
                             else
                                 return false;
-
                         case ">":
                             if (en.GetValDoubleByKey(this.AttrKey) > Double.Parse(this.OperatorValue.ToString()))
                                 return true;
                             else
                                 return false;
-
                         case ">=":
                             if (en.GetValDoubleByKey(this.AttrKey) >= Double.Parse(this.OperatorValue.ToString()))
                                 return true;
                             else
                                 return false;
-
                         case "<":
                             if (en.GetValDoubleByKey(this.AttrKey) < Double.Parse(this.OperatorValue.ToString()))
                                 return true;
@@ -488,9 +490,8 @@ namespace BP.WF
                             else
                                 return true;
                         default:
-                            throw new Exception("@没有找到操作符号..");
+                            throw new Exception("@没有找到操作符号(" + this.FK_Operator.Trim().ToLower() + ").");
                     }
-
                 }
                 catch (Exception ex)
                 {

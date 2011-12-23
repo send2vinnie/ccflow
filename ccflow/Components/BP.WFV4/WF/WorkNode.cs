@@ -2094,10 +2094,12 @@ namespace BP.WF
                         {
                             Node ndFrom = new Node(int.Parse(fk_nodeFrom));
                             string fromWorkID = System.Web.HttpContext.Current.Request.QueryString["FromWorkID"];
+                            
+                            GenerWorkFlow gwfP=new GenerWorkFlow(Int64.Parse(fromWorkID));
 
                             //记录当前流程被调起。
                             this.AddToTrack(ActionType.StartSubFlow, WebUser.No,
-                                WebUser.Name, ndFrom.NodeID, ndFrom.FlowName+"\t\n"+ndFrom.Name, "被父流程(" + ndFrom.FlowName + ")唤起.");
+                                WebUser.Name, ndFrom.NodeID, ndFrom.FlowName + "\t\n" + ndFrom.Name, "被父流程(" + ndFrom.FlowName + ":" + gwfP.Title+ ")唤起.");
 
                             //记录父流程被调起。
                             Track tkParent = new Track();

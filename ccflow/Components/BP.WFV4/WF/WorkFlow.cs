@@ -549,19 +549,22 @@ namespace BP.WF
             Node nd = new Node(gwf.FK_Node);
             BP.DA.DBAccess.RunSQL("UPDATE  " + nd.PTable + " SET NodeState=1 WHERE OID=" + this.WorkID); // 更新开始节点的状态。
 
-            DBAccess.RunSQL("DELETE WF_GenerWorkFlow   WHERE OID="+this.WorkID);
+            DBAccess.RunSQL("DELETE WF_GenerWorkFlow   WHERE WorkID=" + this.WorkID);
             DBAccess.RunSQL("DELETE WF_GenerWorkerlist WHERE WorkID=" + this.WorkID);
 
-
-            //先让它的子流程结束。
-            WorkerLists wls = new WorkerLists();
-            wls.Retrieve(WorkerListAttr.FID, this.FID);
-            foreach (WorkerList wl in wls)
+            string sql = "SELECT count(*) FROM WF_GenerWorkFlow WHERE FID=" + this.WorkID;
+            int num = DBAccess.RunSQLReturnValInt(sql);
+            if (DBAccess.RunSQLReturnValInt(sql) == 0)
             {
-                WorkFlow wf = new WorkFlow(wl.FK_Flow, wl.WorkID);
-                wf.DoFlowSubOver();
+                /*说明这是最后一个*/
+                WorkFlow wf = new WorkFlow(gwf.FK_Flow, this.FID);
+                wf.DoFlowOver();
+                return "@当前子流程已完成，主流程已完成。";
             }
-            return null;
+            else
+            {
+                return "@当前子流程已完成，主流程还生于(" + num + ")个子流程未完成。";
+            }
         }
         /// <summary>
         /// 结束流程
