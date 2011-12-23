@@ -171,6 +171,20 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
         }
     }
+    public int FromWorkID
+    {
+        get
+        {
+            try
+            {
+                return int.Parse(this.Request.QueryString["FromWorkID"]);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+    }
     #endregion
 
     #region 动态控件
@@ -614,17 +628,17 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             /*判断是否来与子流程.*/
             if (string.IsNullOrEmpty(this.Request.QueryString["FromNode"]) == false)
             {
-                if (this.FID == 0)
-                    throw new Exception("流程设计错误，调起子流程时，没有接受到FID参数。");
+                if (this.FromWorkID == 0)
+                    throw new Exception("流程设计错误，调起子流程时，没有接受到FromWorkID参数。");
 
-                /* 如果来自于主流程 */
-                int FromNode = int.Parse(this.Request.QueryString["FromNode"]);
-                BP.WF.Node FromNode_nd = new BP.WF.Node(FromNode);
-                Work fromWk = FromNode_nd.HisWork;
-                fromWk.OID = this.FID;
-                fromWk.RetrieveFromDBSources();
-                wk.Copy(fromWk);
-                wk.FID = this.FID;
+                ///* 如果来自于主流程 */
+                //int FromNode = int.Parse(this.Request.QueryString["FromNode"]);
+                //BP.WF.Node FromNode_nd = new BP.WF.Node(FromNode);
+                //Work fromWk = FromNode_nd.HisWork;
+                //fromWk.OID = this.FromWorkID;
+                //fromWk.RetrieveFromDBSources();
+                //wk.Copy(fromWk);
+             //   wk.FID = this.FID;
             }
         }
 

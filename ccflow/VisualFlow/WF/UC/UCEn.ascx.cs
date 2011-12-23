@@ -1695,6 +1695,7 @@ namespace BP.Web.Comm.UC.WF
                 js += "\t\n</script>";
                 this.Add(js);
             }
+
             foreach (FrmImgAth ath in imgAths)
             {
                 this.Add("\t\n<DIV id=" + ath.MyPK + " style='position:absolute;left:" + ath.X + "px;top:" + ath.Y + "px;text-align:left;vertical-align:top' >");
