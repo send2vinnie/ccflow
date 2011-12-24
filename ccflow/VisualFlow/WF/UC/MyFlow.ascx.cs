@@ -1103,7 +1103,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     this.Send(true);
                     if (string.IsNullOrEmpty(this.Request.QueryString["WorkID"]))
                     {
-                        this.Response.Redirect(this.PageID + ".aspx?FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "&FromNode=" + this.FromNode, true);
+                        this.Response.Redirect(this.PageID + ".aspx?FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "&FromNode=" + this.FromNode+"&FromWorkID="+this.FromWorkID, true);
                         return;
                     }
                     break;

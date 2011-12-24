@@ -1245,14 +1245,21 @@ namespace BP.Web.Comm.UC.WF
                     /* 一道竖线 */
                     float h = line.Y1 - line.Y2;
                     h = Math.Abs(h);
-                    this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + line.BorderWidth + "px; height:" + h + "px;background-color:" + line.BorderColorHtml + "\" />");
+                    if (line.Y1 < line.Y2)
+                        this.Add("\t\n<img id='" + line.MyPK + "'  style=\"padding:0px;position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + line.BorderWidth + "px; height:" + h + "px;background-color:" + line.BorderColorHtml + "\" />");
+                    else
+                        this.Add("\t\n<img id='" + line.MyPK + "'  style=\"padding:0px;position:absolute; left:" + line.X2 + "px; top:" + line.Y2 + "px; width:" + line.BorderWidth + "px; height:" + h + "px;background-color:" + line.BorderColorHtml + "\" />");
                 }
                 else
                 {
                     /* 一道横线 */
                     float w = line.X2 - line.X1;
                     w = Math.Abs(w);
-                    this.Add("\t\n<img id='" + line.MyPK + "'  style=\"position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px;background-color:" + line.BorderColorHtml + "\" />");
+
+                    if (line.X1 < line.X2)
+                        this.Add("\t\n<img id='" + line.MyPK + "'  style=\"padding:0px;position:absolute; left:" + line.X1 + "px; top:" + line.Y1 + "px; width:" + w + "px; height:" + line.BorderWidth + "px;background-color:" + line.BorderColorHtml + "\" />");
+                    else
+                        this.Add("\t\n<img id='" + line.MyPK + "'  style=\"padding:0px;position:absolute; left:" + line.X2 + "px; top:" + line.Y2 + "px; width:" + w + "px; height:" + line.BorderWidth + "px;background-color:" + line.BorderColorHtml + "\" />");
                 }
             }
 
