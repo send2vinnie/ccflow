@@ -5,11 +5,43 @@ using BP.DA;
 using BP.En;
 namespace BP.Sys
 {
+    /// <summary>
+    /// 应用类型
+    /// </summary>
+    public enum AppType
+    {
+        /// <summary>
+        /// 流程表单
+        /// </summary>
+        Application = 0,
+        /// <summary>
+        /// 节点表单
+        /// </summary>
+        Node = 1
+    }
     public enum FrmFrom
     {
         Flow,
         Node,
         Dtl
+    }
+    /// <summary>
+    /// 表单类型
+    /// </summary>
+    public enum FrmType
+    {
+        /// <summary>
+        /// 傻瓜表单
+        /// </summary>
+        Column4Frm=0,
+        /// <summary>
+        /// 自由表单
+        /// </summary>
+        FreeFrm=1,
+        /// <summary>
+        /// URL 表单(自定义)
+        /// </summary>
+        Url=2
     }
 	/// <summary>
 	/// 映射基础
@@ -31,7 +63,6 @@ namespace BP.Sys
         /// DBURL
         /// </summary>
         public const string DBURL = "DBURL";
-
         /// <summary>
         /// 设计者
         /// </summary>
@@ -43,7 +74,7 @@ namespace BP.Sys
         /// <summary>
         /// 设计者联系方式
         /// </summary>
-        public const string DesignerContext = "DesignerContext";
+        public const string DesignerContact = "DesignerContact";
         /// <summary>
         /// 表单类别
         /// </summary>
@@ -52,6 +83,14 @@ namespace BP.Sys
         /// 在表格中显示的列
         /// </summary>
         public const string AttrsInTable = "AttrsInTable";
+        /// <summary>
+        /// 应用类型
+        /// </summary>
+        public const string AppType = "AppType";
+        /// <summary>
+        /// 表单类型
+        /// </summary>
+        public const string FrmType = "FrmType";
     }
 	/// <summary>
 	/// 映射基础
@@ -157,6 +196,83 @@ namespace BP.Sys
             get
             {
                 return (DBUrlType)this.GetValIntByKey(MapDataAttr.DBURL);
+            }
+        }
+        public int HisFrmTypeInt
+        {
+            get
+            {
+                return this.GetValIntByKey(MapDataAttr.FrmType);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.FrmType, value);
+            }
+        }
+        public FrmType HisFrmType
+        {
+            get
+            {
+                return (FrmType)this.GetValIntByKey(MapDataAttr.FrmType);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.FrmType, (int)value);
+            }
+        }
+        public AppType HisAppType
+        {
+            get
+            {
+                return (AppType)this.GetValIntByKey(MapDataAttr.AppType);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.AppType, (int)value);
+            }
+        }
+        public string DesignerContact
+        {
+            get
+            {
+                return this.GetValStrByKey(MapDataAttr.DesignerContact);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.DesignerContact, value);
+            }
+        }
+        public string DesignerUnit
+        {
+            get
+            {
+                return this.GetValStrByKey(MapDataAttr.DesignerUnit);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.DesignerUnit, value);
+            }
+        }
+        public string Designer
+        {
+            get
+            {
+                return this.GetValStrByKey(MapDataAttr.Designer);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.Designer, value);
+            }
+        }
+        public string FK_FrmSort
+        {
+            get
+            {
+                return this.GetValStrByKey(MapDataAttr.FK_FrmSort);
+            }
+            set
+            {
+                this.SetValByKey(MapDataAttr.FK_FrmSort, value);
             }
         }
         public string Dtls
@@ -436,17 +552,23 @@ namespace BP.Sys
 
                 map.AddTBFloat(MapDataAttr.FrmW, 900, "FrmW", true, true);
                 map.AddTBFloat(MapDataAttr.FrmH, 1200, "FrmH", true, true);
+                //数据源.
                 map.AddTBInt(MapDataAttr.DBURL, 0, "DBURL", true, false);
 
-                map.AddTBString(MapDataAttr.Designer, null, "设计者", true, false, 0, 500, 20);
-                map.AddTBString(MapDataAttr.DesignerUnit, null, "单位", true, false, 0, 500, 20);
-                map.AddTBString(MapDataAttr.DesignerContext, null, "联系方式", true, false, 0, 500, 20);
+                //FrmType  @自由表单，@傻瓜表单，@自定义表单。
+                map.AddTBInt(MapDataAttr.FrmType, 0, "表单类型", true, false);
+
 
                 // 可以为空这个字段。
                 map.AddTBString(MapDataAttr.FK_FrmSort, null, "表单类别", true, false, 0, 500, 20);
                 map.AddTBString(MapDataAttr.AttrsInTable, null, "在表格中显示的列", true, false, 0, 3800, 20);
+                // enumAppType
+                map.AddTBInt(MapDataAttr.AppType, 1, "应用类型", true, false);
 
-                // map.AddTBInt(MapDataAttr.FrmFrom, 0, "来源", true, true);
+                map.AddTBString(MapDataAttr.Designer, null, "设计者", true, false, 0, 500, 20);
+                map.AddTBString(MapDataAttr.DesignerUnit, null, "单位", true, false, 0, 500, 20);
+                map.AddTBString(MapDataAttr.DesignerContact, null, "联系方式", true, false, 0, 500, 20);
+
                 this._enMap = map;
                 return this._enMap;
             }

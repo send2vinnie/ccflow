@@ -37,6 +37,10 @@ namespace BP.WF
         /// FK_Flow
         /// </summary>
         public const string FK_Flow = "FK_Flow";
+        /// <summary>
+        /// 表单类型
+        /// </summary>
+        public const string FrmType = "FrmType";
     }
     /// <summary>
     /// 节点表单
@@ -70,6 +74,17 @@ namespace BP.WF
                 UAC uac = new UAC();
                 uac.OpenForSysAdmin();
                 return uac;
+            }
+        }
+        public int FrmType
+        {
+            get
+            {
+                return this.GetValIntByKey(FrmNodeAttr.FrmType);
+            }
+            set
+            {
+                this.SetValByKey(FrmNodeAttr.FrmType, value);
             }
         }
         /// <summary>
@@ -168,18 +183,23 @@ namespace BP.WF
         /// <summary>
         /// 节点表单
         /// </summary>
+        /// <param name="mypk"></param>
+        public FrmNode(string mypk):base(mypk)
+        {
+        }
+        /// <summary>
+        /// 节点表单
+        /// </summary>
         /// <param name="fk_node">节点</param>
         /// <param name="fk_frm">表单</param>
         public FrmNode(int fk_node, string fk_frm)
         {
-            
             int i = this.Retrieve(FrmNodeAttr.FK_Node, fk_node, FrmNodeAttr.FK_Frm, fk_frm);
             if (i == 0)
             {
                 this.IsPrint = false;
                 this.IsReadonly = false;
                 return;
-
                 throw new Exception("@表单关联信息已被删除。");
             }
         }
@@ -203,6 +223,9 @@ namespace BP.WF
                 map.AddTBString(FrmNodeAttr.FK_Frm, null, "表单编号", true, true, 1, 20, 20);
                 map.AddTBInt(FrmNodeAttr.FK_Node, 0, "节点编号", true, false);
                 map.AddTBString(FrmNodeAttr.FK_Flow, null, "流程", true, true, 1, 20, 20);
+
+                map.AddTBInt(FrmNodeAttr.FrmType, 0, "表单类型", true, false);
+
 
                 map.AddTBInt(FrmNodeAttr.IsReadonly, 1, "是否可以更新", true, false);
                 map.AddTBInt(FrmNodeAttr.IsPrint, 0, "IsPrint", true, false);

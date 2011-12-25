@@ -156,7 +156,6 @@
     <Compile Include="FlowDesc\FlowEmp.cs" />
     <Compile Include="FlowDesc\FlowNode.cs" />
     <Compile Include="FlowDesc\Frm.cs" />
-    <Compile Include="FlowDesc\FrmSort.cs" />
     <Compile Include="FlowDesc\Listen.cs" />
     <Compile Include="FlowDesc\NodeFlow.cs" />
     <Compile Include="FlowDesc\FlowDescExt\FlowDoc.cs" />

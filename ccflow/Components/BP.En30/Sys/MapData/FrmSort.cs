@@ -90,7 +90,7 @@ namespace BP.Sys
 	/// <summary>
     /// 表单类别s 
 	/// </summary>
-	public class FrmSorts :Entities
+	public class FrmSorts :EntitiesNoName
 	{
 		/// <summary>
 		/// 文件管理者s

@@ -8,11 +8,16 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Silverlight;
 
 namespace BP.SL
 {
     public class PubClass
     {
+        public static void DDL_BindDataTable( DataTable dt)
+        {
+        }
+
         public static Color ToColor(string colorName)
         {
             try

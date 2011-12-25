@@ -669,7 +669,10 @@ namespace BP.Web.Controls
 			this.Init += new System.EventHandler(this.TBInit);
 			//this.Load +=new System.EventHandler(this.TBPreRender);			 
 		}
-
+        public void Bind(EntitiesNoName ens, string seleVal)
+        {
+            this.BindEntitiesNoName(ens, seleVal);
+        }
         public void Bind(XML.XmlEns xmls, string key, string name)
         {
             foreach (XML.XmlEn xml in xmls)
