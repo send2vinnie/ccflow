@@ -1051,11 +1051,22 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             isNeedSave = true;
             _Service.DoNewLabelCompleted -= _Service_DoNewLabelCompleted;
         }
-        public bool Save()
+        ToolbarButton HisCtl = null;
+        public bool Save(ToolbarButton ctl)
         {
+            if (ctl != null)
+                this.HisCtl = ctl;
+
+            if (this.HisCtl == null)
+                this.HisCtl = new ToolbarButton();
+
+            this.HisCtl.IsEnabled = false;
             // 如果没有要保存的内容，则返回促成成功。
             if (!isNeedSave)
+            {
+                this.HisCtl.IsEnabled = true;
                 return true;
+            }
 
             string nodes = "";
             string dirs = "";
@@ -1105,11 +1116,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             else
             {
                 HtmlPage.Window.Alert(cr.Message);
+                this.HisCtl.IsEnabled = true;
                 return false;
             }
         }
         void ws_DoSaveFlowCompleted(object sender, DoSaveFlowCompletedEventArgs e)
         {
+            this.HisCtl.IsEnabled = true;
             if (e.Result != null)
             {
                 this.IsNeedSave = true;
@@ -1694,7 +1707,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
         }
-
         public void UpdateSelectedControlToMemory(System.Windows.Controls.Control currentControl)
         {
             NodeLabel ll = (NodeLabel)currentControl;
@@ -1716,8 +1728,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             NewFlow(null);
         }
-
-
         #endregion
 
         #region 事件

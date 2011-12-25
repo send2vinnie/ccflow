@@ -54,6 +54,14 @@ namespace BP
         /// 节点岗位
         /// </summary>
         public const string StaDef = "StaDef";
+        /// <summary>
+        /// 流程表单
+        /// </summary>
+        public const string FlowFrms = "FlowFrms";
+        /// <summary>
+        /// 表单库
+        /// </summary>
+        public const string FrmLib = "FrmLib";
     }
     /// <summary>
     /// 窗口打开方式 
@@ -65,6 +73,36 @@ namespace BP
     }
     public class Glo
     {
+        #region 与控件有关的操作方法
+        public static bool Ctrl_DDL_SetSelectVal(ComboBox ddl, string setVal)
+        {
+            foreach (ListBoxItem item in ddl.Items)
+                item.IsSelected = false;
+            foreach (ListBoxItem item in ddl.Items)
+            {
+                if (item.Tag.ToString() == setVal)
+                {
+                    item.IsSelected = true;
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static void Ctrl_DDL_BindDataTable(ComboBox ddl, DataTable dt, string selectVal)
+        {
+            ddl.Items.Clear();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ListBoxItem li = new ListBoxItem();
+                li.Content = dr[1].ToString();
+                li.Tag = dr[0].ToString();
+                if (dr[0].ToString() == selectVal)
+                    li.IsSelected = true;
+                ddl.Items.Add(li);
+            }
+        }
+        #endregion
+            
         #region 属性
         /// <summary>
         /// 当前BPMHost
@@ -94,6 +132,14 @@ namespace BP
                 case UrlFlag.StaDef:
                     url = "/WF/Admin/XAP/DoPort.aspx?DoType=StaDef&PK=" + node1 + "&Lang=CH";
                     Glo.OpenDialog(Glo.BPMHost + url, "执行", 500, 400);
+                    return;
+                case UrlFlag.FrmLib:
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=FrmLib&FK_Flow=" + fk_flow + "&FK_Node=0&Lang=CH";
+                    Glo.WinOpen(Glo.BPMHost + url, "执行", 800, 760);
+                    return;
+                case UrlFlag.FlowFrms:
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=FlowFrms&FK_Flow=" + fk_flow + "&FK_Node="+node1+"&Lang=CH";
+                    Glo.WinOpen(Glo.BPMHost + url, "执行", 800, 760);
                     return;
                 case UrlFlag.NodeP:
                     url = "/WF/Admin/XAP/DoPort.aspx?DoType=En&EnName=BP.WF.Node&PK=" + node1 + "&Lang=CH";

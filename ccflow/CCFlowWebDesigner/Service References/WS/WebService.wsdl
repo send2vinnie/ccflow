@@ -303,6 +303,48 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="RunSQLReturnString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sql" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLReturnStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RunSQLReturnStringResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLReturnValInt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sql" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLReturnValIntResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RunSQLReturnValIntResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLReturnValFloat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sql" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RunSQLReturnValFloatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RunSQLReturnValFloatResult" type="s:float" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="RunSQLReturnTableS">
         <s:complexType>
           <s:sequence>
@@ -364,6 +406,7 @@
       <s:element name="string" nillable="true" type="s:string" />
       <s:element name="int" type="s:int" />
       <s:element name="boolean" type="s:boolean" />
+      <s:element name="float" type="s:float" />
     </s:schema>
     <s:schema targetNamespace="http://tempuri.org/AbstractTypes">
       <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -497,6 +540,24 @@
   </wsdl:message>
   <wsdl:message name="RunSQLReturnTableSoapOut">
     <wsdl:part name="parameters" element="tns:RunSQLReturnTableResponse" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnStringSoapIn">
+    <wsdl:part name="parameters" element="tns:RunSQLReturnString" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnStringSoapOut">
+    <wsdl:part name="parameters" element="tns:RunSQLReturnStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValIntSoapIn">
+    <wsdl:part name="parameters" element="tns:RunSQLReturnValInt" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValIntSoapOut">
+    <wsdl:part name="parameters" element="tns:RunSQLReturnValIntResponse" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValFloatSoapIn">
+    <wsdl:part name="parameters" element="tns:RunSQLReturnValFloat" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValFloatSoapOut">
+    <wsdl:part name="parameters" element="tns:RunSQLReturnValFloatResponse" />
   </wsdl:message>
   <wsdl:message name="RunSQLReturnTableSSoapIn">
     <wsdl:part name="parameters" element="tns:RunSQLReturnTableS" />
@@ -664,6 +725,24 @@
   </wsdl:message>
   <wsdl:message name="RunSQLReturnTableHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnStringHttpGetIn">
+    <wsdl:part name="sql" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnStringHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValIntHttpGetIn">
+    <wsdl:part name="sql" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValIntHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValFloatHttpGetIn">
+    <wsdl:part name="sql" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValFloatHttpGetOut">
+    <wsdl:part name="Body" element="tns:float" />
   </wsdl:message>
   <wsdl:message name="RunSQLReturnTableSHttpGetIn">
     <wsdl:part name="sqls" type="s:string" />
@@ -834,6 +913,24 @@
   <wsdl:message name="RunSQLReturnTableHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
+  <wsdl:message name="RunSQLReturnStringHttpPostIn">
+    <wsdl:part name="sql" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnStringHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValIntHttpPostIn">
+    <wsdl:part name="sql" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValIntHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValFloatHttpPostIn">
+    <wsdl:part name="sql" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunSQLReturnValFloatHttpPostOut">
+    <wsdl:part name="Body" element="tns:float" />
+  </wsdl:message>
   <wsdl:message name="RunSQLReturnTableSHttpPostIn">
     <wsdl:part name="sqls" type="s:string" />
   </wsdl:message>
@@ -941,6 +1038,18 @@
       <wsdl:input message="tns:RunSQLReturnTableSoapIn" />
       <wsdl:output message="tns:RunSQLReturnTableSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnString">
+      <wsdl:input message="tns:RunSQLReturnStringSoapIn" />
+      <wsdl:output message="tns:RunSQLReturnStringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValInt">
+      <wsdl:input message="tns:RunSQLReturnValIntSoapIn" />
+      <wsdl:output message="tns:RunSQLReturnValIntSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValFloat">
+      <wsdl:input message="tns:RunSQLReturnValFloatSoapIn" />
+      <wsdl:output message="tns:RunSQLReturnValFloatSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="RunSQLReturnTableS">
       <wsdl:input message="tns:RunSQLReturnTableSSoapIn" />
       <wsdl:output message="tns:RunSQLReturnTableSSoapOut" />
@@ -1039,6 +1148,18 @@
       <wsdl:input message="tns:RunSQLReturnTableHttpGetIn" />
       <wsdl:output message="tns:RunSQLReturnTableHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnString">
+      <wsdl:input message="tns:RunSQLReturnStringHttpGetIn" />
+      <wsdl:output message="tns:RunSQLReturnStringHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValInt">
+      <wsdl:input message="tns:RunSQLReturnValIntHttpGetIn" />
+      <wsdl:output message="tns:RunSQLReturnValIntHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValFloat">
+      <wsdl:input message="tns:RunSQLReturnValFloatHttpGetIn" />
+      <wsdl:output message="tns:RunSQLReturnValFloatHttpGetOut" />
+    </wsdl:operation>
     <wsdl:operation name="RunSQLReturnTableS">
       <wsdl:input message="tns:RunSQLReturnTableSHttpGetIn" />
       <wsdl:output message="tns:RunSQLReturnTableSHttpGetOut" />
@@ -1136,6 +1257,18 @@
     <wsdl:operation name="RunSQLReturnTable">
       <wsdl:input message="tns:RunSQLReturnTableHttpPostIn" />
       <wsdl:output message="tns:RunSQLReturnTableHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnString">
+      <wsdl:input message="tns:RunSQLReturnStringHttpPostIn" />
+      <wsdl:output message="tns:RunSQLReturnStringHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValInt">
+      <wsdl:input message="tns:RunSQLReturnValIntHttpPostIn" />
+      <wsdl:output message="tns:RunSQLReturnValIntHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValFloat">
+      <wsdl:input message="tns:RunSQLReturnValFloatHttpPostIn" />
+      <wsdl:output message="tns:RunSQLReturnValFloatHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="RunSQLReturnTableS">
       <wsdl:input message="tns:RunSQLReturnTableSHttpPostIn" />
@@ -1329,6 +1462,33 @@
     </wsdl:operation>
     <wsdl:operation name="RunSQLReturnTable">
       <soap:operation soapAction="http://tempuri.org/RunSQLReturnTable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnString">
+      <soap:operation soapAction="http://tempuri.org/RunSQLReturnString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValInt">
+      <soap:operation soapAction="http://tempuri.org/RunSQLReturnValInt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValFloat">
+      <soap:operation soapAction="http://tempuri.org/RunSQLReturnValFloat" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1555,6 +1715,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnString">
+      <soap12:operation soapAction="http://tempuri.org/RunSQLReturnString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValInt">
+      <soap12:operation soapAction="http://tempuri.org/RunSQLReturnValInt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValFloat">
+      <soap12:operation soapAction="http://tempuri.org/RunSQLReturnValFloat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="RunSQLReturnTableS">
       <soap12:operation soapAction="http://tempuri.org/RunSQLReturnTableS" style="document" />
       <wsdl:input>
@@ -1774,6 +1961,33 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnString">
+      <http:operation location="/RunSQLReturnString" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValInt">
+      <http:operation location="/RunSQLReturnValInt" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValFloat">
+      <http:operation location="/RunSQLReturnValFloat" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="RunSQLReturnTableS">
       <http:operation location="/RunSQLReturnTableS" />
       <wsdl:input>
@@ -1986,6 +2200,33 @@
     </wsdl:operation>
     <wsdl:operation name="RunSQLReturnTable">
       <http:operation location="/RunSQLReturnTable" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnString">
+      <http:operation location="/RunSQLReturnString" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValInt">
+      <http:operation location="/RunSQLReturnValInt" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSQLReturnValFloat">
+      <http:operation location="/RunSQLReturnValFloat" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

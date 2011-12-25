@@ -10,7 +10,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Silverlight;
 using BP.DA;
-using BP.Frm;
 using BP;
 
 namespace WF.Controls

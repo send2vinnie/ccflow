@@ -138,6 +138,24 @@ namespace WF.WS {
         
         string EndRunSQLReturnTable(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQLReturnString", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.IAsyncResult BeginRunSQLReturnString(string sql, System.AsyncCallback callback, object asyncState);
+        
+        string EndRunSQLReturnString(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQLReturnValInt", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.IAsyncResult BeginRunSQLReturnValInt(string sql, System.AsyncCallback callback, object asyncState);
+        
+        int EndRunSQLReturnValInt(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQLReturnValFloat", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.IAsyncResult BeginRunSQLReturnValFloat(string sql, System.AsyncCallback callback, object asyncState);
+        
+        float EndRunSQLReturnValFloat(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/RunSQLReturnTableS", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.IAsyncResult BeginRunSQLReturnTableS(string sqls, System.AsyncCallback callback, object asyncState);
@@ -627,6 +645,63 @@ namespace WF.WS {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RunSQLReturnStringCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RunSQLReturnStringCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RunSQLReturnValIntCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RunSQLReturnValIntCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public int Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RunSQLReturnValFloatCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RunSQLReturnValFloatCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public float Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((float)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RunSQLReturnTableSCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -825,6 +900,24 @@ namespace WF.WS {
         
         private System.Threading.SendOrPostCallback onRunSQLReturnTableCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRunSQLReturnStringDelegate;
+        
+        private EndOperationDelegate onEndRunSQLReturnStringDelegate;
+        
+        private System.Threading.SendOrPostCallback onRunSQLReturnStringCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRunSQLReturnValIntDelegate;
+        
+        private EndOperationDelegate onEndRunSQLReturnValIntDelegate;
+        
+        private System.Threading.SendOrPostCallback onRunSQLReturnValIntCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRunSQLReturnValFloatDelegate;
+        
+        private EndOperationDelegate onEndRunSQLReturnValFloatDelegate;
+        
+        private System.Threading.SendOrPostCallback onRunSQLReturnValFloatCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRunSQLReturnTableSDelegate;
         
         private EndOperationDelegate onEndRunSQLReturnTableSDelegate;
@@ -940,6 +1033,12 @@ namespace WF.WS {
         public event System.EventHandler<SaveEnCompletedEventArgs> SaveEnCompleted;
         
         public event System.EventHandler<RunSQLReturnTableCompletedEventArgs> RunSQLReturnTableCompleted;
+        
+        public event System.EventHandler<RunSQLReturnStringCompletedEventArgs> RunSQLReturnStringCompleted;
+        
+        public event System.EventHandler<RunSQLReturnValIntCompletedEventArgs> RunSQLReturnValIntCompleted;
+        
+        public event System.EventHandler<RunSQLReturnValFloatCompletedEventArgs> RunSQLReturnValFloatCompleted;
         
         public event System.EventHandler<RunSQLReturnTableSCompletedEventArgs> RunSQLReturnTableSCompleted;
         
@@ -1950,6 +2049,144 @@ namespace WF.WS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult WF.WS.WSDesignerSoap.BeginRunSQLReturnString(string sql, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRunSQLReturnString(sql, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string WF.WS.WSDesignerSoap.EndRunSQLReturnString(System.IAsyncResult result) {
+            return base.Channel.EndRunSQLReturnString(result);
+        }
+        
+        private System.IAsyncResult OnBeginRunSQLReturnString(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string sql = ((string)(inValues[0]));
+            return ((WF.WS.WSDesignerSoap)(this)).BeginRunSQLReturnString(sql, callback, asyncState);
+        }
+        
+        private object[] OnEndRunSQLReturnString(System.IAsyncResult result) {
+            string retVal = ((WF.WS.WSDesignerSoap)(this)).EndRunSQLReturnString(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRunSQLReturnStringCompleted(object state) {
+            if ((this.RunSQLReturnStringCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RunSQLReturnStringCompleted(this, new RunSQLReturnStringCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RunSQLReturnStringAsync(string sql) {
+            this.RunSQLReturnStringAsync(sql, null);
+        }
+        
+        public void RunSQLReturnStringAsync(string sql, object userState) {
+            if ((this.onBeginRunSQLReturnStringDelegate == null)) {
+                this.onBeginRunSQLReturnStringDelegate = new BeginOperationDelegate(this.OnBeginRunSQLReturnString);
+            }
+            if ((this.onEndRunSQLReturnStringDelegate == null)) {
+                this.onEndRunSQLReturnStringDelegate = new EndOperationDelegate(this.OnEndRunSQLReturnString);
+            }
+            if ((this.onRunSQLReturnStringCompletedDelegate == null)) {
+                this.onRunSQLReturnStringCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRunSQLReturnStringCompleted);
+            }
+            base.InvokeAsync(this.onBeginRunSQLReturnStringDelegate, new object[] {
+                        sql}, this.onEndRunSQLReturnStringDelegate, this.onRunSQLReturnStringCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult WF.WS.WSDesignerSoap.BeginRunSQLReturnValInt(string sql, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRunSQLReturnValInt(sql, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        int WF.WS.WSDesignerSoap.EndRunSQLReturnValInt(System.IAsyncResult result) {
+            return base.Channel.EndRunSQLReturnValInt(result);
+        }
+        
+        private System.IAsyncResult OnBeginRunSQLReturnValInt(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string sql = ((string)(inValues[0]));
+            return ((WF.WS.WSDesignerSoap)(this)).BeginRunSQLReturnValInt(sql, callback, asyncState);
+        }
+        
+        private object[] OnEndRunSQLReturnValInt(System.IAsyncResult result) {
+            int retVal = ((WF.WS.WSDesignerSoap)(this)).EndRunSQLReturnValInt(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRunSQLReturnValIntCompleted(object state) {
+            if ((this.RunSQLReturnValIntCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RunSQLReturnValIntCompleted(this, new RunSQLReturnValIntCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RunSQLReturnValIntAsync(string sql) {
+            this.RunSQLReturnValIntAsync(sql, null);
+        }
+        
+        public void RunSQLReturnValIntAsync(string sql, object userState) {
+            if ((this.onBeginRunSQLReturnValIntDelegate == null)) {
+                this.onBeginRunSQLReturnValIntDelegate = new BeginOperationDelegate(this.OnBeginRunSQLReturnValInt);
+            }
+            if ((this.onEndRunSQLReturnValIntDelegate == null)) {
+                this.onEndRunSQLReturnValIntDelegate = new EndOperationDelegate(this.OnEndRunSQLReturnValInt);
+            }
+            if ((this.onRunSQLReturnValIntCompletedDelegate == null)) {
+                this.onRunSQLReturnValIntCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRunSQLReturnValIntCompleted);
+            }
+            base.InvokeAsync(this.onBeginRunSQLReturnValIntDelegate, new object[] {
+                        sql}, this.onEndRunSQLReturnValIntDelegate, this.onRunSQLReturnValIntCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult WF.WS.WSDesignerSoap.BeginRunSQLReturnValFloat(string sql, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRunSQLReturnValFloat(sql, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        float WF.WS.WSDesignerSoap.EndRunSQLReturnValFloat(System.IAsyncResult result) {
+            return base.Channel.EndRunSQLReturnValFloat(result);
+        }
+        
+        private System.IAsyncResult OnBeginRunSQLReturnValFloat(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string sql = ((string)(inValues[0]));
+            return ((WF.WS.WSDesignerSoap)(this)).BeginRunSQLReturnValFloat(sql, callback, asyncState);
+        }
+        
+        private object[] OnEndRunSQLReturnValFloat(System.IAsyncResult result) {
+            float retVal = ((WF.WS.WSDesignerSoap)(this)).EndRunSQLReturnValFloat(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRunSQLReturnValFloatCompleted(object state) {
+            if ((this.RunSQLReturnValFloatCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RunSQLReturnValFloatCompleted(this, new RunSQLReturnValFloatCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RunSQLReturnValFloatAsync(string sql) {
+            this.RunSQLReturnValFloatAsync(sql, null);
+        }
+        
+        public void RunSQLReturnValFloatAsync(string sql, object userState) {
+            if ((this.onBeginRunSQLReturnValFloatDelegate == null)) {
+                this.onBeginRunSQLReturnValFloatDelegate = new BeginOperationDelegate(this.OnBeginRunSQLReturnValFloat);
+            }
+            if ((this.onEndRunSQLReturnValFloatDelegate == null)) {
+                this.onEndRunSQLReturnValFloatDelegate = new EndOperationDelegate(this.OnEndRunSQLReturnValFloat);
+            }
+            if ((this.onRunSQLReturnValFloatCompletedDelegate == null)) {
+                this.onRunSQLReturnValFloatCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRunSQLReturnValFloatCompleted);
+            }
+            base.InvokeAsync(this.onBeginRunSQLReturnValFloatDelegate, new object[] {
+                        sql}, this.onEndRunSQLReturnValFloatDelegate, this.onRunSQLReturnValFloatCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult WF.WS.WSDesignerSoap.BeginRunSQLReturnTableS(string sqls, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRunSQLReturnTableS(sqls, callback, asyncState);
         }
@@ -2492,6 +2729,45 @@ namespace WF.WS {
             public string EndRunSQLReturnTable(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 string _result = ((string)(base.EndInvoke("RunSQLReturnTable", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRunSQLReturnString(string sql, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = sql;
+                System.IAsyncResult _result = base.BeginInvoke("RunSQLReturnString", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndRunSQLReturnString(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("RunSQLReturnString", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRunSQLReturnValInt(string sql, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = sql;
+                System.IAsyncResult _result = base.BeginInvoke("RunSQLReturnValInt", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public int EndRunSQLReturnValInt(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                int _result = ((int)(base.EndInvoke("RunSQLReturnValInt", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRunSQLReturnValFloat(string sql, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = sql;
+                System.IAsyncResult _result = base.BeginInvoke("RunSQLReturnValFloat", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public float EndRunSQLReturnValFloat(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                float _result = ((float)(base.EndInvoke("RunSQLReturnValFloat", _args, result)));
                 return _result;
             }
             

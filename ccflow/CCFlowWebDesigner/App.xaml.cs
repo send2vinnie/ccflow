@@ -24,6 +24,7 @@ namespace BP
 {
     public partial class App : Application
     {
+       
         public App()
         {
             this.Startup += this.Application_Startup;
@@ -46,6 +47,10 @@ namespace BP
             Thread.CurrentThread.CurrentUICulture = culture;
 
             Glo.BPMHost = GetHostUrl();
+
+            //WF.Frm.FrmLib lab = new WF.Frm.FrmLib();
+            //this.RootVisual = lab;
+            //return;
 
             if (System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("WorkID")
              || System.Windows.Browser.HtmlPage.Document.QueryString.ContainsKey("FK_Flow"))
@@ -73,6 +78,7 @@ namespace BP
         }
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
+
             // 如果应用程序是在调试器外运行的，则使用浏览器的
             // 异常机制报告该异常。在 IE 上，将在状态栏中用一个 
             // 黄色警报图标来显示该异常，而 Firefox 则会显示一个脚本错误。
@@ -91,7 +97,10 @@ namespace BP
         {
             string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
             errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
-            HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
+
+            MessageBox.Show(errorMsg, "ccflow err:", MessageBoxButton.OK);
+
+            //HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
         }
         /// <summary>
         /// 得到当前所在网站的根目录，如Http://localhost/flow

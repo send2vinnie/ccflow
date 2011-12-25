@@ -255,6 +255,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             c.Designer = this;
             c.FlowID = flowid;
             c.getFlows();
+            c.Width = 2000;
+            c.Height = 2000;
 
             var ti = new TabItemEx();
             ti.Content = c;
@@ -772,7 +774,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 {
                     if(HtmlPage.Window.Confirm(Text.IsSave))
                     {
-                        if (SelectedContainer.Save())
+                        if (SelectedContainer.Save(null))
                         {
                             this.tbDesigner.Items.Remove(this.tbDesigner.SelectedItem);
                         }
@@ -890,7 +892,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
 
             }
-           
         }
 
         private void Content_FullScreenChanged(object sender, EventArgs e)
@@ -912,7 +913,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
             }
         }
-
         private void Content_Resized(object sender, EventArgs e)
         {
             LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
@@ -977,6 +977,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             switch (control.Name)
             {
+                case "Btn_ToolBarFrmLab":
+                    Glo.WinOpenByDoType("CH", "FrmLib", "","0", null);
+                    //string  url = "/WF/Admin/XAP/DoPort.aspx?DoType=FrmLib&FK_Node=0&Lang=CH";
+                    //Glo.WinOpen(Glo.BPMHost + url, "执行", 800, 760);
+                    return;
+                    //WF.Frm.FrmLib lib = new WF.Frm.FrmLib();
+                    //lib.Show();
                 case "Btn_ToolBarLogin":
                     Glo.WinOpen("/WF/Login.aspx", "登陆", 800, 900);
                     return;
@@ -1004,7 +1011,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 case "Btn_ToolBarSave":
                     if (SelectedContainer != null)
                     {
-                        SelectedContainer.Save();
+                        SelectedContainer.Save(control);
                     }
                     break;
                 case "Btn_ToolBarDesignReport":
@@ -1012,9 +1019,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
                 case "Btn_ToolBarCheck":
                     if (SelectedContainer != null)
-                    {
                         SelectedContainer.btnCheck();
-                    }
                     break;
                 case "Btn_ToolBarRun":
                     if (SelectedContainer != null)
@@ -1040,11 +1045,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
             }
         }
-       
-
         private void  setToolBarButtonEnableStatus(bool isEnable)
         {
-
             foreach (var toolbarButton in ToolBarButtonList)
             {
                 if (toolbarButton.Tag != null && toolbarButton.Tag.ToString() == ToolBarEnableIsFlowSensitived)
@@ -1053,7 +1055,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
         }
-        
         #endregion
 
         /// <summary>

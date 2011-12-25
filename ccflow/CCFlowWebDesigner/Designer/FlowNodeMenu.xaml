@@ -10,6 +10,8 @@
                     <liquidMenu:MenuItem ID="menuDesignNodeFrm" Text="设计节点表单" Icon="../Images/MenuItem/deFrm.png" />
                     <liquidMenu:MenuItem ID="menuDesignFlowFrm" Text="表单库" Icon="../Images/MenuItem/deFrm.png" />
 
+                    <liquidMenu:MenuItem ID="menuDesignBindFlowFrm" Text="绑定流程表单" Icon="../Images/MenuItem/deFrm.png" />
+
                     <!--<liquidMenu:MenuItem ID="menuDesignFrmF4" Text="设计傻瓜表单" Icon="../Images/MenuItem/EditTable4.png" />-->
                     <liquidMenu:MenuItem ID="menuJobStation" Text="节点工作岗位" Icon="../Images/MenuItem/Post.png" />
                     <!--<liquidMenu:MenuItem ID="menuFlowProperty" Text="流程属性" Icon="../Images/MenuItem/Property.png" />-->

@@ -42,6 +42,7 @@ namespace WF.Controls
                 new ToolbarItem(){No="ToolBarEditFlow", Name="属性"},
                 new ToolbarItem(){No="ToolBarDeleteFlow", Name="删除"},
                 new ToolbarItem(){No="ToolBarGenerateModel", Name="导出"},
+                new ToolbarItem(){No="ToolBarFrmLab", Name="表单库"},
                 new ToolbarItem(){No="ToolBarReleaseToFTP", Name="发布到FTP"},
                 new ToolbarItem(){No="ToolBarHelp", Name="帮助", IsEnable = true}
                 
