@@ -9,7 +9,6 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    
        
         <asp:Label ID="Label1" runat="server" Text="流程类型名称:"></asp:Label>
     

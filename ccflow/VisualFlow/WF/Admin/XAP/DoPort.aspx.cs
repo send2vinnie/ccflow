@@ -87,6 +87,8 @@ public partial class DoPort : WebPage
         BP.Web.WebUser.SignInOfGenerLang(emp, "CH");
 
         string fk_flow = this.Request.QueryString["FK_Flow"];
+        string fk_Node = this.Request.QueryString["FK_Node"];
+
         string FK_MapData = this.Request.QueryString["FK_MapData"];
 
         switch (this.DoType)
@@ -125,6 +127,12 @@ public partial class DoPort : WebPage
                         this.Response.Redirect("../../../Comm/RefFunc/UIEn.aspx?EnsName=" + this.EnsName + "&No=" + this.PK, true);
                         break;
                 }
+                break;
+            case "FrmLib": //"表单库"
+                this.Response.Redirect("../FlowFrms.aspx?ShowType=FrmLab&FK_Flow=" + fk_flow + "&FK_Node=" + fk_Node + "&Lang=" + BP.Web.WebUser.SysLang, true);
+                break;
+            case "FlowFrms": //"流程表单"
+                this.Response.Redirect("../FlowFrms.aspx?ShowType=FlowFrms&FK_Flow=" + fk_flow + "&FK_Node=" + fk_Node + "&Lang=" + BP.Web.WebUser.SysLang, true);
                 break;
             case "StaDef": // 节点岗位.
                 this.Response.Redirect("./../../../Comm/UIEn1ToM.aspx?EnName=BP.WF.Ext.NodeO&AttrKey=BP.WF.NodeStations&PK=" + this.PK + "&NodeID=" + this.PK + "&RunModel=0&FLRole=0&FJOpen=0&r=" + this.PK, true);

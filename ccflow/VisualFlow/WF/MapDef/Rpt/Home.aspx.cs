@@ -173,8 +173,9 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
             attrsOfSearch.AddEntity(myattr);
         }
 
+        this.Pub2.AddH2("列表字段显示顺序- 移动箭头改变顺序");
+
         this.Pub2.AddTable("align=left");
-        this.Pub2.AddCaptionLeft("移动箭头改变顺序");
         this.Pub2.AddTR();
         int idx = -1;
         foreach (MapAttr attr in attrsOfSearch)
@@ -227,6 +228,8 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
     #region 查询列表字段筛选
     public void SelectColumns()
     {
+        this.Pub2.AddH2("请选择要显示的字段,然后点保存按钮.");
+
         this.Pub2.AddTable("width=90% align=left");
         GroupFields gfs = new GroupFields(this.FK_Flow);
         MapAttrs mattrs = new MapAttrs(this.FK_MapData);
@@ -342,7 +345,10 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
 
         #region 查询条件定义
 //        this.Pub2.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义") + " - <a href=\"javascript:WinOpen('../Rpt/Search.aspx?FK_Flow=" + this.FK_Flow + "')\">" + this.ToE("WFRpt2r", "查询预览") + "</a>-<a href=\"javascript:WinOpen('../../../Comm/GroupEnsMNum.aspx?EnsName=" + this.MyPK + "')\">" + this.ToE("WFRpt3r", "分析预览") + "</a>");
-        this.Pub2.AddFieldSet(this.ToE("WFRpt1r", "查询条件定义")  );
+
+        this.Pub2.AddH2("查询条件定义");
+
+        this.Pub2.AddFieldSet( "设置查询条件" );
 
         foreach (MapAttr mattr in mattrs)
         {
