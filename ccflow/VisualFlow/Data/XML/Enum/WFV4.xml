@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
+    <Item Key="FrmType"
+    CH="@0=自由表单@1=傻瓜表单@2=自己定义表单"
+    EN="@0=自由表单@1=傻瓜表单@2=自己定义表单"
+    JP="@0=自由表单@1=傻瓜表单@2=自己定义表单"
+    RU="@0=自由表单@1=傻瓜表单@2=自己定义表单"
+        />
+    
   <Item Key="DeliveryWay"
     CH="@0=按岗位计算@1=按部门计算@2=按SQL计算@3=按设置的人员计算@4=由上一步发送人选择@5=按上一节点表单FK_Emp字段计算@6=按上一步操作人员@7=按上一步操作人员并自动跳转"
     EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
