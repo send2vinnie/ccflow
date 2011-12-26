@@ -165,6 +165,36 @@ namespace BP.Web
             return Connector.ToXml(ds);
         }
         /// <summary>
+        /// 运行sql返回String.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string RunSQLReturnString(string sql)
+        {
+            return BP.DA.DBAccess.RunSQLReturnString(sql);
+        }
+        /// <summary>
+        /// 运行sql返回String.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public int RunSQLReturnValInt(string sql)
+        {
+            return BP.DA.DBAccess.RunSQLReturnValInt(sql);
+        }
+        /// <summary>
+        /// 运行sql返回float.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public float RunSQLReturnValFloat(string sql)
+        {
+            return BP.DA.DBAccess.RunSQLReturnValFloat(sql);
+        }
+        /// <summary>
         /// 运行sql返回table.
         /// </summary>
         /// <param name="sql"></param>
