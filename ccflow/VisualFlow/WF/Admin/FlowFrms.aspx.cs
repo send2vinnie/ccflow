@@ -61,11 +61,9 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
                 }
                 else
                 {
-                    this.Alert("此表单已经被多个流程节点(" + fnsR.Count + ")绑定，所以您不能删除它。");
-
                     MapData md = new MapData();
                     md.No = this.FK_MapData;
-                   // md.Delete();
+                    md.Delete();
                 }
                 break;
             case "Del":

@@ -609,7 +609,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         {
             this.Pub1.GetTBByID("TB_MaxLen").Enabled = false;
             this.Pub1.GetTBByID("TB_MaxLen").Text = "4000";
-            this.Pub1.GetTBByID("TB_UIHeight").Text = "8";
+            this.Pub1.GetTBByID("TB_UIHeight").Text = "90";
         }
         else
         {
@@ -749,7 +749,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         //this.Pub1.AddTD("控制该它在表单的显示方式");
         this.Pub1.AddTREnd();
         #endregion 是否可编辑
-
 
         #region 是否可界面可见
         this.Pub1.AddTR1();

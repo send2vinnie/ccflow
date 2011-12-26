@@ -153,7 +153,6 @@ public partial class WF_MapDef_MapFrame : WebPage
                     dtlN.GroupID = 0;
                     dtlN.RowIdx = 0;
                     GroupFields gfs1 = new GroupFields(this.FK_MapData);
-
                     if (gfs1.Count == 1)
                     {
                         GroupField gf = (GroupField)gfs1[0];

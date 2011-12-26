@@ -234,6 +234,28 @@ body
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
+    function EditAth(fk_mapdata, ath) {
+        var url = 'Attachment.aspx?FK_MapData=' + fk_mapdata + '&Ath=' + ath;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+    function Ath(mypk) {
+        var url = 'Attachment.aspx?DoType=List&FK_MapData=' + mypk;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+
+    function AthDoUp(MyPK) {
+        var url = 'Do.aspx?DoType=AthDoUp&MyPK=' + MyPK;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+    function AthDoDown(MyPK) {
+        var url = 'Do.aspx?DoType=AthDoDown&MyPK=' + MyPK;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+
     function EditFrame(mypk, dtlKey) {
         var url = 'MapFrame.aspx?DoType=Edit&FK_MapData=' + mypk + '&FK_MapFrame=' + dtlKey;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
@@ -317,11 +339,17 @@ body
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-                <table width='80%'  align=center >
+                <table width='100%' height='1300px' align=center >
                  <tr>
-                  <td valign=top>
+
+                  <td valign=top align=left width='50px;'   bgcolor="#cccccc">
+                   <uc1:Pub ID="Left" runat="server" />
+                 </td>
+
+                  <td valign=top align=left>
                    <uc1:Pub ID="Pub1" runat="server" />
                  </td>
+
                  </tr>
                 </table>
 </asp:Content>

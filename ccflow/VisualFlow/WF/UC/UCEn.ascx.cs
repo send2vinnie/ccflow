@@ -35,6 +35,7 @@ namespace BP.Web.Comm.UC.WF
         public MapDtls dtls;
         public MapFrames frames;
         public MapM2Ms m2ms;
+        public FrmAttachments aths;
         private GroupFields gfs;
         public int rowIdx = 0;
         public bool isLeftNext = true;
@@ -259,6 +260,11 @@ namespace BP.Web.Comm.UC.WF
                 if (m2m.IsAutoSize)
                     js += "\t\n window.setInterval(\"ReinitIframe('F" + m2m.No + "','TD" + m2m.No + "')\", 200);";
             }
+            foreach (FrmAttachment ath in aths)
+            {
+                if (ath.IsAutoSize)
+                    js += "\t\n window.setInterval(\"ReinitIframe('F" + ath.MyPK + "','TD" + ath.MyPK + "')\", 200);";
+            }
             js += "\t\n</script>";
             this.Add(js);
 
@@ -400,8 +406,7 @@ namespace BP.Web.Comm.UC.WF
             dtls = new MapDtls(enName);
             frames = new MapFrames(enName);
             m2ms = new MapM2Ms(enName);
- 
-
+              aths = new FrmAttachments(enName);
 
             this.Add("<table id=tabForm width='500px' align=center >");
             string appPath = this.Page.Request.ApplicationPath;
@@ -454,9 +459,9 @@ namespace BP.Web.Comm.UC.WF
 
 
                         if (attr.UIIsEnable)
-                            this.Add("<TD  colspan=4 width='100%' valign=top align=left>");
+                            this.Add("<TD height='" + attr.UIHeight.ToString() + "px'  colspan=4 width='100%' valign=top align=left>");
                         else
-                            this.Add("<TD  colspan=4 width='100%' valign=top class=TBReadonly>");
+                            this.Add("<TD height='" + attr.UIHeight.ToString() + "px'  colspan=4 width='100%' valign=top class=TBReadonly>");
 
                         this.Add("<div style='font-size:14px;color:black;' >");
                         Label lab = new Label();
@@ -469,7 +474,7 @@ namespace BP.Web.Comm.UC.WF
                         TB mytbLine = new TB();
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
-                        mytbLine.Rows = 8;
+                        mytbLine.Attributes["style"] = "width:100%;height:100%;padding: 0px;margin: 0px;";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
 
                         // mytbLine.Attributes["onmousedown"] = script;
@@ -480,7 +485,8 @@ namespace BP.Web.Comm.UC.WF
                         else
                             mytbLine.Attributes["class"] = "TBDoc";
 
-                        mytbLine.Attributes["style"] = "width:98%;padding: 0px;margin: 0px;";
+
+                        mytbLine.Attributes["style"] = "width:98%;height:100%;padding: 0px;margin: 0px;";
 
                         this.Add(mytbLine);
 
@@ -506,33 +512,26 @@ namespace BP.Web.Comm.UC.WF
                             this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
                         }
 
-                        this.Add("<TD class=FDesc colspan=2>");
+                        this.Add("<TD class=FDesc colspan=2 height='" + attr.UIHeight.ToString() + "px' >");
                         this.Add(attr.Name);
                         TB mytbLine = new TB();
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         mytbLine.TextMode = TextBoxMode.MultiLine;
-                        mytbLine.Rows = 8;
                         mytbLine.Attributes["class"] = "TBDoc";
-
-                        // mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
-
                         if (mytbLine.Enabled == false)
                         {
                             mytbLine.Attributes["class"] = "TBReadonly";
                             mytbLine.Attributes.Add("readonly", "true");
                         }
-
-
+                        mytbLine.Attributes["style"] = "width:98%;height:100%;padding: 0px;margin: 0px;";
                         this.Add(mytbLine);
                         this.AddTDEnd();
-
                         if (isLeftNext == false)
                         {
                             this.AddTREnd();
                             rowIdx++;
                         }
-
                         isLeftNext = !isLeftNext;
                         continue;
                     }
@@ -753,6 +752,11 @@ namespace BP.Web.Comm.UC.WF
             {
                 if (m2m.IsAutoSize)
                     js += "\t\n window.setInterval(\"ReinitIframe('F" + m2m.No + "','TD" + m2m.No + "')\", 200);";
+            }
+            foreach (FrmAttachment ath in aths)
+            {
+                if (ath.IsAutoSize)
+                    js += "\t\n window.setInterval(\"ReinitIframe('F" + ath.MyPK + "','TD" + ath.MyPK + "')\", 200);";
             }
             js += "\t\n</script>";
             this.Add(js);
@@ -1164,6 +1168,54 @@ namespace BP.Web.Comm.UC.WF
                 this.AddTREnd();
             }
             #endregion 框架
+
+
+            #region 附件
+            foreach (FrmAttachment ath in aths)
+            {
+                if (ath.IsUse)
+                    continue;
+                if (isJudgeRowIdx)
+                {
+                    if (ath.RowIdx != rowIdx)
+                        continue;
+                }
+
+                if (ath.GroupID == 0 && rowIdx == 0)
+                {
+                    ath.GroupID = currGF.OID;
+                    ath.RowIdx = 0;
+                    ath.Update();
+                }
+                else if (ath.GroupID == currGF.OID)
+                {
+                }
+                else
+                {
+                    continue;
+                }
+                ath.IsUse = true;
+                rowIdx++;
+                // myidx++;
+                this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+                if (ath.IsAutoSize)
+                    this.Add("<TD colspan=4 ID='TD" + ath.MyPK + "' height='50px' width='100%'  >");
+                else
+                    this.Add("<TD colspan=4 ID='TD" + ath.MyPK + "' height='" + ath.H + "' width='" + ath.W + "'  >");
+
+                string src = "./FreeFrm/AttachmentUpload.aspx?PKVal="+this.HisEn.PKVal+"&Ath=" + ath.NoOfAth + "&FK_MapData=" + EnsName + "&FK_FrmAttachment=" + ath.MyPK;
+                if (ath.IsAutoSize)
+                {
+                    this.Add("<iframe ID='F" + ath.MyPK + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=auto /></iframe>");
+                }
+                else
+                {
+                    this.Add("<iframe ID='F" + ath.MyPK + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + ath.W + "' height='" + ath.H + "' scrolling=auto /></iframe>");
+                }
+                this.AddTDEnd();
+                this.AddTREnd();
+            }
+            #endregion 附件
         }
         #endregion
 

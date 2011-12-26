@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <DS>
-  <MapMenu No="NewF" CH="新建字段"   JS="javascript:AddF(@MyPK);"  Img="../../Images/Btn/New.gif" />
-  <MapMenu No="CopyF" CH="复制字段"  JS="javascript:CopyFieldFromNode(@MyPK);"  Img="../../Images/Btn/Copy.gif" />
-  <MapMenu No="DTable" CH="增加从表" JS="javascript:MapDtl(@MyPK);" Img="../../Images/Btn/Table.gif"  />
-  <MapMenu No="DM" CH="增加多选框"     JS="javascript:MapM2M(@MyPK);" Img="../../Images/Btn/ChoseCol.gif"  />
-  <MapMenu No="Ath" CH="多附件组件"     JS="javascript:Ath(@MyPK);" Img="../../Images/Btn/ChoseCol.gif"  />
-  <MapMenu No="Frm" CH="设置框架"    JS="javascript:MapFrame(@MyPK);" Img="./Img/Frame.gif"  />
-  <MapMenu No="FGroup" CH="字段分组" JS="javascript:GroupFieldNew(@MyPK);" Img="../../Images/Btn/Apply.gif"  />
-  <MapMenu No="ExpImp" CH="导入/导出" JS="javascript:ExpImp(@MyPK);" Img="../../Images/Btn/Apply.gif"  />
+  <MapMenu No="NewF" CH="新建字段"   JS="javascript:AddF(@MyPK);"  Img="../../Images/Btn/New.gif" 
+           Note="向表单中增加新字段。" />
+  <MapMenu No="CopyF" CH="复制字段"  JS="javascript:CopyFieldFromNode(@MyPK);"  Img="../../Images/Btn/Copy.gif"
+           Note="从其它表单中复制字段" />
+  <MapMenu No="DTable" CH="增加从表" JS="javascript:MapDtl(@MyPK);" Img="../../Images/Btn/Table.gif"
+           Note="增加一个从表，比如：报销费用清单。"  />
+  <MapMenu No="DM" CH="增加多选框"     JS="javascript:MapM2M(@MyPK);" Img="../../Images/Btn/ChoseCol.gif" 
+           Note="比如人员列表、选课科目、支持的操作系统。" />
+  <MapMenu No="Ath" CH="附件组件"     JS="javascript:Ath(@MyPK);" Img="../../Images/Btn/ChoseCol.gif" 
+           Note="单个附件与多个附件类型的数据上传、浏览。"/>
+  <MapMenu No="Frm" CH="设置框架"    JS="javascript:MapFrame(@MyPK);" Img="./Img/Frame.gif" 
+           Note="可以利用此功能把您自己定义的表单、界面、嵌入到傻瓜表单中。"/>
+  <MapMenu No="FGroup" CH="新建字段分组" JS="javascript:GroupFieldNew(@MyPK);" Img="../../Images/Btn/Apply.gif"
+           Note="把一类的字段或者组件分割开，让表单设计更有条理。" />
+  <MapMenu No="ExpImp" CH="导入/导出" JS="javascript:ExpImp(@MyPK);" Img="../../Images/Btn/Apply.gif"
+           Note="导入或者导入表单模板。" />
 
   <MapMenu111 No="Ext" CH="扩展设置"    JS="javascript:MapExt(@MyPK);" Img="../../Images/Btn/DTS.gif" />
 

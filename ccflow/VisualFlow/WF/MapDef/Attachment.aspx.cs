@@ -40,14 +40,15 @@ public partial class WF_MapDef_FrmAttachment : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         FrmAttachment ath = new FrmAttachment();
-        ath.CheckPhysicsTable();
 
         ath.MyPK = this.FK_MapData + "_" + this.Ath;
         if (this.Ath != null)
             ath.RetrieveFromDBSources();
 
+        ath.FK_MapData = this.FK_MapData;
+        ath.NoOfAth = this.Ath;
         ath.MyPK = this.FK_MapData + "_" + this.Ath;
-
+    
         //this.Response.Write(this.Ath);
         //this.Response.Write("  -- "+this.FK_MapData);
 
@@ -135,6 +136,48 @@ public partial class WF_MapDef_FrmAttachment : WebPage
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
+        this.Pub1.AddTD("高度");
+        BP.Web.Controls.TB mytb = new BP.Web.Controls.TB();
+        mytb.ID = "TB_" + FrmAttachmentAttr.H;
+        mytb.Text = ath.H.ToString();
+        mytb.ShowType = BP.Web.Controls.TBType.Float;
+        this.Pub1.AddTD("colspan=1", mytb);
+        this.Pub1.AddTD("对傻瓜表单有效");
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("宽度");
+        mytb = new BP.Web.Controls.TB();
+        mytb.ID = "TB_" + FrmAttachmentAttr.W;
+        mytb.Text = ath.W.ToString();
+        mytb.ShowType = BP.Web.Controls.TBType.Float;
+        mytb.Columns = 60;
+        this.Pub1.AddTD("colspan=1", mytb);
+        this.Pub1.AddTD("对傻瓜表单有效");
+        this.Pub1.AddTREnd();
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("自动控制");
+        cb = new CheckBox();
+        cb.ID = "CB_" + FrmAttachmentAttr.IsAutoSize;
+        cb.Text = "自动控制高度与宽度(对傻瓜表单有效)";
+        cb.Checked = ath.IsAutoSize;
+        this.Pub1.AddTD("colspan=2",cb);
+        this.Pub1.AddTREnd();
+
+        GroupFields gfs = new GroupFields(ath.FK_MapData);
+
+        this.Pub1.AddTR1();
+        this.Pub1.AddTD(this.ToE("ShowInGroup", "显示在分组"));
+        BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
+        ddl.ID = "DDL_GroupField";
+        ddl.BindEntities(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab, false, BP.Web.Controls.AddAllLocation.None);
+        ddl.SetSelectItem(ath.GroupID);
+        this.Pub1.AddTD("colspan=2", ddl);
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
         this.Pub1.AddTD("");
         Button btn = new Button();
         btn.ID = "Btn";
@@ -154,12 +197,27 @@ public partial class WF_MapDef_FrmAttachment : WebPage
             ath.RetrieveFromDBSources();
         ath = this.Pub1.Copy(ath) as FrmAttachment;
         ath.FK_MapData = this.FK_MapData;
-
-
         ath.MyPK = this.FK_MapData + "_" + this.Ath;
+
+        GroupFields gfs1 = new GroupFields(this.FK_MapData);
+        if (gfs1.Count == 1)
+        {
+            GroupField gf = (GroupField)gfs1[0];
+            ath.GroupID = gf.OID;
+        }
+        else
+        {
+            ath.GroupID = this.Pub1.GetDDLByID("DDL_GroupField").SelectedItemIntVal;
+        }
+
         if (this.Ath == null)
         {
             ath.UploadType = (AttachmentUploadType)int.Parse(this.UploadType);
+            if (ath.IsExits == true)
+            {
+                this.Alert("附件编号("+ath.NoOfAth+")已经存在。");
+                return;
+            }
             ath.Insert();
         }
         else

@@ -369,6 +369,24 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                     mygf.Update();
                     this.WinClose();
                     break;
+                case "AthDoUp":
+                    FrmAttachment frmAth = new FrmAttachment(this.MyPK);
+                    if (frmAth.RowIdx > 0)
+                    {
+                        frmAth.RowIdx = frmAth.RowIdx - 1;
+                        frmAth.Update();
+                    }
+                    this.WinClose();
+                    break;
+                case "AthDoDown":
+                    FrmAttachment frmAthD = new FrmAttachment(this.MyPK);
+                    if (frmAthD.RowIdx < 10)
+                    {
+                        frmAthD.RowIdx = frmAthD.RowIdx + 1;
+                        frmAthD.Update();
+                    }
+                    this.WinClose();
+                    break;
                 case "DtlDoUp":
                     MapDtl dtl1 = new MapDtl(this.MyPK);
                     if (dtl1.RowIdx > 0)
