@@ -44,6 +44,16 @@ namespace BP.WF.XML
                 return this.GetValStringByKey("Img");
             }
         }
+        /// <summary>
+        /// 说明
+        /// </summary>
+        public string Note
+        {
+            get
+            {
+                return this.GetValStringByKey("Note");
+            }
+        }
         #endregion
 
         #region 构造

@@ -83,6 +83,18 @@ namespace BP.Sys
         /// 上传类型
         /// </summary>
         public const string UploadType = "UploadType";
+        /// <summary>
+        /// RowIdx
+        /// </summary>
+        public const string RowIdx = "RowIdx";
+        /// <summary>
+        /// GroupID
+        /// </summary>
+        public const string GroupID = "GroupID";
+        /// <summary>
+        /// 自动控制大小
+        /// </summary>
+        public const string IsAutoSize = "IsAutoSize";
     }
     /// <summary>
     /// 附件
@@ -144,6 +156,20 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(FrmAttachmentAttr.IsDelete, value);
+            }
+        }
+        /// <summary>
+        /// 自动控制大小
+        /// </summary>
+        public bool IsAutoSize
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FrmAttachmentAttr.IsAutoSize);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.IsAutoSize, value);
             }
         }
         /// <summary>
@@ -269,6 +295,28 @@ namespace BP.Sys
                 this.SetValByKey(FrmAttachmentAttr.H, value);
             }
         }
+        public int RowIdx
+        {
+            get
+            {
+                return this.GetValIntByKey(FrmAttachmentAttr.RowIdx);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.RowIdx, value);
+            }
+        }
+        public int GroupID
+        {
+            get
+            {
+                return this.GetValIntByKey(FrmAttachmentAttr.GroupID);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.GroupID, value);
+            }
+        }
         /// <summary>
         /// FK_MapData
         /// </summary>
@@ -334,7 +382,13 @@ namespace BP.Sys
                 map.AddBoolean(FrmAttachmentAttr.IsUpload, true, "是否可以上传", false, false);
                 map.AddBoolean(FrmAttachmentAttr.IsDelete, true, "是否可以删除", false, false);
                 map.AddBoolean(FrmAttachmentAttr.IsDownload, true, "是否可以下载", false, false);
+
+                map.AddBoolean(FrmAttachmentAttr.IsAutoSize, true, "自动控制大小", false, false);
+
                 map.AddTBInt(FrmAttachmentAttr.UploadType, 0, "上传类型0单个1多个2指定", false, false);
+
+                map.AddTBInt(FrmAttachmentAttr.RowIdx, 0, "RowIdx", false, false);
+                map.AddTBInt(FrmAttachmentAttr.GroupID, 0, "GroupID", false, false);
 
                 this._enMap = map;
                 return this._enMap;
@@ -342,7 +396,7 @@ namespace BP.Sys
         }
         #endregion
 
-
+        public bool IsUse = false;
         protected override bool beforeUpdateInsertAction()
         {
             this.MyPK = this.FK_MapData + "_" + this.NoOfAth;
