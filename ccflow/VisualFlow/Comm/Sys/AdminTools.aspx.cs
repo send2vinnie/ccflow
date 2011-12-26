@@ -79,7 +79,7 @@ namespace BP.Web.WF.Comm.Sys
             }
 
             this.UCSys1.AddTable();
-            this.UCSys1.AddCaptionLeft( this.GenerCaption( "管理员工具" ) );
+            this.UCSys1.AddCaptionLeft(this.GenerCaption("管理员工具"));
             this.UCSys1.AddTR();
             this.UCSys1.AddTDTitle("");
             this.UCSys1.AddTDTitle("名称");
@@ -96,15 +96,11 @@ namespace BP.Web.WF.Comm.Sys
                 this.UCSys1.AddTD(dr["描述"].ToString());
                 this.UCSys1.AddTREnd();
             }
-
             this.UCSys1.AddTableEnd();
-
-
             //    this.Ucsys1.Add(this.GenerCaption("功能执行"));
             // this.Ucsys1.AddHR();
             // this.Response.Write(this.GenerTablePage(dt, "管理员工具"));
         }
-
 
 		#region Web 窗体设计器生成的代码
 		override protected void OnInit(EventArgs e)
