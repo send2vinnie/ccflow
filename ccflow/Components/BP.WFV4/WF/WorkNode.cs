@@ -3136,9 +3136,10 @@ namespace BP.WF
         /// <param name="gwls"></param>
         public void AddIntoWacthDog(WorkerLists gwls)
         {
-            string basePath = "http://" + SystemConfig.AppSettings["BPMHost"];
+            string basePath = "http://" + System.Web.HttpContext.Current.Request.Url.Host;
+            basePath += "/"+System.Web.HttpContext.Current.Request.ApplicationPath;
+
             string mailTemp = BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfDataUser + "\\EmailTemplete\\"+WebUser.SysLang+".txt");
-            //foreach (WorkerList wl in HisWorkerLists)
             foreach (WorkerList wl in gwls)
             {
                 if (wl.IsEnable == false)
