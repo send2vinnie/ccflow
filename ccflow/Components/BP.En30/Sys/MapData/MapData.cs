@@ -404,41 +404,15 @@ namespace BP.Sys
         #endregion
 
         #region 构造方法
-        //public MapAttrs GenerHisTableCells
-        //{
-        //    get
-        //    {
-        //        //if ( this.CellsFrom == null)
-        //        //    return null;
-        //        MapAttrs mapAttrs = new MapAttrs(this.No+"T");
-        //        if (mapAttrs.Count == 0)
-        //        {
-        //            for (int i = 1; i < 4; i++)
-        //            {
-        //                MapAttr attr = new MapAttr();
-        //                attr.FK_MapData = this.No + "T";
-        //                attr.KeyOfEn = "F" + i.ToString();
-        //                attr.Name = "Lab" + i;
-        //                attr.MyDataType = BP.DA.DataType.AppString;
-        //                attr.UIContralType = UIContralType.TB;
-        //                attr.LGType = FieldTypeS.Normal;
-        //                attr.UIVisible = true;
-        //                attr.UIIsEnable = true;
-        //                attr.UIWidth = 30;
-        //                attr.UIIsLine = true;
-        //                attr.MinLen = 0;
-        //                attr.MaxLen = 600;
-        //                attr.IDX = i;
-        //                attr.Insert();
-        //            }
-        //            mapAttrs = new MapAttrs(this.No + "T");
-        //        }
-        //        return mapAttrs;
-        //    }
-        //}
         public Map GenerHisMap()
         {
             MapAttrs mapAttrs = new MapAttrs(this.No);
+            if (mapAttrs.Count == 0)
+            {
+                this.RepairMap();
+                mapAttrs = new MapAttrs(this.No);
+            }
+
             Map map = new Map(this.PTable);
 
             DBUrl u = new DBUrl(this.HisDBUrl);
@@ -875,7 +849,7 @@ namespace BP.Sys
                 }
             }
         }
-        protected override bool beforeInsert()
+        public void RepairMap()
         {
             BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
             if (attr.IsExit(MapAttrAttr.KeyOfEn, "OID", MapAttrAttr.FK_MapData, this.No) == false)
@@ -910,7 +884,9 @@ namespace BP.Sys
                 attr.Tag = "1";
                 attr.Insert();
             }
-
+        }
+        protected override bool beforeInsert()
+        {
             return base.beforeInsert();
         }
         protected override bool beforeDelete()
@@ -1017,6 +993,7 @@ namespace BP.Sys
             sql = "SELECT * FROM Sys_MapAttr WHERE " + where + " AND KeyOfEn NOT IN('WFState','WFLog','NodeState')";
             DataTable Sys_MapAttr = DBAccess.RunSQLReturnTable(sql);
             Sys_MapAttr.TableName = "Sys_MapAttr";
+           
             ds.Tables.Add(Sys_MapAttr);
 
             // Sys_MapM2M.
