@@ -197,19 +197,17 @@ public partial class WF_MapDef_GroupField : WebPage
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
-
         btn = new Btn();
         btn.Text = this.ToE("NewField", "新建字段");
         btn.ID = "Btn_NewField";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
-
-        btn = new Btn();
-        btn.Text = this.ToE("CopyField", "复制字段");
-        btn.ID = "Btn_CopyField";
-        btn.Click += new EventHandler(btn_Click);
-        this.Pub1.Add(btn);
+        //btn = new Btn();
+        //btn.Text = this.ToE("CopyField", "复制字段");
+        //btn.ID = "Btn_CopyField";
+        //btn.Click += new EventHandler(btn_Click);
+        //this.Pub1.Add(btn);
 
 
         btn = new Btn();

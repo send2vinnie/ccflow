@@ -23,6 +23,15 @@
   if(event.keyCode==13)
      event.keyCode=9;
 -->
+
+
+</script>
+		<script language="javascript" >
+function ShowIt(m)
+{
+   var url='Method.aspx?M='+m;
+   var a=window.showModalDialog( url, 'OneVs' ,'dialogHeight: 400px; dialogWidth: 500px; dialogTop: 100px; dialogLeft: 110px; center: yes; help: no'); 
+}
 </script>
 	</HEAD>
 	<body    onkeypress=Esc() leftMargin=0 

@@ -64,11 +64,11 @@ public partial class WF_Frm : WebPage
             return s;
         }
     }
-    public bool IsReadonly
+    public bool IsEdit
     {
         get
         {
-            if (this.Request.QueryString["IsReadonly"] == "1")
+            if (this.Request.QueryString["IsEdit"] == "1")
                 return true;
             return false;
         }
@@ -98,35 +98,56 @@ public partial class WF_Frm : WebPage
             GEDtl dtlEn = dtl.HisGEDtl;
             dtlEn.SetValByKey("OID", this.FID);
 
-            if (dtlEn.EnMap.Attrs.Count <= 1)
+            if (dtlEn.EnMap.Attrs.Count < 1)
             {
                 this.UCEn1.AddMsgOfWarning("提示", "<h2>明细表单没有字段无法预览。</h2>");
                 return;
             }
             int i = dtlEn.RetrieveFromDBSources();
-            this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
+            this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, !this.IsEdit);
+
+            this.AddJSEvent(dtlEn);
         }
         else
         {
             GEEntity en = md.HisGEEn;
             en.SetValByKey("OID", this.FID);
-            if (en.EnMap.Attrs.Count <= 1)
+            if (en.EnMap.Attrs.Count < 1)
             {
-                this.UCEn1.AddMsgOfWarning("提示", "<h2>主表单没有字段无法预览。FK_MapData="+this.FK_MapData+"</h2>");
+                this.UCEn1.AddMsgOfWarning("提示", "<h2>主表单没有字段无法预览。FK_MapData=" + this.FK_MapData + "</h2>");
                 return;
             }
 
             int i = en.RetrieveFromDBSources();
             if (i == 0 && this.FID != 0)
                 en.DirectInsert();
-            this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsReadonly);
-        }
-        Session["Count"] = null;
+            this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
 
-        this.Btn_Save.Visible = !this.IsReadonly;
-        this.Btn_Save.Enabled = !this.IsReadonly;
-        this.Btn_Print.Visible = true;
+            this.AddJSEvent(en);
+        }
+
+        Session["Count"] = null;
+        this.Btn_Save.Visible = this.IsEdit;
+        this.Btn_Save.Enabled = this.IsEdit;
+
+        this.Btn_Print.Visible = this.IsPrint;
+        this.Btn_Print.Enabled = this.IsPrint;
         this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData + "&WorkID=" + this.WorkID + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
+    }
+    public void AddJSEvent(Entity en)
+    {
+        Attrs attrs=en.EnMap.Attrs;
+        foreach (Attr attr in attrs)
+        {
+            if (attr.UIIsReadonly || attr.UIVisible == false)
+                continue;
+
+            if (attr.IsFKorEnum)
+            {
+                var ddl = this.UCEn1.GetDDLByID("DDL_" + attr.Key);
+                // ddl.Attributes["onselect"]
+            }
+        }
     }
     /// <summary>
     /// 保存点

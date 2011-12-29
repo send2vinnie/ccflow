@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/WF/MapDef/WinOpen.master" AutoEventWireup="true" CodeFile="MapDef.aspx.cs" 
-Inherits="WF_MapDef_MapDef" Title="ccflow表单设计器" %>
+Inherits="WF_MapDef_MapDef" Title="ccflow傻瓜表单设计器" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <style type="text/css">
@@ -66,9 +66,9 @@ body
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 200px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    function ExpImp(mypk) {
-        var url = 'ExpImp.aspx?RefNo=' + mypk + "&RefOID=0&DoType=FunList";
-        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 200px; dialogWidth: 600px;center: yes; help: no');
+    function ExpImp(mypk, fk_flow) {
+        var url = 'ExpImp.aspx?RefNo=' + mypk + "&RefOID=0&DoType=FunList&FK_Flow="+fk_flow;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
 
@@ -266,6 +266,11 @@ body
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
+    function HidAttr(fk_mapData) {
+        var url = 'HidAttr.aspx?FK_MapData=' + fk_mapData;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
 </script>
 	<base target="_self" />
     <style type="text/css">
@@ -346,7 +351,7 @@ body
                    <uc1:Pub ID="Left" runat="server" />
                  </td>
 
-                  <td valign=top align=left>
+                  <td valign=top align=center>
                    <uc1:Pub ID="Pub1" runat="server" />
                  </td>
 

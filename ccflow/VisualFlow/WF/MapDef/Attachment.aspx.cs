@@ -9,6 +9,9 @@ using BP.Web;
 
 public partial class WF_MapDef_FrmAttachment : WebPage
 {
+    /// <summary>
+    /// 类型
+    /// </summary>
     public string UploadType
     {
         get
@@ -26,7 +29,6 @@ public partial class WF_MapDef_FrmAttachment : WebPage
             string s= this.Request.QueryString["FK_MapData"];
             if (s == null)
                 s = "test";
-
             return s;
         }
     }
@@ -180,11 +182,24 @@ public partial class WF_MapDef_FrmAttachment : WebPage
         this.Pub1.AddTR();
         this.Pub1.AddTD("");
         Button btn = new Button();
-        btn.ID = "Btn";
+        btn.ID = "Btn_Save";
         btn.Text = "  Save  ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.AddTD(btn);
-        this.Pub1.AddTD();
+
+        if (this.Ath != null)
+        {
+            btn = new Button();
+            btn.ID = "Btn_Delete";
+            btn.Text = "  Delete  ";
+            btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
+            btn.Click += new EventHandler(btn_Click);
+            this.Pub1.AddTD(btn);
+        }
+        else
+        {
+            this.Pub1.AddTD();
+        }
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }
@@ -192,6 +207,15 @@ public partial class WF_MapDef_FrmAttachment : WebPage
     void btn_Click(object sender, EventArgs e)
     {
         FrmAttachment ath = new FrmAttachment();
+        Button btn = sender as Button;
+        if (btn.ID == "Btn_Delete")
+        {
+            ath.MyPK = this.FK_MapData + "_" + this.Ath;
+            ath.Delete();
+            this.WinClose("删除成功.");
+            return;
+        }
+
         ath.MyPK = this.FK_MapData + "_" + this.Ath;
         if (this.Ath != null)
             ath.RetrieveFromDBSources();

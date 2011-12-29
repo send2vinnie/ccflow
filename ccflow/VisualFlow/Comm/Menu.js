@@ -61,7 +61,7 @@ function RefMethod1( path , index , warning, target, ensName, keys )
  
   var url=path+"/Comm/RefMethod.aspx?Index="+index+"&EnsName="+ ensName + keys;
     if (target==null || target=='' )
-      var a=WinOpen(url, 'remmed' );
+      var b=WinOpen(url, 'remmed' );
     else
       var a=WinOpen(url,  target );
     //  var b=window.showModalDialog( url , 'aass', 'dialogHeight: 400px; dialogWidth: 600px; dialogTop: 100px; dialogLeft: 110px; center: yes; help: no'); 

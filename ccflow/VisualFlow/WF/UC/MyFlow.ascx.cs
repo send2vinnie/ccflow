@@ -333,7 +333,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     public BP.WF.Node currND = null;
     #endregion
 
-
     #region Page load 事件
     /// <summary>
     /// Page_Load
@@ -752,25 +751,29 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
         switch (nd.HisFormType)
         {
-            case FormType.FixForm:
-                this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID); //, false, false, null);
-                if (wk.WorkEndInfo.Length > 2)
-                {
-                    this.UCEn1.Add(wk.WorkEndInfo);
-                }
-                return;
             case FormType.FreeForm:
             case FormType.DisableIt:
+            case FormType.FixForm:
                 Frms frms = nd.HisFrms;
                 if (frms.Count == 0)
                 {
-                    this.UCEn1.Add("<div id=divFreeFrm >");
-                    this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID, false); //, false, false, null);
-                    if (wk.WorkEndInfo.Length > 2)
+                    if (nd.HisFormType == FormType.FreeForm)
                     {
-                        this.UCEn1.Add(wk.WorkEndInfo);
+                        /* 自由表单 */
+                        this.UCEn1.Add("<div id=divFreeFrm >");
+                        this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID, false); //, false, false, null);
+                        if (wk.WorkEndInfo.Length > 2)
+                            this.UCEn1.Add(wk.WorkEndInfo);
+                        this.UCEn1.Add("</div>");
                     }
-                    this.UCEn1.Add("</div>");
+
+                    if (nd.HisFormType == FormType.FixForm)
+                    {
+                        /*傻瓜表单*/
+                        this.UCEn1.BindColumn4(wk, "ND" + nd.NodeID); //, false, false, null);
+                        if (wk.WorkEndInfo.Length > 2)
+                            this.UCEn1.Add(wk.WorkEndInfo);
+                    }
                 }
                 else
                 {
@@ -780,11 +783,26 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         Frm myfrm = new Frm();
                         myfrm.No = "ND" + nd.NodeID;
                         myfrm.Name = wk.EnDesc;
+                        myfrm.HisFormType = nd.HisFormType;
 
                         FrmNode fnNode = new FrmNode();
                         fnNode.FK_Frm = myfrm.No;
-                        fnNode.IsReadonly = false;
+                        fnNode.IsEdit = true;
                         fnNode.IsPrint = false;
+                        switch (nd.HisFormType)
+                        {
+                            case FormType.FixForm:
+                                fnNode.HisFrmType = FrmType.Column4Frm;
+                                break;
+                            case FormType.FreeForm:
+                                fnNode.HisFrmType = FrmType.FreeFrm;
+                                break;
+                            case FormType.SelfForm:
+                                fnNode.HisFrmType = FrmType.Url;
+                                break;
+                            default:
+                                throw new Exception("出现了未判断的异常。");
+                        }
                         myfrm.HisFrmNode = fnNode;
                         frms.AddEntity(myfrm, 0);
                     }
@@ -799,7 +817,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         Frm frm = (Frm)frms[0];
                         FrmNode fn = frm.HisFrmNode;
                         string src = "";
-                        src = "Frm.aspx?FK_MapData=" + frm.No + "&FID=" + fid + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt + "&FK_Node=" + nd.NodeID + "&WorkID=" + this.WorkID;
+                        src = fn.FrmUrl + ".aspx?FK_MapData=" + frm.No + "&FID=" + fid + "&IsEdit=" + fn.IsEditInt + "&IsPrint=" + fn.IsPrintInt + "&FK_Node=" + nd.NodeID + "&WorkID=" + this.WorkID;
                         this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;' >");
                         this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "' src='" + src + "' frameborder=0  style='position:absolute;width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0'  /></iframe>");
                         this.UCEn1.Add("\t\n </DIV>");
@@ -830,7 +848,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         {
                             FrmNode fn = frm.HisFrmNode;
                             string src = "";
-                            src = "Frm.aspx?FK_MapData=" + frm.No + "&FID=" + fid + "&IsReadonly=" + fn.IsReadonlyInt + "&IsPrint=" + fn.IsPrintInt + "&FK_Node=" + nd.NodeID + "&WorkID=" + this.WorkID;
+                            src = fn.FrmUrl + ".aspx?FK_MapData=" + frm.No + "&FID=" + fid + "&IsEdit=" + fn.IsEditInt + "&IsPrint=" + fn.IsPrintInt + "&FK_Node=" + nd.NodeID + "&WorkID=" + this.WorkID;
                             this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\" onclick=\"TabClick('" + frm.No + "','" + src + "');\" >" + frm.Name + "</a></li>");
                         }
                         this.UCEn1.Add("\t\n </ul>");

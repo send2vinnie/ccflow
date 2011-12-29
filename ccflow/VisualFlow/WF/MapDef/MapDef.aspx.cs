@@ -13,7 +13,6 @@ using BP.En;
 using BP.Web.Controls;
 using BP.DA;
 using BP.Web;
-
 public partial class WF_MapDef_MapDef : WebPage
 {
     public new string MyPK
@@ -35,6 +34,13 @@ public partial class WF_MapDef_MapDef : WebPage
         get
         {
             return this.MyPK;
+        }
+    }
+    public string FK_Flow
+    {
+        get
+        {
+            return this.Request.QueryString["FK_Flow"];
         }
     }
     /// <summary>
@@ -83,12 +89,12 @@ public partial class WF_MapDef_MapDef : WebPage
         xmls.RetrieveAll();
 
         #region bindleft
-        this.Left.Add("<img src='../../DataUser/LogBiger.png' border=0/>");
+        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' border=0/></a>");
         this.Left.AddHR();
         this.Left.AddUL();
         foreach (BP.WF.XML.MapMenu item in xmls)
         {
-            this.Left.AddLi("<a href=\"" + item.JS.Replace("@MyPK", "'" + this.FK_MapData + "'") + "\" ><b>" + item.Name + "</b></a><br><font color=green>" + item.Note + "</font>");
+            this.Left.AddLi("<a href=\"" + item.JS.Replace("@MyPK", "'" + this.FK_MapData + "'").Replace("@FK_Flow","'"+this.FK_Flow+"'") + "\" ><b>" + item.Name + "</b></a><br><font color=green>" + item.Note + "</font>");
         }
         this.Left.AddULEnd();
         #endregion bindleft
@@ -97,7 +103,7 @@ public partial class WF_MapDef_MapDef : WebPage
         this.Pub1.Add("\t\n<Table style=\"width:600px;\" align=left>");
         /*
          * 根据 GroupField 循环出现菜单。
-         */
+         */ 
         foreach (GroupField gf in gfs)
         {
             rowIdx = 0;
@@ -589,56 +595,53 @@ public partial class WF_MapDef_MapDef : WebPage
         #endregion 处理iFrom 的自适应的问题。
 
         #region 处理隐藏字段。
-        //string SysFields = "OID,FID,FK_NY,Emps,FK_Dept,NodeState,WFState,BillNo,RDT,MyNum,";
-        string msg = ""; // +++++++ 编辑隐藏字段 +++++++++ <br>";
-        foreach (MapAttr attr in mattrs)
-        {
-            if (attr.UIVisible)
-            {
-                bool isHave = false;
-                foreach (GroupField gf in gfs)
-                {
-                    if (attr.GroupID == gf.OID)
-                    {
-                        isHave = true;
-                        break;
-                    }
+        ////string SysFields = "OID,FID,FK_NY,Emps,FK_Dept,NodeState,WFState,BillNo,RDT,MyNum,";
+        //string msg = ""; // +++++++ 编辑隐藏字段 +++++++++ <br>";
+        //foreach (MapAttr attr in mattrs)
+        //{
+        //    if (attr.UIVisible)
+        //    {
+        //        bool isHave = false;
+        //        foreach (GroupField gf in gfs)
+        //        {
+        //            if (attr.GroupID == gf.OID)
+        //            {
+        //                isHave = true;
+        //                break;
+        //            }
 
-                }
-                if (isHave == false)
-                    msg += "<a href=\"javascript:Edit('" + this.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
-
-                continue;
-            }
-
-            switch (attr.KeyOfEn)
-            {
-                case "OID":
-                case "FID":
-                case "FK_NY":
-                case "Emps":
-                case "FK_Dept":
-                case "NodeState":
-                case "WFState":
-                case "BillNo":
-                case "RDT":
-                case "MyNum":
-                case "Rec":
-                case "CDT":
-                    continue;
-                default:
-                    break;
-            }
-            msg += "<a href=\"javascript:Edit('" + this.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
-        }
-
-        if (msg.Length > 10)
-        {
-            this.Pub1.AddFieldSet("编辑隐藏字段");
-            this.Pub1.Add(msg);
-            this.Pub1.Add("<br>说明：隐藏字段是不显示在表单里面，多用于属性的计算、方向条件的设置，报表的体现。");
-            this.Pub1.AddFieldSetEnd();
-        }
+        //        }
+        //        if (isHave == false)
+        //            msg += "<a href=\"javascript:Edit('" + this.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
+        //        continue;
+        //    }
+        //    switch (attr.KeyOfEn)
+        //    {
+        //        case "OID":
+        //        case "FID":
+        //        case "FK_NY":
+        //        case "Emps":
+        //        case "FK_Dept":
+        //        case "NodeState":
+        //        case "WFState":
+        //        case "BillNo":
+        //        case "RDT":
+        //        case "MyNum":
+        //        case "Rec":
+        //        case "CDT":
+        //            continue;
+        //        default:
+        //            break;
+        //    }
+        //    msg += "<a href=\"javascript:Edit('" + this.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
+        //}
+        //if (msg.Length > 10)
+        //{
+        //    this.Pub1.AddFieldSet("编辑隐藏字段");
+        //    this.Pub1.Add(msg);
+        //    this.Pub1.Add("<br>说明：隐藏字段是不显示在表单里面，多用于属性的计算、方向条件的设置，报表的体现。");
+        //    this.Pub1.AddFieldSetEnd();
+        //}
         #endregion 处理隐藏字段。
     }
 

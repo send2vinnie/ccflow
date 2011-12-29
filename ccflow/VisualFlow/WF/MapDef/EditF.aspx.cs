@@ -338,7 +338,8 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD();
+        this.Pub1.AddTD("对傻瓜表单有效");
+
 
        // this.Pub1.AddTD("控制该它在表单的显示方式");
         this.Pub1.AddTREnd();
@@ -379,7 +380,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
 
-        this.Pub1.AddTD();
+        this.Pub1.AddTD("不可见者为隐藏字段.");
      //   this.Pub1.AddTD("控制该它在表单的界面里是否可见");
         this.Pub1.AddTREnd();
         #endregion 是否可界面可见
@@ -745,7 +746,8 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
 
-        this.Pub1.AddTD();
+        this.Pub1.AddTD("对傻瓜表单有效");
+
         //this.Pub1.AddTD("控制该它在表单的显示方式");
         this.Pub1.AddTREnd();
         #endregion 是否可编辑
@@ -778,7 +780,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
 
-        this.Pub1.AddTD();
+        this.Pub1.AddTD("不可见者为隐藏字段.");
         //this.Pub1.AddTD("控制该它在表单的界面里是否可见");
         this.Pub1.AddTREnd();
         #endregion 是否可界面可见

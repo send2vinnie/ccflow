@@ -198,7 +198,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
 
-        this.Pub1.AddTD();
+        this.Pub1.AddTD("不可见者为隐藏字段.");
         this.Pub1.AddTREnd();
         #endregion 是否可界面可见
 

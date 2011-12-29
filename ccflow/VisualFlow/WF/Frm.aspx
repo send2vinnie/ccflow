@@ -2,6 +2,7 @@
 <%@ Register src="UC/UCEn.ascx" tagname="UCEn" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <script language="javascript" >
+    var isFrmChange = false;
     var isChange = false;
     function SaveDtlData() {
         if (isChange == false)
@@ -10,6 +11,7 @@
         btn.click();
         isChange = false;
     }
+
     function TROver(ctrl) {
         ctrl.style.backgroundColor = 'LightSteelBlue';
     }
@@ -25,11 +27,13 @@
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = 'Dtl.aspx?EnsName=' + ens + '&RefPKVal=' + refPk + '&PageIdx=' + pageIdx;
     }
-
     function DtlOpt(workId, fk_mapdtl) {
         var url = 'DtlOpt.aspx?WorkID=' + workId + '&FK_MapDtl=' + fk_mapdtl;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = 'Dtl.aspx?EnsName=' + fk_mapdtl + '&RefPKVal=' + workId;
+    }
+    function OnKeyPress() {
+
     }
     </script>
     <style type="text/css">
@@ -42,11 +46,11 @@
 	<script language="JavaScript" src="./../Comm/JScript.js"></script>
    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" ></script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server" >
 <asp:Button ID="Btn_Save" runat="server" Text="保存"  CssClass="HBtn" Visible=true 
         onclick="Btn_Save_Click"  />
 <asp:Button ID="Btn_Print" runat="server" Text="打印"  CssClass="HBtn" Visible=true />
-
     <uc1:UCEn ID="UCEn1" runat="server" />
 </asp:Content>
 

@@ -346,11 +346,7 @@ namespace BP.Web.Comm.UC
             bool isReadonly = false;
             this.IsReadonly = false;
             this.IsShowDtl = false;
-            this.Controls.Clear();
             this.Attributes["visibility"] = "hidden";
-            //this.Height=0;
-            //this.Width=0;
-            this.Controls.Clear();
             this.Add("<table width='100%' id='a1' border='1' cellpadding='0' cellspacing='0' style='border-collapse: collapse' bordercolor='#111111' >");
             bool isLeft = true;
             object val = null;

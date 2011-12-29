@@ -28,42 +28,14 @@
 	</HEAD>
 	<body  onkeypress=Esc() leftMargin=0 topMargin=0>
 		<form id="Form1" method="post" runat="server">
-            <FONT face="宋体">
-				<TABLE id="Table1" cellSpacing="1" cellPadding="1" width="100%" border="0">
-				    <TR>
-				        <TD>
-				        <asp:Panel ID="panConfirm" runat="server" HorizontalAlign="Center">
-                            <p>您确认要执行当前操作吗？</p>
-                            <asp:Button ID="btnSubmit" runat="server" Text="执行" onclick="btnSubmit_Click" />&nbsp;&nbsp;
-                            <input id="Button1" type="button" value="关闭" onclick="javascript:window.close();" />
-                        </asp:Panel>
-                       
-				        </TD>
-				    </TR>
-					<TR>
-						<TD class=TD  bgcolor=InfoBackground>
-                            <uc2:ucsys ID="Ucsys1" runat="server" />
-                        </TD>
-					</TR>
-					<TR>
-						<TD class=TD  bgcolor=InfoBackground>
-                            <uc2:ucsys ID="Ucsys2" runat="server" />
-                        </TD>
-					</TR>
-					<TR>
-						<TD>
+        <br />
+        <table style="width:80%;align:center" align=center>
+        <tr>
+        <td>
 						    <uc1:UCEn id="UCEn1" runat="server"></uc1:UCEn>
-						</TD>
-					</TR>
-					<TR>
-						<TD class=TD bgcolor=InfoBackground>
-                            <uc2:ucsys ID="UcMsg" runat="server" />
-                        </TD>
-					</TR>
-				</TABLE>
-			</FONT>      
-            </ContentTemplate>
-        </asp:UpdatePanel>			
+                            </td>
+                            </tr>
+         </table>
 		</form>
 	</body>
 </HTML>
