@@ -1130,7 +1130,7 @@ namespace BP.DA
                 string mysql = sql.Clone() as string;
                 foreach (Para p in paras)
                 {
-                    msg += "@" + p.ParaName + "  val=" + p.val + " type=" + p.DAType.ToString();
+                    msg += "@" + p.ParaName + "=" + p.val + "," + p.DAType.ToString();
                     mysql = mysql.Replace(":" + p.ParaName + ",", "'" + p.val + "',");
                 }
 

@@ -673,7 +673,7 @@ namespace BP.En
         public bool UIIsLine = false;
 		private bool _UIIsReadonly=false;
 		/// <summary>
-		/// 是不是制度
+		/// 是不是只读
 		/// </summary>
 		public bool UIIsReadonly
 		{

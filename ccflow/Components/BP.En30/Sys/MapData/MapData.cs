@@ -31,13 +31,13 @@ namespace BP.Sys
     public enum FrmType
     {
         /// <summary>
-        /// 傻瓜表单
-        /// </summary>
-        Column4Frm=0,
-        /// <summary>
         /// 自由表单
         /// </summary>
-        FreeFrm=1,
+        FreeFrm=0,
+        /// <summary>
+        /// 傻瓜表单
+        /// </summary>
+        Column4Frm = 1,
         /// <summary>
         /// URL 表单(自定义)
         /// </summary>
@@ -874,7 +874,44 @@ namespace BP.Sys
                         break;
                 }
             }
+        }
+        protected override bool beforeInsert()
+        {
+            BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
+            if (attr.IsExit(MapAttrAttr.KeyOfEn, "OID", MapAttrAttr.FK_MapData, this.No) == false)
+            {
+                attr.FK_MapData = this.No;
+                attr.KeyOfEn = "OID";
+                attr.Name = "OID";
+                attr.MyDataType = BP.DA.DataType.AppInt;
+                attr.UIContralType = UIContralType.TB;
+                attr.LGType = FieldTypeS.Normal;
+                attr.UIVisible = false;
+                attr.UIIsEnable = false;
+                attr.DefVal = "0";
+                attr.HisEditType = BP.En.EditType.Readonly;
+                attr.Insert();
+            }
 
+            if (attr.IsExit(MapAttrAttr.KeyOfEn, "RDT", MapAttrAttr.FK_MapData, this.No) == false)
+            {
+                attr = new BP.Sys.MapAttr();
+                attr.FK_MapData = this.No;
+                attr.HisEditType = BP.En.EditType.UnDel;
+                attr.KeyOfEn = "RDT";
+                attr.Name = "更新时间";
+
+                attr.MyDataType = BP.DA.DataType.AppDateTime;
+                attr.UIContralType = UIContralType.TB;
+                attr.LGType = FieldTypeS.Normal;
+                attr.UIVisible = false;
+                attr.UIIsEnable = false;
+                attr.DefVal = "@RDT";
+                attr.Tag = "1";
+                attr.Insert();
+            }
+
+            return base.beforeInsert();
         }
         protected override bool beforeDelete()
         {
@@ -913,6 +950,7 @@ namespace BP.Sys
             sql += "@DELETE Sys_MapAttr WHERE " + where;
             sql += "@DELETE Sys_GroupField WHERE EnName IN (" + ids + ")";
             sql += "@DELETE Sys_MapData WHERE No IN (" + ids + ")";
+            sql += "@DELETE Sys_MapDtl WHERE FK_MapData='"+this.No+"'";
             DBAccess.RunSQLs(sql);
             return base.beforeDelete();
         }
