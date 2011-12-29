@@ -1,0 +1,2253 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <Sys_MapData>
+    <No>ND16010</No>
+    <Name>执行招聘</Name>
+    <EnPK />
+    <SearchKeys />
+    <PTable />
+    <Dtls />
+    <CellsFrom />
+    <CellsX>4</CellsX>
+    <CellsY>5</CellsY>
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
+    <DBURL>0</DBURL>
+    <Designer />
+    <DesignerUnit />
+    <DesignerContext />
+    <FK_Flow />
+    <FormType>0</FormType>
+    <URL />
+    <FK_FrmSort />
+    <ShowAttrs />
+  </Sys_MapData>
+  <Sys_FrmLine>
+    <MyPK>Line111201070102</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>143</X1>
+    <Y1>199</Y1>
+    <X2>143</X2>
+    <Y2>199</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line111201070122</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>144</X1>
+    <Y1>167</Y1>
+    <X2>144</X2>
+    <Y2>686</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line111201070146</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>87</X1>
+    <Y1>685</Y1>
+    <X2>87</X2>
+    <Y2>667</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line111201070149</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>724</X1>
+    <Y1>684</Y1>
+    <X2>724</X2>
+    <Y2>662</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line111201070151</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>86</X1>
+    <Y1>685</Y1>
+    <X2>86</X2>
+    <Y2>684</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line111201070152</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>723</X1>
+    <Y1>686</Y1>
+    <X2>723</X2>
+    <Y2>684</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line111201070153</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>88</X1>
+    <Y1>685</Y1>
+    <X2>85</X2>
+    <Y2>685</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450510</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>89</X1>
+    <Y1>170</Y1>
+    <X2>725</X2>
+    <Y2>170</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450511</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>88</X1>
+    <Y1>433</Y1>
+    <X2>719</X2>
+    <Y2>433</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450512</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>719</X1>
+    <Y1>431</Y1>
+    <X2>725</X2>
+    <Y2>431</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112120445052</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>191</X1>
+    <Y1>712</Y1>
+    <X2>191</X2>
+    <Y2>712</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450520</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>281.82</X1>
+    <Y1>81.82</Y1>
+    <X2>281.82</X2>
+    <Y2>121.82</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450521</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>360</X1>
+    <Y1>80.91</Y1>
+    <X2>360</X2>
+    <Y2>120.91</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450522</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>81.55</X1>
+    <Y1>80</Y1>
+    <X2>718.82</X2>
+    <Y2>80</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450523</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>81.82</X1>
+    <Y1>40</Y1>
+    <X2>81.82</X2>
+    <Y2>480.91</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450524</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>83.36</X1>
+    <Y1>40.91</Y1>
+    <X2>717.91</X2>
+    <Y2>40.91</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450525</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>83.36</X1>
+    <Y1>120.91</Y1>
+    <X2>717.91</X2>
+    <Y2>120.91</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450526</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>719.09</X1>
+    <Y1>40</Y1>
+    <X2>719.09</X2>
+    <Y2>482.73</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450527</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>86</X1>
+    <Y1>971</Y1>
+    <X2>86</X2>
+    <Y2>969</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450528</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>89</X1>
+    <Y1>687</Y1>
+    <X2>723</X2>
+    <Y2>687</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450529</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>87</X1>
+    <Y1>972</Y1>
+    <X2>87</X2>
+    <Y2>947</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112120445053</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>724</X1>
+    <Y1>664</Y1>
+    <X2>724</X2>
+    <Y2>487</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450530</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>144</X1>
+    <Y1>968</Y1>
+    <X2>144</X2>
+    <Y2>943</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450531</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>724</X1>
+    <Y1>967</Y1>
+    <X2>724</X2>
+    <Y2>937</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450532</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>88</X1>
+    <Y1>936</Y1>
+    <X2>723</X2>
+    <Y2>936</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450533</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>201</X1>
+    <Y1>809</Y1>
+    <X2>201</X2>
+    <Y2>809</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450534</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>724</X1>
+    <Y1>975</Y1>
+    <X2>724</X2>
+    <Y2>965</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450535</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>196</X1>
+    <Y1>813</Y1>
+    <X2>196</X2>
+    <Y2>813</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450536</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>191</X1>
+    <Y1>813</Y1>
+    <X2>191</X2>
+    <Y2>813</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450539</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>114</X1>
+    <Y1>938</Y1>
+    <X2>114</X2>
+    <Y2>938</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112120445054</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>87</X1>
+    <Y1>668</Y1>
+    <X2>87</X2>
+    <Y2>482</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450540</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>85</X1>
+    <Y1>961</Y1>
+    <X2>85</X2>
+    <Y2>961</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450541</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>86</X1>
+    <Y1>962</Y1>
+    <X2>86</X2>
+    <Y2>963</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line11121204450542</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>88</X1>
+    <Y1>972</Y1>
+    <X2>723</X2>
+    <Y2>972</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112120445055</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>85</X1>
+    <Y1>535</Y1>
+    <X2>85</X2>
+    <Y2>535</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112120445057</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X1>156</X1>
+    <Y1>487</Y1>
+    <X2>156</X2>
+    <Y2>487</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>0</X>
+    <Y>0</Y>
+  </Sys_FrmLine>
+  <Sys_FrmImg>
+    <MyPK>Img1112120445050</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <X>577.26</X>
+    <Y>3.45</Y>
+    <H>40</H>
+    <W>137</W>
+    <ImgURL>/CCForm;component/Img/LogoBig.png</ImgURL>
+    <LinkURL />
+    <LinkTarget>_blank</LinkTarget>
+  </Sys_FrmImg>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450516</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>备@注</Text>
+    <X>109</X>
+    <Y>936</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450517</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>签字</Text>
+    <X>324</X>
+    <Y>664</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450518</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>招聘流程</Text>
+    <X>192</X>
+    <Y>58</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450519</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>招聘类型</Text>
+    <X>103</X>
+    <Y>128</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450520</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>电话</Text>
+    <X>898</X>
+    <Y>310</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450521</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>评估项目</Text>
+    <X>372</X>
+    <Y>174</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450522</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>形象气质</Text>
+    <X>215</X>
+    <Y>195</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450523</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>劳动关系</Text>
+    <X>250</X>
+    <Y>128</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450524</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>聘用关系</Text>
+    <X>389</X>
+    <Y>126</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450525</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>E-MAIL</Text>
+    <X>293</X>
+    <Y>150</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450526</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>个性特征</Text>
+    <X>210</X>
+    <Y>218</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450527</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>工作稳定性</Text>
+    <X>204</X>
+    <Y>242</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450528</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>综合素质</Text>
+    <X>203</X>
+    <Y>265</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450529</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>专业年限</Text>
+    <X>201</X>
+    <Y>289</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450530</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>职称/资格证书</Text>
+    <X>181</X>
+    <Y>309</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450531</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>离职原因</Text>
+    <X>206</X>
+    <Y>331</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450532</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>薪酬期望</Text>
+    <X>196</X>
+    <Y>361</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450533</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>税前</Text>
+    <X>254</X>
+    <Y>361</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450534</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>元/月以上</Text>
+    <X>371</X>
+    <Y>361</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450535</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>个人期望</Text>
+    <X>147</X>
+    <Y>353</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450536</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>人@力@资@源@部@人@员@填@写</Text>
+    <X>107</X>
+    <Y>248</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450537</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>人@力@资@源@部@人@员@填@写</Text>
+    <X>-26</X>
+    <Y>233</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450538</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>签字</Text>
+    <X>385</X>
+    <Y>409</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450539</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>日期</Text>
+    <X>496</X>
+    <Y>412</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450540</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>合同签订形式</Text>
+    <X>146</X>
+    <Y>383</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450541</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>劳动合同</Text>
+    <X>286</X>
+    <Y>381</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450542</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>项目合同</Text>
+    <X>381</X>
+    <Y>384</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450543</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>用@人@部@门@面@试@结@论</Text>
+    <X>-13</X>
+    <Y>610</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450544</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>评估项目</Text>
+    <X>345</X>
+    <Y>430</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450545</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>工作经验</Text>
+    <X>191</X>
+    <Y>443</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450546</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>专业技能</Text>
+    <X>189</X>
+    <Y>468</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450547</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>工作稳定性</Text>
+    <X>183</X>
+    <Y>494</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450548</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>个性特征</Text>
+    <X>189</X>
+    <Y>519</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450549</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>综合素质</Text>
+    <X>190</X>
+    <Y>549</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450550</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>薪酬期望</Text>
+    <X>192</X>
+    <Y>575</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450551</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>面试结论</Text>
+    <X>180</X>
+    <Y>595</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450552</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>建议录用</Text>
+    <X>270</X>
+    <Y>596</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450553</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>部门/项目</Text>
+    <X>335</X>
+    <Y>596</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450554</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>岗位</Text>
+    <X>486</X>
+    <Y>598</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450555</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>建议不录用</Text>
+    <X>415</X>
+    <Y>619</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450556</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>建议暂存入人才库</Text>
+    <X>269</X>
+    <Y>620</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450557</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>用@人@部@门@面@试@结@论</Text>
+    <X>109</X>
+    <Y>472</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450558</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>拟定试用期薪酬</Text>
+    <X>157</X>
+    <Y>645</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450559</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>拟定转正期薪酬</Text>
+    <X>364</X>
+    <Y>642</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450560</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>元/月</Text>
+    <X>328</X>
+    <Y>644</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450561</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>元/月</Text>
+    <X>539</X>
+    <Y>641</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450562</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>日期</Text>
+    <X>481</X>
+    <Y>671</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450563</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>流程标题</Text>
+    <X>106.5</X>
+    <Y>59.22</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450564</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>应聘者姓名</Text>
+    <X>103.48</X>
+    <Y>102.08</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450565</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>应聘部门/岗位</Text>
+    <X>288.64</X>
+    <Y>92.17</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11121204450566</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <Text>招聘录用申请表</Text>
+    <X>287.67</X>
+    <Y>7.27</Y>
+    <FontSize>23</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_MapAttr>
+    <MyPK>ND16010_a</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>a</KeyOfEn>
+    <Name>a</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>959</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>214</X>
+    <Y>127</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_aa</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>aa</KeyOfEn>
+    <Name>aa</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>960</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>162</X>
+    <Y>98</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_ab</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>ab</KeyOfEn>
+    <Name>ab</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>961</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>371</X>
+    <Y>98</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_ac</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>ac</KeyOfEn>
+    <Name>ac</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>962</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>341</X>
+    <Y>146</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_ad</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>ad</KeyOfEn>
+    <Name>ad</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>258</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>963</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>22</UIHeight>
+    <X>267</X>
+    <Y>194</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_ae</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>ae</KeyOfEn>
+    <Name>ae</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>260</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>964</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>266</X>
+    <Y>241</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_ap</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>ap</KeyOfEn>
+    <Name>ap</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>264</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>965</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>265</X>
+    <Y>286</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_ar</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>ar</KeyOfEn>
+    <Name>ar</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>260</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>966</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>22</UIHeight>
+    <X>266</X>
+    <Y>217</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_aw</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>aw</KeyOfEn>
+    <Name>aw</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>264</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>967</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>265</X>
+    <Y>263</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_az</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>az</KeyOfEn>
+    <Name>az</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>93</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>968</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>276</X>
+    <Y>357</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_b</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>b</KeyOfEn>
+    <Name>b</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>969</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>357</X>
+    <Y>127</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_CDT</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>CDT</KeyOfEn>
+    <Name>完成时间</Name>
+    <DefVal>@RDT</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>7</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag>1</Tag>
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_d</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>d</KeyOfEn>
+    <Name>d</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>970</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>248</X>
+    <Y>381</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_dd</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>dd</KeyOfEn>
+    <Name>dd</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>267</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>971</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>265</X>
+    <Y>518</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_df</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>df</KeyOfEn>
+    <Name>df</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>95</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>972</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>22</UIHeight>
+    <X>511</X>
+    <Y>596</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_ds</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>ds</KeyOfEn>
+    <Name>ds</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>268</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>973</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>22</UIHeight>
+    <X>263</X>
+    <Y>573</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_e</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>e</KeyOfEn>
+    <Name>e</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>974</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>341</X>
+    <Y>382</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_ed</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>ed</KeyOfEn>
+    <Name>ed</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>86</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>975</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>407</X>
+    <Y>408</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_ee</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>ee</KeyOfEn>
+    <Name>ee</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>268</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>976</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>22</UIHeight>
+    <X>264</X>
+    <Y>547</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_Emps</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>Emps</KeyOfEn>
+    <Name>Emps</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>400</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_f</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>f</KeyOfEn>
+    <Name>f</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>977</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>239</X>
+    <Y>593</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_fd</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>fd</KeyOfEn>
+    <Name>fd</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>89</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>978</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>20</UIHeight>
+    <X>445</X>
+    <Y>641</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_FID</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>FID</KeyOfEn>
+    <Name>FID</Name>
+    <DefVal>0</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_FK_Dept</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>FK_Dept</KeyOfEn>
+    <Name>操作员部门</Name>
+    <DefVal />
+    <UIContralType>1</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>2</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>20</MaxLen>
+    <UIBindKey>BP.Port.Depts</UIBindKey>
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_fr</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>fr</KeyOfEn>
+    <Name>fr</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>87</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>979</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>20</UIHeight>
+    <X>237</X>
+    <Y>643</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_g</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>g</KeyOfEn>
+    <Name>g</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>980</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>375</X>
+    <Y>620</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_h</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>h</KeyOfEn>
+    <Name>h</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>981</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>238</X>
+    <Y>621</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_hh</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>hh</KeyOfEn>
+    <Name>hh</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>94</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>982</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>388</X>
+    <Y>596</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_lj</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>lj</KeyOfEn>
+    <Name>lj</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>983</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>22</UIHeight>
+    <X>508</X>
+    <Y>664</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_OID</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>OID</KeyOfEn>
+    <Name>WorkID</Name>
+    <DefVal>0</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>2</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_qa</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>qa</KeyOfEn>
+    <Name>qa</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>266</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>984</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>22</UIHeight>
+    <X>265</X>
+    <Y>468</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_qq</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>qq</KeyOfEn>
+    <Name>qq</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>265</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>985</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>266</X>
+    <Y>444</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_qs</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>qs</KeyOfEn>
+    <Name>qs</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>265</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>986</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>265</X>
+    <Y>493</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_RDT</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>RDT</KeyOfEn>
+    <Name>接受时间</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>7</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag>1</Tag>
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_Rec</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>Rec</KeyOfEn>
+    <Name>记录人</Name>
+    <DefVal>@WebUser.No</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>20</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_rf</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>rf</KeyOfEn>
+    <Name>rf</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>987</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>356</X>
+    <Y>663</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_tr</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>tr</KeyOfEn>
+    <Name>tr</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>579</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>988</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>32</UIHeight>
+    <X>144</X>
+    <Y>938</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_wd</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>wd</KeyOfEn>
+    <Name>wd</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>94</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>989</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>528</X>
+    <Y>408</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_za</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>za</KeyOfEn>
+    <Name>za</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>264</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>990</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>266</X>
+    <Y>308</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND16010_zl</MyPK>
+    <FK_MapData>ND16010</FK_MapData>
+    <KeyOfEn>zl</KeyOfEn>
+    <Name>zl</Name>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>265</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>991</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>21</UIHeight>
+    <X>266</X>
+    <Y>330</Y>
+  </Sys_MapAttr>
+</NewDataSet>

@@ -1,0 +1,2122 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <Sys_MapData>
+    <No>ND7120</No>
+    <Name>总师室报告复核</Name>
+    <EnPK />
+    <SearchKeys />
+    <PTable />
+    <Dtls />
+    <CellsFrom />
+    <CellsX>4</CellsX>
+    <CellsY>5</CellsY>
+    <FrmW>1800</FrmW>
+    <FrmH>2400</FrmH>
+    <DBURL>0</DBURL>
+    <Designer />
+    <DesignerUnit />
+    <DesignerContext />
+    <FK_Flow />
+    <FormType>0</FormType>
+    <URL />
+    <FK_FrmSort />
+    <ShowAttrs />
+  </Sys_MapData>
+  <Sys_FrmLine>
+    <MyPK>Line1112060404180</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <X1>281.82</X1>
+    <Y1>81.82</Y1>
+    <X2>281.82</X2>
+    <Y2>121.82</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112060404181</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <X1>360</X1>
+    <Y1>80.91</Y1>
+    <X2>360</X2>
+    <Y2>120.91</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112060404182</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <X1>158.82</X1>
+    <Y1>41.82</Y1>
+    <X2>158.82</X2>
+    <Y2>123</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112060404183</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <X1>81.55</X1>
+    <Y1>80</Y1>
+    <X2>718.82</X2>
+    <Y2>80</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112060404184</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <X1>81.82</X1>
+    <Y1>40</Y1>
+    <X2>81.82</X2>
+    <Y2>127</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112060404185</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <X1>83.36</X1>
+    <Y1>40.91</Y1>
+    <X2>717.91</X2>
+    <Y2>40.91</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112060404186</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <X1>83.36</X1>
+    <Y1>120.91</Y1>
+    <X2>717.91</X2>
+    <Y2>120.91</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MyPK>Line1112060404187</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <X1>719.09</X1>
+    <Y1>40</Y1>
+    <X2>719.09</X2>
+    <Y2>127</Y2>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
+    <BorderStyle />
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_FrmLine>
+  <Sys_FrmLab>
+    <MyPK>Lab1112060404180</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>其他类型项目（委托单位）</Text>
+    <X>8</X>
+    <Y>1410</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab1112060404181</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>流程标题</Text>
+    <X>106.5</X>
+    <Y>59.22</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041810</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>计费标准</Text>
+    <X>284</X>
+    <Y>400</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041811</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>下浮率</Text>
+    <X>605</X>
+    <Y>403</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041812</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>甲供情况</Text>
+    <X>29</X>
+    <Y>450</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041813</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>自查</Text>
+    <X>33</X>
+    <Y>632</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041814</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>主管领导审批</Text>
+    <X>18</X>
+    <Y>923</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041815</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>项目名称</Text>
+    <X>41</X>
+    <Y>144</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041816</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>发起时间</Text>
+    <X>307.64</X>
+    <Y>95.17</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041817</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>建筑面积</Text>
+    <X>605</X>
+    <Y>326</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041818</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>送审内容</Text>
+    <X>232</X>
+    <Y>363</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041819</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>报告</Text>
+    <X>34</X>
+    <Y>505</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab1112060404182</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>发起人</Text>
+    <X>106.48</X>
+    <Y>96.08</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041820</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>复核前造价</Text>
+    <X>19</X>
+    <Y>544</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041821</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>复核后造价</Text>
+    <X>20</X>
+    <Y>591</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041822</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>总师室复核</Text>
+    <X>29</X>
+    <Y>1076</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041823</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>报告复核</Text>
+    <X>294.67</X>
+    <Y>8.27</Y>
+    <FontSize>23</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041824</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>设计单位</Text>
+    <X>567</X>
+    <Y>285</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041825</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>实施人员</Text>
+    <X>31</X>
+    <Y>248</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041826</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>工程地址&amp;nbsp;</Text>
+    <X>33</X>
+    <Y>286</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041827</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>建设单位</Text>
+    <X>314</X>
+    <Y>287</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041828</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>施工单位</Text>
+    <X>300</X>
+    <Y>323</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041829</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>咨询服务内容</Text>
+    <X>25</X>
+    <Y>179</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab1112060404183</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>项目负责人</Text>
+    <X>24</X>
+    <Y>215</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab11120604041830</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>审价类项目（委托单位）</Text>
+    <X>10</X>
+    <Y>1280</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab1112060404184</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>项目负责人复核</Text>
+    <X>14</X>
+    <Y>769</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab1112060404185</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>水电费及其他约定</Text>
+    <X>343</X>
+    <Y>445</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab1112060404186</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>监理单位</Text>
+    <X>33</X>
+    <Y>323</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab1112060404187</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>送审价</Text>
+    <X>39</X>
+    <Y>365</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab1112060404188</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>定额选用</Text>
+    <X>570</X>
+    <Y>361</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab1112060404189</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>材料价格取定</Text>
+    <X>17</X>
+    <Y>403</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111206043325</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>报告问题</Text>
+    <X>3</X>
+    <Y>1683</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111206043835</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>、施工单位、项目名称、送审金额、审定金额（含大小写）等信息错误</Text>
+    <X>126</X>
+    <Y>1683</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111207092008</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>累计应为绝对值</Text>
+    <X>148</X>
+    <Y>1736</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111207092101</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>、文字格式等错误</Text>
+    <X>126</X>
+    <Y>1764</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111207103100</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>计价原则问题</Text>
+    <X>491</X>
+    <Y>1683</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111207103219</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>计价原则（含上限合同）</Text>
+    <X>637</X>
+    <Y>1684</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111207103757</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>其他问题</Text>
+    <X>10</X>
+    <Y>1810</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111207104023</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>人员复核确认签名不完整</Text>
+    <X>138</X>
+    <Y>1810</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111207104146</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>或案号错误</Text>
+    <X>136</X>
+    <Y>1840</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111207104345</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>，项目特征与工作内容描述不全或不一致</Text>
+    <X>186</X>
+    <Y>1867</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MyPK>Lab111213031347</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <Text>事业部有无报告类型</Text>
+    <X>132</X>
+    <Y>1583</Y>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLab>
+  <Sys_MapAttr>
+    <MyPK>ND7120_baogao</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>baogao</KeyOfEn>
+    <Name>报告</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2789</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>99</X>
+    <Y>501</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_BaoGaoYuJuBuTongShun</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>BaoGaoYuJuBuTongShun</KeyOfEn>
+    <Name>报告语句不通顺</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1132</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>60</X>
+    <Y>1708</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_BiaoDianFuHao</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>BiaoDianFuHao</KeyOfEn>
+    <Name>标点符号</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1133</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>61</X>
+    <Y>1764</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_cailiaojiagequding</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>cailiaojiagequding</KeyOfEn>
+    <Name>材料价格取定</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>146</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2775</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>99</X>
+    <Y>399</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_CDT</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>CDT</KeyOfEn>
+    <Name>完成时间</Name>
+    <DefVal>@RDT</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>7</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag>1</Tag>
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_ChengGuoWenJianDaYinBuWanZheng</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>ChengGuoWenJianDaYinBuWanZheng</KeyOfEn>
+    <Name>成果文件打印不完整</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1134</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>60</X>
+    <Y>1869</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_dingexuanyong</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>dingexuanyong</KeyOfEn>
+    <Name>定额选用</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>156</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2776</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>627</X>
+    <Y>360</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_Emps</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>Emps</KeyOfEn>
+    <Name>Emps</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>400</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_faqiren</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>faqiren</KeyOfEn>
+    <Name>发起人</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>200</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2777</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>175.56</X>
+    <Y>92.43</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_faqishijian</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>faqishijian</KeyOfEn>
+    <Name>发起时间</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>7</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag>1</Tag>
+    <IDX>2778</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>384</X>
+    <Y>92.43</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_FID</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>FID</KeyOfEn>
+    <Name>FID</Name>
+    <DefVal>0</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_FK_Dept</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>FK_Dept</KeyOfEn>
+    <Name>操作员部门</Name>
+    <DefVal />
+    <UIContralType>1</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>2</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>20</MaxLen>
+    <UIBindKey>BP.Port.Depts</UIBindKey>
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_fuhehouzaojia3</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>fuhehouzaojia3</KeyOfEn>
+    <Name>复核后造价</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>8</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2779</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>104</X>
+    <Y>589</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_fuheqianzaojia3</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>fuheqianzaojia3</KeyOfEn>
+    <Name>复核前造价</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>8</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2780</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>102</X>
+    <Y>544</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_FuHeXiangMuZu</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>FuHeXiangMuZu</KeyOfEn>
+    <Name>复核项目组</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1135</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>60</X>
+    <Y>1809</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_gongchengdizhi</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>gongchengdizhi</KeyOfEn>
+    <Name>工程地址 </Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>209</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2781</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>98</X>
+    <Y>286</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_jiagongqingkuang</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>jiagongqingkuang</KeyOfEn>
+    <Name>甲供情况</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>214</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2782</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>100</X>
+    <Y>444</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_jianlidanwei</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>jianlidanwei</KeyOfEn>
+    <Name>监理单位</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>194</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2783</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>99</X>
+    <Y>322</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_jianshedanwei</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>jianshedanwei</KeyOfEn>
+    <Name>建设单位</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>199</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2784</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>362</X>
+    <Y>285</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_jianzhumianji</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>jianzhumianji</KeyOfEn>
+    <Name>建筑面积</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>8</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2785</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>663</X>
+    <Y>323</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_jifeibiaozhun</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>jifeibiaozhun</KeyOfEn>
+    <Name>计费标准</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>219</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2786</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>344</X>
+    <Y>399</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_OID</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>OID</KeyOfEn>
+    <Name>WorkID</Name>
+    <DefVal>0</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>2</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_qitaleixingxiangmuweituodanwei</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>qitaleixingxiangmuweituodanwei</KeyOfEn>
+    <Name>其他类型项目（委托单位）</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>376</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <Tag />
+    <IDX>2787</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>105408</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>93</UIHeight>
+    <X>153</X>
+    <Y>1404</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_QuFeiYuanZeWuYiJu</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>QuFeiYuanZeWuYiJu</KeyOfEn>
+    <Name>取费原则无依据</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1138</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>571</X>
+    <Y>1771</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_RDT</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>RDT</KeyOfEn>
+    <Name>接受时间</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>7</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag>1</Tag>
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_Rec</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>Rec</KeyOfEn>
+    <Name>记录人</Name>
+    <DefVal>@WebUser.No</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>20</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>999</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>1</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_shejidanwei</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>shejidanwei</KeyOfEn>
+    <Name>设计单位</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>188</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2767</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>615</X>
+    <Y>282</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_ShenDingDanHeZengJian</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>ShenDingDanHeZengJian</KeyOfEn>
+    <Name>审定单核增减</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1136</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>60</X>
+    <Y>1736</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_shenjialeixiangmuweituodanwei</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>shenjialeixiangmuweituodanwei</KeyOfEn>
+    <Name>审价类项目（委托单位）</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>378</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <Tag />
+    <IDX>2772</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>105408</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>91</UIHeight>
+    <X>137</X>
+    <Y>1276</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_shigongdanwei</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>shigongdanwei</KeyOfEn>
+    <Name>施工单位</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>225</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2773</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>361</X>
+    <Y>323</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_shishirenyuan</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>shishirenyuan</KeyOfEn>
+    <Name>实施人员</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2774</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>100</X>
+    <Y>250</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_ShiYeBuBaoGao</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>ShiYeBuBaoGao</KeyOfEn>
+    <Name>事业部报告</Name>
+    <UIContralType>1</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>1</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey>ShiYeBuBaoGao</UIBindKey>
+    <UIRefKey>No</UIRefKey>
+    <UIRefKeyText>Name</UIRefKeyText>
+    <UIVisible>1</UIVisible>
+    <IDX>1137</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>238</X>
+    <Y>1582</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_shuidianfeijiqitayueding</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>shuidianfeijiqitayueding</KeyOfEn>
+    <Name>水电费及其他约定</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>322</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2768</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>442</X>
+    <Y>443</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_songshenjia</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>songshenjia</KeyOfEn>
+    <Name>送审价</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>3</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2769</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>99</X>
+    <Y>359</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_songshenneirong</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>songshenneirong</KeyOfEn>
+    <Name>送审内容</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>250</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2770</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>290</X>
+    <Y>356</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_Title</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>Title</KeyOfEn>
+    <Name>标题</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>251</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>200</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2771</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>1</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>174.83</X>
+    <Y>54.4</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_WeiBeiHeTong</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>WeiBeiHeTong</KeyOfEn>
+    <Name>违背合同</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1127</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>569</X>
+    <Y>1684</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_WeiBeiZhaoTouBiaoJiJiaYuanZe</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>WeiBeiZhaoTouBiaoJiJiaYuanZe</KeyOfEn>
+    <Name>违背招投标计价原则</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1128</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>569</X>
+    <Y>1713</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_WeiJianLiAnHao</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>WeiJianLiAnHao</KeyOfEn>
+    <Name>未建立案号</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1129</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>60</X>
+    <Y>1840</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_WeiTuoDanWei</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>WeiTuoDanWei</KeyOfEn>
+    <Name>委托单位</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1130</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>59</X>
+    <Y>1683</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_WuJiJiaYiJu</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>WuJiJiaYiJu</KeyOfEn>
+    <Name>无计价依据</Name>
+    <UIContralType>2</UIContralType>
+    <MyDataType>4</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <IDX>1131</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>569</X>
+    <Y>1742</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_xiafulv</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>xiafulv</KeyOfEn>
+    <Name>涓嬫诞鐜?</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>8</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2820</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>660</X>
+    <Y>399</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_xiangmufuzeren</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>xiangmufuzeren</KeyOfEn>
+    <Name>项目负责人</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2821</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>101</X>
+    <Y>213</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_xiangmufuzerenfuhe</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>xiangmufuzerenfuhe</KeyOfEn>
+    <Name>项目负责人复核</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>343</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <Tag />
+    <IDX>2822</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>105408</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>110</UIHeight>
+    <X>104</X>
+    <Y>762</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_xiangmumingcheng</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>xiangmumingcheng</KeyOfEn>
+    <Name>项目名称</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2823</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>101</X>
+    <Y>141</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_zhuguanlingdaoshenpi</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>zhuguanlingdaoshenpi</KeyOfEn>
+    <Name>主管领导审批</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>347</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <Tag />
+    <IDX>2824</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>105408</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>116</UIHeight>
+    <X>102</X>
+    <Y>914</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_zicha3</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>zicha3</KeyOfEn>
+    <Name>自查</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>343</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <Tag />
+    <IDX>2825</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>105408</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>100</UIHeight>
+    <X>103</X>
+    <Y>634</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_zixunfuwuneirong</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>zixunfuwuneirong</KeyOfEn>
+    <Name>咨询服务内容</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>127</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <Tag />
+    <IDX>2826</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>23</UIHeight>
+    <X>100</X>
+    <Y>178</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND7120_zongshishifuhe</MyPK>
+    <FK_MapData>ND7120</FK_MapData>
+    <KeyOfEn>zongshishifuhe</KeyOfEn>
+    <Name>总师室复核</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>352</UIWidth>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <Tag />
+    <IDX>2827</IDX>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <UIIsShowLine>0</UIIsShowLine>
+    <UIIsLine>0</UIIsLine>
+    <EditType>0</EditType>
+    <GroupID>105408</GroupID>
+    <IsSigan>0</IsSigan>
+    <UIHeight>166</UIHeight>
+    <X>102</X>
+    <Y>1073</Y>
+  </Sys_MapAttr>
+  <Sys_GroupField>
+    <OID>105408</OID>
+    <Lab>总师室报告复核</Lab>
+    <EnName>ND7120</EnName>
+    <Idx>0</Idx>
+  </Sys_GroupField>
+</NewDataSet>
