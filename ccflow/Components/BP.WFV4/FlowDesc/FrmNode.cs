@@ -24,7 +24,7 @@ namespace BP.WF
         /// <summary>
         /// 是否readonly.
         /// </summary>
-        public const string IsReadonly = "IsReadonly";
+        public const string IsEdit = "IsEdit";
         /// <summary>
         /// IsPrint
         /// </summary>
@@ -51,6 +51,21 @@ namespace BP.WF
     public class FrmNode : EntityMyPK
     {
         #region 基本属性
+        public string FrmUrl
+        {
+            get
+            {
+                switch (this.HisFrmType)
+                {
+                    case Sys.FrmType.Column4Frm:
+                        return "FrmFix";
+                    case Sys.FrmType.FreeFrm:
+                        return "Frm";
+                    default:
+                        throw new Exception("err,未处理。");
+                }
+            }
+        }
         private Frm _hisFrm = null;
         public Frm HisFrm
         {
@@ -74,6 +89,17 @@ namespace BP.WF
                 UAC uac = new UAC();
                 uac.OpenForSysAdmin();
                 return uac;
+            }
+        }
+        public BP.Sys.FrmType HisFrmType
+        {
+            get
+            {
+                return (BP.Sys.FrmType)this.GetValIntByKey(FrmNodeAttr.FrmType);
+            }
+            set
+            {
+                this.SetValByKey(FrmNodeAttr.FrmType, (int)value);
             }
         }
         public int FrmType
@@ -137,15 +163,15 @@ namespace BP.WF
                 this.SetValByKey(FrmNodeAttr.FK_Flow, value);
             }
         }
-        public bool IsReadonly
+        public bool IsEdit
         {
             get
             {
-                return this.GetValBooleanByKey(FrmNodeAttr.IsReadonly);
+                return this.GetValBooleanByKey(FrmNodeAttr.IsEdit);
             }
             set
             {
-                this.SetValByKey(FrmNodeAttr.IsReadonly, value);
+                this.SetValByKey(FrmNodeAttr.IsEdit, value);
             }
         }
         public bool IsPrint
@@ -159,11 +185,11 @@ namespace BP.WF
                 this.SetValByKey(FrmNodeAttr.IsPrint, value);
             }
         }
-        public int IsReadonlyInt
+        public int IsEditInt
         {
             get
             {
-                return this.GetValIntByKey(FrmNodeAttr.IsReadonly);
+                return this.GetValIntByKey(FrmNodeAttr.IsEdit);
             }
         }
         public int IsPrintInt
@@ -198,7 +224,7 @@ namespace BP.WF
             if (i == 0)
             {
                 this.IsPrint = false;
-                this.IsReadonly = false;
+                this.IsEdit = false;
                 return;
                 throw new Exception("@表单关联信息已被删除。");
             }
@@ -227,7 +253,7 @@ namespace BP.WF
                 map.AddTBInt(FrmNodeAttr.FrmType, 0, "表单类型", true, false);
 
 
-                map.AddTBInt(FrmNodeAttr.IsReadonly, 1, "是否可以更新", true, false);
+                map.AddTBInt(FrmNodeAttr.IsEdit, 1, "是否可以更新", true, false);
                 map.AddTBInt(FrmNodeAttr.IsPrint, 0, "IsPrint", true, false);
 
                 map.AddTBInt(FrmNodeAttr.Idx, 0, "顺序号", true, false);

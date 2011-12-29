@@ -1035,10 +1035,22 @@ namespace BP.WF
                 DataType.SaveAsFile(path + this.Name + "_" + nd.Name + ".htm", msg);
             }
         }
-
+        /// <summary>
+        /// 生成流程模板
+        /// </summary>
+        /// <returns></returns>
         public string GenerFlowXmlTemplete()
         {
             string path = SystemConfig.PathOfDataUser + @"\FlowDesc\" + this.No + "." + this.Name + "\\";
+            return this.GenerFlowXmlTemplete(path);
+        }
+        /// <summary>
+        /// 生成流程模板
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public string GenerFlowXmlTemplete(string path)
+        {
             if (System.IO.Directory.Exists(path) == false)
                 System.IO.Directory.CreateDirectory(path);
 
@@ -1267,7 +1279,7 @@ namespace BP.WF
             dt.TableName = "Sys_FrmEvent";
             ds.Tables.Add(dt);
 
-            ds.WriteXml(path + this.Name + ".xml");
+            ds.WriteXml(path +"\\"+ this.Name + ".xml");
             return path;
         }
         /// <summary>

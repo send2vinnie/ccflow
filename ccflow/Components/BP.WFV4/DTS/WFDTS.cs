@@ -39,7 +39,6 @@ namespace BP.WF.DTS
         }
     }
 
-
     public class UserPort : DataIOEn2
     {
         /// <summary>

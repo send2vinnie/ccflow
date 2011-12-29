@@ -148,6 +148,7 @@
     <Compile Include="DTS\ClearDB.cs" />
     <Compile Include="DTS\RepariNodeFrmMap.cs" />
     <Compile Include="DTS\RepariMapAttrMinLen.cs" />
+    <Compile Include="DTS\GenerTemplate.cs" />
     <Compile Include="FlowDesc\Condition\Cond.cs" />
     <Compile Include="FlowDesc\Condition\TurnTo.cs" />
     <Compile Include="FlowDesc\FlowDescExt\BtnLab.cs">
