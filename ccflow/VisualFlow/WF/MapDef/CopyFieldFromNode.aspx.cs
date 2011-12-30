@@ -111,7 +111,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     continue;
                 this.Pub2.AddTR();
                 cb = new CheckBox();
-                cb.ID = "CB" + m2m.No + "_" + m2m.GroupID;
+                cb.ID = "CB" + m2m.MyPK + "_" + m2m.GroupID;
                 cb.Text = this.ToE("M2M", "多选") + ":" + m2m.Name;
                 this.Pub2.AddTD(cb);
                 this.Pub2.AddTREnd();
@@ -123,7 +123,7 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     continue;
                 this.Pub2.AddTR();
                 cb = new CheckBox();
-                cb.ID = "CB" + frm.No + "_" + frm.GroupID;
+                cb.ID = "CB" + frm.MyPK + "_" + frm.GroupID;
                 cb.Text = this.ToE("Frame", "框架") + ":" + frm.Name;
                 this.Pub2.AddTD(cb);
                 this.Pub2.AddTREnd();
@@ -239,14 +239,15 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     continue;
 
                 MapM2M mym2m = new MapM2M();
-                mym2m.No = m2m.No.Replace(this.NodeOfSelect, this.FK_Node);
+                mym2m.MyPK = m2m.MyPK.Replace(this.NodeOfSelect, this.FK_Node);
+              //  mym2m.FK_MapData =this
                 if (mym2m.IsExits)
                     continue;
 
                 mym2m.Copy(m2m);
                 mym2m.FK_MapData = this.FK_Node;
                 mym2m.GroupID = mygf.OID;
-                mym2m.No = m2m.No.Replace(this.NodeOfSelect, this.FK_Node);
+                mym2m.MyPK = m2m.MyPK.Replace(this.NodeOfSelect, this.FK_Node);
                 mym2m.Insert();
             }
 
@@ -256,14 +257,14 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     continue;
 
                 MapFrame myen = new MapFrame();
-                myen.No = frm.No.Replace(this.NodeOfSelect, this.FK_Node);
+                myen.MyPK = frm.MyPK.Replace(this.NodeOfSelect, this.FK_Node);
                 if (myen.IsExits)
                     continue;
 
                 myen.Copy(frm);
                 myen.FK_MapData = this.FK_Node;
                 myen.GroupID = mygf.OID;
-                myen.No = frm.No.Replace(this.NodeOfSelect, this.FK_Node);
+                myen.MyPK = frm.MyPK.Replace(this.NodeOfSelect, this.FK_Node);
                 myen.Insert();
             }
 

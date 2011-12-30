@@ -48,7 +48,7 @@ public partial class WF_MapDef_FrmAttachment : WebPage
             ath.RetrieveFromDBSources();
 
         ath.FK_MapData = this.FK_MapData;
-        ath.NoOfAth = this.Ath;
+        ath.NoOfObj = this.Ath;
         ath.MyPK = this.FK_MapData + "_" + this.Ath;
     
         //this.Response.Write(this.Ath);
@@ -67,8 +67,8 @@ public partial class WF_MapDef_FrmAttachment : WebPage
         this.Pub1.AddTR();
         this.Pub1.AddTD("编号");
         TextBox tb = new TextBox();
-        tb.ID = "TB_" + FrmAttachmentAttr.NoOfAth;
-        tb.Text = ath.NoOfAth;
+        tb.ID = "TB_" + FrmAttachmentAttr.NoOfObj;
+        tb.Text = ath.NoOfObj;
         if (this.Ath != null)
             tb.Enabled = false;
 
@@ -239,14 +239,14 @@ public partial class WF_MapDef_FrmAttachment : WebPage
             ath.UploadType = (AttachmentUploadType)int.Parse(this.UploadType);
             if (ath.IsExits == true)
             {
-                this.Alert("附件编号("+ath.NoOfAth+")已经存在。");
+                this.Alert("附件编号("+ath.NoOfObj+")已经存在。");
                 return;
             }
             ath.Insert();
         }
         else
         {
-            ath.NoOfAth = this.Ath;
+            ath.NoOfObj = this.Ath;
             ath.Update();
         }
         this.WinCloseWithMsg("保存成功");

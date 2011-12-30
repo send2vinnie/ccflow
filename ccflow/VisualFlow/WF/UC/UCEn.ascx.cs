@@ -258,7 +258,7 @@ namespace BP.Web.Comm.UC.WF
             foreach (MapM2M m2m in m2ms)
             {
                 if (m2m.IsAutoSize)
-                    js += "\t\n window.setInterval(\"ReinitIframe('F" + m2m.No + "','TD" + m2m.No + "')\", 200);";
+                    js += "\t\n window.setInterval(\"ReinitIframe('F" + m2m.NoOfObj + "','TD" + m2m.NoOfObj + "')\", 200);";
             }
             foreach (FrmAttachment ath in aths)
             {
@@ -270,7 +270,7 @@ namespace BP.Web.Comm.UC.WF
 
             foreach (MapFrame fr in frames)
             {
-                js += "\t\n window.setInterval(\"ReinitIframe(\"ReinitIframe('F" + fr.No + "','TD" + fr.No + "')\", 200);";
+                js += "\t\n window.setInterval(\"ReinitIframe(\"ReinitIframe('F" + fr.NoOfObj + "','TD" + fr.NoOfObj + "')\", 200);";
             }
 
             js += "\t\n</script>";
@@ -376,7 +376,7 @@ namespace BP.Web.Comm.UC.WF
                     src += "&Table=" + fram.FK_MapData + "&WorkID=" + pk + "&FID=" + fid;
                 else
                     src += "?Table=" + fram.FK_MapData + "&WorkID=" + pk + "&FID=" + fid;
-                this.Add("<TD colspan=2 class=FDesc ID='TD" + fram.No + "'><a href='" + src + "'>" + fram.Name + "</a></TD>");
+                this.Add("<TD colspan=2 class=FDesc ID='TD" + fram.NoOfObj + "'><a href='" + src + "'>" + fram.Name + "</a></TD>");
                 this.AddTREnd();
             }
             #endregion 明细表
@@ -746,17 +746,17 @@ namespace BP.Web.Comm.UC.WF
             foreach (MapFrame fr in frames)
             {
                 if (fr.IsAutoSize)
-                    js += "\t\n window.setInterval(\"ReinitIframe('F" + fr.No + "','TD" + fr.No + "')\", 200);";
+                    js += "\t\n window.setInterval(\"ReinitIframe('F" + fr.NoOfObj + "','TD" + fr.NoOfObj + "')\", 200);";
             }
             foreach (MapM2M m2m in m2ms)
             {
                 if (m2m.IsAutoSize)
-                    js += "\t\n window.setInterval(\"ReinitIframe('F" + m2m.No + "','TD" + m2m.No + "')\", 200);";
+                    js += "\t\n window.setInterval(\"ReinitIframe('F" + m2m.NoOfObj + "','TD" + m2m.NoOfObj + "')\", 200);";
             }
             foreach (FrmAttachment ath in aths)
             {
                 if (ath.IsAutoSize)
-                    js += "\t\n window.setInterval(\"ReinitIframe('F" + ath.MyPK + "','TD" + ath.MyPK + "')\", 200);";
+                    js += "\t\n window.setInterval(\"ReinitIframe('F" + ath.NoOfObj + "','TD" + ath.NoOfObj + "')\", 200);";
             }
             js += "\t\n</script>";
             this.Add(js);
@@ -1076,12 +1076,12 @@ namespace BP.Web.Comm.UC.WF
                 rowIdx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
                 if (M2M.IsAutoSize)
-                    this.Add("<TD colspan=4 ID='TD" + M2M.No + "' height='50px' width='100%'  >");
+                    this.Add("<TD colspan=4 ID='TD" + M2M.NoOfObj + "' height='50px' width='100%'  >");
                 else
-                    this.Add("<TD colspan=4 ID='TD" + M2M.No + "' height='" + M2M.H + "' width='" + M2M.W + "'  >");
+                    this.Add("<TD colspan=4 ID='TD" + M2M.NoOfObj + "' height='" + M2M.H + "' width='" + M2M.W + "'  >");
 
 
-                string src = "M2M.aspx?FK_MapM2M=" + M2M.No;
+                string src = "M2M.aspx?FK_MapM2M=" + M2M.NoOfObj;
                 string paras = this.RequestParas;
 
                 //if (paras.Contains("FK_Node=") == false)
@@ -1096,11 +1096,11 @@ namespace BP.Web.Comm.UC.WF
                 src += "&r=q" + paras;
                 if (M2M.IsAutoSize)
                 {
-                    this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                    this.Add("<iframe ID='F" + M2M.NoOfObj + "'   Onblur=\"SaveM2M('" + M2M.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
                 }
                 else
                 {
-                    this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.W + "' height='" + M2M.H + "' scrolling=auto /></iframe>");
+                    this.Add("<iframe ID='F" + M2M.NoOfObj + "'   Onblur=\"SaveM2M('" + M2M.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.W + "' height='" + M2M.H + "' scrolling=auto /></iframe>");
                 }
                 this.AddTDEnd();
                 this.AddTREnd();
@@ -1138,9 +1138,9 @@ namespace BP.Web.Comm.UC.WF
                 // myidx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
                 if (fram.IsAutoSize)
-                    this.Add("<TD colspan=4 ID='TD" + fram.No + "' height='50px' width='100%'  >");
+                    this.Add("<TD colspan=4 ID='TD" + fram.NoOfObj + "' height='50px' width='100%'  >");
                 else
-                    this.Add("<TD colspan=4 ID='TD" + fram.No + "' height='" + fram.Height + "' width='" + fram.Width + "'  >");
+                    this.Add("<TD colspan=4 ID='TD" + fram.NoOfObj + "' height='" + fram.H + "' width='" + fram.W + "'  >");
 
                 string paras = this.RequestParas;
                 if (paras.Contains("FID=") == false)
@@ -1157,11 +1157,11 @@ namespace BP.Web.Comm.UC.WF
 
                 if (fram.IsAutoSize)
                 {
-                    this.Add("<iframe ID='F" + fram.No + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=auto /></iframe>");
+                    this.Add("<iframe ID='F" + fram.NoOfObj + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=auto /></iframe>");
                 }
                 else
                 {
-                    this.Add("<iframe ID='F" + fram.No + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + fram.Width + "' height='" + fram.Height + "' scrolling=auto /></iframe>");
+                    this.Add("<iframe ID='F" + fram.NoOfObj + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + fram.W + "' height='" + fram.H + "' scrolling=auto /></iframe>");
                 }
 
                 this.AddTDEnd();
@@ -1203,7 +1203,7 @@ namespace BP.Web.Comm.UC.WF
                 else
                     this.Add("<TD colspan=4 ID='TD" + ath.MyPK + "' height='" + ath.H + "' width='" + ath.W + "'  >");
 
-                string src = "./FreeFrm/AttachmentUpload.aspx?PKVal="+this.HisEn.PKVal+"&Ath=" + ath.NoOfAth + "&FK_MapData=" + EnsName + "&FK_FrmAttachment=" + ath.MyPK;
+                string src = "./FreeFrm/AttachmentUpload.aspx?PKVal="+this.HisEn.PKVal+"&Ath=" + ath.NoOfObj + "&FK_MapData=" + EnsName + "&FK_FrmAttachment=" + ath.MyPK;
                 if (ath.IsAutoSize)
                 {
                     this.Add("<iframe ID='F" + ath.MyPK + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=auto /></iframe>");
@@ -1628,10 +1628,10 @@ namespace BP.Web.Comm.UC.WF
             foreach (MapM2M M2M in m2ms)
             {
 
-                this.Add("<DIV id='Fd" + M2M.No + "' style='position:absolute; left:" + M2M.X + "px; top:" + M2M.Y + "px; width:" + M2M.W + "px; height:" + M2M.H + "px;text-align: left;' >");
+                this.Add("<DIV id='Fd" + M2M.NoOfObj + "' style='position:absolute; left:" + M2M.X + "px; top:" + M2M.Y + "px; width:" + M2M.W + "px; height:" + M2M.H + "px;text-align: left;' >");
                 this.Add("<span>");
 
-                string src = "M2M.aspx?FK_MapM2M=" + M2M.No;
+                string src = "M2M.aspx?FK_MapM2M=" + M2M.NoOfObj;
                 string paras = this.RequestParas;
                 try
                 {
@@ -1647,7 +1647,7 @@ namespace BP.Web.Comm.UC.WF
 
                 src += "&r=q" + paras;
 
-                this.Add("<iframe ID='F" + M2M.No + "'   Onblur=\"SaveM2M('" + M2M.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.W + "' height='" + M2M.H + "'   scrolling=auto/></iframe>");
+                this.Add("<iframe ID='F" + M2M.NoOfObj + "'   Onblur=\"SaveM2M('" + M2M.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.W + "' height='" + M2M.H + "'   scrolling=auto/></iframe>");
 
                 this.Add("</span>");
                 this.Add("</DIV>");

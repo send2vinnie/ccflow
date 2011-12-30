@@ -230,7 +230,7 @@ public partial class Comm_MapDef_EditEnum : BP.Web.WebPage
 
         this.Pub1.Add(rb);
         this.Pub1.AddTDEnd();
-        this.Pub1.AddTD();
+        this.Pub1.AddTD("对傻瓜表单有效");
 
       //  this.Pub1.AddTD("控制该它在表单的显示方式");
         this.Pub1.AddTREnd();

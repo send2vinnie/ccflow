@@ -56,6 +56,22 @@ public partial class WF_MapDef_MapDef : WebPage
             return false;
         }
     }
+    public void BindLeft()
+    {
+        BP.WF.XML.MapMenus xmls = new BP.WF.XML.MapMenus();
+        xmls.RetrieveAll();
+
+        #region bindleft
+        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' border=0/></a>");
+        this.Left.AddHR();
+        this.Left.AddUL();
+        foreach (BP.WF.XML.MapMenu item in xmls)
+        {
+            this.Left.AddLi("<a href=\"" + item.JS.Replace("@MyPK", "'" + this.FK_MapData + "'").Replace("@FK_Flow", "'" + this.FK_Flow + "'") + "\" ><b>" + item.Name + "</b></a><br><font color=green>" + item.Note + "</font>");
+        }
+        this.Left.AddULEnd();
+        #endregion bindleft
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         string fk_node = this.Request.QueryString["FK_Node"];
@@ -84,22 +100,10 @@ public partial class WF_MapDef_MapDef : WebPage
             //    mygf.Update();
             //}
         }
+        this.BindLeft();
+    
 
-        BP.WF.XML.MapMenus xmls = new BP.WF.XML.MapMenus();
-        xmls.RetrieveAll();
-
-        #region bindleft
-        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' border=0/></a>");
-        this.Left.AddHR();
-        this.Left.AddUL();
-        foreach (BP.WF.XML.MapMenu item in xmls)
-        {
-            this.Left.AddLi("<a href=\"" + item.JS.Replace("@MyPK", "'" + this.FK_MapData + "'").Replace("@FK_Flow","'"+this.FK_Flow+"'") + "\" ><b>" + item.Name + "</b></a><br><font color=green>" + item.Note + "</font>");
-        }
-        this.Left.AddULEnd();
-        #endregion bindleft
-
-        this.Pub1.AddH2("设计表单:"+md.Name );
+        this.Pub1.AddH2("设计表单:("+md.No+")"+md.Name );
         this.Pub1.Add("\t\n<Table style=\"width:600px;\" align=left>");
         /*
          * 根据 GroupField 循环出现菜单。
@@ -205,7 +209,6 @@ public partial class WF_MapDef_MapDef : WebPage
 
                     TB mytbLine = new TB();
                     mytbLine.TextMode = TextBoxMode.MultiLine;
-
                     mytbLine.Attributes["class"] = "TBDoc"; // "width:100%;padding: 0px;margin: 0px;";
                     mytbLine.ID = "TB_" + attr.KeyOfEn;
                     mytbLine.Enabled = attr.UIIsEnable;
@@ -527,7 +530,7 @@ public partial class WF_MapDef_MapDef : WebPage
         foreach (MapM2M M2M in dot2dots)
         {
             if (M2M.IsAutoSize)
-                js += "\t\n window.setInterval(\"ReinitIframe('F" + M2M.No + "','TD" + M2M.No + "')\", 200);";
+                js += "\t\n window.setInterval(\"ReinitIframe('F" + M2M.MyPK + "','TD" + M2M.MyPK + "')\", 200);";
         }
         foreach (FrmAttachment ath in aths)
         {
@@ -536,7 +539,7 @@ public partial class WF_MapDef_MapDef : WebPage
         }
         foreach (MapFrame fr in frams)
         {
-            js += "\t\n window.setInterval(\"ReinitIframe('F" + fr.No + "','TD" + fr.No + "')\", 200);";
+            js += "\t\n window.setInterval(\"ReinitIframe('F" + fr.MyPK + "','TD" + fr.MyPK + "')\", 200);";
         }
 
         js += "\t\n</script>";
@@ -719,14 +722,14 @@ public partial class WF_MapDef_MapDef : WebPage
             dtl.IsUse = true;
             int myidx = rowIdx + 10;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditAth('" + this.FK_MapData + "','" + dtl.NoOfAth + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:AthDoUp('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:AthDoDown('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditAth('" + this.FK_MapData + "','" + dtl.NoOfObj + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:AthDoUp('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:AthDoDown('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
             this.Pub1.AddTREnd();
 
             myidx++;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
             this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.MyPK + "' height='50px' width='1000px'>");
 
-            string src = "../FreeFrm/AttachmentUpload.aspx?PKVal=0&Ath=" + dtl.NoOfAth + "&FK_MapData=" + this.FK_MapData + "&FK_FrmAttachment=" + dtl.MyPK;
+            string src = "../FreeFrm/AttachmentUpload.aspx?PKVal=0&Ath=" + dtl.NoOfObj + "&FK_MapData=" + this.FK_MapData + "&FK_FrmAttachment=" + dtl.MyPK;
             if (dtl.IsAutoSize)
                 this.Pub1.Add("<iframe ID='F" + dtl.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
             else
@@ -766,18 +769,18 @@ public partial class WF_MapDef_MapDef : WebPage
             dtl.IsUse = true;
             int myidx = rowIdx + 10;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditM2M('" + this.FK_MapData + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:M2MDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:M2MDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditM2M('" + this.FK_MapData + "','" + dtl.MyPK + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:M2MDoUp('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:M2MDoDown('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
             this.Pub1.AddTREnd();
 
             myidx++;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-            this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' width='1000px'>");
+            this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.MyPK + "' height='50px' width='1000px'>");
 
-            string src = "M2MDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapM2M=" + dtl.No;
+            string src = "M2MDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapM2M=" + dtl.MyPK;
             if (dtl.IsAutoSize)
-                this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
+                this.Pub1.Add("<iframe ID='F" + dtl.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
             else
-                this.Pub1.Add("<iframe ID='F" + dtl.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + dtl.W + "' height='" + dtl.H + "' scrolling=auto  /></iframe>");
+                this.Pub1.Add("<iframe ID='F" + dtl.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + dtl.W + "' height='" + dtl.H + "' scrolling=auto  /></iframe>");
 
 
             this.Pub1.AddTDEnd();
@@ -816,15 +819,15 @@ public partial class WF_MapDef_MapDef : WebPage
             int myidx = rowIdx + 20;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
             // this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditDtl('" + this.FK_MapData + "','" + dtl.No + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.AddF('" + dtl.No + "');\"><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("Insert", "插入列") + "</a><a href=\"javascript:document.getElementById('F" + dtl.No + "').contentWindow.CopyF('" + dtl.No + "');\"><img src='../../Images/Btn/Copy.gif' border=0/>" + this.ToE("Copy", "复制列") + "</a><a href=\"javascript:DtlDoUp('" + dtl.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:DtlDoDown('" + dtl.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
-            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditFrame('" + this.FK_MapData + "','" + fram.No + "')\" >" + fram.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:FrameDoUp('" + fram.No + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:FrameDoDown('" + fram.No + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditFrame('" + this.FK_MapData + "','" + fram.MyPK + "')\" >" + fram.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:FrameDoUp('" + fram.MyPK + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:FrameDoDown('" + fram.MyPK + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
             this.Pub1.AddTREnd();
 
             myidx++;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
             if (fram.IsAutoSize)
-                this.Pub1.Add("<TD colspan=4 ID='TD" + fram.No + "' height='50px' width='1000px'>");
+                this.Pub1.Add("<TD colspan=4 ID='TD" + fram.MyPK + "' height='50px' width='1000px'>");
             else
-                this.Pub1.Add("<TD colspan=4 ID='TD" + fram.No + "' height='" + fram.Height + "' width='" + fram.Width + "' >");
+                this.Pub1.Add("<TD colspan=4 ID='TD" + fram.MyPK + "' height='" + fram.H + "' width='" + fram.W + "' >");
 
 
             string src = fram.URL; // "MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapDtl=" + fram.No;
@@ -834,9 +837,9 @@ public partial class WF_MapDef_MapDef : WebPage
                 src += "?FK_Node=" + this.RefNo + "&WorkID=" + this.RefOID;
 
             if (fram.IsAutoSize)
-                this.Pub1.Add("<iframe ID='F" + fram.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='100%' scrolling=no  /></iframe>");
+                this.Pub1.Add("<iframe ID='F" + fram.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='100%' scrolling=no  /></iframe>");
             else
-                this.Pub1.Add("<iframe ID='F" + fram.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + fram.Width + "' height='" + fram.Height + "' scrolling=no  /></iframe>");
+                this.Pub1.Add("<iframe ID='F" + fram.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + fram.W + "' height='" + fram.H + "' scrolling=no  /></iframe>");
 
             //  this.Pub1.Add("<iframe ID='F" + fram.No + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + fram.W + "px' height='" + fram.H + "px' scrolling=no /></iframe>");
 

@@ -143,7 +143,7 @@ namespace BP.Web
                         return null;
                     case "DelM2M":
                         MapM2M m2mDel = new MapM2M();
-                        m2mDel.No = v1;
+                        m2mDel.NoOfObj = v1;
                         m2mDel.Delete();
 
                         M2M m2mData = new M2M();
@@ -169,16 +169,21 @@ namespace BP.Web
                         string m2mName = v2;
 
                         MapM2M m2m = new MapM2M();
-                        m2m.No = v2;
-                        if (m2m.IsExits)
-                            return "多选名称:" + m2mName + "，已经存在。";
+                        m2m.NoOfObj = v2;
 
                         m2m.X = float.Parse(v3);
                         m2m.Y = float.Parse(v4);
 
                         m2m.Name = "新建多选";
                         m2m.FK_MapData = fk_mapdataM2M;
-                        m2m.Insert();
+                        try
+                        {
+                            m2m.Insert();
+                        }
+                        catch
+                        {
+                            return "多选名称:" + m2mName + "，已经存在。";
+                        }
                         return null;
                     case "DelEnum":
                         // 检查这个物理表是否被使用。

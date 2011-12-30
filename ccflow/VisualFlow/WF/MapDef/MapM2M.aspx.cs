@@ -39,83 +39,43 @@ public partial class WF_MapDef_MapM2M : WebPage
     {
         MapData md = new MapData(this.FK_MapData);
         this.Title = md.Name + " - " + this.ToE("DesignFrame", "设计多选");
+
         switch (this.DoType)
         {
-            case "List":
-                BindList(md);
-                break;
-            case "New":
-                int num = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapM2M WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
-                MapM2M dtl1 = new MapM2M();
-                dtl1.Name = this.ToE("DtlFrame", "多选") + num;
-                dtl1.No = this.FK_MapData + "M2M" + num;
-               // dtl1.PTable = this.FK_MapData + "M2M" + num;
-                BindEdit(md, dtl1);
-                break;
+
             case "Edit":
                 MapM2M dtl = new MapM2M();
                 if (this.FK_MapM2M == null)
                 {
-                    dtl.No = this.FK_MapData + "Frame";
+                    dtl.NoOfObj = "Frm";
+                    dtl.FK_MapData = this.FK_MapData;
                 }
                 else
                 {
-                    dtl.No = this.FK_MapM2M;
+                    dtl.MyPK = this.FK_MapM2M;
                     dtl.Retrieve();
                 }
                 BindEdit(md, dtl);
                 break;
             default:
-                throw new Exception("er" + this.DoType);
+            case "New":
+                int num = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapM2M WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
+                MapM2M dtl1 = new MapM2M();
+                dtl1.Name = this.ToE("DtlFrame", "多选") + num;
+                dtl1.FK_MapData = this.FK_MapData;
+                dtl1.NoOfObj = "M2M" + num;
+                BindEdit(md, dtl1);
+                break;
         }
     }
-    public void BindList(MapData md)
-    {
-        MapM2Ms dtls = new MapM2Ms(md.No);
-        if (dtls.Count == 0)
-        {
-            this.Response.Redirect("MapM2M.aspx?DoType=New&FK_MapData=" + this.FK_MapData + "&sd=sd", true);
-            return;
-        }
-
-        if (dtls.Count == 1)
-        {
-            MapM2M d = (MapM2M)dtls[0];
-            this.Response.Redirect("MapM2M.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapM2M=" + d.No, true);
-            return;
-        }
-
-        this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeft("<a href='MapDef.aspx?MyPK=" + this.MyPK + "'>" + this.ToE("Back", "返回") + ":" + md.Name + "</a> - <a href='MapM2M.aspx?DoType=New&FK_MapData=" + this.FK_MapData + "&sd=sd'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
-        this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("IDX");
-        this.Pub1.AddTDTitle(this.ToE("No", "编号"));
-        this.Pub1.AddTDTitle(this.ToE("Name", "名称"));
-        this.Pub1.AddTDTitle(this.ToE("Oper", "操作"));
-        this.Pub1.AddTREnd();
-
-        TB tb = new TB();
-        int i = 0;
-        foreach (MapM2M dtl in dtls)
-        {
-            i++;
-            this.Pub1.AddTR();
-            this.Pub1.AddTDIdx(i);
-            this.Pub1.AddTD(dtl.No);
-            this.Pub1.AddTD(dtl.Name);
-            this.Pub1.AddTD("<a href='MapM2M.aspx?FK_MapData=" + this.FK_MapData + "&DoType=Edit&FK_MapM2M=" + dtl.No + "'>" + this.ToE("Edit", "编辑") + "</a>");
-            this.Pub1.AddTREnd();
-        }
-        this.Pub1.AddTableEnd();
-
-    }
-    void btn_Click(object sender, EventArgs e)
+    void btn_Save_Click(object sender, EventArgs e)
     {
         Button btn = sender as Button;
         try
         {
             switch (this.DoType)
             {
+                default:
                 case "New":
                     MapM2M dtlN = new MapM2M();
                     dtlN = (MapM2M)this.Pub1.Copy(dtlN);
@@ -123,7 +83,7 @@ public partial class WF_MapDef_MapM2M : WebPage
                     {
                         if (dtlN.IsExits)
                         {
-                            this.Alert(this.ToE("Exits", "已存在编号：") + dtlN.No);
+                            this.Alert(this.ToE("Exits", "已存在编号：") + dtlN.NoOfObj);
                             return;
                         }
                     }
@@ -131,7 +91,6 @@ public partial class WF_MapDef_MapM2M : WebPage
                     dtlN.GroupID = 0;
                     dtlN.RowIdx = 0;
                     GroupFields gfs1 = new GroupFields(this.FK_MapData);
-
                     if (gfs1.Count == 1)
                     {
                         GroupField gf = (GroupField)gfs1[0];
@@ -141,15 +100,13 @@ public partial class WF_MapDef_MapM2M : WebPage
                     {
                         dtlN.GroupID = this.Pub1.GetDDLByID("DDL_GroupField").SelectedItemIntVal;
                     }
-
                     dtlN.Insert();
-
                     if (btn.ID.Contains("AndClose"))
                     {
                         this.WinClose();
                         return;
                     }
-                    this.Response.Redirect("MapM2M.aspx?DoType=Edit&FK_MapM2M=" + dtlN.No + "&FK_MapData=" + this.FK_MapData, true);
+                    this.Response.Redirect("MapM2M.aspx?DoType=Edit&FK_MapM2M=" + dtlN.MyPK + "&FK_MapData=" + this.FK_MapData, true);
                     break;
                 case "Edit":
                     MapM2M dtl = new MapM2M(this.FK_MapM2M);
@@ -158,7 +115,7 @@ public partial class WF_MapDef_MapM2M : WebPage
                     {
                         if (dtl.IsExits)
                         {
-                            this.Alert(this.ToE("Exits", "已存在编号：") + dtl.No);
+                            this.Alert(this.ToE("Exits", "已存在编号：") + dtl.MyPK);
                             return;
                         }
                     }
@@ -166,7 +123,7 @@ public partial class WF_MapDef_MapM2M : WebPage
                     dtl.IsAutoSize = this.Pub1.GetRadioBtnByID("RB_IsAutoSize_1").Checked;
 
                     GroupFields gfs = new GroupFields(dtl.FK_MapData);
-                        dtl.GroupID = this.Pub1.GetDDLByID("DDL_GroupField").SelectedItemIntVal;
+                    dtl.GroupID = this.Pub1.GetDDLByID("DDL_GroupField").SelectedItemIntVal;
 
                     if (this.DoType == "New")
                         dtl.Insert();
@@ -178,10 +135,7 @@ public partial class WF_MapDef_MapM2M : WebPage
                         this.WinClose();
                         return;
                     }
-
-                    this.Response.Redirect("MapM2M.aspx?DoType=Edit&FK_MapM2M=" + dtl.No + "&FK_MapData=" + this.FK_MapData, true);
-                    break;
-                default:
+                    this.Response.Redirect("MapM2M.aspx?DoType=Edit&FK_MapM2M=" + dtl.MyPK + "&FK_MapData=" + this.FK_MapData, true);
                     break;
             }
         }
@@ -195,7 +149,7 @@ public partial class WF_MapDef_MapM2M : WebPage
         try
         {
             MapM2M dtl = new MapM2M();
-            dtl.No = this.FK_MapM2M;
+            dtl.MyPK = this.FK_MapM2M;
             dtl.Delete();
             this.WinClose();
         }
@@ -204,17 +158,11 @@ public partial class WF_MapDef_MapM2M : WebPage
             this.Alert(ex.Message);
         }
     }
-    void btn_New_Click(object sender, EventArgs e)
-    {
-        this.Response.Redirect("MapM2M.aspx?DoType=New&FK_MapData=" + this.FK_MapData, true);
-    }
+    
     void btn_Go_Click(object sender, EventArgs e)
     {
-        MapM2M dtl = new MapM2M(this.FK_MapM2M);
-        //  dtl.IntMapAttrs();
         this.Response.Redirect("MapM2MDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapM2M=" + this.FK_MapM2M, true);
     }
-
     public void BindEdit(MapData md, MapM2M dtl)
     {
         this.Pub1.AddTable();
@@ -231,8 +179,8 @@ public partial class WF_MapDef_MapM2M : WebPage
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("No", "编号"));
         TB tb = new TB();
-        tb.ID = "TB_No";
-        tb.Text = dtl.No;
+        tb.ID = "TB_NoOfObj";
+        tb.Text = dtl.NoOfObj;
         if (this.DoType == "Edit")
             tb.Enabled = false;
         this.Pub1.AddTD(tb);
@@ -381,13 +329,13 @@ public partial class WF_MapDef_MapM2M : WebPage
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = " " + this.ToE("Save", "保存") + " ";
-        btn.Click += new EventHandler(btn_Click);
+        btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
         btn.Text = " " + this.ToE("SaveAndClose", "保存并关闭") + " ";
-        btn.Click += new EventHandler(btn_Click);
+        btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
         if (this.FK_MapM2M != null)
@@ -397,12 +345,6 @@ public partial class WF_MapDef_MapM2M : WebPage
             btn.Text = this.ToE("Del", "删除"); // "删除";
             btn.Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确认吗？") + "');";
             btn.Click += new EventHandler(btn_Del_Click);
-            this.Pub1.Add(btn);
-
-            btn = new Button();
-            btn.ID = "Btn_New";
-            btn.Text = this.ToE("New", "新建"); // "删除";
-            btn.Click += new EventHandler(btn_New_Click);
             this.Pub1.Add(btn);
         }
 

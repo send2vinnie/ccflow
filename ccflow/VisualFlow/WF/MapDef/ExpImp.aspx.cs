@@ -29,6 +29,13 @@ public partial class WF_MapDef_ExpImp : WebPage
             return this.Request.QueryString["RefNo"];
         }
     }
+    public string FromMap
+    {
+        get
+        {
+            return this.Request.QueryString["FromMap"];
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "ccfrom:导入导出";
@@ -45,7 +52,10 @@ public partial class WF_MapDef_ExpImp : WebPage
                 this.WinClose();
                 break;
             case "Imp":
-                break;
+                MapData mdForm = new MapData(this.FromMap);
+                MapData.ImpMapData(this.RefNo, mdForm.GenerHisDataSet());
+                this.WinClose();
+                return;
             case "Share":
                 this.Share();
                 break;
@@ -187,7 +197,7 @@ public partial class WF_MapDef_ExpImp : WebPage
             this.Pub1.AddUL();
             foreach (DataRow dr in dt.Rows)
             {
-                this.Pub1.AddLi("ExpImp.aspx?FK_Flow="+this.FK_Flow+"&RefNo="+this.RefNo, dr["Name"].ToString());
+                this.Pub1.AddLi("ExpImp.aspx?DoType=Imp&FK_Flow=" + this.FK_Flow + "&RefNo=" + this.RefNo + "&FromMap=ND" + dr["NodeID"], dr["Name"].ToString());
             }
             this.Pub1.AddULEnd();
             this.Pub1.AddFieldSetEnd();

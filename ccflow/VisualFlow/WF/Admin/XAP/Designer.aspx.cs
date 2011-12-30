@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.Port;
+using BP.Sys;
 using BP.DA;
 
 public partial class Designer : System.Web.UI.Page
@@ -35,6 +37,40 @@ public partial class Designer : System.Web.UI.Page
                 }
             }
             #endregion 测试数据库是否连接成功。
+
+            #region 2011-12-29 升级表单元素.
+            try
+            {
+                DataTable dt = DBAccess.RunSQLReturnTable("SELECT No FROM Sys_MapFrame");
+                if (dt.Rows.Count == 0)
+                {
+                    DBAccess.RunSQL("DROP TABLE Sys_MapFrame");
+                    MapFrame mf = new MapFrame();
+                    mf.CheckPhysicsTable();
+                }
+
+                dt = DBAccess.RunSQLReturnTable("SELECT No FROM Sys_MapM2M");
+                if (dt.Rows.Count == 0)
+                {
+                    DBAccess.RunSQL("DROP TABLE Sys_MapM2M");
+                    MapM2M m2m = new MapM2M();
+                    m2m.CheckPhysicsTable();
+                }
+
+                dt = DBAccess.RunSQLReturnTable("SELECT No FROM Sys_FrmAttachment");
+                if (dt.Rows.Count == 0)
+                {
+                    DBAccess.RunSQL("DROP TABLE Sys_FrmAttachment");
+                    FrmAttachment ath = new FrmAttachment();
+                    ath.CheckPhysicsTable();
+                }
+            }
+            catch
+            {
+
+            }
+            #endregion
+
 
             #region 2011-12-21 升级节点属性规则.
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='RunModel'");

@@ -67,11 +67,10 @@ body
         window.location.href = window.location.href;
     }
     function ExpImp(mypk, fk_flow) {
-        var url = 'ExpImp.aspx?RefNo=' + mypk + "&RefOID=0&DoType=FunList&FK_Flow="+fk_flow;
+        var url = 'ExpImp.aspx?RefNo=' + mypk + "&RefOID=0&DoType=FunList&FK_Flow=" + fk_flow;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
-
     function GroupField(mypk, OID )
     {
         var url='GroupField.aspx?RefNo='+mypk+"&RefOID="+OID ;

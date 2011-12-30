@@ -48,18 +48,18 @@ public partial class WF_MapDef_MapFrame : WebPage
                 int num = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapFrame WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
                 MapFrame dtl1 = new MapFrame();
                 dtl1.Name = this.ToE("DtlFrame", "框架") + num;
-                dtl1.No = this.FK_MapData + "F" + num;
+                dtl1.NoOfObj = "F" + num;
                 BindEdit(md, dtl1);
                 break;
             case "Edit":
                 MapFrame dtl = new MapFrame();
                 if (this.FK_MapFrame == null)
                 {
-                    dtl.No = this.FK_MapData + "Frame";
+                    dtl.NoOfObj =  "Frm";
                 }
                 else
                 {
-                    dtl.No = this.FK_MapFrame;
+                    dtl.MyPK = this.FK_MapFrame;
                     dtl.Retrieve();
                 }
                 BindEdit(md, dtl);
@@ -80,7 +80,7 @@ public partial class WF_MapDef_MapFrame : WebPage
         if (dtls.Count == 1)
         {
             MapFrame d = (MapFrame)dtls[0];
-            this.Response.Redirect("MapFrame.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapFrame=" + d.No, true);
+            this.Response.Redirect("MapFrame.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapFrame=" + d.MyPK, true);
             return;
         }
 
@@ -97,28 +97,26 @@ public partial class WF_MapDef_MapFrame : WebPage
         int i = 0;
         foreach (MapFrame dtl in dtls)
         {
-
             i++;
             this.Pub1.AddTR();
             this.Pub1.AddTDIdx(i);
-            this.Pub1.AddTD(dtl.No);
+            this.Pub1.AddTD(dtl.MyPK);
             this.Pub1.AddTD(dtl.Name);
-            this.Pub1.AddTD("<a href='MapFrame.aspx?FK_MapData=" + this.FK_MapData + "&DoType=Edit&FK_MapFrame=" + dtl.No + "'>" + this.ToE("Edit", "编辑") + "</a>");
+            this.Pub1.AddTD("<a href='MapFrame.aspx?FK_MapData=" + this.FK_MapData + "&DoType=Edit&FK_MapFrame=" + dtl.MyPK + "'>" + this.ToE("Edit", "编辑") + "</a>");
             this.Pub1.AddTREnd();
             continue;
 
             tb = new TB();
-            tb.ID = "TB_No_" + dtl.No;
-            tb.Text = dtl.No;
+            tb.ID = "TB_No_" + dtl.MyPK;
+            tb.Text = dtl.MyPK;
             this.Pub1.AddTD(tb);
 
             tb = new TB();
-            tb.ID = "TB_Name_" + dtl.No;
+            tb.ID = "TB_Name_" + dtl.MyPK;
             tb.Text = dtl.Name;
             this.Pub1.AddTD(tb);
 
-
-            this.Pub1.AddTD("<a href='MapFrame.aspx?FK_MapData=" + this.FK_MapData + "&DoType=Edit&FK_MapFrame=" + dtl.No + "'>" + this.ToE("Edit", "编辑") + "</a>");
+            this.Pub1.AddTD("<a href='MapFrame.aspx?FK_MapData=" + this.FK_MapData + "&DoType=Edit&FK_MapFrame=" + dtl.MyPK + "'>" + this.ToE("Edit", "编辑") + "</a>");
             this.Pub1.AddTREnd();
         }
 
@@ -145,7 +143,7 @@ public partial class WF_MapDef_MapFrame : WebPage
                     {
                         if (dtlN.IsExits)
                         {
-                            this.Alert(this.ToE("Exits", "已存在编号：") + dtlN.No);
+                            this.Alert(this.ToE("Exits", "已存在编号：") + dtlN.MyPK);
                             return;
                         }
                     }
@@ -170,7 +168,7 @@ public partial class WF_MapDef_MapFrame : WebPage
                         this.WinClose();
                         return;
                     }
-                    this.Response.Redirect("MapFrame.aspx?DoType=Edit&FK_MapFrame=" + dtlN.No + "&FK_MapData=" + this.FK_MapData, true);
+                    this.Response.Redirect("MapFrame.aspx?DoType=Edit&FK_MapFrame=" + dtlN.MyPK + "&FK_MapData=" + this.FK_MapData, true);
                     break;
                 case "Edit":
                     MapFrame dtl = new MapFrame(this.FK_MapFrame);
@@ -179,7 +177,7 @@ public partial class WF_MapDef_MapFrame : WebPage
                     {
                         if (dtl.IsExits)
                         {
-                            this.Alert(this.ToE("Exits", "已存在编号：") + dtl.No);
+                            this.Alert(this.ToE("Exits", "已存在编号：") + dtl.NoOfObj);
                             return;
                         }
                     }
@@ -200,7 +198,7 @@ public partial class WF_MapDef_MapFrame : WebPage
                         return;
                     }
 
-                    this.Response.Redirect("MapFrame.aspx?DoType=Edit&FK_MapFrame=" + dtl.No + "&FK_MapData=" + this.FK_MapData, true);
+                    this.Response.Redirect("MapFrame.aspx?DoType=Edit&FK_MapFrame=" + dtl.MyPK + "&FK_MapData=" + this.FK_MapData, true);
                     break;
                 default:
                     break;
@@ -216,7 +214,7 @@ public partial class WF_MapDef_MapFrame : WebPage
         try
         {
             MapFrame dtl = new MapFrame();
-            dtl.No = this.FK_MapFrame;
+            dtl.MyPK = this.FK_MapFrame;
             dtl.Delete();
             this.WinClose();
             //this.Response.Redirect("MapFrame.aspx?DoType=DtlList&FK_MapData=" + this.FK_MapData, true);
@@ -268,8 +266,8 @@ public partial class WF_MapDef_MapFrame : WebPage
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("No", "编号"));
         TB tb = new TB();
-        tb.ID = "TB_No";
-        tb.Text = dtl.No;
+        tb.ID = "TB_NoOObj";
+        tb.Text = dtl.NoOfObj;
         if (this.DoType == "Edit")
             tb.Enabled = false;
         this.Pub1.AddTD(tb);
@@ -303,8 +301,8 @@ public partial class WF_MapDef_MapFrame : WebPage
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("Width", "框架宽度"));
         tb = new TB();
-        tb.ID = "TB_Width";
-        tb.Text = dtl.Width;
+        tb.ID = "TB_W";
+        tb.Text = dtl.W;
         tb.ShowType = TBType.TB;
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD();
@@ -314,9 +312,9 @@ public partial class WF_MapDef_MapFrame : WebPage
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("Height", "框架高度"));
         tb = new TB();
-        tb.ID = "TB_Height";
+        tb.ID = "TB_H";
         tb.ShowType = TBType.TB;
-        tb.Text = dtl.Height;
+        tb.Text = dtl.H;
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
