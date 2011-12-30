@@ -10,13 +10,13 @@ using BP.En;
 using BP.PRJ;
 using BP.Web;
 
-public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
+public partial class ExpandingApplication_PRJ_NodeRuleUI : WebPage
 {
     public string FK_Prj
     {
         get
         {
-            string s= this.Request.QueryString["FK_Prj"];
+            string s = this.Request.QueryString["FK_Prj"];
             if (s == null)
                 s = "0001";
             return s;
@@ -90,11 +90,12 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
     }
     public void BindRight()
     {
+        this.PubTitle.AddCaptionLeft("资料树节点访问控制");
         Nodes nds = new Nodes(this.FK_Flow);
         this.Pub2.AddUL();
         foreach (Node nd in nds)
         {
-            this.Pub2.AddLi("<a href=\"javascript:window.showModalDialog('NodeAccess.aspx?FK_Node=" + nd.NodeID + "&FK_Prj="+this.FK_Prj+"', 'ds', 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no');\" >" + nd.Name + "</a>");
+            this.Pub2.AddLi("<a href=\"javascript:window.showModalDialog('NodeAccess.aspx?FK_Node=" + nd.NodeID + "&FK_Prj=" + this.FK_Prj + "', 'ds', 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no');\" >" + nd.Name + "</a>");
         }
         this.Pub2.AddULEnd();
     }
@@ -103,10 +104,10 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
         NodeAccesss nrs = new NodeAccesss();
         nrs.Retrieve(NodeAccessAttr.FK_Node, this.FK_Node, NodeAccessAttr.FK_Prj, this.FK_Prj);
 
-        string root = BP.SystemConfig.PathOfDataUser + "\\PrjData\\Templete\\"+this.FK_Prj;
+        string root = BP.SystemConfig.PathOfDataUser + "\\PrjData\\Templete\\" + this.FK_Prj;
 
         this.Pub3.AddTable("width=100%");
-        this.Pub3.AddCaptionLeft("节点与资料树访问权限 - <a href=\"javascript:AddDir()\" >增加文件夹</a>");
+        this.Pub3.AddCaptionLeft("节点与资料树访问权限 - <a href=\"javascript:AddDir('" + this.FK_Flow + "','"+this.FK_Node+"')\" >增加文件夹</a>");
         string[] dirs = System.IO.Directory.GetDirectories(root);
         int idx = 0;
         foreach (string dir in dirs)
@@ -116,7 +117,7 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
             this.Pub3.AddTR();
             this.Pub3.AddTDIdx(idx);
             this.Pub3.AddTD("colspan=5", "<img src='./../Images/Btn/open.gif'>" + dirInfo.Name);
-            this.Pub3.AddTD("<a href=\"javascript:AddFile('" + idx + "')\" >增加模板</a>");
+            this.Pub3.AddTD("<a href=\"javascript:AddFile('" + idx + "','" + this.FK_Flow + "','" + this.FK_Node + "')\" >增加模板</a>");
             this.Pub3.AddTREnd();
             FileInfo[] fls = dirInfo.GetFiles();
             foreach (FileInfo fl in fls)
@@ -158,7 +159,7 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
                 cb.Checked = rl.IsDelete;
                 this.Pub3.AddTD(cb);
 
-                this.Pub3.AddTD("<a href=\"javascript:DelFile('" + idx + "')\" >删除</a>");
+                this.Pub3.AddTD("<a href=\"javascript:DelFile('" + idx + "','" + this.FK_Flow + "','" + this.FK_Node + "')\" >删除</a>");
                 this.Pub3.AddTREnd();
             }
         }
@@ -168,14 +169,13 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
         Button btn = new Button();
         btn.Text = " Save  ";
         btn.ID = "Btn_Save";
-        btn.Click += new EventHandler(btn_Click);
+        btn.Click += new EventHandler(btn_Templete_Click);
         this.Pub3.Add(btn);
     }
-    void btn_Click(object sender, EventArgs e)
+    void btn_Templete_Click(object sender, EventArgs e)
     {
-
         NodeAccesss nrs = new NodeAccesss();
-        nrs.Retrieve(NodeAccessAttr.FK_Node, this.FK_Node, NodeAccessAttr.FK_Prj,this.FK_Prj);
+        nrs.Retrieve(NodeAccessAttr.FK_Node, this.FK_Node, NodeAccessAttr.FK_Prj, this.FK_Prj);
 
         string root = BP.SystemConfig.PathOfDataUser + "\\PrjData\\Templete\\" + this.FK_Prj;
         this.Pub3.AddTable();
@@ -196,12 +196,12 @@ public partial class ExpandingApplication_PRJ_NodeRuleUI :WebPage
                 rl.FileName = fl.Name;
                 rl.FK_Node = this.FK_Node;
                 rl.FK_Prj = this.FK_Prj;
-                 
+
                 rl.IsView = this.Pub3.GetCBByID("CB_" + NodeAccessAttr.IsView + "_" + idx).Checked;
                 rl.IsDown = this.Pub3.GetCBByID("CB_" + NodeAccessAttr.IsDown + "_" + idx).Checked;
                 rl.IsUpload = this.Pub3.GetCBByID("CB_" + NodeAccessAttr.IsUpload + "_" + idx).Checked;
                 rl.IsDelete = this.Pub3.GetCBByID("CB_" + NodeAccessAttr.IsDelete + "_" + idx).Checked;
-                rl.MyPK = rl.FileFullName + "_" + this.FK_Node + "_" + this.FK_Prj;
+                rl.MyPK =DataType.ParseStringToPinyin( rl.FileName) + "_" + this.FK_Node + "_" + this.FK_Prj;
                 rl.Save();
             }
         }

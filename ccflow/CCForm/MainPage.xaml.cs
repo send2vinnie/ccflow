@@ -1477,7 +1477,7 @@ namespace CCForm
                             if (uploadType == AttachmentUploadType.Single)
                             {
                                 
-                                BPAttachment ath = new BPAttachment(dr["NoOfAth"],
+                                BPAttachment ath = new BPAttachment(dr["NoOfObj"],
                                     dr["Name"],dr["Exts"],
                                     double.Parse(dr["W"]),dr["SaveTo"].ToString());
 
@@ -1520,7 +1520,7 @@ namespace CCForm
                                 BPAttachmentM athM = new BPAttachmentM();
                                 athM.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
                                 athM.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
-                                athM.Name = dr["NoOfAth"];
+                                athM.Name = dr["NoOfObj"];
                                 athM.Width = double.Parse(dr["W"]);
                                 athM.Height = double.Parse(dr["H"]);
                                 athM.X = double.Parse(dr["X"]);
@@ -3731,7 +3731,7 @@ namespace CCForm
             athDT.TableName = "Sys_FrmAttachment";
             athDT.Columns.Add(new DataColumn("MyPK", typeof(string)));
             athDT.Columns.Add(new DataColumn("FK_MapData", typeof(string)));
-            athDT.Columns.Add(new DataColumn("NoOfAth", typeof(string)));
+            athDT.Columns.Add(new DataColumn("NoOfObj", typeof(string)));
             athDT.Columns.Add(new DataColumn("Name", typeof(string)));
             athDT.Columns.Add(new DataColumn("Exts", typeof(string)));
             athDT.Columns.Add(new DataColumn("SaveTo", typeof(string)));
@@ -4094,7 +4094,7 @@ namespace CCForm
                     DataRow mapAth = athDT.NewRow();
                     mapAth["MyPK"] = Glo.FK_MapData + "_" + athCtl.Name;
                     mapAth["FK_MapData"] = Glo.FK_MapData;
-                    mapAth["NoOfAth"] = athCtl.Name;
+                    mapAth["NoOfObj"] = athCtl.Name;
                     mapAth["Name"] = athCtl.Label;
                     mapAth["Exts"] = athCtl.Exts;
                     mapAth["SaveTo"] = athCtl.SaveTo;
@@ -4119,7 +4119,7 @@ namespace CCForm
                     DataRow mapAth = athDT.NewRow();
                     mapAth["MyPK"] = Glo.FK_MapData + "_" + athM.Name;
                     mapAth["FK_MapData"] = Glo.FK_MapData;
-                    mapAth["NoOfAth"] = athM.Name;
+                    mapAth["NoOfObj"] = athM.Name;
                     mapAth["Name"] = athM.Label;
                     mapAth["SaveTo"] = athM.SaveTo;
                     mapAth["UploadType"] = "1";

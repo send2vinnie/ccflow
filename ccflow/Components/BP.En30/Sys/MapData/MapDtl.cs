@@ -195,7 +195,9 @@ namespace BP.Sys
                 this.SetValByKey(MapDtlAttr.DtlShowModel, (int)value);
             }
         }
-       
+        /// <summary>
+        /// 
+        /// </summary>
         public WhenOverSize HisWhenOverSize
         {
             get

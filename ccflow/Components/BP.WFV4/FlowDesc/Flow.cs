@@ -3587,7 +3587,7 @@ namespace BP.WF
                                     val = val.Replace("ND" + oldFlowID, "ND" + flowID);
                                     en.SetValByKey(dc.ColumnName, val);
                                 }
-                                en.MyPK = en.FK_MapData + "_" + en.NoOfAth;
+                                en.MyPK = en.FK_MapData + "_" + en.NoOfObj;
                                 en.Save();
                             }
                             break;

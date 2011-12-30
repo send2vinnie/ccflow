@@ -58,7 +58,7 @@ namespace BP.Sys
         /// <summary>
         /// 附件编号
         /// </summary>
-        public const string NoOfAth = "NoOfAth";
+        public const string NoOfObj = "NoOfObj";
         /// <summary>
         /// 是否可以上传
         /// </summary>
@@ -228,15 +228,15 @@ namespace BP.Sys
         /// <summary>
         /// 附件编号
         /// </summary>
-        public string NoOfAth
+        public string NoOfObj
         {
             get
             {
-                return this.GetValStringByKey(FrmAttachmentAttr.NoOfAth);
+                return this.GetValStringByKey(FrmAttachmentAttr.NoOfObj);
             }
             set
             {
-                this.SetValByKey(FrmAttachmentAttr.NoOfAth, value);
+                this.SetValByKey(FrmAttachmentAttr.NoOfObj, value);
             }
         }
         /// <summary>
@@ -367,7 +367,7 @@ namespace BP.Sys
                 map.AddMyPK();
 
                 map.AddTBString(FrmAttachmentAttr.FK_MapData, null,"FK_MapData", true, false, 1, 30, 20);
-                map.AddTBString(FrmAttachmentAttr.NoOfAth, null, "附件编号", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentAttr.NoOfObj, null, "附件编号", true, false, 0, 50, 20);
 
                 map.AddTBString(FrmAttachmentAttr.Name, null,"名称", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentAttr.Exts, null, "扩展名", true, false, 0, 50, 20);
@@ -399,7 +399,7 @@ namespace BP.Sys
         public bool IsUse = false;
         protected override bool beforeUpdateInsertAction()
         {
-            this.MyPK = this.FK_MapData + "_" + this.NoOfAth;
+            this.MyPK = this.FK_MapData + "_" + this.NoOfObj;
             return base.beforeUpdateInsertAction();
         }
     }

@@ -7,7 +7,7 @@ namespace BP.Sys
     /// <summary>
     /// 点对点
     /// </summary>
-    public class MapM2MAttr : EntityNoNameAttr
+    public class MapM2MAttr : EntityMyPKAttr
     {
         /// <summary>
         /// 主表
@@ -34,21 +34,21 @@ namespace BP.Sys
         public const string X = "X";
         public const string Y = "Y";
         public const string Cols = "Cols";
+        /// <summary>
+        /// 对象编号
+        /// </summary>
+        public const string NoOfObj = "NoOfObj";
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public const string Name = "Name";
+
     }
     /// <summary>
     /// 点对点
     /// </summary>
-    public class MapM2M : EntityNoName
+    public class MapM2M : EntityMyPK
     {
-        public GEEntity HisGEEntity
-        {
-            get
-            {
-                GEEntity en = new GEEntity(this.No);
-                return en;
-            }
-        }
-
         #region 属性
         /// <summary>
         /// 是否自适应大小
@@ -149,7 +149,34 @@ namespace BP.Sys
                 this.SetValByKey(MapM2MAttr.DBOfGroups, value);
             }
         }
-
+        /// <summary>
+        /// 内部编号
+        /// </summary>
+        public string NoOfObj
+        {
+            get
+            {
+                return this.GetValStrByKey(MapM2MAttr.NoOfObj);
+            }
+            set
+            {
+                this.SetValByKey(MapM2MAttr.NoOfObj, value);
+            }
+        }
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return this.GetValStrByKey(MapM2MAttr.Name);
+            }
+            set
+            {
+                this.SetValByKey(MapM2MAttr.Name, value);
+            }
+        }
         public bool IsUse = false;
         public string FK_MapData
         {
@@ -259,13 +286,21 @@ namespace BP.Sys
         public MapM2M()
         {
         }
+        public MapM2M(string myPK)
+        {
+            this.MyPK = myPK;
+            this.Retrieve();
+        }
         /// <summary>
         /// 点对点
         /// </summary>
-        /// <param name="no"></param>
-        public MapM2M(string no)
+        /// <param name="fk_mapdata"></param>
+        /// <param name="noOfObj"></param>
+        public MapM2M(string fk_mapdata, string noOfObj)
         {
-            this.No = no;
+            this.FK_MapData=fk_mapdata;
+            this.NoOfObj=noOfObj;
+            this.MyPK = this.FK_MapData + "_" + this.NoOfObj;
             this.Retrieve();
         }
         /// <summary>
@@ -283,8 +318,11 @@ namespace BP.Sys
                 map.EnDesc = "多选";
                 map.EnType = EnType.Sys;
 
-                map.AddTBStringPK(MapM2MAttr.No, null, "编号", true, false, 1, 20, 20);
-                map.AddTBString(MapM2MAttr.Name, null, "描述", true, false, 1, 200, 20);
+                map.AddMyPK();
+                map.AddTBString(MapM2MAttr.NoOfObj, null, "编号", true, false, 1, 20, 20);
+                map.AddTBString(MapM2MAttr.Name, null, "名称", true, false, 1, 200, 20);
+
+
                 map.AddTBString(MapM2MAttr.FK_MapData, null, "主表", true, false, 0, 30, 20);
 
                 map.AddTBString(MapM2MAttr.DBOfObjs, null, "DBOfObjs", true, false, 0, 4000, 20);
@@ -322,18 +360,20 @@ namespace BP.Sys
                 this.DBOfGroups = "SELECT No,Name FROM Port_Dept";
                 this.DBOfObjs = "SELECT No,Name,FK_Dept FROM Port_Emp";
             }
+
             return base.beforeInsert();
         }
-        protected override void afterInsert()
+        protected override bool beforeUpdateInsertAction()
         {
-            base.afterInsert();
+            this.MyPK = this.FK_MapData + "_" + this.NoOfObj;
+            return base.beforeUpdateInsertAction();
         }
         #endregion
     }
     /// <summary>
     /// 点对点s
     /// </summary>
-    public class MapM2Ms : EntitiesNoName
+    public class MapM2Ms : EntitiesMyPK
     {
         #region 构造
         /// <summary>

@@ -1037,6 +1037,9 @@ namespace BP.DA
         }
         public static void RunSQLs(string sql)
         {
+            if (string.IsNullOrEmpty(sql))
+                return;
+
             sql = sql.Replace("@GO","~");
             sql = sql.Replace("@", "~");
             string[] strs = sql.Split('~');

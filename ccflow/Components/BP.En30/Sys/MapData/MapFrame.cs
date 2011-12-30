@@ -7,7 +7,7 @@ namespace BP.Sys
     /// <summary>
     /// 框架
     /// </summary>
-    public class MapFrameAttr : EntityNoNameAttr
+    public class MapFrameAttr : EntityMyPKAttr
     {
         /// <summary>
         /// 主表
@@ -25,17 +25,25 @@ namespace BP.Sys
         /// GroupID
         /// </summary>
         public const string GroupID = "GroupID";
-        public const string Height = "Height";
-        public const string Width = "Width";
+        public const string H = "H";
+        public const string W = "W";
         /// <summary>
         /// 是否可以自适应大小
         /// </summary>
         public const string IsAutoSize = "IsAutoSize";
+        /// <summary>
+        /// 内部编号
+        /// </summary>
+        public const string NoOfObj = "NoOfObj";
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public const string Name = "Name";
     }
     /// <summary>
     /// 框架
     /// </summary>
-    public class MapFrame : EntityNoName
+    public class MapFrame : EntityMyPK
     {
         #region 属性
         /// <summary>
@@ -52,6 +60,37 @@ namespace BP.Sys
                 this.SetValByKey(MapFrameAttr.IsAutoSize, value);
             }
         }
+        /// <summary>
+        /// 编号
+        /// </summary>
+        public string NoOfObj
+        {
+            get
+            {
+                return this.GetValStrByKey(MapFrameAttr.NoOfObj);
+            }
+            set
+            {
+                this.SetValByKey(MapFrameAttr.NoOfObj, value);
+            }
+        }
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return this.GetValStrByKey(MapFrameAttr.Name);
+            }
+            set
+            {
+                this.SetValByKey(MapFrameAttr.Name, value);
+            }
+        }
+        /// <summary>
+        /// 连接
+        /// </summary>
         public string URL
         {
             get
@@ -63,26 +102,32 @@ namespace BP.Sys
                 this.SetValByKey(MapFrameAttr.URL, value);
             }
         }
-        public string Height
+        /// <summary>
+        /// 高度
+        /// </summary>
+        public string H
         {
             get
             {
-                return this.GetValStrByKey(MapFrameAttr.Height);
+                return this.GetValStrByKey(MapFrameAttr.H);
             }
             set
             {
-                this.SetValByKey(MapFrameAttr.Height, value);
+                this.SetValByKey(MapFrameAttr.H, value);
             }
         }
-        public string Width
+        /// <summary>
+        /// 宽度
+        /// </summary>
+        public string W
         {
             get
             {
-                return this.GetValStrByKey(MapFrameAttr.Width);
+                return this.GetValStrByKey(MapFrameAttr.W);
             }
             set
             {
-                this.SetValByKey(MapFrameAttr.Width, value);
+                this.SetValByKey(MapFrameAttr.W, value);
             }
         }
         public bool IsUse = false;
@@ -134,9 +179,9 @@ namespace BP.Sys
         /// 框架
         /// </summary>
         /// <param name="no"></param>
-        public MapFrame(string no)
+        public MapFrame(string mypk)
         {
-            this.No = no;
+            this.MyPK = mypk;
             this.Retrieve();
         }
         /// <summary>
@@ -154,16 +199,14 @@ namespace BP.Sys
                 map.EnDesc = "框架";
                 map.EnType = EnType.Sys;
 
-                map.AddTBStringPK(MapFrameAttr.No, null, "编号", true, false, 1, 20, 20);
+                map.AddMyPK();
+                map.AddTBString(MapFrameAttr.NoOfObj, null, "编号", true, false, 1, 20, 20);
+                map.AddTBString(MapFrameAttr.Name, null, "名称", true, false, 1, 200, 20);
 
-                map.AddTBString(MapFrameAttr.Name, null, "描述", true, false, 1, 200, 20);
                 map.AddTBString(MapFrameAttr.FK_MapData, null, "主表", true, false, 0, 30, 20);
-
                 map.AddTBString(MapFrameAttr.URL, null, "URL", true, false, 0, 3000, 20);
-
-                map.AddTBString(MapFrameAttr.Width, null, "Width", true, false, 0, 20, 20);
-                map.AddTBString(MapFrameAttr.Height, null, "Height", true, false, 0, 20, 20);
-
+                map.AddTBString(MapFrameAttr.W, null, "W", true, false, 0, 20, 20);
+                map.AddTBString(MapFrameAttr.H, null, "H", true, false, 0, 20, 20);
 
                 //map.AddTBInt(MapFrameAttr.H, 500, "高度", false, false);
                 //map.AddTBInt(MapFrameAttr.W, 400, "宽度", false, false);
@@ -179,12 +222,18 @@ namespace BP.Sys
                 return this._enMap;
             }
         }
+      
+        protected override bool beforeUpdateInsertAction()
+        {
+            this.MyPK = this.FK_MapData + "_" + this.NoOfObj;
+            return base.beforeUpdateInsertAction();
+        }
         #endregion
     }
     /// <summary>
     /// 框架s
     /// </summary>
-    public class MapFrames : EntitiesNoName
+    public class MapFrames : EntitiesMyPK
     {
         #region 构造
         /// <summary>

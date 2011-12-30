@@ -107,23 +107,23 @@ namespace CCForm
         /// 
         /// </summary>
         /// <param name="name"></param>
-        public BPAttachment(string nooFAth, string name, string exts, double tbWidth,string _saveTo)
+        public BPAttachment(string NoOfObj, string name, string exts, double tbWidth,string _saveTo)
         {
             if (tbWidth < 20)
                 tbWidth = 20;
 
-            this.Name = nooFAth;
+            this.Name = NoOfObj;
             StackPanel sp = new StackPanel();
-            sp.Name = "sp" + nooFAth;
+            sp.Name = "sp" + NoOfObj;
             sp.Orientation = Orientation.Horizontal;
             this.HisTB = new BPTextBox();
-            this.HisTB.Name = "No:" + nooFAth;
+            this.HisTB.Name = "No:" + NoOfObj;
             this.HisTB.Width = tbWidth;
             this.Exts = exts;
             this.SaveTo = _saveTo;
             sp.Children.Add(this.HisTB);
             Button btn = new Button();
-            btn.Name = "btns" + nooFAth;
+            btn.Name = "btns" + NoOfObj;
             btn.Content = "浏览-上传-删除";
             sp.Children.Add(btn);
             this.Content = sp;

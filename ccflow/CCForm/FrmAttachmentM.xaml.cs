@@ -48,7 +48,7 @@ namespace CCForm
             string vals = "@EnName=BP.Sys.FrmAttachment@MyPK=" + Glo.FK_MapData + "_" + mypk + "@UploadType=1";
 
             vals += "@FK_MapData=" + Glo.FK_MapData;
-            vals += "@NoOfAth=" + this.TB_No.Text.Trim();
+            vals += "@NoOfObj=" + this.TB_No.Text.Trim();
             vals += "@Name=" + this.TB_Name.Text;
             vals += "@SaveTo=" + this.TB_SaveTo.Text.Trim();
             vals += "@Sort=" + this.TB_Sort.Text.Trim();

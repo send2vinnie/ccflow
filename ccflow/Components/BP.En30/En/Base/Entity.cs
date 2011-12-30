@@ -1823,7 +1823,6 @@ namespace BP.En
                     break;
             }
         }
-
         /// <summary>
         /// 如果一个属性是外键，并且它还有一个字段存储它的名称。
         /// 设置这个外键名称的属性。
@@ -1839,6 +1838,309 @@ namespace BP.En
                 string s = this.GetValRefTextByKey(attr.Key);
                 this.SetValByKey(attr.Key + "Name", s);
             }
+        }
+        private void CheckPhysicsTableSQL()
+        {
+            string table=this.EnMap.PhysicsTable;
+            DBType dbtype = this.EnMap.EnDBUrl.DBType;
+            string sqlFields = "";
+            string sqlYueShu = "";
+            switch (SystemConfig.AppCenterDBType)
+            {
+                case DBType.SQL2000:
+                    sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
+                    sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('"+this.EnMap.PhysicsTable+"') ";
+                    break;
+                default:
+                    break;
+            }
+            DataTable dtAttr = DBAccess.RunSQLReturnTable(sqlFields);
+            DataTable dtYueShu = DBAccess.RunSQLReturnTable(sqlYueShu);
+          
+
+            #region 修复表字段。
+            Attrs attrs = this.EnMap.Attrs;
+            foreach (Attr attr in attrs)
+            {
+                if (attr.IsRefAttr)
+                    continue;
+
+                string FType = "";
+                string Flen = "";
+
+                #region 判断是否存在.
+                bool isHave = false;
+                foreach (DataRow dr in dtAttr.Rows)
+                {
+                    if (dr["FName"].ToString().ToLower() == attr.Key.ToLower())
+                    {
+                        isHave = true;
+                        FType = dr["FType"] as string;
+                        Flen = dr["FLen"].ToString();
+                        break;
+                    }
+                }
+                if (isHave == false)
+                {
+                    /*不存在此列 , 就增加此列。*/
+                    switch (attr.MyDataType)
+                    {
+                        case DataType.AppString:
+                        case DataType.AppDate:
+                        case DataType.AppDateTime:
+                            int len = attr.MaxLength;
+                            if (len == 0)
+                                len = 200;
+                            //throw new Exception("属性的最小长度不能为0。");
+                            if (dbtype == DBType.Access && len >= 254)
+                                DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + "  Memo DEFAULT '" + attr.DefaultVal + "' NULL");
+                            else
+                                DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " VARCHAR(" + len + ") DEFAULT '" + attr.DefaultVal + "' NULL");
+                            continue;
+                        case DataType.AppInt:
+                        case DataType.AppBoolean:
+                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " INT DEFAULT '" + attr.DefaultVal + "' NULL");
+                            continue;
+                        case DataType.AppFloat:
+                        case DataType.AppMoney:
+                        case DataType.AppRate:
+                        case DataType.AppDouble:
+                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " FLOAT DEFAULT '" + attr.DefaultVal + "' NULL");
+                            continue;
+                        default:
+                            throw new Exception("error MyFieldType= " + attr.MyFieldType + " key=" + attr.Key);
+                    }
+                }
+                #endregion
+
+                #region 检查类型是否匹配.
+                switch (attr.MyDataType)
+                {
+                    case DataType.AppString:
+                    case DataType.AppDate:
+                    case DataType.AppDateTime:
+                        if (FType == "varchar")
+                        {
+                            /*类型正确，检查长度*/
+                            if (Flen == null)
+                                throw new Exception(""+attr.Key+" -"+sqlFields);
+                            int len = int.Parse(Flen);
+                            if (len < attr.MaxLength)
+                            {
+                                /*需要改变长度.*/
+                                switch (dbtype)
+                                {
+                                    case DBType.SQL2000:
+                                        DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " alter column " + attr.Desc + " varchar(" + attr.MaxLength + ")");
+                                        continue;
+                                    case DBType.Oracle9i:
+                                        DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " modify " + attr.Desc + " varchar2(" + attr.MaxLength + ")");
+                                        continue;
+                                    default:
+                                        throw new Exception("没有判断的类型。");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            /*如果类型不匹配，就删除它在重新建, 先删除约束，在删除列，在重建。*/
+                            foreach (DataRow dr in dtYueShu.Rows)
+                            {
+                                if (dr["FName"].ToString().ToLower() == attr.Key.ToLower())
+                                    DBAccess.RunSQL("alter table " + table + " drop constraint " + dr[0].ToString()  );
+                            }
+                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " drop column " + attr.Field);
+                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " VARCHAR(" + attr.MaxLength + ") DEFAULT '" + attr.DefaultVal + "' NULL");
+                            continue;
+                        }
+                        break;
+                    case DataType.AppInt:
+                    case DataType.AppBoolean:
+                        if (FType != "int")
+                        {
+                            /*如果类型不匹配，就删除它在重新建, 先删除约束，在删除列，在重建。*/
+                            foreach (DataRow dr in dtYueShu.Rows)
+                            {
+                                if (dr["FName"].ToString().ToLower() == attr.Key.ToLower())
+                                    DBAccess.RunSQL("alter table " + table + " drop constraint " + dr[0].ToString());
+                            }
+                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " drop column " + attr.Field);
+                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " INT DEFAULT '" + attr.DefaultVal + "' NULL");
+                            continue;
+                        }
+                        break;
+                    case DataType.AppFloat:
+                    case DataType.AppMoney:
+                    case DataType.AppRate:
+                    case DataType.AppDouble:
+                        if (FType != "float")
+                        {
+                            /*如果类型不匹配，就删除它在重新建, 先删除约束，在删除列，在重建。*/
+                            foreach (DataRow dr in dtYueShu.Rows)
+                            {
+                                if (dr["FName"].ToString().ToLower() == attr.Key.ToLower())
+                                    DBAccess.RunSQL("alter table " + table + " drop constraint " + dr[0].ToString() );
+                            }
+                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " drop column " + attr.Field);
+                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " FLOAT DEFAULT '" + attr.DefaultVal + "' NULL");
+                            continue;
+                        }
+                        break;
+                    default:
+                        throw new Exception("error MyFieldType= " + attr.MyFieldType + " key=" + attr.Key);
+                        break;
+                }
+                #endregion
+            }
+            #endregion 修复表字段。
+
+            #region 检查枚举类型是否存在.
+            attrs = this._enMap.HisEnumAttrs;
+            foreach (Attr attr in attrs)
+            {
+                if (attr.MyDataType != DataType.AppInt)
+                    continue;
+
+                if (attr.UITag == null)
+                    continue;
+
+                try
+                {
+                    SysEnums ses = new SysEnums(attr.UIBindKey, attr.UITag);
+                    continue;
+                }
+                catch
+                {
+                }
+
+                try
+                {
+                    string[] strs = attr.UITag.Split('@');
+                    SysEnums ens = new SysEnums();
+                    ens.Delete(SysEnumAttr.EnumKey, attr.UIBindKey);
+                    foreach (string s in strs)
+                    {
+                        if (s == "" || s == null)
+                            continue;
+
+                        string[] vk = s.Split('=');
+                        SysEnum se = new SysEnum();
+                        se.IntKey = int.Parse(vk[0]);
+                        se.Lab = vk[1];
+                        se.EnumKey = attr.UIBindKey;
+                        se.Insert();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("@自动增加枚举时出现错误，请确定您的格式是否正确。" + ex.Message + "attr.UIBindKey=" + attr.UIBindKey);
+                }
+
+            }
+            #endregion
+
+            #region 建立索引
+            try
+            {
+                int pkconut = this.PKCount;
+                if (pkconut == 1)
+                {
+                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
+                }
+                else if (pkconut == 2)
+                {
+                    string pk0 = this.PKs[0];
+                    string pk1 = this.PKs[1];
+                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
+                }
+                else if (pkconut == 3)
+                {
+                    try
+                    {
+                        string pk0 = this.PKs[0];
+                        string pk1 = this.PKs[1];
+                        string pk2 = this.PKs[2];
+                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                    }
+                    catch
+                    {
+                    }
+                }
+                else if (pkconut == 4)
+                {
+                    try
+                    {
+                        string pk0 = this.PKs[0];
+                        string pk1 = this.PKs[1];
+                        string pk2 = this.PKs[2];
+                        string pk3 = this.PKs[3];
+                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2, pk3);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.DefaultLogWriteLineError(ex.Message);
+                throw ex;
+                //throw new Exception("create pk error :"+ex.Message );
+            }
+            #endregion
+
+            #region 建立主键
+            if (DBAccess.IsExitsTabPK(this.EnMap.PhysicsTable) == false)
+            {
+                try
+                {
+                    int pkconut = this.PKCount;
+                    if (pkconut == 1)
+                    {
+                        try
+                        {
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, this.PKField);
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                    else if (pkconut == 2)
+                    {
+                        try
+                        {
+                            string pk0 = this.PKs[0];
+                            string pk1 = this.PKs[1];
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1);
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    else if (pkconut == 3)
+                    {
+                        try
+                        {
+                            string pk0 = this.PKs[0];
+                            string pk1 = this.PKs[1];
+                            string pk2 = this.PKs[2];
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.DefaultLogWriteLineError(ex.Message);
+                    throw ex;
+                }
+            }
+            #endregion
         }
         /// <summary>
         /// 检查物理表
@@ -1866,14 +2168,24 @@ namespace BP.En
                 return;
 
             // 如果不是主应用程序的数据库就不让执行检查. 考虑第三方的系统的安全问题.
-            if (this._enMap.EnDBUrl.DBUrlType != DBUrlType.AppCenterDSN)
+            if (this._enMap.EnDBUrl.DBUrlType 
+                != DBUrlType.AppCenterDSN)
                 return;
+
+            switch (SystemConfig.AppCenterDBType)
+            {
+                case DBType.SQL2000:
+                    this.CheckPhysicsTableSQL();
+                    return;
+                default:
+                    break;
+            }
 
             #region 检查字段是否存在
             string sql = "SELECT *  FROM " + this.EnMap.PhysicsTable + " WHERE 1=2";
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
-            // 如果不存在。
+            // 如果不存在.
             foreach (Attr attr in this.EnMap.Attrs)
             {
                 if (attr.MyFieldType == FieldType.RefText)
@@ -1883,22 +2195,7 @@ namespace BP.En
                     continue;
 
                 if (dt.Columns.Contains(attr.Key) == true)
-                {
-                    if (attr.MyDataType != DataType.AppString)
-                        continue;
-
                     continue;
-                    /*
-                     // 检查长度问题
-                    DataColumn dc = dt.Columns[attr.Key];
-                    if (dc.MaxLength > attr.MaxLength)
-                        continue;
-                    // 开始扩展长度
-                     #warning 如何解决它.
-                    this.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " modify (" + attr.Key + " varchar2(" + attr.MaxLength + "))");
-                    continue;
-                     * */
-                }
 
                 if (attr.Key == "AID")
                 {
@@ -1951,8 +2248,6 @@ namespace BP.En
                     || attr.MyDataType == DataType.AppBoolean
                     || attr.MyDataType == DataType.AppRate)
                     continue;
-
-                //string ptable = this.EnMap.PhysicsTableExt;
 
                 int maxLen = attr.MaxLength;
                 dt = new DataTable();

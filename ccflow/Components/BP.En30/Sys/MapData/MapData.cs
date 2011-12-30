@@ -552,9 +552,13 @@ namespace BP.Sys
         public static void ImpMapData(string fk_mapdata, DataSet ds)
         {
             #region 检查导入的数据是否完整.
-            string errMsg="";
+            string errMsg = "";
+            if (ds.Tables.Contains("WF_Node") == true)
+                errMsg += "@此模板文件为流程模板。";
+
             if (ds.Tables.Contains("Sys_MapAttr") == false)
                 errMsg += "@缺少表:Sys_MapAttr";
+
 
             if (ds.Tables.Contains("Sys_MapData") == false)
                 errMsg += "@缺少表:Sys_MapData";
@@ -564,17 +568,23 @@ namespace BP.Sys
             foreach (DataRow dr in dtCheck.Rows)
             {
                 if (dr["KeyOfEn"].ToString() == "OID")
+                {
                     isHave = true;
+                    break;
+                }
             }
+
             if (isHave == false)
                 errMsg += "@缺少列:OID";
 
             if (errMsg != "")
-                throw new Exception("以下错误不可导入"+errMsg);
+                throw new Exception("以下错误不可导入，可能的原因是非表单模板文件:" + errMsg);
             #endregion
+
+            // 定义在最后执行的sql.
+            string endDoSQL = "";
+
             //检查是否存在OID字段.
-
-
             MapData mdOld = new MapData();
             mdOld.No = fk_mapdata;
             mdOld.Delete();
@@ -745,7 +755,6 @@ namespace BP.Sys
                             }
                             catch
                             {
-
                             }
                         }
                         break;
@@ -777,7 +786,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.No = "D" + timeKey + "_" + idx;
+                            en.NoOfObj = "M2M" + timeKey + "_" + idx;
                             en.Insert();
                         }
                         break;
@@ -793,7 +802,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.No = "Fra" + timeKey + "_" + idx;
+                            en.NoOfObj = "Fra" + timeKey + "_" + idx;
                             en.Insert();
                         }
                         break;
@@ -816,7 +825,6 @@ namespace BP.Sys
                     case "Sys_MapAttr":
                         foreach (DataRow dr in dt.Rows)
                         {
-                            idx++;
                             MapAttr en = new MapAttr();
                             foreach (DataColumn dc in dt.Columns)
                             {
@@ -825,7 +833,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.Insert();
+                            en.DirectInsert();
                         }
                         break;
                     case "Sys_GroupField":
@@ -840,17 +848,53 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
+                            int beforeID = en.OID;
                             en.OID = 0;
                             en.Insert();
+                            endDoSQL += "@UPDATE Sys_MapAttr SET GroupID=" + en.OID + " WHERE FK_MapData='" + fk_mapdata + "' AND GroupID=" + beforeID;
                         }
                         break;
                     default:
                         break;
                 }
             }
+
+            //执行最后结束的sql.
+            DBAccess.RunSQLs(endDoSQL);
+
+            MapData mdNew = new MapData(fk_mapdata);
+          
+            mdNew.RepairMap();
         }
         public void RepairMap()
         {
+            GroupFields gfs = new GroupFields(this.No);
+            if (gfs.Count == 0)
+            {
+                GroupField gf = new GroupField();
+                gf.EnName = this.No;
+                gf.Lab =this.Name;
+                gf.Insert();
+                string sqls = "";
+                sqls += "@UPDATE Sys_MapDtl SET GroupID=" + gf.OID + " WHERE FK_MapData='" + this.No + "'";
+                sqls += "@UPDATE Sys_MapAttr SET GroupID=" + gf.OID + " WHERE FK_MapData='" + this.No + "'";
+                sqls += "@UPDATE Sys_MapFrame SET GroupID=" + gf.OID + " WHERE FK_MapData='" + this.No + "'";
+                sqls += "@UPDATE Sys_MapM2M SET GroupID=" + gf.OID + " WHERE FK_MapData='" + this.No + "'";
+                sqls += "@UPDATE Sys_FrmAttachment SET GroupID=" + gf.OID + " WHERE FK_MapData='" + this.No + "'";
+                DBAccess.RunSQLs(sqls);
+            }
+            else
+            {
+                GroupField gfFirst = gfs[0] as GroupField;
+                string sqls = "";
+                sqls += "@UPDATE Sys_MapDtl SET GroupID=" + gfFirst.OID + "        WHERE  No   IN (SELECT No   FROM Sys_MapDtl        WHERE GroupID NOT IN (SELECT OID FROM Sys_GroupField WHERE EnName='" + this.No + "'))AND FK_MapData='" + this.No + "' ";
+                sqls += "@UPDATE Sys_MapAttr SET GroupID=" + gfFirst.OID + "       WHERE  MyPK IN (SELECT MyPK FROM Sys_MapAttr       WHERE GroupID NOT IN (SELECT OID FROM Sys_GroupField WHERE EnName='" + this.No + "'))AND FK_MapData='" + this.No + "' ";
+                sqls += "@UPDATE Sys_MapFrame SET GroupID=" + gfFirst.OID + "      WHERE  MyPK IN (SELECT MyPK FROM Sys_MapFrame      WHERE GroupID NOT IN (SELECT OID FROM Sys_GroupField WHERE EnName='" + this.No + "'))AND FK_MapData='" + this.No + "' ";
+                sqls += "@UPDATE Sys_MapM2M SET GroupID=" + gfFirst.OID + "        WHERE  MyPK IN (SELECT MyPK FROM Sys_MapM2M        WHERE GroupID NOT IN (SELECT OID FROM Sys_GroupField WHERE EnName='" + this.No + "'))AND FK_MapData='" + this.No + "' ";
+                sqls += "@UPDATE Sys_FrmAttachment SET GroupID=" + gfFirst.OID + " WHERE  MyPK IN (SELECT MyPK FROM Sys_FrmAttachment WHERE GroupID NOT IN (SELECT OID FROM Sys_GroupField WHERE EnName='" + this.No + "'))AND FK_MapData='" + this.No + "' ";
+                DBAccess.RunSQLs(sqls);
+            }
+
             BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
             if (attr.IsExit(MapAttrAttr.KeyOfEn, "OID", MapAttrAttr.FK_MapData, this.No) == false)
             {
@@ -990,7 +1034,7 @@ namespace BP.Sys
             ds.Tables.Add(Sys_FrmRB);
 
             // Sys_MapAttr.
-            sql = "SELECT * FROM Sys_MapAttr WHERE " + where + " AND KeyOfEn NOT IN('WFState','WFLog','NodeState')";
+            sql = "SELECT * FROM Sys_MapAttr WHERE " + where + " AND KeyOfEn NOT IN('WFState','WFLog','NodeState') ORDER BY FK_MapData,IDX ";
             DataTable Sys_MapAttr = DBAccess.RunSQLReturnTable(sql);
             Sys_MapAttr.TableName = "Sys_MapAttr";
            

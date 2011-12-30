@@ -41,7 +41,7 @@ namespace CCForm
 
             #region 属性.
             string mypk = this.TB_No.Text.Trim();
-            string vals = "@EnName=BP.Sys.FrmAttachment@MyPK=" +Glo.FK_MapData +"_" + mypk + "@FK_MapData=" + Glo.FK_MapData + "@Name=" + this.TB_Name.Text + "@Exts=" + this.TB_Exts.Text + "@NoOfAth=" + mypk;
+            string vals = "@EnName=BP.Sys.FrmAttachment@MyPK=" +Glo.FK_MapData +"_" + mypk + "@FK_MapData=" + Glo.FK_MapData + "@Name=" + this.TB_Name.Text + "@Exts=" + this.TB_Exts.Text + "@NoOfObj=" + mypk;
 
             vals += "@SaveTo=" + this.TB_SaveTo.Text.Trim();
             vals += "@X=" +this.HisBPAttachment.X;
