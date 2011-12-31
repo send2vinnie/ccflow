@@ -146,7 +146,7 @@ namespace BP.Web.Comm
         {
             string ensName = this.Request.QueryString["M"];
             Method rm = BP.DA.ClassFactory.GetMethod(ensName);
-            Bind(rm);
+            this.Bind(rm);
         }
         public void Bind(Method rm)
         {
@@ -161,15 +161,18 @@ namespace BP.Web.Comm
             btn.Text = "¹¦ÄÜÖ´ÐÐ";
             if (string.IsNullOrEmpty(rm.Warning) == false)
             {
-                btn.Attributes["onclick"] = "return window.confirm('" + rm.Warning + "');";
-
+                btn.Attributes["onclick"] = "if (confirm('" + rm.Warning + "')==false) {return false;}else{ this.disabled=true; }";
+            }
+            else
+            {
+                btn.OnClientClick = "this.disabled=true;";
+                //  btn.Attributes["onclick"] = "this.disabled=true;return window.confirm('" + rm.Warning + "');";
             }
 
             this.UCEn1.AddBR();
             this.UCEn1.AddBR();
             btn.ID = "Btn_Do";
             btn.UseSubmitBehavior = false;
-            btn.OnClientClick = "this.disabled=true;"; 
             btn.Click += new EventHandler(btn_Do_Click);
 
             this.UCEn1.Add(btn);
