@@ -1,12 +1,20 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="MyFlowWap.ascx.cs" Inherits="WF_UC_MyFlowWap" %>
-<%@ Register src="../../../Comm/UC/UCSys.ascx" tagname="UCSys" tagprefix="uc3" %>
-<%@ Register src="../../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc4" %>
-<%@ Register src="../../UC/UCEn.ascx" tagname="UCEn" tagprefix="uc6" %>
-    <%@ Register src="./../../Pub.ascx" tagname="Pub" tagprefix="uc2" %>
-    <%@ Register src="../Pub.ascx" tagname="Pub" tagprefix="uc1" %>
-    <script language="JavaScript" src="./../../Style/JScript.js" type="text/javascript"></script>
-    <script language="JavaScript" src="../../../Comm/JS/Calendar.js" type="text/javascript"></script>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="MyFlowWap.ascx.cs" Inherits="WF_WAP_UC_MyFlowWap" %>
+<%@ Register src="../../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc1" %>
+<%@ Register src="../../UC/UCEn.ascx" tagname="UCEn" tagprefix="uc2" %>
+<%@ Register src="../../UC/Pub.ascx" tagname="Pub" tagprefix="uc3" %>
 <script language=javascript>
+    //执行分支流程退回到分合流节点。
+    function DoSubFlowReturn(fid, workid, fk_node) {
+        var url = 'ReturnWorkSubFlowToFHL.aspx?FID=' + fid + '&WorkID=' + workid + '&FK_Node=' + fk_node;
+        var v = WinShowModalDialog(url, 'df');
+        window.location.href = window.history.url;
+    }
+    function To(url) {
+        window.location.href = url;
+    }
+</script>
+
+<script language="javascript">
     function GroupBarClick(rowIdx) {
         var alt = document.getElementById('Img' + rowIdx).alert;
         var sta = 'block';
@@ -26,25 +34,51 @@
             document.getElementById(rowIdx + '_' + i).style.display = sta;
         }
     }
-</script>
-<%--
-<fieldset> 
-<legend align=right><a href='Home.aspx' > <img src='./Img/Home.gif' border=0 >Home</a></legend>
---%>
 
-<table width='100%'   >
-<tr>
-<td class='ToolBar' align=left >
-<uc4:ToolBar ID="ToolBar1" runat="server" />
-</td>
-</tr>
-<tr valign="top">
-<td valign="top" align=left >
-<uc6:UCEn ID="UCEn1" runat="server" />
-     <uc1:Pub ID="FlowMsg" runat="server" />
-    <uc1:Pub ID="Pub1" runat="server" />
-</td>
-</tr>
-</table>
-<%--
- </fieldset>--%>
+    function DoDelSubFlow(fk_flow, workid) {
+        if (window.confirm('您确定要终止进程吗？') == false)
+            return;
+        var url = 'Do.aspx?DoType=DelSubFlow&FK_Flow=' + fk_flow + '&WorkID=' + workid;
+        WinShowModalDialog(url, '');
+        window.location.href = window.location.href; //aspxPage + '.aspx?WorkID=';
+    }
+    function Do(warning, url) {
+        if (window.confirm(warning) == false)
+            return;
+        window.location.href = url;
+        // WinOpen(url);
+    }
+</script>
+
+<style type="text/css">
+.Bar
+{
+    width:500px;
+    text-align:center;
+}
+
+#tabForm, D
+{
+    width:960px;
+    text-align:left;
+    margin:0 auto;
+    margin-bottom:5px;
+}
+
+#divFreeFrm {
+ position:relative;
+ left:25PX;
+ width:960px;
+}
+</style>
+
+<div id=tabForm >
+    <uc1:ToolBar ID="ToolBar1" runat="server" />
+</div>
+
+<div id="D" >
+    <uc3:Pub ID="FlowMsg" runat="server" />
+    <uc3:Pub ID="Pub1" runat="server" />
+    <uc2:UCEn ID="UCEn1" runat="server" />
+    <uc3:Pub ID="Pub2" runat="server" />
+</div>
