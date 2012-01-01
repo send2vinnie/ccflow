@@ -28,7 +28,11 @@ namespace BP.DA
         /// <summary>
         /// DB2
         /// </summary>
-        DB2
+        DB2,
+        /// <summary>
+        /// MySQL
+        /// </summary>
+        MySQL
     }
     /// <summary>
     /// 保管位置

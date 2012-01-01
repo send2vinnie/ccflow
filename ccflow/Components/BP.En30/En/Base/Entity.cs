@@ -1851,9 +1851,22 @@ namespace BP.En
                     sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
                     sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('"+this.EnMap.PhysicsTable+"') ";
                     break;
-                default:
+                case DBType.Oracle9i:
+                    sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
+                    sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('" + this.EnMap.PhysicsTable + "') ";
                     break;
+                case DBType.DB2:
+                    sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
+                    sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('" + this.EnMap.PhysicsTable + "') ";
+                    break;
+                case DBType.MySQL:
+                    sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
+                    sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('" + this.EnMap.PhysicsTable + "') ";
+                    break;
+                default:
+                    throw new Exception("没有判断的数据库类型。");
             }
+
             DataTable dtAttr = DBAccess.RunSQLReturnTable(sqlFields);
             DataTable dtYueShu = DBAccess.RunSQLReturnTable(sqlYueShu);
           
@@ -1931,10 +1944,10 @@ namespace BP.En
                                 switch (dbtype)
                                 {
                                     case DBType.SQL2000:
-                                        DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " alter column " + attr.Desc + " varchar(" + attr.MaxLength + ")");
+                                        DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " alter column " + attr.Key + " varchar(" + attr.MaxLength + ")");
                                         continue;
                                     case DBType.Oracle9i:
-                                        DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " modify " + attr.Desc + " varchar2(" + attr.MaxLength + ")");
+                                        DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " modify " + attr.Key + " varchar2(" + attr.MaxLength + ")");
                                         continue;
                                     default:
                                         throw new Exception("没有判断的类型。");
