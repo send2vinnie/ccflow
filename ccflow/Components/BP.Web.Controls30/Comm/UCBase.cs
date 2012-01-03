@@ -1047,7 +1047,6 @@ namespace BP.Web.UC
         {
             AddIframe("/Comm/Item3.aspx?EnName=" + enName + "&PK=" + pk);
         }
-
         public void AddFieldSetRound(string title)
         {
             this.Add("<table cellpadding='0' cellspacing='0'><tr><td><fieldset align='center'><legend>" + title + " </legend>");

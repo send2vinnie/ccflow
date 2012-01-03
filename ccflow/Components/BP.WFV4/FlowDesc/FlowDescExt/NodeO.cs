@@ -224,6 +224,8 @@ namespace BP.WF.Ext
 
                 map.AddTBString(NodeAttr.TurnToDealDoc, null, "转向处理内容", true, false, 0, 2000, 10, true);
 
+                map.AddTBString(NodeAttr.JumpSQL, null, "可跳转的节点", true, false, 0, 2000, 10, true);
+
                 //map.AddBoolean("IsSkipReturn", false, "是否可以跨级撤销", true, true, true);
 
                 map.AddTBDateTime("DTFrom", "生命周期从", true, true);
@@ -236,6 +238,11 @@ namespace BP.WF.Ext
 
                 map.AddTBString(BtnAttr.SaveLab, "保存", "保存按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.SaveEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.JumpWayLab, "跳转", "跳转按钮标签", true, false, 0, 50, 10);
+                map.AddDDLSysEnum(NodeAttr.JumpWay, 0, "跳转规则",
+           true, true, NodeAttr.JumpWay);
+
 
                 map.AddTBString(BtnAttr.ReturnLab, "退回", "退回按钮标签", true, false, 0, 50, 10);
                 map.AddDDLSysEnum(NodeAttr.ReturnRole, 0, this.ToE("ReturnRole", "退回规则"),

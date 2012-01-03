@@ -71,6 +71,32 @@ namespace BP.WF
     /// <summary>
     /// 节点工作退回规则
     /// </summary>
+    public enum JumpWay
+    {
+        /// <summary>
+        /// 不能跳转
+        /// </summary>
+        CanNotJump,
+        /// <summary>
+        /// 向后跳转
+        /// </summary>
+        Next,
+        /// <summary>
+        /// 向前跳转
+        /// </summary>
+        Previous,
+        /// <summary>
+        /// 任何节点
+        /// </summary>
+        AnyNode,
+        /// <summary>
+        /// 任意点
+        /// </summary>
+        JumpSpecifiedNodes
+    }
+    /// <summary>
+    /// 节点工作退回规则
+    /// </summary>
     public enum ReturnRole
     {
         /// <summary>
@@ -481,6 +507,14 @@ namespace BP.WF
         /// 焦点字段
         /// </summary>
         public const string FocusField = "FocusField";
+        /// <summary>
+        /// 跳转规则
+        /// </summary>
+        public const string JumpWay = "JumpWay";
+        /// <summary>
+        /// 可跳转的节点
+        /// </summary>
+        public const string JumpSQL = "JumpSQL";
         #endregion
     }
     /// <summary>
@@ -1198,6 +1232,20 @@ namespace BP.WF
             set
             {
                 SetValByKey(NodeAttr.TurnToDealDoc, value);
+            }
+        }
+        /// <summary>
+        /// 可跳转的节点
+        /// </summary>
+        public string JumpSQL
+        {
+            get
+            {
+                return this.GetValStrByKey(NodeAttr.JumpSQL);
+            }
+            set
+            {
+                SetValByKey(NodeAttr.JumpSQL, value);
             }
         }
         public string FlowName
@@ -2247,6 +2295,7 @@ namespace BP.WF
 
                 map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 100, 10);
 
+                map.AddTBString(NodeAttr.JumpSQL, null, "可跳转的节点", true, false, 0, 2000, 10, true);
 
 
                 //map.AddTBDate(FlowAttr.LifeCycleFrom, BP.DA.DataType.CurrentData, "生命周期从", true, false);
@@ -2509,7 +2558,6 @@ namespace BP.WF
             attr.HisEditType = BP.En.EditType.UnDel;
             attr.UIIsLine = true;
             attr.Insert();
-
 
             attr = new BP.Sys.MapAttr();
             attr.FK_MapData = md.No;

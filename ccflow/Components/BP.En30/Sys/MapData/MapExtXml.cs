@@ -38,6 +38,12 @@ namespace BP.Sys
         /// 下拉框自动填充
         /// </summary>
         public const string DDLFullCtrl = "DDLFullCtrl";
+        /// <summary>
+        /// 表单装载填充
+        /// </summary>
+        public const string PageLoadFull = "PageLoadFull";
+
+        
     }
 	public class MapExtXml:XmlEnNoName
 	{

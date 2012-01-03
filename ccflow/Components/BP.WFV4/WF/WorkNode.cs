@@ -2063,6 +2063,7 @@ namespace BP.WF
                 return _HisFlow;
             }
         }
+        public Node JumpTo = null;
         /// <summary>
         /// 解决流程回滚的问题
         /// </summary>
@@ -3353,6 +3354,12 @@ namespace BP.WF
                     return ovrMsg + this.ToE("WN0", "@此工作流程运行到最后一个环节，工作成功结束！");
                 else
                     return ovrMsg + this.ToE("WN0", "@此工作流程运行到最后一个环节，工作成功结束！") + "<img src='" + this.VirPath + "/Images/Btn/PrintWorkRpt.gif' ><a href='" + this.VirPath + "/WF/WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "&FK_Node=" + this.HisNode.NodeID + "'target='_blank' >" + this.ToE("WorkRpt", "工作报告") + "</a>";
+            }
+
+            // 如果有跳转的节点.
+            if (this.JumpTo != null)
+            {
+                return msg + StartNextNode(this.JumpTo);
             }
 
             // 如果只有一个转向节点, 就不用判断条件了,直接转向他.

@@ -29,6 +29,10 @@ namespace BP.WF
         /// </summary>
         public const string SaveEnable = "SaveEnable";
         /// <summary>
+        /// 跳转规则
+        /// </summary>
+        public const string JumpWayLab = "JumpWayLab";
+        /// <summary>
         /// 保存标签
         /// </summary>
         public const string SaveLab = "SaveLab";
@@ -186,7 +190,27 @@ namespace BP.WF
                 return this.GetValBooleanByKey(BtnAttr.SaveEnable);
             }
         }
-
+        public string JumpWayLab
+        {
+            get
+            {
+                return this.GetValStringByKey(BtnAttr.JumpWayLab);
+            }
+        }
+        public JumpWay JumpWayEnum
+        {
+            get
+            {
+                return (JumpWay)this.GetValIntByKey(NodeAttr.JumpWay);
+            }
+        }
+        public bool JumpWayEnable
+        {
+            get
+            {
+                return this.GetValBooleanByKey(NodeAttr.JumpWay);
+            }
+        }
         public string ReturnLab
         {
             get
@@ -231,6 +255,8 @@ namespace BP.WF
                 return this.GetValBooleanByKey(BtnAttr.PrintDocEnable);
             }
         }
+
+
 
         public string SendLab
         {
@@ -361,6 +387,10 @@ namespace BP.WF
 
                 map.AddTBString(BtnAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, true);
+
+                map.AddTBString(BtnAttr.JumpWayLab, "跳转", "跳转按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(NodeAttr.JumpWay, false, "是否启用", true, true);
+
 
                 map.AddTBString(BtnAttr.SaveLab, "保存", "保存按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.SaveEnable, true, "是否启用", true, true);
