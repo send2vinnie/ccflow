@@ -75,8 +75,8 @@ public partial class WF_MapDef_GroupField : WebPage
         attr.UIIsEnable = true;
         attr.UIIsLine = true;
         attr.MaxLen = 4000;
-
         attr.GroupID = gf.OID;
+        attr.UIHeight = 23 * 3;
         attr.IDX = 1;
         attr.Insert();
 
@@ -125,10 +125,10 @@ public partial class WF_MapDef_GroupField : WebPage
 
                 this.Pub1.AddUL();
                 this.Pub1.AddLi("GroupField.aspx?DoType=NewGroup&RefNo=" + this.RefNo,
-                     this.ToE("NewGFBlank", "新建空白字段分组") + "<br><font color=green>" + this.ToE("NewGFBlankD", "系统会让您输入审核的信息，并创建审核分组。") + "</font>");
+                     "<b>"+this.ToE("NewGFBlank", "新建空白字段分组") + "</b><br><font color=green>" + this.ToE("NewGFBlankD", "系统会让您输入审核的信息，并创建审核分组。") + "</font>");
 
                 this.Pub1.AddLi("GroupField.aspx?DoType=NewCheckGroup&RefNo=" + this.RefNo,
-                    this.ToE("NewGFCheck", "新建审核分组") + "<br><font color=green>" + this.ToE("NewGFCheckD", "系统会让您输入审核的信息，并创建审核分组。") + "</font>");
+                    "<b>" + this.ToE("NewGFCheck", "新建审核分组") + "</b><br><font color=green>" + this.ToE("NewGFCheckD", "系统会让您输入审核的信息，并创建审核分组。") + "</font>");
                 //TB tb = new TB();
                 this.Pub1.AddULEnd();
                 this.Pub1.AddFieldSetEnd();

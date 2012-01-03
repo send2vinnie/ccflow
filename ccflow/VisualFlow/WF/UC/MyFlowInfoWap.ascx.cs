@@ -104,7 +104,7 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
             s = s.Replace("@", "<BR>@");
             this.Add("<div style='width:500px;text-align:center'>");
             if (WebUser.IsWap)
-                this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0/>主页</a> - " + this.ToE("Note", "操作提示"), s);
+                this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0/>Home</a> - " + this.ToE("Note", "操作提示"), s);
             else
                 this.AddFieldSet("" + this.ToE("Note", "操作提示"), s);
 

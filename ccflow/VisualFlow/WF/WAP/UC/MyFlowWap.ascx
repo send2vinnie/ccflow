@@ -3,6 +3,15 @@
 <%@ Register src="../../UC/UCEn.ascx" tagname="UCEn" tagprefix="uc2" %>
 <%@ Register src="../../UC/Pub.ascx" tagname="Pub" tagprefix="uc3" %>
 <script language=javascript>
+        function WinOpen(url) {
+            WinOpen(url, 'z');
+        }
+        function WinOpen(url, winName) {
+            var newWindow = window.open(url, winName, 'width=700,height=400,top=100,left=300,scrollbars=yes,resizable=yes,toolbar=false,location=false,center=yes,center: yes;');
+            newWindow.focus();
+            return;
+        }
+
     //执行分支流程退回到分合流节点。
     function DoSubFlowReturn(fid, workid, fk_node) {
         var url = 'ReturnWorkSubFlowToFHL.aspx?FID=' + fid + '&WorkID=' + workid + '&FK_Node=' + fk_node;

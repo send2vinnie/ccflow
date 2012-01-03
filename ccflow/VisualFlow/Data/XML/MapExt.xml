@@ -2,26 +2,26 @@
 <NewDataSet>
 	<!-- 扩展  -->
   <FieldExt111 No="Back"     CH="返回"   DFor="TB,DDL,Checkbox" URL="Do.aspx?DoType=DobackToF" />
-  <FieldExt No="AutoFull"     CH="数据获取"   DFor="TB,DDL,Checkbox" URL="AutoFull.aspx?s=3" />
-  <FieldExt No="ActiveDDL"    CH="级联下拉框" DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
-  <FieldExt No="InputCheck"   CH="脚本验证"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
-  
-    <FieldExt No="TBFullCtrl"     CH="文本框自动完成"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
-    <FieldExt No="DDLFullCtrl"     CH="下拉框自动完成"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+    
+    <FieldExt No="PageLoadFull"  CH="装载填充"   DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=34" />
+    <FieldExt No="AutoFull"      CH="数据获取"   DFor="TB,DDL,Checkbox" URL="AutoFull.aspx?s=3" />
+    <FieldExt No="ActiveDDL"     CH="级联下拉框" DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+    <FieldExt No="InputCheck"    CH="脚本验证"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+    <FieldExt No="TBFullCtrl"    CH="文本框自动完成"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+    <FieldExt No="DDLFullCtrl"   CH="下拉框自动完成"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+    <FieldExt No="AutoFullDLL"   CH="动态填充下拉框"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+    <FieldExt No="PopVal"        CH="Pop返回值" DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+    <FieldExt No="Func"          CH="功能执行"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
 
-    <FieldExt No="AutoFullDLL"    CH="动态填充下拉框"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
-  <FieldExt No="PopVal"       CH="Pop返回值" DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
-  <FieldExt No="Func"         CH="功能执行"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
-
-  <ExpFunc No="Word"         CH="导出Word模板"  />
+  <ExpFunc No="Word"        CH="导出Word模板"  />
   <ExpFunc No="PDF"         CH="导出PDF模板"  />
-  <ExpFunc No="Excel"         CH="导出Excel模板"  />
-  <ExpFunc No="Aspx"         CH="导出aspx表单模板"  />
+  <ExpFunc No="Excel"       CH="导出Excel模板"  />
+  <ExpFunc No="Aspx"        CH="导出aspx表单模板"  />
   <ExpFunc No="php"         CH="导出php表单模板"  />
   <ExpFunc No="jsp"         CH="导出jsp表单模板"  />
   
-  <TBEvent No="kepress"       CH="Pop返回值"  />
-  <TBEvent No="PopVal"       CH="Pop返回值"  />
+  <TBEvent No="kepress"     CH="Pop返回值"  />
+  <TBEvent No="PopVal"      CH="Pop返回值"  />
 
   
   <!--<InputCheck No="100" DFor="String" CH="文本框只能输入数字代码(小数点也不能输入)"

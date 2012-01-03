@@ -221,15 +221,17 @@ public partial class Comm_Dtl : WebPage
         #endregion 处理设计时自动填充明细表.
 
         #region 生成标题
-        if (this.IsWap == 1 && this.IsReadonly == 0)
-        {
-            this.Pub1.AddTable();
-            this.Pub1.AddTR();
-            this.Pub1.AddTD("<a href='./../WAP/MyFlow.aspx?WorkID=" + this.RefPKVal + "' />返回</a>");
-            this.Pub1.AddTD("<input type=button onclick=\"javascript:SaveDtlData();\" value='保存' />");
-            this.Pub1.AddTREnd();
-            this.Pub1.AddTableEnd();
-        }
+        //if (this.IsWap == 1 && this.IsReadonly == 0)
+        //{
+        //    this.Pub1.AddTable();
+        //    this.Pub1.AddTR();
+        //    BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
+        //    this.Pub1.AddTD("<a href='../WF/WAP/MyFlow.aspx?WorkID=" + this.RefPKVal + "&FK_Node=" + this.FK_Node + "&FK_Flow="+nd.FK_Flow+"' />返回</a>");
+        //   //this.Pub1.AddTD("<input type=button onclick=\"javascript:SaveDtlData();\" value='保存' />");
+        //    this.Pub1.AddTD("");
+        //    this.Pub1.AddTREnd();
+        //    this.Pub1.AddTableEnd();
+        //}
 
         MapAttrs attrs = new MapAttrs(this.EnsName);
         this.Pub1.Add("<Table border=1 style='padding:0px' >");
@@ -237,11 +239,18 @@ public partial class Comm_Dtl : WebPage
         if (mdtl.IsShowTitle)
         {
             this.Pub1.AddTR();
-            if (this.IsReadonly == 0 && mdtl.IsDelete == true)
-                this.Pub1.Add("<TD class='FDesc'><img src='./../Images/Btn/Table.gif' onclick=\"return DtlOpt('" + this.RefPKVal + "','" + this.EnsName + "');\" border=0/></TD>");
+            if (this.IsWap == 1)
+            {
+                BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
+                this.Pub1.AddTD("<a href='../WF/WAP/MyFlow.aspx?WorkID=" + this.RefPKVal + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + nd.FK_Flow + "' /><img src='./Wap/Img/Back.png' border=0/></a>");
+            }
             else
-                this.Pub1.Add("<TD class='FDesc'></TD>");
-
+            {
+                if (this.IsReadonly == 0 && mdtl.IsDelete == true)
+                    this.Pub1.Add("<TD class='FDesc'><img src='./../Images/Btn/Table.gif' onclick=\"return DtlOpt('" + this.RefPKVal + "','" + this.EnsName + "');\" border=0/></TD>");
+                else
+                    this.Pub1.Add("<TD class='FDesc'></TD>");
+            }
 
             foreach (MapAttr attr in attrs)
             {

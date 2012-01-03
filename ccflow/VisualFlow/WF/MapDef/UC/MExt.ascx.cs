@@ -53,7 +53,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     {
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
-        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' /></a>");
+        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' /></a><hr>");
         this.Left.AddUL();
         foreach (MapExtXml fs in fss)
         {
@@ -256,7 +256,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         this.BindLeft();
-
         this.Page.Title = "表单扩展设置";
         switch (this.DoType)
         {
@@ -286,6 +285,9 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         MapExts mes = new MapExts();
         switch (this.ExtType)
         {
+            case MapExtXmlList.PageLoadFull: //表单装载填充。
+                this.BindPageLoadFull();
+                break;
             case MapExtXmlList.AutoFullDLL: //动态的填充下拉框。
                 this.BindAutoFullDDL();
                 break;
@@ -355,6 +357,106 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             default:
                 break;
         }
+    }
+    /// <summary>
+    /// BindPageLoadFull
+    /// </summary>
+    public void BindPageLoadFull()
+    {
+        MapExt me = new MapExt();
+        me.MyPK = this.FK_MapData + "_" + MapExtXmlList.PageLoadFull;
+        me.RetrieveFromDBSources();
+
+        this.Pub2.AddTable("align=left");
+        this.Pub2.AddCaptionLeft("填充主表SQL");
+        this.Pub2.AddTR();
+        this.Pub2.AddTDTitle("主表设置");
+        this.Pub2.AddTREnd();
+
+        TextBox tb = new TextBox();
+        tb.ID = "TB_" + MapExtAttr.Tag;
+        tb.Text = me.Tag;
+        tb.TextMode = TextBoxMode.MultiLine;
+        tb.Rows = 3;
+        tb.Columns = 70;
+        this.Pub2.AddTR();
+        this.Pub2.AddTD(tb);
+        this.Pub2.AddTREnd();
+
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("说明:填充主表的sql,表达式里支持@变量与约定的公用变量。 <br>比如: SELECT No,Name,Tel, FROM Port_Emp WHERE No='@WebUser.No'  ");
+        this.Pub2.AddTREnd();
+
+        MapDtls dtls = new MapDtls(this.FK_MapData);
+        if (dtls.Count != 0)
+        {
+            this.Pub2.AddTR();
+            this.Pub2.AddTDTitle("明细表的自动填充.");
+            this.Pub2.AddTREnd();
+            string[] sqls = me.Tag1.Split('*');
+            foreach (MapDtl dtl in dtls)
+            {
+                this.Pub2.AddTR();
+                this.Pub2.AddTD("明细表:(" + dtl.No + ")" + dtl.Name);
+                this.Pub2.AddTREnd();
+                tb = new TextBox();
+                tb.ID = "TB_" + dtl.No;
+                foreach (string sql in sqls)
+                {
+                    if (string.IsNullOrEmpty(sql))
+                        continue;
+                    string key = sql.Substring(0, sql.IndexOf('='));
+                    if (key == dtl.No)
+                    {
+                        tb.Text = sql.Substring(sql.IndexOf('=')+1);
+                        break;
+                    }
+                }
+                tb.TextMode = TextBoxMode.MultiLine;
+                tb.Rows = 3;
+                tb.Columns = 70;
+                this.Pub2.AddTR();
+                this.Pub2.AddTD(tb);
+                this.Pub2.AddTREnd();
+            }
+
+            this.Pub2.AddTR();
+            this.Pub2.AddTD("说明:结果集合填充明细表");
+            this.Pub2.AddTREnd();
+        }
+
+        Button btn = new Button();
+        btn.ID = "Btn_Save";
+        btn.Text = " Save ";
+        btn.Click += new EventHandler(btn_SavePageLoadFull_Click);
+        this.Pub2.AddTR();
+        this.Pub2.AddTD(btn);
+        this.Pub2.AddTREnd();
+        this.Pub2.AddTableEnd();
+        return;
+    }
+    /// <summary>
+    /// 保存它
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    void btn_SavePageLoadFull_Click(object sender, EventArgs e)
+    {
+        MapExt me = new MapExt();
+        me.MyPK = this.FK_MapData + "_" + MapExtXmlList.PageLoadFull;
+        me.FK_MapData = this.FK_MapData;
+        me.ExtType = MapExtXmlList.PageLoadFull;
+        me.RetrieveFromDBSources();
+        me.Tag = this.Pub2.GetTextBoxByID("TB_" + MapExtAttr.Tag).Text;
+        string sql = "";
+        MapDtls dtls = new MapDtls(this.FK_MapData);
+        foreach (MapDtl dtl in dtls)
+        {
+            sql += "*" + dtl.No + "=" + this.Pub2.GetTextBoxByID("TB_"+dtl.No).Text;
+        }
+        me.Tag1 = sql;
+        me.Save();
+        this.Alert("保存成功.");
     }
     public void BindAutoFullDDL()
     {

@@ -138,10 +138,7 @@ public partial class WF_Admin_TestFlow : WebPage
             {
                 string url = "../../WAP/MyFlow.aspx?FK_Flow=" + this.FK_Flow;
                 if (this.Request.QueryString["IsWap"] == "1")
-                {
-                    //  this.Response.Write("<script  language=javascript>  window.open( '" + url + "' , 'ass' ,'width=50,top=50,left=50,height=20,scrollbars=yes,resizable=yes,toolbar=false,location=false') </script>");
-                    this.Response.Redirect("../../WAP/MyFlow.aspx?FK_Flow=" + this.FK_Flow+"&FK_Node="+int.Parse(this.FK_Flow)+"01", true);
-                }
+                    this.Response.Redirect("../../WF/WAP/MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + int.Parse(this.FK_Flow) + "01", true);
                 else
                     this.Response.Redirect("../../WF/MyFlow.aspx?FK_Flow=" + this.FK_Flow + "&FK_Node=" + int.Parse(this.FK_Flow) + "01", true);
             }

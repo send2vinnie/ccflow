@@ -46,13 +46,13 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         Response.AddHeader("P3P", "CP=CAO PSA OUR");
         int colspan = 1;
 
-        this.AddTable("width='500px'");
-        this.AddTR();
-        this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
-        this.AddTREnd();
+        this.AddTable();
+        //this.AddTR();
+        //this.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
+        //this.AddTREnd();
 
         this.AddTR();
-        this.Add("<TD class=BigDoc align=left colspan=" + colspan + "><img src='./Img/Login.gif' > <b>系统登陆</b></TD>");
+        this.Add("<TD class=C align=left colspan=" + colspan + "><img src='./Img/Login.gif' > <b>系统登陆</b></TD>");
         this.AddTREnd();
 
 
@@ -119,7 +119,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         {
             string home = "";
             if (WebUser.IsWap)
-                home = "-<a href='Home.aspx'>" + this.ToE("Home", "主页") + "</a>";
+                home = "-<a href='Home.aspx'>Home</a>";
 
             if (WebUser.IsAuthorize)
                 this.Add(" - <a href=\"javascript:ExitAuth('" + WebUser.Auth + "')\" >退出授权模式[" + WebUser.Auth + "]</a>" + home);

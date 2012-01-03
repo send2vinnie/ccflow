@@ -284,7 +284,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-       
         this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b><a href='FlowSearch.aspx' >返回</a> - " + fl.Name + "</b></TD>");
         this.Pub1.AddTREnd();
 
@@ -688,8 +687,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
         if (WebUser.IsWap)
         {
-            BindWap();
-            return;
+            BindWap();  
+            return; 
         }
 
         int colspan = 8;
@@ -785,6 +784,33 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTableEnd();
     }
     public void BindWap()
+    {
+        this.Pub1.AddFieldSet("<a href='Home.aspx' ><img src='./Img/Home.gif' >Home</a>");
+       
+        Flows fls = new Flows();
+        fls.RetrieveAll();
+
+        FlowSorts fss = new FlowSorts();
+        fss.RetrieveAll();
+
+        this.Pub1.AddUL();
+        foreach (FlowSort fs in fss)
+        {
+            this.Pub1.AddBR(fs.Name);
+            foreach (Flow fl in fls)
+            {
+                if (fl.FK_FlowSort != fs.No)
+                    continue;
+                string src2 = this.Request.ApplicationPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt&FK_Flow=" + fl.No + "&IsWap=1";
+                this.Pub1.AddLi("<a href='" + src2 + "' >" + fl.Name + "</a>");
+                //this.Pub1.AddLi("<a href=\"javascript:WinOpen('" + src2 + "');\" >" + fl.Name + "</a>");
+            }
+        }
+        this.Pub1.AddULEnd();
+        this.Pub1.AddFieldSetEnd();
+    }
+
+    public void BindWap_bak()
     {
         this.Pub1.AddFieldSet("<img src='./Img/Home.gif' ><a href='Home.aspx' >Home</a>");
 

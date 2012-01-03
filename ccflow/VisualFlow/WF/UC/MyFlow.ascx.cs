@@ -435,7 +435,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
                 this.FlowMsg.AddUL();
                 if (WebUser.IsWap)
-                    this.FlowMsg.AddLi("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "返回主页") + "</a>");
+                    this.FlowMsg.AddLi("<a href='Home.aspx'><img src='./Img/Home.gif' border=0/>Home</a>");
                 this.FlowMsg.AddLi("<a href='Start" + this.PageSmall + ".aspx'><img src='./Img/Start.gif' border=0/>" + this.ToE("StartWork", "发起流程") + "</a>");
                 this.FlowMsg.AddLi("<a href='Runing" + this.PageSmall + ".aspx'><img src='./Img/Runing.gif' border=0/>" + this.ToE("OnTheWayWork", "在途工作") + "</a>");
                 this.FlowMsg.AddULEnd();
@@ -474,6 +474,19 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 string urlr = "./WorkOpt/PrintDoc.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
                 this.ToolBar1.Add("<input type=button value='" + btnLab.PrintDocLab + "' enable=true onclick=\"WinOpen('" + urlr + "','dsdd'); \" />");
+            }
+
+            //if (btnLab.JumpWayEnable && this.currND.IsStartNode == false)
+            //{
+            //    string urlr = "JumpWay.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
+            //    this.ToolBar1.Add("<input type=button value='" + btnLab.JumpWayLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
+            //}
+
+            if (btnLab.JumpWayEnable )
+            {
+                /*如果没有焦点字段*/
+                string urlr = "JumpWay" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
+                this.ToolBar1.Add("<input type=button value='" + btnLab.JumpWayLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
             }
 
             if (btnLab.ReturnEnable && this.currND.IsStartNode == false && this.currND.FocusField == "")

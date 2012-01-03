@@ -18,6 +18,10 @@ body
     <script language="JavaScript" src="./../Style/Verify.js"></script>
     <script language="JavaScript" src="../../Comm/JS/Calendar.js"></script>
     <script language="javascript"  >
+        function FrmEvent(mypk) {
+            var url = 'FrmEvent.aspx?FK_MapData=' + mypk;
+            var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
+        }
 	function HelpGroup()
 	{
 	   var msg='字段分组：就是把类似的字段放在一起，让用户操作更友好。\t\n比如：我们纳税人设计一个基础信息采集节点。';

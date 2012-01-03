@@ -81,7 +81,7 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
     /// </summary>
     public void BindLB()
     {
-        // 当前用的员工权限。
+        // 当前用的员工权限。 
         this.Clear();
 
         WorkerLists wls = new WorkerLists(this.WorkID, this.NodeID, true);
@@ -90,12 +90,12 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
 
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href='Home.aspx' ><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "主页") + "</a> - " + this.ToE("AT0", "工作分配"));
+            this.AddFieldSet("<a href='./WAP/Home.aspx' ><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "主页") + "</a> - " + this.ToE("AT0", "工作分配"));
         else
             this.AddFieldSet( this.ToE("AT0","工作分配") );
 
-        if (dt.Rows.Count == 0)
-            throw new Exception("@系统错误....." + sql);
+        if (dt.Rows.Count == 0) 
+            throw new Exception("@系统错误..." + sql);
 
         string[] objs = dt.Rows[0]["Objs"].ToString().Split('@');
         string[] emps = dt.Rows[0]["Emps"].ToString().Split('@');
@@ -247,9 +247,9 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
                 this.AddFieldSet("提示信息");
                 this.Add("<br>&nbsp;&nbsp;任务分配成功，特别提示：当下一次流程发送时系统会按照您设置的路径进行智能投递。");
                 this.AddUL();
-                this.AddLi("<a href='Home.aspx' ><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "主页") + "</a>");
-                this.AddLi("<a href='Start.aspx' ><img src='./Img/Start.gif' border=0/>" + this.ToE("Start", "发起") + "</a>");
-                this.AddLi("<a href='Runing.aspx' ><img src='./Img/Runing.gif' border=0/>" + this.ToE("PendingWork", "待办") + "</a>");
+                this.AddLi("<a href='./WAP/Home.aspx' ><img src='./Img/Home.gif' border=0/>" + this.ToE("Home", "主页") + "</a>");
+                this.AddLi("<a href='./WAP/Start.aspx' ><img src='./Img/Start.gif' border=0/>" + this.ToE("Start", "发起") + "</a>");
+                this.AddLi("<a href='./WAP/Runing.aspx' ><img src='./Img/Runing.gif' border=0/>" + this.ToE("PendingWork", "待办") + "</a>");
                 this.AddULEnd();
                 this.AddFieldSetEnd();
             }

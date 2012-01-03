@@ -67,7 +67,7 @@ public partial class WF_MapDef_MapDef : WebPage
         this.Left.AddUL();
         foreach (BP.WF.XML.MapMenu item in xmls)
         {
-            this.Left.AddLi("<a href=\"" + item.JS.Replace("@MyPK", "'" + this.FK_MapData + "'").Replace("@FK_Flow", "'" + this.FK_Flow + "'") + "\" ><b>" + item.Name + "</b></a><br><font color=green>" + item.Note + "</font>");
+            this.Left.AddLi("<a href=\"" + item.JS.Replace("@MyPK", "'" + this.FK_MapData + "'").Replace("@FK_Flow", "'" + this.FK_Flow + "'") + "\" ><img src='"+item.Img+"' width='16px' /><b>" + item.Name + "</b></a><br><font color=green>" + item.Note + "</font>");
         }
         this.Left.AddULEnd();
         #endregion bindleft

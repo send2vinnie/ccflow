@@ -13,7 +13,16 @@
     JP="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
     RU="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
         />
-    
+
+    <!-- 跳转规则 -->
+    <Item Key="JumpWay"
+    CH="@0=不能跳转@1=只能向后跳转@2=只能向前跳转@3=任意节点跳转@4=按指定规则跳转"
+    EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+    JP="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+    RU="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+        />
+
+    <!-- 退回规则 -->
     <Item Key="ReturnRole"
     CH="@0=不能退回@1=只能退回上一个节点@2=可退回以前任意节点@3=可退回指定的节点"
     EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"

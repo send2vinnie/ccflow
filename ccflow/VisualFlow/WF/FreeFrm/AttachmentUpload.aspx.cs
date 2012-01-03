@@ -14,11 +14,11 @@ public partial class WF_FreeFrm_UploadFile : WebPage
     /// <summary>
     /// ath.
     /// </summary>
-    public string Ath
+    public string NoOfObj
     {
         get
         {
-            return this.Request.QueryString["Ath"];
+            return this.Request.QueryString["NoOfObj"];
         }
     }
     public string PKVal
@@ -102,8 +102,6 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         }
         if (athDesc.IsUpload)
         {
-           
-
             this.Pub1.AddTR();
             this.Pub1.AddTD();
             this.Pub1.AddTDBegin("colspan=5");

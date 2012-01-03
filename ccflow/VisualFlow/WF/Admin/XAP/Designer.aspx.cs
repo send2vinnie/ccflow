@@ -17,6 +17,8 @@ public partial class Designer : System.Web.UI.Page
         try
         {
             msg = "@在检查数据库连接出现错误。";
+
+
             #region 测试数据库是否连接成功。
             try
             {
@@ -37,6 +39,11 @@ public partial class Designer : System.Web.UI.Page
                 }
             }
             #endregion 测试数据库是否连接成功。
+
+            #region 2012-修复表单
+            DBAccess.RunSQL("UPDATE sys_mapdata SET FrmW=900  where FrmW IS NULL");
+            DBAccess.RunSQL("UPDATE sys_mapdata SET FrmH=1000 where FrmH IS NULL");
+            #endregion
 
             #region 2011-12-29 升级表单元素.
             try
@@ -94,8 +101,6 @@ public partial class Designer : System.Web.UI.Page
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DeliveryWay'");
             #endregion
 
-           
-
 
             #region 手动升级. 2011-07-08 补充节点字段分组.
             //string sql = "DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
@@ -110,7 +115,7 @@ public partial class Designer : System.Web.UI.Page
             if (BP.DA.DBAccess.RunSQLReturnValInt(sql) == 0)
             {
                 msg = "@补充数据时出现错误，获得文件。";
-                string fileOfSQL=BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql";
+                string fileOfSQL = BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql";
                 string scrpts = BP.DA.DataType.ReadTextFile(fileOfSQL);
                 BP.DA.DBAccess.RunSQLs(scrpts);
             }
@@ -136,7 +141,7 @@ public partial class Designer : System.Web.UI.Page
             #region 更新 WF_EmpWorks. 2011-11-09
             msg = "@更新视图出现错误。";
             try
-            {   
+            {
                 sql = "DROP VIEW WF_EmpWorks";
                 BP.DA.DBAccess.RunSQLs(sql);
             }
@@ -171,7 +176,7 @@ public partial class Designer : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            this.Response.Write("问题出处:"+msg+"<br>详细信息:@"+ex.Message + "<br>@<a href='../DBInstall.aspx' >点这里到系统升级界面。</a>");
+            this.Response.Write("问题出处:" + msg + "<br>详细信息:@" + ex.Message + "<br>@<a href='../DBInstall.aspx' >点这里到系统升级界面。</a>");
             return;
         }
     }

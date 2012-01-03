@@ -48,18 +48,18 @@ public partial class WAP_Home : WebPage
 
         this.Top.AddFieldSet("<img src='./Img/Home.gif' border=0/>  Hi:" + WebUser.No + "," + WebUser.Name + "-<a href='DoWap.aspx?DoType=Out'>" + this.ToE("LogOut", "注销") + "</a>");
 
-        this.Top.Add("<table border=0 width=100% >");
+        this.Top.Add("<table class='C' width=100% >");
 
         bool isTR = true;
         foreach (BP.WF.XML.ToolBar en in ens)
         {
             if (isTR)
-                this.Top.AddTR();
+                this.Top.Add("<TR>");
 
             if (en.No == "EmpWorks")
-                this.Top.AddTDBigDoc("class=BigDoc align=center", "<a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><img src='" + en.Img + "' border='0' ><br>" + msg + "</a>");
+                this.Top.Add("<td class='C'><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><img src='" + en.Img + "' border='0' ><br>" + msg + "</a></TD>");
             else
-                this.Top.AddTDBigDoc("class=BigDoc align=center", "<a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><img src='" + en.Img + "' border='0' ><br>" + en.Name + "</a>");
+                this.Top.Add("<td class='C'><a href='" + en.Url + "' target='_self' title='" + en.Title + "' ><img src='" + en.Img + "' border='0' ><br>" + en.Name + "</a></td>");
 
             if (isTR == false)
                 this.Top.AddTREnd();
@@ -67,7 +67,5 @@ public partial class WAP_Home : WebPage
         }
         this.Top.AddTableEnd();
         return;
-
-         
     }
 }

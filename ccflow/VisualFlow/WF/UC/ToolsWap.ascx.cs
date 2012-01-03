@@ -827,9 +827,8 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         string sql = "SELECT a.No,a.Name,b.Name as DeptName FROM Port_Emp a, Port_Dept b WHERE a.FK_Dept=b.No AND a.FK_Dept LIKE '" + WebUser.FK_Dept + "%' ORDER  BY a.FK_Dept ";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
-
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To5", "请选择您要授权的人员"));
+            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >Home</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To5", "请选择您要授权的人员"));
         else
             this.AddFieldSet(this.ToE("To5", "请选择您要授权的人员")  );
 

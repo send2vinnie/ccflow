@@ -50,6 +50,27 @@ namespace BP.Web.Comm.UC.WF
             dtls = new MapDtls(enName);
             frames = new MapFrames(enName);
             m2ms = new MapM2Ms(enName);
+            aths = new FrmAttachments(enName);
+            mes = new MapExts(enName);
+
+
+            #region 处理事件.
+            fes = new FrmEvents(enName);
+            try
+            {
+                string msg = fes.DoEventNode(EventListFrm.FrmLoadBefore, en);
+                if (msg != null)
+                    this.Alert(msg);
+            }
+            catch (Exception ex)
+            {
+                this.Alert(ex.Message);
+                return;
+            }
+            #endregion 处理事件.
+
+            //处理装载前填充.
+            this.LoadData(mattrs, en);
 
             this.Add("<table width=100% >");
             foreach (GroupField gf in gfs)
@@ -93,9 +114,9 @@ namespace BP.Web.Comm.UC.WF
                     if (attr.IsBigDoc && attr.UIIsLine)
                     {
                         if (attr.UIIsEnable)
-                            this.Add("<TD  colspan=2 width='100%' valign=top align=left>" + attr.Name + "<br>");
+                            this.Add("<TD colspan=2 height='" + attr.UIHeight.ToString() + "px'    width='100%' valign=top align=left>" + attr.Name+"<br>");
                         else
-                            this.Add("<TD  colspan=2 width='100%' valign=top >" + attr.Name + "<br>");
+                            this.Add("<TD colspan=2 height='" + attr.UIHeight.ToString() + "px'   width='100%' valign=top class=TBReadonly>" + attr.Name + "<br>");
 
                         TB mytbLine = new TB();
                         if (attr.IsBigDoc)
@@ -107,12 +128,11 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         if (attr.IsBigDoc)
                         {
-                            mytbLine.Rows = 5;
+                          //  mytbLine = 5;
                             // mytbLine.Columns = 30;
                         }
 
-                        mytbLine.Attributes["width"] = "100%";
-                        mytbLine.Attributes["style"] = "width:100%;padding: 0px;margin: 0px;overflow-y:visible";
+                        mytbLine.Attributes["style"] = "width:98%;height:100%;padding: 0px;margin: 0px;";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
                         mytbLine.Enabled = attr.UIIsEnable;
 
@@ -380,10 +400,142 @@ namespace BP.Web.Comm.UC.WF
                 this.AddTREnd();
             }
             #endregion 明细表
-        }
 
+            #region 附件
+            foreach (FrmAttachment ath in aths)
+            {
+                if (ath.IsUse)
+                    continue;
+                if (isJudgeRowIdx)
+                {
+                    if (ath.RowIdx != rowIdx)
+                        continue;
+                }
+
+                if (ath.GroupID == 0 && rowIdx == 0)
+                {
+                    ath.GroupID = currGF.OID;
+                    ath.RowIdx = 0;
+                    ath.Update();
+                }
+                else if (ath.GroupID == currGF.OID)
+                {
+
+                }
+                else
+                {
+                    continue;
+                }
+                ath.IsUse = true;
+                rowIdx++;
+
+                string src = "./../FreeFrm/AttachmentUpload.aspx?IsWap=1&PKVal=" + this.HisEn.PKVal + "&NoOfObj=" + ath.NoOfObj + "&FK_MapData=" + EnsName + "&FK_FrmAttachment=" + ath.MyPK;
+                this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+                this.Add("<TD colspan=2 class=FDesc ID='TD" + ath.NoOfObj + "'><a href='" + src + "'>" + ath.Name + "</a></TD>");
+                this.AddTREnd();
+            }
+            #endregion 附件
+        }
+        public MapExts mes = null;
+        private void LoadData(MapAttrs mattrs,Entity en)
+        {
+            #region 处理装载前的填充。
+            if (mes.Count >= 1)
+            {
+                foreach (MapExt item in mes)
+                {
+                    if (item.ExtType != MapExtXmlList.PageLoadFull)
+                        continue;
+
+                    string sql = item.Tag;
+                    #region 处理sql变量
+                    sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
+                    sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                    sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                    sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
+                    foreach (MapAttr attr in mattrs)
+                    {
+                        if (sql.Contains("@"))
+                        {
+                            sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    #endregion 处理sql变量
+
+
+                    // full main table.
+                    DataTable dt = DBAccess.RunSQLReturnTable(sql);
+                    if (dt.Rows.Count == 1)
+                    {
+                        DataRow dr = dt.Rows[0];
+                        foreach (DataColumn dc in dt.Columns)
+                        {
+                            en.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                        }
+                    }
+                    // 填充明细表.
+                    foreach (MapDtl dtl in dtls)
+                    {
+                        string[] sqls = item.Tag1.Split('*');
+                        foreach (string mysql in sqls)
+                        {
+                            if (mysql.Contains(dtl.No + "=") == false)
+                                continue;
+
+                            #region 处理sql.
+                            sql = mysql;
+                            sql = sql.Replace(dtl.No + "=", "");
+                            sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
+                            sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                            sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                            sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
+                            foreach (MapAttr attr in mattrs)
+                            {
+                                if (sql.Contains("@"))
+                                {
+                                    sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            #endregion 处理sql.
+                            dt = DBAccess.RunSQLReturnTable(sql);
+                            GEDtls gedtls = new GEDtls(dtl.No);
+                            gedtls.Delete(GEDtlAttr.RefPK, (int)en.PKVal);
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                GEDtl gedtl = gedtls.GetNewEntity as GEDtl;
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    gedtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                                }
+                                gedtl.RefPK = en.PKVal.ToString();
+                                gedtl.Insert();
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion 处理装载前的填充.
+        }
         public void BindColumn4(Entity en, string enName)
         {
+            this.HisEn = en;
+            currGF = new GroupField();
+            MapAttrs mattrs = new MapAttrs(enName);
+            gfs = new GroupFields(enName);
+            dtls = new MapDtls(enName);
+            frames = new MapFrames(enName);
+            m2ms = new MapM2Ms(enName);
+            aths = new FrmAttachments(enName);
+            mes = new MapExts(enName);
+
             #region 处理事件.
             fes = new FrmEvents(enName);
             try
@@ -399,14 +551,9 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion 处理事件.
 
-            this.HisEn = en;
-            currGF = new GroupField();
-            MapAttrs mattrs = new MapAttrs(enName);
-            gfs = new GroupFields(enName);
-            dtls = new MapDtls(enName);
-            frames = new MapFrames(enName);
-            m2ms = new MapM2Ms(enName);
-              aths = new FrmAttachments(enName);
+            //处理装载前填充.
+            this.LoadData(mattrs,en);
+
 
             this.Add("<table id=tabForm width='500px' align=center >");
             string appPath = this.Page.Request.ApplicationPath;
@@ -474,10 +621,7 @@ namespace BP.Web.Comm.UC.WF
                         TB mytbLine = new TB();
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
-                        mytbLine.Attributes["style"] = "width:100%;height:100%;padding: 0px;margin: 0px;";
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
-
-                        // mytbLine.Attributes["onmousedown"] = script;
 
                         mytbLine.Enabled = attr.UIIsEnable;
                         if (mytbLine.Enabled == false)
@@ -485,9 +629,7 @@ namespace BP.Web.Comm.UC.WF
                         else
                             mytbLine.Attributes["class"] = "TBDoc";
 
-
                         mytbLine.Attributes["style"] = "width:98%;height:100%;padding: 0px;margin: 0px;";
-
                         this.Add(mytbLine);
 
                         if (mytbLine.Enabled)
@@ -704,7 +846,6 @@ namespace BP.Web.Comm.UC.WF
                     #endregion 加入字段
 
                     #region 尾后处理。
-
                     if (colspanOfCtl == 3)
                     {
                         isLeftNext = true;
@@ -720,7 +861,6 @@ namespace BP.Web.Comm.UC.WF
                     }
                     isLeftNext = false;
                     #endregion add contrals.
-
                 }
                 // 最后处理补充上它。
                 if (isLeftNext == false)
@@ -802,7 +942,6 @@ namespace BP.Web.Comm.UC.WF
             #endregion 处理事件.
 
             #region 处理扩展设置
-            MapExts mes = new MapExts(enName);
             if (mes.Count != 0)
             {
                 #region load js.
@@ -1225,6 +1364,7 @@ namespace BP.Web.Comm.UC.WF
         public string EnName = null;
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
+            mes = new MapExts(enName);
             this.IsReadonly = isReadonly;
             this.FK_MapData = enName;
             this.HisEn = en;
@@ -1248,6 +1388,9 @@ namespace BP.Web.Comm.UC.WF
             m2ms = new MapM2Ms(enName);
             MapData md = new MapData();
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
+
+            //处理装载前填充.
+            this.LoadData(mattrs, en);
 
             #region 输出按钮
             FrmBtns btns = new FrmBtns(this.FK_MapData);
@@ -1627,10 +1770,8 @@ namespace BP.Web.Comm.UC.WF
             #region 多对多的关系
             foreach (MapM2M M2M in m2ms)
             {
-
                 this.Add("<DIV id='Fd" + M2M.NoOfObj + "' style='position:absolute; left:" + M2M.X + "px; top:" + M2M.Y + "px; width:" + M2M.W + "px; height:" + M2M.H + "px;text-align: left;' >");
                 this.Add("<span>");
-
                 string src = "M2M.aspx?FK_MapM2M=" + M2M.NoOfObj;
                 string paras = this.RequestParas;
                 try
@@ -1676,7 +1817,6 @@ namespace BP.Web.Comm.UC.WF
                     this.Add(lab);
                     if (athDB != null)
                         lab.Text = "<a href='./../DataUser/UploadFile/" + athDB.FilePathName + "' target=_blank ><img src='./../Images/FileType/" + athDB.FileExts + ".gif' border=0/>" + athDB.FileName + "</a>";
-
 
                     FileUpload fu = new FileUpload();
                     fu.ID = ath.MyPK;
@@ -1735,7 +1875,6 @@ namespace BP.Web.Comm.UC.WF
                     this.Add("</span>");
                     this.Add("</DIV>");
                 }
-
             }
             #endregion 输出附件.
 

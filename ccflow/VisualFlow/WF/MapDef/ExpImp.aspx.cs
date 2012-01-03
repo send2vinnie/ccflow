@@ -197,7 +197,8 @@ public partial class WF_MapDef_ExpImp : WebPage
             this.Pub1.AddUL();
             foreach (DataRow dr in dt.Rows)
             {
-                this.Pub1.AddLi("ExpImp.aspx?DoType=Imp&FK_Flow=" + this.FK_Flow + "&RefNo=" + this.RefNo + "&FromMap=ND" + dr["NodeID"], dr["Name"].ToString());
+               // this.Pub1.AddLi("ExpImp.aspx?DoType=Imp&FK_Flow=" + this.FK_Flow + "&RefNo=" + this.RefNo + "&FromMap=ND" + dr["NodeID"], dr["Name"].ToString());
+                this.Pub1.AddLi("<a href=\"javascript:LoadFrm('" + this.FK_Flow + "','" + this.RefNo + "','ND" + dr["NodeID"] + "');\" >" + dr["Name"].ToString() + "</a>");
             }
             this.Pub1.AddULEnd();
             this.Pub1.AddFieldSetEnd();

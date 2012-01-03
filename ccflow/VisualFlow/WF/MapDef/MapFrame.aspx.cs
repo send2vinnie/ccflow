@@ -266,7 +266,7 @@ public partial class WF_MapDef_MapFrame : WebPage
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("No", "编号"));
         TB tb = new TB();
-        tb.ID = "TB_NoOObj";
+        tb.ID = "TB_" + MapFrameAttr.NoOfObj;
         tb.Text = dtl.NoOfObj;
         if (this.DoType == "Edit")
             tb.Enabled = false;

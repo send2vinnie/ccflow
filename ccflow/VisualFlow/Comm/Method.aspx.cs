@@ -40,7 +40,7 @@ namespace BP.Web.Comm
             {
                 if (attr.MyFieldType == FieldType.RefText)
                     continue;
-                mynum++;
+                mynum++; 
             }
             int idx = 0;
             foreach (Attr attr in rm.HisAttrs)

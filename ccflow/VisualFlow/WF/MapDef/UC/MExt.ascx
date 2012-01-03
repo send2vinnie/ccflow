@@ -9,8 +9,8 @@
 </script>
 <table width='100%'>
 <tr>
-<td valign='top' width="30%" align=left><uc1:Pub ID="Left" runat="server" /></td>
-<td valign='top' width="70%" align=left><uc1:Pub ID="Pub2" runat="server" /></td>
+<td valign='top' width="20%" align=left><uc1:Pub ID="Left" runat="server" /></td>
+<td valign='top' width="80%" align=left><uc1:Pub ID="Pub2" runat="server" /></td>
 </tr>
 </table>
     
