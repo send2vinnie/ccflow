@@ -1797,9 +1797,7 @@ namespace BP.En
             {
                 if (attr.MyDataType == DataType.AppDate || attr.MyDataType == DataType.AppDateTime)
                 {
-
                     DateTime dt = this.GetValDateTime(attr.Key);
-
                 }
             }
         }
@@ -1816,11 +1814,14 @@ namespace BP.En
                 case DBType.SQL2000:
                     DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOfMS(this));
                     break;
+                case DBType.MySQL:
+                    DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOfMySQL(this));
+                    break;
                 case DBType.Access:
                     DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOf_OLE(this));
                     break;
                 default:
-                    break;
+                    throw new Exception("@未判断的数据库类型。");
             }
         }
         /// <summary>
@@ -1852,14 +1853,17 @@ namespace BP.En
                     sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('"+this.EnMap.PhysicsTable+"') ";
                     break;
                 case DBType.Oracle9i:
+#warning 需要翻译
                     sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
                     sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('" + this.EnMap.PhysicsTable + "') ";
                     break;
                 case DBType.DB2:
+#warning 需要翻译
                     sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
                     sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('" + this.EnMap.PhysicsTable + "') ";
                     break;
                 case DBType.MySQL:
+#warning 需要翻译
                     sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
                     sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('" + this.EnMap.PhysicsTable + "') ";
                     break;
@@ -1947,6 +1951,7 @@ namespace BP.En
                                         DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " alter column " + attr.Key + " varchar(" + attr.MaxLength + ")");
                                         continue;
                                     case DBType.Oracle9i:
+                                    case DBType.MySQL:
                                         DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " modify " + attr.Key + " varchar2(" + attr.MaxLength + ")");
                                         continue;
                                     default:
@@ -2167,11 +2172,11 @@ namespace BP.En
                 || this.EnMap.EnType == EnType.Ext)
                 return;
 
-
             if (DBAccess.IsExitsObject(this.EnMap.PhysicsTable) == false)
             {
                 /* 如果物理表不存在就新建立一个物理表。*/
                 this.CreatePhysicsTable();
+                return;
             }
             if (this._enMap == null)
                 this._enMap = this.EnMap;
@@ -2345,29 +2350,28 @@ namespace BP.En
                 {
                 }
 
-                try
+                //try
+                //{
+                string[] strs = attr.UITag.Split('@');
+                SysEnums ens = new SysEnums();
+                ens.Delete(SysEnumAttr.EnumKey, attr.UIBindKey);
+                foreach (string s in strs)
                 {
-                    string[] strs = attr.UITag.Split('@');
-                    SysEnums ens = new SysEnums();
-                    ens.Delete(SysEnumAttr.EnumKey, attr.UIBindKey);
-                    foreach (string s in strs)
-                    {
-                        if (s == "" || s == null)
-                            continue;
+                    if (s == "" || s == null)
+                        continue;
 
-                        string[] vk = s.Split('=');
-                        SysEnum se = new SysEnum();
-                        se.IntKey = int.Parse(vk[0]);
-                        se.Lab = vk[1];
-                        se.EnumKey = attr.UIBindKey;
-                        se.Insert();
-                    }
+                    string[] vk = s.Split('=');
+                    SysEnum se = new SysEnum();
+                    se.IntKey = int.Parse(vk[0]);
+                    se.Lab = vk[1];
+                    se.EnumKey = attr.UIBindKey;
+                    se.Insert();
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception("@自动增加枚举时出现错误，请确定您的格式是否正确。" + ex.Message + "attr.UIBindKey=" + attr.UIBindKey);
-                }
-
+                //}
+                //catch (Exception ex)
+                //{
+                //    throw new Exception("@自动增加枚举时出现错误，请确定您的格式是否正确。" + ex.Message + "attr.UIBindKey=" + attr.UIBindKey);
+                //}
             }
             #endregion
 

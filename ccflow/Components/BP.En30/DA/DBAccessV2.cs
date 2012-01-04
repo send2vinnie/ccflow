@@ -26,6 +26,10 @@ using System.Data.OleDb;
 using System.Web;
 using System.Data.Odbc ; 
 using System.IO;
+using MySql.Data;
+using MySql;
+using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient.Properties;
 //using System.Web.Caching;
 
 namespace BP.DA
@@ -379,6 +383,7 @@ namespace BP.DA
         public static BP.DA.ConnOfOras HisConnOfOras = null;
         public static BP.DA.ConnOfSQLs HisConnOfSQLs = null;
         public static BP.DA.ConnOfOLEs HisConnOfOLEs = null;
+        public static BP.DA.ConnOfMySQLs HisConnOfMySQLs = null;
         #endregion
 
 
@@ -626,8 +631,14 @@ namespace BP.DA
                             HisConnOfOras = new ConnOfOras();
                             HisConnOfOras.Init();
                         }
-                        //return HisConnOfOras.GetOne();
                         return HisConnOfOras.GetOneV2();
+                    case DBType.MySQL:
+                        if (HisConnOfOras == null)
+                        {
+                            HisConnOfMySQLs = new ConnOfMySQLs();
+                            HisConnOfMySQLs.Init();
+                        }
+                        return HisConnOfMySQLs.GetOne();
                     case DBType.Access:
                         if (HisConnOfOLEs == null)
                         {
@@ -1070,10 +1081,7 @@ namespace BP.DA
         /// <returns></returns>
         public static int RunSQL(string sql)
         {
-            Paras ps = new Paras();
             RunSQLReturnTableCount++;
-
-          //Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "===RunSQLReturnTable sql=" + sql);
 
             if (sql == null || sql.Trim() == "")
                 return 1;
@@ -1083,7 +1091,10 @@ namespace BP.DA
                 case DBType.SQL2000:
                     return RunSQL_200705_SQL(sql);
                 case DBType.Oracle9i:
+                    Paras ps = new Paras();
                     return RunSQL_200705_Ora(sql,ps);
+                case DBType.MySQL:
+                    return RunSQL_200705_MySQL(sql);
                 case DBType.Access:
                     return RunSQL_200705_OLE(sql);
                 default:
@@ -1106,9 +1117,7 @@ namespace BP.DA
         public static int RunSQL(string sql, Paras paras)
         {
             RunSQLReturnTableCount++;
-
             //   Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "===RunSQLReturnTable sql=" + sql);
-
             if (sql == null || sql.Trim() == "")
                 return 1;
 
@@ -1120,6 +1129,8 @@ namespace BP.DA
                         return RunSQL_200705_SQL(sql, paras);
                     case DBType.Oracle9i:
                         return RunSQL_200705_Ora(sql.Replace("]","").Replace("[",""), paras);
+                    case DBType.MySQL:
+                        return RunSQL_200705_MySQL(sql, paras);
                     case DBType.Access:
                         return RunSQL_200705_OLE(sql, paras);
                     default:
@@ -1140,6 +1151,11 @@ namespace BP.DA
                 throw new Exception(ex.Message + " Paras=" + msg + "<hr>" + mysql);
             }
         }
+        /// <summary>
+        /// 运行sql
+        /// </summary>
+        /// <param name="sql">sql</param>
+        /// <returns>执行结果</returns>
         private static int RunSQL_200705_SQL(string sql)
         {
             ConnOfSQL connofora = (ConnOfSQL)DBAccess.GetAppCenterDBConn;
@@ -1179,47 +1195,6 @@ namespace BP.DA
                     conn.Close();
 
                 HisConnOfSQLs.PutPool(connofora);
-            }
-        }
-        private static int RunSQL_200705_Ora_del(string sql)
-        {
-            ConnOfOra connofora = (ConnOfOra)DBAccess.GetAppCenterDBConn;
-            OracleConnection conn = connofora.Conn;
-            try
-            {
-                if (conn == null)
-                    conn = new OracleConnection(SystemConfig.AppCenterDSN);
-
-                if (conn.State != System.Data.ConnectionState.Open)
-                {
-                    conn.ConnectionString = SystemConfig.AppCenterDSN;
-                    conn.Open();
-                }
-
-                OracleCommand cmd = new OracleCommand(sql, conn);
-                cmd.CommandType = CommandType.Text;
-                int i = cmd.ExecuteNonQuery();
-                cmd.Dispose();
-                HisConnOfOras.PutPool(connofora);
-                return i;
-            }
-            catch (System.Exception ex)
-            {
-                HisConnOfOras.PutPool(connofora);
-                if (BP.SystemConfig.IsDebug)
-                {
-                    string msg = "RunSQL2   SQL=" + sql + ex.Message;
-                    Log.DebugWriteError(msg);
-                    throw new Exception(msg);
-                }
-                else
-                    throw ex;
-            }
-            finally
-            {
-                if (SystemConfig.IsBSsystem_Test == false)
-                    conn.Close();
-                HisConnOfOras.PutPool(connofora);
             }
         }
         private static int RunSQL_200705_SQL(string sql, Paras paras)
@@ -1273,6 +1248,106 @@ namespace BP.DA
                 if (SystemConfig.IsBSsystem_Test == false)
                     conn.Close();
                 HisConnOfSQLs.PutPool(connofora);
+            }
+        }
+        /// <summary>
+        /// 运行sql
+        /// </summary>
+        /// <param name="sql">sql</param>
+        /// <returns>执行结果</returns>
+        private static int RunSQL_200705_MySQL(string sql)
+        {
+            ConnOfMySQL connofora = DBAccess.GetAppCenterDBConn  as ConnOfMySQL;
+            MySqlConnection conn = connofora.Conn;
+            try
+            {
+                if (conn == null)
+                    conn = new MySqlConnection(SystemConfig.AppCenterDSN);
+
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.CommandType = CommandType.Text;
+                int i = cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                HisConnOfMySQLs.PutPool(connofora);
+                return i;
+            }
+            catch (System.Exception ex)
+            {
+                HisConnOfMySQLs.PutPool(connofora);
+                if (BP.SystemConfig.IsDebug)
+                {
+                    string msg = "RunSQL2   SQL=" + sql + ex.Message;
+                    Log.DebugWriteError(msg);
+                    throw new Exception(msg);
+                }
+                else
+                {
+                    throw new Exception(ex.Message + " Run SQL=" + sql);
+                }
+            }
+            finally
+            {
+                if (SystemConfig.IsBSsystem_Test == false)
+                    conn.Close();
+                HisConnOfMySQLs.PutPool(connofora);
+            }
+        }
+        /// <summary>
+        /// RunSQL_200705_MySQL
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="paras"></param>
+        /// <returns></returns>
+        private static int RunSQL_200705_MySQL(string sql, Paras paras)
+        {
+            ConnOfMySQL connofora = (ConnOfMySQL)DBAccess.GetAppCenterDBConn;
+            connofora.AddSQL(sql);
+            MySqlConnection conn = connofora.Conn;
+            try
+            {
+                if (conn == null)
+                    conn = new MySqlConnection(SystemConfig.AppCenterDSN);
+
+                if (conn.State != System.Data.ConnectionState.Open)
+                {
+                    conn.ConnectionString = SystemConfig.AppCenterDSN;
+                    conn.Open();
+                }
+
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.CommandType = CommandType.Text;
+
+                foreach (Para para in paras)
+                {
+                    MySqlParameter oraP = new MySqlParameter(para.ParaName, para.val);
+                    cmd.Parameters.Add(oraP);
+                }
+
+                int i = cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                HisConnOfMySQLs.PutPool(connofora);
+                return i;
+            }
+            catch (System.Exception ex)
+            {
+                HisConnOfMySQLs.PutPool(connofora);
+                if (BP.SystemConfig.IsDebug)
+                {
+                    string msg = "RunSQL2   SQL=" + sql + ex.Message;
+                    Log.DebugWriteError(msg);
+                    throw new Exception(msg);
+                }
+                else
+                    throw ex;
+            }
+            finally
+            {
+                if (SystemConfig.IsBSsystem_Test == false)
+                    conn.Close();
+                HisConnOfMySQLs.PutPool(connofora);
             }
         }
         private static int RunSQL_200705_Ora(string sql,Paras paras)
@@ -1838,6 +1913,77 @@ namespace BP.DA
         /// </summary>
         /// <param name="selectSQL">要执行的sql</param>
         /// <returns>返回table</returns>
+        private static DataTable RunSQLReturnTable_200705_MySQL(string selectSQL)
+        {
+            ConnOfMySQL connofObj = GetAppCenterDBConn as ConnOfMySQL;
+            MySqlConnection conn = connofObj.Conn;
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                    conn.Open();
+
+                MySqlDataAdapter ada = new MySqlDataAdapter(selectSQL, conn);
+                ada.SelectCommand.CommandType = CommandType.Text;
+                DataTable oratb = new DataTable("otb");
+                ada.Fill(oratb);
+                ada.Dispose();
+                HisConnOfMySQLs.PutPool(connofObj);
+                return oratb;
+            }
+            catch (System.Exception ex)
+            {
+                HisConnOfMySQLs.PutPool(connofObj);
+                string msg = "@运行查询在(RunSQLReturnTable_200705_MySQL)出错 sql=" + selectSQL + " @异常信息：" + ex.Message;
+                Log.DebugWriteError(msg);
+                throw new Exception(msg);
+            }
+            finally
+            {
+                HisConnOfMySQLs.PutPool(connofObj);
+            }
+        }
+        /// <summary>
+        /// RunSQLReturnTable_200705_SQL
+        /// </summary>
+        /// <param name="selectSQL">要执行的sql</param>
+        /// <returns>返回table</returns>
+        private static DataTable RunSQLReturnTable_200705_MySQL(string sql, Paras paras)
+        {
+            MySqlConnection conn = new MySqlConnection(SystemConfig.AppCenterDSN);
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
+
+            MySqlDataAdapter ada = new MySqlDataAdapter(sql, conn);
+            ada.SelectCommand.CommandType = CommandType.Text;
+
+            // 加入参数
+            foreach (Para para in paras)
+            {
+                MySqlParameter myParameter = new MySqlParameter(para.ParaName, para.val);
+                myParameter.Size = para.Size;
+                ada.SelectCommand.Parameters.Add(myParameter);
+            }
+
+            try
+            {
+                DataTable oratb = new DataTable("otb");
+                ada.Fill(oratb);
+                ada.Dispose();
+                conn.Close();
+                return oratb;
+            }
+            catch (Exception ex)
+            {
+                ada.Dispose();
+                conn.Close();
+                throw new Exception("SQL=" + sql + " Exception=" + ex.Message);
+            }
+        }
+        /// <summary>
+        /// RunSQLReturnTable_200705_SQL
+        /// </summary>
+        /// <param name="selectSQL">要执行的sql</param>
+        /// <returns>返回table</returns>
         private static DataTable RunSQLReturnTable_200705_SQL(string selectSQL)
         {
             ConnOfSQL connofObj = GetAppCenterDBConn as ConnOfSQL;
@@ -1948,9 +2094,10 @@ namespace BP.DA
                     return RunSQLReturnTable_200705_SQL(sql,ps);
                 case DBType.Oracle9i:
                     return RunSQLReturnTable_200705_Ora(sql,ps);
+                case DBType.MySQL:
+                    return RunSQLReturnTable_200705_MySQL(sql, ps);
                 case DBType.Access:
                     return RunSQLReturnTable_200705_OLE(sql,ps);
-                    //return RunSQLReturnTable(sql, GetAppCenterDBConn as OleDbConnection);
                 default:
                     throw new Exception("@发现未知的数据库连接类型！");
             }
@@ -1980,12 +2127,12 @@ namespace BP.DA
             {
                 case DBType.SQL2000:
                     return RunSQLReturnTable_200705_SQL(sql, paras);
-                // return RunSQLReturnTable(sql, GetAppCenterDBConn as SqlConnection, SystemConfig.AppCenterDSN);
                 case DBType.Oracle9i:
                     return RunSQLReturnTable_200705_Ora(sql,paras);
+                case DBType.MySQL:
+                    return RunSQLReturnTable_200705_MySQL(sql, paras);
                 case DBType.Access:
                     return RunSQLReturnTable_200705_OLE(sql,paras);
-                //return RunSQLReturnTable(sql, GetAppCenterDBConn as OleDbConnection);
                 default:
                     throw new Exception("@发现未知的数据库连接类型！");
             }
@@ -2040,7 +2187,6 @@ namespace BP.DA
         public static float RunSQLReturnValFloat(string sql, float val)
         {
             return RunSQLReturnValFloat(sql, new Paras(), val);
-
         }
         /// <summary>
         /// sdfsd
@@ -2326,7 +2472,6 @@ namespace BP.DA
         {
             RunSQLReturnTableCount++;
           //  Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "===RunSQLReturnTable sql=" + sql);
-
             DataTable dt = null;
             switch (SystemConfig.AppCenterDBType)
             {
@@ -2335,6 +2480,9 @@ namespace BP.DA
                     break;
                 case DBType.SQL2000:
                     dt = DBAccess.RunSQLReturnTable_200705_SQL(sql, paras);
+                    break;
+                case DBType.MySQL:
+                    dt = DBAccess.RunSQLReturnTable_200705_MySQL(sql, paras);
                     break;
                 case DBType.Access:
                     dt = DBAccess.RunSQLReturnTable_200705_OLE(sql, paras);
@@ -2363,6 +2511,9 @@ namespace BP.DA
                     break;
                 case DBType.SQL2000:
                     dt = DBAccess.RunSQLReturnTable_200705_SQL(sql, new Paras());
+                    break;
+                case DBType.MySQL:
+                    dt = DBAccess.RunSQLReturnTable_200705_MySQL(sql, new Paras());
                     break;
                 case DBType.Access:
                     dt = DBAccess.RunSQLReturnTable_200705_OLE(sql, new Paras());
@@ -2425,6 +2576,9 @@ namespace BP.DA
                 case DBType.Oracle9i:
                     sql = "SELECT constraint_name, constraint_type,search_condition, r_constraint_name  from user_constraints WHERE table_name = upper(:tab) AND constraint_type = 'P'";
                     break;
+                case DBType.MySQL:
+                    sql = "select column_name, table_name,CONSTRAINT_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE table_name =@Tab ";
+                    break;
                 default:
                     throw new Exception("ssseerr ");
             }
@@ -2450,10 +2604,13 @@ namespace BP.DA
                 case DBType.Oracle9i:
                     if (obj.IndexOf(".") != -1)
                         obj = obj.Split('.')[1];
-
                     return IsExits("select tname from tab WHERE  tname = upper(:obj) ",ps);
                 case DBType.SQL2000:
                     return IsExits("SELECT name  FROM sysobjects  WHERE  name = '" + obj + "'");
+                case DBType.MySQL:
+                    if (obj.IndexOf(".") != -1)
+                        obj = obj.Split('.')[1];
+                    return IsExits("SELECT table_name, table_type FROM information_schema.tables  WHERE table_name = '" + obj + "'");
                 case DBType.Access:
                     //return false ; //IsExits("SELECT * FROM MSysObjects WHERE (((MSysObjects.Name) =  '"+obj+"' ))");
                     return IsExits("SELECT * FROM MSysObjects WHERE Name =  '" + obj + "'");
@@ -2506,7 +2663,7 @@ namespace BP.DA
                     //}
                     break;
                 case DBType.SQL2000:
-                    i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) from syscolumns WHERE id in (SELECT id  FROM sysobjects WHERE  name='" + table + "') AND Name='" + col + "'", 0);
+                    i = DBAccess.RunSQLReturnValInt("SELECT  COUNT(*)  FROM information_schema.COLUMNS  WHERE TABLE_NAME='"+table+"' AND COLUMN_NAME='"+col+"'", 0);
                     break;
                 case DBType.Oracle9i:
                     if (table.IndexOf(".") != -1)
@@ -3515,70 +3672,70 @@ namespace BP.DA
 	/// <summary>
 	/// Oracle9i 的访问
 	/// </summary>
-	public class DBAccessOfOracle9i1
-	{
-    
-		#region 关于运行存储过程
+    public class DBAccessOfOracle9i1
+    {
 
-		#region 执行存储过程返回影响个数
-		/// <summary>
-		/// 运行存储过程
-		/// </summary>
-		/// <param name="spName">名称</param>
-		/// <returns>返回影响的行数</returns>
-		public static int RunSP(string spName)
-		{
-			return DBProcedure.RunSP(spName,DBAccessOfOracle9i1.GetSingleConn );
-		}
-		/// <summary>
-		/// 运行存储过程
-		/// </summary>
-		/// <param name="spName">名称</param>
-		/// <param name="paras">参数</param>
-		/// <returns>返回影响的行数</returns>
-		public static int RunSP(string spName, Paras paras)
-		{
-			return DBProcedure.RunSP(spName, paras, DBAccessOfOracle9i1.GetSingleConn );
-		}
-		public static int RunSP(string spName, string para, string paraVal)
-		{
-			Paras paras = new Paras();
-			Para p = new Para( para, DbType.String, paraVal);
-			paras.Add(p);
-			return DBProcedure.RunSP(spName, paras, DBAccessOfOracle9i1.GetSingleConn );
-		}
-		#endregion
+        #region 关于运行存储过程
 
-		#region 运行存储过程返回 DataTable
-		/// <summary>
-		/// 运行存储过程
-		/// </summary>
-		/// <param name="spName">名称</param>
-		/// <returns>DataTable</returns>
-		public static DataTable RunSPReTable(string spName)
-		{
-			return DBProcedure.RunSPReturnDataTable(spName,DBAccessOfOracle9i1.GetSingleConn);
-		}
-		/// <summary>
-		/// 运行存储过程
-		/// </summary>
-		/// <param name="spName">名称</param>
-		/// <param name="paras">参数</param>
-		/// <returns>DataTable</returns>
-		public static DataTable RunSPReTable(string spName, Paras paras)
-		{
-			return DBProcedure.RunSPReturnDataTable(spName,paras,DBAccessOfOracle9i1.GetSingleConn);
-		}
-		#endregion
+        #region 执行存储过程返回影响个数
+        /// <summary>
+        /// 运行存储过程
+        /// </summary>
+        /// <param name="spName">名称</param>
+        /// <returns>返回影响的行数</returns>
+        public static int RunSP(string spName)
+        {
+            return DBProcedure.RunSP(spName, DBAccessOfOracle9i1.GetSingleConn);
+        }
+        /// <summary>
+        /// 运行存储过程
+        /// </summary>
+        /// <param name="spName">名称</param>
+        /// <param name="paras">参数</param>
+        /// <returns>返回影响的行数</returns>
+        public static int RunSP(string spName, Paras paras)
+        {
+            return DBProcedure.RunSP(spName, paras, DBAccessOfOracle9i1.GetSingleConn);
+        }
+        public static int RunSP(string spName, string para, string paraVal)
+        {
+            Paras paras = new Paras();
+            Para p = new Para(para, DbType.String, paraVal);
+            paras.Add(p);
+            return DBProcedure.RunSP(spName, paras, DBAccessOfOracle9i1.GetSingleConn);
+        }
+        #endregion
 
-		#endregion
+        #region 运行存储过程返回 DataTable
+        /// <summary>
+        /// 运行存储过程
+        /// </summary>
+        /// <param name="spName">名称</param>
+        /// <returns>DataTable</returns>
+        public static DataTable RunSPReTable(string spName)
+        {
+            return DBProcedure.RunSPReturnDataTable(spName, DBAccessOfOracle9i1.GetSingleConn);
+        }
+        /// <summary>
+        /// 运行存储过程
+        /// </summary>
+        /// <param name="spName">名称</param>
+        /// <param name="paras">参数</param>
+        /// <returns>DataTable</returns>
+        public static DataTable RunSPReTable(string spName, Paras paras)
+        {
+            return DBProcedure.RunSPReturnDataTable(spName, paras, DBAccessOfOracle9i1.GetSingleConn);
+        }
+        #endregion
+
+        #endregion
 
 
-		/// <summary>
-		/// 检查是不是存在
-		/// </summary>
-		/// <param name="selectSQL"></param>
-		/// <returns>检查是不是存在</returns>
+        /// <summary>
+        /// 检查是不是存在
+        /// </summary>
+        /// <param name="selectSQL"></param>
+        /// <returns>检查是不是存在</returns>
         public static bool IsExits(string selectSQL)
         {
             if (RunSQLReturnVal(selectSQL) == null)
@@ -3586,226 +3743,219 @@ namespace BP.DA
             return true;
         }
 
-       
-	
-
-		#region 取得连接对象 ，CS、BS共用属性【关键属性】
-		public static OracleConnection GetSingleConn
-		{
-			get
-			{
+        #region 取得连接对象 ，CS、BS共用属性【关键属性】
+        public static OracleConnection GetSingleConn
+        {
+            get
+            {
                 if (SystemConfig.IsBSsystem_Test)
-				{
-					OracleConnection conn = HttpContext.Current.Session["DBAccessOfOracle9i1"] as OracleConnection;
-					if (conn==null)
-					{
-						conn = new OracleConnection( SystemConfig.DBAccessOfOracle9i1  );
-						conn.Open();
-						HttpContext.Current.Session[ "DBAccessOfOracle9i1" ] = conn;
-					}
-					return conn;
-				}
-				else
-				{
-					OracleConnection conn = SystemConfig.CS_DBConnctionDic["DBAccessOfOracle9i1"] as OracleConnection;
-					if (conn==null)
-					{
-						conn = new OracleConnection( SystemConfig.DBAccessOfOracle9i1 );
-						SystemConfig.CS_DBConnctionDic[ "DBAccessOfOracle9i1" ] = conn;
-						conn.Open();
-					}
-					else
-					{
-						if (conn.State!=ConnectionState.Open)
-							conn.Open();
-					}
-					
-					return conn;
-				}
-			}
-		}
-		#endregion 取得连接对象 ，CS、BS共用属性
+                {
+                    OracleConnection conn = HttpContext.Current.Session["DBAccessOfOracle9i1"] as OracleConnection;
+                    if (conn == null)
+                    {
+                        conn = new OracleConnection(SystemConfig.DBAccessOfOracle9i1);
+                        conn.Open();
+                        HttpContext.Current.Session["DBAccessOfOracle9i1"] = conn;
+                    }
+                    return conn;
+                }
+                else
+                {
+                    OracleConnection conn = SystemConfig.CS_DBConnctionDic["DBAccessOfOracle9i1"] as OracleConnection;
+                    if (conn == null)
+                    {
+                        conn = new OracleConnection(SystemConfig.DBAccessOfOracle9i1);
+                        SystemConfig.CS_DBConnctionDic["DBAccessOfOracle9i1"] = conn;
+                        conn.Open();
+                    }
+                    else
+                    {
+                        if (conn.State != ConnectionState.Open)
+                            conn.Open();
+                    }
 
-		#region 重载 RunSQLReturnTable
-		/// <summary>
-		/// 运行sql返回table.
-		/// </summary>
-		/// <param name="sql">sql</param>
-		/// <returns>返回的结果集合</returns>
-		public static DataTable RunSQLReturnTable(string sql)
-		{
-			return DBAccess.RunSQLReturnTable( sql , GetSingleConn , CommandType.Text, SystemConfig.DBAccessOfOracle9i1 );
-		}
-		/// <summary>
-		/// 运行sql返回table.
-		/// </summary>
-		/// <param name="sql">sql</param>
-		/// <param name="sqlType">CommandType</param>
-		/// <param name="pars">para</param>
-		/// <returns>返回的结果集合</returns>
+                    return conn;
+                }
+            }
+        }
+        #endregion 取得连接对象 ，CS、BS共用属性
+
+        #region 重载 RunSQLReturnTable
+        /// <summary>
+        /// 运行sql返回table.
+        /// </summary>
+        /// <param name="sql">sql</param>
+        /// <returns>返回的结果集合</returns>
+        public static DataTable RunSQLReturnTable(string sql)
+        {
+            return DBAccess.RunSQLReturnTable(sql, GetSingleConn, CommandType.Text, SystemConfig.DBAccessOfOracle9i1);
+        }
+        /// <summary>
+        /// 运行sql返回table.
+        /// </summary>
+        /// <param name="sql">sql</param>
+        /// <param name="sqlType">CommandType</param>
+        /// <param name="pars">para</param>
+        /// <returns>返回的结果集合</returns>
         public static DataTable RunSQLReturnTable(string sql, CommandType sqlType, params object[] pars)
         {
             return DBAccess.RunSQLReturnTable(sql, GetSingleConn, sqlType, SystemConfig.DBAccessOfOracle9i1);
         }
-		#endregion
+        #endregion
 
-		#region 重载 RunSQL
-		public static int RunSQLTRUNCATETable(string table)
-		{
-			return DBAccess.RunSQL( "  TRUNCATE TABLE "+table  );
-		}
-		/// <summary>
-		/// 运行SQL
-		/// </summary>
-		/// <param name="sql"></param>
-		/// <returns></returns>
-		public static int RunSQL(string sql )
-		{
-			return DBAccess.RunSQL( sql , GetSingleConn ,CommandType.Text, SystemConfig.DBAccessOfOracle9i1 );
-		}
-		/// <summary>
-		/// 运行 SQL
-		/// </summary>
-		/// <param name="sql">SQL</param>
-		/// <param name="sqlType">CommandType</param>
-		/// <param name="pars">参数</param>
-		/// <returns>结果集</returns>
-		public static int RunSQL(string sql ,CommandType sqlType ,params object[] pars)
-		{
-			return DBAccess.RunSQL( sql , GetSingleConn ,sqlType ,SystemConfig.DBAccessOfOracle9i1);
-		}
-		#endregion 
-				
-		#region 执行SQL ，返回首行首列
-		/// <summary>
-		/// 运行sql 返回一个object .
-		/// </summary>
-		/// <param name="sql"></param>
-		/// <returns>object</returns>
-		public static object RunSQLReturnVal(string sql )
-		{
-			return DBAccess.RunSQLReturnTable(sql).Rows[0][0];
+        #region 重载 RunSQL
+        public static int RunSQLTRUNCATETable(string table)
+        {
+            return DBAccess.RunSQL("  TRUNCATE TABLE " + table);
+        }
+        /// <summary>
+        /// 运行SQL
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static int RunSQL(string sql)
+        {
+            return DBAccess.RunSQL(sql, GetSingleConn, CommandType.Text, SystemConfig.DBAccessOfOracle9i1);
+        }
+        /// <summary>
+        /// 运行 SQL
+        /// </summary>
+        /// <param name="sql">SQL</param>
+        /// <param name="sqlType">CommandType</param>
+        /// <param name="pars">参数</param>
+        /// <returns>结果集</returns>
+        public static int RunSQL(string sql, CommandType sqlType, params object[] pars)
+        {
+            return DBAccess.RunSQL(sql, GetSingleConn, sqlType, SystemConfig.DBAccessOfOracle9i1);
+        }
+        #endregion
 
-			//return DBAccess.RunSQLReturnVal(sql,GetSingleConn, SystemConfig.DBAccessOfOracle9i1);
-		}
-		/// <summary>
-		/// run sql return object values
-		/// </summary>
-		/// <param name="sql"></param>
-		/// <returns></returns>
-		public static int RunSQLReturnIntVal(string sql )
-		{
-			//return (DBAccessOfOracle9i1.RunSQLReturnVal( sql );
-			string str=DBAccessOfOracle9i1.RunSQLReturnVal( sql ).ToString();
-			try
-			{
-				return int.Parse(str);
-			}
-			catch(Exception ex)
-			{
-				throw new Exception("RunSQLReturnIntVal 9i ="+ex.Message+ " str = "+str );
-			}
-		}
-		/// <summary>
-		/// run sql return float values.
-		/// </summary>
-		/// <param name="sql">will run sql</param>
-		/// <returns>values</returns>
-		public static float RunSQLReturnFloatVal(string sql )
-		{
+        #region 执行SQL ，返回首行首列
+        /// <summary>
+        /// 运行sql 返回一个object .
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns>object</returns>
+        public static object RunSQLReturnVal(string sql)
+        {
+            return DBAccess.RunSQLReturnTable(sql).Rows[0][0];
 
-			object obj=DBAccessOfOracle9i1.RunSQLReturnVal( sql );
+            //return DBAccess.RunSQLReturnVal(sql,GetSingleConn, SystemConfig.DBAccessOfOracle9i1);
+        }
+        /// <summary>
+        /// run sql return object values
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static int RunSQLReturnIntVal(string sql)
+        {
+            //return (DBAccessOfOracle9i1.RunSQLReturnVal( sql );
+            string str = DBAccessOfOracle9i1.RunSQLReturnVal(sql).ToString();
+            try
+            {
+                return int.Parse(str);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("RunSQLReturnIntVal 9i =" + ex.Message + " str = " + str);
+            }
+        }
+        /// <summary>
+        /// run sql return float values.
+        /// </summary>
+        /// <param name="sql">will run sql</param>
+        /// <returns>values</returns>
+        public static float RunSQLReturnFloatVal(string sql)
+        {
 
-			if (obj.ToString()=="System.DBNull")
-				throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnFloatVal(sql)错误,运行的结果是null.请检查sql="+sql);
+            object obj = DBAccessOfOracle9i1.RunSQLReturnVal(sql);
 
-			try
-			{
-				return float.Parse(obj.ToString());
-			}
-			catch 
-			{
-				throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnFloatVal(sql)错误,运行的结果是["+obj.ToString()+"].不能向float 转换,请检查sql="+sql);
-			}
-		}
-		/// <summary>
-		/// 运行sql 返回float
-		/// </summary>
-		/// <param name="sql">要运行的sql</param>
-		/// <param name="isNullAsVal">如果是Null, 返回的信息.</param>
-		/// <returns></returns>
-		public static float RunSQLReturnFloatVal(string sql, float isNullAsVal)
-		{
-			object obj=DBAccessOfOracle9i1.RunSQLReturnVal( sql );
-			try
-			{
-				System.DBNull dbnull=(System.DBNull)obj;
-				return isNullAsVal;
-			}
-			catch
-			{
-			}		
+            if (obj.ToString() == "System.DBNull")
+                throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnFloatVal(sql)错误,运行的结果是null.请检查sql=" + sql);
 
-			try
-			{
-				return float.Parse(obj.ToString());
-			}
-			catch 
-			{
-				throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnFloatVal(sql,isNullAsVal)错误,运行的结果是["+obj+"].不能向float 转换,请检查sql="+sql);
-			}
-		}
-		/// <summary>
-		/// run sql return decimal val
-		/// </summary>
-		/// <param name="sql"></param>
-		/// <returns></returns>
-		public static decimal RunSQLReturnDecimalVal(string sql )
-		{			
-			object obj=DBAccessOfOracle9i1.RunSQLReturnVal( sql );
-			if (obj==null)
-				throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnDecimalVal()错误,运行的结果是null.请检查sql="+sql);
-			try				
-			{
-				return decimal.Parse(obj.ToString());
-			}
-			catch 
-			{
-				throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnDecimalVal()错误,运行的结果是["+obj+"].不能向decimal 转换,请检查sql="+sql);
-			}
-		}
-		/// <summary>
-		/// run sql return decimal.
-		/// </summary>
-		/// <param name="sql"></param>
-		/// <param name="isNullAsVal"></param>
-		/// <returns></returns>
-		public static decimal RunSQLReturnDecimalVal(string sql, decimal isNullAsVal )
-		{
-			object obj=DBAccessOfOracle9i1.RunSQLReturnVal( sql );
-			try
-			{
-				System.DBNull dbnull=(System.DBNull)obj;
-				return isNullAsVal;
-			}
-			catch
-			{
-			}		
+            try
+            {
+                return float.Parse(obj.ToString());
+            }
+            catch
+            {
+                throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnFloatVal(sql)错误,运行的结果是[" + obj.ToString() + "].不能向float 转换,请检查sql=" + sql);
+            }
+        }
+        /// <summary>
+        /// 运行sql 返回float
+        /// </summary>
+        /// <param name="sql">要运行的sql</param>
+        /// <param name="isNullAsVal">如果是Null, 返回的信息.</param>
+        /// <returns></returns>
+        public static float RunSQLReturnFloatVal(string sql, float isNullAsVal)
+        {
+            object obj = DBAccessOfOracle9i1.RunSQLReturnVal(sql);
+            try
+            {
+                System.DBNull dbnull = (System.DBNull)obj;
+                return isNullAsVal;
+            }
+            catch
+            {
+            }
 
-			try
-			{
-				return decimal.Parse(obj.ToString());
-			}
-			catch 
-			{
-				throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnDecimalVal(sql,isNullAsVal)错误,运行的结果是["+obj+"].不能向float 转换,请检查sql="+sql);
-			}
-		}
-		#endregion 执行SQL ，返回首行首列
-	 
-	}
+            try
+            {
+                return float.Parse(obj.ToString());
+            }
+            catch
+            {
+                throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnFloatVal(sql,isNullAsVal)错误,运行的结果是[" + obj + "].不能向float 转换,请检查sql=" + sql);
+            }
+        }
+        /// <summary>
+        /// run sql return decimal val
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static decimal RunSQLReturnDecimalVal(string sql)
+        {
+            object obj = DBAccessOfOracle9i1.RunSQLReturnVal(sql);
+            if (obj == null)
+                throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnDecimalVal()错误,运行的结果是null.请检查sql=" + sql);
+            try
+            {
+                return decimal.Parse(obj.ToString());
+            }
+            catch
+            {
+                throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnDecimalVal()错误,运行的结果是[" + obj + "].不能向decimal 转换,请检查sql=" + sql);
+            }
+        }
+        /// <summary>
+        /// run sql return decimal.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="isNullAsVal"></param>
+        /// <returns></returns>
+        public static decimal RunSQLReturnDecimalVal(string sql, decimal isNullAsVal)
+        {
+            object obj = DBAccessOfOracle9i1.RunSQLReturnVal(sql);
+            try
+            {
+                System.DBNull dbnull = (System.DBNull)obj;
+                return isNullAsVal;
+            }
+            catch
+            {
+            }
 
-	
-	
+            try
+            {
+                return decimal.Parse(obj.ToString());
+            }
+            catch
+            {
+                throw new Exception("@执行方法DBAccessOfOracle9i1.RunSQLReturnDecimalVal(sql,isNullAsVal)错误,运行的结果是[" + obj + "].不能向float 转换,请检查sql=" + sql);
+            }
+        }
+        #endregion 执行SQL ，返回首行首列
+    }
 }
  

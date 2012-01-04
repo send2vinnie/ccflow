@@ -281,6 +281,13 @@ namespace BP.Sys
         public FrmEvent()
         {
         }
+        public FrmEvent(string fk_mapdata, string fk_Event)
+        {
+            this.FK_Event = fk_Event;
+            this.FK_MapData = fk_mapdata;
+            this.MyPK = this.FK_MapData + "_" + this.FK_Event;
+            this.RetrieveFromDBSources();
+        }
         /// <summary>
         /// 重写基类方法
         /// </summary>

@@ -1340,11 +1340,12 @@ namespace BP
                     case "MSSQL2000":
                     case "MSSQL":
                         return BP.DA.DBType.SQL2000;
-                        break;
+                    case "Oracle":
+                        return BP.DA.DBType.Oracle9i;
+                    case "MySQL":
+                        return BP.DA.DBType.MySQL;
                     case "Access":
                         return BP.DA.DBType.Access;
-                        break;
-                    case "Oracle":
                     default:
                         return BP.DA.DBType.Oracle9i;
                 }

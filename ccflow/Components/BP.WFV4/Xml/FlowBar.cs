@@ -4,7 +4,6 @@ using BP.DA;
 using BP.En;
 using BP.XML;
 
-
 namespace BP.WF.XML
 {
     public class FlowBar : XmlEn

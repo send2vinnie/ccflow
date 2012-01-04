@@ -410,11 +410,8 @@ namespace BP.Sys
                 map.DepositaryOfMap = Depositary.Application;
                 map.AddMyPK();
 
-
                 map.AddTBString(SysDocFileAttr.FileName, null, "名称", false, true, 0, 200, 30);
-
                 map.AddTBInt(SysDocFileAttr.FileSize, 0, "大小", true, true);
-
                 map.AddTBString(SysDocFileAttr.FileType, null, "文件类型", true, true, 0, 50, 20);
 
                 map.AddTBString("D1", null, "D1", true, true, 0, 4000, 20);
@@ -427,19 +424,22 @@ namespace BP.Sys
                 map.AddTBString("D8", null, "D8", true, true, 0, 4000, 20);
                 map.AddTBString("D9", null, "D9", true, true, 0, 4000, 20);
 
-                map.AddTBString("D10", null, "D10", true, true, 0, 4000, 20);
-                map.AddTBString("D11", null, "D11", true, true, 0, 4000, 20);
+                if (map.EnDBUrl.DBType != DBType.MySQL)
+                {
+                    map.AddTBString("D10", null, "D10", true, true, 0, 4000, 20);
+                    map.AddTBString("D11", null, "D11", true, true, 0, 4000, 20);
 
-                map.AddTBString("D12", null, "D12", true, true, 0, 4000, 20);
-                map.AddTBString("D13", null, "D13", true, true, 0, 4000, 20);
-                map.AddTBString("D14", null, "D14", true, true, 0, 4000, 20);
-                map.AddTBString("D15", null, "D15", true, true, 0, 4000, 20);
+                    map.AddTBString("D12", null, "D12", true, true, 0, 4000, 20);
+                    map.AddTBString("D13", null, "D13", true, true, 0, 4000, 20);
+                    map.AddTBString("D14", null, "D14", true, true, 0, 4000, 20);
+                    map.AddTBString("D15", null, "D15", true, true, 0, 4000, 20);
 
-                map.AddTBString("D16", null, "D16", true, true, 0, 4000, 20);
-                map.AddTBString("D17", null, "D17", true, true, 0, 4000, 20);
-                map.AddTBString("D18", null, "D18", true, true, 0, 4000, 20);
-                map.AddTBString("D19", null, "D19", true, true, 0, 4000, 20);
-                map.AddTBString("D20", null, "D20", true, true, 0, 4000, 20);
+                    map.AddTBString("D16", null, "D16", true, true, 0, 4000, 20);
+                    map.AddTBString("D17", null, "D17", true, true, 0, 4000, 20);
+                    map.AddTBString("D18", null, "D18", true, true, 0, 4000, 20);
+                    map.AddTBString("D19", null, "D19", true, true, 0, 4000, 20);
+                    map.AddTBString("D20", null, "D20", true, true, 0, 4000, 20);
+                }
 
                 this._enMap = map;
                 return this._enMap;

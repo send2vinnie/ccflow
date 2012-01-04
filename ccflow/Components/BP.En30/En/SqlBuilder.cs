@@ -252,6 +252,7 @@ namespace BP.En
             switch (en.EnMap.EnDBUrl.DBType)
             {
                 case DBType.SQL2000:
+                case DBType.MySQL:
                     sql = SqlBuilder.SelectSQLOfMS(en, 1) + "   AND ( " + SqlBuilder.GenerWhereByPK(en, "@") + " )";
                     break;
                 case DBType.Access:
@@ -277,6 +278,7 @@ namespace BP.En
             switch (en.EnMap.EnDBUrl.DBType)
             {
                 case DBType.SQL2000:
+                case DBType.MySQL:
                     sql = SqlBuilder.SelectSQLOfMS(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;
                 case DBType.Access:
@@ -286,7 +288,6 @@ namespace BP.En
                     sql = SqlBuilder.SelectSQLOfOra(en, 1) + "AND (" + SqlBuilder.GenerWhereByPK(en, ":") + " )";
                     break;
                 case DBType.DB2:
-                    throw new Exception("还没有实现。");
                 default:
                     throw new Exception("还没有实现。");
             }
@@ -299,6 +300,7 @@ namespace BP.En
             switch (en.EnMap.EnDBUrl.DBType)
             {
                 case DBType.SQL2000:
+                case DBType.MySQL:
                 case DBType.Access:
                     if (en.EnMap.HisFKAttrs.Count == 0)
                         return SqlBuilder.SelectSQLOfMS(en, 1) + SqlBuilder.GetKeyConditionOfOraForPara(en);
@@ -313,7 +315,6 @@ namespace BP.En
                     else
                         return SqlBuilder.SelectSQLOfOra(en, 1) + "  AND ( " + SqlBuilder.GetKeyConditionOfOraForPara(en) + " )";
                 case DBType.DB2:
-                    throw new Exception("还没有实现。");
                 default:
                     throw new Exception("还没有实现。");
             }
@@ -654,6 +655,58 @@ namespace BP.En
                     case DataType.AppDate:
                     case DataType.AppDateTime:
                         if (  attr.IsPK)
+                            sql += attr.Field + " varchar (" + attr.MaxLength + ") NOT NULL,";
+                        else
+                            sql += attr.Field + " varchar (" + attr.MaxLength + ") NULL,";
+                        break;
+                    case DataType.AppRate:
+                    case DataType.AppFloat:
+                    case DataType.AppMoney:
+                    case DataType.AppDouble:
+                        sql += attr.Field + " float  NULL,";
+                        break;
+                    case DataType.AppBoolean:
+                    case DataType.AppInt:
+                        if (attr.IsPK)
+                            sql += attr.Field + " int NOT NULL,";
+                        else
+                            sql += attr.Field + " int  NULL,";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            sql = sql.Substring(0, sql.Length - 1);
+            sql += ")";
+
+            return sql;
+        }
+
+        /// <summary>
+        /// 生成sql.
+        /// </summary>
+        /// <param name="en"></param>
+        /// <returns></returns>
+        public static string GenerCreateTableSQLOfMySQL(Entity en)
+        {
+            if (en.EnMap.PhysicsTable == null)
+                throw new Exception("您没有为[" + en.EnDesc + "],设置物理表。");
+
+            if (en.EnMap.PhysicsTable.Trim().Length == 0)
+                throw new Exception("您没有为[" + en.EnDesc + "],设置物理表。");
+
+            string sql = "CREATE TABLE  " + en.EnMap.PhysicsTable + " (";
+            foreach (Attr attr in en.EnMap.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+
+                switch (attr.MyDataType)
+                {
+                    case DataType.AppString:
+                    case DataType.AppDate:
+                    case DataType.AppDateTime:
+                        if (attr.IsPK)
                             sql += attr.Field + " varchar (" + attr.MaxLength + ") NOT NULL,";
                         else
                             sql += attr.Field + " varchar (" + attr.MaxLength + ") NULL,";
@@ -1712,6 +1765,7 @@ namespace BP.En
             {
                 case DBType.SQL2000:
                 case DBType.Access:
+                case DBType.MySQL:
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
                         " WHERE " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;
@@ -1786,7 +1840,10 @@ namespace BP.En
                         string str = en.GetValStrByKey(attr.Key).ToString();
                         str = str.Replace("￥", "");
                         str = str.Replace(",", "");
-                        ps.Add(attr.Key, decimal.Parse(str));
+                        if (string.IsNullOrEmpty(str))
+                            ps.Add(attr.Key, 0);
+                        else
+                            ps.Add(attr.Key, decimal.Parse(str));
                         break;
                     case DataType.AppDate: // 如果是日期类型。
                     case DataType.AppDateTime:
@@ -1844,6 +1901,7 @@ namespace BP.En
             {
                 case DBType.SQL2000:
                 case DBType.Access:
+                case DBType.MySQL:
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
                         " WHERE " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;

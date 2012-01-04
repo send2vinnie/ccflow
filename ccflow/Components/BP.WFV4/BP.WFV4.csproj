@@ -149,6 +149,7 @@
     <Compile Include="DTS\RepariNodeFrmMap.cs" />
     <Compile Include="DTS\RepariMapAttrMinLen.cs" />
     <Compile Include="DTS\GenerTemplate.cs" />
+    <Compile Include="DTS\DTSDominInfo.cs" />
     <Compile Include="FlowDesc\Condition\Cond.cs" />
     <Compile Include="FlowDesc\Condition\TurnTo.cs" />
     <Compile Include="FlowDesc\FlowDescExt\BtnLab.cs">
@@ -269,6 +270,7 @@
     <Compile Include="Xml\WorkOptDtl.cs" />
     <Compile Include="Xml\WatchDogXml.cs" />
     <Compile Include="Xml\EventListDtl.cs" />
+    <Compile Include="Xml\MapDef\FrmEventXml.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -7,6 +7,9 @@ using System.Data.Common;
 
 namespace BP.DA
 {
+    /// <summary>
+    /// SqlConnection
+    /// </summary>
     public class ConnOfSQL : ConnBase
     {
         public new SqlConnection Conn = null;
@@ -14,8 +17,14 @@ namespace BP.DA
         {
         }
     }
+    /// <summary>
+    /// SqlConnections
+    /// </summary>
     public class ConnOfSQLs : System.Collections.CollectionBase
     {
+        /// <summary>
+        /// SqlConnections
+        /// </summary>
         public ConnOfSQLs()
         {
         }
@@ -38,13 +47,10 @@ namespace BP.DA
         public bool isLock = false;
         public ConnOfSQL GetOne()
         {
-            //if (this.Count == 0)
-            //    this.Init();
             while (isLock)
             {
                 ;
             }
-
             isLock = true;
             foreach (ConnOfSQL conn in this)
             {
@@ -59,7 +65,7 @@ namespace BP.DA
                 }
             }
 
-            // 如果没有新的连接。
+            //如果没有新的连接。
             ConnOfSQL nconn = new ConnOfSQL();
             nconn.IDX = this.Count;
             nconn.Conn = new SqlConnection(SystemConfig.AppCenterDSN);
@@ -67,9 +73,7 @@ namespace BP.DA
             this.InnerList.Add(nconn);
             isLock = false;
             return nconn;
-            //throw new Exception("没有可用的连接了，请报告给管理员。");
         }
-      
         /// <summary>
         /// PutPool
         /// </summary>
