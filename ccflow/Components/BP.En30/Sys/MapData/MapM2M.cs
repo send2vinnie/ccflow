@@ -4,6 +4,10 @@ using BP.DA;
 using BP.En;
 namespace BP.Sys
 {
+    public enum M2MShowWay
+    {
+         
+    }
     /// <summary>
     /// 点对点
     /// </summary>
@@ -24,7 +28,7 @@ namespace BP.Sys
         /// <summary>
         /// 是否可以自适应大小
         /// </summary>
-        public const string IsAutoSize = "IsAutoSize";
+        public const string ShowWay = "ShowWay";
         public const string DBOfObjs = "DBOfObjs";
         public const string DBOfGroups = "DBOfGroups";
         public const string IsDelete = "IsDelete";
@@ -42,7 +46,25 @@ namespace BP.Sys
         /// 名称
         /// </summary>
         public const string Name = "Name";
-
+    }
+    public enum FrmShowWay
+    {
+        /// <summary>
+        /// 隐藏
+        /// </summary>
+        Hidden,
+        /// <summary>
+        /// 自动大小
+        /// </summary>
+        FrmAutoSize,
+        /// <summary>
+        /// 指定大小
+        /// </summary>
+        FrmSpecSize,
+        /// <summary>
+        /// 新连接
+        /// </summary>
+        WinOpen
     }
     /// <summary>
     /// 点对点
@@ -51,17 +73,17 @@ namespace BP.Sys
     {
         #region 属性
         /// <summary>
-        /// 是否自适应大小
+        /// 显示方式
         /// </summary>
-        public bool IsAutoSize
+        public FrmShowWay ShowWay
         {
             get
             {
-                return this.GetValBooleanByKey(MapM2MAttr.IsAutoSize);
+                return (FrmShowWay)this.GetValIntByKey(MapM2MAttr.ShowWay);
             }
             set
             {
-                this.SetValByKey(MapM2MAttr.IsAutoSize, value);
+                this.SetValByKey(MapM2MAttr.ShowWay, (int)value);
             }
         }
         public bool IsDelete
@@ -301,7 +323,7 @@ namespace BP.Sys
             this.FK_MapData=fk_mapdata;
             this.NoOfObj=noOfObj;
             this.MyPK = this.FK_MapData + "_" + this.NoOfObj;
-            this.Retrieve();
+            this.RetrieveFromDBSources();
         }
         /// <summary>
         /// EnMap
@@ -322,7 +344,6 @@ namespace BP.Sys
                 map.AddTBString(MapM2MAttr.NoOfObj, null, "编号", true, false, 1, 20, 20);
                 map.AddTBString(MapM2MAttr.Name, null, "名称", true, false, 1, 200, 20);
 
-
                 map.AddTBString(MapM2MAttr.FK_MapData, null, "主表", true, false, 0, 30, 20);
 
                 map.AddTBString(MapM2MAttr.DBOfObjs, null, "DBOfObjs", true, false, 0, 4000, 20);
@@ -331,7 +352,8 @@ namespace BP.Sys
                 map.AddTBFloat(MapM2MAttr.H, 100, "H", false, false);
                 map.AddTBFloat(MapM2MAttr.W, 160, "W", false, false);
 
-                map.AddBoolean(MapM2MAttr.IsAutoSize, true, "是否自动设置大小", false, false);
+                map.AddTBInt(MapM2MAttr.ShowWay, 1, "显示方式", false, false);
+
 
                 map.AddTBInt(MapM2MAttr.RowIdx, 99, "位置", false, false);
                 map.AddTBInt(MapM2MAttr.GroupID, 0, "分组ID", false, false);
