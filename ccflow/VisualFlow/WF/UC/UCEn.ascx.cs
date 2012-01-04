@@ -277,7 +277,7 @@ namespace BP.Web.Comm.UC.WF
             }
             foreach (MapM2M m2m in m2ms)
             {
-                if (m2m.IsAutoSize)
+                if (m2m.ShowWay== FrmShowWay.FrmAutoSize)
                     js += "\t\n window.setInterval(\"ReinitIframe('F" + m2m.NoOfObj + "','TD" + m2m.NoOfObj + "')\", 200);";
             }
             foreach (FrmAttachment ath in aths)
@@ -489,7 +489,7 @@ namespace BP.Web.Comm.UC.WF
                             if (mysql.Contains(dtl.No + "=") == false)
                                 continue;
 
-                            if (string.IsNullOrEmpty(mysql) == false)
+                            if (string.IsNullOrEmpty(mysql))
                                 continue;
 
                             #region 处理sql.
@@ -896,7 +896,7 @@ namespace BP.Web.Comm.UC.WF
             }
             foreach (MapM2M m2m in m2ms)
             {
-                if (m2m.IsAutoSize)
+                if (m2m.ShowWay == FrmShowWay.FrmAutoSize)
                     js += "\t\n window.setInterval(\"ReinitIframe('F" + m2m.NoOfObj + "','TD" + m2m.NoOfObj + "')\", 200);";
             }
             foreach (FrmAttachment ath in aths)
@@ -1220,7 +1220,7 @@ namespace BP.Web.Comm.UC.WF
                 M2M.IsUse = true;
                 rowIdx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                if (M2M.IsAutoSize)
+                if (M2M.ShowWay==  FrmShowWay.FrmAutoSize)
                     this.Add("<TD colspan=4 ID='TD" + M2M.NoOfObj + "' height='50px' width='100%'  >");
                 else
                     this.Add("<TD colspan=4 ID='TD" + M2M.NoOfObj + "' height='" + M2M.H + "' width='" + M2M.W + "'  >");
@@ -1239,7 +1239,7 @@ namespace BP.Web.Comm.UC.WF
                     paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
 
                 src += "&r=q" + paras;
-                if (M2M.IsAutoSize)
+                if (M2M.ShowWay == FrmShowWay.FrmAutoSize)
                 {
                     this.Add("<iframe ID='F" + M2M.NoOfObj + "'   Onblur=\"SaveM2M('" + M2M.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
                 }
