@@ -2159,7 +2159,7 @@ namespace CCForm
                     IsmuElePanel = false;
                     /* Edit 事件. */
                     string url = Glo.BPMHost + "/WF/MapDef/MapM2M.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&FK_MapM2M=" + m2m.Name;
-                    HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:450px;dialogWidth:500px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
+                    HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:600px;dialogWidth:650px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
                 }
                 _lastTime = DateTime.Now;
                 return;
