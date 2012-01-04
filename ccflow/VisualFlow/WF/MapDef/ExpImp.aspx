@@ -5,6 +5,7 @@
     function LoadFrm(fk_flow, refno, fk_Frm) {
         if (confirm('您确定吗？') == false)
             return;
+        window.location.target = '_self';
         window.location.href = 'ExpImp.aspx?DoType=Imp&FK_Flow=" + fk_flow + "&RefNo=" +refno + "&FromMap=' + fk_Frm;
     }
 </script>

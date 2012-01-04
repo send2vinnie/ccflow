@@ -44,7 +44,12 @@
   <InputCheck No="01" CH="文本框只能输入数字代码(小数点也不能输入)"    JS="this.value=this.value.replace(/\D/g,'')" />
   <InputCheck No="02" CH="只能输入数字,能输小数点"    JS="this.value=this.value.replace(/\D/g,'')" />
 
-  <FieldGroup No="IsPass" CH="明细表审核分组" CHDesc="批量增加三个审核分组字段，是否通过,审核人,审核日期." />
-  
+    <FieldGroup No="IsPass" CH="明细表审核分组" CHDesc="批量增加三个审核分组字段，是否通过,审核人,审核日期." />
+
+    <!-- 表单事件 -->
+    <FrmEvent No="FrmLoadBefore" CH="装载前" CHDesc="" />
+    <FrmEvent No="FrmLoadAfter" CH="装载后"  CHDesc="" />
+    <FrmEvent No="SaveBefore" CH="保存前"    CHDesc="" />
+    <FrmEvent No="SaveAfter" CH="保存后"     CHDesc="" />
 </DS>
 

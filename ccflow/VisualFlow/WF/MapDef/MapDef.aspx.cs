@@ -75,7 +75,7 @@ public partial class WF_MapDef_MapDef : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         string fk_node = this.Request.QueryString["FK_Node"];
-        if (fk_node != null)
+        if ( string.IsNullOrEmpty(fk_node) ==false)
         {
             BP.WF.Node nd = new BP.WF.Node();
             nd.NodeID = int.Parse(fk_node);
