@@ -452,11 +452,15 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         MapDtls dtls = new MapDtls(this.FK_MapData);
         foreach (MapDtl dtl in dtls)
         {
-            sql += "*" + dtl.No + "=" + this.Pub2.GetTextBoxByID("TB_"+dtl.No).Text;
+            sql += "*" + dtl.No + "=" + this.Pub2.GetTextBoxByID("TB_" + dtl.No).Text;
         }
         me.Tag1 = sql;
-        me.Save();
-        this.Alert("保存成功.");
+
+        string info = me.Tag1 + me.Tag;
+        if (string.IsNullOrEmpty(info))
+            me.Delete();
+        else
+            me.Save();
     }
     public void BindAutoFullDDL()
     {
