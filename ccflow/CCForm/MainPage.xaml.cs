@@ -1428,12 +1428,12 @@ namespace CCForm
                             if (dr["FK_MapData"] != Glo.FK_MapData)
                                 continue;
 
-                            BPM2M m2m = new BPM2M(dr["No"]);
+                            BPM2M m2m = new BPM2M(dr["NoOfObj"]);
                             m2m.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
                             m2m.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
 
-                            m2m.Width = double.Parse(dr["Width"]);
-                            m2m.Height = double.Parse(dr["Height"]);
+                            m2m.Width = double.Parse(dr["W"]);
+                            m2m.Height = double.Parse(dr["H"]);
 
                             MouseDragElementBehavior mde = new MouseDragElementBehavior();
                             Interaction.GetBehaviors(m2m).Add(mde);
@@ -3716,7 +3716,8 @@ namespace CCForm
             #region m2mDT
             DataTable m2mDT = new DataTable();
             m2mDT.TableName = "Sys_MapM2M";
-            m2mDT.Columns.Add(new DataColumn("No", typeof(string)));
+            m2mDT.Columns.Add(new DataColumn("MyPK", typeof(string)));
+            m2mDT.Columns.Add(new DataColumn("NoOfObj", typeof(string)));
             m2mDT.Columns.Add(new DataColumn("FK_MapData", typeof(string)));
 
             m2mDT.Columns.Add(new DataColumn("X", typeof(double)));
@@ -4071,8 +4072,9 @@ namespace CCForm
                 if (m2mCtl != null)
                 {
                     DataRow rowM2M = m2mDT.NewRow();
-                    rowM2M["No"] = m2mCtl.Name;
+                    rowM2M["NoOfObj"] = m2mCtl.Name;
                     rowM2M["FK_MapData"] = Glo.FK_MapData;
+                    rowM2M["MyPK"] = m2mCtl.Name+"_"+Glo.FK_MapData;
 
                     MatrixTransform transform = m2mCtl.TransformToVisual(this.canvasMain) as MatrixTransform;
 

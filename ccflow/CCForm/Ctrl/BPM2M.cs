@@ -96,7 +96,7 @@ namespace CCForm
         public void LoadDtl()
         {
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-            da.RunSQLReturnTableAsync("SELECT * FROM Sys_MapM2M WHERE No='" + this.Name + "'");
+            da.RunSQLReturnTableAsync("SELECT * FROM Sys_MapM2M WHERE NoOfObj='" + this.Name + "' AND FK_MapData='"+Glo.FK_MapData+"'");
             da.RunSQLReturnTableCompleted += new EventHandler<FF.RunSQLReturnTableCompletedEventArgs>(da_RunSQLReturnTableCompleted);
         }
         void da_RunSQLReturnTableCompleted(object sender, FF.RunSQLReturnTableCompletedEventArgs e)
