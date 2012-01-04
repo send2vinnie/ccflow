@@ -5,4 +5,18 @@
     EN=""
     JP=""
     RU=""    />
+
+    <Item Key="FrmUrlShowWay"
+    CH="@0=不显示@1=自动大小@2=指定大小@3=新窗口"
+    EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+    JP="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+    RU="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file" />
+
+  <Item Key="FrmEventType"
+  CH="@0=禁用@1=执行存储过程@2=执行SQL@3=执行URL@4=执行WebServices@5=执行EXE"
+  EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+  JP="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+  RU="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file" />
+    
+
 </NewDataSet>

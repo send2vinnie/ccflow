@@ -9,6 +9,7 @@
   其他：要想能够修改web。config，您需要在文件里面设置。
     <identity impersonate="true"  userName="administrator" password="" /> 
     -->
+  
     <Item No="IsDebug" Name="是否测试状态" Note="是否测试状态" DBType="Boolen"  IsShow="1" />
   <Item No="IsAuth" Name="是否需要安全验证" Note="在嵌入方式工作时,是否要检查访问者的安全性" DBType="Boolen"  IsShow="1" />
 
