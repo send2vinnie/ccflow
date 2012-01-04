@@ -53,7 +53,6 @@ namespace BP.Web.Comm.UC.WF
             aths = new FrmAttachments(enName);
             mes = new MapExts(enName);
 
-
             #region 处理事件.
             fes = new FrmEvents(enName);
             try
@@ -442,6 +441,7 @@ namespace BP.Web.Comm.UC.WF
             #region 处理装载前的填充。
             if (mes.Count >= 1)
             {
+                DataTable dt = null;
                 foreach (MapExt item in mes)
                 {
                     if (item.ExtType != MapExtXmlList.PageLoadFull)
@@ -450,6 +450,7 @@ namespace BP.Web.Comm.UC.WF
                     string sql = item.Tag;
                     if (string.IsNullOrEmpty(sql) == false)
                     {
+                        /* 如果有填充主表的sql  */
                         #region 处理sql变量
                         sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
                         sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
@@ -458,39 +459,42 @@ namespace BP.Web.Comm.UC.WF
                         foreach (MapAttr attr in mattrs)
                         {
                             if (sql.Contains("@"))
-                            {
                                 sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
-                            }
                             else
-                            {
                                 break;
-                            }
                         }
                         #endregion 处理sql变量
-                    }
 
-
-                    // full main table.
-                    DataTable dt = DBAccess.RunSQLReturnTable(sql);
-                    if (dt.Rows.Count == 1)
-                    {
-                        DataRow dr = dt.Rows[0];
-                        foreach (DataColumn dc in dt.Columns)
+                        if (string.IsNullOrEmpty(sql) == false)
                         {
-                            en.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                            dt = DBAccess.RunSQLReturnTable(sql);
+                            if (dt.Rows.Count == 1)
+                            {
+                                DataRow dr = dt.Rows[0];
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    en.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                                }
+                            }
                         }
                     }
+
+                    if (string.IsNullOrEmpty(item.Tag1))
+                        break;
+                  
                     // 填充明细表.
                     foreach (MapDtl dtl in dtls)
                     {
                         string[] sqls = item.Tag1.Split('*');
                         foreach (string mysql in sqls)
                         {
+                            if (string.IsNullOrEmpty(mysql))
+                                continue;
+
                             if (mysql.Contains(dtl.No + "=") == false)
                                 continue;
 
-                            if (string.IsNullOrEmpty(mysql))
-                                continue;
+                         
 
                             #region 处理sql.
                             sql = mysql;
@@ -511,6 +515,10 @@ namespace BP.Web.Comm.UC.WF
                                 }
                             }
                             #endregion 处理sql.
+
+                            if (string.IsNullOrEmpty(sql))
+                                continue;
+
                             dt = DBAccess.RunSQLReturnTable(sql);
                             GEDtls gedtls = new GEDtls(dtl.No);
                             gedtls.Delete(GEDtlAttr.RefPK, (int)en.PKVal);
@@ -1392,6 +1400,8 @@ namespace BP.Web.Comm.UC.WF
             #endregion 处理事件.
 
             m2ms = new MapM2Ms(enName);
+            dtls = new MapDtls(enName);
+
             MapData md = new MapData();
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
 
@@ -1720,7 +1730,6 @@ namespace BP.Web.Comm.UC.WF
             #endregion 输出数据控件.
 
             #region 输出明细.
-            MapDtls dtls = new MapDtls(enName);
             foreach (MapDtl dtl in dtls)
             {
                 if (dtl.IsView == false)
@@ -1778,7 +1787,7 @@ namespace BP.Web.Comm.UC.WF
             {
                 this.Add("<DIV id='Fd" + M2M.NoOfObj + "' style='position:absolute; left:" + M2M.X + "px; top:" + M2M.Y + "px; width:" + M2M.W + "px; height:" + M2M.H + "px;text-align: left;' >");
                 this.Add("<span>");
-                string src = "M2M.aspx?FK_MapM2M=" + M2M.NoOfObj;
+                string src = "M2M.aspx?FK_MapM2M=" + M2M.NoOfObj+"&FK_MapData="+M2M.FK_MapData;
                 string paras = this.RequestParas;
                 try
                 {

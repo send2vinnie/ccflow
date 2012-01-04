@@ -42,9 +42,9 @@ public partial class Comm_M2M : WebPage
         this.Page.RegisterClientScriptBlock("s",
             "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
-        MapM2M mapM2M = new MapM2M(this.FK_MapM2M);
+        MapM2M mapM2M = new MapM2M(this.FK_MapData, this.FK_MapM2M);
         BP.WF.M2M m2m = new BP.WF.M2M();
-        m2m.MyPK = mapM2M.FK_Node+"_"+this.WorkID+"_"+this.FK_MapM2M;
+        m2m.MyPK = mapM2M.FK_Node + "_" + this.WorkID + "_" + this.FK_MapData;
         m2m.RetrieveFromDBSources();
         DataTable dtGroup = new DataTable();
         if (mapM2M.DBOfGroups.Length >5)
@@ -195,7 +195,7 @@ public partial class Comm_M2M : WebPage
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-        MapM2M mapM2M = new MapM2M(this.FK_MapM2M);
+        MapM2M mapM2M = new MapM2M(this.FK_MapData, this.FK_MapM2M);
 
         BP.WF.M2M m2m = new BP.WF.M2M();
         m2m.MyPK = mapM2M.FK_Node + "_" + this.WorkID+"_"+this.FK_MapM2M;

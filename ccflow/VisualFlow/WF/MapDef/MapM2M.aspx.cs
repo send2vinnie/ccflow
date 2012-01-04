@@ -54,7 +54,6 @@ public partial class WF_MapDef_MapM2M : WebPage
             dtl.FK_MapData = this.FK_MapData;
             dtl.ShowWay = (FrmShowWay)this.Pub1.GetDDLByID("DDL_ShowWay").SelectedItemIntVal;
 
-
             dtl.FK_MapData = this.FK_MapData;
             dtl.NoOfObj = this.FK_MapM2M;
 
