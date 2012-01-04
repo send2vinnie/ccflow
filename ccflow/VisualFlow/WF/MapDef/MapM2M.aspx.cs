@@ -39,10 +39,8 @@ public partial class WF_MapDef_MapM2M : WebPage
     {
         MapData md = new MapData(this.FK_MapData);
         this.Title = md.Name + " - " + this.ToE("DesignFrame", "设计多选");
-
         switch (this.DoType)
         {
-
             case "Edit":
                 MapM2M dtl = new MapM2M();
                 if (this.FK_MapM2M == null)
@@ -186,7 +184,6 @@ public partial class WF_MapDef_MapM2M : WebPage
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
-
 
         this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);

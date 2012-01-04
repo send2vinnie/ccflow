@@ -448,23 +448,26 @@ namespace BP.Web.Comm.UC.WF
                         continue;
 
                     string sql = item.Tag;
-                    #region 处理sql变量
-                    sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
-                    sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
-                    sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
-                    sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
-                    foreach (MapAttr attr in mattrs)
+                    if (string.IsNullOrEmpty(sql) == false)
                     {
-                        if (sql.Contains("@"))
+                        #region 处理sql变量
+                        sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
+                        sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                        sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                        sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
+                        foreach (MapAttr attr in mattrs)
                         {
-                            sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                            if (sql.Contains("@"))
+                            {
+                                sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                            }
+                            else
+                            {
+                                break;
+                            }
                         }
-                        else
-                        {
-                            break;
-                        }
+                        #endregion 处理sql变量
                     }
-                    #endregion 处理sql变量
 
 
                     // full main table.
@@ -484,6 +487,9 @@ namespace BP.Web.Comm.UC.WF
                         foreach (string mysql in sqls)
                         {
                             if (mysql.Contains(dtl.No + "=") == false)
+                                continue;
+
+                            if (string.IsNullOrEmpty(mysql) == false)
                                 continue;
 
                             #region 处理sql.
