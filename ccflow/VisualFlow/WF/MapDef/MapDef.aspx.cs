@@ -529,7 +529,7 @@ public partial class WF_MapDef_MapDef : WebPage
 
         foreach (MapM2M M2M in dot2dots)
         {
-            if (M2M.IsAutoSize)
+            if (M2M.ShowWay == FrmShowWay.FrmAutoSize)
                 js += "\t\n window.setInterval(\"ReinitIframe('F" + M2M.MyPK + "','TD" + M2M.MyPK + "')\", 200);";
         }
         foreach (FrmAttachment ath in aths)
@@ -777,7 +777,7 @@ public partial class WF_MapDef_MapDef : WebPage
             this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.MyPK + "' height='50px' width='1000px'>");
 
             string src = "M2MDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapM2M=" + dtl.MyPK;
-            if (dtl.IsAutoSize)
+            if (dtl.ShowWay == FrmShowWay.FrmAutoSize)
                 this.Pub1.Add("<iframe ID='F" + dtl.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
             else
                 this.Pub1.Add("<iframe ID='F" + dtl.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + dtl.W + "' height='" + dtl.H + "' scrolling=auto  /></iframe>");
