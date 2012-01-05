@@ -495,6 +495,9 @@ namespace BP.Web.Comm.UC.WF
                             if (mysql.Contains(dtl.No + "=") == false)
                                 continue;
 
+                            GEDtls gedtls = new GEDtls(dtl.No);
+                            if (gedtls.Retrieve(GEDtlAttr.RefPK, (int)en.PKVal) != 0)
+                                continue;
 
                             #region 处理sql.
                             sql = mysql;
@@ -520,8 +523,6 @@ namespace BP.Web.Comm.UC.WF
                                 continue;
 
                             dt = DBAccess.RunSQLReturnTable(sql);
-                            GEDtls gedtls = new GEDtls(dtl.No);
-                            gedtls.Delete(GEDtlAttr.RefPK, (int)en.PKVal);
                             foreach (DataRow dr in dt.Rows)
                             {
                                 GEDtl gedtl = gedtls.GetNewEntity as GEDtl;
