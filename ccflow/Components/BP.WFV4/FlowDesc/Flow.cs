@@ -1931,6 +1931,7 @@ namespace BP.WF
                 }
                 catch
                 {
+
                 }
                 rpt.InsertAsOID(rpt.OID);
             }

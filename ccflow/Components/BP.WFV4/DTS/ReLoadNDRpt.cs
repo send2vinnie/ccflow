@@ -45,6 +45,19 @@ namespace BP.WF
         /// <returns>返回执行结果</returns>
         public override object Do()
         {
+            BP.Sys.MapAttrs attrs = new Sys.MapAttrs();
+            attrs.RetrieveAll();
+            foreach (BP.Sys.MapAttr item in attrs)
+            {
+                try
+                {
+                    int i = int.Parse(item.KeyOfEn.Substring(0,1));
+                    item.Delete();
+                }
+                catch
+                {
+                }
+            }
 
             string msg = "";
             Flows fls = new Flows();
