@@ -98,8 +98,14 @@ namespace BP
             string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
             errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
 
-            MessageBox.Show(errorMsg, "ccflow err:", MessageBoxButton.OK);
+            string alert = "请您按如下方式处理这个错误。";
+            alert += "\t\n1，如果是第一次使用，请打开安装文件中有常见的问题,此文件位于D:\\ccflow\\Documents\\.";
+            alert += "\t\n2，进入官方网站(http://ccflow.org)加入QQ群论坛中，获得更多的ccflow爱好者帮助。";
+            alert += "\t\n3，把此屏幕copy一个图片，发送到 ccflow@qq.com，我们会尽快给您回复。";
+            alert += "\t\n";
 
+            MessageBox.Show(alert + errorMsg, "ccflow err:",
+                MessageBoxButton.OK);
             //HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
         }
         /// <summary>
