@@ -31,9 +31,9 @@ namespace BP.Sys
         /// 通用实体
         /// </summary>
         /// <param name="nodeid">节点ID</param>
-        public GEEntity(string fk_mapdtl)
+        public GEEntity(string fk_mapdata)
         {
-            this.FK_MapData = fk_mapdtl;
+            this.FK_MapData = fk_mapdata;
         }
         /// <summary>
         /// 通用实体

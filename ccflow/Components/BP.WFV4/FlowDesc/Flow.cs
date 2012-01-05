@@ -848,10 +848,8 @@ namespace BP.WF
 
                         try
                         {
-
                             if (cond.AttrKey.Length < 2)
                                 continue;
-
                             if (ndOfCond.HisWork.EnMap.Attrs.Contains(cond.AttrKey) == false)
                                 throw new Exception("属性:" + cond.AttrKey + " , " + cond.AttrName + " 不存在。");
                         }
@@ -860,7 +858,6 @@ namespace BP.WF
                             msg += "<font color=red>" + ex.Message + "</font>";
                             ndOfCond.Delete();
                         }
-
                         msg += cond.AttrKey + cond.AttrName + cond.OperatorValue + "、";
                         rpt += cond.AttrKey + cond.AttrName + cond.OperatorValue + "、";
                     }
@@ -1867,6 +1864,28 @@ namespace BP.WF
             CheckRpt(nds);
             CheckRptDtl(nds);
             this.CheckRptView(nds);
+
+            // 检查报表数据是否丢失。
+            string sql = "SELECT OID FROM ND" + int.Parse(this.No) + "01 WHERE NodeState >0 AND OID NOT IN (SELECT OID FROM  ND" + int.Parse(this.No) + "Rpt ) ";
+            DataTable dt = DBAccess.RunSQLReturnTable(sql);
+
+            GEEntity rpt=new GEEntity("ND" + int.Parse(this.No) + "Rpt");
+            foreach (DataRow dr in dt.Rows)
+            {
+                int oid = int.Parse(dr[0].ToString());
+                rpt.SetValByKey("OID",oid);
+                foreach (Node nd in nds)
+                {
+                    Work wk = nd.HisWork;
+                    wk.OID = oid;
+                    if (wk.RetrieveFromDBSources() == 0)
+                        continue;
+
+                    rpt.Copy(wk);
+                }
+                rpt.SetValByKey("OID", oid);
+                rpt.Insert();
+            }
         }
         /// <summary>
         /// 生成明细报表信息

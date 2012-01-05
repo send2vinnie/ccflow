@@ -2158,7 +2158,7 @@ namespace CCForm
                 {
                     IsmuElePanel = false;
                     /* Edit 事件. */
-                    string url = Glo.BPMHost + "/WF/MapDef/MapM2M.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&FK_MapM2M=" + m2m.Name;
+                    string url = Glo.BPMHost + "/WF/MapDef/MapM2M.aspx?DoType=New&FK_MapData=" + Glo.FK_MapData + "&FK_MapM2M=" + m2m.Name;
                     HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:600px;dialogWidth:650px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
                 }
                 _lastTime = DateTime.Now;
@@ -4074,7 +4074,7 @@ namespace CCForm
                     DataRow rowM2M = m2mDT.NewRow();
                     rowM2M["NoOfObj"] = m2mCtl.Name;
                     rowM2M["FK_MapData"] = Glo.FK_MapData;
-                    rowM2M["MyPK"] = m2mCtl.Name+"_"+Glo.FK_MapData;
+                    rowM2M["MyPK"] =  Glo.FK_MapData + "_" +  m2mCtl.Name ;
 
                     MatrixTransform transform = m2mCtl.TransformToVisual(this.canvasMain) as MatrixTransform;
 

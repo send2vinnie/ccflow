@@ -1186,7 +1186,6 @@ namespace BP.WF
         {
             GenerWorkFlow gwf = new GenerWorkFlow(wkid);
             this._FID = gwf.FID;
-
             if (wkid == 0)
                 throw new Exception("@没有指定工作ID, 不能创建工作流程.");
             Flow flow = new Flow(fk_flow);

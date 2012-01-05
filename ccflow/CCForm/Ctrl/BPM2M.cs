@@ -90,7 +90,6 @@ namespace CCForm
             this.Width = 400;
             this.Height = 200;
             this.BorderThickness = new Thickness(5);
-
             this.LoadDtl();
         }
         public void LoadDtl()

@@ -287,7 +287,6 @@ namespace BP.Sys
                 this.SetValByKey(MapM2MAttr.Y, value);
             }
         }
-
         /// <summary>
         /// 扩展属性
         /// </summary>
@@ -340,19 +339,21 @@ namespace BP.Sys
                 map.EnType = EnType.Sys;
 
                 map.AddMyPK();
+                map.AddTBString(MapM2MAttr.FK_MapData, null, "主表", true, false, 1, 30, 20);
                 map.AddTBString(MapM2MAttr.NoOfObj, null, "编号", true, false, 1, 20, 20);
-                map.AddTBString(MapM2MAttr.Name, null, "名称", true, false, 1, 200, 20);
 
-                map.AddTBString(MapM2MAttr.FK_MapData, null, "主表", true, false, 0, 30, 20);
+                map.AddTBString(MapM2MAttr.Name, null, "名称", true, false, 1, 200, 20);
 
                 map.AddTBString(MapM2MAttr.DBOfObjs, null, "DBOfObjs", true, false, 0, 4000, 20);
                 map.AddTBString(MapM2MAttr.DBOfGroups, null, "DBOfGroups", true, false, 0, 4000, 20);
 
                 map.AddTBFloat(MapM2MAttr.H, 100, "H", false, false);
                 map.AddTBFloat(MapM2MAttr.W, 160, "W", false, false);
+                map.AddTBFloat(FrmImgAttr.X, 5, "X", true, false);
+                map.AddTBFloat(FrmImgAttr.Y, 5, "Y", false, false);
+
 
                 map.AddTBInt(MapM2MAttr.ShowWay, 1, "显示方式", false, false);
-
 
                 map.AddTBInt(MapM2MAttr.RowIdx, 99, "位置", false, false);
                 map.AddTBInt(MapM2MAttr.GroupID, 0, "分组ID", false, false);
@@ -361,11 +362,6 @@ namespace BP.Sys
 
                 map.AddBoolean(MapM2MAttr.IsDelete, true, "可删除否", false, false);
                 map.AddBoolean(MapM2MAttr.IsInsert, true, "可插入否", false, false);
-
-
-                map.AddTBFloat(FrmImgAttr.X, 5, "X", true, false);
-                map.AddTBFloat(FrmImgAttr.Y, 5, "Y", false, false);
-
 
                 //map.AddTBFloat(FrmImgAttr.H, 200, "H", true, false);
                 //map.AddTBFloat(FrmImgAttr.W, 500, "W", false, false);
