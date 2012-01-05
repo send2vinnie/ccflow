@@ -1013,6 +1013,17 @@ namespace BP.WF
             //}
         }
         /// <summary>
+        /// 删除主表数据也要删除它的明细数据
+        /// </summary>
+        protected override void afterDelete()
+        {
+            MapDtls dtls = new MapDtls("ND" + this.NodeID);
+            foreach (MapDtl dtl in dtls)
+                DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + this.OID);
+
+            base.afterDelete();
+        }
+        /// <summary>
         /// 结束前插入
         /// </summary>
         /// <returns></returns>

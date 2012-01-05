@@ -1135,8 +1135,8 @@ namespace BP.WF
                 this.HisWork.Update(this.HisNode.FocusField, "");
             }
 
+
             Node backToNode = new Node(backtoNodeID);
-             
             switch (this.HisNode.HisNodeWorkType)
             {
                 case NodeWorkType.WorkHL: /*如果当前是合流点 */
@@ -1181,6 +1181,8 @@ namespace BP.WF
             WorkNode wnOfBackTo = new WorkNode(this.WorkID, backtoNodeID);
             wnOfBackTo.HisWork.NodeState = NodeState.Back; // 更新 return work 状态．
             wnOfBackTo.HisWork.DirectUpdate();
+
+         
 
             // 改变当前待办工作节点。
             DBAccess.RunSQL("UPDATE WF_GenerWorkFlow   SET FK_Node='" + backtoNodeID + "',NodeName='" + backToNode.Name+ "' WHERE  WorkID=" + this.WorkID);
