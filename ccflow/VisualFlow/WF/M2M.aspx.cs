@@ -67,10 +67,10 @@ public partial class Comm_M2M : WebPage
         }
 
         DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjsRun);
-        if (dtObj.Columns.Count != 3)
+        if (dtObj.Columns.Count == 2)
         {
-            dtGroup.Columns.Add("Group", typeof(string));
-            foreach (DataRow dr in dtGroup.Rows)
+            dtObj.Columns.Add("Group", typeof(string));
+            foreach (DataRow dr in dtObj.Rows)
             {
                 dr["Group"] = "01";
             }
