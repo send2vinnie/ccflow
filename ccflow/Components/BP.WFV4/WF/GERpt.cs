@@ -39,6 +39,39 @@ namespace BP.WF
     public class GERpt : BP.En.EntityOID
     {
         #region attrs
+        public int MyNum
+        {
+            get
+            {
+                return this.GetValIntByKey(GERptAttr.MyNum);
+            }
+            set
+            {
+                this.SetValByKey(GERptAttr.MyNum, value);
+            }
+        }
+        public int FID
+        {
+            get
+            {
+                return this.GetValIntByKey(GERptAttr.FID);
+            }
+            set
+            {
+                this.SetValByKey(GERptAttr.FID, value);
+            }
+        }
+        public string FlowEmps
+        {
+            get
+            {
+                return this.GetValStringByKey(GERptAttr.FlowEmps);
+            }
+            set
+            {
+                this.SetValByKey(GERptAttr.FlowEmps, value);
+            }
+        }
         /// <summary>
         /// 流程发起人
         /// </summary>
@@ -90,6 +123,17 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(GERptAttr.FlowEnderRDT, value);
+            }
+        }
+        public string Title
+        {
+            get
+            {
+                return this.GetValStringByKey(GERptAttr.Title);
+            }
+            set
+            {
+                this.SetValByKey(GERptAttr.Title, value);
             }
         }
         public string FK_Dept

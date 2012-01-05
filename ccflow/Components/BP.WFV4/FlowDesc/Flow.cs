@@ -1865,15 +1865,28 @@ namespace BP.WF
             CheckRptDtl(nds);
             this.CheckRptView(nds);
 
+
             // 检查报表数据是否丢失。
             string sql = "SELECT OID FROM ND" + int.Parse(this.No) + "01 WHERE NodeState >0 AND OID NOT IN (SELECT OID FROM  ND" + int.Parse(this.No) + "Rpt ) ";
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
-
-            GEEntity rpt=new GEEntity("ND" + int.Parse(this.No) + "Rpt");
+            this.CheckRptData(nds, dt);
+        }
+        /// <summary>
+        /// 检查与修复报表数据
+        /// </summary>
+        /// <param name="nds"></param>
+        /// <param name="dt"></param>
+        private void CheckRptData(Nodes nds, DataTable dt)
+        {
+            GERpt rpt = new GERpt("ND" + int.Parse(this.No) + "Rpt");
             foreach (DataRow dr in dt.Rows)
             {
+                rpt.ResetDefaultVal();
                 int oid = int.Parse(dr[0].ToString());
-                rpt.SetValByKey("OID",oid);
+                rpt.SetValByKey("OID", oid);
+                Work startWork = null;
+                Work endWK = null;
+                string emps = "";
                 foreach (Node nd in nds)
                 {
                     Work wk = nd.HisWork;
@@ -1882,8 +1895,24 @@ namespace BP.WF
                         continue;
 
                     rpt.Copy(wk);
+                    if (nd.NodeID == int.Parse(this.No + "01"))
+                        startWork = wk;
+
+                    emps += "," + wk.Rec;
+                    endWK = wk;
                 }
+
                 rpt.SetValByKey("OID", oid);
+                rpt.FK_Dept = startWork.GetValStrByKey("FK_Dept");
+                rpt.Title = startWork.GetValStrByKey("Title");
+                rpt.WFState = startWork.GetValIntByKey("WFState");
+                rpt.FlowStarter = startWork.Rec;
+                rpt.FlowStartRDT = startWork.RDT;
+                rpt.FID = startWork.GetValIntByKey("FID");
+                rpt.FlowEmps = emps;
+                rpt.FlowEnder = endWK.Rec;
+                rpt.FlowEnderRDT = endWK.RDT;
+                rpt.MyNum = 1;
                 rpt.Insert();
             }
         }
