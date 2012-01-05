@@ -54,11 +54,27 @@ public partial class Comm_M2M : WebPage
         m2m.MyPK = mapM2M.FK_Node + "_" + this.WorkID + "_" + this.FK_MapData;
         m2m.RetrieveFromDBSources();
         DataTable dtGroup = new DataTable();
-        if (mapM2M.DBOfGroups.Length >5)
-            dtGroup=BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfGroupsRun);
+        if (mapM2M.DBOfGroups.Length > 5)
+            dtGroup = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfGroupsRun);
+        else
+        {
+            dtGroup.Columns.Add("No",typeof(string));
+            dtGroup.Columns.Add("Name", typeof(string));
+            DataRow dr = dtGroup.NewRow();
+            dr["No"] = "01";
+            dr["Name"] = "全部选择";
+            dtGroup.Rows.Add(dr);
+        }
 
         DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjsRun);
-
+        if (dtObj.Columns.Count != 3)
+        {
+            dtGroup.Columns.Add("Group", typeof(string));
+            foreach (DataRow dr in dtGroup.Rows)
+            {
+                dr["Group"] = "01";
+            }
+        }
         bool isInsert = mapM2M.IsInsert;
         bool isDelete = mapM2M.IsDelete;
 
