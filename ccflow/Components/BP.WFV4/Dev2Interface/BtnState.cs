@@ -43,6 +43,10 @@ namespace BP.WF
         /// 流程轨迹
         /// </summary>
         public const string Btn_Track = "Btn_Track";
+        /// <summary>
+        /// Btn_Search
+        /// </summary>
+        public const string Btn_Search = "Btn_Search";
     }
     /// <summary>
     /// 按钮状态

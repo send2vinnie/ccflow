@@ -63,8 +63,14 @@ namespace BP.WF
 
         public const string RptLab = "RptLab";
         public const string RptEnable = "RptEnable";
-
-
+        /// <summary>
+        /// 查询标签
+        /// </summary>
+        public const string SearchLab = "SearchLab";
+        /// <summary>
+        /// 查询是否可用
+        /// </summary>
+        public const string SearchEnable = "SearchEnable";
         public const string TrackLab = "TrackLab";
         public const string TrackEnable = "TrackEnable";
 
@@ -126,6 +132,29 @@ namespace BP.WF
                 this.SetValByKey(BtnAttr.NodeID, value);
             }
         }
+        public string SearchLab
+        {
+            get
+            {
+                return this.GetValStringByKey(BtnAttr.SearchLab);
+            }
+            set
+            {
+                this.SetValByKey(BtnAttr.SearchLab, value);
+            }
+        }
+        public bool SearchEnable
+        {
+            get
+            {
+                return this.GetValBooleanByKey(BtnAttr.SearchEnable);
+            }
+            set
+            {
+                this.SetValByKey(BtnAttr.SearchEnable, value);
+            }
+        }
+
         public string ShiftLab
         {
             get
@@ -417,21 +446,20 @@ namespace BP.WF
                 map.AddTBString(BtnAttr.PrintDocLab, "打印单据", "打印单据按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.PrintDocEnable, false, "是否启用", true, true);
 
-
                 map.AddTBString(BtnAttr.AthLab, "附件", "附件按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.FJOpen, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.TrackLab, "轨迹", "轨迹按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.TrackEnable, true, "是否启用", true, true);
 
-
                 map.AddTBString(BtnAttr.SelectAccepterLab, "接受人", "接受人按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.SelectAccepterEnable, false, "是否启用", true, true);
-
 
                 map.AddTBString(BtnAttr.OptLab, "选项", "选项按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.OptEnable, true, "是否启用", true, true);
 
+                map.AddTBString(BtnAttr.SearchLab, "查询", "查询按钮标签", true, false, 0, 50, 10);
+                map.AddBoolean(BtnAttr.SearchEnable, true, "是否启用", true, true);
 
                 //map.AddTBString(BtnAttr.URL, null, "URL", true, false, 0, 50, 10);
 

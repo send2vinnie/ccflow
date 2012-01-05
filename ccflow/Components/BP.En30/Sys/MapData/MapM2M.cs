@@ -6,7 +6,6 @@ namespace BP.Sys
 {
     public enum M2MShowWay
     {
-         
     }
     /// <summary>
     /// µã¶Ôµã
