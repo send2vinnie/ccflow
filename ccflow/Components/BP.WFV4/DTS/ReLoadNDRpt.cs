@@ -45,6 +45,13 @@ namespace BP.WF
         /// <returns>返回执行结果</returns>
         public override object Do()
         {
+            string keys="~!@#$%^&*()_+{}|:<>?`=[];,./～！＠＃￥％……＆×（）——＋｛｝｜：“《》？｀－＝［］；＇，．／";
+            char[] cc = keys.ToCharArray();
+            foreach (char c in cc)
+            {
+                DBAccess.RunSQL("update sys_mapattr set keyofen=REPLACE(keyofen,'" + c + "' , '_')");
+            }
+
             BP.Sys.MapAttrs attrs = new Sys.MapAttrs();
             attrs.RetrieveAll();
             foreach (BP.Sys.MapAttr item in attrs)
@@ -52,7 +59,8 @@ namespace BP.WF
                 try
                 {
                     int i = int.Parse(item.KeyOfEn.Substring(0,1));
-                    item.Delete();
+                    item.KeyOfEn = "_A" + item.KeyOfEn;
+                    item.Update();
                 }
                 catch
                 {
