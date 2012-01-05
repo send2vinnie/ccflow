@@ -451,6 +451,7 @@ namespace BP.Web.Comm.UC.WF
                     if (string.IsNullOrEmpty(sql) == false)
                     {
                         /* 如果有填充主表的sql  */
+
                         #region 处理sql变量
                         sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
                         sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
@@ -494,7 +495,6 @@ namespace BP.Web.Comm.UC.WF
                             if (mysql.Contains(dtl.No + "=") == false)
                                 continue;
 
-                         
 
                             #region 处理sql.
                             sql = mysql;
@@ -530,6 +530,8 @@ namespace BP.Web.Comm.UC.WF
                                     gedtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
                                 }
                                 gedtl.RefPK = en.PKVal.ToString();
+                                gedtl.RDT = DataType.CurrentDataTime;
+                                gedtl.Rec = WebUser.No;
                                 gedtl.Insert();
                             }
                         }
