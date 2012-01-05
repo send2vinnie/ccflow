@@ -1865,11 +1865,21 @@ namespace BP.WF
             CheckRptDtl(nds);
             this.CheckRptView(nds);
 
-
             // 检查报表数据是否丢失。
             string sql = "SELECT OID FROM ND" + int.Parse(this.No) + "01 WHERE NodeState >0 AND OID NOT IN (SELECT OID FROM  ND" + int.Parse(this.No) + "Rpt ) ";
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
             this.CheckRptData(nds, dt);
+        }
+        public string DoReloadRptData()
+        {
+            this.CheckRpt();
+
+            // 检查报表数据是否丢失。
+            DBAccess.RunSQL("DELETE ND" + int.Parse(this.No) + "Rpt");
+            string sql = "SELECT OID FROM ND" + int.Parse(this.No) + "01 WHERE NodeState >0 AND OID NOT IN (SELECT OID FROM  ND" + int.Parse(this.No) + "Rpt ) ";
+            DataTable dt = DBAccess.RunSQLReturnTable(sql);
+            this.CheckRptData(this.HisNodes, dt);
+            return "@共有:"+dt.Rows.Count+"条("+this.Name+")数据被装载成功。";
         }
         /// <summary>
         /// 检查与修复报表数据
@@ -1913,7 +1923,7 @@ namespace BP.WF
                 rpt.FlowEnder = endWK.Rec;
                 rpt.FlowEnderRDT = endWK.RDT;
                 rpt.MyNum = 1;
-                rpt.Insert();
+                rpt.InsertAsOID(rpt.OID);
             }
         }
         /// <summary>

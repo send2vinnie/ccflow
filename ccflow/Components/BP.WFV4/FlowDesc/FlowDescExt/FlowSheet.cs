@@ -70,7 +70,6 @@ namespace BP.WF.Ext
                 map.AddTBString(FlowAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 50, 10, true);
                 map.AddBoolean(FlowAttr.IsOK, true, this.ToE("IsEnable", "是否起用"), true, true);
 
-
                 map.AddDDLSysEnum(FlowAttr.FlowRunWay, (int)FlowRunWay.HandWork, this.ToE("RunWay", "运行方式"),
                     true, true, FlowAttr.FlowRunWay,"@0=手工启动@1=按月启动@2=按周启动@3=按天启动@4=按小时启动");
 
@@ -108,7 +107,6 @@ namespace BP.WF.Ext
                 //rm.Icon = "/Images/Btn/Table.gif"; 
                 map.AddRefMethod(rm);
 
-
                 rm = new RefMethod();
                 rm.Icon = "/Images/Btn/Delete.gif";
                 rm.Title = this.ToE("DelFlowData", "删除数据"); // "删除数据";
@@ -119,6 +117,14 @@ namespace BP.WF.Ext
 
                 rm.ClassMethodName = this.ToString() + ".DoDelData";
                 map.AddRefMethod(rm);
+
+                rm = new RefMethod();
+                rm.Icon = "/Images/Btn/DTS.gif";
+                rm.Title = "重新生成本流程报表数据"; // "删除数据";
+                rm.Warning = this.ToE("AYS", "您确定要执行吗? 注意:此方法耗费资源。");// "您确定要执行删除流程数据吗？";
+                rm.ClassMethodName = this.ToString() + ".DoReloadRptData";
+                map.AddRefMethod(rm);
+
 
                 //rm = new RefMethod();
                 //rm.Title = this.ToE("Event", "事件"); // "报表运行";
@@ -157,6 +163,14 @@ namespace BP.WF.Ext
             fl.No = this.No;
             fl.RetrieveFromDBSources();
             return fl.DoCheck();
+        }
+
+        public string DoReloadRptData()
+        {
+            Flow fl = new Flow();
+            fl.No = this.No;
+            fl.RetrieveFromDBSources();
+            return fl.DoReloadRptData();
         }
 
         public string DoDelData()
