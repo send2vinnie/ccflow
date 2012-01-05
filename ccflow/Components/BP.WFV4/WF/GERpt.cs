@@ -150,6 +150,17 @@ namespace BP.WF
                 this.SetValByKey(GERptAttr.Title, value);
             }
         }
+        public string FK_NY
+        {
+            get
+            {
+                return this.GetValStringByKey(GERptAttr.FK_NY);
+            }
+            set
+            {
+                this.SetValByKey(GERptAttr.FK_NY, value);
+            }
+        }
         public string FK_Dept
         {
             get

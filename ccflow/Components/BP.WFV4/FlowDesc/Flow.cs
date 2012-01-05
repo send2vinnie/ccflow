@@ -1913,6 +1913,7 @@ namespace BP.WF
                 }
 
                 rpt.SetValByKey("OID", oid);
+                rpt.FK_NY = startWork.GetValStrByKey("FK_NY");
                 rpt.FK_Dept = startWork.GetValStrByKey("FK_Dept");
                 rpt.Title = startWork.GetValStrByKey("Title");
                 rpt.WFState = startWork.GetValIntByKey("WFState");
