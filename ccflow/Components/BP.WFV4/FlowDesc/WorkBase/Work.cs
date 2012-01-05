@@ -196,6 +196,20 @@ namespace BP.WF
                 }
             }
         }
+        public DateTime RDT_DateTime
+        {
+            get
+            {
+                try
+                {
+                    return DataType.ParseSysDate2DateTime(this.RDT_Date);
+                }
+                catch
+                {
+                    return DateTime.Now;
+                }
+            }
+        }
         public string Record_FK_NY
         {
             get

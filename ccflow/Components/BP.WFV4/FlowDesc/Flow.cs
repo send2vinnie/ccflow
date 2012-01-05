@@ -1923,6 +1923,14 @@ namespace BP.WF
                 rpt.FlowEnder = endWK.Rec;
                 rpt.FlowEnderRDT = endWK.RDT;
                 rpt.MyNum = 1;
+                try
+                {
+                    TimeSpan ts = endWK.RDT_DateTime - startWork.RDT_DateTime;
+                    rpt.FlowDaySpan = ts.Days;
+                }
+                catch
+                {
+                }
                 rpt.InsertAsOID(rpt.OID);
             }
         }

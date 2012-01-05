@@ -39,6 +39,20 @@ namespace BP.WF
     public class GERpt : BP.En.EntityOID
     {
         #region attrs
+        /// <summary>
+        /// 流程时间跨度
+        /// </summary>
+        public int FlowDaySpan
+        {
+            get
+            {
+                return this.GetValIntByKey(GERptAttr.FlowDaySpan);
+            }
+            set
+            {
+                this.SetValByKey(GERptAttr.FlowDaySpan, value);
+            }
+        }
         public int MyNum
         {
             get
