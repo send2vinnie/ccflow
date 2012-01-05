@@ -760,6 +760,7 @@ public partial class WF_MapDef_MapDef : WebPage
             }
             else if (dtl.GroupID == currGF.OID)
             {
+
             }
             else
             {
@@ -769,19 +770,18 @@ public partial class WF_MapDef_MapDef : WebPage
             dtl.IsUse = true;
             int myidx = rowIdx + 10;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditM2M('" + this.FK_MapData + "','" + dtl.MyPK + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:M2MDoUp('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:M2MDoDown('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditM2M('" + this.FK_MapData + "','" + dtl.NoOfObj + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:M2MDoUp('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:M2MDoDown('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
             this.Pub1.AddTREnd();
 
             myidx++;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
             this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.MyPK + "' height='50px' width='1000px'>");
 
-            string src = "M2MDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapM2M=" + dtl.MyPK;
+            string src = "M2MDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapM2M=" + dtl.NoOfObj;
             if (dtl.ShowWay == FrmShowWay.FrmAutoSize)
                 this.Pub1.Add("<iframe ID='F" + dtl.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
             else
                 this.Pub1.Add("<iframe ID='F" + dtl.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + dtl.W + "' height='" + dtl.H + "' scrolling=auto  /></iframe>");
-
 
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();

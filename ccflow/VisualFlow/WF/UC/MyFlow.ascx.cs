@@ -548,7 +548,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (btnLab.SearchEnable)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.SearchLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Rpt/Search.aspx?EnsName=ND"+int.Parse(this.FK_Flow)+"Rpt&FK_Flow="+this.FK_Flow+ "','dsd0'); \" />");
-
             #endregion
 
             this.BindWork(currND, currWK);

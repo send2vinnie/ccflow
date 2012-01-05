@@ -23,6 +23,13 @@ public partial class Comm_M2M : WebPage
             return Int64.Parse(this.Request.QueryString["WorkID"]);
         }
     }
+    public string IsOpen
+    {
+        get
+        {
+            return this.Request.QueryString["IsOpen"];
+        }
+    }
     public string FK_MapData
     {
         get
@@ -57,6 +64,11 @@ public partial class Comm_M2M : WebPage
 
         if (isDelete == false && isInsert == false)
             this.Button1.Enabled = false;
+
+        if ((isDelete || isInsert) && string.IsNullOrEmpty(this.IsOpen)==false)
+        {
+            this.Button1.Visible = true;
+        }
 
         this.Pub1.AddTable("width=100% border=0");
         foreach (DataRow drGroup in dtGroup.Rows)

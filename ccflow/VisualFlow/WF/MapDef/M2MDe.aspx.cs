@@ -28,7 +28,7 @@ public partial class WF_MapDef_M2MDe : WebPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        MapM2M M2M = new MapM2M(this.FK_MapM2M);
+        MapM2M M2M = new MapM2M(this.FK_MapData,this.FK_MapM2M);
 
         DataTable dtGroup = new DataTable();
 
@@ -91,7 +91,6 @@ public partial class WF_MapDef_M2MDe : WebPage
                     continue;
             }
         }
-
         if (isHaveUnGroup == true)
         {
             this.Pub1.AddTR();

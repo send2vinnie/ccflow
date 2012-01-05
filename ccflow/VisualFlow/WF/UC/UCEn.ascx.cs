@@ -434,6 +434,71 @@ namespace BP.Web.Comm.UC.WF
                 this.AddTREnd();
             }
             #endregion 附件
+
+            #region 多对多的关系
+            foreach (MapM2M m2m in m2ms)
+            {
+                if (m2m.IsUse)
+                    continue;
+
+                if (isJudgeRowIdx)
+                {
+                    if (m2m.RowIdx != rowIdx)
+                        continue;
+                }
+
+                if (m2m.GroupID == 0 && rowIdx == 0)
+                {
+                    m2m.GroupID = currGF.OID;
+                    m2m.RowIdx = 0;
+                    m2m.Update();
+                }
+                else if (m2m.GroupID == currGF.OID)
+                {
+
+                }
+                else
+                {
+                    continue;
+                }
+                m2m.IsUse = true;
+                rowIdx++;
+                this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
+                if (m2m.ShowWay == FrmShowWay.FrmAutoSize)
+                    this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='50px' width='100%'  >");
+                else
+                    this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='" + m2m.H + "' width='" + m2m.W + "'  >");
+
+
+                string src = "M2M.aspx?FK_MapM2M=" + m2m.NoOfObj;
+                string paras = this.RequestParas;
+
+                if (paras.Contains("FID=") == false)
+                    paras += "&FID=" + this.HisEn.GetValStrByKey("FID");
+
+                if (paras.Contains("WorkID=") == false)
+                    paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
+
+                src += "&r=q" + paras;
+
+                switch (m2m.ShowWay)
+                {
+                    case FrmShowWay.FrmAutoSize:
+                        this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                        break;
+                    case FrmShowWay.FrmSpecSize:
+                        this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "' scrolling=auto /></iframe>");
+                        break;
+                    case FrmShowWay.Hidden:
+                        break;
+                    case FrmShowWay.WinOpen:
+                        this.Add("<a href=\"javascript:WinOpen('" + src + "&IsOpen=1" + "','" + m2m.W + "','" + m2m.H + "');\"  />" + m2m.Name + "</a>");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            #endregion 多对多的关系
         }
         public MapExts mes = null;
         private void LoadData(MapAttrs mattrs,Entity en)
@@ -1203,24 +1268,24 @@ namespace BP.Web.Comm.UC.WF
             #endregion 明细表
 
             #region 多对多的关系
-            foreach (MapM2M M2M in m2ms)
+            foreach (MapM2M m2m in m2ms)
             {
-                if (M2M.IsUse)
+                if (m2m.IsUse)
                     continue;
 
                 if (isJudgeRowIdx)
                 {
-                    if (M2M.RowIdx != rowIdx)
+                    if (m2m.RowIdx != rowIdx)
                         continue;
                 }
 
-                if (M2M.GroupID == 0 && rowIdx == 0)
+                if (m2m.GroupID == 0 && rowIdx == 0)
                 {
-                    M2M.GroupID = currGF.OID;
-                    M2M.RowIdx = 0;
-                    M2M.Update();
+                    m2m.GroupID = currGF.OID;
+                    m2m.RowIdx = 0;
+                    m2m.Update();
                 }
-                else if (M2M.GroupID == currGF.OID)
+                else if (m2m.GroupID == currGF.OID)
                 {
 
                 }
@@ -1228,16 +1293,16 @@ namespace BP.Web.Comm.UC.WF
                 {
                     continue;
                 }
-                M2M.IsUse = true;
+                m2m.IsUse = true;
                 rowIdx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                if (M2M.ShowWay==  FrmShowWay.FrmAutoSize)
-                    this.Add("<TD colspan=4 ID='TD" + M2M.NoOfObj + "' height='50px' width='100%'  >");
+                if (m2m.ShowWay == FrmShowWay.FrmAutoSize)
+                    this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='50px' width='100%'  >");
                 else
-                    this.Add("<TD colspan=4 ID='TD" + M2M.NoOfObj + "' height='" + M2M.H + "' width='" + M2M.W + "'  >");
+                    this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='" + m2m.H + "' width='" + m2m.W + "'  >");
 
 
-                string src = "M2M.aspx?FK_MapM2M=" + M2M.NoOfObj;
+                string src = "M2M.aspx?FK_MapM2M=" + m2m.NoOfObj;
                 string paras = this.RequestParas;
 
                 //if (paras.Contains("FK_Node=") == false)
@@ -1250,16 +1315,23 @@ namespace BP.Web.Comm.UC.WF
                     paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
 
                 src += "&r=q" + paras;
-                if (M2M.ShowWay == FrmShowWay.FrmAutoSize)
+
+                switch (m2m.ShowWay)
                 {
-                    this.Add("<iframe ID='F" + M2M.NoOfObj + "'   Onblur=\"SaveM2M('" + M2M.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                    case FrmShowWay.FrmAutoSize:
+                        this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                        break;
+                    case FrmShowWay.FrmSpecSize:
+                        this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "' scrolling=auto /></iframe>");
+                        break;
+                    case FrmShowWay.Hidden:
+                        break;
+                    case FrmShowWay.WinOpen:
+                        this.Add("<a href=\"javascript:WinOpen('" + src + "&IsOpen=1" + "','" + m2m.W + "','" + m2m.H + "');\"  />" + m2m.Name + "</a>");
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    this.Add("<iframe ID='F" + M2M.NoOfObj + "'   Onblur=\"SaveM2M('" + M2M.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.W + "' height='" + M2M.H + "' scrolling=auto /></iframe>");
-                }
-                this.AddTDEnd();
-                this.AddTREnd();
             }
             #endregion 多对多的关系
 
@@ -1786,11 +1858,11 @@ namespace BP.Web.Comm.UC.WF
             #endregion 输出明细.
 
             #region 多对多的关系
-            foreach (MapM2M M2M in m2ms)
+            foreach (MapM2M m2m in m2ms)
             {
-                this.Add("<DIV id='Fd" + M2M.NoOfObj + "' style='position:absolute; left:" + M2M.X + "px; top:" + M2M.Y + "px; width:" + M2M.W + "px; height:" + M2M.H + "px;text-align: left;' >");
+                this.Add("<DIV id='Fd" + m2m.NoOfObj + "' style='position:absolute; left:" + m2m.X + "px; top:" + m2m.Y + "px; width:" + m2m.W + "px; height:" + m2m.H + "px;text-align: left;' >");
                 this.Add("<span>");
-                string src = "M2M.aspx?FK_MapM2M=" + M2M.NoOfObj+"&FK_MapData="+M2M.FK_MapData;
+                string src = "M2M.aspx?FK_MapM2M=" + m2m.NoOfObj;
                 string paras = this.RequestParas;
                 try
                 {
@@ -1806,7 +1878,20 @@ namespace BP.Web.Comm.UC.WF
 
                 src += "&r=q" + paras;
 
-                this.Add("<iframe ID='F" + M2M.NoOfObj + "'   Onblur=\"SaveM2M('" + M2M.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + M2M.W + "' height='" + M2M.H + "'   scrolling=auto/></iframe>");
+                switch (m2m.ShowWay)
+                {
+                    case FrmShowWay.FrmAutoSize:
+                    case FrmShowWay.FrmSpecSize:
+                        this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "'   scrolling=auto/></iframe>");
+                        break;
+                    case FrmShowWay.Hidden:
+                        break;
+                    case FrmShowWay.WinOpen:
+                        this.Add("<a href=\"javascript:WinOpen('" + src+"&IsOpen=1" + "','"+m2m.W+"','"+m2m.H+"');\"  />"+m2m.Name+"</a>");
+                        break;
+                    default:
+                        break;
+                }
 
                 this.Add("</span>");
                 this.Add("</DIV>");

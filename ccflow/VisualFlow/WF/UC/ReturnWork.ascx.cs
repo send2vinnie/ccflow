@@ -361,14 +361,14 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
             Work wk = wn.HisWork;
             WorkNode mywn = null;
-            if (btn.ID == "Btn_ReturnHid")
-            {
-                mywn = wn.DoReturnWork(this.DDL1.SelectedItemIntVal, this.TB1.Text, true);
-            }
-            else
-            {
+            //if (btn.ID == "Btn_ReturnHid")
+            //{
+            //    mywn = wn.DoReturnWork(this.DDL1.SelectedItemIntVal, this.TB1.Text, true);
+            //}
+            //else
+            //{
                 mywn = wn.DoReturnWork(this.DDL1.SelectedItemIntVal, this.TB1.Text);
-            }
+           // }
 
             // 退回事件。
             string msg = mywn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
