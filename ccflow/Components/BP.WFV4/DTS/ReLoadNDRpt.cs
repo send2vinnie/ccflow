@@ -60,12 +60,14 @@ namespace BP.WF
                 {
                     int i = int.Parse(item.KeyOfEn.Substring(0,1));
                     item.KeyOfEn = "_A" + item.KeyOfEn;
-                    item.Update();
                 }
                 catch
                 {
+                    continue;
                 }
+                item.DirectUpdate();
             }
+            BP.DA.DBAccess.RunSQL("UPDATE  sys_mapattr SET MyPK=FK_MapData+'_'+KeyOfEn where MyPK!=FK_MapData+'_'+KeyOfEn");
 
             string msg = "";
             Flows fls = new Flows();
