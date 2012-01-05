@@ -1182,7 +1182,6 @@ namespace BP.WF
             wnOfBackTo.HisWork.NodeState = NodeState.Back; // 更新 return work 状态．
             wnOfBackTo.HisWork.DirectUpdate();
 
-         
 
             // 改变当前待办工作节点。
             DBAccess.RunSQL("UPDATE WF_GenerWorkFlow   SET FK_Node='" + backtoNodeID + "',NodeName='" + backToNode.Name+ "' WHERE  WorkID=" + this.WorkID);
@@ -1243,6 +1242,8 @@ namespace BP.WF
             ReorderLog(fromND, toND);
             DataType.WriteFile(file+".txt", infoLog);
             DataType.WriteFile(file + ".htm", infoLog.Replace("\r\n","<br>"));
+
+            this.HisWork.Delete();
         }
         public void ReorderLog(Node fromND, Node toND)
         {
