@@ -303,7 +303,7 @@ namespace BP.Sys
         {
             get
             {
-                string doc= this.GetValStrByKey(MapAttrAttr.AutoFullDoc);
+                string doc = this.GetValStrByKey(MapAttrAttr.AutoFullDoc);
                 doc = doc.Replace("~", "'");
                 doc = doc.Replace("@WebUser.No", BP.Web.WebUser.No);
                 doc = doc.Replace("@WebUser.Name", BP.Web.WebUser.Name);
@@ -995,7 +995,7 @@ namespace BP.Sys
                 map.AddTBInt(MapAttrAttr.IDX, 0, "序号", true, false);
                 map.AddTBInt(MapAttrAttr.GroupID, 0, "GroupID", true, false);
 
-          //      map.AddTBInt(MapAttrAttr.TabIdx, 0, "Tab顺序键", true, false);
+                //      map.AddTBInt(MapAttrAttr.TabIdx, 0, "Tab顺序键", true, false);
 
                 // 是否是签字，操作员字段有效。2010-09-23 增加。
                 map.AddTBInt(MapAttrAttr.IsSigan, 0, "签字？", true, false);
@@ -1042,15 +1042,15 @@ namespace BP.Sys
         {
             this.DoOrderUp(MapAttrAttr.FK_MapData, this.FK_MapData, MapAttrAttr.IDX);
         }
-      
+
 
         public void DoUp()
         {
-            this.DoOrderUp(MapAttrAttr.GroupID, this.GroupID.ToString(),MapAttrAttr.UIVisible,"1", MapAttrAttr.IDX);
+            this.DoOrderUp(MapAttrAttr.GroupID, this.GroupID.ToString(), MapAttrAttr.UIVisible, "1", MapAttrAttr.IDX);
         }
         public void DoDown()
         {
-            this.DoOrderDown(MapAttrAttr.GroupID, this.GroupID.ToString(),MapAttrAttr.UIVisible,"1", MapAttrAttr.IDX);
+            this.DoOrderDown(MapAttrAttr.GroupID, this.GroupID.ToString(), MapAttrAttr.UIVisible, "1", MapAttrAttr.IDX);
         }
         public void DoDtlDown()
         {
@@ -1086,7 +1086,7 @@ namespace BP.Sys
         }
         private string DoJumpUp(MapAttr attrTo)
         {
-            string sql = "UPDATE Sys_MapAttr SET IDX=IDX+1 WHERE IDX <=" + attrTo.IDX + " AND FK_MapData='" + this.FK_MapData + "' AND GroupID="+this.GroupID;
+            string sql = "UPDATE Sys_MapAttr SET IDX=IDX+1 WHERE IDX <=" + attrTo.IDX + " AND FK_MapData='" + this.FK_MapData + "' AND GroupID=" + this.GroupID;
             DBAccess.RunSQL(sql);
             this.IDX = attrTo.IDX - 1;
             this.GroupID = attrTo.GroupID;
@@ -1141,14 +1141,7 @@ namespace BP.Sys
             }
             else
             {
-                if (this.KeyOfEn.Contains("_") == false)
-                {
-                    System.Text.RegularExpressions.Regex reg1 = new System.Text.RegularExpressions.Regex(@"^[A-Za-z0-9]+$");
-                    if (reg1.IsMatch(this.KeyOfEn) == false)
-                    {
-                        // throw new Exception("您输入的字段英文名[" + this.KeyOfEn + "]不符合要求，请按英文、拼音缩写填写或者由系统写完成。");
-                    }
-                }
+                this.KeyOfEn = PubClass.DealToFieldOrTableNames(this.KeyOfEn);
             }
 
             string keyofenC = this.KeyOfEn.Clone() as string;

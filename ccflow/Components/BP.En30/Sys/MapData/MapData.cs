@@ -931,6 +931,7 @@ namespace BP.Sys
         }
         protected override bool beforeInsert()
         {
+            this.PTable = PubClass.DealToFieldOrTableNames(this.PTable);
             return base.beforeInsert();
         }
         protected override bool beforeDelete()

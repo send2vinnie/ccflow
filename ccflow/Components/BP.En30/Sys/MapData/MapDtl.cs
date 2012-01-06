@@ -77,6 +77,9 @@ namespace BP.Sys
         public const string IsShowIdx = "IsShowIdx";
         public const string IsCopyNDData = "IsCopyNDData";
         public const string IsReadonly = "IsReadonly";
+        /// <summary>
+        /// WhenOverSize
+        /// </summary>
         public const string WhenOverSize = "WhenOverSize";
         /// <summary>
         /// GroupID
@@ -111,6 +114,10 @@ namespace BP.Sys
         /// 是否可以导入？
         /// </summary>
         public const string IsImp = "IsImp";
+        /// <summary>
+        /// 是否启用多附件
+        /// </summary>
+        public const string IsEnableAthM = "IsEnableAthM";
     }
     /// <summary>
     /// 明细
@@ -323,6 +330,21 @@ namespace BP.Sys
             }
         }
         /// <summary>
+        /// 是否启用多附件
+        /// </summary>
+        public bool IsEnableAthM
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsEnableAthM);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsEnableAthM, value);
+            }
+        }
+        
+        /// <summary>
         /// 是否起用审核连接
         /// </summary>
         public bool IsEnablePass
@@ -529,7 +551,8 @@ namespace BP.Sys
                 map.AddBoolean(MapDtlAttr.IsUpdate, true, "IsUpdate", false, false);
 
                 map.AddBoolean(MapDtlAttr.IsEnablePass, false, "是否启用通过审核功能?", false, false);
-
+                map.AddBoolean(MapDtlAttr.IsEnableAthM, false, "是否启用多附件", false, false);
+                
 
                 map.AddDDLSysEnum(MapDtlAttr.WhenOverSize, 0, "WhenOverSize", true, true,
                  MapDtlAttr.WhenOverSize, "@0=不处理@1=向下顺增行@2=次页显示");

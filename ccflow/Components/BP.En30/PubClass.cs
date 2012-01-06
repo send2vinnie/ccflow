@@ -677,6 +677,29 @@ namespace BP
                 return "black";
             }
         }
+        /// <summary>
+        /// ´¦Àí×Ö¶Î
+        /// </summary>
+        /// <param name="fd"></param>
+        /// <returns></returns>
+        public static string DealToFieldOrTableNames(string fd)
+        {
+            string keys = "~!@#$%^&*()_+{}|:<>?`=[];,./¡«£¡£À£££¤£¥¡­¡­£¦¡Á£¨£©¡ª¡ª£«£û£ý£ü£º¡°¡¶¡·£¿£à£­£½£Û£Ý£»£§£¬£®£¯";
+            char[] cc = keys.ToCharArray();
+            foreach (char c in cc)
+                fd = fd.Replace(c.ToString(), "");
+
+            string s = fd.Substring(0, 1);
+            try
+            {
+                int a = int.Parse(s);
+                fd = "F" + fd;
+            }
+            catch
+            {
+            }
+            return fd;
+        }
         private static string _KeyFields = null;
         public static string KeyFields
         {

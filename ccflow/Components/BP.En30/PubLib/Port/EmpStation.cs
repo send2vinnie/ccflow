@@ -115,7 +115,9 @@ namespace BP.Port
 
                 //map.AddDDLEntitiesPK(EmpStationAttr.FK_Emp,null, DataType.AppInt,"操作员",new 县局(),"OID","Name",true);
 
-                map.AddDDLEntitiesPK(EmpStationAttr.FK_Emp, null, "操作员", new Emps(), true);
+                map.AddTBStringPK(EmpDeptAttr.FK_Emp, null, "操作员", false, false, 1, 15, 1);
+
+               // map.AddDDLEntitiesPK(EmpStationAttr.FK_Emp, null, "操作员", new Emps(), true);
                 map.AddDDLEntitiesPK(EmpStationAttr.FK_Station, null, "工作岗位", new Stations(), true);
 
                 map.AddSearchAttr(EmpStationAttr.FK_Station);
