@@ -112,7 +112,10 @@ namespace BP.WF.Port
                 map.EnDesc = "人员岗位";
                 map.EnType = EnType.Dot2Dot; //实体类型，admin 系统管理员表，PowerAble 权限管理表,也是用户表,你要想把它加入权限管理里面请在这里设置。。
 
-                map.AddDDLEntitiesPK(EmpStationAttr.FK_Emp, null, "操作员", new Emps(), true);
+              //  map.AddDDLEntitiesPK(EmpStationAttr.FK_Emp, null, "操作员", new Emps(), true);
+
+                map.AddTBStringPK(EmpDeptAttr.FK_Emp, null, "操作员", false, false, 1, 15, 1);
+
                 map.AddDDLEntitiesPK(EmpStationAttr.FK_Station, null, "工作岗位", new Stations(), true);
 
                 map.AddSearchAttr(EmpStationAttr.FK_Station);

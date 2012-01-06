@@ -120,7 +120,10 @@ namespace BP.WF.Port
 				map.EnDesc="操作员与工作部门";	
 				map.EnType=EnType.Dot2Dot;
 
-				map.AddDDLEntitiesPK(EmpDeptAttr.FK_Emp,null,"操作员",new Emps(),true);
+
+                map.AddTBStringPK(EmpDeptAttr.FK_Emp, null, "操作员", false, false, 1, 15, 1);
+
+				//map.AddDDLEntitiesPK(EmpDeptAttr.FK_Emp,null,"操作员",new Emps(),true);
 				map.AddDDLEntitiesPK(EmpDeptAttr.FK_Dept,null,"部门",new Depts(),true);
 
 				this._enMap=map;
