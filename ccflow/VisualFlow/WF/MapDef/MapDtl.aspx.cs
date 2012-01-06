@@ -46,9 +46,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
         switch (this.DoType)
         {
-            case "DtlList":
-                BindDtlList(md);
-                break;
             case "New":
                 int num = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapDtl WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
                 MapDtl dtl1 = new MapDtl();
@@ -74,74 +71,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
                 throw new Exception("er:" + this.DoType);
         }
     }
-    public void BindDtlList(MapData md)
-    {
-        MapDtls dtls = new MapDtls(md.No);
-        if (dtls.Count == 0)
-        {
-            this.Response.Redirect("MapDtl.aspx?DoType=New&FK_MapData=" + this.FK_MapData + "&sd=sd", true);
-            return;
-        }
-
-        if (dtls.Count == 1)
-        {
-            MapDtl d = (MapDtl)dtls[0];
-            this.Response.Redirect("MapDtl.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapDtl=" + d.No, true);
-            return;
-        }
-
-        this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeft("<a href='MapDef.aspx?MyPK=" + this.MyPK + "'>" + this.ToE("Back", "返回") + ":" + md.Name + "</a> - <a href='MapDtl.aspx?DoType=New&FK_MapData=" + this.FK_MapData + "&sd=sd'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
-        this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("IDX");
-        this.Pub1.AddTDTitle(this.ToE("No", "编号"));
-        this.Pub1.AddTDTitle(this.ToE("Name", "名称"));
-        this.Pub1.AddTDTitle(this.ToE("PTable", "物理表"));
-        this.Pub1.AddTDTitle(this.ToE("Oper", "操作"));
-        this.Pub1.AddTREnd();
-
-        TB tb = new TB();
-        int i = 0;
-        foreach (MapDtl dtl in dtls)
-        {
-            i++;
-            this.Pub1.AddTR();
-            this.Pub1.AddTDIdx(i);
-            this.Pub1.AddTD(dtl.No);
-            this.Pub1.AddTD(dtl.Name);
-            this.Pub1.AddTD(dtl.PTable);
-            this.Pub1.AddTD("<a href='MapDtl.aspx?FK_MapData=" + this.FK_MapData + "&DoType=Edit&FK_MapDtl=" + dtl.No + "'>" + this.ToE("Edit", "编辑") + "</a>");
-            this.Pub1.AddTREnd();
-            continue;
-
-            tb = new TB();
-            tb.ID = "TB_No_" + dtl.No;
-            tb.Text = dtl.No;
-            this.Pub1.AddTD(tb);
-
-            tb = new TB();
-            tb.ID = "TB_Name_" + dtl.No;
-            tb.Text = dtl.Name;
-            this.Pub1.AddTD(tb);
-
-            tb = new TB();
-            tb.ID = "TB_PTable_" + dtl.No;
-            tb.Text = dtl.PTable;
-            this.Pub1.AddTD(tb);
-
-            this.Pub1.AddTD("<a href='MapDtl.aspx?FK_MapData=" + this.FK_MapData + "&DoType=Edit&FK_MapDtl=" + dtl.No + "'>" + this.ToE("Edit", "编辑") + "</a>");
-            this.Pub1.AddTREnd();
-        }
-
-        //this.Pub1.AddTRSum();
-        //Button btn = new Button();
-        //btn.ID = "Btn_Save";
-        //btn.Text = this.ToE("Save", "保存");
-        //btn.Click += new EventHandler(btn_Click);
-        //this.Pub1.AddTD("colspan=5", btn);
-        //this.Pub1.AddTREnd();
-        this.Pub1.AddTableEnd();
-    }
+   
     void btn_Click(object sender, EventArgs e)
     {
         Button btn = sender as Button;
@@ -233,6 +163,21 @@ public partial class Comm_MapDef_MapDtl : WebPage
             this.Alert(ex.Message);
         }
     }
+
+    void btn_MapAth_Click(object sender, EventArgs e)
+    {
+        FrmAttachment ath = new FrmAttachment();
+        ath.MyPK = this.FK_MapDtl + "_AthM";
+        if (ath.RetrieveFromDBSources() == 0)
+        {
+            ath.FK_MapData = this.FK_MapDtl;
+            ath.NoOfObj = "AthM";
+            ath.Name = "我的明细表附件";
+            ath.UploadType = AttachmentUploadType.Multi;
+            ath.Insert();
+        }
+        this.Response.Redirect("Attachment.aspx?DoType=Edit&FK_MapData=" + this.FK_MapDtl + "&UploadType=1&Ath=AthM", true);
+    }
     void btn_MapExt_Click(object sender, EventArgs e)
     {
         this.Response.Redirect("MapExt.aspx?DoType=New&FK_MapData=" + this.FK_MapDtl, true);
@@ -253,7 +198,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
     {
         this.Pub1.AddTable();
         this.Pub1.AddCaptionLeft("明细表属性");
-      //  this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "'>" + this.ToE("Back", "返回") + ":" + md.Name + "</a> -  " + this.ToE("DtlTable", "明细表") + ":（" + dtl.Name + "）");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Item", "项目"));
@@ -391,8 +335,20 @@ public partial class Comm_MapDef_MapDtl : WebPage
         cb.ID = "CB_IsEnablePass";
         cb.Text = this.ToE("IsEnablePass", "是否起用审核字段？");// "是否合计行";
         cb.Checked = dtl.IsEnablePass;
-        this.Pub1.AddTD("colspan=2", cb);
-        this.Pub1.AddTREnd();
+        this.Pub1.AddTD(cb);
+
+        cb = new CheckBox();
+        cb.ID = "CB_IsEnableAthM";
+        cb.Text = "是否启用多附件";
+        cb.Checked = dtl.IsEnableAthM;
+        this.Pub1.AddTD(cb);
+
+        //cb = new CheckBox();
+        //cb.ID = "CB_IsEnableAth";
+        //cb.Text = "是否启用单附件"; 
+        //cb.Checked = dtl.IsEnablePass;
+        //this.Pub1.AddTD(cb);
+        //this.Pub1.AddTREnd();
 
 
         this.Pub1.AddTR1();
@@ -489,6 +445,15 @@ public partial class Comm_MapDef_MapDtl : WebPage
              
             btn.Click += new EventHandler(btn_MapExt_Click);
             this.Pub1.Add(btn);
+
+            if (dtl.IsEnableAthM)
+            {
+                btn = new Button();
+                btn.ID = "Btn_IsEnableAthM";
+                btn.Text = "附件属性"; // "删除";
+                btn.Click += new EventHandler(btn_MapAth_Click);
+                this.Pub1.Add(btn);
+            }
         }
      
         this.Pub1.AddTDEnd();

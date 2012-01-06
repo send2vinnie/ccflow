@@ -40,6 +40,17 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion 测试数据库是否连接成功。
 
+            #region 2012-01-17 修复表单
+            try
+            {
+                DBAccess.RunSQL("UPDATE Sys_FrmAttachment SET NOOfObj=NoOfAth where noofobj is null");
+            }
+            catch
+            {
+            }
+            #endregion
+
+
             #region 2012-修复表单
             DBAccess.RunSQL("UPDATE sys_mapdata SET FrmW=900  where FrmW IS NULL");
             DBAccess.RunSQL("UPDATE sys_mapdata SET FrmH=1000 where FrmH IS NULL");

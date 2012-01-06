@@ -63,6 +63,8 @@ public partial class WF_FreeFrm_UploadFile : WebPage
 
         BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment(this.FK_FrmAttachment);
 
+        this.Title = athDesc.Name;
+
         this.Pub1.AddTable("width='100%'");
         this.Pub1.AddTR();
         if (athDesc.Sort.Contains(","))
@@ -71,6 +73,8 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         this.Pub1.AddTD("大小KB");
         this.Pub1.AddTD("上传日期");
         this.Pub1.AddTD("上传人");
+        if (athDesc.IsNote)
+            this.Pub1.AddTD("备注");
         this.Pub1.AddTD("操作");
         this.Pub1.AddTREnd();
 
@@ -94,6 +98,9 @@ public partial class WF_FreeFrm_UploadFile : WebPage
             this.Pub1.AddTD(db.FileSize);
             this.Pub1.AddTD(db.RDT);
             this.Pub1.AddTD(db.RecName);
+            if (athDesc.IsNote)
+                this.Pub1.AddTD(db.MyNote);
+
             if (athDesc.IsDelete)
                 this.Pub1.AddTD("<a href=\"javascript:Del('" + this.FK_FrmAttachment + "','" + this.PKVal + "','" + db.MyPK + "')\">删除</a>");
             else
@@ -103,11 +110,13 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         if (athDesc.IsUpload)
         {
             this.Pub1.AddTR();
-            this.Pub1.AddTD();
-            this.Pub1.AddTDBegin("colspan=5");
+            this.Pub1.AddTDBegin("colspan=6");
+           
 
             System.Web.UI.WebControls.FileUpload fu = new System.Web.UI.WebControls.FileUpload();
             fu.ID = "file";
+            fu.BorderStyle = BorderStyle.NotSet;
+
             this.Pub1.Add(fu);
 
             if (athDesc.Sort.Contains(","))
@@ -124,6 +133,16 @@ public partial class WF_FreeFrm_UploadFile : WebPage
                     ddl.Items.Add(new ListItem(str, str));
                 }
                 this.Pub1.Add(ddl);
+            }
+
+            if (athDesc.IsNote)
+            {
+                TextBox tb = new TextBox();
+                tb.ID = "TB_Note";
+                tb.Attributes["Width"] = "100%";
+                tb.Attributes["class"] = "TBNote";
+                tb.Columns = 30;
+                this.Pub1.Add(tb);
             }
 
             Button btn = new Button();
@@ -151,9 +170,7 @@ public partial class WF_FreeFrm_UploadFile : WebPage
             System.IO.Directory.CreateDirectory(athDesc.SaveTo);
 
         int oid = BP.DA.DBAccess.GenerOID();
-
         string exp = "";
-
         string saveTo = athDesc.SaveTo + "\\" + oid + "." + fu.FileName.Substring(fu.FileName.LastIndexOf('.') + 1);
         fu.SaveAs(saveTo);
 
@@ -172,6 +189,8 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         dbUpload.RDT = DataType.CurrentDataTime;
         dbUpload.Rec = BP.Web.WebUser.No;
         dbUpload.RecName = BP.Web.WebUser.Name;
+        if (athDesc.IsNote)
+            dbUpload.MyNote = this.Pub1.GetTextBoxByID("TB_Note").Text;
 
         if (athDesc.Sort.Contains(","))
             dbUpload.Sort = this.Pub1.GetDDLByID("ddl").SelectedItemStringVal;

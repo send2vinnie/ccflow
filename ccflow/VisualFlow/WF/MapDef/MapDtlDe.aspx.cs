@@ -69,7 +69,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         MapDtl dtl = new MapDtl(this.FK_MapDtl);
         if (dtl.IsView == false)
             return;
-
+        
         MapAttrs attrs = new MapAttrs(this.MyPK);
         MapExts mes = new MapExts(this.MyPK);
         if (mes.Count != 0)
@@ -95,7 +95,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         
         this.Pub1.AddTR();
         if (dtl.IsShowIdx)
-            this.Pub1.AddTDTitle(); 
+            this.Pub1.AddTDTitle();
 
         foreach (MapAttr attr in attrs)
         {
@@ -127,15 +127,17 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             }
             //  this.Pub1.Add("[<a href=\"javascript:Insert('" + this.MyPK + "','" + attr.IDX + "');\" ><img src='../../Images/Btn/Insert.gif' border=0/>插入</a>]");
             this.Pub1.Add("<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "');\" ><img src='../../Images/Btn/Right.gif' class=Arrow alt='向右移动' border=0/></a>");
-            this.Pub1.Add("</TH>");  
+            this.Pub1.Add("</TH>");
         }
+        if (dtl.IsEnableAthM)
+            this.Pub1.AddTDTitle();
         this.Pub1.AddTREnd();
 
-        for (int i =1 ; i <= dtl.RowsOfList; i++)
+        for (int i = 1; i <= dtl.RowsOfList; i++)
         {
             this.Pub1.AddTR();
-             if (dtl.IsShowIdx)
-            this.Pub1.AddTDIdx(i);
+            if (dtl.IsShowIdx)
+                this.Pub1.AddTDIdx(i);
             foreach (MapAttr attr in attrs)
             {
                 if (attr.UIVisible == false)
@@ -166,11 +168,11 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                                 {
                                     tb.TextMode = TextBoxMode.MultiLine;
                                     tb.Attributes["Height"] = attr.UIHeight + "px";
-                                    tb.Rows = attr.UIHeight / 25 ;
+                                    tb.Rows = attr.UIHeight / 25;
                                 }
                                 break;
                             case BP.DA.DataType.AppDateTime:
-                                tb.Attributes["style"] = "width:"+attr.UIWidth+"px;border: none;";
+                                tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border: none;";
                                 if (attr.UIIsEnable)
                                 {
                                     tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
@@ -182,7 +184,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                                 if (attr.UIIsEnable)
                                 {
                                     tb.Attributes["onfocus"] = "WdatePicker();";
-                                  //  tb.Attributes["class"] = "TBcalendar";
+                                    //  tb.Attributes["class"] = "TBcalendar";
                                 }
 
                                 break;
@@ -248,6 +250,8 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         break;
                 }
             }
+            if (dtl.IsEnableAthM)
+                this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../FreeFrm/AttachmentUpload.aspx?PKVal=0&Ath=AthM&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM')\"><img src='./../Img/AttachmentM.png' border=0 width='16px' /></a>");
             this.Pub1.AddTREnd();
         }
         if (dtl.IsShowSum)
@@ -277,6 +281,8 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                     this.Pub1.AddTD();
                 }
             }
+            if (dtl.IsEnableAthM)
+                this.Pub1.AddTD();
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();

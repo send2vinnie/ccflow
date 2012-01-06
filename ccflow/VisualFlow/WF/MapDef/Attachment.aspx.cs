@@ -42,7 +42,6 @@ public partial class WF_MapDef_FrmAttachment : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         FrmAttachment ath = new FrmAttachment();
-
         ath.MyPK = this.FK_MapData + "_" + this.Ath;
         if (this.Ath != null)
             ath.RetrieveFromDBSources();
@@ -136,6 +135,18 @@ public partial class WF_MapDef_FrmAttachment : WebPage
         this.Pub1.AddTD(cb);
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("");
+        cb = new CheckBox();
+        cb.ID = "CB_" + FrmAttachmentAttr.IsNote;
+        cb.Text = "是否增加备注列";
+        cb.Checked = ath.IsNote;
+        this.Pub1.AddTD(cb);
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTD("高度");
@@ -237,6 +248,7 @@ public partial class WF_MapDef_FrmAttachment : WebPage
         if (this.Ath == null)
         {
             ath.UploadType = (AttachmentUploadType)int.Parse(this.UploadType);
+            ath.MyPK = this.FK_MapData + "_" + this.Ath;
             if (ath.IsExits == true)
             {
                 this.Alert("附件编号("+ath.NoOfObj+")已经存在。");

@@ -265,10 +265,12 @@ public partial class Comm_Dtl : WebPage
                 this.Pub1.AddTDTitle(attr.Name);// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
             }
 
+            if (mdtl.IsEnableAthM)
+                this.Pub1.AddTDTitle("");
+
             if (mdtl.IsDelete && this.IsReadonly == 0)
-            {
                 this.Pub1.Add("<TD class='FDesc' nowarp=true ><img src='./../Images/Btn/Save.gif' border=0 onclick='SaveDtlData();' ></TD>");
-            }
+
             this.Pub1.AddTREnd();
         }
         #endregion 生成标题
@@ -587,7 +589,13 @@ public partial class Comm_Dtl : WebPage
                         break;
                 }
             }
-            #endregion 增加rows
+
+            if ( mdtl.IsDelete && dtl.OID >= 100 && mdtl.IsEnableAthM)
+                this.Pub1.AddTD("<a href=\"javascript:WinOpen('./FreeFrm/AttachmentUpload.aspx?PKVal=" + dtl.OID + "&Ath=AthM&FK_MapData=" + mdtl.No + "&FK_FrmAttachment=" + mdtl.No + "_AthM')\"><img src='./Img/AttachmentM.png' border=0 width='16px' /></a>");
+            else
+                this.Pub1.AddTD("");
+
+
 
             if (mdtl.IsDelete && dtl.OID >= 100 && this.IsReadonly == 0)
             {
@@ -597,7 +605,14 @@ public partial class Comm_Dtl : WebPage
             {
                 this.Pub1.Add("<TD class=TD border=0>&nbsp;</TD>");
             }
+
+            
+
             this.Pub1.AddTREnd();
+
+            #endregion 增加rows
+
+           
 
             #region 拓展属性
             if (this.IsReadonly == 0 && mes.Count != 0)

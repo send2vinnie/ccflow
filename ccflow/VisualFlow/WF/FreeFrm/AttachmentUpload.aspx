@@ -9,6 +9,15 @@ AutoEventWireup="true" CodeFile="AttachmentUpload.aspx.cs" Inherits="WF_FreeFrm_
         window.location.href = 'AttachmentUpload.aspx?DoType=Del&DelPKVal=' + delPKVal + '&FK_FrmAttachment=' + fk_ath + '&PKVal=' + pkVal;
     }
 </script>
+
+<style  type="text/css">
+   .TBNote
+   {
+       border-bottom-color:Black;
+       background-color:Silver;
+   }
+   
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <uc1:Pub ID="Pub1" runat="server" />
