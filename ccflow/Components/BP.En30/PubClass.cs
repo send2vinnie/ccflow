@@ -684,7 +684,7 @@ namespace BP
         /// <returns></returns>
         public static string DealToFieldOrTableNames(string fd)
         {
-            string keys = "~!@#$%^&*()_+{}|:<>?`=[];,./¡«£¡£À£££¤£¥¡­¡­£¦¡Á£¨£©¡ª¡ª£«£û£ý£ü£º¡°¡¶¡·£¿£à£­£½£Û£Ý£»£§£¬£®£¯";
+            string keys = "~!@#$%^&*()+{}|:<>?`=[];,./¡«£¡£À£££¤£¥¡­¡­£¦¡Á£¨£©¡ª¡ª£«£û£ý£ü£º¡°¡¶¡·£¿£à£­£½£Û£Ý£»£§£¬£®£¯";
             char[] cc = keys.ToCharArray();
             foreach (char c in cc)
                 fd = fd.Replace(c.ToString(), "");

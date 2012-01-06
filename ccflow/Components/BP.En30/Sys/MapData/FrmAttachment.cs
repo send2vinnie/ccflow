@@ -64,6 +64,10 @@ namespace BP.Sys
         /// </summary>
         public const string IsUpload = "IsUpload";
         /// <summary>
+        /// 是否增加
+        /// </summary>
+        public const string IsNote = "IsNote";
+        /// <summary>
         /// 是否可以删除
         /// </summary>
         public const string IsDelete = "IsDelete";
@@ -170,6 +174,20 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(FrmAttachmentAttr.IsAutoSize, value);
+            }
+        }
+        /// <summary>
+        /// 备注列
+        /// </summary>
+        public bool IsNote
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FrmAttachmentAttr.IsNote);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentAttr.IsNote, value);
             }
         }
         /// <summary>
@@ -384,6 +402,7 @@ namespace BP.Sys
                 map.AddBoolean(FrmAttachmentAttr.IsDownload, true, "是否可以下载", false, false);
 
                 map.AddBoolean(FrmAttachmentAttr.IsAutoSize, true, "自动控制大小", false, false);
+                map.AddBoolean(FrmAttachmentAttr.IsNote, true, "是否增加备注", false, false);
 
                 map.AddTBInt(FrmAttachmentAttr.UploadType, 0, "上传类型0单个1多个2指定", false, false);
 

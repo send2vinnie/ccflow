@@ -53,6 +53,10 @@ namespace BP.Sys
         /// 类别
         /// </summary>
         public const string Sort = "Sort";
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public const string MyNote = "MyNote";
     }
     /// <summary>
     /// 附件数据存储
@@ -156,6 +160,23 @@ namespace BP.Sys
                 this.SetValByKey(FrmAttachmentDBAttr.RefPKVal, value);
             }
         }
+        /// <summary>
+        /// MyNote
+        /// </summary>
+        public string MyNote
+        {
+            get
+            {
+                return this.GetValStringByKey(FrmAttachmentDBAttr.MyNote);
+            }
+            set
+            {
+                this.SetValByKey(FrmAttachmentDBAttr.MyNote, value);
+            }
+        }
+        /// <summary>
+        /// Rec
+        /// </summary>
         public string Rec
         {
             get
@@ -252,6 +273,8 @@ namespace BP.Sys
                 map.AddTBDateTime(FrmAttachmentDBAttr.RDT, null, "记录日期", true, false);
                 map.AddTBString(FrmAttachmentDBAttr.Rec, null, "记录人", true, false, 0, 50, 20);
                 map.AddTBString(FrmAttachmentDBAttr.RecName, null, "记录人名字", true, false, 0, 50, 20);
+                map.AddTBStringDoc(FrmAttachmentDBAttr.MyNote, null, "MyNote", true, false);
+
                 this._enMap = map;
                 return this._enMap;
             }
