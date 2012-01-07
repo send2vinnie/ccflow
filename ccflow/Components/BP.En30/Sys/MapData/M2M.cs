@@ -4,70 +4,82 @@ using BP.DA;
 using BP.En;
 //using BP.ZHZS.Base;
 
-namespace BP.WF
+namespace BP.Sys
 {
     /// <summary>
     /// M2M
     /// </summary>
-    public class M2MAttr
+    public class M2MAttr : EntityMyPKAttr
     {
-        public const string FK_Node = "FK_Node";
-        public const string WorkID = "WorkID";
+        public const string FK_MapData = "FK_MapData";
+        public const string M2MNo = "M2MNo";
+        public const string EnOID = "EnOID";
         public const string Doc = "Doc";
-        public const string ValNames = "ValNames";
-        public const string MapM2M = "MapM2M";
-        public const string OperObj = "OperObj";
+        public const string ValsSQL = "ValsSQL";
+        public const string ValsName = "ValsName";
+        public const string DtlObj = "DtlObj";
     }
 	/// <summary>
-    ///  M2M 
+    ///  M2M 数据存储
 	/// </summary>
     public class M2M : EntityMyPK
     {
-        public int FK_Node
+        public string FK_MapData
         {
             get
             {
-                return this.GetValIntByKey(M2MAttr.FK_Node);
+                return this.GetValStrByKey(M2MAttr.FK_MapData);
             }
             set
             {
-                this.SetValByKey(M2MAttr.FK_Node, value);
+                this.SetValByKey(M2MAttr.FK_MapData, value);
             }
         }
-        public Int64 WorkID
+        public Int64 EnOID
         {
             get
             {
-                return this.GetValInt64ByKey(M2MAttr.WorkID);
+                return this.GetValInt64ByKey(M2MAttr.EnOID);
             }
             set
             {
-                this.SetValByKey(M2MAttr.WorkID, value);
+                this.SetValByKey(M2MAttr.EnOID, value);
             }
         }
         /// <summary>
         /// 操作对象对于m2mm有效
         /// </summary>
-        public string OperObj
+        public string DtlObj
         {
             get
             {
-                return this.GetValStrByKey(M2MAttr.OperObj);
+                return this.GetValStrByKey(M2MAttr.DtlObj);
             }
             set
             {
-                this.SetValByKey(M2MAttr.OperObj, value);
+                this.SetValByKey(M2MAttr.DtlObj, value);
             }
         }
-        public string MapM2M
+        public string ValsSQL
         {
             get
             {
-                return this.GetValStrByKey(M2MAttr.MapM2M);
+                return this.GetValStrByKey(M2MAttr.ValsSQL);
             }
             set
             {
-                this.SetValByKey(M2MAttr.MapM2M, value);
+                this.SetValByKey(M2MAttr.ValsSQL, value);
+            }
+        }
+        public string ValsName
+        {
+            get
+            {
+                return this.GetValStrByKey(M2MAttr.ValsName);
+            }
+            set
+            {
+                this.SetValByKey(M2MAttr.ValsName, value);
             }
         }
         /// <summary>
@@ -84,18 +96,15 @@ namespace BP.WF
                 this.SetValByKey(M2MAttr.Doc, value);
             }
         }
-        /// <summary>
-        /// 值与名称
-        /// </summary>
-        public string ValNames
+        public string M2MNo
         {
             get
             {
-                return this.GetValStrByKey(M2MAttr.ValNames);
+                return this.GetValStrByKey(M2MAttr.M2MNo);
             }
             set
             {
-                this.SetValByKey(M2MAttr.ValNames, value);
+                this.SetValByKey(M2MAttr.M2MNo, value);
             }
         }
         #region 构造方法
@@ -104,20 +113,6 @@ namespace BP.WF
         /// </summary>
         public M2M()
         {
-        }
-        /// <summary>
-        /// M2M数据存储
-        /// </summary>
-        /// <param name="_No"></param>
-        public M2M(string _No) : base(_No) 
-        {
-        }
-        public M2M(int nodeid, int workid) 
-        {
-            this.FK_Node = nodeid;
-            this.WorkID = workid;
-            this.MyPK = this.FK_Node + "_" + this.WorkID;
-            this.RetrieveFromDBSources();
         }
         #endregion
 
@@ -130,19 +125,20 @@ namespace BP.WF
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("WF_M2M");
+                Map map = new Map("Sys_M2M");
                 map.EnDesc = "M2M数据存储";
                 map.DepositaryOfMap = Depositary.Application;
 
                 map.AddMyPK();
-                map.AddTBInt(M2MAttr.FK_Node, 0, "FK_Node", true, true);
-                map.AddTBInt(M2MAttr.WorkID, 0, "WorkID", true, false);
+                map.AddTBString(M2MAttr.FK_MapData, null, "FK_MapData", true, true, 0, 20, 20);
+                map.AddTBString(M2MAttr.M2MNo, null, "M2MNo", true, true, 0, 20, 20);
 
-                map.AddTBString(M2MAttr.MapM2M, null, "MapM2M", true, true,0,20,20);
-                map.AddTBString(M2MAttr.OperObj, null, "OperObj(对于m2mm有效)", true, true, 0, 20, 20);
+                map.AddTBInt(M2MAttr.EnOID, 0, "实体OID", true, false);
+                map.AddTBString(M2MAttr.DtlObj, null, "DtlObj(对于m2mm有效)", true, true, 0, 20, 20);
 
                 map.AddTBStringDoc();
-                map.AddTBStringDoc(M2MAttr.ValNames, null, "ValNames", true, true);
+                map.AddTBStringDoc(M2MAttr.ValsName, null, "ValsName", true, true);
+                map.AddTBStringDoc(M2MAttr.ValsSQL, null, "ValsSQL", true, true);
 
                 this._enMap = map;
                 return this._enMap;
@@ -150,8 +146,12 @@ namespace BP.WF
         }
         protected override bool beforeUpdateInsertAction()
         {
-            this.MyPK = this.FK_Node + "_" + this.WorkID + "_" + this.MapM2M + "_" + this.OperObj;
+            this.InitMyPK();
             return base.beforeUpdateInsertAction();
+        }
+        public void InitMyPK()
+        {
+            this.MyPK = this.FK_MapData + "_" + this.M2MNo + "_" + this.EnOID + "_" + this.DtlObj;
         }
     }
 	/// <summary>
@@ -168,11 +168,11 @@ namespace BP.WF
         /// <summary>
         /// M2M数据存储s
         /// </summary>
-        /// <param name="fk_node"></param>
-        /// <param name="workid"></param>
-        public M2Ms(int fk_node, Int64 workid)
+        /// <param name="FK_MapData"></param>
+        /// <param name="EnOID"></param>
+        public M2Ms(int FK_MapData, Int64 EnOID)
         {
-            this.Retrieve(M2MAttr.FK_Node, fk_node, M2MAttr.WorkID, workid);
+            this.Retrieve(M2MAttr.FK_MapData, FK_MapData, M2MAttr.EnOID, EnOID);
         }
         /// <summary>
         /// M2M数据存储 Entity 
