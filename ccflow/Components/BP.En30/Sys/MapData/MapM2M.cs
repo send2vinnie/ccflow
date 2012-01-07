@@ -4,8 +4,19 @@ using BP.DA;
 using BP.En;
 namespace BP.Sys
 {
-    public enum M2MShowWay
+    /// <summary>
+    /// 多对多的类型
+    /// </summary>
+    public enum M2MType
     {
+        /// <summary>
+        /// 一对多
+        /// </summary>
+        M2M,
+        /// <summary>
+        /// 一对多对多
+        /// </summary>
+        M2MM
     }
     /// <summary>
     /// 点对点
@@ -28,6 +39,17 @@ namespace BP.Sys
         /// 是否可以自适应大小
         /// </summary>
         public const string ShowWay = "ShowWay";
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public const string M2MType = "M2MType";
+        /// <summary>
+        /// DBOfLists (对一对多对多模式有效）
+        /// </summary>
+        public const string DBOfLists = "DBOfLists";
+        /// <summary>
+        /// DBOfObjs
+        /// </summary>
         public const string DBOfObjs = "DBOfObjs";
         public const string DBOfGroups = "DBOfGroups";
         public const string IsDelete = "IsDelete";
@@ -107,6 +129,37 @@ namespace BP.Sys
                 this.SetValByKey(MapM2MAttr.IsInsert, value);
             }
         }
+        /// <summary>
+        /// 列表(对一对多对多模式有效）
+        /// </summary>
+        public string DBOfLists
+        {
+            get
+            {
+                string sql = this.GetValStrByKey(MapM2MAttr.DBOfLists);
+                sql = sql.Replace("~", "'");
+                return sql;
+            }
+            set
+            {
+                this.SetValByKey(MapM2MAttr.DBOfLists, value);
+            }
+        }
+        /// <summary>
+        /// 列表(对一对多对多模式有效）
+        /// </summary>
+        public string DBOfListsRun
+        {
+            get
+            {
+                string sql = this.DBOfLists;
+                sql = sql.Replace("~", "'");
+                sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
+                sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                return sql;
+            }
+        }
         public string DBOfObjs
         {
             get
@@ -125,10 +178,6 @@ namespace BP.Sys
             get
             {
                 string sql = this.GetValStrByKey(MapM2MAttr.DBOfGroups);
-                //if (string.IsNullOrEmpty(sql))
-                //{
-                //    return "SELECT No,Name Port_Dept ";
-                //}
                 sql = sql.Replace("~", "'");
                 return sql;
             }
@@ -137,7 +186,6 @@ namespace BP.Sys
                 this.SetValByKey(MapM2MAttr.DBOfGroups, value);
             }
         }
-
         public string DBOfObjsRun
         {
             get
@@ -230,6 +278,17 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapM2MAttr.Cols, value);
+            }
+        }
+        public M2MType HisM2MType
+        {
+            get
+            {
+                return (M2MType)this.GetValIntByKey(MapM2MAttr.M2MType);
+            }
+            set
+            {
+                this.SetValByKey(MapM2MAttr.M2MType, (int)value);
             }
         }
         public int GroupID
@@ -344,6 +403,8 @@ namespace BP.Sys
 
                 map.AddTBString(MapM2MAttr.Name, null, "名称", true, false, 1, 200, 20);
 
+                map.AddTBString(MapM2MAttr.DBOfLists, null, "列表数据源(对一对多对多模式有效）", true, false, 0, 4000, 20);
+
                 map.AddTBString(MapM2MAttr.DBOfObjs, null, "DBOfObjs", true, false, 0, 4000, 20);
                 map.AddTBString(MapM2MAttr.DBOfGroups, null, "DBOfGroups", true, false, 0, 4000, 20);
 
@@ -352,8 +413,10 @@ namespace BP.Sys
                 map.AddTBFloat(FrmImgAttr.X, 5, "X", true, false);
                 map.AddTBFloat(FrmImgAttr.Y, 5, "Y", false, false);
 
+                map.AddTBInt(MapM2MAttr.ShowWay, (int)FrmShowWay.FrmAutoSize, "显示方式", false, false);
 
-                map.AddTBInt(MapM2MAttr.ShowWay, 1, "显示方式", false, false);
+                map.AddTBInt(MapM2MAttr.M2MType, (int)M2MType.M2M, "类型", false, false);
+
 
                 map.AddTBInt(MapM2MAttr.RowIdx, 99, "位置", false, false);
                 map.AddTBInt(MapM2MAttr.GroupID, 0, "分组ID", false, false);

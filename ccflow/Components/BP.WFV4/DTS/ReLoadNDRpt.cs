@@ -45,14 +45,20 @@ namespace BP.WF
         /// <returns>返回执行结果</returns>
         public override object Do()
         {
-          
-
             string msg = "";
             Flows fls = new Flows();
             fls.RetrieveAllFromDBSource();
             foreach (Flow fl in fls)
             {
-              msg+=  fl.DoReloadRptData();
+                try
+                {
+                    msg += fl.DoReloadRptData();
+                }
+                catch(Exception ex)
+                {
+                    msg += "@在处理流程(" + fl.Name + ")出现异常" + ex.Message;
+                    return msg;
+                }
             }
             return "提示："+fls.Count+"个流程参与了体检，信息如下：@"+msg;
         }

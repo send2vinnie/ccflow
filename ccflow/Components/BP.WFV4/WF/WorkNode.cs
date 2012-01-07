@@ -2344,7 +2344,7 @@ namespace BP.WF
                         mywk.InsertAsOID(mywk.OID);
 
                         #region  复制附件信息
-                        if (athDBs.Count >= 0)
+                        if (athDBs.Count > 0)
                         {
                             /* 说明当前节点有附件数据 */
                             athDBs.Delete(FrmAttachmentDBAttr.FK_MapData, "ND" + toNode.NodeID,
@@ -2366,7 +2366,7 @@ namespace BP.WF
                         #endregion  复制附件信息
 
                         #region  复制明细表信息.
-                        if (dtlsFrom.Count >= 1)
+                        if (dtlsFrom.Count > 0 )
                         {
                             int i = -1;
                             foreach (Sys.MapDtl dtl in dtlsFrom)
@@ -2411,7 +2411,32 @@ namespace BP.WF
                                     dtCopy.FK_MapDtl = toDtl.No;
                                     dtCopy.RefPK = mywk.OID.ToString();
                                     dtCopy.OID = 0;
-                                    dtCopy.Insert();
+                                    dtCopy.InsertAsOID(gedtl.OID);
+
+                                    #region  复制明细表单条 - 附件信息
+                                    if (toDtl.IsEnableAthM)
+                                    {
+                                        /*如果启用了多附件,就复制这条明细数据的附件信息。*/
+                                        athDBs = new FrmAttachmentDBs(dtl.No, gedtl.OID.ToString());
+                                        if (athDBs.Count > 0)
+                                        {
+                                            i = 0;
+                                            foreach (FrmAttachmentDB athDB in athDBs)
+                                            {
+                                                i++;
+                                                FrmAttachmentDB athDB_N = new FrmAttachmentDB();
+                                                athDB_N.Copy(athDB);
+                                                athDB_N.FK_MapData = toDtl.No;
+                                                athDB_N.MyPK = toDtl.No + "_" + dtCopy.OID + "_" + i.ToString();
+                                                athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
+                                                    "ND" + toNode.NodeID);
+                                                athDB_N.RefPKVal = dtCopy.OID.ToString();
+                                                athDB_N.DirectInsert();
+                                            }
+                                        }
+                                    }
+                                    #endregion  复制明细表单条 - 附件信息
+
                                 }
                             }
                         }
@@ -3464,7 +3489,7 @@ namespace BP.WF
                 wk.BeforeSave();
                 wk.DirectInsert();
 
-                if (athDBs.Count >= 0)
+                if (athDBs.Count > 0)
                 {
                     /*说明当前节点有附件数据*/
                     int idx = 0;
@@ -3760,7 +3785,7 @@ namespace BP.WF
             #region 复制附件。
             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                   this.WorkID.ToString());
-            if (athDBs.Count >= 0)
+            if (athDBs.Count > 0)
             {
                 /*说明当前节点有附件数据*/
                 int idx = 0;
@@ -3926,7 +3951,7 @@ namespace BP.WF
             #region 复制附件。
             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                   this.WorkID.ToString());
-            if (athDBs.Count >= 0)
+            if (athDBs.Count > 0)
             {
                 /*说明当前节点有附件数据*/
                 int idx = 0;
@@ -4011,7 +4036,7 @@ namespace BP.WF
                 FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                       this.WorkID.ToString());
                 int idx = 0;
-                if (athDBs.Count >= 0)
+                if (athDBs.Count > 0)
                 {
                     athDBs.Delete(FrmAttachmentDBAttr.FK_MapData, "ND" + nd.NodeID,
                         FrmAttachmentDBAttr.RefPKVal, this.WorkID);
@@ -4120,6 +4145,7 @@ namespace BP.WF
                             /*判断当前节点该明细表上是否有，isPass 审核字段，如果没有抛出异常信息。*/
                         }
 
+                        DBAccess.RunSQL("DELETE " + toDtl.PTable + " WHERE RefPK=" + this.WorkID);
                         foreach (GEDtl gedtl in gedtls)
                         {
                             if (isEnablePass)
@@ -4135,16 +4161,33 @@ namespace BP.WF
                             dtCopy.Copy(gedtl);
                             dtCopy.FK_MapDtl = toDtl.No;
                             dtCopy.RefPK = this.WorkID.ToString();
-                            try
-                            {
-                                dtCopy.InsertAsOID(dtCopy.OID);
-                            }
-                            catch
-                            {
-                                dtCopy.Update();
-                            }
-                        }
+                            dtCopy.InsertAsOID(dtCopy.OID);
 
+                            #region  复制明细表单条 - 附件信息
+                            if (toDtl.IsEnableAthM)
+                            {
+                                /*如果启用了多附件,就复制这条明细数据的附件信息。*/
+                                athDBs = new FrmAttachmentDBs(dtl.No, gedtl.OID.ToString());
+                                if (athDBs.Count > 0)
+                                {
+                                    i = 0;
+                                    foreach (FrmAttachmentDB athDB in athDBs)
+                                    {
+                                        i++;
+                                        FrmAttachmentDB athDB_N = new FrmAttachmentDB();
+                                        athDB_N.Copy(athDB);
+                                        athDB_N.FK_MapData = toDtl.No;
+                                        athDB_N.MyPK = toDtl.No + "_" + dtCopy.OID + "_" + i.ToString();
+                                        athDB_N.FK_FrmAttachment = athDB_N.FK_FrmAttachment.Replace("ND" + this.HisNode.NodeID,
+                                            "ND" + nd.NodeID);
+                                        athDB_N.RefPKVal = dtCopy.OID.ToString();
+                                        athDB_N.DirectInsert();
+                                    }
+                                }
+                            }
+                            #endregion  复制明细表单条 - 附件信息
+
+                        }
                         if (isEnablePass)
                         {
                             /* 如果启用了审核通过机制，就把未审核的数据copy到第一个节点上去 
@@ -4155,8 +4198,6 @@ namespace BP.WF
                             string startTable = "ND" + int.Parse(nd.FK_Flow) + "01";
                             string startUser = "SELECT Rec FROM " + startTable + " WHERE OID=" + this.WorkID;
                             startUser = DBAccess.RunSQLReturnString(startUser);
-
-                            //this.HisWorkFlow.StartNodeID;
 
                             MapDtl startDtl = (MapDtl)startDtls[i];
                             foreach (GEDtl gedtl in gedtls)
