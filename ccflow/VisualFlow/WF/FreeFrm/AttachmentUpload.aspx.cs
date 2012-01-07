@@ -62,7 +62,6 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         }
 
         BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment(this.FK_FrmAttachment);
-
         this.Title = athDesc.Name;
 
         this.Pub1.AddTable("width='100%'");

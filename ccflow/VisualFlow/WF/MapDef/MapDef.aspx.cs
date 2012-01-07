@@ -75,12 +75,11 @@ public partial class WF_MapDef_MapDef : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         string fk_node = this.Request.QueryString["FK_Node"];
-        if ( string.IsNullOrEmpty(fk_node) ==false)
+        if (string.IsNullOrEmpty(fk_node) == false)
         {
             BP.WF.Node nd = new BP.WF.Node();
             nd.NodeID = int.Parse(fk_node);
             nd.RetrieveFromDBSources();
-
             if (nd.HisFormType != BP.WF.FormType.FixForm)
             {
                 this.Response.Redirect("./CCForm/Frm.aspx?FK_MapData=" + this.FK_MapData + "&FK_Flow=" + nd.FK_Flow, true);
@@ -558,6 +557,9 @@ public partial class WF_MapDef_MapDef : WebPage
                 case AutoFullWay.Way1_JS:
                     js = "\t\n <script type='text/javascript' >";
                     TB tb = this.Pub1.GetTBByID("TB_" + attr.KeyOfEn);
+                    if (tb == null)
+                        continue;
+
                     string left = "\n  document.forms[0]." + tb.ClientID + ".value = ";
                     string right = attr.AutoFullDoc;
                     foreach (MapAttr mattr in mattrs)
@@ -741,50 +743,80 @@ public partial class WF_MapDef_MapDef : WebPage
         #endregion 增加附件
 
         #region 增加M2M
-        foreach (MapM2M dtl in dot2dots)
+        foreach (MapM2M m2m in dot2dots)
         {
-            if (dtl.IsUse)
+            if (m2m.IsUse)
                 continue;
 
             if (isJudgeRowIdx)
             {
-                if (dtl.RowIdx != rowIdx)
+                if (m2m.RowIdx != rowIdx)
                     continue;
             }
 
-            if (dtl.GroupID == 0 && rowIdx == 0)
+            if (m2m.GroupID == 0 && rowIdx == 0)
             {
-                dtl.GroupID = currGF.OID;
-                dtl.RowIdx = 0;
-                dtl.Update();
+                m2m.GroupID = currGF.OID;
+                m2m.RowIdx = 0;
+                m2m.Update();
             }
-            else if (dtl.GroupID == currGF.OID)
+            else if (m2m.GroupID == currGF.OID)
             {
-
             }
             else
             {
                 continue;
             }
 
-            dtl.IsUse = true;
+            m2m.IsUse = true;
             int myidx = rowIdx + 10;
             this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditM2M('" + this.FK_MapData + "','" + dtl.NoOfObj + "')\" >" + dtl.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:M2MDoUp('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:M2MDoDown('" + dtl.MyPK + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
+            this.Pub1.Add("<TD colspan=4 class=TRSum  ><div style='text-align:left; float:left'><a href=\"javascript:EditM2M('" + this.FK_MapData + "','" + m2m.NoOfObj + "')\" >" + m2m.Name + "</a></div><div style='text-align:right; float:right'><a href=\"javascript:M2MDoUp('" + m2m.MyPK + "')\" ><img src='../../Images/Btn/Up.gif' border=0/></a> <a href=\"javascript:M2MDoDown('" + m2m.MyPK + "')\" ><img src='../../Images/Btn/Down.gif' border=0/></a></div></td>");
             this.Pub1.AddTREnd();
 
             myidx++;
-            this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-            this.Pub1.Add("<TD colspan=4 ID='TD" + dtl.MyPK + "' height='50px' width='1000px'>");
-
-            string src = "M2MDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapM2M=" + dtl.NoOfObj;
-            if (dtl.ShowWay == FrmShowWay.FrmAutoSize)
-                this.Pub1.Add("<iframe ID='F" + dtl.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
+            string src = "";
+            if (m2m.HisM2MType == M2MType.M2M)
+                src = "../M2M.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + m2m.NoOfObj + "&WorkID=0";
             else
-                this.Pub1.Add("<iframe ID='F" + dtl.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='" + dtl.W + "' height='" + dtl.H + "' scrolling=auto  /></iframe>");
+                src = "../M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + m2m.NoOfObj + "&WorkID=0";
 
-            this.Pub1.AddTDEnd();
-            this.Pub1.AddTREnd();
+            switch (m2m.ShowWay)
+            {
+                case FrmShowWay.FrmAutoSize:
+                    //this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "'");
+                    //this.Pub1.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' width='100%'>");
+                    //this.Pub1.Add("<iframe ID='F" + m2m.NoOfObj + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%'   scrolling=no  /></iframe>");
+                    //this.Pub1.AddTDEnd();
+                    //this.Pub1.AddTREnd();
+
+                    myidx++;
+                    this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
+                    this.Pub1.Add("<TD colspan=4 ID='TD" + m2m.MyPK + "' height='50px' width='1000px'>");
+                    this.Pub1.Add("<iframe ID='F" + m2m.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
+                    this.Pub1.AddTDEnd();
+                    this.Pub1.AddTREnd();
+                    break;
+                case FrmShowWay.FrmSpecSize:
+                    this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "'");
+                    this.Pub1.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='" + m2m.H + "' width='" + m2m.W + "'  >");
+                    this.Pub1.Add("<iframe ID='F" + m2m.NoOfObj + "' src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "' scrolling=auto /></iframe>");
+                    this.Pub1.AddTDEnd();
+                    this.Pub1.AddTREnd();
+                    break;
+                case FrmShowWay.Hidden:
+                    break;
+                case FrmShowWay.WinOpen:
+                    this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "'");
+                    this.Pub1.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='20px' width='100%' >");
+                    this.Pub1.Add("<a href=\"javascript:WinOpen('" + src + "&IsOpen=1" + "','" + m2m.W + "','" + m2m.H + "');\"  />" + m2m.Name + "</a>");
+                    this.Pub1.AddTDEnd();
+                    this.Pub1.AddTREnd();
+                    break;
+                default:
+                    break;
+            }
+        
         }
         #endregion 增加M2M
 

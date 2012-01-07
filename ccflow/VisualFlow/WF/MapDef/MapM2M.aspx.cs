@@ -11,6 +11,7 @@ using BP.Web;
 
 public partial class WF_MapDef_MapM2M : WebPage
 {
+
     #region 属性
     public new string DoType
     {
@@ -26,11 +27,11 @@ public partial class WF_MapDef_MapM2M : WebPage
             return this.Request.QueryString["FK_MapData"];
         }
     }
-    public string FK_MapM2M
+    public string NoOfObj
     {
         get
         {
-            return this.Request.QueryString["FK_MapM2M"];
+            return this.Request.QueryString["NoOfObj"];
         }
     }
     #endregion 属性
@@ -39,7 +40,13 @@ public partial class WF_MapDef_MapM2M : WebPage
     {
         MapData md = new MapData(this.FK_MapData);
         this.Title = md.Name + " - " + this.ToE("DesignFrame", "设计多选");
-        MapM2M m2m = new MapM2M(this.FK_MapData, this.FK_MapM2M);
+        MapM2M m2m = new MapM2M(this.FK_MapData, this.NoOfObj);
+        if (m2m.HisM2MType == M2MType.M2MM)
+        {
+            this.Response.Redirect("MapM2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj, true);
+            return;
+        }
+
         this.Pub1.AddTable();
         this.Pub1.AddCaptionLeft("多选属性");
         int idx = 1;
@@ -200,7 +207,7 @@ public partial class WF_MapDef_MapM2M : WebPage
 
         this.Pub1.AddFieldSet("SQL事例");
         this.Pub1.Add("主体数据源:");
-        this.Pub1.AddBR("SELECT No,Name,FK_Dept FROM Port_Emp ");
+        this.Pub1.AddBR("SELECT No,Name,FK_Dept FROM Port_Emp");
         this.Pub1.AddBR();
         this.Pub1.Add("分组数据源:");
         this.Pub1.AddBR("SELECT No,Name FROM Port_Dept ");
@@ -211,19 +218,20 @@ public partial class WF_MapDef_MapM2M : WebPage
         Button btn = sender as Button;
         try
         {
-            MapM2M m2m = new MapM2M(this.FK_MapData, this.FK_MapM2M);
+            MapM2M m2m = new MapM2M(this.FK_MapData, this.NoOfObj);
             m2m = (MapM2M)this.Pub1.Copy(m2m);
             m2m.FK_MapData = this.FK_MapData;
             m2m.ShowWay = (FrmShowWay)this.Pub1.GetDDLByID("DDL_ShowWay").SelectedItemIntVal;
             m2m.FK_MapData = this.FK_MapData;
             if (string.IsNullOrEmpty(m2m.NoOfObj))
-                m2m.NoOfObj = this.FK_MapM2M;
+                m2m.NoOfObj = this.NoOfObj;
 
             if (string.IsNullOrEmpty(m2m.NoOfObj))
                 m2m.NoOfObj = DataType.ParseStringToPinyin(m2m.Name);
 
             GroupFields gfs = new GroupFields(m2m.FK_MapData);
             m2m.GroupID = this.Pub1.GetDDLByID("DDL_GroupField").SelectedItemIntVal;
+            m2m.HisM2MType = M2MType.M2M;
             m2m.Save();
 
             if (btn.ID.Contains("AndC"))
@@ -231,7 +239,7 @@ public partial class WF_MapDef_MapM2M : WebPage
                 this.WinClose();
                 return;
             }
-            this.Response.Redirect("MapM2M.aspx?DoType=Edit&FK_MapM2M=" + m2m.NoOfObj + "&FK_MapData=" + this.FK_MapData, true);
+            this.Response.Redirect("MapM2M.aspx?DoType=Edit&NoOfObj=" + m2m.NoOfObj + "&FK_MapData=" + this.FK_MapData, true);
         }
         catch (Exception ex)
         {
@@ -243,7 +251,7 @@ public partial class WF_MapDef_MapM2M : WebPage
         try
         {
             MapM2M dtl = new MapM2M();
-            dtl.MyPK = this.FK_MapData + "_" + this.FK_MapM2M;
+            dtl.MyPK = this.FK_MapData + "_" + this.NoOfObj;
             dtl.Delete();
             this.WinClose();
         }
@@ -252,4 +260,5 @@ public partial class WF_MapDef_MapM2M : WebPage
             this.Alert(ex.Message);
         }
     }
+
 }

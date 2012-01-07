@@ -470,7 +470,7 @@ namespace BP.Web.Comm.UC.WF
                     this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='" + m2m.H + "' width='" + m2m.W + "'  >");
 
 
-                string src = "M2M.aspx?FK_MapM2M=" + m2m.NoOfObj;
+                string src = "M2M.aspx?NoOfObj=" + m2m.NoOfObj;
                 string paras = this.RequestParas;
 
                 if (paras.Contains("FID=") == false)
@@ -1306,8 +1306,7 @@ namespace BP.Web.Comm.UC.WF
                 else
                     this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='" + m2m.H + "' width='" + m2m.W + "'  >");
 
-
-                string src = "M2M.aspx?FK_MapM2M=" + m2m.NoOfObj;
+                string src = "M2M.aspx?NoOfObj=" + m2m.NoOfObj;
                 string paras = this.RequestParas;
 
                 //if (paras.Contains("FK_Node=") == false)
@@ -1869,7 +1868,7 @@ namespace BP.Web.Comm.UC.WF
             {
                 this.Add("<DIV id='Fd" + m2m.NoOfObj + "' style='position:absolute; left:" + m2m.X + "px; top:" + m2m.Y + "px; width:" + m2m.W + "px; height:" + m2m.H + "px;text-align: left;' >");
                 this.Add("<span>");
-                string src = "M2M.aspx?FK_MapM2M=" + m2m.NoOfObj;
+                string src = "M2M.aspx?NoOfObj=" + m2m.NoOfObj;
 
                 string paras = this.RequestParas;
                 try

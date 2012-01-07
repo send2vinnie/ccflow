@@ -219,7 +219,7 @@ body
   }
 
   function EditM2M(mypk, dtlKey) {
-      var url = 'MapM2M.aspx?DoType=Edit&FK_MapData=' + mypk + '&FK_MapM2M=' + dtlKey;
+      var url = 'MapM2M.aspx?DoType=Edit&FK_MapData=' + mypk + '&NoOfObj=' + dtlKey;
       var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
       window.location.href = window.location.href;
   }
@@ -230,10 +230,15 @@ body
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    
     /// 多选.
     function MapM2M(mypk) {
         var url = 'MapM2M.aspx?DoType=List&FK_MapData=' + mypk;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+
+    function MapM2MM(mypk) {
+        var url = 'MapM2MM.aspx?FK_MapData=' + mypk;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }

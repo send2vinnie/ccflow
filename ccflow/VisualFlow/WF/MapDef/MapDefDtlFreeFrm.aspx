@@ -5,7 +5,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <base target=_self />
 <script language=javascript>
-
 	function HelpGroup()
 	{
 	   var msg='字段分组：就是把类似的字段放在一起，让用户操作更友好。\t\n比如：我们纳税人设计一个基础信息采集节点。';
@@ -201,7 +200,7 @@
   }
 
   function EditM2M(mypk, dtlKey) {
-      var url = 'MapM2M.aspx?DoType=Edit&FK_MapData=' + mypk + '&FK_MapM2M=' + dtlKey;
+      var url = 'MapM2M.aspx?DoType=Edit&FK_MapData=' + mypk + '&NoOfObj=' + dtlKey;
       var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no');
       window.location.href = window.location.href;
   }
