@@ -6,6 +6,8 @@
 
     // 获取DDL值
     function ReqDDL(ddlID) {
+
+        alert(ddlID);
         var v = document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_DDL_' + ddlID).value;
         if (v == null) {
             alert('没有找到ID='+ddlID+'的下拉框控件.');
@@ -14,7 +16,8 @@
     }
     // 获取TB值
     function ReqTB(tbID) {
-        var v = document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_TB_' + ddlID).value;
+        alert(tbID);
+        var v = document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_TB_' + tbID).value;
         if (v == null) {
             alert('没有找到ID=' + ddlID + '的文本框控件.');
         }
