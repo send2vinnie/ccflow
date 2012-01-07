@@ -47,7 +47,7 @@ namespace BP.WF
         /// <returns>返回执行结果</returns>
         public override object Do()
         {
-            string keys = "~!@#$%^&*()_+{}|:<>?`=[];,./～！＠＃￥％……＆×（）——＋｛｝｜：“《》？｀－＝［］；＇，．／";
+            string keys = "~!@#$%^&*()+{}|:<>?`=[];,./～！＠＃￥％……＆×（）——＋｛｝｜：“《》？｀－＝［］；＇，．／";
             char[] cc = keys.ToCharArray();
             foreach (char c in cc)
             {
@@ -65,14 +65,25 @@ namespace BP.WF
                 {
                     int i = int.Parse( item.KeyOfEn.Substring(0, 1) );
                     item.KeyOfEn = "F" + item.KeyOfEn;
+                    try
+                    {
+                        MapAttr itemCopy = new MapAttr();
+                        itemCopy.Copy(item);
+                        itemCopy.Insert();
+                        item.DirectDelete();
+                    }
+                    catch (Exception ex)
+                    {
+                        msg += "@" + ex.Message;
+                    }
                 }
                 catch
                 {
                     continue;
                 }
                 DBAccess.RunSQL("UPDATE sys_mapAttr set KeyOfEn='"+item.KeyOfEn+"', mypk=FK_MapData+'_'+keyofen where keyofen='"+item.KeyOfEn+"'");
-
                 msg += "@第(" + idx + ")个错误修复成功，原（"+f+"）修复成("+item.KeyOfEn+").";
+                idx++;
             }
 
             BP.DA.DBAccess.RunSQL("UPDATE Sys_MapAttr SET MyPK=FK_MapData+'_'+KeyOfEn WHERE MyPK!=FK_MapData+'_'+KeyOfEn");
