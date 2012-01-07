@@ -1301,10 +1301,6 @@ namespace BP.Web.Comm.UC.WF
                 m2m.IsUse = true;
                 rowIdx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                if (m2m.ShowWay == FrmShowWay.FrmAutoSize)
-                    this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='50px' width='100%'  >");
-                else
-                    this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='" + m2m.H + "' width='" + m2m.W + "'  >");
 
                 string src = "M2M.aspx?NoOfObj=" + m2m.NoOfObj;
                 string paras = this.RequestParas;
@@ -1325,14 +1321,17 @@ namespace BP.Web.Comm.UC.WF
                 switch (m2m.ShowWay)
                 {
                     case FrmShowWay.FrmAutoSize:
+                        this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='20px' width='100%'  >");
                         this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
                         break;
                     case FrmShowWay.FrmSpecSize:
+                        this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='" + m2m.H + "' width='" + m2m.W + "'  >");
                         this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "' scrolling=auto /></iframe>");
                         break;
                     case FrmShowWay.Hidden:
                         break;
                     case FrmShowWay.WinOpen:
+                        this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='20px' width='100%'  >");
                         this.Add("<a href=\"javascript:WinOpen('" + src + "&IsOpen=1" + "','" + m2m.W + "','" + m2m.H + "');\"  />" + m2m.Name + "</a>");
                         break;
                     default:

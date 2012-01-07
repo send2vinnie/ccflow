@@ -55,8 +55,8 @@ public partial class Comm_M2M : WebPage
             this.Response.Redirect("M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&IsOpen=" + this.IsOpen + "&WorkID=" + this.WorkID, true);
             return;
         }
-        BP.WF.M2M m2m = new BP.WF.M2M();
-        m2m.MyPK = mapM2M.FK_Node + "_" + this.WorkID + "_" + this.FK_MapData;
+        BP.Sys.M2M m2m = new BP.Sys.M2M();
+        m2m.MyPK = this.FK_MapData + "_" + this.NoOfObj + "_" + this.WorkID + "_";
         m2m.RetrieveFromDBSources();
         DataTable dtGroup = new DataTable();
         if (mapM2M.DBOfGroups.Length > 5)
@@ -247,12 +247,13 @@ public partial class Comm_M2M : WebPage
             return;
 
         MapM2M mapM2M = new MapM2M(this.FK_MapData, this.NoOfObj);
-        BP.WF.M2M m2m = new BP.WF.M2M();
-        m2m.MyPK = mapM2M.FK_Node + "_" + this.WorkID+"_"+this.NoOfObj;
-        m2m.FK_Node = mapM2M.FK_Node;
-        m2m.WorkID = this.WorkID;
-        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjs);
 
+        BP.Sys.M2M m2m = new BP.Sys.M2M();
+        m2m.FK_MapData = this.FK_MapData;
+        m2m.EnOID = this.WorkID;
+        m2m.M2MNo = this.NoOfObj;
+
+        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjs);
         string str = ",";
         string strT = "";
         foreach (DataRow dr in dtObj.Rows)
@@ -266,11 +267,11 @@ public partial class Comm_M2M : WebPage
                 continue;
 
             str += id + ",";
-            strT += "@" + id + cb.Text;
+            strT += "@" + id +","+ cb.Text;
         }
         m2m.Vals = str;
-        m2m.ValNames = strT;
-        m2m.MapM2M = this.NoOfObj;
+        m2m.ValsName = strT;
+        m2m.InitMyPK();
         m2m.Save();
     }
 }
