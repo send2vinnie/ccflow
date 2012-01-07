@@ -4065,9 +4065,8 @@ namespace BP.WF
                     {
                         M2M m2 = new M2M();
                         m2.Copy(item);
-                        m2.FK_Node = nd.NodeID;
-                        m2.WorkID = this.WorkID;
-                        m2.MapM2M = m2.MapM2M.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
+                        m2.EnOID = this.WorkID;
+                        m2.FK_MapData = m2.FK_MapData.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
                         try
                         {
                             m2.DirectInsert();

@@ -7,7 +7,7 @@ using BP.En;
 namespace BP.WF
 {
     /// <summary>
-    /// 属性
+    /// M2M
     /// </summary>
     public class M2MAttr
     {
@@ -16,10 +16,10 @@ namespace BP.WF
         public const string Doc = "Doc";
         public const string ValNames = "ValNames";
         public const string MapM2M = "MapM2M";
-
+        public const string OperObj = "OperObj";
     }
 	/// <summary>
-    ///  M2M类别
+    ///  M2M 
 	/// </summary>
     public class M2M : EntityMyPK
     {
@@ -45,6 +45,20 @@ namespace BP.WF
                 this.SetValByKey(M2MAttr.WorkID, value);
             }
         }
+        /// <summary>
+        /// 操作对象对于m2mm有效
+        /// </summary>
+        public string OperObj
+        {
+            get
+            {
+                return this.GetValStrByKey(M2MAttr.OperObj);
+            }
+            set
+            {
+                this.SetValByKey(M2MAttr.OperObj, value);
+            }
+        }
         public string MapM2M
         {
             get
@@ -56,6 +70,9 @@ namespace BP.WF
                 this.SetValByKey(M2MAttr.MapM2M, value);
             }
         }
+        /// <summary>
+        /// 数据
+        /// </summary>
         public string Vals
         {
             get
@@ -67,6 +84,9 @@ namespace BP.WF
                 this.SetValByKey(M2MAttr.Doc, value);
             }
         }
+        /// <summary>
+        /// 值与名称
+        /// </summary>
         public string ValNames
         {
             get
@@ -89,8 +109,9 @@ namespace BP.WF
         /// M2M数据存储
         /// </summary>
         /// <param name="_No"></param>
-        public M2M(string _No) : base(_No) { }
-
+        public M2M(string _No) : base(_No) 
+        {
+        }
         public M2M(int nodeid, int workid) 
         {
             this.FK_Node = nodeid;
@@ -118,6 +139,7 @@ namespace BP.WF
                 map.AddTBInt(M2MAttr.WorkID, 0, "WorkID", true, false);
 
                 map.AddTBString(M2MAttr.MapM2M, null, "MapM2M", true, true,0,20,20);
+                map.AddTBString(M2MAttr.OperObj, null, "OperObj(对于m2mm有效)", true, true, 0, 20, 20);
 
                 map.AddTBStringDoc();
                 map.AddTBStringDoc(M2MAttr.ValNames, null, "ValNames", true, true);
@@ -128,7 +150,7 @@ namespace BP.WF
         }
         protected override bool beforeUpdateInsertAction()
         {
-            this.MyPK = this.FK_Node + "_" + this.WorkID+"_"+this.MapM2M;
+            this.MyPK = this.FK_Node + "_" + this.WorkID + "_" + this.MapM2M + "_" + this.OperObj;
             return base.beforeUpdateInsertAction();
         }
     }
@@ -140,7 +162,9 @@ namespace BP.WF
         /// <summary>
         /// M2M数据存储s
         /// </summary>
-        public M2Ms() { }
+        public M2Ms() 
+        {
+        }
         /// <summary>
         /// M2M数据存储s
         /// </summary>

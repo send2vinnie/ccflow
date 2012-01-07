@@ -173,7 +173,6 @@
     <Compile Include="FlowDesc\NodeDept.cs" />
     <Compile Include="FlowDesc\FlowStation.cs" />
     <Compile Include="FlowDesc\NodeUnitData.cs" />
-    <Compile Include="FlowDesc\M2M.cs" />
     <Compile Include="FlowData.cs" />
     <Compile Include="FlowDesc\FrmNode.cs" />
     <Compile Include="Glo.cs" />
