@@ -3,6 +3,24 @@
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc5" %>
 <%@ Register src="UCEn.ascx" tagname="UCEn" tagprefix="uc6" %>
 <script language=javascript>
+
+    // 获取DDL值
+    function ReqDDL(ddlID) {
+        var v = document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_DDL_' + ddlID).value;
+        if (v == null) {
+            alert('没有找到ID='+ddlID+'的下拉框控件.');
+        }
+        return v;
+    }
+    // 获取TB值
+    function ReqTB(tbID) {
+        var v = document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_TB_' + ddlID).value;
+        if (v == null) {
+            alert('没有找到ID=' + ddlID + '的文本框控件.');
+        }
+        return v;
+    }
+
     //执行分支流程退回到分合流节点。
     function DoSubFlowReturn(fid, workid, fk_node) {
         var url = 'ReturnWorkSubFlowToFHL.aspx?FID=' + fid + '&WorkID=' + workid + '&FK_Node=' + fk_node;
