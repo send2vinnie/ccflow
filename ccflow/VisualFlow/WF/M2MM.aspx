@@ -30,6 +30,28 @@
         	 height:1px;
         	 display:none;
         }
+        
+       UL
+       {
+            padding-left:14px;
+       }
+       
+       li
+       {
+           font-size:16px;
+       }
+       
+       table
+       {
+           border:none;
+       }
+       
+       .Left
+       {
+           border:none;
+           background-color:Silver;
+       }
+</style>
     </style>
 	<script language="JavaScript" src="./../Comm/JScript.js"></script>
     <script language="JavaScript" src="./../Comm/JS/Calendar.js" type="text/javascript"></script>    
@@ -37,7 +59,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <table>
 <tr>
-<td valign=top>
+<td valign=top style='width:30%' class=Left>
     <uc1:Pub ID="Left" runat="server" />
     </td>
 <td valign=top>

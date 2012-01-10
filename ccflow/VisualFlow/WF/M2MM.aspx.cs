@@ -40,12 +40,27 @@ public partial class WF_M2MM : WebPage
             return this.Request.QueryString["NoOfObj"];
         }
     }
+    private int GetNum(M2Ms m2ms, string obj)
+    {
+        foreach (M2M m2m in m2ms)
+        {
+            if (m2m.DtlObj == obj)
+            {
+                return m2m.NumSelected;
+            }
+        }
+        return 0;
+    }
     /// <summary>
     /// 操作对象
     /// </summary>
     public string OperObj = null;
     public bool BindLeft(MapM2M mapM2M)
     {
+        BP.Sys.M2Ms m2ms = new BP.Sys.M2Ms();
+        m2ms.Retrieve(M2MAttr.FK_MapData, this.FK_MapData,
+            M2MAttr.M2MNo, this.NoOfObj, M2MAttr.EnOID, this.WorkID);
+        
         DataTable dtList;
         if (mapM2M.DBOfLists.Substring(0, 1) == "@")
         {
@@ -57,8 +72,8 @@ public partial class WF_M2MM : WebPage
             m2m.MyPK = this.FK_MapData + "_" + myNo + "_" + this.WorkID + "_";
             if (m2m.RetrieveFromDBSources() == 0)
                 return false;
-            string[] vals = m2m.ValsName.Split('@');
 
+            string[] vals = m2m.ValsName.Split('@');
             this.Left.AddUL();
             foreach (string val in vals)
             {
@@ -69,11 +84,12 @@ public partial class WF_M2MM : WebPage
                     this.OperObj = strs[0];
 
                 if (this.OperObj == strs[0])
-                    this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + strs[0] + "'><b>" + strs[1] + "</b></a><br>");
+                    this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + strs[0] + "'><b>" + strs[1] + "(" + GetNum(m2ms, strs[0]) + ")</b></a><br>");
                 else
-                    this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + strs[0] + "'>" + strs[1] + "</a><br>");
+                    this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + strs[0] + "'>" + strs[1] + "(" + GetNum(m2ms, strs[0]) + ")</a><br>");
             }
             this.Left.AddULEnd();
+            return true;
         }
         else
         {
@@ -88,10 +104,13 @@ public partial class WF_M2MM : WebPage
         {
             if (this.OperObj == null)
                 this.OperObj = dr[0].ToString();
-            this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + dr[0].ToString() + "'>" + dr[1].ToString() + "</a><br>");
+
+            if (this.OperObj == dr[0].ToString())
+                this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + dr[0].ToString() + "'><b>" + dr[1].ToString() + "(" + GetNum(m2ms, dr[0].ToString()) + "</b></a><br>");
+            else
+                this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + dr[0].ToString() + "'>" + dr[1].ToString() + "(" + GetNum(m2ms, dr[0].ToString()) + "</a><br>");
         }
         this.Left.AddULEnd();
-
         return true;
     }
     protected void Page_Load(object sender, EventArgs e)
@@ -142,7 +161,7 @@ public partial class WF_M2MM : WebPage
             this.Button1.Visible = true;
         }
 
-        this.Pub1.AddTable("width=100% border=0");
+        this.Pub1.Add("<Table style='border:none;' >");
         foreach (DataRow drGroup in dtGroup.Rows)
         {
             string ctlIDs = "";
@@ -304,6 +323,7 @@ public partial class WF_M2MM : WebPage
 
         string str = ",";
         string strT = "";
+        int numOfselected = 0;
         foreach (DataRow dr in dtObj.Rows)
         {
             string id = dr[0].ToString();
@@ -314,10 +334,18 @@ public partial class WF_M2MM : WebPage
                 continue;
             str += id + ",";
             strT += "@" + id + cb.Text;
+            numOfselected++;
         }
         m2m.Vals = str;
         m2m.ValsName = strT;
         m2m.InitMyPK();
+        m2m.NumSelected = numOfselected;
         m2m.Save();
+
+        if (this.IsOpen == "1" )
+        {
+            //this.Response.Redirect("M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&NoOfObj=" + this.NoOfObj + "&OperObj=" + this.OperObj + "&IsOpen=" + this.IsOpen, true);
+        }
+
     }
 }

@@ -256,6 +256,7 @@ public partial class Comm_M2M : WebPage
         DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjs);
         string str = ",";
         string strT = "";
+        int numOfselected = 0;
         foreach (DataRow dr in dtObj.Rows)
         {
             string id = dr[0].ToString();
@@ -267,11 +268,13 @@ public partial class Comm_M2M : WebPage
                 continue;
 
             str += id + ",";
-            strT += "@" + id +","+ cb.Text;
+            strT += "@" + id + "," + cb.Text;
+            numOfselected++;
         }
         m2m.Vals = str;
         m2m.ValsName = strT;
         m2m.InitMyPK();
+        m2m.NumSelected = numOfselected;
         m2m.Save();
     }
 }
