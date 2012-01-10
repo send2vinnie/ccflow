@@ -18,6 +18,10 @@ namespace BP.Sys
         public const string ValsSQL = "ValsSQL";
         public const string ValsName = "ValsName";
         public const string DtlObj = "DtlObj";
+        /// <summary>
+        /// 选择数
+        /// </summary>
+        public const string NumSelected = "NumSelected";
     }
 	/// <summary>
     ///  M2M 数据存储
@@ -33,6 +37,20 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(M2MAttr.FK_MapData, value);
+            }
+        }
+        /// <summary>
+        /// 选择数
+        /// </summary>
+        public int NumSelected
+        {
+            get
+            {
+                return this.GetValIntByKey(M2MAttr.NumSelected);
+            }
+            set
+            {
+                this.SetValByKey(M2MAttr.NumSelected, value);
             }
         }
         public Int64 EnOID
@@ -139,6 +157,8 @@ namespace BP.Sys
                 map.AddTBStringDoc();
                 map.AddTBStringDoc(M2MAttr.ValsName, null, "ValsName", true, true);
                 map.AddTBStringDoc(M2MAttr.ValsSQL, null, "ValsSQL", true, true);
+
+                map.AddTBInt(M2MAttr.NumSelected, 0, "选择数", true, false);
 
                 this._enMap = map;
                 return this._enMap;
