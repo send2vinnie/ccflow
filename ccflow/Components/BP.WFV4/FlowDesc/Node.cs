@@ -2206,8 +2206,8 @@ namespace BP.WF
                 //map.AddTBString(NodeAttr.EnsName, null, "工作s", false, false, 0, 100, 10);
                 //map.AddTBString(NodeAttr.EnName, null, "工作", false, false, 0, 100, 10);
 
-                map.AddTBInt(NodeAttr.WarningDays, 0, this.ToE(NodeAttr.WarningDays, "警告期限(0不警告)"), false, false); // "警告期限(0不警告)"
-                map.AddTBInt(NodeAttr.DeductDays, 1, this.ToE(NodeAttr.DeductDays, "限期(天)"), false, false); //"限期(天)"
+                map.AddTBFloat(NodeAttr.WarningDays, 0, this.ToE(NodeAttr.WarningDays, "警告期限(0不警告)"), false, false); // "警告期限(0不警告)"
+                map.AddTBFloat(NodeAttr.DeductDays, 1, this.ToE(NodeAttr.DeductDays, "限期(天)"), false, false); //"限期(天)"
                 map.AddTBFloat(NodeAttr.DeductCent, 2, this.ToE(NodeAttr.DeductCent, "扣分(每延期1天扣)"), false, false); //"扣分(每延期1天扣)"
                 map.AddTBFloat(NodeAttr.MaxDeductCent, 10, this.ToE(NodeAttr.MaxDeductCent, "最高扣分"), false, false); //"最高扣分"
                 map.AddTBFloat(NodeAttr.SwinkCent, float.Parse("0.1"), this.ToE("SwinkCent", "工作得分"), false, false); //"工作得分"
