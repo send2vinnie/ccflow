@@ -143,11 +143,11 @@ namespace BP.Web
                         return null;
                     case "DelM2M":
                         MapM2M m2mDel = new MapM2M();
-                        m2mDel.NoOfObj = v1;
+                        m2mDel.MyPK = v1;
                         m2mDel.Delete();
 
-                        M2M m2mData = new M2M();
-                        m2mData.Delete(M2MAttr.MapM2M, v1);
+                        //M2M m2mData = new M2M();
+                        //m2mData.Delete(M2MAttr.FK_MapData, v1);
                         return null;
                     case "NewAthM": // 新建 NewAthM. 
                         string fk_mapdataAth = v1;
