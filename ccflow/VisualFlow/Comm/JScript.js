@@ -54,17 +54,16 @@ function WinShowModalDialog(url, winName) {
 }
 
 function WinShowModalDialog(url, winName, w, h) {
-    var v = window.showModalDialog(url, winName, 'dialogHeight: '+h+'px; dialogWidth: '+w+'px; center: yes; help: no');
+    var v = window.showModalDialog(url, winName, 'dialogHeight: ' + h + 'px; dialogWidth: ' + w + 'px; center: yes; help: no');
     return;
 }
 
 function ReturnVal(ctrl, url, winName) {
-
+    url = url + '&CtrlVal=' + ctrl.value;
     var v = window.showModalDialog(url, winName, 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no');
     if (v == null || v == '' || v == 'NaN') {
         return;
     }
-
     ctrl.value = v;
     return;
 }

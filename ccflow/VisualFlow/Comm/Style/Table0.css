@@ -289,12 +289,10 @@ legend
     font-style: inherit;
     font-weight: bold;
 }
-
  
 ul
 {
-   
-    
+  padding-left:15px;
 }
 
 li
@@ -306,6 +304,9 @@ Img
 {
     border:0px;
 }
- 
 
+.Left
+{
+    background-color:InfoBackground;
+}
   
