@@ -1,4 +1,24 @@
-﻿/* 自动填充 */
+﻿/*  ReturnValTBFullCtrl */
+function ReturnValTBFullCtrl(ctrl, fk_mapExt) {
+    var url = 'FrmReturnValTBFullCtrl.aspx?CtrlVal=' + ctrl.value + '&FK_MapExt=' + fk_mapExt;
+    var v = window.showModalDialog(url, 'wd', 'dialogHeight: 550px; dialogWidth: 650px; dialogTop: 100px; dialogLeft: 150px; center: yes; help: no');
+    if (v == null || v == '' || v == 'NaN') {
+        return;
+    }
+    ctrl.value = v;
+
+    //执行填充其它的控件.
+    FullCtrl(v, ctrl.id, fk_mapExt);
+
+    //执行个性化填充下拉框.
+    FullCtrlDDL(v, ctrl.id, fk_mapExt);
+
+    //执行填充明细表.
+    FullDtl(v, ctrl.id, fk_mapExt);
+    return;
+}
+
+/* 自动填充 */
 function DDLFullCtrl(e, ddlChild, fk_mapExt) {
     var json_data = { "Key": e, "FK_MapExt": fk_mapExt };
     $.ajax({
@@ -177,7 +197,6 @@ function FullCtrlDDL(key, ctrlIdBefore, fk_mapExt) {
 }
 function FullCtrlDDLDB(e, ddlID, ctrlIdBefore, endID, fk_mapExt) {
     var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "DoType": "ReqDDLFullListDB", "MyDDL": ddlID };
-
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -193,11 +212,8 @@ function FullCtrlDDLDB(e, ddlID, ctrlIdBefore, endID, fk_mapExt) {
             } else {
                 endID = "_" + endID;
             }
-
             var id = ctrlIdBefore + "DDL_" + ddlID + "" + endID;
-
             $("#" + id).empty();
-
             var dataObj = eval("(" + data + ")"); //转换为json对象 
             // alert(data);
             $.each(dataObj.Head, function (idx, item) {
@@ -283,6 +299,7 @@ function getoffset(e) {
 var oldValue = "";
 var highlightindex = -1;
 function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
+
 
     openDiv(sender, tbid);
     var myEvent = event || window.event;

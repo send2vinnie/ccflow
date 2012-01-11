@@ -1123,6 +1123,16 @@ namespace BP.Web.Comm.UC.WF
                             TextBox tbAuto = this.GetTextBoxByID("TB_" + me.AttrOfOper);
                             if (tbAuto == null)
                                 continue;
+
+                          //  onpropertychange
+                         // tbAuto.Attributes["onpropertychange"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                         
+                        //   tbAuto.Attributes["onkeydown"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                           // tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+
+                           // tbAuto.Attributes["ondblclick"] = "ReturnValTBFullCtrl(this,'" + me.MyPK + "','sd');";
+
+                            tbAuto.Attributes["ondblclick"] = "ReturnValTBFullCtrl(this,'" + me.MyPK + "');";
                             tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                             tbAuto.Attributes["AUTOCOMPLETE"] = "OFF";
                             if (me.Tag != "")
