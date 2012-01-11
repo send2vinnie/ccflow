@@ -276,11 +276,9 @@ namespace BP.WF.Ext
                 map.AddTBString(BtnAttr.OptLab, "选项", "选项按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.OptEnable, true, "是否启用", true, true);
 
-
                 map.AddTBString(BtnAttr.SelectAccepterLab, "接受人", "接受人按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.SelectAccepterEnable, false, "是否启用", true, true);
                 #endregion  功能按钮状态
-
 
                 // 考核属性
                 map.AddTBFloat(NodeAttr.WarningDays, 0, this.ToE(NodeAttr.WarningDays, "警告期限(0不警告)"), true, false); // "警告期限(0不警告)"
