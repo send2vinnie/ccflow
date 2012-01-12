@@ -4072,9 +4072,9 @@ namespace BP.WF
             sql += "@GO DELETE WF_Listen WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
            
-
             // É¾³ýd2dÊý¾Ý.
-            sql += "@GO DELETE WF_M2M WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+          //  sql += "@GO DELETE WF_M2M WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+
 
             // É¾³ýÅäÖÃ.
             sql += "@GO DELETE WF_FAppSet WHERE NodeID IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
