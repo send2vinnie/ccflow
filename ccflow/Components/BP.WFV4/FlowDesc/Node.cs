@@ -2875,46 +2875,46 @@ namespace BP.WF
                     attr.Insert();
                 }
 
-                if (attr.IsExit(MapAttrAttr.KeyOfEn, "faqiren", MapAttrAttr.FK_MapData, md.No) == false)
-                {
-                    attr = new BP.Sys.MapAttr();
-                    attr.FK_MapData = md.No;
-                    attr.HisEditType = BP.En.EditType.Edit;
-                    attr.KeyOfEn = "faqiren";
-                    attr.Name = BP.Sys.Language.GetValByUserLang("faqiren", "发起人"); // "发起人";
-                    attr.MyDataType = BP.DA.DataType.AppString;
-                    attr.UIContralType = UIContralType.TB;
-                    attr.LGType = FieldTypeS.Normal;
-                    attr.UIVisible = true;
-                    attr.UIIsEnable = false;
-                    attr.UIIsLine = false;
-                    attr.MinLen = 0;
-                    attr.MaxLen = 200;
-                    attr.IDX = -100;
-                    attr.DefVal = "@WebUser.No";
-                    attr.X = (float)159.2;
-                    attr.Y = (float)102.8;
-                    attr.Insert();
-                }
+                //if (attr.IsExit(MapAttrAttr.KeyOfEn, "faqiren", MapAttrAttr.FK_MapData, md.No) == false)
+                //{
+                //    attr = new BP.Sys.MapAttr();
+                //    attr.FK_MapData = md.No;
+                //    attr.HisEditType = BP.En.EditType.Edit;
+                //    attr.KeyOfEn = "faqiren";
+                //    attr.Name = BP.Sys.Language.GetValByUserLang("faqiren", "发起人"); // "发起人";
+                //    attr.MyDataType = BP.DA.DataType.AppString;
+                //    attr.UIContralType = UIContralType.TB;
+                //    attr.LGType = FieldTypeS.Normal;
+                //    attr.UIVisible = true;
+                //    attr.UIIsEnable = false;
+                //    attr.UIIsLine = false;
+                //    attr.MinLen = 0;
+                //    attr.MaxLen = 200;
+                //    attr.IDX = -100;
+                //    attr.DefVal = "@WebUser.No";
+                //    attr.X = (float)159.2;
+                //    attr.Y = (float)102.8;
+                //    attr.Insert();
+                //}
 
-                if (attr.IsExit(MapAttrAttr.KeyOfEn, "faqishijian", MapAttrAttr.FK_MapData, md.No) == false)
-                {
-                    attr = new BP.Sys.MapAttr();
-                    attr.FK_MapData = md.No;
-                    attr.HisEditType = BP.En.EditType.Edit;
-                    attr.KeyOfEn = "faqishijian";
-                    attr.Name = BP.Sys.Language.GetValByUserLang("faqishijian", "发起时间"); //"发起时间";
-                    attr.MyDataType = BP.DA.DataType.AppDateTime;
-                    attr.UIContralType = UIContralType.TB;
-                    attr.LGType = FieldTypeS.Normal;
-                    attr.UIVisible = true;
-                    attr.UIIsEnable = false;
-                    attr.DefVal = "@RDT";
-                    attr.Tag = "1";
-                    attr.X = (float)324;
-                    attr.Y = (float)102.8;
-                    attr.Insert();
-                }
+                //if (attr.IsExit(MapAttrAttr.KeyOfEn, "faqishijian", MapAttrAttr.FK_MapData, md.No) == false)
+                //{
+                //    attr = new BP.Sys.MapAttr();
+                //    attr.FK_MapData = md.No;
+                //    attr.HisEditType = BP.En.EditType.Edit;
+                //    attr.KeyOfEn = "faqishijian";
+                //    attr.Name = BP.Sys.Language.GetValByUserLang("faqishijian", "发起时间"); //"发起时间";
+                //    attr.MyDataType = BP.DA.DataType.AppDateTime;
+                //    attr.UIContralType = UIContralType.TB;
+                //    attr.LGType = FieldTypeS.Normal;
+                //    attr.UIVisible = true;
+                //    attr.UIIsEnable = false;
+                //    attr.DefVal = "@RDT";
+                //    attr.Tag = "1";
+                //    attr.X = (float)324;
+                //    attr.Y = (float)102.8;
+                //    attr.Insert();
+                //}
 
 
                 if (attr.IsExit(MapAttrAttr.KeyOfEn, "FK_NY", MapAttrAttr.FK_MapData, md.No) == false)
