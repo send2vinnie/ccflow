@@ -230,6 +230,7 @@ function FullCtrlDDLDB(e, ddlID, ctrlIdBefore, endID, fk_mapExt) {
 }
 
 function FullCtrl(e, ctrlIdBefore, fk_mapExt) {
+    e = escape(e);
     var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "DoType": "ReqCtrl" };
     $.ajax({
         type: "get",
@@ -299,7 +300,6 @@ function getoffset(e) {
 var oldValue = "";
 var highlightindex = -1;
 function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
-
 
     openDiv(sender, tbid);
     var myEvent = event || window.event;

@@ -32,7 +32,11 @@ public class Handler : IHttpHandler, IRequiresSessionState
         BP.Sys.MapExt me = new BP.Sys.MapExt(fk_mapExt);
         DataTable dt = null;
         string sql = "";
+
         string key = context.Request.QueryString["Key"];
+        key = System.Web.HttpUtility.UrlDecode(key,
+            System.Text.Encoding.GetEncoding("GB2312"));
+        
         switch (me.ExtType)
         {
             case BP.Sys.MapExtXmlList.ActiveDDL: // 级连菜单。

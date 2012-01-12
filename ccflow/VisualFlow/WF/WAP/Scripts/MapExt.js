@@ -201,8 +201,6 @@ var oldValue = "";
 var highlightindex = -1;
 function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
 
-    alert(tbid);
-
     openDiv(sender, tbid);
     var myEvent = event || window.event;
     var myKeyCode = myEvent.keyCode;

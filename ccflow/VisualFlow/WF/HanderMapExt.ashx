@@ -1,6 +1,11 @@
 ﻿<%@ WebHandler Language="C#" Class="Handler" %>
 
 using System;
+using System.IO;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
@@ -35,16 +40,17 @@ public class Handler : IHttpHandler, IRequiresSessionState
         string fk_mapExt = context.Request.QueryString["FK_MapExt"].ToString();
         if (context.Request.QueryString["Key"] == null)
             return;
-
         no=context.Request.QueryString["WebUserNo"];
         name = context.Request.QueryString["WebUserName"];
         fk_dept = context.Request.QueryString["WebUserFK_Dept"];
 
         BP.Sys.MapExt me = new BP.Sys.MapExt(fk_mapExt);
-        DataTable dt = null;
+       DataTable dt = null;
         string sql = "";
-        string key = context.Request.QueryString["Key"];
-        switch (me.ExtType)
+        string key=context.Request.QueryString["Key"];
+        key = System.Web.HttpUtility.UrlDecode(key,            System.Text.Encoding.GetEncoding("GB2312"));
+        key = key.Trim();
+       // key = "周";        switch (me.ExtType)
         {
             case BP.Sys.MapExtXmlList.DDLFullCtrl: // 级连菜单。
                 sql = this.DealSQL(me.DocOfSQLDeal, key);

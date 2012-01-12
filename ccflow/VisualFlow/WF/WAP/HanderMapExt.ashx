@@ -26,7 +26,12 @@ public class Handler : IHttpHandler
         BP.Sys.MapExt me = new BP.Sys.MapExt(fk_mapExt);
         DataTable dt = null;
         string sql = "";
+        //   string key = context.Request.QueryString["Key"];
+
         string key = context.Request.QueryString["Key"];
+        key = System.Web.HttpUtility.UrlDecode(key,
+            System.Text.Encoding.GetEncoding("GB2312"));
+
         switch (me.ExtType)
         {
             case BP.Sys.MapExtXmlList.ActiveDDL: // 级连菜单。
@@ -47,7 +52,7 @@ public class Handler : IHttpHandler
                         /* 获取填充的明细表集合. */
                         DataTable dtDtl = new DataTable("Head");
                         dtDtl.Columns.Add("Dtl", typeof(string));
-                        
+
                         string[] strsDtl = me.Tag1.Split('$');
                         foreach (string str in strsDtl)
                         {

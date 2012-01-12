@@ -7,7 +7,6 @@ using System.Web.SessionState;
 
 public class Handler : IHttpHandler, IRequiresSessionState  
 {
-
     public void ProcessRequest(HttpContext context)
     {
         switch (context.Request.QueryString["DoType"])
