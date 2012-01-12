@@ -857,7 +857,6 @@ namespace BP.En
                         if (obj.ToString() == "0")
                             return false;
 
-
                     // 生成数据库判断语句。
                     string selectSQL = "SELECT " + this.PKField + " FROM " + this.EnMap.PhysicsTable + " WHERE ";
                     switch (this.EnMap.EnDBUrl.DBType)
