@@ -56,11 +56,11 @@ namespace CCForm
         }
         #endregion 处理选中.
 
+        public int M2MType = 0;
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
         }
-
         public BPM2M()
         {
             this.Foreground = new SolidColorBrush(Colors.Green);

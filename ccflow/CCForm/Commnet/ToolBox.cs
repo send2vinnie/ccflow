@@ -66,6 +66,8 @@ namespace CCForm
         public const string Img = "Img";
         public const string Dtl = "Dtl";
         public const string M2M = "M2M";
+        public const string M2MM = "M2MM";
+
         public const string Btn = "Btn";
         public const string Attachment = "Attachment";
         /// <summary>
@@ -136,7 +138,8 @@ namespace CCForm
 
                 new ToolBox(){ IcoName=ToolBox.ImgAth, IcoNameText="图片附件",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/ImgAth.png",UriKind.RelativeOrAbsolute))},
                 new ToolBox(){ IcoName=ToolBox.Dtl, IcoNameText="明细表(从表)",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/Dtl.png",UriKind.RelativeOrAbsolute))},
-                new ToolBox(){ IcoName=ToolBox.M2M, IcoNameText="一对多关系",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/M2M.png",UriKind.RelativeOrAbsolute))},
+                new ToolBox(){ IcoName=ToolBox.M2M, IcoNameText="一对多",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/M2M.png",UriKind.RelativeOrAbsolute))},
+                new ToolBox(){ IcoName=ToolBox.M2MM, IcoNameText="一对多多",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/M2M.png",UriKind.RelativeOrAbsolute))},
                 new ToolBox(){ IcoName=ToolBox.HiddenField, IcoNameText="隐藏字段",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/HiddenField.png",UriKind.RelativeOrAbsolute))}
             };
             return ToolBoxList;

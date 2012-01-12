@@ -38,6 +38,7 @@ namespace CCForm
 
         #region zhoupeng add 全局变量
         LoadingWindow loadingWindow = new LoadingWindow();
+        public SelectM2M winSelectM2M = new SelectM2M();
         public FlowFrm winFlowFrm = new FlowFrm();
         public FrmLink winFrmLink = new FrmLink();
         public FrmLab winFrmLab = new FrmLab();
@@ -154,7 +155,6 @@ namespace CCForm
                 x += stepLength;
             }
 
-
             x = left;
             y = top + stepLength;
 
@@ -177,7 +177,6 @@ namespace CCForm
         void WindowDilag_Closed(object sender, EventArgs e)
         {
             this.SetSelectedTool(ToolBox.Mouse);
-
             ChildWindow c = sender as ChildWindow;
             if (c.DialogResult == false)
                 return;
@@ -186,10 +185,40 @@ namespace CCForm
             {
                 //this.currLab.Content = this.winFrmLab.TB_Text.Text.Replace("@", "\n");
                 //int size = this.winFrmLab.DDL_FrontSize.SelectedIndex + 6;
-               // this.currImg.FontSize = ""; // double.Parse(size.ToString());
+                // this.currImg.FontSize = ""; // double.Parse(size.ToString());
                 return;
             }
 
+            if (c.Name == "winSelectM2M")
+            {
+                BPM2M m2m = new BPM2M();
+                m2m.Name = Glo.TempVal.ToString();
+                m2m.Cursor = Cursors.Hand;
+                m2m.SetValue(Canvas.LeftProperty, X);
+                m2m.SetValue(Canvas.TopProperty, Y);
+                if (this.canvasMain.FindName(m2m.Name) != null)
+                {
+                    MessageBox.Show("已经存在对象：" + m2m.Name);
+                    this.SetSelectedTool(ToolBox.Mouse);
+                    return;
+                }
+
+                MouseDragElementBehavior mymdeE = new MouseDragElementBehavior();
+                Interaction.GetBehaviors(m2m).Add(mymdeE);
+                m2m.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                m2m.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                this.SetSelectedTool(ToolBox.Mouse);
+
+                this.canvasMain.Children.Add(m2m);
+                Glo.currEle = m2m;
+                this.currM2M = m2m;
+                string url = "";
+                url = Glo.BPMHost + "/WF/MapDef/MapM2M.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&NoOfObj=" + m2m.Name;
+                HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:600px;dialogWidth:650px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
+                return;
+            }
+
+            
             if (c.Name == "winFrmLab")
             {
                 this.currLab.Content = this.winFrmLab.TB_Text.Text.Replace("@", "\n");
@@ -583,6 +612,7 @@ namespace CCForm
             #region chinwin.
             winFrmImg.Name = "winFrmImg";
             winFrmLab.Name = "winFrmLab";
+            winSelectM2M.Name = "winSelectM2M";
             winFrmLink.Name = "winFrmLink";
             winSelectTB.Name = "winSelectTB";
             winSelectDDL.Name = "winSelectDDL";
@@ -595,10 +625,8 @@ namespace CCForm
             winNodeFrms.Name = "winNodeFrms";
             winFrmAttachmentM.Name = "winFrmAttachmentM";
 
-
             winFrmImg.Closed += new EventHandler(WindowDilag_Closed);
             winFrmLab.Closed += new EventHandler(WindowDilag_Closed);
-
             winFrmLink.Closed += new EventHandler(WindowDilag_Closed);
             winNodeFrms.Closed += new EventHandler(WindowDilag_Closed);
             winSelectTB.Closed += new EventHandler(WindowDilag_Closed);
@@ -610,6 +638,7 @@ namespace CCForm
             winFrmOp.Closed += new EventHandler(WindowDilag_Closed);
             winFlowFrm.Closed += new EventHandler(WindowDilag_Closed);
             winFrmAttachmentM.Closed += new EventHandler(WindowDilag_Closed);
+            winSelectM2M.Closed += new EventHandler(WindowDilag_Closed);
             #endregion chinwin.
 
             #region 构造
@@ -1841,31 +1870,45 @@ namespace CCForm
                     this.currDtl = newDtl;
                     break;
                 case ToolBox.M2M:
-                    int numM2M = 1;
-                    foreach (UIElement ctl in this.canvasMain.Children)
-                    {
-                        BPM2M dtl = ctl as BPM2M;
-                        if (dtl == null)
-                            continue;
-                        numM2M++;
-                    }
-
-                    BPM2M myM2M = new BPM2M();
-                    myM2M.Name = Glo.FK_MapData + "M2M" + numM2M;
-                    myM2M.Name = "M2M" + DateTime.Now.ToString("yyyyMMddhhmmss"); //Glo.FK_MapData + "M2M" + numM2M;
-                    myM2M.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
-                    myM2M.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
-                    myM2M.NewM2M(e.GetPosition(this.canvasMain).X, e.GetPosition(this.canvasMain).Y);
-
-                    myM2M.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                    myM2M.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                    this.winSelectM2M.IsM2M = 0;
+                    this.winSelectM2M.Show();
+                    X = e.GetPosition(this.canvasMain).X;
+                    Y = e.GetPosition(this.canvasMain).Y;
                     this.SetSelectedTool(ToolBox.Mouse);
+                    break;
+                case ToolBox.M2MM:
+                      X = e.GetPosition(this.canvasMain).X;
+                    Y = e.GetPosition(this.canvasMain).Y;
+                    this.winSelectM2M.IsM2M = 1;
+                    this.winSelectM2M.X = X;
+                    this.winSelectM2M.Y = Y;
+                    this.winSelectM2M.Show();
+                    this.SetSelectedTool(ToolBox.Mouse);
+                    break;
 
-                    this.canvasMain.Children.Add(myM2M);
+                    //int numM2M = 1;
+                    //foreach (UIElement ctl in this.canvasMain.Children)
+                    //{
+                    //    BPM2M dtl = ctl as BPM2M;
+                    //    if (dtl == null)
+                    //        continue;
+                    //    numM2M++;
+                    //}
 
-                    Glo.currEle = myM2M;
-                    this.currM2M = myM2M;
+                    //BPM2M myM2M = new BPM2M();
+                    //myM2M.Name = Glo.FK_MapData + "M2M" + numM2M;
+                    //myM2M.Name = "M2M" + DateTime.Now.ToString("yyyyMMddhhmmss"); //Glo.FK_MapData + "M2M" + numM2M;
+                    //myM2M.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
+                    //myM2M.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
+                    //myM2M.NewM2M(e.GetPosition(this.canvasMain).X, e.GetPosition(this.canvasMain).Y);
 
+                    //myM2M.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                    //myM2M.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                    //this.SetSelectedTool(ToolBox.Mouse);
+
+                    //this.canvasMain.Children.Add(myM2M);
+
+                 
                     break;
                 case ToolBox.ImgAth:
                     int num1 = 1;
@@ -2158,7 +2201,8 @@ namespace CCForm
                 {
                     IsmuElePanel = false;
                     /* Edit 事件. */
-                    string url = Glo.BPMHost + "/WF/MapDef/MapM2M.aspx?DoType=New&FK_MapData=" + Glo.FK_MapData + "&FK_MapM2M=" + m2m.Name;
+                    string url = "";
+                    url = Glo.BPMHost + "/WF/MapDef/MapM2M.aspx?DoType=Edit&FK_MapData=" + Glo.FK_MapData + "&NoOfObj=" + m2m.Name;
                     HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:600px;dialogWidth:650px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
                 }
                 _lastTime = DateTime.Now;
@@ -2306,7 +2350,6 @@ namespace CCForm
             this.muElePanel.Visibility = System.Windows.Visibility.Visible;
             muElePanel.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
             muElePanel.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
-
             Glo.currEle = sender as UIElement;
         }
         void e_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

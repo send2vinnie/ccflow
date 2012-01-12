@@ -345,6 +345,7 @@ namespace CCForm
             }
         }
         public static MapData HisMapData = null;
+        public static object TempVal = null;
     }
 }
 
