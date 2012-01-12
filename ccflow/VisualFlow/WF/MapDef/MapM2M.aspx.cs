@@ -30,7 +30,7 @@ public partial class WF_MapDef_MapM2M : WebPage
     public string NoOfObj
     {
         get
-        {
+        { 
             return this.Request.QueryString["NoOfObj"];
         }
     }

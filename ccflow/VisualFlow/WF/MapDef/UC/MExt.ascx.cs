@@ -921,6 +921,24 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 5;
         tb.Columns = 80;
+      //  tb.Attributes["width"] = "100%";
+
+        this.Pub2.AddTD("colspan=3", tb);
+        this.Pub2.AddTREnd();
+
+
+        this.Pub2.AddTR();
+        this.Pub2.AddTDTitle("colspan=3", "关键字查询的SQL:");
+        this.Pub2.AddTREnd();
+
+        this.Pub2.AddTR();
+        tb = new TextBox();
+        tb.ID = "TB_Tag";
+        tb.Text = me.Tag;
+        tb.TextMode = TextBoxMode.MultiLine;
+        tb.Rows = 5;
+       tb.Columns = 80;
+      //  tb.Attributes["width"] = "100%";
         this.Pub2.AddTD("colspan=3", tb);
         this.Pub2.AddTREnd();
 
@@ -943,12 +961,14 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         this.Pub2.AddFieldSet("文本框自动完成填充事例: 必须有No,Name两列，其它的列如果与本表单的字段名相同则可自动填充。");
         this.Pub2.AddB("For oracle:");
-        string sql = "SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM WF_Emp WHERE No LIKE '@Key%' AND ROWNUM<=15";
+        string sql = "自动填充SQL:SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM WF_Emp WHERE No LIKE '@Key%' AND ROWNUM<=15";
+        sql += "<br>关键字查询SQL:SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM WF_Emp WHERE No LIKE '@Key%'  ";
         this.Pub2.AddBR(sql.Replace("~", "\""));
 
         this.Pub2.AddBR();
         this.Pub2.AddB("For sqlserver:");
-        sql = "SELECT TOP 15 No, Name , Name as mingcheng FROM WF_Emp WHERE No LIKE '@Key%'";
+        sql = "自动填充SQL:SELECT TOP 15 No, Name , Name as mingcheng FROM WF_Emp WHERE No LIKE '@Key%'";
+        sql += "<br>关键字查询SQL:SELECT  No, Name , Name as mingcheng FROM WF_Emp WHERE No LIKE '@Key%'";
         this.Pub2.AddBR(sql.Replace("~", "\""));
 
         this.Pub2.AddFieldSetEnd();
@@ -1324,6 +1344,13 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         try
         {
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(me.Doc);
+
+            if (string.IsNullOrEmpty(me.Tag) == false)
+            {
+                dt = BP.DA.DBAccess.RunSQLReturnTable(me.Tag);
+                if (dt.Columns.Contains("Name") == false || dt.Columns.Contains("No") == false)
+                    throw new Exception("在您的sql表达式里，必须有No,Name 还两个列。");
+            }
 
             if (this.ExtType == MapExtXmlList.TBFullCtrl)
             {

@@ -34,7 +34,7 @@ public partial class WF_UC_ReturnValTBFullCtrl : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         MapExt ext = new MapExt(this.FK_MapExt);
-        string sql = ext.DocOfSQLDeal;
+        string sql = ext.TagOfSQL_autoFullTB;
         if (this.Val != null)
             sql = sql.Replace("@Key", this.Val);
 
@@ -99,12 +99,11 @@ public partial class WF_UC_ReturnValTBFullCtrl : BP.Web.UC.UCBase3
     {
         string key = this.GetTextBoxByID("TB_Key").Text;
         this.Response.Redirect("FrmReturnValTBFullCtrl.aspx?FK_MapExt=" + this.FK_MapExt + "&CtrlVal=" + key, true);
-
     }
     void btn_Click(object sender, EventArgs e)
     {
         MapExt ext = new MapExt(this.FK_MapExt);
-        string sql = ext.DocOfSQLDeal;
+        string sql = ext.TagOfSQL_autoFullTB;
         if (this.Val != null)
             sql = sql.Replace("@Key", this.Val);
 
@@ -120,7 +119,6 @@ public partial class WF_UC_ReturnValTBFullCtrl : BP.Web.UC.UCBase3
                 return;
 
             }
-
         }
         this.WinClose(val);
     }

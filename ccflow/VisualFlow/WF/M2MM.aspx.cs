@@ -62,6 +62,8 @@ public partial class WF_M2MM : WebPage
             M2MAttr.M2MNo, this.NoOfObj, M2MAttr.EnOID, this.WorkID);
         
         DataTable dtList;
+   
+
         if (mapM2M.DBOfLists.Substring(0, 1) == "@")
         {
             dtList = new DataTable();
@@ -121,7 +123,22 @@ public partial class WF_M2MM : WebPage
         MapM2M mapM2M = new MapM2M(this.FK_MapData, this.NoOfObj);
         this.OperObj = this.Request.QueryString["OperObj"];
 
-        this.BindLeft(mapM2M);
+        if (string.IsNullOrEmpty(mapM2M.DBOfLists) == true)
+        {
+            this.Pub1.AddFieldSetYellow("提示");
+            this.Pub1.Add("表单设计错误:没有设置列表数据源.");
+            this.Pub1.AddFieldSetEnd();
+            this.Button1.Enabled = false;
+            return;
+        }
+
+        if (this.BindLeft(mapM2M) == false)
+        {
+            this.Pub1.AddFieldSetYellow("提示");
+            this.Pub1.Add("列表数据源为空.");
+            this.Pub1.AddFieldSetEnd();
+            return;
+        }
 
         BP.Sys.M2M m2m = new BP.Sys.M2M();
         m2m.MyPK = this.FK_MapData + "_" + this.NoOfObj + "_" + this.WorkID + "_" + this.OperObj;
