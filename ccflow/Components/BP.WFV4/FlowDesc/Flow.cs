@@ -437,19 +437,26 @@ namespace BP.WF
                     {
                         MapDtls dtlsFrom = wkFrom.HisMapDtls;
                         int idx = 0;
-                        foreach (MapDtl dtl in dtls)
-                        {
-                            //new 一个实例.
-                            GEDtl dtlData = new GEDtl(dtl.No);
-                            MapDtl dtlFrom = dtlsFrom[idx] as MapDtl;
 
-                            GEDtls dtlsFromData = new GEDtls(dtlFrom.No);
-                            dtlsFromData.Retrieve(GEDtlAttr.RefPK, fromWorkID);
-                            foreach (GEDtl geDtlFromData in dtlsFromData)
+                        if (dtlsFrom.Count == dtls.Count)
+                        {
+                            foreach (MapDtl dtl in dtls)
                             {
-                                dtlData.Copy(geDtlFromData);
-                                dtlData.RefPK = wk.OID.ToString();
-                                dtlData.SaveAsOID(geDtlFromData.OID);
+                                if (dtl.IsCopyNDData == false)
+                                    continue;
+
+                                //new 一个实例.
+                                GEDtl dtlData = new GEDtl(dtl.No);
+                                MapDtl dtlFrom = dtlsFrom[idx] as MapDtl;
+
+                                GEDtls dtlsFromData = new GEDtls(dtlFrom.No);
+                                dtlsFromData.Retrieve(GEDtlAttr.RefPK, fromWorkID);
+                                foreach (GEDtl geDtlFromData in dtlsFromData)
+                                {
+                                    dtlData.Copy(geDtlFromData);
+                                    dtlData.RefPK = wk.OID.ToString();
+                                    dtlData.SaveAsOID(geDtlFromData.OID);
+                                }
                             }
                         }
                     }
