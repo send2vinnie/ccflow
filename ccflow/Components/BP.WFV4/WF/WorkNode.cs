@@ -958,7 +958,6 @@ namespace BP.WF
                 return WorkerListWayOfDept(town, dt);
             }
 
-
             // 没有查询到的情况下, 按照最大匹配数计算。
             sql = "SELECT NO FROM Port_Emp WHERE NO IN "
                + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
@@ -971,7 +970,6 @@ namespace BP.WF
                 Stations nextStations = town.HisNode.HisStations;
                 if (nextStations.Count == 0)
                     throw new Exception(this.ToE("WN19", "节点没有岗位:") + town.HisNode.NodeID + "  " + town.HisNode.Name);
-
                 //  throw new Exception(this.ToEP1("WN2", "@工作流程{0}已经完成。", town.HisNode.Name));
             }
             else
