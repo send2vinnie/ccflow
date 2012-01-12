@@ -426,7 +426,7 @@ namespace BP.WF
                     sql += "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + " ) )";
                     sql += " AND  No IN ";
                     if (WebUser.FK_Dept.Length == 2)
-                        sql += "(SELECT FK_Emp FROM Port_EmpDept ) WHERE FK_Emp!='" + WebUser.No + "' ";
+                        sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Emp!='" + WebUser.No + "') ";
                     else
                         sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Emp!='" + WebUser.No + "' AND FK_Dept LIKE '" + WebUser.FK_Dept.Substring(0, WebUser.FK_Dept.Length - 4) + "%')";
 
