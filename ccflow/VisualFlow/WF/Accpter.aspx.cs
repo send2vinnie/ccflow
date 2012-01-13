@@ -75,7 +75,7 @@ public partial class WF_Accpter : WebPage
         // 优先解决本部门的问题。
         if (this.FK_Dept== WebUser.FK_Dept)
         {
-            sql = "SELECT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
+            sql = "SELECT DISTINCT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
             sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
             sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
             sql += ") AND a.No IN (SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept ='" + WebUser.FK_Dept + "')";
@@ -85,7 +85,7 @@ public partial class WF_Accpter : WebPage
                 return dt;
         }
 
-        sql = "SELECT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
+        sql = "SELECT DISTINCT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
         sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
         sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
         sql += ") ORDER BY FK_DEPT ";
