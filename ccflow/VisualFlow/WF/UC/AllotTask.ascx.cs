@@ -35,9 +35,11 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
     {
         get
         {
-            try{
-            return int.Parse(this.Request.QueryString["FID"]);
-            }catch
+            try
+            {
+                return int.Parse(this.Request.QueryString["FID"]);
+            }
+            catch
             {
                 return 0;
             }
@@ -85,7 +87,6 @@ public partial class WF_UC_AllotTask : BP.Web.UC.UCBase3
         this.Clear();
 
         WorkerLists wls = new WorkerLists(this.WorkID, this.NodeID, true);
-
         string sql = "SELECT * FROM WF_RememberMe WHERE FK_Emp='" + WebUser.No + "' AND FK_Node=" + this.NodeID;
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
 
