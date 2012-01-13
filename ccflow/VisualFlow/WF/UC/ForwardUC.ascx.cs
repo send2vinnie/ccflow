@@ -100,15 +100,21 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId);
             int i = DBAccess.RunSQL("UPDATE WF_GenerWorkerlist set IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId + " AND FK_Emp='" + toEmp + "'");
             Emp emp = new Emp(toEmp);
+            WorkerLists wls = null;
+            WorkerList wl = null;
             if (i == 0)
             {
                 /*说明: 用其它的岗位上的人来处理的，就给他增加待办工作。*/
-                WorkerLists wls = new WorkerLists(this.WorkID, nodeId);
-                WorkerList wl = wls[0] as WorkerList;
+                wls = new WorkerLists(this.WorkID, nodeId);
+                wl = wls[0] as WorkerList;
                 wl.FK_Emp = toEmp.ToString();
                 wl.FK_EmpText = emp.Name;
                 wl.IsEnable = true;
                 wl.Insert();
+
+                // 清楚工作者，为转发消息所用.
+                wls.Clear();
+                wls.AddEntity(wl);
             }
 
             BP.WF.Node nd = new BP.WF.Node(nodeId);
@@ -137,6 +143,13 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             {
                 wn.HisWork.Update(wn.HisNode.FocusField, "");
             }
+
+            if (wls == null)
+                wls = new WorkerLists(this.WorkID, nodeId,WebUser.No);
+
+            // 写入消息。
+            wn.AddIntoWacthDog(wls);
+
             string info = "@工作移交成功。@您已经成功的把工作移交给：" + emp.No + " , " + emp.Name;
             info += "@<a href='MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnShift&FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "' ><img src='./Img/UnDo.gif' border=0 />撤消工作移交</a>.";
             this.Session["info"] = info;

@@ -48,9 +48,11 @@ public class Handler : IHttpHandler, IRequiresSessionState
        DataTable dt = null;
         string sql = "";
         string key=context.Request.QueryString["Key"];
-        key = System.Web.HttpUtility.UrlDecode(key,            System.Text.Encoding.GetEncoding("GB2312"));
+        key = System.Web.HttpUtility.UrlDecode(key,
+            System.Text.Encoding.GetEncoding("GB2312"));
         key = key.Trim();
-       // key = "周";        switch (me.ExtType)
+       // key = "周";
+        switch (me.ExtType)
         {
             case BP.Sys.MapExtXmlList.DDLFullCtrl: // 级连菜单。
                 sql = this.DealSQL(me.DocOfSQLDeal, key);
