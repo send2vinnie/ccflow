@@ -197,11 +197,11 @@ namespace BP.WF
         /// <summary>
         /// 警告天
         /// </summary>
-        public int WarningDays
+        public float WarningDays
         {
             get
             {
-                return this.GetValIntByKey(WorkerListAttr.WarningDays);
+                return this.GetValFloatByKey(WorkerListAttr.WarningDays);
             }
             set
             {
@@ -372,7 +372,7 @@ namespace BP.WF
                 map.AddTBDateTime(WorkerListAttr.SDT, "应完成日期", false, false);
                 map.AddTBDateTime(WorkerListAttr.DTOfWarning, "警告日期", false, false);
 
-                map.AddTBInt(WorkerListAttr.WarningDays, 0, "预警天", true, false);
+                map.AddTBFloat(WorkerListAttr.WarningDays, 0, "预警天", true, false);
                 map.AddTBDateTime(WorkerListAttr.RDT, "RDT", false, false);
 
                 map.AddBoolean(WorkerListAttr.IsEnable, true, "是否可用", true, true);
@@ -426,6 +426,17 @@ namespace BP.WF
             qo.AddWhere(WorkerListAttr.WorkID, workId);
             qo.addAnd();
             qo.AddWhere(WorkerListAttr.FK_Node, nodeId);
+            qo.DoQuery();
+            return;
+        }
+        public WorkerLists(Int64 workId, int nodeId,string fk_emp)
+        {
+            QueryObject qo = new QueryObject(this);
+            qo.AddWhere(WorkerListAttr.WorkID, workId);
+            qo.addAnd();
+            qo.AddWhere(WorkerListAttr.FK_Node, nodeId);
+            qo.addAnd();
+            qo.AddWhere(WorkerListAttr.FK_Emp, fk_emp);
             qo.DoQuery();
             return;
         }

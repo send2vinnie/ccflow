@@ -1010,11 +1010,11 @@ namespace BP.WF
         /// <summary>
         /// 需要天数（限期）
         /// </summary>
-        public int DeductDays
+        public float DeductDays
         {
             get
             {
-                int i = this.GetValIntByKey(NodeAttr.DeductDays);
+                float i= this.GetValFloatByKey(NodeAttr.DeductDays);
                 if (i == 0)
                     return 1;
                 return i;
@@ -1070,7 +1070,7 @@ namespace BP.WF
         /// <summary>
         /// 最终期限( 需要天数（限期）+警告天数)
         /// </summary>
-        public int NeedCompleteDays
+        public float NeedCompleteDays
         {
             get
             {
@@ -1123,14 +1123,14 @@ namespace BP.WF
                 this.SetValByKey(NodeAttr.X, value);
             }
         }
-        public int WarningDays
+        public float WarningDays
         {
             get
             {
-                if (this.GetValIntByKey(NodeAttr.WarningDays) == 0)
+                if (this.GetValFloatByKey(NodeAttr.WarningDays) == 0)
                     return this.DeductDays;
                 else
-                    return this.DeductDays - this.GetValIntByKey(NodeAttr.WarningDays);
+                    return this.DeductDays - this.GetValFloatByKey(NodeAttr.WarningDays);
             }
         }
         /// <summary>

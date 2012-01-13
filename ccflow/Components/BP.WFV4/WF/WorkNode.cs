@@ -801,7 +801,7 @@ namespace BP.WF
                     sql += "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + " ) )";
                     sql += " AND  No IN ";
                     if (WebUser.FK_Dept.Length == 2)
-                        sql += "(SELECT FK_Emp FROM Port_EmpDept ) WHERE FK_Emp!='" + WebUser.No + "' ";
+                        sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE   FK_Emp!='" + WebUser.No + "') ";
                     else
                         sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Emp!='" + WebUser.No + "' AND FK_Dept LIKE '" + WebUser.FK_Dept.Substring(0, WebUser.FK_Dept.Length - 4) + "%')";
 
@@ -1133,7 +1133,6 @@ namespace BP.WF
                 this.HisWork.Update(this.HisNode.FocusField, "");
             }
 
-
             Node backToNode = new Node(backtoNodeID);
             switch (this.HisNode.HisNodeWorkType)
             {
@@ -1180,11 +1179,9 @@ namespace BP.WF
             wnOfBackTo.HisWork.NodeState = NodeState.Back; // 更新 return work 状态．
             wnOfBackTo.HisWork.DirectUpdate();
 
-
             // 改变当前待办工作节点。
             DBAccess.RunSQL("UPDATE WF_GenerWorkFlow   SET FK_Node='" + backtoNodeID + "',NodeName='" + backToNode.Name+ "' WHERE  WorkID=" + this.WorkID);
             DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0 WHERE FK_Node=" + backtoNodeID + " AND WorkID=" + this.WorkID);
-
 
             // 记录退回轨迹。
             ReturnWork rw = new ReturnWork();
@@ -1202,7 +1199,6 @@ namespace BP.WF
             // 加入track.
             this.AddToTrack(ActionType.Return, wnOfBackTo.HisWork.Rec, wnOfBackTo.HisWork.RecText, 
                 backtoNodeID, wnOfBackTo.HisNode.Name, msg);
-
 
             // 记录退回日志.
             ReorderLog(backToNode, this.HisNode,rw);
@@ -1556,10 +1552,18 @@ namespace BP.WF
             //    dtOfWarning = DataType.AddDays(dtOfWarning, i - town.HisNode.WarningDays);
             // edit at 2008-01-22 , 处理预警日期的问题。
 
-            DateTime dtOfShould = DataType.AddDays(DateTime.Now, town.HisNode.DeductDays);
+            DateTime dtOfShould;
+            int day = 0;
+            int hh = 0;
+            if (town.HisNode.DeductDays < 1)
+                day = 0;
+            else
+                day =int.Parse( town.HisNode.DeductDays.ToString());
+
+             dtOfShould = DataType.AddDays(DateTime.Now, day);
             DateTime dtOfWarning = DateTime.Now;
             if (town.HisNode.WarningDays > 0)
-                dtOfWarning = DataType.AddDays(dtOfShould, -town.HisNode.WarningDays); // dtOfShould.AddDays(-town.HisNode.WarningDays);
+                dtOfWarning = DataType.AddDays(dtOfShould, - int.Parse(town.HisNode.WarningDays.ToString())); // dtOfShould.AddDays(-town.HisNode.WarningDays);
 
             switch (this.HisNode.HisNodeWorkType)
             {

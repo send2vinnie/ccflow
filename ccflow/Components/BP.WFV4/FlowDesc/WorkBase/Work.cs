@@ -262,14 +262,14 @@ namespace BP.WF
         /// <summary>
         /// ÍÏÑÓÌìÊý  
         /// </summary>
-        public int DelayDays
+        public float DelayDays
         {
             get
             {
 
                 if (this.SpanDays == 0)
                     return 0;
-                int days = this.SpanDays - this.HisNode.DeductDays;
+                float days = this.SpanDays - this.HisNode.DeductDays;
                 if (days < 0)
                     return 0;
                 return days;
