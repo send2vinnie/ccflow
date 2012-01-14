@@ -92,13 +92,13 @@ public class Handler : IHttpHandler, IRequiresSessionState
                         {
                             if (str == "" || str == null)
                                 continue;
-
+                            
                             string[] ss = str.Split(':');
                             string noOfObj = ss[0];
                             string mysql = ss[1];
                             mysql = DealSQL(mysql, key);
 
-                            DataTable dtFull = DBAccess.RunSQLReturnTable(sql);
+                            DataTable dtFull = DBAccess.RunSQLReturnTable(mysql);
                             M2M m2mData = new M2M();
                             m2mData.FK_MapData = me.FK_MapData;
                             m2mData.EnOID = int.Parse(oid);
@@ -131,13 +131,20 @@ public class Handler : IHttpHandler, IRequiresSessionState
                         string[] strsDtl = me.Tag1.Split('$');
                         foreach (string str in strsDtl)
                         {
-                            if (str == "" || str == null)
+                            if (string.IsNullOrEmpty(str))
                                 continue;
 
-                            string[] ss = str.Split(':');
+                            //string[] ss = str.Split(':');
+                            //string dtlEnName = ss[0];
+                            //string mysql = ss[1];
+                            //mysql = DealSQL(mysql, key);
+                            
+                            
+                            
                             DataRow dr = dtDtl.NewRow();
                             dr[0] = ss[0];
                             dtDtl.Rows.Add(dr);
+
                         }
                         context.Response.Write(JSONTODT(dtDtl));
                         break;

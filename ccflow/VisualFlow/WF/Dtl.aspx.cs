@@ -186,6 +186,9 @@ public partial class Comm_Dtl : WebPage
             string[] strs = me.Tag1.Split('$');
             foreach (string str in strs)
             {
+                if (string.IsNullOrEmpty(str))
+                    continue;
+
                 if (str.Contains(this.EnsName) == false)
                     continue;
                 string[] ss = str.Split(':');
