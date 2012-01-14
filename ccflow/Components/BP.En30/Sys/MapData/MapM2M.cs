@@ -129,6 +129,15 @@ namespace BP.Sys
                 this.SetValByKey(MapM2MAttr.IsInsert, value);
             }
         }
+        public bool IsEdit
+        {
+            get
+            {
+                if (this.IsInsert || this.IsDelete)
+                    return true;
+                return false;
+            }
+        }
         /// <summary>
         /// 列表(对一对多对多模式有效）
         /// </summary>

@@ -572,6 +572,7 @@ namespace BP.WF
         /// <returns></returns>
         public string DoFlowOver()
         {
+
             string msg = this.BeforeFlowOver();
             if (this.IsMainFlow == false)
             {
