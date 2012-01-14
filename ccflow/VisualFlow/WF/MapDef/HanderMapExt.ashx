@@ -134,13 +134,10 @@ public class Handler : IHttpHandler, IRequiresSessionState
                             if (string.IsNullOrEmpty(str))
                                 continue;
 
-                            //string[] ss = str.Split(':');
+                            string[] ss = str.Split(':');
                             //string dtlEnName = ss[0];
                             //string mysql = ss[1];
                             //mysql = DealSQL(mysql, key);
-                            
-                            
-                            
                             DataRow dr = dtDtl.NewRow();
                             dr[0] = ss[0];
                             dtDtl.Rows.Add(dr);
