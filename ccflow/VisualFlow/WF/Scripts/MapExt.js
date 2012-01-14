@@ -104,14 +104,10 @@ function FullIt(oldValue, tbid, fk_mapExt) {
 
     if (oid == null)
         oid = GetQueryString('OID');
-
     if (oid == null)
         oid = GetQueryString('WorkID');
-
     if (oid == null)
         oid = 0;
-
-    alert(oid);
 
     //执行填充其它的控件.
     FullCtrl(oldValue, tbid, fk_mapExt);
