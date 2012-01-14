@@ -469,30 +469,38 @@ namespace BP.Web.Comm.UC.WF
                 else
                     this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='" + m2m.H + "' width='" + m2m.W + "'  >");
 
+                string src = "";
+                if (m2m.HisM2MType== M2MType.M2M)
+                 src = "M2M.aspx?NoOfObj=" + m2m.NoOfObj;
+                else
+                    src = "M2MM.aspx?NoOfObj=" + m2m.NoOfObj;
 
-                string src = "M2M.aspx?NoOfObj=" + m2m.NoOfObj;
                 string paras = this.RequestParas;
 
                 if (paras.Contains("FID=") == false)
                     paras += "&FID=" + this.HisEn.GetValStrByKey("FID");
 
-                if (paras.Contains("WorkID=") == false)
-                    paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
+                if (paras.Contains("OID=") == false)
+                    paras += "&OID=" + this.HisEn.GetValStrByKey("OID");
 
                 src += "&r=q" + paras;
 
                 if (src.Contains("FK_MapData") == false)
                     src += "&FK_MapData=" + m2m.FK_MapData;
 
-
-
                 switch (m2m.ShowWay)
                 {
                     case FrmShowWay.FrmAutoSize:
-                        this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                        if (m2m.IsEdit)
+                            this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                        else
+                            this.Add("<iframe ID='F" + m2m.NoOfObj + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
                         break;
                     case FrmShowWay.FrmSpecSize:
-                        this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "' scrolling=auto /></iframe>");
+                        if (m2m.IsEdit)
+                            this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "' scrolling=auto /></iframe>");
+                        else
+                            this.Add("<iframe ID='F" + m2m.NoOfObj + "'    src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "' scrolling=auto /></iframe>");
                         break;
                     case FrmShowWay.Hidden:
                         break;
@@ -1899,7 +1907,7 @@ namespace BP.Web.Comm.UC.WF
                 if (src.Contains("FK_MapData") == false)
                     src += "&FK_MapData=" + enName;
 
-                if (m2m.HisM2MType == M2MType.M2M)
+                if (m2m.HisM2MType == M2MType.M2MM)
                     src = "M2MM" + src;
                 else
                     src = "M2M" + src;
