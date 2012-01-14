@@ -1900,9 +1900,9 @@ namespace BP.Web.Comm.UC.WF
                     src += "&FK_MapData=" + enName;
 
                 if (m2m.HisM2MType == M2MType.M2M)
-                    src = "M2MM." + src;
+                    src = "M2MM" + src;
                 else
-                    src = "M2M." + src;
+                    src = "M2M" + src;
 
                 switch (m2m.ShowWay)
                 {
