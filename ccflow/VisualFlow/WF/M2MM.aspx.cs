@@ -60,10 +60,7 @@ public partial class WF_M2MM : WebPage
         BP.Sys.M2Ms m2ms = new BP.Sys.M2Ms();
         m2ms.Retrieve(M2MAttr.FK_MapData, this.FK_MapData,
             M2MAttr.M2MNo, this.NoOfObj, M2MAttr.EnOID, this.OID);
-        
         DataTable dtList;
-   
-
         if (mapM2M.DBOfLists.Substring(0, 1) == "@")
         {
             dtList = new DataTable();
@@ -97,7 +94,6 @@ public partial class WF_M2MM : WebPage
         {
             dtList = DBAccess.RunSQLReturnTable(mapM2M.DBOfListsRun);
         }
-
         if (dtList.Rows.Count == 0)
             return false;
 
