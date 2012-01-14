@@ -279,7 +279,7 @@ function DDLAnsc(e, ddlChild, fk_mapExt) {
 }
 
 function FullM2M(key, fk_mapExt) {
-    alert(key);
+    //alert(key);
 
     var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqM2MFullList" };
     $.ajax({
