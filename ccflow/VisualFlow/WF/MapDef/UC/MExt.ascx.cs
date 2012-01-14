@@ -92,22 +92,95 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     /// <summary>
     /// 新建文本框自动完成
     /// </summary>
+    public void EditAutoFullM2M_TB()
+    {
+        MapExt myme = new MapExt(this.MyPK);
+        MapM2Ms m2ms = new MapM2Ms(myme.FK_MapData);
+
+        this.Pub2.AddH2("设置自动填充明细表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
+        if (m2ms.Count == 0)
+        {
+            this.Pub2.Clear();
+            this.Pub2.AddFieldSet("设置自动填充明细表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
+            this.Pub2.Add("该表单下没有从表，所以您不能为明细表设置自动填充。");
+            this.Pub2.AddFieldSetEnd();
+            return;
+        }
+        string[] strs = myme.Tag2.Split('$');
+        bool is1 = false;
+        foreach (MapM2M m2m in m2ms)
+        {
+            TextBox tb = new TextBox();
+            tb.ID = "TB_" + m2m.NoOfObj;
+            tb.Columns = 70;
+            tb.Rows = 5;
+            tb.TextMode = TextBoxMode.MultiLine;
+            foreach (string s in strs)
+            {
+                if (s == null)
+                    continue;
+
+                if (s.Contains(m2m.NoOfObj + ":") == false)
+                    continue;
+
+                string[] ss = s.Split(':');
+                tb.Text = ss[1];
+            }
+            this.Pub2.AddFieldSet("编号:" + m2m.NoOfObj + ",名称:" + m2m.Name);
+            this.Pub2.Add(tb);
+            this.Pub2.AddFieldSetEnd();
+        }
+        this.Pub2.AddHR();
+        Button mybtn = new Button();
+        mybtn.ID = "Btn_Save";
+        mybtn.Text = "保存";
+        mybtn.Click += new EventHandler(mybtn_SaveAutoFullM2M_Click);
+        this.Pub2.Add(mybtn);
+
+        mybtn = new Button();
+        mybtn.ID = "Btn_Cancel";
+        mybtn.Text = "取消";
+        mybtn.Click += new EventHandler(mybtn_SaveAutoFullM2M_Click);
+        this.Pub2.Add(mybtn);
+        this.Pub2.AddFieldSetEnd();
+
+        this.Pub2.AddFieldSet("帮助:");
+        this.Pub2.Add("在这里您需要设置一个查询语句");
+        this.Pub2.AddBR("例如：SELECT No,Name FROM WF_Emp WHERE FK_Dept='@Key' ");
+        this.Pub2.AddBR("这个查询语句要与明细表的列对应上就可以在相关内容的值发生改变时而自动填充checkbox。");
+        this.Pub2.AddBR("注意:");
+        this.Pub2.AddBR("1，@Key 是主表字段传递过来的变量。");
+        this.Pub2.AddBR("2，必须并且仅有No,Name两个列，顺序不要颠倒。");
+        this.Pub2.AddBR("3，从表列字段字名，与填充sql列字段大小写匹配。");
+        this.Pub2.AddFieldSetEnd();
+    }
+    /// <summary>
+    /// 新建文本框自动完成
+    /// </summary>
     public void EditAutoFullDtl_TB()
     {
-        this.Pub2.AddFieldSet("<a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData +"&RefNo="+this.RefNo+"'>返回</a> -设置自动填充明细表");
         MapExt myme = new MapExt(this.MyPK);
         MapDtls dtls = new MapDtls(myme.FK_MapData);
+
+        this.Pub2.AddH2("设置自动填充明细表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
+        if (dtls.Count == 0)
+        {
+            this.Pub2.Clear();
+            this.Pub2.AddFieldSet("设置自动填充明细表. <a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a>");
+            this.Pub2.Add("该表单下没有从表，所以您不能为明细表设置自动填充。");
+            this.Pub2.AddFieldSetEnd();
+            return;
+        }
+
         string[] strs = myme.Tag1.Split('$');
-        this.Pub2.AddTable("border=0  align=left ");
         bool is1 = false;
         foreach (MapDtl dtl in dtls)
         {
-            is1 = this.AddTR(is1);
             TextBox tb = new TextBox();
             tb.ID = "TB_" + dtl.No;
-            tb.Columns = 50;
+            tb.Columns = 70;
+            tb.Rows = 5;
             tb.TextMode = TextBoxMode.MultiLine;
-
             foreach (string s in strs)
             {
                 if (s == null)
@@ -119,15 +192,12 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 string[] ss = s.Split(':');
                 tb.Text = ss[1];
             }
-
-            this.Pub2.AddTDBegin();
-            this.Pub2.AddB("&nbsp;&nbsp;" + dtl.Name + "-明细表");
-            this.Pub2.AddBR();
+            this.Pub2.AddFieldSet("编号:" + dtl.No + ",名称:" + dtl.Name );
             this.Pub2.Add(tb);
-            this.Pub2.AddTDEnd();
-            this.Pub2.AddTREnd();
+            this.Pub2.AddFieldSetEnd();
         }
-        this.Pub2.AddTableEnd();
+
+        this.Pub2.AddHR();
         Button mybtn = new Button();
         mybtn.ID = "Btn_Save";
         mybtn.Text = "保存";
@@ -139,6 +209,15 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         mybtn.Text = "取消";
         mybtn.Click += new EventHandler(mybtn_SaveAutoFullDtl_Click);
         this.Pub2.Add(mybtn);
+        this.Pub2.AddFieldSetEnd();
+
+        this.Pub2.AddFieldSet("帮助:");
+        this.Pub2.Add("在这里您需要设置一个查询语句");
+        this.Pub2.AddBR("例如：SELECT XLMC AS suozaixianlu, bustype as V_BusType FROM [V_XLVsBusType] WHERE jbxx_htid='@Key'");
+        this.Pub2.AddBR("这个查询语句要与明细表的列对应上就可以在文本框的值发生改变时而自动填充。");
+        this.Pub2.AddBR("注意:");
+        this.Pub2.AddBR("1，@Key 是主表字段传递过来的变量。");
+        this.Pub2.AddBR("2，从表列字段字名，与填充sql列字段大小写匹配。");
         this.Pub2.AddFieldSetEnd();
     }
     /// <summary>
@@ -307,6 +386,12 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                     this.EditAutoFullDtl_TB();
                     return;
                 }
+                if (this.DoType == "EditAutoFullM2M")
+                {
+                    this.EditAutoFullM2M_TB();
+                    return;
+                }
+
                 if (this.MyPK != null || this.DoType == "New")
                 {
                     this.EditAutoFull_TB();
@@ -317,6 +402,8 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 this.MapExtList(mes);
                 break;
             case MapExtXmlList.DDLFullCtrl:  //DDL自动完成.
+                
+
                 if (this.DoType == "EditAutoFullDtl")
                 {
                     this.EditAutoFullDtl_DDL();
@@ -604,15 +691,28 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         MapExt myme = new MapExt(this.MyPK);
         MapDtls dtls = new MapDtls(myme.FK_MapData);
         string info = "";
+        string error = "";
         foreach (MapDtl dtl in dtls)
         {
             TextBox tb = this.Pub2.GetTextBoxByID("TB_" + dtl.No);
             if (tb.Text.Trim() == "")
                 continue;
-
             try
             {
                 DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(tb.Text);
+                MapAttrs attrs = new MapAttrs(dtl.No);
+                string err = "";
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    if (attrs.IsExits(MapAttrAttr.KeyOfEn, dc.ColumnName) == false)
+                    {
+                        err += "<br>列" + dc.ColumnName + "不能与明细表 属性匹配.";
+                    }
+                }
+                if (err != "")
+                {
+                    error += "在为("+dtl.Name+")检查sql设置时出现错误:"+err;
+                }
             }
             catch (Exception ex)
             {
@@ -622,11 +722,64 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             info += "$" + dtl.No + ":" + tb.Text;
         }
 
+        if (error != "")
+        {
+            this.Pub2.AddMsgOfWarning("设置错误,请更正:",error);
+            return;
+        }
         myme.Tag1 = info;
         myme.Update();
         this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo, true);
     }
+    void mybtn_SaveAutoFullM2M_Click(object sender, EventArgs e)
+    {
+        Button btn = sender as Button;
+        if (btn.ID.Contains("Cancel"))
+        {
+            this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo, true);
+            return;
+        }
 
+        MapExt myme = new MapExt(this.MyPK);
+        MapM2Ms m2ms = new MapM2Ms(myme.FK_MapData);
+        string info = "";
+        string error = "";
+        foreach (MapM2M m2m in m2ms)
+        {
+            TextBox tb = this.Pub2.GetTextBoxByID("TB_" + m2m.NoOfObj);
+            if (tb.Text.Trim() == "")
+                continue;
+            try
+            {
+                DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(tb.Text);
+                string err = "";
+                if (dt.Columns[0].ColumnName != "No")
+                    err += "第1列不是No.";
+                if (dt.Columns[1].ColumnName != "Name")
+                    err += "第2列不是Name.";
+                
+                if (err != "")
+                {
+                    error += "在为(" + m2m.Name + ")检查sql设置时出现错误：请确认列的顺序是否正确为大小写是否匹配。" + err;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Alert("SQL ERROR: " + ex.Message);
+                return;
+            }
+            info += "$" + m2m.NoOfObj + ":" + tb.Text;
+        }
+
+        if (error != "")
+        {
+            this.Pub2.AddMsgOfWarning("设置错误,请更正:", error);
+            return;
+        }
+        myme.Tag2 = info;
+        myme.Update();
+        this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo, true);
+    }
     void mybtn_SaveAutoFullJilian_Click(object sender, EventArgs e)
     {
         Button btn = sender as Button;
@@ -877,13 +1030,11 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         me.FK_MapData = this.FK_MapData;
 
-        this.Pub2.AddTable("border=0  width='70%' ");
+        this.Pub2.AddTable("border=0");
         this.Pub2.AddCaptionLeft("新建:" + this.Lab);
-
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle("项目");
         this.Pub2.AddTDTitle("采集");
-        this.Pub2.AddTDTitle("说明");
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
@@ -907,11 +1058,10 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         ddl.SetSelectItem(me.AttrOfOper);
         this.Pub2.AddTD(ddl);
-        this.Pub2.AddTD("输入项");
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
-        this.Pub2.AddTDTitle("colspan=3", "自动填充SQL:");
+        this.Pub2.AddTDTitle("colspan=2", "自动填充SQL:");
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
@@ -921,14 +1071,11 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 5;
         tb.Columns = 80;
-      //  tb.Attributes["width"] = "100%";
-
-        this.Pub2.AddTD("colspan=3", tb);
+        this.Pub2.AddTD("colspan=2", tb);
         this.Pub2.AddTREnd();
 
-
         this.Pub2.AddTR();
-        this.Pub2.AddTDTitle("colspan=3", "关键字查询的SQL:");
+        this.Pub2.AddTDTitle("colspan=2", "关键字查询的SQL:");
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
@@ -937,44 +1084,53 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         tb.Text = me.Tag;
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Rows = 5;
-       tb.Columns = 80;
-      //  tb.Attributes["width"] = "100%";
-        this.Pub2.AddTD("colspan=3", tb);
+        tb.Columns = 80;
+        this.Pub2.AddTD("colspan=2", tb);
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTRSum();
+        this.Pub2.AddTDBegin("colspan=2");
+
         Button btn = new Button();
         btn.ID = "BtnSave";
         btn.Text = this.ToE("Save", "保存");
         btn.Click += new EventHandler(btn_SaveAutoFull_Click);
-        this.Pub2.AddTD("colspan=2", btn);
+        this.Pub2.Add(btn);
 
         if (this.MyPK == null)
-            this.Pub2.AddTD();
+        {
+        }
         else
-            this.Pub2.AddTD("<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo = " + this.RefNo + "&ExtType=" + this.ExtType + "&DoType=EditAutoJL\" >级连下拉框</a>-<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo + "&DoType=EditAutoFullDtl\" >填充明细表</a>");
-        this.Pub2.AddTREnd();
+        {
+            this.Pub2.Add("<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo = " + this.RefNo + "&ExtType=" + this.ExtType + "&DoType=EditAutoJL\" >级连下拉框</a>");
+            this.Pub2.Add("-<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo + "&DoType=EditAutoFullDtl\" >填充明细表</a>");
+            this.Pub2.Add("-<a href=\"MapExt.aspx?MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo + "&DoType=EditAutoFullM2M\" >填充一对多</a>");
 
-        #region 输出事例
-        this.Pub2.AddTRSum();
-        this.Pub2.AddTDBegin("colspan=3");
-
-        this.Pub2.AddFieldSet("文本框自动完成填充事例: 必须有No,Name两列，其它的列如果与本表单的字段名相同则可自动填充。");
-        this.Pub2.AddB("For oracle:");
-        string sql = "自动填充SQL:SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM WF_Emp WHERE No LIKE '@Key%' AND ROWNUM<=15";
-        sql += "<br>关键字查询SQL:SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM WF_Emp WHERE No LIKE '@Key%'  ";
-        this.Pub2.AddBR(sql.Replace("~", "\""));
-
-        this.Pub2.AddBR();
-        this.Pub2.AddB("For sqlserver:");
-        sql = "自动填充SQL:SELECT TOP 15 No, Name , Name as mingcheng FROM WF_Emp WHERE No LIKE '@Key%'";
-        sql += "<br>关键字查询SQL:SELECT  No, Name , Name as mingcheng FROM WF_Emp WHERE No LIKE '@Key%'";
-        this.Pub2.AddBR(sql.Replace("~", "\""));
-
-        this.Pub2.AddFieldSetEnd();
+        }
         this.Pub2.AddTDEnd();
         this.Pub2.AddTREnd();
         this.Pub2.AddTableEnd();
+        #region 输出事例
+
+        this.Pub2.AddFieldSet("帮助");
+        this.Pub2.AddB("For oracle:");
+        string sql = "自动填充SQL:<br>SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM WF_Emp WHERE No LIKE '@Key%' AND ROWNUM<=15";
+        sql += "<br>关键字查询SQL:<br>SELECT No as ~No~ , Name as ~Name~, Name as ~mingcheng~ FROM WF_Emp WHERE No LIKE '@Key%'  ";
+        this.Pub2.AddBR(sql.Replace("~", "\""));
+
+        this.Pub2.AddB("<br>For sqlserver:");
+        sql = "自动填充SQL:<br>SELECT TOP 15 No, Name , Name as mingcheng FROM WF_Emp WHERE No LIKE '@Key%'";
+        sql += "<br>关键字查询SQL:<br>SELECT  No, Name , Name as mingcheng FROM WF_Emp WHERE No LIKE '@Key%'";
+        this.Pub2.AddBR(sql.Replace("~", "\""));
+
+        this.Pub2.AddB("<br>注意:");
+        this.Pub2.AddBR("1,文本框自动完成填充事例: 必须有No,Name两列，它用于显示下列出的提示列表。");
+        this.Pub2.AddBR("2,设置合适的记录数量，能够改善系统执行效率。");
+        this.Pub2.AddBR("3,@Key 是系统约定的关键字，就是当用户输入一个字符后ccform就会传递此关键字到数据库查询把结果返回给用户。");
+        this.Pub2.AddBR("4,其它的列与本表单的字段名相同则可自动填充，要注意大小写匹配。");
+        this.Pub2.AddBR("5,关键字查询sql是用来，双点文本框时弹出的查询语句，如果为空就按自动填充的sql计算。");
+
+        this.Pub2.AddFieldSetEnd();
         #endregion 输出事例
     }
     public void EditAutoFull_DDL()

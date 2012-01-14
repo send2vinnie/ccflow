@@ -1,26 +1,38 @@
 ﻿<%@ WebHandler Language="C#" Class="Handler" %>
 
 using System;
+using System.IO;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using BP.Web;
 using System.Configuration;
 using System.Web.SessionState;
 
 public class Handler : IHttpHandler, IRequiresSessionState  
 {
+    string no;
+    string name;
+    string fk_dept;
     public string DealSQL(string sql, string key)
     {
         sql = sql.Replace("@Key", key);
         sql = sql.Replace("@key", key);
         sql = sql.Replace("@Val", key);
         sql = sql.Replace("@val", key);
-        
-        sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
-        sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
-        sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
-        sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
+
+        //sql = sql.Replace("@WebUser.No", no);
+        //sql = sql.Replace("@WebUser.Name", name);
+        //sql = sql.Replace("@WebUser.FK_Dept", fk_dept);
+
+        sql = sql.Replace("@WebUser.No", WebUser.No);
+        sql = sql.Replace("@WebUser.Name", WebUser.Name);
+        sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
         return sql;
     }
     public void ProcessRequest(HttpContext context)
@@ -28,19 +40,27 @@ public class Handler : IHttpHandler, IRequiresSessionState
         string fk_mapExt = context.Request.QueryString["FK_MapExt"].ToString();
         if (context.Request.QueryString["Key"] == null)
             return;
+        no=context.Request.QueryString["WebUserNo"];
+        name = context.Request.QueryString["WebUserName"];
+        fk_dept = context.Request.QueryString["WebUserFK_Dept"];
 
         BP.Sys.MapExt me = new BP.Sys.MapExt(fk_mapExt);
-        DataTable dt = null;
+       DataTable dt = null;
         string sql = "";
-
-        string key = context.Request.QueryString["Key"];
+        string key=context.Request.QueryString["Key"];
         key = System.Web.HttpUtility.UrlDecode(key,
             System.Text.Encoding.GetEncoding("GB2312"));
-        
+        key = key.Trim();
+       // key = "周";
         switch (me.ExtType)
         {
+            case BP.Sys.MapExtXmlList.DDLFullCtrl: // 级连菜单。
+                sql = this.DealSQL(me.DocOfSQLDeal, key);
+                dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+                context.Response.Write(JSONTODT(dt));
+                return;
             case BP.Sys.MapExtXmlList.ActiveDDL: // 级连菜单。
-                sql = this.DealSQL(me.Doc, key);
+                sql = this.DealSQL(me.DocOfSQLDeal, key);
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 context.Response.Write(JSONTODT(dt));
                 return;
@@ -49,7 +69,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
                 {
                     case "ReqCtrl":
                         // 获取填充 ctrl 值的信息.
-                        sql = this.DealSQL(me.Doc, key);
+                        sql = this.DealSQL(me.DocOfSQLDeal, key);
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;
@@ -112,7 +132,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
                         context.Response.Write(JSONTODT(dt));
                         break;
                     default:
-                        sql = this.DealSQL(me.Doc, key);
+                        sql = this.DealSQL(me.DocOfSQLDeal, key);
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;

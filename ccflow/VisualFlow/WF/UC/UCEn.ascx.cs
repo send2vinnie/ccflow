@@ -1124,12 +1124,10 @@ namespace BP.Web.Comm.UC.WF
                             if (tbAuto == null)
                                 continue;
 
-                          //  onpropertychange
-                         // tbAuto.Attributes["onpropertychange"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
-                         
-                        //   tbAuto.Attributes["onkeydown"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                            // onpropertychange
+                           // tbAuto.Attributes["onpropertychange"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
+                           // tbAuto.Attributes["onkeydown"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
                            // tbAuto.Attributes["onkeyup"] = "DoAnscToFillDiv(this,this.value,\'" + tbAuto.ClientID + "\', \'" + me.MyPK + "\');";
-
                            // tbAuto.Attributes["ondblclick"] = "ReturnValTBFullCtrl(this,'" + me.MyPK + "','sd');";
 
                             tbAuto.Attributes["ondblclick"] = "ReturnValTBFullCtrl(this,'" + me.MyPK + "');";
@@ -1314,29 +1312,30 @@ namespace BP.Web.Comm.UC.WF
 
                 string src = "M2M.aspx?NoOfObj=" + m2m.NoOfObj;
                 string paras = this.RequestParas;
-
-                //if (paras.Contains("FK_Node=") == false)
-                //    paras += "&FK_Node=" + this.HisEn.GetValStrByKey("FID");
-
                 if (paras.Contains("FID=") == false)
                     paras += "&FID=" + this.HisEn.GetValStrByKey("FID");
 
-                if (paras.Contains("WorkID=") == false)
-                    paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
+                if (paras.Contains("OID=") == false)
+                    paras += "&OID=" + this.HisEn.GetValStrByKey("OID");
 
                 src += "&r=q" + paras;
                 if (src.Contains("FK_MapData") == false)
                     src += "&FK_MapData=" + m2m.FK_MapData;
-
                 switch (m2m.ShowWay)
                 {
                     case FrmShowWay.FrmAutoSize:
                         this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='20px' width='100%'  >");
-                        this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                        if (m2m.HisM2MType == M2MType.M2M)
+                            this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
+                        else
+                            this.Add("<iframe ID='F" + m2m.NoOfObj + "' src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
                         break;
                     case FrmShowWay.FrmSpecSize:
                         this.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='" + m2m.H + "' width='" + m2m.W + "'  >");
-                        this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "' scrolling=auto /></iframe>");
+                        if (m2m.HisM2MType == M2MType.M2M)
+                            this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "' scrolling=auto /></iframe>");
+                        else
+                            this.Add("<iframe ID='F" + m2m.NoOfObj + "'    src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "' scrolling=auto /></iframe>");
                         break;
                     case FrmShowWay.Hidden:
                         break;
@@ -1411,7 +1410,6 @@ namespace BP.Web.Comm.UC.WF
                 this.AddTREnd();
             }
             #endregion 框架
-
 
             #region 附件
             foreach (FrmAttachment ath in aths)

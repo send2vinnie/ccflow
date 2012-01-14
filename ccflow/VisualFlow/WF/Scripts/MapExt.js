@@ -44,8 +44,20 @@ function DDLFullCtrl(e, ddlChild, fk_mapExt) {
 //                    alert(k);
 //                    alert(dataObj.Head[i][k]);
 
+
                     $("#" + beforeID + 'TB_' + k).val(dataObj.Head[i][k]);
                     $("#" + beforeID + 'TB_' + k + endId).val(dataObj.Head[i][k]);
+
+                    $("#" + beforeID + 'DDL_' + k).val(dataObj.Head[i][k]);
+                    $("#" + beforeID + 'DDL_' + k + endId).val(dataObj.Head[i][k]);
+
+                    if (dataObj.Head[i][k] == '1') {
+                        $("#" + beforeID + 'CB_' + k).attr("checked", true);
+                        $("#" + beforeID + 'CB_' + k + endId).attr("checked", true);
+                    } else {
+                        $("#" + beforeID + 'CB_' + k).attr("checked", false);
+                        $("#" + beforeID + 'CB_' + k + endId).attr("checked", false);
+                    }
                 }
             }
         },
@@ -117,8 +129,50 @@ function DDLAnsc(e, ddlChild, fk_mapExt) {
     });
 }
 
+function FullM2M(key, fk_mapExt) {
+    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqM2MFullList" };
+    $.ajax({
+        type: "get",
+        url: "HanderMapExt.ashx",
+        data: json_data,
+        beforeSend: function (XMLHttpRequest) {
+            //ShowLoading();
+        },
+        success: function (data, textStatus) {
+            if (data == "")
+                return;
+
+            var dataObj = eval("(" + data + ")"); //转换为json对象.
+            for (var i in dataObj.Head) {
+                if (typeof (i) == "function")
+                    continue;
+
+                for (var k in dataObj.Head[i]) {
+                    var fullM2M = dataObj.Head[i][k];
+                    var frm = document.getElementById('F' + fullM2M);
+                    var src = frm.src;
+                    var idx = src.indexOf("&Key");
+                    if (idx == -1)
+                        src = src + '&Key=' + key + '&FK_MapExt=' + fk_mapExt;
+                    else
+                        src = src.substring(0, idx) + '&Key=' + key + '&FK_MapExt=' + fk_mapExt;
+                    frm.src = src;
+                }
+            }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+            //HideLoading();
+        },
+        error: function () {
+            //请求出错处理
+        }
+    });
+}
+
+//填充明细.
 function FullDtl(key, fk_mapExt) {
 
+    //FullM2M(key, fk_mapExt); //填充M2M.
     var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDtlFullList" };
     $.ajax({
         type: "get",
@@ -251,10 +305,21 @@ function FullCtrl(e, ctrlIdBefore, fk_mapExt) {
                     if (k == 'No' || k == 'Name')
                         continue;
 
-                    //   alert(k);
+                 //   alert(k + ' val= ' + dataObj.Head[i][k]);
 
                     $("#" + beforeID + 'TB_' + k).val(dataObj.Head[i][k]);
                     $("#" + beforeID + 'TB_' + k + endId).val(dataObj.Head[i][k]);
+
+                    $("#" + beforeID + 'DDL_' + k).val(dataObj.Head[i][k]);
+                    $("#" + beforeID + 'DDL_' + k + endId).val(dataObj.Head[i][k]);
+
+                    if (dataObj.Head[i][k] == '1') {
+                        $("#" + beforeID + 'CB_' + k).attr("checked", true);
+                        $("#" + beforeID + 'CB_' + k + endId).attr("checked", true);
+                    } else {
+                        $("#" + beforeID + 'CB_' + k).attr("checked", false);
+                        $("#" + beforeID + 'CB_' + k + endId).attr("checked", false);
+                    }
                 }
             }
         },
@@ -263,6 +328,7 @@ function FullCtrl(e, ctrlIdBefore, fk_mapExt) {
         },
         error: function () {
             //请求出错处理
+            alert('error where funnCtrl');
         }
     });
 }
@@ -276,11 +342,14 @@ function openDiv(e, tbID) {
         var rect = getoffset(txtObject);
         orgObject.style.top = rect[0] + 22;
         orgObject.style.left = rect[1];
+
+//        orgObject.style.top =  $("#" + tbID).attr("top") + 22;
+//        orgObject.style.left = $("#" + tbID).attr("left");
+        
         orgObject.style.display = "block";
         txtObject.focus();
     }
 }
-
 function getoffset(e) {
     var t = e.offsetTop;
     var l = e.offsetLeft;
@@ -291,16 +360,12 @@ function getoffset(e) {
     var rec = new Array(1);
     rec[0] = t;
     rec[1] = l;
-
-//    alert(t);
-//    alert(l);
     return rec
 }
 // ********************** 根据关键字动态查询. ******************************** //
 var oldValue = "";
 var highlightindex = -1;
 function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
-
     openDiv(sender, tbid);
     var myEvent = event || window.event;
     var myKeyCode = myEvent.keyCode;
@@ -395,7 +460,7 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
                     //HideLoading();
                 },
                 error: function () {
-                    //     alert('ssss');
+                     alert('error when load data.');
                     //请求出错处理
                 }
             });

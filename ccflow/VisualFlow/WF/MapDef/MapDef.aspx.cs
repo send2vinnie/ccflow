@@ -197,7 +197,7 @@ public partial class WF_MapDef_MapDef : WebPage
                         this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' " + gfAttr);
                     }
                     this.Pub1.Add("<TD  colspan=2 width='50%' height='" + attr.UIHeight.ToString() + "px' >");
-               //     this.Pub1.Add(this.GenerLab(attr, idx, 0, count));
+                    // this.Pub1.Add(this.GenerLab(attr, idx, 0, count));
                     this.Pub1.Add("<span height='" + attr.UIHeight.ToString() + "px' style='float:left'>" + this.GenerLab(attr, idx, 0, count) + "</span>");
                     this.Pub1.Add("<span height='" + attr.UIHeight.ToString() + "px' style='float:right'>");
                     Label lab = new Label();
@@ -213,22 +213,17 @@ public partial class WF_MapDef_MapDef : WebPage
                     mytbLine.Enabled = attr.UIIsEnable;
                     if (mytbLine.Enabled == false)
                         mytbLine.Attributes["class"] = "TBReadonly";
-
                     mytbLine.Attributes["style"] = "width:100%;height:100%;padding: 0px;margin: 0px;";
-
                     this.Pub1.Add(mytbLine);
 
                     lab = this.Pub1.GetLabelByID("Lab" + attr.KeyOfEn);
                     string ctlID = mytbLine.ClientID;
                     lab.Text = "<a href=\"javascript:TBHelp('" + ctlID + "','" + this.Request.ApplicationPath + "','" + md.No + "','" + attr.KeyOfEn + "')\">默认值</a>";
-
-
                     this.Pub1.AddTDEnd();
                     if (isLeftNext == false)
                     {
                         this.Pub1.AddTREnd();
                     }
-
                     isLeftNext = !isLeftNext;
                     continue;
                 }
@@ -529,7 +524,7 @@ public partial class WF_MapDef_MapDef : WebPage
         foreach (MapM2M M2M in dot2dots)
         {
             if (M2M.ShowWay == FrmShowWay.FrmAutoSize)
-                js += "\t\n window.setInterval(\"ReinitIframe('F" + M2M.MyPK + "','TD" + M2M.MyPK + "')\", 200);";
+                js += "\t\n window.setInterval(\"ReinitIframe('F" + M2M.NoOfObj + "','TD" + M2M.NoOfObj + "')\", 200);";
         }
         foreach (FrmAttachment ath in aths)
         {
@@ -777,9 +772,9 @@ public partial class WF_MapDef_MapDef : WebPage
             myidx++;
             string src = "";
             if (m2m.HisM2MType == M2MType.M2M)
-                src = "../M2M.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + m2m.NoOfObj + "&WorkID=0";
+                src = "../M2M.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + m2m.NoOfObj + "&OID=0";
             else
-                src = "../M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + m2m.NoOfObj + "&WorkID=0";
+                src = "../M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + m2m.NoOfObj + "&OID=0";
 
             switch (m2m.ShowWay)
             {
@@ -792,8 +787,8 @@ public partial class WF_MapDef_MapDef : WebPage
 
                     myidx++;
                     this.Pub1.AddTR(" ID='" + currGF.Idx + "_" + myidx + "' ");
-                    this.Pub1.Add("<TD colspan=4 ID='TD" + m2m.MyPK + "' height='50px' width='1000px'>");
-                    this.Pub1.Add("<iframe ID='F" + m2m.MyPK + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
+                    this.Pub1.Add("<TD colspan=4 ID='TD" + m2m.NoOfObj + "' height='50px' width='1000px'>");
+                    this.Pub1.Add("<iframe ID='F" + m2m.NoOfObj + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' width='100%' height='10px' scrolling=no  /></iframe>");
                     this.Pub1.AddTDEnd();
                     this.Pub1.AddTREnd();
                     break;

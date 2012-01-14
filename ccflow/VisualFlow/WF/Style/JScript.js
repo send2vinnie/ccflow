@@ -1,35 +1,25 @@
-
-
 /* 默认植问题 */
 function OpenHelperTBNo( appPath ,  EnsName, ctl  )
 { 
 	// alert( EnsName);
 	// alert( ctl );
-	 
     var url =appPath+ '/Comm/DataHelp.htm?' +appPath+ '/Comm/HelperOfTBNo.aspx?EnsName='+EnsName ;
-    
     var str= window.showModalDialog(url , '','dialogHeight: 550px; dialogWidth:950px; dialogTop: 100px; dialogLeft: 100px; center: no; help: no');
-    
     if (str==undefined )
       return;
-      
     if (str==null)
       return;
       
      ctl.value = str;
      return;
 }
-
- function To( url)
- {
-   window.location.href=url;
- }
-
+function To(url) {
+    window.location.href = url;
+}
 window.onerror=function()
 {
   return true;
 }
-		
 /*打开Opencard*/
 function OpenCard(webAppPath, className, url)
 {
@@ -38,7 +28,6 @@ function OpenCard(webAppPath, className, url)
    newWindow.focus();
    return;
 }
-
 function CardItem3()
 {
   if (CurrEnsName==null)
