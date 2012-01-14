@@ -622,6 +622,7 @@ public partial class Comm_Dtl : WebPage
 
                 this.Page.RegisterClientScriptBlock("b81",
              "<script language='JavaScript' src='./Scripts/MapExt.js' ></script>");
+
                 this.Pub1.Add("<div id='divinfo' style='width: 155px; position: absolute; color: Lime; display: none;cursor: pointer;align:left'></div>");
 
                 this.Page.RegisterClientScriptBlock("dCd",

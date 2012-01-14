@@ -323,6 +323,7 @@ public partial class WF_MapDef_MapDef : WebPage
                                 cb.Text = attr.Name;
                                 cb.Checked = attr.DefValOfBool;
                                 cb.Enabled = attr.UIIsEnable;
+                                cb.ID = "CB_" + attr.KeyOfEn;
                                 this.Pub1.AddTD("width='40%' colspan=" + colspanOfCtl, cb);
                                 break;
                             case BP.DA.DataType.AppDouble:

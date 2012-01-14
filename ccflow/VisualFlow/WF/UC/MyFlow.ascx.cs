@@ -351,13 +351,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
        this.currFlow = new Flow(this.FK_Flow);
        this.currND = new BP.WF.Node(this.FK_Node);
 
-        #region 判断是否有 workid
+       #region 判断是否有 workid
        if (this.WorkID == 0)
        {
            currWK = this.currFlow.NewWork();
            this.WorkID = currWK.OID;
-        //   this.Response.Redirect("MyFlow" + this.PageSmall + ".aspx?WorkID=" + currWK.OID + "&FK_Flow=" + this.FK_Flow + "&FK_Node=" + currWK.HisNode.NodeID, true);
-          // return;
+           //   this.Response.Redirect("MyFlow" + this.PageSmall + ".aspx?WorkID=" + currWK.OID + "&FK_Flow=" + this.FK_Flow + "&FK_Node=" + currWK.HisNode.NodeID, true);
+           // return;
        }
        else
        {

@@ -73,6 +73,23 @@ public class Handler : IHttpHandler, IRequiresSessionState
                         dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                         context.Response.Write(JSONTODT(dt));
                         break;
+                    case "ReqM2MFullList":
+                        /* 获取填充的M2m集合. */
+                        DataTable dtM2M = new DataTable("Head");
+                        dtM2M.Columns.Add("Dtl", typeof(string));
+                        string[] strsM2M = me.Tag2.Split('$');
+                        foreach (string str in strsM2M)
+                        {
+                            if (str == "" || str == null)
+                                continue;
+
+                            string[] ss = str.Split(':');
+                            DataRow dr = dtM2M.NewRow();
+                            dr[0] = ss[0];
+                            dtM2M.Rows.Add(dr);
+                        }
+                        context.Response.Write(JSONTODT(dtM2M));
+                        break;
                     case "ReqDtlFullList":
                         /* 获取填充的明细表集合. */
                         DataTable dtDtl = new DataTable("Head");

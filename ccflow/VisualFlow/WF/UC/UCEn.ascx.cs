@@ -1875,8 +1875,8 @@ namespace BP.Web.Comm.UC.WF
             {
                 this.Add("<DIV id='Fd" + m2m.NoOfObj + "' style='position:absolute; left:" + m2m.X + "px; top:" + m2m.Y + "px; width:" + m2m.W + "px; height:" + m2m.H + "px;text-align: left;' >");
                 this.Add("<span>");
-                string src = "M2M.aspx?NoOfObj=" + m2m.NoOfObj;
 
+                string src = ".aspx?NoOfObj=" + m2m.NoOfObj;
                 string paras = this.RequestParas;
                 try
                 {
@@ -1887,24 +1887,36 @@ namespace BP.Web.Comm.UC.WF
                 {
                 }
 
-                if (paras.Contains("WorkID=") == false)
-                    paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
-
+                if (paras.Contains("OID=") == false)
+                    paras += "&OID=" + this.HisEn.GetValStrByKey("OID");
                 src += "&r=q" + paras;
+
+                if (m2m.IsEdit)
+                    src += "&IsEdit=1";
+                else
+                    src += "&IsEdit=0";
 
                 if (src.Contains("FK_MapData") == false)
                     src += "&FK_MapData=" + enName;
+
+                if (m2m.HisM2MType == M2MType.M2M)
+                    src = "M2MM." + src;
+                else
+                    src = "M2M." + src;
 
                 switch (m2m.ShowWay)
                 {
                     case FrmShowWay.FrmAutoSize:
                     case FrmShowWay.FrmSpecSize:
-                        this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "'   scrolling=auto/></iframe>");
+                        if (m2m.IsEdit)
+                            this.Add("<iframe ID='F" + m2m.NoOfObj + "'   Onblur=\"SaveM2M('" + m2m.NoOfObj + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "'   scrolling=auto/></iframe>");
+                        else
+                            this.Add("<iframe ID='F" + m2m.NoOfObj + "'  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='" + m2m.W + "' height='" + m2m.H + "'   scrolling=auto/></iframe>");
                         break;
                     case FrmShowWay.Hidden:
                         break;
                     case FrmShowWay.WinOpen:
-                        this.Add("<a href=\"javascript:WinOpen('" + src+"&IsOpen=1" + "','"+m2m.W+"','"+m2m.H+"');\"  />"+m2m.Name+"</a>");
+                        this.Add("<a href=\"javascript:WinOpen('" + src + "&IsOpen=1" + "','" + m2m.W + "','" + m2m.H + "');\"  />" + m2m.Name + "</a>");
                         break;
                     default:
                         break;

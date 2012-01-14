@@ -16,11 +16,11 @@ using BP.Web.Controls;
 
 public partial class Comm_M2M : WebPage
 {
-    public Int64 WorkID
+    public Int64 OID
     {
         get
         {
-            return Int64.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["OID"]);
         }
     }
     public string IsOpen
@@ -44,19 +44,96 @@ public partial class Comm_M2M : WebPage
             return this.Request.QueryString["NoOfObj"];
         }
     }
+    public string IsEdit
+    {
+        get
+        {
+            return this.Request.QueryString["IsEdit"];
+        }
+    }
+    public string FK_MapExt
+    {
+        get
+        {
+            return this.Request.QueryString["FK_MapExt"];
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.RegisterClientScriptBlock("s",
             "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
-
         MapM2M mapM2M = new MapM2M(this.FK_MapData, this.NoOfObj);
         if (mapM2M.HisM2MType == M2MType.M2MM)
         {
-            this.Response.Redirect("M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&IsOpen=" + this.IsOpen + "&WorkID=" + this.WorkID, true);
+            this.Response.Redirect("M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&IsOpen=" + this.IsOpen + "&OID=" + this.OID, true);
             return;
         }
+
+        #region 处理设计时自动填充明细表.
+        if (this.Key != null)
+        {
+            MapExt me = new MapExt(this.FK_MapExt);
+            string[] strs = me.Tag2.Split('$');
+            foreach (string str1 in strs)
+            {
+                if (str1 == null)
+                    continue;
+
+                if (str1.Contains(this.NoOfObj) == false)
+                    continue;
+                string[] ss = str1.Split(':');
+                string sql = ss[1];
+                sql = sql.Replace("@Key", this.Key);
+                sql = sql.Replace("@key", this.Key);
+
+                DataTable dtFull = DBAccess.RunSQLReturnTable(sql);
+                M2M m2mData = new M2M();
+                m2mData.FK_MapData = this.FK_MapData;
+                m2mData.EnOID = this.OID;
+                m2mData.M2MNo = this.NoOfObj;
+                string str = ",";
+                string strT = "";
+                foreach (DataRow dr in dtFull.Rows)
+                {
+                    string no = dr["No"].ToString();
+                    string name = dr["Name"].ToString();
+                    str += no + ",";
+                    strT += "@" + no + "," + name;
+                }
+                m2mData.Vals = str;
+                m2mData.ValsName = strT;
+                m2mData.InitMyPK();
+                m2mData.NumSelected = dtFull.Rows.Count;
+                m2mData.Save();
+
+                //BP.DA.DBAccess.RunSQL("DELETE " + this.EnsName + " WHERE RefPK=" + this.RefPKVal);
+                //foreach (DataRow dr in dt.Rows)
+                //{
+                //    BP.Sys.GEDtl mydtl = new GEDtl(this.EnsName);
+                //    mydtl.ResetDefaultVal();
+                //    mydtl.OID = dtls.Count + 1;
+                //    dtls.AddEntity(mydtl);
+                //    foreach (DataColumn dc in dt.Columns)
+                //    {
+                //        mydtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                //    }
+                //}
+                //foreach (BP.Sys.GEDtl item in dtls)
+                //{
+                //    item.OID = 0;
+                //    item.RefPKInt = int.Parse(this.RefPKVal);
+                //    item.Insert();
+                //}
+            }
+            // aspx?NoOfObj=WoDe&r=q&FK_MapData=ND18201&IsTest=1&OID=0&FK_Node=401&FID=0
+            this.Response.Redirect("M2M.aspx?NoOfObj=" + this.NoOfObj + "&FK_MapData=" + this.FK_MapData + "&OID=" + this.OID, true);
+            return;
+        }
+        #endregion 处理设计时自动填充明细表.
+
+
         BP.Sys.M2M m2m = new BP.Sys.M2M();
-        m2m.MyPK = this.FK_MapData + "_" + this.NoOfObj + "_" + this.WorkID + "_";
+        m2m.MyPK = this.FK_MapData + "_" + this.NoOfObj + "_" + this.OID + "_";
         m2m.RetrieveFromDBSources();
         DataTable dtGroup = new DataTable();
         if (mapM2M.DBOfGroups.Length > 5)
@@ -243,14 +320,14 @@ public partial class Comm_M2M : WebPage
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-        if (this.WorkID == 0)
+        if (this.OID == 0)
             return;
 
         MapM2M mapM2M = new MapM2M(this.FK_MapData, this.NoOfObj);
 
         BP.Sys.M2M m2m = new BP.Sys.M2M();
         m2m.FK_MapData = this.FK_MapData;
-        m2m.EnOID = this.WorkID;
+        m2m.EnOID = this.OID;
         m2m.M2MNo = this.NoOfObj;
 
         DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjs);

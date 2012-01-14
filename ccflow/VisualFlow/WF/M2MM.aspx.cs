@@ -12,11 +12,11 @@ using BP.Web.Controls;
 
 public partial class WF_M2MM : WebPage
 {
-    public Int64 WorkID
+    public Int64 OID
     {
         get
         {
-            return Int64.Parse(this.Request.QueryString["WorkID"]);
+            return Int64.Parse(this.Request.QueryString["OID"]);
         }
     }
     public string IsOpen
@@ -59,7 +59,7 @@ public partial class WF_M2MM : WebPage
     {
         BP.Sys.M2Ms m2ms = new BP.Sys.M2Ms();
         m2ms.Retrieve(M2MAttr.FK_MapData, this.FK_MapData,
-            M2MAttr.M2MNo, this.NoOfObj, M2MAttr.EnOID, this.WorkID);
+            M2MAttr.M2MNo, this.NoOfObj, M2MAttr.EnOID, this.OID);
         
         DataTable dtList;
    
@@ -71,7 +71,7 @@ public partial class WF_M2MM : WebPage
             dtList.Columns.Add("Name", typeof(string));
             string myNo = mapM2M.DBOfLists.Replace("@", "");
             BP.Sys.M2M m2m = new BP.Sys.M2M();
-            m2m.MyPK = this.FK_MapData + "_" + myNo + "_" + this.WorkID + "_";
+            m2m.MyPK = this.FK_MapData + "_" + myNo + "_" + this.OID + "_";
             if (m2m.RetrieveFromDBSources() == 0)
                 return false;
 
@@ -86,9 +86,9 @@ public partial class WF_M2MM : WebPage
                     this.OperObj = strs[0];
 
                 if (this.OperObj == strs[0])
-                    this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + strs[0] + "'><b>" + strs[1] + "(" + GetNum(m2ms, strs[0]) + ")</b></a><br>");
+                    this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&OID=" + this.OID + "&OperObj=" + strs[0] + "'><b>" + strs[1] + "(" + GetNum(m2ms, strs[0]) + ")</b></a><br>");
                 else
-                    this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + strs[0] + "'>" + strs[1] + "(" + GetNum(m2ms, strs[0]) + ")</a><br>");
+                    this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&OID=" + this.OID + "&OperObj=" + strs[0] + "'>" + strs[1] + "(" + GetNum(m2ms, strs[0]) + ")</a><br>");
             }
             this.Left.AddULEnd();
             return true;
@@ -108,9 +108,9 @@ public partial class WF_M2MM : WebPage
                 this.OperObj = dr[0].ToString();
 
             if (this.OperObj == dr[0].ToString())
-                this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + dr[0].ToString() + "'><b>" + dr[1].ToString() + "(" + GetNum(m2ms, dr[0].ToString()) + "</b></a><br>");
+                this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&OID=" + this.OID + "&OperObj=" + dr[0].ToString() + "'><b>" + dr[1].ToString() + "(" + GetNum(m2ms, dr[0].ToString()) + "</b></a><br>");
             else
-                this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&OperObj=" + dr[0].ToString() + "'>" + dr[1].ToString() + "(" + GetNum(m2ms, dr[0].ToString()) + "</a><br>");
+                this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&OID=" + this.OID + "&OperObj=" + dr[0].ToString() + "'>" + dr[1].ToString() + "(" + GetNum(m2ms, dr[0].ToString()) + "</a><br>");
         }
         this.Left.AddULEnd();
         return true;
@@ -141,7 +141,7 @@ public partial class WF_M2MM : WebPage
         }
 
         BP.Sys.M2M m2m = new BP.Sys.M2M();
-        m2m.MyPK = this.FK_MapData + "_" + this.NoOfObj + "_" + this.WorkID + "_" + this.OperObj;
+        m2m.MyPK = this.FK_MapData + "_" + this.NoOfObj + "_" + this.OID + "_" + this.OperObj;
         m2m.RetrieveFromDBSources();
         DataTable dtGroup = new DataTable();
         if (mapM2M.DBOfGroups.Length > 5)
@@ -174,9 +174,8 @@ public partial class WF_M2MM : WebPage
             this.Button1.Enabled = false;
 
         if ((isDelete || isInsert) && string.IsNullOrEmpty(this.IsOpen) == false)
-        {
             this.Button1.Visible = true;
-        }
+
 
         this.Pub1.Add("<Table style='border:none;' >");
         foreach (DataRow drGroup in dtGroup.Rows)
@@ -326,13 +325,13 @@ public partial class WF_M2MM : WebPage
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-        if (this.WorkID == 0)
+        if (this.OID == 0)
             return;
 
         MapM2M mapM2M = new MapM2M(this.FK_MapData, this.NoOfObj);
         BP.Sys.M2M m2m = new BP.Sys.M2M();
         m2m.FK_MapData = this.FK_MapData;
-        m2m.EnOID = this.WorkID;
+        m2m.EnOID = this.OID;
         m2m.M2MNo = this.NoOfObj;
         m2m.DtlObj = this.OperObj;
 
@@ -358,11 +357,5 @@ public partial class WF_M2MM : WebPage
         m2m.InitMyPK();
         m2m.NumSelected = numOfselected;
         m2m.Save();
-
-        if (this.IsOpen == "1" )
-        {
-            //this.Response.Redirect("M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&WorkID=" + this.WorkID + "&NoOfObj=" + this.NoOfObj + "&OperObj=" + this.OperObj + "&IsOpen=" + this.IsOpen, true);
-        }
-
     }
 }
