@@ -1579,7 +1579,6 @@ namespace BP.WF
                     break;
             }
 
-
             if (dt.Rows.Count == 1)
             {
                 /* 如果只有一个人员 */
