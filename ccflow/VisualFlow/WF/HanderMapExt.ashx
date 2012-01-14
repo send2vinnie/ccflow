@@ -13,12 +13,18 @@ using System.Text;
 using BP.Web;
 using System.Configuration;
 using System.Web.SessionState;
+using BP.DA;
+using BP.Web;
+using BP.WF;
+using BP.Sys;
+using BP.En;
 
 public class Handler : IHttpHandler, IRequiresSessionState  
 {
     string no;
     string name;
     string fk_dept;
+    string oid;
     public string DealSQL(string sql, string key)
     {
         sql = sql.Replace("@Key", key);
@@ -33,6 +39,9 @@ public class Handler : IHttpHandler, IRequiresSessionState
         sql = sql.Replace("@WebUser.No", WebUser.No);
         sql = sql.Replace("@WebUser.Name", WebUser.Name);
         sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+        if (oid != null)
+            sql = sql.Replace("@OID", oid);
+
         return sql;
     }
     public void ProcessRequest(HttpContext context)
@@ -43,6 +52,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
         no=context.Request.QueryString["WebUserNo"];
         name = context.Request.QueryString["WebUserName"];
         fk_dept = context.Request.QueryString["WebUserFK_Dept"];
+        oid = context.Request.QueryString["OID"];
 
         BP.Sys.MapExt me = new BP.Sys.MapExt(fk_mapExt);
        DataTable dt = null;
@@ -84,9 +94,33 @@ public class Handler : IHttpHandler, IRequiresSessionState
                                 continue;
 
                             string[] ss = str.Split(':');
-                            DataRow dr = dtM2M.NewRow();
-                            dr[0] = ss[0];
-                            dtM2M.Rows.Add(dr);
+                            string noOfObj = ss[0];
+                            string mysql = ss[1];
+                            mysql = DealSQL(mysql, key);
+
+                            DataTable dtFull = DBAccess.RunSQLReturnTable(sql);
+                            M2M m2mData = new M2M();
+                            m2mData.FK_MapData = me.FK_MapData;
+                            m2mData.EnOID = int.Parse(oid);
+                            m2mData.M2MNo = noOfObj;
+                            string mystr = ",";
+                            string mystrT = "";
+                            foreach (DataRow dr in dtFull.Rows)
+                            {
+                                string myno = dr["No"].ToString();
+                                string myname = dr["Name"].ToString();
+                                mystr += myno + ",";
+                                mystrT += "@" + myno + "," + myname;
+                            }
+                            m2mData.Vals = mystr;
+                            m2mData.ValsName = mystrT;
+                            m2mData.InitMyPK();
+                            m2mData.NumSelected = dtFull.Rows.Count;
+                            m2mData.Save();
+                            
+                            DataRow mydr = dtM2M.NewRow();
+                            mydr[0] = ss[0];
+                            dtM2M.Rows.Add(mydr);
                         }
                         context.Response.Write(JSONTODT(dtM2M));
                         break;

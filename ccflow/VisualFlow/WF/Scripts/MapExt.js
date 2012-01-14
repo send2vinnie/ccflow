@@ -1,5 +1,6 @@
 ﻿// ********************** 根据关键字动态查询. ******************************** //
 var oldValue = "";
+var oid ;
 var highlightindex = -1;
 function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
     openDiv(sender, tbid);
@@ -98,7 +99,19 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
         }
     }
 }
+
 function FullIt(oldValue, tbid, fk_mapExt) {
+
+    if (oid == null)
+        oid = GetQueryString('OID');
+
+    if (oid == null)
+        oid = GetQueryString('WorkID');
+
+    if (oid == null)
+        oid = 0;
+
+    alert(oid);
 
     //执行填充其它的控件.
     FullCtrl(oldValue, tbid, fk_mapExt);
@@ -117,7 +130,6 @@ function openDiv(e, tbID) {
     if (document.getElementById("divinfo").style.display == "none") {
         var txtObject = document.getElementById(tbID);
         var orgObject = document.getElementById("divinfo");
-
         var rect = getoffset(txtObject);
         orgObject.style.top = rect[0] + 22;
         orgObject.style.left = rect[1];
@@ -281,7 +293,7 @@ function DDLAnsc(e, ddlChild, fk_mapExt) {
 function FullM2M(key, fk_mapExt) {
     //alert(key);
 
-    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqM2MFullList" };
+    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqM2MFullList","OID": oid };
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -301,6 +313,9 @@ function FullM2M(key, fk_mapExt) {
                 for (var k in dataObj.Head[i]) {
                     var fullM2M = dataObj.Head[i][k];
                     var frm = document.getElementById('F' + fullM2M);
+                    if (frm == null)
+                        continue;
+
                     var src = frm.src;
                     var idx = src.indexOf("&Key");
                     if (idx == -1)
@@ -324,7 +339,7 @@ function FullM2M(key, fk_mapExt) {
 function FullDtl(key, fk_mapExt) {
 
     //FullM2M(key, fk_mapExt); //填充M2M.
-    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDtlFullList" };
+    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDtlFullList", "OID": oid };
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -528,3 +543,5 @@ function MyOut(sender) {
 function hiddiv() {
     $("#divinfo").css("display", "none");
 }
+
+function GetQueryString(name) {   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");   var r = window.location.search.substr(1).match(reg);   if (r!=null)    return unescape(r[2]);    return null;}

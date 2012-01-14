@@ -39,7 +39,7 @@ public partial class WF_MapDef_MapM2M : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         MapData md = new MapData(this.FK_MapData);
-        this.Title = md.Name + " - " + this.ToE("DesignFrame", "设计多选");
+        this.Title = md.Name + " - 设计一对多" ;
         MapM2M m2m = new MapM2M(this.FK_MapData, this.NoOfObj);
         if (m2m.HisM2MType == M2MType.M2MM)
         {
@@ -48,7 +48,7 @@ public partial class WF_MapDef_MapM2M : WebPage
         }
 
         this.Pub1.AddTable();
-        this.Pub1.AddCaptionLeft("多选属性");
+        this.Pub1.AddCaptionLeft("一对多属性");
         int idx = 1;
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
