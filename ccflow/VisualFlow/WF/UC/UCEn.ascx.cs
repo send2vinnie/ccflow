@@ -57,7 +57,7 @@ namespace BP.Web.Comm.UC.WF
             fes = new FrmEvents(enName);
             try
             {
-                string msg = fes.DoEventNode(EventListFrm.FrmLoadBefore, en);
+                string msg = fes.DoEventNode(FrmEventList.FrmLoadBefore, en);
                 if (msg != null)
                     this.Alert(msg);
             }
@@ -635,7 +635,7 @@ namespace BP.Web.Comm.UC.WF
             fes = new FrmEvents(enName);
             try
             {
-                string msg = fes.DoEventNode(EventListFrm.FrmLoadBefore, en);
+                string msg = fes.DoEventNode(FrmEventList.FrmLoadBefore, en);
                 if (msg != null)
                     this.Alert(msg);
             }
@@ -1025,7 +1025,7 @@ namespace BP.Web.Comm.UC.WF
             fes = new FrmEvents(enName);
             try
             {
-                string msg = fes.DoEventNode(EventListFrm.FrmLoadAfter, en);
+                string msg = fes.DoEventNode(FrmEventList.FrmLoadAfter, en);
                 if (msg != null)
                     this.Alert(msg);
             }
@@ -1484,7 +1484,7 @@ namespace BP.Web.Comm.UC.WF
             fes = new FrmEvents(enName);
             try
             {
-                string msg = fes.DoEventNode(EventListFrm.FrmLoadBefore, en);
+                string msg = fes.DoEventNode(FrmEventList.FrmLoadBefore, en);
                 if (msg != null)
                     this.Alert(msg);
             }

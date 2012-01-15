@@ -104,7 +104,6 @@ public partial class WF_Frm : WebPage
             }
             int i = dtlEn.RetrieveFromDBSources();
             this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, !this.IsEdit);
-
             this.AddJSEvent(dtlEn);
         }
         else
@@ -116,10 +115,10 @@ public partial class WF_Frm : WebPage
                 this.UCEn1.AddMsgOfWarning("提示", "<h2>主表单没有字段无法预览。FK_MapData=" + this.FK_MapData + "</h2>");
                 return;
             }
-
             int i = en.RetrieveFromDBSources();
             if (i == 0 && this.FID != 0)
                 en.DirectInsert();
+
             this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(en);
         }
@@ -134,7 +133,7 @@ public partial class WF_Frm : WebPage
     }
     public void AddJSEvent(Entity en)
     {
-        Attrs attrs=en.EnMap.Attrs;
+        Attrs attrs = en.EnMap.Attrs;
         foreach (Attr attr in attrs)
         {
             if (attr.UIIsReadonly || attr.UIVisible == false)
@@ -172,9 +171,13 @@ public partial class WF_Frm : WebPage
         wk.Rec = WebUser.No;
         wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
         wk.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
+
+        FrmEvents fes = new FrmEvents(this.FK_MapData);
+        fes.DoEventNode(FrmEventList.SaveBefore, wk);
         try
         {
             wk.Update();
+            fes.DoEventNode(FrmEventList.SaveAfter, wk);
         }
         catch (Exception ex)
         {
@@ -196,20 +199,35 @@ public partial class WF_Frm : WebPage
     }
     protected void Btn_Save_Click(object sender, EventArgs e)
     {
-        if (this.FK_MapData.Replace("ND", "") == this.FK_Node.ToString())
+
+        try
         {
-            this.SaveNode();
-            return;
+            if (this.FK_MapData.Replace("ND", "") == this.FK_Node.ToString())
+            {
+                this.SaveNode();
+                return;
+            }
+
+
+            MapData md = new MapData(this.FK_MapData);
+            GEEntity en = md.HisGEEn;
+            en.SetValByKey("OID", this.FID);
+            int i = en.RetrieveFromDBSources();
+            en = this.UCEn1.Copy(en) as GEEntity;
+
+            FrmEvents fes = new FrmEvents(this.FK_MapData);
+            fes.DoEventNode(FrmEventList.SaveBefore, en);
+            if (i == 0)
+                en.Insert();
+            else
+                en.Update();
+
+            fes.DoEventNode(FrmEventList.SaveAfter, en);
+        }
+        catch(Exception ex)
+        {
+            this.UCEn1.AddMsgOfWarning("error:", ex.Message);
         }
 
-        MapData md = new MapData(this.FK_MapData);
-        GEEntity en = md.HisGEEn;
-        en.SetValByKey("OID", this.FID);
-        int i = en.RetrieveFromDBSources();
-        en = this.UCEn1.Copy(en) as GEEntity;
-        if (i == 0)
-            en.Insert();
-        else
-            en.Update();
     }
 }
