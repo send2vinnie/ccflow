@@ -21,6 +21,7 @@ namespace CCForm
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("在施工中!");
+
             this.HisImg.WinURL = this.TB_Url.Text;
             this.HisImg.WinTarget = this.TB_WinName.Text;
 

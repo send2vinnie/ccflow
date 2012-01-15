@@ -804,7 +804,7 @@ namespace CCForm
                         TreeViewItem liItem = new TreeViewItem();
                         liItem.Header = noFrm + "," + nameFrm;
                         liItem.Name = fk_node + "_" + noFrm;
-                        liItem.Tag = "@FK_Node=" + fk_node + "@No=" + noFrm + "@Name=" + drFrm["Name"] + "@PTable=" + drFrm["PTable"] + "@URL=" + url + "@FormType=" + drFrm["formType"] + "@IsReadonly=" + drFrmNode["IsReadonly"];
+                        liItem.Tag = "@FK_Node=" + fk_node + "@No=" + noFrm + "@Name=" + drFrm["Name"] + "@PTable=" + drFrm["PTable"] + "@URL=" + url + "@FormType=" + drFrm["formType"] ;
                         // liItem.MouseLeftButtonDown += new MouseButtonEventHandler(liItem_MouseLeftButtonDown);
 
                         liItem.MouseRightButtonDown += new MouseButtonEventHandler(li_MouseRightButtonDown);
