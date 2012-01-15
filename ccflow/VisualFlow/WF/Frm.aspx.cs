@@ -142,7 +142,6 @@ public partial class WF_Frm : WebPage
             if (attr.IsFKorEnum)
             {
                 var ddl = this.UCEn1.GetDDLByID("DDL_" + attr.Key);
-                // ddl.Attributes["onselect"]
             }
         }
     }
