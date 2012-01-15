@@ -1605,7 +1605,10 @@ namespace BP.WF
                     else
                     {
                         return this.DoUnSendSubFlow(gwf); //是子流程时.
+                        //return this.DoUnSendSubFlow(gwf); //是子流程时.
                     }
+                    break;
+                case NodeWorkType.SubThreadWork:
                     break;
                 default:
                     break;
@@ -1834,6 +1837,7 @@ namespace BP.WF
 
             WorkerLists wls = new WorkerLists();
             wls.Delete(WorkerListAttr.WorkID, this.WorkID, WorkerListAttr.FK_Node, gwf.FK_Node.ToString());
+
             wn.HisWork.Delete();
             gwf.FK_Node = wnPri.HisNode.NodeID;
             gwf.NodeName = wnPri.HisNode.Name;
@@ -1913,7 +1917,6 @@ namespace BP.WF
             {
                 // 更新是否显示。
                 DBAccess.RunSQL("UPDATE WF_ForwardWork SET IsRead=1 WHERE WORKID=" + this.WorkID + " AND FK_Node=" + wnPri.HisNode.NodeID);
-
                 if (Web.WebUser.IsWap == false)
                 {
                     if (this.HisFlow.FK_FlowSort != "00")

@@ -3705,7 +3705,7 @@ namespace BP.WF
 
                 // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
                 // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE IsPass=0 AND FID=" + this.HisWork.FID;
-                string sqlAll = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID;
+                string sqlAll = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN (" + this.SpanSubTheadNodes(nd) + ")";
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(sqlAll);
                 decimal passRate = ok / all * 100;
                 string numStr = "@您是第(" + ok + ")到达此节点上的同事。";
@@ -3812,7 +3812,7 @@ namespace BP.WF
             // string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE  IsPass=0 AND FID=" + this.HisWork.FID;
             
             #warning 对于多个分合流点可能会有问题。
-            sql1 = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID;
+            sql1 = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN ("+ this.SpanSubTheadNodes(nd) +")";
             decimal numAll1 = (decimal)DBAccess.RunSQLReturnValInt(sql1);
             decimal passRate1 = 1 / numAll1 * 100;
             if (nd.PassRate <= passRate1)
@@ -3830,6 +3830,31 @@ namespace BP.WF
 
             return "@当前工作已经完成，流程已经运行到合流节点[" + nd.Name + "]。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + nd.NodeID + "')\" >短信通知他们</a>。" + "@您是第一个到达此节点的同事.";
         }
+        private string _SpanSubTheadNodes = null;
+        /// <summary>
+        /// 获取分流与合流之间的子线程节点集合.
+        /// </summary>
+        /// <param name="toNode"></param>
+        /// <returns></returns>
+        private string SpanSubTheadNodes(Node toHLNode)
+        {
+            _SpanSubTheadNodes = "";
+            SpanSubTheadNodes_DG(toHLNode.HisFromNodes);
+            if (_SpanSubTheadNodes == "")
+                throw new Exception("获取分合流之间的节点集合出现错误。");
+            return _SpanSubTheadNodes.Substring(1);
+        }
+        private void SpanSubTheadNodes_DG(Nodes subNDs)
+        {
+            foreach (Node nd in subNDs)
+            {
+                if (nd.IsFL == true)
+                    continue;
+
+                _SpanSubTheadNodes += "," + nd.NodeID;
+                SpanSubTheadNodes_DG(nd.HisFromNodes);
+            }
+        }
         /// <summary>
         /// 有FID
         /// </summary>
@@ -3837,6 +3862,8 @@ namespace BP.WF
         /// <returns></returns>
         private string StartNextWorkNodeHeLiu_WithFID(Node nd)
         {
+            string spanNodes = this.SpanSubTheadNodes(nd);
+
             if (nd.HisFromNodes.Count != 1)
             {
                 return StartNextWorkNodeHeLiu_WithFID_YiBu(nd);
@@ -3871,7 +3898,7 @@ namespace BP.WF
 
                 // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
                 // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE IsPass=0 AND FID=" + this.HisWork.FID;
-                sql = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID;
+                sql = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN (" + spanNodes + ")";
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(sql);
                 decimal passRate = ok / all * 100;
                 string numStr = "@您是第(" + ok + ")到达此节点上的同事。";
@@ -3978,7 +4005,7 @@ namespace BP.WF
             // string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE  IsPass=0 AND FID=" + this.HisWork.FID;
             
             #warning 对于多个分合流点可能会有问题。
-            sql1 = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID;
+            sql1 = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN (" + spanNodes + ")";
             decimal numAll1 = (decimal)DBAccess.RunSQLReturnValInt(sql1);
             decimal passRate1 = 1 / numAll1 * 100;
             if (nd.PassRate <= passRate1)

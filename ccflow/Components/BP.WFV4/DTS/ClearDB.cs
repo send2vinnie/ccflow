@@ -19,9 +19,9 @@ namespace BP.WF
         /// </summary>
         public ClearDB()
         {
-            this.Title = "清除流程运行的数据";
+            this.Title = "清除流程运行的数据(此功能要在测试环境里运行)";
             this.Help = "清除所有流程运行的数据，包括待办工作。";
-            this.Warning = "您确定要执行吗？";
+            this.Warning = "此功能要在测试环境里执行，确认是测试环境吗？";
         }
         /// <summary>
         /// 设置执行变量

@@ -525,7 +525,28 @@ namespace BP.WF
             Work wk = nd.HisWork;
             wk.OID = workid;
             if (wk.RetrieveFromDBSources() == 0)
-                throw new Exception("@工作[" + nd.No  + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
+            {
+                /*
+                 * 2012-10-15 偶然发现一次工作丢失情况, WF_GenerWorkerlist WF_GenerWorkFlow 都有这笔数据，没有查明丢失原因。 zp
+                 * 用如下代码自动修复，但是会遇到数据copy不完全的问题。
+                 * */
+#warning 2012-10-15 偶然发现一次工作丢失情况.
+                GERpt rpt = new GERpt("ND" + int.Parse(this.No) + "Rpt");
+                rpt.OID = int.Parse(workid.ToString());
+                if (rpt.RetrieveFromDBSources() != 0)
+                {
+                    wk.Copy(rpt);
+                    wk.NodeState = NodeState.Init;
+                    wk.Rec = WebUser.No;
+                    wk.Insert();
+                }
+                else
+                {
+                   throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
+                }
+
+              //  throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
+            }
 
             // 设置当前的人员把记录人。
             wk.Rec = WebUser.No;
@@ -539,7 +560,6 @@ namespace BP.WF
             wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
             wk.FID = 0;
             wk.SetValByKey("RecText", WebUser.Name);
-
             if (nd.IsStartNode)
             {
                 try
