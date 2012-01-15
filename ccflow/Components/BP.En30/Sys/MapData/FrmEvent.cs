@@ -39,7 +39,7 @@ namespace BP.Sys
         /// </summary>
         Javascript
     }
-    public class EventListFrm
+    public class FrmEventList
     {
         /// <summary>
         /// 载入前
@@ -61,7 +61,7 @@ namespace BP.Sys
     /// <summary>
     /// 事件标记列表
     /// </summary>
-    public class EventListOfNode : EventListFrm
+    public class EventListOfNode : FrmEventList
     {
         #region 节点事件
         /// <summary>
