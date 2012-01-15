@@ -216,8 +216,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 case "menuDeleteNode":
                     deleteFlowNode();
                     break;
-                case "menuDesignNodeFrm":
-                    Glo.WinOpenByDoType("CH", "MapDef", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
+                case "menuDesignNodeFixModel":
+                    Glo.WinOpenByDoType("CH", "MapDefFixModel", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
+                    break;
+                case "menuDesignNodeFreeModel":
+                    Glo.WinOpenByDoType("CH", "MapDefFreeModel", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
                     break;
                 case "menuDesignFlowFrm": // 表单库
                     Glo.WinOpenByDoType("CH", "FrmLib", _container.FlowID, RelatedFlowNode.FlowNodeID, null);

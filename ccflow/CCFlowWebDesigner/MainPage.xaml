@@ -89,12 +89,13 @@
             <my:TabControlEx.Background>
                 <ImageBrush ImageSource="/Images/Icons/CCFlowWelcome.jpg" Stretch="Fill"/>
             </my:TabControlEx.Background>
+            
             <my:TabControlEx.Template>
                 <ControlTemplate>
                     <!-- TabStripPlacement Top -->
                     <Grid x:Name="TemplateTop" Visibility="Collapsed" >
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid>
@@ -102,7 +103,7 @@
                                 <controlsPrimitives:TabPanel x:Name="TabPanelTop" Margin="2,2,2,-1">
                                 </controlsPrimitives:TabPanel>
                             </StackPanel>
-                            <StackPanel VerticalAlignment="Bottom"  >
+                            <StackPanel VerticalAlignment="Bottom">
                                 <Button x:Name="btnShowList" HorizontalAlignment="Right" Content="/WF;component/Themes/img1.png" Height="20">
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">

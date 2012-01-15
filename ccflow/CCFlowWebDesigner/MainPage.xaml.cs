@@ -255,8 +255,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             c.Designer = this;
             c.FlowID = flowid;
             c.getFlows();
-            c.Width = 2000;
-            c.Height = 2000;
 
             var ti = new TabItemEx();
             ti.Content = c;
@@ -280,6 +278,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             btnClose.DataContext = ti;
             btnClose.SetValue(Canvas.LeftProperty, ti.Width - btnClose.ActualWidth - 20);
             btnClose.SetValue(Canvas.TopProperty, 0.0);
+
             tbx.SetValue(Canvas.TopProperty, btnClose.ActualHeight);
             tbx.SetValue(Canvas.LeftProperty, 0.0);
             ti.SetValue(TabControl.WidthProperty, tbx.ActualWidth + btnClose.ActualWidth + 40);
@@ -289,6 +288,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             tbDesigner.Items.Add(ti);
             tbDesigner.SelectedItem = ti;
+
             setToolBarButtonEnableStatus(true);
         }
         /// <summary>

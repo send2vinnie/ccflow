@@ -24,7 +24,6 @@ namespace BP
 {
     public partial class App : Application
     {
-       
         public App()
         {
             this.Startup += this.Application_Startup;
@@ -78,7 +77,6 @@ namespace BP
         }
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
-
             // 如果应用程序是在调试器外运行的，则使用浏览器的
             // 异常机制报告该异常。在 IE 上，将在状态栏中用一个 
             // 黄色警报图标来显示该异常，而 Firefox 则会显示一个脚本错误。
@@ -100,8 +98,8 @@ namespace BP
 
             string alert = "请您按如下方式处理这个错误。";
             alert += "\t\n1，如果是第一次使用，请打开安装文件中有常见的问题,此文件位于D:\\ccflow\\Documents\\.";
-            alert += "\t\n2，进入官方网站(http://ccflow.org)加入QQ群论坛中，获得更多的ccflow爱好者帮助。";
-            alert += "\t\n3，把此屏幕copy一个图片，发送到 ccflow@qq.com，我们会尽快给您回复。";
+            alert += "\t\n2，进入官方网站(http://ccflow.org)加入QQ群论坛，获得更多的ccflow爱好者帮助。";
+            alert += "\t\n3，把此屏幕copy一个图片，发送到 hiflow@qq.com，我们会尽快给您回复。";
             alert += "\t\n";
 
             MessageBox.Show(alert + errorMsg, "ccflow err:",

@@ -305,6 +305,7 @@ namespace BP
                     x = 1190;
                 if (y < 30)
                     y = 30;
+
                 if (y > 770)
                     y = 770;
 

@@ -9,28 +9,27 @@
     KeyDown="UserControl_KeyDown"
     KeyUp="UserControl_KeyUp"  >
   
-
-        <Grid x:Name="LayoutRoot"   Background="#A0A0A0" ShowGridLines="False" Margin="0"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <Grid x:Name="LayoutRoot"   Background="#A0A0A0" ShowGridLines="False" Margin="0" 
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              ScrollViewer.VerticalScrollBarVisibility="Auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />               
-
+                <ColumnDefinition Width="*" />  
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"   />              
+                <RowDefinition Height="*"   />  
 
             </Grid.RowDefinitions>
-          
                       <ScrollViewer Name="svContainer"  Background="#dcdcdc"  Grid.Column="0" Grid.Row="0"
                       HorizontalContentAlignment="Center" 
                       VerticalAlignment="Top"
                       BorderBrush="Beige"  BorderThickness="0" HorizontalAlignment="Left" 
                       Style="{StaticResource ScrollViewerLime}"
-                      HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto    " >
+                      HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" >
 
                 <ScrollViewer.Content>
                     <!--<Border   VerticalAlignment="Top"   HorizontalAlignment="Left"    BorderThickness="1"  BorderBrush="White" >-->
 
-                        <Canvas       Name="cnsDesignerContainer"     VerticalAlignment="Top"  
+                        <Canvas  Name="cnsDesignerContainer"     VerticalAlignment="Top"  
                                       HorizontalAlignment="Left"   Background="#FFCAE5F2"  
                                    MouseLeftButtonDown="Container_MouseLeftButtonDown"
                                   MouseMove="Container_MouseMove"
@@ -38,17 +37,9 @@
                                   MouseEnter="Container_MouseEnter"
                                    MouseLeave="Container_MouseLeave"
                                       MouseRightButtonDown="cnsDesignerContainer_MouseRightButtonDown">
-                           
-
                         </Canvas>
-
-
                     <!--</Border>-->
-                 
                 </ScrollViewer.Content>
-                
-            
-          
             </ScrollViewer>
            
             <Canvas  Name="menuAndSetting"    Grid.Column="0" Grid.Row="0" >

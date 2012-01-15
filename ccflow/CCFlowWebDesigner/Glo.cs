@@ -49,7 +49,11 @@ namespace BP
         /// <summary>
         /// 节点表单设计
         /// </summary>
-        public const string MapDef = "MapDef";
+        public const string MapDefFixModel = "MapDefFixModel";
+        /// <summary>
+        /// 节点表单设计
+        /// </summary>
+        public const string MapDefFreeModel = "MapDefFreeModel";
         /// <summary>
         /// 节点岗位
         /// </summary>
@@ -149,8 +153,12 @@ namespace BP
                     url = "/WF/Admin/XAP/DoPort.aspx?DoType=En&EnName=BP.WF.Flow&PK=" + fk_flow + "&Lang=CH";
                     Glo.OpenDialog(Glo.BPMHost + url, "执行", 500, 400);
                     return;
-                case UrlFlag.MapDef: // 节点表单设计。
-                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDef&PK=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH";
+                case UrlFlag.MapDefFixModel: // 节点表单设计。
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDefFixModel&PK=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH&FK_Flow=" + fk_flow;
+                    Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计", "Height:600px;Width:800px;", WindowModelEnum.Window);
+                    return;
+                case UrlFlag.MapDefFreeModel: // 节点表单设计。
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDefFreeModel&PK=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH&FK_Flow="+fk_flow;
                     Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计", "Height:600px;Width:800px;", WindowModelEnum.Window);
                     return;
                 case UrlFlag.Dir: // 方向条件。

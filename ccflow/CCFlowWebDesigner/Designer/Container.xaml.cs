@@ -463,6 +463,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             double top = 0;
             double left = 0;
 
+          //  this.Parent.SetValue(canContainerCover DependencyProperty 
+            //cnsDesignerContainer.Width = 500;
+            //cnsDesignerContainer.Height = 9000;
+
             double width = cnsDesignerContainer.Width;
             double height = cnsDesignerContainer.Height;
 
@@ -619,14 +623,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             this.FlowID = flowID;
             _Service.RunSQLReturnTableAsync("select nodeid,Name,X,Y,nodepostype,HisToNDs,nodeworktype from wf_node where fk_flow=" + flowID, true);
             _Service.RunSQLReturnTableCompleted += _service_RunSQLReturnTableCompleted;
-
-
         }
         
         public void getFlows()
         {
             getFlows(this.FlowID);
-
         }
       
         /// <summary>
@@ -1759,10 +1760,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         void _service_RunSQLReturnTableCompleted(object sender, RunSQLReturnTableCompletedEventArgs e)
         {
-
             DataSet ds = new DataSet();
             ds.FromXml(e.Result);
-
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 FlowNode a = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
@@ -1774,29 +1773,30 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     a = new FlowNode((IContainer)this, FlowNodeType.INITIAL);
                     a.sdPicture.txtFlowNodeName.Foreground = sc;
                 }
+
                 if (dr["nodepostype"].ToString() == "2")
                     a = new FlowNode((IContainer)this, FlowNodeType.COMPLETION);
 
                 if (dr["nodepostype"].ToString() == "1")
                 {
-                    if (dr["nodeworktype"] == "3" )
+                    if (dr["nodeworktype"] == "3")
                     {
                         a = new FlowNode((IContainer)this, FlowNodeType.AND_MERGE);
                     }
 
-                    else if (dr["nodeworktype"] == "4" )
+                    else if (dr["nodeworktype"] == "4")
                     {
                         a = new FlowNode((IContainer)this, FlowNodeType.AND_BRANCH);
                     }
-                    else if (dr["nodeworktype"] == "5" )
+                    else if (dr["nodeworktype"] == "5")
                     {
                         a = new FlowNode((IContainer)this, FlowNodeType.STATIONODE);
                     }
                     else
-                    { 
-                         a = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
+                    {
+                        a = new FlowNode((IContainer)this, FlowNodeType.INTERACTION);
                     }
- 
+
                 }
                 a.SetValue(Canvas.ZIndexProperty, NextMaxIndex);
                 a.FlowID = FlowID;
@@ -1806,19 +1806,26 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 double y = double.Parse(dr["Y"]);
                 if (x < 50)
                     x = 50;
-                if (x > 1190)
-                {
-                    x = 1190;
-                }
+
                 if (y < 30)
                     y = 30;
+
+                if (x > 1190)
+                    x = 1190;
+
                 if (y > 770)
                     y = 770;
+
                 a.CenterPoint = new Point(x, y);
                 AddFlowNode(a);
             }
+
+          
+
+
             _Service.GetLablesAsync(FlowID);
             _Service.GetLablesCompleted += new EventHandler<GetLablesCompletedEventArgs>(_service_GetLablesCompleted);
+
             _Service.GetDirectionAsync(FlowID);
             _Service.GetDirectionCompleted += new EventHandler<GetDirectionCompletedEventArgs>(_service_GetDirectionCompleted);
 
@@ -1838,7 +1845,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 {
                     if (bfn.FlowNodeID == dr["Node"].ToString())
                     {
-
                         foreach (FlowNode efn in FlowNodeCollections)
                         {
                             if (efn.FlowNodeID == dr["ToNode"].ToString())
@@ -1880,10 +1886,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         
         private void cnsDesignerContainer_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             if (MouseIsInContainer)
             {
-
                 if (menuFlowNode.Visibility == Visibility.Collapsed
                     && menuDirection.Visibility == Visibility.Collapsed
                     && menuLabel.Visibility == Visibility.Collapsed)

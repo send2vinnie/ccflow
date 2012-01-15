@@ -7,7 +7,9 @@
             <StackPanel Name="spContentMenu"  Canvas.Left="50" Canvas.Top="50" Background="WhiteSmoke" Height="Auto" Orientation="Vertical">
                 <liquidMenu:Menu x:Name="MuContentMenu" Visibility="Visible"  ItemSelected="Menu_ItemSelected">
                     <liquidMenu:MenuItem ID="menuNodeProperty" Text="节点属性"  Icon="../Images/MenuItem/Property.png"/>
-                    <liquidMenu:MenuItem ID="menuDesignNodeFrm" Text="设计节点表单" Icon="../Images/MenuItem/deFrm.png" />
+                    <liquidMenu:MenuItem ID="menuDesignNodeFixModel" Text="设计节点表单-傻瓜模式" Icon="../Images/MenuItem/deFrm.png" />
+                    <liquidMenu:MenuItem ID="menuDesignNodeFreeModel" Text="设计节点表单-自由模式" Icon="../Images/MenuItem/deFrm.png" />
+
                     <liquidMenu:MenuItem ID="menuDesignFlowFrm" Text="表单库" Icon="../Images/MenuItem/deFrm.png" />
 
                     <liquidMenu:MenuItem ID="menuDesignBindFlowFrm" Text="绑定流程表单" Icon="../Images/MenuItem/deFrm.png" />
