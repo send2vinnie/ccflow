@@ -209,6 +209,9 @@ public partial class WF_M2MM : WebPage
                 cb.Attributes["onclick"] = "isChange=true;";
                 cb.Text = name;
                 cb.Checked = m2m.Vals.Contains("," + no + ",");
+                if (cb.Checked)
+                    cb.Text = "<font color=green>" + cb.Text + "</font>";
+
                 this.Pub1.AddTD(cb);
 
                 if (mapM2M.Cols - 1 == colIdx)
@@ -292,6 +295,9 @@ public partial class WF_M2MM : WebPage
                 ctlIDs += cb.ID + ",";
                 cb.Text = name;
                 cb.Checked = m2m.Vals.Contains("," + no + ",");
+                if (cb.Checked)
+                    cb.Text = "<font color=green>" + cb.Text + "</font>";
+
                 this.Pub1.AddTD(cb);
 
                 if (mapM2M.Cols - 1 == colIdx)
@@ -332,7 +338,6 @@ public partial class WF_M2MM : WebPage
         m2m.DtlObj = this.OperObj;
 
         DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjs);
-
         string str = ",";
         string strT = "";
         int numOfselected = 0;

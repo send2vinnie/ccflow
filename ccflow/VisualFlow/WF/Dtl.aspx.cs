@@ -179,50 +179,6 @@ public partial class Comm_Dtl : WebPage
 
         GEDtls dtls = new GEDtls(this.EnsName);
 
-        #region 处理设计时自动填充明细表.
-        if (this.Key != null && this.IsReadonly == 0)
-        {
-            MapExt me = new MapExt(this.FK_MapExt);
-            string[] strs = me.Tag1.Split('$');
-            foreach (string str in strs)
-            {
-                if (string.IsNullOrEmpty(str))
-                    continue;
-
-                if (str.Contains(this.EnsName) == false)
-                    continue;
-                string[] ss = str.Split(':');
-                string sql = ss[1];
-                sql = sql.Replace("@Key", this.Key);
-                sql = sql.Replace("@key", this.Key);
-
-                DataTable dt = DBAccess.RunSQLReturnTable(sql);
-                BP.DA.DBAccess.RunSQL("DELETE " + this.EnsName + " WHERE RefPK=" + this.RefPKVal);
-                foreach (DataRow dr in dt.Rows)
-                {
-                    BP.Sys.GEDtl mydtl = new GEDtl(this.EnsName);
-                    mydtl.ResetDefaultVal();
-                    mydtl.OID = dtls.Count + 1;
-                    dtls.AddEntity(mydtl);
-                    foreach (DataColumn dc in dt.Columns)
-                    {
-                        mydtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
-                    }
-                }
-
-                foreach (BP.Sys.GEDtl item in dtls)
-                {
-                    item.OID = 0;
-                    item.RefPKInt = int.Parse(this.RefPKVal);
-                    item.Insert();
-                }
-            }
-
-            this.Response.Redirect("Dtl.aspx?IsWap=" + this.IsWap + "&EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal, true);
-            return;
-        }
-        #endregion 处理设计时自动填充明细表.
-
         #region 生成标题
         //if (this.IsWap == 1 && this.IsReadonly == 0)
         //{

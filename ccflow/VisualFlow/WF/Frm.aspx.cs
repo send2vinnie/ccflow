@@ -68,9 +68,9 @@ public partial class WF_Frm : WebPage
     {
         get
         {
-            if (this.Request.QueryString["IsEdit"] == "1")
-                return true;
-            return false;
+            if (this.Request.QueryString["IsEdit"] == "0")
+                return false;
+            return true;
         }
     }
     public bool IsPrint
@@ -120,7 +120,7 @@ public partial class WF_Frm : WebPage
             int i = en.RetrieveFromDBSources();
             if (i == 0 && this.FID != 0)
                 en.DirectInsert();
-            this.UCEn1.BindFreeFrm(en, this.FK_MapData, this.IsEdit);
+            this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(en);
         }
 

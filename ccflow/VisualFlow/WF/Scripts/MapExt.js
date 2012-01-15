@@ -73,11 +73,8 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
                     //ShowLoading();
                 },
                 success: function (data, textStatus) {
-
                     /* 如何解决与文本框的宽度与下拉框的一样宽。*/
-
                     //alert($("#" + tbid));
-
                     if (data != "") {
                         highlightindex = -1;
                         dataObj = eval("(" + data + ")"); // 转换为json对象 

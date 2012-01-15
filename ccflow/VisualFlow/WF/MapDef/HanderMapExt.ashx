@@ -135,13 +135,34 @@ public class Handler : IHttpHandler, IRequiresSessionState
                                 continue;
 
                             string[] ss = str.Split(':');
-                            //string dtlEnName = ss[0];
-                            //string mysql = ss[1];
-                            //mysql = DealSQL(mysql, key);
-                            DataRow dr = dtDtl.NewRow();
-                            dr[0] = ss[0];
-                            dtDtl.Rows.Add(dr);
+                            string fk_dtl = ss[0];
+                            string mysql = DealSQL(ss[1], key);
 
+                            GEDtls dtls = new GEDtls(fk_dtl);
+                            MapDtl dtl = new MapDtl(fk_dtl);
+                            
+                            DataTable dtDtlFull = DBAccess.RunSQLReturnTable(sql);
+                            BP.DA.DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + key);
+                            foreach (DataRow dr in dtDtlFull.Rows)
+                            {
+                                BP.Sys.GEDtl mydtl = new GEDtl(fk_dtl);
+                                mydtl.OID = dtls.Count + 1;
+                                dtls.AddEntity(mydtl);
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    mydtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                                }
+                            }
+                            foreach (BP.Sys.GEDtl item in dtls)
+                            {
+                                item.OID = 0;
+                                item.RefPKInt = int.Parse(key);
+                                item.Insert();
+                            }
+
+                            DataRow drRe = dtDtl.NewRow();
+                            drRe[0] = fk_dtl;
+                            dtDtl.Rows.Add(drRe);
                         }
                         context.Response.Write(JSONTODT(dtDtl));
                         break;

@@ -75,17 +75,17 @@ public partial class WF_MapDef_MapDef : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         string fk_node = this.Request.QueryString["FK_Node"];
-        if (string.IsNullOrEmpty(fk_node) == false)
-        {
-            BP.WF.Node nd = new BP.WF.Node();
-            nd.NodeID = int.Parse(fk_node);
-            nd.RetrieveFromDBSources();
-            if (nd.HisFormType != BP.WF.FormType.FixForm)
-            {
-                this.Response.Redirect("./CCForm/Frm.aspx?FK_MapData=" + this.FK_MapData + "&FK_Flow=" + nd.FK_Flow, true);
-                return;
-            }
-        }
+        //if (string.IsNullOrEmpty(fk_node) == false)
+        //{
+        //    BP.WF.Node nd = new BP.WF.Node();
+        //    nd.NodeID = int.Parse(fk_node);
+        //    nd.RetrieveFromDBSources();
+        //    if (nd.HisFormType != BP.WF.FormType.FixForm)
+        //    {
+        //        this.Response.Redirect("./CCForm/Frm.aspx?FK_MapData=" + this.FK_MapData + "&FK_Flow=" + nd.FK_Flow, true);
+        //        return;
+        //    }
+        //}
 
         MapData md = new MapData(this.FK_MapData);
         MapAttrs mattrs = new MapAttrs(md.No);

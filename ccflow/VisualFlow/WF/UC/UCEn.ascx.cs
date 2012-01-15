@@ -1195,7 +1195,7 @@ namespace BP.Web.Comm.UC.WF
             #endregion 处理扩展设置
 
             #region 处理 JS 自动计算.
-            string js = "";
+            string js = "\t\n <script type='text/javascript' >oid="+en.PKVal+";</script>";
             for (int i = 0; i < mattrs.Count; i++)
             {
                 MapAttr attr = mattrs[i] as MapAttr;
