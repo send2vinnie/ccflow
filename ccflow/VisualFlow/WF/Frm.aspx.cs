@@ -207,7 +207,6 @@ public partial class WF_Frm : WebPage
                 return;
             }
 
-
             MapData md = new MapData(this.FK_MapData);
             GEEntity en = md.HisGEEn;
             en.SetValByKey("OID", this.FID);
@@ -222,6 +221,13 @@ public partial class WF_Frm : WebPage
                 en.Update();
 
             fes.DoEventNode(FrmEventList.SaveAfter, en);
+
+            if (fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveAfter) == true 
+                || fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveBefore) == true)
+            {
+                /*如果包含保存*/
+                this.Response.Redirect("Frm.aspx?OID=" + this.RefOID + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID="+this.FID+"&FK_MapData="+this.FK_MapData, true);
+            }
         }
         catch(Exception ex)
         {
