@@ -31,6 +31,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
         if (this.Request.Browser.Cookies == false)
         {
             this.Alert("您的浏览器不支持cookies功能，无法使用改系统。");

@@ -88,6 +88,16 @@ public partial class Comm_Dtl : WebPage
             return str;
         }
     }
+    public string FID
+    {
+        get
+        {
+            string str = this.Request.QueryString["FID"];
+            if (str == null)
+                return "1";
+            return str;
+        }
+    }
     #endregion 属性
 
     public int DtlCount
@@ -238,6 +248,7 @@ public partial class Comm_Dtl : WebPage
         try
         {
             qo = new QueryObject(dtls);
+
             switch (mdtl.DtlOpenType)
             {
                 case DtlOpenType.ForEmp:
@@ -250,7 +261,7 @@ public partial class Comm_Dtl : WebPage
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
                     break;
                 case DtlOpenType.ForFID:
-                    qo.AddWhere(GEDtlAttr.FID, this.RefPKVal);
+                    qo.AddWhere(GEDtlAttr.FID, this.FID);
                     break;
             }
         }

@@ -352,7 +352,15 @@ namespace BP.Web.Comm.UC.WF
                 rowIdx++;
                 // myidx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                string src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal + "&IsWap=1&FK_Node="+dtl.FK_MapData.Replace("ND","");
+                string src = "";
+                try
+                {
+                    src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal + "&FID=" + this.HisEn.GetValStringByKey("FID") + "&IsWap=1&FK_Node=" + dtl.FK_MapData.Replace("ND", "");
+                }
+                catch
+                {
+                    src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal + "&IsWap=1&FK_Node=" + dtl.FK_MapData.Replace("ND", "");
+                }
                 this.Add("<TD colspan=2 class=FDesc ID='TD" + dtl.No + "'><a href='" + src + "'>" + dtl.Name + "</a></TD>");
                 // this.Add("<iframe ID='F" + dtl.No + "' frameborder=0 Onblur=\"SaveDtl('" + dtl.No + "');\" style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' height='10px' scrolling=no  /></iframe>");
                 //this.AddTDEnd();
@@ -1280,7 +1288,15 @@ namespace BP.Web.Comm.UC.WF
                 // myidx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
                 this.Add("<TD colspan=4 ID='TD" + dtl.No + "' height='50px' width='100%' style='align:left'>");
-                string src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal;
+                string src = "";
+                try
+                {
+                    src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal + "&FID=" + this.HisEn.GetValStringByKey("FID") + "&IsWap=0&FK_Node=" + dtl.FK_MapData.Replace("ND", "");
+                }
+                catch
+                {
+                    src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal + "&IsWap=0&FK_Node=" + dtl.FK_MapData.Replace("ND", "");
+                }
                 this.Add("<iframe ID='F" + dtl.No + "'   Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' /></iframe>");
 
                 this.AddTDEnd();
@@ -1399,7 +1415,7 @@ namespace BP.Web.Comm.UC.WF
                 if (paras.Contains("WorkID=") == false)
                     paras += "&WorkID=" + this.HisEn.GetValStrByKey("OID");
 
-                string src = fram.URL;  // this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + fram.No + "&RefPKVal=" + this.HisEn.PKVal;
+                string src = fram.URL; 
                 if (src.Contains("?"))
                     src += "&r=q" + paras;
                 else
@@ -1841,16 +1857,16 @@ namespace BP.Web.Comm.UC.WF
                 if (dtl.HisDtlShowModel == DtlShowModel.Table)
                 {
                     if (isReadonly == true)
-                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1";
+                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1&FID=" + en.GetValStrByKey("FID");
                     else
-                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0";
+                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0&FID=" + en.GetValStrByKey("FID");
                 }
                 else
                 {
                     if (isReadonly == true)
-                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1";
+                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1&FID" + en.GetValStrByKey("FID");
                     else
-                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0";
+                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0&FID" + en.GetValStrByKey("FID");
                 }
 
                 if (this.IsReadonly == true)
