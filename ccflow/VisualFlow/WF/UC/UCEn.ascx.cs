@@ -814,9 +814,9 @@ namespace BP.Web.Comm.UC.WF
                                     {
                                         string v = en.GetValStrByKey(attr.KeyOfEn);
                                         if (v.Length == 0)
-                                            this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                            this.AddTD("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                                         else
-                                            this.Add("<img src='../DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                            this.AddTD("<img src='../DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                                     }
                                     else
                                     {
