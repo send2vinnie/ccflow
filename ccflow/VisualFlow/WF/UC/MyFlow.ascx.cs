@@ -1210,6 +1210,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     }
                     break;
                 case FormType.DisableIt:
+                    currWK.Retrieve();
                     break;
                 default:
                     throw new Exception("@未涉及到的情况。");

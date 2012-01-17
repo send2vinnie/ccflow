@@ -26,6 +26,7 @@ public partial class WF_MapDef_FrmEvent : WebPage
         xmls.RetrieveAll();
 
         FrmEventXml curr = null;
+        this.Pub1.Add("<a href='http://ccflow.org' target=_blank ><img src='./../../DataUser/LogBiger.png' border=0 width='120px;' /></a><hr>");
         this.Pub1.AddUL();
         foreach (FrmEventXml xml in xmls)
         {
@@ -105,7 +106,6 @@ public partial class WF_MapDef_FrmEvent : WebPage
         btn.Text = " Save ";
         this.Pub2.Add(btn);
     }
-
     void btn_Click(object sender, EventArgs e)
     {
         FrmEvent fe = new FrmEvent(this.FK_MapData, this.DoType);
