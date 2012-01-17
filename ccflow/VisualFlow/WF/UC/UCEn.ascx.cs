@@ -107,6 +107,35 @@ namespace BP.Web.Comm.UC.WF
                     rowIdx++;
                     this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
 
+
+                    if (attr.UIIsEnable == false)
+                    {
+                        if (this.LinkFields.Contains("," + attr.KeyOfEn + ","))
+                        {
+                            MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link) as MapExt;
+                            string url = meLink.Tag;
+                            if (url.Contains("?") == false)
+                                url = url + "?a3=2";
+                            url = url + "&WebUserNo=" + WebUser.No + "&SID=" + WebUser.SID + "&EnName=" + enName;
+                            if (url.Contains("@AppPath"))
+                                url = url.Replace("@AppPath", "http://" + this.Request.Url.Host + this.Request.ApplicationPath);
+                            if (url.Contains("@"))
+                            {
+                                Attrs attrs = en.EnMap.Attrs;
+                                foreach (Attr item in attrs)
+                                {
+                                    url = url.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                                    if (url.Contains("@") == false)
+                                        break;
+                                }
+                            }
+                            this.AddTD("<a href='" + url + "' target='" + meLink.Tag1 + "' >" + en.GetValByKey(attr.KeyOfEn) + "</a>");
+                            this.AddTREnd();
+                            continue;
+                        }
+                    }
+
+
                     #region 加入字段
                     // 显示的顺序号.
                     idx++;
@@ -524,12 +553,16 @@ namespace BP.Web.Comm.UC.WF
         public MapExts mes = null;
         private void LoadData(MapAttrs mattrs,Entity en)
         {
+            this.LinkFields = "";
             #region 处理装载前的填充。
             if (mes.Count >= 1)
             {
                 DataTable dt = null;
                 foreach (MapExt item in mes)
                 {
+                    if (item.ExtType == MapExtXmlList.Link)
+                        this.LinkFields += ","+item.AttrOfOper+",";
+
                     if (item.ExtType != MapExtXmlList.PageLoadFull)
                         continue;
 
@@ -656,8 +689,6 @@ namespace BP.Web.Comm.UC.WF
 
             //处理装载前填充.
             this.LoadData(mattrs,en);
-
-
             this.Add("<table id=tabForm width='500px' align=center >");
             string appPath = this.Page.Request.ApplicationPath;
             foreach (GroupField gf in gfs)
@@ -804,10 +835,39 @@ namespace BP.Web.Comm.UC.WF
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
                     }
 
+                    if (attr.UIIsEnable == false)
+                    {
+                        if (this.LinkFields.Contains("," + attr.KeyOfEn + ","))
+                        {
+                            MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link) as MapExt;
+                            string url = meLink.Tag;
+                            if (url.Contains("?") == false)
+                                url = url + "?a3=2";
+                            url = url + "&WebUserNo=" + WebUser.No + "&SID=" + WebUser.SID + "&EnName=" + enName;
+                            if (url.Contains("@AppPath"))
+                                url = url.Replace("@AppPath", "http://" + this.Request.Url.Host + this.Request.ApplicationPath);
+                            if (url.Contains("@"))
+                            {
+                                Attrs attrs = en.EnMap.Attrs;
+                                foreach (Attr item in attrs)
+                                {
+                                    url = url.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                                    if (url.Contains("@") == false)
+                                        break;
+                                }
+                            }
+                            this.AddTD("colspan=" + colspanOfCtl, "<a href='" + url + "' target='" + meLink.Tag1 + "' >" + en.GetValByKey(attr.KeyOfEn) + "</a>");
+                            continue;
+                        }
+                    }
+
+
                     TB tb = new TB();
                     // tb.Columns = 60;
                     tb.ID = "TB_" + attr.KeyOfEn;
                     tb.Enabled = attr.UIIsEnable;
+
+                 
 
                     #region add contrals.
                     switch (attr.LGType)
@@ -1488,9 +1548,11 @@ namespace BP.Web.Comm.UC.WF
         public string FK_MapData = null;
         FrmEvents fes =null;
         public string EnName = null;
+        public string LinkFields = "";
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
             mes = new MapExts(enName);
+           
             this.IsReadonly = isReadonly;
             this.FK_MapData = enName;
             this.HisEn = en;
@@ -1636,11 +1698,36 @@ namespace BP.Web.Comm.UC.WF
                 TB tb = new TB();
                 tb.ID = "TB_" + attr.KeyOfEn;
                 if (attr.UIIsEnable == false)
+                {
                     tb.Attributes.Add("readonly", "true");
-
-                tb.Attributes["tabindex"] = attr.IDX.ToString();
-                if (this.IsReadonly)
                     tb.ReadOnly = true;
+                }
+                tb.Attributes["tabindex"] = attr.IDX.ToString();
+
+                if (attr.UIIsEnable == false && this.LinkFields.Contains("," + attr.KeyOfEn + ","))
+                {
+                    MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link) as MapExt;
+                    string url = meLink.Tag;
+                    if (url.Contains("?") == false)
+                        url = url + "?a3=2";
+                    url = url + "&WebUserNo=" + WebUser.No + "&SID=" + WebUser.SID + "&EnName=" + enName;
+                    if (url.Contains("@AppPath"))
+                        url = url.Replace("@AppPath", "http://" + this.Request.Url.Host + this.Request.ApplicationPath);
+                    if (url.Contains("@"))
+                    {
+                        Attrs attrs = en.EnMap.Attrs;
+                        foreach (Attr item in attrs)
+                        {
+                            url = url.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                            if (url.Contains("@") == false)
+                                break;
+                        }
+                    }
+                    this.Add("<a href='" + url + "' target='" + meLink.Tag1 + "' >" + en.GetValByKey(attr.KeyOfEn) + "</a>");
+                    this.Add("</span>");
+                    this.Add("</DIV>");
+                    continue;
+                }
 
                 switch (attr.LGType)
                 {

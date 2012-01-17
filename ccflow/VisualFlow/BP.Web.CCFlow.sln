@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.Web.Controls30", "..\Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.En30", "..\Components\BP.En30\BP.En30.csproj", "{247F7483-86B3-442E-B8B1-2FCFB432BD75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.PRJ", "..\ExpandingApplication\Prj\BP.PRJ\BP.PRJ.csproj", "{2ED7EB20-2562-42CB-8784-CDE35D063C5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -83,6 +85,16 @@ Global
 		{247F7483-86B3-442E-B8B1-2FCFB432BD75}.Release|Any CPU.Build.0 = Release|Any CPU
 		{247F7483-86B3-442E-B8B1-2FCFB432BD75}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{247F7483-86B3-442E-B8B1-2FCFB432BD75}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2ED7EB20-2562-42CB-8784-CDE35D063C5D}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{2ED7EB20-2562-42CB-8784-CDE35D063C5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ED7EB20-2562-42CB-8784-CDE35D063C5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ED7EB20-2562-42CB-8784-CDE35D063C5D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2ED7EB20-2562-42CB-8784-CDE35D063C5D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2ED7EB20-2562-42CB-8784-CDE35D063C5D}.Release|.NET.ActiveCfg = Release|Any CPU
+		{2ED7EB20-2562-42CB-8784-CDE35D063C5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ED7EB20-2562-42CB-8784-CDE35D063C5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ED7EB20-2562-42CB-8784-CDE35D063C5D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2ED7EB20-2562-42CB-8784-CDE35D063C5D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

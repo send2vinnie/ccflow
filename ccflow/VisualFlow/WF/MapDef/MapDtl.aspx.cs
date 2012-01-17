@@ -21,7 +21,10 @@ public partial class Comm_MapDef_MapDtl : WebPage
     {
         get
         {
-            return this.Request.QueryString["DoType"];
+            string v= this.Request.QueryString["DoType"];
+            if (v == null || v == "")
+                v = "New";
+            return v;
         }
     }
     public string FK_MapData
@@ -46,7 +49,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
         switch (this.DoType)
         {
-           
             case "Edit":
                 MapDtl dtl = new MapDtl();
                 if (this.FK_MapDtl == null)
@@ -71,7 +73,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
                 break;
         }
     }
-   
     void btn_Click(object sender, EventArgs e)
     {
         Button btn = sender as Button;
@@ -80,6 +81,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
             switch (this.DoType)
             {
                 case "New":
+                default:
                     MapDtl dtlN = new MapDtl();
                     dtlN = (MapDtl)this.Pub1.Copy(dtlN);
                     if (this.DoType == "New")
@@ -138,8 +140,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
                         return;
                     }
                     this.Response.Redirect("MapDtl.aspx?DoType=Edit&FK_MapDtl=" + dtl.No + "&FK_MapData=" + this.FK_MapData, true);
-                    break;
-                default:
                     break;
             }
         }

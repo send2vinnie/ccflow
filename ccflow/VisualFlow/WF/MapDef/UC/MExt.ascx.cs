@@ -529,6 +529,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         TextBox tb = new TextBox();
         tb.ID = "TB_Tag";
         tb.Text = me.Tag;
+        tb.Columns = 50;
         this.Pub2.AddTR();
         this.Pub2.AddTD("Url");
         this.Pub2.AddTD(tb);
@@ -537,6 +538,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         tb = new TextBox();
         tb.ID = "TB_Tag1";
         tb.Text = me.Tag1;
+        tb.Columns = 50;
         this.Pub2.AddTR();
         this.Pub2.AddTD("窗口");
         this.Pub2.AddTD(tb);

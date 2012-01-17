@@ -253,9 +253,6 @@ public partial class Comm_Dtl : WebPage
             {
                 case DtlOpenType.ForEmp:
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
-                    // #warning 需要判断。
-                    // qo.addAnd();
-                    //qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
                     break;
                 case DtlOpenType.ForWorkID:
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
@@ -318,6 +315,7 @@ public partial class Comm_Dtl : WebPage
 
         // 需要自动填充的下拉框IDs. 这些下拉框不需要自动填充数据。
         string autoFullDataDDLIDs = ",";
+        string LinkFields = ",";
         foreach (MapExt me in mes)
         {
             switch (me.ExtType)
@@ -327,6 +325,9 @@ public partial class Comm_Dtl : WebPage
                     break;
                 case MapExtXmlList.AutoFullDLL:
                     autoFullDataDDLIDs += me.AttrOfOper + ",";
+                    break;
+                case MapExtXmlList.Link:
+                    LinkFields += me.AttrOfOper + ",";
                     break;
                 default:
                     break;
@@ -373,6 +374,29 @@ public partial class Comm_Dtl : WebPage
                     continue;
 
                 string val = dtl.GetValByKey(attr.KeyOfEn).ToString();
+                if (attr.UIIsEnable == false && LinkFields.Contains("," + attr.KeyOfEn + ","))
+                {
+                    MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link) as MapExt;
+                    string url = meLink.Tag;
+                    if (url.Contains("?") == false)
+                        url = url + "?a3=2";
+                    url = url + "&WebUserNo=" + WebUser.No + "&SID=" + WebUser.SID + "&EnName=" + mdtl.No;
+                    if (url.Contains("@AppPath"))
+                        url = url.Replace("@AppPath", "http://" + this.Request.Url.Host + this.Request.ApplicationPath);
+                    if (url.Contains("@"))
+                    {
+                        Attrs tempAttrs = dtl.EnMap.Attrs;
+                        foreach (Attr item in tempAttrs)
+                        {
+                            url = url.Replace("@" + attr.KeyOfEn, dtl.GetValStrByKey(attr.KeyOfEn));
+                            if (url.Contains("@") == false)
+                                break;
+                        }
+                    }
+                    this.Pub1.AddTD("<a href='" + url + "' target='" + meLink.Tag1 + "' >" + val + "</a>");
+                    continue;
+                }
+
                 switch (attr.UIContralType)
                 {
                     case UIContralType.TB:
@@ -582,8 +606,6 @@ public partial class Comm_Dtl : WebPage
 
             #endregion 增加rows
 
-           
-
             #region 拓展属性
             if (this.IsReadonly == 0 && mes.Count != 0)
             {
@@ -783,7 +805,7 @@ public partial class Comm_Dtl : WebPage
         if (this.IsReadonly == 0)
         {
             // 输出自动计算公式
-            this.Response.Write("\n<script language='JavaScript' >");
+            this.Response.Write("\n<script language='JavaScript'>");
             foreach (GEDtl dtl in dtls)
             {
                 string top = "\n function C" + dtl.OID + "() { \n ";
@@ -1062,7 +1084,6 @@ public partial class Comm_Dtl : WebPage
             right = right.Replace("@" + mattr.Name, " parseFloat( document.forms[0]." + this.Pub1.GetTextBoxByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
             right = right.Replace("@" + mattr.KeyOfEn, " parseFloat( document.forms[0]." + this.Pub1.GetTextBoxByID(tbID).ClientID + ".value.replace( ',' ,  '' ) ) ");
         }
-
         string s = left + right;
         s += "\t\n  document.forms[0]." + this.Pub1.GetTextBoxByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value= VirtyMoney(document.forms[0]." + this.Pub1.GetTextBoxByID("TB_" + attr.KeyOfEn + "_" + pk).ClientID + ".value ) ;";
         return s += " C" + attr.KeyOfEn + "();";

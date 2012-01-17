@@ -72,8 +72,21 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         
         MapAttrs attrs = new MapAttrs(this.MyPK);
         MapExts mes = new MapExts(this.MyPK);
+        string LinkFields = ",";
         if (mes.Count != 0)
         {
+            foreach (MapExt me in mes)
+            {
+                switch (me.ExtType)
+                {
+                    case MapExtXmlList.Link:
+                        LinkFields += me.AttrOfOper + ",";
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             this.Page.RegisterClientScriptBlock("s8",
           "<script language='JavaScript' src='./../Scripts/jquery-1.4.1.min.js' ></script>");
 
@@ -142,6 +155,30 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             {
                 if (attr.UIVisible == false)
                     continue;
+
+                if (attr.UIIsEnable == false && LinkFields.Contains("," + attr.KeyOfEn + ","))
+                {
+                    MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link) as MapExt;
+                    string url = meLink.Tag;
+                    if (url.Contains("?") == false)
+                        url = url + "?a3=2";
+                    url = url + "&WebUserNo=" + WebUser.No + "&SID=" + WebUser.SID + "&EnName=" + this.FK_MapDtl;
+                    if (url.Contains("@AppPath"))
+                        url = url.Replace("@AppPath", "http://" + this.Request.Url.Host + this.Request.ApplicationPath);
+                    if (url.Contains("@"))
+                    {
+                        Attrs tempAttrs = dtl.EnMap.Attrs;
+                        foreach (Attr item in tempAttrs)
+                        {
+                            url = url.Replace("@" + attr.KeyOfEn, dtl.GetValStrByKey(attr.KeyOfEn));
+                            if (url.Contains("@") == false)
+                                break;
+                        }
+                    }
+                    this.Pub1.AddTD("<a href='" + url + "' target='" + meLink.Tag1 + "' >" + attr.DefVal + "</a>");
+                    continue;
+                }
+
 
                 switch (attr.LGType)
                 {
@@ -562,6 +599,9 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         {
             string tbID = "TB_" + mattr.KeyOfEn + "_" + i;
             TextBox tb = this.Pub1.GetTextBoxByID(tbID);
+            if (tb == null)
+                continue;
+
             if (i == 0)
                 right += " parseFloat( document.forms[0]." + tb.ClientID + ".value.replace( ',' ,  '' ) )  ";
             else
