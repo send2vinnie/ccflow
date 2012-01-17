@@ -42,8 +42,10 @@ namespace BP.Sys
         /// ±íµ¥×°ÔØÌî³ä
         /// </summary>
         public const string PageLoadFull = "PageLoadFull";
-
-        
+        /// <summary>
+        /// link.
+        /// </summary>
+        public const string Link = "Link";
     }
 	public class MapExtXml:XmlEnNoName
 	{

@@ -494,7 +494,6 @@ namespace BP.En
                     {
                         if (this.Row == null)
                             throw new Exception("@没有初始化Row.");
-
                         return this.Row.GetValByKey(attrKey).ToString();
                     }
                     catch (Exception ex)

@@ -2412,7 +2412,11 @@ namespace BP.WF
                                     dtCopy.FK_MapDtl = toDtl.No;
                                     dtCopy.RefPK = mywk.OID.ToString();
                                     dtCopy.OID = 0;
-                                    dtCopy.InsertAsOID(gedtl.OID);
+                                    dtCopy.Insert();
+                                 //  dtCopy.InsertAsOID(gedtl.OID);
+
+                                  //  dtCopy.InsertAsOID(gedtl.OID);
+
 
                                     #region  复制明细表单条 - 附件信息
                                     if (toDtl.IsEnableAthM)

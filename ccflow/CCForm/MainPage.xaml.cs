@@ -1092,7 +1092,14 @@ namespace CCForm
         }
         void da_BindFrmCompleted(object sender, FF.GenerFrmCompletedEventArgs e)
         {
-            BindFrm(e.Result);
+            try
+            {
+                BindFrm(e.Result);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("在绑定控件时出现错误,技术信息:Table="+Glo.TempVal+" Ex="+ex.Message);
+            }
         }
         void BindFrm(string xmlStrs)
         {
@@ -1112,6 +1119,7 @@ namespace CCForm
 
             foreach (DataTable dt in this.FrmDS.Tables)
             {
+                Glo.TempVal = dt.TableName;
                 switch (dt.TableName)
                 {
                     case "Sys_MapData":
@@ -1318,7 +1326,7 @@ namespace CCForm
                     case "Sys_MapAttr":
                         foreach (DataRow dr in dt.Rows)
                         {
-                            if (dr["UIVisible"] == "0" )
+                            if (dr["UIVisible"] == "0")
                                 continue;
 
                             if (dr["FK_MapData"] != Glo.FK_MapData)
@@ -1475,13 +1483,9 @@ namespace CCForm
                     case "Sys_MapDtl":
                         foreach (DataRow dr in dt.Rows)
                         {
-                     
-
                             BPDtl dtl = new BPDtl(dr["No"]);
-
                             dtl.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
                             dtl.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
-
                             dtl.Width = double.Parse(dr["W"]);
                             dtl.Height = double.Parse(dr["H"]);
 
@@ -1505,10 +1509,10 @@ namespace CCForm
                             AttachmentUploadType uploadType = (AttachmentUploadType)int.Parse(uploadTypeInt);
                             if (uploadType == AttachmentUploadType.Single)
                             {
-                                
+
                                 BPAttachment ath = new BPAttachment(dr["NoOfObj"],
-                                    dr["Name"],dr["Exts"],
-                                    double.Parse(dr["W"]),dr["SaveTo"].ToString());
+                                    dr["Name"], dr["Exts"],
+                                    double.Parse(dr["W"]), dr["SaveTo"].ToString());
 
                                 ath.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
                                 ath.SetValue(Canvas.TopProperty, double.Parse(dr["Y"]));
@@ -1557,7 +1561,7 @@ namespace CCForm
                                 athM.SaveTo = dr["SaveTo"];
                                 athM.Text = dr["Name"];
                                 athM.Label = dr["Name"];
-                              
+
                                 MouseDragElementBehavior mde = new MouseDragElementBehavior();
                                 Interaction.GetBehaviors(athM).Add(mde);
                                 this.canvasMain.Children.Add(athM);

@@ -73,19 +73,19 @@ namespace BP.Sys
                 switch (this.ExtType)
                 {
                     case MapExtXmlList.ActiveDDL:
-                        dec += "利用sql自动填充下拉框,配置字段" + this.AttrOfOper;
+                        dec += "字段" + this.AttrOfOper;
                         break;
                     case MapExtXmlList.TBFullCtrl:
-                        dec += "利用sql配置TextBox自动完成,配置字段:" + this.AttrOfOper;
+                        dec += this.AttrOfOper;
                         break;
                     case MapExtXmlList.DDLFullCtrl:
-                        dec += "利用sql配置DropDownListbox自动完成,配置字段:" + this.AttrOfOper;
+                        dec += "" + this.AttrOfOper;
                         break;
                     case MapExtXmlList.InputCheck:
-                        dec += "配置字段：" + this.AttrOfOper + " 检查内容：" + this.Tag1;
+                        dec += "字段：" + this.AttrOfOper + " 检查内容：" + this.Tag1;
                         break;
                     case MapExtXmlList.PopVal:
-                        dec += "配置字段：" + this.AttrOfOper + " 弹出的Url：" + this.Tag;
+                        dec += "字段：" + this.AttrOfOper + " Url：" + this.Tag;
                         break;
                     default:
                         break;

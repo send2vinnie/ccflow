@@ -21,8 +21,8 @@ namespace BP.Sys
     {
         public string No = null;
         public string Name = null;
-        public double FrmH = 0;
-        public double FrmW = 0;
+        public double FrmH = 1200;
+        public double FrmW = 900;
         public MapData()
         {
         }
