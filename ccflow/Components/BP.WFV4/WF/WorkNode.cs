@@ -4090,7 +4090,7 @@ namespace BP.WF
                 #endregion 复制附件。
 
                 #region 复制多选数据
-                M2Ms m2ms = new M2Ms(this.HisNode.NodeID, this.WorkID);
+                M2Ms m2ms = new M2Ms("ND"+this.HisNode.NodeID, this.WorkID);
                 if (m2ms.Count >= 1)
                 {
                     foreach (M2M item in m2ms)
