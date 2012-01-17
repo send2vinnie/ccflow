@@ -1111,6 +1111,9 @@ public partial class Comm_Dtl : WebPage
         {
             string tbID = "TB_" + mattr.KeyOfEn + "_" + dtl.OID;
             TextBox tb = this.Pub1.GetTextBoxByID(tbID);
+            if (tb == null)
+                continue;
+
             if (i == 0)
                 right += " parseFloat( document.forms[0]." + tb.ClientID + ".value.replace( ',' ,  '' ) )  ";
             else
