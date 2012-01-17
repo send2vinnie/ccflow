@@ -10,22 +10,14 @@
 		<meta name="CODE_LANGUAGE" Content="C#">
 		<meta name="vs_defaultClientScript" content="JavaScript">
 		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
-				<LINK href="../Style/Table0.css" type="text/css" rel="stylesheet">
+	     <LINK href="../Style/Table0.css" type="text/css" rel="stylesheet">
 		<script language="JavaScript" src="../JScript.js"></script>
-		<script language=javascript>
-<!--
-//-->
-</script>
-	    <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
 	</HEAD>
 	<body topmargin="0" leftmargin="0" >
 		<form id="Form1" method="post" runat="server" >
 			<FONT face="宋体">
 				<TABLE id="Table1" cellSpacing="1" cellPadding="1" width="100%" border="1">
-					<TR>
-						<TD>
-							<asp:Label id="Label1" runat="server">Label</asp:Label></TD>
-					</TR>
+					 <caption   >系统实体信息</caption>
 					<TR>
 						<TD>
 							<cc1:BPToolBar id="BPToolBar1" Visible=true runat="server"></cc1:BPToolBar></TD>

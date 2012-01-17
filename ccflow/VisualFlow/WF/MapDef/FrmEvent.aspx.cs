@@ -55,7 +55,7 @@ public partial class WF_MapDef_FrmEvent : WebPage
         this.Pub2.AddTR();
         this.Pub2.AddTD("事件类型");
         BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
-        ddl.ID = "DDL_FrmType";
+        ddl.ID = "DDL_" + FrmEventAttr.FK_Event;
         ddl.BindSysEnum("FrmEventType", (int)fe.HisDoType);
         this.Pub2.AddTD(ddl);
         this.Pub2.AddTREnd();
@@ -113,7 +113,7 @@ public partial class WF_MapDef_FrmEvent : WebPage
         fe.FK_Event = this.DoType;
         fe.FK_MapData = this.FK_MapData;
         fe.MyPK = this.FK_MapData + "_" + this.DoType;
-        fe.SetValByKey(FrmEventAttr.DoType, this.Pub2.GetDDLByID("DDL_FrmType").SelectedItemIntVal);
+        fe.SetValByKey(FrmEventAttr.DoType, this.Pub2.GetDDLByID("DDL_"+FrmEventAttr.FK_Event).SelectedItemIntVal);
         if (string.IsNullOrEmpty(fe.DoDoc))
             fe.Delete();
         else

@@ -1244,11 +1244,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         currWK.Rec = WebUser.No;
         currWK.SetValByKey("FK_Dept", WebUser.FK_Dept);
         currWK.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
+
+        // 处理节点表单保存事件h.
+        FrmEvents fes;
+          fes = new FrmEvents("ND" + this.FK_Node);
+        fes.DoEventNode(FrmEventList.SaveBefore, currWK);
         try
         {
             if (currND.IsStartNode)
                 currWK.FID = 0;
-
             currWK.Update(); /* 如果是保存 */
         }
         catch (Exception ex)
@@ -1265,13 +1269,16 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             this.Pub1.AlertMsg_Warning("错误", ex.Message + "@有可能此错误被系统自动修复,请您从新保存一次.");
             return;
         }
+
+        // 处理表单保存后。
+        fes.DoEventNode(FrmEventList.SaveAfter, currWK);
+
         string msg = "";
         // 调用工作流程，处理节点信息采集后保存后的工作。
         if (isSave)
         {
             if (string.IsNullOrEmpty(this.Request.QueryString["WorkID"]))
                 return;
-
             currWK.RetrieveFromDBSources();
             this.UCEn1.ResetEnVal(currWK);
             return;

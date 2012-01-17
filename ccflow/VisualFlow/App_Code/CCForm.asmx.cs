@@ -153,7 +153,6 @@ namespace BP.Web
                         MapM2M m2mDel = new MapM2M();
                         m2mDel.MyPK = v1;
                         m2mDel.Delete();
-
                         //M2M m2mData = new M2M();
                         //m2mData.Delete(M2MAttr.FK_MapData, v1);
                         return null;

@@ -10,6 +10,7 @@
     <FieldExt No="TBFullCtrl"    CH="文本框自动完成"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
     <FieldExt No="DDLFullCtrl"   CH="下拉框自动完成"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
     <FieldExt No="AutoFullDLL"   CH="动态填充下拉框"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+    <FieldExt No="Link"   CH="字段超连接"  DFor="TB" URL="MapExt.aspx?s=3" />
     <FieldExt No="PopVal"        CH="Pop返回值" DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
     <FieldExt No="Func"          CH="功能执行"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
 

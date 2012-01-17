@@ -18,7 +18,6 @@ public partial class Designer : System.Web.UI.Page
         {
             msg = "@在检查数据库连接出现错误。";
 
-
             #region 测试数据库是否连接成功。
             try
             {
@@ -40,13 +39,28 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion 测试数据库是否连接成功。
 
+            #region 2012- 01-18 增加一个view. 
+            try
+            {
+                
+                BP.DA.DBAccess.RunSQL("DROP VIEW WF_Track_NYR");
+                sql = "  create  view WF_Track_NYR AS SELECT EmpFrom as FK_Emp,SUBSTRING(RDT,0,8) AS FK_NY, SUBSTRING(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_Track GROUP BY EmpFrom ,SUBSTRING(RDT,0,8) , SUBSTRING(RDT,0,11) GO";
+                BP.DA.DBAccess.RunSQL(sql);
+            }
+            catch
+            {
+            }
+            #endregion
+
             #region 2012-01-17 修复表单
             try
             {
+                DBAccess.RunSQL("UPDATE Sys_FrmAttachment SET NoOfObj =NoOfAth WHERE (NoOfObj IS NULL OR NoOfObj='')");
                 DBAccess.RunSQL("UPDATE Sys_FrmAttachment SET NOOfObj=NoOfAth where noofobj is null");
             }
             catch
             {
+
             }
             #endregion
 
@@ -110,6 +124,7 @@ public partial class Designer : System.Web.UI.Page
 
             #region 2011-12-01 升级投递规则.
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DeliveryWay'");
+            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='FrmEventType'");
             #endregion
 
 

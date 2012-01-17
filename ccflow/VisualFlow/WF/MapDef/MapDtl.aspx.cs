@@ -46,14 +46,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
         switch (this.DoType)
         {
-            case "New":
-                int num = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapDtl WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
-                MapDtl dtl1 = new MapDtl();
-                dtl1.Name = this.ToE("DtlTable", "明细表") + num;
-                dtl1.No = this.FK_MapData + "Dtl" + num;
-                dtl1.PTable = this.FK_MapData + "Dtl" + num;
-                BindEdit(md, dtl1);
-                break;
+           
             case "Edit":
                 MapDtl dtl = new MapDtl();
                 if (this.FK_MapDtl == null)
@@ -68,7 +61,14 @@ public partial class Comm_MapDef_MapDtl : WebPage
                 BindEdit(md, dtl);
                 break;
             default:
-                throw new Exception("er:" + this.DoType);
+            case "New":
+                int num = BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapDtl WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
+                MapDtl dtl1 = new MapDtl();
+                dtl1.Name = this.ToE("DtlTable", "明细表") + num;
+                dtl1.No = this.FK_MapData + "Dtl" + num;
+                dtl1.PTable = this.FK_MapData + "Dtl" + num;
+                BindEdit(md, dtl1);
+                break;
         }
     }
    

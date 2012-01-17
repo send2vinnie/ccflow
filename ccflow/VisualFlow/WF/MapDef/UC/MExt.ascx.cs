@@ -364,6 +364,14 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         MapExts mes = new MapExts();
         switch (this.ExtType)
         {
+            case MapExtXmlList.Link: //字段连接。
+                if (this.MyPK != null || this.DoType == "New")
+                {
+                    this.BindLinkEdit();
+                    return;
+                }
+                this.BindLinkList();
+                break;
             case MapExtXmlList.PageLoadFull: //表单装载填充。
                 this.BindPageLoadFull();
                 break;
@@ -402,8 +410,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 this.MapExtList(mes);
                 break;
             case MapExtXmlList.DDLFullCtrl:  //DDL自动完成.
-                
-
                 if (this.DoType == "EditAutoFullDtl")
                 {
                     this.EditAutoFullDtl_DDL();
@@ -445,6 +451,146 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 break;
         }
     }
+
+    #region link.
+    public void BindLinkList()
+    {
+        MapExts mes = new MapExts();
+        mes.Retrieve(MapExtAttr.ExtType, this.ExtType,
+                   MapExtAttr.FK_MapData, this.FK_MapData);
+        this.Pub2.AddTable("align=left width=100%");
+        this.Pub2.AddCaptionLeftTX("字段超连接");
+        this.Pub2.AddTR();
+        this.Pub2.AddTDTitle("IDX");
+        this.Pub2.AddTDTitle("字段");
+        this.Pub2.AddTDTitle("连接");
+        this.Pub2.AddTDTitle("窗口");
+        this.Pub2.AddTDTitle("操作");
+        this.Pub2.AddTREnd();
+
+        MapAttrs attrs = new MapAttrs(this.FK_MapData);
+        int idx = 0;
+        foreach (MapAttr attr in attrs)
+        {
+            if (attr.UIVisible == false)
+                continue;
+
+            if (attr.UIIsEnable == true)
+                continue;
+
+            this.Pub2.AddTR();
+            this.Pub2.AddTDIdx(idx++);
+            this.Pub2.AddTD(attr.KeyOfEn + "-" + attr.Name);
+            MapExt me = mes.GetEntityByKey(MapExtAttr.AttrOfOper, attr.KeyOfEn) as MapExt;
+            if (me == null)
+            {
+                this.Pub2.AddTD("-");
+                this.Pub2.AddTD("-");
+                this.Pub2.AddTD("<a href='MapExt.aspx?s=3&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&OperAttrKey=" + attr.KeyOfEn + "&DoType=New'>设置</a>");
+            }
+            else
+            {
+                this.Pub2.AddTD(me.Tag);
+                this.Pub2.AddTD(me.Tag1);
+                this.Pub2.AddTD("<a href='MapExt.aspx?s=3&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + me.MyPK + "&OperAttrKey="+attr.KeyOfEn+"'>修改</a>");
+            }
+            this.Pub2.AddTREnd();
+        }
+        this.Pub2.AddTableEnd();
+    }
+    public void BindLinkEdit()
+    {
+        MapExt me = new MapExt();
+        if (this.MyPK != null)
+        {
+            me.MyPK = this.MyPK;
+            me.RetrieveFromDBSources();
+        }
+        else
+        {
+            me.FK_MapData = this.FK_MapData;
+            me.AttrOfOper = this.OperAttrKey;
+            me.Tag = "http://ccflow.org";
+            me.Tag1 = "_"+this.OperAttrKey;
+        }
+
+        this.Pub2.AddTable();
+        this.Pub2.AddCaptionLeftTX("字段超连接 - <a href='MapExt.aspx?s=3&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "' >返回</a>");
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("字段英文名");
+        this.Pub2.AddTD(this.OperAttrKey);
+        this.Pub2.AddTREnd();
+
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("字段中文名");
+        MapAttr ma = new MapAttr(this.FK_MapData, this.OperAttrKey);
+        this.Pub2.AddTD(ma.Name);
+        this.Pub2.AddTREnd();
+        TextBox tb = new TextBox();
+        tb.ID = "TB_Tag";
+        tb.Text = me.Tag;
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("Url");
+        this.Pub2.AddTD(tb);
+        this.Pub2.AddTREnd();
+
+        tb = new TextBox();
+        tb.ID = "TB_Tag1";
+        tb.Text = me.Tag1;
+        this.Pub2.AddTR();
+        this.Pub2.AddTD("窗口");
+        this.Pub2.AddTD(tb);
+        this.Pub2.AddTREnd();
+
+        Button btn = new Button();
+        btn.ID = "Btn_Save";
+        btn.Text = "Save";
+        btn.Click += new EventHandler(BindLinkEdit_Click);
+        this.Pub2.AddTR();
+        this.Pub2.AddTD(btn);
+        if (this.MyPK != null)
+        {
+            btn = new Button();
+            btn.ID = "Btn_Del";
+            btn.Text = "Delete";
+            btn.Click += new EventHandler(BindLinkEdit_Click);
+            btn.Attributes["onclick"] = "return window.confirm('您确定要删除吗？');";
+            this.Pub2.AddTD(btn);
+        }
+        else
+        {
+            this.Pub2.AddTD();
+        }
+        this.Pub2.AddTREnd();
+        this.Pub2.AddTableEnd();
+    }
+    void BindLinkEdit_Click(object sender, EventArgs e)
+    {
+        MapExt me = new MapExt();
+        Button btn = sender as Button;
+        if (btn.ID == "Btn_Del")
+        {
+            me.MyPK = this.MyPK;
+            me.Delete();
+            this.Response.Redirect("MapExt.aspx?s=3&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType, true);
+            return;
+        }
+
+        me = (MapExt)this.Pub2.Copy(me);
+        me.FK_MapData = this.FK_MapData;
+        me.AttrOfOper = this.OperAttrKey;
+        //me.Tag = this.Pub2.GetTextBoxByID("TB_Tag").Text;
+        //me.Tag1 = this.Pub2.GetTextBoxByID("TB_Tag1").Text;
+        me.ExtType = this.ExtType;
+        if (this.MyPK == null)
+            me.MyPK = me.FK_MapData + "_" + me.AttrOfOper + "_" + this.ExtType;
+        else
+            me.MyPK = this.MyPK;
+        me.Save();
+
+        this.Response.Redirect("MapExt.aspx?s=3&FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType, true);
+    }
+    #endregion
     /// <summary>
     /// BindPageLoadFull
     /// </summary>
@@ -1535,7 +1681,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     }
     public void MapExtList(MapExts ens)
     {
-        this.Pub2.AddTable("border=0 width='80%' align=left ");
+        this.Pub2.AddTable("border=0 width='80%' align=left");
         this.Pub2.AddCaptionLeft("<a href='MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&DoType=New&RefNo=" + this.RefNo + "' ><img src='./../../Images/Btn/New.gif' border=0/>新建:" + this.Lab + "</a>");
 
         this.Pub2.AddTR();
@@ -1557,12 +1703,9 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Pub2.AddTREnd();
         }
         this.Pub2.AddTableEndWithBR();
-        // this.Pub2.AddFieldSetEnd();
     }
     public void MapJS(MapExts ens)
     {
-        this.Pub2.AddBR();
-        this.Pub2.AddBR();
         this.Pub2.AddTable("border=0 width=90%");
         this.Pub2.AddCaptionLeft("脚本验证");
         this.Pub2.AddTR();

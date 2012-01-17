@@ -87,7 +87,6 @@ namespace BP.Web.Comm.UI
         }
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
-            this.Label1.Text = this.GenerLabelStr("系统实体信息");
 
 		//	this.GenerLabel(this.Label1,"系统实体");
             if (this.EnName != null)

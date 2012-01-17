@@ -2,14 +2,16 @@
 <NewDataSet>
 	<!-- 系统设置菜单树  -->
   <Menu No="01" Name="" CH="系统设置"  W="700" H="800" Url=""  Icon="../Images/TreeMenu/System.png" />
-  <Menu No="0101" Name="" CH="全局设置"  W="700" H="800" Url="/Comm/Sys/EditWebConfig.aspx" Icon=""  />
+    <Menu No="0103" Name="" CH="表结构"  W="700" H="800" Url="/Comm/Sys/SystemClass.aspx"  Icon="" />
+    <Menu No="0101" Name="" CH="全局设置"  W="700" H="800" Url="/Comm/Sys/EditWebConfig.aspx" Icon=""  />
   <Menu No="0102" Name="" CH="系统枚举值"  W="700" H="800" Url="/Comm/Sys/EnumList.aspx" Icon=""  />
   <Menu No="0103" Name="" CH="编码表"  W="700" H="800" Url="/Comm/Sys/SFTableList.aspx" Icon=""  />
   <Menu No="0103" Name="" CH="JS校验库"  W="700" H="800" Url="/Comm/Sys/FuncLib.aspx"  Icon="" />
   <Menu No="0103" Name="" CH="全局变量"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.Sys.GloVers" Icon=""  />
   <Menu No="0103" Name="" CH="功能执行"  W="700" H="800" Url="/Comm/MethodLink.aspx"  Icon="" />
-   
-  <Menu No="02" Name="" CH="组织结构"  W="700" H="800" Url=""    Icon="../Images/TreeMenu/Org.png"  />
+
+
+    <Menu No="02" Name="" CH="组织结构"  W="700" H="800" Url=""    Icon="../Images/TreeMenu/Org.png"  />
   <Menu No="0201" Name="" CH="部门维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Depts"  Icon="" />
   <Menu No="0202" Name="" CH="岗位维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Stations" Icon=""  />
   <Menu No="0203" Name="" CH="操作员维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Emps" Icon=""  />
