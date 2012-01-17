@@ -192,7 +192,7 @@ namespace BP.Sys
         /// <param name="EnOID"></param>
         public M2Ms(int FK_MapData, Int64 EnOID)
         {
-            this.Retrieve(M2MAttr.FK_MapData, FK_MapData, M2MAttr.EnOID, EnOID);
+            this.Retrieve(M2MAttr.FK_MapData, FK_MapData, M2MAttr.EnOID, EnOID.ToString());
         }
         /// <summary>
         /// M2MÊý¾Ý´æ´¢ Entity 
