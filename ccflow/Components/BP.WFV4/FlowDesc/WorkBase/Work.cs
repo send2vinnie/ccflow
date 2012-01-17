@@ -78,6 +78,16 @@ namespace BP.WF
     {
         #region 基本属性(必须的属性)
         /// <summary>
+        /// classID
+        /// </summary>
+        public override string ClassID
+        {
+            get
+            {
+                return "ND"+this.HisNode.NodeID;
+            }
+        }
+        /// <summary>
         /// 流程ID
         /// </summary>
         public virtual Int64 FID
@@ -646,7 +656,6 @@ namespace BP.WF
             this.Retrieve();
         }
         #endregion
-
 
         #region Node.xml 要配置的信息.
         /// <summary>

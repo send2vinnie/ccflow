@@ -27,6 +27,13 @@ namespace BP.Sys
         {
             return this.FK_MapDtl;
         }
+        public override string ClassID
+        {
+            get
+            {
+                return this.FK_MapDtl;
+            }
+        }
         public string RDT
         {
             get

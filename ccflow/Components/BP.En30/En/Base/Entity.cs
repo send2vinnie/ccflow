@@ -49,6 +49,13 @@ namespace BP.En
                 return null;
             }
         }
+        public virtual string ClassID
+        {
+            get
+            {
+                return this.ToString();
+            }
+        }
         #endregion
 
         #region 与sql操作有关
@@ -3336,7 +3343,6 @@ namespace BP.En
             foreach (Entity en in this)
                 if (en.IsExits)
                     en.Delete();
-
             this.Clear();
         }
         public int RunSQL(string sql)
@@ -3348,6 +3354,23 @@ namespace BP.En
             Entity en = this.GetNewEntity;
             Paras ps = new Paras();
             ps.SQL = "DELETE FROM " + en.EnMap.PhysicsTable + " WHERE " + key + "=" + en.HisDBVarStr + "p";
+
+            if (val.GetType() != typeof(string))
+            {
+                Attr attr = en.EnMap.GetAttrByKey(key);
+                if (attr.MyDataType == DataType.AppString)
+                {
+                    ps.Add("p", val.ToString());
+                }
+                else
+                {
+                    ps.Add("p", val);
+                }
+            }
+            else
+            {
+                ps.Add("p", val);
+            }
             ps.Add("p", val);
             return en.RunSQL(ps);
         }
@@ -3357,19 +3380,100 @@ namespace BP.En
             Entity en = this.GetNewEntity;
             Paras ps = new Paras();
             ps.SQL = "DELETE FROM " + en.EnMap.PhysicsTable + " WHERE " + key1 + "=" + en.HisDBVarStr + "p1 AND " + key2 + "=" + en.HisDBVarStr + "p2";
-            ps.Add("p1", val1);
-            ps.Add("p2", val2);
-            return en.RunSQL(ps);
+            if (val1.GetType() != typeof(string))
+            {
+                Attr attr = en.EnMap.GetAttrByKey(key1);
+                if (attr.MyDataType == DataType.AppString)
+                {
+                    ps.Add("p1", val1.ToString());
+                }
+                else
+                {
+                    ps.Add("p1", val1);
+                }
+            }
+            else
+            {
+                ps.Add("p1", val1);
+            }
 
+            if (val2.GetType() != typeof(string))
+            {
+                Attr attr = en.EnMap.GetAttrByKey(key2);
+                if (attr.MyDataType == DataType.AppString)
+                {
+                    ps.Add("p2", val2.ToString());
+                }
+                else
+                {
+                    ps.Add("p2", val2);
+                }
+            }
+            else
+            {
+                ps.Add("p2", val2);
+            }
+
+           
+            return en.RunSQL(ps);
         }
         public int Delete(string key1, object val1, string key2, object val2, string key3, object val3)
         {
             Entity en = this.GetNewEntity;
             Paras ps = new Paras();
             ps.SQL = "DELETE FROM " + en.EnMap.PhysicsTable + " WHERE " + key1 + "=" + en.HisDBVarStr + "p1 AND " + key2 + "=" + en.HisDBVarStr + "p2 AND " + key3 + "=" + en.HisDBVarStr + "p3";
-            ps.Add("p1", val1);
-            ps.Add("p2", val2);
-            ps.Add("p3", val3);
+            if (val1.GetType() != typeof(string))
+            {
+                Attr attr = en.EnMap.GetAttrByKey(key1);
+                if (attr.MyDataType == DataType.AppString)
+                {
+                    ps.Add("p1", val1.ToString());
+                }
+                else
+                {
+                    ps.Add("p1", val1);
+                }
+            }
+            else
+            {
+                ps.Add("p1", val1);
+            }
+
+            if (val2.GetType() != typeof(string))
+            {
+                Attr attr = en.EnMap.GetAttrByKey(key2);
+                if (attr.MyDataType == DataType.AppString)
+                {
+                    ps.Add("p2", val2.ToString());
+                }
+                else
+                {
+                    ps.Add("p2", val2);
+                }
+            }
+            else
+            {
+                ps.Add("p2", val2);
+            }
+
+            if (val3.GetType() != typeof(string))
+            {
+                Attr attr = en.EnMap.GetAttrByKey(key3);
+                if (attr.MyDataType == DataType.AppString)
+                {
+                    ps.Add("p3", val3.ToString());
+                }
+                else
+                {
+                    ps.Add("p3", val3);
+                }
+            }
+            else
+            {
+                ps.Add("p3", val3);
+            }
+
+          
             return en.RunSQL(ps);
         }
         public int Delete(string key1, object val1, string key2, object val2, string key3, object val3, string key4, object val4)
@@ -3377,11 +3481,73 @@ namespace BP.En
             Entity en = this.GetNewEntity;
             Paras ps = new Paras();
             ps.SQL = "DELETE FROM " + en.EnMap.PhysicsTable + " WHERE " + key1 + "=" + en.HisDBVarStr + "p1 AND " + key2 + "=" + en.HisDBVarStr + "p2 AND " + key3 + "=" + en.HisDBVarStr + "p3 AND " + key4 + "=" + en.HisDBVarStr + "p4";
-            ps.Add("p1", val1);
-            ps.Add("p2", val2);
-            ps.Add("p3", val3);
-            ps.Add("p4", val4);
+            if (val1.GetType() != typeof(string))
+            {
+                Attr attr = en.EnMap.GetAttrByKey(key1);
+                if (attr.MyDataType == DataType.AppString)
+                {
+                    ps.Add("p1", val1.ToString());
+                }
+                else
+                {
+                    ps.Add("p1", val1);
+                }
+            }
+            else
+            {
+                ps.Add("p1", val1);
+            }
 
+            if (val2.GetType() != typeof(string))
+            {
+                Attr attr = en.EnMap.GetAttrByKey(key2);
+                if (attr.MyDataType == DataType.AppString)
+                {
+                    ps.Add("p2", val2.ToString());
+                }
+                else
+                {
+                    ps.Add("p2", val2);
+                }
+            }
+            else
+            {
+                ps.Add("p2", val2);
+            }
+
+            if (val3.GetType() != typeof(string))
+            {
+                Attr attr = en.EnMap.GetAttrByKey(key3);
+                if (attr.MyDataType == DataType.AppString)
+                {
+                    ps.Add("p3", val3.ToString());
+                }
+                else
+                {
+                    ps.Add("p3", val3);
+                }
+            }
+            else
+            {
+                ps.Add("p3", val3);
+            }
+
+            if (val4.GetType() != typeof(string))
+            {
+                Attr attr = en.EnMap.GetAttrByKey(key4);
+                if (attr.MyDataType == DataType.AppString)
+                {
+                    ps.Add("p4", val4.ToString());
+                }
+                else
+                {
+                    ps.Add("p4", val4);
+                }
+            }
+            else
+            {
+                ps.Add("p4", val4);
+            }
             return en.RunSQL(ps);
         }
         /// <summary>

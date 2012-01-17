@@ -17,6 +17,13 @@ namespace BP.Sys
         {
             return this.FK_MapData;
         }
+        public override string ClassID
+        {
+            get
+            {
+                return this.FK_MapData;
+            }
+        }
         /// <summary>
         /// Ö÷¼ü
         /// </summary>

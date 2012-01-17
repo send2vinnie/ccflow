@@ -23,13 +23,21 @@ namespace BP.Sys
         /// </summary>
         SQL,
         /// <summary>
-        /// 执行URL
+        /// 自定义URL
         /// </summary>
-        URL,
+        URLOfSelf,
         /// <summary>
-        /// WebServices
+        /// 系统的url.
         /// </summary>
-        WebServices,
+        URLOfSystem,
+        /// <summary>
+        /// 自定义WS
+        /// </summary>
+        WSOfSelf,
+        /// <summary>
+        /// 系统的WS
+        /// </summary>
+        WSOfSystem,
         /// <summary>
         /// EXE
         /// </summary>
@@ -331,6 +339,8 @@ namespace BP.Sys
     {
         public string DoEventNode(string dotype, Entity en)
         {
+            if (this.Count == 0)
+                return null;
             return _DoEventNode(dotype, en);
         }
         /// <summary>
@@ -395,8 +405,7 @@ namespace BP.Sys
                     doc = doc.Replace("@" + s, mys[1]);
                 }
             }
-
-            if (nev.HisDoType == EventDoType.URL)
+            if (nev.HisDoType == EventDoType.URLOfSelf)
             {
                 //doc += "&FK_Flow=" + nev.FK_Flow.ToString();
                 //doc += "&FK_MapData=" + nev.FK_MapData.ToString();
@@ -436,7 +445,7 @@ namespace BP.Sys
                         throw new Exception(nev.MsgError(en) + " Error:" + ex.Message);
                     }
                     break;
-                case EventDoType.URL:
+                case EventDoType.URLOfSelf:
                     doc = doc.Replace("@AppPath", System.Web.HttpContext.Current.Request.ApplicationPath);
                     try
                     {
@@ -447,9 +456,34 @@ namespace BP.Sys
                         if (text == null || text.Trim() == "")
                             return null;
                         return text;
-
                         //Log.DebugWriteInfo(doc + " ------ " + text);
                         //return "@" + nev.MsgOK + text;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("@" + nev.MsgError(en) + " Error:" + ex.Message);
+                    }
+                    break;
+                case EventDoType.URLOfSystem:
+                    string host = System.Web.HttpContext.Current.Request.Url.Host;
+                    string url = "http://"+host + System.Web.HttpContext.Current.Request.ApplicationPath + "/DataUser/AppCoder/FrmEventHandle.aspx";
+                    url += "?FK_MapData=" + en.ClassID + "&WebUseNo=" + WebUser.No + "&EventType=" + nev.FK_Event;
+                    foreach (Attr attr in attrs)
+                    {
+                        if (attr.UIIsDoc || attr.IsRefAttr || attr.UIIsReadonly )
+                            continue;
+                        url += "&" + attr.Key + "=" + en.GetValStrByKey(attr.Key);
+                    }
+
+                    try
+                    {
+                        string text = DataType.ReadURLContext(url, 800, System.Text.Encoding.UTF8);
+                        if (text != null && text.Substring(0, 7).Contains("Err"))
+                            throw new Exception(text);
+
+                        if (text == null || text.Trim() == "")
+                            return null;
+                        return text;
                     }
                     catch (Exception ex)
                     {
