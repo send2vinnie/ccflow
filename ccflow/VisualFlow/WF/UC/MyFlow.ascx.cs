@@ -1270,8 +1270,16 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return;
         }
 
-        // 处理表单保存后。
-        fes.DoEventNode(FrmEventList.SaveAfter, currWK);
+        try
+        {
+            // 处理表单保存后。
+            fes.DoEventNode(FrmEventList.SaveAfter, currWK);
+        }
+        catch(Exception ex)
+        {
+            this.Alert(ex.Message);
+            return;
+        }
 
         string msg = "";
         // 调用工作流程，处理节点信息采集后保存后的工作。
