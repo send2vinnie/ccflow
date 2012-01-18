@@ -53,7 +53,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     {
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
-        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' /></a><hr>");
+        this.Left.Add("<a href='http://ccflow.org' target=_blank  ><img src='../../DataUser/LogBiger.png' style='width:180px;' /></a><hr>");
         this.Left.AddUL();
         foreach (MapExtXml fs in fss)
         {
@@ -108,8 +108,15 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         string[] strs = myme.Tag2.Split('$');
         bool is1 = false;
+        bool isHaveM2M = false;
+        bool isHaveM2MM = false;
         foreach (MapM2M m2m in m2ms)
         {
+            if (m2m.HisM2MType == M2MType.M2M)
+                isHaveM2M = true;
+            if (m2m.HisM2MType == M2MType.M2MM)
+                isHaveM2MM = true;
+
             TextBox tb = new TextBox();
             tb.ID = "TB_" + m2m.NoOfObj;
             tb.Columns = 70;
@@ -143,16 +150,29 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         mybtn.Click += new EventHandler(mybtn_SaveAutoFullM2M_Click);
         this.Pub2.Add(mybtn);
         this.Pub2.AddFieldSetEnd();
-
-        this.Pub2.AddFieldSet("帮助:");
-        this.Pub2.Add("在这里您需要设置一个查询语句");
-        this.Pub2.AddBR("例如：SELECT No,Name FROM WF_Emp WHERE FK_Dept='@Key' ");
-        this.Pub2.AddBR("这个查询语句要与明细表的列对应上就可以在相关内容的值发生改变时而自动填充checkbox。");
-        this.Pub2.AddBR("注意:");
-        this.Pub2.AddBR("1，@Key 是主表字段传递过来的变量。");
-        this.Pub2.AddBR("2，必须并且仅有No,Name两个列，顺序不要颠倒。");
-        this.Pub2.AddBR("3，从表列字段字名，与填充sql列字段大小写匹配。");
-        this.Pub2.AddFieldSetEnd();
+        
+        if (isHaveM2M)
+        {
+            this.Pub2.AddFieldSet("帮助:一对多");
+            this.Pub2.Add("在主表相关数据发生变化后，一对多数据要发生变化，变化的格式为：");
+            this.Pub2.AddBR("实例：SELECT No,Name FROM WF_Emp WHERE FK_Dept='@Key' ");
+            this.Pub2.AddBR("相关内容的值发生改变时而自动填充checkbox。");
+            this.Pub2.AddBR("注意:");
+            this.Pub2.AddBR("1，@Key 是主表字段传递过来的变量。");
+            this.Pub2.AddBR("2，必须并且仅有No,Name两个列，顺序不要颠倒。");
+            this.Pub2.AddFieldSetEnd();
+        }
+        if (isHaveM2MM)
+        {
+            this.Pub2.AddFieldSet("帮助:一对多多");
+            this.Pub2.Add("在主表相关数据发生变化后，一对多多数据要发生变化，变化的格式为：");
+            this.Pub2.AddBR("实例：SELECT a.FK_Emp M1ID, a.FK_Station as M2ID, b.Name as M2Name FROM Port_EmpStation a, Port_Station b WHERE  A.FK_Station=B.No and a.FK_Emp='@Key'");
+            this.Pub2.AddBR("相关内容的值发生改变时而自动填充checkbox。");
+            this.Pub2.AddBR("注意:");
+            this.Pub2.AddBR("1，@Key 是主表字段传递过来的变量。");
+            this.Pub2.AddBR("2，必须并且仅有3个列(M1ID,M2ID,M2Name)，顺序不要颠倒。第1列的ID对应列表的ID，第2，3列对应的是列表数据源的ID与名称。");
+            this.Pub2.AddFieldSetEnd();
+        }
     }
     /// <summary>
     /// 新建文本框自动完成
@@ -755,7 +775,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             MapExt me = new MapExt();
             me.MyPK = MapExtXmlList.AutoFullDLL + "_" + this.FK_MapData + "_" + fk_attr;
             me.RetrieveFromDBSources();
-
             this.Pub2.AddTR();
             this.Pub2.AddTDBegin("colspan=5");
             this.Pub2.AddFieldSet("设置:(" + attrOper.KeyOfEn + " - " + attrOper.Name+")运行时自动填充数据");
@@ -936,9 +955,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK+"&RefNo="+this.RefNo, true);
             return;
         }
-
         MapExt myme = new MapExt(this.MyPK);
-
         MapAttrs attrs = new MapAttrs(myme.FK_MapData);
         string info = "";
         foreach (MapAttr attr in attrs)
@@ -1063,7 +1080,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         me.FK_MapData = this.FK_MapData;
         temFile = me.Tag;
 
-        this.Pub2.AddTable("border=0  width='70%' ");
+        this.Pub2.AddTable("border=0  width='70%' align=left ");
         MapAttr attr = new MapAttr(this.RefNo);
         this.Pub2.AddCaptionLeft(attr.KeyOfEn + " - " + attr.Name);
         this.Pub2.AddTR();
@@ -1708,7 +1725,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     }
     public void MapJS(MapExts ens)
     {
-        this.Pub2.AddTable("border=0 width=90%");
+        this.Pub2.AddTable("border=0 width=90% align=left");
         this.Pub2.AddCaptionLeft("脚本验证");
         this.Pub2.AddTR();
         this.Pub2.AddTDTitle(this.ToE("Sort", "字段"));
