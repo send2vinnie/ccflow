@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" standalone="yes" ?>
 <NewDataSet>
-
+  
   <!-- 事件类型 -->
   <Source No="Frm"  CH="表单事件"  EN=""/>
-  <Source No="Node" CH="节点事件" EN=""/>
-  <Source No="Flow" CH="流程事件" EN=""/>
+  <Source No="Node" CH="节点事件"  EN=""/>
+  <Source No="Flow" CH="流程事件"  EN=""/>
   
   <!-- 表单事件 -->
   <Item No="FrmLoadBefore"  CH="节点表单载入前" EN="When the node before saving" EventType="Frm" 
         EventDesc="在载入前，您可以为表单预先执行一些数据初始化。" />
   <Item No="FrmLoadAfter"   CH="节点表单载入后" EN="When the node saved" EventType="Frm" 
         EventDesc="在载入后，执行安全处理。" />
+    
   <Item No="SaveBefore"  CH="当节点保存前" EN="When the node before saving"  EventType="Frm"
          EventDesc="可以执行一些数据完整性检查。" />
   <Item No="SaveAfter" CH="当节点保存后" EN="When the node saved" EventType="Frm" 
@@ -34,10 +35,8 @@
     <!-- 明细表事件 -->
     <ItemDtl No="DtlSaveBefore" CH="明细表保存前" EN="" EventType="Dtl" />
     <ItemDtl No="DtlSaveEnd" CH="明细表保存后" EN=""  EventType="Dtl" />
-
     <ItemDtl No="DtlItemSaveBefore" CH="单条数据保存前" EN="" EventType="Dtl"  />
     <ItemDtl No="DtlItemSaveAfter" CH="单条数据保存后" EN="" EventType="Dtl"  />
-
     <ItemDtl No="DtlItemDelBefore" CH="单条删除前" EN="" EventType="Dtl"  />
     <ItemDtl No="DtlItemDelAfter" CH="单条删除后" EN="" EventType="Dtl"  />
 
