@@ -46,9 +46,7 @@ public partial class WF_Admin_listen : WebPage
             li.Retrieve();
         }
 
-
         BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-
         this.Pub1.AddTable();
         this.Pub1.AddCaptionLeft("设置收听：" + nd.Name + "- <a href='Listen.aspx?FK_Node=" + this.FK_Node + "' >返回列表</a>");
 
@@ -76,18 +74,20 @@ public partial class WF_Admin_listen : WebPage
         this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
-        this.Pub1.AddTDTitle("设置标题(最大长度不超过250个字符，可以包含字段变量变量以@开头)<br>例如：您发起的工作@Title已经被@WebUser.Name处理。");
+        this.Pub1.AddTDTitle("设置标题(最大长度不超过250个字符，可以包含字段变量变量以@开头)");
         this.Pub1.AddTREnd();
-
+      
         this.Pub1.AddTR();
         TextBox tb = new TextBox();
         tb.ID = "TB_Title";
-        tb.Columns = 55;
+        tb.Columns = 70;
         tb.Text = li.Title;
-
         this.Pub1.AddTD(tb);
         this.Pub1.AddTREnd();
 
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("例如：您发起的工作@Title已经被@WebUser.Name处理。");
+        this.Pub1.AddTREnd();
 
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("内容信息(长度不限制，可以包含字段变量变量以@开头)");
@@ -98,25 +98,19 @@ public partial class WF_Admin_listen : WebPage
         tb = new TextBox();
         tb.TextMode = TextBoxMode.MultiLine;
         tb.ID = "TB_Doc";
-        tb.Columns = 45;
+        tb.Columns = 70;
         tb.Rows = 8;
         tb.Text = li.Doc;
         this.Pub1.Add(tb);
-        this.Pub1.Add("<br>例如：处理时间@RDT，您可以登陆系统查看处理的详细信息，特此通知。<br>如果您不想接受请在个人设置中退订。");
-        this.Pub1.AddHR();
-
-        //this.Pub1.Add("收听方式:");
-        //DDL ddl = new DDL();
-        //ddl.ID = "DDL_AlertWay";
-        //ddl.BindSysEnum(ListenAttr.AlertWay);
-        //ddl.SetSelectItem((int)li.HisAlertWay);
-        //this.Pub1.Add(ddl);
-        //this.Pub1.AddTDEnd();
-        //this.Pub1.AddTREnd();
-
-        this.Pub1.AddB( this.ToE("Note", "特别说明:") );
-        this.Pub1.Add("消息以什么样的渠道(短信，邮件)发送出去，是以用户设置的 “信息提示”来确定的。");
         this.Pub1.AddTDEnd();
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("例如：处理时间@RDT，您可以登陆系统查看处理的详细信息，特此通知。");
+        this.Pub1.AddTREnd();
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTD("<b>特别说明：</b>消息以什么样的渠道(短信，邮件)发送出去，是以用户设置的 “信息提示”来确定的。");
         this.Pub1.AddTREnd();
 
 
@@ -127,7 +121,6 @@ public partial class WF_Admin_listen : WebPage
         btn.ID = "Save";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
-
 
         btn = new Button();
         btn.Text = this.ToE("SaveAndNew", "保存并新建");

@@ -71,6 +71,8 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             return;
         
         MapAttrs attrs = new MapAttrs(this.MyPK);
+        MapAttrs attrs2 = new MapAttrs();
+
         MapExts mes = new MapExts(this.MyPK);
         string LinkFields = ",";
         if (mes.Count != 0)
@@ -167,10 +169,11 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         url = url.Replace("@AppPath", "http://" + this.Request.Url.Host + this.Request.ApplicationPath);
                     if (url.Contains("@"))
                     {
-                        Attrs tempAttrs = dtl.EnMap.Attrs;
-                        foreach (Attr item in tempAttrs)
+                        if (attrs2.Count == 0)
+                            attrs2 = new MapAttrs(this.FK_MapDtl);
+                        foreach (MapAttr item in attrs2)
                         {
-                            url = url.Replace("@" + attr.KeyOfEn, dtl.GetValStrByKey(attr.KeyOfEn));
+                            url = url.Replace("@" + item.KeyOfEn, item.DefVal);
                             if (url.Contains("@") == false)
                                 break;
                         }

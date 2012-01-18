@@ -162,6 +162,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Pub2.AddBR("2，必须并且仅有No,Name两个列，顺序不要颠倒。");
             this.Pub2.AddFieldSetEnd();
         }
+
         if (isHaveM2MM)
         {
             this.Pub2.AddFieldSet("帮助:一对多多");
@@ -170,7 +171,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Pub2.AddBR("相关内容的值发生改变时而自动填充checkbox。");
             this.Pub2.AddBR("注意:");
             this.Pub2.AddBR("1，@Key 是主表字段传递过来的变量。");
-            this.Pub2.AddBR("2，必须并且仅有3个列(M1ID,M2ID,M2Name)，顺序不要颠倒。第1列的ID对应列表的ID，第2，3列对应的是列表数据源的ID与名称。");
+            this.Pub2.AddBR("2，必须并且仅有3个列 M1ID,M2ID,M2Name，顺序不要颠倒。第1列的ID对应列表的ID，第2，3列对应的是列表数据源的ID与名称。");
             this.Pub2.AddFieldSetEnd();
         }
     }

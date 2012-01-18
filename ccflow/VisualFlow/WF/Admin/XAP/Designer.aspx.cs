@@ -125,6 +125,7 @@ public partial class Designer : System.Web.UI.Page
             #region 2011-12-01 升级投递规则.
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DeliveryWay'");
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='FrmEventType'");
+            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='EventDoType'");
             #endregion
 
 

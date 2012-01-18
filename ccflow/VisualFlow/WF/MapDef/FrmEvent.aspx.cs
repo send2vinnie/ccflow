@@ -57,7 +57,7 @@ public partial class WF_MapDef_FrmEvent : WebPage
         this.Pub2.AddTD("事件类型");
         BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
         ddl.ID = "DDL_" + FrmEventAttr.FK_Event;
-        ddl.BindSysEnum("FrmEventType", (int)fe.HisDoType);
+        ddl.BindSysEnum("EventDoType", (int)fe.HisDoType);
         this.Pub2.AddTD(ddl);
         this.Pub2.AddTREnd();
 

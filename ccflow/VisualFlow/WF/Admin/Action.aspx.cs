@@ -43,46 +43,53 @@ public partial class WF_Admin_Action : WebPage
             delFE.Delete();
         }
 
-        this.Pub3.AddCaptionLeft("节点/流程:事件");
-
-
+        this.Pub3.AddCaptionLeft("节点表单/节点/流程:事件");
         this.Title = "设置:节点事件接口";
         FrmEvents ndevs = new FrmEvents();
         ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_MapData);
+
         EventLists xmls = new EventLists();
         xmls.RetrieveAll();
+        BP.WF.XML.EventSources ess = new EventSources();
+        ess.RetrieveAll();
 
         string myEvent = this.Event;
         BP.WF.XML.EventList myEnentXml = null;
-
-        this.Pub1.AddUL();
-        foreach (BP.WF.XML.EventList xml in xmls)
+        foreach (EventSource item in ess)
         {
-            FrmEvent nde = ndevs.GetEntityByKey(FrmEventAttr.FK_Event, xml.No) as FrmEvent;
-            if (nde == null)
+            this.Pub1.AddB(item.Name);
+            this.Pub1.AddUL();
+            foreach (BP.WF.XML.EventList xml in xmls)
             {
-                if (myEvent == xml.No)
+                if (xml.EventType != item.No)
+                    continue;
+
+                FrmEvent nde = ndevs.GetEntityByKey(FrmEventAttr.FK_Event, xml.No) as FrmEvent;
+                if (nde == null)
                 {
-                    myEnentXml = xml;
-                    this.Pub1.AddLi("<font color=green><b>" + xml.Name + "</b></font>");
+                    if (myEvent == xml.No)
+                    {
+                        myEnentXml = xml;
+                        this.Pub1.AddLi("<font color=green><b>" + xml.Name + "</b></font>");
+                    }
+                    else
+                        this.Pub1.AddLi("Action.aspx?NodeID=" + this.NodeID + "&Event=" + xml.No, xml.Name);
                 }
                 else
-                    this.Pub1.AddLi("Action.aspx?NodeID=" + this.NodeID + "&Event=" + xml.No, xml.Name);
-            }
-            else
-            {
-                if (myEvent == xml.No)
                 {
-                    myEnentXml = xml;
-                    this.Pub1.AddLi("<font color=green><b>" + xml.Name + "</b></font>");
-                }
-                else
-                {
-                    this.Pub1.AddLi("Action.aspx?NodeID=" + this.NodeID + "&Event=" + xml.No + "&MyPK=" + nde.MyPK, "<b>" + xml.Name + "</b>");
+                    if (myEvent == xml.No)
+                    {
+                        myEnentXml = xml;
+                        this.Pub1.AddLi("<font color=green><b>" + xml.Name + "</b></font>");
+                    }
+                    else
+                    {
+                        this.Pub1.AddLi("Action.aspx?NodeID=" + this.NodeID + "&Event=" + xml.No + "&MyPK=" + nde.MyPK, "<b>" + xml.Name + "</b>");
+                    }
                 }
             }
+            this.Pub1.AddULEnd();
         }
-        this.Pub1.AddULEnd();
 
         if (myEnentXml == null)
         {
@@ -91,21 +98,13 @@ public partial class WF_Admin_Action : WebPage
             this.Pub2.AddFieldSetEnd();
             return;
         }
+
         FrmEvent mynde = ndevs.GetEntityByKey(FrmEventAttr.FK_Event, myEvent) as FrmEvent;
         if (mynde == null)
             mynde = new FrmEvent();
 
 
         this.Pub2.AddFieldSet(myEnentXml.Name);
-        this.Pub2.Add("要执行的内容<br>");
-        TextBox tb = new TextBox();
-        tb.ID = "TB_Doc";
-        tb.Columns = 60;
-        tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 3;
-        tb.Text = mynde.DoDoc;
-        this.Pub2.Add(tb);
-        this.Pub2.AddHR();
 
         this.Pub2.Add("内容类型:");
         DDL ddl = new DDL();
@@ -113,18 +112,30 @@ public partial class WF_Admin_Action : WebPage
         ddl.ID = "DDL_EventDoType";
         ddl.SetSelectItem((int)mynde.HisDoType);
         this.Pub2.Add(ddl);
-        this.Pub2.AddHR();
+
+        this.Pub2.Add("&nbsp;要执行的内容<br>");
+        TextBox tb = new TextBox();
+        tb.ID = "TB_Doc";
+        tb.Columns = 60;
+        tb.TextMode = TextBoxMode.MultiLine;
+        tb.Rows = 5;
+        tb.Text = mynde.DoDoc;
+        this.Pub2.Add(tb);
+        this.Pub2.AddBR();
+        this.Pub2.AddBR();
+   
 
         tb = new TextBox();
         tb.ID = "TB_MsgOK";
         tb.Columns = 60;
         tb.Text = mynde.MsgOKString;
         tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 3;
+        tb.Rows = 4;
 
         this.Pub2.Add("执行成功信息提示<br>");
         this.Pub2.Add(tb);
-        this.Pub2.AddHR();
+        this.Pub2.AddBR();
+        this.Pub2.AddBR();
 
         this.Pub2.Add("执行失败信息提示<br>");
         tb = new TextBox();
@@ -132,7 +143,7 @@ public partial class WF_Admin_Action : WebPage
         tb.Columns = 60;
         tb.Text = mynde.MsgErrorString;
         tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 3;
+        tb.Rows = 4;
         this.Pub2.Add(tb);
         this.Pub2.AddFieldSetEnd();
 
@@ -140,6 +151,7 @@ public partial class WF_Admin_Action : WebPage
         btn.ID = "Btn_Save";
         btn.Text = "Save";
         btn.Click += new EventHandler(btn_Click);
+        this.Pub2.Add("&nbsp;&nbsp;");
         this.Pub2.Add(btn);
 
         if (this.MyPK != null)

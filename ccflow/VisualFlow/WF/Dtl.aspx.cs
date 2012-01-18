@@ -203,6 +203,8 @@ public partial class Comm_Dtl : WebPage
         //}
 
         MapAttrs attrs = new MapAttrs(this.EnsName);
+        MapAttrs attrs2 = new MapAttrs();
+
         this.Pub1.Add("<Table border=1 style='padding:0px' >");
 
         if (mdtl.IsShowTitle)
@@ -385,10 +387,11 @@ public partial class Comm_Dtl : WebPage
                         url = url.Replace("@AppPath", "http://" + this.Request.Url.Host + this.Request.ApplicationPath);
                     if (url.Contains("@"))
                     {
-                        Attrs tempAttrs = dtl.EnMap.Attrs;
-                        foreach (Attr item in tempAttrs)
+                        if (attrs2.Count == 0)
+                            attrs2 = new MapAttrs(mdtl.No);
+                        foreach (MapAttr item in attrs2)
                         {
-                            url = url.Replace("@" + attr.KeyOfEn, dtl.GetValStrByKey(attr.KeyOfEn));
+                            url = url.Replace("@" + item.KeyOfEn, dtl.GetValStrByKey(item.KeyOfEn));
                             if (url.Contains("@") == false)
                                 break;
                         }
