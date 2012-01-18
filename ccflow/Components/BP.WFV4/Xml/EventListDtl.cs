@@ -13,10 +13,8 @@ namespace BP.WF.XML
     {
         public const string DtlSaveBefore = "DtlSaveBefore";
         public const string DtlSaveEnd = "DtlSaveEnd";
-
         public const string DtlItemSaveBefore = "DtlItemSaveBefore";
         public const string DtlItemSaveAfter = "DtlItemSaveAfter";
-
         public const string DtlItemDelBefore = "DtlItemDelBefore";
         public const string DtlItemDelAfter = "DtlItemDelAfter";
     }

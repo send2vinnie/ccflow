@@ -74,7 +74,7 @@ namespace BP.WF.XML
         {
             get
             {
-                return SystemConfig.PathOfXML + "\\EventSource.xml";
+                return SystemConfig.PathOfXML + "\\EventList.xml";
             }
         }
         /// <summary>

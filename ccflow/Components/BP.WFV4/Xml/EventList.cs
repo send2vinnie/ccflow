@@ -33,6 +33,13 @@ namespace BP.WF.XML
                 return this.GetValStringByKey("EventDesc");
             }
         }
+        public string EventType
+        {
+            get
+            {
+                return this.GetValStringByKey("EventType");
+            }
+        }
         #endregion
 
         #region ππ‘Ï

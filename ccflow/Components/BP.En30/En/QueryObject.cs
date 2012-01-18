@@ -412,12 +412,10 @@ namespace BP.En
         {
             this.AddWhere(attr,  val.ToString() );
         }
-
 		public void AddWhere(string attr, float val)  
 		{
 			this.AddWhere(attr, "=", val);
 		}
-
 		public void AddWhere(string attr, object val)  
 		{
             if (val == null)
@@ -426,7 +424,7 @@ namespace BP.En
             if (val.GetType() == typeof(int) || val.GetType() == typeof(Int32) )
 			{
 				//int i = int.Parse(val.ToString()) ;
-				this.AddWhere(attr, "=", (int)val);
+                this.AddWhere(attr, "=", (Int32)val);
 				return;
 			} 
 			this.AddWhere(attr, "=", val.ToString() );
