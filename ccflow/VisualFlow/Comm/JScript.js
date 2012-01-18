@@ -352,6 +352,7 @@ function ReinitIframe(frmID, tdID) {
 }
 /* …Ë÷√—°øÚ cb1.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')"; */
 function SetSelected(cb, ids) {
+    alert(ids);
     var arrmp = ids.split(',');
     var arrObj = document.all;
     var isCheck = false;
@@ -361,10 +362,15 @@ function SetSelected(cb, ids) {
         isCheck = false;
     for (var i = 0; i < arrObj.length; i++) {
         if (typeof arrObj[i].type != "undefined" && arrObj[i].type == 'checkbox') {
-
             for (var idx = 0; idx <= arrmp.length; idx++) {
-                if (arrObj[i].name.indexOf(arrmp[idx]) > 1) {
+                if (arrmp[idx] == '')
+                    continue;
+                var cid = arrObj[i].name + ',';
+                var ctmp = arrmp[idx] + ',';
+                if (cid.indexOf(ctmp) > 1) {
                     arrObj[i].checked = isCheck;
+                    //                    alert(arrObj[i].name + ' is checked ');
+                    //                    alert(cid + ctmp);
                 }
             }
         }
