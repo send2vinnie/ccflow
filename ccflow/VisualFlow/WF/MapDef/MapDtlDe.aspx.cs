@@ -291,7 +291,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                 }
             }
             if (dtl.IsEnableAthM)
-                this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../FreeFrm/AttachmentUpload.aspx?PKVal=0&Ath=AthM&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM')\"><img src='./../Img/AttachmentM.png' border=0 width='16px' /></a>");
+                this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../FreeFrm/AttachmentUpload.aspx?IsBTitle=1&PKVal=0&Ath=AthM&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM')\"><img src='./../Img/AttachmentM.png' border=0 width='16px' /></a>");
             this.Pub1.AddTREnd();
         }
         if (dtl.IsShowSum)

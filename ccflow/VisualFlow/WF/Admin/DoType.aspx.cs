@@ -30,6 +30,7 @@ public partial class WF_Admin_DoType : WebPage
         switch ( this.DoType )
         {
             case "FlowCheck":
+                this.Title = "流程检查";
                 BP.WF.Flow fl = new BP.WF.Flow(this.RefNo);
                 this.Ucsys1.AddFieldSet(this.ToE("FlowCheckInfo", "流程检查信息")); 
                 this.Ucsys1.Add( fl.DoCheck() ); //  流程检查信息

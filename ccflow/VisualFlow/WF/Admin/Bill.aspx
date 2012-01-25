@@ -25,15 +25,8 @@
 </head>
 <body class="Body<%=BP.Web.WebUser.Style%>"   leftMargin=0  topMargin=0>
     <form id="form1" runat="server">
-        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;
-            height: 100%">
-            <tr>
-                <td valign=top>
                    <uc2:ucsys ID="Ucsys1" runat="server" />
                    <uc2:ucsys ID="Ucsys2" runat="server" />
-                </td>
-            </tr>
-        </table>
     </form>
 </body>
 </html>

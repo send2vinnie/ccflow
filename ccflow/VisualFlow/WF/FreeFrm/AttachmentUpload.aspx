@@ -17,6 +17,15 @@ AutoEventWireup="true" CodeFile="AttachmentUpload.aspx.cs" Inherits="WF_FreeFrm_
        background-color:Silver;
    }
    
+   Button
+   {
+       font-size:12px;
+   }
+   
+   .Btn
+   {
+       font-size:12px;
+   }
 </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">

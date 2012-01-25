@@ -352,7 +352,7 @@ function ReinitIframe(frmID, tdID) {
 }
 /* …Ë÷√—°øÚ cb1.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')"; */
 function SetSelected(cb, ids) {
-    alert(ids);
+    //alert(ids);
     var arrmp = ids.split(',');
     var arrObj = document.all;
     var isCheck = false;

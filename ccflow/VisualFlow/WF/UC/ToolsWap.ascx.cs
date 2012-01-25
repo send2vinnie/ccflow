@@ -259,9 +259,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddTD();
         this.AddTREnd();
         this.AddTableEnd();
-
         this.AddFieldSetEnd();
-
     }
     public void Siganture()
     {
@@ -309,26 +307,26 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         }
 
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To4", "电子签名设置") + WebUser.Auth);
+            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='" + this.PageID + ".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To4", "电子签名设置") + WebUser.Auth);
         else
             this.AddFieldSet(this.ToE("To4", "电子签名设置") + WebUser.Auth);
 
-       // this.AddFieldSet(this.ToE("To4", "电子签名设置"));
+        // this.AddFieldSet(this.ToE("To4", "电子签名设置"));
 
         this.Add("<p align=center><img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=1 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/> </p>");
 
-        this.Add( this.ToE("Upload" ,"上传") );
+        this.Add(this.ToE("Upload", "上传"));
 
         System.Web.UI.WebControls.FileUpload fu = new System.Web.UI.WebControls.FileUpload();
-            fu.ID = "F";
-            this.Add(fu);
+        fu.ID = "F";
+        this.Add(fu);
 
-            Btn btn = new Btn();
-            btn.Text = this.ToE("OK",  "确定");
-            btn.Click += new EventHandler(btn_Siganture_Click);
-            this.Add(btn);
+        Btn btn = new Btn();
+        btn.Text = this.ToE("OK", "确定");
+        btn.Click += new EventHandler(btn_Siganture_Click);
+        this.Add(btn);
 
-            this.AddHR();
+        this.AddHR();
 
         this.AddB("利用扫描仪设置步骤:");
         this.AddUL();
@@ -336,7 +334,6 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddLi("送入扫描仪扫描，并得到jpg文件。");
         this.AddLi("利用出片处理工具把他们处理缩小到 90*30像素大小。");
         this.AddULEnd();
-
 
         this.AddB("手写设置:");
         this.AddUL();
@@ -346,8 +343,8 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
 
         this.AddB("让系统自动为您创建（请选择字体）:");
         this.AddUL();
-        this.AddLi("<a href='"+this.PageID+".aspx?RefNo=Siganture&DoType=ST'>宋体</a>");
-        this.AddLi("<a href='"+this.PageID+".aspx?RefNo=Siganture&DoType=LS'>隶书</a>");
+        this.AddLi("<a href='" + this.PageID + ".aspx?RefNo=Siganture&DoType=ST'>宋体</a>");
+        this.AddLi("<a href='" + this.PageID + ".aspx?RefNo=Siganture&DoType=LS'>隶书</a>");
         this.AddULEnd();
 
         this.AddFieldSetEnd();

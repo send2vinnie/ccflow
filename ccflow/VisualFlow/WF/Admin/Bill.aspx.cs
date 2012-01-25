@@ -40,8 +40,8 @@ public partial class WF_Admin_BillSet : WebPage
         this.Ucsys1.AddCaptionLeft("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "' >" + this.ToE("Back", "返回") + "</a> - <a href=Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New ><img  border=0 src='../../Images/Btn/New.gif' />" + this.ToE("New", "新建") + "</a>-" + BP.WF.Glo.GenerHelp("Bill"));
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle(ToE("Item", "项目"));
-        this.Ucsys1.AddTDTitle(ToE("Input","输入"));
-        this.Ucsys1.AddTDTitle(ToE("Note","备注"));
+        this.Ucsys1.AddTDTitle(ToE("Input", "输入"));
+        this.Ucsys1.AddTDTitle(ToE("Note", "备注"));
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
@@ -50,48 +50,44 @@ public partial class WF_Admin_BillSet : WebPage
         ddl.ID = "DDL_BillType";
 
         BP.WF.BillTypes ens = new BillTypes();
-        ens.RetrieveAll();
+        ens.RetrieveAllFromDBSource();
 
         if (ens.Count == 0)
         {
             BP.WF.BillType enB = new BillType();
-            enB.Name = this.ToE("NewType", "新建类型") +"1";
+            enB.Name = this.ToE("NewType", "新建类型") + "1";
             enB.FK_Flow = this.FK_Flow;
-            enB.No = enB.GenerNewNo;
+            enB.No ="01";
             enB.Insert();
             ens.AddEntity(enB);
         }
 
         ddl.BindEntities(ens);
         ddl.SetSelectItem(bill.FK_BillType);
-
         this.Ucsys1.AddTD(ddl);
-        this.Ucsys1.AddTD("<a href='javascript:AddBillType();' >" + this.ToE("NewType", "新建类型") + "</a>");
+        this.Ucsys1.AddTD("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=EditType'><img src='../../Images/Btn/Edit.gif' border=0/>类别维护</a>");
         this.Ucsys1.AddTREnd();
 
-
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(ToE("No","编号"));
+        this.Ucsys1.AddTD(ToE("No", "编号"));
         TB tb = new TB();
         tb.ID = "TB_No";
         tb.Text = bill.No;
         tb.Enabled = false;
         if (tb.Text == "")
-        {
-            tb.Text = this.ToE("AutoGener","系统自动生成");
-        }
+            tb.Text = this.ToE("AutoGener", "系统自动生成");
 
         this.Ucsys1.AddTD(tb);
         this.Ucsys1.AddTD("");
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(this.ToE("Name","名称")); // 单据/单据名称
+        this.Ucsys1.AddTD(this.ToE("Name", "名称")); // 单据/单据名称
         tb = new TB();
         tb.ID = "TB_Name";
         tb.Text = bill.Name;
-        this.Ucsys1.AddTD(tb);
-        this.Ucsys1.AddTD("");
+        tb.Columns = 40;
+        this.Ucsys1.AddTD("colspan=2", tb);
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
@@ -104,41 +100,27 @@ public partial class WF_Admin_BillSet : WebPage
         this.Ucsys1.AddTD("目前不支持excel,html格式.");
         this.Ucsys1.AddTREnd();
 
-        //this.Ucsys1.AddTR();
-        //this.Ucsys1.AddTD(this.ToE("ReplaceVal", "要替换<br>特殊字段")); // 单据/单据名称
-        //tb = new TB();
-        //tb.ID = "TB_ReplaceVal";
-        //tb.Text = bill.ReplaceVal;
-        //tb.TextMode = TextBoxMode.MultiLine;
-        //tb.Rows = 3;
-        //this.Ucsys1.AddTD(tb);
-        //this.Ucsys1.AddTD("格式为:@表名称.字段名称=要替换的值 比如：@NodeName.ID='' ");
-        //this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTR();
-        this.Ucsys1.AddTD(this.ToE("BillTemplete", "单据模板") );
+        this.Ucsys1.AddTD(this.ToE("BillTemplete", "单据模板"));
         HtmlInputFile file = new HtmlInputFile();
         file.ID = "f";
+        file.Attributes["width"] = "100%";
         this.Ucsys1.AddTD("colspan=2", file);
-       // this.Ucsys1.AddTD("colspan=2",this.ToE("BillTempleteD","选择本地模板上传"));
+         
         this.Ucsys1.AddTREnd();
 
         this.Ucsys1.AddTRSum();
         this.Ucsys1.Add("<TD class=TD colspan=3 align=center>");
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = this.ToE("Save","保存");
+        btn.Text = this.ToE("Save", "保存");
         this.Ucsys1.Add(btn);
         btn.Click += new EventHandler(btn_Click);
         this.Ucsys1.Add(btn);
         if (bill.No.Length > 1)
         {
-            //btn = new Button();
-            //btn.ID = "Btn_Gener";
-            //btn.Text = this.ToE("Test", "测试生成");   //"测试生成";
-            //this.Ucsys1.Add(btn);
-            //btn.Click += new EventHandler(btn_Gener_Click);
-            //this.Ucsys1.Add(btn);
+          
 
             btn = new Button();
             btn.ID = "Btn_Del";
@@ -153,11 +135,7 @@ public partial class WF_Admin_BillSet : WebPage
 
         this.Ucsys1.Add(url + "</TD>");
         this.Ucsys1.AddTREnd();
-
-        //this.Ucsys1.AddTRSum();
-        //this.Ucsys1.AddTDBigDoc("colspan=3 class=BigDoc", "提示：关于如何制作单据请打开帮助。");
-        //this.Ucsys1.AddTREnd();
-
+ 
         this.Ucsys1.AddTable();
     }
     void btn_Gener_Click(object sender, EventArgs e)
@@ -171,7 +149,6 @@ public partial class WF_Admin_BillSet : WebPage
         BillTemplate bt = new BillTemplate();
         bt.NodeID = this.NodeID;
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
-
         if (this.RefNo != null)
         {
             bt.No = this.RefNo;
@@ -208,9 +185,7 @@ public partial class WF_Admin_BillSet : WebPage
             System.IO.File.Copy(temp, fullFile, true);
             return;
         }
-
         bt = this.Ucsys1.Copy(bt) as BillTemplate;
-
         if (file.Value == null || file.Value.ToLower().Contains(".rtf") == false)
         {
             this.Alert(this.ToE("Bill1", "@错误，非法的 rtf 格式文件。"));
@@ -223,7 +198,6 @@ public partial class WF_Admin_BillSet : WebPage
         fileName = fileName.Substring(fileName.LastIndexOf("\\") + 1);
         if (bt.Name == "")
             bt.Name = fileName.Replace(".rtf", "");
-
         try
         {
             bt.No = BP.DA.chs2py.convert(bt.Name);
@@ -285,25 +259,85 @@ public partial class WF_Admin_BillSet : WebPage
         nd.HisBillIDs = Billids;
         nd.Update();
         #endregion 更新节点信息。
-
         this.Response.Redirect("Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID, true);
+    }
+    /// <summary>
+    /// 类别修改
+    /// </summary>
+    public void EditTypes()
+    {
+        this.Ucsys1.AddTable();
+        this.Ucsys1.AddCaptionLeft("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "'>返回</a> -单据类别维护");
+        this.Ucsys1.AddTR();
+        this.Ucsys1.AddTDTitle("类别编号");
+        this.Ucsys1.AddTDTitle("类别名称");
+        this.Ucsys1.AddTREnd();
+
+        BillTypes ens = new BillTypes();
+        ens.RetrieveAll();
+        for (int i = 1; i < 18; i++)
+        {
+            this.Ucsys1.AddTR();
+            this.Ucsys1.AddTD(i.ToString().PadLeft(2, '0'));
+            TextBox tb = new TextBox();
+            tb.ID = "TB_" + i;
+            tb.Columns = 50;
+            try
+            {
+                BillType en = ens[i - 1] as BillType;
+                tb.Text = en.Name;
+                this.Ucsys1.AddTD(tb);
+            }
+            catch
+            {
+                this.Ucsys1.AddTD(tb);
+            }
+            this.Ucsys1.AddTREnd();
+        }
+
+        this.Ucsys1.AddTableEndWithHR();
+        Button btn = new Button();
+        btn.ID = "Btn_Save";
+        btn.Text = "Save";
+        btn.Click+=new EventHandler(btn_SaveTypes_Click);
+        this.Ucsys1.Add(btn);
+    }
+    protected void btn_SaveTypes_Click(object sender, EventArgs e)
+    {
+        BillTypes ens = new BillTypes();
+        ens.RetrieveAll();
+        ens.Delete();
+        for (int i = 1; i < 18; i++)
+        {
+            string name = this.Ucsys1.GetTextBoxByID("TB_" + i).Text;
+            if (string.IsNullOrEmpty(name))
+                continue;
+
+            BillType en = new BillType();
+            en.No = i.ToString().PadLeft(2, '0');
+            en.Name = name;
+            en.FK_Flow = this.FK_Flow;
+            en.Insert();
+        }
+        this.Alert("保存成功.");
     }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = this.ToE("NodeBillDesign", "节点单据设计"); //"节点单据设计";
-
         switch (this.DoType)
         {
-
             case "Edit":
                 BillTemplate bk1 = new BillTemplate(this.RefNo);
                 bk1.NodeID = this.NodeID;
                 this.DoNew(bk1);
-                break;
+                return;
             case "New":
                  BillTemplate bk = new BillTemplate();
                 bk.NodeID = this.RefOID;
                 this.DoNew(bk);
+                return;
+            case "EditType":
+                EditTypes();
                 return;
             default:
                 break;
@@ -319,12 +353,10 @@ public partial class WF_Admin_BillSet : WebPage
         BP.WF.Node nd = new BP.WF.Node(this.NodeID);
         this.Title = nd.Name + " - " + this.ToE("BillMang", "单据管理");  //单据管理
         this.Ucsys1.AddTable();
-        this.Ucsys1.AddCaptionLeft(nd.Name + " - <a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a>");
+        if (this.RefNo ==null)
+            this.Ucsys1.AddCaptionLeft("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=New'><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("New", "新建") + "</a> -<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=EditType'><img src='../../Images/Btn/Edit.gif' border=0/>类别维护</a>");
         this.Ucsys1.AddTR();
         this.Ucsys1.AddTDTitle("IDX");
-        this.Ucsys1.AddTDTitle(this.ToE("Node","节点"));
-        this.Ucsys1.AddTDTitle(this.ToE("NodeName", "节点名称"));
-
         this.Ucsys1.AddTDTitle(this.ToE("No","编号"));
         this.Ucsys1.AddTDTitle(this.ToE("Name","名称"));
         this.Ucsys1.AddTDTitle(this.ToE("Oper", "操作"));
@@ -335,9 +367,7 @@ public partial class WF_Admin_BillSet : WebPage
             i++;
             this.Ucsys1.AddTR();
             this.Ucsys1.AddTDIdx(i);
-            this.Ucsys1.AddTD(Bill.NodeID);
-            this.Ucsys1.AddTD(  Bill.NodeName);
-
+             
             this.Ucsys1.AddTD(Bill.No);
             this.Ucsys1.AddTD("<img src='../../Images/Btn/Word.gif' >" + Bill.Name);
             this.Ucsys1.AddTD("<a href='Bill.aspx?FK_Flow=" + this.FK_Flow + "&NodeID=" + this.NodeID + "&DoType=Edit&RefNo=" + Bill.No + "'><img src='../../Images/Btn/Edit.gif' border=0/>" + this.ToE("Edit", "编辑") + "</a>|<a href='../../DataUser/CyclostyleFile/" + Bill.No + ".rtf'><img src='../../Images/Btn/save.gif' border=0/>" + this.ToE("DownTemplete", "模板下载") + "</a>");
@@ -345,6 +375,4 @@ public partial class WF_Admin_BillSet : WebPage
         }
         this.Ucsys1.AddTableEnd();
     }
-
-
 }

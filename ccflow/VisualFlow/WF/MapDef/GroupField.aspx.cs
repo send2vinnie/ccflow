@@ -34,7 +34,6 @@ public partial class WF_MapDef_GroupField : WebPage
                 return s;
         }
     }
-
     void btn_Check_Click(object sender, EventArgs e)
     {
         string sta = this.Pub1.GetTBByID("TB_Sta").Text.Trim();
@@ -110,7 +109,6 @@ public partial class WF_MapDef_GroupField : WebPage
         attr.GroupID = gf.OID;
         attr.IDX = 3;
         attr.Insert();
-
         this.WinCloseWithMsg(this.ToE("SaveOK", "保存成功")); // "增加成功，您可以调整它的位置与修改字段的标签。"
     }
     protected void Page_Load(object sender, EventArgs e)

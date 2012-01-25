@@ -182,7 +182,13 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         string pass = this.GetTextBoxByID("TB_Pass").Text;
         try
         {
-            Emp em = new Emp(user);
+            Emp em = new Emp();
+            em.No = user;
+            if (em.RetrieveFromDBSources() == 0)
+            {
+                this.Alert("用户名或密码错误，注意两者区分大小写，请检查是否按下了CapsLock。");
+                return;
+            }
             if (em.CheckPass(pass))
             {
                 WebUser.SignInOfGenerLang(em, this.Lang);
@@ -201,7 +207,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
                 Response.Redirect(this.ToWhere, false);
                 return;
             }
-            this.Alert("用户名密码错误，注意密码区分大小写，请检查是否按下了CapsLock.。");
+            this.Alert("用户名或密码错误，注意两者区分大小写，请检查是否按下了CapsLock。");
         }
         catch (System.Exception ex)
         {

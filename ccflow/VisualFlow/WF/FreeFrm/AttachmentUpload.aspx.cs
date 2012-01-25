@@ -29,6 +29,14 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         }
     }
 
+    public string IsBTitle
+    {
+        get
+        {
+            return this.Request.QueryString["IsBTitle"];
+        }
+    }
+
     public string DelPKVal
     {
         get
@@ -61,30 +69,55 @@ public partial class WF_FreeFrm_UploadFile : WebPage
             return;
         }
 
-        BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment(this.FK_FrmAttachment);
+        BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment();
+        athDesc.MyPK = this.FK_FrmAttachment;
+        if (athDesc.RetrieveFromDBSources() == 0)
+        {
+
+        }
+
         this.Title = athDesc.Name;
 
         this.Pub1.AddTable("width='100%'");
-        this.Pub1.AddTR();
-        if (athDesc.Sort.Contains(","))
-            this.Pub1.AddTD("类别");
-        this.Pub1.AddTD("文件名");
-        this.Pub1.AddTD("大小KB");
-        this.Pub1.AddTD("上传日期");
-        this.Pub1.AddTD("上传人");
-        if (athDesc.IsNote)
-            this.Pub1.AddTD("备注");
-        this.Pub1.AddTD("操作");
-        this.Pub1.AddTREnd();
+        if (this.IsBTitle == "1")
+        {
+            this.Pub1.AddTR();
+            this.Pub1.AddTDTitle("IDX");
+            if (athDesc.Sort.Contains(","))
+                this.Pub1.AddTDTitle("类别");
+            this.Pub1.AddTDTitle("文件名");
+            this.Pub1.AddTDTitle("大小KB");
+            this.Pub1.AddTDTitle("上传日期");
+            this.Pub1.AddTDTitle("上传人");
+            if (athDesc.IsNote)
+                this.Pub1.AddTDTitle("备注");
+            this.Pub1.AddTDTitle("操作");
+            this.Pub1.AddTREnd();
+        }else
+        {
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("IDX");
+            if (athDesc.Sort.Contains(","))
+                this.Pub1.AddTD("类别");
+            this.Pub1.AddTD("文件名");
+            this.Pub1.AddTD("大小KB");
+            this.Pub1.AddTD("上传日期");
+            this.Pub1.AddTD("上传人");
+            if (athDesc.IsNote)
+                this.Pub1.AddTD("备注");
+            this.Pub1.AddTD("操作");
+            this.Pub1.AddTREnd();
+        }
 
         BP.Sys.FrmAttachmentDBs dbs = new BP.Sys.FrmAttachmentDBs();
         dbs.Retrieve(FrmAttachmentDBAttr.FK_FrmAttachment, this.FK_FrmAttachment,
             FrmAttachmentDBAttr.RefPKVal, this.PKVal);
-      
-        int i = 1;
+        int i = 0;
         foreach (FrmAttachmentDB db in dbs)
         {
+            i++;
             this.Pub1.AddTR();
+            this.Pub1.AddTDIdx(i);
             if (athDesc.Sort.Contains(","))
                 this.Pub1.AddTD(db.Sort);
 
@@ -109,26 +142,21 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         if (athDesc.IsUpload)
         {
             this.Pub1.AddTR();
-            this.Pub1.AddTDBegin("colspan=6");
-           
-
+            this.Pub1.AddTDBegin("colspan=7");
+            this.Pub1.Add("文件:");
             System.Web.UI.WebControls.FileUpload fu = new System.Web.UI.WebControls.FileUpload();
             fu.ID = "file";
             fu.BorderStyle = BorderStyle.NotSet;
-
             this.Pub1.Add(fu);
-
             if (athDesc.Sort.Contains(","))
             {
                 string[] strs = athDesc.Sort.Split(',');
-
                 BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
                 ddl.ID = "ddl";
                 foreach (string str in strs)
                 {
                     if (str == null || str == "")
                         continue;
-
                     ddl.Items.Add(new ListItem(str, str));
                 }
                 this.Pub1.Add(ddl);
@@ -141,9 +169,9 @@ public partial class WF_FreeFrm_UploadFile : WebPage
                 tb.Attributes["Width"] = "100%";
                 tb.Attributes["class"] = "TBNote";
                 tb.Columns = 30;
+                this.Pub1.Add("&nbsp;备注:");
                 this.Pub1.Add(tb);
             }
-
             Button btn = new Button();
             btn.Text = "上传";
             btn.ID = "Btn_Upload";
@@ -154,7 +182,6 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         }
         this.Pub1.AddTableEnd();
     }
-
     void btn_Click(object sender, EventArgs e)
     {
         BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment(this.FK_FrmAttachment);
@@ -193,8 +220,7 @@ public partial class WF_FreeFrm_UploadFile : WebPage
 
         if (athDesc.Sort.Contains(","))
             dbUpload.Sort = this.Pub1.GetDDLByID("ddl").SelectedItemStringVal;
-
         dbUpload.Insert();
-        this.Response.Redirect("AttachmentUpload.aspx?FK_FrmAttachment=" + this.FK_FrmAttachment + "&PKVal=" + this.PKVal, true);
+        this.Response.Redirect("AttachmentUpload.aspx?IsBTitle=" + this.IsBTitle + "&FK_FrmAttachment=" + this.FK_FrmAttachment + "&PKVal=" + this.PKVal, true);
     }
 }

@@ -129,7 +129,6 @@ public partial class Comm_Dtl : WebPage
     {
         this.Page.RegisterClientScriptBlock("s",
          "<link href='../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
-
         MapDtl mdtl = new MapDtl(this.EnsName);
         if (mdtl.HisDtlShowModel == DtlShowModel.Card)
         {
@@ -204,9 +203,7 @@ public partial class Comm_Dtl : WebPage
 
         MapAttrs attrs = new MapAttrs(this.EnsName);
         MapAttrs attrs2 = new MapAttrs();
-
         this.Pub1.Add("<Table border=1 style='padding:0px' >");
-
         if (mdtl.IsShowTitle)
         {
             this.Pub1.AddTR();
@@ -217,10 +214,10 @@ public partial class Comm_Dtl : WebPage
             }
             else
             {
-                if (this.IsReadonly == 0 && mdtl.IsDelete == true)
+                if (mdtl.IsReadonly == false)
                     this.Pub1.Add("<TD class='FDesc'><img src='./../Images/Btn/Table.gif' onclick=\"return DtlOpt('" + this.RefPKVal + "','" + this.EnsName + "');\" border=0/></TD>");
                 else
-                    this.Pub1.Add("<TD class='FDesc'></TD>");
+                    this.Pub1.AddTDTitle();
             }
 
             foreach (MapAttr attr in attrs)
@@ -278,7 +275,6 @@ public partial class Comm_Dtl : WebPage
             this.Pub2.Clear();
             this.Pub2.BindPageIdx(count, mdtl.RowsOfList, this.PageIdx, "Dtl.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal + "&IsWap=" + this.IsWap + "&IsReadonly=" + this.IsReadonly);
             int num = qo.DoQuery("OID", mdtl.RowsOfList, this.PageIdx, false);
-
             mdtl.RowsOfList = mdtl.RowsOfList + this.addRowNum;
             if (mdtl.IsInsert && this.IsReadonly == 0)
             {
@@ -369,10 +365,7 @@ public partial class Comm_Dtl : WebPage
             #region 增加rows
             foreach (MapAttr attr in attrs)
             {
-                if (attr.UIVisible == false)
-                    continue;
-
-                if (attr.KeyOfEn == "OID")
+                if (attr.UIVisible == false || attr.KeyOfEn == "OID")
                     continue;
 
                 string val = dtl.GetValByKey(attr.KeyOfEn).ToString();
@@ -407,9 +400,7 @@ public partial class Comm_Dtl : WebPage
                         tb.ID = "TB_" + attr.KeyOfEn + "_" + dtl.OID;
                         //  tb.Enabled = attr.UIIsEnable;
                         if (attr.UIIsEnable == false)
-                        {
                             tb.Enabled = true;
-                        }
 
                         tb.Attributes["onfocus"] = "isChange=true;";
                         switch (attr.MyDataType)
@@ -587,14 +578,15 @@ public partial class Comm_Dtl : WebPage
                 }
             }
 
-            if ( mdtl.IsDelete && dtl.OID >= 100 && mdtl.IsEnableAthM)
-                this.Pub1.AddTD("<a href=\"javascript:WinOpen('./FreeFrm/AttachmentUpload.aspx?PKVal=" + dtl.OID + "&Ath=AthM&FK_MapData=" + mdtl.No + "&FK_FrmAttachment=" + mdtl.No + "_AthM')\"><img src='./Img/AttachmentM.png' border=0 width='16px' /></a>");
-            else
-                this.Pub1.AddTD("");
+            if (mdtl.IsEnableAthM)
+            {
+                if (dtl.OID >= 100)
+                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('./FreeFrm/AttachmentUpload.aspx?IsBTitle=1&PKVal=" + dtl.OID + "&Ath=AthM&FK_MapData=" + mdtl.No + "&FK_FrmAttachment=" + mdtl.No + "_AthM')\"><img src='./Img/AttachmentM.png' border=0 width='16px' /></a>");
+                else
+                    this.Pub1.AddTD("");
+            }
 
-
-
-            if (mdtl.IsDelete && dtl.OID >= 100 && this.IsReadonly == 0)
+            if (mdtl.IsDelete && dtl.OID >= 100 )
             {
                 this.Pub1.Add("<TD border=0><img src='../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','" + this.EnsName + "','" + this.RefPKVal + "','" + this.PageIdx + "')\" /></TD>");
             }
@@ -602,11 +594,8 @@ public partial class Comm_Dtl : WebPage
             {
                 this.Pub1.Add("<TD class=TD border=0>&nbsp;</TD>");
             }
-
             
-
             this.Pub1.AddTREnd();
-
             #endregion 增加rows
 
             #region 拓展属性
@@ -754,12 +743,10 @@ public partial class Comm_Dtl : WebPage
             this.Pub1.AddTRSum();
             if (mdtl.IsShowIdx)
                 this.Pub1.AddTD();
-
             foreach (MapAttr attr in attrs)
             {
                 if (attr.UIVisible == false)
                     continue;
-
                 if (attr.IsNum && attr.LGType == FieldTypeS.Normal)
                 {
                     TextBox tb = new TextBox();
@@ -775,12 +762,10 @@ public partial class Comm_Dtl : WebPage
                         case DataType.AppMoney:
                             tb.Text = dtls.GetSumDecimalByKey(attr.KeyOfEn).ToString("0.00");
                             tb.Attributes["style"] = "width:" + attr.UIWidth + "px;text-align:right;border:none";
-
                             break;
                         case DataType.AppInt:
                             tb.Text = dtls.GetSumIntByKey(attr.KeyOfEn).ToString();
                             tb.Attributes["style"] = "width:" + attr.UIWidth + "px;text-align:right;border:none";
-
                             break;
                         case DataType.AppFloat:
                             tb.Text = dtls.GetSumFloatByKey(attr.KeyOfEn).ToString();
@@ -796,10 +781,14 @@ public partial class Comm_Dtl : WebPage
                     this.Pub1.AddTD();
                 }
             }
+            if (mdtl.IsEnableAthM)
+                this.Pub1.AddTD();
+            if (mdtl.IsDelete || mdtl.IsUpdate)
+                this.Pub1.AddTD();
+
             this.Pub1.AddTREnd();
         }
         #endregion 生成合计
-
         #endregion 生成数据
 
         this.Pub1.AddTableEnd();
@@ -823,7 +812,6 @@ public partial class Comm_Dtl : WebPage
 
                     if (attr.LGType != FieldTypeS.Normal)
                         continue;
-
                     if (attr.AutoFullDoc != "")
                     {
                         script += this.GenerAutoFull(dtl.OID.ToString(), attrs, attr);
@@ -869,7 +857,6 @@ public partial class Comm_Dtl : WebPage
 
         this.Response.Redirect(url, true);
     }
-
     public void Delete()
     {
 

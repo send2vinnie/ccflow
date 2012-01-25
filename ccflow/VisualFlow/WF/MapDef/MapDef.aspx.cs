@@ -62,7 +62,7 @@ public partial class WF_MapDef_MapDef : WebPage
         xmls.RetrieveAll();
 
         #region bindleft
-        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' border=0/></a>");
+        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='" + this.Request.ApplicationPath + "/DataUser/LogBiger.png' border=0/></a>");
         this.Left.AddHR();
         this.Left.AddUL();
         foreach (BP.WF.XML.MapMenu item in xmls)
@@ -100,7 +100,6 @@ public partial class WF_MapDef_MapDef : WebPage
             //}
         }
         this.BindLeft();
-    
 
         this.Pub1.AddH2("设计表单:("+md.No+")"+md.Name );
         this.Pub1.Add("\t\n<Table style=\"width:600px;\" align=left>");
@@ -596,6 +595,16 @@ public partial class WF_MapDef_MapDef : WebPage
         #endregion 处理iFrom 的自适应的问题。
 
         #region 处理隐藏字段。
+        DataTable dt = DBAccess.RunSQLReturnTable("SELECT * FROM Sys_MapAttr WHERE FK_MapData='"+this.FK_MapData+"' AND GroupID NOT IN (SELECT OID FROM Sys_GroupField WHERE EnName='"+this.FK_MapData+"')");
+        if (dt.Rows.Count != 0)
+        {
+            int gfid = gfs[0].GetValIntByKey("OID");
+            foreach (DataRow dr in dt.Rows)
+                DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID="+gfid+" WHERE MyPK='"+dr["MyPK"]+"'");
+
+            this.Response.Redirect(this.Request.RawUrl);
+        }
+
         ////string SysFields = "OID,FID,FK_NY,Emps,FK_Dept,NodeState,WFState,BillNo,RDT,MyNum,";
         //string msg = ""; // +++++++ 编辑隐藏字段 +++++++++ <br>";
         //foreach (MapAttr attr in mattrs)

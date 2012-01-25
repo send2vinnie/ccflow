@@ -118,13 +118,12 @@ public partial class WF_Admin_Action : WebPage
         tb.ID = "TB_Doc";
         tb.Columns = 60;
         tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 5;
+        tb.Rows = 7;
         tb.Text = mynde.DoDoc;
         this.Pub2.Add(tb);
         this.Pub2.AddBR();
         this.Pub2.AddBR();
    
-
         tb = new TextBox();
         tb.ID = "TB_MsgOK";
         tb.Columns = 60;

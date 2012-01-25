@@ -56,7 +56,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
             return;
         }
 
-        this.Pub1.AddH2("数据库安装向导...");
+       // this.Pub1.AddH2("数据库安装向导...");
 
         this.Pub1.AddFieldSet("选择安装语言.");
         BP.WF.XML.Langs langs = new BP.WF.XML.Langs();
@@ -123,6 +123,23 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         this.Pub1.AddBR();
         this.Pub1.AddFieldSetEndBR();
 
+        this.Pub1.AddFieldSet("是否装载演示流程模板?");
+        rb = new RadioButton();
+        rb.Text = "是:我要安装demo流程模板，以方便我学习ccflow。";
+        rb.ID = "RB_DemoOn";
+        rb.GroupName = "hjd";
+        rb.Checked = true;
+        this.Pub1.Add(rb);
+        this.Pub1.AddBR();
+        rb = new RadioButton();
+        rb.Text = "否:不安装。";
+        rb.ID = "RB_DemoOff";
+        rb.GroupName = "hjd";
+        this.Pub1.Add(rb);
+        this.Pub1.AddBR();
+        this.Pub1.AddFieldSetEndBR();
+
+
         Button btn = new Button();
         btn.ID = "Btn_s";
         btn.Text = "下一步";
@@ -168,6 +185,24 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
 
         //加注释.
         BP.PubClass.AddComment();
+    
+        // 装载演示数据.
+        if (this.Pub1.GetRadioButtonByID("RB_DemoOn").Checked)
+        {
+            BP.WF.DTS.LoadTemplete l = new BP.WF.DTS.LoadTemplete();
+            l.Do();
+        }
+
+        try
+        {
+            //增加图片签名
+            BP.WF.DTS.GenerSiganture gs = new BP.WF.DTS.GenerSiganture();
+            gs.Do();
+        }
+        catch
+        {
+
+        }
 
         this.Response.Redirect("DBInstall.aspx?DoType=OK", true);
     }

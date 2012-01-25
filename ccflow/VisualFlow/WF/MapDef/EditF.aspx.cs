@@ -398,7 +398,6 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         attr.MyDataTypeS = this.Pub1.GetDDLByID("DDL_DTType").SelectedItemStringVal;
         attr.Update();
         this.Response.Redirect("EditF.aspx?DoType=" + this.DoType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo + "&FType=" + attr.MyDataType + "&GroupField=" + this.GroupField, true);
-
         // this.Response.Redirect(this.Request.RawUrl, true);
     }
     public void EditBeforeEnd(MapAttr mapAttr)
@@ -415,13 +414,13 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             mapAttr.GroupID = this.GroupField;
 
         ddlGroup.SetSelectItem(mapAttr.GroupID);
+
         this.Pub1.AddTD("colspan=3", ddlGroup);
         this.Pub1.AddTREnd();
         #endregion 字段分组
 
-
         #region 是否是数字签名字段
-        if (mapAttr.UIIsEnable == false && mapAttr.MyDataType == DataType.AppString && mapAttr.LGType== FieldTypeS.Normal)
+        if (mapAttr.UIIsEnable == false && mapAttr.MyDataType == DataType.AppString && mapAttr.LGType == FieldTypeS.Normal)
         {
             this.Pub1.AddTR();
             this.Pub1.AddTDIdx(idx++);
@@ -430,11 +429,10 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             cb.Text = "是否是数字签名字段";
             cb.Checked = mapAttr.IsSigan;
 
-            this.Pub1.AddTD("colspan=3",cb);
+            this.Pub1.AddTD("colspan=3", cb);
             this.Pub1.AddTREnd();
         }
         #endregion 字段分组
-
 
         this.Pub1.AddTRSum();
         this.Pub1.Add("<TD colspan=4 align=center>");
@@ -446,7 +444,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         btn = new Button();
         btn.ID = "Btn_SaveAndClose";
-        btn.Text = this.ToE("SaveAndClose",  "保存并关闭" ); // "保存并关闭";
+        btn.Text = this.ToE("SaveAndClose", "保存并关闭"); // "保存并关闭";
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
 
@@ -461,7 +459,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
             btn = new Button();
             btn.ID = "Btn_AutoFull";
             btn.Text = this.ToE("AutoFull", "扩展设置");
-            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFull.aspx?RefNo=" + this.RefNo + "&FK_MapData="+mapAttr.FK_MapData+"',''); return false;";
+            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFull.aspx?RefNo=" + this.RefNo + "&FK_MapData=" + mapAttr.FK_MapData + "',''); return false;";
             this.Pub1.Add(btn);
 
             if (mapAttr.HisEditType == EditType.Edit)
@@ -489,7 +487,7 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.Add(btn);
 
         // this.Pub1.Add("<input type=button  value='" + + "' onclick=\"window.location.href='" + url + "'\" >");
-        //        this.Pub1.Add("<a href='" + url + "'><img src='../../Images/Btn/New.gif' border=0>" + this.ToE("New", "新建") + "</a></TD>");
+        // this.Pub1.Add("<a href='" + url + "'><img src='../../Images/Btn/New.gif' border=0>" + this.ToE("New", "新建") + "</a></TD>");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEndWithBR();
     }

@@ -102,14 +102,14 @@ public partial class Designer : System.Web.UI.Page
 
             }
             #endregion
-
+            
 
             #region 2011-12-21 升级节点属性规则.
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='RunModel'");
             #endregion
 
 
-            msg = "@执行升级出现错误。";
+            msg = "@执行升级出现错误。"; 
             //保障升级后的数据完整性. 2011-11-26.
             sql = "UPDATE SYS_MAPEXT SET ExtType='TBFullCtrl' WHERE ExtType='FullCtrl'";
             DBAccess.RunSQL(sql);

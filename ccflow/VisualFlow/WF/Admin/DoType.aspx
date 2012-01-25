@@ -6,11 +6,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>无标题页</title>
+    <title></title>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+    <div  style='width:80%' >
         <uc1:ucsys ID="Ucsys1" runat="server" />
     </div>
     </form>

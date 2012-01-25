@@ -867,8 +867,6 @@ namespace BP.Web.Comm.UC.WF
                     tb.ID = "TB_" + attr.KeyOfEn;
                     tb.Enabled = attr.UIIsEnable;
 
-                 
-
                     #region add contrals.
                     switch (attr.LGType)
                     {
@@ -1317,11 +1315,15 @@ namespace BP.Web.Comm.UC.WF
             #region 明细表
             foreach (MapDtl dtl in dtls)
             {
-                if (dtl.IsView == false)
+                if (dtl.IsView == false || dtl.IsUse)
                     continue;
 
-                if (dtl.IsUse)
-                    continue;
+                if (dtl.GroupID == 0)
+                {
+                    dtl.GroupID = currGF.OID;
+                    dtl.RowIdx = 0;
+                    dtl.Update();
+                }
 
                 if (isJudgeRowIdx)
                 {
@@ -1329,13 +1331,7 @@ namespace BP.Web.Comm.UC.WF
                         continue;
                 }
 
-                if (dtl.GroupID == 0 && rowIdx == 0)
-                {
-                    dtl.GroupID = currGF.OID;
-                    dtl.RowIdx = 0;
-                    dtl.Update();
-                }
-                else if (dtl.GroupID == currGF.OID)
+                if (dtl.GroupID == currGF.OID)
                 {
 
                 }
@@ -1343,6 +1339,7 @@ namespace BP.Web.Comm.UC.WF
                 {
                     continue;
                 }
+
                 dtl.IsUse = true;
                 rowIdx++;
                 // myidx++;
@@ -1357,7 +1354,10 @@ namespace BP.Web.Comm.UC.WF
                 {
                     src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal + "&IsWap=0&FK_Node=" + dtl.FK_MapData.Replace("ND", "");
                 }
-                this.Add("<iframe ID='F" + dtl.No + "'   Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' /></iframe>");
+                if (this.IsReadonly || dtl.IsReadonly)
+                    this.Add("<iframe ID='F" + dtl.No + "'  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' /></iframe>");
+                else
+                    this.Add("<iframe ID='F" + dtl.No + "'   Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' /></iframe>");
 
                 this.AddTDEnd();
                 this.AddTREnd();
@@ -1551,8 +1551,8 @@ namespace BP.Web.Comm.UC.WF
         public string LinkFields = "";
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
+            string appPath = this.Request.ApplicationPath;
             mes = new MapExts(enName);
-           
             this.IsReadonly = isReadonly;
             this.FK_MapData = enName;
             this.HisEn = en;
@@ -1673,11 +1673,11 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n<DIV id=" + img.MyPK + " style='position:absolute;left:" + img.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
                 if (string.IsNullOrEmpty(img.LinkURL) == false)
                 {
-                    this.Add("\t\n<a href='" + img.LinkURL + "' target=" + img.LinkTarget + " ><img src='./../DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' /></a>");
+                    this.Add("\t\n<a href='" + img.LinkURL + "' target=" + img.LinkTarget + " ><img src='" + appPath + "/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' /></a>");
                 }
                 else
                 {
-                    this.Add("\t\n<img src='./../DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' />");
+                    this.Add("\t\n<img src='" + appPath + "/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + img.W + "px;height:" + img.H + "px;' />");
 
                 }
                 this.Add("\t\n</DIV>");
@@ -1693,17 +1693,7 @@ namespace BP.Web.Comm.UC.WF
 
                 this.Add("<DIV id='F" + attr.KeyOfEn + "' style='position:absolute; left:" + attr.X + "px; top:" + attr.Y + "px; width:" + attr.UIWidth + "px; height:16px;text-align: left;word-break: keep-all;' >");
                 this.Add("<span>");
-
                 #region add contrals.
-                TB tb = new TB();
-                tb.ID = "TB_" + attr.KeyOfEn;
-                if (attr.UIIsEnable == false)
-                {
-                    tb.Attributes.Add("readonly", "true");
-                    tb.ReadOnly = true;
-                }
-                tb.Attributes["tabindex"] = attr.IDX.ToString();
-
                 if (attr.UIIsEnable == false && this.LinkFields.Contains("," + attr.KeyOfEn + ","))
                 {
                     MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link) as MapExt;
@@ -1728,49 +1718,56 @@ namespace BP.Web.Comm.UC.WF
                     this.Add("</DIV>");
                     continue;
                 }
+                if (attr.IsSigan)
+                {
+                    string v = en.GetValStrByKey(attr.KeyOfEn);
+                    if (v.Length == 0)
+                        this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                    else
+                        this.Add("<img src='../DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                    this.Add("</span>");
+                    this.Add("</DIV>");
+                    continue;
+                }
 
+                TB tb = new TB();
+                tb.ID = "TB_" + attr.KeyOfEn;
+                if (attr.UIIsEnable == false)
+                {
+                    tb.Attributes.Add("readonly", "true");
+                    tb.ReadOnly = true;
+                }
+                tb.Attributes["tabindex"] = attr.IDX.ToString();
                 switch (attr.LGType)
                 {
                     case FieldTypeS.Normal:
                         switch (attr.MyDataType)
                         {
                             case BP.DA.DataType.AppString:
-                                if (attr.IsSigan)
+
+                                if (attr.UIRows == 1)
                                 {
-                                    string v = en.GetValStrByKey(attr.KeyOfEn);
-                                    if (v.Length == 0)
-                                        this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                    tb.Text = en.GetValStringByKey(attr.KeyOfEn);
+                                    tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 15px;padding: 0px;margin: 0px;";
+                                    if (attr.UIIsEnable)
+                                        tb.CssClass = "TB";
                                     else
-                                        this.Add("<img src='../DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
-                                    continue;
-                                    //  this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                        tb.CssClass = "TBReadonly";
+                                    this.Add(tb);
                                 }
                                 else
                                 {
-                                    if (attr.UIRows == 1)
-                                    {
-                                        tb.Text = en.GetValStringByKey(attr.KeyOfEn);
-                                        tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left; height: 15px;padding: 0px;margin: 0px;";
-                                        if (attr.UIIsEnable)
-                                            tb.CssClass = "TB";
-                                        else
-                                            tb.CssClass = "TBReadonly";
-                                        this.Add(tb);
-                                    }
+                                    tb.TextMode = TextBoxMode.MultiLine;
+                                    tb.Text = en.GetValStrByKey(attr.KeyOfEn);
+                                    tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left;padding: 0px;margin: 0px;";
+                                    tb.Rows = attr.UIRows;
+
+                                    if (attr.UIIsEnable)
+                                        tb.CssClass = "TBDoc";
                                     else
-                                    {
-                                        tb.TextMode = TextBoxMode.MultiLine;
-                                        tb.Text = en.GetValStrByKey(attr.KeyOfEn);
-                                        tb.Attributes["style"] = "width: " + attr.UIWidth + "px; text-align: left;padding: 0px;margin: 0px;";
-                                        tb.Rows = attr.UIRows;
+                                        tb.CssClass = "TBReadonly";
 
-                                        if (attr.UIIsEnable)
-                                            tb.CssClass = "TBDoc";
-                                        else
-                                            tb.CssClass = "TBReadonly";
-
-                                        this.Add(tb);
-                                    }
+                                    this.Add(tb);
                                 }
                                 break;
                             case BP.DA.DataType.AppDate:
@@ -1956,7 +1953,7 @@ namespace BP.Web.Comm.UC.WF
                         src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0&FID" + en.GetValStrByKey("FID");
                 }
 
-                if (this.IsReadonly == true)
+                if (this.IsReadonly == true || dtl.IsReadonly)
                     this.Add("<iframe ID='F" + dtl.No + "'    src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=auto /></iframe>");
                 else
                     this.Add("<iframe ID='F" + dtl.No + "'  Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0  style='position:absolute;width:" + dtl.W + "px; height:" + dtl.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=auto /></iframe>");
@@ -2579,11 +2576,17 @@ namespace BP.Web.Comm.UC.WF
         {
             get
             {
-                return (bool)this.ViewState["IsReadonly"];
+                string s = this.ViewState["IsReadonly"] as string;
+                if (s == "1")
+                    return true;
+                return false;
             }
             set
             {
-                ViewState["IsReadonly"] = value;
+                if (value)
+                    ViewState["IsReadonly"] = "1";
+                else
+                    ViewState["IsReadonly"] = "0";
             }
         }
         public bool IsShowDtl
@@ -3416,7 +3419,7 @@ namespace BP.Web.Comm.UC.WF
         {
             if (this.IsPostBack)
             {
-                //	this.Bind(this.HisEn,this.IsReadonly,this.IsShowDtl ) ;
+                //	this.Bind(this.HisEn,this.IsReadonly,this.IsShowDtl) ;
             }
         }
         public Entity HisEn = null;
