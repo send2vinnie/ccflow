@@ -191,7 +191,7 @@ namespace WF.Frm
             }
             else
             {
-                MessageBox.Show("保存成功", "ccflow", MessageBoxButton.OK);
+          //      MessageBox.Show("保存成功", "ccflow", MessageBoxButton.OK);
                 this.DialogResult = true;
             }
         }

@@ -103,7 +103,6 @@ namespace BP.Sys
         /// </summary>
         public EnsAppCfg()
         {
-
         }
         /// <summary>
         /// 系统实体
@@ -143,22 +142,19 @@ namespace BP.Sys
                             {
                                 Entity en = BP.DA.ClassFactory.GetEns(ensName).GetNewEntity;
                                 if (en.EnMap.Attrs.Contains("Name"))
-                                {
                                     this.CfgVal = "Name";
-                                }
                                 if (en.EnMap.Attrs.Contains("Title"))
-                                {
                                     this.CfgVal = "Title";
-                                }
                             }
                             else
+                            {
                                 this.CfgVal = attr.DefaultVal.ToString();
-
+                            }
                             this.Insert();
                             return;
                         }
                     }
-                    throw new Exception("@您没有在\\xml\\Ens\\EnsAppXml\\中配置:" + ensName + " " + cfgkey + " 的值。");
+                    //throw new Exception("@您没有在\\xml\\Ens\\EnsAppXml\\中配置:" + ensName + " " + cfgkey + " 的值。");
                 }
 
                 BP.Sys.Xml.EnsAppXml xml = xmls[0] as BP.Sys.Xml.EnsAppXml;

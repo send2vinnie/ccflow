@@ -282,6 +282,15 @@ namespace BP.Sys
                 this.SetValByKey(MapDtlAttr.IsShowTitle, value);
             }
         }
+        public bool IsReadonly
+        {
+            get
+            {
+                if (this.IsDelete || this.IsInsert)
+                    return false;
+                return true;
+            }
+        }
         public bool IsDelete
         {
             get
@@ -343,7 +352,7 @@ namespace BP.Sys
                 this.SetValByKey(MapDtlAttr.IsEnableAthM, value);
             }
         }
-        
+
         /// <summary>
         /// 是否起用审核连接
         /// </summary>
@@ -552,7 +561,7 @@ namespace BP.Sys
 
                 map.AddBoolean(MapDtlAttr.IsEnablePass, false, "是否启用通过审核功能?", false, false);
                 map.AddBoolean(MapDtlAttr.IsEnableAthM, false, "是否启用多附件", false, false);
-                
+
 
                 map.AddDDLSysEnum(MapDtlAttr.WhenOverSize, 0, "WhenOverSize", true, true,
                  MapDtlAttr.WhenOverSize, "@0=不处理@1=向下顺增行@2=次页显示");
@@ -571,7 +580,7 @@ namespace BP.Sys
 
                 map.AddTBFloat(MapDtlAttr.FrmW, 900, "FrmW", true, true);
                 map.AddTBFloat(MapDtlAttr.FrmH, 1200, "FrmH", true, true);
-                
+
                 this._enMap = map;
                 return this._enMap;
             }
@@ -694,7 +703,7 @@ namespace BP.Sys
                 attr = new BP.Sys.MapAttr();
                 attr.FK_MapData = this.No;
                 attr.HisEditType = EditType.Readonly;
-                
+
                 attr.KeyOfEn = "FID";
                 attr.Name = "FID";
                 attr.MyDataType = BP.DA.DataType.AppInt;
@@ -728,7 +737,7 @@ namespace BP.Sys
                 attr = new BP.Sys.MapAttr();
                 attr.FK_MapData = this.No;
                 attr.HisEditType = EditType.Readonly;
-             
+
                 attr.KeyOfEn = "Rec";
                 attr.Name = "记录人";
                 attr.MyDataType = BP.DA.DataType.AppString;
@@ -752,12 +761,25 @@ namespace BP.Sys
                 if (attr.UIIsEnable && attr.UIContralType == UIContralType.TB)
                     isHaveEnable = true;
             }
+
+            if (this.IsEnableAthM)
+            {
+                /* 如果启用了多附件*/
+                BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment();
+                athDesc.MyPK = this.No + "_AthM";
+                if (athDesc.RetrieveFromDBSources() == 0)
+                {
+                    athDesc.FK_MapData = this.No;
+                    athDesc.NoOfObj = "AthM";
+                    athDesc.Name = this.Name;
+                    athDesc.Insert();
+                }
+            }
             // this.IsReadonly = !isHaveEnable;
             return base.beforeUpdate();
         }
         protected override bool beforeDelete()
         {
-
             string sql = "";
             sql += "@DELETE Sys_FrmLine WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_FrmLab WHERE FK_MapData='" + this.No + "'";
@@ -773,7 +795,6 @@ namespace BP.Sys
             sql += "@DELETE Sys_MapData WHERE No='" + this.No + "'";
             sql += "@DELETE Sys_GroupField WHERE EnName='" + this.No + "'";
             DBAccess.RunSQLs(sql);
-
             try
             {
                 BP.DA.DBAccess.RunSQL("DROP TABLE " + this.PTable);
@@ -795,6 +816,7 @@ namespace BP.Sys
         /// </summary>
         public MapDtls()
         {
+
         }
         /// <summary>
         /// 明细s

@@ -192,7 +192,7 @@ namespace BP.WF.Ext
 
                 // 基础属性
                 map.AddTBIntPK(NodeAttr.NodeID, 0, this.ToE("NodeID", "节点ID"), true, true);
-                map.AddTBInt(NodeAttr.Step, (int)NodeWorkType.Work, "步骤", true, false);
+                map.AddTBInt(NodeAttr.Step, 0, "步骤", true, false);
 
                 map.AddTBString(NodeAttr.Name, null, this.ToE("Name", "名称"), true, true, 0, 100, 10, true);
                 map.AddBoolean(NodeAttr.IsTask, true, this.ToE("IsTask", "允许分配工作否?"), true, true, false);

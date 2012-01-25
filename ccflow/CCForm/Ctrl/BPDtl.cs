@@ -257,8 +257,14 @@ namespace CCForm
                 return;
             }
 
-            Canvas c = this.Parent as Canvas;
-            c.Children.Remove(this);
+            try
+            {
+                Canvas c = this.Parent as Canvas;
+                c.Children.Remove(this);
+            }
+            catch
+            {
+            }
         }
         /// <summary>
         /// 隐藏它

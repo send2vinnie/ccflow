@@ -3008,7 +3008,7 @@ namespace BP.WF
                         case "FK_FlowSort":
                             continue;
                         case "Name":
-                            val = "Copy of " + val + "_" + DateTime.Now.ToString("MM月dd日hh时mm分");
+                            val = "CopyOf" + val + "_" + DateTime.Now.ToString("MM月dd日hh时mm分");
                             break;
                         default:
                             break;
@@ -3023,6 +3023,10 @@ namespace BP.WF
                 #region 处理OID 插入重复的问题。 Sys_GroupField ， Sys_MapAttr.
                 DataTable mydtGF = ds.Tables["Sys_GroupField"];
                 DataTable myDTAttr = ds.Tables["Sys_MapAttr"];
+                DataTable myDTAth = ds.Tables["Sys_FrmAttachment"];
+                DataTable myDTDtl = ds.Tables["Sys_MapDtl"];
+                DataTable myDFrm = ds.Tables["Sys_MapFrame"];
+                DataTable myDM2M = ds.Tables["Sys_MapM2M"];
                 foreach (DataRow dr in mydtGF.Rows)
                 {
                     Sys.GroupField gf = new Sys.GroupField();
@@ -3031,16 +3035,74 @@ namespace BP.WF
                         string val = dr[dc.ColumnName] as string;
                         gf.SetValByKey(dc.ColumnName, val);
                     }
-                    if (gf.IsExits)
+                    int oldID = gf.OID;
+                    gf.OID = DBAccess.GenerOID();
+                    dr["OID"] = gf.OID;
+
+                    // 属性。
+                    if (myDTAttr != null)
                     {
-                        int oldID = gf.OID;
-                        dr["OID"] = DBAccess.GenerOID();
                         foreach (DataRow dr1 in myDTAttr.Rows)
                         {
+                            if (dr1["GroupID"] == null)
+                                dr1["GroupID"] = 0;
+
                             if (dr1["GroupID"].ToString() == oldID.ToString())
-                            {
                                 dr1["GroupID"] = gf.OID;
-                            }
+                        }
+                    }
+
+                    if (myDTAth != null)
+                    {
+                        // 附件。
+                        foreach (DataRow dr1 in myDTAth.Rows)
+                        {
+                            if (dr1["GroupID"] == null)
+                                dr1["GroupID"] = 0;
+
+                            if (dr1["GroupID"].ToString() == oldID.ToString())
+                                dr1["GroupID"] = gf.OID;
+                        }
+                    }
+
+                    if (myDTDtl != null)
+                    {
+                        // 明细表。
+                        foreach (DataRow dr1 in myDTDtl.Rows)
+                        {
+                            if (dr1["GroupID"] == null)
+                                dr1["GroupID"] = 0;
+
+                            if (dr1["GroupID"].ToString() == oldID.ToString())
+                                dr1["GroupID"] = gf.OID;
+                        }
+                    }
+
+
+                    if (myDFrm != null)
+                    {
+
+                        // frm.
+                        foreach (DataRow dr1 in myDFrm.Rows)
+                        {
+                            if (dr1["GroupID"] == null)
+                                dr1["GroupID"] = 0;
+
+                            if (dr1["GroupID"].ToString() == oldID.ToString())
+                                dr1["GroupID"] = gf.OID;
+                        }
+                    }
+
+                    if (myDM2M != null)
+                    {
+                        // m2m.
+                        foreach (DataRow dr1 in myDM2M.Rows)
+                        {
+                            if (dr1["GroupID"] == null)
+                                dr1["GroupID"] = 0;
+
+                            if (dr1["GroupID"].ToString() == oldID.ToString())
+                                dr1["GroupID"] = gf.OID;
                         }
                     }
                 }
@@ -3054,6 +3116,7 @@ namespace BP.WF
                         case "WF_Flow": //模版文件。
                             continue;
                         case "WF_BillTemplate":
+                            continue; /*因为省掉了 打印模板的处理。*/
                             foreach (DataRow dr in dt.Rows)
                             {
                                 BillTemplate bt = new BillTemplate();
@@ -3062,7 +3125,6 @@ namespace BP.WF
                                     string val = dr[dc.ColumnName] as string;
                                     if (val == null)
                                         continue;
-
                                     switch (dc.ColumnName)
                                     {
                                         case "FK_Flow":
@@ -3087,13 +3149,14 @@ namespace BP.WF
                                     bt.No = no + i.ToString();
                                     i++;
                                 }
+
                                 try
                                 {
                                     File.Copy(info.DirectoryName + "\\" + no + ".rtf", BP.SystemConfig.PathOfWebApp + @"\DataUser\CyclostyleFile\" + bt.No + ".rtf", true);
                                 }
                                 catch (Exception ex)
                                 {
-                                    infoErr += "@恢复单据模板时出现错误：" + ex.Message + ",有可能是您在复制流程模板时没有复制同目录下的单据模板文件。";
+                                    // infoErr += "@恢复单据模板时出现错误：" + ex.Message + ",有可能是您在复制流程模板时没有复制同目录下的单据模板文件。";
                                 }
                                 bt.Insert();
                             }
@@ -3492,7 +3555,6 @@ namespace BP.WF
                                     }
                                     se.SetValByKey(dc.ColumnName, val);
                                 }
-
                                 se.MyPK = se.EnumKey + "_" + se.Lang + "_" + se.IntKey;
                                 if (se.IsExits)
                                     continue;
@@ -3510,7 +3572,6 @@ namespace BP.WF
                                         continue;
                                     sem.SetValByKey(dc.ColumnName, val);
                                 }
-
                                 if (sem.IsExits)
                                     continue;
                                 sem.Insert();
@@ -3527,6 +3588,7 @@ namespace BP.WF
                                     {
                                         case Sys.MapAttrAttr.FK_MapData:
                                         case Sys.MapAttrAttr.KeyOfEn:
+                                        case Sys.MapAttrAttr.AutoFullDoc:
                                             val = val.Replace("ND" + oldFlowID, "ND" + flowID);
                                             break;
                                         default:
@@ -3534,7 +3596,8 @@ namespace BP.WF
                                     }
                                     ma.SetValByKey(dc.ColumnName, val);
                                 }
-                                bool b = ma.IsExit(Sys.MapAttrAttr.FK_MapData, ma.FK_MapData, Sys.MapAttrAttr.KeyOfEn, ma.KeyOfEn);
+                                bool b = ma.IsExit(Sys.MapAttrAttr.FK_MapData, ma.FK_MapData,
+                                    Sys.MapAttrAttr.KeyOfEn, ma.KeyOfEn);
                                 if (b == true)
                                     ma.Update();
                                 else
@@ -3769,10 +3832,9 @@ namespace BP.WF
                                     }
                                     gf.SetValByKey(dc.ColumnName, val);
                                 }
-
-                                int oid = DBAccess.GenerOID();
-                                DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID=" + oid + " WHERE FK_MapData='" + gf.EnName + "' AND GroupID=" + gf.OID);
-                                gf.InsertAsOID(oid);
+                                //  int oid = DBAccess.GenerOID();
+                                //  DBAccess.RunSQL("UPDATE Sys_MapAttr SET GroupID=" + gf.OID + " WHERE FK_MapData='" + gf.EnName + "' AND GroupID=" + gf.OID);
+                                gf.InsertAsOID(gf.OID);
                             }
                             break;
                         default:
@@ -3789,15 +3851,25 @@ namespace BP.WF
                 #endregion
 
                 if (infoErr == "")
+                {
+                    fl.DoCheck();
                     return fl; // "完全成功。";
+                }
 
                 infoErr = "@执行期间出现如下非致命的错误：\t\r" + infoErr + "@ " + infoTable;
                 throw new Exception(infoErr);
             }
             catch (Exception ex)
             {
-                fl.DoDelete();
-                throw new Exception("@" + infoErr + " @table=" + infoTable + "@" + ex.Message);
+                try
+                {
+                    fl.DoDelete();
+                    throw new Exception("@" + infoErr + " @table=" + infoTable + "@" + ex.Message);
+                }
+                catch(Exception ex1)
+                {
+                    throw new Exception("@" + infoErr + " @table=" + infoTable + "@" + ex.Message + "@删除已经产生的数据期间错误:=" + ex1.Message);
+                }
             }
         }
         public Node DoNewNode(int x, int y)
@@ -4183,7 +4255,14 @@ namespace BP.WF
             foreach (MapDtl dtl in dtl1s)
             {
                 sql += "@GO DELETE  FROM  Sys_MapAttr WHERE FK_MapData='" + dtl.No + "'";
-                BP.DA.DBAccess.RunSQL("DROP TABLE " + dtl.PTable);
+
+                try
+                {
+                    BP.DA.DBAccess.RunSQL("DROP TABLE " + dtl.PTable);
+                }
+                catch
+                {
+                }
             }
             sql += "@GO DELETE  FROM  Sys_MapDtl WHERE FK_MapData='" + fk_map + "'";
             //删除视图.

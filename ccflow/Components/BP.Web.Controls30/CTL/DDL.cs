@@ -682,6 +682,7 @@ namespace BP.Web.Controls
         }
         public void Bind(Entities ens, string key, string name)
         {
+            this.Items.Clear();
             foreach (Entity en in ens)
             {
                 this.Items.Add(new ListItem(en.GetValStringByKey(name), en.GetValStringByKey(key)));

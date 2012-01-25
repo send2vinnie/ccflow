@@ -1100,7 +1100,6 @@ namespace BP.WF
             {
                 if (this.No == "01")
                     return true;
-
                 return false;
 
                 //if (this.HisNodePosType == NodePosType.Start)
@@ -1681,7 +1680,28 @@ namespace BP.WF
         {
             get
             {
-                return (NodeWorkType)this.GetValIntByKey(NodeAttr.NodeWorkType);
+#warning 2012-01-24修订,没有自动计算出来属性。
+                switch (this.HisRunModel)
+                {
+                    case RunModel.Ordinary:
+                        if (this.IsStartNode)
+                            return NodeWorkType.StartWork;
+                        else
+                            return NodeWorkType.Work;
+                    case RunModel.FL:
+                        if (this.IsStartNode)
+                            return NodeWorkType.StartWorkFL;
+                        else
+                            return NodeWorkType.WorkFL;
+                    case RunModel.HL:
+                            return NodeWorkType.WorkHL;
+                    case RunModel.FHL:
+                        return NodeWorkType.WorkFHL;
+                    case RunModel.SubThread:
+                        return NodeWorkType.SubThreadWork;
+                    default:
+                        throw new Exception("@没有判断类型NodeWorkType.");
+                }
             }
             set
             {
@@ -2283,8 +2303,6 @@ namespace BP.WF
                 map.AddTBString(NodeAttr.HisBillIDs, null, "单据IDs", false, false, 0, 200, 10);
                 map.AddTBString(NodeAttr.HisEmps, null, "HisEmps", false, false, 0, 600, 10);
                 map.AddTBString(NodeAttr.HisSubFlows, null, "HisSubFlows", false, false, 0, 200, 10);
-
-
 
                 map.AddTBString(NodeAttr.PTable, null, "物理表", false, false, 0, 100, 10);
 

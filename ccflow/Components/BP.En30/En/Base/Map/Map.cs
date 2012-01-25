@@ -596,18 +596,12 @@ namespace BP.En
                         this._HisCfgAttrs.AddBoolen("IsEnableFocusField", true, this.ToE("IsEnableFocusField","是否启用焦点字段"));
                         this._HisCfgAttrs.AddTBString("FocusField", null, this.ToE("FocusField","焦点字段(用于显示点击打开的列)"), true, false, 0, 20, 20);
                         this._HisCfgAttrs.AddBoolen("IsEnableRefFunc", true, this.ToE("IsEnableRefFunc","是否启用相关功能列"));
-
                         this._HisCfgAttrs.AddBoolen("IsEnableOpenICON", true, this.ToE("IsEnableOpenICON","是否启用打开图标"));
-
-
                         this._HisCfgAttrs.AddDDLSysEnum("MoveToShowWay", 0, this.ToE("MoveToShowWay","移动到显示方式"), true, false,
                             "MoveToShowWay", "@0=不显示@1=下拉列表@2=平铺");
                         this._HisCfgAttrs.AddTBString("MoveTo", null, this.ToE("MoveTo","移动到字段"), true, false, 0, 20, 20);
-
-
                         this._HisCfgAttrs.AddTBInt("WinCardW", 820, this.ToE("WinCardW","弹出窗口宽度"), true, false);
                         this._HisCfgAttrs.AddTBInt("WinCardH", 480, this.ToE("WinCardH","弹出窗口高度"), true, false);
-
                         this._HisCfgAttrs.AddDDLSysEnum("EditerType", 0, this.ToE("EditerType", "大块文本编辑器"), 
                             true, false, "EditerType", "@0=无@1=sina编辑器@2=FKCEditer");
 

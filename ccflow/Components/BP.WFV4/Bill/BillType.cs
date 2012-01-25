@@ -63,7 +63,6 @@ namespace BP.WF
 
                 map.AddTBStringPK(SimpleNoNameAttr.No, null, "编号", true, true, 2, 2, 2);
                 map.AddTBString(SimpleNoNameAttr.Name, null, "名称", true, false, 1, 50, 50);
-
                 map.AddTBString("FK_Flow", null, "流程", true, false, 1, 50, 50);
 
              //   map.AddDDLEntities( "FK_Flow", null, "流程", new Flows(), true);

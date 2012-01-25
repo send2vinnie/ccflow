@@ -147,7 +147,10 @@ namespace BP.TA
         {
             get
             {
-                return this.GetValStringByKey(SMSAttr.Email);
+                string s = this.GetValStringByKey(SMSAttr.Email);
+                if (string.IsNullOrEmpty(s))
+                    s = "ccflow@ccflow.org";
+                return s;
             }
             set
             {

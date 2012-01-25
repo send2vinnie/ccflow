@@ -317,7 +317,6 @@ namespace BP.WF.Port
                 map.AddTBString(WFEmpAttr.Msg, null, "Msg", true, true, 0, 4000, 20);
                 map.AddTBInt(WFEmpAttr.Style, 0, "Style", false, false);
                 map.AddTBInt(WFEmpAttr.Idx, 0, "Idx", false, false);
-
                 this._enMap = map;
                 return this._enMap;
             }

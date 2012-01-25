@@ -1130,7 +1130,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 MessageBox.Show(e.Result, "保存流程错误", MessageBoxButton.OK);
                 return;
             }
-            MessageBox.Show("保存成功", "ccflow", MessageBoxButton.OK);
+      //      MessageBox.Show("保存成功", "ccflow", MessageBoxButton.OK);
             this.IsNeedSave = false;
         }
         FlowNode getFlowNode(string FlowNodeFlowID)

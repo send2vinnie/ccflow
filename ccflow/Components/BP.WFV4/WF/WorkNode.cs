@@ -3428,7 +3428,7 @@ namespace BP.WF
             }
 
             if (toNode == null)
-                throw new Exception(string.Format(this.ToE("WN11", "@转向条件设置错误:节点名称{0}, 系统无法投递。"),
+                throw new Exception(string.Format(this.ToE("WN11", "@转向条件设置错误,节点名称:{0}, 系统无法投递。"),
                     this.HisNode.Name));
 
             /* 删除曾经在这个步骤上的流程运行数据。
@@ -3867,7 +3867,6 @@ namespace BP.WF
         private string StartNextWorkNodeHeLiu_WithFID(Node nd)
         {
             string spanNodes = this.SpanSubTheadNodes(nd);
-
             if (nd.HisFromNodes.Count != 1)
             {
                 return StartNextWorkNodeHeLiu_WithFID_YiBu(nd);
