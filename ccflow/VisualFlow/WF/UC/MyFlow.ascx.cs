@@ -764,6 +764,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
         #endregion 判断是否合流节点。
 
+        if (nd.HisFormType == FormType.DisableIt)
+            wk.DirectUpdate();
+
         switch (nd.HisFormType)
         {
             case FormType.FreeForm:
@@ -1211,12 +1214,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     break;
                 case FormType.DisableIt:
                     currWK.Retrieve();
-
-                    // 处理传递过来的参数。
-                    foreach (string k in this.Request.QueryString.AllKeys)
-                    {
-                        currWK.SetValByKey(k, this.Request.QueryString[k]);
-                    }
+                 
                     break;
                 default:
                     throw new Exception("@未涉及到的情况。");

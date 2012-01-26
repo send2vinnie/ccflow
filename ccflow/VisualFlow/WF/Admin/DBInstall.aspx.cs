@@ -39,8 +39,8 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                     this.Pub1.AddMsgGreen("同步数据表结构成功, 部分错误不会影响系统运行.",
                         "执行成功，希望在系统每次升级后执行此功能，不会对你的数据库数据产生影响。<br> <a href='./XAP/Designer.aspx'>进入流程设计器.</a>");
 
-                    string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
-                    BP.DA.DBAccess.RunSQLScript(scrpts);
+                    //string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
+                    //BP.DA.DBAccess.RunSQLScript(scrpts);
                 }
                 return;
             }
@@ -139,7 +139,6 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         this.Pub1.AddBR();
         this.Pub1.AddFieldSetEndBR();
 
-
         Button btn = new Button();
         btn.ID = "Btn_s";
         btn.Text = "下一步";
@@ -152,7 +151,6 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         string lang = "CH";
         string db = "SQLServer";
         string hj = "Inc";
-
 
         if (this.Pub1.GetRadioButtonByID("RB_SQL").Checked)
             db = "SQLServer";
@@ -185,7 +183,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
 
         //加注释.
         BP.PubClass.AddComment();
-    
+
         // 装载演示数据.
         if (this.Pub1.GetRadioButtonByID("RB_DemoOn").Checked)
         {
@@ -201,9 +199,12 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         }
         catch
         {
-
         }
 
+        // fileOfSQL.
+        string fileOfSQL = BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql";
+        BP.DA.DBAccess.RunSQLScript(fileOfSQL);
+      
         this.Response.Redirect("DBInstall.aspx?DoType=OK", true);
     }
 }

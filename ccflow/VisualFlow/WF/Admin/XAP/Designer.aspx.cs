@@ -108,7 +108,6 @@ public partial class Designer : System.Web.UI.Page
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='RunModel'");
             #endregion
 
-
             msg = "@执行升级出现错误。"; 
             //保障升级后的数据完整性. 2011-11-26.
             sql = "UPDATE SYS_MAPEXT SET ExtType='TBFullCtrl' WHERE ExtType='FullCtrl'";
@@ -143,8 +142,7 @@ public partial class Designer : System.Web.UI.Page
             {
                 msg = "@补充数据时出现错误，获得文件。";
                 string fileOfSQL = BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql";
-                string scrpts = BP.DA.DataType.ReadTextFile(fileOfSQL);
-                BP.DA.DBAccess.RunSQLs(scrpts);
+                BP.DA.DBAccess.RunSQLScript(fileOfSQL);
             }
 
             msg = "@升级退回规则。";
