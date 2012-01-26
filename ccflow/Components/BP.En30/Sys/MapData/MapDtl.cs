@@ -90,7 +90,13 @@ namespace BP.Sys
         public const string IsInsert = "IsInsert";
         public const string IsUpdate = "IsUpdate";
         public const string IsEnablePass = "IsEnablePass";
-
+        /// <summary>
+        /// 是否是合流汇总数据
+        /// </summary>
+        public const string IsHLDtl = "IsHLDtl";
+        /// <summary>
+        /// 是否显示titlt
+        /// </summary>
         public const string IsShowTitle = "IsShowTitle";
         /// <summary>
         /// 显示格式
@@ -280,6 +286,20 @@ namespace BP.Sys
             set
             {
                 this.SetValByKey(MapDtlAttr.IsShowTitle, value);
+            }
+        }
+        /// <summary>
+        /// 是否是合流汇总数据
+        /// </summary>
+        public bool IsHLDtl
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsHLDtl);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsHLDtl, value);
             }
         }
         public bool IsReadonly
@@ -547,6 +567,8 @@ namespace BP.Sys
                 map.AddBoolean(MapDtlAttr.IsShowSum, true, "IsShowSum", false, false);
                 map.AddBoolean(MapDtlAttr.IsShowIdx, true, "IsShowIdx", false, false);
                 map.AddBoolean(MapDtlAttr.IsCopyNDData, true, "IsCopyNDData", false, false);
+                map.AddBoolean(MapDtlAttr.IsHLDtl, false, "是否是合流汇总", false, false);
+
                 map.AddBoolean(MapDtlAttr.IsReadonly, false, "IsReadonly", false, false);
                 map.AddBoolean(MapDtlAttr.IsShowTitle, true, "IsShowTitle", false, false);
                 map.AddBoolean(MapDtlAttr.IsView, true, "是否可见", false, false);

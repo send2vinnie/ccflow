@@ -2558,11 +2558,9 @@ namespace BP.WF
                 catch (Exception ex)
                 {
                     BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
-
                     attr.FK_MapData = "ND" + this.HisNode.NodeID;
                     attr.HisEditType = BP.En.EditType.UnDel;
                     attr.KeyOfEn = "Title";
-
                     int i = attr.Retrieve(MapAttrAttr.FK_MapData, attr.FK_MapData, MapAttrAttr.KeyOfEn, attr.KeyOfEn);
                     if (i == 0)
                     {
@@ -2579,10 +2577,8 @@ namespace BP.WF
                         attr.IDX = -100;
                         attr.Insert();
                     }
-
                     fh.Title = WebUser.No + "-" + WebUser.Name + " @ " + DataType.CurrentDataTime + " ";
                 }
-
                 fh.RDT = DataType.CurrentData;
                 fh.FID = this.WorkID;
                 fh.FK_Flow = this.HisNode.FK_Flow;
@@ -3315,6 +3311,7 @@ namespace BP.WF
                 /*在检查完后，流程已经停止了。*/
                 return msg;
             }
+
             switch (this.HisNode.HisNodeWorkType)
             {
                 case NodeWorkType.WorkHL:
@@ -3555,6 +3552,8 @@ namespace BP.WF
                     DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET WorkID=" + wk.OID + ",FID=" + this.WorkID + " WHERE FK_Emp='" + wl.FK_Emp + "' AND WorkID=" + this.WorkID + " AND FK_Node=" + nd.NodeID);
                 }
             }
+            this.HisWork.NodeState = NodeState.Complete;
+            this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Complete);
             return msg;
         }
         /// <summary>
@@ -3566,7 +3565,6 @@ namespace BP.WF
             /*如果当前节点是分流，下一个节点是合流，就按普通节点启动它。*/
             if (this.HisNode.IsFL && nd.IsHL)
                 return StartNextWorkNodeOrdinary(nd);  /* 普通节点 */
-
             string msg = "";
             try
             {
@@ -3680,7 +3678,7 @@ namespace BP.WF
         }
         private string StartNextWorkNodeHeLiu_WithFID_YiBu(Node nd)
         {
-             GenerFH myfh = new GenerFH(this.HisWork.FID);
+            GenerFH myfh = new GenerFH(this.HisWork.FID);
             if (myfh.FK_Node == nd.NodeID)
             {
                 /* 说明不是第一次到这个节点上来了, 
@@ -3693,7 +3691,6 @@ namespace BP.WF
                  * 首先:更新它的节点 worklist 信息, 说明当前节点已经完成了.
                  * 不让当前的操作员能看到自己的工作。
                  */
-
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=1  WHERE WorkID=" + this.WorkID + " AND FID=" + this.HisWork.FID + " AND FK_Node=" + this.HisNode.NodeID);
                 DBAccess.RunSQL("UPDATE WF_GenerWorkFlow   SET FK_Node=" + nd.NodeID + ",NodeName='" + nd.Name + "' WHERE WorkID=" + this.HisWork.OID);
 
@@ -3703,16 +3700,26 @@ namespace BP.WF
                 this.HisWork.Update(WorkAttr.NodeState, (int)NodeState.Complete,
                     WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
 
+                // 产生合流汇总明细表数据.
+                this.GenerHieLiuHuiZhongDtlData(nd);
+
                 #region 处理完成率
-                string sqlOK = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID + " AND IsPass=1";
+                Nodes fromNds = nd.HisFromNodes;
+                string nearHLNodes = "";
+                foreach (Node mynd in fromNds)
+                {
+                    if (mynd.HisNodeWorkType == NodeWorkType.SubThreadWork)
+                        nearHLNodes += "," + mynd.NodeID;
+                }
+                nearHLNodes = nearHLNodes.Substring(1);
+
+                string sqlOK = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE FK_Node IN (" + nearHLNodes + ") AND FID=" + this.HisWork.FID + " AND IsPass=1";
                 decimal ok = (decimal)DBAccess.RunSQLReturnValInt(sqlOK);
 
-                // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
-                // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE IsPass=0 AND FID=" + this.HisWork.FID;
                 string sqlAll = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN (" + this.SpanSubTheadNodes(nd) + ")";
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(sqlAll);
                 decimal passRate = ok / all * 100;
-                string numStr = "@您是第(" + ok + ")到达此节点上的同事。";
+                string numStr = "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
                 if (nd.PassRate <= passRate)
                 {
                     /*说明全部的人员都完成了，就让合流点显示它。*/
@@ -3721,11 +3728,8 @@ namespace BP.WF
                 }
                 #endregion 处理完成率
 
-                //  sql = "SELECT FK_Emp,FK_EmpText FROM WF_GenerWorkerlist WHERE WorkID="+myfh.FID+" AND IsPass=3";
-                //DataTable dt =
                 string fk_emp1 = myfh.ToEmpsMsg.Substring(0, myfh.ToEmpsMsg.LastIndexOf('<'));
                 this.AddToTrack(ActionType.ForwardHL, fk_emp1, myfh.ToEmpsMsg, nd.NodeID, nd.Name, null);
-
                 return "@流程已经运行到合流节点[" + nd.Name + "]，当前工作已经完成.@您的工作已经发送给如下人员[" + myfh.ToEmpsMsg + "]，<a href=\"javascript:WinOpen('./Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + nd.NodeID + "')\" >短信通知他们</a>。" + this.GenerWhySendToThem(this.HisNode.NodeID, nd.NodeID) + numStr;
             }
 
@@ -3765,16 +3769,17 @@ namespace BP.WF
             * 不让当前的操作员能看到自己的工作。
             */
 
-            #region 设置父流程状态 设置当前的节点为:
+            // 设置父流程状态 设置当前的节点为:
             myfh.Update(GenerFHAttr.FK_Node, nd.NodeID,
                 GenerFHAttr.ToEmpsMsg, toEmpsStr);
 
+            #region 处理合流节点表单数据。
             Work mainWK = town.HisWork;
             mainWK.OID = this.HisWork.FID;
             if (mainWK.RetrieveFromDBSources() == 1)
                 mainWK.Delete();
 
-            // 复制报表上面的数据到合流点上去。
+            #region 复制报表上面的数据到合流点上去。
             DataTable dt = DBAccess.RunSQLReturnTable("SELECT * FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE OID=" + this.HisWork.FID);
             foreach (DataColumn dc in dt.Columns)
                 mainWK.SetValByKey(dc.ColumnName, dt.Rows[0][dc.ColumnName]);
@@ -3784,8 +3789,7 @@ namespace BP.WF
             mainWK.Emps = emps;
             mainWK.OID = this.HisWork.FID;
             mainWK.Insert();
-
-            /*处理表单数据的复制。*/
+            #endregion 复制报表上面的数据到合流点上去。
 
             #region 复制附件。
             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
@@ -3809,31 +3813,62 @@ namespace BP.WF
             }
             #endregion 复制附件。
 
-            /* 合流点需要等待各个分流点全部处理完后才能看到它。*/
+            // 产生合流汇总明细表数据.
+            this.GenerHieLiuHuiZhongDtlData(nd);
 
+            #endregion 处理合流节点表单数据
+
+
+            /* 合流点需要等待各个分流点全部处理完后才能看到它。*/
+            string info = "";
             string sql1 = "";
-            // "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
-            // string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE  IsPass=0 AND FID=" + this.HisWork.FID;
-            
-            #warning 对于多个分合流点可能会有问题。
-            sql1 = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN ("+ this.SpanSubTheadNodes(nd) +")";
+#warning 对于多个分合流点可能会有问题。
+            sql1 = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN (" + this.SpanSubTheadNodes(nd) + ")";
             decimal numAll1 = (decimal)DBAccess.RunSQLReturnValInt(sql1);
             decimal passRate1 = 1 / numAll1 * 100;
             if (nd.PassRate <= passRate1)
             {
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=0,WorkID=" + this.HisWork.FID + ",FID=0 WHERE FK_Node=" + nd.NodeID + " AND WorkID=" + this.HisWork.OID);
+                info = "@下一步合流点("+nd.Name+")已经启动。";
             }
             else
             {
-                #warning 为了不让其显示在途的工作需要， =3 不是正常的处理模式。
+#warning 为了不让其显示在途的工作需要， =3 不是正常的处理模式。
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=3,WorkID=" + this.HisWork.FID + ",FID=0 WHERE FK_Node=" + nd.NodeID + " AND WorkID=" + this.HisWork.OID);
             }
-
             DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + nd.NodeID + ",NodeName='" + nd.Name + "' WHERE WorkID=" + this.HisWork.FID);
-            #endregion 设置父流程状态
-
-            return "@当前工作已经完成，流程已经运行到合流节点[" + nd.Name + "]。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + nd.NodeID + "')\" >短信通知他们</a>。" + "@您是第一个到达此节点的同事.";
+            return "@当前工作已经完成，流程已经运行到合流节点[" + nd.Name + "]。@您的工作已经发送给如下人员[" + toEmpsStr + "]，<a href=\"javascript:WinOpen('" + this.VirPath + "/WF/Msg/SMS.aspx?WorkID=" + this.WorkID + "&FK_Node=" + nd.NodeID + "')\" >短信通知他们</a>。" + "@您是第一个到达此节点的同事."+info;
         }
+        /// <summary>
+        /// 产生合流汇总数据
+        /// </summary>
+        /// <param name="nd"></param>
+        private void GenerHieLiuHuiZhongDtlData(Node ndOfHeLiu)
+        {
+            MapDtls mydtls = ndOfHeLiu.HisWork.HisMapDtls;
+            foreach (MapDtl dtl in mydtls)
+            {
+                if (dtl.IsHLDtl == false)
+                    continue;
+                GEDtl geDtl = dtl.HisGEDtl;
+                geDtl.Copy(this.HisWork);
+                geDtl.RefPK = this.HisWork.FID.ToString();
+                geDtl.Rec = WebUser.No;
+                geDtl.RDT = DataType.CurrentDataTime;
+                try
+                {
+                    geDtl.InsertAsOID(geDtl.OID);
+                }
+                catch
+                {
+                    geDtl.Update();
+                }
+                break;
+            }
+        }
+        /// <summary>
+        /// 子线程节点
+        /// </summary>
         private string _SpanSubTheadNodes = null;
         /// <summary>
         /// 获取分流与合流之间的子线程节点集合.
@@ -3845,8 +3880,18 @@ namespace BP.WF
             _SpanSubTheadNodes = "";
             SpanSubTheadNodes_DG(toHLNode.HisFromNodes);
             if (_SpanSubTheadNodes == "")
-                throw new Exception("获取分合流之间的节点集合出现错误。");
-            return _SpanSubTheadNodes.Substring(1);
+                throw new Exception("获取分合流之间的子线程节点集合出现错。");
+            _SpanSubTheadNodes = _SpanSubTheadNodes.Substring(1);
+            return _SpanSubTheadNodes;
+
+            //DataTable dt = DBAccess.RunSQLReturnTable("SELECT * FROM WF_GenerWorkerlist WHERE FID=" + this.HisWork.FID + " AND FK_Node IN (" + _SpanSubTheadNodes + ") ");
+            //_SpanSubTheadNodes = "";
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    _SpanSubTheadNodes += "," + dr["FK_Node"].ToString();
+            //}
+            //_SpanSubTheadNodes = _SpanSubTheadNodes.Substring(1);
+            //return _SpanSubTheadNodes;
         }
         private void SpanSubTheadNodes_DG(Nodes subNDs)
         {
@@ -3855,7 +3900,9 @@ namespace BP.WF
                 if (nd.IsFL == true)
                     continue;
 
-                _SpanSubTheadNodes += "," + nd.NodeID;
+                if (nd.HisNodeWorkType == NodeWorkType.SubThreadWork)
+                    _SpanSubTheadNodes += "," + nd.NodeID;
+
                 SpanSubTheadNodes_DG(nd.HisFromNodes);
             }
         }
@@ -3904,7 +3951,7 @@ namespace BP.WF
                 sql = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN (" + spanNodes + ")";
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(sql);
                 decimal passRate = ok / all * 100;
-                string numStr = "@您是第(" + ok + ")到达此节点上的同事。";
+                string numStr = "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
                 if (nd.PassRate <= passRate)
                 {
                     /*说明全部的人员都完成了，就让合流点显示它。*/
@@ -3913,8 +3960,10 @@ namespace BP.WF
                 }
                 #endregion 处理完成率
 
-                //  sql = "SELECT FK_Emp,FK_EmpText FROM WF_GenerWorkerlist WHERE WorkID="+myfh.FID+" AND IsPass=3";
-                //DataTable dt =
+
+                // 产生合流汇总明细表数据.
+                this.GenerHieLiuHuiZhongDtlData(nd);
+
                 string fk_emp1 = myfh.ToEmpsMsg.Substring(0, myfh.ToEmpsMsg.LastIndexOf('<'));
                 this.AddToTrack(ActionType.ForwardHL, fk_emp1, myfh.ToEmpsMsg, nd.NodeID, nd.Name, null);
 
@@ -3977,8 +4026,10 @@ namespace BP.WF
             mainWK.OID = this.HisWork.FID;
             mainWK.Insert();
 
-            /*处理表单数据的复制。*/
+            // 产生合流汇总明细表数据.
+            this.GenerHieLiuHuiZhongDtlData(nd);
 
+            /*处理表单数据的复制。*/
             #region 复制附件。
             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                   this.WorkID.ToString());
@@ -4006,8 +4057,8 @@ namespace BP.WF
             string sql1 = "";
             // "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
             // string sql1 = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE  IsPass=0 AND FID=" + this.HisWork.FID;
-            
-            #warning 对于多个分合流点可能会有问题。
+
+#warning 对于多个分合流点可能会有问题。
             sql1 = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN (" + spanNodes + ")";
             decimal numAll1 = (decimal)DBAccess.RunSQLReturnValInt(sql1);
             decimal passRate1 = 1 / numAll1 * 100;
@@ -4017,7 +4068,7 @@ namespace BP.WF
             }
             else
             {
-                #warning 为了不让其显示在途的工作需要， =3 不是正常的处理模式。
+#warning 为了不让其显示在途的工作需要， =3 不是正常的处理模式。
                 DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=3,WorkID=" + this.HisWork.FID + ",FID=0 WHERE FK_Node=" + nd.NodeID + " AND WorkID=" + this.HisWork.OID);
             }
 
