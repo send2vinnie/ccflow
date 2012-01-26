@@ -72,7 +72,7 @@ namespace CCForm
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             BPBtn btn = this.HisBtn;
-            string keys = "@EnName=BP.Sys.FrmBtn@PKVal=" + btn.Name + "@FK_MapData=" + Glo.FK_MapData + "@Text=" + btn.Content.ToString() + "@DDL_AppType=" + (int)btn.HisBtnType + "@EventType=" + (int)btn.HisEventType + "@EventContext=" + this.TB_EventDoc.Text + "@MsgOK=" + this.TB_MsgOK.Text + "@MsgErr=" + this.TB_MsgErr.Text;
+            string keys = "@EnName=BP.Sys.FrmBtn@PKVal=" + btn.Name + "@FK_MapData=" + Glo.FK_MapData + "@Text=" + btn.Content.ToString() + "@DDL_AppType=" + (int)btn.HisBtnType + "@EventType=" + (int)btn.HisEventType + "@EventContext=" + this.TB_EventDoc.Text.Replace('@', '#') + "@MsgOK=" + this.TB_MsgOK.Text.Replace('@', '#') + "@MsgErr=" + this.TB_MsgErr.Text.Replace('@', '#');
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
             da.SaveEnAsync(keys);
             da.SaveEnCompleted += new EventHandler<FF.SaveEnCompletedEventArgs>(da_SaveEnCompleted);
@@ -124,10 +124,8 @@ namespace CCForm
 
             this.TB_EventDoc.IsEnabled = false;
             this.DDL_EventType.IsEnabled = false;
-
             this.TB_MsgOK.IsEnabled = false;
             this.TB_MsgErr.IsEnabled = false;
-
             return;
         }
 

@@ -24,7 +24,8 @@
         <sdk:Label Height="28" HorizontalAlignment="Left" Margin="140,103,0,0" Name="label5" VerticalAlignment="Top" Width="57" Content="字体名称" />
         <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,101,89,0" Name="DDL_FrontName" VerticalAlignment="Top" Width="87" />
         <sdk:Label Height="21" HorizontalAlignment="Left" Margin="305,105,0,0" Name="label6" VerticalAlignment="Top" Width="51" Content="连接地址" />
-        <TextBox Height="97" HorizontalAlignment="Left" Margin="14,130,0,0" Name="TB_URL" VerticalAlignment="Top" Width="349" TextWrapping="Wrap" />
+        <TextBox Height="80" HorizontalAlignment="Left" Margin="14,130,0,0" Name="TB_URL" VerticalAlignment="Top" Width="349" TextWrapping="Wrap" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="72,235,0,0" Name="DDL_WinName" VerticalAlignment="Top" Width="113" ItemsSource="{Binding}" SelectionChanged="DDL_WinName_SelectionChanged" />
+        <sdk:Label Height="21" HorizontalAlignment="Left" Margin="14,212,0,0" Name="label7" VerticalAlignment="Top" Width="349" Content="提示:连接地址中支持@+字段变量与全局变量.更多请查看开发手册。" />
     </Grid>
 </controls:ChildWindow>

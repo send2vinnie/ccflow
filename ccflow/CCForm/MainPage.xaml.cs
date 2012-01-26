@@ -4113,7 +4113,6 @@ namespace CCForm
                 }
                 #endregion BPDtl
 
-
                 #region BPM2M
                 BPM2M m2mCtl = ctl as BPM2M;
                 if (m2mCtl != null)
@@ -4183,7 +4182,6 @@ namespace CCForm
                     continue;
                 }
                 #endregion BPAttachmentM
-
 
                 #region BPImgAth
                 BPImgAth imgAth = ctl as BPImgAth;
@@ -4423,7 +4421,7 @@ namespace CCForm
             }
             else
             {
-                MessageBox.Show("ccform 保存成功.", "保存提示", MessageBoxButton.OK);
+              //  MessageBox.Show("ccform 保存成功.", "保存提示", MessageBoxButton.OK);
             }
         }
         public void RunSQL(string sql)
