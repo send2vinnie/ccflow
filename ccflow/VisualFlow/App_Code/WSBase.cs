@@ -139,7 +139,7 @@ namespace BP.Web
                 {
                     if (key == "PKVal")
                         continue;
-                    en.SetValByKey(key, ap.HisHT[key]);
+                    en.SetValByKey(key, ap.HisHT[key].ToString().Replace('#','@'));
                 }
                 en.Save();
                 return en.PKVal as string;

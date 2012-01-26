@@ -332,16 +332,28 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTD(cb);
 
         cb = new CheckBox();
-        cb.ID = "CB_IsEnablePass";
-        cb.Text = this.ToE("IsEnablePass", "是否起用审核字段？");// "是否合计行";
-        cb.Checked = dtl.IsEnablePass;
-        this.Pub1.AddTD(cb);
+        cb.ID = "CB_IsHLDtl";
+        cb.Text = "是否是分流汇总从表(当前节点是合流节点有效)";
+        cb.Checked = dtl.IsHLDtl;
+        this.Pub1.AddTD("colspan=2",cb);
+        this.Pub1.AddTREnd();
 
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         cb = new CheckBox();
         cb.ID = "CB_IsEnableAthM";
         cb.Text = "是否启用多附件";
         cb.Checked = dtl.IsEnableAthM;
         this.Pub1.AddTD(cb);
+        cb = new CheckBox();
+        cb.ID = "CB_IsEnablePass";
+        cb.Text = this.ToE("IsEnablePass", "是否起用审核字段？");// "是否合计行";
+        cb.Checked = dtl.IsEnablePass;
+        this.Pub1.AddTD(cb);
+        this.Pub1.AddTD();
+        this.Pub1.AddTREnd();
+
 
         //cb = new CheckBox();
         //cb.ID = "CB_IsEnableAth";
