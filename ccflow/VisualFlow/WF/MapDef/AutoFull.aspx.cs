@@ -475,9 +475,15 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
             mattr.HisAutoFull = AutoFullWay.Way4_Dtl;
             foreach (MapDtl dtl in dtls)
             {
-
-                if (this.Pub1.GetRadioButtonByID("RB_" + dtl.No).Checked == false)
+                try
+                {
+                    if (this.Pub1.GetRadioButtonByID("RB_" + dtl.No).Checked == false)
+                        continue;
+                }
+                catch
+                {
                     continue;
+                }
 
                 //  doc = "SELECT " + this.Pub1.GetDDLByID( "DDL_"+dtl.No + "_Way").SelectedValue + "(" + this.Pub1.GetDDLByID("DDL_"+dtl.No+"_F").SelectedValue + ") FROM " + dtl.No + " WHERE REFOID=@OID";
                 doc = "@Table=" + dtl.No + "@Field=" + this.Pub1.GetDDLByID("DDL_" + dtl.No + "_F").SelectedValue + "@Way=" + this.Pub1.GetDDLByID("DDL_" + dtl.No + "_Way").SelectedValue;
