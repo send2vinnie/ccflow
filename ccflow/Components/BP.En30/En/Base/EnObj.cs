@@ -475,6 +475,17 @@ namespace BP.En
         {
             return this.Row.GetValByKey(key).ToString();
         }
+        public string GetValStrByKey(string key, string isNullAs)
+        {
+            try
+            {
+                return this.Row.GetValByKey(key).ToString();
+            }
+            catch
+            {
+                return isNullAs;
+            }
+        }
 		/// <summary>
 		/// È¡µÃString
 		/// </summary>

@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Collections;
 using BP.DA;
 using BP.Web.Controls;
@@ -19,7 +20,7 @@ namespace BP.WF.DTS
         public LoadTemplete()
         {
             this.Title = "装载流程演示模板";
-            this.Help = "为了帮助各位爱好者学习与掌握ccflow, 特提供一些流程模板以方便学习。";
+            this.Help = "为了帮助各位爱好者学习与掌握ccflow, 特提供一些流程模板与表单模板以方便学习。";
             this.Help += "@这些模板的位于" + SystemConfig.PathOfData + "\\FlowDemo\\";
         }
         /// <summary>
@@ -44,7 +45,11 @@ namespace BP.WF.DTS
             string msg = "";
             string flowPath = SystemConfig.PathOfData + "\\FlowDemo\\Flow\\";
             string[] fls = System.IO.Directory.GetFiles(flowPath);
-            string fk_flowsort = DBAccess.RunSQLReturnString("SELECT No FROM WF_FlowSort");
+
+            string fk_flowsort = "01";
+            //DBAccess.RunSQLReturnString("SELECT No FROM WF_FlowSort");
+
+            // 调度表单文件。
             foreach (string f in fls)
             {
                 try
@@ -53,8 +58,30 @@ namespace BP.WF.DTS
                     Flow myflow = BP.WF.Flow.DoLoadFlowTemplate(fk_flowsort, f);
                     msg += "@流程:" + myflow.Name + "装载成功。";
                     System.IO.FileInfo info = new System.IO.FileInfo(f);
-                    myflow.Name = info.Name;
+                    myflow.Name = info.Name.Replace(".xml","");
                     myflow.DirectUpdate();
+                }
+                catch (Exception ex)
+                {
+                    msg += "@调度失败" + ex.Message;
+                }
+            }
+
+ 
+            // 调度表单文件。
+            flowPath = SystemConfig.PathOfData + "\\FlowDemo\\Form\\";
+            fls = System.IO.Directory.GetFiles(flowPath);
+            foreach (string f in fls)
+            {
+                try
+                {
+                    msg += "@开始调度表单模板文件:" + f;
+                    System.IO.FileInfo info = new System.IO.FileInfo(f);
+                    if (info.Extension != ".xml")
+                        continue;
+                    DataSet ds = new DataSet();
+                    ds.ReadXml(f);
+                    MapData.ImpMapData(ds);
                 }
                 catch (Exception ex)
                 {

@@ -91,6 +91,10 @@ namespace BP.Sys
         /// 表单类型
         /// </summary>
         public const string FrmType = "FrmType";
+        /// <summary>
+        /// Tag
+        /// </summary>
+        public const string Tag = "Tag";
     }
 	/// <summary>
 	/// 映射基础
@@ -529,6 +533,9 @@ namespace BP.Sys
                 //数据源.
                 map.AddTBInt(MapDataAttr.DBURL, 0, "DBURL", true, false);
 
+                // Tag
+                map.AddTBString(MapDataAttr.Tag, null, "Tag", true, false, 0, 500, 20);
+
                 //FrmType  @自由表单，@傻瓜表单，@自定义表单。
                 map.AddTBInt(MapDataAttr.FrmType, 0, "表单类型", true, false);
 
@@ -549,6 +556,31 @@ namespace BP.Sys
         }
         #endregion
 
+        /// <summary>
+        /// 导入数据
+        /// </summary>
+        /// <param name="ds"></param>
+        public static void ImpMapData(DataSet ds)
+        {
+            string errMsg = "";
+            if (ds.Tables.Contains("WF_Node") == true)
+                errMsg += "@此模板文件为流程模板。";
+            if (ds.Tables.Contains("Sys_MapAttr") == false)
+                errMsg += "@缺少表:Sys_MapAttr";
+            if (ds.Tables.Contains("Sys_MapData") == false)
+                errMsg += "@缺少表:Sys_MapData";
+            if (errMsg != "")
+                throw new Exception(errMsg);
+
+            DataTable dt = ds.Tables["Sys_MapData"];
+            string fk_mapData = dt.Rows[0]["No"].ToString();
+            MapData md = new MapData();
+            md.No = fk_mapData;
+            if (md.IsExits)
+                throw new Exception("已经存在(" + fk_mapData + ")的数据。");
+            //导入.
+            ImpMapData(fk_mapData, ds);
+        }
         public static void ImpMapData(string fk_mapdata, DataSet ds)
         {
             #region 检查导入的数据是否完整.
@@ -599,7 +631,8 @@ namespace BP.Sys
                 oldMapID = dr["No"].ToString();
             }
 
-            string timeKey = DateTime.Now.ToString("yyMMddhhmm");
+          //string timeKey = DateTime.Now.ToString("yyMMddhhmm");
+            string timeKey = fk_mapdata;
             foreach (DataTable dt in ds.Tables)
             {
                 int idx = 0;
@@ -854,6 +887,37 @@ namespace BP.Sys
                             endDoSQL += "@UPDATE Sys_MapAttr SET GroupID=" + en.OID + " WHERE FK_MapData='" + fk_mapdata + "' AND GroupID=" + beforeID;
                         }
                         break;
+                    case "Sys_Enum":  
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Sys.SysEnum se = new Sys.SysEnum();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                se.SetValByKey(dc.ColumnName, val);
+                            }
+                            se.MyPK = se.EnumKey + "_" + se.Lang + "_" + se.IntKey;
+                            if (se.IsExits)
+                                continue;
+                            se.Insert();
+                        }
+                        break;
+                    case "Sys_EnumMain": 
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Sys.SysEnumMain sem = new Sys.SysEnumMain();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                string val = dr[dc.ColumnName] as string;
+                                if (val == null)
+                                    continue;
+                                sem.SetValByKey(dc.ColumnName, val);
+                            }
+                            if (sem.IsExits)
+                                continue;
+                            sem.Insert();
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -1038,7 +1102,21 @@ namespace BP.Sys
             sql = "SELECT * FROM Sys_MapAttr WHERE " + where + " AND KeyOfEn NOT IN('WFState','WFLog','NodeState') ORDER BY FK_MapData,IDX ";
             DataTable Sys_MapAttr = DBAccess.RunSQLReturnTable(sql);
             Sys_MapAttr.TableName = "Sys_MapAttr";
-           
+            if (Sys_MapAttr.Rows.Count == 0)
+            {
+                BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
+                attr.FK_MapData = this.No;
+                attr.KeyOfEn = "OID";
+                attr.Name = "OID";
+                attr.MyDataType = BP.DA.DataType.AppInt;
+                attr.UIContralType = UIContralType.TB;
+                attr.LGType = FieldTypeS.Normal;
+                attr.UIVisible = false;
+                attr.UIIsEnable = false;
+                attr.DefVal = "0";
+                attr.HisEditType = BP.En.EditType.Readonly;
+                attr.Insert();
+            }
             ds.Tables.Add(Sys_MapAttr);
 
             // Sys_MapM2M.
@@ -1070,6 +1148,22 @@ namespace BP.Sys
             DataTable Sys_GroupField = DBAccess.RunSQLReturnTable(sql);
             Sys_GroupField.TableName = "Sys_GroupField";
             ds.Tables.Add(Sys_GroupField);
+
+            string fk_MapData = "'"+this.No+"'";
+            foreach (DataRow dr in Sys_MapDtl.Rows)
+                fk_MapData+=",'"+dr["No"].ToString()+"'";
+
+            // Sys_EnumMain
+            sql = "SELECT * FROM Sys_EnumMain WHERE No IN (SELECT UIBindKey FROM Sys_MapAttr WHERE FK_MapData IN (" + fk_MapData + ") )";
+            DataTable Sys_EnumMain = DBAccess.RunSQLReturnTable(sql);
+            Sys_EnumMain.TableName = "Sys_EnumMain";
+            ds.Tables.Add(Sys_EnumMain);
+
+            // Sys_Enum
+            sql = "SELECT * FROM Sys_Enum WHERE EnumKey IN ( SELECT No FROM Sys_EnumMain WHERE No IN ( SELECT UIBindKey FROM Sys_MapAttr WHERE FK_MapData IN (" + fk_MapData + ") ))";
+            DataTable Sys_Enum = DBAccess.RunSQLReturnTable(sql);
+            Sys_Enum.TableName = "Sys_Enum";
+            ds.Tables.Add(Sys_Enum);
             return ds;
         }
         /// <summary>

@@ -62,7 +62,6 @@ namespace BP.WF
             sql = "DELETE Sys_Enum WHERE EnumKey='FormType'";
             BP.DA.DBAccess.RunSQLs(sql);
 
-
             // ÐÞ¸´Òòbug¶ªÊ§µÄ×Ö¶Î.
             MapDatas mds = new MapDatas();
             mds.RetrieveAll();

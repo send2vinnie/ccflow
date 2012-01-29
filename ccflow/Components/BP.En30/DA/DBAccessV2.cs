@@ -1022,7 +1022,6 @@ namespace BP.DA
                     sql = "SP_Help  " + proName;
                     break;
             }
-
             try
             {
                 return BP.DA.DBAccess.RunSQLReturnTable(sql);
@@ -1033,7 +1032,6 @@ namespace BP.DA
                 return BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
         }
-
         public static void RunSQLScript(string sqlOfScriptFilePath)
         {
             string str = BP.DA.DataType.ReadTextFile(sqlOfScriptFilePath);
@@ -1043,9 +1041,16 @@ namespace BP.DA
                 if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
                     continue;
 
+                if (s.Contains("--"))
+                    continue;
+
+                if (s.Contains("/*"))
+                    continue;
+
                 BP.DA.DBAccess.RunSQL(s);
             }
         }
+
         public static void RunSQLs(string sql)
         {
             if (string.IsNullOrEmpty(sql))

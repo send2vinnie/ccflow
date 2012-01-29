@@ -1216,26 +1216,23 @@ namespace BP.WF
             dt.TableName = "Sys_EnumMain";
             ds.Tables.Add(dt);
 
+            // Sys_Enum
+            sql = "SELECT * FROM Sys_Enum WHERE EnumKey IN ( SELECT No FROM Sys_EnumMain WHERE No IN (SELECT KeyOfEn from Sys_MapAttr WHERE FK_MapData LIKE 'ND" + flowID + "%' ) )";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_Enum";
+            ds.Tables.Add(dt);
+
             // Sys_MapDtl
             sql = "SELECT * FROM Sys_MapDtl WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_MapDtl";
             ds.Tables.Add(dt);
 
-
             // Sys_MapExt
             sql = "SELECT * FROM Sys_MapExt WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_MapExt";
             ds.Tables.Add(dt);
-
-
-            // Sys_Enum
-            sql = "SELECT * FROM Sys_Enum WHERE EnumKey IN ( SELECT No FROM Sys_EnumMain where NO IN (SELECT KeyOfEn from Sys_MapAttr WHERE FK_MapData LIKE 'ND" + flowID + "%' ) )";
-            dt = DBAccess.RunSQLReturnTable(sql);
-            dt.TableName = "Sys_Enum";
-            ds.Tables.Add(dt);
-
 
             // Sys_GroupField
             sql = "SELECT * FROM Sys_GroupField WHERE EnName LIKE 'ND" + flowID + "%' ";
@@ -2987,7 +2984,8 @@ namespace BP.WF
             fl.No = fl.GenerNewNo;
             string oldFlowNo = dtFlow.Rows[0]["No"].ToString();
             int oldFlowID = int.Parse(oldFlowNo);
-            string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
+          //  string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
+            string timeKey = fl.No;
             int idx = 0;
             string infoErr = "";
             string infoTable = "";
@@ -3018,7 +3016,6 @@ namespace BP.WF
                 fl.FK_FlowSort = fk_flowSort;
                 fl.Save();
                 #endregion 处理流程表数据
-
 
                 #region 处理OID 插入重复的问题。 Sys_GroupField ， Sys_MapAttr.
                 DataTable mydtGF = ds.Tables["Sys_GroupField"];

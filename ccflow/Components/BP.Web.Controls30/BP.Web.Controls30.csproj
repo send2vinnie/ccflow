@@ -162,10 +162,6 @@
     <Compile Include="FCKeditor\Util.cs" />
     <Compile Include="FCKeditor\XmlUtil.cs" />
     <Compile Include="Glo.cs" />
-    <Compile Include="Html\ImgSpeed.cs" />
-    <Compile Include="Html\ImgRunDtl.cs" />
-    <Compile Include="Html\ImgRun.cs" />
-    <Compile Include="Html\Direction.cs" />
     <Compile Include="IWCW\BPMultiPage.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -298,6 +294,9 @@
       <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
       <Name>BP.En30</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Html\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

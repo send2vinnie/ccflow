@@ -74,11 +74,14 @@ namespace BP.Sys
                     return this._enMap;
                 Map map = new Map("Sys_FrmSort");
                 map.EnType = EnType.Sys;
+                map.CodeStruct = "2";
+                map.IsAllowRepeatNo = false;
+                map.IsAutoGenerNo = true;
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
 
                 map.EnDesc = "表单类别";
-                map.AddTBStringPK(FrmSortAttr.No, null, "编号", true, false, 2, 2, 2);
+                map.AddTBStringPK(FrmSortAttr.No, null, "编号", true, true, 2, 2, 2);
                 map.AddTBString(FrmSortAttr.Name, null, "名称", true, false, 0, 50, 20);
                 //   map.AddTBString(FrmSortAttr.Icon, "图标", "图标", true, false, 0, 50, 20);
                 this._enMap = map;

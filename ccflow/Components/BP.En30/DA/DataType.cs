@@ -186,16 +186,9 @@ namespace BP.DA
         {
             try
             {
-                //System.IO.StreamReader read = new System.IO.StreamReader(file, System.Text.Encoding.GetEncoding("GB2312") ); // 文件流.
                 System.IO.StreamReader read = new System.IO.StreamReader(file, System.Text.Encoding.UTF8); // 文件流.
-
-                //  System.IO.StreamReader read = new System.IO.StreamReader(file, TxtFileEncoding.GetEncoding(file)); // 文件流.
-                //   System.IO.StreamReader read = new System.IO.StreamReader(file, TxtFileEncoding.GetEncoding(file)); // 文件流.
-                // System.IO.StreamReader read = new System.IO.StreamReader(file, System.Text.Encoding.GetEncoding("GB2312") ); // 文件流.
                 string doc = read.ReadToEnd();  //读取完毕。
                 read.Close(); // 关闭。
-                
-                // System.Web.HttpContext.Current.Response.Write(TxtFileEncoding.GetEncoding(file).EncodingName );
                 return doc;
             }
             catch

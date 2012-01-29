@@ -228,20 +228,40 @@ namespace BP.WF
             #endregion 注册枚举类型
 
             #region 3, 执行基本的 sql
-            string sqlscript = BP.DA.DataType.ReadTextFile(SystemConfig.PathOfData + "\\Install\\SQLScript\\Port_" + yunXingHuanjing + "_" + lang + ".sql");
-            BP.DA.DBAccess.RunSQLs(sqlscript);
+            string sqlscript =  SystemConfig.PathOfData + "\\Install\\SQLScript\\Port_" + yunXingHuanjing + "_" + lang + ".sql";
+            BP.DA.DBAccess.RunSQLScript(sqlscript);
             #endregion 修复
 
             #region 4, 创建视图与系统函数
-            sqlscript = BP.DA.DataType.ReadTextFile(SystemConfig.PathOfData + "\\Install\\SQLScript\\CreateViewSQL.sql");
-
-            BP.DA.DBAccess.RunSQLs(sqlscript);
+            sqlscript =  SystemConfig.PathOfData + "\\Install\\SQLScript\\CreateViewSQL.sql";
+            BP.DA.DBAccess.RunSQLScript(sqlscript);
             #endregion 创建视图与系统函数
 
             #region 5, 初始化数据。
-            sqlscript = BP.DA.DataType.ReadTextFile(SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql");
+            sqlscript =  SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql" ;
+            BP.DA.DBAccess.RunSQLScript(sqlscript);
+            #endregion 初始化数据
 
-            BP.DA.DBAccess.RunSQLs(sqlscript);
+            #region 6, 生成临时的wf数据。
+            BP.Port.Emps emps = new BP.Port.Emps();
+            emps.RetrieveAllFromDBSource();
+            int i = 0;
+            foreach (BP.Port.Emp emp in emps)
+            {
+                i++;
+                BP.WF.Port.WFEmp wfEmp = new BP.WF.Port.WFEmp();
+                wfEmp.Copy(emp);
+                if (wfEmp.Email.Length == 0)
+                    wfEmp.Email = wfEmp + "@ccflow.org";
+
+                if (wfEmp.Tel.Length == 0)
+                    wfEmp.Tel = "88553730-6" + i.ToString().PadLeft(2, '0');
+
+                if (wfEmp.IsExits)
+                    wfEmp.Update();
+                else
+                    wfEmp.Insert();
+            }
             #endregion 初始化数据
         }
         public static void KillProcess(string processName) //杀掉进程的方法
