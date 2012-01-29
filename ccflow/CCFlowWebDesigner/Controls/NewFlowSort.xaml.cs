@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,33 +24,24 @@ namespace WF.Controls
             Add,
             Edit
         }
-
         public string No { get; set; }
         public string FK_FlowSort { get; set; }
-
         /// <summary>
         /// 流程类别名称
         /// </summary>
         public string FlowSortName { get; set; }
-
         /// <summary>
         /// 显示类型
         /// </summary>
         public DisplayTypeEnum DisplayType { get; set; }
-
-
         public event EventHandler<DoCompletedEventArgs> ServiceDoCompletedEvent;
-
-
         public NewFlowSort(MainPage contaniner): this()
         {
-           
             this._container = contaniner;
         }
-        public NewFlowSort() 
-        {  
+        public NewFlowSort()
+        {
             InitializeComponent();
-        
         }
         MainPage _container;
         public MainPage Container
@@ -65,7 +55,6 @@ namespace WF.Controls
                 _container = value;
             }
         }
-
         /// <summary>
         /// 初始化控件内容 
         /// </summary>
@@ -76,7 +65,6 @@ namespace WF.Controls
             this.No = no;
             txtFlowNodeName.Text = name;
         }
-
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             if(DisplayTypeEnum.Add == DisplayType)
@@ -90,17 +78,13 @@ namespace WF.Controls
                 Container._Service.DoAsync("EditFlowSort", this.No + "," + txtFlowNodeName.Text, true);
                 Container._Service.DoCompleted += new EventHandler<DoCompletedEventArgs>(_service_DoCompleted);
             }
-           
             this.DialogResult = true;
         }
-
         void _service_DoCompleted(object sender, DoCompletedEventArgs e)
         {
             this.No=  e.Result;
             if(null != ServiceDoCompletedEvent)
-            {
                 ServiceDoCompletedEvent(this, e);
-            }
             Container._Service.DoCompleted -= _service_DoCompleted;
         }
 

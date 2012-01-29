@@ -38,9 +38,9 @@
                                Grid.ColumnSpan="2"  Content="" />
                 </Grid>
             </sdk:TabItem>
-            <sdk:TabItem Header="从流程表单导入" Name="tabItem4">
+            <sdk:TabItem Header="从表单库中导入" Name="tabItem4">
                 <Grid>
-                    <ListBox Height="174" HorizontalAlignment="Left" Margin="6,4,0,0" Name="listBox2" VerticalAlignment="Top" Width="286" SelectionChanged="listBox2_SelectionChanged" />
+                    <ListBox Height="174" HorizontalAlignment="Left" Margin="6,4,0,0" Name="listBox_FrmLab" VerticalAlignment="Top" Width="286" SelectionChanged="listBox2_SelectionChanged" />
                 </Grid>
             </sdk:TabItem>
         </controls:TabControl>

@@ -8,15 +8,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.ServiceModel;
+using WF.WS;
+using Ccflow.Web.UI.Control.Workflow.Designer;
 using BP;
 using BP.DA;
-using WF.WS;
 using Silverlight;
 
 namespace WF.Frm
 {
     public partial class Frm : ChildWindow
     {
+        public MainPage HisMainPage = null;
         public AppType HisAppType = AppType.Application;
         public bool IsNew = false;
         public Frm()
@@ -32,25 +35,12 @@ namespace WF.Frm
             this.IsNew = false;
             string sqls = "SELECT * FROM Sys_FrmSort ";
             sqls += "@SELECT * FROM Sys_MapData WHERE No='" + fk_mapdata + "'";
-
             this.TB_No.IsEnabled = false;
-            WSDesignerSoapClient da = Glo.GetDesignerServiceInstance();
-            da.RunSQLReturnTableSAsync(sqls);
-            da.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(da_RunSQLReturnTableSCompleted);
+            WSDesignerSoapClient daBindFrm = Glo.GetDesignerServiceInstance();
+            daBindFrm.RunSQLReturnTableSAsync(sqls);
+            daBindFrm.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(daBindFrm_RunSQLReturnTableSCompleted);
         }
-        public void BindNew()
-        {
-            this.Title = "新建表单";
-            this.IsNew = true;
-            this.TB_No.IsEnabled = true;
-            string sqls = "SELECT * FROM Sys_FrmSort ";
-            WSDesignerSoapClient da = Glo.GetDesignerServiceInstance();
-            da.RunSQLReturnTableSAsync(sqls);
-            da.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(da_RunSQLReturnTableSCompleted);
-            this.HisAppType = AppType.Application;
-            this.Show();
-        }
-        void da_RunSQLReturnTableSCompleted(object sender, RunSQLReturnTableSCompletedEventArgs e)
+        void daBindFrm_RunSQLReturnTableSCompleted(object sender, RunSQLReturnTableSCompletedEventArgs e)
         {
             this.Btn_Del.IsEnabled = false;
             this.Btn_Save.IsEnabled = false;
@@ -65,7 +55,6 @@ namespace WF.Frm
                 dr[1] = "默认类别";
                 dtSort.Rows.Add(dr);
             }
-
             if (this.IsNew)
             {
                 Glo.Ctrl_DDL_BindDataTable(this.DDL_FrmSort, dtSort, "01");
@@ -86,7 +75,9 @@ namespace WF.Frm
             this.TB_No.Text = dtMapdata.Rows[0]["No"];
             this.TB_Name.Text = dtMapdata.Rows[0]["Name"];
             this.TB_PTable.Text = dtMapdata.Rows[0]["PTable"];
-            this.TB_URL.Text = dtMapdata.Rows[0]["URL"];
+            string tag = dtMapdata.Rows[0]["Tag"];
+            if (tag != null)
+                this.TB_URL.Text = tag;
 
             this.TB_Designer.Text = dtMapdata.Rows[0]["Designer"];
             this.TB_DesignerUnit.Text = dtMapdata.Rows[0]["DesignerUnit"];
@@ -105,13 +96,30 @@ namespace WF.Frm
                 this.Btn_Save.IsEnabled = true;
             }
         }
-
+        public void BindNew()
+        {
+            this.Title = "新建表单";
+            this.IsNew = true;
+            this.TB_No.IsEnabled = true;
+            string sqls = "SELECT No,Name FROM Sys_FrmSort";
+            WSDesignerSoapClient daNew = Glo.GetDesignerServiceInstance();
+            daNew.RunSQLReturnTableSAsync(sqls);
+            daNew.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(daNew_RunSQLReturnTableSCompleted);
+            this.HisAppType = AppType.Application;
+        }
+        void daNew_RunSQLReturnTableSCompleted(object sender, RunSQLReturnTableSCompletedEventArgs e)
+        {
+            DataSet ds = new DataSet();
+            ds.FromXml(e.Result);
+            DataTable dtSort = ds.Tables[0];
+            Glo.Ctrl_DDL_BindDataTable(this.DDL_FrmSort, dtSort,"01");
+        }
+        
         private void DelButton_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("您确定要删除吗？", "ccflow提示", MessageBoxButton.OKCancel)
                 == MessageBoxResult.Cancel)
                 return;
-
             WSDesignerSoapClient delMap = Glo.GetDesignerServiceInstance();
             delMap.DoTypeAsync("DelFrm", this.TB_No.Text,null,null,null,null);
             delMap.DoTypeCompleted += new EventHandler<DoTypeCompletedEventArgs>(delMap_DoTypeCompleted);
@@ -121,6 +129,7 @@ namespace WF.Frm
             if (e.Result == null)
             {
                 this.DialogResult = true;
+                this.HisMainPage.BindFormTree();
                 return;
             }
             MessageBox.Show(e.Result, "错误", MessageBoxButton.OK);
@@ -154,26 +163,33 @@ namespace WF.Frm
         }
         public void SaveEn()
         {
+            string error = "";
+            if (string.IsNullOrEmpty(this.TB_No.Text.Trim()))
+                error += "编号不能为空.";
+
+            if (string.IsNullOrEmpty(this.TB_Name.Text.Trim()))
+                error += "名称不能为空.";
+
             string strs = "";
             strs += "@EnName=BP.Sys.MapData@PKVal=" + this.TB_No.Text;
             strs += "@No=" + this.TB_No.Text;
             strs += "@Name=" + this.TB_Name.Text;
             strs += "@PTable=" + this.TB_PTable.Text;
-            strs += "@URL=" + this.TB_URL.Text;
-
+            strs += "@Tag=" + this.TB_URL.Text;
 
             ListBoxItem lb = this.DDL_FrmSort.SelectedItem as ListBoxItem;
+            if (lb != null)
             strs += "@FK_FrmSort=" + lb.Tag.ToString();
 
             lb = this.DDL_FrmType.SelectedItem as ListBoxItem;
+            if (lb != null)
             strs += "@FrmType=" + lb.Tag.ToString();
 
             lb = this.DDL_DBUrl.SelectedItem as ListBoxItem;
+            if (lb!=null)
             strs += "@DBURL=" + lb.Tag.ToString();
 
-
             strs += "@AppType=" + (int)this.HisAppType;
-
             strs += "@Designer=" + this.TB_Designer.Text;
             strs += "@DesignerContact=" + this.TB_DesignerContact.Text;
             strs += "@DesignerUnit=" + this.TB_DesignerUnit.Text;
@@ -191,17 +207,18 @@ namespace WF.Frm
             }
             else
             {
-          //      MessageBox.Show("保存成功", "ccflow", MessageBoxButton.OK);
+                this.HisMainPage.BindFormTree();
                 this.DialogResult = true;
             }
         }
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            this.HisMainPage.BindFormTree();
             this.DialogResult = false;
         }
         private void DDL_FrmType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-                this.SetState();
+            this.SetState();
         }
         public void SetState()
         {

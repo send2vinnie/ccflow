@@ -29,7 +29,6 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
         <StackPanel Grid.RowSpan="2" Background="white"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Name="stackPanelLeft"   Orientation="Vertical">
             <Image x:Name="imageLogo" Width="210" Height="70" Margin="5,2,5,2" Source="/Images/Icons/CCflow.jpg"   />
             <sdk:TabControl  Name="TbcFDS" Width="220" Height="auto"    MouseLeave="TbcFDS_MouseLeave" >
@@ -56,7 +55,38 @@
                         </liquidMenu:Menu>
                     </Canvas>
                 </sdk:TabItem>
-                <sdk:TabItem Header="流程优化" Name="Tbwf" Background="white"   >
+                <sdk:TabItem Header="表单库" Name="TbItemFrm" Background="white" BorderThickness="0">
+                    <Canvas Background="white" 
+                            MouseLeftButtonDown="CCFormTree_MouseLeftButtonDown" Name="canvasFormTree" 
+                            Width="Auto" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
+                        <liquidTreeView:Tree x:Name="FromTree"  BorderThickness="0" Width="210"  
+                                             HorizontalScrollBarVisibility="Auto"
+                                             VerticalScrollBarVisibility="Auto"
+                                             EnableLines="True"   Height="900"
+                                             SelectionChanged="CCForm_SelectionChanged" 
+                                             MouseRightButtonDown="CCForm_MouseRightButtonDown" 
+                                             MouseLeftButtonDown="CCForm_MouseLeftButtonDown" >
+                        </liquidTreeView:Tree>
+                        <liquidMenu:Menu x:Name="MuFormTree" Background="white" Visibility="Collapsed" ItemSelected="MuFrmTree_ItemSelected">
+                            <liquidMenu:MenuItem ID="Frm_EditForm" Text="表单属性"  Icon="../Images/Form.png" />
+                            <liquidMenu:MenuItem ID="Frm_NewForm" Text="新建表单"  Icon="../Images/FormNew.png" />
+
+                            <liquidMenu:MenuDivider />
+                            <liquidMenu:MenuItem ID="Frm_FormDesignerFix"  Text="设计傻瓜表单"   Icon="../Images/MenuItem/Edit.png"  />
+                            <liquidMenu:MenuItem ID="Frm_FormDesignerFree" Text="设计自由表单"   Icon="../Images/MenuItem/Edit.png" />
+
+                            <liquidMenu:MenuDivider />
+                            <liquidMenu:MenuItem ID="Frm_NewFormSort" Text="新建表单类别" Icon="../Images/MenuItem/FlowSort.png"  />
+                            <liquidMenu:MenuItem ID="Frm_EditSort" Text="编辑表单类别"  Icon="../Images/MenuItem/Edit.png" />
+                            <liquidMenu:MenuDivider />
+                            <liquidMenu:MenuItem ID="Frm_Delete" Text="删除" Icon="../Images/MenuItem/Delete.png" />
+                            <liquidMenu:MenuDivider />
+                            <liquidMenu:MenuItem ID="Frm_Refresh" Text="刷新" Icon="../Images/MenuItem/Refresh.png"  />
+                        </liquidMenu:Menu>
+                    </Canvas>
+                </sdk:TabItem>
+                
+                <sdk:TabItem Header="流程优化" Name="Tbwf" Background="white"  Visibility="Collapsed"  >
                     <liquidTreeView:Tree x:Name="TvwFlowDataEnum"  
                                              BorderThickness="0" Width="210"  
                                              HorizontalScrollBarVisibility="Auto"

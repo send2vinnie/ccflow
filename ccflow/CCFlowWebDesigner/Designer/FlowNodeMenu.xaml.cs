@@ -226,7 +226,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     Glo.WinOpenByDoType("CH", "FrmLib", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
                     break;
                 case "menuDesignBindFlowFrm": //流程表单
-                         Glo.WinOpenByDoType("CH", "FlowFrms", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
+                    Glo.WinOpenByDoType("CH", "FlowFrms", _container.FlowID, RelatedFlowNode.FlowNodeID, null);
                     break;
                 case "menuJobStation": // 节点工作岗位。
                     Glo.WinOpenByDoType("CH", "StaDef", _container.FlowID, RelatedFlowNode.FlowNodeID, null);

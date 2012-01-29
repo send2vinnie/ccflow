@@ -156,6 +156,9 @@
     <Compile Include="Frm\FrmLib.xaml.cs">
       <DependentUpon>FrmLib.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Frm\FrmSortEdit.xaml.cs">
+      <DependentUpon>FrmSortEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Frm\PubClass.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -247,6 +250,8 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Resource Include="Images\Form.png" />
+    <Resource Include="Images\FormNew.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\WS\WebService.wsdl" />
     <None Include="Service References\WS\WF.WS.UploadfileResponse.datasource">
@@ -305,6 +310,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Frm\FrmLib.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Frm\FrmSortEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

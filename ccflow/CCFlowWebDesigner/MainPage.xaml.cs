@@ -37,7 +37,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private WSDesignerSoapClient _service = Glo.GetDesignerServiceInstance();
         
         // 最后的流程类型，用于重新绑定流程树后，再打开最后操作的流程类别
-        private string latestFlowSortID; 
+        private string CurrFK_FlowSort="01";
 
         private List<ToolbarButton> ToolBarButtonList = new List<ToolbarButton>();
         private const string ToolBarEnableIsFlowSensitived = "EnableIsFlowSensitived";
@@ -87,6 +87,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public MainPage()
         {
             InitializeComponent();
+            #region 处理事件
+            #endregion
             try
             {
                 var ws = Glo.GetDesignerServiceInstance();
@@ -96,6 +98,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                 // 流程树。
                 this.BindFlowAndFlowSort();
+
+                // 绑定formTree.
+                this.BindFormTree();
 
                 //装 toolbar.
                 this.LoadToolbar();
@@ -111,7 +116,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 MessageBox.Show(ex.Message);
             }
         }
-
         #endregion
 
         #region 方法
@@ -128,13 +132,26 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 brush.ImageSource = new BitmapImage(new Uri(string.Format("/Images/Icons/{0}Welcome.jpg", id), UriKind.Relative));
                 tbDesigner.Background = brush;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
         void ws_DoTypeCompleted(object sender, DoTypeCompletedEventArgs e)
         {
+            switch (Glo.TempVar)
+            {
+                case "DeleteFrmSort":
+                case "DeleteFrm":
+                    if (e.Result != null)
+                        MessageBox.Show(e.Result, "Error", MessageBoxButton.OK);
+                    else
+                        this.BindFormTree();
+                    return;
+                default:
+                    break;
+            }
+
             DataSet ds = new DataSet();
             ds.FromXml(e.Result);
 
@@ -417,6 +434,74 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _Service.DoAsync("GetFlows", string.Empty, true);
             _Service.DoCompleted += _service_GetFlowsCompleted;
         }
+        public void BindFormTree()
+        {
+            string sqls = "";
+            sqls += "@SELECT No,Name FROM Sys_FrmSort";
+            sqls += "@SELECT No,Name,FK_FrmSort FROM Sys_MapData WHERE FK_FrmSort IN (SELECT No FROM Sys_FrmSort)";
+            var da = Glo.GetDesignerServiceInstance();
+            da.RunSQLReturnTableSAsync(sqls);
+            da.RunSQLReturnTableSCompleted += new EventHandler<RunSQLReturnTableSCompletedEventArgs>(da_RunSQLReturnTableSCompleted);
+        }
+        void da_RunSQLReturnTableSCompleted(object sender, RunSQLReturnTableSCompletedEventArgs e)
+        {
+            DataSet ds = new DataSet();
+            ds.FromXml(e.Result);
+
+            TreeNode firstNode = new TreeNode();
+            this.FromTree.Clear();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                var node = new TreeNode();
+                node.Title = dr["Name"].ToString();
+                node.ID = dr["No"].ToString();
+                node.IsSort = true;
+                node.Icon = "../Images/MenuItem/FlowSort.png";
+                firstNode.Nodes.Add(node);
+
+                if (node.ID == this.CurrFK_FrmSort)
+                    node.IsExpanded = true;
+
+                this.FromTree.Nodes.Add(node);
+            }
+
+
+
+            foreach (DataRow d in ds.Tables[1].Rows)
+            {
+                var node = new TreeNode();
+                node.Title = d["Name"].ToString();
+                node.ID = d["FK_FrmSort"].ToString();
+                node.Name = d["No"].ToString();
+                node.IsSort = false;
+
+
+                foreach (TreeNode ne in firstNode.Nodes)
+                {
+                    try
+                    {
+                        if (ne.ID == d["FK_FrmSort"].ToString())
+                        {
+                            ne.Nodes.Add(node);
+                            ne.IsSort = true;
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            // 完成绑定后，展开最后的FlowSort
+            foreach (TreeNode node in FromTree.Nodes)
+            {
+                if (node.ID == this.CurrFK_FlowSort)
+                {
+                    node.IsExpanded = true;
+                    node.Expand();
+                    this.CurrFK_FlowSort = string.Empty;
+                }
+            }
+        }
         /// <summary>
         /// 获取工作流类型事件
         /// </summary>
@@ -439,25 +524,24 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return;
             }
 
+            #region bing Flow.
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 var node = new TreeNode();
                 node.Title = dr["Name"].ToString();
                 node.ID = dr["No"].ToString();
-                node.IsFlowSort = true;
+                node.IsSort = true;
                 node.Icon = "../Images/MenuItem/FlowSort.png";
-
                 firstNodeByFlow.Nodes.Add(node);
                 TvwFlow.Nodes.Add(node);
             }
-
             foreach (DataRow d in ds.Tables[1].Rows)
             {
                 var node = new TreeNode();
                 node.Title = d["Name"].ToString();
                 node.ID = d["FK_FlowSort"].ToString();
                 node.Name = d["No"].ToString();
-                node.IsFlowSort = false;
+                node.IsSort = false;
                 if (SelectedContainer != null)
                 {
                     if (SelectedContainer.FlowID == node.Name)
@@ -476,7 +560,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         if (ne.ID == d["FK_FlowSort"].ToString())
                         {
                             ne.Nodes.Add(node);
-                            ne.IsFlowSort = true;
+                            ne.IsSort = true;
                         }
                     }
                     catch
@@ -484,22 +568,19 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     }
                 }
             }
-
-
             // 完成绑定后，展开最后的FlowSort
-            foreach(TreeNode node in TvwFlow.Nodes)
+            foreach (TreeNode node in TvwFlow.Nodes)
             {
-                if (node.ID == latestFlowSortID)
+                if (node.ID == this.CurrFK_FlowSort)
                 {
                     node.IsExpanded = true;
                     node.Expand();
-                    latestFlowSortID = string.Empty;
+                    this.CurrFK_FlowSort = string.Empty;
                 }
             }
-
+            #endregion bing Flow.
             _Service.DoCompleted -= _service_GetFlowsCompleted;
         }
-        
         /// <summary>
         /// 
         /// </summary>
@@ -509,7 +590,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             if (e.Tag == null)
                 return;
-
             switch (e.Tag.ToString())
             {
                 case "menuExp":
@@ -520,10 +600,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     Glo.WinOpen("http://ccflow.org/Help.aspx?wd=设计器", "帮助", 900, 1200);
                     break;
                 case "OpenFlow":
-                     OpenFlow(TvwFlow.Selected.ID, TvwFlow.Selected.Name, TvwFlow.Selected.Title);
-                     break;
+                    OpenFlow(TvwFlow.Selected.ID, TvwFlow.Selected.Name, TvwFlow.Selected.Title);
+                    break;
                 case "NewFlow_Blank":
-                     NewFlowHandler(0);
+                    NewFlowHandler(0);
                     break;
                 case "NewFlow_Disk":
                     NewFlowHandler(1);
@@ -539,13 +619,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
                 case "Delete":
                     var deleteFlowNode = TvwFlow.Selected as TreeNode;
-                    if(null == deleteFlowNode)
+                    if (null == deleteFlowNode)
                     {
                         break;
                     }
-                    if (!deleteFlowNode.IsFlowSort)
+                    if (!deleteFlowNode.IsSort)
                     {
-                        latestFlowSortID = TvwFlow.Selected.ID;
+                        this.CurrFK_FlowSort = TvwFlow.Selected.ID;
                         DeleteFlow(TvwFlow.Selected.Name);
 
                         foreach (TabItem t in tbDesigner.Items)
@@ -557,7 +637,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                                 break;
                             }
                         }
-                        
+
                     }
                     else
                     {
@@ -568,7 +648,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     this.BindFlowAndFlowSort();
                     break;
                 case "Edit":
-                    latestFlowSortID = TvwFlow.Selected.ID;
+                    this.CurrFK_FlowSort = TvwFlow.Selected.ID;
                     var editFlowSort = new NewFlowSort(this);
                     editFlowSort.InitControl(TvwFlow.Selected.ID, TvwFlow.Selected.EditedTitle);
                     editFlowSort.DisplayType = NewFlowSort.DisplayTypeEnum.Edit;
@@ -576,10 +656,91 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     editFlowSort.Show();
                     break;
             }
-
             MuFlowTree.Hide();
+            MuFormTree.Hide();
         }
+        public string CurrFK_FrmSort="01";
+        private void MuFrmTree_ItemSelected(object sender, MenuEventArgs e)
+        {
+            var selectedNode = this.FromTree.Selected as TreeNode;
+            if (selectedNode == null)
+                return;
+            if (e.Tag == null)
+                return;
+            this.CurrFK_FrmSort = selectedNode.ID;
+            Glo.TempVar = e.Tag.ToString();
+            switch (e.Tag.ToString())
+            {
+                case "Frm_EditForm": //表单属性
+                    WF.Frm.Frm frm = new WF.Frm.Frm();
+                    frm.BindFrm(selectedNode.Name);
+                    frm.HisMainPage = this;
+                    frm.Show();
+                    break;
+                case "Frm_NewForm": //新建表单
+                    WF.Frm.Frm frm1 = new WF.Frm.Frm();
+                    frm1.BindNew();
+                    frm1.HisMainPage = this;
+                    frm1.Show();
+                    break;
+                case "Frm_FormDesignerFix": //设计傻瓜表单
+                    Glo.WinOpenByDoType("CH", UrlFlag.FormFixModel, selectedNode.Name, null, null);
+                    break;
+                case "Frm_FormDesignerFree": //设计傻瓜表单
+                    Glo.WinOpenByDoType("CH", UrlFlag.FormFreeModel, selectedNode.Name, null, null);
+                    break;
+                case "Help":
+                    Glo.WinOpen("http://ccflow.org/Help.aspx?wd=设计器", "帮助", 900, 1200);
+                    break;
+                case "Frm_NewFormSort": //新建表单类别
+                    WF.Frm.FrmSortEdit frmSortEdit = new WF.Frm.FrmSortEdit();
+                    frmSortEdit.No = "";
+                    frmSortEdit.TB_Name.Text = "New Form Sort";
+                    frmSortEdit.HisMainPage = this;
+                    frmSortEdit.Show();
+                    break;
+                case "Frm_EditSort": //编辑
+                    WF.Frm.FrmSortEdit frmSortEdit1 = new WF.Frm.FrmSortEdit();
+                    frmSortEdit1.No = selectedNode.ID;
+                    frmSortEdit1.TB_Name.Text = selectedNode.Title;
+                    frmSortEdit1.HisMainPage = this;
+                    frmSortEdit1.Show();
+                    break;
+                case "Frm_Delete": //删除
+                    var deleteFlowNode = this.FromTree.Selected as TreeNode;
+                    if (null == deleteFlowNode)
+                        break;
 
+                    if (MessageBox.Show("您确认要删除吗？", "ccflow", MessageBoxButton.OKCancel) 
+                        == MessageBoxResult.No)
+                        return;
+
+                    if (deleteFlowNode.IsSort==true)
+                    {
+                        var ws = Glo.GetDesignerServiceInstance();
+                        Glo.TempVar = "DeleteFrmSort";
+                        ws.DoTypeAsync(Glo.TempVar, deleteFlowNode.ID, null, null, null, null);
+                        ws.DoTypeCompleted += new EventHandler<DoTypeCompletedEventArgs>(ws_DoTypeCompleted);
+                    }
+                    else
+                    {
+                        var ws = Glo.GetDesignerServiceInstance();
+                        Glo.TempVar = "DeleteFrm";
+                        ws.DoTypeAsync(Glo.TempVar, deleteFlowNode.Name, null, null, null, null);
+                        ws.DoTypeCompleted += new EventHandler<DoTypeCompletedEventArgs>(ws_DoTypeCompleted);
+                        //DeleteFrmSort(deleteFlowNode.ID);
+                    }
+                    break;
+                case "Frm_Refresh": //刷新
+                    this.BindFormTree();
+                    break;
+                default:
+                    MessageBox.Show("没有判断的标记:" + Glo.TempVar);
+                    break;
+            }
+            MuFlowTree.Hide();
+            MuFormTree.Hide();
+        }
         /// <summary>
         /// 添加流程类别关闭时要执行的动作，一般来说是刷新窗体
         /// </summary>
@@ -588,14 +749,36 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         void AddEditFlowSortDoCompletedEventHandler(object sender, EventArgs e)
         {
             var add = (NewFlowSort)sender;
-
             if (add.DialogResult == true)
             {
                 this.BindFlowAndFlowSort();
             }
         }
-
-
+        void EditFrmSortDoCompletedEventHandler(object sender, EventArgs e)
+        {
+            switch (Glo.TempVar)
+            {
+                case "Frm_EditForm":
+                case "Frm_NewForm":
+                    var frm = (WF.Frm.Frm)sender;
+                    if (frm.DialogResult == true)
+                    {
+                        this.BindFormTree();
+                    }
+                    break;
+                case "Frm_NewFormSort":
+                case "Frm_EditFormSort":
+                    var add = (WF.Frm.FrmSortEdit)sender;
+                    if (add.DialogResult == true)
+                    {
+                        this.BindFormTree();
+                    }
+                    break;
+                default:
+                    MessageBox.Show("未判断的标记:"+Glo.TempVar);
+                    break;
+            }
+        }
         /// <summary>
         /// 在工作流树空白处按下鼠标左键事件
         /// </summary>
@@ -604,8 +787,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private void CvsFlowTree_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             MuFlowTree.Hide();
+            MuFormTree.Hide();
         }
-
         /// <summary>
         /// 工作流树被选中事件
         /// </summary>
@@ -614,8 +797,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private void TvwFlow_SelectionChanged(object sender, TreeEventArgs e)
         {
             MuFlowTree.Hide();
+            MuFormTree.Hide();
         }
-
         /// <summary>
         /// 右击工作流树事件
         /// </summary>
@@ -624,7 +807,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private void TvwFlow_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-
             Point position = e.GetPosition(TvwFlow);
             TreeNode node = TvwFlow.GetNodeAtPoint(position) as TreeNode;
             if (node != null)
@@ -664,7 +846,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     MuFlowTree.Get("Delete").IsEnabled = true;
                     MuFlowTree.Get("Edit").IsEnabled = true;
                 }
-                if (node.IsFlowSort)
+                if (node.IsSort)
                 {
                     // 只有节点的兄弟数大于1时允许删除
                     if (node.ParentNode.Nodes.Count > 1)
@@ -684,10 +866,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     MuFlowTree.Get("OpenFlow").IsEnabled = true;
                 }
             }
-
             e.Handled = true;
         }
-
         /// <summary>
         /// 双击工作流树事件
         /// </summary>
@@ -698,13 +878,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             if (_doubleClickTimer.IsEnabled)
             {
                 _doubleClickTimer.Stop();
-
-
-                // 如果双击的是流程类型结点就返回，什么也不做
-                if( null == TvwFlow.Selected || ((TreeNode)TvwFlow.Selected).IsFlowSort)
-                {
+                // 如果双击的是流程类型结点就返回，什么也不做.
+                if (null == TvwFlow.Selected || ((TreeNode)TvwFlow.Selected).IsSort)
                     return;
-                }
+
                 OpenFlow(TvwFlow.Selected.Name, TvwFlow.Selected.Title);
             }
             else
@@ -712,7 +889,118 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 _doubleClickTimer.Start();
             }
         }
-       
+
+        #region CCForm_MouseLeftButtonDown
+
+        /// <summary>
+        /// 在工作流树空白处按下鼠标左键事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CCFormTree_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MuFlowTree.Hide();
+            MuFormTree.Hide();
+        }
+        /// <summary>
+        /// 工作流树被选中事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CCForm_SelectionChanged(object sender, TreeEventArgs e)
+        {
+            MuFlowTree.Hide();
+            MuFormTree.Hide();
+        }
+        private void CCForm_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MuFlowTree.Hide();
+            MuFormTree.Hide();
+
+            if (_doubleClickTimer.IsEnabled)
+            {
+                _doubleClickTimer.Stop();
+
+                if (null == this.FromTree.Selected 
+                    || ((TreeNode)FromTree.Selected).IsSort)
+                    return;
+
+                TreeNode tn = FromTree.Selected as TreeNode;
+                this.CurrFK_FrmSort = tn.ID;
+                WF.Frm.Frm frm = new WF.Frm.Frm();
+                frm.BindFrm(tn.Name);
+                frm.HisMainPage = this;
+                frm.Show();
+            }
+            else
+            {
+                _doubleClickTimer.Start();
+            }
+        }
+        private void CCForm_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+            Point position = e.GetPosition(this.FromTree);
+            TreeNode node = this.FromTree.GetNodeAtPoint(position) as TreeNode;
+            if (node != null)
+            {
+                Point MuFlowTreePos = this.FromTree.TransformToVisual(this.FromTree).Transform(position);
+                node.IsSelected = true;
+                this.FromTree.ClearSelected();
+                this.FromTree.SetSelected(node);
+
+                // 调整x,y 值 ，以防止菜单被遮盖住
+                var x = MuFlowTreePos.X;
+                var y = MuFlowTreePos.Y;
+                var menuHeight = 250;
+                var menuWidth = 170;
+                if (x + menuWidth > 220)
+                {
+                    x = x - (x + menuWidth - 220);
+                }
+                if (y + menuHeight > Application.Current.Host.Content.ActualHeight)
+                {
+                    y = y - (y + menuHeight - Application.Current.Host.Content.ActualHeight);
+                }
+                this.MuFormTree.SetValue(Canvas.LeftProperty, x);
+                this.MuFormTree.SetValue(Canvas.TopProperty, y);
+                this.MuFormTree.Show();
+                if (node.isRoot)
+                {
+                    this.MuFormTree.Get("Frm_EditForm").IsEnabled = false;
+                    this.MuFormTree.Get("Frm_Delete").IsEnabled = false;
+                    this.MuFormTree.Get("Frm_EditSort").IsEnabled = false;
+                }
+                else
+                {
+                    MuFormTree.Get("Frm_EditForm").IsEnabled = true;
+                    MuFormTree.Get("Frm_Delete").IsEnabled = true;
+                    MuFormTree.Get("Frm_EditForm").IsEnabled = true;
+                }
+
+                if (node.IsSort)
+                {
+                    // 只有节点的兄弟数大于1时允许删除
+                    if (node.ParentNode.Nodes.Count > 1)
+                    {
+                        MuFormTree.Get("Frm_Delete").IsEnabled = true;
+                    }
+                    else
+                    {
+                        MuFormTree.Get("Frm_Delete").IsEnabled = false;
+                    }
+                    MuFormTree.Get("Frm_EditForm").IsEnabled = false;
+                    //  MuFormTree.Get("Edit").IsEnabled = true;
+                }
+                else
+                {
+                    MuFormTree.Get("Frm_EditForm").IsEnabled = true;
+                }
+            }
+            e.Handled = true;
+        }
+#endregion
+
         /// <summary>
         /// 报表设计事件
         /// </summary>
@@ -728,12 +1016,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
       
         public void NewFlowHandler(int tabIdx)
         {
-            latestFlowSortID = TvwFlow.Selected.ID;
+            this.CurrFK_FlowSort = TvwFlow.Selected.ID;
             var fu = new FrmNewFlow();
             fu.CurrentDesinger = this;
             fu.tabControl.TabIndex = tabIdx;
 
-            if (TvwFlow.Selected != null &&  ((TreeNode)TvwFlow.Selected).IsFlowSort)
+            if (TvwFlow.Selected != null && ((TreeNode)TvwFlow.Selected).IsSort)
             {
                 fu.CurrentFlowSortName = TvwFlow.Selected.Title;
             }
@@ -902,6 +1190,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
                 TbcFDS.Height = LayoutRoot.Height - 75;
+
                 TvwFlow.Height = Application.Current.Host.Content.ActualHeight - 35 - 100;
                 TvwFlowDataEnum.Height = TvwSysMenu.Height = TvwFlow.Height;
 
@@ -928,6 +1217,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private void TbcFDS_MouseLeave(object sender, MouseEventArgs e)
         {
             MuFlowTree.Hide();
+            MuFormTree.Hide();
+
         }
 
         #region Toolbar related
@@ -1082,15 +1373,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         canvas.Children[0].Visibility = Visibility.Collapsed;
                     }
                 }
-
             }
-
         }
 
         #region UserControl Related 
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             MuFlowTree.Hide();
+            MuFormTree.Hide();
         }
         /// <summary>
         ///  diable the default silverlight rightmenu

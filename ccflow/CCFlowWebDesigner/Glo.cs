@@ -47,13 +47,23 @@ namespace BP
         /// </summary>
         public const string Dir = "Dir";
         /// <summary>
-        /// 节点表单设计
+        /// 节点表单设计-傻瓜
         /// </summary>
         public const string MapDefFixModel = "MapDefFixModel";
         /// <summary>
-        /// 节点表单设计
+        /// 节点表单设计-自由
         /// </summary>
         public const string MapDefFreeModel = "MapDefFreeModel";
+
+        /// <summary>
+        /// 表单设计-傻瓜
+        /// </summary>
+        public const string FormFixModel = "FormFixModel";
+        /// <summary>
+        /// 表单设计-自由
+        /// </summary>
+        public const string FormFreeModel = "FormFreeModel";
+
         /// <summary>
         /// 节点岗位
         /// </summary>
@@ -80,14 +90,31 @@ namespace BP
         #region 与控件有关的操作方法
         public static bool Ctrl_DDL_SetSelectVal(ComboBox ddl, string setVal)
         {
+            string oldVal = "";
             foreach (ListBoxItem item in ddl.Items)
-                item.IsSelected = false;
+            {
+                if (item.IsEnabled == true)
+                {
+                    oldVal = item.Tag.ToString();
+                    item.IsSelected = false;
+                    break;
+                }
+            }
             foreach (ListBoxItem item in ddl.Items)
             {
                 if (item.Tag.ToString() == setVal)
                 {
                     item.IsSelected = true;
                     return true;
+                }
+            }
+
+            foreach (ListBoxItem item in ddl.Items)
+            {
+                if (item.Tag.ToString() == oldVal)
+                {
+                    item.IsSelected = true;
+                    break;
                 }
             }
             return false;
@@ -108,6 +135,10 @@ namespace BP
         #endregion
             
         #region 属性
+        /// <summary>
+        /// 临时变量.
+        /// </summary>
+        public static string TempVar = null;
         /// <summary>
         /// 当前BPMHost
         /// </summary>
@@ -159,6 +190,14 @@ namespace BP
                     return;
                 case UrlFlag.MapDefFreeModel: // 节点表单设计。
                     url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDefFreeModel&PK=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH&FK_Flow="+fk_flow;
+                    Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计", "Height:600px;Width:800px;", WindowModelEnum.Window);
+                    return;
+                case UrlFlag.FormFixModel: // 节点表单设计。
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=FormFixModel&FK_MapData=" + fk_flow;
+                    Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计", "Height:600px;Width:800px;", WindowModelEnum.Window);
+                    return;
+                case UrlFlag.FormFreeModel: // 节点表单设计。
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=FormFreeModel&FK_MapData=" + fk_flow ;
                     Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计", "Height:600px;Width:800px;", WindowModelEnum.Window);
                     return;
                 case UrlFlag.Dir: // 方向条件。

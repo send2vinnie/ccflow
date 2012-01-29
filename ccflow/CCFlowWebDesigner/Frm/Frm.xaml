@@ -28,8 +28,8 @@
             <sdk:Label Content="URL" Height="28" HorizontalAlignment="Left" Margin="37,109,0,0" Name="label3" VerticalAlignment="Top" Width="50" />
             <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="False" Margin="91,47,0,0" Name="TB_No" Text="" VerticalAlignment="Top" Width="120" />
             <TextBox Height="23" HorizontalAlignment="Right" Margin="0,21,148,0" Name="TB_Name" VerticalAlignment="Top" Width="308" Grid.ColumnSpan="2" LostFocus="TB_Name_LostFocus" />
-            <sdk:Label Content="类型" Height="28" HorizontalAlignment="Left" Margin="35,83,0,0" Name="label5" VerticalAlignment="Top" Width="37" />
-            <ComboBox Height="23" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="91,79,0,0" Name="DDL_FrmType" SelectionChanged="DDL_FrmType_SelectionChanged" VerticalAlignment="Top" Width="120">
+            <sdk:Label Content="默认类型" Height="28" HorizontalAlignment="Left" Margin="35,83,0,0" Name="label5" VerticalAlignment="Top" Width="54" IsRequired="False" />
+            <ComboBox Height="23" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="92,79,0,0" Name="DDL_FrmType" SelectionChanged="DDL_FrmType_SelectionChanged" VerticalAlignment="Top" Width="120">
                 <ComboBoxItem Content="傻瓜表单" Tag="0" />
                 <ComboBoxItem Content="自由表单" IsSelected="True" Tag="1" />
                 <ComboBoxItem Content="自定义表单" Tag="2" />

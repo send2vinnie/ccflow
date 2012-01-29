@@ -1627,24 +1627,17 @@ namespace WF.WS {
         public void GetLablesAsync(string flowid) {
             this.GetLablesAsync(flowid, null);
         }
-
-        public void GetLablesAsync(string flowid, object userState)
-        {
-            if ((this.onBeginGetLablesDelegate == null))
-            {
+        
+        public void GetLablesAsync(string flowid, object userState) {
+            if ((this.onBeginGetLablesDelegate == null)) {
                 this.onBeginGetLablesDelegate = new BeginOperationDelegate(this.OnBeginGetLables);
             }
-
-            if ((this.onEndGetLablesDelegate == null))
-            {
+            if ((this.onEndGetLablesDelegate == null)) {
                 this.onEndGetLablesDelegate = new EndOperationDelegate(this.OnEndGetLables);
             }
-
-            if ((this.onGetLablesCompletedDelegate == null))
-            {
+            if ((this.onGetLablesCompletedDelegate == null)) {
                 this.onGetLablesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetLablesCompleted);
             }
-
             base.InvokeAsync(this.onBeginGetLablesDelegate, new object[] {
                         flowid}, this.onEndGetLablesDelegate, this.onGetLablesCompletedDelegate, userState);
         }

@@ -17,7 +17,7 @@ namespace WF.Controls
         /// <summary>
         /// 是否流程类别
         /// </summary>
-        public bool IsFlowSort { get; set; }
+        public bool IsSort { get; set; }
         public TreeNode() { }
         /// <summary>
         /// 部门

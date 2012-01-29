@@ -89,7 +89,7 @@ namespace CCForm
         void da_RunSQLReturnTableSCompleted(object sender, RunSQLReturnTableSCompletedEventArgs e)
         {
             this.listBox1.Items.Clear();
-            this.listBox2.Items.Clear();
+            this.listBox_FrmLab.Items.Clear();
 
             DataSet ds = new DataSet();
             ds.FromXml(e.Result);
@@ -110,7 +110,7 @@ namespace CCForm
                 lb.Tag = dr["No"];
                 if (Glo.FK_MapData == lb.Tag.ToString())
                     continue;
-                this.listBox2.Items.Add(lb);
+                this.listBox_FrmLab.Items.Add(lb);
             }
         }
               
@@ -120,7 +120,8 @@ namespace CCForm
         private byte[] buffer;
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("导入会清除当前的设计内容，您确定要执行吗？", "警告", MessageBoxButton.OKCancel)
+            if (MessageBox.Show("导入会清除当前的设计内容，您确定要执行吗？",
+                "警告", MessageBoxButton.OKCancel)
             == MessageBoxResult.Cancel)
                 return;
 
@@ -152,7 +153,10 @@ namespace CCForm
                 case 3: // 从流程表单.
                     loadingWindow.Title = "正在装载流程表单请稍后...";
                     loadingWindow.Show();
-                    ListBoxItem lb44 = this.listBox1.SelectedItem as ListBoxItem;
+                    ListBoxItem lb44 = this.listBox_FrmLab.SelectedItem as ListBoxItem;
+                    if (lb44 == null)
+                        return;
+
                     CCFormSoapClient fdaa = Glo.GetCCFormSoapClientServiceInstance();
                     fdaa.CopyFrmAsync(lb44.Tag.ToString(), Glo.FK_MapData, isClear);
                     fdaa.CopyFrmCompleted += new EventHandler<CopyFrmCompletedEventArgs>(da_CopyFrmCompleted);
