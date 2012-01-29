@@ -39,6 +39,18 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion 测试数据库是否连接成功。
 
+            #region 2012- 01-29 增加字段。
+            try
+            {
+                DBAccess.RunSQLReturnTable("SELECT TAG FROM sys_mapdata where 1=2 ");
+            }
+            catch
+            {
+                MapData md = new MapData();
+                md.CheckPhysicsTable();
+            }
+            #endregion
+
             #region 2012- 01-18 增加一个view. 
             try
             {
