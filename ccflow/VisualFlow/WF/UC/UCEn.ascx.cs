@@ -2,7 +2,7 @@
 // 此文件是作为 ASP.NET 2.0 Web 项目转换的一部分修改的。
 // 类名已更改，且类已修改为从文件“App_Code\Migrated\comm\uc\Stub_ucen_ascx_cs.cs”的抽象基类 
 // 继承。
-// 在运行时，此项允许您的 Web 应用程序中的其他类使用该抽象基类绑定和访问 
+// 在运行时，此项允许您的 Web 应用程序中的其他类使用该抽象基类绑定和访问  
 // 代码隐藏页。 
 // 关联的内容页“comm\uc\ucen.ascx”也已修改，以引用新的类名。
 // 有关此代码模式的更多信息，请参考 http://go.microsoft.com/fwlink/?LinkId=46995 
@@ -1941,16 +1941,16 @@ namespace BP.Web.Comm.UC.WF
                 if (dtl.HisDtlShowModel == DtlShowModel.Table)
                 {
                     if (isReadonly == true)
-                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1&FID=" + en.GetValStrByKey("FID");
+                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1&FID=" + en.GetValStrByKey("FID","0");
                     else
-                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0&FID=" + en.GetValStrByKey("FID");
+                        src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0&FID=" + en.GetValStrByKey("FID", "0");
                 }
                 else
                 {
                     if (isReadonly == true)
-                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1&FID" + en.GetValStrByKey("FID");
+                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1&FID" + en.GetValStrByKey("FID", "0");
                     else
-                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0&FID" + en.GetValStrByKey("FID");
+                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0&FID" + en.GetValStrByKey("FID", "0");
                 }
 
                 if (this.IsReadonly == true || dtl.IsReadonly)

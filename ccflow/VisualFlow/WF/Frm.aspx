@@ -29,6 +29,13 @@
         return v;
     }
 
+    // 设置值.
+    function SetCtrlVal(ctrlID, val) {
+        document.getElementById('ContentPlaceHolder1_UCEn1_TB_' + ctrlID).value = val;
+        document.getElementById('ContentPlaceHolder1_UCEn1_DDL_' + ctrlID).value = val;
+        document.getElementById('ContentPlaceHolder1_UCEn1_CB_' + ctrlID).value = val;
+    }
+
     var isFrmChange = false;
     var isChange = false;
     function SaveDtlData() {

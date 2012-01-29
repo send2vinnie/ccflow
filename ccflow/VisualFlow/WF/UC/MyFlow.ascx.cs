@@ -1205,16 +1205,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     {
                         if (attr.UIIsEnable)
                             continue;
-
                         if (attr.DefValReal.Contains("@") == false)
                             continue;
-
                         currWK.SetValByKey(attr.KeyOfEn, attr.DefVal);
                     }
                     break;
                 case FormType.DisableIt:
                     currWK.Retrieve();
-                 
                     break;
                 default:
                     throw new Exception("@未涉及到的情况。");

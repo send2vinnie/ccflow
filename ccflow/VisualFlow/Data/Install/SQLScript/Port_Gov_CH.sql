@@ -15,7 +15,6 @@ INSERT INTO Port_Dept (No,Name) VALUES('015102','YYY区信息科') @GO
 INSERT INTO Port_Dept (No,Name) VALUES('015151','YYY区一分局') @GO
 INSERT INTO Port_Dept (No,Name) VALUES('015152','YYY区二分局') @GO
 
-
 INSERT INTO Port_Dept (No,Name) VALUES('0152','ZZZ区局') @GO
 INSERT INTO Port_Dept (No,Name) VALUES('015201','ZZZ区征管科') @GO
 INSERT INTO Port_Dept (No,Name) VALUES('015202','ZZZ区信息科') @GO
@@ -108,7 +107,7 @@ INSERT INTO Port_EmpStation (FK_Emp,FK_Station) VALUES('liping','06') @GO
 INSERT INTO Port_EmpStation (FK_Emp,FK_Station) VALUES('liyan','11') @GO
 
 -- WF_FlowSort   @GO
-INSERT INTO WF_FlowSort (No,Name) VALUES('02','业务类')  @GO
+INSERT INTO WF_FlowSort (No,Name) VALUES('01','业务类')  @GO
 
 
 

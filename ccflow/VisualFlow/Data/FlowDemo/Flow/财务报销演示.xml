@@ -600,7 +600,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND201Dtl1</No>
@@ -621,7 +621,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND202</No>
@@ -642,7 +642,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND202Dtl1</No>
@@ -663,7 +663,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND203</No>
@@ -684,7 +684,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND203Dtl1</No>
@@ -705,7 +705,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND204</No>
@@ -726,7 +726,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND204Dtl1</No>
@@ -747,7 +747,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND299</No>
@@ -768,7 +768,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND299Dtl1</No>
@@ -789,7 +789,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND2Rpt</No>
@@ -810,7 +810,8 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
+    <Tag />
   </Sys_MapData>
   <Sys_MapAttr>
     <MyPK>ND201_BillNo</MyPK>
@@ -5215,7 +5216,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>65</GroupID>
+    <GroupID>274</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -5476,7 +5477,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>65</GroupID>
+    <GroupID>274</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -5505,7 +5506,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>65</GroupID>
+    <GroupID>274</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -5563,7 +5564,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>65</GroupID>
+    <GroupID>274</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -5737,7 +5738,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>65</GroupID>
+    <GroupID>274</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -5882,7 +5883,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>65</GroupID>
+    <GroupID>274</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -5911,7 +5912,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>65</GroupID>
+    <GroupID>274</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -5940,7 +5941,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>65</GroupID>
+    <GroupID>274</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -5969,7 +5970,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>65</GroupID>
+    <GroupID>274</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -5998,36 +5999,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>65</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>5</X>
-    <Y>5</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>ND2Rpt_FlowDaySpan</MyPK>
-    <FK_MapData>ND2Rpt</FK_MapData>
-    <KeyOfEn>FlowDaySpan</KeyOfEn>
-    <Name>跨度(天)</Name>
-    <DefVal />
-    <UIContralType>0</UIContralType>
-    <MyDataType>8</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>100</UIWidth>
-    <UIHeight>23</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>500</MaxLen>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <UIIsEnable>1</UIIsEnable>
-    <UIIsLine>0</UIIsLine>
-    <Tag />
-    <EditType>1</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>999</IDX>
-    <GroupID>65</GroupID>
+    <GroupID>274</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -6322,6 +6294,35 @@
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND2Rpt_FlowDaySpan</MyPK>
+    <FK_MapData>ND2Rpt</FK_MapData>
+    <KeyOfEn>FlowDaySpan</KeyOfEn>
+    <Name>跨度(天)</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>8</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>274</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
   <Sys_EnumMain>
     <No>FYLX</No>
     <Name>费用类型</Name>
@@ -6485,12 +6486,12 @@
   </Sys_MapDtl>
   <Sys_MapDtl>
     <No>ND2RptDtl1</No>
-    <Name>ND204Dtl1</Name>
+    <Name>ND299Dtl1</Name>
     <FK_MapData>ND2Rpt</FK_MapData>
     <PTable>ND2RptDtl1</PTable>
     <RowIdx>2</RowIdx>
     <GroupID>-1</GroupID>
-    <RowsOfList>9</RowsOfList>
+    <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
     <IsCopyNDData>1</IsCopyNDData>
@@ -6513,6 +6514,7 @@
     <W>630</W>
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
+    <IsHLDtl>0</IsHLDtl>
   </Sys_MapDtl>
   <Sys_Enum>
     <MyPK>FYLX_CH_0</MyPK>
@@ -6663,7 +6665,7 @@
     <Idx>99</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>65</OID>
+    <OID>274</OID>
     <Lab>流程信息</Lab>
     <EnName>ND2Rpt</EnName>
     <Idx>-1</Idx>

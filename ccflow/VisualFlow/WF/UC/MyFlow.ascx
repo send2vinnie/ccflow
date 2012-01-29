@@ -27,6 +27,12 @@
         }
         return v;
     }
+    // 设置值.
+    function SetCtrlVal(ctrlID, val) {
+        document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_TB_' + ctrlID).value = val;
+        document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_DDL_' + ctrlID).value = val;
+        document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_UCEn1_CB_' + ctrlID).value = val;
+    }
     //执行分支流程退回到分合流节点。
     function DoSubFlowReturn(fid, workid, fk_node) {
         var url = 'ReturnWorkSubFlowToFHL.aspx?FID=' + fid + '&WorkID=' + workid + '&FK_Node=' + fk_node;

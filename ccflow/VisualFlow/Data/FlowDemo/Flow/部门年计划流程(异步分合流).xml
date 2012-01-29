@@ -570,7 +570,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND402</No>
@@ -591,7 +591,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND403</No>
@@ -612,7 +612,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND404</No>
@@ -633,7 +633,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND499</No>
@@ -654,7 +654,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND499Dtl1</No>
@@ -675,7 +675,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapData>
     <No>ND4Rpt</No>
@@ -696,7 +696,7 @@
     <FormType>0</FormType>
     <URL />
     <FrmW>900</FrmW>
-    <FrmH>1200</FrmH>
+    <FrmH>1000</FrmH>
   </Sys_MapData>
   <Sys_MapAttr>
     <MyPK>ND401_OID</MyPK>
@@ -1331,7 +1331,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1360,7 +1360,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1389,7 +1389,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1505,7 +1505,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1534,7 +1534,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -4289,7 +4289,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -4318,7 +4318,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -4347,7 +4347,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -4376,7 +4376,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -4405,7 +4405,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -4434,7 +4434,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>256</GroupID>
+    <GroupID>263</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -4920,8 +4920,8 @@
     <IsReadonly>0</IsReadonly>
     <IsShowTitle>1</IsShowTitle>
     <IsView>1</IsView>
-    <IsExp>0</IsExp>
-    <IsImp>0</IsImp>
+    <IsExp>1</IsExp>
+    <IsImp>1</IsImp>
     <IsInsert>0</IsInsert>
     <IsDelete>0</IsDelete>
     <IsUpdate>0</IsUpdate>
@@ -4993,7 +4993,7 @@
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>256</OID>
+    <OID>263</OID>
     <Lab>流程信息</Lab>
     <EnName>ND4Rpt</EnName>
     <Idx>-1</Idx>

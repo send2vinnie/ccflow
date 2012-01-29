@@ -48,7 +48,6 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         catch (Exception ex)
         {
             this.Pub1.AddFieldSet("提示:数据库连接没有配置好");
-
             this.Pub1.Add("1, 请打开web.config文件配置 appSettings - AppCenterDSN 节点中的数据库连接信息。");
             this.Pub1.AddBR("2, 支持的数据库类型在，AppCenterDBType中配置，分别是MSSQL2000,Oracle,DB2,Access,MySQL ");
             this.Pub1.AddBR("<hr>错误信息:" + ex.Message);
@@ -125,7 +124,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
 
         this.Pub1.AddFieldSet("是否装载演示流程模板?");
         rb = new RadioButton();
-        rb.Text = "是:我要安装demo流程模板，以方便我学习ccflow。";
+        rb.Text = "是:我要安装demo流程模板、表单模板，以方便我学习ccflow与ccform.";
         rb.ID = "RB_DemoOn";
         rb.GroupName = "hjd";
         rb.Checked = true;
@@ -142,10 +141,11 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         Button btn = new Button();
         btn.ID = "Btn_s";
         btn.Text = "下一步";
+        btn.UseSubmitBehavior = false;
+        btn.OnClientClick = "this.disabled=true;"; 
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
     }
-
     void btn_Click(object sender, EventArgs e)
     {
         string lang = "CH";
@@ -178,6 +178,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         if (this.Pub1.GetRadioButtonByID("RB_Gov").Checked)
             hj = "Gov";
 
+        hj = "Inc";
         //运行。
         BP.WF.Glo.DoInstallDataBase(lang, hj);
 
@@ -190,6 +191,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
             BP.WF.DTS.LoadTemplete l = new BP.WF.DTS.LoadTemplete();
             l.Do();
         }
+     
 
         try
         {
@@ -201,9 +203,6 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         {
         }
 
-        // fileOfSQL.
-        string fileOfSQL = BP.SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql";
-        BP.DA.DBAccess.RunSQLScript(fileOfSQL);
       
         this.Response.Redirect("DBInstall.aspx?DoType=OK", true);
     }

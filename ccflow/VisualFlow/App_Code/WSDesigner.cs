@@ -39,8 +39,15 @@ public class WSDesigner : WSBase
         {
             switch (doType)
             {
+                case "DeleteFrmSort":
+                    FrmSort fs = new FrmSort();
+                    fs.No = v1;
+                    fs.Delete();
+                    return null;
+                case "DeleteFrm":
                 case "DelFrm":
-                    MapData md = new MapData(v1);
+                    MapData md = new MapData();
+                    md.No = v1;
                     md.Delete();
                     return null;
                 case "InitDesignerXml":
@@ -145,17 +152,31 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
     {
         // 如果admin账户登录时有错误发生，则返回错误信息
         var result = LetAdminLogin("CH", isLogin);
-        if (!string.IsNullOrEmpty(result))
+        if (string.IsNullOrEmpty(result)==false)
         {
             return result;
         }
-
 
         switch (doWhat)
         {
             case "GenerFlowTemplete":
                 Flow temp = new BP.WF.Flow(para1);
                 return null;
+            case "NewFrmSort":
+                BP.Sys.FrmSort frmSort = null;
+                try
+                {
+                    frmSort = new FrmSort();
+                    frmSort.No="01";
+                    frmSort.Name = para1;
+                    frmSort.No = frmSort.GenerNewNo;
+                    frmSort.Insert();
+                    return frmSort.No;
+                }
+                catch (Exception ex)
+                {
+                    return "Do Method NewFlowSort Branch has a error , para:\t" + para1 + ex.Message;
+                }
             case "NewFlowSort":
                 BP.WF.FlowSort fs = null;
                 try
@@ -169,10 +190,8 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 catch (Exception ex)
                 {
                     BP.DA.Log.DefaultLogWriteLineError("Do Method NewFlowSort Branch has a error , para:\t" + para1 + ex.Message);
-
                     return null;
                 }
-
             case "EditFlowSort":
                 try
                 {
@@ -363,14 +382,9 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 //var stream = new System.IO.FileStream(imageFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
                 //stream.Write(binaryData, 0, binaryData.Length);
                 //stream.Close();
-
                 //var xmlFilePath = FlowTemplete_Gener(args[0], true);
-
-
                 //string remoteDr = "/" + ConfigurationSettings.AppSettings["UserIdentifier"];;
-
                 //var ftp = new FtpConnection();
-
                 //try
                 //{
                 //    string ftpIP = ConfigurationSettings.AppSettings["FTPServerIP"];
@@ -401,13 +415,10 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                 //    ftp.Close();
                 //}
                 return string.Empty;
-                break;
-
             default:
                 throw null;
         }
     }
-  
     /// <summary>
     /// 创建一个节点
     /// </summary>

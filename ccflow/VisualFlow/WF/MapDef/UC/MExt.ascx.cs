@@ -300,7 +300,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         this.Pub2.AddTable("border=0 width='70%' align=left");
         this.Pub2.AddCaptionLeft("<a href='?ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&FK_MapData=" + this.FK_MapData + "&RefNo=" + this.RefNo + "'>返回</a> -设置级连菜单");
-
         bool is1 = false;
         foreach (MapAttr attr in attrs)
         {
@@ -309,7 +308,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             if (attr.UIIsEnable == false)
                 continue;
 
-            is1 = this.AddTR(is1);
             TextBox tb = new TextBox();
             tb.ID = "TB_" + attr.KeyOfEn;
             tb.Attributes["width"] = "100%";
@@ -329,16 +327,17 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 tb.Text = ss[1];
             }
 
-            this.Pub2.AddTDBegin();
-            this.Pub2.AddB("&nbsp;&nbsp;" + attr.Name + "-字段");
-            this.Pub2.AddBR();
-            this.Pub2.Add(tb);
-            this.Pub2.AddTDEnd();
+            this.Pub2.AddTR();
+            this.Pub2.AddTD("" + attr.Name +"  " +attr.KeyOfEn+ " 字段<br>");
+            this.Pub2.AddTREnd();
+
+            this.Pub2.AddTR();
+            this.Pub2.AddTD(tb);
             this.Pub2.AddTREnd();
         }
-        this.Pub2.AddTableEndWithBR();
+        this.Pub2.AddTR();
+        this.Pub2.AddTDBegin();
 
-        this.Pub2.Add("<div align=center>");
         Button mybtn = new Button();
         mybtn.ID = "Btn_Save";
         mybtn.Text = "保存";
@@ -350,8 +349,11 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         mybtn.Text = "取消";
         mybtn.Click += new EventHandler(mybtn_SaveAutoFullJilian_Click);
         this.Pub2.Add(mybtn);
-        this.Pub2.Add("</div>");
 
+        this.Pub2.AddTDEnd();
+        this.Pub2.AddTREnd();
+
+        this.Pub2.AddTableEnd();
     }
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -363,13 +365,14 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 MapExt mm = new MapExt();
                 mm.MyPK = this.MyPK;
                 if (this.ExtType == MapExtXmlList.InputCheck)
-                {
                     mm.Retrieve();
-                }
+
                 mm.Delete();
                 this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&RefNo=" + this.RefNo, true);
                 return;
             case "EditAutoJL":
+                this.EditAutoJL();
+                return;
             default:
                 break;
         }
@@ -953,9 +956,10 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         Button btn = sender as Button;
         if (btn.ID.Contains("Cancel"))
         {
-            this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK+"&RefNo="+this.RefNo, true);
+            this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo, true);
             return;
         }
+
         MapExt myme = new MapExt(this.MyPK);
         MapAttrs attrs = new MapAttrs(myme.FK_MapData);
         string info = "";
@@ -974,6 +978,11 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             try
             {
                 DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(tb.Text);
+                if (tb.Text.Contains("@Key") == false)
+                    throw new Exception("缺少@Key参数。");
+
+                if (dt.Columns.Contains("No") == false || dt.Columns.Contains("Name") == false)
+                    throw new Exception("在您的sql表单公式中必须有No,Name两个列，来绑定下拉框。");
             }
             catch (Exception ex)
             {
@@ -982,10 +991,10 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             }
             info += "$" + attr.KeyOfEn + ":" + tb.Text;
         }
-
         myme.Tag = info;
         myme.Update();
-        this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK+"&RefNo="+this.RefNo, true);
+        this.Alert("保存成功.");
+        //   this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo, true);
     }
 
     public void Edit_PopVal()

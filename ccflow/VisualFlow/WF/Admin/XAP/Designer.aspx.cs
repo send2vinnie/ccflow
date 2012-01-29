@@ -64,7 +64,6 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion
 
-
             #region 2012-修复表单
             DBAccess.RunSQL("UPDATE sys_mapdata SET FrmW=900  where FrmW IS NULL");
             DBAccess.RunSQL("UPDATE sys_mapdata SET FrmH=1000 where FrmH IS NULL");
@@ -195,7 +194,13 @@ public partial class Designer : System.Web.UI.Page
             }
             else
             {
-                throw new Exception("admin 用户丢失，请注意大小写。");
+                emp.No = "admin";
+                emp.Name = "admin";
+                emp.FK_Dept = "01";
+                emp.Pass = "pub";
+                emp.Insert();
+                BP.Web.WebUser.SignInOfGener(emp, true);
+                //throw new Exception("admin 用户丢失，请注意大小写。");
             }
             #endregion 执行admin登陆.
         }
