@@ -1212,7 +1212,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
-        this.Pub2.AddTD("输入文本框");
+        this.Pub2.AddTD("下拉框");
         BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
         ddl.ID = "DDL_Oper";
         MapAttrs attrs = new MapAttrs(this.FK_MapData);
@@ -1326,7 +1326,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Pub2.AddTREnd();
 
         this.Pub2.AddTR();
-        this.Pub2.AddTD("输入文本框");
+        this.Pub2.AddTD("下拉框");
         BP.Web.Controls.DDL ddl = new BP.Web.Controls.DDL();
         ddl.ID = "DDL_Oper";
         MapAttrs attrs = new MapAttrs(this.FK_MapData);

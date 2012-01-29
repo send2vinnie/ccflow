@@ -181,12 +181,36 @@ public partial class Comm_Dtl : WebPage
                 this.ViewState["R"] = "0";
         }
     }
+    public GEEntity _MainEn = null;
+    public GEEntity MainEn
+    {
+        get
+        {
+            if (_MainEn==null)
+                _MainEn = new GEEntity(this.FK_MapData, this.RefOID);
+            return _MainEn;
+        }
+    }
+
+    public MapAttrs _MainMapAttrs = null;
+    public MapAttrs MainMapAttrs
+    {
+        get
+        {
+            if (_MainMapAttrs == null)
+                _MainMapAttrs = new MapAttrs(this.FK_MapData);
+            return _MainMapAttrs;
+        }
+    }
+
+    public string FK_MapData = null;
     public void Bind(MapDtl mdtl)
     {
         if (this.Request.QueryString["IsTest"] != null)
             BP.DA.Cash.SetMap(this.EnsName, null);
 
         GEDtls dtls = new GEDtls(this.EnsName);
+        this.FK_MapData = mdtl.FK_MapData;
 
         #region 生成标题
         //if (this.IsWap == 1 && this.IsReadonly == 0)
@@ -671,6 +695,18 @@ public partial class Comm_Dtl : WebPage
                                         if (fullSQL.Contains("@") == false)
                                             break;
                                         fullSQL = fullSQL.Replace("@" + attr.Key, mydtl.GetValStrByKey(attr.Key));
+                                    }
+                                }
+
+                                if (fullSQL.Contains("@"))
+                                {
+                                    /*从主表中取数据*/
+                                    Attrs attrsFull = this.MainEn.EnMap.Attrs;
+                                    foreach (Attr attr in attrsFull)
+                                    {
+                                        if (fullSQL.Contains("@") == false)
+                                            break;
+                                        fullSQL = fullSQL.Replace("@" + attr.Key, this.MainEn.GetValStrByKey(attr.Key));
                                     }
                                 }
 
