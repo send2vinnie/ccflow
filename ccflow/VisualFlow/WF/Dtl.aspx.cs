@@ -187,7 +187,7 @@ public partial class Comm_Dtl : WebPage
         get
         {
             if (_MainEn==null)
-                _MainEn = new GEEntity(this.FK_MapData, this.RefOID);
+                _MainEn = new GEEntity(this.FK_MapData, this.RefPKVal);
             return _MainEn;
         }
     }
