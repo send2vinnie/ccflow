@@ -996,7 +996,6 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         this.Alert("保存成功.");
         //   this.Response.Redirect("MapExt.aspx?FK_MapData=" + this.FK_MapData + "&ExtType=" + this.ExtType + "&MyPK=" + this.MyPK + "&RefNo=" + this.RefNo, true);
     }
-
     public void Edit_PopVal()
     {
         this.Pub2.AddTable("border=0");
