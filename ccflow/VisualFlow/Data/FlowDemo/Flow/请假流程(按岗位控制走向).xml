@@ -3,7 +3,7 @@
   <WF_Flow>
     <No>003</No>
     <FK_FlowSort>02</FK_FlowSort>
-    <Name>请假流程</Name>
+    <Name>请假流程(按岗位控制走向)</Name>
     <IsOK>1</IsOK>
     <FlowRunWay>0</FlowRunWay>
     <FlowRunObj />
@@ -77,7 +77,7 @@
     <DoOutTime />
     <FK_Flow>003</FK_Flow>
     <NodeWorkType>1</NodeWorkType>
-    <FlowName>请假流程</FlowName>
+    <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>02</FK_FlowSort>
     <FK_FlowSortT>业务类</FK_FlowSortT>
     <FrmAttr />
@@ -163,7 +163,7 @@
     <DoOutTime />
     <FK_Flow>003</FK_Flow>
     <NodeWorkType>0</NodeWorkType>
-    <FlowName>请假流程</FlowName>
+    <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>02</FK_FlowSort>
     <FK_FlowSortT>业务类</FK_FlowSortT>
     <FrmAttr />
@@ -249,7 +249,7 @@
     <DoOutTime />
     <FK_Flow>003</FK_Flow>
     <NodeWorkType>0</NodeWorkType>
-    <FlowName>请假流程</FlowName>
+    <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>02</FK_FlowSort>
     <FK_FlowSortT>业务类</FK_FlowSortT>
     <FrmAttr />
@@ -335,7 +335,7 @@
     <DoOutTime />
     <FK_Flow>003</FK_Flow>
     <NodeWorkType>0</NodeWorkType>
-    <FlowName>请假流程</FlowName>
+    <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>02</FK_FlowSort>
     <FK_FlowSortT>业务类</FK_FlowSortT>
     <FrmAttr />
@@ -421,7 +421,7 @@
     <DoOutTime />
     <FK_Flow>003</FK_Flow>
     <NodeWorkType>0</NodeWorkType>
-    <FlowName>请假流程</FlowName>
+    <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>02</FK_FlowSort>
     <FK_FlowSortT>业务类</FK_FlowSortT>
     <FrmAttr />
@@ -507,7 +507,7 @@
     <DoOutTime />
     <FK_Flow>003</FK_Flow>
     <NodeWorkType>0</NodeWorkType>
-    <FlowName>请假流程</FlowName>
+    <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>02</FK_FlowSort>
     <FK_FlowSortT>业务类</FK_FlowSortT>
     <FrmAttr />
@@ -527,7 +527,7 @@
     <IsCCFlow>0</IsCCFlow>
     <HisStas>@01</HisStas>
     <HisDeptStrs />
-    <HisToNDs>@304@307</HisToNDs>
+    <HisToNDs>@307</HisToNDs>
     <HisBillIDs />
     <HisEmps />
     <HisSubFlows />
@@ -593,7 +593,7 @@
     <DoOutTime />
     <FK_Flow>003</FK_Flow>
     <NodeWorkType>0</NodeWorkType>
-    <FlowName>请假流程</FlowName>
+    <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>02</FK_FlowSort>
     <FK_FlowSortT>业务类</FK_FlowSortT>
     <FrmAttr />
@@ -679,7 +679,7 @@
     <DoOutTime />
     <FK_Flow>003</FK_Flow>
     <NodeWorkType>0</NodeWorkType>
-    <FlowName>请假流程</FlowName>
+    <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>02</FK_FlowSort>
     <FK_FlowSortT>业务类</FK_FlowSortT>
     <FrmAttr />
@@ -1150,7 +1150,7 @@
   </Sys_MapData>
   <Sys_MapData>
     <No>ND3Rpt</No>
-    <Name>请假流程</Name>
+    <Name>请假流程(按岗位控制走向)</Name>
     <EnPK />
     <SearchKeys />
     <PTable>ND3Rpt</PTable>
