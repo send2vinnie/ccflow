@@ -202,7 +202,6 @@ public partial class Comm_Dtl : WebPage
             return _MainMapAttrs;
         }
     }
-
     public string FK_MapData = null;
     public void Bind(MapDtl mdtl)
     {
@@ -706,10 +705,15 @@ public partial class Comm_Dtl : WebPage
                                     {
                                         if (fullSQL.Contains("@") == false)
                                             break;
+
+                                        if (fullSQL.Contains("@" + attr.Key) == false)
+                                            continue;
+
                                         fullSQL = fullSQL.Replace("@" + attr.Key, this.MainEn.GetValStrByKey(attr.Key));
                                     }
                                 }
 
+                                ddlFull.Items.Clear();
                                 ddlFull.Bind(DBAccess.RunSQLReturnTable(fullSQL), "No", "Name");
                                 if (ddlFull.SetSelectItem(valOld) == false)
                                 {
