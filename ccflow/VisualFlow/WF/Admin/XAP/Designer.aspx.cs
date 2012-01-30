@@ -54,13 +54,12 @@ public partial class Designer : System.Web.UI.Page
             #region 2012- 01-18 增加一个view. 
             try
             {
-                
-                BP.DA.DBAccess.RunSQL("DROP VIEW WF_Track_NYR");
-                sql = "  create  view WF_Track_NYR AS SELECT EmpFrom as FK_Emp,SUBSTRING(RDT,0,8) AS FK_NY, SUBSTRING(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_Track GROUP BY EmpFrom ,SUBSTRING(RDT,0,8) , SUBSTRING(RDT,0,11) GO";
+                sql = "  create  view WF_Track_NYR AS SELECT EmpFrom as FK_Emp,SUBSTRING(RDT,0,8) AS FK_NY, SUBSTRING(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_Track GROUP BY EmpFrom ,SUBSTRING(RDT,0,8) , SUBSTRING(RDT,0,11) ";
                 BP.DA.DBAccess.RunSQL(sql);
             }
             catch
             {
+               
             }
             #endregion
 
@@ -72,7 +71,6 @@ public partial class Designer : System.Web.UI.Page
             }
             catch
             {
-
             }
             #endregion
 

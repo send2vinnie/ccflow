@@ -95,6 +95,7 @@ public partial class DoPort : WebPage
 
         string fk_flow = this.Request.QueryString["FK_Flow"];
         string fk_Node = this.Request.QueryString["FK_Node"];
+
         string FK_MapData = this.Request.QueryString["FK_MapData"];
         if (string.IsNullOrEmpty(FK_MapData))
             FK_MapData = this.Request.QueryString["PK"];
@@ -159,18 +160,10 @@ public partial class DoPort : WebPage
                     this.Response.Redirect("../../MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
                 break;
             case "MapDefFixModel": // 表单定义.
-                this.Response.Redirect("../../MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + this.FK_Flow, true);
-                //this.Response.Redirect("./../../../Comm/UIEn1ToM.aspx?EnName=BP.WF.Ext.NodeO&AttrKey=BP.WF.NodeStations&PK=" + this.PK + "&NodeID=" + this.PK + "&RunModel=0&FLRole=0&FJOpen=0&r=" + this.PK, true);
+                this.Response.Redirect("../../MapDef/MapDef.aspx?FK_MapData=" + FK_MapData + "&FK_Flow=" + this.FK_Flow, true);
                 break;
             case "MapDefFreeModel": // 表单定义.
-                this.Response.Redirect("../../MapDef/CCForm/Frm.aspx?FK_MapData=" + FK_MapData, true);
-                break;
-            case "FormFixModel": // 表单定义.
-                this.Response.Redirect("../../MapDef/MapDef.aspx?PK=" + FK_MapData, true);
-                break;
-            case "FormFreeModel": // 表单定义.
-                
-                this.Response.Redirect("../../MapDef/CCForm/Frm.aspx?FK_MapData=" + FK_MapData, true);
+                this.Response.Redirect("../../MapDef/CCForm/Frm.aspx?FK_MapData=" + FK_MapData + "&FK_Flow=" + this.FK_Flow, true);
                 break;
             case "MapDefFree": //表单定义.
                 int nodeidFree = int.Parse(this.PK.Replace("ND", ""));
