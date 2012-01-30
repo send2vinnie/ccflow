@@ -140,26 +140,30 @@ public class Handler : IHttpHandler, IRequiresSessionState
 
                             GEDtls dtls = new GEDtls(fk_dtl);
                             MapDtl dtl = new MapDtl(fk_dtl);
-                            
-                            DataTable dtDtlFull = DBAccess.RunSQLReturnTable(sql);
-                            BP.DA.DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + key);
+
+                            DataTable dtDtlFull = DBAccess.RunSQLReturnTable(mysql);
+                            BP.DA.DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + oid );
                             foreach (DataRow dr in dtDtlFull.Rows)
                             {
                                 BP.Sys.GEDtl mydtl = new GEDtl(fk_dtl);
-                                mydtl.OID = dtls.Count + 1;
+                              //  mydtl.OID = dtls.Count + 1;
                                 dtls.AddEntity(mydtl);
-                                foreach (DataColumn dc in dt.Columns)
+                                foreach (DataColumn dc in dtDtlFull.Columns)
                                 {
                                     mydtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
                                 }
+                                mydtl.RefPKInt = int.Parse( oid);
+                                if (mydtl.OID > 100)
+                                {
+                                    mydtl.InsertAsOID(mydtl.OID);
+                                }
+                                else
+                                {
+                                    mydtl.OID = 0;
+                                    mydtl.Insert();
+                                }
+                                    
                             }
-                            foreach (BP.Sys.GEDtl item in dtls)
-                            {
-                                item.OID = 0;
-                                item.RefPKInt = int.Parse(key);
-                                item.Insert();
-                            }
-
                             DataRow drRe = dtDtl.NewRow();
                             drRe[0] = fk_dtl;
                             dtDtl.Rows.Add(drRe);

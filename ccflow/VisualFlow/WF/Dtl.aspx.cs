@@ -243,7 +243,7 @@ public partial class Comm_Dtl : WebPage
                     this.Pub1.AddTDTitle();
             }
 
-            foreach (MapAttr attr in attrs)
+           foreach (MapAttr attr in attrs)
             {
                 if (attr.UIVisible == false)
                     continue;

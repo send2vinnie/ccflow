@@ -97,80 +97,30 @@ public class Handler : IHttpHandler, IRequiresSessionState
                             string noOfObj = ss[0];
                             string mysql = ss[1];
                             mysql = DealSQL(mysql, key);
+
                             DataTable dtFull = DBAccess.RunSQLReturnTable(mysql);
+                            M2M m2mData = new M2M();
+                            m2mData.FK_MapData = me.FK_MapData;
+                            m2mData.EnOID = int.Parse(oid);
+                            m2mData.M2MNo = noOfObj;
+                            string mystr = ",";
+                            string mystrT = "";
+                            foreach (DataRow dr in dtFull.Rows)
+                            {
+                                string myno = dr["No"].ToString();
+                                string myname = dr["Name"].ToString();
+                                mystr += myno + ",";
+                                mystrT += "@" + myno + "," + myname;
+                            }
+                            m2mData.Vals = mystr;
+                            m2mData.ValsName = mystrT;
+                            m2mData.InitMyPK();
+                            m2mData.NumSelected = dtFull.Rows.Count;
+                            m2mData.Save();
                             
-                            MapM2M m2m = new MapM2M(me.FK_MapData, noOfObj);
-                            if (m2m.HisM2MType == M2MType.M2M)
-                            {
-                                M2M m2mData = new M2M();
-                                m2mData.FK_MapData = me.FK_MapData;
-                                m2mData.EnOID = int.Parse(oid);
-                                m2mData.M2MNo = noOfObj;
-                                string mystr = ",";
-                                string mystrT = "";
-                                foreach (DataRow dr in dtFull.Rows)
-                                {
-                                    string myno = dr["No"].ToString();
-                                    string myname = dr["Name"].ToString();
-                                    mystr += myno + ",";
-                                    mystrT += "@" + myno + "," + myname;
-                                }
-                                m2mData.Vals = mystr;
-                                m2mData.ValsName = mystrT;
-                                m2mData.InitMyPK();
-                                m2mData.NumSelected = dtFull.Rows.Count;
-                                m2mData.Save();
-
-                                DataRow mydr = dtM2M.NewRow();
-                                mydr[0] = ss[0];
-                                dtM2M.Rows.Add(mydr);
-                            }
-
-                            if (m2m.HisM2MType == M2MType.M2MM)
-                            {
-                                DBAccess.RunSQL("DELETE Sys_M2M WHERE FK_MapData='"+me.FK_MapData+"' AND M2MNo='"+noOfObj+"'");
-                                string listIDs = ",";
-                                foreach (DataRow dr in dtFull.Rows)
-                                {
-                                    if (listIDs.Contains("," + dr[0] + ","))
-                                        continue;
-                                    listIDs += dr[0].ToString() + ",";
-                                }
-                                string[] listIDsStrs = listIDs.Split(',');
-                                foreach (string list in listIDsStrs)
-                                {
-                                    if (string.IsNullOrEmpty(list))
-                                        continue;
-
-                                    string doc = "";
-                                    string valsName = "";
-                                    int num = 0;
-                                    foreach (DataRow dr in dtFull.Rows)
-                                    {
-                                        doc += "," + dr["M2ID"].ToString();
-                                        valsName += "@" + dr["M2ID"].ToString() + "," + dr["M2Name"].ToString();
-                                        num++;
-                                    }
-                                    
-                                    M2M m2mData = new M2M();
-                                    m2mData.FK_MapData = me.FK_MapData;
-                                    m2mData.EnOID = int.Parse(oid);
-                                    m2mData.M2MNo = noOfObj;
-                                    m2mData.DtlObj = list;
-                                    m2mData.Vals = doc;
-                                    m2mData.ValsName = valsName;
-                                    m2mData.NumSelected = num;
-                                    m2mData.InitMyPK();
-                                    try
-                                    {
-                                        m2mData.Insert();
-                                    }
-                                    catch
-                                    {
-                                        m2mData.Update();
-                                    }
-                                }
-                            }
+                            DataRow mydr = dtM2M.NewRow();
+                            mydr[0] = ss[0];
+                            dtM2M.Rows.Add(mydr);
                         }
                         context.Response.Write(JSONTODT(dtM2M));
                         break;
@@ -190,26 +140,30 @@ public class Handler : IHttpHandler, IRequiresSessionState
 
                             GEDtls dtls = new GEDtls(fk_dtl);
                             MapDtl dtl = new MapDtl(fk_dtl);
-                            
-                            DataTable dtDtlFull = DBAccess.RunSQLReturnTable(sql);
-                            BP.DA.DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + key);
+
+                            DataTable dtDtlFull = DBAccess.RunSQLReturnTable(mysql);
+                            BP.DA.DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + oid );
                             foreach (DataRow dr in dtDtlFull.Rows)
                             {
                                 BP.Sys.GEDtl mydtl = new GEDtl(fk_dtl);
-                                mydtl.OID = dtls.Count + 1;
+                              //  mydtl.OID = dtls.Count + 1;
                                 dtls.AddEntity(mydtl);
-                                foreach (DataColumn dc in dt.Columns)
+                                foreach (DataColumn dc in dtDtlFull.Columns)
                                 {
                                     mydtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
                                 }
+                                mydtl.RefPKInt = int.Parse( oid);
+                                if (mydtl.OID > 100)
+                                {
+                                    mydtl.InsertAsOID(mydtl.OID);
+                                }
+                                else
+                                {
+                                    mydtl.OID = 0;
+                                    mydtl.Insert();
+                                }
+                                    
                             }
-                            foreach (BP.Sys.GEDtl item in dtls)
-                            {
-                                item.OID = 0;
-                                item.RefPKInt = int.Parse(key);
-                                item.Insert();
-                            }
-
                             DataRow drRe = dtDtl.NewRow();
                             drRe[0] = fk_dtl;
                             dtDtl.Rows.Add(drRe);
