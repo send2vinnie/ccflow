@@ -112,8 +112,8 @@ public partial class Comm_M2M : WebPage
         {
             string ctlIDs = "";
             string groupNo = drGroup[0].ToString();
-            this.Pub1.AddTR();
 
+            this.Pub1.AddTR();
             CheckBox cbx = new CheckBox();
             cbx.ID = "CBs_" + drGroup[0].ToString();
             cbx.Text = drGroup[1].ToString();
@@ -144,7 +144,7 @@ public partial class Comm_M2M : WebPage
                 cb.Text = name;
                 cb.Checked = m2m.Vals.Contains("," + no + ",");
                 if (cb.Checked)
-                    cb.Text = "<font color=green>"+cb.Text+"</font>";
+                    cb.Text = "<font color=green>" + cb.Text + "</font>";
                 this.Pub1.AddTD(cb);
 
                 if (mapM2M.Cols - 1 == colIdx)

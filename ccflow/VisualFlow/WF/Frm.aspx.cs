@@ -97,9 +97,11 @@ public partial class WF_Frm : WebPage
             GEDtl dtlEn = dtl.HisGEDtl;
             dtlEn.SetValByKey("OID", this.FID);
 
-            if (dtlEn.EnMap.Attrs.Count < 1)
+            if (dtlEn.EnMap.Attrs.Count < 2)
             {
-                this.UCEn1.AddMsgOfWarning("提示", "<h2>明细表单没有字段无法预览。</h2>");
+                md.RepairMap();
+                this.Response.Redirect(this.Request.RawUrl, true);
+                //  this.UCEn1.AddMsgOfWarning("提示", "<h2>明细表单没有字段无法预览。</h2>");
                 return;
             }
             int i = dtlEn.RetrieveFromDBSources();
@@ -110,11 +112,14 @@ public partial class WF_Frm : WebPage
         {
             GEEntity en = md.HisGEEn;
             en.SetValByKey("OID", this.FID);
-            if (en.EnMap.Attrs.Count < 1)
+            if (en.EnMap.Attrs.Count < 2)
             {
-                this.UCEn1.AddMsgOfWarning("提示", "<h2>主表单没有字段无法预览。FK_MapData=" + this.FK_MapData + "</h2>");
+                md.RepairMap();
+                this.Response.Redirect(this.Request.RawUrl, true);
+                //   this.UCEn1.AddMsgOfWarning("提示", "<h2>主表单没有字段无法预览。FK_MapData=" + this.FK_MapData + "</h2>");
                 return;
             }
+
             int i = en.RetrieveFromDBSources();
             if (i == 0 && this.FID != 0)
                 en.DirectInsert();
