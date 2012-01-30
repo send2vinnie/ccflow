@@ -1,13 +1,9 @@
-
 using System;
 using System.Data;
 using BP.DA;
 using BP.En;
 using BP.WF;
 using BP.Port;
-using BP.Port;
-using BP.En;
-
 
 namespace BP.WF
 {
@@ -57,7 +53,6 @@ namespace BP.WF
         /// 工作人员（候选)
         /// </summary>
         public const string RDT = "RDT";
-
         #endregion
     }
 	/// <summary>
@@ -177,9 +172,8 @@ namespace BP.WF
                 this.SetValByKey(RunRecordAttr.FromAfterNoteTime, value);
             }
         }
-        
-        #endregion
 
+        #endregion
 
         #region 构造函数
         /// <summary>
@@ -212,7 +206,7 @@ namespace BP.WF
 
                 map.AddDDLEntities(RunRecordAttr.FK_Day, null, "日", new Pub.Days(), false);
                 map.AddDDLEntities(RunRecordAttr.FK_NY, null, "月份", new Pub.YFs(), false);
-                
+
 
                 map.AddTBDateTime(RunRecordAttr.RDT, "RDT", true, false);
                 map.AddTBIntMyNum();
@@ -221,7 +215,7 @@ namespace BP.WF
                 map.AddSearchAttr(RunRecordAttr.FK_Day);
                 map.AddSearchAttr(RunRecordAttr.FK_Node);
 
-               
+
                 this._enMap = map;
                 return this._enMap;
             }
@@ -234,13 +228,9 @@ namespace BP.WF
             this.FK_Day = now.ToString("dd");
             this.FK_NY = now.ToString("MM");
             this.RDT = now.ToString("yyyy-MM-dd hh:mm:ss");
-
-         //   Frm
-
             this.FK_Emp = Web.WebUser.No;
             return base.beforeUpdateInsertAction();
         }
-
     }
 	/// <summary>
 	/// 运行记录

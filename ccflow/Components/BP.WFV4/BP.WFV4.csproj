@@ -138,6 +138,7 @@
     <Compile Include="CH\CHOfFlow.cs" />
     <Compile Include="CH\CHOfFlowRpt.cs" />
     <Compile Include="CH\CHOfNode.cs" />
+    <Compile Include="DemoData\Resume.cs" />
     <Compile Include="Dev2Interface\BtnState.cs" />
     <Compile Include="DTS\LoadTemplete.cs">
       <SubType>Code</SubType>

@@ -252,7 +252,7 @@ namespace BP.WF
                 BP.WF.Port.WFEmp wfEmp = new BP.WF.Port.WFEmp();
                 wfEmp.Copy(emp);
                 if (wfEmp.Email.Length == 0)
-                    wfEmp.Email = wfEmp + "@ccflow.org";
+                    wfEmp.Email = emp.No + "@ccflow.org";
 
                 if (wfEmp.Tel.Length == 0)
                     wfEmp.Tel = "88553730-6" + i.ToString().PadLeft(2, '0');
@@ -261,6 +261,23 @@ namespace BP.WF
                     wfEmp.Update();
                 else
                     wfEmp.Insert();
+            }
+
+            // 生成简历数据.
+            int oid = 1000;
+            foreach (BP.Port.Emp emp in emps)
+            {
+                for (int myIdx = 0; myIdx < 6; myIdx++)
+                {
+                    BP.WF.Demo.Resume re = new Demo.Resume();
+                    re.NianYue = "200" + myIdx + "年01月";
+                    re.FK_Emp = emp.No;
+                    re.GongZuoDanWei = "工作部门-" + myIdx;
+                    re.ZhengMingRen = "张" + myIdx;
+                    re.BeiZhu = emp.Name + "同志工作非常认真.";
+                    oid++;
+                    re.InsertAsOID(oid);
+                }
             }
             #endregion 初始化数据
         }
