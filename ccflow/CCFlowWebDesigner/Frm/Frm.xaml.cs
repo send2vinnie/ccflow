@@ -179,15 +179,15 @@ namespace WF.Frm
 
             ListBoxItem lb = this.DDL_FrmSort.SelectedItem as ListBoxItem;
             if (lb != null)
-            strs += "@FK_FrmSort=" + lb.Tag.ToString();
+                strs += "@FK_FrmSort=" + lb.Tag.ToString();
 
             lb = this.DDL_FrmType.SelectedItem as ListBoxItem;
             if (lb != null)
-            strs += "@FrmType=" + lb.Tag.ToString();
+                strs += "@FrmType=" + lb.Tag.ToString();
 
             lb = this.DDL_DBUrl.SelectedItem as ListBoxItem;
-            if (lb!=null)
-            strs += "@DBURL=" + lb.Tag.ToString();
+            if (lb != null)
+                strs += "@DBURL=" + lb.Tag.ToString();
 
             strs += "@AppType=" + (int)this.HisAppType;
             strs += "@Designer=" + this.TB_Designer.Text;

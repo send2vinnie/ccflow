@@ -185,19 +185,19 @@ namespace BP
                     Glo.OpenDialog(Glo.BPMHost + url, "执行", 500, 400);
                     return;
                 case UrlFlag.MapDefFixModel: // 节点表单设计。
-                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDefFixModel&PK=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH&FK_Flow=" + fk_flow;
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDefFixModel&FK_MapData=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH&FK_Flow=" + fk_flow;
                     Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计", "Height:600px;Width:800px;", WindowModelEnum.Window);
                     return;
                 case UrlFlag.MapDefFreeModel: // 节点表单设计。
-                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDefFreeModel&PK=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH&FK_Flow="+fk_flow;
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDefFreeModel&FK_MapData=ND" + node1 + "&FK_Node=" + node1 + "&Lang=CH&FK_Flow=" + fk_flow;
                     Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计", "Height:600px;Width:800px;", WindowModelEnum.Window);
                     return;
                 case UrlFlag.FormFixModel: // 节点表单设计。
-                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=FormFixModel&FK_MapData=" + fk_flow;
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDefFixModel&FK_MapData=" + fk_flow;
                     Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计", "Height:600px;Width:800px;", WindowModelEnum.Window);
                     return;
                 case UrlFlag.FormFreeModel: // 节点表单设计。
-                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=FormFreeModel&FK_MapData=" + fk_flow ;
+                    url = "/WF/Admin/XAP/DoPort.aspx?DoType=MapDefFreeModel&FK_MapData=" + fk_flow;
                     Glo.OpenWindowOrDialog(Glo.BPMHost + url, "节点表单设计", "Height:600px;Width:800px;", WindowModelEnum.Window);
                     return;
                 case UrlFlag.Dir: // 方向条件。

@@ -684,10 +684,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     frm1.Show();
                     break;
                 case "Frm_FormDesignerFix": //设计傻瓜表单
-                    Glo.WinOpenByDoType("CH", UrlFlag.MapDefFixModel, selectedNode.Name, null, null);
+                    Glo.WinOpenByDoType("CH", UrlFlag.FormFixModel, selectedNode.Name, null, null);
                     break;
                 case "Frm_FormDesignerFree": //设计free表单
-                    Glo.WinOpenByDoType("CH", UrlFlag.MapDefFreeModel, selectedNode.Name, null, null);
+                    Glo.WinOpenByDoType("CH", UrlFlag.FormFreeModel, selectedNode.Name, null, null);
                     break;
                 case "Help":
                     Glo.WinOpen("http://ccflow.org/Help.aspx?wd=设计器", "帮助", 900, 1200);
