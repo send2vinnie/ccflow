@@ -1186,9 +1186,8 @@ namespace BP.Web.Comm.UC.WF
                             DataTable dt = DBAccess.RunSQLReturnTable(fullSQL);
                             // ddlChild.Items.Clear();
                             foreach (DataRow dr in dt.Rows)
-                            {
                                 ddlChild.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
-                            }
+
                             ddlChild.SetSelectItem(valClient);
                             break;
                         case MapExtXmlList.AutoFullDLL: // 自动填充下拉框.

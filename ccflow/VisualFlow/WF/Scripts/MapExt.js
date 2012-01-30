@@ -508,14 +508,6 @@ function ItemClick(sender, val, tbid, fk_mapExt) {
     // 填充.
     FullIt(oldValue, tbid, fk_mapExt);
 
-//    //执行填充其它的控件.
-//    FullCtrl(oldValue, tbid, fk_mapExt);
-
-//    //执行个性化填充下拉框.
-//    FullCtrlDDL(oldValue, tbid, fk_mapExt);
-
-//    //执行填充明细表.
-//    FullDtl(oldValue, fk_mapExt);
 }
 
 function MyOver(sender) {

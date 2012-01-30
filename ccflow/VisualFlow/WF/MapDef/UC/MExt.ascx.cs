@@ -215,6 +215,16 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             }
             this.Pub2.AddFieldSet("编号:" + dtl.No + ",名称:" + dtl.Name );
             this.Pub2.Add(tb);
+
+            string fs = "可填充的字段:";
+            MapAttrs attrs = new MapAttrs(dtl.No);
+            foreach (MapAttr  item in attrs)
+            {
+                if (item.KeyOfEn == "OID" || item.KeyOfEn == "RefPKVal")
+                    continue;
+                fs += item.KeyOfEn + ",";
+            }
+            this.Pub2.Add("<BR>"+fs.Substring(0,fs.Length-1));
             this.Pub2.AddFieldSetEnd();
         }
 
