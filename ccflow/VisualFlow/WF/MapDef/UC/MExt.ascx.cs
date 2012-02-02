@@ -1558,9 +1558,11 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         {
             me.MyPK = this.FK_MapData + "_" + me.ExtType + "_" + me.AttrOfOper + "_" + me.AttrsOfActive;
 
-            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(me.Doc);
-            if (dt.Columns.Contains("Name") == false || dt.Columns.Contains("No") == false)
+            if (me.Doc.Contains("No")==false || me.Doc.Contains("Name")==false)
                 throw new Exception("在您的sql表达式里，必须有No,Name 还两个列。");
+            //DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(me.Doc);
+            //if (dt.Columns.Contains("Name") == false || dt.Columns.Contains("No") == false)
+            //    throw new Exception("在您的sql表达式里，必须有No,Name 还两个列。");
             me.Save();
         }
         catch (Exception ex)
