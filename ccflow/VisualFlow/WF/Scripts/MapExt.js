@@ -24,7 +24,6 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
         }
         autoNodes.eq(highlightindex).css("background-color", "blue");
         autoNodes.eq(highlightindex).css("color", "white");
-
     }
     else if (myKeyCode == 40) {
         if (highlightindex != -1) {
@@ -64,7 +63,7 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
     else {
         if (e != oldValue) {
             $("#divinfo").empty();
-            var json_data = { "Key": e, "FK_MapExt": fk_mapExt };
+            var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "KVs": kvs };
             $.ajax({
                 type: "get",
                 url: "HanderMapExt.ashx",
@@ -155,29 +154,31 @@ function ReturnValTBFullCtrl(ctrl, fk_mapExt) {
         return;
     }
     ctrl.value = v;
-
-
     // 填充.
     FullIt(oldValue, ctrl.id, fk_mapExt);
-
-
-//    //执行填充其它的控件.
-//    FullCtrl(v, ctrl.id, fk_mapExt);
-
-//    //执行个性化填充下拉框.
-//    FullCtrlDDL(v, ctrl.id, fk_mapExt);
-
-//    //执行填充明细表.
-//    FullDtl(v, ctrl.id, fk_mapExt);
     return;
 }
 
+var kvs = null;
+function GenerPageKVs() {
+    var ddls = document.getElementsByTagName("select");
+    kvs = "";
+    for (var i = 0; i < ddls.length; i++) {
+
+        var id = ddls[i].name;
+        var myid = id.substring(id.indexOf('DDL_') + 4);
+        kvs += '~' + myid + '=' + ddls[i].value;
+        //  if (ddls[i].type == "text" || ddls[i].type == "checkbox") {
+        //}
+    }
+}
 /* 自动填充 */
 function DDLFullCtrl(e, ddlChild, fk_mapExt) {
-    var json_data = { "Key": e, "FK_MapExt": fk_mapExt };
+    GenerPageKVs();
+    var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "KVs": kvs };
     $.ajax({
         type: "get",
-        url: "HanderMapExt.ashx",
+        url: "HanderMapExt.ashx?KVs=" + kvs,
         data: json_data,
         beforeSend: function (XMLHttpRequest) {
             //ShowLoading();
@@ -194,10 +195,8 @@ function DDLFullCtrl(e, ddlChild, fk_mapExt) {
                 for (var k in dataObj.Head[i]) {
                     if (k == 'No' || k == 'Name')
                         continue;
-
 //                    alert(k);
 //                    alert(dataObj.Head[i][k]);
-
 
                     $("#" + beforeID + 'TB_' + k).val(dataObj.Head[i][k]);
                     $("#" + beforeID + 'TB_' + k + endId).val(dataObj.Head[i][k]);
@@ -225,7 +224,8 @@ function DDLFullCtrl(e, ddlChild, fk_mapExt) {
 }
 /* 级联下拉框*/
 function DDLAnsc(e, ddlChild, fk_mapExt) {
-    var json_data = { "Key": e, "FK_MapExt": fk_mapExt };
+    GenerPageKVs();
+    var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "KVs" : kvs };
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -285,8 +285,8 @@ function DDLAnsc(e, ddlChild, fk_mapExt) {
 
 function FullM2M(key, fk_mapExt) {
     //alert(key);
-
-    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqM2MFullList","OID": oid };
+    GenerPageKVs();
+    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqM2MFullList", "OID": oid, "KVs": kvs };
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -330,9 +330,9 @@ function FullM2M(key, fk_mapExt) {
 
 //填充明细.
 function FullDtl(key, fk_mapExt) {
-
+    GenerPageKVs();
     //FullM2M(key, fk_mapExt); //填充M2M.
-    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDtlFullList", "OID": oid };
+    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDtlFullList", "OID": oid, "KVs": kvs };
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -373,7 +373,8 @@ function FullDtl(key, fk_mapExt) {
 }
 
 function FullCtrlDDL(key, ctrlIdBefore, fk_mapExt) {
-    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDDLFullList" };
+    GenerPageKVs();
+    var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDDLFullList", "KVs": kvs };
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -409,7 +410,8 @@ function FullCtrlDDL(key, ctrlIdBefore, fk_mapExt) {
     });
 }
 function FullCtrlDDLDB(e, ddlID, ctrlIdBefore, endID, fk_mapExt) {
-    var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "DoType": "ReqDDLFullListDB", "MyDDL": ddlID };
+    GenerPageKVs();
+    var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "DoType": "ReqDDLFullListDB", "MyDDL": ddlID, "KVs": kvs };
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -444,7 +446,8 @@ function FullCtrlDDLDB(e, ddlID, ctrlIdBefore, endID, fk_mapExt) {
 
 function FullCtrl(e, ctrlIdBefore, fk_mapExt) {
     e = escape(e);
-    var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "DoType": "ReqCtrl" };
+    GenerPageKVs();
+    var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "DoType": "ReqCtrl", "KVs": kvs };
     $.ajax({
         type: "get",
         url: "HanderMapExt.ashx",
@@ -464,7 +467,7 @@ function FullCtrl(e, ctrlIdBefore, fk_mapExt) {
                     if (k == 'No' || k == 'Name')
                         continue;
 
-                  //  alert(k + ' val= ' + dataObj.Head[i][k]);
+                    //  alert(k + ' val= ' + dataObj.Head[i][k]);
 
                     $("#" + beforeID + 'TB_' + k).val(dataObj.Head[i][k]);
                     $("#" + beforeID + 'TB_' + k + endId).val(dataObj.Head[i][k]);
@@ -492,10 +495,8 @@ function FullCtrl(e, ctrlIdBefore, fk_mapExt) {
     });
 }
 
-
 var itemStyle = 'padding:2px;color: #000000;background-color:Silver;width:100%;border-style: none double double none;border-width: 1px;';
 var itemStyleOfS = 'padding:2px;color: #000000;background-color:green;width:100%';
-
 function ItemClick(sender, val, tbid, fk_mapExt) {
 
     $("#divinfo").empty();
@@ -507,7 +508,6 @@ function ItemClick(sender, val, tbid, fk_mapExt) {
 
     // 填充.
     FullIt(oldValue, tbid, fk_mapExt);
-
 }
 
 function MyOver(sender) {
@@ -529,6 +529,7 @@ function hiddiv() {
     $("#divinfo").css("display", "none");
 }
 
+// 获取参数.
 function GetQueryString(name) {
    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
    var r = window.location.search.substr(1).match(reg);

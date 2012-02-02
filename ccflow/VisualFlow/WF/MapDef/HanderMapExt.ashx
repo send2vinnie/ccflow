@@ -25,6 +25,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
     string name;
     string fk_dept;
     string oid;
+    string kvs;
     public string DealSQL(string sql, string key)
     {
         sql = sql.Replace("@Key", key);
@@ -42,6 +43,23 @@ public class Handler : IHttpHandler, IRequiresSessionState
         if (oid != null)
             sql = sql.Replace("@OID", oid);
 
+        if (string.IsNullOrEmpty(kvs) == false && sql.Contains("@")==true )
+        {
+            string[] strs = kvs.Split('~');
+            foreach (string s in strs)
+            {
+                if (string.IsNullOrEmpty(s)
+                    || s.Contains("=") == false)
+                    continue;
+                
+
+                string[] mykv = s.Split('=');
+                sql = sql.Replace("@" + mykv[0], mykv[1]);
+
+                if (sql.Contains("@") == false)
+                    break;
+            }
+        }
         return sql;
     }
     public void ProcessRequest(HttpContext context)
@@ -53,6 +71,7 @@ public class Handler : IHttpHandler, IRequiresSessionState
         name = context.Request.QueryString["WebUserName"];
         fk_dept = context.Request.QueryString["WebUserFK_Dept"];
         oid = context.Request.QueryString["OID"];
+        kvs = context.Request.QueryString["KVs"];
 
         BP.Sys.MapExt me = new BP.Sys.MapExt(fk_mapExt);
        DataTable dt = null;
@@ -64,12 +83,12 @@ public class Handler : IHttpHandler, IRequiresSessionState
        // key = "周";
         switch (me.ExtType)
         {
-            case BP.Sys.MapExtXmlList.DDLFullCtrl: // 级连菜单.
+            case BP.Sys.MapExtXmlList.DDLFullCtrl: // 级连ddl.
                 sql = this.DealSQL(me.DocOfSQLDeal, key);
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 context.Response.Write(JSONTODT(dt));
                 return;
-            case BP.Sys.MapExtXmlList.ActiveDDL: // 级连菜单。
+            case BP.Sys.MapExtXmlList.ActiveDDL: // 动态填充ddl。
                 sql = this.DealSQL(me.DocOfSQLDeal, key);
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 context.Response.Write(JSONTODT(dt));
