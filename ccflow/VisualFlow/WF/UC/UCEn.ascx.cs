@@ -1228,7 +1228,6 @@ namespace BP.Web.Comm.UC.WF
                                     sql = sql.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
                                     sql = sql.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
                                     sql = sql.Replace("@Key", tbAuto.Text.Trim());
-
                                     if (sql.Contains("@"))
                                     {
                                         foreach (MapAttr attr in mattrs)
@@ -1236,6 +1235,9 @@ namespace BP.Web.Comm.UC.WF
                                             if (sql.Contains("@" + attr.KeyOfEn) == false)
                                                 continue;
                                             sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+
+                                            if (sql.Contains("@") == false)
+                                                break;
                                         }
                                     }
 
