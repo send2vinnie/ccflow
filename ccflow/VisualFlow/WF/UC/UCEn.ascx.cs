@@ -1229,6 +1229,16 @@ namespace BP.Web.Comm.UC.WF
                                     sql = sql.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
                                     sql = sql.Replace("@Key", tbAuto.Text.Trim());
 
+                                    if (sql.Contains("@"))
+                                    {
+                                        foreach (MapAttr attr in mattrs)
+                                        {
+                                            if (sql.Contains("@" + attr.KeyOfEn) == false)
+                                                continue;
+                                            sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                                        }
+                                    }
+
                                     dt = DBAccess.RunSQLReturnTable(sql);
                                     string valC1 = ddlC1.SelectedItemStringVal;
                                     ddlC1.Items.Clear();
