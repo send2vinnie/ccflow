@@ -71,6 +71,7 @@ D:\ccflow\VisualFlow\WF -- ccflow前台应用程序层(主要的功能都是在这个目录里面)
 D:\ccflow\VisualFlow\WF\Admin - 对ccflow的管理比如设计方向条件.报表定义...
 D:\ccflow\VisualFlow\WF\MapDef - 表单定义.
 D:\ccflow\VisualFlow\ClientBin - silverlight 程序.。
+
 CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
  
 *****************************************************************
@@ -113,7 +114,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 
     2, 请看下面第5步骤, 为数据库配置链接.
 
-    3, 执行修复&安装数据库工具: http://localhost/ccFlow/WF/Admin/DBInstall.aspx (如果这个网页打不开，这是你的iis配置不正确.)
+    3, 执行数据库安装向导: http://localhost/ccFlow/ (如果这个网页打不开，这是你的iis配置不正确.)
 
 
 5, 修改 D:\ccflow\VisualFlow\web.config Appsetting 节点中的数据库连接。
@@ -127,7 +128,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
   <!-- 数据库连接url. -->
   <add key="AppCenterDSN" value="Password=;Persist Security Info=True;User ID=sa;Initial Catalog=ccflow;Data Source=.;Timeout=2" />
 
-  <!--ccflow 支持的数据库类型, MSSQL, Oracle, DB2,   注意区分大小写. -->
+  <!--ccflow 支持的数据库类型, MSSQL, Oracle, DB2, MySQL  注意区分大小写. -->
   <add key="AppCenterDBType" value="MSSQL" />
 
 6, 启动流程设计器
