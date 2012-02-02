@@ -1183,6 +1183,20 @@ namespace BP.Web.Comm.UC.WF
                             fullSQL = fullSQL.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
                             fullSQL = fullSQL.Replace("@Key", val);
 
+                            if (fullSQL.Contains("@"))
+                            {
+                                foreach (MapAttr attr in mattrs)
+                                {
+                                    if (fullSQL.Contains("@" + attr.KeyOfEn) == false)
+                                        continue;
+                                    fullSQL = fullSQL.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+
+                                    if (fullSQL.Contains("@") == false)
+                                        break;
+                                }
+                            }
+
+
                             DataTable dt = DBAccess.RunSQLReturnTable(fullSQL);
                             // ddlChild.Items.Clear();
                             foreach (DataRow dr in dt.Rows)
