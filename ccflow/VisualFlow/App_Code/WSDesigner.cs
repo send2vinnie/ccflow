@@ -171,7 +171,7 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
                     frmSort.Name = para1;
                     frmSort.No = frmSort.GenerNewNo;
                     frmSort.Insert();
-                    return frmSort.No;
+                    return null;
                 }
                 catch (Exception ex)
                 {
