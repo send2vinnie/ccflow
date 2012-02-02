@@ -54,12 +54,14 @@ public partial class Designer : System.Web.UI.Page
             #region 2012- 01-18 增加一个view. 
             try
             {
-                sql = "  create  view WF_Track_NYR AS SELECT EmpFrom as FK_Emp,SUBSTRING(RDT,0,8) AS FK_NY, SUBSTRING(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_Track GROUP BY EmpFrom ,SUBSTRING(RDT,0,8) , SUBSTRING(RDT,0,11) ";
+                if (BP.SystemConfig.AppCenterDBType== DBType.Oracle9i)
+                    sql = "  create  view WF_Track_NYR AS SELECT EmpFrom as FK_Emp,SUBSTR(RDT,0,8) AS FK_NY, SUBSTR(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_Track GROUP BY EmpFrom ,SUBSTR(RDT,0,8) , SUBSTR(RDT,0,11) ";
+                else
+                    sql = "  create  view WF_Track_NYR AS SELECT EmpFrom as FK_Emp,SUBSTRING(RDT,0,8) AS FK_NY, SUBSTRING(RDT,0,11) AS RDT,  COUNT(*) AS Num FROM  WF_Track GROUP BY EmpFrom ,SUBSTRING(RDT,0,8) , SUBSTRING(RDT,0,11) ";
                 BP.DA.DBAccess.RunSQL(sql);
             }
             catch
             {
-               
             }
             #endregion
 
