@@ -23,7 +23,7 @@ public partial class WF_MapDef_MapDef : WebPage
             if (key == null)
                 key = this.Request.QueryString["PK"];
             if (key == null)
-                key = this.Request.QueryString["FK_MapDdata"];
+                key = this.Request.QueryString["FK_MapData"];
             if (key == null)
                 key = "ND1601";
             return key;

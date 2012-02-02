@@ -160,9 +160,11 @@ public partial class DoPort : WebPage
                     this.Response.Redirect("../../MapDef/MapDef.aspx?PK=" + this.PK + "&FK_Flow=" + nd1.FK_Flow, true);
                 break;
             case "MapDefFixModel": // 表单定义.
+            case "FormFixModel":
                 this.Response.Redirect("../../MapDef/MapDef.aspx?FK_MapData=" + FK_MapData + "&FK_Flow=" + this.FK_Flow, true);
                 break;
             case "MapDefFreeModel": // 表单定义.
+            case "FormFreeModel":
                 this.Response.Redirect("../../MapDef/CCForm/Frm.aspx?FK_MapData=" + FK_MapData + "&FK_Flow=" + this.FK_Flow, true);
                 break;
             case "MapDefFree": //表单定义.
