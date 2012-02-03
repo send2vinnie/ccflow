@@ -456,16 +456,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 node.Title = dr["Name"].ToString();
                 node.ID = dr["No"].ToString();
                 node.IsSort = true;
-                node.Icon = "../Images/MenuItem/FlowSort.png";
+                node.Icon = "../Images/MenuItem/FlowSheet.png";
                 firstNode.Nodes.Add(node);
 
                 if (node.ID == this.CurrFK_FrmSort)
                     node.IsExpanded = true;
-
                 this.FromTree.Nodes.Add(node);
             }
-
-
 
             foreach (DataRow d in ds.Tables[1].Rows)
             {
@@ -474,8 +471,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 node.ID = d["FK_FrmSort"].ToString();
                 node.Name = d["No"].ToString();
                 node.IsSort = false;
-
-
                 foreach (TreeNode ne in firstNode.Nodes)
                 {
                     try
