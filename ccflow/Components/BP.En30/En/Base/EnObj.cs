@@ -319,7 +319,10 @@ namespace BP.En
             get
             {
                 if (this._row == null)
-                    this._row = new Row(this.EnMap.Attrs);
+                {
+                    this._row = new Row();
+                    this._row.LoadAttrs(this.EnMap.Attrs);
+                }
                 return this._row;
             }
             set
@@ -336,6 +339,7 @@ namespace BP.En
         {
             this.SetValByKey(attrKey, DataType.DealSuperLink(val));
         }
+        
 		/// <summary>
 		/// 设置object类型的值
 		/// </summary>

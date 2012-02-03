@@ -229,7 +229,8 @@ namespace BP.XML
             foreach (DataRow dr in dt.Rows)
             {
                 XmlEn en = this.GetNewEntity;
-                en.Row = new Row(dt, dr);
+                en.Row = new Row();
+                en.Row.LoadDataTable(dt, dr);
                 this.Add(en);
             }
             return dt.Rows.Count;
@@ -503,7 +504,8 @@ namespace BP.XML
             foreach (DataRow dr in dt.Rows)
             {
                 XmlEn en = this.GetNewEntity;
-                en.Row = new Row(dt, dr);
+                en.Row = new Row();
+                en.Row.LoadDataTable(dt, dr);
                 this.Add(en);
             }
 
@@ -531,7 +533,8 @@ namespace BP.XML
                 if (dr[key].ToString().Length == len )
                 {
                     XmlEn en = this.GetNewEntity;
-                    en.Row = new Row(dt, dr);
+                    en.Row = new Row();
+                    en.Row.LoadDataTable(dt, dr);
                     this.Add(en);
                     i++;
                 }
@@ -555,7 +558,8 @@ namespace BP.XML
                 if (dr[key].ToString() == val.ToString() && dr[key1].ToString() == val1)
                 {
                     XmlEn en = this.GetNewEntity;
-                    en.Row = new Row(dt, dr);
+                    en.Row = new Row();
+                    en.Row.LoadDataTable(dt, dr);
                     this.Add(en);
                     i++;
                 }
@@ -584,7 +588,8 @@ namespace BP.XML
 				if ( dr[key].ToString() == val.ToString())
 				{
 					XmlEn en =this.GetNewEntity;
-					en.Row= new Row(dt,dr);
+					en.Row= new Row();
+                    en.Row.LoadDataTable(dt, dr);
 					this.Add(en);
 					i++;
 				}
@@ -604,7 +609,8 @@ namespace BP.XML
                 if (dr[key].ToString() == val.ToString())
                 {
                     XmlEn en = this.GetNewEntity;
-                    en.Row = new Row(dt, dr);
+                    en.Row = new Row();
+                    en.Row.LoadDataTable(dt, dr);
                     this.Add(en);
                     i++;
                 }

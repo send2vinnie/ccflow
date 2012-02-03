@@ -560,7 +560,7 @@ namespace BP.Sys
         /// 导入数据
         /// </summary>
         /// <param name="ds"></param>
-        public static void ImpMapData(DataSet ds)
+        public static MapData ImpMapData(DataSet ds)
         {
             string errMsg = "";
             if (ds.Tables.Contains("WF_Node") == true)
@@ -579,12 +579,17 @@ namespace BP.Sys
             if (md.IsExits)
                 throw new Exception("已经存在(" + fk_mapData + ")的数据。");
             //导入.
-            ImpMapData(fk_mapData, ds);
+            return ImpMapData(fk_mapData, ds);
         }
-        public static void ImpMapData(string fk_mapdata, DataSet ds)
+        public static MapData ImpMapData(string fk_mapdata, DataSet ds)
         {
             #region 检查导入的数据是否完整.
+
             string errMsg = "";
+
+            //if (ds.Tables[0].TableName != "Sys_MapData")
+            //    errMsg += "@非表单模板。";
+
             if (ds.Tables.Contains("WF_Node") == true)
                 errMsg += "@此模板文件为流程模板。";
 
@@ -620,7 +625,7 @@ namespace BP.Sys
             MapData mdOld = new MapData();
             mdOld.No = fk_mapdata;
             mdOld.Delete();
-
+ 
             // 求出dataset的map.
             string oldMapID = "";
             DataTable dtMap = ds.Tables["Sys_MapData"];
@@ -656,6 +661,7 @@ namespace BP.Sys
                         foreach (DataRow dr in dt.Rows)
                         {
                             MapData md = new MapData();
+                            
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 object val = dr[dc.ColumnName] as object;
@@ -664,7 +670,10 @@ namespace BP.Sys
                                 md.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                                 //md.SetValByKey(dc.ColumnName, val);
                             }
-                            md.Insert();
+                            if (string.IsNullOrEmpty(md.PTable.Trim()))
+                                md.PTable = md.No;
+
+                            md.DirectInsert();
                         }
                         break;
                     case "Sys_FrmBtn":
@@ -713,7 +722,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            //  en.FK_MapData = fk_mapdata;
+                            en.FK_MapData = fk_mapdata;
                             en.MyPK = "LB" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -927,8 +936,8 @@ namespace BP.Sys
             DBAccess.RunSQLs(endDoSQL);
 
             MapData mdNew = new MapData(fk_mapdata);
-          
             mdNew.RepairMap();
+            return mdNew;
         }
         public void RepairMap()
         {

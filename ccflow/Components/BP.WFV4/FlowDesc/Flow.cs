@@ -2369,7 +2369,6 @@ namespace BP.WF
             BP.Sys.GEEntity sw = this.HisFlowData;
             sw.CheckPhysicsTable();
 
-#warning 估计有问题。
             DBAccess.RunSQL("DELETE FROM Sys_GroupField WHERE EnName='" + fk_mapData + "' AND OID NOT IN (SELECT GroupID FROM Sys_MapAttr WHERE FK_MapData = '" + fk_mapData + "')");
             DBAccess.RunSQL("UPDATE ND" + flowId + "Rpt SET MyNum=1");
         }
@@ -3248,7 +3247,13 @@ namespace BP.WF
                                     }
                                     dir.SetValByKey(dc.ColumnName, val);
                                 }
-                                dir.Insert();
+                                try
+                                {
+                                    dir.Insert();
+                                }
+                                catch
+                                {
+                                }
                             }
                             break;
                         case "WF_TurnTo": //转向规则.

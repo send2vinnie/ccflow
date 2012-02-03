@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Data;
 using System.Collections;
 using BP.DA;
@@ -45,10 +46,8 @@ namespace BP.WF.DTS
             string msg = "";
             string flowPath = SystemConfig.PathOfData + "\\FlowDemo\\Flow\\";
             string[] fls = System.IO.Directory.GetFiles(flowPath);
-
             string fk_flowsort = "01";
             //DBAccess.RunSQLReturnString("SELECT No FROM WF_FlowSort");
-
             // 调度表单文件。
             foreach (string f in fls)
             {
@@ -58,7 +57,7 @@ namespace BP.WF.DTS
                     Flow myflow = BP.WF.Flow.DoLoadFlowTemplate(fk_flowsort, f);
                     msg += "@流程:" + myflow.Name + "装载成功。";
                     System.IO.FileInfo info = new System.IO.FileInfo(f);
-                    myflow.Name = info.Name.Replace(".xml","");
+                    myflow.Name = info.Name.Replace(".xml", "");
                     myflow.DirectUpdate();
                 }
                 catch (Exception ex)
@@ -69,25 +68,44 @@ namespace BP.WF.DTS
 
  
             // 调度表单文件。
-            flowPath = SystemConfig.PathOfData + "\\FlowDemo\\Form\\";
-            fls = System.IO.Directory.GetFiles(flowPath);
-            foreach (string f in fls)
+            FrmSorts fss = new FrmSorts();
+            fss.ClearTable();
+
+            string frmPath = SystemConfig.PathOfData + "\\FlowDemo\\Form\\";
+            DirectoryInfo dirInfo =new DirectoryInfo(frmPath);
+            DirectoryInfo[] dirs = dirInfo.GetDirectories();
+            foreach (DirectoryInfo item in dirs)
             {
-                try
+                FrmSort fs = new FrmSort();
+                fs.No = item.Name.Substring(0, 2);
+                fs.Name = item.Name.Substring(2);
+                fs.Insert();
+
+                fls = System.IO.Directory.GetFiles(item.FullName);
+                foreach (string f in fls)
                 {
-                    msg += "@开始调度表单模板文件:" + f;
-                    System.IO.FileInfo info = new System.IO.FileInfo(f);
-                    if (info.Extension != ".xml")
-                        continue;
-                    DataSet ds = new DataSet();
-                    ds.ReadXml(f);
-                    MapData.ImpMapData(ds);
-                }
-                catch (Exception ex)
-                {
-                    msg += "@调度失败" + ex.Message;
+                    try
+                    {
+                        msg += "@开始调度表单模板文件:" + f;
+                        System.IO.FileInfo info = new System.IO.FileInfo(f);
+                        if (info.Extension != ".xml")
+                            continue;
+                        DataSet ds = new DataSet();
+                        ds.ReadXml(f);
+
+                        MapData md = MapData.ImpMapData(ds);
+                        md.FK_FrmSort = fs.No;
+                        md.Update();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        msg += "@调度失败" + ex.Message;
+                    }
                 }
             }
+
+            BP.DA.Log.DebugWriteError(msg);
             return msg;
         }
         /// <summary>

@@ -148,7 +148,10 @@ namespace BP.En
                     return null;
 
                 if (this._row == null)
-                    this._row = new Row(this.HisAttrs);
+                {
+                    this._row = new Row();
+                    this._row.LoadAttrs(this.HisAttrs);
+                }
 
                 return this._row;
             }

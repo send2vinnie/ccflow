@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 using System.Collections;
-using BP.En;
+ 
 
 namespace BP.En
 {
@@ -11,14 +11,14 @@ namespace BP.En
 	/// </summary>
 	public class Row : Hashtable
 	{
-		public Row()
-		{
-		}
-		/// <summary>
-		/// 用属性构造一个row.
-		/// </summary>
-		/// <param name="attrs"></param>
-        public Row(Attrs attrs)
+        public Row():base(System.StringComparer.Create(System.Globalization.CultureInfo.CurrentCulture, true))
+        {
+        }
+        /// <summary>
+        /// LoadAttrs
+        /// </summary>
+        /// <param name="attrs"></param>
+        public void LoadAttrs(Attrs attrs)
         {
             this.Clear();
             foreach (Attr attr in attrs)
@@ -43,18 +43,19 @@ namespace BP.En
                 }
             }
         }
-		/// <summary>
-		/// 用数据表的描述构造一个(用于xmlEn)
-		/// </summary>
-		/// <param name="dt"></param>
-		public Row(DataTable dt, DataRow dr)
-		{
-			this.Clear();
-			foreach( DataColumn dc in dt.Columns ) 
-			{
-				this.Add(dc.ColumnName, dr[dc.ColumnName] );
-			}
-		}
+
+         /// <summary>
+        /// LoadAttrs
+        /// </summary>
+        /// <param name="attrs"></param>
+        public void LoadDataTable(DataTable dt, DataRow dr)
+        {
+            this.Clear();
+            foreach (DataColumn dc in dt.Columns)
+            {
+                this.Add(dc.ColumnName, dr[dc.ColumnName]);
+            }
+        }
 
 		/// <summary>
 		/// 设置一个值by key . 
@@ -78,6 +79,7 @@ namespace BP.En
         public object GetValByKey(string key)
         {
             return this[key];
+
 
             /*
             if (SystemConfig.IsDebug)
