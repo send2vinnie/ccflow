@@ -144,8 +144,16 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             this.Pub1.Add("<a href=\"javascript:Down('" + this.MyPK + "','" + attr.MyPK + "');\" ><img src='../../Images/Btn/Right.gif' class=Arrow alt='向右移动' border=0/></a>");
             this.Pub1.Add("</TH>");
         }
+
         if (dtl.IsEnableAthM)
-            this.Pub1.AddTDTitle();
+            this.Pub1.AddTDTitle("<a href=\"javascript:window.showModalDialog('Attachment.aspx?IsBTitle=1&PKVal=0&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM&Ath=AthM')\"><img src='./../Img/set.gif' border=0 width='16px' /></a>");
+         
+        if (dtl.IsEnableM2M)
+            this.Pub1.AddTDTitle("<a href=\"javascript:window.showModalDialog('MapM2M.aspx?NoOfObj=M2M&FK_MapData=" + this.FK_MapDtl + "','m2m','dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no')\"><img src='./../Img/set.gif' border=0 width='16px' /></a>");
+
+        if (dtl.IsEnableM2MM)
+            this.Pub1.AddTDTitle("<a href=\"javascript:window.showModalDialog('MapM2MM.aspx?NoOfObj=M2MM&FK_MapData=" + this.FK_MapDtl + "','m2m','dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no')\"><img src='./../Img/set.gif' border=0 width='16px' /></a>");
+
         this.Pub1.AddTREnd();
 
         for (int i = 1; i <= dtl.RowsOfList; i++)
@@ -226,7 +234,6 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                                     tb.Attributes["onfocus"] = "WdatePicker();";
                                     //  tb.Attributes["class"] = "TBcalendar";
                                 }
-
                                 break;
                             default:
                                 tb.Attributes["style"] = "width:" + attr.UIWidth + "px;border: none;";
@@ -290,10 +297,30 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                         break;
                 }
             }
+
+
             if (dtl.IsEnableAthM)
-                this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../FreeFrm/AttachmentUpload.aspx?IsBTitle=1&PKVal=0&Ath=AthM&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM')\"><img src='./../Img/AttachmentM.png' border=0 width='16px' /></a>");
+                this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./../FreeFrm/AttachmentUpload.aspx?IsBTitle=1&PKVal=0&Ath=AthM&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM')\"><img src='./../Img/AttachmentM.png' border=0 width='16px' /></a>");
+
+            if (dtl.IsEnableM2M)
+                this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./../M2M.aspx?NoOfObj=M2M&IsTest=1&OID=0&FK_MapData=" + this.FK_MapDtl + "','m2m','dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no')\"><img src='./../Img/M2M.png' border=0 width='16px' /></a>");
+
+            if (dtl.IsEnableM2MM)
+                this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./../M2MM.aspx?NoOfObj=M2MM&IsTest=1&OID=0&FK_MapData=" + this.FK_MapDtl + "','m2m','dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no')\"><img src='./../Img/M2MM.png' border=0 width='16px' /></a>");
+
+
+            //if (dtl.IsEnableAthM)
+            //    this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../FreeFrm/AttachmentUpload.aspx?IsBTitle=1&PKVal=0&Ath=AthM&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM')\"><img src='./../Img/AttachmentM.png' border=0 width='16px' /></a>");
+
+            //if (dtl.IsEnableM2M)
+            //    this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../M2M.aspx?NoOfObj=M2M&IsTest=1&OID=0&FK_MapData=" + this.FK_MapDtl + "')\"><img src='./../Img/M2M.png' border=0 width='16px' /></a>");
+
+            //if (dtl.IsEnableM2MM)
+            //    this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../M2MM.aspx?NoOfObj=M2MM&IsTest=1&OID=0&FK_MapData=" + this.FK_MapDtl + "')\"><img src='./../Img/M2M.png' border=0 width='16px' /></a>");
+
             this.Pub1.AddTREnd();
         }
+
         if (dtl.IsShowSum)
         {
             this.Pub1.AddTRSum();
@@ -323,6 +350,13 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
             }
             if (dtl.IsEnableAthM)
                 this.Pub1.AddTD();
+
+            if (dtl.IsEnableM2M)
+                this.Pub1.AddTD();
+
+            if (dtl.IsEnableM2MM)
+                this.Pub1.AddTD();
+
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();

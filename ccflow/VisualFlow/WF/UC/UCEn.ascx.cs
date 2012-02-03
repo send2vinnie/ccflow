@@ -1190,12 +1190,10 @@ namespace BP.Web.Comm.UC.WF
                                     if (fullSQL.Contains("@" + attr.KeyOfEn) == false)
                                         continue;
                                     fullSQL = fullSQL.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
-
                                     if (fullSQL.Contains("@") == false)
                                         break;
                                 }
                             }
-
 
                             DataTable dt = DBAccess.RunSQLReturnTable(fullSQL);
                             // ddlChild.Items.Clear();

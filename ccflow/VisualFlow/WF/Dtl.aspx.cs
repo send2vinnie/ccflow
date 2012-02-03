@@ -259,6 +259,13 @@ public partial class Comm_Dtl : WebPage
             if (mdtl.IsEnableAthM)
                 this.Pub1.AddTDTitle("");
 
+            if (mdtl.IsEnableM2M)
+                this.Pub1.AddTDTitle("");
+
+            if (mdtl.IsEnableM2MM)
+                this.Pub1.AddTDTitle("");
+
+
             if (mdtl.IsDelete && this.IsReadonly == 0)
                 this.Pub1.Add("<TD class='FDesc' nowarp=true ><img src='./../Images/Btn/Save.gif' border=0 onclick='SaveDtlData();' ></TD>");
 
@@ -601,13 +608,41 @@ public partial class Comm_Dtl : WebPage
                 }
             }
 
+
+
+            //if (dtl.IsEnableAthM)
+            //    this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./../FreeFrm/AttachmentUpload.aspx?IsBTitle=1&PKVal=0&Ath=AthM&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM')\"><img src='./../Img/AttachmentM.png' border=0 width='16px' /></a>");
+
+            //if (dtl.IsEnableM2M)
+            //    this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./../M2M.aspx?NoOfObj=M2M&IsTest=1&OID=0&FK_MapData=" + this.FK_MapDtl + "','m2m','dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no')\"><img src='./../Img/M2M.png' border=0 width='16px' /></a>");
+
+            //if (dtl.IsEnableM2MM)
+            //    this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./../M2MM.aspx?NoOfObj=M2MM&IsTest=1&OID=0&FK_MapData=" + this.FK_MapDtl + "','m2m','dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no')\"><img src='./../Img/M2MM.png' border=0 width='16px' /></a>");
+
             if (mdtl.IsEnableAthM)
             {
                 if (dtl.OID >= 100)
-                    this.Pub1.AddTD("<a href=\"javascript:WinOpen('./FreeFrm/AttachmentUpload.aspx?IsBTitle=1&PKVal=" + dtl.OID + "&Ath=AthM&FK_MapData=" + mdtl.No + "&FK_FrmAttachment=" + mdtl.No + "_AthM')\"><img src='./Img/AttachmentM.png' border=0 width='16px' /></a>");
+                    this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./FreeFrm/AttachmentUpload.aspx?IsBTitle=1&PKVal=" + dtl.OID + "&Ath=AthM&FK_MapData=" + mdtl.No + "&FK_FrmAttachment=" + mdtl.No + "_AthM')\"><img src='./Img/AttachmentM.png' border=0 width='16px' /></a>");
                 else
                     this.Pub1.AddTD("");
             }
+
+            if (mdtl.IsEnableM2M)
+            {
+                if (dtl.OID >= 100)
+                    this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./M2M.aspx?IsOpen=1&NoOfObj=M2M&OID=" + dtl.OID + "&FK_MapData=" + mdtl.No + "','m2m','dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no')\"><img src='./Img/M2M.png' border=0 width='16px' /></a>");
+                else
+                    this.Pub1.AddTD("");
+            }
+
+            if (mdtl.IsEnableM2MM)
+            {
+                if (dtl.OID >= 100)
+                    this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./M2MM.aspx?IsOpen=1&NoOfObj=M2MM&OID=" + dtl.OID + "&FK_MapData=" + mdtl.No + "','m2m','dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no')\"><img src='./Img/M2M.png' border=0 width='16px' /></a>");
+                else
+                    this.Pub1.AddTD("");
+            }
+
 
             if (mdtl.IsDelete && dtl.OID >= 100 )
             {
@@ -823,6 +858,13 @@ public partial class Comm_Dtl : WebPage
             }
             if (mdtl.IsEnableAthM)
                 this.Pub1.AddTD();
+
+            if (mdtl.IsEnableM2M)
+                this.Pub1.AddTD();
+
+            if (mdtl.IsEnableM2MM)
+                this.Pub1.AddTD();
+
             if (mdtl.IsDelete || mdtl.IsUpdate)
                 this.Pub1.AddTD();
 

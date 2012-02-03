@@ -346,11 +346,29 @@ public partial class Comm_MapDef_MapDtl : WebPage
         cb.Text = "是否启用多附件";
         cb.Checked = dtl.IsEnableAthM;
         this.Pub1.AddTD(cb);
+
+        cb = new CheckBox();
+        cb.ID = "CB_"+MapDtlAttr.IsEnableM2M;
+        cb.Text = "是否启用一对多";
+        cb.Checked = dtl.IsEnableM2M;
+        this.Pub1.AddTD(cb);
+
+        cb = new CheckBox();
+        cb.ID = "CB_" + MapDtlAttr.IsEnableM2MM;
+        cb.Text = "是否启用一对多多";
+        cb.Checked = dtl.IsEnableM2MM;
+        this.Pub1.AddTD(cb);
+        this.Pub1.AddTREnd();
+
+
+        this.Pub1.AddTR();
+        this.Pub1.AddTDIdx(idx++);
         cb = new CheckBox();
         cb.ID = "CB_IsEnablePass";
         cb.Text = this.ToE("IsEnablePass", "是否起用审核字段？");// "是否合计行";
         cb.Checked = dtl.IsEnablePass;
         this.Pub1.AddTD(cb);
+        this.Pub1.AddTD();
         this.Pub1.AddTD();
         this.Pub1.AddTREnd();
 
