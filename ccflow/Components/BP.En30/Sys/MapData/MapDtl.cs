@@ -124,6 +124,14 @@ namespace BP.Sys
         /// 是否启用多附件
         /// </summary>
         public const string IsEnableAthM = "IsEnableAthM";
+        /// <summary>
+        /// IsEnableM2M
+        /// </summary>
+        public const string IsEnableM2M = "IsEnableM2M";
+        /// <summary>
+        /// IsEnableM2MM
+        /// </summary>
+        public const string IsEnableM2MM = "IsEnableM2MM";
     }
     /// <summary>
     /// 明细
@@ -398,6 +406,34 @@ namespace BP.Sys
                 this.SetValByKey(MapDtlAttr.IsCopyNDData, value);
             }
         }
+        /// <summary>
+        /// 是否启用一对多
+        /// </summary>
+        public bool IsEnableM2M
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsEnableM2M);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsEnableM2M, value);
+            }
+        }
+        /// <summary>
+        /// 是否启用一对多多
+        /// </summary>
+        public bool IsEnableM2MM
+        {
+            get
+            {
+                return this.GetValBooleanByKey(MapDtlAttr.IsEnableM2MM);
+            }
+            set
+            {
+                this.SetValByKey(MapDtlAttr.IsEnableM2MM, value);
+            }
+        }
 
         public bool IsUse = false;
         /// <summary>
@@ -583,6 +619,11 @@ namespace BP.Sys
 
                 map.AddBoolean(MapDtlAttr.IsEnablePass, false, "是否启用通过审核功能?", false, false);
                 map.AddBoolean(MapDtlAttr.IsEnableAthM, false, "是否启用多附件", false, false);
+
+                map.AddBoolean(MapDtlAttr.IsEnableM2M, false, "是否启用M2M", false, false);
+                map.AddBoolean(MapDtlAttr.IsEnableM2MM, false, "是否启用M2M", false, false);
+
+
 
 
                 map.AddDDLSysEnum(MapDtlAttr.WhenOverSize, 0, "WhenOverSize", true, true,
@@ -774,6 +815,48 @@ namespace BP.Sys
                 attr.Insert();
             }
         }
+        private void InitExtMembers()
+        {
+            /* 如果启用了多附件*/
+            BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment();
+            athDesc.MyPK = this.No + "_AthM";
+            if (athDesc.RetrieveFromDBSources() == 0)
+            {
+                athDesc.FK_MapData = this.No;
+                athDesc.NoOfObj = "AthM";
+                athDesc.Name = this.Name;
+                athDesc.Insert();
+            }
+
+            MapM2M m2m = new MapM2M();
+            m2m.MyPK = this.No + "_M2M";
+            m2m.Name = "M2M";
+            m2m.NoOfObj = "M2M";
+            m2m.FK_MapData = this.No;
+            if (m2m.RetrieveFromDBSources() == 0)
+            {
+                m2m.FK_MapData = this.No;
+                m2m.NoOfObj = "M2M";
+                m2m.Insert();
+            }
+
+            m2m = new MapM2M();
+            m2m.MyPK = this.No + "_M2MM";
+            m2m.Name = "M2MM";
+            m2m.NoOfObj = "M2MM";
+            m2m.FK_MapData = this.No;
+            if (m2m.RetrieveFromDBSources() == 0)
+            {
+                m2m.FK_MapData = this.No;
+                m2m.NoOfObj = "M2MM";
+                m2m.Insert();
+            }
+        }
+        protected override bool beforeInsert()
+        {
+            this.InitExtMembers();
+            return base.beforeInsert();
+        }
         protected override bool beforeUpdate()
         {
             MapAttrs attrs = new MapAttrs(this.No);
@@ -783,21 +866,7 @@ namespace BP.Sys
                 if (attr.UIIsEnable && attr.UIContralType == UIContralType.TB)
                     isHaveEnable = true;
             }
-
-            if (this.IsEnableAthM)
-            {
-                /* 如果启用了多附件*/
-                BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment();
-                athDesc.MyPK = this.No + "_AthM";
-                if (athDesc.RetrieveFromDBSources() == 0)
-                {
-                    athDesc.FK_MapData = this.No;
-                    athDesc.NoOfObj = "AthM";
-                    athDesc.Name = this.Name;
-                    athDesc.Insert();
-                }
-            }
-            // this.IsReadonly = !isHaveEnable;
+            this.InitExtMembers();
             return base.beforeUpdate();
         }
         protected override bool beforeDelete()
@@ -810,12 +879,12 @@ namespace BP.Sys
             sql += "@DELETE Sys_FrmImgAth WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_FrmRB WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_FrmAttachment WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_MapM2M WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_MapFrame WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_MapExt WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_MapAttr WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_MapData WHERE No='" + this.No + "'";
             sql += "@DELETE Sys_GroupField WHERE EnName='" + this.No + "'";
+            sql += "@DELETE Sys_MapM2M WHERE FK_MapData='" + this.No + "'";
             DBAccess.RunSQLs(sql);
             try
             {

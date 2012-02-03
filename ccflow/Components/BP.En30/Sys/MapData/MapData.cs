@@ -960,6 +960,7 @@ namespace BP.Sys
             }
 
             BP.Sys.MapAttr attr = new BP.Sys.MapAttr();
+
             if (attr.IsExit(MapAttrAttr.KeyOfEn, "OID", MapAttrAttr.FK_MapData, this.No) == false)
             {
                 attr.FK_MapData = this.No;

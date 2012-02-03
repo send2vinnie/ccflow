@@ -2413,12 +2413,11 @@ namespace BP.WF
                                     dtCopy.RefPK = mywk.OID.ToString();
                                     dtCopy.OID = 0;
                                     dtCopy.Insert();
-                                 //  dtCopy.InsertAsOID(gedtl.OID);
 
-                                  //  dtCopy.InsertAsOID(gedtl.OID);
+                                   //dtCopy.InsertAsOID(gedtl.OID);
+                                   //dtCopy.InsertAsOID(gedtl.OID);
 
-
-                                    #region  复制明细表单条 - 附件信息
+                                    #region  复制明细表单条 - 附件信息 - M2M- M2MM
                                     if (toDtl.IsEnableAthM)
                                     {
                                         /*如果启用了多附件,就复制这条明细数据的附件信息。*/
@@ -2437,6 +2436,25 @@ namespace BP.WF
                                                     "ND" + toNode.NodeID);
                                                 athDB_N.RefPKVal = dtCopy.OID.ToString();
                                                 athDB_N.DirectInsert();
+                                            }
+                                        }
+                                    }
+                                    if (toDtl.IsEnableM2M || toDtl.IsEnableM2MM)
+                                    {
+                                        /*如果启用了m2m */
+                                        M2Ms m2ms = new M2Ms(dtl.No, gedtl.OID);
+                                        if (m2ms.Count > 0)
+                                        {
+                                            i = 0;
+                                            foreach (M2M m2m in m2ms)
+                                            {
+                                                i++;
+                                                M2M m2m_N = new M2M();
+                                                m2m_N.Copy(m2m);
+                                                m2m_N.FK_MapData = toDtl.No;
+                                                m2m_N.MyPK = toDtl.No + "_" + m2m.M2MNo + "_" + gedtl.ToString()+"_"+m2m.DtlObj;
+                                                m2m_N.EnOID = gedtl.OID;
+                                                m2m_N.DirectInsert();
                                             }
                                         }
                                     }
@@ -4263,6 +4281,25 @@ namespace BP.WF
                                             "ND" + nd.NodeID);
                                         athDB_N.RefPKVal = dtCopy.OID.ToString();
                                         athDB_N.DirectInsert();
+                                    }
+                                }
+                            }
+                            if (toDtl.IsEnableM2M || toDtl.IsEnableM2MM)
+                            {
+                                /*如果启用了m2m */
+                                m2ms = new M2Ms(dtl.No, gedtl.OID);
+                                if (m2ms.Count > 0)
+                                {
+                                    i = 0;
+                                    foreach (M2M m2m in m2ms)
+                                    {
+                                        i++;
+                                        M2M m2m_N = new M2M();
+                                        m2m_N.Copy(m2m);
+                                        m2m_N.FK_MapData = toDtl.No;
+                                        m2m_N.MyPK = toDtl.No + "_" + m2m.M2MNo + "_" + gedtl.ToString() + "_" + m2m.DtlObj;
+                                        m2m_N.EnOID = gedtl.OID;
+                                        m2m_N.DirectInsert();
                                     }
                                 }
                             }

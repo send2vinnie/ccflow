@@ -86,6 +86,7 @@ namespace BP.Sys
             }
         }
         #endregion
+ 
     }
     /// <summary>
     /// 通用实体s
