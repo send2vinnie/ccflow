@@ -104,9 +104,9 @@ public partial class WF_M2MM : WebPage
                 this.OperObj = dr[0].ToString();
 
             if (this.OperObj == dr[0].ToString())
-                this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&OID=" + this.OID + "&OperObj=" + dr[0].ToString() + "'><b>" + dr[1].ToString() + "(" + GetNum(m2ms, dr[0].ToString()) + "</b></a><br>");
+                this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&OID=" + this.OID + "&OperObj=" + dr[0].ToString() + "'><b>" + dr[1].ToString() + "(" + GetNum(m2ms, dr[0].ToString()) + ")</b></a><br>");
             else
-                this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&OID=" + this.OID + "&OperObj=" + dr[0].ToString() + "'>" + dr[1].ToString() + "(" + GetNum(m2ms, dr[0].ToString()) + "</a><br>");
+                this.Left.AddLi("<a href='M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&OID=" + this.OID + "&OperObj=" + dr[0].ToString() + "'>" + dr[1].ToString() + "(" + GetNum(m2ms, dr[0].ToString()) + ")</a><br>");
         }
         this.Left.AddULEnd();
         return true;
