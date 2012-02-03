@@ -1,9 +1,9 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <Sys_MapDtl>
-    <NO>00009Dtl1</NO>
-    <NAME>机械设备明细表</NAME>
-    <FK_MAPDATA>00009</FK_MAPDATA>
+    <NO>Demo_Inc10Dtl1</NO>
+    <NAME>10.机械设备明细表</NAME>
+    <FK_MAPDATA>Demo_Inc10</FK_MAPDATA>
     <PTABLE>EQU_LIST</PTABLE>
     <ROWIDX>99</ROWIDX>
     <GROUPID>0</GROUPID>
@@ -33,8 +33,8 @@
     <ISENABLEATHM>0</ISENABLEATHM>
   </Sys_MapDtl>
   <Sys_MapData>
-    <NO>00009</NO>
-    <NAME>十、企业自有的主要机械设备</NAME>
+    <NO>Demo_Inc10</NO>
+    <NAME>10.企业自有的主要机械设备</NAME>
     <FK_FLOW>001</FK_FLOW>
     <FORMTYPE>0</FORMTYPE>
     <PTABLE>info10_QYZYSB</PTABLE>
@@ -47,7 +47,7 @@
   </Sys_MapData>
   <Sys_FrmLine>
     <MYPK>Line110703060358</MYPK>
-    <FK_MAPDATA>00009</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc10</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>30</X1>
@@ -59,7 +59,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110703060303</MYPK>
-    <FK_MAPDATA>00009</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc10</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>31</X1>
@@ -71,7 +71,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110703060308</MYPK>
-    <FK_MAPDATA>00009</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc10</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>734</X1>
@@ -83,7 +83,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110703060344</MYPK>
-    <FK_MAPDATA>00009</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc10</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>30</X1>
@@ -95,7 +95,7 @@
   </Sys_FrmLine>
   <Sys_FrmLab>
     <MYPK>Lab1107060913041</MYPK>
-    <FK_MAPDATA>00009</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc10</FK_MAPDATA>
     <TEXT>十、企业自有的主要机械设备</TEXT>
     <X>255</X>
     <Y>25</Y>
@@ -109,7 +109,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707025352</MYPK>
-    <FK_MAPDATA>00009</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc10</FK_MAPDATA>
     <TEXT>注：本表可复制加页。</TEXT>
     <X>28</X>
     <Y>762</Y>
@@ -121,8 +121,8 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_MapAttr>
-    <MYPK>00009_OID</MYPK>
-    <FK_MAPDATA>00009</FK_MAPDATA>
+    <MYPK>Demo_Inc10_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc10</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>WorkID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -145,8 +145,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009_FID</MYPK>
-    <FK_MAPDATA>00009</FK_MAPDATA>
+    <MYPK>Demo_Inc10_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc10</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -169,8 +169,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_OID</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>主键</NAME>
     <DEFVAL>0</DEFVAL>
@@ -193,8 +193,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_RefPK</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_RefPK</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>RefPK</KEYOFEN>
     <NAME>关联ID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -217,8 +217,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_FID</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -241,8 +241,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_RDT</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_RDT</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>RDT</KEYOFEN>
     <NAME>记录时间</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -265,8 +265,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_Rec</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_Rec</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>Rec</KEYOFEN>
     <NAME>记录人</NAME>
     <DEFVAL>@WebUser.No</DEFVAL>
@@ -290,8 +290,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_Model_format</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_Model_format</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>Model_format</KEYOFEN>
     <NAME>型号</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -313,8 +313,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_Site_</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_Site_</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>Site_</KEYOFEN>
     <NAME>场地</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -336,8 +336,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_out_date</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_out_date</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>out_date</KEYOFEN>
     <NAME>出厂日期</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -359,8 +359,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_Number_</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_Number_</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>Number_</KEYOFEN>
     <NAME>数量(台)</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -382,8 +382,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_power_total</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_power_total</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>power_total</KEYOFEN>
     <NAME>功率</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -405,8 +405,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_Original_value</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_Original_value</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>Original_value</KEYOFEN>
     <NAME>原值（万元）</NAME>
     <DEFVAL>0</DEFVAL>
@@ -429,8 +429,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_Net_value</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_Net_value</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>Net_value</KEYOFEN>
     <NAME>净值</NAME>
     <DEFVAL>0</DEFVAL>
@@ -453,8 +453,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_sbsy</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_sbsy</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>sbsy</KEYOFEN>
     <NAME>设备所有</NAME>
     <DEFVAL>0</DEFVAL>
@@ -478,8 +478,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00009Dtl1_equ_name</MYPK>
-    <FK_MAPDATA>00009Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc10Dtl1_equ_name</MYPK>
+    <FK_MAPDATA>Demo_Inc10Dtl1</FK_MAPDATA>
     <KEYOFEN>equ_name</KEYOFEN>
     <NAME>设备及仪器名称</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -503,7 +503,7 @@
   <Sys_GroupField>
     <OID>231</OID>
     <LAB>企业自有的主要机械设备</LAB>
-    <ENNAME>00009</ENNAME>
+    <ENNAME>Demo_Inc10</ENNAME>
     <IDX>0</IDX>
   </Sys_GroupField>
   <Sys_EnumMain>

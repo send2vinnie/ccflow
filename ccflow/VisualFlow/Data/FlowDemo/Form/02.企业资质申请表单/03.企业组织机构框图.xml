@@ -1,8 +1,8 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <Sys_MapData>
-    <NO>00003</NO>
-    <NAME>三、企业组织机构框图</NAME>
+    <NO>Demo_Inc03</NO>
+    <NAME>03.企业组织机构框图</NAME>
     <FK_FLOW>001</FK_FLOW>
     <FORMTYPE>0</FORMTYPE>
     <PTABLE>Info3_ZZJG</PTABLE>
@@ -15,7 +15,7 @@
   </Sys_MapData>
   <Sys_FrmLine>
     <MYPK>Line110710121016</MYPK>
-    <FK_MAPDATA>00003</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc03</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>50</X1>
@@ -27,7 +27,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710121018</MYPK>
-    <FK_MAPDATA>00003</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc03</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>566</X1>
@@ -39,7 +39,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710121019</MYPK>
-    <FK_MAPDATA>00003</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc03</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>49</X1>
@@ -51,7 +51,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710121022</MYPK>
-    <FK_MAPDATA>00003</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc03</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>722</X1>
@@ -63,7 +63,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710121057</MYPK>
-    <FK_MAPDATA>00003</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc03</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>48</X1>
@@ -75,7 +75,7 @@
   </Sys_FrmLine>
   <Sys_FrmLab>
     <MYPK>Lab1107040325471</MYPK>
-    <FK_MAPDATA>00003</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc03</FK_MAPDATA>
     <TEXT>三、企业组织结构框图</TEXT>
     <X>288</X>
     <Y>29</Y>
@@ -88,8 +88,8 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_MapAttr>
-    <MYPK>00003_OID</MYPK>
-    <FK_MAPDATA>00003</FK_MAPDATA>
+    <MYPK>Demo_Inc03_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc03</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>WorkID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -112,8 +112,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00003_FID</MYPK>
-    <FK_MAPDATA>00003</FK_MAPDATA>
+    <MYPK>Demo_Inc03_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc03</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -137,7 +137,7 @@
   </Sys_MapAttr>
   <Sys_FrmImgAth>
     <MYPK>TB110712015555</MYPK>
-    <FK_MAPDATA>00003</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc03</FK_MAPDATA>
     <X>58</X>
     <Y>79</Y>
     <H>634</H>
@@ -146,7 +146,7 @@
   <Sys_GroupField>
     <OID>190</OID>
     <LAB>企业组织结构框图</LAB>
-    <ENNAME>00003</ENNAME>
+    <ENNAME>Demo_Inc03</ENNAME>
     <IDX>0</IDX>
   </Sys_GroupField>
 </NewDataSet>

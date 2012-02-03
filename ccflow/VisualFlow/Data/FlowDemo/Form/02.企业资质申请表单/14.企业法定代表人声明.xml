@@ -1,8 +1,8 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <Sys_MapData>
-    <NO>00012</NO>
-    <NAME>企业法定代表人声明</NAME>
+    <NO>Demo_Inc14</NO>
+    <NAME>14.企业法定代表人声明</NAME>
     <FK_FLOW>001</FK_FLOW>
     <FORMTYPE>0</FORMTYPE>
     <PTABLE>info_QYFRSM</PTABLE>
@@ -15,7 +15,7 @@
   </Sys_MapData>
   <Sys_FrmLine>
     <MYPK>Line110704060425</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>100</X1>
@@ -27,7 +27,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110704060431</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>100</X1>
@@ -39,7 +39,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110704060433</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>86</X1>
@@ -51,7 +51,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110704060435</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>769</X1>
@@ -63,7 +63,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110704060437</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>731</X1>
@@ -75,7 +75,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110704060413</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>100</X1>
@@ -87,7 +87,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110704060428</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>99</X1>
@@ -99,7 +99,7 @@
   </Sys_FrmLine>
   <Sys_FrmLab>
     <MYPK>Lab1107060450161</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <TEXT>企业法定代表人声明</TEXT>
     <X>326</X>
     <Y>29</Y>
@@ -112,8 +112,8 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_MapAttr>
-    <MYPK>00012_LAWS_STATE</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <MYPK>Demo_Inc14_LAWS_STATE</MYPK>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <KEYOFEN>LAWS_STATE</KEYOFEN>
     <NAME>法人声明</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -135,8 +135,8 @@
     <Y>93</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00012_OID</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <MYPK>Demo_Inc14_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>WorkID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -159,8 +159,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00012_FID</MYPK>
-    <FK_MAPDATA>00012</FK_MAPDATA>
+    <MYPK>Demo_Inc14_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -185,7 +185,7 @@
   <Sys_GroupField>
     <OID>247</OID>
     <LAB>企业法定代表人声明</LAB>
-    <ENNAME>00012</ENNAME>
+    <ENNAME>Demo_Inc14</ENNAME>
     <IDX>0</IDX>
   </Sys_GroupField>
 </NewDataSet>

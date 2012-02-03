@@ -1,9 +1,9 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <Sys_MapDtl>
-    <NO>00023Dtl1</NO>
-    <NAME>工程业绩</NAME>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <NO>Demo_Inc11Dtl1</NO>
+    <NAME>11.工程业绩</NAME>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <PTABLE>proj_list</PTABLE>
     <ROWIDX>99</ROWIDX>
     <GROUPID>0</GROUPID>
@@ -33,8 +33,8 @@
     <ISENABLEATHM>0</ISENABLEATHM>
   </Sys_MapDtl>
   <Sys_MapData>
-    <NO>00023</NO>
-    <NAME>十一、企业代表工程业绩一览表</NAME>
+    <NO>Demo_Inc11</NO>
+    <NAME>11.企业代表工程业绩一览表</NAME>
     <FK_FLOW>001</FK_FLOW>
     <FORMTYPE>0</FORMTYPE>
     <PTABLE>info11_gcyj</PTABLE>
@@ -47,7 +47,7 @@
   </Sys_MapData>
   <Sys_FrmLine>
     <MYPK>Line110707101956_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>695</X1>
@@ -59,7 +59,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071023</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>628</X1>
@@ -71,7 +71,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071004</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>57</X1>
@@ -83,7 +83,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071043</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>282</X1>
@@ -95,7 +95,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110707102845_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>355</X1>
@@ -107,7 +107,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071037</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>761</X1>
@@ -119,7 +119,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071038</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>738</X1>
@@ -131,7 +131,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071039</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>738</X1>
@@ -143,7 +143,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071041</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>59</X1>
@@ -155,7 +155,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071042</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>111</X1>
@@ -167,7 +167,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071017</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>58</X1>
@@ -179,7 +179,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071026</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>86</X1>
@@ -191,7 +191,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071032</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>184</X1>
@@ -203,7 +203,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071035</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>281</X1>
@@ -215,7 +215,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110710071040</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>560</X1>
@@ -227,7 +227,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110707102418_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>403</X1>
@@ -239,7 +239,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110707102430_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>450</X1>
@@ -251,7 +251,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110707102438_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>503</X1>
@@ -263,7 +263,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110702070207</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>60</X1>
@@ -275,7 +275,7 @@
   </Sys_FrmLine>
   <Sys_FrmLab>
     <MYPK>Lab1107071011061</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>十一、企业代表工程业绩一览表</TEXT>
     <X>270</X>
     <Y>18</Y>
@@ -289,7 +289,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101607</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>工程名称</TEXT>
     <X>115</X>
     <Y>82</Y>
@@ -302,7 +302,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101320</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>序@号</TEXT>
     <X>66</X>
     <Y>66</Y>
@@ -315,7 +315,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101621_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>工程类别</TEXT>
     <X>206</X>
     <Y>82</Y>
@@ -328,7 +328,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101639_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>工程规模</TEXT>
     <X>411</X>
     <Y>61</Y>
@@ -341,7 +341,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101706_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>工程指标</TEXT>
     <X>295</X>
     <Y>95</Y>
@@ -354,7 +354,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101720_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>单位</TEXT>
     <X>368</X>
     <Y>97</Y>
@@ -367,7 +367,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101732_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>数量</TEXT>
     <X>413</X>
     <Y>97</Y>
@@ -380,7 +380,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101750_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>合同价@(万元）</TEXT>
     <X>455</X>
     <Y>89</Y>
@@ -393,7 +393,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101811_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>结算价格@(万元）</TEXT>
     <X>507</X>
     <Y>90</Y>
@@ -406,7 +406,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101830_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>开工时间</TEXT>
     <X>566</X>
     <Y>81</Y>
@@ -419,7 +419,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101845_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>竣工时间</TEXT>
     <X>632</X>
     <Y>82</Y>
@@ -432,7 +432,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707101859_1</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>质量@评定@结果</TEXT>
     <X>715</X>
     <Y>63</Y>
@@ -445,7 +445,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707024629</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <TEXT>注：1.本表按竣工时间先后，填写本企业主要工程业绩；2.工程类别，按照资质等级标准分类填写；@3.本表可复制加页；4.技术指标是指高度、长度、跨度、面积、装机容量、直径、流量等指标。</TEXT>
     <X>70</X>
     <Y>581</Y>
@@ -457,8 +457,8 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_MapAttr>
-    <MYPK>00023_OID</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <MYPK>Demo_Inc11_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>WorkID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -481,8 +481,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023_FID</MYPK>
-    <FK_MAPDATA>00023</FK_MAPDATA>
+    <MYPK>Demo_Inc11_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc11</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -505,8 +505,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_OID</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>主键</NAME>
     <DEFVAL>0</DEFVAL>
@@ -529,8 +529,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_RefPK</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_RefPK</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>RefPK</KEYOFEN>
     <NAME>关联ID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -553,8 +553,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_Rec</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_Rec</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>Rec</KEYOFEN>
     <NAME>记录人</NAME>
     <DEFVAL>@WebUser.No</DEFVAL>
@@ -578,8 +578,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_RDT</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_RDT</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>RDT</KEYOFEN>
     <NAME>记录时间</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -602,8 +602,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_FID</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -626,8 +626,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_Product_name</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_Product_name</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>Product_name</KEYOFEN>
     <NAME>工程名称</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -649,8 +649,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_Product_type</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_Product_type</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>Product_type</KEYOFEN>
     <NAME>工程类别</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -672,8 +672,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_Product_index</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_Product_index</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>Product_index</KEYOFEN>
     <NAME>工程指标</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -695,8 +695,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_Unti_</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_Unti_</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>Unti_</KEYOFEN>
     <NAME>单位</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -718,8 +718,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_Number_</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_Number_</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>Number_</KEYOFEN>
     <NAME>数量</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -741,8 +741,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_contract_price</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_contract_price</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>contract_price</KEYOFEN>
     <NAME>合同价</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -764,8 +764,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_Stitle_price</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_Stitle_price</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>Stitle_price</KEYOFEN>
     <NAME>结算价</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -787,8 +787,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_Start_day</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_Start_day</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>Start_day</KEYOFEN>
     <NAME>开工时间</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -810,8 +810,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_End_day</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_End_day</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>End_day</KEYOFEN>
     <NAME>竣工时间</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -833,8 +833,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00023Dtl1_Quality_assess</MYPK>
-    <FK_MAPDATA>00023Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc11Dtl1_Quality_assess</MYPK>
+    <FK_MAPDATA>Demo_Inc11Dtl1</FK_MAPDATA>
     <KEYOFEN>Quality_assess</KEYOFEN>
     <NAME>质量评定结果</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -858,7 +858,7 @@
   <Sys_GroupField>
     <OID>272</OID>
     <LAB>企业代表工程业绩一览表</LAB>
-    <ENNAME>00023</ENNAME>
+    <ENNAME>Demo_Inc11</ENNAME>
     <IDX>0</IDX>
   </Sys_GroupField>
 </NewDataSet>

@@ -1,9 +1,9 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <Sys_MapDtl>
-    <NO>00008Dtl1</NO>
-    <NAME>项目经理名单</NAME>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <NO>Demo_Inc09Dtl1</NO>
+    <NAME>09.项目经理名单</NAME>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <PTABLE>MANAGE_MUME</PTABLE>
     <ROWIDX>99</ROWIDX>
     <GROUPID>0</GROUPID>
@@ -33,8 +33,8 @@
     <ISENABLEATHM>0</ISENABLEATHM>
   </Sys_MapDtl>
   <Sys_MapData>
-    <NO>00008</NO>
-    <NAME>九、企业注册建造师名单</NAME>
+    <NO>Demo_Inc09</NO>
+    <NAME>09.企业注册建造师名单</NAME>
     <FK_FLOW>001</FK_FLOW>
     <FORMTYPE>0</FORMTYPE>
     <PTABLE>info9_JZSMD</PTABLE>
@@ -47,7 +47,7 @@
   </Sys_MapData>
   <Sys_FrmLine>
     <MYPK>Line110702070230</MYPK>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>37</X1>
@@ -59,7 +59,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110702070206</MYPK>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>35</X1>
@@ -71,7 +71,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110702070227</MYPK>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>38</X1>
@@ -83,7 +83,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110702070235</MYPK>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>28</X1>
@@ -95,7 +95,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110702070238</MYPK>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>777</X1>
@@ -107,7 +107,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110702070240</MYPK>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>777</X1>
@@ -119,7 +119,7 @@
   </Sys_FrmLine>
   <Sys_FrmLab>
     <MYPK>Lab1107061157241</MYPK>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <TEXT>九、企业项目经理名单</TEXT>
     <X>330</X>
     <Y>17</Y>
@@ -133,7 +133,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707025040</MYPK>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <TEXT>注：1.本表按项目经理的级别顺序进行分级后填写；&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;2.本表可复制加页。</TEXT>
     <X>40</X>
     <Y>773</Y>
@@ -145,8 +145,8 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_MapAttr>
-    <MYPK>00008_OID</MYPK>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <MYPK>Demo_Inc09_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>WorkID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -169,8 +169,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008_FID</MYPK>
-    <FK_MAPDATA>00008</FK_MAPDATA>
+    <MYPK>Demo_Inc09_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc09</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -193,8 +193,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008Dtl1_name_</MYPK>
-    <FK_MAPDATA>00008Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc09Dtl1_name_</MYPK>
+    <FK_MAPDATA>Demo_Inc09Dtl1</FK_MAPDATA>
     <KEYOFEN>name_</KEYOFEN>
     <NAME>姓名</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -216,8 +216,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008Dtl1_ID_NUMBER</MYPK>
-    <FK_MAPDATA>00008Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc09Dtl1_ID_NUMBER</MYPK>
+    <FK_MAPDATA>Demo_Inc09Dtl1</FK_MAPDATA>
     <KEYOFEN>ID_NUMBER</KEYOFEN>
     <NAME>身份证号码</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -239,8 +239,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008Dtl1_Graduc_profession</MYPK>
-    <FK_MAPDATA>00008Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc09Dtl1_Graduc_profession</MYPK>
+    <FK_MAPDATA>Demo_Inc09Dtl1</FK_MAPDATA>
     <KEYOFEN>Graduc_profession</KEYOFEN>
     <NAME>专业</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -262,8 +262,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008Dtl1_level_</MYPK>
-    <FK_MAPDATA>00008Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc09Dtl1_level_</MYPK>
+    <FK_MAPDATA>Demo_Inc09Dtl1</FK_MAPDATA>
     <KEYOFEN>level_</KEYOFEN>
     <NAME>级别</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -285,8 +285,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008Dtl1_Cert_id</MYPK>
-    <FK_MAPDATA>00008Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc09Dtl1_Cert_id</MYPK>
+    <FK_MAPDATA>Demo_Inc09Dtl1</FK_MAPDATA>
     <KEYOFEN>Cert_id</KEYOFEN>
     <NAME>证书编号</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -308,8 +308,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008Dtl1_OID</MYPK>
-    <FK_MAPDATA>00008Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc09Dtl1_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc09Dtl1</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>主键</NAME>
     <DEFVAL>0</DEFVAL>
@@ -332,8 +332,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008Dtl1_RefPK</MYPK>
-    <FK_MAPDATA>00008Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc09Dtl1_RefPK</MYPK>
+    <FK_MAPDATA>Demo_Inc09Dtl1</FK_MAPDATA>
     <KEYOFEN>RefPK</KEYOFEN>
     <NAME>关联ID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -356,8 +356,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008Dtl1_FID</MYPK>
-    <FK_MAPDATA>00008Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc09Dtl1_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc09Dtl1</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -380,8 +380,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008Dtl1_RDT</MYPK>
-    <FK_MAPDATA>00008Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc09Dtl1_RDT</MYPK>
+    <FK_MAPDATA>Demo_Inc09Dtl1</FK_MAPDATA>
     <KEYOFEN>RDT</KEYOFEN>
     <NAME>记录时间</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -404,8 +404,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00008Dtl1_Rec</MYPK>
-    <FK_MAPDATA>00008Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc09Dtl1_Rec</MYPK>
+    <FK_MAPDATA>Demo_Inc09Dtl1</FK_MAPDATA>
     <KEYOFEN>Rec</KEYOFEN>
     <NAME>记录人</NAME>
     <DEFVAL>@WebUser.No</DEFVAL>
@@ -431,7 +431,7 @@
   <Sys_GroupField>
     <OID>229</OID>
     <LAB>九、企业注册建造师名单</LAB>
-    <ENNAME>00008</ENNAME>
+    <ENNAME>Demo_Inc09</ENNAME>
     <IDX>0</IDX>
   </Sys_GroupField>
 </NewDataSet>

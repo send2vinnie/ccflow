@@ -1,8 +1,8 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <Sys_MapData>
-    <NO>00002</NO>
-    <NAME>二、企业简介</NAME>
+    <NO>Demo_Inc02</NO>
+    <NAME>02.企业简介</NAME>
     <FK_FLOW>001</FK_FLOW>
     <FORMTYPE>0</FORMTYPE>
     <PTABLE>Info2_QYJJ</PTABLE>
@@ -15,7 +15,7 @@
   </Sys_MapData>
   <Sys_FrmLine>
     <MYPK>Line110709050929</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>331</X1>
@@ -27,7 +27,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110709050912</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>53</X1>
@@ -39,7 +39,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110709050932</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>331</X1>
@@ -51,7 +51,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110709050949</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>154</X1>
@@ -63,7 +63,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110709050948</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>746</X1>
@@ -75,7 +75,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110709050951</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>733</X1>
@@ -87,7 +87,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110709050952</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>733</X1>
@@ -99,7 +99,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110705093837_1</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>54</X1>
@@ -111,7 +111,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110709050959</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>63</X1>
@@ -123,7 +123,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110701050155</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>52</X1>
@@ -135,7 +135,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110701050158</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>747</X1>
@@ -147,7 +147,7 @@
   </Sys_FrmLine>
   <Sys_FrmLine>
     <MYPK>Line110701050159</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
     <X1>747</X1>
@@ -159,7 +159,7 @@
   </Sys_FrmLine>
   <Sys_FrmLab>
     <MYPK>Lab1107040324091</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <TEXT>二、企&amp;nbsp;&amp;nbsp;业&amp;nbsp;&amp;nbsp;简&amp;nbsp;&amp;nbsp;介</TEXT>
     <X>342.50</X>
     <Y>9</Y>
@@ -173,7 +173,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MYPK>Lab110707022654</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <TEXT>注：本简介可复制加页。</TEXT>
     <X>66</X>
     <Y>625</Y>
@@ -185,8 +185,8 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_MapAttr>
-    <MYPK>00002_ent_resume</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <MYPK>Demo_Inc02_ent_resume</MYPK>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <KEYOFEN>ent_resume</KEYOFEN>
     <NAME>企业简介</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -208,8 +208,8 @@
     <Y>58</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00002_OID</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <MYPK>Demo_Inc02_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>WorkID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -232,8 +232,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00002_FID</MYPK>
-    <FK_MAPDATA>00002</FK_MAPDATA>
+    <MYPK>Demo_Inc02_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -258,7 +258,7 @@
   <Sys_GroupField>
     <OID>189</OID>
     <LAB>企业简介</LAB>
-    <ENNAME>00002</ENNAME>
+    <ENNAME>Demo_Inc02</ENNAME>
     <IDX>0</IDX>
   </Sys_GroupField>
 </NewDataSet>

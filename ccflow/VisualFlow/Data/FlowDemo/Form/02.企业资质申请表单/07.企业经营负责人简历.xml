@@ -1,10 +1,23 @@
-<?xml version="1.0" standalone="yes"?>
+﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
+ <Sys_MapData>
+    <NO>Demo_Inc07</NO>
+    <NAME>07.企业经营负责人简历</NAME>
+    <FK_FLOW>001</FK_FLOW>
+    <FORMTYPE>0</FORMTYPE>
+    <PTABLE>info7_QYFZRJL</PTABLE>
+    <FRMW>900</FRMW>
+    <FRMH>1200</FRMH>
+    <DBURL>0</DBURL>
+    <FRMTYPE>0</FRMTYPE>
+    <FK_FRMSORT>01</FK_FRMSORT>
+    <APPTYPE>1</APPTYPE>
+  </Sys_MapData>
   <Sys_MapDtl>
-    <NO>00005Dtl1</NO>
-    <NAME>技术人员工作简历表</NAME>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <PTABLE>skill_work_list</PTABLE>
+    <NO>Demo_Inc07Dtl1</NO>
+    <NAME>负责人工作简历</NAME>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <PTABLE>charge_WORK_LIST</PTABLE>
     <ROWIDX>99</ROWIDX>
     <GROUPID>0</GROUPID>
     <ROWSOFLIST>6</ROWSOFLIST>
@@ -18,10 +31,10 @@
     <ISENABLEPASS>0</ISENABLEPASS>
     <WHENOVERSIZE>1</WHENOVERSIZE>
     <DTLOPENTYPE>0</DTLOPENTYPE>
-    <X>41</X>
-    <Y>287</Y>
-    <H>252</H>
-    <W>702</W>
+    <X>91</X>
+    <Y>307</Y>
+    <H>331</H>
+    <W>653</W>
     <ISSHOWTITLE>1</ISSHOWTITLE>
     <DTLSHOWMODEL>0</DTLSHOWMODEL>
     <FRMW>900</FRMW>
@@ -32,452 +45,253 @@
     <ISIMP>1</ISIMP>
     <ISENABLEATHM>0</ISENABLEATHM>
   </Sys_MapDtl>
-  <Sys_MapData>
-    <NO>00005</NO>
-    <NAME>五、企业技术负责人简历</NAME>
-    <FK_FLOW>001</FK_FLOW>
-    <FORMTYPE>0</FORMTYPE>
-    <PTABLE>info5_JSJL</PTABLE>
-    <FRMW>900</FRMW>
-    <FRMH>1200</FRMH>
-    <DBURL>0</DBURL>
-    <FRMTYPE>0</FRMTYPE>
-    <FK_FRMSORT>01</FK_FRMSORT>
-    <APPTYPE>1</APPTYPE>
-  </Sys_MapData>
+ 
   <Sys_FrmLine>
-    <MYPK>Line110708050836</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110702060205</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>745</X1>
-    <Y1>484</Y1>
-    <X2>745</X2>
-    <Y2>484</Y2>
+    <X1>82</X1>
+    <Y1>653</Y1>
+    <X2>754</X2>
+    <Y2>653</Y2>
     <BORDERWIDTH>4</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110708050837</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706024039_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>745</X1>
-    <Y1>484</Y1>
-    <X2>745</X2>
-    <Y2>484</Y2>
+    <X1>83</X1>
+    <Y1>142</Y1>
+    <X2>653</X2>
+    <Y2>142</Y2>
+    <BORDERWIDTH>2</BORDERWIDTH>
+    <BORDERCOLOR>Black</BORDERCOLOR>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MYPK>Line110706024058_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>84</X1>
+    <Y1>179</Y1>
+    <X2>651</X2>
+    <Y2>179</Y2>
+    <BORDERWIDTH>2</BORDERWIDTH>
+    <BORDERCOLOR>Black</BORDERCOLOR>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MYPK>Line110702060238</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>101</X1>
+    <Y1>652</Y1>
+    <X2>101</X2>
+    <Y2>652</Y2>
     <BORDERWIDTH>4</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110708050847</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110702060239</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>739</X1>
-    <Y1>265</Y1>
-    <X2>739</X2>
-    <Y2>265</Y2>
+    <X1>101</X1>
+    <Y1>652</Y1>
+    <X2>101</X2>
+    <Y2>652</Y2>
     <BORDERWIDTH>4</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110706115016_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110702060246</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>538</X1>
-    <Y1>53</Y1>
-    <X2>538</X2>
-    <Y2>198</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110706115032_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>446</X1>
-    <Y1>53</Y1>
-    <X2>446</X2>
-    <Y2>197</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110706115034_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>657</X1>
-    <Y1>53</Y1>
-    <X2>657</X2>
-    <Y2>198</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110706115217_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>251</X1>
-    <Y1>56</Y1>
-    <X2>251</X2>
-    <Y2>200</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110706115227_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>111</X1>
-    <Y1>56</Y1>
-    <X2>111</X2>
-    <Y2>234</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110705050544</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>31</X1>
-    <Y1>611</Y1>
-    <X2>31</X2>
-    <Y2>611</Y2>
+    <X1>759</X1>
+    <Y1>650</Y1>
+    <X2>759</X2>
+    <Y2>650</Y2>
     <BORDERWIDTH>4</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110705050502</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110702060202</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>399</X1>
-    <Y1>645</Y1>
-    <X2>399</X2>
-    <Y2>645</Y2>
-    <BORDERWIDTH>4</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110705050512</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>609</X1>
-    <Y1>658</Y1>
-    <X2>609</X2>
-    <Y2>658</Y2>
-    <BORDERWIDTH>4</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110706041824_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>39</X1>
-    <Y1>92</Y1>
-    <X2>658</X2>
-    <Y2>92</Y2>
+    <X1>535</X1>
+    <Y1>64</Y1>
+    <X2>535</X2>
+    <Y2>219</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110705050534</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706025822_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>39</X1>
-    <Y1>54</Y1>
-    <X2>746</X2>
-    <Y2>54</Y2>
+    <X1>82</X1>
+    <Y1>102</Y1>
+    <X2>651</X2>
+    <Y2>102</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110705050537</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706030003_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>752</X1>
-    <Y1>54</Y1>
+    <X1>84</X1>
+    <Y1>179</Y1>
+    <X2>652</X2>
+    <Y2>179</Y2>
+    <BORDERWIDTH>2</BORDERWIDTH>
+    <BORDERCOLOR>Black</BORDERCOLOR>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MYPK>Line110706030028_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>84</X1>
+    <Y1>217</Y1>
+    <X2>754</X2>
+    <Y2>217</Y2>
+    <BORDERWIDTH>2</BORDERWIDTH>
+    <BORDERCOLOR>Black</BORDERCOLOR>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MYPK>Line110706030116_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>81</X1>
+    <Y1>259</Y1>
+    <X2>750</X2>
+    <Y2>259</Y2>
+    <BORDERWIDTH>2</BORDERWIDTH>
+    <BORDERCOLOR>Black</BORDERCOLOR>
+  </Sys_FrmLine>
+  <Sys_FrmLine>
+    <MYPK>Line110703060327</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <X>0</X>
+    <Y>0</Y>
+    <X1>82</X1>
+    <Y1>300</Y1>
     <X2>752</X2>
-    <Y2>54</Y2>
-    <BORDERWIDTH>4</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110705050543</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>31</X1>
-    <Y1>612</Y1>
-    <X2>31</X2>
-    <Y2>611</Y2>
-    <BORDERWIDTH>4</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110705050545</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>747</X1>
-    <Y1>54</Y1>
-    <X2>747</X2>
-    <Y2>547</Y2>
+    <Y2>300</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110705050547</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706030501_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>748</X1>
-    <Y1>605</Y1>
-    <X2>748</X2>
-    <Y2>605</Y2>
-    <BORDERWIDTH>4</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110705050550</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>764</X1>
-    <Y1>620</Y1>
-    <X2>764</X2>
-    <Y2>620</Y2>
-    <BORDERWIDTH>4</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110705050549</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>136</X1>
-    <Y1>639</Y1>
-    <X2>136</X2>
-    <Y2>639</Y2>
-    <BORDERWIDTH>4</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110705050556</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>297</X1>
-    <Y1>644</Y1>
-    <X2>297</X2>
-    <Y2>644</Y2>
-    <BORDERWIDTH>4</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
-  </Sys_FrmLine>
-  <Sys_FrmLine>
-    <MYPK>Line110705050500</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>0</X>
-    <Y>0</Y>
-    <X1>327</X1>
-    <Y1>55</Y1>
-    <X2>327</X2>
-    <Y2>198</Y2>
+    <X1>339</X1>
+    <Y1>62</Y1>
+    <X2>339</X2>
+    <Y2>216</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110706041837_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706030617_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>37</X1>
-    <Y1>127</Y1>
-    <X2>656</X2>
-    <Y2>127</Y2>
+    <X1>271</X1>
+    <Y1>64</Y1>
+    <X2>271</X2>
+    <Y2>218</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110706041844_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706030713_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>36</X1>
-    <Y1>163</Y1>
-    <X2>657</X2>
-    <Y2>163</Y2>
+    <X1>455</X1>
+    <Y1>62</Y1>
+    <X2>455</X2>
+    <Y2>216</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110706042020_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706030727_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>36</X1>
-    <Y1>199</Y1>
-    <X2>748</X2>
-    <Y2>199</Y2>
+    <X1>157</X1>
+    <Y1>64</Y1>
+    <X2>157</X2>
+    <Y2>258</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110706042116_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706030759_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>37</X1>
-    <Y1>236</Y1>
-    <X2>749</X2>
-    <Y2>236</Y2>
+    <X1>652</X1>
+    <Y1>62</Y1>
+    <X2>652</X2>
+    <Y2>217</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110706042155_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706030854_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>37</X1>
-    <Y1>54</Y1>
-    <X2>37</X2>
-    <Y2>547</Y2>
+    <X1>753</X1>
+    <Y1>62</Y1>
+    <X2>753</X2>
+    <Y2>651</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110706042237_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706031207_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>36</X1>
-    <Y1>282</Y1>
-    <X2>748</X2>
-    <Y2>282</Y2>
+    <X1>82</X1>
+    <Y1>63</Y1>
+    <X2>82</X2>
+    <Y2>652</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110706042254_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Line110706031306_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <X>0</X>
     <Y>0</Y>
-    <X1>37</X1>
-    <Y1>547</Y1>
-    <X2>749</X2>
-    <Y2>547</Y2>
+    <X1>81</X1>
+    <Y1>63</Y1>
+    <X2>753</X2>
+    <Y2>63</Y2>
     <BORDERWIDTH>2</BORDERWIDTH>
     <BORDERCOLOR>Black</BORDERCOLOR>
   </Sys_FrmLine>
   <Sys_FrmLab>
-    <MYPK>Lab110705084353</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>毕业时间</TEXT>
-    <X>45.50</X>
-    <Y>138</Y>
-    <FONTSIZE>13</FONTSIZE>
-    <FONTCOLOR>#FF000000</FONTCOLOR>
-    <FONTNAME>Portable User Interface</FONTNAME>
-    <FONTSTYLE>Normal</FONTSTYLE>
-    <ISBOLD>0</ISBOLD>
-    <ISITALIC>0</ISITALIC>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MYPK>Lab110705084419</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>毕业专业</TEXT>
-    <X>259</X>
-    <Y>134</Y>
-    <FONTSIZE>13</FONTSIZE>
-    <FONTCOLOR>#FF000000</FONTCOLOR>
-    <FONTNAME>Portable User Interface</FONTNAME>
-    <FONTSTYLE>Normal</FONTSTYLE>
-    <ISBOLD>0</ISBOLD>
-    <ISITALIC>0</ISITALIC>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MYPK>Lab110705084524</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>电&amp;nbsp;&amp;nbsp;&amp;nbsp;话</TEXT>
-    <X>50.50</X>
-    <Y>171</Y>
-    <FONTSIZE>13</FONTSIZE>
-    <FONTCOLOR>#FF000000</FONTCOLOR>
-    <FONTNAME>Portable User Interface</FONTNAME>
-    <FONTSTYLE>Normal</FONTSTYLE>
-    <ISBOLD>0</ISBOLD>
-    <ISITALIC>0</ISITALIC>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MYPK>Lab110705084625</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>毕业院校</TEXT>
-    <X>44.50</X>
-    <Y>207</Y>
-    <FONTSIZE>13</FONTSIZE>
-    <FONTCOLOR>#FF000000</FONTCOLOR>
-    <FONTNAME>Portable User Interface</FONTNAME>
-    <FONTSTYLE>Normal</FONTSTYLE>
-    <ISBOLD>0</ISBOLD>
-    <ISITALIC>0</ISITALIC>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MYPK>Lab110705084805</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>工作管理资历</TEXT>
-    <X>452</X>
-    <Y>134</Y>
-    <FONTSIZE>13</FONTSIZE>
-    <FONTCOLOR>#FF000000</FONTCOLOR>
-    <FONTNAME>Portable User Interface</FONTNAME>
-    <FONTSTYLE>Normal</FONTSTYLE>
-    <ISBOLD>0</ISBOLD>
-    <ISITALIC>0</ISITALIC>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MYPK>Lab110705085017_1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>工作简历</TEXT>
-    <X>42</X>
-    <Y>248</Y>
-    <FONTSIZE>16</FONTSIZE>
-    <FONTCOLOR>#FF000000</FONTCOLOR>
-    <FONTNAME>Portable User Interface</FONTNAME>
-    <FONTSTYLE>Normal</FONTSTYLE>
-    <ISBOLD>0</ISBOLD>
-    <ISITALIC>0</ISITALIC>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MYPK>Lab110708023201</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>移动电话</TEXT>
-    <X>262</X>
-    <Y>171</Y>
-    <FONTSIZE>13</FONTSIZE>
-    <FONTCOLOR>#FF000000</FONTCOLOR>
-    <FONTNAME>Portable User Interface</FONTNAME>
-    <FONTSTYLE>Normal</FONTSTYLE>
-    <ISBOLD>0</ISBOLD>
-    <ISITALIC>0</ISITALIC>
-  </Sys_FrmLab>
-  <Sys_FrmLab>
-    <MYPK>Lab1107050545281</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>五、企业技术负责人简历</TEXT>
-    <X>274</X>
-    <Y>14</Y>
+    <MYPK>Lab1107060236011</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>七、企业经营负责人简历</TEXT>
+    <X>298</X>
+    <Y>20</Y>
     <FONTSIZE>22</FONTSIZE>
     <FONTCOLOR>#FF000000</FONTCOLOR>
     <FONTNAME>Portable User Interface</FONTNAME>
@@ -487,11 +301,11 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MYPK>Lab110705054908</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>姓&amp;nbsp;&amp;nbsp;&amp;nbsp;名</TEXT>
-    <X>50.50</X>
-    <Y>64</Y>
+    <MYPK>Lab110706024354</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>性&amp;nbsp;&amp;nbsp;别</TEXT>
+    <X>282</X>
+    <Y>76</Y>
     <FONTSIZE>13</FONTSIZE>
     <FONTCOLOR>#FF000000</FONTCOLOR>
     <FONTNAME>Portable User Interface</FONTNAME>
@@ -500,11 +314,11 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MYPK>Lab110705054915</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>性&amp;nbsp;&amp;nbsp;&amp;nbsp;别</TEXT>
-    <X>265</X>
-    <Y>64</Y>
+    <MYPK>Lab110706024007</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>姓&amp;nbsp;&amp;nbsp;名</TEXT>
+    <X>97</X>
+    <Y>75</Y>
     <FONTSIZE>13</FONTSIZE>
     <FONTCOLOR>#FF000000</FONTCOLOR>
     <FONTNAME>Portable User Interface</FONTNAME>
@@ -513,11 +327,11 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MYPK>Lab110705054955</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>出&amp;nbsp;生&amp;nbsp;年&amp;nbsp;月</TEXT>
-    <X>454</X>
-    <Y>64</Y>
+    <MYPK>Lab110706024439</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>出生年月</TEXT>
+    <X>463</X>
+    <Y>78</Y>
     <FONTSIZE>13</FONTSIZE>
     <FONTCOLOR>#FF000000</FONTCOLOR>
     <FONTNAME>Portable User Interface</FONTNAME>
@@ -526,11 +340,11 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MYPK>Lab110705055032</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>职&amp;nbsp;&amp;nbsp;&amp;nbsp;务</TEXT>
-    <X>49.50</X>
-    <Y>101</Y>
+    <MYPK>Lab110706024526</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>职&amp;nbsp;&amp;nbsp;务</TEXT>
+    <X>97</X>
+    <Y>115</Y>
     <FONTSIZE>13</FONTSIZE>
     <FONTCOLOR>#FF000000</FONTCOLOR>
     <FONTNAME>Portable User Interface</FONTNAME>
@@ -539,11 +353,11 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MYPK>Lab110705055047</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>职&amp;nbsp;&amp;nbsp;&amp;nbsp;称</TEXT>
-    <X>265</X>
-    <Y>99</Y>
+    <MYPK>Lab110706024550</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>职&amp;nbsp;&amp;nbsp;称</TEXT>
+    <X>282</X>
+    <Y>116</Y>
     <FONTSIZE>13</FONTSIZE>
     <FONTCOLOR>#FF000000</FONTCOLOR>
     <FONTNAME>Portable User Interface</FONTNAME>
@@ -552,11 +366,11 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MYPK>Lab110705055106</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>最&amp;nbsp;高&amp;nbsp;学&amp;nbsp;历</TEXT>
-    <X>454</X>
-    <Y>98</Y>
+    <MYPK>Lab110706024652</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>最高学历</TEXT>
+    <X>463</X>
+    <Y>117</Y>
     <FONTSIZE>13</FONTSIZE>
     <FONTCOLOR>#FF000000</FONTCOLOR>
     <FONTNAME>Portable User Interface</FONTNAME>
@@ -565,11 +379,102 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MYPK>Lab110707023214</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <TEXT>注：工作简历从参加工作开始连续填写。</TEXT>
-    <X>39</X>
-    <Y>580</Y>
+    <MYPK>Lab110706024731</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>电&amp;nbsp;&amp;nbsp;话</TEXT>
+    <X>97</X>
+    <Y>152</Y>
+    <FONTSIZE>13</FONTSIZE>
+    <FONTCOLOR>#FF000000</FONTCOLOR>
+    <FONTNAME>Portable User Interface</FONTNAME>
+    <FONTSTYLE>Normal</FONTSTYLE>
+    <ISBOLD>0</ISBOLD>
+    <ISITALIC>0</ISITALIC>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MYPK>Lab110706024749</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>移动电话</TEXT>
+    <X>277</X>
+    <Y>152</Y>
+    <FONTSIZE>13</FONTSIZE>
+    <FONTCOLOR>#FF000000</FONTCOLOR>
+    <FONTNAME>Portable User Interface</FONTNAME>
+    <FONTSTYLE>Normal</FONTSTYLE>
+    <ISBOLD>0</ISBOLD>
+    <ISITALIC>0</ISITALIC>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MYPK>Lab110706024859</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>毕业时间</TEXT>
+    <X>91</X>
+    <Y>193</Y>
+    <FONTSIZE>13</FONTSIZE>
+    <FONTCOLOR>#FF000000</FONTCOLOR>
+    <FONTNAME>Portable User Interface</FONTNAME>
+    <FONTSTYLE>Normal</FONTSTYLE>
+    <ISBOLD>0</ISBOLD>
+    <ISITALIC>0</ISITALIC>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MYPK>Lab110706024912</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>毕业专业</TEXT>
+    <X>278</X>
+    <Y>191</Y>
+    <FONTSIZE>13</FONTSIZE>
+    <FONTCOLOR>#FF000000</FONTCOLOR>
+    <FONTNAME>Portable User Interface</FONTNAME>
+    <FONTSTYLE>Normal</FONTSTYLE>
+    <ISBOLD>0</ISBOLD>
+    <ISITALIC>0</ISITALIC>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MYPK>Lab110706024927</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>毕业学校</TEXT>
+    <X>91</X>
+    <Y>230</Y>
+    <FONTSIZE>13</FONTSIZE>
+    <FONTCOLOR>#FF000000</FONTCOLOR>
+    <FONTNAME>Portable User Interface</FONTNAME>
+    <FONTSTYLE>Normal</FONTSTYLE>
+    <ISBOLD>0</ISBOLD>
+    <ISITALIC>0</ISITALIC>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MYPK>Lab110706030353_1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>工作简历</TEXT>
+    <X>92</X>
+    <Y>269</Y>
+    <FONTSIZE>15</FONTSIZE>
+    <FONTCOLOR>#FF000000</FONTCOLOR>
+    <FONTNAME>Portable User Interface</FONTNAME>
+    <FONTSTYLE>Normal</FONTSTYLE>
+    <ISBOLD>0</ISBOLD>
+    <ISITALIC>0</ISITALIC>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MYPK>Lab110711041319</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>管理资历</TEXT>
+    <X>463</X>
+    <Y>151</Y>
+    <FONTSIZE>12</FONTSIZE>
+    <FONTCOLOR>#FF000000</FONTCOLOR>
+    <FONTNAME>Portable User Interface</FONTNAME>
+    <FONTSTYLE>Normal</FONTSTYLE>
+    <ISBOLD>0</ISBOLD>
+    <ISITALIC>0</ISITALIC>
+  </Sys_FrmLab>
+  <Sys_FrmLab>
+    <MYPK>Lab110707024917</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <TEXT>注：1.企业经营负责人指特级、一级资质企业的总经济师；@&amp;nbsp;&amp;nbsp;2.工作简历从参加工作开始连续填写。</TEXT>
+    <X>83</X>
+    <Y>665</Y>
     <FONTSIZE>12</FONTSIZE>
     <FONTCOLOR>#FF000000</FONTCOLOR>
     <FONTNAME>Portable User Interface</FONTNAME>
@@ -578,26 +483,26 @@
     <ISITALIC>0</ISITALIC>
   </Sys_FrmLab>
   <Sys_FrmRB>
-    <MYPK>00005_sex__0</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Demo_Inc07_sex__0</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <KEYOFEN>sex_</KEYOFEN>
     <ENUMKEY>sex_</ENUMKEY>
     <LAB>男</LAB>
-    <X>338</X>
-    <Y>63</Y>
+    <X>351</X>
+    <Y>73</Y>
   </Sys_FrmRB>
   <Sys_FrmRB>
-    <MYPK>00005_sex__1</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Demo_Inc07_sex__1</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <KEYOFEN>sex_</KEYOFEN>
     <ENUMKEY>sex_</ENUMKEY>
     <LAB>女</LAB>
-    <X>384</X>
-    <Y>63</Y>
+    <X>393</X>
+    <Y>74</Y>
   </Sys_FrmRB>
   <Sys_MapAttr>
-    <MYPK>00005_sex_</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Demo_Inc07_sex_</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <KEYOFEN>sex_</KEYOFEN>
     <UICONTRALTYPE>3</UICONTRALTYPE>
     <MYDATATYPE>2</MYDATATYPE>
@@ -621,14 +526,14 @@
     <Y>0</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005_NAME_</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Demo_Inc07_NAME_</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <KEYOFEN>NAME_</KEYOFEN>
     <NAME>姓名</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
     <MYDATATYPE>1</MYDATATYPE>
     <LGTYPE>0</LGTYPE>
-    <UIWIDTH>124</UIWIDTH>
+    <UIWIDTH>100</UIWIDTH>
     <UIHEIGHT>23</UIHEIGHT>
     <MINLEN>0</MINLEN>
     <MAXLEN>500</MAXLEN>
@@ -640,18 +545,18 @@
     <IDX>0</IDX>
     <GROUPID>0</GROUPID>
     <ISSIGAN>0</ISSIGAN>
-    <X>118</X>
-    <Y>61</Y>
+    <X>164</X>
+    <Y>74</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005_TEL_</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <KEYOFEN>TEL_</KEYOFEN>
-    <NAME>电话</NAME>
+    <MYPK>Demo_Inc07_MANAGE_YEAR</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <KEYOFEN>MANAGE_YEAR</KEYOFEN>
+    <NAME>管理资历</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
     <MYDATATYPE>1</MYDATATYPE>
     <LGTYPE>0</LGTYPE>
-    <UIWIDTH>124</UIWIDTH>
+    <UIWIDTH>100</UIWIDTH>
     <UIHEIGHT>23</UIHEIGHT>
     <MINLEN>0</MINLEN>
     <MAXLEN>500</MAXLEN>
@@ -660,38 +565,15 @@
     <UIISLINE>1</UIISLINE>
     <EDITTYPE>0</EDITTYPE>
     <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>17</IDX>
+    <IDX>0</IDX>
     <GROUPID>0</GROUPID>
     <ISSIGAN>0</ISSIGAN>
-    <X>118</X>
-    <Y>167</Y>
+    <X>542</X>
+    <Y>150</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005_Birthday_</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <KEYOFEN>Birthday_</KEYOFEN>
-    <NAME>出生年月</NAME>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>1</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>104</UIWIDTH>
-    <UIHEIGHT>23</UIHEIGHT>
-    <MINLEN>0</MINLEN>
-    <MAXLEN>500</MAXLEN>
-    <UIVISIBLE>1</UIVISIBLE>
-    <UIISENABLE>1</UIISENABLE>
-    <UIISLINE>1</UIISLINE>
-    <EDITTYPE>0</EDITTYPE>
-    <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>19</IDX>
-    <GROUPID>0</GROUPID>
-    <ISSIGAN>0</ISSIGAN>
-    <X>544</X>
-    <Y>60</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MYPK>00005_OID</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Demo_Inc07_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>WorkID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -707,15 +589,15 @@
     <UIISLINE>0</UIISLINE>
     <EDITTYPE>2</EDITTYPE>
     <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>40</IDX>
+    <IDX>38</IDX>
     <GROUPID>0</GROUPID>
     <ISSIGAN>0</ISSIGAN>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005_FID</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Demo_Inc07_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -731,181 +613,150 @@
     <UIISLINE>0</UIISLINE>
     <EDITTYPE>2</EDITTYPE>
     <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>57</IDX>
+    <IDX>49</IDX>
     <GROUPID>0</GROUPID>
     <ISSIGAN>0</ISSIGAN>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005_Max_education</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Demo_Inc07_TITLE_</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <KEYOFEN>TITLE_</KEYOFEN>
+    <NAME>职称</NAME>
+    <UICONTRALTYPE>0</UICONTRALTYPE>
+    <MYDATATYPE>1</MYDATATYPE>
+    <LGTYPE>0</LGTYPE>
+    <UIWIDTH>101</UIWIDTH>
+    <UIHEIGHT>23</UIHEIGHT>
+    <UIVISIBLE>1</UIVISIBLE>
+    <UIISENABLE>1</UIISENABLE>
+    <X>345</X>
+    <Y>111</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MYPK>Demo_Inc07_Max_education</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <KEYOFEN>Max_education</KEYOFEN>
     <NAME>最高学历</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
     <MYDATATYPE>1</MYDATATYPE>
     <LGTYPE>0</LGTYPE>
-    <UIWIDTH>104</UIWIDTH>
+    <UIWIDTH>103</UIWIDTH>
     <UIHEIGHT>23</UIHEIGHT>
     <UIVISIBLE>1</UIVISIBLE>
     <UIISENABLE>1</UIISENABLE>
-    <X>544</X>
-    <Y>96</Y>
+    <X>541</X>
+    <Y>112</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005_Title_</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <KEYOFEN>Title_</KEYOFEN>
-    <NAME>职称</NAME>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>1</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>105</UIWIDTH>
-    <UIHEIGHT>23</UIHEIGHT>
-    <UIVISIBLE>1</UIVISIBLE>
-    <UIISENABLE>1</UIISENABLE>
-    <X>333</X>
-    <Y>98</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MYPK>00005_Position_</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <KEYOFEN>Position_</KEYOFEN>
+    <MYPK>Demo_Inc07_POSITION_</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <KEYOFEN>POSITION_</KEYOFEN>
     <NAME>职务</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
     <MYDATATYPE>1</MYDATATYPE>
     <LGTYPE>0</LGTYPE>
-    <UIWIDTH>123</UIWIDTH>
+    <UIWIDTH>100</UIWIDTH>
     <UIHEIGHT>23</UIHEIGHT>
     <UIVISIBLE>1</UIVISIBLE>
     <UIISENABLE>1</UIISENABLE>
-    <X>119</X>
-    <Y>98</Y>
+    <X>163</X>
+    <Y>111</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005_Graduc_profession</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <KEYOFEN>Graduc_profession</KEYOFEN>
-    <NAME>毕业专业</NAME>
+    <MYPK>Demo_Inc07_Birthday_</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <KEYOFEN>Birthday_</KEYOFEN>
+    <NAME>出生年月</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
     <MYDATATYPE>1</MYDATATYPE>
     <LGTYPE>0</LGTYPE>
-    <UIWIDTH>104</UIWIDTH>
+    <UIWIDTH>102</UIWIDTH>
     <UIHEIGHT>23</UIHEIGHT>
     <UIVISIBLE>1</UIVISIBLE>
     <UIISENABLE>1</UIISENABLE>
-    <X>334</X>
-    <Y>134</Y>
+    <X>541</X>
+    <Y>72</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005_Graduc_date</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
+    <MYPK>Demo_Inc07_Graduc_school</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <KEYOFEN>Graduc_school</KEYOFEN>
+    <NAME>毕业学校</NAME>
+    <UICONTRALTYPE>0</UICONTRALTYPE>
+    <MYDATATYPE>1</MYDATATYPE>
+    <LGTYPE>0</LGTYPE>
+    <UIWIDTH>578</UIWIDTH>
+    <UIHEIGHT>23</UIHEIGHT>
+    <UIVISIBLE>1</UIVISIBLE>
+    <UIISENABLE>1</UIISENABLE>
+    <X>164</X>
+    <Y>228</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MYPK>Demo_Inc07_Mobile_</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <KEYOFEN>Mobile_</KEYOFEN>
+    <NAME>移动电话</NAME>
+    <UICONTRALTYPE>0</UICONTRALTYPE>
+    <MYDATATYPE>1</MYDATATYPE>
+    <LGTYPE>0</LGTYPE>
+    <UIWIDTH>100</UIWIDTH>
+    <UIHEIGHT>23</UIHEIGHT>
+    <UIVISIBLE>1</UIVISIBLE>
+    <UIISENABLE>1</UIISENABLE>
+    <X>346</X>
+    <Y>149</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MYPK>Demo_Inc07_Graduc_date</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
     <KEYOFEN>Graduc_date</KEYOFEN>
     <NAME>毕业时间</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
     <MYDATATYPE>1</MYDATATYPE>
     <LGTYPE>0</LGTYPE>
-    <UIWIDTH>124</UIWIDTH>
+    <UIWIDTH>100</UIWIDTH>
     <UIHEIGHT>23</UIHEIGHT>
     <UIVISIBLE>1</UIVISIBLE>
     <UIISENABLE>1</UIISENABLE>
-    <X>119</X>
-    <Y>132</Y>
+    <X>165</X>
+    <Y>187</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005_Graduc_school</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <KEYOFEN>Graduc_school</KEYOFEN>
-    <NAME>毕业院校</NAME>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>1</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>549</UIWIDTH>
-    <UIHEIGHT>23</UIHEIGHT>
-    <UIVISIBLE>1</UIVISIBLE>
-    <UIISENABLE>1</UIISENABLE>
-    <X>117</X>
-    <Y>206</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MYPK>00005_Manage_year</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <KEYOFEN>Manage_year</KEYOFEN>
-    <NAME>工作管理资历</NAME>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>1</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>104</UIWIDTH>
-    <UIHEIGHT>23</UIHEIGHT>
-    <UIVISIBLE>1</UIVISIBLE>
-    <UIISENABLE>1</UIISENABLE>
-    <X>545</X>
-    <Y>134</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MYPK>00005_MOBILE_</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <KEYOFEN>MOBILE_</KEYOFEN>
-    <NAME>移动电话</NAME>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>1</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>106</UIWIDTH>
-    <UIHEIGHT>23</UIHEIGHT>
-    <UIVISIBLE>1</UIVISIBLE>
-    <UIISENABLE>1</UIISENABLE>
-    <X>332</X>
-    <Y>170</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MYPK>00005Dtl1_start_date</MYPK>
-    <FK_MAPDATA>00005Dtl1</FK_MAPDATA>
-    <KEYOFEN>start_date</KEYOFEN>
-    <NAME>起始时间</NAME>
+    <MYPK>Demo_Inc07_Graduc_profession</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <KEYOFEN>Graduc_profession</KEYOFEN>
+    <NAME>毕业专业</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
     <MYDATATYPE>1</MYDATATYPE>
     <LGTYPE>0</LGTYPE>
     <UIWIDTH>100</UIWIDTH>
-    <UIHEIGHT>100</UIHEIGHT>
-    <MINLEN>0</MINLEN>
-    <MAXLEN>500</MAXLEN>
+    <UIHEIGHT>23</UIHEIGHT>
     <UIVISIBLE>1</UIVISIBLE>
     <UIISENABLE>1</UIISENABLE>
-    <UIISLINE>0</UIISLINE>
-    <EDITTYPE>0</EDITTYPE>
-    <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>1</IDX>
-    <GROUPID>730</GROUPID>
-    <ISSIGAN>0</ISSIGAN>
-    <X>5</X>
-    <Y>5</Y>
+    <X>346</X>
+    <Y>186</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005Dtl1_end_date</MYPK>
-    <FK_MAPDATA>00005Dtl1</FK_MAPDATA>
-    <KEYOFEN>end_date</KEYOFEN>
-    <NAME>终止时间</NAME>
+    <MYPK>Demo_Inc07_TEL_</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <KEYOFEN>TEL_</KEYOFEN>
+    <NAME>电话</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
     <MYDATATYPE>1</MYDATATYPE>
     <LGTYPE>0</LGTYPE>
     <UIWIDTH>100</UIWIDTH>
-    <UIHEIGHT>100</UIHEIGHT>
-    <MINLEN>0</MINLEN>
-    <MAXLEN>500</MAXLEN>
+    <UIHEIGHT>23</UIHEIGHT>
     <UIVISIBLE>1</UIVISIBLE>
     <UIISENABLE>1</UIISENABLE>
-    <UIISLINE>0</UIISLINE>
-    <EDITTYPE>0</EDITTYPE>
-    <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>2</IDX>
-    <GROUPID>730</GROUPID>
-    <ISSIGAN>0</ISSIGAN>
-    <X>5</X>
-    <Y>5</Y>
+    <X>164</X>
+    <Y>150</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005Dtl1_OID</MYPK>
-    <FK_MAPDATA>00005Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc07Dtl1_OID</MYPK>
+    <FK_MAPDATA>Demo_Inc07Dtl1</FK_MAPDATA>
     <KEYOFEN>OID</KEYOFEN>
     <NAME>主键</NAME>
     <DEFVAL>0</DEFVAL>
@@ -921,15 +772,15 @@
     <UIISLINE>0</UIISLINE>
     <EDITTYPE>2</EDITTYPE>
     <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>3</IDX>
-    <GROUPID>730</GROUPID>
+    <IDX>1</IDX>
+    <GROUPID>242</GROUPID>
     <ISSIGAN>0</ISSIGAN>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005Dtl1_RefPK</MYPK>
-    <FK_MAPDATA>00005Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc07Dtl1_RefPK</MYPK>
+    <FK_MAPDATA>Demo_Inc07Dtl1</FK_MAPDATA>
     <KEYOFEN>RefPK</KEYOFEN>
     <NAME>关联ID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -945,15 +796,15 @@
     <UIISLINE>0</UIISLINE>
     <EDITTYPE>2</EDITTYPE>
     <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>4</IDX>
-    <GROUPID>730</GROUPID>
+    <IDX>2</IDX>
+    <GROUPID>242</GROUPID>
     <ISSIGAN>0</ISSIGAN>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005Dtl1_FID</MYPK>
-    <FK_MAPDATA>00005Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc07Dtl1_FID</MYPK>
+    <FK_MAPDATA>Demo_Inc07Dtl1</FK_MAPDATA>
     <KEYOFEN>FID</KEYOFEN>
     <NAME>FID</NAME>
     <DEFVAL>0</DEFVAL>
@@ -969,15 +820,15 @@
     <UIISLINE>0</UIISLINE>
     <EDITTYPE>2</EDITTYPE>
     <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>5</IDX>
-    <GROUPID>730</GROUPID>
+    <IDX>3</IDX>
+    <GROUPID>242</GROUPID>
     <ISSIGAN>0</ISSIGAN>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005Dtl1_RDT</MYPK>
-    <FK_MAPDATA>00005Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc07Dtl1_RDT</MYPK>
+    <FK_MAPDATA>Demo_Inc07Dtl1</FK_MAPDATA>
     <KEYOFEN>RDT</KEYOFEN>
     <NAME>记录时间</NAME>
     <UICONTRALTYPE>0</UICONTRALTYPE>
@@ -993,38 +844,15 @@
     <TAG>1</TAG>
     <EDITTYPE>1</EDITTYPE>
     <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>6</IDX>
-    <GROUPID>730</GROUPID>
+    <IDX>4</IDX>
+    <GROUPID>242</GROUPID>
     <ISSIGAN>0</ISSIGAN>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>00005Dtl1_UNIT_</MYPK>
-    <FK_MAPDATA>00005Dtl1</FK_MAPDATA>
-    <KEYOFEN>UNIT_</KEYOFEN>
-    <NAME>在何单位从事何工作任何职</NAME>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>1</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>300</UIWIDTH>
-    <UIHEIGHT>100</UIHEIGHT>
-    <MINLEN>0</MINLEN>
-    <MAXLEN>500</MAXLEN>
-    <UIVISIBLE>1</UIVISIBLE>
-    <UIISENABLE>1</UIISENABLE>
-    <UIISLINE>0</UIISLINE>
-    <EDITTYPE>0</EDITTYPE>
-    <AUTOFULLWAY>0</AUTOFULLWAY>
-    <IDX>7</IDX>
-    <GROUPID>730</GROUPID>
-    <ISSIGAN>0</ISSIGAN>
-    <X>5</X>
-    <Y>5</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MYPK>00005Dtl1_Rec</MYPK>
-    <FK_MAPDATA>00005Dtl1</FK_MAPDATA>
+    <MYPK>Demo_Inc07Dtl1_Rec</MYPK>
+    <FK_MAPDATA>Demo_Inc07Dtl1</FK_MAPDATA>
     <KEYOFEN>Rec</KEYOFEN>
     <NAME>记录人</NAME>
     <DEFVAL>@WebUser.No</DEFVAL>
@@ -1041,30 +869,93 @@
     <TAG>@WebUser.No</TAG>
     <EDITTYPE>2</EDITTYPE>
     <AUTOFULLWAY>0</AUTOFULLWAY>
+    <IDX>5</IDX>
+    <GROUPID>242</GROUPID>
+    <ISSIGAN>0</ISSIGAN>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MYPK>Demo_Inc07Dtl1_start_date</MYPK>
+    <FK_MAPDATA>Demo_Inc07Dtl1</FK_MAPDATA>
+    <KEYOFEN>start_date</KEYOFEN>
+    <NAME>起始时间</NAME>
+    <UICONTRALTYPE>0</UICONTRALTYPE>
+    <MYDATATYPE>1</MYDATATYPE>
+    <LGTYPE>0</LGTYPE>
+    <UIWIDTH>100</UIWIDTH>
+    <UIHEIGHT>100</UIHEIGHT>
+    <MINLEN>0</MINLEN>
+    <MAXLEN>500</MAXLEN>
+    <UIVISIBLE>1</UIVISIBLE>
+    <UIISENABLE>1</UIISENABLE>
+    <UIISLINE>0</UIISLINE>
+    <EDITTYPE>0</EDITTYPE>
+    <AUTOFULLWAY>0</AUTOFULLWAY>
+    <IDX>6</IDX>
+    <GROUPID>242</GROUPID>
+    <ISSIGAN>0</ISSIGAN>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MYPK>Demo_Inc07Dtl1_end_date</MYPK>
+    <FK_MAPDATA>Demo_Inc07Dtl1</FK_MAPDATA>
+    <KEYOFEN>end_date</KEYOFEN>
+    <NAME>终止时间</NAME>
+    <UICONTRALTYPE>0</UICONTRALTYPE>
+    <MYDATATYPE>1</MYDATATYPE>
+    <LGTYPE>0</LGTYPE>
+    <UIWIDTH>100</UIWIDTH>
+    <UIHEIGHT>100</UIHEIGHT>
+    <MINLEN>0</MINLEN>
+    <MAXLEN>500</MAXLEN>
+    <UIVISIBLE>1</UIVISIBLE>
+    <UIISENABLE>1</UIISENABLE>
+    <UIISLINE>0</UIISLINE>
+    <EDITTYPE>0</EDITTYPE>
+    <AUTOFULLWAY>0</AUTOFULLWAY>
     <IDX>7</IDX>
-    <GROUPID>730</GROUPID>
+    <GROUPID>242</GROUPID>
+    <ISSIGAN>0</ISSIGAN>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MYPK>Demo_Inc07Dtl1_unit_</MYPK>
+    <FK_MAPDATA>Demo_Inc07Dtl1</FK_MAPDATA>
+    <KEYOFEN>unit_</KEYOFEN>
+    <NAME>在何单位从事何工作任何职</NAME>
+    <UICONTRALTYPE>0</UICONTRALTYPE>
+    <MYDATATYPE>1</MYDATATYPE>
+    <LGTYPE>0</LGTYPE>
+    <UIWIDTH>200</UIWIDTH>
+    <UIHEIGHT>200</UIHEIGHT>
+    <MINLEN>0</MINLEN>
+    <MAXLEN>500</MAXLEN>
+    <UIVISIBLE>1</UIVISIBLE>
+    <UIISENABLE>1</UIISENABLE>
+    <UIISLINE>0</UIISLINE>
+    <EDITTYPE>0</EDITTYPE>
+    <AUTOFULLWAY>0</AUTOFULLWAY>
+    <IDX>8</IDX>
+    <GROUPID>242</GROUPID>
     <ISSIGAN>0</ISSIGAN>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_FrmImgAth>
-    <MYPK>TB110713053453</MYPK>
-    <FK_MAPDATA>00005</FK_MAPDATA>
-    <X>653</X>
-    <Y>48</Y>
-    <H>150</H>
-    <W>92</W>
+    <MYPK>TB110714021812</MYPK>
+    <FK_MAPDATA>Demo_Inc07</FK_MAPDATA>
+    <X>647</X>
+    <Y>50</Y>
+    <H>168</H>
+    <W>104</W>
   </Sys_FrmImgAth>
   <Sys_GroupField>
-    <OID>217</OID>
-    <LAB>企业技术负责人简历</LAB>
-    <ENNAME>00005</ENNAME>
-    <IDX>0</IDX>
-  </Sys_GroupField>
-  <Sys_GroupField>
-    <OID>730</OID>
-    <LAB>基础信息</LAB>
-    <ENNAME>00005Dtl1</ENNAME>
+    <OID>241</OID>
+    <LAB>企业经营负责人简历</LAB>
+    <ENNAME>Demo_Inc07</ENNAME>
     <IDX>0</IDX>
   </Sys_GroupField>
   <Sys_EnumMain>
