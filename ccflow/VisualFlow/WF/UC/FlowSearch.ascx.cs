@@ -558,7 +558,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
     }
-
     public void BindBill()
     {
         Flow fl1 = new Flow(this.FK_Flow);
