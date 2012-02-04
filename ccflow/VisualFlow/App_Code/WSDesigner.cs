@@ -673,5 +673,35 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
         }
         
     }
+    [WebMethod]
+    public string UploadfileCCForm(byte[] FileByte, string fileName, string fk_frmSort)
+    {
+        try
+        {
+            //文件存放路径
+            string filepath = BP.SystemConfig.PathOfTemp + "\\" + fileName;
+            //如果文件已经存在则删除
+            if (File.Exists(filepath))
+                File.Delete(filepath);
+            //创建文件流实例，用于写入文件
+            FileStream stream = new FileStream(filepath, FileMode.CreateNew);
+            //写入文件
+            stream.Write(FileByte, 0, FileByte.Length);
+            stream.Close();
+
+            DataSet ds = new DataSet();
+            ds.ReadXml(filepath);
+
+            MapData md = MapData.ImpMapData(ds);
+            md.FK_FrmSort = fk_frmSort;
+            md.Update();
+            return null;
+        }
+        catch (Exception exception)
+        {
+            return "Error: Occured on upload the file. Error Message is :\n" + exception.Message;
+        }
+
+    }
 
 }
