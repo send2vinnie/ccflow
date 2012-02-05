@@ -3804,6 +3804,24 @@ namespace BP.WF
                                 en.Save();
                             }
                             break;
+                        case "Sys_MapM2M": //Sys_MapM2M.
+                            idx = 0;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                idx++;
+                                MapM2M en = new MapM2M();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                    en.SetValByKey(dc.ColumnName, val);
+                                }
+                                en.Save();
+                            }
+                            break;
                         case "Sys_FrmRB": //Sys_FrmRB.
                             idx = 0;
                             foreach (DataRow dr in dt.Rows)
