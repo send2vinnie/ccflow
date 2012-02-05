@@ -79,7 +79,7 @@
     <NodeWorkType>1</NodeWorkType>
     <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -165,7 +165,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -251,7 +251,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -337,7 +337,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -423,7 +423,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -509,7 +509,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -595,7 +595,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -681,7 +681,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>请假流程(按岗位控制走向)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -773,6 +773,13 @@
     <FK_Flow>002</FK_Flow>
     <X>159</X>
     <Y>247</Y>
+  </WF_LabNote>
+  <WF_LabNote>
+    <MyPK>184</MyPK>
+    <Name>由发起人的岗位来决定流程的路线。</Name>
+    <FK_Flow>002</FK_Flow>
+    <X>314</X>
+    <Y>265</Y>
   </WF_LabNote>
   <WF_Listen>
     <OID>34</OID>

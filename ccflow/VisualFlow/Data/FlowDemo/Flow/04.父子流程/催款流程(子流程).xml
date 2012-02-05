@@ -79,7 +79,7 @@
     <NodeWorkType>1</NodeWorkType>
     <FlowName>催款流程(子流程)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -165,7 +165,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>催款流程(子流程)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>

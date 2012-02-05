@@ -26,7 +26,7 @@
   <WF_Node>
     <NodeID>401</NodeID>
     <Step>1</Step>
-    <Name>发起</Name>
+    <Name>发起-分流节点</Name>
     <IsTask>1</IsTask>
     <IsForceKill>0</IsForceKill>
     <RunModel>2</RunModel>
@@ -79,7 +79,7 @@
     <NodeWorkType>1</NodeWorkType>
     <FlowName>月销售总结(同步分合流)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -104,15 +104,15 @@
     <PTable />
     <ShowSheets />
     <GroupStaNDs>@401@499</GroupStaNDs>
-    <X>158</X>
-    <Y>51</Y>
+    <X>164</X>
+    <Y>52</Y>
     <SearchLab>查询</SearchLab>
     <SearchEnable>1</SearchEnable>
   </WF_Node>
   <WF_Node>
     <NodeID>402</NodeID>
     <Step>2</Step>
-    <Name>各销售人员填写月份工作总结单</Name>
+    <Name>各销售员填写-子线程节点</Name>
     <IsTask>1</IsTask>
     <IsForceKill>0</IsForceKill>
     <RunModel>4</RunModel>
@@ -165,7 +165,7 @@
     <NodeWorkType>6</NodeWorkType>
     <FlowName>月销售总结(同步分合流)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -190,15 +190,15 @@
     <PTable />
     <ShowSheets />
     <GroupStaNDs>@402</GroupStaNDs>
-    <X>154</X>
-    <Y>141</Y>
+    <X>164</X>
+    <Y>149</Y>
     <SearchLab>查询</SearchLab>
     <SearchEnable>1</SearchEnable>
   </WF_Node>
   <WF_Node>
     <NodeID>499</NodeID>
     <Step>3</Step>
-    <Name>汇总</Name>
+    <Name>汇总-合流点</Name>
     <IsTask>1</IsTask>
     <IsForceKill>0</IsForceKill>
     <RunModel>1</RunModel>
@@ -251,7 +251,7 @@
     <NodeWorkType>3</NodeWorkType>
     <FlowName>月销售总结(同步分合流)</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -276,7 +276,7 @@
     <PTable />
     <ShowSheets />
     <GroupStaNDs>@401@499</GroupStaNDs>
-    <X>153</X>
+    <X>160</X>
     <Y>262</Y>
     <SearchLab>查询</SearchLab>
     <SearchEnable>1</SearchEnable>
@@ -343,6 +343,13 @@
     <Node>402</Node>
     <ToNode>499</ToNode>
   </WF_Direction>
+  <WF_LabNote>
+    <MyPK>189</MyPK>
+    <Name>发起节点可以有n个人接受，每个人处理完后就发送到汇总节点。</Name>
+    <FK_Flow>004</FK_Flow>
+    <X>176</X>
+    <Y>86</Y>
+  </WF_LabNote>
   <WF_NodeStation>
     <FK_Node>401</FK_Node>
     <FK_Station>02</FK_Station>

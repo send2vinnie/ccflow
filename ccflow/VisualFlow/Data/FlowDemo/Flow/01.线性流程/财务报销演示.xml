@@ -79,7 +79,7 @@
     <NodeWorkType>1</NodeWorkType>
     <FlowName>财务报销演示</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -165,7 +165,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>财务报销演示</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -251,7 +251,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>财务报销演示</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -337,7 +337,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>财务报销演示</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -423,7 +423,7 @@
     <NodeWorkType>0</NodeWorkType>
     <FlowName>财务报销演示</FlowName>
     <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>.异步分合流</FK_FlowSortT>
+    <FK_FlowSortT>异步分合流</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -572,6 +572,13 @@
     <FK_Flow>003</FK_Flow>
     <X>56</X>
     <Y>192</Y>
+  </WF_LabNote>
+  <WF_LabNote>
+    <MyPK>187</MyPK>
+    <Name>财务报销流程，可以学习一下ccflow的方向条件，ccform的主从表的设计。</Name>
+    <FK_Flow>003</FK_Flow>
+    <X>122</X>
+    <Y>78</Y>
   </WF_LabNote>
   <WF_Listen>
     <OID>57</OID>
