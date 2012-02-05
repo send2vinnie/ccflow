@@ -6,11 +6,12 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl1</PTable>
     <RowIdx>3</RowIdx>
-    <GroupID>431</GroupID>
+    <GroupID>111</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
     <IsCopyNDData>1</IsCopyNDData>
+    <IsHLDtl>0</IsHLDtl>
     <IsReadonly>0</IsReadonly>
     <IsShowTitle>1</IsShowTitle>
     <IsView>1</IsView>
@@ -21,6 +22,8 @@
     <IsUpdate>0</IsUpdate>
     <IsEnablePass>0</IsEnablePass>
     <IsEnableAthM>0</IsEnableAthM>
+    <IsEnableM2M>0</IsEnableM2M>
+    <IsEnableM2MM>0</IsEnableM2MM>
     <WhenOverSize>0</WhenOverSize>
     <DtlOpenType>0</DtlOpenType>
     <DtlShowModel>0</DtlShowModel>
@@ -30,7 +33,6 @@
     <W>666</W>
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
-    <IsHLDtl>0</IsHLDtl>
   </Sys_MapDtl>
   <Sys_MapDtl>
     <No>Demo_03Dtl2</No>
@@ -38,11 +40,12 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl2</PTable>
     <RowIdx>0</RowIdx>
-    <GroupID>431</GroupID>
+    <GroupID>111</GroupID>
     <RowsOfList>3</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
     <IsCopyNDData>1</IsCopyNDData>
+    <IsHLDtl>0</IsHLDtl>
     <IsReadonly>0</IsReadonly>
     <IsShowTitle>1</IsShowTitle>
     <IsView>1</IsView>
@@ -53,6 +56,8 @@
     <IsUpdate>1</IsUpdate>
     <IsEnablePass>0</IsEnablePass>
     <IsEnableAthM>0</IsEnableAthM>
+    <IsEnableM2M>0</IsEnableM2M>
+    <IsEnableM2MM>0</IsEnableM2MM>
     <WhenOverSize>0</WhenOverSize>
     <DtlOpenType>0</DtlOpenType>
     <DtlShowModel>0</DtlShowModel>
@@ -62,7 +67,6 @@
     <W>653</W>
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
-    <IsHLDtl>0</IsHLDtl>
   </Sys_MapDtl>
   <Sys_MapDtl>
     <No>Demo_03Dtl3</No>
@@ -70,11 +74,12 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl3</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>431</GroupID>
+    <GroupID>111</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
     <IsCopyNDData>1</IsCopyNDData>
+    <IsHLDtl>0</IsHLDtl>
     <IsReadonly>0</IsReadonly>
     <IsShowTitle>1</IsShowTitle>
     <IsView>1</IsView>
@@ -85,6 +90,8 @@
     <IsUpdate>1</IsUpdate>
     <IsEnablePass>0</IsEnablePass>
     <IsEnableAthM>0</IsEnableAthM>
+    <IsEnableM2M>0</IsEnableM2M>
+    <IsEnableM2MM>0</IsEnableM2MM>
     <WhenOverSize>0</WhenOverSize>
     <DtlOpenType>0</DtlOpenType>
     <DtlShowModel>0</DtlShowModel>
@@ -94,7 +101,6 @@
     <W>920</W>
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
-    <IsHLDtl>0</IsHLDtl>
   </Sys_MapDtl>
   <Sys_MapDtl>
     <No>Demo_03Dtl4</No>
@@ -102,11 +108,12 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl4</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>431</GroupID>
+    <GroupID>111</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
     <IsCopyNDData>1</IsCopyNDData>
+    <IsHLDtl>0</IsHLDtl>
     <IsReadonly>0</IsReadonly>
     <IsShowTitle>1</IsShowTitle>
     <IsView>1</IsView>
@@ -117,6 +124,8 @@
     <IsUpdate>1</IsUpdate>
     <IsEnablePass>0</IsEnablePass>
     <IsEnableAthM>0</IsEnableAthM>
+    <IsEnableM2M>0</IsEnableM2M>
+    <IsEnableM2MM>0</IsEnableM2MM>
     <WhenOverSize>0</WhenOverSize>
     <DtlOpenType>0</DtlOpenType>
     <DtlShowModel>0</DtlShowModel>
@@ -126,7 +135,6 @@
     <W>860</W>
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
-    <IsHLDtl>0</IsHLDtl>
   </Sys_MapDtl>
   <Sys_MapData>
     <No>Demo_03</No>
@@ -136,6 +144,7 @@
     <PTable>Demo_03</PTable>
     <Dtls />
     <DBURL>0</DBURL>
+    <Tag />
     <FrmType>1</FrmType>
     <FK_FrmSort>01</FK_FrmSort>
     <AttrsInTable />
@@ -148,7 +157,6 @@
     <URL />
     <FrmW>900</FrmW>
     <FrmH>2000</FrmH>
-    <Tag />
   </Sys_MapData>
   <Sys_MapData>
     <No>Demo_03Dtl1</No>
@@ -158,6 +166,7 @@
     <PTable>Demo_03Dtl1</PTable>
     <Dtls />
     <DBURL>0</DBURL>
+    <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort />
     <AttrsInTable />
@@ -170,7 +179,6 @@
     <URL />
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
-    <Tag />
   </Sys_MapData>
   <Sys_MapData>
     <No>Demo_03Dtl2</No>
@@ -180,6 +188,7 @@
     <PTable>Demo_03Dtl2</PTable>
     <Dtls />
     <DBURL>0</DBURL>
+    <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort />
     <AttrsInTable />
@@ -192,7 +201,6 @@
     <URL />
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
-    <Tag />
   </Sys_MapData>
   <Sys_MapData>
     <No>Demo_03Dtl3</No>
@@ -202,6 +210,7 @@
     <PTable>Demo_03Dtl3</PTable>
     <Dtls />
     <DBURL>0</DBURL>
+    <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort />
     <AttrsInTable />
@@ -214,7 +223,6 @@
     <URL />
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
-    <Tag />
   </Sys_MapData>
   <Sys_MapData>
     <No>Demo_03Dtl4</No>
@@ -224,6 +232,7 @@
     <PTable>Demo_03Dtl4</PTable>
     <Dtls />
     <DBURL>0</DBURL>
+    <Tag />
     <FrmType>0</FrmType>
     <FK_FrmSort />
     <AttrsInTable />
@@ -236,7 +245,6 @@
     <URL />
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
-    <Tag />
   </Sys_MapData>
   <Sys_FrmLine>
     <MyPK>LEDemo_03_1</MyPK>
@@ -347,7 +355,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120109300923</MyPK>
+    <MyPK>LEDemo_03_10</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -620,7 +628,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>431</GroupID>
+    <GroupID>111</GroupID>
     <IsSigan>0</IsSigan>
     <X>107</X>
     <Y>368</Y>
@@ -649,7 +657,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>431</GroupID>
+    <GroupID>111</GroupID>
     <IsSigan>0</IsSigan>
     <X>270</X>
     <Y>368</Y>
@@ -678,7 +686,7 @@
     <AutoFullDoc>@Table=Demo_03Dtl2@Field=XiaoJi@Way=SUM</AutoFullDoc>
     <AutoFullWay>4</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>431</GroupID>
+    <GroupID>111</GroupID>
     <IsSigan>0</IsSigan>
     <X>427</X>
     <Y>367</Y>
@@ -707,7 +715,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>433</GroupID>
+    <GroupID>113</GroupID>
     <IsSigan>0</IsSigan>
     <X>192</X>
     <Y>91</Y>
@@ -736,7 +744,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>433</GroupID>
+    <GroupID>113</GroupID>
     <IsSigan>0</IsSigan>
     <X>310</X>
     <Y>91</Y>
@@ -765,7 +773,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>433</GroupID>
+    <GroupID>113</GroupID>
     <IsSigan>0</IsSigan>
     <X>436</X>
     <Y>91</Y>
@@ -794,7 +802,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>433</GroupID>
+    <GroupID>113</GroupID>
     <IsSigan>0</IsSigan>
     <X>601</X>
     <Y>89</Y>
@@ -823,7 +831,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>433</GroupID>
+    <GroupID>113</GroupID>
     <IsSigan>0</IsSigan>
     <X>83</X>
     <Y>91</Y>
@@ -852,7 +860,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>431</GroupID>
+    <GroupID>111</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -881,7 +889,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>0</GroupID>
+    <GroupID>111</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -2220,6 +2228,250 @@
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
+  <Sys_MapM2M>
+    <MyPK>Demo_03Dtl1_M2M</MyPK>
+    <FK_MapData>Demo_03Dtl1</FK_MapData>
+    <NoOfObj>M2M</NoOfObj>
+    <Name>M2M</Name>
+    <DBOfLists />
+    <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
+    <DBOfGroups>SELECT No,Name FROM Port_Dept</DBOfGroups>
+    <H>100</H>
+    <W>160</W>
+    <X>5</X>
+    <Y>5</Y>
+    <ShowWay>1</ShowWay>
+    <M2MType>0</M2MType>
+    <RowIdx>99</RowIdx>
+    <GroupID>0</GroupID>
+    <Cols>4</Cols>
+    <IsDelete>1</IsDelete>
+    <IsInsert>1</IsInsert>
+  </Sys_MapM2M>
+  <Sys_MapM2M>
+    <MyPK>Demo_03Dtl1_M2MM</MyPK>
+    <FK_MapData>Demo_03Dtl1</FK_MapData>
+    <NoOfObj>M2MM</NoOfObj>
+    <Name>M2MM</Name>
+    <DBOfLists />
+    <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
+    <DBOfGroups>SELECT No,Name FROM Port_Dept</DBOfGroups>
+    <H>100</H>
+    <W>160</W>
+    <X>5</X>
+    <Y>5</Y>
+    <ShowWay>1</ShowWay>
+    <M2MType>0</M2MType>
+    <RowIdx>99</RowIdx>
+    <GroupID>0</GroupID>
+    <Cols>4</Cols>
+    <IsDelete>1</IsDelete>
+    <IsInsert>1</IsInsert>
+  </Sys_MapM2M>
+  <Sys_MapM2M>
+    <MyPK>Demo_03Dtl2_M2M</MyPK>
+    <FK_MapData>Demo_03Dtl2</FK_MapData>
+    <NoOfObj>M2M</NoOfObj>
+    <Name>M2M</Name>
+    <DBOfLists />
+    <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
+    <DBOfGroups>SELECT No,Name FROM Port_Dept</DBOfGroups>
+    <H>100</H>
+    <W>160</W>
+    <X>5</X>
+    <Y>5</Y>
+    <ShowWay>1</ShowWay>
+    <M2MType>0</M2MType>
+    <RowIdx>99</RowIdx>
+    <GroupID>0</GroupID>
+    <Cols>4</Cols>
+    <IsDelete>1</IsDelete>
+    <IsInsert>1</IsInsert>
+  </Sys_MapM2M>
+  <Sys_MapM2M>
+    <MyPK>Demo_03Dtl2_M2MM</MyPK>
+    <FK_MapData>Demo_03Dtl2</FK_MapData>
+    <NoOfObj>M2MM</NoOfObj>
+    <Name>M2MM</Name>
+    <DBOfLists />
+    <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
+    <DBOfGroups>SELECT No,Name FROM Port_Dept</DBOfGroups>
+    <H>100</H>
+    <W>160</W>
+    <X>5</X>
+    <Y>5</Y>
+    <ShowWay>1</ShowWay>
+    <M2MType>0</M2MType>
+    <RowIdx>99</RowIdx>
+    <GroupID>0</GroupID>
+    <Cols>4</Cols>
+    <IsDelete>1</IsDelete>
+    <IsInsert>1</IsInsert>
+  </Sys_MapM2M>
+  <Sys_MapM2M>
+    <MyPK>Demo_03Dtl3_M2M</MyPK>
+    <FK_MapData>Demo_03Dtl3</FK_MapData>
+    <NoOfObj>M2M</NoOfObj>
+    <Name>M2M</Name>
+    <DBOfLists />
+    <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
+    <DBOfGroups>SELECT No,Name FROM Port_Dept</DBOfGroups>
+    <H>100</H>
+    <W>160</W>
+    <X>5</X>
+    <Y>5</Y>
+    <ShowWay>1</ShowWay>
+    <M2MType>0</M2MType>
+    <RowIdx>99</RowIdx>
+    <GroupID>0</GroupID>
+    <Cols>4</Cols>
+    <IsDelete>1</IsDelete>
+    <IsInsert>1</IsInsert>
+  </Sys_MapM2M>
+  <Sys_MapM2M>
+    <MyPK>Demo_03Dtl3_M2MM</MyPK>
+    <FK_MapData>Demo_03Dtl3</FK_MapData>
+    <NoOfObj>M2MM</NoOfObj>
+    <Name>M2MM</Name>
+    <DBOfLists />
+    <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
+    <DBOfGroups>SELECT No,Name FROM Port_Dept</DBOfGroups>
+    <H>100</H>
+    <W>160</W>
+    <X>5</X>
+    <Y>5</Y>
+    <ShowWay>1</ShowWay>
+    <M2MType>0</M2MType>
+    <RowIdx>99</RowIdx>
+    <GroupID>0</GroupID>
+    <Cols>4</Cols>
+    <IsDelete>1</IsDelete>
+    <IsInsert>1</IsInsert>
+  </Sys_MapM2M>
+  <Sys_MapM2M>
+    <MyPK>Demo_03Dtl4_M2M</MyPK>
+    <FK_MapData>Demo_03Dtl4</FK_MapData>
+    <NoOfObj>M2M</NoOfObj>
+    <Name>M2M</Name>
+    <DBOfLists />
+    <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
+    <DBOfGroups>SELECT No,Name FROM Port_Dept</DBOfGroups>
+    <H>100</H>
+    <W>160</W>
+    <X>5</X>
+    <Y>5</Y>
+    <ShowWay>1</ShowWay>
+    <M2MType>0</M2MType>
+    <RowIdx>99</RowIdx>
+    <GroupID>0</GroupID>
+    <Cols>4</Cols>
+    <IsDelete>1</IsDelete>
+    <IsInsert>1</IsInsert>
+  </Sys_MapM2M>
+  <Sys_MapM2M>
+    <MyPK>Demo_03Dtl4_M2MM</MyPK>
+    <FK_MapData>Demo_03Dtl4</FK_MapData>
+    <NoOfObj>M2MM</NoOfObj>
+    <Name>M2MM</Name>
+    <DBOfLists />
+    <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
+    <DBOfGroups>SELECT No,Name FROM Port_Dept</DBOfGroups>
+    <H>100</H>
+    <W>160</W>
+    <X>5</X>
+    <Y>5</Y>
+    <ShowWay>1</ShowWay>
+    <M2MType>0</M2MType>
+    <RowIdx>99</RowIdx>
+    <GroupID>0</GroupID>
+    <Cols>4</Cols>
+    <IsDelete>1</IsDelete>
+    <IsInsert>1</IsInsert>
+  </Sys_MapM2M>
+  <Sys_FrmAttachment>
+    <MyPK>Demo_03Dtl1_AthM</MyPK>
+    <FK_MapData>Demo_03Dtl1</FK_MapData>
+    <NoOfObj>AthM</NoOfObj>
+    <Name>Demo_03Dtl1</Name>
+    <Exts />
+    <SaveTo />
+    <Sort />
+    <X>5</X>
+    <Y>5</Y>
+    <W>40</W>
+    <H>150</H>
+    <IsUpload>1</IsUpload>
+    <IsDelete>1</IsDelete>
+    <IsDownload>1</IsDownload>
+    <IsAutoSize>1</IsAutoSize>
+    <IsNote>1</IsNote>
+    <UploadType>0</UploadType>
+    <RowIdx>0</RowIdx>
+    <GroupID>0</GroupID>
+  </Sys_FrmAttachment>
+  <Sys_FrmAttachment>
+    <MyPK>Demo_03Dtl2_AthM</MyPK>
+    <FK_MapData>Demo_03Dtl2</FK_MapData>
+    <NoOfObj>AthM</NoOfObj>
+    <Name>Demo_03Dtl2</Name>
+    <Exts />
+    <SaveTo />
+    <Sort />
+    <X>5</X>
+    <Y>5</Y>
+    <W>40</W>
+    <H>150</H>
+    <IsUpload>1</IsUpload>
+    <IsDelete>1</IsDelete>
+    <IsDownload>1</IsDownload>
+    <IsAutoSize>1</IsAutoSize>
+    <IsNote>1</IsNote>
+    <UploadType>0</UploadType>
+    <RowIdx>0</RowIdx>
+    <GroupID>0</GroupID>
+  </Sys_FrmAttachment>
+  <Sys_FrmAttachment>
+    <MyPK>Demo_03Dtl3_AthM</MyPK>
+    <FK_MapData>Demo_03Dtl3</FK_MapData>
+    <NoOfObj>AthM</NoOfObj>
+    <Name>Demo_03Dtl3</Name>
+    <Exts />
+    <SaveTo />
+    <Sort />
+    <X>5</X>
+    <Y>5</Y>
+    <W>40</W>
+    <H>150</H>
+    <IsUpload>1</IsUpload>
+    <IsDelete>1</IsDelete>
+    <IsDownload>1</IsDownload>
+    <IsAutoSize>1</IsAutoSize>
+    <IsNote>1</IsNote>
+    <UploadType>0</UploadType>
+    <RowIdx>0</RowIdx>
+    <GroupID>0</GroupID>
+  </Sys_FrmAttachment>
+  <Sys_FrmAttachment>
+    <MyPK>Demo_03Dtl4_AthM</MyPK>
+    <FK_MapData>Demo_03Dtl4</FK_MapData>
+    <NoOfObj>AthM</NoOfObj>
+    <Name>Demo_03Dtl4</Name>
+    <Exts />
+    <SaveTo />
+    <Sort />
+    <X>5</X>
+    <Y>5</Y>
+    <W>40</W>
+    <H>150</H>
+    <IsUpload>1</IsUpload>
+    <IsDelete>1</IsDelete>
+    <IsDownload>1</IsDownload>
+    <IsAutoSize>1</IsAutoSize>
+    <IsNote>1</IsNote>
+    <UploadType>0</UploadType>
+    <RowIdx>0</RowIdx>
+    <GroupID>0</GroupID>
+  </Sys_FrmAttachment>
   <Sys_MapExt>
     <MyPK>ExtDemo_03_1</MyPK>
     <FK_MapData>Demo_03</FK_MapData>
@@ -2263,37 +2515,37 @@
     <W>400</W>
   </Sys_MapExt>
   <Sys_GroupField>
-    <OID>430</OID>
+    <OID>110</OID>
     <Lab>Demo_03Dtl1</Lab>
     <EnName>Demo_03Dtl1</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>431</OID>
+    <OID>111</OID>
     <Lab>03.主从表基础功能</Lab>
     <EnName>Demo_03</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>432</OID>
+    <OID>112</OID>
     <Lab>Demo_03Dtl2</Lab>
     <EnName>Demo_03Dtl2</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>433</OID>
+    <OID>113</OID>
     <Lab>填充明细表</Lab>
     <EnName>Demo_03</EnName>
     <Idx>1</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>434</OID>
+    <OID>114</OID>
     <Lab>Demo_03Dtl3</Lab>
     <EnName>Demo_03Dtl3</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>435</OID>
+    <OID>115</OID>
     <Lab>Demo_03Dtl4</Lab>
     <EnName>Demo_03Dtl4</EnName>
     <Idx>0</Idx>

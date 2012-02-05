@@ -1,264 +1,319 @@
-﻿<?xml version="1.0" standalone="yes"?>
+<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <Sys_MapData>
-    <NO>Demo_Inc02</NO>
-    <NAME>02.企业简介</NAME>
-    <FK_FLOW>001</FK_FLOW>
-    <FORMTYPE>0</FORMTYPE>
-    <PTABLE>Info2_QYJJ</PTABLE>
-    <FRMW>900</FRMW>
-    <FRMH>1200</FRMH>
+    <No>Demo_Inc02</No>
+    <Name>02.企业简介</Name>
+    <EnPK />
+    <SearchKeys />
+    <PTable>Info2_QYJJ</PTable>
+    <Dtls />
     <DBURL>0</DBURL>
-    <FRMTYPE>0</FRMTYPE>
-    <FK_FRMSORT>01</FK_FRMSORT>
-    <APPTYPE>1</APPTYPE>
+    <Tag />
+    <FrmType>0</FrmType>
+    <FK_FrmSort>02</FK_FrmSort>
+    <AttrsInTable />
+    <AppType>1</AppType>
+    <Designer />
+    <DesignerUnit />
+    <DesignerContact />
+    <FK_Flow />
+    <FormType>0</FormType>
+    <URL />
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_FrmLine>
-    <MYPK>Line110709050929</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_1</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>331</X1>
     <Y1>363</Y1>
     <X2>331</X2>
     <Y2>363</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110709050912</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_2</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>53</X1>
     <Y1>51</Y1>
     <X2>747</X2>
     <Y2>51</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110709050932</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_3</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>331</X1>
     <Y1>363</Y1>
     <X2>331</X2>
     <Y2>363</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110709050949</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_4</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>154</X1>
     <Y1>676</Y1>
     <X2>154</X2>
     <Y2>676</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110709050948</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_5</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>746</X1>
     <Y1>49</Y1>
     <X2>746</X2>
     <Y2>608</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110709050951</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_6</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>733</X1>
     <Y1>657</Y1>
     <X2>733</X2>
     <Y2>657</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110709050952</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_7</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>733</X1>
     <Y1>657</Y1>
     <X2>733</X2>
     <Y2>657</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110705093837_1</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_8</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>54</X1>
     <Y1>49</Y1>
     <X2>54</X2>
     <Y2>609</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110709050959</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_9</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>63</X1>
     <Y1>720</Y1>
     <X2>63</X2>
     <Y2>720</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110701050155</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_10</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>52</X1>
     <Y1>607</Y1>
     <X2>747</X2>
     <Y2>607</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110701050158</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_11</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>747</X1>
     <Y1>616</Y1>
     <X2>747</X2>
     <Y2>616</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110701050159</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
+    <MyPK>LEDemo_Inc02_12</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>747</X1>
     <Y1>616</Y1>
     <X2>747</X2>
     <Y2>616</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLab>
-    <MYPK>Lab1107040324091</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
-    <TEXT>二、企&amp;nbsp;&amp;nbsp;业&amp;nbsp;&amp;nbsp;简&amp;nbsp;&amp;nbsp;介</TEXT>
-    <X>342.50</X>
+    <MyPK>LBDemo_Inc02_1</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
+    <Text>二、企&amp;nbsp;&amp;nbsp;业&amp;nbsp;&amp;nbsp;简&amp;nbsp;&amp;nbsp;介</Text>
+    <X>342.5</X>
     <Y>9</Y>
-    <FONTSIZE>20</FONTSIZE>
-    <FONTCOLOR>#FF000000</FONTCOLOR>
-    <FONTNAME>Portable User Interface</FONTNAME>
-    <FONTSTYLE>Normal</FONTSTYLE>
-    <FONTWEIGHT>Bold</FONTWEIGHT>
-    <ISBOLD>0</ISBOLD>
-    <ISITALIC>0</ISITALIC>
+    <FontSize>20</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>Bold</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MYPK>Lab110707022654</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
-    <TEXT>注：本简介可复制加页。</TEXT>
+    <MyPK>LBDemo_Inc02_2</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
+    <Text>注：本简介可复制加页。</Text>
     <X>66</X>
     <Y>625</Y>
-    <FONTSIZE>11</FONTSIZE>
-    <FONTCOLOR>#FF000000</FONTCOLOR>
-    <FONTNAME>Portable User Interface</FONTNAME>
-    <FONTSTYLE>Normal</FONTSTYLE>
-    <ISBOLD>0</ISBOLD>
-    <ISITALIC>0</ISITALIC>
+    <FontSize>11</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight />
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_MapAttr>
-    <MYPK>Demo_Inc02_ent_resume</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
-    <KEYOFEN>ent_resume</KEYOFEN>
-    <NAME>企业简介</NAME>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>1</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>678</UIWIDTH>
-    <UIHEIGHT>544</UIHEIGHT>
-    <MINLEN>0</MINLEN>
-    <MAXLEN>4000</MAXLEN>
-    <UIVISIBLE>1</UIVISIBLE>
-    <UIISENABLE>1</UIISENABLE>
-    <UIISLINE>0</UIISLINE>
-    <EDITTYPE>0</EDITTYPE>
-    <AUTOFULLWAY>0</AUTOFULLWAY>
+    <MyPK>Demo_Inc02_ent_resume</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
+    <KeyOfEn>ent_resume</KeyOfEn>
+    <Name>企业简介</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>678</UIWidth>
+    <UIHeight>544</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>4000</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
     <IDX>3</IDX>
-    <GROUPID>189</GROUPID>
-    <ISSIGAN>0</ISSIGAN>
+    <GroupID>119</GroupID>
+    <IsSigan>0</IsSigan>
     <X>57</X>
     <Y>58</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>Demo_Inc02_OID</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
-    <KEYOFEN>OID</KEYOFEN>
-    <NAME>WorkID</NAME>
-    <DEFVAL>0</DEFVAL>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>2</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>100</UIWIDTH>
-    <UIHEIGHT>23</UIHEIGHT>
-    <MINLEN>0</MINLEN>
-    <MAXLEN>500</MAXLEN>
-    <UIVISIBLE>0</UIVISIBLE>
-    <UIISENABLE>0</UIISENABLE>
-    <UIISLINE>0</UIISLINE>
-    <EDITTYPE>2</EDITTYPE>
-    <AUTOFULLWAY>0</AUTOFULLWAY>
+    <MyPK>Demo_Inc02_OID</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
+    <KeyOfEn>OID</KeyOfEn>
+    <Name>WorkID</Name>
+    <DefVal>0</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>2</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
     <IDX>23</IDX>
-    <GROUPID>0</GROUPID>
-    <ISSIGAN>0</ISSIGAN>
+    <GroupID>119</GroupID>
+    <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>Demo_Inc02_FID</MYPK>
-    <FK_MAPDATA>Demo_Inc02</FK_MAPDATA>
-    <KEYOFEN>FID</KEYOFEN>
-    <NAME>FID</NAME>
-    <DEFVAL>0</DEFVAL>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>2</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>100</UIWIDTH>
-    <UIHEIGHT>23</UIHEIGHT>
-    <MINLEN>0</MINLEN>
-    <MAXLEN>500</MAXLEN>
-    <UIVISIBLE>0</UIVISIBLE>
-    <UIISENABLE>0</UIISENABLE>
-    <UIISLINE>0</UIISLINE>
-    <EDITTYPE>2</EDITTYPE>
-    <AUTOFULLWAY>0</AUTOFULLWAY>
+    <MyPK>Demo_Inc02_FID</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
+    <KeyOfEn>FID</KeyOfEn>
+    <Name>FID</Name>
+    <DefVal>0</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>2</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
     <IDX>60</IDX>
-    <GROUPID>0</GROUPID>
-    <ISSIGAN>0</ISSIGAN>
+    <GroupID>119</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>Demo_Inc02_RDT</MyPK>
+    <FK_MapData>Demo_Inc02</FK_MapData>
+    <KeyOfEn>RDT</KeyOfEn>
+    <Name>更新时间</Name>
+    <DefVal>@RDT</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>7</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag>1</Tag>
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_GroupField>
-    <OID>189</OID>
-    <LAB>企业简介</LAB>
-    <ENNAME>Demo_Inc02</ENNAME>
-    <IDX>0</IDX>
+    <OID>119</OID>
+    <Lab>企业简介</Lab>
+    <EnName>Demo_Inc02</EnName>
+    <Idx>0</Idx>
   </Sys_GroupField>
 </NewDataSet>

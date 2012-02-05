@@ -1,191 +1,245 @@
-﻿<?xml version="1.0" standalone="yes"?>
+<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <Sys_MapData>
-    <NO>Demo_Inc14</NO>
-    <NAME>14.企业法定代表人声明</NAME>
-    <FK_FLOW>001</FK_FLOW>
-    <FORMTYPE>0</FORMTYPE>
-    <PTABLE>info_QYFRSM</PTABLE>
-    <FRMW>900</FRMW>
-    <FRMH>1200</FRMH>
+    <No>Demo_Inc14</No>
+    <Name>14.企业法定代表人声明</Name>
+    <EnPK />
+    <SearchKeys />
+    <PTable>info_QYFRSM</PTable>
+    <Dtls />
     <DBURL>0</DBURL>
-    <FRMTYPE>0</FRMTYPE>
-    <FK_FRMSORT>01</FK_FRMSORT>
-    <APPTYPE>1</APPTYPE>
+    <Tag />
+    <FrmType>0</FrmType>
+    <FK_FrmSort>02</FK_FrmSort>
+    <AttrsInTable />
+    <AppType>1</AppType>
+    <Designer />
+    <DesignerUnit />
+    <DesignerContact />
+    <FK_Flow />
+    <FormType>0</FormType>
+    <URL />
+    <FrmW>900</FrmW>
+    <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_FrmLine>
-    <MYPK>Line110704060425</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
+    <MyPK>LEDemo_Inc14_1</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>100</X1>
     <Y1>80</Y1>
     <X2>100</X2>
     <Y2>730</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110704060431</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
+    <MyPK>LEDemo_Inc14_2</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>100</X1>
     <Y1>78</Y1>
     <X2>100</X2>
     <Y2>642</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110704060433</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
+    <MyPK>LEDemo_Inc14_3</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>86</X1>
     <Y1>642</Y1>
     <X2>86</X2>
     <Y2>642</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110704060435</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
+    <MyPK>LEDemo_Inc14_4</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>769</X1>
     <Y1>78</Y1>
     <X2>769</X2>
     <Y2>729</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110704060437</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
+    <MyPK>LEDemo_Inc14_5</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>731</X1>
     <Y1>659</Y1>
     <X2>731</X2>
     <Y2>659</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110704060413</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
+    <MyPK>LEDemo_Inc14_6</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>100</X1>
     <Y1>729</Y1>
     <X2>768</X2>
     <Y2>729</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MYPK>Line110704060428</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
+    <MyPK>LEDemo_Inc14_7</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
     <X>0</X>
     <Y>0</Y>
     <X1>99</X1>
     <Y1>78</Y1>
     <X2>772</X2>
     <Y2>78</Y2>
-    <BORDERWIDTH>2</BORDERWIDTH>
-    <BORDERCOLOR>Black</BORDERCOLOR>
+    <BorderWidth>2</BorderWidth>
+    <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLab>
-    <MYPK>Lab1107060450161</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
-    <TEXT>企业法定代表人声明</TEXT>
+    <MyPK>LBDemo_Inc14_1</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
+    <Text>企业法定代表人声明</Text>
     <X>326</X>
     <Y>29</Y>
-    <FONTSIZE>20</FONTSIZE>
-    <FONTCOLOR>#FF000000</FONTCOLOR>
-    <FONTNAME>Portable User Interface</FONTNAME>
-    <FONTSTYLE>Normal</FONTSTYLE>
-    <FONTWEIGHT>Bold</FONTWEIGHT>
-    <ISBOLD>0</ISBOLD>
-    <ISITALIC>0</ISITALIC>
+    <FontSize>20</FontSize>
+    <FontColor>#FF000000</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <FontWeight>Bold</FontWeight>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_MapAttr>
-    <MYPK>Demo_Inc14_LAWS_STATE</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
-    <KEYOFEN>LAWS_STATE</KEYOFEN>
-    <NAME>法人声明</NAME>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>1</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>645</UIWIDTH>
-    <UIHEIGHT>619</UIHEIGHT>
-    <MINLEN>0</MINLEN>
-    <MAXLEN>500</MAXLEN>
-    <UIVISIBLE>1</UIVISIBLE>
-    <UIISENABLE>1</UIISENABLE>
-    <UIISLINE>1</UIISLINE>
-    <EDITTYPE>0</EDITTYPE>
-    <AUTOFULLWAY>0</AUTOFULLWAY>
+    <MyPK>Demo_Inc14_LAWS_STATE</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
+    <KeyOfEn>LAWS_STATE</KeyOfEn>
+    <Name>法人声明</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>645</UIWidth>
+    <UIHeight>619</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>1</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
     <IDX>4</IDX>
-    <GROUPID>247</GROUPID>
-    <ISSIGAN>0</ISSIGAN>
+    <GroupID>133</GroupID>
+    <IsSigan>0</IsSigan>
     <X>110</X>
     <Y>93</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>Demo_Inc14_OID</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
-    <KEYOFEN>OID</KEYOFEN>
-    <NAME>WorkID</NAME>
-    <DEFVAL>0</DEFVAL>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>2</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>100</UIWIDTH>
-    <UIHEIGHT>23</UIHEIGHT>
-    <MINLEN>0</MINLEN>
-    <MAXLEN>500</MAXLEN>
-    <UIVISIBLE>0</UIVISIBLE>
-    <UIISENABLE>0</UIISENABLE>
-    <UIISLINE>0</UIISLINE>
-    <EDITTYPE>2</EDITTYPE>
-    <AUTOFULLWAY>0</AUTOFULLWAY>
+    <MyPK>Demo_Inc14_OID</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
+    <KeyOfEn>OID</KeyOfEn>
+    <Name>WorkID</Name>
+    <DefVal>0</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>2</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
     <IDX>39</IDX>
-    <GROUPID>0</GROUPID>
-    <ISSIGAN>0</ISSIGAN>
+    <GroupID>133</GroupID>
+    <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MYPK>Demo_Inc14_FID</MYPK>
-    <FK_MAPDATA>Demo_Inc14</FK_MAPDATA>
-    <KEYOFEN>FID</KEYOFEN>
-    <NAME>FID</NAME>
-    <DEFVAL>0</DEFVAL>
-    <UICONTRALTYPE>0</UICONTRALTYPE>
-    <MYDATATYPE>2</MYDATATYPE>
-    <LGTYPE>0</LGTYPE>
-    <UIWIDTH>100</UIWIDTH>
-    <UIHEIGHT>23</UIHEIGHT>
-    <MINLEN>0</MINLEN>
-    <MAXLEN>500</MAXLEN>
-    <UIVISIBLE>0</UIVISIBLE>
-    <UIISENABLE>0</UIISENABLE>
-    <UIISLINE>0</UIISLINE>
-    <EDITTYPE>2</EDITTYPE>
-    <AUTOFULLWAY>0</AUTOFULLWAY>
+    <MyPK>Demo_Inc14_FID</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
+    <KeyOfEn>FID</KeyOfEn>
+    <Name>FID</Name>
+    <DefVal>0</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>2</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
     <IDX>48</IDX>
-    <GROUPID>0</GROUPID>
-    <ISSIGAN>0</ISSIGAN>
+    <GroupID>133</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>Demo_Inc14_RDT</MyPK>
+    <FK_MapData>Demo_Inc14</FK_MapData>
+    <KeyOfEn>RDT</KeyOfEn>
+    <Name>更新时间</Name>
+    <DefVal>@RDT</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>7</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag>1</Tag>
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>0</GroupID>
+    <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_GroupField>
-    <OID>247</OID>
-    <LAB>企业法定代表人声明</LAB>
-    <ENNAME>Demo_Inc14</ENNAME>
-    <IDX>0</IDX>
+    <OID>133</OID>
+    <Lab>企业法定代表人声明</Lab>
+    <EnName>Demo_Inc14</EnName>
+    <Idx>0</Idx>
   </Sys_GroupField>
 </NewDataSet>

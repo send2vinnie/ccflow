@@ -8,6 +8,7 @@
     <PTable>Demo_04</PTable>
     <Dtls />
     <DBURL>0</DBURL>
+    <Tag />
     <FrmType>1</FrmType>
     <FK_FrmSort>01</FK_FrmSort>
     <AttrsInTable />
@@ -20,10 +21,9 @@
     <URL />
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
-    <Tag />
   </Sys_MapData>
   <Sys_FrmLine>
-    <MyPK>Line120106300604</MyPK>
+    <MyPK>LEDemo_04_1</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -35,7 +35,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120106300606</MyPK>
+    <MyPK>LEDemo_04_2</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -47,7 +47,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120106300609</MyPK>
+    <MyPK>LEDemo_04_3</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -59,7 +59,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120106300613</MyPK>
+    <MyPK>LEDemo_04_4</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -71,7 +71,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120106300612</MyPK>
+    <MyPK>LEDemo_04_5</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -83,7 +83,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120106300636</MyPK>
+    <MyPK>LEDemo_04_6</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -95,7 +95,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120109300928</MyPK>
+    <MyPK>LEDemo_04_7</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -107,7 +107,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120109300924</MyPK>
+    <MyPK>LEDemo_04_8</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -119,7 +119,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmImg>
-    <MyPK>Demo_04Img1</MyPK>
+    <MyPK>ImgDemo_04_1</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <X>602</X>
     <Y>21</Y>
@@ -130,7 +130,7 @@
     <LinkTarget>_blank</LinkTarget>
   </Sys_FrmImg>
   <Sys_FrmLab>
-    <MyPK>Lab120130091415</MyPK>
+    <MyPK>LBDemo_04_1</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <Text>自动填充M2M</Text>
     <X>111</X>
@@ -139,11 +139,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>1</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130061823</MyPK>
+    <MyPK>LBDemo_04_2</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <Text>一对多关系数据存储与展示-详细信息请参考操作录像.</Text>
     <X>74</X>
@@ -152,11 +153,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>1</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130061920</MyPK>
+    <MyPK>LBDemo_04_3</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <Text>带有数据分组-数据采集</Text>
     <X>94</X>
@@ -165,11 +167,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>1</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130063925_1</MyPK>
+    <MyPK>LBDemo_04_4</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <Text>无数据分组-4列显示-数据采集</Text>
     <X>449</X>
@@ -178,11 +181,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>1</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130064927</MyPK>
+    <MyPK>LBDemo_04_5</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <Text>熟练的使用一对多的关系可帮助你构建高级的应用</Text>
     <X>454</X>
@@ -191,11 +195,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130065049</MyPK>
+    <MyPK>LBDemo_04_6</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <Text>操作员</Text>
     <X>112</X>
@@ -204,11 +209,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130065118</MyPK>
+    <MyPK>LBDemo_04_7</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <Text>名称</Text>
     <X>264</X>
@@ -217,11 +223,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130065139</MyPK>
+    <MyPK>LBDemo_04_8</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <Text>所在部门</Text>
     <X>418</X>
@@ -230,11 +237,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130092114</MyPK>
+    <MyPK>LBDemo_04_9</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <Text>在操作员文本框中输入一个操作员编号,系统就会把该操作员的岗位自动填充.</Text>
     <X>269</X>
@@ -243,6 +251,7 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
@@ -251,15 +260,27 @@
     <FK_MapData>Demo_04</FK_MapData>
     <KeyOfEn>MingCheng</KeyOfEn>
     <Name>名称</Name>
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>116</GroupID>
+    <IsSigan>0</IsSigan>
     <X>298</X>
     <Y>641</Y>
   </Sys_MapAttr>
@@ -268,15 +289,27 @@
     <FK_MapData>Demo_04</FK_MapData>
     <KeyOfEn>FK_Dept</KeyOfEn>
     <Name>所在部门</Name>
+    <DefVal />
     <UIContralType>1</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>2</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey>BP.Port.Depts</UIBindKey>
     <UIRefKey>No</UIRefKey>
     <UIRefKeyText>Name</UIRefKeyText>
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>116</GroupID>
+    <IsSigan>0</IsSigan>
     <X>476</X>
     <Y>638</Y>
   </Sys_MapAttr>
@@ -304,7 +337,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>0</GroupID>
+    <GroupID>116</GroupID>
     <IsSigan>0</IsSigan>
     <X>159</X>
     <Y>641</Y>
@@ -333,7 +366,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>415</GroupID>
+    <GroupID>116</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -362,15 +395,15 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>0</GroupID>
+    <GroupID>116</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapM2M>
-    <MyPK>Demo_04_M2M1</MyPK>
+    <MyPK>Demo_04_M2MDemo_04_1</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
-    <NoOfObj>M2M1</NoOfObj>
+    <NoOfObj>M2MDemo_04_1</NoOfObj>
     <Name>新建一对多</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -382,15 +415,15 @@
     <ShowWay>1</ShowWay>
     <M2MType>0</M2MType>
     <RowIdx>99</RowIdx>
-    <GroupID>415</GroupID>
+    <GroupID>116</GroupID>
     <Cols>2</Cols>
     <IsDelete>1</IsDelete>
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_04_M2M2</MyPK>
+    <MyPK>Demo_04_M2MDemo_04_2</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
-    <NoOfObj>M2M2</NoOfObj>
+    <NoOfObj>M2MDemo_04_2</NoOfObj>
     <Name>新建一对多</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -402,15 +435,15 @@
     <ShowWay>1</ShowWay>
     <M2MType>0</M2MType>
     <RowIdx>99</RowIdx>
-    <GroupID>415</GroupID>
+    <GroupID>116</GroupID>
     <Cols>4</Cols>
     <IsDelete>1</IsDelete>
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_04_M2M3</MyPK>
+    <MyPK>Demo_04_M2MDemo_04_3</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
-    <NoOfObj>M2M3</NoOfObj>
+    <NoOfObj>M2MDemo_04_3</NoOfObj>
     <Name>新建一对多</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,StaGrade FROM Port_Station</DBOfObjs>
@@ -422,13 +455,13 @@
     <ShowWay>1</ShowWay>
     <M2MType>0</M2MType>
     <RowIdx>99</RowIdx>
-    <GroupID>415</GroupID>
+    <GroupID>116</GroupID>
     <Cols>5</Cols>
     <IsDelete>1</IsDelete>
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapExt>
-    <MyPK>Demo_04_TBFullCtrl_CaoZuoYuan</MyPK>
+    <MyPK>ExtDemo_04_1</MyPK>
     <FK_MapData>Demo_04</FK_MapData>
     <ExtType>TBFullCtrl</ExtType>
     <DoWay>0</DoWay>
@@ -442,7 +475,7 @@
     <W>400</W>
   </Sys_MapExt>
   <Sys_GroupField>
-    <OID>415</OID>
+    <OID>116</OID>
     <Lab>04.一对多</Lab>
     <EnName>Demo_04</EnName>
     <Idx>0</Idx>

@@ -8,6 +8,7 @@
     <PTable>Demo_NewPrj</PTable>
     <Dtls />
     <DBURL>0</DBURL>
+    <Tag />
     <FrmType>1</FrmType>
     <FK_FrmSort>03</FK_FrmSort>
     <AttrsInTable />
@@ -20,10 +21,9 @@
     <URL />
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
-    <Tag />
   </Sys_MapData>
   <Sys_FrmLine>
-    <MyPK>Line120110301037</MyPK>
+    <MyPK>LEDemo_NewPrj_1</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -35,7 +35,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120110301041</MyPK>
+    <MyPK>LEDemo_NewPrj_2</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -47,7 +47,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120110301044</MyPK>
+    <MyPK>LEDemo_NewPrj_3</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -59,7 +59,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120110301031</MyPK>
+    <MyPK>LEDemo_NewPrj_4</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -71,7 +71,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120110301034</MyPK>
+    <MyPK>LEDemo_NewPrj_5</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -83,7 +83,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120110301042</MyPK>
+    <MyPK>LEDemo_NewPrj_6</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -95,7 +95,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120110301018</MyPK>
+    <MyPK>LEDemo_NewPrj_7</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -107,7 +107,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120110301022</MyPK>
+    <MyPK>LEDemo_NewPrj_8</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -119,7 +119,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120110301016</MyPK>
+    <MyPK>LEDemo_NewPrj_9</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -131,7 +131,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120110301020</MyPK>
+    <MyPK>LEDemo_NewPrj_10</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -143,7 +143,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120110301024</MyPK>
+    <MyPK>LEDemo_NewPrj_11</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -155,7 +155,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120111301154</MyPK>
+    <MyPK>LEDemo_NewPrj_12</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -167,7 +167,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmImg>
-    <MyPK>Demo_NewPrjImg1</MyPK>
+    <MyPK>ImgDemo_NewPrj_1</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <X>484</X>
     <Y>22</Y>
@@ -178,7 +178,7 @@
     <LinkTarget>_blank</LinkTarget>
   </Sys_FrmImg>
   <Sys_FrmLab>
-    <MyPK>Lab120130102216</MyPK>
+    <MyPK>LBDemo_NewPrj_1</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>一对多与一对多的关系应用案例</Text>
     <X>46</X>
@@ -187,11 +187,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130102347</MyPK>
+    <MyPK>LBDemo_NewPrj_2</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>项目编号</Text>
     <X>63</X>
@@ -200,11 +201,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130102359</MyPK>
+    <MyPK>LBDemo_NewPrj_3</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>项目名称</Text>
     <X>256</X>
@@ -213,11 +215,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130102417</MyPK>
+    <MyPK>LBDemo_NewPrj_4</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>项目地址</Text>
     <X>464</X>
@@ -226,11 +229,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130102435</MyPK>
+    <MyPK>LBDemo_NewPrj_5</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>项目负责人</Text>
     <X>454</X>
@@ -239,11 +243,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130103308</MyPK>
+    <MyPK>LBDemo_NewPrj_6</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>项目金额</Text>
     <X>61</X>
@@ -252,11 +257,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130103414</MyPK>
+    <MyPK>LBDemo_NewPrj_7</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>启动日期</Text>
     <X>255</X>
@@ -265,11 +271,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130103830</MyPK>
+    <MyPK>LBDemo_NewPrj_8</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>项@目@成@员</Text>
     <X>71</X>
@@ -278,11 +285,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130105201</MyPK>
+    <MyPK>LBDemo_NewPrj_9</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>项@目@成@员@岗@位@分@配</Text>
     <X>69</X>
@@ -291,11 +299,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130105238</MyPK>
+    <MyPK>LBDemo_NewPrj_10</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>新建工程项目</Text>
     <X>222</X>
@@ -304,11 +313,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>1</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120130111855</MyPK>
+    <MyPK>LBDemo_NewPrj_11</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <Text>说明:在预览时不会看到完整的项目成员岗位分配，因为它不会项目成员不会存盘，所以项目成员岗位分配不会自动变化@运行时可以将M2MM列表数据源设置为@XiangMuChengYuan</Text>
     <X>46</X>
@@ -317,6 +327,7 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
@@ -325,15 +336,27 @@
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <KeyOfEn>XiangMuBianHao</KeyOfEn>
     <Name>项目编号</Name>
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>134</GroupID>
+    <IsSigan>0</IsSigan>
     <X>126</X>
     <Y>89</Y>
   </Sys_MapAttr>
@@ -342,15 +365,27 @@
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <KeyOfEn>XiangMuMingCheng</KeyOfEn>
     <Name>项目名称</Name>
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>134</GroupID>
+    <IsSigan>0</IsSigan>
     <X>328</X>
     <Y>87</Y>
   </Sys_MapAttr>
@@ -359,15 +394,27 @@
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <KeyOfEn>DiZhi</KeyOfEn>
     <Name>地址</Name>
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>148</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>134</GroupID>
+    <IsSigan>0</IsSigan>
     <X>530</X>
     <Y>87</Y>
   </Sys_MapAttr>
@@ -376,15 +423,27 @@
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <KeyOfEn>FK_Emp</KeyOfEn>
     <Name>负责人</Name>
+    <DefVal />
     <UIContralType>1</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>2</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey>BP.Port.Emps</UIBindKey>
     <UIRefKey>No</UIRefKey>
     <UIRefKeyText>Name</UIRefKeyText>
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>134</GroupID>
+    <IsSigan>0</IsSigan>
     <X>542</X>
     <Y>128</Y>
   </Sys_MapAttr>
@@ -393,15 +452,27 @@
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <KeyOfEn>XiangMuJinE</KeyOfEn>
     <Name>项目金额</Name>
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>8</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>134</GroupID>
+    <IsSigan>0</IsSigan>
     <X>125</X>
     <Y>128</Y>
   </Sys_MapAttr>
@@ -410,15 +481,27 @@
     <FK_MapData>Demo_NewPrj</FK_MapData>
     <KeyOfEn>QiDongRiQi</KeyOfEn>
     <Name>启动日期</Name>
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>6</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>134</GroupID>
+    <IsSigan>0</IsSigan>
     <X>330</X>
     <Y>129</Y>
   </Sys_MapAttr>
@@ -446,15 +529,44 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
+    <GroupID>134</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>Demo_NewPrj_RDT</MyPK>
+    <FK_MapData>Demo_NewPrj</FK_MapData>
+    <KeyOfEn>RDT</KeyOfEn>
+    <Name>更新时间</Name>
+    <DefVal>@RDT</DefVal>
+    <UIContralType>0</UIContralType>
+    <MyDataType>7</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag>1</Tag>
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
     <GroupID>0</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapM2M>
-    <MyPK>Demo_NewPrj_XiangMuChengYuan</MyPK>
+    <MyPK>Demo_NewPrj_M2MDemo_NewPrj_1</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
-    <NoOfObj>XiangMuChengYuan</NoOfObj>
+    <NoOfObj>M2MDemo_NewPrj_1</NoOfObj>
     <Name>项目成员</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -466,15 +578,15 @@
     <ShowWay>1</ShowWay>
     <M2MType>0</M2MType>
     <RowIdx>99</RowIdx>
-    <GroupID>437</GroupID>
+    <GroupID>134</GroupID>
     <Cols>6</Cols>
     <IsDelete>1</IsDelete>
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_NewPrj_CYGWFP</MyPK>
+    <MyPK>Demo_NewPrj_M2MDemo_NewPrj_2</MyPK>
     <FK_MapData>Demo_NewPrj</FK_MapData>
-    <NoOfObj>CYGWFP</NoOfObj>
+    <NoOfObj>M2MDemo_NewPrj_2</NoOfObj>
     <Name>成员岗位分配</Name>
     <DBOfLists>SELECT No,Name FROM Port_Emp</DBOfLists>
     <DBOfObjs>SELECT No,Name,StaGrade FROM Port_Station</DBOfObjs>
@@ -486,13 +598,13 @@
     <ShowWay>1</ShowWay>
     <M2MType>1</M2MType>
     <RowIdx>99</RowIdx>
-    <GroupID>437</GroupID>
+    <GroupID>134</GroupID>
     <Cols>4</Cols>
     <IsDelete>1</IsDelete>
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_GroupField>
-    <OID>437</OID>
+    <OID>134</OID>
     <Lab>新建工程(一对多多的应用)</Lab>
     <EnName>Demo_NewPrj</EnName>
     <Idx>0</Idx>
