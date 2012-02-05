@@ -14,7 +14,8 @@
 		<script language="javascript" >
 		    var isChange = false;
 		    function SaveM2M() {
-		        if (isChange == true)
+
+		        if (isChange == false)
 		            return;
 		        var btn = document.getElementById('Button1');
 		        btn.click();
@@ -50,7 +51,7 @@
 <body topmargin="0" leftmargin="0" onkeypress="Esc()" style="font-size:smaller"> 
     <form id="form1" runat="server">
      <uc2:Pub ID="Pub1" runat="server" />
-     <asp:Button ID="Button1" runat="server" Text="Save"  Visible=false
+     <asp:Button ID="Button1" runat="server" Text="Save" Visible=true
          onclick="Button1_Click" />
     </form>
 </body>

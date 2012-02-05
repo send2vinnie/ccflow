@@ -92,19 +92,19 @@ public partial class Comm_M2M : WebPage
         {
             dtObj.Columns.Add("Group", typeof(string));
             foreach (DataRow dr in dtObj.Rows)
-            {
                 dr["Group"] = "01";
-            }
         }
 
         bool isInsert = mapM2M.IsInsert;
         bool isDelete = mapM2M.IsDelete;
 
-        if (isDelete == false && isInsert == false)
-            this.Button1.Enabled = false;
+        //if (isDelete == false && isInsert == false)
+        //    this.Button1.Enabled = false;
 
         if ((isDelete || isInsert) && string.IsNullOrEmpty(this.IsOpen) == false)
             this.Button1.Visible = true;
+
+
 
         this.Pub1.AddTable("width=100% border=0");
         foreach (DataRow drGroup in dtGroup.Rows)
@@ -112,6 +112,7 @@ public partial class Comm_M2M : WebPage
             string ctlIDs = "";
             string groupNo = drGroup[0].ToString();
 
+            //增加全部选择.
             this.Pub1.AddTR();
             CheckBox cbx = new CheckBox();
             cbx.ID = "CBs_" + drGroup[0].ToString();
@@ -129,7 +130,9 @@ public partial class Comm_M2M : WebPage
                 string no = drObj[0].ToString();
                 string name = drObj[1].ToString();
                 string group = drObj[2].ToString();
-                if (group != groupNo)
+               
+
+                if (group.Trim() != groupNo.Trim())
                     continue;
 
                 colIdx++;
@@ -171,32 +174,28 @@ public partial class Comm_M2M : WebPage
 
         #region 处理未分组的情况.
         bool isHaveUnGroup = false;
-        if (dtObj.Columns.Count > 2)
+        foreach (DataRow drObj in dtObj.Rows)
         {
-            foreach (DataRow drObj in dtObj.Rows)
+            string group = drObj[2].ToString();
+            isHaveUnGroup = true;
+            foreach (DataRow drGroup in dtGroup.Rows)
             {
-                string group = drObj[2].ToString();
-                isHaveUnGroup = true;
-                foreach (DataRow drGroup in dtGroup.Rows)
+                string groupNo = drGroup[0].ToString();
+                if (group == groupNo)
                 {
-                    string groupNo = drGroup[0].ToString();
-                    if (group == groupNo)
-                    {
-                        isHaveUnGroup = false;
-                        break;
-                    }
+                    isHaveUnGroup = false;
+                    break;
                 }
-                if (isHaveUnGroup == false)
-                    continue;
             }
+            if (isHaveUnGroup == false)
+                continue;
         }
+         
 
         if (isHaveUnGroup == true)
         {
             this.Pub1.AddTR();
             this.Pub1.AddTDBigDocBegain(); // ("nowarp=true");
-
-
             this.Pub1.AddTable();
             int colIdx = -1;
             string ctlIDs = "";
@@ -227,7 +226,7 @@ public partial class Comm_M2M : WebPage
                 CheckBox cb = new CheckBox();
                 cb.ID = "CB_" + no;
                 ctlIDs += cb.ID + ",";
-                cb.Text = name;
+                cb.Text = name + group;
                 cb.Checked = m2m.Vals.Contains("," + no + ",");
                 if (cb.Checked)
                     cb.Text = "<font color=green>" + cb.Text + "</font>";
@@ -250,7 +249,6 @@ public partial class Comm_M2M : WebPage
                 this.Pub1.AddTREnd();
             }
             this.Pub1.AddTableEnd();
-
             //cbx.Attributes["onclick"] = "SetSelected(this,'" + ctlIDs + "')";
             this.Pub1.AddTDEnd();
             this.Pub1.AddTREnd();
