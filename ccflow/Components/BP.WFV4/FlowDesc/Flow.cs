@@ -1123,6 +1123,12 @@ namespace BP.WF
             dt.TableName = "WF_TurnTo";
             ds.Tables.Add(dt);
 
+            // 节点与表单绑定.
+            sql = "SELECT * FROM WF_FrmNode WHERE FK_Flow='" + this.No + "'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "WF_FrmNode";
+            ds.Tables.Add(dt);
+
             // 方向
             string sqlin = "SELECT NodeID FROM WF_Node WHERE fk_flow='" + this.No + "'";
             sql = "select * from WF_Direction where Node IN (" + sqlin + ") OR ToNode In (" + sqlin + ")";
@@ -3157,6 +3163,35 @@ namespace BP.WF
                                 bt.Insert();
                             }
                             break;
+                        case "WF_FrmNode": //Conds.xml。
+                            DBAccess.RunSQL("DELETE WF_FrmNode WHERE FK_Flow='"+fl.No+"'");
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                FrmNode fn = new FrmNode();
+                                fn.FK_Flow = fl.No;
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+                                    switch (dc.ColumnName)
+                                    {
+                                        case "FK_Node":
+                                            if (val.Length == 3)
+                                                val = flowID + val.Substring(1);
+                                            else if (val.Length == 4)
+                                                val = flowID + val.Substring(2);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    fn.SetValByKey(dc.ColumnName, val);
+                                }
+                                // 开始插入。
+                                fn.MyPK = fn.FK_Frm + "_" + fn.FK_Node;
+                                fn.Insert();
+                            }
+                            break;
                         case "WF_Cond": //Conds.xml。
                             foreach (DataRow dr in dt.Rows)
                             {
@@ -4345,9 +4380,7 @@ namespace BP.WF
         {
             QueryObject qo = new QueryObject(this);
             qo.AddWhere(FlowAttr.FlowType, 1);
-
             qo.addOrderBy(FlowAttr.No);
-
             qo.DoQuery();
         }
         /// <summary>

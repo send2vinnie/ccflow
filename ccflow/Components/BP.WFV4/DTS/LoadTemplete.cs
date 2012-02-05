@@ -44,44 +44,62 @@ namespace BP.WF.DTS
         public override object Do()
         {
             string msg = "";
-            string flowPath = SystemConfig.PathOfData + "\\FlowDemo\\Flow\\";
-            string[] fls = System.IO.Directory.GetFiles(flowPath);
-            string fk_flowsort = "01";
-            //DBAccess.RunSQLReturnString("SELECT No FROM WF_FlowSort");
-            // 调度表单文件。
-            foreach (string f in fls)
+            FlowSorts sorts = new FlowSorts();
+            sorts.ClearTable();
+
+            DirectoryInfo dirInfo = new DirectoryInfo(SystemConfig.PathOfData + "\\FlowDemo\\Flow\\");
+            DirectoryInfo[] dirs = dirInfo.GetDirectories();
+            foreach (DirectoryInfo dir in dirs)
             {
-                try
+                if (dir.FullName.Contains(".svn"))
+                    continue;
+
+                string[] fls = System.IO.Directory.GetFiles(dir.FullName);
+                if (fls.Length == 0)
+                    continue;
+
+                FlowSort fs = new FlowSort();
+                fs.No = dir.Name.Substring(0, 2);
+                fs.Name = dir.Name.Substring(3);
+                fs.Insert();
+                foreach (string f in fls)
                 {
-                    msg += "@开始调度文件:" + f;
-                    Flow myflow = BP.WF.Flow.DoLoadFlowTemplate(fk_flowsort, f);
-                    msg += "@流程:" + myflow.Name + "装载成功。";
-                    System.IO.FileInfo info = new System.IO.FileInfo(f);
-                    myflow.Name = info.Name.Replace(".xml", "");
-                    myflow.DirectUpdate();
-                }
-                catch (Exception ex)
-                {
-                    msg += "@调度失败" + ex.Message;
+                    try
+                    {
+                        msg += "@开始调度流程模板文件:" + f;
+                        Flow myflow = BP.WF.Flow.DoLoadFlowTemplate(fs.No, f);
+                        msg += "@流程:" + myflow.Name + "装载成功。";
+                        System.IO.FileInfo info = new System.IO.FileInfo(f);
+                        myflow.Name = info.Name.Replace(".xml", "");
+                        myflow.DirectUpdate();
+                    }
+                    catch (Exception ex)
+                    {
+                        msg += "@调度失败" + ex.Message;
+                    }
                 }
             }
-
  
             // 调度表单文件。
             FrmSorts fss = new FrmSorts();
             fss.ClearTable();
 
             string frmPath = SystemConfig.PathOfData + "\\FlowDemo\\Form\\";
-            DirectoryInfo dirInfo =new DirectoryInfo(frmPath);
-            DirectoryInfo[] dirs = dirInfo.GetDirectories();
+              dirInfo =new DirectoryInfo(frmPath);
+              dirs = dirInfo.GetDirectories();
             foreach (DirectoryInfo item in dirs)
             {
+                if (item.FullName.Contains(".svn"))
+                    continue;
+
+                string[] fls = System.IO.Directory.GetFiles(item.FullName);
+                if (fls.Length == 0)
+                    continue;
                 FrmSort fs = new FrmSort();
                 fs.No = item.Name.Substring(0, 2);
-                fs.Name = item.Name.Substring(2);
+                fs.Name = item.Name.Substring(3);
                 fs.Insert();
 
-                fls = System.IO.Directory.GetFiles(item.FullName);
                 foreach (string f in fls)
                 {
                     try
