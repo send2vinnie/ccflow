@@ -61,7 +61,6 @@ namespace BP.WF
 
            
             // 把部门导入里面去。
- 
 
             //DirectoryEntry de = new DirectoryEntry("LDAP://" + domain, name, pass);
             //DirectorySearcher srch = new DirectorySearcher();

@@ -3626,6 +3626,9 @@ namespace BP.WF
                                         case Sys.MapAttrAttr.FK_MapData:
                                         case Sys.MapAttrAttr.KeyOfEn:
                                         case Sys.MapAttrAttr.AutoFullDoc:
+                                            if (val == null)
+                                                continue;
+
                                             val = val.Replace("ND" + oldFlowID, "ND" + flowID);
                                             break;
                                         default:
