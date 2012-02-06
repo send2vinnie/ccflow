@@ -234,7 +234,9 @@ namespace BP.WF.Ext
 
                 #region  功能按钮状态
                 map.AddTBString(BtnAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, false);
+             //   map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, false);
+                map.AddTBString(BtnAttr.SendJS, "", "按钮JS函数", true, false, 0, 50, 10);
+
 
                 map.AddTBString(BtnAttr.SaveLab, "保存", "保存按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.SaveEnable, true, "是否启用", true, true);

@@ -309,7 +309,7 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(BtnAttr.SendJS);
+                return this.GetValStringByKey(BtnAttr.SendJS).Replace("~","'");
             }
         }
         public string TrackLab
