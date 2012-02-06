@@ -458,9 +458,14 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             {
                 this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
                 this.Btn_Send.UseSubmitBehavior = false;
-                this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                if (btnLab.SendJS.Trim().Length > 2)
+                    this.Btn_Send.OnClientClick = btnLab.SendJS + ";this.disabled=true;"; //this.disabled='disabled'; return true;";
+                else
+                    this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+
                 this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
+
 
             if (btnLab.SaveEnable)
             {

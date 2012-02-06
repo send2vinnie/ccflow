@@ -139,9 +139,14 @@ namespace BP.Web.WF
                         string sid = this.Request.QueryString["SID"];
                         string[] strs = sid.Split('_');
                         WorkerList wl = new WorkerList();
-                        int i = wl.Retrieve(WorkerListAttr.FK_Emp, strs[0], WorkerListAttr.WorkID, strs[1], WorkerListAttr.FK_Node, strs[2]);
+                        int i = wl.Retrieve(WorkerListAttr.FK_Emp, strs[0],
+                            WorkerListAttr.WorkID, strs[1],
+                            WorkerListAttr.FK_Node, strs[2]);
                         if (i == 0)
+                        {
+                            this.Response.Write("<h2>提示</h2>此工作已经被别人处理或者此流程已删除。");
                             return;
+                        }
                         BP.Port.Emp emp155 = new BP.Port.Emp(wl.FK_Emp);
                         Web.WebUser.SignInOfGener(emp155, true);
                         string u="MyFlow.aspx?FK_Flow=" + wl.FK_Flow + "&WorkID=" + wl.WorkID;
