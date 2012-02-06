@@ -107,6 +107,10 @@ namespace BP.WF
         /// SelectAccepterEnable
         /// </summary>
         public const string SelectAccepterEnable = "SelectAccepterEnable";
+        /// <summary>
+        /// 发送按钮
+        /// </summary>
+        public const string SendJS = "SendJS";
     }
     /// <summary>
     /// Btn
@@ -298,7 +302,14 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.SendEnable);
+                return true;
+            }
+        }
+        public string SendJS
+        {
+            get
+            {
+                return this.GetValStringByKey(BtnAttr.SendJS);
             }
         }
         public string TrackLab
@@ -415,7 +426,10 @@ namespace BP.WF
                 map.AddTBIntPK(BtnAttr.NodeID, 0, "NodeID", true, false);
 
                 map.AddTBString(BtnAttr.SendLab, "发送", "发送按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, true);
+                map.AddTBString(BtnAttr.SendJS, "", "按钮JS函数", true, false, 0, 50, 10);
+                
+             //   map.AddBoolean(BtnAttr.SendEnable, true, "是否启用", true, true);
+
 
                 map.AddTBString(BtnAttr.JumpWayLab, "跳转", "跳转按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(NodeAttr.JumpWay, false, "是否启用", true, true);
