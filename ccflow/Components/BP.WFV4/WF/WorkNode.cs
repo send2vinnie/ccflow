@@ -649,7 +649,6 @@ namespace BP.WF
                 }
 
                 dt = DBAccess.RunSQLReturnTable(sql);
-
                 // 如果能够找到.
                 if (dt.Rows.Count >= 1)
                 {
@@ -670,7 +669,6 @@ namespace BP.WF
                 dt.Rows.Add(dr);
                 return WorkerListWayOfDept(town, dt);
             }
-
 
             /* 如果执行节点 与 接受节点岗位集合不一致 */
             if (this.HisNode.GroupStaNDs != town.HisNode.GroupStaNDs)
