@@ -44,7 +44,7 @@
                         </liquidTreeView:Tree>
                         <liquidMenu:Menu x:Name="MuFlowTree" Background="white" Visibility="Collapsed" ItemSelected="MuFlowTree_ItemSelected">
                             <liquidMenu:MenuItem ID="OpenFlow" Text="打开流程"  Icon="../Images/MenuItem/Open.png" />
-                            <liquidMenu:MenuItem ID="NewFlow_Blank" Text="新建流程"  Icon="../Images/MenuItem/New.png" />
+                            <liquidMenu:MenuItem ID="NewFlow_Blank" Text="新建/导入流程"  Icon="../Images/MenuItem/New.png" />
                             <liquidMenu:MenuDivider />
                             <liquidMenu:MenuItem ID="NewFlowSort" Text="新建流程类别" Icon="../Images/MenuItem/FlowSort.png"  />
                             <liquidMenu:MenuItem ID="Edit" Text="编辑流程类别"  Icon="../Images/MenuItem/Edit.png" />
@@ -71,10 +71,15 @@
                             <liquidMenu:MenuItem ID="Frm_EditForm" Text="表单属性"  Icon="../Images/Form.png" />
                             <liquidMenu:MenuItem ID="Frm_NewForm" Text="新建表单"  Icon="../Images/FormNew.png" />
 
+
                             <liquidMenu:MenuDivider />
                             <liquidMenu:MenuItem ID="Frm_FormDesignerFix"  Text="设计傻瓜表单"   Icon="../Images/MenuItem/Edit.png"  />
                             <liquidMenu:MenuItem ID="Frm_FormDesignerFree" Text="设计自由表单"   Icon="../Images/MenuItem/Edit.png" />
 
+                            <liquidMenu:MenuDivider />
+                            <liquidMenu:MenuItem ID="Frm_Exp"  Text="导出"   Icon="../Images/MenuItem/Edit.png"  />
+                            <liquidMenu:MenuItem ID="Frm_Imp" Text="导入"   Icon="../Images/MenuItem/Edit.png" />
+                            
                             <liquidMenu:MenuDivider />
                             <liquidMenu:MenuItem ID="Frm_NewFormSort" Text="新建表单类别" Icon="../Images/MenuItem/FlowSort.png"  />
                             <liquidMenu:MenuItem ID="Frm_EditSort" Text="编辑表单类别"  Icon="../Images/MenuItem/Edit.png" />

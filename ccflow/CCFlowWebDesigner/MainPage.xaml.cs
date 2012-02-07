@@ -706,11 +706,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     if (null == deleteFlowNode)
                         break;
 
-                    if (MessageBox.Show("您确认要删除吗？", "ccflow", MessageBoxButton.OKCancel) 
+                    if (MessageBox.Show("您确认要删除吗？", "ccflow", MessageBoxButton.OKCancel)
                         == MessageBoxResult.No)
                         return;
 
-                    if (deleteFlowNode.IsSort==true)
+                    if (deleteFlowNode.IsSort == true)
                     {
                         var ws = Glo.GetDesignerServiceInstance();
                         Glo.TempVar = "DeleteFrmSort";
@@ -729,8 +729,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 case "Frm_Refresh": //刷新
                     this.BindFormTree();
                     break;
+                case "Frm_Imp":  //Imp
+                    WF.Frm.FrmImp imp = new WF.Frm.FrmImp();
+                    imp.Show();
+                    break;
                 default:
-                    MessageBox.Show("没有判断的标记:" + Glo.TempVar);
+                    MessageBox.Show("功能未完成:" + Glo.TempVar);
                     break;
             }
             MuFlowTree.Hide();

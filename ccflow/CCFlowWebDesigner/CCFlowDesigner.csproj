@@ -153,6 +153,12 @@
     <Compile Include="Frm\Frm.xaml.cs">
       <DependentUpon>Frm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Frm\FrmExp.xaml.cs">
+      <DependentUpon>FrmExp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Frm\FrmImp.xaml.cs">
+      <DependentUpon>FrmImp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Frm\FrmLib.xaml.cs">
       <DependentUpon>FrmLib.xaml</DependentUpon>
     </Compile>
@@ -254,6 +260,9 @@
     <Resource Include="Images\FormNew.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\WS\WebService.wsdl" />
+    <None Include="Service References\WS\WF.WS.UploadfileCCFormResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WS\WF.WS.UploadfileResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -306,6 +315,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Frm\Frm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Frm\FrmExp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Frm\FrmImp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

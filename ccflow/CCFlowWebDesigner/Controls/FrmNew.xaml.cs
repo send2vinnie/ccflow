@@ -109,9 +109,7 @@ namespace WF.Controls
 
         private void BtnUpLoad_Click(object sender, RoutedEventArgs e)
         {
-
             dialog.Filter = "Xml Files (.xml)|*.xml|All Files (*.*)|*.*";
-
             if (dialog.ShowDialog().Value)
             {
                 // 选择上传的文件

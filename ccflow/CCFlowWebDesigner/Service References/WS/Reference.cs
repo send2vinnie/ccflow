@@ -102,6 +102,12 @@ namespace WF.WS {
         
         WF.WS.UploadfileResponse EndUploadfile(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/UploadfileCCForm", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.IAsyncResult BeginUploadfileCCForm(WF.WS.UploadfileCCFormRequest request, System.AsyncCallback callback, object asyncState);
+        
+        WF.WS.UploadfileCCFormResponse EndUploadfileCCForm(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CfgKey", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.IAsyncResult BeginCfgKey(string kev, System.AsyncCallback callback, object asyncState);
@@ -217,6 +223,49 @@ namespace WF.WS {
         
         public UploadfileResponse(string UploadfileResult) {
             this.UploadfileResult = UploadfileResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="UploadfileCCForm", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class UploadfileCCFormRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")]
+        public byte[] FileByte;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public string fileName;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        public string fk_frmSort;
+        
+        public UploadfileCCFormRequest() {
+        }
+        
+        public UploadfileCCFormRequest(byte[] FileByte, string fileName, string fk_frmSort) {
+            this.FileByte = FileByte;
+            this.fileName = fileName;
+            this.fk_frmSort = fk_frmSort;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="UploadfileCCFormResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class UploadfileCCFormResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string UploadfileCCFormResult;
+        
+        public UploadfileCCFormResponse() {
+        }
+        
+        public UploadfileCCFormResponse(string UploadfileCCFormResult) {
+            this.UploadfileCCFormResult = UploadfileCCFormResult;
         }
     }
     
@@ -517,6 +566,25 @@ namespace WF.WS {
         private object[] results;
         
         public UploadfileCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class UploadfileCCFormCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public UploadfileCCFormCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -864,6 +932,12 @@ namespace WF.WS {
         
         private System.Threading.SendOrPostCallback onUploadfileCompletedDelegate;
         
+        private BeginOperationDelegate onBeginUploadfileCCFormDelegate;
+        
+        private EndOperationDelegate onEndUploadfileCCFormDelegate;
+        
+        private System.Threading.SendOrPostCallback onUploadfileCCFormCompletedDelegate;
+        
         private BeginOperationDelegate onBeginCfgKeyDelegate;
         
         private EndOperationDelegate onEndCfgKeyDelegate;
@@ -1021,6 +1095,8 @@ namespace WF.WS {
         public event System.EventHandler<DoSaveFlowCompletedEventArgs> DoSaveFlowCompleted;
         
         public event System.EventHandler<UploadfileCompletedEventArgs> UploadfileCompleted;
+        
+        public event System.EventHandler<UploadfileCCFormCompletedEventArgs> UploadfileCCFormCompleted;
         
         public event System.EventHandler<CfgKeyCompletedEventArgs> CfgKeyCompleted;
         
@@ -1754,6 +1830,71 @@ namespace WF.WS {
             base.InvokeAsync(this.onBeginUploadfileDelegate, new object[] {
                         FileByte,
                         fileName}, this.onEndUploadfileDelegate, this.onUploadfileCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult WF.WS.WSDesignerSoap.BeginUploadfileCCForm(WF.WS.UploadfileCCFormRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUploadfileCCForm(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.IAsyncResult BeginUploadfileCCForm(byte[] FileByte, string fileName, string fk_frmSort, System.AsyncCallback callback, object asyncState) {
+            WF.WS.UploadfileCCFormRequest inValue = new WF.WS.UploadfileCCFormRequest();
+            inValue.FileByte = FileByte;
+            inValue.fileName = fileName;
+            inValue.fk_frmSort = fk_frmSort;
+            return ((WF.WS.WSDesignerSoap)(this)).BeginUploadfileCCForm(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        WF.WS.UploadfileCCFormResponse WF.WS.WSDesignerSoap.EndUploadfileCCForm(System.IAsyncResult result) {
+            return base.Channel.EndUploadfileCCForm(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private string EndUploadfileCCForm(System.IAsyncResult result) {
+            WF.WS.UploadfileCCFormResponse retVal = ((WF.WS.WSDesignerSoap)(this)).EndUploadfileCCForm(result);
+            return retVal.UploadfileCCFormResult;
+        }
+        
+        private System.IAsyncResult OnBeginUploadfileCCForm(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            byte[] FileByte = ((byte[])(inValues[0]));
+            string fileName = ((string)(inValues[1]));
+            string fk_frmSort = ((string)(inValues[2]));
+            return this.BeginUploadfileCCForm(FileByte, fileName, fk_frmSort, callback, asyncState);
+        }
+        
+        private object[] OnEndUploadfileCCForm(System.IAsyncResult result) {
+            string retVal = this.EndUploadfileCCForm(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnUploadfileCCFormCompleted(object state) {
+            if ((this.UploadfileCCFormCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.UploadfileCCFormCompleted(this, new UploadfileCCFormCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void UploadfileCCFormAsync(byte[] FileByte, string fileName, string fk_frmSort) {
+            this.UploadfileCCFormAsync(FileByte, fileName, fk_frmSort, null);
+        }
+        
+        public void UploadfileCCFormAsync(byte[] FileByte, string fileName, string fk_frmSort, object userState) {
+            if ((this.onBeginUploadfileCCFormDelegate == null)) {
+                this.onBeginUploadfileCCFormDelegate = new BeginOperationDelegate(this.OnBeginUploadfileCCForm);
+            }
+            if ((this.onEndUploadfileCCFormDelegate == null)) {
+                this.onEndUploadfileCCFormDelegate = new EndOperationDelegate(this.OnEndUploadfileCCForm);
+            }
+            if ((this.onUploadfileCCFormCompletedDelegate == null)) {
+                this.onUploadfileCCFormCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUploadfileCCFormCompleted);
+            }
+            base.InvokeAsync(this.onBeginUploadfileCCFormDelegate, new object[] {
+                        FileByte,
+                        fileName,
+                        fk_frmSort}, this.onEndUploadfileCCFormDelegate, this.onUploadfileCCFormCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2651,6 +2792,19 @@ namespace WF.WS {
             public WF.WS.UploadfileResponse EndUploadfile(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 WF.WS.UploadfileResponse _result = ((WF.WS.UploadfileResponse)(base.EndInvoke("Uploadfile", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginUploadfileCCForm(WF.WS.UploadfileCCFormRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("UploadfileCCForm", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public WF.WS.UploadfileCCFormResponse EndUploadfileCCForm(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                WF.WS.UploadfileCCFormResponse _result = ((WF.WS.UploadfileCCFormResponse)(base.EndInvoke("UploadfileCCForm", _args, result)));
                 return _result;
             }
             

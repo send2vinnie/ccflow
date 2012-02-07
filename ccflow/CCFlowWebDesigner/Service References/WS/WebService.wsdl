@@ -218,6 +218,22 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="UploadfileCCForm">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FileByte" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="fileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fk_frmSort" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadfileCCFormResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UploadfileCCFormResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="CfgKey">
         <s:complexType>
           <s:sequence>
@@ -505,6 +521,12 @@
   <wsdl:message name="UploadfileSoapOut">
     <wsdl:part name="parameters" element="tns:UploadfileResponse" />
   </wsdl:message>
+  <wsdl:message name="UploadfileCCFormSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadfileCCForm" />
+  </wsdl:message>
+  <wsdl:message name="UploadfileCCFormSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadfileCCFormResponse" />
+  </wsdl:message>
   <wsdl:message name="CfgKeySoapIn">
     <wsdl:part name="parameters" element="tns:CfgKey" />
   </wsdl:message>
@@ -687,6 +709,14 @@
     <wsdl:part name="fileName" type="s:string" />
   </wsdl:message>
   <wsdl:message name="UploadfileHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="UploadfileCCFormHttpGetIn">
+    <wsdl:part name="FileByte" type="s1:StringArray" />
+    <wsdl:part name="fileName" type="s:string" />
+    <wsdl:part name="fk_frmSort" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UploadfileCCFormHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="CfgKeyHttpGetIn">
@@ -876,6 +906,14 @@
   <wsdl:message name="UploadfileHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
+  <wsdl:message name="UploadfileCCFormHttpPostIn">
+    <wsdl:part name="FileByte" type="s1:StringArray" />
+    <wsdl:part name="fileName" type="s:string" />
+    <wsdl:part name="fk_frmSort" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UploadfileCCFormHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
   <wsdl:message name="CfgKeyHttpPostIn">
     <wsdl:part name="kev" type="s:string" />
   </wsdl:message>
@@ -1014,6 +1052,10 @@
       <wsdl:input message="tns:UploadfileSoapIn" />
       <wsdl:output message="tns:UploadfileSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="UploadfileCCForm">
+      <wsdl:input message="tns:UploadfileCCFormSoapIn" />
+      <wsdl:output message="tns:UploadfileCCFormSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="CfgKey">
       <wsdl:input message="tns:CfgKeySoapIn" />
       <wsdl:output message="tns:CfgKeySoapOut" />
@@ -1124,6 +1166,10 @@
       <wsdl:input message="tns:UploadfileHttpGetIn" />
       <wsdl:output message="tns:UploadfileHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="UploadfileCCForm">
+      <wsdl:input message="tns:UploadfileCCFormHttpGetIn" />
+      <wsdl:output message="tns:UploadfileCCFormHttpGetOut" />
+    </wsdl:operation>
     <wsdl:operation name="CfgKey">
       <wsdl:input message="tns:CfgKeyHttpGetIn" />
       <wsdl:output message="tns:CfgKeyHttpGetOut" />
@@ -1233,6 +1279,10 @@
     <wsdl:operation name="Uploadfile">
       <wsdl:input message="tns:UploadfileHttpPostIn" />
       <wsdl:output message="tns:UploadfileHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadfileCCForm">
+      <wsdl:input message="tns:UploadfileCCFormHttpPostIn" />
+      <wsdl:output message="tns:UploadfileCCFormHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="CfgKey">
       <wsdl:input message="tns:CfgKeyHttpPostIn" />
@@ -1408,6 +1458,15 @@
     </wsdl:operation>
     <wsdl:operation name="Uploadfile">
       <soap:operation soapAction="http://tempuri.org/Uploadfile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadfileCCForm">
+      <soap:operation soapAction="http://tempuri.org/UploadfileCCForm" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1661,6 +1720,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UploadfileCCForm">
+      <soap12:operation soapAction="http://tempuri.org/UploadfileCCForm" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="CfgKey">
       <soap12:operation soapAction="http://tempuri.org/CfgKey" style="document" />
       <wsdl:input>
@@ -1907,6 +1975,15 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UploadfileCCForm">
+      <http:operation location="/UploadfileCCForm" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="CfgKey">
       <http:operation location="/CfgKey" />
       <wsdl:input>
@@ -2146,6 +2223,15 @@
     </wsdl:operation>
     <wsdl:operation name="Uploadfile">
       <http:operation location="/Uploadfile" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadfileCCForm">
+      <http:operation location="/UploadfileCCForm" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

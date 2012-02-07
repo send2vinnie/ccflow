@@ -73,8 +73,9 @@
                 <liquidMenu:MenuDivider />
                 <liquidMenu:MenuItem ID="menuDelete" Text="删除选择项" Icon="../Images/MenuItem/Delete.png" />
                 <liquidMenu:MenuDivider />
-                <liquidMenu:MenuItem ID="menuExp" Text="导出/共享:流程模板"  Icon="../Images/MenuItem/Download.png"  />
-                <liquidMenu:MenuItem ID="menuImp" Text="导入/查找:流程模板"  Icon="../Images/MenuItem/Upload.png"  />
+                <!--<liquidMenu:MenuItem ID="menuExp" Text="导出/共享:流程模板"  Icon="../Images/MenuItem/Download.png"  />
+                <liquidMenu:MenuItem ID="menuImp" Text="导入/查找:流程模板"  Icon="../Images/MenuItem/Upload.png"  />-->
+                
                 <liquidMenu:MenuItem ID="MenuDisplayHideGrid" Text="显示/隐藏网格" Icon="../Images/MenuItem/Grid.png"  />
                 <liquidMenu:MenuItem ID="Help" Text="帮助" Icon="../Images/MenuItem/Help.png"  />
             </liquidMenu:Menu>
