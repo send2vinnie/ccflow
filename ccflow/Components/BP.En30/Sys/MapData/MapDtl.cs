@@ -818,38 +818,47 @@ namespace BP.Sys
         private void InitExtMembers()
         {
             /* 如果启用了多附件*/
-            BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment();
-            athDesc.MyPK = this.No + "_AthM";
-            if (athDesc.RetrieveFromDBSources() == 0)
+            if (this.IsEnableAthM)
             {
-                athDesc.FK_MapData = this.No;
-                athDesc.NoOfObj = "AthM";
-                athDesc.Name = this.Name;
-                athDesc.Insert();
+                BP.Sys.FrmAttachment athDesc = new BP.Sys.FrmAttachment();
+                athDesc.MyPK = this.No + "_AthM";
+                if (athDesc.RetrieveFromDBSources() == 0)
+                {
+                    athDesc.FK_MapData = this.No;
+                    athDesc.NoOfObj = "AthM";
+                    athDesc.Name = this.Name;
+                    athDesc.Insert();
+                }
             }
 
-            MapM2M m2m = new MapM2M();
-            m2m.MyPK = this.No + "_M2M";
-            m2m.Name = "M2M";
-            m2m.NoOfObj = "M2M";
-            m2m.FK_MapData = this.No;
-            if (m2m.RetrieveFromDBSources() == 0)
+            if (this.IsEnableM2M)
             {
-                m2m.FK_MapData = this.No;
+                MapM2M m2m = new MapM2M();
+                m2m.MyPK = this.No + "_M2M";
+                m2m.Name = "M2M";
                 m2m.NoOfObj = "M2M";
-                m2m.Insert();
+                m2m.FK_MapData = this.No;
+                if (m2m.RetrieveFromDBSources() == 0)
+                {
+                    m2m.FK_MapData = this.No;
+                    m2m.NoOfObj = "M2M";
+                    m2m.Insert();
+                }
             }
 
-            m2m = new MapM2M();
-            m2m.MyPK = this.No + "_M2MM";
-            m2m.Name = "M2MM";
-            m2m.NoOfObj = "M2MM";
-            m2m.FK_MapData = this.No;
-            if (m2m.RetrieveFromDBSources() == 0)
+            if (this.IsEnableM2MM)
             {
-                m2m.FK_MapData = this.No;
+                MapM2M m2m = new MapM2M();
+                m2m.MyPK = this.No + "_M2MM";
+                m2m.Name = "M2MM";
                 m2m.NoOfObj = "M2MM";
-                m2m.Insert();
+                m2m.FK_MapData = this.No;
+                if (m2m.RetrieveFromDBSources() == 0)
+                {
+                    m2m.FK_MapData = this.No;
+                    m2m.NoOfObj = "M2MM";
+                    m2m.Insert();
+                }
             }
         }
         protected override bool beforeInsert()

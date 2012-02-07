@@ -288,9 +288,6 @@ namespace BP.WF
                 return this.GetValBooleanByKey(BtnAttr.PrintDocEnable);
             }
         }
-
-
-
         public string SendLab
         {
             get
