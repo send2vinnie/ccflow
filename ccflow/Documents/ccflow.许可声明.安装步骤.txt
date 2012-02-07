@@ -170,7 +170,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
         把 Internet information services. 与 Internet 信息服务 全部选择上。
    
           
-    2,  设置mimee类型.
+    2,  设置mime类型.
      
        开始->运行->输入inetmgr . 把鼠标放在根节点上, 选择iis 分组中的 MIME类型.
 
