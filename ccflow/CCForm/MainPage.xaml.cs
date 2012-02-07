@@ -3019,8 +3019,9 @@ namespace CCForm
                     if (dtlFrm != null)
                     {
                         this.currDtl = dtlFrm;
-                        this.IsmuElePanel = true;
-                        UIElement_Click(dtlFrm, e);
+                      //  string url = Glo.BPMHost + "/WF/MapDef/MapDef.aspx?DoType=Edit&FK_MapData=" + dtlFrm.Name;
+                        string url = Glo.BPMHost + "/WF/MapDef/CCForm/Frm.aspx?FK_MapData="+dtlFrm.Name;
+                        HtmlPage.Window.Eval("window.open('" + url + "','_blank')");
                         return;
                     }
                     else
@@ -3030,8 +3031,8 @@ namespace CCForm
                     break;
                 case "eleTabIdx":
                 case "eleTabIdx_Ext":
-                    string url = Glo.BPMHost + "/WF/MapDef/TabIdx.aspx?FK_MapData=" + Glo.FK_MapData;
-                    HtmlPage.Window.Eval("window.showModalDialog('" + url + "',window,'dialogHeight:500px;dialogWidth:700px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
+                    string url1 = Glo.BPMHost + "/WF/MapDef/TabIdx.aspx?FK_MapData=" + Glo.FK_MapData;
+                    HtmlPage.Window.Eval("window.showModalDialog('" + url1 + "',window,'dialogHeight:500px;dialogWidth:700px;center:Yes;help:No;scroll:auto;resizable:1;status:No;');");
                     return;
                 case "eleEdit":
                     Line line = Glo.currEle as Line;
