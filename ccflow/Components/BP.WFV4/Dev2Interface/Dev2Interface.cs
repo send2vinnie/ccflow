@@ -292,6 +292,35 @@ namespace BP.WF
             return wn.AfterNodeSave();
         }
         /// <summary>
+        /// 发起一个工作
+        /// </summary>
+        /// <param name="flowNo">流程编号</param>
+        /// <param name="ht">开始节点数据</param>
+        /// <param name="fk_nodeOfJumpTo">将要跳转的节点</param>
+        /// <returns>执行信息</returns>
+        public static string Node_StartWork(string flowNo, Hashtable ht,int fk_nodeOfJumpTo)
+        {
+            Node nd = new Node(int.Parse(flowNo + "01"));
+            StartWork sw = nd.HisWork as StartWork;
+            if (ht != null)
+            {
+                foreach (string str in ht.Keys)
+                    sw.SetValByKey(str, ht[str]);
+            }
+            sw.Title = sw.Title + "(自动发起)";
+            sw.SetValByKey("RDT", DataType.CurrentDataTime);
+            sw.SetValByKey("CDT", DataType.CurrentDataTime);
+            sw.SetValByKey("FK_NY", DataType.CurrentYearMonth);
+            sw.SetValByKey("Rec", WebUser.No);
+            sw.SetValByKey("Emps", WebUser.No);
+            sw.SetValByKey("FK_Dept", WebUser.FK_Dept);
+            sw.InsertAsOID(BP.DA.DBAccess.GenerOID());
+
+            WorkNode wn = new WorkNode(sw, nd);
+            wn.JumpTo = new Node(fk_nodeOfJumpTo);
+            return wn.AfterNodeSave();
+        }
+        /// <summary>
         /// 发送工作
         /// </summary>
         /// <param name="nodeID">节点编号</param>
