@@ -157,14 +157,15 @@ public partial class WF_DtlFrm : WebPage
         #endregion 输出标签.
 
         #region 输出从表单内容.
+        MapData md = new MapData(mdtl.No);
         foreach (GEDtl dtl in dtls)
         {
-            this.UCEn1.Add("\t\n <DIV id='" + dtl.OID + "' style='width:" + mdtl.FrmW + "px; height:" + mdtl.FrmH + "px;text-align: left;' >");
+            this.UCEn1.Add("\t\n <DIV id='" + dtl.OID + "' style='width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;' >");
 
             string src = "";
             src = "FrmDtl.aspx?FK_MapData=" + this.EnsName + "&WorkID=" + this.RefPKVal + "&OID=" + dtl.OID + "&IsReadonly=" + this.IsReadonly;
 
-            this.UCEn1.Add("\t\n <iframe ID='F" + dtl.OID + "' src='" + src + "' frameborder=0  style='position:absolute;width:" + mdtl.FrmW + "px; height:" + mdtl.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
+            this.UCEn1.Add("\t\n <iframe ID='F" + dtl.OID + "' src='" + src + "' frameborder=0  style='position:absolute;width:" + md.FrmW + "px; height:" + md.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=no /></iframe>");
             this.UCEn1.Add("\t\n </DIV>");
         }
         #endregion 输出从表单内容.

@@ -61,6 +61,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("IDX", "序"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("Title", "标题"));
+        this.Pub1.AddTDTitle("nowarp=true", this.ToE("Title", "流程"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("CurrNode", "当前节点"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("StartDate", "发起日期"));
         this.Pub1.AddTDTitle("nowarp=true", this.ToE("Emp", "发起人"));
@@ -76,6 +77,7 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
             this.Pub1.AddTDIdx(i);
             //   this.Pub1.AddTDA("MyFlow.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow, gwf.Title);
             this.Pub1.AddTDDoc(gwf.Title,50,gwf.Title);
+            this.Pub1.AddTD(gwf.FlowName);
             this.Pub1.AddTD(gwf.NodeName);
             this.Pub1.AddTD(gwf.RDT);
             this.Pub1.AddTD(gwf.RecName);

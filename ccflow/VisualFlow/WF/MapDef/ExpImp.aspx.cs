@@ -145,7 +145,7 @@ public partial class WF_MapDef_ExpImp : WebPage
         this.Pub1.AddTableEnd();
 
         this.Pub1.AddFieldSet("共享说明");
-        this.Pub1.Add("如果您想批量的共享表单，请转到流程设计器-功能执行-导出流程与表单模板，发送邮件到template@ccflow.com中。");
+        this.Pub1.Add("如果您想批量的共享表单，请转到流程设计器-功能执行-导出流程与表单模板，发送邮件到template@ccflow.org中。");
         this.Pub1.AddFieldSetEnd();
     }
     void btn_ShareIt_Click(object sender, EventArgs e)
