@@ -230,6 +230,9 @@ namespace BP.Sys
             if (sql != null)
                 return sql;
 
+            if (this.Count == 0)
+                throw new Exception("@枚举值" + enumKey + "已被删除。");
+
             sql = " CASE " + mTable + field;
             foreach (SysEnum se1 in this)
             {
@@ -237,7 +240,6 @@ namespace BP.Sys
             }
 
             SysEnum se = (SysEnum)this.GetEntityByKey(SysEnumAttr.IntKey, def);
-
             if (se == null)
                 sql += " END " + key + "Text";
             else
@@ -249,15 +251,15 @@ namespace BP.Sys
 
         public string GenerCaseWhenForOracle(string mTable, string key, string field, string enumKey, int def)
         {
+            if (this.Count == 0)
+                throw new Exception("@枚举值" + enumKey + "已被删除，无法形成期望的SQL。");
+
             string sql = "";
             sql = " CASE " + mTable + field;
             foreach (SysEnum se1 in this)
-            {
                 sql += " WHEN " + se1.IntKey + " THEN '" + se1.Lab + "'";
-            }
 
             SysEnum se = (SysEnum)this.GetEntityByKey(SysEnumAttr.IntKey, def);
-
             if (se == null)
                 sql += " END " + key + "Text";
             else
@@ -360,7 +362,6 @@ namespace BP.Sys
             }
 
             Cash.AddObj("EnumOf" + enumKey + Web.WebUser.SysLang, Depositary.Application, this);
-             
             return true;
         }
 		/// <summary>

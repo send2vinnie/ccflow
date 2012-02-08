@@ -2794,8 +2794,6 @@ namespace BP.WF
 
                 map.AddTBDecimal(FlowAttr.AvgDay, 0, "平均运行用天", false, false);
 
-
-
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
 
                 map.AddTBString(FlowAttr.TitleRole, null,"标题生成规则", true, false, 0, 500, 10, true);
@@ -2860,11 +2858,10 @@ namespace BP.WF
 
         protected override bool beforeInsert()
         {
-            if (this.FK_FlowSort == "01")
-                this.HisFlowSheetType = FlowSheetType.DocFlow;
-            else
-                this.HisFlowSheetType = FlowSheetType.SheetFlow;
-
+            //if (this.FK_FlowSort == "01")
+            //    this.HisFlowSheetType = FlowSheetType.DocFlow;
+            //else
+            //    this.HisFlowSheetType = FlowSheetType.SheetFlow;
 
             return base.beforeInsert();
         }
