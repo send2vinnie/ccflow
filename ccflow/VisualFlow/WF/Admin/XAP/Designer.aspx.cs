@@ -39,6 +39,17 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion 测试数据库是否连接成功。
 
+             #region 2012- 01-29 增加字段。
+            try
+            {
+                DBAccess.RunSQL("UPDATE WF_Flow SET FlowSheetType=0");
+            }
+            catch
+            {
+            }
+            #endregion
+
+            
             #region 2012- 01-29 增加字段。
             try
             {
