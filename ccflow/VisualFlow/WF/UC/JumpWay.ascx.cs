@@ -59,7 +59,7 @@ public partial class WF_UC_JumpWay : BP.Web.UC.UCBase3
         {
             Node ndJump = new Node(this.GoNode);
             WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
-            wn.JumpTo = ndJump;
+            wn.JumpToNode = ndJump;
             string msg = wn.AfterNodeSave();
 
             this.AddFieldSet("发送提示");
