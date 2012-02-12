@@ -25,13 +25,7 @@ namespace BP.WF
             DataTable dt = BP.DBLoad.GetTableByExt(xlsFile);
             string err = "";
             string info = "";
-            //检查格式是否符合要求.
-            if (dt.Columns.Contains("ToNodeID") == false)
-                err += " no columns ToNode";
-
-            if (dt.Columns.Contains("ToNode") == false)
-                err += " no columns ToNode";
-
+            
             foreach (DataRow dr in dt.Rows)
             {
                 string flowPK = dr["FlowPK"].ToString();
@@ -47,10 +41,8 @@ namespace BP.WF
                     continue;
                 }
                 string sql = "SELECT count(*) as Num FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'";
-                throw new Exception(sql);
-
                 int i = DBAccess.RunSQLReturnValInt(sql);
-                if (i == 0)
+                if (i == 1)
                     continue; // 此数据已经调度了。
 
                 BP.Port.Emp emp = new BP.Port.Emp(starter);
@@ -73,6 +65,80 @@ namespace BP.WF
                 {
                     info += "<hr>" + ex.Message;
                     DBAccess.RunSQL("DELETE FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'");
+                }
+            }
+            return info + err;
+        }
+
+        public static string LoadFlowDataWithToSpecEndNode(string xlsFile)
+        {
+            DataTable dt = BP.DBLoad.GetTableByExt(xlsFile);
+            string err = "";
+            string info = "";
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                string flowPK = dr["FlowPK"].ToString();
+                string starter = dr["Starter"].ToString();
+                string executer = dr["Executer"].ToString();
+
+                int toNode = int.Parse(dr["ToNodeID"].ToString().Replace("ND", ""));
+                Node nd = new Node();
+                nd.NodeID = toNode;
+                if (nd.RetrieveFromDBSources() == 0)
+                {
+                    err += "节点ID错误:" + toNode;
+                    continue;
+                }
+
+                if (nd.IsEndNode == false)
+                {
+                    err += "节点ID错误:" + toNode + ", 非结束节点。";
+                    continue;
+                }
+
+                string sql = "SELECT count(*) as Num FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'";
+                int i = DBAccess.RunSQLReturnValInt(sql);
+                if (i == 1)
+                    continue; // 此数据已经调度了。
+
+                BP.Port.Emp emp = new BP.Port.Emp(starter);
+                BP.Web.WebUser.SignInOfGener(emp);
+
+                Flow fl = nd.HisFlow;
+                Work wk = fl.NewWork();
+                foreach (DataColumn dc in dt.Columns)
+                    wk.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+
+                Node ndStart = nd.HisFlow.HisStartNode;
+                WorkNode wn = new WorkNode(wk, ndStart);
+                wn.JumpToNode = nd;
+                wn.JumpToEmp = executer;
+                try
+                {
+                    info += "<hr>" + wn.AfterNodeSave();
+                }
+                catch (Exception ex)
+                {
+                    err += "<hr>启动错误:" + ex.Message;
+                    DBAccess.RunSQL("DELETE FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'");
+                    continue;
+                }
+
+                Work wkEnd = nd.GetWork(wk.OID);
+                foreach (DataColumn dc in dt.Columns)
+                    wkEnd.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+
+                try
+                {
+                    WorkNode wnEnd = new WorkNode(wkEnd, nd);
+                    wnEnd.AfterNodeSave();
+                    info += "<hr>" + wnEnd.AfterNodeSave();
+                }
+                catch (Exception ex)
+                {
+                    err += "<hr>结束错误:" + ex.Message;
+                    continue;
                 }
             }
             return info + err;
