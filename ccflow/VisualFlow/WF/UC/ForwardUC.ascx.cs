@@ -40,15 +40,50 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
             return s;
         }
     }
+    public string FK_Dept
+    {
+        get
+        {
+            string s= this.Request.QueryString["FK_Dept"];
+            if (string.IsNullOrEmpty(s))
+                return WebUser.FK_Dept;
+            return s;
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.ToolBar1.AddBtn(NamesOfBtn.Forward,"移交");
         this.ToolBar1.AddBtn(NamesOfBtn.Cancel, "取消");
         this.ToolBar1.GetBtnByID(NamesOfBtn.Forward).Attributes["onclick"] = " return confirm('您确定要执行吗？');";
+
+        Depts depts = new Depts();
+        depts.RetrieveAllFromDBSource();
+        this.ToolBar1.AddDDL("DDL_Dept");
+        DDL ddl = this.ToolBar1.GetDDLByID("DDL_Dept");
+        ddl.AutoPostBack = true;
+        ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
+        foreach (Dept dept in depts)
+        {
+            ListItem li = new ListItem();
+            li.Text = BP.DA.DataType.GenerSpace(dept.Grade - 1) + dept.Name;
+            li.Text = li.Text.Replace("&nbsp;", "_");
+            li.Value = dept.No;
+            ddl.Items.Add(li);
+
+            if ( this.FK_Dept == li.Value)
+                li.Selected = true;
+        }
+
         this.ToolBar1.AddLab("ds","请选择移交人，输入移交原因，点移交按钮执行工作移交。");
         this.ToolBar1.GetBtnByID(NamesOfBtn.Forward).Click += new EventHandler(WF_UC_Forward_Click);
         this.ToolBar1.GetBtnByID(NamesOfBtn.Cancel).Click += new EventHandler(WF_UC_Forward_Click);
         this.BindLB();
+    }
+
+    void ddl_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DDL ddl =sender as DDL;
+        this.Response.Redirect(this.PageID+".aspx?WorkID="+this.WorkID+"&FK_Node="+this.Request.QueryString["FK_Node"]+"&FK_Flow="+this.Request.QueryString["FK_Flow"]+"&FK_Dept="+ddl.SelectedItemStringVal,true);
     }
     void WF_UC_Forward_Click(object sender, EventArgs e)
     {
@@ -68,7 +103,8 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
                 throw new Exception("@您必须输入移交原因。");
 
             string sql = "";
-            sql = " SELECT No,Name FROM Port_Emp WHERE NO IN (SELECT FK_EMP FROM Port_EmpDept WHERE FK_Dept IN (SELECT FK_Dept FROM Port_EmpDept WHERE fk_emp='" + BP.Web.WebUser.No + "') ) or FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%'";
+            //sql = " SELECT No,Name FROM Port_Emp WHERE NO IN (SELECT FK_EMP FROM Port_EmpDept WHERE FK_Dept IN (SELECT FK_Dept FROM Port_EmpDept WHERE fk_emp='" + BP.Web.WebUser.No + "') ) or FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%'";
+            sql = " SELECT No,Name FROM Port_Emp WHERE FK_Dept='" + this.FK_Dept + "'";
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
 
             string toEmp = "";
@@ -172,7 +208,9 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
     {
         // 当前用的员工权限。
         string sql = "";
-        sql = " SELECT No,Name FROM Port_Emp WHERE NO IN (SELECT FK_EMP FROM Port_EmpDept WHERE FK_Dept IN (SELECT FK_Dept FROM Port_EmpDept WHERE fk_emp='" + BP.Web.WebUser.No + "') ) or FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%'";
+       // sql = " SELECT No,Name FROM Port_Emp WHERE NO IN (SELECT FK_EMP FROM Port_EmpDept WHERE FK_Dept IN (SELECT FK_Dept FROM Port_EmpDept WHERE fk_emp='" + BP.Web.WebUser.No + "') ) or FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%'";
+        sql = " SELECT No,Name FROM Port_Emp WHERE FK_Dept='"+this.FK_Dept+"'";
+
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
         int colIdx = -1;
 
