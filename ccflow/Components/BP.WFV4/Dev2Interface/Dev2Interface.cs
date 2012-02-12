@@ -317,7 +317,7 @@ namespace BP.WF
             sw.InsertAsOID(BP.DA.DBAccess.GenerOID());
 
             WorkNode wn = new WorkNode(sw, nd);
-            wn.JumpTo = new Node(fk_nodeOfJumpTo);
+            wn.JumpToNode = new Node(fk_nodeOfJumpTo);
             return wn.AfterNodeSave();
         }
         /// <summary>

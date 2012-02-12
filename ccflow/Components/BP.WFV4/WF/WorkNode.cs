@@ -464,6 +464,15 @@ namespace BP.WF
             // 如果执行了两次发送，那前一次的轨迹就需要被删除。这里是为了避免错误。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE WorkID=" + this.HisWork.OID + " AND FK_Node =" + town.HisNode.NodeID);
 
+            // 如果指定特定的人员处理。
+            if (JumpToEmp != null)
+            {
+                DataRow dr = dt.NewRow();
+                dr[0] = JumpToEmp;
+                dt.Rows.Add(dr);
+                return WorkerListWayOfDept(town, dt);
+            }
+
             // 按上一节点发送人处理。
             if (town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOper
                 || town.HisNode.HisDeliveryWay == DeliveryWay.ByPreviousOperSkip)
@@ -2065,7 +2074,8 @@ namespace BP.WF
                 return _HisFlow;
             }
         }
-        public Node JumpTo = null;
+        public Node JumpToNode = null;
+        public string JumpToEmp = null;
         /// <summary>
         /// 解决流程回滚的问题
         /// </summary>
@@ -3403,9 +3413,9 @@ namespace BP.WF
             }
 
             // 如果有跳转的节点.
-            if (this.JumpTo != null)
+            if (this.JumpToNode != null)
             {
-                return msg + StartNextNode(this.JumpTo);
+                return msg + StartNextNode(this.JumpToNode);
             }
 
             // 如果只有一个转向节点, 就不用判断条件了,直接转向他.

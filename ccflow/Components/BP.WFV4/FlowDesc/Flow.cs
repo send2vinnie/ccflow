@@ -3892,7 +3892,7 @@ namespace BP.WF
                             }
                             break;
                         default:
-                            infoErr += "Error:" + dt.TableName;
+                           // infoErr += "Error:" + dt.TableName;
                             break;
                         //    throw new Exception("@unhandle named " + dt.TableName);
                     }

@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
@@ -14,7 +15,69 @@ using BP;
 namespace BP.WF
 {
     public class Glo
-    {  
+    {
+        /// <summary>
+        /// 装载流程数据 
+        /// </summary>
+        /// <param name="xlsFile"></param>
+        public static string LoadFlowDataWithToSpecNode(string xlsFile)
+        {
+            DataTable dt = BP.DBLoad.GetTableByExt(xlsFile);
+            string err = "";
+            string info = "";
+            //检查格式是否符合要求.
+            if (dt.Columns.Contains("ToNodeID") == false)
+                err += " no columns ToNode";
+
+            if (dt.Columns.Contains("ToNode") == false)
+                err += " no columns ToNode";
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                string flowPK = dr["FlowPK"].ToString();
+                string starter = dr["Starter"].ToString();
+                string executer = dr["Executer"].ToString();
+
+                int toNode = int.Parse(dr["ToNodeID"].ToString().Replace("ND",""));
+                Node nd = new Node();
+                nd.NodeID = toNode;
+                if (nd.RetrieveFromDBSources() == 0)
+                {
+                    err += "节点ID错误:" + toNode;
+                    continue;
+                }
+                string sql = "SELECT count(*) as Num FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'";
+                throw new Exception(sql);
+
+                int i = DBAccess.RunSQLReturnValInt(sql);
+                if (i == 0)
+                    continue; // 此数据已经调度了。
+
+                BP.Port.Emp emp = new BP.Port.Emp(starter);
+                BP.Web.WebUser.SignInOfGener(emp);
+
+                Flow fl = nd.HisFlow;
+                Work wk = fl.NewWork();
+                foreach (DataColumn dc in dt.Columns)
+                    wk.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+
+                Node ndStart = nd.HisFlow.HisStartNode;
+                WorkNode wn = new WorkNode(wk, ndStart);
+                wn.JumpToNode = nd;
+                wn.JumpToEmp = executer;
+                try
+                {
+                    info += "<hr>" + wn.AfterNodeSave();
+                }
+                catch (Exception ex)
+                {
+                    info += "<hr>" + ex.Message;
+                    DBAccess.RunSQL("DELETE FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'");
+                }
+            }
+            return info + err;
+        }
+
         public static void ResetFlowView()
         {
             string sql = "DROP VIEW V_WF_Data ";
