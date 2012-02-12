@@ -125,6 +125,9 @@ namespace BP.WF
                     continue;
                 }
 
+                emp = new BP.Port.Emp(executer);
+                BP.Web.WebUser.SignInOfGener(emp);
+
                 Work wkEnd = nd.GetWork(wk.OID);
                 foreach (DataColumn dc in dt.Columns)
                     wkEnd.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
