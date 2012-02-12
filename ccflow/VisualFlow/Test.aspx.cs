@@ -9,10 +9,16 @@ public partial class TestFrm : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        string file = @"C:\aa\开票流程1.xls";
-    string info=    BP.WF.Glo.LoadFlowDataWithToSpecNode(file);
-    this.Response.Write(info);
+        string file = @"C:\aa\开票流程2.xls";
+        string info = BP.WF.Glo.LoadFlowDataWithToSpecEndNode(file);
+        this.Response.Write(info);
         return;
+
+        string file1 = @"C:\aa\开票流程1.xls";
+        string info1 = BP.WF.Glo.LoadFlowDataWithToSpecNode(file1);
+        this.Response.Write(info1);
+        return;
+
         //  WF/Frm.aspx?FK_MapData=ND18201&IsTest=1&WorkID=0&FK_Node=401
         this.Response.Redirect("./WF/Frm.aspx?FK_MapData=ND18201&IsTest=1&WorkID=0&FK_Node=401", true);
         BP.WF.Flow fl = new BP.WF.Flow();
