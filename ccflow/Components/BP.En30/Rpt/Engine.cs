@@ -625,10 +625,22 @@ namespace BP.Rpt.RTF
                                         rowData = rowData.Replace("<" + shortName + "." + attr.Key + ">", dtl.GetValDecimalByKey(attr.Key).ToString("0.00"));
                                         break;
                                     case DataType.AppInt:
-                                        rowData = rowData.Replace("<" + shortName + "." + attr.Key + ">", dtl.GetValStringByKey(attr.Key));
+                                        if (attr.MyDataType == DataType.AppBoolean)
+                                        {
+                                            rowData = rowData.Replace("<" + shortName + "." + attr.Key + ">", dtl.GetValStrByKey(attr.Key));
+                                            int v = dtl.GetValIntByKey(attr.Key);
+                                            if (v == 1)
+                                                rowData = rowData.Replace("<" + shortName + "." + attr.Key + "Text>", "ÊÇ");
+                                            else
+                                                rowData = rowData.Replace("<" + shortName + "." + attr.Key + "Text>", "·ñ");
+                                        }
+                                        else
+                                        {
+                                            rowData = rowData.Replace("<" + shortName + "." + attr.Key + ">", dtl.GetValStrByKey(attr.Key));
+                                        }
                                         break;
                                     default:
-                                        rowData = rowData.Replace("<" + shortName + "." + attr.Key + ">", GetCode(dtl.GetValStringByKey(attr.Key)));
+                                        rowData = rowData.Replace("<" + shortName + "." + attr.Key + ">", GetCode(dtl.GetValStrByKey(attr.Key)));
                                         break;
                                 }
                             }
