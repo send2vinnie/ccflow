@@ -130,6 +130,14 @@ public partial class Comm_Dtl : WebPage
         this.Page.RegisterClientScriptBlock("s",
          "<link href='../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
         MapDtl mdtl = new MapDtl(this.EnsName);
+
+        if (this.IsReadonly == 1)
+        {
+            mdtl._IsReadonly = 1;
+            this.Button1.Enabled = false;
+        }
+
+
         if (mdtl.HisDtlShowModel == DtlShowModel.Card)
         {
             this.Response.Redirect("DtlFrm.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal+"&IsWap="+this.IsWap+"&FK_Node="+this.FK_Node, true);
@@ -164,7 +172,7 @@ public partial class Comm_Dtl : WebPage
             return 0;
         }
     }
-    public bool IsEnable
+    public bool IsEnable_del
     {
         get
         {
@@ -191,7 +199,6 @@ public partial class Comm_Dtl : WebPage
             return _MainEn;
         }
     }
-
     public MapAttrs _MainMapAttrs = null;
     public MapAttrs MainMapAttrs
     {
@@ -212,17 +219,6 @@ public partial class Comm_Dtl : WebPage
         this.FK_MapData = mdtl.FK_MapData;
 
         #region 生成标题
-        //if (this.IsWap == 1 && this.IsReadonly == 0)
-        //{
-        //    this.Pub1.AddTable();
-        //    this.Pub1.AddTR();
-        //    BP.WF.Node nd = new BP.WF.Node(this.FK_Node);
-        //    this.Pub1.AddTD("<a href='../WF/WAP/MyFlow.aspx?WorkID=" + this.RefPKVal + "&FK_Node=" + this.FK_Node + "&FK_Flow="+nd.FK_Flow+"' />返回</a>");
-        //   //this.Pub1.AddTD("<input type=button onclick=\"javascript:SaveDtlData();\" value='保存' />");
-        //    this.Pub1.AddTD("");
-        //    this.Pub1.AddTREnd();
-        //    this.Pub1.AddTableEnd();
-        //}
 
         MapAttrs attrs = new MapAttrs(this.EnsName);
         MapAttrs attrs2 = new MapAttrs();
@@ -243,7 +239,7 @@ public partial class Comm_Dtl : WebPage
                     this.Pub1.AddTDTitle();
             }
 
-           foreach (MapAttr attr in attrs)
+            foreach (MapAttr attr in attrs)
             {
                 if (attr.UIVisible == false)
                     continue;
@@ -251,8 +247,6 @@ public partial class Comm_Dtl : WebPage
                 if (attr.IsPK)
                     continue;
 
-                if (attr.UIIsEnable)
-                    this.IsEnable = true;
                 this.Pub1.AddTDTitle(attr.Name);// ("<TD class='FDesc' nowarp=true ><label>" + attr.Name + "</label></TD>");
             }
 
@@ -264,7 +258,6 @@ public partial class Comm_Dtl : WebPage
 
             if (mdtl.IsEnableM2MM)
                 this.Pub1.AddTDTitle("");
-
 
             if (mdtl.IsDelete && this.IsReadonly == 0)
                 this.Pub1.Add("<TD class='FDesc' nowarp=true ><img src='./../Images/Btn/Save.gif' border=0 onclick='SaveDtlData();' ></TD>");
@@ -609,7 +602,6 @@ public partial class Comm_Dtl : WebPage
             }
 
 
-
             //if (dtl.IsEnableAthM)
             //    this.Pub1.AddTD("<a href=\"javascript:window.showModalDialog('./../FreeFrm/AttachmentUpload.aspx?IsBTitle=1&PKVal=0&Ath=AthM&FK_MapData=" + this.FK_MapDtl + "&FK_FrmAttachment=" + this.FK_MapDtl + "_AthM')\"><img src='./../Img/AttachmentM.png' border=0 width='16px' /></a>");
 
@@ -643,14 +635,14 @@ public partial class Comm_Dtl : WebPage
                     this.Pub1.AddTD("");
             }
 
-
-            if (mdtl.IsDelete && dtl.OID >= 100 )
+            if (mdtl.IsDelete && this.IsReadonly == 0 && dtl.OID >= 100)
             {
                 this.Pub1.Add("<TD border=0><img src='../Images/Btn/Delete.gif' onclick=\"javascript:Del('" + dtl.OID + "','" + this.EnsName + "','" + this.RefPKVal + "','" + this.PageIdx + "')\" /></TD>");
             }
             else if (mdtl.IsDelete)
             {
-                this.Pub1.Add("<TD class=TD border=0>&nbsp;</TD>");
+                if (this.IsReadonly == 0)
+                    this.Pub1.Add("<TD class=TD border=0>&nbsp;</TD>");
             }
             
             this.Pub1.AddTREnd();
@@ -865,7 +857,7 @@ public partial class Comm_Dtl : WebPage
             if (mdtl.IsEnableM2MM)
                 this.Pub1.AddTD();
 
-            if (mdtl.IsDelete || mdtl.IsUpdate)
+            if (mdtl.IsReadonly==false)
                 this.Pub1.AddTD();
 
             this.Pub1.AddTREnd();

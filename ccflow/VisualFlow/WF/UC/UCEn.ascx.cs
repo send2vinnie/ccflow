@@ -1065,25 +1065,26 @@ namespace BP.Web.Comm.UC.WF
 
             // 处理扩展。
             this.AfterBindEn_DealMapExt(enName, mattrs,en);
+            if (this.IsReadonly == false)
+            {
+                #region 处理iFrom SaveDtlData。
+                js = "\t\n<script type='text/javascript' >";
+                js += "\t\n function SaveDtl(dtl) { ";
+                js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
+                js += "\t\n } ";
+                js += "\t\n</script>";
+                this.Add(js);
+                #endregion 处理iFrom SaveDtlData。
 
-            #region 处理iFrom SaveDtlData。
-            js = "\t\n<script type='text/javascript' >";
-            js += "\t\n function SaveDtl(dtl) { ";
-
-            js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveDtlData(); ";
-            js += "\t\n } ";
-            js += "\t\n</script>";
-            this.Add(js);
-            #endregion 处理iFrom SaveDtlData。
-
-            #region 处理iFrom  SaveM2M Save。
-            js = "\t\n<script type='text/javascript' >";
-            js += "\t\n function SaveM2M(dtl) { ";
-            js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveM2M();";
-            js += "\t\n } ";
-            js += "\t\n</script>";
-            this.Add(js);
-            #endregion 处理iFrom  SaveM2M Save。
+                #region 处理iFrom  SaveM2M Save。
+                js = "\t\n<script type='text/javascript' >";
+                js += "\t\n function SaveM2M(dtl) { ";
+                js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveM2M();";
+                js += "\t\n } ";
+                js += "\t\n</script>";
+                this.Add(js);
+                #endregion 处理iFrom  SaveM2M Save。
+            }
         }
         private void AfterBindEn_DealMapExt(string enName, MapAttrs mattrs,Entity en)
         {
@@ -1377,8 +1378,9 @@ namespace BP.Web.Comm.UC.WF
                 {
                     src = this.Request.ApplicationPath + "/WF/Dtl.aspx?EnsName=" + dtl.No + "&RefPKVal=" + this.HisEn.PKVal + "&IsWap=0&FK_Node=" + dtl.FK_MapData.Replace("ND", "");
                 }
+
                 if (this.IsReadonly || dtl.IsReadonly)
-                    this.Add("<iframe ID='F" + dtl.No + "'  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' /></iframe>");
+                    this.Add("<iframe ID='F" + dtl.No + "'  src='" + src + "&IsReadonly=1' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='30px' /></iframe>");
                 else
                     this.Add("<iframe ID='F" + dtl.No + "'   Onblur=\"SaveDtl('" + dtl.No + "');\"  src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' /></iframe>");
 

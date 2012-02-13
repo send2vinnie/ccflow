@@ -62,11 +62,10 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
         this.Pub1.AddTDTitle(this.ToE("Starter", "发起人"));
         this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
-      //  this.Pub1.AddTDTitle("发送人");
+        //  this.Pub1.AddTDTitle("发送人");
         this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
         this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));
         this.Pub1.AddTDTitle(this.ToE("Sta", "状态"));
-
         this.Pub1.AddTREnd();
 
         int i = 0;
@@ -75,18 +74,17 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         foreach (DataRow dr in dt.Rows)
         {
             string sdt = dr["SDT"] as string;
-              this.Pub1.AddTRTX(); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
+            this.Pub1.AddTRTX(); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
             //is1 = this.Pub1.AddTR(is1); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
-
             i++;
             this.Pub1.AddTDIdx(i);
             this.Pub1.AddTD(dr["FlowName"].ToString());
             this.Pub1.AddTD(dr["NodeName"].ToString());
-            this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node="+dr["FK_Node"]+"&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+            this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
             this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
             this.Pub1.AddTD(dr["RDT"].ToString());
 
-           // this.Pub1.AddTD(dr["Sender"].ToString());
+            // this.Pub1.AddTD(dr["Sender"].ToString());
 
             this.Pub1.AddTD(dr["ADT"].ToString());
             this.Pub1.AddTD(dr["SDT"].ToString());
@@ -105,7 +103,6 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         this.Pub1.AddTD("colspan=" + colspan, "&nbsp;");
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
-        
         return;
     }
     protected void Page_Load(object sender, EventArgs e)
