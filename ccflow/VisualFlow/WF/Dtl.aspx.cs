@@ -1021,7 +1021,7 @@ public partial class Comm_Dtl : WebPage
 
 
         #region 处理事件,这是仅仅判断了，保存后的处理内容。
-        FrmEvents fes = new FrmEvents(this.EnsName);
+        FrmEvents fes = new FrmEvents(this.FK_MapData);
         if (fes.Count > 0)
         {
             try
