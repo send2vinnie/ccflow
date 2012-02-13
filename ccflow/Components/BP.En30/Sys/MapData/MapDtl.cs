@@ -310,12 +310,25 @@ namespace BP.Sys
                 this.SetValByKey(MapDtlAttr.IsHLDtl, value);
             }
         }
+        public int _IsReadonly = 2;
         public bool IsReadonly
         {
             get
             {
-                if (this.IsDelete || this.IsInsert)
+                if (_IsReadonly != 2)
+                {
+                    if (_IsReadonly == 1)
+                        return true;
+                    else
+                        return false;
+                }
+
+                if (this.IsDelete || this.IsInsert || this.IsUpdate)
+                {
+                    _IsReadonly = 0;
                     return false;
+                }
+                _IsReadonly = 1;
                 return true;
             }
         }
@@ -574,6 +587,7 @@ namespace BP.Sys
         public MapDtl(string mypk)
         {
             this.No = mypk;
+            this._IsReadonly = 2;
             this.Retrieve();
         }
         /// <summary>

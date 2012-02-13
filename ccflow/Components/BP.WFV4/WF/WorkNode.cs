@@ -2695,7 +2695,7 @@ namespace BP.WF
             title = title.Replace("@WebUser.No", WebUser.No);
             title = title.Replace("@WebUser.Name", WebUser.Name);
             title = title.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
-            title = title.Replace("@RDT", DateTime.Now.ToString("MM月dd日hh时mm分"));
+            title = title.Replace("@RDT", DateTime.Now.ToString("MM月dd日HH时mm分"));
             if (title.Contains("@"))
             {
                 foreach (Attr attr in this.HisWork.EnMap.Attrs)

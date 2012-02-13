@@ -3007,7 +3007,7 @@ namespace BP.WF
                         case "FK_FlowSort":
                             continue;
                         case "Name":
-                            val = "CopyOf" + val + "_" + DateTime.Now.ToString("MM月dd日hh时mm分");
+                            val = "CopyOf" + val + "_" + DateTime.Now.ToString("MM月dd日HH时mm分");
                             break;
                         default:
                             break;
