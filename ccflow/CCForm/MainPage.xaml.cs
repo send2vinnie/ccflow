@@ -739,20 +739,11 @@ namespace CCForm
         {
             string sqls = "SELECT NodeID, Name,Step FROM WF_Node WHERE FK_Flow='" + Glo.FK_Flow + "'";
             sqls += "@SELECT * FROM WF_FrmNode WHERE FK_Flow='" + Glo.FK_Flow + "' AND FK_Frm IN (SELECT No FROM Sys_MapData ) ORDER BY FK_Node, Idx";
-            //            sqls += "@SELECT * FROM Sys_MapData WHERE  FK_Flow='" + Glo.FK_Flow + "'";
             sqls += "@SELECT * FROM Sys_MapData ";
-
             sqls += "@SELECT * FROM Sys_MapDtl WHERE  FK_MapData IN( SELECT No FROM Sys_MapData WHERE FK_Flow='" + Glo.FK_Flow + "') AND DtlShowModel=1";
-            //sqls += "@SELECT No,Name,FK_MapData,PTable,IsUpdate FROM Sys_MapDtl WHERE  FK_MapData IN( SELECT No FROM WF_Frm WHERE FK_Flow='" + Glo.FK_Flow + "')";
-
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
             da.RunSQLReturnTableSAsync(sqls);
             da.RunSQLReturnTableSCompleted += new EventHandler<FF.RunSQLReturnTableSCompletedEventArgs>(BindTreeView_RunSQLReturnTableCompleted);
-
-            //sqls = "SELECT * FROM WF_Frm WHERE FK_Flow='" + Glo.FK_Flow + "'";
-            //sqls += "@SELECT * FROM WF_FrmNode WHERE FK_Node='" + Glo.FK_Node + "'";
-            //da.RunSQLReturnTableSAsync(sqls.Split('@'));
-            //da.RunSQLReturnTableSCompleted += new EventHandler<FF.RunSQLReturnTableSCompletedEventArgs>(BindTreeView_Frm_RunSQLReturnTableCompleted);
         }
         void BindTreeView_RunSQLReturnTableCompleted(object sender, FF.RunSQLReturnTableSCompletedEventArgs e)
         {
@@ -820,7 +811,6 @@ namespace CCForm
                             if (fk_frmDtl != noFrm)
                                 continue;
 
-
                             string noDtlFrm = drDtl["No"] as string;
                             string nameDtlFrm = drDtl["Name"] as string;
 
@@ -828,10 +818,8 @@ namespace CCForm
                             liItemDtl.Header = fk_frmDtl + "," + nameDtlFrm;
                             liItemDtl.Name = fk_node + "_" + fk_frm + "_" + noDtlFrm;
                             liItemDtl.Tag = "@FK_Node=" + fk_node + "@No=" + fk_frmDtl + "@Name=" + drDtl["Name"] + "@PTable=" + drDtl["PTable"] + "@IsUpdate=" + drDtl["IsUpdate"];
-
                             liItemDtl.MouseRightButtonDown += new MouseButtonEventHandler(li_MouseRightButtonDown);
                             liItemDtl.MouseLeftButtonDown += new MouseButtonEventHandler(BindTreeView_li_MouseLeftButtonDown);
-
                             liItem.Items.Add(liItemDtl);
 
                             if (liItemDtl.Name == Glo.FK_MapData)
@@ -3416,12 +3404,11 @@ namespace CCForm
                     Glo.WinOpen(Glo.BPMHost + "/WF/Admin/XAP/DoPort.aspx?DoType=DownFormTemplete&FK_MapData=" + Glo.FK_MapData,
                         100, 100);
                     return;
-                    //FrmExp back = new FrmExp();
-                    //back.Show();
-                    break;
+                //FrmExp back = new FrmExp();
+                //back.Show();
                 case "Btn_Imp":
-                    FrmImp imp = new FrmImp();
-                    imp.Show();
+                    winFrmImp.HisMainPage = this;
+                    winFrmImp.Show();
                     break;
                 case "Btn_Delete":
                     if (this.selectedElements.Count == 0)
