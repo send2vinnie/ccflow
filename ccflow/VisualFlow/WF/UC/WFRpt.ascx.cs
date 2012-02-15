@@ -279,8 +279,9 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             return;
         }
 
+        Flow fl=new Flow(this.FK_Flow);
         this.AddTable("width='100%'");
-        this.AddCaptionLeft("工作流程日志");
+        this.AddCaptionLeft("流程日志:" + fl.Name);
         this.AddTR();
         this.AddTDTitle("IDX");
         this.AddTDTitle("日期时间");
