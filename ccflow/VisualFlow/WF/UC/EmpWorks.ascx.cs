@@ -49,15 +49,33 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             this.ViewState["FK_Flow"] = value;
         }
     }
+    public string GroupBy
+    {
+        get
+        {
+            return "FlowName";
+        }
+    }
     public void BindList()
     {
         DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
+
+        string groupVals = "";
+        foreach (DataRow dr in dt.Rows)
+        {
+            if (groupVals.Contains("@" + dr[this.GroupBy]))
+                continue;
+
+            groupVals += "@" + dr[this.GroupBy];
+        }
         int colspan = 9;
         this.Pub1.AddTable("border=1px align=center width='960px' ");
         this.Pub1.AddCaption("<img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "待办工作") + "</b>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
-        this.Pub1.AddTDTitle(this.ToE("Flow", "流程"));
+        if (this.GroupBy != "FlowName")
+            this.Pub1.AddTDTitle(this.ToE("Flow", "流程"));
+
         this.Pub1.AddTDTitle(this.ToE("NodeName", "节点"));
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
         this.Pub1.AddTDTitle(this.ToE("Starter", "发起人"));
@@ -71,33 +89,47 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         int i = 0;
         bool is1 = false;
         DateTime cdt = DateTime.Now;
-        foreach (DataRow dr in dt.Rows)
+        string[] gVals = groupVals.Split('@');
+        int gIdx = 0;
+        foreach (string g in gVals)
         {
-            string sdt = dr["SDT"] as string;
-            this.Pub1.AddTRTX(); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
-            //is1 = this.Pub1.AddTR(is1); // ("onmouseover='TROver(this)' onmouseout='TROut(this)' onclick=\"\" ");
-            i++;
-            this.Pub1.AddTDIdx(i);
-            this.Pub1.AddTD(dr["FlowName"].ToString());
-            this.Pub1.AddTD(dr["NodeName"].ToString());
-            this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
-            this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
-            this.Pub1.AddTD(dr["RDT"].ToString());
+            if (string.IsNullOrEmpty(g))
+                continue;
 
-            // this.Pub1.AddTD(dr["Sender"].ToString());
-
-            this.Pub1.AddTD(dr["ADT"].ToString());
-            this.Pub1.AddTD(dr["SDT"].ToString());
-            DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
-            if (cdt >= mysdt)
-            {
-                this.Pub1.AddTDCenter("<font color=red>逾期</font>");
-            }
-            else
-            {
-                this.Pub1.AddTDCenter("正常");
-            }
+            gIdx++;
+            this.Pub1.AddTR();
+            this.Pub1.AddTD("colspan=8 class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g + "</b>");
             this.Pub1.AddTREnd();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr[this.GroupBy].ToString() != g)
+                    continue;
+
+                string sdt = dr["SDT"] as string;
+                this.Pub1.AddTR("ID='"+gIdx+"_"+i+"'");
+                i++;
+                this.Pub1.AddTDIdx(i);
+                if (this.GroupBy != "FlowName")
+                    this.Pub1.AddTD(dr["FlowName"].ToString());
+                this.Pub1.AddTD(dr["NodeName"].ToString());
+                this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
+                this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
+                this.Pub1.AddTD(dr["RDT"].ToString());
+
+                this.Pub1.AddTD(dr["ADT"].ToString());
+                this.Pub1.AddTD(dr["SDT"].ToString());
+                DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
+                if (cdt >= mysdt)
+                {
+                    this.Pub1.AddTDCenter("<font color=red>逾期</font>");
+                }
+                else
+                {
+                    this.Pub1.AddTDCenter("正常");
+                }
+                this.Pub1.AddTREnd();
+            }
         }
         this.Pub1.AddTRSum();
         this.Pub1.AddTD("colspan=" + colspan, "&nbsp;");
