@@ -1,7 +1,7 @@
 产品名称: 驰骋.net工作流程引擎.
 英文名称: ChiCheng Workflow Engine 
 简    称: ccflow    版本: 4.5
-开发历史: 2003-2011年. 性    质: 100%开源,无任何功能限制
+开发历史: 2003-2012年. 性    质: 100%开源,无任何功能限制
 许可协议: LGPL URL: http://www.gnu.org/licenses/lgpl.html
 官方网站: http://ccflow.org
 源 代 码: http://ccflow.googlecode.com/svn/ccflow/ 请用svn下载.
