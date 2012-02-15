@@ -53,7 +53,10 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
     {
         get
         {
-            return "FlowName";
+            string s = this.Request.QueryString["GroupBy"];
+            if (s == null)
+                s = "FlowName";
+            return s;
         }
     }
     public void BindList()
@@ -73,12 +76,18 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         this.Pub1.AddCaption("<img src='./Img/Runing.gif' >&nbsp;<b>" + this.ToE("OnTheWayWork", "待办工作") + "</b>");
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("ID");
-        if (this.GroupBy != "FlowName")
-            this.Pub1.AddTDTitle(this.ToE("Flow", "流程"));
-
-        this.Pub1.AddTDTitle(this.ToE("NodeName", "节点"));
         this.Pub1.AddTDTitle(this.ToE("Title", "标题"));
-        this.Pub1.AddTDTitle(this.ToE("Starter", "发起人"));
+
+        if (this.GroupBy != "FlowName")
+            this.Pub1.AddTDTitle( "<a href='"+this.PageID+".aspx?GroupBy=FlowName' >"+this.ToE("Flow", "流程")+"</a>");
+
+        if (this.GroupBy != "NodeName")
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName' >" + this.ToE("NodeName", "节点") + "</a>");
+
+
+        if (this.GroupBy != "Starter")
+            this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=Starter' >" + this.ToE("Starter", "发起人") + "</a>");
+
         this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
         //  this.Pub1.AddTDTitle("发送人");
         this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
@@ -107,27 +116,22 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
                     continue;
 
                 string sdt = dr["SDT"] as string;
-                this.Pub1.AddTR("ID='"+gIdx+"_"+i+"'");
+                this.Pub1.AddTR("ID='" + gIdx + "_" + i + "'");
                 i++;
                 this.Pub1.AddTDIdx(i);
+                this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
                 if (this.GroupBy != "FlowName")
                     this.Pub1.AddTD(dr["FlowName"].ToString());
                 this.Pub1.AddTD(dr["NodeName"].ToString());
-                this.Pub1.AddTD("<a href=\"MyFlow" + this.PageSmall + ".aspx?FK_Flow=" + dr["FK_Flow"] + "&FK_Node=" + dr["FK_Node"] + "&FID=" + dr["FID"] + "&WorkID=" + dr["WorkID"] + "\" >" + dr["Title"].ToString());
                 this.Pub1.AddTD(dr["Starter"].ToString() + " " + dr["StarterName"]);
                 this.Pub1.AddTD(dr["RDT"].ToString());
-
                 this.Pub1.AddTD(dr["ADT"].ToString());
                 this.Pub1.AddTD(dr["SDT"].ToString());
                 DateTime mysdt = DataType.ParseSysDate2DateTime(sdt);
                 if (cdt >= mysdt)
-                {
                     this.Pub1.AddTDCenter("<font color=red>逾期</font>");
-                }
                 else
-                {
                     this.Pub1.AddTDCenter("正常");
-                }
                 this.Pub1.AddTREnd();
             }
         }
