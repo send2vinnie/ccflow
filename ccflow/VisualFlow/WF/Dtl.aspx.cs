@@ -394,10 +394,13 @@ public partial class Comm_Dtl : WebPage
                 string val = dtl.GetValByKey(attr.KeyOfEn).ToString();
                 if (attr.UIIsEnable == false && LinkFields.Contains("," + attr.KeyOfEn + ","))
                 {
-                    MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link) as MapExt;
+                    MapExt meLink = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.Link, 
+                        MapExtAttr.AttrOfOper,attr.KeyOfEn) as MapExt;
+
                     string url = meLink.Tag;
                     if (url.Contains("?") == false)
                         url = url + "?a3=2";
+
                     url = url + "&WebUserNo=" + WebUser.No + "&SID=" + WebUser.SID + "&EnName=" + mdtl.No;
                     if (url.Contains("@AppPath"))
                         url = url.Replace("@AppPath", "http://" + this.Request.Url.Host + this.Request.ApplicationPath);
@@ -1018,7 +1021,6 @@ public partial class Comm_Dtl : WebPage
 
         if (isAddDDLSelectIdxChange == true)
             return;
-
 
         #region 处理事件,这是仅仅判断了，保存后的处理内容。
         FrmEvents fes = new FrmEvents(this.FK_MapData);
