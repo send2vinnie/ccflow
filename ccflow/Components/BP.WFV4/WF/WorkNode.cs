@@ -2092,10 +2092,6 @@ namespace BP.WF
             // 调用发送前的接口。
             try
             {
-                msg += AfterNodeSave_Do();
-
-                DBAccess.DoTransactionCommit(); //提交事务.
-                
                 #region 处理调用日志.
                 if (this.HisNode.IsStartNode)
                 {
@@ -2107,12 +2103,12 @@ namespace BP.WF
                         {
                             Node ndFrom = new Node(int.Parse(fk_nodeFrom));
                             string fromWorkID = System.Web.HttpContext.Current.Request.QueryString["FromWorkID"];
-                            
-                            GenerWorkFlow gwfP=new GenerWorkFlow(Int64.Parse(fromWorkID));
+
+                            GenerWorkFlow gwfP = new GenerWorkFlow(Int64.Parse(fromWorkID));
 
                             //记录当前流程被调起。
                             this.AddToTrack(ActionType.StartSubFlow, WebUser.No,
-                                WebUser.Name, ndFrom.NodeID, ndFrom.FlowName + "\t\n" + ndFrom.Name, "被父流程(" + ndFrom.FlowName + ":" + gwfP.Title+ ")唤起.");
+                                WebUser.Name, ndFrom.NodeID, ndFrom.FlowName + "\t\n" + ndFrom.Name, "被父流程(" + ndFrom.FlowName + ":" + gwfP.Title + ")唤起.");
 
                             //记录父流程被调起。
                             Track tkParent = new Track();
@@ -2139,6 +2135,11 @@ namespace BP.WF
                     }
                 }
                 #endregion 处理调用日志.
+
+                msg += AfterNodeSave_Do();
+
+                DBAccess.DoTransactionCommit(); //提交事务.
+                
 
                 try
                 {
