@@ -11,9 +11,7 @@ namespace BP.WF
     /// </summary>
     public class GERptAttr
     {
-
         public const string Title = "Title";
-        public const string BillNo = "BillNo";
         public const string FlowEmps = "FlowEmps";
         public const string FID = "FID";
         public const string OID = "OID";

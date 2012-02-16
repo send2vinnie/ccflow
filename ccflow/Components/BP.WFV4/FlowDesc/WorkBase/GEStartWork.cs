@@ -32,10 +32,6 @@ namespace BP.WF
 	public class GEStartWorkAttr :WorkAttr
 	{
         /// <summary>
-        /// 单据编号
-        /// </summary>
-        public const string BillNo = "BillNo";
-        /// <summary>
         /// 年月
         /// </summary>
         public const string FK_NY = "FK_NY";

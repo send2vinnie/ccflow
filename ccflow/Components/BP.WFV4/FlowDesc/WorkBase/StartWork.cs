@@ -16,14 +16,6 @@ namespace BP.WF
     {
         #region 可选的属性
         /// <summary>
-        /// 编号（单据）
-        /// </summary>
-        public const string BillNo = "BillNo";
-        /// <summary>
-        /// 县局（用于单据编号）
-        /// </summary>
-        public const string FK_XJ = "FK_XJ";
-        /// <summary>
         /// 部门
         /// </summary>
         public const string FK_Dept = "FK_Dept";
@@ -104,16 +96,6 @@ namespace BP.WF
                 this.SetValByKey(StartWorkAttr.FK_Dept, value);
             }
         }
-		/// <summary>
-		/// 单据编号
-		/// </summary>
-        public string BillNo
-		{
-			get
-			{
-				return this.GetValStringByKey(StartWorkAttr.BillNo);
-			} 
-		}
 		#endregion
 
 		#region 基本属性
@@ -230,36 +212,6 @@ namespace BP.WF
 			return base.beforeUpdate();
 		}
 		#endregion
-
-		#region 方法
-		/// <summary>
-		/// 设置单据编号
-		/// </summary>
-        public void InitBillNo()
-        {
-            try
-            {
-                string no = this.GetValStringByKey(StartWorkAttr.BillNo);
-                if (no == "" || no == "自动生成" || no.Length == 0 || no == null || no == "&nbsp;")
-                {
-                    this.EnMap.CodeStruct = "4";
-                    string fk_dept = BP.Web.WebUser.FK_Dept;
-                    if (fk_dept == null || fk_dept == "")
-                        fk_dept = "01";
-
-                    no = this.GenerNewNoByKey("BillNo", "FK_Dept", fk_dept);
-                    if (no == null)
-                        no = BP.Web.WebUser.FK_Dept + "0001";
-                    this.SetValByKey("BillNo", no);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("@产生编号错误：" + ex.Message);
-            }
-        }
-		#endregion
-
 	}
 	/// <summary>
 	/// 工作流程采集信息的基类 集合

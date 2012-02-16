@@ -40,10 +40,6 @@ namespace BP.WF
         /// </summary>
         public const string FK_Starter = "FK_Starter";
         /// <summary>
-        /// BillNo
-        /// </summary>
-        public const string BillNo = "BillNo";
-        /// <summary>
         /// 文号
         /// </summary>
         public const string FilePrix = "FilePrix";
@@ -149,17 +145,6 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(BillAttr.FK_Flow, value);
-            }
-        }
-        public string BillNo
-        {
-            get
-            {
-                return this.GetValStringByKey(BillAttr.BillNo);
-            }
-            set
-            {
-                this.SetValByKey(BillAttr.BillNo, value);
             }
         }
         public string FK_FlowT
@@ -385,7 +370,7 @@ namespace BP.WF
                 map.AddTBString(BillAttr.Title, null, "标题", false, false, 0, 300, 5);
                 map.AddDDLEntities(BillAttr.FK_Starter, null, "发起人", new BP.WF.Port.Emps(), false);
                 map.AddTBDateTime(BillAttr.StartDT, "发起时间", true, true);
-                map.AddTBString(BillAttr.BillNo, null, "BillNo", false, false, 0, 30, 5);
+             //   map.AddTBString(BillAttr.BillNo, null, "BillNo", false, false, 0, 30, 5);
 
                 //  map.AddTBString(BillAttr.FK_Flow, null, "流程", false, false, 0, 30, 5);
                 //map.AddTBString(BillAttr.FK_Bill, null, "FK_Bill", false, false, 0, 30, 5);

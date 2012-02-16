@@ -164,7 +164,7 @@ namespace BP.WF
             foreach (Flow fl in fls)
             {
                 fl.CheckRpt();
-                sql += "\t\n SELECT '" + fl.No + "' as FK_Flow, '" + fl.Name + "' AS FlowName, '" + fl.FK_FlowSort + "' as FK_FlowSort,  BillNo,CDT,Emps,FID,FK_Dept,FK_NY,";
+                sql += "\t\n SELECT '" + fl.No + "' as FK_Flow, '" + fl.Name + "' AS FlowName, '" + fl.FK_FlowSort + "' as FK_FlowSort,CDT,Emps,FID,FK_Dept,FK_NY,";
                 sql += "MyNum,OID,RDT,Rec,Title,WFState,FlowEmps,";
                 sql += "FlowStarter,FlowStartRDT,FlowEnder,FlowEnderRDT,FlowDaySpan FROM ND" + int.Parse(fl.No) + "Rpt";
                 sql += "\t\n  UNION";

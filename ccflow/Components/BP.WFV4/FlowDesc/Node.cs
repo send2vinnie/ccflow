@@ -2853,22 +2853,22 @@ namespace BP.WF
                 }
 
 
-                if (attr.IsExit(MapAttrAttr.KeyOfEn, StartWorkAttr.BillNo, MapAttrAttr.FK_MapData, md.No) == false)
-                {
-                    attr = new BP.Sys.MapAttr();
-                    attr.FK_MapData = md.No;
-                    attr.HisEditType = BP.En.EditType.UnDel;
-                    attr.KeyOfEn = StartWorkAttr.BillNo;
-                    attr.Name = BP.Sys.Language.GetValByUserLang("BillNo", "单据文号"); //"单据文号";
-                    attr.MyDataType = BP.DA.DataType.AppString;
-                    attr.UIContralType = UIContralType.TB;
-                    attr.LGType = FieldTypeS.Normal;
-                    attr.UIVisible = false;
-                    attr.UIIsEnable = false;
-                    attr.MinLen = 0;
-                    attr.MaxLen = 15;
-                    attr.Insert();
-                }
+                //if (attr.IsExit(MapAttrAttr.KeyOfEn, StartWorkAttr.BillNo, MapAttrAttr.FK_MapData, md.No) == false)
+                //{
+                //    attr = new BP.Sys.MapAttr();
+                //    attr.FK_MapData = md.No;
+                //    attr.HisEditType = BP.En.EditType.UnDel;
+                //    attr.KeyOfEn = StartWorkAttr.BillNo;
+                //    attr.Name = BP.Sys.Language.GetValByUserLang("BillNo", "单据文号"); //"单据文号";
+                //    attr.MyDataType = BP.DA.DataType.AppString;
+                //    attr.UIContralType = UIContralType.TB;
+                //    attr.LGType = FieldTypeS.Normal;
+                //    attr.UIVisible = false;
+                //    attr.UIIsEnable = false;
+                //    attr.MinLen = 0;
+                //    attr.MaxLen = 15;
+                //    attr.Insert();
+                //}
 
                 if (attr.IsExit(MapAttrAttr.KeyOfEn, StartWorkAttr.Title, MapAttrAttr.FK_MapData, md.No) == false)
                 {
@@ -3137,19 +3137,19 @@ namespace BP.WF
                 attr.UIIsEnable = false;
                 attr.Insert();
 
-                attr = new BP.Sys.MapAttr();
-                attr.FK_MapData = md.No;
-                attr.HisEditType = BP.En.EditType.UnDel;
-                attr.KeyOfEn = "BillNo";
-                attr.Name = BP.Sys.Language.GetValByUserLang("BillNo", "单据文号"); //"单据文号";
-                attr.MyDataType = BP.DA.DataType.AppString;
-                attr.UIContralType = UIContralType.TB;
-                attr.LGType = FieldTypeS.Normal;
-                attr.UIVisible = false;
-                attr.UIIsEnable = false;
-                attr.MinLen = 0;
-                attr.MaxLen = 15;
-                attr.Insert();
+                //attr = new BP.Sys.MapAttr();
+                //attr.FK_MapData = md.No;
+                //attr.HisEditType = BP.En.EditType.UnDel;
+                //attr.KeyOfEn = "BillNo";
+                //attr.Name = BP.Sys.Language.GetValByUserLang("BillNo", "单据文号"); //"单据文号";
+                //attr.MyDataType = BP.DA.DataType.AppString;
+                //attr.UIContralType = UIContralType.TB;
+                //attr.LGType = FieldTypeS.Normal;
+                //attr.UIVisible = false;
+                //attr.UIIsEnable = false;
+                //attr.MinLen = 0;
+                //attr.MaxLen = 15;
+                //attr.Insert();
 
                 attr = new BP.Sys.MapAttr();
                 attr.FK_MapData = md.No;

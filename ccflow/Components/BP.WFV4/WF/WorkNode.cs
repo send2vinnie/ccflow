@@ -2738,7 +2738,6 @@ namespace BP.WF
             }
 
             StartWork sw = (StartWork)this.HisWork;
-            sw.InitBillNo();
 
             #region …Ë÷√  HisGenerWorkFlow
 
@@ -2967,7 +2966,6 @@ namespace BP.WF
 
                 rptGe.RetrieveFromDBSources();
                 DateTime dt = DateTime.Now;
-                string BillNo = this.HisWorkFlow.HisStartWork.BillNo;
                 Flow fl = new Flow(this.HisNode.FK_Flow);
                 string year = dt.Year.ToString();
                 string billInfo = "";
@@ -3067,14 +3065,13 @@ namespace BP.WF
                         bill.FID = this.HisWork.FID;
                         bill.WorkID = this.HisWork.OID;
                         bill.FK_Node = this.HisNode.NodeID;
-                        bill.FK_Bill = func.No;
+                      //  bill.FK_Bill = func.No;
                         bill.FK_Dept = WebUser.FK_Dept;
                         bill.FK_Emp = WebUser.No;
                         bill.Url = billUrl;
                         bill.RDT = DataType.CurrentDataTime;
                         bill.FK_NY = DataType.CurrentYearMonth;
                         bill.FK_Flow = this.HisNode.FK_Flow;
-                        bill.BillNo = BillNo;
                         bill.FK_BillType = func.FK_BillType;
                         bill.FK_Flow = this.HisNode.FK_Flow;
                         bill.Emps = this.rptGe.GetValStrByKey("Emps");
