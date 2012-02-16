@@ -9,7 +9,6 @@ public partial class SDKFlows_MyForm : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         this.Pub1.Add("url:"+this.Request.RawUrl);
     }
 }

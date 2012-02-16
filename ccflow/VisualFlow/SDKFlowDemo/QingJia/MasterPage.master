@@ -9,10 +9,12 @@
 </head>
 <body>
     <form id="form1" runat="server">
+
     <div align=center>
     <table border=1 width='80%' >
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
+
     </table>
     </div>
 
@@ -25,11 +27,11 @@
     <fieldset>
     <legend><font color=green><b>测试信息测试信息(与表单应用无关):</b></font></legend>
 
-        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
      
      <ul>
-     <li><a href='/Flow/WF/Login.aspx'>切换用户</li>
-     <li><a href='/Flow/' >测试主页</a></li>
+     <li><a href='../../WF/Login.aspx'>切换用户</li>
+     <li><a href='../../' >测试主页</a></li>
      </ul>
 
      </fieldset>

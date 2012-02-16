@@ -41,7 +41,6 @@ public partial class Demo_QingJiaTiao_S1_TianxieShenqingDan : FlowPage
         msg = msg.Replace("@@", "@");
         msg = msg.Replace("@", "<BR>@");
         this.Alert("发送提示", msg);
-
         this.InitButtonState();
     }
     protected void Btn_UnSend_Click(object sender, EventArgs e)
@@ -55,7 +54,6 @@ public partial class Demo_QingJiaTiao_S1_TianxieShenqingDan : FlowPage
     }
     protected void Btn_Save_Click(object sender, EventArgs e)
     {
-        
         Hashtable ht = new Hashtable();
         ht.Add("Title", this.TB_Title.Text);
         ht.Add("qingjiatian", float.Parse(this.TB_qingjiatian.Text));
@@ -63,7 +61,6 @@ public partial class Demo_QingJiaTiao_S1_TianxieShenqingDan : FlowPage
         /* 编写您的表单保存业务逻辑 */
         string msg = BP.WF.Dev2Interface.Node_SaveWork(this.FK_Flow,
             this.WorkID, ht);
-
         this.Alert("保存提示信息", msg);
     }
 
