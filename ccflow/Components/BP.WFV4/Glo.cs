@@ -406,7 +406,7 @@ namespace BP.WF
                     re.FK_Emp = emp.No;
                     re.GongZuoDanWei = "工作部门-" + myIdx;
                     re.ZhengMingRen = "张" + myIdx;
-                    re.BeiZhu = emp.Name + "同志工作非常认真.";
+                    re.BeiZhu = emp.Name + "同志工作认真.";
                     oid++;
                     re.InsertAsOID(oid);
                 }

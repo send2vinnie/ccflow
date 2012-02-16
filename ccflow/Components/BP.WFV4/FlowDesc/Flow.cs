@@ -2763,7 +2763,7 @@ namespace BP.WF
                 map.CodeStruct = "3";
 
                 map.AddTBStringPK(FlowAttr.No, null, null, true, true, 1, 10, 3);
-                map.AddTBString(FlowAttr.Name, null, null, true, false, 0, 50, 10);
+                map.AddTBString(FlowAttr.Name, null, null, true, false, 0, 500, 10);
 
                 map.AddDDLEntities(FlowAttr.FK_FlowSort, "01", this.ToE("FlowSort", "流程类别"), new FlowSorts(), false);
                 map.AddTBInt(FlowAttr.FlowType, (int)FlowType.Panel, "流程类型", false, false);
@@ -3214,14 +3214,31 @@ namespace BP.WF
                                             else if (val.Length == 4)
                                                 val = flowID + val.Substring(2);
                                             break;
+                                        case "FK_Flow":
+                                            val = fl.No;
+                                            break;
                                         default:
                                             break;
                                     }
                                     cd.SetValByKey(dc.ColumnName, val);
                                 }
 
-                                // ，开始插入。
-                                cd.MyPK = DA.DBAccess.GenerOID().ToString();
+                                cd.FK_Flow = fl.No;
+
+                                //  return this.FK_MainNode + "_" + this.ToNodeID + "_" + this.HisCondType.ToString() + "_" + ConnDataFrom.Stas.ToString();
+                                // ，开始插入。 
+                                if (cd.MyPK.Contains("Stas"))
+                                {
+                                    cd.MyPK = cd.FK_Node + "_" + cd.ToNodeID + "_" + cd.HisCondType.ToString() + "_" + ConnDataFrom.Stas.ToString();
+                                }
+                                else if (cd.MyPK.Contains("Dept"))
+                                {
+                                    cd.MyPK = cd.FK_Node + "_" + cd.ToNodeID + "_" + cd.HisCondType.ToString() + "_" + ConnDataFrom.Depts.ToString();
+                                }
+                                else
+                                {
+                                    cd.MyPK = DA.DBAccess.GenerOID().ToString();
+                                }
                                 cd.Insert();
                             }
                             break;
@@ -3674,7 +3691,6 @@ namespace BP.WF
                                         continue;
 
                                     val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-
                                     md.SetValByKey(dc.ColumnName, val);
                                 }
                                 md.Save();
@@ -4214,6 +4230,8 @@ namespace BP.WF
             sql += "@GO DELETE  FROM WF_GenerWorkerlist WHERE FK_Flow='" + this.No + "'";
 
             sql += "@GO DELETE FROM  WF_GenerWorkFlow WHERE FK_Flow='" + this.No + "'";
+
+            sql += "@GO DELETE FROM  WF_Cond WHERE FK_Flow='" + this.No + "'";
 
             // 删除岗位节点。
             sql += "@GO DELETE  FROM  WF_NodeStation WHERE FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
