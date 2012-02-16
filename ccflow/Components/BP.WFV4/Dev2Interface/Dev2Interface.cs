@@ -66,14 +66,14 @@ namespace BP.WF
         public static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
         {
             string sql = null;
-            sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY WorkID ";
+            sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY ADT ";
             return BP.DA.DBAccess.RunSQLReturnTable(sql);
         }
         #endregion 获取当前操作员的待办工作
-
+       
 
         #region 获取当前操作员的在途工作
-        /// <summary>
+        /// <summary>m
         /// 获取当前操作员的在途工作
         /// </summary>
         /// <returns>在途工作</returns>
@@ -85,7 +85,7 @@ namespace BP.WF
         {
             string sql = "SELECT a.WorkID FROM WF_GenerWorkFlow A, WF_GenerWorkerlist B WHERE A.WorkID=B.WorkID AND B.FK_EMP='" + userNo + "' AND B.IsEnable=1 AND B.IsPass=1 ";
             GenerWorkFlows gwfs = new GenerWorkFlows();
-            gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")");
+            gwfs.RetrieveInSQL(GenerWorkFlowAttr.WorkID, "(" + sql + ")", "" );
             return gwfs;
         }
         /// <summary>

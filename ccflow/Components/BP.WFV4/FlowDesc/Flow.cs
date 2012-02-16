@@ -1180,6 +1180,9 @@ namespace BP.WF
             dt.TableName = "WF_NodeEmp";
             ds.Tables.Add(dt);
 
+
+         
+
             //// 流程报表。
             //WFRpts rpts = new WFRpts(this.No);
             //// rpts.SaveToXml(path + "WFRpts.xml");
@@ -3177,6 +3180,9 @@ namespace BP.WF
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
                                                 val = flowID + val.Substring(2);
+                                            break;
+                                        case "FK_Flow":
+                                            val = fl.No;
                                             break;
                                         default:
                                             break;

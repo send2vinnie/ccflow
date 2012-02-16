@@ -195,6 +195,16 @@ namespace BP.En
         {
             this.AddWhere(attr, " IN ", "( " + sql + " )");
         }
+        /// <summary>
+        /// 增加查询条件，条件用 IN 表示．sql必须是一个列的集合．
+        /// </summary>
+        /// <param name="attr">属性</param>
+        /// <param name="sql">此sql,必须是有一个列的集合．</param>
+        public void AddWhereInSQL(string attr, string sql, string orderBy)
+        {
+            this.AddWhere(attr, " IN ", "( " + sql + " )");
+            this.addOrderBy(orderBy);
+        }
 		/// <summary>
 		/// 增加查询条件，条件用 IN 表示．sql必须是一个列的集合．
 		/// </summary>

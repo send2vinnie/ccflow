@@ -3748,6 +3748,13 @@ namespace BP.En
             qo.AddWhereInSQL(attr, sql);
             return qo.DoQuery();
         }
+        public int RetrieveInSQL(string attr, string sql,string orderBy)
+        {
+            QueryObject qo = new QueryObject(this);
+            qo.AddWhereInSQL(attr, sql);
+            qo.addOrderBy(orderBy);
+            return qo.DoQuery();
+        }
 
         public int RetrieveInSQL(string sql)
         {
