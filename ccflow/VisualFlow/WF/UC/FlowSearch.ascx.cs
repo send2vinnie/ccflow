@@ -626,8 +626,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle("发起");
         this.Pub1.AddTDTitle("发起日期");
         this.Pub1.AddTDTitle("发起人部门");
-
-        this.Pub1.AddTDTitle("单据编号");
         this.Pub1.AddTDTitle("单据名称");
         this.Pub1.AddTDTitle("打印人");
         this.Pub1.AddTDTitle("打印日期");
@@ -645,7 +643,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             this.Pub1.AddTD(bill.FK_StarterT);
             this.Pub1.AddTD(bill.RDT);
             this.Pub1.AddTD(bill.FK_DeptT);
-            this.Pub1.AddTD(bill.BillNo);
+           // this.Pub1.AddTD(bill.BillNo);
             this.Pub1.AddTDA("javascript:WinOpen('" + bill.Url + "')", "<img src='../../Images/Btn/Word.gif' border=0 />" + bill.FK_BillText);
             this.Pub1.AddTD(bill.FK_EmpT);
             this.Pub1.AddTD(bill.RDT);

@@ -146,7 +146,6 @@ public partial class Comm_MapDef_CopyFieldFromNode :BP.Web.WebPage
                     case BP.WF.GEStartWorkAttr.OID:
                     case BP.WF.GEStartWorkAttr.RDT:
                     case BP.WF.GEStartWorkAttr.Rec:
-                    case BP.WF.GEStartWorkAttr.BillNo:
                     case BP.WF.GEStartWorkAttr.FK_NY:
                     case BP.WF.GEStartWorkAttr.WFState:
                     case BP.WF.GEStartWorkAttr.Sender:
