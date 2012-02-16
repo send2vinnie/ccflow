@@ -140,7 +140,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         cond.MyPK = this.GenerMyPK;
         cond.RetrieveFromDBSources();
 
-
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         BP.WF.Node tond = new BP.WF.Node(this.ToNodeID);
 

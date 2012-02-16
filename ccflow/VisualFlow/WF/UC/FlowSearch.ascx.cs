@@ -751,7 +751,9 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
 
                 if (fl.NumOfBill == 0)
+                {
                     this.Pub1.AddTD("...");
+                }
                 else
                 {
                     string src = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=BP.WF.Bills&FK_Flow=" + fl.No;
