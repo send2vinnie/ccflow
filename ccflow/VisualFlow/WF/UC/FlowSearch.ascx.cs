@@ -763,6 +763,9 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
                 string src2 = this.Request.ApplicationPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt&FK_Flow=" + fl.No;
                 this.Pub1.Add("<a href=\"javascript:WinOpen('" + src2 + "');\" >" + search + "</a>");
 
+                src2 = this.Request.ApplicationPath + "/WF/Rpt/Group.aspx?FK_Flow="+fl.No+"&DoType=Dept";
+                this.Pub1.Add(" - <a href=\"javascript:WinOpen('" + src2 + "');\" >" + FX + "</a>");
+
                 //if (fl.NumOfDtl != 0)
                 //    this.Pub1.Add("-<a href=\"javascript:Dtl('" + fl.No + "');\" >" + dtl + "</a>");
                 //string src1 = this.Request.ApplicationPath + "/Comm/GroupEnsMNum.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";
