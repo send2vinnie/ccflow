@@ -195,7 +195,7 @@ public class FlowPage : System.Web.UI.Page
     /// <param name="msg">消息</param>
     public void Alert(string title, string msg)
     {
-        this.Response.Write("<fieldset><legend>"+title+"</legend> "+msg+"</fieldset>");
+        this.Response.Write("<fieldset style='width:50%' ><legend>"+title+"</legend> "+msg+"</fieldset>");
     }
     public string DoGenerJSOfReturn()
     {
