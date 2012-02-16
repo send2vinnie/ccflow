@@ -12,7 +12,7 @@
     <FrmType>0</FrmType>
     <FK_FrmSort>02</FK_FrmSort>
     <AttrsInTable />
-    <AppType>1</AppType>
+    <AppType>0</AppType>
     <Designer />
     <DesignerUnit />
     <DesignerContact />
@@ -144,7 +144,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>4</IDX>
-    <GroupID>133</GroupID>
+    <GroupID>179</GroupID>
     <IsSigan>0</IsSigan>
     <X>110</X>
     <Y>93</Y>
@@ -173,7 +173,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>39</IDX>
-    <GroupID>133</GroupID>
+    <GroupID>179</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -202,7 +202,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>48</IDX>
-    <GroupID>133</GroupID>
+    <GroupID>179</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -231,13 +231,13 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>0</GroupID>
+    <GroupID>179</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_GroupField>
-    <OID>133</OID>
+    <OID>179</OID>
     <Lab>企业法定代表人声明</Lab>
     <EnName>Demo_Inc14</EnName>
     <Idx>0</Idx>

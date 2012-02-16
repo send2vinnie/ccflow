@@ -6,7 +6,7 @@
     <FK_MapData>Demo_Inc05</FK_MapData>
     <PTable>skill_work_list</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>0</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -46,7 +46,7 @@
     <FrmType>0</FrmType>
     <FK_FrmSort>02</FK_FrmSort>
     <AttrsInTable />
-    <AppType>1</AppType>
+    <AppType>0</AppType>
     <Designer />
     <DesignerUnit />
     <DesignerContact />
@@ -607,16 +607,6 @@
     <FK_MapData>Demo_Inc05</FK_MapData>
     <KeyOfEn>sex_</KeyOfEn>
     <EnumKey>sex_</EnumKey>
-    <Lab>男</Lab>
-    <IntKey>0</IntKey>
-    <X>338</X>
-    <Y>63</Y>
-  </Sys_FrmRB>
-  <Sys_FrmRB>
-    <MyPK>Demo_Inc05_sex__0</MyPK>
-    <FK_MapData>Demo_Inc05</FK_MapData>
-    <KeyOfEn>sex_</KeyOfEn>
-    <EnumKey>sex_</EnumKey>
     <Lab>女</Lab>
     <IntKey>0</IntKey>
     <X>384</X>
@@ -646,7 +636,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>544</X>
     <Y>96</Y>
@@ -675,7 +665,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>333</X>
     <Y>98</Y>
@@ -704,7 +694,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>119</X>
     <Y>98</Y>
@@ -733,7 +723,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>334</X>
     <Y>134</Y>
@@ -762,7 +752,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>119</X>
     <Y>132</Y>
@@ -791,7 +781,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>117</X>
     <Y>206</Y>
@@ -820,7 +810,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>545</X>
     <Y>134</Y>
@@ -849,7 +839,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>332</X>
     <Y>170</Y>
@@ -878,7 +868,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>0</X>
     <Y>0</Y>
@@ -907,7 +897,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>118</X>
     <Y>61</Y>
@@ -936,7 +926,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>17</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>118</X>
     <Y>167</Y>
@@ -965,7 +955,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>19</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>544</X>
     <Y>60</Y>
@@ -994,7 +984,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>40</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1023,7 +1013,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>57</IDX>
-    <GroupID>122</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1052,7 +1042,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>0</GroupID>
+    <GroupID>170</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1290,9 +1280,9 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapM2M>
-    <MyPK>Demo_Inc05Dtl1_M2M</MyPK>
+    <MyPK>Demo_Inc05Dtl1_M2MDemo_Inc05_1</MyPK>
     <FK_MapData>Demo_Inc05Dtl1</FK_MapData>
-    <NoOfObj>M2M</NoOfObj>
+    <NoOfObj>M2MDemo_Inc05_1</NoOfObj>
     <Name>M2M</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -1310,9 +1300,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_Inc05Dtl1_M2MM</MyPK>
+    <MyPK>Demo_Inc05Dtl1_M2MDemo_Inc05_2</MyPK>
     <FK_MapData>Demo_Inc05Dtl1</FK_MapData>
-    <NoOfObj>M2MM</NoOfObj>
+    <NoOfObj>M2MDemo_Inc05_2</NoOfObj>
     <Name>M2MM</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -1360,7 +1350,7 @@
     <W>92</W>
   </Sys_FrmImgAth>
   <Sys_GroupField>
-    <OID>122</OID>
+    <OID>170</OID>
     <Lab>企业技术负责人简历</Lab>
     <EnName>Demo_Inc05</EnName>
     <Idx>0</Idx>

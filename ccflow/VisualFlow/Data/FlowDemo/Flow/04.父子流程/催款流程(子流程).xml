@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <WF_Flow>
-    <No>006</No>
+    <No>009</No>
     <FK_FlowSort>04</FK_FlowSort>
     <Name>催款流程(子流程)</Name>
     <IsOK>1</IsOK>
@@ -24,7 +24,7 @@
     <AvgDay>0</AvgDay>
   </WF_Flow>
   <WF_Node>
-    <NodeID>601</NodeID>
+    <NodeID>901</NodeID>
     <Step>1</Step>
     <Name>开始节点</Name>
     <IsTask>1</IsTask>
@@ -41,7 +41,7 @@
     <DTFrom>2012-02-04 12:08</DTFrom>
     <DTTo>2012-02-04 12:08</DTTo>
     <SendLab>发送</SendLab>
-    <SendEnable>1</SendEnable>
+    <SendJS />
     <SaveLab>保存</SaveLab>
     <SaveEnable>1</SaveEnable>
     <JumpWayLab>跳转</JumpWayLab>
@@ -75,11 +75,11 @@
     <SwinkCent>0.1</SwinkCent>
     <OutTimeDeal>0</OutTimeDeal>
     <DoOutTime />
-    <FK_Flow>006</FK_Flow>
+    <FK_Flow>009</FK_Flow>
     <NodeWorkType>1</NodeWorkType>
     <FlowName>催款流程(子流程)</FlowName>
-    <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>异步分合流</FK_FlowSortT>
+    <FK_FlowSort>01</FK_FlowSort>
+    <FK_FlowSortT>线性流程</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -97,20 +97,20 @@
     <IsCCFlow>0</IsCCFlow>
     <HisStas />
     <HisDeptStrs />
-    <HisToNDs>@699</HisToNDs>
+    <HisToNDs>@999</HisToNDs>
     <HisBillIDs />
     <HisEmps />
     <HisSubFlows />
     <PTable />
     <ShowSheets />
-    <GroupStaNDs>@601@699</GroupStaNDs>
+    <GroupStaNDs>@901@999</GroupStaNDs>
     <X>104</X>
     <Y>63</Y>
     <SearchLab>查询</SearchLab>
     <SearchEnable>1</SearchEnable>
   </WF_Node>
   <WF_Node>
-    <NodeID>699</NodeID>
+    <NodeID>999</NodeID>
     <Step>99</Step>
     <Name>结束节点</Name>
     <IsTask>1</IsTask>
@@ -127,7 +127,7 @@
     <DTFrom>2012-02-04 12:08</DTFrom>
     <DTTo>2012-02-04 12:08</DTTo>
     <SendLab>发送</SendLab>
-    <SendEnable>1</SendEnable>
+    <SendJS />
     <SaveLab>保存</SaveLab>
     <SaveEnable>1</SaveEnable>
     <JumpWayLab>跳转</JumpWayLab>
@@ -161,11 +161,11 @@
     <SwinkCent>0.1</SwinkCent>
     <OutTimeDeal>0</OutTimeDeal>
     <DoOutTime />
-    <FK_Flow>006</FK_Flow>
+    <FK_Flow>009</FK_Flow>
     <NodeWorkType>0</NodeWorkType>
     <FlowName>催款流程(子流程)</FlowName>
-    <FK_FlowSort>03</FK_FlowSort>
-    <FK_FlowSortT>异步分合流</FK_FlowSortT>
+    <FK_FlowSort>01</FK_FlowSort>
+    <FK_FlowSortT>线性流程</FK_FlowSortT>
     <FrmAttr />
     <Doc />
     <IsCanCC>1</IsCanCC>
@@ -189,22 +189,22 @@
     <HisSubFlows />
     <PTable />
     <ShowSheets />
-    <GroupStaNDs>@601@699</GroupStaNDs>
+    <GroupStaNDs>@901@999</GroupStaNDs>
     <X>103</X>
     <Y>207</Y>
     <SearchLab>查询</SearchLab>
     <SearchEnable>1</SearchEnable>
   </WF_Node>
   <WF_Direction>
-    <Node>601</Node>
-    <ToNode>699</ToNode>
+    <Node>901</Node>
+    <ToNode>999</ToNode>
   </WF_Direction>
   <Sys_MapData>
-    <No>ND601</No>
+    <No>ND901</No>
     <Name>开始节点</Name>
     <EnPK />
     <SearchKeys />
-    <PTable>ND601</PTable>
+    <PTable>ND901</PTable>
     <Dtls />
     <DBURL>0</DBURL>
     <Tag />
@@ -222,11 +222,11 @@
     <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_MapData>
-    <No>ND699</No>
+    <No>ND999</No>
     <Name>结束节点</Name>
     <EnPK />
     <SearchKeys />
-    <PTable>ND699</PTable>
+    <PTable>ND999</PTable>
     <Dtls />
     <DBURL>0</DBURL>
     <Tag />
@@ -244,11 +244,11 @@
     <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_MapData>
-    <No>ND6Rpt</No>
-    <Name>CopyOf催款流程(子流程)_02月04日12时08分</Name>
+    <No>ND9Rpt</No>
+    <Name>CopyOf催款流程(子流程)_02月16日21时53分</Name>
     <EnPK />
     <SearchKeys />
-    <PTable>ND6Rpt</PTable>
+    <PTable>ND9Rpt</PTable>
     <Dtls />
     <DBURL>0</DBURL>
     <Tag />
@@ -266,8 +266,211 @@
     <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_MapAttr>
-    <MyPK>ND601_OID</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND9Rpt_MyNum</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
+    <KeyOfEn>MyNum</KeyOfEn>
+    <Name>个数</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>2</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>0</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>138</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND9Rpt_FlowEmps</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
+    <KeyOfEn>FlowEmps</KeyOfEn>
+    <Name>参与人</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>1000</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>1</UIIsLine>
+    <Tag />
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>138</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND9Rpt_FlowStarter</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
+    <KeyOfEn>FlowStarter</KeyOfEn>
+    <Name>发起人</Name>
+    <DefVal />
+    <UIContralType>1</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>2</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>1000</MaxLen>
+    <UIBindKey>BP.Port.Emps</UIBindKey>
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>138</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND9Rpt_FlowStartRDT</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
+    <KeyOfEn>FlowStartRDT</KeyOfEn>
+    <Name>发起时间</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>7</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>138</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND9Rpt_FlowEnder</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
+    <KeyOfEn>FlowEnder</KeyOfEn>
+    <Name>结束人</Name>
+    <DefVal />
+    <UIContralType>1</UIContralType>
+    <MyDataType>1</MyDataType>
+    <LGType>2</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>1000</MaxLen>
+    <UIBindKey>BP.Port.Emps</UIBindKey>
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>138</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND9Rpt_FlowEnderRDT</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
+    <KeyOfEn>FlowEnderRDT</KeyOfEn>
+    <Name>结束时间</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>7</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>0</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>138</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND9Rpt_FlowDaySpan</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
+    <KeyOfEn>FlowDaySpan</KeyOfEn>
+    <Name>跨度(天)</Name>
+    <DefVal />
+    <UIContralType>0</UIContralType>
+    <MyDataType>8</MyDataType>
+    <LGType>0</LGType>
+    <UIWidth>100</UIWidth>
+    <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
+    <UIBindKey />
+    <UIRefKey />
+    <UIRefKeyText />
+    <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>1</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>999</IDX>
+    <GroupID>138</GroupID>
+    <IsSigan>0</IsSigan>
+    <X>5</X>
+    <Y>5</Y>
+  </Sys_MapAttr>
+  <Sys_MapAttr>
+    <MyPK>ND901_OID</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>OID</KeyOfEn>
     <Name>WorkID</Name>
     <DefVal>0</DefVal>
@@ -295,8 +498,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_FID</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_FID</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>FID</KeyOfEn>
     <Name>FID</Name>
     <DefVal>0</DefVal>
@@ -324,8 +527,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_RDT</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_RDT</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>RDT</KeyOfEn>
     <Name>接受时间</Name>
     <DefVal />
@@ -353,8 +556,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_CDT</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_CDT</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>CDT</KeyOfEn>
     <Name>发起时间</Name>
     <DefVal>@RDT</DefVal>
@@ -382,8 +585,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_Rec</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_Rec</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>Rec</KeyOfEn>
     <Name>发起人</Name>
     <DefVal>@WebUser.No</DefVal>
@@ -411,8 +614,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_Emps</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_Emps</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>Emps</KeyOfEn>
     <Name>Emps</Name>
     <DefVal />
@@ -440,8 +643,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_NodeState</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_NodeState</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>NodeState</KeyOfEn>
     <Name>节点状态</Name>
     <DefVal>0</DefVal>
@@ -469,8 +672,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_FK_Dept</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_FK_Dept</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>FK_Dept</KeyOfEn>
     <Name>操作员部门</Name>
     <DefVal />
@@ -498,8 +701,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_WFState</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_WFState</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>WFState</KeyOfEn>
     <Name>流程状态</Name>
     <DefVal>0</DefVal>
@@ -527,8 +730,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_BillNo</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_BillNo</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>BillNo</KeyOfEn>
     <Name>单据文号</Name>
     <DefVal />
@@ -556,8 +759,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_Title</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_Title</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>Title</KeyOfEn>
     <Name>标题</Name>
     <DefVal />
@@ -585,8 +788,8 @@
     <Y>54.4</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_FaQiRen</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_FaQiRen</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>FaQiRen</KeyOfEn>
     <Name>发起人</Name>
     <DefVal>@WebUser.No</DefVal>
@@ -614,8 +817,8 @@
     <Y>92.43</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_FaQiShiJian</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_FaQiShiJian</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>FaQiShiJian</KeyOfEn>
     <Name>发起时间</Name>
     <DefVal>@RDT</DefVal>
@@ -643,8 +846,8 @@
     <Y>92.43</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_FK_NY</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_FK_NY</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>FK_NY</KeyOfEn>
     <Name>年月</Name>
     <DefVal />
@@ -672,8 +875,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND601_MyNum</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>ND901_MyNum</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <KeyOfEn>MyNum</KeyOfEn>
     <Name>个数</Name>
     <DefVal>1</DefVal>
@@ -701,8 +904,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND699_OID</MyPK>
-    <FK_MapData>ND699</FK_MapData>
+    <MyPK>ND999_OID</MyPK>
+    <FK_MapData>ND999</FK_MapData>
     <KeyOfEn>OID</KeyOfEn>
     <Name>WorkID</Name>
     <DefVal>0</DefVal>
@@ -730,8 +933,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND699_FID</MyPK>
-    <FK_MapData>ND699</FK_MapData>
+    <MyPK>ND999_FID</MyPK>
+    <FK_MapData>ND999</FK_MapData>
     <KeyOfEn>FID</KeyOfEn>
     <Name>FID</Name>
     <DefVal>0</DefVal>
@@ -759,8 +962,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND699_RDT</MyPK>
-    <FK_MapData>ND699</FK_MapData>
+    <MyPK>ND999_RDT</MyPK>
+    <FK_MapData>ND999</FK_MapData>
     <KeyOfEn>RDT</KeyOfEn>
     <Name>接受时间</Name>
     <DefVal />
@@ -788,8 +991,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND699_CDT</MyPK>
-    <FK_MapData>ND699</FK_MapData>
+    <MyPK>ND999_CDT</MyPK>
+    <FK_MapData>ND999</FK_MapData>
     <KeyOfEn>CDT</KeyOfEn>
     <Name>完成时间</Name>
     <DefVal>@RDT</DefVal>
@@ -817,8 +1020,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND699_Rec</MyPK>
-    <FK_MapData>ND699</FK_MapData>
+    <MyPK>ND999_Rec</MyPK>
+    <FK_MapData>ND999</FK_MapData>
     <KeyOfEn>Rec</KeyOfEn>
     <Name>记录人</Name>
     <DefVal>@WebUser.No</DefVal>
@@ -846,8 +1049,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND699_Emps</MyPK>
-    <FK_MapData>ND699</FK_MapData>
+    <MyPK>ND999_Emps</MyPK>
+    <FK_MapData>ND999</FK_MapData>
     <KeyOfEn>Emps</KeyOfEn>
     <Name>Emps</Name>
     <DefVal />
@@ -875,8 +1078,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND699_NodeState</MyPK>
-    <FK_MapData>ND699</FK_MapData>
+    <MyPK>ND999_NodeState</MyPK>
+    <FK_MapData>ND999</FK_MapData>
     <KeyOfEn>NodeState</KeyOfEn>
     <Name>节点状态</Name>
     <DefVal>0</DefVal>
@@ -904,8 +1107,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND699_FK_Dept</MyPK>
-    <FK_MapData>ND699</FK_MapData>
+    <MyPK>ND999_FK_Dept</MyPK>
+    <FK_MapData>ND999</FK_MapData>
     <KeyOfEn>FK_Dept</KeyOfEn>
     <Name>操作员部门</Name>
     <DefVal />
@@ -933,8 +1136,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_OID</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_OID</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>OID</KeyOfEn>
     <Name>WorkID</Name>
     <DefVal />
@@ -962,8 +1165,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_FID</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_FID</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>FID</KeyOfEn>
     <Name>FID</Name>
     <DefVal />
@@ -991,8 +1194,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_RDT</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_RDT</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>RDT</KeyOfEn>
     <Name>接受时间</Name>
     <DefVal />
@@ -1020,8 +1223,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_CDT</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_CDT</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>CDT</KeyOfEn>
     <Name>发起时间</Name>
     <DefVal />
@@ -1049,8 +1252,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_Rec</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_Rec</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>Rec</KeyOfEn>
     <Name>发起人</Name>
     <DefVal />
@@ -1078,8 +1281,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_Emps</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_Emps</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>Emps</KeyOfEn>
     <Name>Emps</Name>
     <DefVal />
@@ -1107,8 +1310,8 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_FK_Dept</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_FK_Dept</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>FK_Dept</KeyOfEn>
     <Name>操作员部门</Name>
     <DefVal />
@@ -1130,14 +1333,14 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>98</GroupID>
+    <GroupID>138</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_WFState</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_WFState</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>WFState</KeyOfEn>
     <Name>流程状态</Name>
     <DefVal />
@@ -1159,14 +1362,14 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>98</GroupID>
+    <GroupID>138</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_BillNo</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_BillNo</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>BillNo</KeyOfEn>
     <Name>单据文号</Name>
     <DefVal />
@@ -1188,14 +1391,14 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>98</GroupID>
+    <GroupID>138</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_Title</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_Title</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>Title</KeyOfEn>
     <Name>标题</Name>
     <DefVal />
@@ -1223,8 +1426,8 @@
     <Y>54.4</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_FaQiRen</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_FaQiRen</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>FaQiRen</KeyOfEn>
     <Name>发起人</Name>
     <DefVal />
@@ -1252,8 +1455,8 @@
     <Y>92.43</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_FaQiShiJian</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_FaQiShiJian</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>FaQiShiJian</KeyOfEn>
     <Name>发起时间</Name>
     <DefVal />
@@ -1281,8 +1484,8 @@
     <Y>92.43</Y>
   </Sys_MapAttr>
   <Sys_MapAttr>
-    <MyPK>ND6Rpt_FK_NY</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
+    <MyPK>ND9Rpt_FK_NY</MyPK>
+    <FK_MapData>ND9Rpt</FK_MapData>
     <KeyOfEn>FK_NY</KeyOfEn>
     <Name>年月</Name>
     <DefVal />
@@ -1304,223 +1507,20 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>98</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>5</X>
-    <Y>5</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>ND6Rpt_MyNum</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
-    <KeyOfEn>MyNum</KeyOfEn>
-    <Name>个数</Name>
-    <DefVal />
-    <UIContralType>0</UIContralType>
-    <MyDataType>2</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>100</UIWidth>
-    <UIHeight>23</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>500</MaxLen>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>0</UIVisible>
-    <UIIsEnable>0</UIIsEnable>
-    <UIIsLine>0</UIIsLine>
-    <Tag />
-    <EditType>1</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>999</IDX>
-    <GroupID>98</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>5</X>
-    <Y>5</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>ND6Rpt_FlowEmps</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
-    <KeyOfEn>FlowEmps</KeyOfEn>
-    <Name>参与人</Name>
-    <DefVal />
-    <UIContralType>0</UIContralType>
-    <MyDataType>1</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>100</UIWidth>
-    <UIHeight>23</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>1000</MaxLen>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <UIIsEnable>0</UIIsEnable>
-    <UIIsLine>1</UIIsLine>
-    <Tag />
-    <EditType>1</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>999</IDX>
-    <GroupID>98</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>5</X>
-    <Y>5</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>ND6Rpt_FlowStarter</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
-    <KeyOfEn>FlowStarter</KeyOfEn>
-    <Name>发起人</Name>
-    <DefVal />
-    <UIContralType>1</UIContralType>
-    <MyDataType>1</MyDataType>
-    <LGType>2</LGType>
-    <UIWidth>100</UIWidth>
-    <UIHeight>23</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>1000</MaxLen>
-    <UIBindKey>BP.Port.Emps</UIBindKey>
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <UIIsEnable>0</UIIsEnable>
-    <UIIsLine>0</UIIsLine>
-    <Tag />
-    <EditType>1</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>999</IDX>
-    <GroupID>98</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>5</X>
-    <Y>5</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>ND6Rpt_FlowStartRDT</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
-    <KeyOfEn>FlowStartRDT</KeyOfEn>
-    <Name>发起时间</Name>
-    <DefVal />
-    <UIContralType>0</UIContralType>
-    <MyDataType>7</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>100</UIWidth>
-    <UIHeight>23</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>500</MaxLen>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <UIIsEnable>0</UIIsEnable>
-    <UIIsLine>0</UIIsLine>
-    <Tag />
-    <EditType>1</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>999</IDX>
-    <GroupID>98</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>5</X>
-    <Y>5</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>ND6Rpt_FlowEnder</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
-    <KeyOfEn>FlowEnder</KeyOfEn>
-    <Name>结束人</Name>
-    <DefVal />
-    <UIContralType>1</UIContralType>
-    <MyDataType>1</MyDataType>
-    <LGType>2</LGType>
-    <UIWidth>100</UIWidth>
-    <UIHeight>23</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>1000</MaxLen>
-    <UIBindKey>BP.Port.Emps</UIBindKey>
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <UIIsEnable>0</UIIsEnable>
-    <UIIsLine>0</UIIsLine>
-    <Tag />
-    <EditType>1</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>999</IDX>
-    <GroupID>98</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>5</X>
-    <Y>5</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>ND6Rpt_FlowEnderRDT</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
-    <KeyOfEn>FlowEnderRDT</KeyOfEn>
-    <Name>结束时间</Name>
-    <DefVal />
-    <UIContralType>0</UIContralType>
-    <MyDataType>7</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>100</UIWidth>
-    <UIHeight>23</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>500</MaxLen>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <UIIsEnable>0</UIIsEnable>
-    <UIIsLine>0</UIIsLine>
-    <Tag />
-    <EditType>1</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>999</IDX>
-    <GroupID>98</GroupID>
-    <IsSigan>0</IsSigan>
-    <X>5</X>
-    <Y>5</Y>
-  </Sys_MapAttr>
-  <Sys_MapAttr>
-    <MyPK>ND6Rpt_FlowDaySpan</MyPK>
-    <FK_MapData>ND6Rpt</FK_MapData>
-    <KeyOfEn>FlowDaySpan</KeyOfEn>
-    <Name>跨度(天)</Name>
-    <DefVal />
-    <UIContralType>0</UIContralType>
-    <MyDataType>8</MyDataType>
-    <LGType>0</LGType>
-    <UIWidth>100</UIWidth>
-    <UIHeight>23</UIHeight>
-    <MinLen>0</MinLen>
-    <MaxLen>500</MaxLen>
-    <UIBindKey />
-    <UIRefKey />
-    <UIRefKeyText />
-    <UIVisible>1</UIVisible>
-    <UIIsEnable>1</UIIsEnable>
-    <UIIsLine>0</UIIsLine>
-    <Tag />
-    <EditType>1</EditType>
-    <AutoFullDoc />
-    <AutoFullWay>0</AutoFullWay>
-    <IDX>999</IDX>
-    <GroupID>98</GroupID>
+    <GroupID>138</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_GroupField>
-    <OID>98</OID>
+    <OID>138</OID>
     <Lab>流程信息</Lab>
-    <EnName>ND6Rpt</EnName>
+    <EnName>ND9Rpt</EnName>
     <Idx>-1</Idx>
   </Sys_GroupField>
   <Sys_FrmLine>
-    <MyPK>Line006_1</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Line009_1</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <X>5</X>
     <Y>5</Y>
     <X1>281.82</X1>
@@ -1531,8 +1531,8 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line006_2</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Line009_2</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <X>5</X>
     <Y>5</Y>
     <X1>360</X1>
@@ -1543,8 +1543,8 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line006_3</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Line009_3</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <X>5</X>
     <Y>5</Y>
     <X1>158.82</X1>
@@ -1555,8 +1555,8 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line006_4</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Line009_4</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <X>5</X>
     <Y>5</Y>
     <X1>81.55</X1>
@@ -1567,8 +1567,8 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line006_5</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Line009_5</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <X>5</X>
     <Y>5</Y>
     <X1>81.82</X1>
@@ -1579,8 +1579,8 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line006_6</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Line009_6</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <X>5</X>
     <Y>5</Y>
     <X1>81.82</X1>
@@ -1591,8 +1591,8 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line006_7</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Line009_7</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <X>5</X>
     <Y>5</Y>
     <X1>83.36</X1>
@@ -1603,8 +1603,8 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line006_8</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Line009_8</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <X>5</X>
     <Y>5</Y>
     <X1>83.36</X1>
@@ -1615,8 +1615,8 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line006_9</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Line009_9</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <X>5</X>
     <Y>5</Y>
     <X1>719.09</X1>
@@ -1627,8 +1627,8 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLab>
-    <MyPK>Lab006_1</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Lab009_1</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <Text>发起人</Text>
     <X>106.48</X>
     <Y>96.08</Y>
@@ -1641,8 +1641,8 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab006_2</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Lab009_2</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <Text>发起时间</Text>
     <X>307.64</X>
     <Y>95.17</Y>
@@ -1655,8 +1655,8 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab006_3</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Lab009_3</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <Text>新建节点(请修改标题)</Text>
     <X>294.67</X>
     <Y>8.27</Y>
@@ -1669,8 +1669,8 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab006_4</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Lab009_4</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <Text>说明:以上内容是ccflow自动产生的，您可以修改/删除它。@为了更方便您的设计您可以到http://ccflow.org官网下载表单模板.@因为当前技术问题与silverlight开发工具使用特别说明如下:@@1,改变控件位置: @  所有的控件都支持 wasd, 做为方向键用来移动控件的位置， 部分控件支持方向键. @2, 增加textbox, 从表, dropdownlistbox, 的宽度 shift+ -&gt; 方向键增加宽度 shift + &lt;- 减小宽度.@3, 保存 windows键 + s.  删除 delete.  复制 ctrl+c   粘帖: ctrl+v.@4, 支持全选，批量移动， 批量放大缩小字体., 批量改变线的宽度.@5, 改变线的长度： 选择线，点绿色的圆点，拖拉它。.@6, 放大或者缩小　label 的字体 , 选择一个多个label , 按 A+ 或者　A－　按钮.@7, 改变线或者标签的颜色， 选择操作对象，点工具栏上的调色板.</Text>
     <X>168.24</X>
     <Y>163.7</Y>
@@ -1683,8 +1683,8 @@
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmImg>
-    <MyPK>Img006_1</MyPK>
-    <FK_MapData>ND601</FK_MapData>
+    <MyPK>Img009_1</MyPK>
+    <FK_MapData>ND901</FK_MapData>
     <X>577.26</X>
     <Y>3.45</Y>
     <H>40</H>

@@ -6,7 +6,7 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl1</PTable>
     <RowIdx>3</RowIdx>
-    <GroupID>111</GroupID>
+    <GroupID>156</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -40,7 +40,7 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl2</PTable>
     <RowIdx>0</RowIdx>
-    <GroupID>111</GroupID>
+    <GroupID>156</GroupID>
     <RowsOfList>3</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -74,7 +74,7 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl3</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>111</GroupID>
+    <GroupID>156</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -108,7 +108,7 @@
     <FK_MapData>Demo_03</FK_MapData>
     <PTable>Demo_03Dtl4</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>111</GroupID>
+    <GroupID>156</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -628,7 +628,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>111</GroupID>
+    <GroupID>156</GroupID>
     <IsSigan>0</IsSigan>
     <X>107</X>
     <Y>368</Y>
@@ -657,7 +657,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>111</GroupID>
+    <GroupID>156</GroupID>
     <IsSigan>0</IsSigan>
     <X>270</X>
     <Y>368</Y>
@@ -686,7 +686,7 @@
     <AutoFullDoc>@Table=Demo_03Dtl2@Field=XiaoJi@Way=SUM</AutoFullDoc>
     <AutoFullWay>4</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>111</GroupID>
+    <GroupID>156</GroupID>
     <IsSigan>0</IsSigan>
     <X>427</X>
     <Y>367</Y>
@@ -715,7 +715,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>113</GroupID>
+    <GroupID>158</GroupID>
     <IsSigan>0</IsSigan>
     <X>192</X>
     <Y>91</Y>
@@ -744,7 +744,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>113</GroupID>
+    <GroupID>158</GroupID>
     <IsSigan>0</IsSigan>
     <X>310</X>
     <Y>91</Y>
@@ -773,7 +773,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>113</GroupID>
+    <GroupID>158</GroupID>
     <IsSigan>0</IsSigan>
     <X>436</X>
     <Y>91</Y>
@@ -802,7 +802,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>113</GroupID>
+    <GroupID>158</GroupID>
     <IsSigan>0</IsSigan>
     <X>601</X>
     <Y>89</Y>
@@ -831,7 +831,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>113</GroupID>
+    <GroupID>158</GroupID>
     <IsSigan>0</IsSigan>
     <X>83</X>
     <Y>91</Y>
@@ -860,7 +860,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>111</GroupID>
+    <GroupID>156</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -889,7 +889,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>111</GroupID>
+    <GroupID>156</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -2229,9 +2229,9 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapM2M>
-    <MyPK>Demo_03Dtl1_M2M</MyPK>
+    <MyPK>Demo_03Dtl1_M2MDemo_03_1</MyPK>
     <FK_MapData>Demo_03Dtl1</FK_MapData>
-    <NoOfObj>M2M</NoOfObj>
+    <NoOfObj>M2MDemo_03_1</NoOfObj>
     <Name>M2M</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -2249,9 +2249,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_03Dtl1_M2MM</MyPK>
+    <MyPK>Demo_03Dtl1_M2MDemo_03_2</MyPK>
     <FK_MapData>Demo_03Dtl1</FK_MapData>
-    <NoOfObj>M2MM</NoOfObj>
+    <NoOfObj>M2MDemo_03_2</NoOfObj>
     <Name>M2MM</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -2269,9 +2269,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_03Dtl2_M2M</MyPK>
+    <MyPK>Demo_03Dtl2_M2MDemo_03_3</MyPK>
     <FK_MapData>Demo_03Dtl2</FK_MapData>
-    <NoOfObj>M2M</NoOfObj>
+    <NoOfObj>M2MDemo_03_3</NoOfObj>
     <Name>M2M</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -2289,9 +2289,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_03Dtl2_M2MM</MyPK>
+    <MyPK>Demo_03Dtl2_M2MDemo_03_4</MyPK>
     <FK_MapData>Demo_03Dtl2</FK_MapData>
-    <NoOfObj>M2MM</NoOfObj>
+    <NoOfObj>M2MDemo_03_4</NoOfObj>
     <Name>M2MM</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -2309,9 +2309,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_03Dtl3_M2M</MyPK>
+    <MyPK>Demo_03Dtl3_M2MDemo_03_5</MyPK>
     <FK_MapData>Demo_03Dtl3</FK_MapData>
-    <NoOfObj>M2M</NoOfObj>
+    <NoOfObj>M2MDemo_03_5</NoOfObj>
     <Name>M2M</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -2329,9 +2329,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_03Dtl3_M2MM</MyPK>
+    <MyPK>Demo_03Dtl3_M2MDemo_03_6</MyPK>
     <FK_MapData>Demo_03Dtl3</FK_MapData>
-    <NoOfObj>M2MM</NoOfObj>
+    <NoOfObj>M2MDemo_03_6</NoOfObj>
     <Name>M2MM</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -2349,9 +2349,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_03Dtl4_M2M</MyPK>
+    <MyPK>Demo_03Dtl4_M2MDemo_03_7</MyPK>
     <FK_MapData>Demo_03Dtl4</FK_MapData>
-    <NoOfObj>M2M</NoOfObj>
+    <NoOfObj>M2MDemo_03_7</NoOfObj>
     <Name>M2M</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -2369,9 +2369,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_03Dtl4_M2MM</MyPK>
+    <MyPK>Demo_03Dtl4_M2MDemo_03_8</MyPK>
     <FK_MapData>Demo_03Dtl4</FK_MapData>
-    <NoOfObj>M2MM</NoOfObj>
+    <NoOfObj>M2MDemo_03_8</NoOfObj>
     <Name>M2MM</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -2515,37 +2515,37 @@
     <W>400</W>
   </Sys_MapExt>
   <Sys_GroupField>
-    <OID>110</OID>
+    <OID>155</OID>
     <Lab>Demo_03Dtl1</Lab>
     <EnName>Demo_03Dtl1</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>111</OID>
+    <OID>156</OID>
     <Lab>03.主从表基础功能</Lab>
     <EnName>Demo_03</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>112</OID>
+    <OID>157</OID>
     <Lab>Demo_03Dtl2</Lab>
     <EnName>Demo_03Dtl2</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>113</OID>
+    <OID>158</OID>
     <Lab>填充明细表</Lab>
     <EnName>Demo_03</EnName>
     <Idx>1</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>114</OID>
+    <OID>159</OID>
     <Lab>Demo_03Dtl3</Lab>
     <EnName>Demo_03Dtl3</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>115</OID>
+    <OID>160</OID>
     <Lab>Demo_03Dtl4</Lab>
     <EnName>Demo_03Dtl4</EnName>
     <Idx>0</Idx>

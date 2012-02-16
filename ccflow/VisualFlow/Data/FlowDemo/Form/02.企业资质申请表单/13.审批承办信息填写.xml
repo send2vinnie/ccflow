@@ -12,7 +12,7 @@
     <FrmType>0</FrmType>
     <FK_FrmSort>02</FK_FrmSort>
     <AttrsInTable />
-    <AppType>1</AppType>
+    <AppType>0</AppType>
     <Designer />
     <DesignerUnit />
     <DesignerContact />
@@ -238,7 +238,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>132</GroupID>
+    <GroupID>178</GroupID>
     <IsSigan>0</IsSigan>
     <X>253</X>
     <Y>83</Y>
@@ -267,7 +267,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>132</GroupID>
+    <GroupID>178</GroupID>
     <IsSigan>0</IsSigan>
     <X>254</X>
     <Y>130</Y>
@@ -296,7 +296,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>132</GroupID>
+    <GroupID>178</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -325,7 +325,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>132</GroupID>
+    <GroupID>178</GroupID>
     <IsSigan>0</IsSigan>
     <X>253</X>
     <Y>215</Y>
@@ -354,7 +354,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>132</GroupID>
+    <GroupID>178</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -383,7 +383,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>132</GroupID>
+    <GroupID>178</GroupID>
     <IsSigan>0</IsSigan>
     <X>254</X>
     <Y>174</Y>
@@ -412,13 +412,13 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>0</GroupID>
+    <GroupID>178</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_GroupField>
-    <OID>132</OID>
+    <OID>178</OID>
     <Lab>manage_pop</Lab>
     <EnName>Demo_Inc13</EnName>
     <Idx>0</Idx>

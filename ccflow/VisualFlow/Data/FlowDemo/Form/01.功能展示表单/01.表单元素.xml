@@ -6,7 +6,7 @@
     <FK_MapData>Demo_01</FK_MapData>
     <PTable>Demo_01Dtl1</PTable>
     <RowIdx>1</RowIdx>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -1010,7 +1010,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>1</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>84</X>
     <Y>329</Y>
@@ -1039,7 +1039,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>2</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>443</X>
     <Y>330</Y>
@@ -1068,7 +1068,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>3</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>295</X>
     <Y>330</Y>
@@ -1097,7 +1097,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>4</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>219</X>
     <Y>373</Y>
@@ -1126,7 +1126,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>5</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>0</X>
     <Y>0</Y>
@@ -1155,7 +1155,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>6</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>84</X>
     <Y>369</Y>
@@ -1184,7 +1184,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>7</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>86</X>
     <Y>410</Y>
@@ -1213,7 +1213,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>8</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>289</X>
     <Y>408</Y>
@@ -1242,7 +1242,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>9</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>524</X>
     <Y>408</Y>
@@ -1271,7 +1271,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>10</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>83</X>
     <Y>448</Y>
@@ -1300,7 +1300,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>11</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>82</X>
     <Y>479</Y>
@@ -1329,7 +1329,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1358,7 +1358,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1654,9 +1654,9 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapM2M>
-    <MyPK>Demo_01Dtl1_M2M</MyPK>
+    <MyPK>Demo_01Dtl1_M2MDemo_01_1</MyPK>
     <FK_MapData>Demo_01Dtl1</FK_MapData>
-    <NoOfObj>M2M</NoOfObj>
+    <NoOfObj>M2MDemo_01_1</NoOfObj>
     <Name>M2M</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -1674,9 +1674,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_01Dtl1_M2MM</MyPK>
+    <MyPK>Demo_01Dtl1_M2MDemo_01_2</MyPK>
     <FK_MapData>Demo_01Dtl1</FK_MapData>
-    <NoOfObj>M2MM</NoOfObj>
+    <NoOfObj>M2MDemo_01_2</NoOfObj>
     <Name>M2MM</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -1694,9 +1694,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_01_M2MDemo_01_1</MyPK>
+    <MyPK>Demo_01_M2MDemo_01_3</MyPK>
     <FK_MapData>Demo_01</FK_MapData>
-    <NoOfObj>M2MDemo_01_1</NoOfObj>
+    <NoOfObj>M2MDemo_01_3</NoOfObj>
     <Name>新建一对多</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -1708,15 +1708,15 @@
     <ShowWay>1</ShowWay>
     <M2MType>0</M2MType>
     <RowIdx>99</RowIdx>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <Cols>6</Cols>
     <IsDelete>1</IsDelete>
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_01_M2MDemo_01_2</MyPK>
+    <MyPK>Demo_01_M2MDemo_01_4</MyPK>
     <FK_MapData>Demo_01</FK_MapData>
-    <NoOfObj>M2MDemo_01_2</NoOfObj>
+    <NoOfObj>M2MDemo_01_4</NoOfObj>
     <Name>新建一对多多</Name>
     <DBOfLists>SELECT No,Name FROM Port_Emp</DBOfLists>
     <DBOfObjs>SELECT No,Name,StaGrade FROM Port_Station</DBOfObjs>
@@ -1728,7 +1728,7 @@
     <ShowWay>1</ShowWay>
     <M2MType>1</M2MType>
     <RowIdx>99</RowIdx>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
     <Cols>4</Cols>
     <IsDelete>1</IsDelete>
     <IsInsert>1</IsInsert>
@@ -1773,7 +1773,7 @@
     <IsNote>0</IsNote>
     <UploadType>1</UploadType>
     <RowIdx>5</RowIdx>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
   </Sys_FrmAttachment>
   <Sys_FrmAttachment>
     <MyPK>Demo_01_DanGeFuJian</MyPK>
@@ -1794,7 +1794,7 @@
     <IsNote>0</IsNote>
     <UploadType>0</UploadType>
     <RowIdx>5</RowIdx>
-    <GroupID>104</GroupID>
+    <GroupID>149</GroupID>
   </Sys_FrmAttachment>
   <Sys_FrmImgAth>
     <MyPK>ImgADemo_01_1</MyPK>
@@ -1806,37 +1806,37 @@
     <W>143</W>
   </Sys_FrmImgAth>
   <Sys_GroupField>
-    <OID>103</OID>
+    <OID>148</OID>
     <Lab>从表</Lab>
     <EnName>Demo_01</EnName>
     <Idx>1</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>104</OID>
+    <OID>149</OID>
     <Lab>CCForm表单控件展示</Lab>
     <EnName>Demo_01</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>105</OID>
+    <OID>150</OID>
     <Lab>Demo_01Dtl1</Lab>
     <EnName>Demo_01Dtl1</EnName>
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>106</OID>
+    <OID>151</OID>
     <Lab>一对多数据采集</Lab>
     <EnName>Demo_01</EnName>
     <Idx>2</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>107</OID>
+    <OID>152</OID>
     <Lab>多附件与单附件</Lab>
     <EnName>Demo_01</EnName>
     <Idx>4</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>108</OID>
+    <OID>153</OID>
     <Lab>一对多多数据采集</Lab>
     <EnName>Demo_01</EnName>
     <Idx>3</Idx>

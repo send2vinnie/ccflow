@@ -23,7 +23,7 @@
     <FrmH>1200</FrmH>
   </Sys_MapData>
   <Sys_FrmLine>
-    <MyPK>Line120211051138</MyPK>
+    <MyPK>LEDemo_HK01_1</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -35,7 +35,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051107</MyPK>
+    <MyPK>LEDemo_HK01_2</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -47,7 +47,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051128</MyPK>
+    <MyPK>LEDemo_HK01_3</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -59,7 +59,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051132</MyPK>
+    <MyPK>LEDemo_HK01_4</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -71,7 +71,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051139</MyPK>
+    <MyPK>LEDemo_HK01_5</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -83,7 +83,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051112</MyPK>
+    <MyPK>LEDemo_HK01_6</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -95,7 +95,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051129</MyPK>
+    <MyPK>LEDemo_HK01_7</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -107,7 +107,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051133</MyPK>
+    <MyPK>LEDemo_HK01_8</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -119,7 +119,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051141</MyPK>
+    <MyPK>LEDemo_HK01_9</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -131,7 +131,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051145</MyPK>
+    <MyPK>LEDemo_HK01_10</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -143,7 +143,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051124</MyPK>
+    <MyPK>LEDemo_HK01_11</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -155,7 +155,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051113</MyPK>
+    <MyPK>LEDemo_HK01_12</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -167,7 +167,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051135</MyPK>
+    <MyPK>LEDemo_HK01_13</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -179,7 +179,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120211051140</MyPK>
+    <MyPK>LEDemo_HK01_14</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -191,7 +191,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120212051224</MyPK>
+    <MyPK>LEDemo_HK01_15</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -203,7 +203,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmLine>
-    <MyPK>Line120212051253</MyPK>
+    <MyPK>LEDemo_HK01_16</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>0</X>
     <Y>0</Y>
@@ -215,7 +215,7 @@
     <BorderColor>Black</BorderColor>
   </Sys_FrmLine>
   <Sys_FrmImg>
-    <MyPK>Demo_HK01Img1</MyPK>
+    <MyPK>ImgDemo_HK01_1</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <X>399</X>
     <Y>18</Y>
@@ -226,7 +226,7 @@
     <LinkTarget>_blank</LinkTarget>
   </Sys_FrmImg>
   <Sys_FrmLab>
-    <MyPK>Lab120205111034</MyPK>
+    <MyPK>LBDemo_HK01_1</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>开航考察工作单-飞行(测试)</Text>
     <X>40</X>
@@ -235,11 +235,12 @@
     <FontColor>#FF1312FF</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>1</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205111350</MyPK>
+    <MyPK>LBDemo_HK01_2</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>考察单位</Text>
     <X>59</X>
@@ -248,11 +249,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205111409</MyPK>
+    <MyPK>LBDemo_HK01_3</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>考察责任人</Text>
     <X>256</X>
@@ -261,11 +263,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205111428</MyPK>
+    <MyPK>LBDemo_HK01_4</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>考察时间</Text>
     <X>417</X>
@@ -274,11 +277,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205111550</MyPK>
+    <MyPK>LBDemo_HK01_5</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>考@察@项@目</Text>
     <X>72</X>
@@ -287,11 +291,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205111742</MyPK>
+    <MyPK>LBDemo_HK01_6</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>1&amp;nbsp;使用机场（包括目的地机场、技术经停机场和备降机场）地形、地貌特征和净空条件。@2&amp;nbsp;使用机场起降方法、进离港程序、等待程序、限制噪音程序和宵禁规定等运行限制及特殊管制规定。@3&amp;nbsp;使用机场跑道、滑行道、停机位及灯光、助航等设备装备及保障情况。@4&amp;nbsp;使用机场通信、气象、航行情报保障能力。@5&amp;nbsp;地面供油设施、设备装备情况及保障能力。@6&amp;nbsp;国际运行沿途各国的空中交通管制及特殊限制规定。</Text>
     <X>132</X>
@@ -300,11 +305,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205115928</MyPK>
+    <MyPK>LBDemo_HK01_7</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>详细考察情况</Text>
     <X>554</X>
@@ -313,11 +319,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205115945</MyPK>
+    <MyPK>LBDemo_HK01_8</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>是否符合要求</Text>
     <X>417</X>
@@ -326,11 +333,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205120002</MyPK>
+    <MyPK>LBDemo_HK01_9</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>谈判和/或了解事项</Text>
     <X>107</X>
@@ -339,11 +347,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205120142</MyPK>
+    <MyPK>LBDemo_HK01_10</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>1&amp;nbsp;跟踪使用机场的落地许可的批复。</Text>
     <X>80</X>
@@ -352,11 +361,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205120154</MyPK>
+    <MyPK>LBDemo_HK01_11</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>2&amp;nbsp;气象资料、航行通告的提供。</Text>
     <X>81</X>
@@ -365,11 +375,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205120202</MyPK>
+    <MyPK>LBDemo_HK01_12</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>3&amp;nbsp;领航计划报的拍发。</Text>
     <X>80</X>
@@ -378,11 +389,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205120209_1</MyPK>
+    <MyPK>LBDemo_HK01_13</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>4&amp;nbsp;飞行动态监控、信息传递流程。</Text>
     <X>83</X>
@@ -391,11 +403,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205120320</MyPK>
+    <MyPK>LBDemo_HK01_14</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>5&amp;nbsp;加注燃油程序、燃油规格及价格，燃油冻结的考虑。</Text>
     <X>81</X>
@@ -404,11 +417,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205120337</MyPK>
+    <MyPK>LBDemo_HK01_15</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>6&amp;nbsp;签派代理及延伸服务内容、形式、费用。</Text>
     <X>81</X>
@@ -417,11 +431,12 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
   <Sys_FrmLab>
-    <MyPK>Lab120205120804</MyPK>
+    <MyPK>LBDemo_HK01_16</MyPK>
     <FK_MapData>Demo_HK01</FK_MapData>
     <Text>索取资料@备注</Text>
     <X>50</X>
@@ -430,6 +445,7 @@
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
+    <FontWeight>normal</FontWeight>
     <IsBold>0</IsBold>
     <IsItalic>0</IsItalic>
   </Sys_FrmLab>
@@ -438,15 +454,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>IsOK1</KeyOfEn>
     <Name>是否符合要求</Name>
+    <DefVal />
     <UIContralType>2</UIContralType>
     <MyDataType>4</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>415</X>
     <Y>331</Y>
   </Sys_MapAttr>
@@ -455,15 +483,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>IsOK2</KeyOfEn>
     <Name>是否符合要求</Name>
+    <DefVal />
     <UIContralType>2</UIContralType>
     <MyDataType>4</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>413</X>
     <Y>370</Y>
   </Sys_MapAttr>
@@ -472,15 +512,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>IsOK3</KeyOfEn>
     <Name>是否符合要求</Name>
+    <DefVal />
     <UIContralType>2</UIContralType>
     <MyDataType>4</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>415</X>
     <Y>411</Y>
   </Sys_MapAttr>
@@ -489,15 +541,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>IsOK4</KeyOfEn>
     <Name>是否符合要求</Name>
+    <DefVal />
     <UIContralType>2</UIContralType>
     <MyDataType>4</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>415</X>
     <Y>450</Y>
   </Sys_MapAttr>
@@ -506,15 +570,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>IsOk5</KeyOfEn>
     <Name>是否符合要求</Name>
+    <DefVal />
     <UIContralType>2</UIContralType>
     <MyDataType>4</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>413</X>
     <Y>492</Y>
   </Sys_MapAttr>
@@ -523,15 +599,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>IsOK6</KeyOfEn>
     <Name>是否符合要求</Name>
+    <DefVal />
     <UIContralType>2</UIContralType>
     <MyDataType>4</MyDataType>
     <LGType>0</LGType>
     <UIWidth>100</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>411</X>
     <Y>529</Y>
   </Sys_MapAttr>
@@ -540,15 +628,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>XiangXiQingKuang</KeyOfEn>
     <Name>详细情况</Name>
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>152</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>521</X>
     <Y>328</Y>
   </Sys_MapAttr>
@@ -557,15 +657,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>TB120205120946_1</KeyOfEn>
     <Name />
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>152</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>520</X>
     <Y>366</Y>
   </Sys_MapAttr>
@@ -574,15 +686,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>TB120205120954_1</KeyOfEn>
     <Name />
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>152</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>519</X>
     <Y>405</Y>
   </Sys_MapAttr>
@@ -591,15 +715,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>TB120205121003_1</KeyOfEn>
     <Name />
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>152</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>520</X>
     <Y>447</Y>
   </Sys_MapAttr>
@@ -608,15 +744,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>TB120205121010_1</KeyOfEn>
     <Name />
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>152</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>519</X>
     <Y>486</Y>
   </Sys_MapAttr>
@@ -625,15 +773,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>TB120205121014_1</KeyOfEn>
     <Name />
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>152</UIWidth>
     <UIHeight>23</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>519</X>
     <Y>525</Y>
   </Sys_MapAttr>
@@ -642,15 +802,27 @@
     <FK_MapData>Demo_HK01</FK_MapData>
     <KeyOfEn>BeiZhu</KeyOfEn>
     <Name>备注</Name>
+    <DefVal />
     <UIContralType>0</UIContralType>
     <MyDataType>1</MyDataType>
     <LGType>0</LGType>
     <UIWidth>548</UIWidth>
     <UIHeight>101</UIHeight>
+    <MinLen>0</MinLen>
+    <MaxLen>500</MaxLen>
     <UIBindKey />
     <UIRefKey />
     <UIRefKeyText />
     <UIVisible>1</UIVisible>
+    <UIIsEnable>1</UIIsEnable>
+    <UIIsLine>0</UIIsLine>
+    <Tag />
+    <EditType>0</EditType>
+    <AutoFullDoc />
+    <AutoFullWay>0</AutoFullWay>
+    <IDX>0</IDX>
+    <GroupID>183</GroupID>
+    <IsSigan>0</IsSigan>
     <X>124</X>
     <Y>562</Y>
   </Sys_MapAttr>
@@ -678,7 +850,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>167</GroupID>
+    <GroupID>183</GroupID>
     <IsSigan>0</IsSigan>
     <X>488</X>
     <Y>87</Y>
@@ -707,7 +879,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>167</GroupID>
+    <GroupID>183</GroupID>
     <IsSigan>0</IsSigan>
     <X>325</X>
     <Y>88</Y>
@@ -736,7 +908,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>0</IDX>
-    <GroupID>167</GroupID>
+    <GroupID>183</GroupID>
     <IsSigan>0</IsSigan>
     <X>126</X>
     <Y>89</Y>
@@ -765,7 +937,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>167</GroupID>
+    <GroupID>183</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -794,13 +966,13 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>0</GroupID>
+    <GroupID>183</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_GroupField>
-    <OID>167</OID>
+    <OID>183</OID>
     <Lab>开行考察工作单-飞行</Lab>
     <EnName>Demo_HK01</EnName>
     <Idx>0</Idx>

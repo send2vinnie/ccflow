@@ -6,7 +6,7 @@
     <FK_MapData>Demo_Inc12</FK_MapData>
     <PTable>info9_QYDBGC</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>130</GroupID>
+    <GroupID>177</GroupID>
     <RowsOfList>6</RowsOfList>
     <IsShowSum>1</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -46,7 +46,7 @@
     <FrmType>0</FrmType>
     <FK_FrmSort>02</FK_FrmSort>
     <AttrsInTable />
-    <AppType>1</AppType>
+    <AppType>0</AppType>
     <Designer />
     <DesignerUnit />
     <DesignerContact />
@@ -1110,7 +1110,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>1</IDX>
-    <GroupID>130</GroupID>
+    <GroupID>177</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1139,7 +1139,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>1</IDX>
-    <GroupID>130</GroupID>
+    <GroupID>177</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -2189,9 +2189,9 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapM2M>
-    <MyPK>Demo_Inc12Dtl1_M2M</MyPK>
+    <MyPK>Demo_Inc12Dtl1_M2MDemo_Inc12_1</MyPK>
     <FK_MapData>Demo_Inc12Dtl1</FK_MapData>
-    <NoOfObj>M2M</NoOfObj>
+    <NoOfObj>M2MDemo_Inc12_1</NoOfObj>
     <Name>M2M</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -2209,9 +2209,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_Inc12Dtl1_M2MM</MyPK>
+    <MyPK>Demo_Inc12Dtl1_M2MDemo_Inc12_2</MyPK>
     <FK_MapData>Demo_Inc12Dtl1</FK_MapData>
-    <NoOfObj>M2MM</NoOfObj>
+    <NoOfObj>M2MDemo_Inc12_2</NoOfObj>
     <Name>M2MM</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -2250,7 +2250,7 @@
     <GroupID>0</GroupID>
   </Sys_FrmAttachment>
   <Sys_GroupField>
-    <OID>130</OID>
+    <OID>177</OID>
     <Lab>企业代表工程情况</Lab>
     <EnName>Demo_Inc12</EnName>
     <Idx>0</Idx>

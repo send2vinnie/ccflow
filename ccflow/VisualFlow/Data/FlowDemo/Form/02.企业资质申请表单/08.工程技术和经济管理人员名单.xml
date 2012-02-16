@@ -6,7 +6,7 @@
     <FK_MapData>Demo_Inc08</FK_MapData>
     <PTable>prj_manage_mume</PTable>
     <RowIdx>99</RowIdx>
-    <GroupID>126</GroupID>
+    <GroupID>173</GroupID>
     <RowsOfList>35</RowsOfList>
     <IsShowSum>0</IsShowSum>
     <IsShowIdx>1</IsShowIdx>
@@ -46,7 +46,7 @@
     <FrmType>0</FrmType>
     <FK_FrmSort>02</FK_FrmSort>
     <AttrsInTable />
-    <AppType>1</AppType>
+    <AppType>0</AppType>
     <Designer />
     <DesignerUnit />
     <DesignerContact />
@@ -192,7 +192,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>33</IDX>
-    <GroupID>126</GroupID>
+    <GroupID>173</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -221,7 +221,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>54</IDX>
-    <GroupID>126</GroupID>
+    <GroupID>173</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -250,7 +250,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>0</GroupID>
+    <GroupID>173</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -604,9 +604,9 @@
     <Y>5</Y>
   </Sys_MapAttr>
   <Sys_MapM2M>
-    <MyPK>Demo_Inc08Dtl1_M2M</MyPK>
+    <MyPK>Demo_Inc08Dtl1_M2MDemo_Inc08_1</MyPK>
     <FK_MapData>Demo_Inc08Dtl1</FK_MapData>
-    <NoOfObj>M2M</NoOfObj>
+    <NoOfObj>M2MDemo_Inc08_1</NoOfObj>
     <Name>M2M</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -624,9 +624,9 @@
     <IsInsert>1</IsInsert>
   </Sys_MapM2M>
   <Sys_MapM2M>
-    <MyPK>Demo_Inc08Dtl1_M2MM</MyPK>
+    <MyPK>Demo_Inc08Dtl1_M2MDemo_Inc08_2</MyPK>
     <FK_MapData>Demo_Inc08Dtl1</FK_MapData>
-    <NoOfObj>M2MM</NoOfObj>
+    <NoOfObj>M2MDemo_Inc08_2</NoOfObj>
     <Name>M2MM</Name>
     <DBOfLists />
     <DBOfObjs>SELECT No,Name,FK_Dept FROM Port_Emp</DBOfObjs>
@@ -665,7 +665,7 @@
     <GroupID>0</GroupID>
   </Sys_FrmAttachment>
   <Sys_GroupField>
-    <OID>126</OID>
+    <OID>173</OID>
     <Lab>工程技术和经济管理人员名单</Lab>
     <EnName>Demo_Inc08</EnName>
     <Idx>0</Idx>
