@@ -532,7 +532,6 @@ namespace BP.WF
                 return WorkerListWayOfDept(town, dt);
             }
 
-
             // 判断 节点人员里是否有设置？  如果有就不考虑岗位设置了。从节点人员设置里面查询。
             if (town.HisNode.HisEmps.Length > 2)
             {

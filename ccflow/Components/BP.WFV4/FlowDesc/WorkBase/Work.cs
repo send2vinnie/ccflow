@@ -691,63 +691,8 @@ namespace BP.WF
         {
             get
             {
-
+                return "";
                 string tp = "";
-                //if (this.HisNode.HisFJOpen != FJOpen.None)
-                //{
-                //    if (this.OID == 0)
-                //        tp += "[<a href=\"javascript:alert('" + this.ToE("ForFJ", "请保存后上传附件") + "');\" ><img src='../images/Btn/Search.gif' border=0/>" + this.ToE("FJ", "附件") + "</a>]";
-                //    else
-                //        tp += "[<a href=\"javascript:WinOpen('../WF/FileManager.aspx?WorkID=" + this.OID + "&FID=" + this.FID + "&FJOpen=" + (int)this.HisNode.HisFJOpen + "&FK_Node=" + this.HisNode.NodeID + "' ,'sd');\" ><img src='../images/Btn/Adjunct.gif' border=0/>" + this.ToE("FJ", "附件") + "-" + FileManagers.NumOfFile(this.OID, this.FID, this.HisNode.HisFJOpen) + "</a>]";
-                //}
-
-                //if (SystemConfig.IsDebug)
-                //{
-                //        tp += "[<a href=\"javascript:alert('" + this.ToE("W1", "提示：在设计状态下才有此功能。") + "'); WinOpen('./../Comm/UIEn.aspx?EnName=BP.WF.Node&PK=" + this.NodeID + "');\" ><img src='./Img/WF.ICO' border=0/>" + this.ToE("DNode", "节点设计") + "</a>]";
-                //}
-
-                //if (this.OID == 0)
-                //{
-                //    if (this.HisNode.IsCanRpt)
-                //        tp += "[<a href=\"javascript:alert('" + this.ToE("WorkRpt", "工作报告") + "');\"  ><img src='./Img/WorkRpt.gif' border=0/>" + this.ToE("WorkRpt", "工作报告") + "</a>]";
-                //}
-                //else
-                //{
-                //    if (this.HisNode.IsCanRpt)
-                //        tp += "[<a href=\"javascript:WinOpen('../WF/WFRpt.aspx?WorkID=" + this.OID + "&FID=" + this.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "' ,'s3');\" ><img src='./Img/WorkRpt.gif' border=0/>" + this.ToE("WorkRpt", "工作报告") + "</a>]";
-
-                //    tp += "[<a href=\"javascript:WinOpen('../WF/Chart.aspx?DoType=DT&WorkID=" + this.OID + "&FID=" + this.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "' ,'s3');\" ><img src='./Img/Track.gif' border=0/>" + this.ToE("Track", "工作轨迹") + "</a>]";
-                //    tp += "[<a href=\"javascript:WinOpen('../WF/Do.aspx?DoType=DoPrint&WorkID=" + this.OID + "&NodeID=" + this.HisNode.NodeID + "&FK_Flow=" + this.HisNode.FK_Flow + "' ,'s3');\" ><img src='./Img/Print.gif' border=0/>" + this.ToE("Print", "打印") + "</a>]";
-                //}
-
-
-                if (this.HisNode.HisDeliveryWay== DeliveryWay.BySelected && this.HisNode.IsEndNode == false)
-                {
-                    if (this.OID == 0)
-                    {
-                     //   tp += "[<a href=\"javascript:alert('" + this.ToE("JSRen", "保存后才能执行") + "');\" ><img src='../images/Btn/Search.gif' border=0/>" + this.ToE("JSRen", "接受人") + "</a>]";
-                    }
-                    else
-                    {
-
-                        if (this.HisNode.HisFormType == FormType.FixForm)
-                            tp += "[<a href=\"javascript:WinOpen('../WF/Accpter.aspx?WorkID=" + this.OID + "&FK_Node=" + this.HisNode.NodeID + "' ,'s8d');\" ><img src='../images/Btn/Adjunct.gif' border=0/>" + this.ToE("JSRen", "接受人") + "</a>]";
-                    }
-                }
-
-                //if (this.HisNode.IsCanCC)
-                //{
-                //    if (this.OID == 0)
-                //        tp += "[<a href=\"javascript:alert('" + this.ToE("CC", "抄送") + "');\" ><img src='../Images/Btn/CC.gif' border=0/>" + this.ToE("CC", "抄送") + "</a>]";
-                //    else
-                //        tp += "[<a href=\"javascript:WinOpen('../WF/Msg/Write.aspx?WorkID=" + this.OID + "&FK_Node=" + this.HisNode.NodeID + "' ,'s8d');\" ><img src='../images/Btn/CC.gif' border=0/>" + this.ToE("CC", "抄送") + "</a>]";
-                //}
-
-                //if (this.HisNode.HisNodeWorkType == NodeWorkType.GECheckMuls)
-                //{
-                //    tp += "[<a href=\"javascript:WinOpen('ViewGECheckMuls.aspx?WorkID=" + this.OID + "&FK_Node=" + this.HisNode.NodeID + "' ,'sdd');\" ><img src='../images/Btn/Adjunct.gif' border=0/>" + this.ToE("TSSH", "同事审核") + "</a>]";
-                //}
-
                 FAppSets sets = new FAppSets(this.NodeID);
                 foreach (FAppSet set in sets)
                 {
@@ -935,7 +880,6 @@ namespace BP.WF
         /// </summary>
         public void InsertAsOID(Int64 oid)
         {
-            //this.InitBillNo();
             this.SetValByKey("OID", oid);
             //EnDA.Insert(this);
             this.RunSQL(SqlBuilder.Insert(this));
@@ -946,7 +890,6 @@ namespace BP.WF
         /// <param name="oid"></param>
         public void SaveAsOID(Int64 oid)
         {
-            //this.InitBillNo();
             this.SetValByKey("OID", oid);
             if (this.RetrieveNotSetValues().Rows.Count == 0)
                 this.InsertAsOID(oid);

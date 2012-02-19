@@ -204,7 +204,6 @@ namespace BP.WF
 		/// <returns></returns>
 		protected override bool beforeUpdate()
 		{
-			//this.InitBillNo();
 			if (base.beforeUpdate()==false)
 				return false;
 			if (this.OID < 0 )			

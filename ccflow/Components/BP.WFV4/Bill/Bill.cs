@@ -370,8 +370,6 @@ namespace BP.WF
                 map.AddTBString(BillAttr.Title, null, "标题", false, false, 0, 300, 5);
                 map.AddDDLEntities(BillAttr.FK_Starter, null, "发起人", new BP.WF.Port.Emps(), false);
                 map.AddTBDateTime(BillAttr.StartDT, "发起时间", true, true);
-             //   map.AddTBString(BillAttr.BillNo, null, "BillNo", false, false, 0, 30, 5);
-
                 //  map.AddTBString(BillAttr.FK_Flow, null, "流程", false, false, 0, 30, 5);
                 //map.AddTBString(BillAttr.FK_Bill, null, "FK_Bill", false, false, 0, 30, 5);
 

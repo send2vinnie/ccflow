@@ -164,6 +164,7 @@ namespace BP.Sys
             }
         }
         #endregion
+
         public static Boolean IsEditDtlModel
         {
             get
@@ -324,7 +325,7 @@ namespace BP.Sys
             {
                 string s = this.GetValStrByKey(MapDataAttr.AttrsInTable);
                 if (string.IsNullOrEmpty(s))
-                    s = "@FK_Dept=发起人部门@FlowStarter=发起人@WFState=状态@Title=标题@FlowStartRDT=发起时间@FlowEmps=参与人@FlowDaySpan=时间跨度@FlowEnder=结束人@FlowEnderRDT=流程结束时间@FK_NY=年月@BillNo=编号";
+                    s = "@FK_Dept=发起人部门@FlowStarter=发起人@WFState=状态@Title=标题@FlowStartRDT=发起时间@FlowEmps=参与人@FlowDaySpan=时间跨度@FlowEnder=结束人@FlowEnderRDT=流程结束时间@FK_NY=年月";
                 return s;
             }
             set
@@ -722,7 +723,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.FK_MapData = fk_mapdata;
+                          //  en.FK_MapData = fk_mapdata; 删除此行解决从表lab的问题。
                             en.MyPK = "LB" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -756,7 +757,6 @@ namespace BP.Sys
 
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            //en.FK_MapData = fk_mapdata;
                             en.MyPK = "Img" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -773,7 +773,6 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            // en.FK_MapData = fk_mapdata;
                             en.MyPK = "ImgA" + timeKey + "_" + idx;
                             en.Insert();
                         }
@@ -790,7 +789,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            //en.FK_MapData = fk_mapdata;
+
                             try
                             {
                                 en.Save();

@@ -174,6 +174,12 @@ namespace BP.Sys
             this.MyPK = this.FK_MapData + "_" + this.KeyOfEn + "_" + this.IntKey;
             return base.beforeInsert();
         }
+
+        protected override bool beforeUpdateInsertAction()
+        {
+            this.MyPK = this.FK_MapData + "_" + this.KeyOfEn + "_" + this.IntKey;
+            return base.beforeUpdateInsertAction();
+        }
     }
     /// <summary>
     /// µ¥Ñ¡¿òs

@@ -168,7 +168,6 @@ namespace BP.WF
                 map.AddTBIntPKOID(FlowDataAttr.OID, "WorkID");
                 map.AddTBInt(FlowDataAttr.FID, 0, "FID", true, true);
                 map.AddTBString(FlowDataAttr.Title, null, "标题", true, true, 0, 100, 100);
-               // map.AddTBString(FlowDataAttr.BillNo, null, "单据号", true, true, 0, 100, 100);
                 map.AddDDLEntities(FlowDataAttr.FlowStarter, null, "发起人", new WF.Port.WFEmps(), false);
                 map.AddTBDateTime(FlowDataAttr.FlowStartRDT, null, "发起日期", true, true);
                 map.AddDDLSysEnum(FlowDataAttr.WFState, 0, "流程状态", true, true);
