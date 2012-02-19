@@ -235,7 +235,6 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
                 //case "CDT":
                 case "FK_Emp":
                 case "NodeState":
-                case "BillNo":
                 case "MyNum":
                 case "FK_NY":
                 case WorkAttr.Emps:

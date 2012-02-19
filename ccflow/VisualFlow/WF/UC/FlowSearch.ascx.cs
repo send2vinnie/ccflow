@@ -643,7 +643,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             this.Pub1.AddTD(bill.FK_StarterT);
             this.Pub1.AddTD(bill.RDT);
             this.Pub1.AddTD(bill.FK_DeptT);
-           // this.Pub1.AddTD(bill.BillNo);
             this.Pub1.AddTDA("javascript:WinOpen('" + bill.Url + "')", "<img src='../../Images/Btn/Word.gif' border=0 />" + bill.FK_BillText);
             this.Pub1.AddTD(bill.FK_EmpT);
             this.Pub1.AddTD(bill.RDT);

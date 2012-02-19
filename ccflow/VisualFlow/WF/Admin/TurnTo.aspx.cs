@@ -119,7 +119,6 @@ public partial class WF_Admin_TurnTo : WebPage
                 case "Title":
                 case "FK_Emp":
                 case "NodeState":
-                case "BillNo":
                 case "MyNum":
                 case "FK_NY":
                 case WorkAttr.Emps:

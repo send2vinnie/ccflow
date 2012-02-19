@@ -604,54 +604,6 @@ public partial class WF_MapDef_MapDef : WebPage
 
             this.Response.Redirect(this.Request.RawUrl);
         }
-
-        ////string SysFields = "OID,FID,FK_NY,Emps,FK_Dept,NodeState,WFState,BillNo,RDT,MyNum,";
-        //string msg = ""; // +++++++ 编辑隐藏字段 +++++++++ <br>";
-        //foreach (MapAttr attr in mattrs)
-        //{
-        //    if (attr.UIVisible)
-        //    {
-        //        bool isHave = false;
-        //        foreach (GroupField gf in gfs)
-        //        {
-        //            if (attr.GroupID == gf.OID)
-        //            {
-        //                isHave = true;
-        //                break;
-        //            }
-
-        //        }
-        //        if (isHave == false)
-        //            msg += "<a href=\"javascript:Edit('" + this.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
-        //        continue;
-        //    }
-        //    switch (attr.KeyOfEn)
-        //    {
-        //        case "OID":
-        //        case "FID":
-        //        case "FK_NY":
-        //        case "Emps":
-        //        case "FK_Dept":
-        //        case "NodeState":
-        //        case "WFState":
-        //        case "BillNo":
-        //        case "RDT":
-        //        case "MyNum":
-        //        case "Rec":
-        //        case "CDT":
-        //            continue;
-        //        default:
-        //            break;
-        //    }
-        //    msg += "<a href=\"javascript:Edit('" + this.FK_MapData + "','" + attr.MyPK + "','" + attr.MyDataType + "');\">" + attr.Name + "</a> ";
-        //}
-        //if (msg.Length > 10)
-        //{
-        //    this.Pub1.AddFieldSet("编辑隐藏字段");
-        //    this.Pub1.Add(msg);
-        //    this.Pub1.Add("<br>说明：隐藏字段是不显示在表单里面，多用于属性的计算、方向条件的设置，报表的体现。");
-        //    this.Pub1.AddFieldSetEnd();
-        //}
         #endregion 处理隐藏字段。
     }
 

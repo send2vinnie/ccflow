@@ -1136,7 +1136,7 @@ namespace BP.Web.Comm.UC.WF
                             string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
                             fullSQL = fullSQL.Replace("@WebUser.Name", WebUser.Name);
                             fullSQL = fullSQL.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
-
+                            
                             if (fullSQL.Contains("@"))
                             {
                                 Attrs attrs = en.EnMap.Attrs;
@@ -1173,17 +1173,18 @@ namespace BP.Web.Comm.UC.WF
                             DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
                             if (ddlPerant == null || ddlChild == null)
                                 continue;
+
                             ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
 
                             // 处理默认选择。
                             string val = ddlPerant.SelectedItemStringVal;
-                            string valClient = ddlChild.SelectedItemStringVal;
+                            string valClient = en.GetValStrByKey(me.AttrsOfActive); // ddlChild.SelectedItemStringVal;
 
                              string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
                             fullSQL = fullSQL.Replace("@WebUser.Name", WebUser.Name);
                             fullSQL = fullSQL.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
                             fullSQL = fullSQL.Replace("@Key", val);
-
+                            
                             if (fullSQL.Contains("@"))
                             {
                                 foreach (MapAttr attr in mattrs)
@@ -1231,7 +1232,7 @@ namespace BP.Web.Comm.UC.WF
                                     if (ddlC1 == null)
                                     {
                                         //me.Tag = "";
-                                        // me.Update();
+                                        //me.Update();
                                         continue;
                                     }
 
@@ -1574,9 +1575,14 @@ namespace BP.Web.Comm.UC.WF
         FrmEvents fes =null;
         public string EnName = null;
         public string LinkFields = "";
+        public MapData mapData = null;
+
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
+            this.mapData = new MapData(enName);
+           
             string appPath = this.Request.ApplicationPath;
+
             mes = new MapExts(enName);
             this.IsReadonly = isReadonly;
             this.FK_MapData = enName;
@@ -1608,7 +1614,7 @@ namespace BP.Web.Comm.UC.WF
             this.LoadData(mattrs, en);
 
             #region 输出按钮
-            FrmBtns btns = new FrmBtns(this.FK_MapData);
+            FrmBtns btns =  new FrmBtns(this.FK_MapData);
             foreach (FrmBtn btn in btns)
             {
                 this.Add("\t\n<DIV id=u2 style='position:absolute;left:" + btn.X + "px;top:" + btn.Y + "px;text-align:left;' >");

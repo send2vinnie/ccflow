@@ -46,7 +46,6 @@ public partial class WF_MapDef_HidAttr : WebPage
                 case "FK_Dept":
                 case "NodeState":
                 case "WFState":
-                case "BillNo":
                 case "RDT":
                 case "MyNum":
                 case "Rec":
