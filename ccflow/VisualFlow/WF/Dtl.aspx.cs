@@ -306,6 +306,7 @@ public partial class Comm_Dtl : WebPage
                 {
                     BP.Sys.GEDtl dt = new GEDtl(this.EnsName);
                     dt.ResetDefaultVal();
+                    dt.SetValByKey(GEDtlAttr.RefPK, this.RefPKVal);
                     dt.OID = i;
                     dtls.AddEntity(dt);
                 }
@@ -314,6 +315,7 @@ public partial class Comm_Dtl : WebPage
                 {
                     BP.Sys.GEDtl dt1 = new GEDtl(this.EnsName);
                     dt1.ResetDefaultVal();
+                    dt1.SetValByKey(GEDtlAttr.RefPK, this.RefPKVal);
                     dt1.OID = mdtl.RowsOfList + 1;
                     dtls.AddEntity(dt1);
                 }
