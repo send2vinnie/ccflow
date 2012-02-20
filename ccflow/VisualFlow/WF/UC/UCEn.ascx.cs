@@ -744,12 +744,12 @@ namespace BP.Web.Comm.UC.WF
                         else
                             this.Add("<TD height='" + attr.UIHeight.ToString() + "px'  colspan=4 width='100%' valign=top class=TBReadonly>");
 
-                        this.Add("<div style='font-size:14px;color:black;' >");
+                      //  this.Add("<div style='font-size:14px;color:black;' >");
                         Label lab = new Label();
                         lab.ID = "Lab" + attr.KeyOfEn;
-                        lab.Text = attr.Name;
+                        lab.Text = attr.Name ;
                         this.Add(lab);
-                        this.Add("</div>");
+                     //   this.Add("</div>");
 
 
                         TB mytbLine = new TB();
@@ -865,17 +865,23 @@ namespace BP.Web.Comm.UC.WF
                     TB tb = new TB();
                     // tb.Columns = 60;
                     tb.ID = "TB_" + attr.KeyOfEn;
-                    tb.Enabled = attr.UIIsEnable;
+                 //  tb.Enabled = attr.UIIsEnable;
+                  //  tb.ReadOnly = !attr.UIIsEnable;
+
 
                     #region add contrals.
                     switch (attr.LGType)
                     {
                         case FieldTypeS.Normal:
-                            tb.Enabled = attr.UIIsEnable;
+                           //  tb.Enabled = attr.UIIsEnable;
+                          //  tb.Enabled = attr.UIIsEnable;
+
+                            tb.ReadOnly = !attr.UIIsEnable;
+
                             switch (attr.MyDataType)
                             {
                                 case BP.DA.DataType.AppString:
-                                    this.AddTDDesc(attr.Name);
+                                    this.AddTDDesc(attr.Name+"sss");
                                     if (attr.IsSigan)
                                     {
                                         string v = en.GetValStrByKey(attr.KeyOfEn);
@@ -1033,7 +1039,6 @@ namespace BP.Web.Comm.UC.WF
                 this.InsertObjects(false);
             }
             this.AddTableEnd();
-
 
             #region 处理iFrom 的自适应的问题。
             string js = "\t\n<script type='text/javascript' >";
