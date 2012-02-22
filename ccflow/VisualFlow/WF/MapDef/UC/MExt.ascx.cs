@@ -646,7 +646,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         tb.ID = "TB_" + MapExtAttr.Tag;
         tb.Text = me.Tag;
         tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 3;
+        tb.Rows = 10;
         tb.Columns = 70;
         this.Pub2.AddTR();
         this.Pub2.AddTD(tb);
@@ -682,7 +682,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                     }
                 }
                 tb.TextMode = TextBoxMode.MultiLine;
-                tb.Rows = 3;
+                tb.Rows = 10;
                 tb.Columns = 70;
                 this.Pub2.AddTR();
                 this.Pub2.AddTD(tb);

@@ -738,18 +738,18 @@ namespace BP.Web.Comm.UC.WF
                         rowIdx++;
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
 
-
+                        int h = attr.UIHeight + 14;
                         if (attr.UIIsEnable)
-                            this.Add("<TD height='" + attr.UIHeight.ToString() + "px'  colspan=4 width='100%' valign=top align=left>");
+                            this.Add("<TD height='" + h.ToString() + "px'  colspan=4 width='100%' valign=top align=left>");
                         else
-                            this.Add("<TD height='" + attr.UIHeight.ToString() + "px'  colspan=4 width='100%' valign=top class=TBReadonly>");
+                            this.Add("<TD height='" + h.ToString() + "px'  colspan=4 width='100%' valign=top class=TBReadonly>");
 
-                      //  this.Add("<div style='font-size:14px;color:black;' >");
+                        this.Add("<div style='font-size:14px;color:black;' >");
                         Label lab = new Label();
                         lab.ID = "Lab" + attr.KeyOfEn;
                         lab.Text = attr.Name ;
                         this.Add(lab);
-                     //   this.Add("</div>");
+                        this.Add("</div>");
 
 
                         TB mytbLine = new TB();
@@ -863,25 +863,17 @@ namespace BP.Web.Comm.UC.WF
 
 
                     TB tb = new TB();
-                    // tb.Columns = 60;
                     tb.ID = "TB_" + attr.KeyOfEn;
-                 //  tb.Enabled = attr.UIIsEnable;
-                  //  tb.ReadOnly = !attr.UIIsEnable;
-
+                    tb.Enabled = attr.UIIsEnable;
 
                     #region add contrals.
                     switch (attr.LGType)
                     {
                         case FieldTypeS.Normal:
-                           //  tb.Enabled = attr.UIIsEnable;
-                          //  tb.Enabled = attr.UIIsEnable;
-
-                            tb.ReadOnly = !attr.UIIsEnable;
-
                             switch (attr.MyDataType)
                             {
                                 case BP.DA.DataType.AppString:
-                                    this.AddTDDesc(attr.Name+"sss");
+                                    this.AddTDDesc(attr.Name);
                                     if (attr.IsSigan)
                                     {
                                         string v = en.GetValStrByKey(attr.KeyOfEn);
@@ -898,9 +890,6 @@ namespace BP.Web.Comm.UC.WF
                                             this.AddTD(" width='80%' colspan=" + colspanOfCtl, tb);
                                         else
                                             this.AddTD(" width='40%' colspan=" + colspanOfCtl, tb);
-
-                                        //tb.Attributes["width"] = "100%";
-                                        //tb.Attributes["size"] = "190";
                                     }
                                     break;
                                 case BP.DA.DataType.AppDate:
