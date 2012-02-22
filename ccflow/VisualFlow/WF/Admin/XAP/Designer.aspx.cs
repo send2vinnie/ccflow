@@ -41,6 +41,8 @@ public partial class Designer : System.Web.UI.Page
 
             try
             {
+                BP.WF.Node nd = new BP.WF.Node();
+                nd.CheckPhysicsTable();
                 DBAccess.RunSQL("UPDATE WF_Node SET WhoExeIt=0 WHERE WhoExeIt IS NULL");
             }
             catch
