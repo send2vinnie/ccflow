@@ -296,6 +296,13 @@
     <X>215</X>
     <Y>87</Y>
   </WF_LabNote>
+  <WF_LabNote>
+    <MyPK>234</MyPK>
+    <Name>在此标签的正上方有一个运行按钮，就可以运行此流程并调试它。</Name>
+    <FK_Flow>011</FK_Flow>
+    <X>397</X>
+    <Y>13</Y>
+  </WF_LabNote>
   <WF_NodeStation>
     <FK_Node>1101</FK_Node>
     <FK_Station>04</FK_Station>

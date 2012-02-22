@@ -101,7 +101,6 @@
   <Item No="NodeState" CH="节点状态" RU="Узел-государство" EN="Node State" JP="ノードの状態" />
   <Item No="FlowState" CH="流程状态" RU="Процесс статус" EN="Flow State" JP="処理の進行状況" />
   <Item No="OperDept" CH="操作员部门" RU="Сектор операторов" EN="Operator's Department" JP="事業部門" />
-  <Item No="BillNo" CH="单据文号" RU="Условное обозначение документа" EN="Document ID" JP="文書記号" />
   <Item No="Title" CH="标题" RU="Процесс титула&#xD;&#xA;" EN="Title" JP="プロセスタイトル" />
   <Item No="YearMonth" CH="年月" RU="Годы" EN="Year &amp; Month" JP="年月" />
   <Item No="Num" CH="个数" RU="Количество" EN="Number" JP="数の" />

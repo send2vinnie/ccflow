@@ -503,8 +503,8 @@
     <MyPK>208</MyPK>
     <Name>此流程为一个节点多个流程表单实例，您可以在节点上右键点绑定表单功能查看到当前节点要绑定的表单。</Name>
     <FK_Flow>001</FK_Flow>
-    <X>366</X>
-    <Y>94</Y>
+    <X>363</X>
+    <Y>92</Y>
   </WF_LabNote>
   <WF_LabNote>
     <MyPK>210</MyPK>
@@ -519,6 +519,13 @@
     <FK_Flow>001</FK_Flow>
     <X>363</X>
     <Y>161</Y>
+  </WF_LabNote>
+  <WF_LabNote>
+    <MyPK>236</MyPK>
+    <Name>在此标签的正上方有一个运行按钮，就可以运行此流程并调试它。</Name>
+    <FK_Flow>001</FK_Flow>
+    <X>404</X>
+    <Y>15</Y>
   </WF_LabNote>
   <WF_NodeStation>
     <FK_Node>101</FK_Node>
@@ -1793,7 +1800,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>206</GroupID>
+    <GroupID>237</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1822,7 +1829,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>206</GroupID>
+    <GroupID>237</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1967,7 +1974,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>206</GroupID>
+    <GroupID>237</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -1996,7 +2003,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>206</GroupID>
+    <GroupID>237</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -9797,7 +9804,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>206</GroupID>
+    <GroupID>237</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -9826,7 +9833,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>206</GroupID>
+    <GroupID>237</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -9855,7 +9862,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>206</GroupID>
+    <GroupID>237</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -9884,7 +9891,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>206</GroupID>
+    <GroupID>237</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -9913,7 +9920,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>206</GroupID>
+    <GroupID>237</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -9942,7 +9949,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>206</GroupID>
+    <GroupID>237</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -10123,6 +10130,12 @@
   </Sys_GroupField>
   <Sys_GroupField>
     <OID>206</OID>
+    <Lab>流程信息</Lab>
+    <EnName>ND1Rpt</EnName>
+    <Idx>-1</Idx>
+  </Sys_GroupField>
+  <Sys_GroupField>
+    <OID>237</OID>
     <Lab>流程信息</Lab>
     <EnName>ND1Rpt</EnName>
     <Idx>-1</Idx>

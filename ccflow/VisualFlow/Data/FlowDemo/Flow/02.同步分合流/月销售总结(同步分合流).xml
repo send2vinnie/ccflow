@@ -311,8 +311,8 @@
     <MyPK>006_176_86_1</MyPK>
     <Name>发起节点可以有n个人接受，每个人处理完后就发送到汇总节点。</Name>
     <FK_Flow>006</FK_Flow>
-    <X>191</X>
-    <Y>91</Y>
+    <X>180</X>
+    <Y>94</Y>
   </WF_LabNote>
   <WF_NodeStation>
     <FK_Node>601</FK_Node>

@@ -340,7 +340,7 @@
   </Sys_FrmLine>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_1</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>代表工程（测试表单）</Text>
     <X>480</X>
     <Y>11</Y>
@@ -354,7 +354,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_2</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>工程名称</Text>
     <X>97</X>
     <Y>55</Y>
@@ -368,7 +368,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_3</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>施工单位</Text>
     <X>298</X>
     <Y>55</Y>
@@ -382,7 +382,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_4</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>工程造价</Text>
     <X>499</X>
     <Y>50</Y>
@@ -396,7 +396,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_5</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>建筑物地址</Text>
     <X>87</X>
     <Y>93</Y>
@@ -410,7 +410,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_6</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>建筑面积</Text>
     <X>498</X>
     <Y>94</Y>
@@ -424,7 +424,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_7</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>施工组织方式</Text>
     <X>83</X>
     <Y>172</Y>
@@ -438,7 +438,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_8</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>合同编号</Text>
     <X>97</X>
     <Y>135</Y>
@@ -452,7 +452,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_9</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>项目经理</Text>
     <X>298</X>
     <Y>132</Y>
@@ -466,7 +466,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_10</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>工@程@简@介</Text>
     <X>114</X>
     <Y>228</Y>
@@ -480,7 +480,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_11</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>设备所有</Text>
     <X>499</X>
     <Y>170</Y>
@@ -494,7 +494,7 @@
   </Sys_FrmLab>
   <Sys_FrmLab>
     <MyPK>LBDemo_06_12</MyPK>
-    <FK_MapData>Demo_06</FK_MapData>
+    <FK_MapData>Demo_06Dtl2</FK_MapData>
     <Text>竣工日期</Text>
     <X>496</X>
     <Y>132</Y>
