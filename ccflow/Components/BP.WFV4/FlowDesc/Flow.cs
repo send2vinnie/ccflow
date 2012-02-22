@@ -2960,8 +2960,8 @@ namespace BP.WF
 
             string oldFlowNo = dtFlow.Rows[0]["No"].ToString();
             int oldFlowID = int.Parse(oldFlowNo);
-            //  string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
-            string timeKey = fl.No;
+              string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
+           // string timeKey = fl.No;
             int idx = 0;
             string infoErr = "";
             string infoTable = "";
@@ -4212,56 +4212,54 @@ namespace BP.WF
         {
             string sql = "";
 
-            sql = "DELETE FROM WF_chofflow WHERE FK_Flow='" + this.No + "'";
-
-            sql += "@GO DELETE  FROM WF_GenerWorkerlist WHERE FK_Flow='" + this.No + "'";
-
-            sql += "@GO DELETE FROM  WF_GenerWorkFlow WHERE FK_Flow='" + this.No + "'";
-
-            sql += "@GO DELETE FROM  WF_Cond WHERE FK_Flow='" + this.No + "'";
+            sql = " DELETE FROM WF_chofflow WHERE FK_Flow='" + this.No + "'";
+            sql += "@ DELETE  FROM WF_GenerWorkerlist WHERE FK_Flow='" + this.No + "'";
+            sql += "@ DELETE FROM  WF_GenerWorkFlow WHERE FK_Flow='" + this.No + "'";
+            sql += "@ DELETE FROM  WF_Cond WHERE FK_Flow='" + this.No + "'";
 
             // 删除岗位节点。
-            sql += "@GO DELETE  FROM  WF_NodeStation WHERE FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql += "@ DELETE  FROM  WF_NodeStation WHERE FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             // 删除方向。
-            sql += "@GO DELETE FROM WF_Direction  WHERE Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql += "@ DELETE FROM WF_Direction  WHERE Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
-            sql += "@GO DELETE FROM WF_Direction  WHERE ToNode in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql += "@ DELETE FROM WF_Direction  WHERE ToNode in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             //删除它。
-            sql += "@GO DELETE FROM WF_NodeEmp  WHERE   FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql += "@ DELETE FROM WF_NodeEmp  WHERE   FK_Node in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
 
             //删除侦听.
-            sql += "@GO DELETE WF_Listen WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql += "@ DELETE WF_Listen WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             // 删除d2d数据.
             //  sql += "@GO DELETE WF_M2M WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
+            // 删除配置.
+            sql += "@ DELETE WF_FAppSet WHERE NodeID IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+
 
             // 删除配置.
-            sql += "@GO DELETE WF_FAppSet WHERE NodeID IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-
-
-            // 删除配置.
-            sql += "@GO DELETE WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
+            sql += "@ DELETE WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
 
 
             // 外部程序设置
-            sql += "@GO DELETE  FROM  WF_FAppSet WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql += "@ DELETE  FROM  WF_FAppSet WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             // 删除单据
-            sql += "@GO DELETE FROM WF_BillTemplate WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql += "@ DELETE FROM WF_BillTemplate WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             Nodes nds = new Nodes(this.No);
             foreach (Node nd in nds)
+            {
                 nd.Delete();
+            }
 
-            sql += "@GO DELETE  FROM WF_Node WHERE FK_Flow='" + this.No + "'";
-            sql += "@GO DELETE  FROM  WF_LabNote WHERE FK_Flow='" + this.No + "'";
+            sql += "@ DELETE  FROM WF_Node WHERE FK_Flow='" + this.No + "'";
+            sql += "@ DELETE  FROM  WF_LabNote WHERE FK_Flow='" + this.No + "'";
 
             //删除分组信息
-            sql += "@GO DELETE FROM Sys_GroupField WHERE EnName NOT IN(SELECT NO FROM Sys_MapData)";
+            sql += "@ DELETE FROM Sys_GroupField WHERE EnName NOT IN(SELECT NO FROM Sys_MapData)";
 
             #region 删除流程报表。
             MapData md = new MapData();
@@ -4280,6 +4278,7 @@ namespace BP.WF
 
             // 执行录制的sql scripts.
             BP.DA.DBAccess.RunSQLs(sql);
+            this.Delete();
             this.RepareV_FlowData_View();
         }
         #endregion

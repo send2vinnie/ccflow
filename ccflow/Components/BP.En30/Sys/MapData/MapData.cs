@@ -637,8 +637,8 @@ namespace BP.Sys
                 oldMapID = dr["No"].ToString();
             }
 
-          //string timeKey = DateTime.Now.ToString("yyMMddhhmm");
-            string timeKey = fk_mapdata;
+           string timeKey = DateTime.Now.ToString("yyMMddHHmmss");
+           // string timeKey = fk_mapdata;
             foreach (DataTable dt in ds.Tables)
             {
                 int idx = 0;
