@@ -69,6 +69,33 @@
     function OnKeyPress() {
 
     }
+
+    function ReinitIframe(frmID, tdID) {
+        try {
+
+            var iframe = document.getElementById(frmID);
+            var tdF = document.getElementById(tdID);
+
+            iframe.height = iframe.contentWindow.document.body.scrollHeight;
+            iframe.width = iframe.contentWindow.document.body.scrollWidth;
+
+            if (tdF.width < iframe.width) {
+                //alert(tdF.width +'  ' + iframe.width);
+                tdF.width = iframe.width;
+            } else {
+                iframe.width = tdF.width;
+            }
+
+            tdF.height = iframe.height;
+            return;
+
+        } catch (ex) {
+
+            return;
+        }
+        return;
+    }
+
     </script>
     <style type="text/css">
         .HBtn

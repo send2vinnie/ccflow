@@ -418,7 +418,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
        }
         #endregion 判断是否有workid
 
-        #region 判断权限
+       #region 判断权限
         if (this.IsPostBack == false)
         {
             if (currND.IsStartNode == false && WorkerLists.CheckUserPower(this.WorkID, WebUser.No) == false)
@@ -782,7 +782,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 {
                     if (nd.HisFormType == FormType.FreeForm)
                     {
-                        /* 自由表单 */
+                        /*自由表单*/
                         this.UCEn1.Add("<div id=divFreeFrm >");
                         this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID, false); //, false, false, null);
                         if (wk.WorkEndInfo.Length > 2)
@@ -800,7 +800,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 }
                 else
                 {
-                    /* 涉及到多个表单的情况...*/
+                    /*涉及到多个表单的情况...*/
                     if (nd.HisFormType != FormType.DisableIt)
                     {
                         Frm myfrm = new Frm();

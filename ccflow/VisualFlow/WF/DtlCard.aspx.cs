@@ -82,6 +82,7 @@ public partial class WF_DtlFrm : WebPage
                     qo.AddWhere(GEDtlAttr.FID, this.RefPKVal);
                     break;
             }
+            qo.DoQuery();
         }
         catch (Exception ex)
         {

@@ -82,6 +82,16 @@ public partial class WF_FrmDtl : System.Web.UI.Page
         dtlEn.SetValByKey("OID", this.OID);
         dtlEn.RetrieveFromDBSources();
 
+        MapAttrs mattrs = new MapAttrs(dtl.No);
+        foreach (MapAttr mattr in mattrs)
+        {
+            if (mattr.DefValReal.Contains("@") == false)
+                continue;
+            dtlEn.SetValByKey(mattr.KeyOfEn, mattr.DefVal);
+        }
+
+        //dtlEn.ResetDefaultVal();
+
         this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
 
         if (this.IsReadonly)

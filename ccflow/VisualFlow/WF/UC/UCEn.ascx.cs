@@ -738,7 +738,7 @@ namespace BP.Web.Comm.UC.WF
                         rowIdx++;
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
 
-                        int h = attr.UIHeight + 14;
+                        int h = attr.UIHeight+20;
                         if (attr.UIIsEnable)
                             this.Add("<TD height='" + h.ToString() + "px'  colspan=4 width='100%' valign=top align=left>");
                         else
@@ -763,7 +763,7 @@ namespace BP.Web.Comm.UC.WF
                         else
                             mytbLine.Attributes["class"] = "TBDoc";
 
-                        mytbLine.Attributes["style"] = "width:98%;height:100%;padding: 0px;margin: 0px;";
+                        mytbLine.Attributes["style"] = "width:98%;height:"+attr.UIHeight+"px;padding: 0px;margin: 0px;";
                         this.Add(mytbLine);
 
                         if (mytbLine.Enabled)
@@ -860,7 +860,6 @@ namespace BP.Web.Comm.UC.WF
                             continue;
                         }
                     }
-
 
                     TB tb = new TB();
                     tb.ID = "TB_" + attr.KeyOfEn;
@@ -1973,9 +1972,9 @@ namespace BP.Web.Comm.UC.WF
                 else
                 {
                     if (isReadonly == true)
-                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1&FID" + en.GetValStrByKey("FID", "0");
+                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=1&FID=" + en.GetValStrByKey("FID", "0");
                     else
-                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0&FID" + en.GetValStrByKey("FID", "0");
+                        src = this.Request.ApplicationPath + "/WF/DtlCard.aspx?EnsName=" + dtl.No + "&RefPKVal=" + en.PKVal + "&IsReadonly=0&FID=" + en.GetValStrByKey("FID", "0");
                 }
 
                 if (this.IsReadonly == true || dtl.IsReadonly)
