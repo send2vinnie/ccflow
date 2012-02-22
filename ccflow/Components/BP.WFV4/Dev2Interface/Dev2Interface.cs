@@ -80,7 +80,11 @@ namespace BP.WF
                 if (Web.WebUser.No != starter)
                 {
                     BP.Web.WebUser.Exit();
-                    BP.Port.Emp emp = new BP.Port.Emp(starter);
+                    BP.Port.Emp emp = new BP.Port.Emp();
+                    emp.No = starter;
+                    if (emp.RetrieveFromDBSources() == 0)
+                        continue;
+
                     BP.Web.WebUser.SignInOfGener(emp);
                 }
 
@@ -199,7 +203,7 @@ namespace BP.WF
             return BP.DA.DBAccess.RunSQLReturnTable(sql);
         }
         #endregion 获取当前操作员的待办工作
-       
+
 
         #region 获取当前操作员的在途工作
         /// <summary>m

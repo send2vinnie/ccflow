@@ -636,8 +636,20 @@ namespace BP.WF
                 GEDtls dtlDatas = new GEDtls(dtl.No);
                 dtlDatas.Retrieve(GEDtlAttr.RefPK, this.WorkID);
 
-                // 创建一个Rpt对象。
-                GEDtl geDtl = new GEDtl("ND" + int.Parse(this.HisFlow.No) + "RptDtl" + i.ToString());
+                GEDtl geDtl = null;
+                try
+                {
+                    // 创建一个Rpt对象。
+                    geDtl = new GEDtl("ND" + int.Parse(this.HisFlow.No) + "RptDtl" + i.ToString());
+                    geDtl.ResetDefaultVal();
+                }
+                catch
+                {
+#warning 此处需要修复。
+                    continue;
+                }
+
+
                 // 复制到指定的报表中。
                 foreach (GEDtl dtlData in dtlDatas)
                 {
