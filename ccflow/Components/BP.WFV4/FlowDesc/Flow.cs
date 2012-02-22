@@ -536,7 +536,6 @@ namespace BP.WF
                 {
                     throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
                 }
-
                 //  throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
             }
 
@@ -546,7 +545,7 @@ namespace BP.WF
             wk.Rec = WebUser.No;
             wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
             wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
-            //       wk.NodeState = 0; 保留节点状态才可提示它。
+            // wk.NodeState = 0; 保留节点状态才可提示它。
             wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
             wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
             wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
@@ -665,6 +664,7 @@ namespace BP.WF
             }
             catch
             {
+
             }
 
             string flowDataViewExtFields = BP.SystemConfig.AppSettings["FlowDataViewExtFields"];
@@ -3762,7 +3762,7 @@ namespace BP.WF
 
                                     en.SetValByKey(dc.ColumnName, val);
                                 }
-                                en.MyPK = "Link" + timeKey + "_" + idx;
+                                en.MyPK = "LK" + timeKey + "_" + idx;
                                 en.Insert();
                             }
                             break;

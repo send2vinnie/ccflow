@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Collections;
 using BP.DA;
 using BP.En;
@@ -755,6 +756,9 @@ namespace BP.Sys
         {
             get
             {
+                if (this.UIIsEnable)
+                    return false;
+
                 return this.GetValBooleanByKey(MapAttrAttr.IsSigan);
             }
             set

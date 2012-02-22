@@ -202,11 +202,10 @@ namespace BP.En
 		/// </summary>
 		public void ResetDefaultVal()
 		{
-			foreach(Attr attr in this.EnMap.Attrs)
-			{
-				this.SetValByKey(attr.Key, attr.DefaultVal);
-			}
-			//this._row=null;
+            foreach (Attr attr in this.EnMap.Attrs)
+            {
+                this.SetValByKey(attr.Key, attr.DefaultVal);
+            }
 		}
 		#endregion 
 
