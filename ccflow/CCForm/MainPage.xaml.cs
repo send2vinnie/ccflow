@@ -4261,15 +4261,15 @@ namespace CCForm
                 string pk = "";
                 foreach (DataColumn dc in ysdt.Columns)
                 {
-                    switch (dc.ColumnName)
+                    switch (dc.ColumnName.ToLower())
                     {
-                        case "MyPK":
+                        case "mypk":
                             pk = "MyPK";
                             break;
-                        case "No":
+                        case "no":
                             pk = "No";
                             break;
-                        case "OID":
+                        case "oid":
                             pk = "OID";
                             break;
                         default:
