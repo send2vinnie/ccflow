@@ -39,19 +39,21 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion 测试数据库是否连接成功。
 
+
             try
             {
-                BP.WF.Node nd = new BP.WF.Node();
+                BP.WF.Ext.NodeO nd = new BP.WF.Ext.NodeO();
                 nd.CheckPhysicsTable();
                 BP.WF.WorkerList wl = new BP.WF.WorkerList();
                 wl.CheckPhysicsTable();
                 DBAccess.RunSQL("UPDATE WF_Node SET WhoExeIt=0 WHERE WhoExeIt IS NULL");
+                DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET WhoExeIt=0 WHERE WhoExeIt IS NULL");
             }
             catch
             {
             }
 
-             #region 2012- 01-29 增加字段。
+            #region 2012- 01-29 增加字段。
             try
             {
                 DBAccess.RunSQL("UPDATE WF_Flow SET FlowSheetType=0");
@@ -140,6 +142,7 @@ public partial class Designer : System.Web.UI.Page
 
             #region 2011-12-21 升级节点属性规则.
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='RunModel'");
+            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='FlowRunWay'");
             #endregion
 
             msg = "@执行升级出现错误。"; 
