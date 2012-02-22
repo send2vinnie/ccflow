@@ -50,6 +50,7 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
     }
     #endregion
 
+    public int PageSize = 600;
     protected void Page_Load(object sender, EventArgs e)
     {
         Flow fl = new Flow(this.FK_Flow);
@@ -63,8 +64,8 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
             qo.addAnd();
             qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
-            this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearchMyWork.aspx?EnsName=" + this.EnsName + "&FK_Flow=" + this.FK_Flow);
-            qo.DoQuery("OID", 10, this.PageIdx);
+            this.Pub2.BindPageIdx(qo.GetCount(), this.PageSize, this.PageIdx, "FlowSearchMyWork.aspx?EnsName=" + this.EnsName + "&FK_Flow=" + this.FK_Flow);
+            qo.DoQuery("OID", this.PageSize, this.PageIdx);
         }
         catch (Exception ex)
         {
@@ -232,7 +233,7 @@ public partial class WF_UC_FlowSearchMyWork : BP.Web.UC.UCBase3
                 qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
 
-            this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName);
+            this.Pub2.BindPageIdx(qo.GetCount(), this.PageSize, this.PageIdx, "?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName);
            
             qo.DoQuery();
 

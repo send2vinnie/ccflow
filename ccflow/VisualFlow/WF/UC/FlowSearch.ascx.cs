@@ -96,6 +96,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
     }
     #endregion 属性
 
+    public int PageSize = 600;
     public void BindSearch()
     {
         Node nd = new Node(this.FK_Node);
@@ -108,8 +109,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         else
             qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
-        this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
-        qo.DoQuery("OID", 10, this.PageIdx);
+        this.Pub2.BindPageIdx(qo.GetCount(), this.PageSize, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
+        qo.DoQuery("OID", this.PageSize, this.PageIdx);
 
         // 生成页面数据。
         Attrs attrs = nd.HisWork.EnMap.Attrs;
@@ -247,7 +248,7 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             qo.addAnd();
             qo.AddWhere(BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
-            this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
+            this.Pub2.BindPageIdx(qo.GetCount(), this.PageSize, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
             qo.DoQuery();
 
 
@@ -426,8 +427,8 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         else
             qo.AddWhere("" + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) >='" + this.DT_F + "' AND " + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,10) <='" + this.DT_T + "' ");
 
-        this.Pub2.BindPageIdx(qo.GetCount(), 10, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
-        qo.DoQuery("OID", 10, this.PageIdx);
+        this.Pub2.BindPageIdx(qo.GetCount(), this.PageSize, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
+        qo.DoQuery("OID", this.PageSize, this.PageIdx);
 
         // 生成页面数据。
         Attrs attrs = nd.HisWork.EnMap.Attrs;
