@@ -175,25 +175,17 @@ namespace BP.WF
         /// </summary>
         HandWork,
         /// <summary>
-        /// 按年度
+        /// 指定人员按时启动
         /// </summary>
-        ByYear,
+        SpecEmp,
         /// <summary>
-        /// 按照月份
+        /// 数据集按时启动
         /// </summary>
-        ByMonth,
+        DataModel,
         /// <summary>
-        /// 按照周
+        /// 触发式启动
         /// </summary>
-        ByWeek,
-        /// <summary>
-        /// 按照天
-        /// </summary>
-        ByDay,
-        /// <summary>
-        /// 按小时
-        /// </summary>
-        ByHours
+        InsertModel
     }
     /// <summary>
     /// 流程属性
@@ -272,7 +264,7 @@ namespace BP.WF
         /// <summary>
         /// 运行的设置
         /// </summary>
-        public const string FlowRunObj = "FlowRunObj";
+        public const string RunObj = "RunObj";
         /// <summary>
         /// 是否有Bill
         /// </summary>
@@ -542,10 +534,10 @@ namespace BP.WF
                 }
                 else
                 {
-                   throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
+                    throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
                 }
 
-              //  throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
+                //  throw new Exception("@工作[" + nd.NodeID + " : " + wk.EnDesc + "],数据WorkID=" + workid + " 丢失,请联系管理员。");
             }
 
             // 设置当前的人员把记录人。
@@ -554,7 +546,7 @@ namespace BP.WF
             wk.Rec = WebUser.No;
             wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
             wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
-     //       wk.NodeState = 0; 保留节点状态才可提示它。
+            //       wk.NodeState = 0; 保留节点状态才可提示它。
             wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
             wk.SetValByKey("FK_DeptName", WebUser.FK_DeptName);
             wk.SetValByKey("FK_DeptText", WebUser.FK_DeptName);
@@ -605,15 +597,15 @@ namespace BP.WF
         /// <summary>
         /// 运行对象
         /// </summary>
-        public string FlowRunObj
+        public string RunObj
         {
             get
             {
-                return this.GetValStrByKey(FlowAttr.FlowRunObj);
+                return this.GetValStrByKey(FlowAttr.RunObj);
             }
             set
             {
-                this.SetValByKey(FlowAttr.FlowRunObj, value);
+                this.SetValByKey(FlowAttr.RunObj, value);
             }
         }
         public string StartListUrl
@@ -680,7 +672,7 @@ namespace BP.WF
                 flowDataViewExtFields = "";
 
             sql = "CREATE VIEW V_FlowData  ";
-       //     sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
+            //     sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
             sql += " AS ";
             foreach (Flow fl in fls)
             {
@@ -744,7 +736,7 @@ namespace BP.WF
 
                 rpt += "<hr><b>" + this.ToEP1("NStep", "@第{0}步", nd.Step.ToString()) + "：" + nd.Name + "：</b><br>";
                 rpt += this.ToE("Info", "信息") + "：";
-                 
+
                 BP.Sys.MapAttrs attrs = new BP.Sys.MapAttrs("ND" + nd.NodeID);
 
                 foreach (BP.Sys.MapAttr attr in attrs)
@@ -892,8 +884,8 @@ namespace BP.WF
                 msg += "<br>";
 
                 #region 检查是否有方向条件
-                if (nd.HisToNodes.Count >= 2 
-                    && (nd.HisRunModel== RunModel.Ordinary || nd.HisRunModel== RunModel.SubThread) )
+                if (nd.HisToNodes.Count >= 2
+                    && (nd.HisRunModel == RunModel.Ordinary || nd.HisRunModel == RunModel.SubThread))
                 {
                     foreach (Node cND in nd.HisToNodes)
                     {
@@ -1180,9 +1172,6 @@ namespace BP.WF
             dt.TableName = "WF_NodeEmp";
             ds.Tables.Add(dt);
 
-
-         
-
             //// 流程报表。
             //WFRpts rpts = new WFRpts(this.No);
             //// rpts.SaveToXml(path + "WFRpts.xml");
@@ -1214,7 +1203,7 @@ namespace BP.WF
 
 
             // Sys_MapAttr.
-            sql = "SELECT * FROM Sys_MapAttr WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
+            sql = "SELECT * FROM Sys_MapAttr WHERE  FK_MapData LIKE 'ND" + flowID + "%' ORDER BY FK_MapData,Idx";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_MapAttr";
             ds.Tables.Add(dt);
@@ -1309,7 +1298,7 @@ namespace BP.WF
             dt.TableName = "Sys_FrmEvent";
             ds.Tables.Add(dt);
 
-            ds.WriteXml(path +"\\"+ this.Name + ".xml");
+            ds.WriteXml(path + "\\" + this.Name + ".xml");
             return path;
         }
         /// <summary>
@@ -1317,7 +1306,7 @@ namespace BP.WF
         /// </summary>
         private void GenerWorkTempleteDoc(Entity en, string enName, Node nd)
         {
-            string tempFilePath =  SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No + "." + this.Name + "\\";
+            string tempFilePath = SystemConfig.PathOfWorkDir + @"\VisualFlow\DataUser\FlowDesc\" + this.No + "." + this.Name + "\\";
             if (System.IO.Directory.Exists(tempFilePath) == false)
                 System.IO.Directory.CreateDirectory(tempFilePath);
             tempFilePath = tempFilePath + nd.FlowName + "_" + nd.Name + ".doc";
@@ -1898,10 +1887,10 @@ namespace BP.WF
             CheckRptDtl(nds);
             this.CheckRptView(nds);
 
-            // 检查报表数据是否丢失。
-            string sql = "SELECT OID FROM ND" + int.Parse(this.No) + "01 WHERE NodeState >0 AND OID NOT IN (SELECT OID FROM  ND" + int.Parse(this.No) + "Rpt ) ";
-            DataTable dt = DBAccess.RunSQLReturnTable(sql);
-            this.CheckRptData(nds, dt);
+            //// 检查报表数据是否丢失。
+            //string sql = "SELECT OID FROM ND" + int.Parse(this.No) + "01 WHERE NodeState >0 AND OID NOT IN (SELECT OID FROM  ND" + int.Parse(this.No) + "Rpt ) ";
+            //DataTable dt = DBAccess.RunSQLReturnTable(sql);
+            //this.CheckRptData(nds, dt);
         }
         public string DoReloadRptData()
         {
@@ -1912,7 +1901,7 @@ namespace BP.WF
             string sql = "SELECT OID FROM ND" + int.Parse(this.No) + "01 WHERE NodeState >0 AND OID NOT IN (SELECT OID FROM  ND" + int.Parse(this.No) + "Rpt ) ";
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
             this.CheckRptData(this.HisNodes, dt);
-            return "@共有:"+dt.Rows.Count+"条("+this.Name+")数据被装载成功。";
+            return "@共有:" + dt.Rows.Count + "条(" + this.Name + ")数据被装载成功。";
         }
         /// <summary>
         /// 检查与修复报表数据
@@ -2177,8 +2166,8 @@ namespace BP.WF
                         attr.DirectDelete();
                         break;
                     case StartWorkAttr.WFState:
-                        
-                        if (attr.UIContralType != UIContralType.DDL || attr.UIBindKey!="WFState" )
+
+                        if (attr.UIContralType != UIContralType.DDL || attr.UIBindKey != "WFState")
                         {
                             attr.UIBindKey = attr.KeyOfEn;
                             attr.UIContralType = UIContralType.DDL;
@@ -2759,7 +2748,6 @@ namespace BP.WF
                 map.DepositaryOfEntity = Depositary.Application;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = this.ToE("Flow", "流程");
-                map.IsAllowRepeatName = false;
                 map.CodeStruct = "3";
 
                 map.AddTBStringPK(FlowAttr.No, null, null, true, true, 1, 10, 3);
@@ -2778,8 +2766,8 @@ namespace BP.WF
 
                 map.AddDDLSysEnum(FlowAttr.FlowRunWay, (int)FlowRunWay.HandWork, "运行方式", false,
                     false, FlowAttr.FlowRunWay,
-                    "@0=手工启动@1=按月启动@2=按天启动@3=按周启动@4=按天启动@5=按小时启动");
-                map.AddTBString(FlowAttr.FlowRunObj, null, "运行内容", true, false, 0, 3000, 10);
+                    "@0=手工启动@1=指定人员按时启动@2=数据集按时启动@3=触发式启动");
+                map.AddTBString(FlowAttr.RunObj, null, "运行内容", true, false, 0, 3000, 10);
 
                 map.AddTBString(FlowAttr.Note, null, null, true, false, 0, 100, 10);
                 map.AddTBString(FlowAttr.RunSQL, null, "流程结束执行后执行的SQL", true, false, 0, 2000, 10);
@@ -2799,12 +2787,12 @@ namespace BP.WF
 
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
 
-                map.AddTBString(FlowAttr.TitleRole, null,"标题生成规则", true, false, 0, 500, 10, true);
+                map.AddTBString(FlowAttr.TitleRole, null, "标题生成规则", true, false, 0, 500, 10, true);
 
                 map.AddTBInt(FlowAttr.AppType, 0, "应用类型", false, false);
 
                 map.AddSearchAttr(FlowAttr.FK_FlowSort);
-                   map.AddSearchAttr(FlowAttr.FlowRunWay);
+                map.AddSearchAttr(FlowAttr.FlowRunWay);
 
 
                 RefMethod rm = new RefMethod();
@@ -2851,23 +2839,6 @@ namespace BP.WF
             }
         }
         #endregion
-
-        protected override bool beforeDelete()
-        {
-            //this.DoDelData();
-            //this.DoDelete();
-            return base.beforeDelete();
-        }
-
-        protected override bool beforeInsert()
-        {
-            //if (this.FK_FlowSort == "01")
-            //    this.HisFlowSheetType = FlowSheetType.DocFlow;
-            //else
-            //    this.HisFlowSheetType = FlowSheetType.SheetFlow;
-
-            return base.beforeInsert();
-        }
 
         protected override bool beforeUpdateInsertAction()
         {
@@ -2986,9 +2957,10 @@ namespace BP.WF
             DataTable dtFlow = ds.Tables["WF_Flow"];
             Flow fl = new Flow();
             fl.No = fl.GenerNewNo;
+
             string oldFlowNo = dtFlow.Rows[0]["No"].ToString();
             int oldFlowID = int.Parse(oldFlowNo);
-          //  string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
+            //  string timeKey = DateTime.Now.ToString("yyMMddhhmmss");
             string timeKey = fl.No;
             int idx = 0;
             string infoErr = "";
@@ -3004,12 +2976,12 @@ namespace BP.WF
                 foreach (DataColumn dc in dtFlow.Columns)
                 {
                     string val = dtFlow.Rows[0][dc.ColumnName] as string;
-                    switch (dc.ColumnName)
+                    switch (dc.ColumnName.ToLower())
                     {
-                        case "No":
-                        case "FK_FlowSort":
+                        case "no":
+                        case "fk_flowsort":
                             continue;
-                        case "Name":
+                        case "name":
                             val = "CopyOf" + val + "_" + DateTime.Now.ToString("MM月dd日HH时mm分");
                             break;
                         default:
@@ -3126,13 +3098,13 @@ namespace BP.WF
                                     string val = dr[dc.ColumnName] as string;
                                     if (val == null)
                                         continue;
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case "FK_Flow":
+                                        case "fk_flow":
                                             val = flowID.ToString();
                                             break;
-                                        case "NodeID":
-                                        case "FK_Node":
+                                        case "nodeid":
+                                        case "fk_node":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else
@@ -3163,7 +3135,7 @@ namespace BP.WF
                             }
                             break;
                         case "WF_FrmNode": //Conds.xml。
-                            DBAccess.RunSQL("DELETE WF_FrmNode WHERE FK_Flow='"+fl.No+"'");
+                            DBAccess.RunSQL("DELETE WF_FrmNode WHERE FK_Flow='" + fl.No + "'");
                             foreach (DataRow dr in dt.Rows)
                             {
                                 FrmNode fn = new FrmNode();
@@ -3173,15 +3145,15 @@ namespace BP.WF
                                     string val = dr[dc.ColumnName] as string;
                                     if (val == null)
                                         continue;
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case "FK_Node":
+                                        case "fk_node":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
                                                 val = flowID + val.Substring(2);
                                             break;
-                                        case "FK_Flow":
+                                        case "fk_flow":
                                             val = fl.No;
                                             break;
                                         default:
@@ -3204,17 +3176,21 @@ namespace BP.WF
                                     string val = dr[dc.ColumnName] as string;
                                     if (val == null)
                                         continue;
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case "ToNodeID":
-                                        case "FK_Node":
-                                        case "NodeID":
+                                        case "fk_attr":
+                                            val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                            //val = val.Replace("ND" + oldFlowID.ToString(), "ND" + int.Parse(fl.No));
+                                            break;
+                                        case "tonodeid":
+                                        case "fk_node":
+                                        case "nodeid":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
                                                 val = flowID + val.Substring(2);
                                             break;
-                                        case "FK_Flow":
+                                        case "fk_flow":
                                             val = fl.No;
                                             break;
                                         default:
@@ -3251,10 +3227,10 @@ namespace BP.WF
                                     string val = dr[dc.ColumnName] as string;
                                     if (val == null)
                                         continue;
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case NodeReturnAttr.FK_Node:
-                                        case NodeReturnAttr.ReturnN:
+                                        case "fk_node":
+                                        case "returnn":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
@@ -3287,10 +3263,10 @@ namespace BP.WF
                                     if (val == null)
                                         continue;
 
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case "Node":
-                                        case "ToNode":
+                                        case "node":
+                                        case "tonode":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
@@ -3320,9 +3296,9 @@ namespace BP.WF
                                     string val = dr[dc.ColumnName] as string;
                                     if (val == null)
                                         continue;
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case TurnToAttr.FK_Node:
+                                        case "fk_node":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
@@ -3348,9 +3324,9 @@ namespace BP.WF
                                     if (val == null)
                                         continue;
 
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case "FK_Node":
+                                        case "fk_node":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
@@ -3375,9 +3351,9 @@ namespace BP.WF
                                     if (val == null)
                                         continue;
 
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case FlowStationAttr.FK_Flow:
+                                        case "fk_flow":
                                             continue;
                                         default:
                                             break;
@@ -3416,9 +3392,9 @@ namespace BP.WF
                                     if (val == null)
                                         continue;
 
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case "FK_Node":
+                                        case "fk_node":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
@@ -3443,20 +3419,20 @@ namespace BP.WF
                                     if (val == null)
                                         continue;
 
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case NodeAttr.NodeID:
+                                        case "nodeid":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
                                                 val = flowID + val.Substring(2);
                                             break;
-                                        case NodeAttr.FK_Flow:
-                                        case "FK_FlowSort":
+                                        case "fk_flow":
+                                        case "fk_flowsort":
                                             continue;
-                                        case NodeAttr.ShowSheets:
-                                        case NodeAttr.HisToNDs:
-                                        case NodeAttr.GroupStaNDs:
+                                        case "showsheets":
+                                        case "histonds":
+                                        case "groupstands":
                                             string key = "@" + flowID;
                                             val = val.Replace(key, "");
                                             break;
@@ -3490,20 +3466,20 @@ namespace BP.WF
                                     string val = dr[dc.ColumnName] as string;
                                     if (val == null)
                                         continue;
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case NodeAttr.NodeID:
+                                        case "nodeid":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
                                                 val = flowID + val.Substring(2);
                                             break;
-                                        case NodeAttr.FK_Flow:
-                                        case "FK_FlowSort":
+                                        case "fk_flow":
+                                        case "fk_flowsort":
                                             continue;
-                                        case NodeAttr.ShowSheets:
-                                        case NodeAttr.HisToNDs:
-                                        case NodeAttr.GroupStaNDs:
+                                        case "showsheets":
+                                        case "histonds":
+                                        case "groupstands":
                                             string key = "@" + flowID;
                                             val = val.Replace(key, "");
                                             break;
@@ -3512,7 +3488,7 @@ namespace BP.WF
                                     }
                                     nd.SetValByKey(dc.ColumnName, val);
                                 }
-                               
+
                                 nd.FK_Flow = fl.No;
                                 nd.FlowName = fl.Name;
                                 nd.DirectUpdate();
@@ -3529,9 +3505,9 @@ namespace BP.WF
                                     if (val == null)
                                         continue;
 
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case "FK_Node":
+                                        case "fk_node":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
@@ -3555,18 +3531,18 @@ namespace BP.WF
                                     if (val == null)
                                         continue;
 
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case "OID":
+                                        case "oid":
                                             continue;
                                             break;
-                                        case "FK_Node":
+                                        case "fk_node":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
                                                 val = flowID + val.Substring(2);
                                             break;
-                                        case "Nodes":
+                                        case "nodes":
                                             string[] nds = val.Split('@');
                                             string valExt = "";
                                             foreach (string nd in nds)
@@ -3602,9 +3578,9 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case "FK_Node":
+                                        case "fk_node":
                                             break;
                                         default:
                                             break;
@@ -3640,11 +3616,11 @@ namespace BP.WF
                                 foreach (DataColumn dc in dt.Columns)
                                 {
                                     string val = dr[dc.ColumnName] as string;
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case Sys.MapAttrAttr.FK_MapData:
-                                        case Sys.MapAttrAttr.KeyOfEn:
-                                        case Sys.MapAttrAttr.AutoFullDoc:
+                                        case "fk_mapdata":
+                                        case "keyofen":
+                                        case "autofulldoc":
                                             if (val == null)
                                                 continue;
 
@@ -3657,10 +3633,12 @@ namespace BP.WF
                                 }
                                 bool b = ma.IsExit(Sys.MapAttrAttr.FK_MapData, ma.FK_MapData,
                                     Sys.MapAttrAttr.KeyOfEn, ma.KeyOfEn);
+
+                                ma.MyPK = ma.FK_MapData + "_" + ma.KeyOfEn;
                                 if (b == true)
-                                    ma.Update();
+                                    ma.DirectUpdate();
                                 else
-                                    ma.Insert();
+                                    ma.DirectInsert();
                             }
                             break;
                         case "Sys_MapData": //RptEmps.xml。
@@ -3727,28 +3705,28 @@ namespace BP.WF
                                     val = val.Replace("ND" + oldFlowID, "ND" + flowID);
                                     en.SetValByKey(dc.ColumnName, val);
                                 }
-                                en.MyPK = "Line" + timeKey + "_" + idx;
+                                en.MyPK = "LINE" + timeKey + "_" + idx;
                                 en.Insert();
                             }
                             break;
-                        case  "Sys_FrmImg":
-                              idx = 0;
-                              foreach (DataRow dr in dt.Rows)
-                              {
-                                  idx++;
-                                  FrmImg en = new FrmImg();
-                                  foreach (DataColumn dc in dt.Columns)
-                                  {
-                                      string val = dr[dc.ColumnName] as string;
-                                      if (val == null)
-                                          continue;
+                        case "Sys_FrmImg":
+                            idx = 0;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                idx++;
+                                FrmImg en = new FrmImg();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
 
-                                      val = val.Replace("ND" + oldFlowID, "ND" + flowID);
-                                      en.SetValByKey(dc.ColumnName, val);
-                                  }
-                                  en.MyPK = "Img" + timeKey + "_" + idx;
-                                  en.Insert();
-                              }
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                    en.SetValByKey(dc.ColumnName, val);
+                                }
+                                en.MyPK = "Img" + timeKey + "_" + idx;
+                                en.Insert();
+                            }
                             break;
                         case "Sys_FrmLab":
                             idx = 0;
@@ -3845,6 +3823,7 @@ namespace BP.WF
                             break;
                         case "Sys_FrmRB": //Sys_FrmRB.
                             idx = 0;
+
                             foreach (DataRow dr in dt.Rows)
                             {
                                 idx++;
@@ -3871,9 +3850,9 @@ namespace BP.WF
                                     if (val == null)
                                         continue;
 
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case "FK_Node":
+                                        case "fk_node":
                                             if (val.Length == 3)
                                                 val = flowID + val.Substring(1);
                                             else if (val.Length == 4)
@@ -3897,10 +3876,10 @@ namespace BP.WF
                                     if (val == null)
                                         continue;
 
-                                    switch (dc.ColumnName)
+                                    switch (dc.ColumnName.ToLower())
                                     {
-                                        case Sys.GroupFieldAttr.EnName:
-                                        case Sys.MapAttrAttr.KeyOfEn:
+                                        case "enname":
+                                        case "keyofen":
                                             val = val.Replace("ND" + oldFlowID, "ND" + flowID);
                                             break;
                                         default:
@@ -3914,7 +3893,7 @@ namespace BP.WF
                             }
                             break;
                         default:
-                           // infoErr += "Error:" + dt.TableName;
+                            // infoErr += "Error:" + dt.TableName;
                             break;
                         //    throw new Exception("@unhandle named " + dt.TableName);
                     }
@@ -3928,7 +3907,15 @@ namespace BP.WF
 
                 if (infoErr == "")
                 {
-                    fl.DoCheck();
+                    infoTable = "";
+                    try
+                    {
+                        fl.DoCheck();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("@装载完成后,检查流程时出现错误." + ex.Message);
+                    }
                     return fl; // "完全成功。";
                 }
 
@@ -3942,9 +3929,9 @@ namespace BP.WF
                     fl.DoDelete();
                     throw new Exception("@" + infoErr + " @table=" + infoTable + "@" + ex.Message);
                 }
-                catch(Exception ex1)
+                catch (Exception ex1)
                 {
-                    throw new Exception("@" + infoErr + " @table=" + infoTable + "@" + ex.Message + "@删除已经产生的数据期间错误:=" + ex1.Message);
+                    throw new Exception("@删除已经产生的错误的流程数据期间错误:" + ex1.Message);
                 }
             }
         }
@@ -3987,8 +3974,8 @@ namespace BP.WF
 
             #region 删除有可能存在的历史数据.
             Flow fl = new Flow(this.No);
-                fl.DoDelData();
-                fl.DoDelete();
+            fl.DoDelData();
+            fl.DoDelete();
             this.Save();
             #endregion 删除有可能存在的历史数据.
 
@@ -4248,9 +4235,8 @@ namespace BP.WF
             //删除侦听.
             sql += "@GO DELETE WF_Listen WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
-           
             // 删除d2d数据.
-          //  sql += "@GO DELETE WF_M2M WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            //  sql += "@GO DELETE WF_M2M WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
 
             // 删除配置.
@@ -4260,9 +4246,6 @@ namespace BP.WF
             // 删除配置.
             sql += "@GO DELETE WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
 
-            //// 删除报表
-            //WFRpts rpts = new WFRpts(this.No);
-            //rpts.Delete();
 
             // 外部程序设置
             sql += "@GO DELETE  FROM  WF_FAppSet WHERE  NodeID in (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
@@ -4272,42 +4255,7 @@ namespace BP.WF
 
             Nodes nds = new Nodes(this.No);
             foreach (Node nd in nds)
-            {
-                string ndNo = "ND" + nd.NodeID;
-
-                // 删除事件.
-                sql += "@GO DELETE Sys_FrmEvent WHERE FK_MapData='"+ndNo+"'";
-
-                Sys.MapDtls dtls = new BP.Sys.MapDtls(ndNo);
-                foreach (MapDtl dtl in dtls)
-                {
-                    sql += "@GO DELETE FROM Sys_MapAttr WHERE FK_MapData='" + dtl.No + "'";
-                    try
-                    {
-                        DBAccess.RunSQL("DROP TABLE " + dtl.PTable);
-                    }
-                    catch
-                    {
-                    }
-                }
-
-                sql += "@GO DELETE  FROM  Sys_MapDtl WHERE FK_MapData='ND" + nd.NodeID + "'";
-                sql += "@GO DELETE  FROM  Sys_FrmLine WHERE FK_MapData='ND" + nd.NodeID + "'";
-                sql += "@GO DELETE  FROM  Sys_FrmLab WHERE FK_MapData='ND" + nd.NodeID + "'";
-                sql += "@GO DELETE  FROM  Sys_FrmImg WHERE FK_MapData='ND" + nd.NodeID + "'";
-                sql += "@GO DELETE  FROM  Sys_MapAttr WHERE FK_MapData='ND" + nd.NodeID + "'";
-                sql += "@GO DELETE  FROM  Sys_GroupField WHERE EnName='ND" + nd.NodeID + "' OR EnName='' ";
-                sql += "@GO DELETE  FROM Sys_MapData WHERE No='ND" + nd.NodeID + "'";
-
-
-                sql += "@GO DELETE  FROM Sys_FrmBtn WHERE FK_MapData='ND" + nd.NodeID + "'";
-                sql += "@GO DELETE  FROM Sys_FrmEvent WHERE FK_MapData='ND" + nd.NodeID + "'";
-                sql += "@GO DELETE  FROM Sys_FrmLink WHERE FK_MapData='ND" + nd.NodeID + "'";
-
-                sql += "@GO DELETE  FROM Sys_FrmAttachmentDB WHERE FK_MapData='ND" + nd.NodeID + "'";
-                sql += "@GO DELETE  FROM Sys_FrmAttachment WHERE FK_MapData='ND" + nd.NodeID + "'";
-                sql += "@GO DELETE  FROM Sys_FrmRB WHERE FK_MapData='ND" + nd.NodeID + "'";
-            }
+                nd.Delete();
 
             sql += "@GO DELETE  FROM WF_Node WHERE FK_Flow='" + this.No + "'";
             sql += "@GO DELETE  FROM  WF_LabNote WHERE FK_Flow='" + this.No + "'";
@@ -4316,33 +4264,10 @@ namespace BP.WF
             sql += "@GO DELETE FROM Sys_GroupField WHERE EnName NOT IN(SELECT NO FROM Sys_MapData)";
 
             #region 删除流程报表。
-            string fk_map = "ND" + int.Parse(this.No) + "Rpt";
-            sql += "@GO DELETE  FROM  Sys_MapData WHERE No='" + fk_map + "'";
-            sql += "@GO DELETE  FROM  Sys_MapAttr WHERE FK_MapData='" + fk_map + "'";
-            try
-            {
-                BP.DA.DBAccess.RunSQL("DROP TABLE " + fk_map);
-            }
-            catch
-            {
+            MapData md = new MapData();
+            md.No = "ND" + int.Parse(this.No) + "Rpt";
+            md.Delete();
 
-            }
-
-            // 删除明细表。
-            MapDtls dtl1s = new MapDtls(fk_map);
-            foreach (MapDtl dtl in dtl1s)
-            {
-                sql += "@GO DELETE  FROM  Sys_MapAttr WHERE FK_MapData='" + dtl.No + "'";
-
-                try
-                {
-                    BP.DA.DBAccess.RunSQL("DROP TABLE " + dtl.PTable);
-                }
-                catch
-                {
-                }
-            }
-            sql += "@GO DELETE  FROM  Sys_MapDtl WHERE FK_MapData='" + fk_map + "'";
             //删除视图.
             try
             {
@@ -4355,8 +4280,6 @@ namespace BP.WF
 
             // 执行录制的sql scripts.
             BP.DA.DBAccess.RunSQLs(sql);
-            this.Delete();
-
             this.RepareV_FlowData_View();
         }
         #endregion

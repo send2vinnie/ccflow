@@ -146,7 +146,6 @@ namespace BP.WF
             }
             return info + err;
         }
-
         public static void ResetFlowView()
         {
             string sql = "DROP VIEW V_WF_Data ";

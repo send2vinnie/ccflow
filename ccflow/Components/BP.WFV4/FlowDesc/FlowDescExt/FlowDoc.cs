@@ -90,22 +90,18 @@ namespace BP.WF.Ext
       //          map.AddDDLSysEnum(BP.WF.FlowAttr.CCWay, (int)CCWay.ByMsg, "抄送方式", true, true, BP.WF.FlowAttr.CCWay,
       //"@0=调用本系统及时信息@1=通过Email(在web.config中配置)@2=调用手机接口@3=调用数据库函数");
 
-
-
                 map.AddDDLSysEnum(FlowAttr.FlowRunWay, (int)FlowRunWay.HandWork, "运行方式", true, true, FlowAttr.FlowRunWay,
-                    "@0=手工启动@1=按月启动@2=按周启动@3=按天启动@4=按小时启动");
-                map.AddTBString(FlowAttr.FlowRunObj, null,  this.ToE("RunDoc", "运行内容"), true, false, 0, 100, 10);
+                    "@0=手工启动@1=指定人员按时启动@2=数据集按时启动@3=触发式启动");
+                map.AddTBString(FlowAttr.RunObj, null, "运行内容", true, false, 0, 100, 10);
                
                 map.AddTBString(BP.WF.FlowAttr.Note, null, this.ToE("Note", "备注"), true, false, 0, 100, 10,true);
                 
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
                 map.AddTBString(FlowAttr.TitleRole, null, "标题生成规则", true, false, 0, 500, 10, true);
 
-
-
                 // map.AddBoolean(BP.WF.FlowAttr.CCType, false, "流程完成后抄送参与人员", true, true);
-                //    map.AddTBString(BP.WF.FlowAttr.CCStas, null, "要抄送的岗位", false, false, 0, 2000, 10);
-                //   map.AddTBDecimal(BP.WF.FlowAttr.AvgDay, 0, "平均运行用天", false, false);
+                // map.AddTBString(BP.WF.FlowAttr.CCStas, null, "要抄送的岗位", false, false, 0, 2000, 10);
+                // map.AddTBDecimal(BP.WF.FlowAttr.AvgDay, 0, "平均运行用天", false, false);
 
                 RefMethod rm = new RefMethod();
                 rm.Title = this.ToE("DesignCheckRpt", "设计检查报告"); // "设计检查报告";

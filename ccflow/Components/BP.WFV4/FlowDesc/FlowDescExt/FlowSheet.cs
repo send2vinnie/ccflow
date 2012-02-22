@@ -71,9 +71,9 @@ namespace BP.WF.Ext
                 map.AddBoolean(FlowAttr.IsOK, true, this.ToE("IsEnable", "是否起用"), true, true);
 
                 map.AddDDLSysEnum(FlowAttr.FlowRunWay, (int)FlowRunWay.HandWork, this.ToE("RunWay", "运行方式"),
-                    true, true, FlowAttr.FlowRunWay,"@0=手工启动@1=按月启动@2=按周启动@3=按天启动@4=按小时启动");
+                    true, true, FlowAttr.FlowRunWay, "@0=手工启动@1=指定人员按时启动@2=数据集按时启动@3=触发式启动");
 
-                map.AddTBString(FlowAttr.FlowRunObj, null, this.ToE("RunDoc", "运行内容"), true, false, 0, 100, 10,true);
+                map.AddTBString(FlowAttr.RunObj, null, "运行内容", true, false, 0, 100, 10, true);
                 map.AddBoolean(FlowAttr.IsCanStart, true, this.ToE("IsCanRunBySelf", "可以独立启动否？(独立启动的流程可以显示在发起流程列表里)"), true, true, true);
 
                 map.AddTBStringDoc(FlowAttr.Note, null, this.ToE("Note", "备注"), 

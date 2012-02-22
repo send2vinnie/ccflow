@@ -124,6 +124,7 @@ namespace BP.WF
                 return "Send,Save,Return,CC,Shift,Del,Rpt,Ath,Track,Opt,EndFLow";
             }
         }
+
         #region 基本属性
         public int NodeID
         {

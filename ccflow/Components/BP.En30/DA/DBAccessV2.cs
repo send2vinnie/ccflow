@@ -1743,7 +1743,6 @@ namespace BP.DA
         #region OracleConnection
         private static DataTable RunSQLReturnTable_200705_Ora(string selectSQL, Paras paras)
         {
-
             ConnOfOra connofObj = GetAppCenterDBConn as ConnOfOra;
             connofObj.AddSQL(selectSQL);
             OracleConnection conn = connofObj.Conn;
@@ -1797,7 +1796,6 @@ namespace BP.DA
         {
             if (selectSQL.Contains(":"))
                 throw new Exception("@sql 中有参数。"+selectSQL );
-
 
             ConnOfOra connofObj = GetAppCenterDBConn as ConnOfOra;
             OracleConnection conn = connofObj.Conn;

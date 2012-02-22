@@ -2534,6 +2534,8 @@ namespace BP.En
                         //sql = sql.Replace("''", "'");
                         //  sql = sql.Replace("'''", "''");
 
+                        sql = sql.Replace("''", "'");
+
                         string val = "";
                         try
                         {

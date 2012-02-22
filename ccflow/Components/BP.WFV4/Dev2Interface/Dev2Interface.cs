@@ -6,6 +6,7 @@ using System.Text;
 using BP.WF;
 using BP.DA;
 using BP.Web;
+using BP.Sys;
 
 namespace BP.WF
 {
@@ -14,6 +15,134 @@ namespace BP.WF
     /// </summary>
     public class Dev2Interface
     {
+        #region 自动执行
+        /// <summary>
+        /// 自动执行开始节点数据
+        /// </summary>
+        public static void DTS_AutoStarterFlow(Flow fl)
+        {
+            #region 读取数据.
+            BP.Sys.MapExt me = new Sys.MapExt();
+            int i = me.Retrieve(MapExtAttr.FK_MapData, "ND" + int.Parse(fl.No) + "01",
+                MapExtAttr.ExtType, "PageLoadFull");
+            if (i == 0)
+            {
+                BP.DA.Log.DefaultLogWriteLineError("没有为流程(" + fl.Name + ")的开始节点设置发起数据,请参考说明书解决.");
+                return;
+            }
+
+            // 获取从表数据.
+            DataSet ds = new DataSet();
+            string[] dtlSQLs = me.Tag1.Split('*');
+            foreach (string sql in dtlSQLs)
+            {
+                if (string.IsNullOrEmpty(sql))
+                    continue;
+
+                string[] tempStrs = sql.Split('=');
+                string dtlName = tempStrs[0];
+                DataTable dtlTable = BP.DA.DBAccess.RunSQLReturnTable(sql.Replace(dtlName + "=", ""));
+                dtlTable.TableName = dtlName;
+                ds.Tables.Add(dtlTable);
+            }
+            #endregion 读取数据.
+
+            #region 检查数据源是否正确.
+            string errMsg = "";
+            // 获取主表数据.
+            DataTable dtMain = BP.DA.DBAccess.RunSQLReturnTable(me.Tag);
+            if (dtMain.Columns.Contains("Starter") == false)
+                errMsg += "@配值的主表中没有Starter列.";
+
+            if (dtMain.Columns.Contains("MainPK") == false)
+                errMsg += "@配值的主表中没有MainPK列.";
+
+            if (dtMain.Columns.Contains("RefPK") == false && ds.Tables.Count != 0)
+                errMsg += "@配值的主表中没有RefPK列.";
+
+            if (errMsg.Length > 2)
+            {
+                BP.DA.Log.DefaultLogWriteLineError("流程(" + fl.Name + ")的开始节点设置发起数据,不完整." + errMsg);
+                return;
+            }
+            #endregion 检查数据源是否正确.
+
+            #region 处理流程发起.
+            string nodeTable = "ND" + int.Parse(fl.No) + "01";
+            foreach (DataRow dr in dtMain.Rows)
+            {
+                string mainPK = dr["MainPK"].ToString();
+                string sql = "SELECT OID FROM " + nodeTable + " WHERE MainPK='" + mainPK + "'";
+                if (DBAccess.RunSQLReturnTable(sql).Rows.Count != 0)
+                    continue; /*说明已经调度过了*/
+
+                string starter = dr["Starter"].ToString();
+                if (Web.WebUser.No != starter)
+                {
+                    BP.Web.WebUser.Exit();
+                    BP.Port.Emp emp = new BP.Port.Emp(starter);
+                    BP.Web.WebUser.SignInOfGener(emp);
+                }
+
+                #region  给值.
+                Work wk = fl.NewWork();
+                foreach (DataColumn dc in dtMain.Columns)
+                    wk.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+
+                if (ds.Tables.Count != 0)
+                {
+                    string refPK = dr["RefPK"].ToString();
+                    // MapData md = new MapData(nodeTable);
+                    MapDtls dtls = new MapDtls(nodeTable);
+                    foreach (MapDtl dtl in dtls)
+                    {
+                        foreach (DataTable dt in ds.Tables)
+                        {
+                            if (dt.TableName != dtl.No)
+                                continue;
+
+                            //删除原来的数据。
+                            GEDtl dtlEn = dtl.HisGEDtl;
+                            dtlEn.Delete(GEDtlAttr.RefPK, wk.OID.ToString());
+
+                            // 执行数据插入。
+                            foreach (DataRow drDtl in dt.Rows)
+                            {
+                                if (drDtl["RefPK"].ToString() != refPK)
+                                    continue;
+
+                                dtlEn = dtl.HisGEDtl;
+
+                                foreach (DataColumn dc in dt.Columns)
+                                    dtlEn.SetValByKey(dc.ColumnName, drDtl[dc.ColumnName].ToString());
+
+                                dtlEn.RefPK = wk.OID.ToString();
+                                dtlEn.Insert();
+                            }
+                        }
+                    }
+                }
+                #endregion  给值.
+
+                // 处理发送信息.
+                Node nd = fl.HisStartNode;
+                try
+                {
+                    WorkNode wn = new WorkNode(wk, nd);
+                    string msg = wn.AfterNodeSave();
+                    BP.DA.Log.DefaultLogWriteLineInfo(msg);
+                }
+                catch (Exception ex)
+                {
+                    BP.DA.Log.DefaultLogWriteLineWarning(ex.Message);
+                }
+            }
+            #endregion 处理流程发起.
+
+        }
+        #endregion
+
+
         #region 数据接口
 
         #region 获取当前操作员可以发起的流程集合
@@ -27,8 +156,8 @@ namespace BP.WF
         }
         public static Flows DB_GenerCanStartFlowsOfEntities(string userNo)
         {
-            string sql = "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_EMP='" + WebUser.No + "')) ";
-            string sql2 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
+            string sql = "SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeStation WHERE FK_Station IN (SELECT FK_Station FROM Port_EmpStation WHERE FK_EMP='" + WebUser.No + "')) ";
+            string sql2 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND ( WhoExeIt=0 OR WhoExeIt=2 ) AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
          //   string sql3 = " UNION  SELECT FK_Flow FROM WF_Node WHERE NodePosType=0 AND NodeID IN ( SELECT FK_Node FROM WF_NodeEmp WHERE FK_Emp='" + userNo + "' ) ";
            // System.Web.cont
             Flows fls = new Flows();

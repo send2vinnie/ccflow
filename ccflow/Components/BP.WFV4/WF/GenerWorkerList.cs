@@ -86,6 +86,10 @@ namespace BP.WF
         /// 发送人
         /// </summary>
         public const string Sender = "Sender";
+        /// <summary>
+        /// 谁执行它?
+        /// </summary>
+        public const string WhoExeIt = "WhoExeIt";
         #endregion
     }
     /// <summary>
@@ -380,6 +384,8 @@ namespace BP.WF
                 //对会签节点有效
                 map.AddTBInt(WorkerListAttr.IsPass, 0, "是否通过(对会签节点有效)", false, false);
 
+                // 谁执行它？
+                map.AddTBInt(WorkerListAttr.WhoExeIt, 0, "谁执行它", false, false);
 
                 //发送人. 2011-11-12 为天津用户增加。
                 map.AddTBString(WorkerListAttr.Sender, null, "发送人", true, false, 0, 100, 100);

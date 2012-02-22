@@ -589,9 +589,9 @@ namespace BP.Sys
                 switch (this.MyDataType)
                 {
                     case DataType.AppDate:
-                        return 10;
+                        return 100;
                     case DataType.AppDateTime:
-                        return 20;
+                        return 100;
                     default:
                         break;
                 }
@@ -1153,7 +1153,7 @@ namespace BP.Sys
             if (this.IsExit(BP.Sys.MapAttrAttr.KeyOfEn, this.KeyOfEn,
                 BP.Sys.MapAttrAttr.FK_MapData, this.FK_MapData))
             {
-                throw new Exception("@已经存在字段名称(" + this.Name + ")字段(" + this.KeyOfEn + ")");
+                throw new Exception("@在["+this.MyPK+"]已经存在字段名称[" + this.Name + "]字段[" + this.KeyOfEn + "]");
             }
 
             this.IDX = 999; // BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapAttr WHERE FK_MapData='" + this.FK_MapData + "'") + 1;

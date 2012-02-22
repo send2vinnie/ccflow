@@ -281,6 +281,24 @@ namespace BP.WF
         Branch = 2
     }
     /// <summary>
+    /// 谁执行它
+    /// </summary>
+    public enum WhoDoIt
+    {
+        /// <summary>
+        /// 操作员
+        /// </summary>
+        Operator,
+        /// <summary>
+        /// 机器
+        /// </summary>
+        MachtionOnly,
+        /// <summary>
+        /// 混合
+        /// </summary>
+        Mux
+    }
+    /// <summary>
     /// 
     /// </summary>
     public enum NodePosType
@@ -474,6 +492,10 @@ namespace BP.WF
         /// 运行模式
         /// </summary>
         public const string RunModel = "RunModel";
+        /// <summary>
+        /// 谁执行它？
+        /// </summary>
+        public const string WhoExeIt = "WhoExeIt";
         /// <summary>
         /// 分流规则
         /// </summary>
@@ -2481,6 +2503,7 @@ namespace BP.WF
             BP.DA.DBAccess.RunSQL("DELETE WF_NodeEmp WHERE FK_Node=" + this.NodeID);
             BP.DA.DBAccess.RunSQL("DELETE WF_NodeDept WHERE FK_Node=" + this.NodeID);
             BP.DA.DBAccess.RunSQL("DELETE WF_NodeFlow WHERE FK_Node=" + this.NodeID);
+            BP.DA.DBAccess.RunSQL("DELETE WF_FrmNode WHERE FK_Node=" + this.NodeID);
 
             return base.beforeDelete();
         }

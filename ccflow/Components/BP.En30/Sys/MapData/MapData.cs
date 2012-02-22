@@ -874,6 +874,8 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
+
+                            en.MyPK = en.FK_MapData + "_" + en.KeyOfEn;
                             en.DirectInsert();
                         }
                         break;
@@ -1009,9 +1011,7 @@ namespace BP.Sys
         }
         protected override bool beforeDelete()
         {
-            MapAttrs attrs = new MapAttrs();
-            string sql = "";
-            attrs.Delete(MapAttrAttr.FK_MapData, this.No);
+            #region 删除物理表。
             try
             {
                 BP.DA.DBAccess.RunSQL("DROP TABLE " + this.PTable);
@@ -1019,18 +1019,32 @@ namespace BP.Sys
             catch
             {
             }
+            Sys.MapDtls dtls = new BP.Sys.MapDtls(this.No);
+            foreach (MapDtl dtl in dtls)
+            {
+                try
+                {
+                    DBAccess.RunSQL("DROP TABLE " + dtl.PTable);
+                }
+                catch
+                {
+                }
+            }
+            #endregion
 
-            // Sys_MapDtl.
+            string sql = "";
             sql = "SELECT * FROM Sys_MapDtl WHERE FK_MapData ='" + this.No + "'";
             DataTable Sys_MapDtl = DBAccess.RunSQLReturnTable(sql);
             string ids = "'" + this.No + "'";
             foreach (DataRow dr in Sys_MapDtl.Rows)
-            {
                 ids += ",'" + dr["No"] + "'";
-            }
 
             string where = " FK_MapData IN (" + ids + ")";
+
+            #region 删除相关的数据。
+            sql += "@DELETE Sys_MapDtl WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_FrmLine WHERE " + where;
+            sql += "@DELETE Sys_FrmEvent WHERE " + where;
             sql += "@DELETE Sys_FrmBtn WHERE " + where;
             sql += "@DELETE Sys_FrmLab WHERE " + where;
             sql += "@DELETE Sys_FrmLink WHERE " + where;
@@ -1044,8 +1058,10 @@ namespace BP.Sys
             sql += "@DELETE Sys_MapAttr WHERE " + where;
             sql += "@DELETE Sys_GroupField WHERE EnName IN (" + ids + ")";
             sql += "@DELETE Sys_MapData WHERE No IN (" + ids + ")";
-            sql += "@DELETE Sys_MapDtl WHERE FK_MapData='"+this.No+"'";
+            sql += "@DELETE Sys_M2M WHERE " + where;
             DBAccess.RunSQLs(sql);
+            #endregion 删除相关的数据。
+
             return base.beforeDelete();
         }
         public System.Data.DataSet GenerHisDataSet()

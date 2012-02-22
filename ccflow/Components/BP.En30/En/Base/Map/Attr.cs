@@ -584,9 +584,9 @@ namespace BP.En
                 switch (this.MyDataType)
                 {
                     case DataType.AppDate:
-                        return 10;
+                        return 50;
                     case DataType.AppDateTime:
-                        return 16;
+                        return 50;
                     default:
                         return this._maxLength;
                 }

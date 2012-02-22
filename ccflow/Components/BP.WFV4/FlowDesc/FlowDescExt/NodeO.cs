@@ -205,6 +205,8 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(NodeAttr.RunModel, 0, this.ToE("RunModel", "运行模式"),
                     true, true, NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流@4=子线程");
 
+            
+            
                 //map.AddDDLSysEnum(NodeAttr.FLRole, 0, this.ToE("FLRole", "分流规则"), true, true, NodeAttr.FLRole,
                 //    "@0=按接受人@1=按部门@2=按岗位");
 
@@ -213,13 +215,15 @@ namespace BP.WF.Ext
                 map.AddDDLSysEnum(NodeAttr.DeliveryWay, 0, "投递规则", true, true);
                 map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10, true);
 
-                map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true);
+                map.AddDDLSysEnum(NodeAttr.WhoExeIt, 0, "谁执行它",
+              true, true, NodeAttr.WhoExeIt, "@0=操作员执行@1=机器执行@2=混合执行");
 
+                map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true);
                 map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 500, 10, true);
 
                 map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 500, 10, false);
 
-                map.AddDDLSysEnum(NodeAttr.TurnToDeal, 0, "成功发送后转向方式",
+                map.AddDDLSysEnum(NodeAttr.TurnToDeal, 0, "发送后转向",
                  true, true, NodeAttr.TurnToDeal, "@0=提示ccflow默认信息@1=提示指定信息@2=转向指定的url@3=按照条件转向");
 
                 map.AddTBString(NodeAttr.TurnToDealDoc, null, "转向处理内容", true, false, 0, 2000, 10, true);
