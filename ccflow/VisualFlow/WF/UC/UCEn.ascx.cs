@@ -567,41 +567,40 @@ namespace BP.Web.Comm.UC.WF
                         continue;
 
                     string sql = item.Tag;
-                    if (string.IsNullOrEmpty(sql))
-                        continue;
-
-                    /* 如果有填充主表的sql  */
-
-                    #region 处理sql变量
-                    sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
-                    sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
-                    sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
-                    sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
-                    foreach (MapAttr attr in mattrs)
-                    {
-                        if (sql.Contains("@"))
-                            sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
-                        else
-                            continue;
-                    }
-                    #endregion 处理sql变量
-
                     if (string.IsNullOrEmpty(sql) == false)
                     {
-                        dt = DBAccess.RunSQLReturnTable(sql);
-                        if (dt.Rows.Count == 1)
+                        /* 如果有填充主表的sql  */
+
+                        #region 处理sql变量
+                        sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
+                        sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                        sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                        sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
+                        foreach (MapAttr attr in mattrs)
                         {
-                            DataRow dr = dt.Rows[0];
-                            foreach (DataColumn dc in dt.Columns)
+                            if (sql.Contains("@"))
+                                sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                            else
+                                break;
+                        }
+                        #endregion 处理sql变量
+
+                        if (string.IsNullOrEmpty(sql) == false)
+                        {
+                            dt = DBAccess.RunSQLReturnTable(sql);
+                            if (dt.Rows.Count == 1)
                             {
-                                en.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                                DataRow dr = dt.Rows[0];
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    en.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                                }
                             }
                         }
                     }
 
-
                     if (string.IsNullOrEmpty(item.Tag1))
-                        continue;
+                        break;
 
                     // 填充明细表.
                     foreach (MapDtl dtl in dtls)
@@ -616,7 +615,7 @@ namespace BP.Web.Comm.UC.WF
                                 continue;
 
                             GEDtls gedtls = new GEDtls(dtl.No);
-                            if (gedtls.Retrieve(GEDtlAttr.RefPK, en.PKVal) != 0)
+                            if (gedtls.Retrieve(GEDtlAttr.RefPK, (int)en.PKVal) != 0)
                                 continue;
 
                             #region 处理sql.
