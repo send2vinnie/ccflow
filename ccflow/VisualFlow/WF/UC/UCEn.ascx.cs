@@ -582,7 +582,7 @@ namespace BP.Web.Comm.UC.WF
                         if (sql.Contains("@"))
                             sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
                         else
-                            break;
+                            continue;
                     }
                     #endregion 处理sql变量
 
@@ -601,7 +601,7 @@ namespace BP.Web.Comm.UC.WF
 
 
                     if (string.IsNullOrEmpty(item.Tag1))
-                        break;
+                        continue;
 
                     // 填充明细表.
                     foreach (MapDtl dtl in dtls)
@@ -616,7 +616,7 @@ namespace BP.Web.Comm.UC.WF
                                 continue;
 
                             GEDtls gedtls = new GEDtls(dtl.No);
-                            if (gedtls.Retrieve(GEDtlAttr.RefPK, (int)en.PKVal) != 0)
+                            if (gedtls.Retrieve(GEDtlAttr.RefPK, en.PKVal) != 0)
                                 continue;
 
                             #region 处理sql.
