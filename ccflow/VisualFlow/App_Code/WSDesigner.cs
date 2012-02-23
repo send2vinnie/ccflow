@@ -683,8 +683,10 @@ where s.No=es.FK_Station and e.No=es.FK_Emp");
             //如果文件已经存在则删除
             if (File.Exists(filepath))
                 File.Delete(filepath);
+
             //创建文件流实例，用于写入文件
             FileStream stream = new FileStream(filepath, FileMode.CreateNew);
+
             //写入文件
             stream.Write(FileByte, 0, FileByte.Length);
             stream.Close();
