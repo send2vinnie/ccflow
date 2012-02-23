@@ -91,23 +91,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="Data\FlowDesc\Thumbs.db" />
-    <None Include="Data\Img\Thumbs.db" />
     <None Include="Data\Img_CCS\Thumbs.db" />
     <None Include="Data\Img_Engg\Thumbs.db" />
-    <None Include="Data\Img_ML\Thumbs.db" />
-    <None Include="Data\Log\2010_08_20.log" />
-    <None Include="Data\Log\2010_08_23.log" />
-    <None Include="Data\Log\2010_08_24.log" />
-    <None Include="Data\Log\2010_08_26.log" />
-    <None Include="Data\Log\2010_09_02.log" />
-    <None Include="Data\Log\2010_09_03.log" />
-    <None Include="Data\Log\2010_09_04.log" />
-    <None Include="Data\Log\2010_09_05.log" />
-    <None Include="Data\Log\2010_09_06.log" />
-    <None Include="Data\Log\2010_09_07.log" />
-    <None Include="Data\Log\2010_09_08.log" />
-    <None Include="Data\Node\Thumbs.db" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -120,15 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Cfg.txt" />
-    <Content Include="Data\FlowDesc\006.gif" />
-    <Content Include="Data\FlowDesc\009.gif" />
-    <Content Include="Data\FlowDesc\010.gif" />
-    <Content Include="Data\FlowDesc\个人借款.htm" />
-    <Content Include="Data\FlowDesc\周朋测试.htm" />
     <Content Include="Data\Img\log.jpg" />
     <Content Include="Data\Img_CCS\log.gif" />
     <Content Include="Data\Img_Engg\log.gif" />
-    <Content Include="Data\Img_ML\log.gif" />
     <Content Include="Data\Language\Btn.xml" />
     <Content Include="Data\Language\Comm.xml" />
     <Content Include="Data\Language\Cond.aspx.xml" />
@@ -145,18 +124,6 @@
     <Content Include="Data\Language\WF.Admin.xml" />
     <Content Include="Data\Language\WFV4.xml" />
     <Content Include="Data\Language\Words.xml" />
-    <Content Include="Data\Node\5.bmp" />
-    <Content Include="Data\Node\GECheckMuls.bmp" />
-    <Content Include="Data\Node\GECheckStands.bmp" />
-    <Content Include="Data\Node\LabNote.bmp" />
-    <Content Include="Data\Node\MulChecks.bmp" />
-    <Content Include="Data\Node\StandardChecks.bmp" />
-    <Content Include="Data\Node\StartWork.bmp" />
-    <Content Include="Data\Node\StartWorkFL.bmp" />
-    <Content Include="Data\Node\Work.bmp" />
-    <Content Include="Data\Node\WorkFHL.bmp" />
-    <Content Include="Data\Node\WorkFL.bmp" />
-    <Content Include="Data\Node\WorkHL.bmp" />
     <Content Include="Run.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +137,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\FlowDesc\" />
+    <Folder Include="Data\Img_ML\" />
     <Folder Include="Data\Xml\" />
   </ItemGroup>
   <ItemGroup>

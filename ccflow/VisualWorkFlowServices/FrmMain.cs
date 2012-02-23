@@ -64,7 +64,7 @@ namespace SMSServices
             }
             else
             {
-                this.SetText("服务暂停***********"+DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
+                this.SetText("服务暂停***********" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                 this.HisScanSta = ScanSta.Pause;
                 this.Btn_StartStop.Text = "启动";
                 this.toolStripStatusLabel1.Text = "服务暂停";
@@ -82,6 +82,8 @@ namespace SMSServices
             int idx = 0;
             while (true)
             {
+                System.Threading.Thread.Sleep(500);
+
                 while (this.HisScanSta == ScanSta.Pause)
                 {
                     System.Threading.Thread.Sleep(3000);
@@ -90,6 +92,9 @@ namespace SMSServices
                     //this.SetText("暂停中...");
                 }
 
+                this.SetText("检查自动发起流程....");
+
+
                 #region 自动启动流程
                 foreach (BP.WF.Flow fl in fls)
                 {
@@ -97,8 +102,9 @@ namespace SMSServices
                         || fl.HisFlowRunWay == BP.WF.FlowRunWay.HandWork)
                         continue;
 
-                    if (DateTime.Now.ToString("hh:mm") == fl.Tag)
+                    if (DateTime.Now.ToString("HH:mm") == fl.Tag)
                         continue;
+
                     if (fl.RunObj == null || fl.RunObj == "")
                     {
                         string msg = "您设置自动运行流程错误，没有设置流程内容，流程编号：" + fl.No;
@@ -107,7 +113,7 @@ namespace SMSServices
                     }
 
                     #region 判断当前时间是否可以运行它。
-                    string nowStr = DateTime.Now.ToString("yyyy-MM-dd,hh:mm");
+                    string nowStr = DateTime.Now.ToString("yyyy-MM-dd,HH:mm");
                     string[] strs = fl.RunObj.Split('@'); //破开时间串。
                     bool IsCanRun = false;
                     foreach (string str in strs)
@@ -121,7 +127,7 @@ namespace SMSServices
                         continue;
 
                     // 设置时间.
-                    fl.Tag = DateTime.Now.ToString("hh:mm");
+                    fl.Tag = DateTime.Now.ToString("HH:mm");
                     #endregion 判断当前时间是否可以运行它。
 
                     // 以此用户进入.
