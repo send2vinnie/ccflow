@@ -53,6 +53,7 @@ namespace SMSServices
                     ThreadStart ts = new ThreadStart(ReadFiles);
                     thread = new Thread(ts);
                     thread.Start();
+
                     this.Btn_StartStop.Text = "暂停";
                 }
 
@@ -73,40 +74,6 @@ namespace SMSServices
 
         public void ReadFiles()
         {
-            //BP.WF.Flow fl = new BP.WF.Flow();
-            //fl.No = "009";
-            //fl.Name = "sssss";
-            //fl.Insert();
-
-
-            //BP.WF.Flow fl2 = new BP.WF.Flow("009");
-
-            // fl2.Name="sdsdsdsdsdsd";
-            // fl2.FK_FlowSort = "01";
-            // fl2.Update();
-
-            // fl2.Delete();
-
-
-            // BP.WF.Flow fl4 = new BP.WF.Flow();
-            // fl4.No = "002";
-            // fl4.Retrieve();
-
-            // BP.WF.Flows ens = new BP.WF.Flows();
-            // ens.RetrieveAll();
-            // foreach (BP.WF.Flow en in ens)
-            // {
-            // }
-
-
-            // BP.WF.Flows ens1111 = new BP.WF.Flows();
-            // BP.En.QueryObject qo = new BP.En.QueryObject(ens1111);
-            // qo.AddWhere("FK_FlowSort", "01");
-            // qo.DoQuery();
-            // foreach (BP.WF.Flow en in ens1111)
-            // {
-            // }
-
             BP.WF.Flows fls = new BP.WF.Flows();
             fls.RetrieveAll();
 
@@ -131,112 +98,64 @@ namespace SMSServices
                         continue;
 
                     if (DateTime.Now.ToString("hh:mm") == fl.Tag)
-                        return;
-
-
-                    if (fl.FlowRunObj == null || fl.FlowRunObj == "")
+                        continue;
+                    if (fl.RunObj == null || fl.RunObj == "")
                     {
                         string msg = "您设置自动运行流程错误，没有设置流程内容，流程编号：" + fl.No;
                         this.SetText(msg);
                         continue;
                     }
 
-                    string flowRunObj = fl.FlowRunObj;
-
-                    string fk_emp = flowRunObj.Substring(0, flowRunObj.IndexOf('@'));
-                    flowRunObj = flowRunObj.Substring(flowRunObj.IndexOf('@'));
-                    string[] dts = flowRunObj.Split('@'); //破开时间串。
-                    BP.Port.Emp emp = new BP.Port.Emp();
-                    emp.No = fk_emp;
-                    if (emp.RetrieveFromDBSources() == 0)
+                    #region 判断当前时间是否可以运行它。
+                    string nowStr = DateTime.Now.ToString("yyyy-MM-dd,hh:mm");
+                    string[] strs = fl.RunObj.Split('@'); //破开时间串。
+                    bool IsCanRun = false;
+                    foreach (string str in strs)
                     {
-                        this.SetText("启动自动启动流程错误：发起人(" + fk_emp + ")不存在。");
-                        continue;
+                        if (string.IsNullOrEmpty(str))
+                            continue;
+                        if (nowStr.Contains(str))
+                            IsCanRun = true;
                     }
+                    if (IsCanRun == false)
+                        continue;
+
+                    // 设置时间.
+                    fl.Tag = DateTime.Now.ToString("hh:mm");
+                    #endregion 判断当前时间是否可以运行它。
 
                     // 以此用户进入.
-                    BP.Web.WebUser.SignInOfGener(emp);
                     switch (fl.HisFlowRunWay)
                     {
-                        case BP.WF.FlowRunWay.ByYear: // 按年 @01-01,22:01
-                            foreach (string mydt in dts)
+                        case BP.WF.FlowRunWay.SpecEmp: //指定人员按时运行。
+                            string RunObj = fl.RunObj;
+                            string fk_emp = RunObj.Substring(0, RunObj.IndexOf('@'));
+
+                            BP.Port.Emp emp = new BP.Port.Emp();
+                            emp.No = fk_emp;
+                            if (emp.RetrieveFromDBSources() == 0)
                             {
-                                if (mydt == null || mydt == "")
-                                    continue;
-
-                                string nowND = DateTime.Now.ToString("MM-dd,hh:mm");
-                                if (nowND != mydt)
-                                    continue;
-                                BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
+                                this.SetText("启动自动启动流程错误：发起人(" + fk_emp + ")不存在。");
+                                continue;
                             }
-                            break;
-                        case BP.WF.FlowRunWay.ByMonth: // 按月
-                            foreach (string mydt in dts)
-                            {
-                                if (mydt == null || mydt == "")
-                                    continue;
-
-                                string nowYF = DateTime.Now.ToString("dd,hh:mm");
-                                if (nowYF != mydt)
-                                    continue;
-                                BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
-                            }
-                            break;
-                        case BP.WF.FlowRunWay.ByWeek: // 按周
-                            foreach (string mydt in dts)
-                            {
-                                if (mydt == null || mydt == "")
-                                    continue;
-
-                                string nowYF = DateTime.Now.ToString("dd,hh:mm");
-                                if (nowYF != mydt)
-                                    continue;
-
-                                //判断是否设置的当天？
-                                DayOfWeek dw = DateTime.Now.DayOfWeek;
-                                int mydw = (int)dw;
-                                if (mydw != int.Parse(mydt.Substring(0, 1)))
-                                    continue;
-
-                                BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
-                            }
-                            break;
-                        case BP.WF.FlowRunWay.ByDay: // 按日
-                            foreach (string mydt in dts)
-                            {
-                                if (mydt == null || mydt == "")
-                                    continue;
-
-                                string nowYF = DateTime.Now.ToString("hh:mm");
-                                if (nowYF != mydt)
-                                    continue;
-
-                                BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
-                            }
-                            break;
-                        case BP.WF.FlowRunWay.ByHours: // 按小时
-                            foreach (string mydt in dts)
-                            {
-                                if (mydt == null || mydt == "")
-                                    continue;
-
-                                string nowFen = DateTime.Now.ToString("mm");
-                                if (nowFen != mydt)
-                                    continue;
-                                BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
-                            }
-                            break;
+                            BP.Web.WebUser.SignInOfGener(emp);
+                            BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
+                            continue;
+                        case BP.WF.FlowRunWay.DataModel: //按数据集合驱动的模式执行。
+                            this.SetText("@开始执行数据驱动流程调度"+fl.Name);
+                            BP.WF.Dev2Interface.DTS_AutoStarterFlow(fl);
+                            continue;
                         default:
                             break;
                     }
                 }
+
                 if (BP.Web.WebUser.No != "admin")
                 {
                     BP.Port.Emp empadmin = new BP.Port.Emp("admin");
                     BP.Web.WebUser.SignInOfGener(empadmin);
                 }
                 #endregion 发送消息
-
 
                 #region 发送消息
                 BP.TA.SMSs sms = new BP.TA.SMSs();
@@ -257,19 +176,12 @@ namespace SMSServices
 
                         if (this.checkBox1.Checked)
                             Console.Beep();
-
-                        //this.SetText("暂停中...");
                     }
 
                     try
                     {
                         this.SetText("@执行：" + sm.Tel + " email: " + sm.Email);
-                        //switch (sm.AlertType)
-                        //{ 
-                        //     case 
-                        //}
                         this.SendMail(sm);
-
 
                         idx++;
                         this.SetText("已完成 , 第:" + idx + " 个.");
@@ -285,8 +197,7 @@ namespace SMSServices
                 }
                 #endregion 发送消息
 
-
-                //   this.SetText("已执行:" + idx + " 数据.....");
+                //this.SetText("已执行:" + idx + " 数据.....");
                 System.Threading.Thread.Sleep(1000);
                 switch (this.toolStripStatusLabel1.Text)
                 {
@@ -311,7 +222,6 @@ namespace SMSServices
         /// <param name="sms"></param>
         public void SendMail(BP.TA.SMS sms)
         {
-
             System.Net.Mail.MailMessage myEmail = new System.Net.Mail.MailMessage();
             myEmail.From = new MailAddress("ccflow.cn@gmail.com", "ccflow", System.Text.Encoding.UTF8);
            // myEmail.From = new MailAddress("pengzhou86@gmail.com", "public", System.Text.Encoding.UTF8);
@@ -329,7 +239,7 @@ namespace SMSServices
             myEmail.Priority = MailPriority.High;//邮件优先级
 
             SmtpClient client = new SmtpClient();
-            client.Credentials = new System.Net.NetworkCredential("ccflow.cn@gmail.com", "www.ccflow.cn");
+            client.Credentials = new System.Net.NetworkCredential("ccflow.cn@gmail.com", "www.ccflow.org");
 
             //上述写你的GMail邮箱和密码
             client.Port = 587;//Gmail使用的端口
@@ -385,16 +295,19 @@ namespace SMSServices
             this.notifyIcon1.Visible = true;
         }
 
-        
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             notifyIcon1_Click(null, null);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            BP.WF.Flow fl = new BP.WF.Flow("040");
+            BP.WF.Dev2Interface.DTS_AutoStarterFlow(fl);
         }
     }
 }
