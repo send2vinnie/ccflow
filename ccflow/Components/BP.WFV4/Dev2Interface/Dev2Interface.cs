@@ -56,10 +56,7 @@ namespace BP.WF
 
             if (dtMain.Columns.Contains("MainPK") == false)
                 errMsg += "@配值的主表中没有MainPK列.";
-
-            if (dtMain.Columns.Contains("RefPK") == false && ds.Tables.Count != 0)
-                errMsg += "@配值的主表中没有RefPK列.";
-
+           
             if (errMsg.Length > 2)
             {
                 BP.DA.Log.DefaultLogWriteLineError("流程(" + fl.Name + ")的开始节点设置发起数据,不完整." + errMsg);
@@ -68,7 +65,7 @@ namespace BP.WF
             #endregion 检查数据源是否正确.
 
             #region 处理流程发起.
-            string nodeTable = "ND" + int.Parse(fl.No) + "01";
+            string nodeTable = "ND" + int.Parse(fl.No) + "01";            
             foreach (DataRow dr in dtMain.Rows)
             {
                 string mainPK = dr["MainPK"].ToString();
@@ -95,7 +92,7 @@ namespace BP.WF
 
                 if (ds.Tables.Count != 0)
                 {
-                    string refPK = dr["RefPK"].ToString();
+                    string refPK = dr["MainPK"].ToString();
                     // MapData md = new MapData(nodeTable);
                     MapDtls dtls = new MapDtls(nodeTable);
                     foreach (MapDtl dtl in dtls)
@@ -112,7 +109,7 @@ namespace BP.WF
                             // 执行数据插入。
                             foreach (DataRow drDtl in dt.Rows)
                             {
-                                if (drDtl["RefPK"].ToString() != refPK)
+                                if (drDtl["RefMainPK"].ToString() != refPK)
                                     continue;
 
                                 dtlEn = dtl.HisGEDtl;

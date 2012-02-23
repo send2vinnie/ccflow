@@ -579,6 +579,7 @@ namespace BP.Sys
             md.No = fk_mapData;
             if (md.IsExits)
                 throw new Exception("已经存在(" + fk_mapData + ")的数据。");
+
             //导入.
             return ImpMapData(fk_mapData, ds);
         }
