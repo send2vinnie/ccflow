@@ -382,7 +382,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                            msgInfo += "</fieldset>";
                        }
                        this.FlowMsg.AlertMsg_Info("流程退回提示", msgInfo);
-                       currWK.Update("NodeState", (int)NodeState.Init);
+                       if (currWK.HisNode.IsStartNode == false)
+                       {
+                           currWK.Update("NodeState", (int)NodeState.Init);
+                       }
                    }
                    break;
                case NodeState.Forward:
