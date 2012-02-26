@@ -107,6 +107,39 @@ public partial class WF_FrmDtl : System.Web.UI.Page
     }
     protected void Btn_Save_Click(object sender, EventArgs e)
     {
+        try
+        {
+
+            MapDtl dtl = new MapDtl(this.FK_MapData);
+            GEDtl dtlEn = dtl.HisGEDtl;
+            dtlEn.SetValByKey("OID", this.OID);
+           int i =  dtlEn.RetrieveFromDBSources();
+
+            dtlEn = this.UCEn1.Copy(dtlEn) as GEDtl;
+
+            FrmEvents fes = new FrmEvents(this.FK_MapData);
+            fes.DoEventNode(FrmEventList.SaveBefore, dtlEn);
+            if (i == 0)
+                dtlEn.Insert();
+            else
+                dtlEn.Update();
+
+            fes.DoEventNode(FrmEventList.SaveAfter, dtlEn);
+
+            if (fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveAfter) == true
+                || fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveBefore) == true)
+            {
+                /*如果包含保存*/
+                // /FrmDtl.aspx?FK_MapData=ND11699Dtl1&WorkID=2078&OID=7365&IsReadonly=False
+                this.Response.Redirect(this.Request.RawUrl, true);
+                 //this.Response.Redirect("FrmDtl.aspx?WorkID=" + this.WorkID + "&FK_MapData=" + this.FK_MapData + "&IsReadonly="+this.IsReadonly, true);
+            }
+        }
+        catch (Exception ex)
+        {
+            this.UCEn1.AddMsgOfWarning("error:", ex.Message);
+        }
+
 
     }
      
