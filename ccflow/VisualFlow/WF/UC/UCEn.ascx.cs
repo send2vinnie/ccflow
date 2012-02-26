@@ -570,7 +570,6 @@ namespace BP.Web.Comm.UC.WF
                     if (string.IsNullOrEmpty(sql) == false)
                     {
                         /* 如果有填充主表的sql  */
-
                         #region 处理sql变量
                         sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
                         sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
@@ -600,7 +599,7 @@ namespace BP.Web.Comm.UC.WF
                     }
 
                     if (string.IsNullOrEmpty(item.Tag1))
-                        break;
+                        continue;
 
                     // 填充明细表.
                     foreach (MapDtl dtl in dtls)
@@ -615,8 +614,10 @@ namespace BP.Web.Comm.UC.WF
                                 continue;
 
                             GEDtls gedtls = new GEDtls(dtl.No);
-                            if (gedtls.Retrieve(GEDtlAttr.RefPK, (int)en.PKVal) != 0)
-                                continue;
+                            gedtls.Delete(GEDtlAttr.RefPK, en.PKVal);
+
+                            //if (gedtls.Retrieve(GEDtlAttr.RefPK, (int)en.PKVal) != 0)
+                            //    continue;
 
                             #region 处理sql.
                             sql = mysql;
@@ -628,13 +629,9 @@ namespace BP.Web.Comm.UC.WF
                             foreach (MapAttr attr in mattrs)
                             {
                                 if (sql.Contains("@"))
-                                {
                                     sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
-                                }
                                 else
-                                {
                                     break;
-                                }
                             }
                             #endregion 处理sql.
 
@@ -689,7 +686,7 @@ namespace BP.Web.Comm.UC.WF
 
             //处理装载前填充.
             this.LoadData(mattrs,en);
-            this.Add("<table id=tabForm width='500px' align=center >");
+            this.Add("<table id=tabForm  align=center >");
             string appPath = this.Page.Request.ApplicationPath;
             foreach (GroupField gf in gfs)
             {

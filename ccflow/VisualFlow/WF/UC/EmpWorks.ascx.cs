@@ -66,10 +66,10 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         string groupVals = "";
         foreach (DataRow dr in dt.Rows)
         {
-            if (groupVals.Contains("@" + dr[this.GroupBy]))
+            if (groupVals.Contains("@" + dr[this.GroupBy].ToString()+"," ))
                 continue;
 
-            groupVals += "@" + dr[this.GroupBy];
+            groupVals += "@" + dr[this.GroupBy].ToString()+",";
         }
         int colspan = 9;
         this.Pub1.AddTable("border=1px align=center width='960px' ");
@@ -84,11 +84,11 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         if (this.GroupBy != "NodeName")
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=NodeName' >" + this.ToE("NodeName", "节点") + "</a>");
 
-
         if (this.GroupBy != "Starter")
             this.Pub1.AddTDTitle("<a href='" + this.PageID + ".aspx?GroupBy=Starter' >" + this.ToE("Starter", "发起人") + "</a>");
 
         this.Pub1.AddTDTitle(this.ToE("RDT", "发起日期"));
+
         //  this.Pub1.AddTDTitle("发送人");
         this.Pub1.AddTDTitle(this.ToE("ADT", "接受日期"));
         this.Pub1.AddTDTitle(this.ToE("SDT", "期限"));
@@ -107,12 +107,12 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
 
             gIdx++;
             this.Pub1.AddTR();
-            this.Pub1.AddTD("colspan="+colspan+" class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g + "</b>");
+            this.Pub1.AddTD("colspan="+colspan+" class=Sum onclick=\"GroupBarClick('" + gIdx + "')\" ", "<div style='text-align:left; float:left' ><img src='./Style/Min.gif' alert='Min' id='Img" + gIdx + "'   border=0 />&nbsp;<b>" + g.Replace(",","") + "</b>");
             this.Pub1.AddTREnd();
 
             foreach (DataRow dr in dt.Rows)
             {
-                if (dr[this.GroupBy].ToString() != g)
+                if (dr[this.GroupBy].ToString()+"," !=g )
                     continue;
 
                 string sdt = dr["SDT"] as string;
