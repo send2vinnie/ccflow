@@ -186,7 +186,10 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 
 
 8. 如果遇到流程设计器打开出错误，请如下方式解决
-    打开:
+
+    1, 如果你能够正常使用 http://demo.ccflow.org 上的演示环境，就说明你的IE 没有问题, 如果不能就要重新按装本机上的silverlight.
+
+    2, 打开:
     http://localhost/ccflow/WF/Admin/XAP/WebService.asmx?op=CfgKey
 
     在文本框中输入aaaa ,如果不能正确的返回xml值，仔细看看错误，有可能提示访问临时目录权限不够. 
