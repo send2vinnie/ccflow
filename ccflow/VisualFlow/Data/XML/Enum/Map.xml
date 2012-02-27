@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" standalone="yes"?>
 <NewDataSet>
   <Item Key="DtlShowModel"
-    CH="@0=表格@1=卡片"
+    CH="@0=表格@1=卡片(自由模式)@2=卡片(傻瓜模式)"
     EN=""
     JP=""
     RU=""    />
