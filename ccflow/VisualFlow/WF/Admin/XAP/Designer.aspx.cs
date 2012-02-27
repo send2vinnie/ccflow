@@ -39,6 +39,10 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion 测试数据库是否连接成功。
 
+            #region 升级 DtlShowModel 2012-02-27
+            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DtlShowModel'");
+            #endregion
+
 
             try
             {

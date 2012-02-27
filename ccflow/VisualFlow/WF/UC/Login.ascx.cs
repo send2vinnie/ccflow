@@ -41,6 +41,8 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         if (this.DoType == "Logout")
         {
             BP.Web.WebUser.Exit();
+            this.Response.Redirect(this.PageID + ".aspx", true);
+            return;
         }
 
         WebUser.SysLang = this.Lang;

@@ -435,8 +435,13 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
                             me.Delete();
                             continue;
                         }
+
                         ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
+                        if (ddlPerant.Items.Count == 0)
+                            continue;
+
                         string val = ddlPerant.SelectedItemStringVal;
+
                         string valC1 = ddlChild.SelectedItemStringVal;
                         DataTable dt = DBAccess.RunSQLReturnTable(me.Doc.Replace("@Key", val));
                         ddlChild.Items.Clear();

@@ -586,7 +586,18 @@ namespace BP.Web.Comm.UC.WF
 
                         if (string.IsNullOrEmpty(sql) == false)
                         {
-                            dt = DBAccess.RunSQLReturnTable(sql);
+                            if (sql.Contains("@"))
+                                throw new Exception("设置的sql有错误可能有没有替换的变量:"+sql);
+
+                            try
+                            {
+                                dt = DBAccess.RunSQLReturnTable(sql);
+                            }
+                            catch (Exception ex)
+                            {
+                                throw new Exception(ex.Message);
+                            }
+
                             if (dt.Rows.Count == 1)
                             {
                                 DataRow dr = dt.Rows[0];
@@ -638,7 +649,18 @@ namespace BP.Web.Comm.UC.WF
                             if (string.IsNullOrEmpty(sql))
                                 continue;
 
-                            dt = DBAccess.RunSQLReturnTable(sql);
+                            if (sql.Contains("@"))
+                                throw new Exception("设置的sql有错误可能有没有替换的变量:" + sql);
+
+                            try
+                            {
+                                dt = DBAccess.RunSQLReturnTable(sql);
+                            }
+                            catch(Exception ex)
+                            {
+                                throw new Exception(ex.Message);
+                            }
+
                             foreach (DataRow dr in dt.Rows)
                             {
                                 GEDtl gedtl = gedtls.GetNewEntity as GEDtl;

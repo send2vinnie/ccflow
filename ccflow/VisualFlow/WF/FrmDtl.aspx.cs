@@ -90,6 +90,9 @@ public partial class WF_FrmDtl : System.Web.UI.Page
             dtlEn.SetValByKey(mattr.KeyOfEn, mattr.DefVal);
         }
 
+        this.Btn_Save.UseSubmitBehavior = false;
+        this.Btn_Save.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+
         //dtlEn.ResetDefaultVal();
 
         this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, this.IsReadonly);
@@ -113,34 +116,34 @@ public partial class WF_FrmDtl : System.Web.UI.Page
             MapDtl dtl = new MapDtl(this.FK_MapData);
             GEDtl dtlEn = dtl.HisGEDtl;
             dtlEn.SetValByKey("OID", this.OID);
-           int i =  dtlEn.RetrieveFromDBSources();
-
+            int i = dtlEn.RetrieveFromDBSources();
             dtlEn = this.UCEn1.Copy(dtlEn) as GEDtl;
+            dtlEn.SetValByKey(GEDtlAttr.RefPK, this.WorkID);
 
-            FrmEvents fes = new FrmEvents(this.FK_MapData);
-            fes.DoEventNode(FrmEventList.SaveBefore, dtlEn);
             if (i == 0)
-                dtlEn.Insert();
-            else
-                dtlEn.Update();
-
-            fes.DoEventNode(FrmEventList.SaveAfter, dtlEn);
-
-            if (fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveAfter) == true
-                || fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveBefore) == true)
             {
-                /*如果包含保存*/
-                // /FrmDtl.aspx?FK_MapData=ND11699Dtl1&WorkID=2078&OID=7365&IsReadonly=False
-                this.Response.Redirect(this.Request.RawUrl, true);
-                 //this.Response.Redirect("FrmDtl.aspx?WorkID=" + this.WorkID + "&FK_MapData=" + this.FK_MapData + "&IsReadonly="+this.IsReadonly, true);
+                dtlEn.OID = 0;
+                dtlEn.Insert();
             }
+            else
+            {
+                dtlEn.Update();
+            }
+
+            this.Response.Redirect("FrmDtl.aspx?WorkID=" + dtlEn.RefPK + "&FK_MapData=" + this.FK_MapData + "&IsReadonly=" + this.IsReadonly+"&OID="+dtlEn.OID, true);
+
+            //if (fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveAfter) == true
+            //    || fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveBefore) == true)
+            //{
+            //    /*如果包含保存*/
+            //    // /FrmDtl.aspx?FK_MapData=ND11699Dtl1&WorkID=2078&OID=7365&IsReadonly=False
+            //    this.Response.Redirect(this.Request.RawUrl, true);
+            //    //this.Response.Redirect("FrmDtl.aspx?WorkID=" + this.WorkID + "&FK_MapData=" + this.FK_MapData + "&IsReadonly="+this.IsReadonly, true);
+            //}
         }
         catch (Exception ex)
         {
             this.UCEn1.AddMsgOfWarning("error:", ex.Message);
         }
-
-
     }
-     
 }
