@@ -551,133 +551,113 @@ namespace BP.Web.Comm.UC.WF
             #endregion 多对多的关系
         }
         public MapExts mes = null;
-        private void LoadData(MapAttrs mattrs,Entity en)
+        private void LoadData(MapAttrs mattrs, Entity en)
         {
             this.LinkFields = "";
-            #region 处理装载前的填充。
-            if (mes.Count >= 1)
+            if (mes.Count == 0)
+                return;
+            foreach (MapExt myitem in mes)
             {
-                DataTable dt = null;
-                foreach (MapExt item in mes)
+                if (myitem.ExtType == MapExtXmlList.Link)
+                    this.LinkFields += "," + myitem.AttrOfOper + ",";
+            }
+
+
+            MapExt item = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.PageLoadFull) as MapExt;
+            if (item == null)
+                return;
+
+            DataTable dt = null;
+            string sql = item.Tag;
+            if (string.IsNullOrEmpty(sql) == false)
+            {
+                /* 如果有填充主表的sql  */
+                #region 处理sql变量
+                sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
+                sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
+                foreach (MapAttr attr in mattrs)
                 {
-                    if (item.ExtType == MapExtXmlList.Link)
-                        this.LinkFields += "," + item.AttrOfOper + ",";
+                    if (sql.Contains("@"))
+                        sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                    else
+                        break;
+                }
+                #endregion 处理sql变量
 
-                    if (item.ExtType != MapExtXmlList.PageLoadFull)
-                        continue;
-
-                    string sql = item.Tag;
-                    if (string.IsNullOrEmpty(sql) == false)
+                if (string.IsNullOrEmpty(sql) == false)
+                {
+                    if (sql.Contains("@"))
+                        throw new Exception("设置的sql有错误可能有没有替换的变量:" + sql);
+                    dt = DBAccess.RunSQLReturnTable(sql);
+                    if (dt.Rows.Count == 1)
                     {
-                        /* 如果有填充主表的sql  */
-                        #region 处理sql变量
-                        sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
-                        sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
-                        sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
-                        sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
-                        foreach (MapAttr attr in mattrs)
+                        DataRow dr = dt.Rows[0];
+                        foreach (DataColumn dc in dt.Columns)
                         {
-                            if (sql.Contains("@"))
-                                sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
-                            else
-                                break;
-                        }
-                        #endregion 处理sql变量
-
-                        if (string.IsNullOrEmpty(sql) == false)
-                        {
-                            if (sql.Contains("@"))
-                                throw new Exception("设置的sql有错误可能有没有替换的变量:"+sql);
-
-                            try
-                            {
-                                dt = DBAccess.RunSQLReturnTable(sql);
-                            }
-                            catch (Exception ex)
-                            {
-                                throw new Exception(ex.Message);
-                            }
-
-                            if (dt.Rows.Count == 1)
-                            {
-                                DataRow dr = dt.Rows[0];
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    en.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
-                                }
-                            }
-                        }
-                    }
-
-                    if (string.IsNullOrEmpty(item.Tag1))
-                        continue;
-
-                    // 填充明细表.
-                    foreach (MapDtl dtl in dtls)
-                    {
-                        string[] sqls = item.Tag1.Split('*');
-                        foreach (string mysql in sqls)
-                        {
-                            if (string.IsNullOrEmpty(mysql))
-                                continue;
-
-                            if (mysql.Contains(dtl.No + "=") == false)
-                                continue;
-
-                            GEDtls gedtls = new GEDtls(dtl.No);
-                            gedtls.Delete(GEDtlAttr.RefPK, en.PKVal);
-
-                            //if (gedtls.Retrieve(GEDtlAttr.RefPK, (int)en.PKVal) != 0)
-                            //    continue;
-
-                            #region 处理sql.
-                            sql = mysql;
-                            sql = sql.Replace(dtl.No + "=", "");
-                            sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
-                            sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
-                            sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
-                            sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
-                            foreach (MapAttr attr in mattrs)
-                            {
-                                if (sql.Contains("@"))
-                                    sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
-                                else
-                                    break;
-                            }
-                            #endregion 处理sql.
-
-                            if (string.IsNullOrEmpty(sql))
-                                continue;
-
-                            if (sql.Contains("@"))
-                                throw new Exception("设置的sql有错误可能有没有替换的变量:" + sql);
-
-                            try
-                            {
-                                dt = DBAccess.RunSQLReturnTable(sql);
-                            }
-                            catch(Exception ex)
-                            {
-                                throw new Exception(ex.Message);
-                            }
-
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                GEDtl gedtl = gedtls.GetNewEntity as GEDtl;
-                                foreach (DataColumn dc in dt.Columns)
-                                {
-                                    gedtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
-                                }
-                                gedtl.RefPK = en.PKVal.ToString();
-                                gedtl.RDT = DataType.CurrentDataTime;
-                                gedtl.Rec = WebUser.No;
-                                gedtl.Insert();
-                            }
+                            en.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
                         }
                     }
                 }
             }
-            #endregion 处理装载前的填充.
+
+            if (string.IsNullOrEmpty(item.Tag1))
+                return;
+
+            // 填充明细表.
+            foreach (MapDtl dtl in dtls)
+            {
+                string[] sqls = item.Tag1.Split('*');
+                foreach (string mysql in sqls)
+                {
+                    if (string.IsNullOrEmpty(mysql))
+                        continue;
+
+                    if (mysql.Contains(dtl.No + "=") == false)
+                        continue;
+
+                    GEDtls gedtls = new GEDtls(dtl.No);
+                    gedtls.Delete(GEDtlAttr.RefPK, en.PKVal);
+
+
+                    #region 处理sql.
+                    sql = mysql;
+                    sql = sql.Replace(dtl.No + "=", "");
+                    sql = sql.Replace("@WebUser.No", BP.Web.WebUser.No);
+                    sql = sql.Replace("@WebUser.Name", BP.Web.WebUser.Name);
+                    sql = sql.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+                    sql = sql.Replace("@WebUser.FK_DeptName", BP.Web.WebUser.FK_DeptName);
+                    foreach (MapAttr attr in mattrs)
+                    {
+                        if (sql.Contains("@"))
+                            sql = sql.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+                        else
+                            break;
+                    }
+                    #endregion 处理sql.
+
+                    if (string.IsNullOrEmpty(sql))
+                        continue;
+
+                    if (sql.Contains("@"))
+                        throw new Exception("设置的sql有错误可能有没有替换的变量:" + sql);
+
+                    dt = DBAccess.RunSQLReturnTable(sql);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        GEDtl gedtl = gedtls.GetNewEntity as GEDtl;
+                        foreach (DataColumn dc in dt.Columns)
+                        {
+                            gedtl.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                        }
+                        gedtl.RefPK = en.PKVal.ToString();
+                        gedtl.RDT = DataType.CurrentDataTime;
+                        gedtl.Rec = WebUser.No;
+                        gedtl.Insert();
+                    }
+                }
+            }
         }
         public void BindColumn4(Entity en, string enName)
         {
