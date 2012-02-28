@@ -229,9 +229,7 @@ namespace SMSServices
         public void SendMail(BP.TA.SMS sms)
         {
             System.Net.Mail.MailMessage myEmail = new System.Net.Mail.MailMessage();
-            myEmail.From = new MailAddress("ccflow.cn@gmail.com", "ccflow", System.Text.Encoding.UTF8);
-           // myEmail.From = new MailAddress("pengzhou86@gmail.com", "public", System.Text.Encoding.UTF8);
-
+            myEmail.From = new MailAddress("ccflow.cn@gmail.com", "ccflow123", System.Text.Encoding.UTF8);
 
             myEmail.To.Add( sms.Email);
             myEmail.Subject = sms.EmailTitle;

@@ -46,26 +46,36 @@ namespace SMSServices
         }
         public static void LoadConfigByFile()
         {
-          //  BP.WF.Glo.IntallPath = PathOfVisualFlow;
+          //BP.WF.Glo.IntallPath = PathOfVisualFlow;
 
             BP.SystemConfig.IsBSsystem_Test = false;
             BP.SystemConfig.IsBSsystem = false;
             SystemConfig.IsBSsystem = false;
 
-
             string path = PathOfVisualFlow + "\\web.config"; //如果有这个文件就装载它。
             if (System.IO.File.Exists(path) == false)
-                throw new Exception("配置文件没有找到:" + path);
-
+            {
+                MessageBox.Show("配置文件没有找到:" + path);
+                return;
+                //throw new Exception("配置文件没有找到:" + path);
+            }
 
             BP.DA.ClassFactory.LoadConfig(path);
             try
             {
-                BP.Port.Emp em = new BP.Port.Emp("admin");
+                try
+                {
+                    BP.Port.Emp em = new BP.Port.Emp("admin");
+                }
+                catch
+                {
+                    BP.Port.Emp em = new BP.Port.Emp("admin");
+                }
             }
-            catch
+            catch(Exception ex)
             {
-                BP.Port.Emp em = new BP.Port.Emp("admin");
+                MessageBox.Show("连接数据库出现异常:" + ex.Message);
+                return;
             }
 
             BP.SystemConfig.IsBSsystem_Test = false;
