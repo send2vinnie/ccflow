@@ -25,14 +25,14 @@ namespace BP.WF
             DataTable dt = BP.DBLoad.GetTableByExt(xlsFile);
             string err = "";
             string info = "";
-            
+
             foreach (DataRow dr in dt.Rows)
             {
                 string flowPK = dr["FlowPK"].ToString();
                 string starter = dr["Starter"].ToString();
                 string executer = dr["Executer"].ToString();
 
-                int toNode = int.Parse(dr["ToNodeID"].ToString().Replace("ND",""));
+                int toNode = int.Parse(dr["ToNodeID"].ToString().Replace("ND", ""));
                 Node nd = new Node();
                 nd.NodeID = toNode;
                 if (nd.RetrieveFromDBSources() == 0)
@@ -45,13 +45,20 @@ namespace BP.WF
                 if (i == 1)
                     continue; // 此数据已经调度了。
 
-                BP.Port.Emp emp = new BP.Port.Emp(starter);
+                BP.Port.Emp emp = new BP.Port.Emp();
+                emp.No = starter;
+                if (emp.IsExits == false)
+                {
+                    info += "@账号:" + starter + ",不存在。";
+                    continue;
+                }
                 BP.Web.WebUser.SignInOfGener(emp);
 
                 Flow fl = nd.HisFlow;
                 Work wk = fl.NewWork();
                 foreach (DataColumn dc in dt.Columns)
                     wk.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                wk.Update();
 
                 Node ndStart = nd.HisFlow.HisStartNode;
                 WorkNode wn = new WorkNode(wk, ndStart);
@@ -69,7 +76,6 @@ namespace BP.WF
             }
             return info + err;
         }
-
         public static string LoadFlowDataWithToSpecEndNode(string xlsFile)
         {
             DataTable dt = BP.DBLoad.GetTableByExt(xlsFile);
@@ -81,7 +87,6 @@ namespace BP.WF
                 string flowPK = dr["FlowPK"].ToString();
                 string starter = dr["Starter"].ToString();
                 string executer = dr["Executer"].ToString();
-
                 int toNode = int.Parse(dr["ToNodeID"].ToString().Replace("ND", ""));
                 Node nd = new Node();
                 nd.NodeID = toNode;
@@ -103,13 +108,47 @@ namespace BP.WF
                     continue; // 此数据已经调度了。
 
                 //发起人发起。
-                BP.Port.Emp emp = new BP.Port.Emp(starter);
+                BP.Port.Emp emp = new BP.Port.Emp();
+                emp.No = executer;
+                if (emp.RetrieveFromDBSources() == 0)
+                {
+                    info += "@账号:" + starter + ",不存在。";
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(emp.FK_Dept))
+                {
+                    info += "@账号:" + starter + ",没有设置部门。";
+                    continue;
+                }
+
+
+                emp = new BP.Port.Emp();
+                emp.No = starter;
+                if (emp.RetrieveFromDBSources()==0)
+                {
+                    info += "@账号:" + starter + ",不存在。";
+                    continue;
+                }
+                else
+                {
+                    emp.RetrieveFromDBSources();
+                    if (string.IsNullOrEmpty(emp.FK_Dept))
+                    {
+                        info += "@账号:" + starter + ",没有设置部门。";
+                        continue;
+                    }
+                }
+
+
+
                 BP.Web.WebUser.SignInOfGener(emp);
 
                 Flow fl = nd.HisFlow;
                 Work wk = fl.NewWork();
                 foreach (DataColumn dc in dt.Columns)
                     wk.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                wk.Update();
 
                 Node ndStart = nd.HisFlow.HisStartNode;
                 WorkNode wn = new WorkNode(wk, ndStart);
@@ -134,7 +173,7 @@ namespace BP.WF
                 Work wkEnd = nd.GetWork(wk.OID);
                 foreach (DataColumn dc in dt.Columns)
                     wkEnd.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
-
+                wkEnd.Update();
                 try
                 {
                     WorkNode wnEnd = new WorkNode(wkEnd, nd);

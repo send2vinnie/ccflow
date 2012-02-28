@@ -313,5 +313,19 @@ namespace SMSServices
             BP.WF.Flow fl = new BP.WF.Flow("040");
             BP.WF.Dev2Interface.DTS_AutoStarterFlow(fl);
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            // 把流程运行到最后的节点上去，并且结束流程。
+            string file = @"C:\aa\开票流程-流程已完成.xls";
+            string info = BP.WF.Glo.LoadFlowDataWithToSpecEndNode(file);
+            BP.DA.Log.DefaultLogWriteLineInfo(info);
+
+            file = @"C:\aa\开票流程-流程未完成.xls";
+            info = BP.WF.Glo.LoadFlowDataWithToSpecNode(file);
+            BP.DA.Log.DefaultLogWriteLineInfo(info);
+
+            MessageBox.Show("执行成功。");
+        }
     }
 }

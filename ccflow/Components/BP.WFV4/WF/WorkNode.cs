@@ -91,7 +91,7 @@ namespace BP.WF
         {
             get
             {
-                if (_VirPath == null)
+                if (_VirPath == null && BP.SystemConfig.IsBSsystem)
                     _VirPath = System.Web.HttpContext.Current.Request.ApplicationPath ;
                 return _VirPath;
             }
@@ -3179,10 +3179,13 @@ namespace BP.WF
         /// <param name="gwls"></param>
         public void AddIntoWacthDog(WorkerLists gwls)
         {
-            string basePath = "http://" + System.Web.HttpContext.Current.Request.Url.Host;
-            basePath += "/"+System.Web.HttpContext.Current.Request.ApplicationPath;
+            if (BP.SystemConfig.IsBSsystem == false)
+                return;
 
-            string mailTemp = BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfDataUser + "\\EmailTemplete\\"+WebUser.SysLang+".txt");
+            string basePath = "http://" + System.Web.HttpContext.Current.Request.Url.Host;
+            basePath += "/" + System.Web.HttpContext.Current.Request.ApplicationPath;
+
+            string mailTemp = BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfDataUser + "\\EmailTemplete\\" + WebUser.SysLang + ".txt");
             foreach (WorkerList wl in gwls)
             {
                 if (wl.IsEnable == false)
@@ -3221,7 +3224,6 @@ namespace BP.WF
             wd.FK_Station=this.HisStationOfUse.No;
             wd.Save();
             */
-
         }
         /// <summary>
         /// 会签节点是否全部完成？

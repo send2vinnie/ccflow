@@ -469,6 +469,9 @@ namespace BP.Web
             if (string.IsNullOrEmpty(s) == false)
                 return s;
 
+            if (BP.SystemConfig.IsBSsystem==false)
+                return null;
+
             string key = "CCS";
             HttpCookie hc = System.Web.HttpContext.Current.Request.Cookies[key];
             if (hc == null)
@@ -507,6 +510,13 @@ namespace BP.Web
                 if (string.IsNullOrEmpty(s))
                 {
                     s =WebUser.GetValFromSessionOrCookies("FK_Dept");
+                    if (s == null)
+                    {
+                        s = DBAccess.RunSQLReturnStringIsNull("SELECT FK_Dept FROM Port_Emp WHERE No='"+WebUser.No+"'",null);
+                        if (string.IsNullOrEmpty(s))
+                            throw new Exception("@人员("+WebUser.No+")没有设置部门。");
+                        SetSessionByKey("FK_Dept", s);
+                    }
                 }
                 return s;
             }
@@ -811,6 +821,9 @@ namespace BP.Web
         {
             get
             {
+                if (BP.SystemConfig.IsBSsystem == false)
+                    return false;
+
                 int s = (int)GetSessionByKey("IsWap", 9);
                 if (s == 9)
                 {
