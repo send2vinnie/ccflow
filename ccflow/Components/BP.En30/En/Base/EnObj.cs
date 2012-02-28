@@ -979,7 +979,9 @@ namespace BP.En
                 // throw new Exception(this.ToString()+"求PK");
                 foreach (Attr attr in this.EnMap.Attrs)
                 {
-                    if (attr.MyFieldType == FieldType.PK || attr.MyFieldType == FieldType.PKEnum || attr.MyFieldType == FieldType.PKFK)
+                    if (attr.MyFieldType == FieldType.PK 
+                        || attr.MyFieldType == FieldType.PKEnum 
+                        || attr.MyFieldType == FieldType.PKFK)
                         return attr.Field;
                 }
                 throw new Exception("@没有给【" + this.EnDesc + "】定义主键。");

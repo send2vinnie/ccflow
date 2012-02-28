@@ -104,6 +104,13 @@ namespace BP.WF
 	public class GenerWorkFlow : Entity
 	{	
 		#region 基本属性
+        public override string PK
+        {
+            get
+            {
+                return GenerWorkFlowAttr.WorkID;
+            }
+        }
         ///// <summary>
         ///// HisFlow
         ///// </summary>
@@ -394,6 +401,7 @@ namespace BP.WF
                 map.EnDesc =  "未完成流程";
 
                 map.AddTBIntPK(GenerWorkFlowAttr.WorkID, 0, "WorkID", true, true);
+
                 map.AddTBInt(GenerWorkFlowAttr.FID, 0, "流程ID", true, true);
 
                 map.AddTBString(GenerWorkFlowAttr.FK_FlowSort, null, "流程类别", true, false, 0, 500, 10);

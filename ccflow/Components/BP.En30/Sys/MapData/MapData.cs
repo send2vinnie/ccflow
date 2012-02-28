@@ -1030,6 +1030,7 @@ namespace BP.Sys
                 catch
                 {
                 }
+                dtl.Delete();
             }
             #endregion
 

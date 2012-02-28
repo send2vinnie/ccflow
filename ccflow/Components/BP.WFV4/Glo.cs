@@ -102,6 +102,7 @@ namespace BP.WF
                 if (i == 1)
                     continue; // 此数据已经调度了。
 
+                //发起人发起。
                 BP.Port.Emp emp = new BP.Port.Emp(starter);
                 BP.Web.WebUser.SignInOfGener(emp);
 
@@ -125,6 +126,8 @@ namespace BP.WF
                     continue;
                 }
 
+
+                //结束点结束。
                 emp = new BP.Port.Emp(executer);
                 BP.Web.WebUser.SignInOfGener(emp);
 
@@ -135,7 +138,7 @@ namespace BP.WF
                 try
                 {
                     WorkNode wnEnd = new WorkNode(wkEnd, nd);
-                    wnEnd.AfterNodeSave();
+                  //  wnEnd.AfterNodeSave();
                     info += "<hr>" + wnEnd.AfterNodeSave();
                 }
                 catch (Exception ex)

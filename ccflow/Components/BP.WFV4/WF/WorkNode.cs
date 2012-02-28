@@ -2477,52 +2477,27 @@ namespace BP.WF
                         GenerWorkFlow gwf = new GenerWorkFlow();
                         gwf.FID = this.WorkID;
                         gwf.WorkID = mywk.OID;
+                        gwf.Title = this.GenerTitle(this.HisWork);
 
-                        if (BP.WF.Glo.IsShowUserNoOnly == false)
-                            gwf.Title = WebUser.No + "," + WebUser.Name + " 发起：" + toNode.Name + "(分流节点)";
-                        else
-                            gwf.Title = WebUser.No + " 发起：" + toNode.Name + "(分流节点)";
+                        //if (BP.WF.Glo.IsShowUserNoOnly == false)
+                        //    gwf.Title = WebUser.No + "," + WebUser.Name + " 发起：" + toNode.Name + "(分流节点)";
+                        //else
+                        //    gwf.Title = WebUser.No + " 发起：" + toNode.Name + "(分流节点)";
 
                         gwf.WFState = 0;
                         gwf.RDT = DataType.CurrentDataTime;
                         gwf.Rec = Web.WebUser.No;
                         gwf.RecName = Web.WebUser.Name;
-
                         gwf.FK_Flow = toNode.FK_Flow;
                         gwf.FlowName = toNode.FlowName;
-
+                        gwf.FID = this.WorkID;
                         gwf.FK_FlowSort = toNode.HisFlow.FK_FlowSort;
                         gwf.FK_Node =  toNode.NodeID;
                         gwf.NodeName = toNode.Name;
                         gwf.FK_Dept = wl.FK_Dept;
                         gwf.DeptName = wl.FK_DeptT;
-
-                        // 判断历史轨迹里面是否有这个数据.
-                        if (isHaveEmp)
-                        {
-                            if (gwf.Update() == 0)
-                            {
-                                try
-                                {
-                                    gwf.DirectInsert();
-                                }
-                                catch
-                                {
-                                    gwf.DirectUpdate();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            try
-                            {
-                                gwf.DirectInsert();
-                            }
-                            catch
-                            {
-                                gwf.DirectUpdate();
-                            }
-                        }
+                        gwf.DirectInsert();
+                         
                         DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET WorkID=" + mywk.OID + ",FID=" + this.WorkID + " WHERE FK_Emp='" + wl.FK_Emp + "' AND WorkID=" + this.WorkID + " AND FK_Node=" + toNode.NodeID);
                     }
                     break;
@@ -2683,7 +2658,38 @@ namespace BP.WF
             }
         }
         #endregion
+        public string GenerTitle(Work wk)
+        {
+            // 生成标题.
+            Attr myattr = this.HisWork.EnMap.Attrs.GetAttrByKey("Title");
+            if (myattr == null)
+                myattr = this.HisWork.EnMap.Attrs.GetAttrByKey("Title");
 
+            string titleRole = "";
+            if (myattr != null)
+                titleRole = myattr.DefaultVal.ToString();
+
+            if (string.IsNullOrEmpty(titleRole) || titleRole.Contains("@") == false)
+                titleRole = "@WebUser.FK_DeptName - @WebUser.No,@WebUser.Name在@RDT发起.";
+
+            titleRole = titleRole.Replace("@WebUser.No", WebUser.No);
+            titleRole = titleRole.Replace("@WebUser.Name", WebUser.Name);
+            titleRole = titleRole.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+            titleRole = titleRole.Replace("@RDT", DateTime.Now.ToString("MM月dd日HH时mm分"));
+            if (titleRole.Contains("@"))
+            {
+                foreach (Attr attr in wk.EnMap.Attrs)
+                {
+                    if (titleRole.Contains("@") == false)
+                        break;
+                    if (attr.IsFKorEnum)
+                        continue;
+                    titleRole = titleRole.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
+                }
+            }
+            wk.SetValByKey("Title", titleRole);
+            return titleRole;
+        }
         public GEEntity rptGe = null;
         private void InitStartWorkData()
         {
@@ -2691,25 +2697,9 @@ namespace BP.WF
             GenerWorkFlow gwf = new GenerWorkFlow();
             gwf.WorkID = this.HisWork.OID;
 
-            string title = this.HisFlow.TitleRole;
-            title = title.Replace("@WebUser.No", WebUser.No);
-            title = title.Replace("@WebUser.Name", WebUser.Name);
-            title = title.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
-            title = title.Replace("@RDT", DateTime.Now.ToString("MM月dd日HH时mm分"));
-            if (title.Contains("@"))
-            {
-                foreach (Attr attr in this.HisWork.EnMap.Attrs)
-                {
-                    if (title.Contains("@") == false)
-                        break;
-                    if (attr.IsFKorEnum)
-                        continue;
-                    title = title.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
-                }
-            }
-            this.HisWork.SetValByKey(StartWorkAttr.Title, title);
+           //this.HisWork.SetValByKey(StartWorkAttr.Title, title);
 
-            gwf.Title = title;
+            gwf.Title = this.GenerTitle(this.HisWork);
             gwf.WFState = 0;
             gwf.RDT = this.HisWork.RDT;
             gwf.Rec = Web.WebUser.No;
@@ -2719,7 +2709,7 @@ namespace BP.WF
             gwf.FlowName = this.HisNode.FlowName;
 
             gwf.FK_FlowSort = this.HisNode.HisFlow.FK_FlowSort;
-
+            
             gwf.FK_Node = this.HisNode.NodeID;
             gwf.NodeName = this.HisNode.Name;
 
@@ -2857,8 +2847,8 @@ namespace BP.WF
                 rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No);
                 rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
                 rptGe.SetValByKey(GERptAttr.WFState, 0);
-                rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
                 rptGe.Copy(this.HisWork);
+                rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
                 rptGe.Insert();
             }
             else
@@ -3361,11 +3351,11 @@ namespace BP.WF
                         DataTable dt = DBAccess.RunSQLReturnTable("SELECT b.No,b.Name FROM WF_GenerWorkerList a,Port_Emp b WHERE a.FK_Emp=b.No AND IsPass=0 AND FID=" + this.HisWork.OID);
                         if (dt.Rows.Count != 0)
                         {
-                           int i=  BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET FID=0 WHERE FID=WorkID AND WorkID="+this.WorkID);
-                           if (i == 1)
-                           {
-                               //  this.HisWorkFlow.FID = 0;
-                           }
+                            int i = BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET FID=0 WHERE FID=WorkID AND WorkID=" + this.WorkID);
+                            if (i == 1)
+                            {
+                                //  this.HisWorkFlow.FID = 0;
+                            }
 
                             dt = DBAccess.RunSQLReturnTable("SELECT b.No,b.Name FROM WF_GenerWorkerList a,Port_Emp b WHERE a.FK_Emp=b.No AND IsPass=0 AND FID=" + this.HisWork.OID);
                             if (dt.Rows.Count != 0)
@@ -3537,18 +3527,16 @@ namespace BP.WF
                 WorkerLists gwls = this.GenerWorkerLists(town);
                 foreach (WorkerList wl in gwls)
                 {
-                    msg += wl.FK_Emp+"，"+ wl.FK_EmpText + "、";
+                    msg += wl.FK_Emp + "，" + wl.FK_EmpText + "、";
 
                     // 产生工作的信息。
                     GenerWorkFlow gwf = new GenerWorkFlow();
                     gwf.FID = this.WorkID;
                     gwf.WorkID = wk.OID;
 
-                    #warning 需要修改成标题生成规则。
-                    if (BP.WF.Glo.IsShowUserNoOnly==false)
-                        gwf.Title = WebUser.No + "," + WebUser.Name + " 发起：" + nd.Name + "(分流节点)";
-                    else
-                        gwf.Title = WebUser.No + " 发起：" + nd.Name + "(分流节点)";
+#warning 需要修改成标题生成规则。
+                    
+                    gwf.Title = this.GenerTitle(this.HisWork);
 
                     gwf.WFState = 0;
                     gwf.RDT = DataType.CurrentDataTime;
@@ -3558,20 +3546,12 @@ namespace BP.WF
                     gwf.FlowName = nd.FlowName;
 
                     gwf.FK_FlowSort = this.HisNode.HisFlow.FK_FlowSort;
-                     
+
                     gwf.FK_Node = nd.NodeID;
                     gwf.NodeName = nd.Name;
                     gwf.FK_Dept = wl.FK_Dept;
                     gwf.DeptName = wl.FK_DeptT;
-
-                    try
-                    {
-                        gwf.DirectInsert();
-                    }
-                    catch
-                    {
-                        gwf.DirectUpdate();
-                    }
+                    gwf.DirectInsert();
                     DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET WorkID=" + wk.OID + ",FID=" + this.WorkID + " WHERE FK_Emp='" + wl.FK_Emp + "' AND WorkID=" + this.WorkID + " AND FK_Node=" + nd.NodeID);
                 }
             }
@@ -3936,6 +3916,9 @@ namespace BP.WF
         /// <returns></returns>
         private string StartNextWorkNodeHeLiu_WithFID(Node nd)
         {
+            //设置已经通过.
+            DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=1  WHERE WorkID=" + this.WorkID + " AND FID=" + this.HisWork.FID );
+
             string spanNodes = this.SpanSubTheadNodes(nd);
             if (nd.HisFromNodes.Count != 1)
             {

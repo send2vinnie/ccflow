@@ -373,6 +373,9 @@ namespace BP.Web
             if (IsBSMode)
             {
                 string token = WebUser.Token;
+                System.Web.HttpContext.Current.Response.Cookies.Clear();
+                System.Web.HttpContext.Current.Request.Cookies.Clear();
+                return;
 
                 HttpCookie cookie = new HttpCookie("CCS", string.Empty);
                 cookie.Expires = DateTime.Now.AddMinutes(1);

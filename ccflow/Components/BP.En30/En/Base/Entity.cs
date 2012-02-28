@@ -2199,9 +2199,7 @@ namespace BP.En
             switch (SystemConfig.AppCenterDBType)
             {
                 case DBType.SQL2000:
-                    if (this.EnMap.PhysicsTable == "ND58Rpt")
-                        this.CheckPhysicsTableSQL();
-                    else
+                    
                         this.CheckPhysicsTableSQL();
                     return;
                 default:

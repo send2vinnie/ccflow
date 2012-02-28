@@ -1473,9 +1473,9 @@ namespace BP.WF
                 else
                 {
                     if (this.HisFlow.FK_FlowSort != "00")
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + gwf.FID + "&FK_Node=" + gwf.FK_Node + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/WF/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + gwf.FID + "&FK_Node=" + gwf.FK_Node + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                     else
-                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + gwf.FID + "&FK_Node=" + gwf.FK_Node + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/WF/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
+                        return this.ToE("WN23", "@撤消执行成功，您可以点这里") + "<a href='" + this.VirPath + this.AppType + "/MyFlow" + Glo.FromPageType + ".aspx?FK_Flow=" + this.HisFlow.No + "&WorkID=" + this.WorkID + "&FID=" + gwf.FID + "&FK_Node=" + gwf.FK_Node + "'><img src='" + this.VirPath + "/Images/Btn/Do.gif' border=0/>" + this.ToE("DoWork", "执行工作") + "</A> , <a href='" + this.VirPath + "/WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + wn.HisWork.OID + "&FK_Flow=" + this.HisFlow.No + "' /><img src='" + this.VirPath + "/Images/Btn/Delete.gif' border=0/>" + this.ToE("FlowOver", "此流程已经完成(删除它)") + "</a>。" + msg;
                 }
             }
             else
@@ -1662,6 +1662,14 @@ namespace BP.WF
             // 记录日志..
             wnPri.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, wnPri.HisNode.NodeID, wnPri.HisNode.Name, "无");
 
+            // 删除数据.
+            if (wn.HisNode.IsStartNode)
+            {
+                DBAccess.RunSQL("DELETE WF_GenerFH WHERE FID=" + this.WorkID);
+                DBAccess.RunSQL("DELETE WF_GenerWorkFlow WHERE WorkID=" + this.WorkID);
+                DBAccess.RunSQL("DELETE WF_GenerWorkerlist WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nd.NodeID);
+            }
+
 
             #region 恢复工作轨迹，解决工作抢办。
             if (wnPri.HisNode.IsStartNode == false)
@@ -1761,32 +1769,37 @@ namespace BP.WF
 
             // 记录日志..
             WorkNode wn = new WorkNode(wk, nd);
-            wn.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, gwf.FK_Node, gwf.NodeName, "无");
+            wn.AddToTrack(ActionType.Undo, WebUser.No, WebUser.Name, gwf.FK_Node, gwf.NodeName, "");
 
-            // 找出它的下一个节点。
-            sql = "SELECT FK_Node FROM WF_GenerWorkFlow WHERE FID=" + this.WorkID + " AND FK_Node!='" + gwf.FK_Node + "'";
-            dt = DBAccess.RunSQLReturnTable(sql);
-            if (dt.Rows.Count == 0)
-                throw new Exception("system error, pls call administrator.");
 
             // 删除分合流记录。
-            DBAccess.RunSQL("DELETE WF_GenerFH WHERE FID=" + this.WorkID);
-
-            // 删除已经发起的流程。
-            int nextNode = (int)dt.Rows[0][0];
-            DBAccess.RunSQL("DELETE WF_GenerWorkFlow WHERE FID=" + this.WorkID);
+            if (nd.IsStartNode)
+            {
+                DBAccess.RunSQL("DELETE WF_GenerFH WHERE FID=" + this.WorkID);
+                DBAccess.RunSQL("DELETE WF_GenerWorkFlow WHERE WorkID=" + this.WorkID);
+                DBAccess.RunSQL("DELETE WF_GenerWorkerlist WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nd.NodeID);
+            }
 
 
             //删除上一个节点的数据。
-            DBAccess.RunSQL("DELETE WF_GenerWorkerList WHERE FID=" + this.WorkID + " AND FK_Node=" + nextNode);
-            Node ndNext = new Node(nextNode);
+            foreach (Node ndNext in nd.HisToNodes)
+            {
+                int i = DBAccess.RunSQL("DELETE WF_GenerWorkerList WHERE FID=" + this.WorkID + " AND FK_Node=" + ndNext.NodeID);
+                if (i == 0)
+                    continue;
 
-            // 删除工作记录。
-            Works wks = ndNext.HisWorks;
-            wks.Delete(WorkerListAttr.FID, this.WorkID);
+                // 删除工作记录。
+                Works wks = ndNext.HisWorks;
+                wks.Delete(WorkerListAttr.FID, this.WorkID);
+
+                // 删除已经发起的流程。
+                DBAccess.RunSQL("DELETE WF_GenerWorkFlow WHERE FID=" + this.WorkID + " AND FK_Node=" + ndNext.NodeID);
+            }
 
             //设置当前节点。
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node + " AND IsPass=1");
+            BP.DA.DBAccess.RunSQL("UPDATE WF_GenerFH SET FK_Node=" + gwf.FK_Node + " WHERE FID=" + this.WorkID);
+
 
             // 设置当前节点的状态.
             Node cNode = new Node(gwf.FK_Node);
@@ -1856,6 +1869,7 @@ namespace BP.WF
             gwf.Update();
 
             BP.DA.DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE WorkID=" + this.WorkID + " AND FK_Node=" + gwf.FK_Node);
+            BP.DA.DBAccess.RunSQL("UPDATE WF_GenerFH SET FK_Node=" + gwf.FK_Node + " WHERE FID=" + this.WorkID);
 
             ForwardWorks fws = new ForwardWorks();
             fws.Delete(ForwardWorkAttr.FK_Node, wn.HisNode.NodeID.ToString(),

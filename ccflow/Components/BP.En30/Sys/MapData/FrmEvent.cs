@@ -394,7 +394,9 @@ namespace BP.Sys
             if (System.Web.HttpContext.Current != null)
             {
                 string url = System.Web.HttpContext.Current.Request.RawUrl;
-                url = url.Substring(url.IndexOf('?'));
+                if (url.IndexOf('?') != -1)
+                    url = url.Substring(url.IndexOf('?'));
+
                 string[] paras = url.Split('&');
                 foreach (string s in paras)
                 {

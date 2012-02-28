@@ -409,7 +409,10 @@ namespace BP.WF
                 foreach (string str in ht.Keys)
                     sw.SetValByKey(str, ht[str]);
             }
+
             sw.Title = sw.Title + "(自动发起)";
+
+
             sw.SetValByKey("RDT", DataType.CurrentDataTime);
             sw.SetValByKey("CDT", DataType.CurrentDataTime);
             sw.SetValByKey("FK_NY", DataType.CurrentYearMonth);

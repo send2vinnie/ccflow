@@ -58,10 +58,6 @@ namespace BP.WF
             sql = "INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态')";
             BP.DA.DBAccess.RunSQL(sql);
 
-            //删除表单类型.
-            sql = "DELETE Sys_Enum WHERE EnumKey='FormType'";
-            BP.DA.DBAccess.RunSQLs(sql);
-
             // 修复因bug丢失的字段.
             MapDatas mds = new MapDatas();
             mds.RetrieveAll();
@@ -76,6 +72,7 @@ namespace BP.WF
                 }
                 catch(Exception ex)
                 {
+
                 }
 
                 MapAttr attr = new MapAttr();

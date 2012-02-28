@@ -97,7 +97,6 @@ namespace BP.WF.Ext
                 map.AddTBString(BP.WF.FlowAttr.Note, null, this.ToE("Note", "备注"), true, false, 0, 100, 10,true);
                 
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
-                map.AddTBString(FlowAttr.TitleRole, null, "标题生成规则", true, false, 0, 500, 10, true);
 
                 // map.AddBoolean(BP.WF.FlowAttr.CCType, false, "流程完成后抄送参与人员", true, true);
                 // map.AddTBString(BP.WF.FlowAttr.CCStas, null, "要抄送的岗位", false, false, 0, 2000, 10);
