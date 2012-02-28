@@ -229,7 +229,7 @@ namespace SMSServices
         public void SendMail(BP.TA.SMS sms)
         {
             System.Net.Mail.MailMessage myEmail = new System.Net.Mail.MailMessage();
-            myEmail.From = new MailAddress("ccflow.cn@gmail.com", "ccflow123", System.Text.Encoding.UTF8);
+            myEmail.From = new MailAddress("ccflow.cn@gmail.com", "ccflow", System.Text.Encoding.UTF8);
 
             myEmail.To.Add( sms.Email);
             myEmail.Subject = sms.EmailTitle;
@@ -243,7 +243,7 @@ namespace SMSServices
             myEmail.Priority = MailPriority.High;//邮件优先级
 
             SmtpClient client = new SmtpClient();
-            client.Credentials = new System.Net.NetworkCredential("ccflow.cn@gmail.com", "www.ccflow.org");
+            client.Credentials = new System.Net.NetworkCredential("ccflow.cn@gmail.com", "ccflow123");
 
             //上述写你的GMail邮箱和密码
             client.Port = 587;//Gmail使用的端口
