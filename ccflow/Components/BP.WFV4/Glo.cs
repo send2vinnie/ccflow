@@ -114,10 +114,6 @@ namespace BP.WF
             int idx = 0;
             foreach (DataRow dr in dt.Rows)
             {
-                idx++;
-                if (idx == 10)
-                    break;
-
                 string flowPK = dr["FlowPK"].ToString().Trim();
                 if (string.IsNullOrEmpty(flowPK))
                     continue;
