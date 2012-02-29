@@ -266,8 +266,8 @@ namespace BP.Sys
                 map.AddTBString(FrmAttachmentDBAttr.RefPKVal, null, "实体主键", true, false, 0, 50, 20);
 
                 map.AddTBString(FrmAttachmentDBAttr.Sort, null, "类别", true, false, 0, 200, 20);
-                map.AddTBString(FrmAttachmentDBAttr.FileFullName, null, "FileFullName", true, false, 0, 200, 20);
-                map.AddTBString(FrmAttachmentDBAttr.FileName, null,"名称", true, false, 0, 50, 20);
+                map.AddTBString(FrmAttachmentDBAttr.FileFullName, null, "FileFullName", true, false, 0, 700, 20);
+                map.AddTBString(FrmAttachmentDBAttr.FileName, null,"名称", true, false, 0, 500, 20);
                 map.AddTBString(FrmAttachmentDBAttr.FileExts, null, "扩展", true, false, 0, 50, 20);
                 map.AddTBFloat(FrmAttachmentDBAttr.FileSize, 0, "文件大小", true, false);
 

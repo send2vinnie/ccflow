@@ -165,6 +165,10 @@ namespace BP.WF
                 // 删除单据信息.
                 DBAccess.RunSQL("DELETE FROM WF_Bill WHERE WorkID=" + this.WorkID);
 
+                // 删除track.
+                DBAccess.RunSQL("DELETE FROM wf_track WHERE WorkID=" + this.WorkID);
+
+
                 //删除它的工作.
                 DBAccess.RunSQL("DELETE FROM WF_GenerFH WHERE  FID=" + this.WorkID + " AND FK_Flow='" + this.HisFlow.No + "'");
                 DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + " ) AND FK_Flow='" + this.HisFlow.No + "'");

@@ -31,7 +31,6 @@ namespace BP.WF
                 string flowPK = dr["FlowPK"].ToString();
                 string starter = dr["Starter"].ToString();
                 string executer = dr["Executer"].ToString();
-
                 int toNode = int.Parse(dr["ToNodeID"].ToString().Replace("ND", ""));
                 Node nd = new Node();
                 nd.NodeID = toNode;
@@ -45,19 +44,45 @@ namespace BP.WF
                 if (i == 1)
                     continue; // 此数据已经调度了。
 
+                #region 检查数据是否完整。
+              
+
                 BP.Port.Emp emp = new BP.Port.Emp();
-                emp.No = starter;
-                if (emp.IsExits == false)
+                emp.No = executer;
+                if (emp.RetrieveFromDBSources() == 0)
                 {
-                    info += "@账号:" + starter + ",不存在。";
+                    err += "@账号:" + starter + ",不存在。";
                     continue;
                 }
-                BP.Web.WebUser.SignInOfGener(emp);
+                if (string.IsNullOrEmpty(emp.FK_Dept))
+                {
+                    err += "@账号:" + starter + ",没有部门。";
+                    continue;
+                }
 
+                emp.No = starter;
+                if (emp.RetrieveFromDBSources() == 0)
+                {
+                    err += "@账号:" + executer + ",不存在。";
+                    continue;
+                }
+                if (string.IsNullOrEmpty(emp.FK_Dept))
+                {
+                    err += "@账号:" + executer + ",没有部门。";
+                    continue;
+                }
+                #endregion 检查数据是否完整。
+
+                BP.Web.WebUser.SignInOfGener(emp);
                 Flow fl = nd.HisFlow;
                 Work wk = fl.NewWork();
                 foreach (DataColumn dc in dt.Columns)
-                    wk.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                    wk.SetValByKey(dc.ColumnName.Trim(), dr[dc.ColumnName].ToString().Trim());
+
+                wk.SetValByKey(WorkAttr.Rec, Web.WebUser.No);
+                wk.SetValByKey(StartWorkAttr.FK_Dept, Web.WebUser.FK_Dept);
+                wk.SetValByKey("FK_NY", DataType.CurrentYearMonth);
+                wk.SetValByKey(WorkAttr.MyNum, 1);
                 wk.Update();
 
                 Node ndStart = nd.HisFlow.HisStartNode;
@@ -72,6 +97,7 @@ namespace BP.WF
                 {
                     info += "<hr>" + ex.Message;
                     DBAccess.RunSQL("DELETE FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'");
+                    DBAccess.RunSQL("DELETE FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE FlowPK='" + flowPK + "'");
                 }
             }
             return info + err;
@@ -79,6 +105,10 @@ namespace BP.WF
         public static string LoadFlowDataWithToSpecEndNode(string xlsFile)
         {
             DataTable dt = BP.DBLoad.GetTableByExt(xlsFile);
+            DataSet ds = new DataSet();
+            ds.Tables.Add(dt);
+            ds.WriteXml("C:\\已完成.xml");
+
             string err = "";
             string info = "";
             foreach (DataRow dr in dt.Rows)
@@ -87,21 +117,21 @@ namespace BP.WF
                 string starter = dr["Starter"].ToString();
                 string executer = dr["Executer"].ToString();
                 int toNode = int.Parse(dr["ToNodeID"].ToString().Replace("ND", ""));
-                Node nd = new Node();
-                nd.NodeID = toNode;
-                if (nd.RetrieveFromDBSources() == 0)
+                Node ndOfEnd = new Node();
+                ndOfEnd.NodeID = toNode;
+                if (ndOfEnd.RetrieveFromDBSources() == 0)
                 {
                     err += "节点ID错误:" + toNode;
                     continue;
                 }
 
-                if (nd.IsEndNode == false)
+                if (ndOfEnd.IsEndNode == false)
                 {
                     err += "节点ID错误:" + toNode + ", 非结束节点。";
                     continue;
                 }
 
-                string sql = "SELECT count(*) as Num FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'";
+                string sql = "SELECT count(*) as Num FROM ND" + int.Parse(ndOfEnd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'";
                 int i = DBAccess.RunSQLReturnValInt(sql);
                 if (i == 1)
                     continue; // 此数据已经调度了。
@@ -142,16 +172,20 @@ namespace BP.WF
 
 
                 BP.Web.WebUser.SignInOfGener(emp);
-                Flow fl = nd.HisFlow;
+                Flow fl = ndOfEnd.HisFlow;
                 Work wk = fl.NewWork();
                 foreach (DataColumn dc in dt.Columns)
-                    wk.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                    wk.SetValByKey(dc.ColumnName.Trim(), dr[dc.ColumnName].ToString().Trim());
 
+                wk.SetValByKey(WorkAttr.Rec, Web.WebUser.No);
+                wk.SetValByKey(StartWorkAttr.FK_Dept, Web.WebUser.FK_Dept);
+                wk.SetValByKey("FK_NY", DataType.CurrentYearMonth);
+                wk.SetValByKey(WorkAttr.MyNum, 1);
                 wk.Update();
 
-                Node ndStart = nd.HisFlow.HisStartNode;
+                Node ndStart =fl.HisStartNode;
                 WorkNode wn = new WorkNode(wk, ndStart);
-                wn.JumpToNode = nd;
+                wn.JumpToNode = ndOfEnd;
                 wn.JumpToEmp = executer;
                 try
                 {
@@ -160,7 +194,7 @@ namespace BP.WF
                 catch (Exception ex)
                 {
                     err += "<hr>启动错误:" + ex.Message;
-                    DBAccess.RunSQL("DELETE FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'");
+                    DBAccess.RunSQL("DELETE FROM ND" + int.Parse(ndOfEnd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'");
                     continue;
                 }
 
@@ -168,19 +202,28 @@ namespace BP.WF
                 emp = new BP.Port.Emp(executer);
                 BP.Web.WebUser.SignInOfGener(emp);
 
-                Work wkEnd = nd.GetWork(wk.OID);
+                Work wkEnd = ndOfEnd.GetWork(wk.OID);
                 foreach (DataColumn dc in dt.Columns)
-                    wkEnd.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+                    wkEnd.SetValByKey(dc.ColumnName.Trim(), dr[dc.ColumnName].ToString().Trim());
+
+                wkEnd.SetValByKey(WorkAttr.Rec, Web.WebUser.No);
+                wkEnd.SetValByKey(StartWorkAttr.FK_Dept, Web.WebUser.FK_Dept);
+                wkEnd.SetValByKey("FK_NY", DataType.CurrentYearMonth);
+                wkEnd.SetValByKey(WorkAttr.MyNum, 1);
+
                 wkEnd.Update();
                 try
                 {
-                    WorkNode wnEnd = new WorkNode(wkEnd, nd);
+                    WorkNode wnEnd = new WorkNode(wkEnd, ndOfEnd);
                   //  wnEnd.AfterNodeSave();
                     info += "<hr>" + wnEnd.AfterNodeSave();
                 }
                 catch (Exception ex)
                 {
-                    err += "<hr>结束错误:" + ex.Message;
+                    err += "<hr>结束错误(系统直接删除它):" + ex.Message;
+                    WorkFlow wf = new WorkFlow(fl, wk.OID);
+                    wf.DoDeleteWorkFlowByReal();
+
                     continue;
                 }
             }
