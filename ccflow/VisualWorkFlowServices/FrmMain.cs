@@ -234,8 +234,8 @@ namespace SMSServices
         { 
             #region 读取数据.
             BP.Sys.MapExt me = new MapExt();
-            int i = me.Retrieve(MapExtAttr.FK_MapData, "ND" + int.Parse(fl.No) + "01",
-                MapExtAttr.ExtType, "PageLoadFull");
+            me.MyPK = "ND" + int.Parse(fl.No) + "01" + "_" + MapExtXmlList.PageLoadFull;
+            int i = me.RetrieveFromDBSources();
             if (i == 0)
             {
                 BP.DA.Log.DefaultLogWriteLineError("没有为流程(" + fl.Name + ")的开始节点设置发起数据,请参考说明书解决.");
@@ -296,7 +296,7 @@ namespace SMSServices
                 string sql = "SELECT OID FROM " + nodeTable + " WHERE MainPK='" + mainPK + "'";
                 if (DBAccess.RunSQLReturnTable(sql).Rows.Count != 0)
                 {
-                    this.SetText("@第（" + idx + "）条任务，此任务在之前已经完成。");
+                    this.SetText("@" + fl.Name + ",第" + idx + "条,此任务在之前已经完成。");
                     continue; /*说明已经调度过了*/
                 }
 
@@ -308,8 +308,8 @@ namespace SMSServices
                     emp.No = starter;
                     if (emp.RetrieveFromDBSources() == 0)
                     {
-                        this.SetText("@第（" + idx + "）条任务，设置的发起人员:" + emp.No + "不存在。");
-                        BP.DA.Log.DefaultLogWriteLineInfo("@数据驱动方式发起流程("+fl.Name+")设置的发起人员:" + emp.No + "不存在。");
+                        this.SetText("@" + fl.Name + ",第" + idx + "条,设置的发起人员:" + emp.No + "不存在.");
+                        BP.DA.Log.DefaultLogWriteLineInfo("@数据驱动方式发起流程(" + fl.Name + ")设置的发起人员:" + emp.No + "不存在。");
                         continue;
                     }
                     WebUser.SignInOfGener(emp);
@@ -340,7 +340,7 @@ namespace SMSServices
                             {
                                 if (drDtl["RefMainPK"].ToString() != mainPK)
                                     continue;
-                                 
+
                                 dtlEn = dtl.HisGEDtl;
                                 foreach (DataColumn dc in dt.Columns)
                                     dtlEn.SetValByKey(dc.ColumnName, drDtl[dc.ColumnName].ToString());
@@ -361,11 +361,12 @@ namespace SMSServices
                     WorkNode wn = new WorkNode(wk, nd);
                     string msg = wn.AfterNodeSave();
                     BP.DA.Log.DefaultLogWriteLineInfo(msg);
-                    this.SetText("@第（" + idx + "）条任务，" + WebUser.No + " - " + WebUser.Name + "已经完成。\r\n" + msg);
+                    this.SetText("@" + fl.Name + ",第" + idx + "条,发起人员:" + WebUser.No + "-" + WebUser.Name + "已完成.\r\n" + msg);
+                    //this.SetText("@第（" + idx + "）条任务，" + WebUser.No + " - " + WebUser.Name + "已经完成。\r\n" + msg);
                 }
                 catch (Exception ex)
                 {
-                    this.SetText("@第（" + idx + "）条任务，" + WebUser.No + " - " + WebUser.Name + "，发起时出现错误."+ex.Message);
+                    this.SetText("@" + fl.Name + ",第" + idx + "条,发起人员:" + WebUser.No + "-" + WebUser.Name + "发起时出现错误.\r\n" + ex.Message);
                     BP.DA.Log.DefaultLogWriteLineWarning(ex.Message);
                 }
             }
@@ -466,11 +467,11 @@ namespace SMSServices
         private void button1_Click_1(object sender, EventArgs e)
         {
             // 把流程运行到最后的节点上去，并且结束流程。
-            string file = @"C:\aa\开票流程-流程已完成.xls";
+            string file = @"C:\aa\流程已完成.xls";
             string info = BP.WF.Glo.LoadFlowDataWithToSpecEndNode(file);
             BP.DA.Log.DefaultLogWriteLineInfo(info);
 
-            file = @"C:\aa\开票流程-流程未完成.xls";
+            file = @"C:\aa\流程未完成.xls";
             info = BP.WF.Glo.LoadFlowDataWithToSpecNode(file);
             BP.DA.Log.DefaultLogWriteLineInfo(info);
 
