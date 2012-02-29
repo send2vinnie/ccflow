@@ -111,9 +111,17 @@ namespace BP.WF
 
             string err = "";
             string info = "";
+            int idx = 0;
             foreach (DataRow dr in dt.Rows)
             {
-                string flowPK = dr["FlowPK"].ToString();
+                idx++;
+                if (idx == 10)
+                    break;
+
+                string flowPK = dr["FlowPK"].ToString().Trim();
+                if (string.IsNullOrEmpty(flowPK))
+                    continue;
+
                 string starter = dr["Starter"].ToString();
                 string executer = dr["Executer"].ToString();
                 int toNode = int.Parse(dr["ToNodeID"].ToString().Replace("ND", ""));
@@ -223,7 +231,6 @@ namespace BP.WF
                     err += "<hr>结束错误(系统直接删除它):" + ex.Message;
                     WorkFlow wf = new WorkFlow(fl, wk.OID);
                     wf.DoDeleteWorkFlowByReal();
-
                     continue;
                 }
             }

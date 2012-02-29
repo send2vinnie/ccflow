@@ -3194,7 +3194,7 @@ namespace BP.WF
 
             try
             {
-                t.MyPK = t.WorkID + "_" + t.FID + "_"  + toEmp + "_" + toNDid + DateTime.Now.ToString("yyMMddhhmmss");
+                t.MyPK = t.WorkID + "_" + t.FID + "_"  + t.NDFrom + "_" + t.NDTo +"_"+t.EmpFrom+"_"+t.EmpTo+"_"+ DateTime.Now.ToString("yyMMddhhmmss");
                 t.Insert();
             }
             catch
