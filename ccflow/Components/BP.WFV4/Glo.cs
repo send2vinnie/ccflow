@@ -95,9 +95,9 @@ namespace BP.WF
                 }
                 catch (Exception ex)
                 {
-                    info += "<hr>" + ex.Message;
-                    DBAccess.RunSQL("DELETE FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'");
-                    DBAccess.RunSQL("DELETE FROM ND" + int.Parse(nd.FK_Flow) + "Rpt WHERE FlowPK='" + flowPK + "'");
+                    err += "<hr>" + ex.Message;
+                    WorkFlow wf = new WorkFlow(fl, wk.OID);
+                    wf.DoDeleteWorkFlowByReal();
                 }
             }
             return info + err;
