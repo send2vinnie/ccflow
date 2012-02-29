@@ -199,6 +199,8 @@ namespace BP.WF
                 {
                     err += "<hr>Æô¶¯´íÎó:" + ex.Message;
                     DBAccess.RunSQL("DELETE FROM ND" + int.Parse(ndOfEnd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'");
+                    WorkFlow wf = new WorkFlow(fl, wk.OID);
+                    wf.DoDeleteWorkFlowByReal();
                     continue;
                 }
 
