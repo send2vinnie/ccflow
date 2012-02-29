@@ -562,6 +562,9 @@ namespace BP.Web.Comm.UC.WF
                     this.LinkFields += "," + myitem.AttrOfOper + ",";
             }
 
+            if (this.IsReadonly)
+                return;
+
 
             MapExt item = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.PageLoadFull) as MapExt;
             if (item == null)

@@ -180,7 +180,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
     }
     void btn_Click(object sender, EventArgs e)
     {
-        string user = this.GetTextBoxByID("TB_User").Text;
+        string user = this.GetTextBoxByID("TB_User").Text.Trim();
         string pass = this.GetTextBoxByID("TB_Pass").Text;
         try
         {
