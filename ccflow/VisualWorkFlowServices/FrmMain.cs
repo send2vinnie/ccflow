@@ -8,6 +8,13 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using BP.WF;
+using BP.Port;
+using BP.En;
+using BP.Sys;
+using BP.DA;
+using BP;
+using BP.Web;
 
 namespace SMSServices
 {
@@ -148,8 +155,9 @@ namespace SMSServices
                             BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
                             continue;
                         case BP.WF.FlowRunWay.DataModel: //按数据集合驱动的模式执行。
-                            this.SetText("@开始执行数据驱动流程调度"+fl.Name);
-                            BP.WF.Dev2Interface.DTS_AutoStarterFlow(fl);
+                            this.SetText("@开始执行数据驱动流程调度:"+fl.Name);
+                            this.DTS_Flow(fl);
+                            //BP.WF.Dev2Interface.DTS_AutoStarterFlow(fl);
                             continue;
                         default:
                             break;
@@ -221,6 +229,147 @@ namespace SMSServices
                         break;
                 }
             }
+        }
+        public void DTS_Flow(BP.WF.Flow fl)
+        { 
+            #region 读取数据.
+            BP.Sys.MapExt me = new MapExt();
+            int i = me.Retrieve(MapExtAttr.FK_MapData, "ND" + int.Parse(fl.No) + "01",
+                MapExtAttr.ExtType, "PageLoadFull");
+            if (i == 0)
+            {
+                BP.DA.Log.DefaultLogWriteLineError("没有为流程(" + fl.Name + ")的开始节点设置发起数据,请参考说明书解决.");
+                return;
+            }
+
+            // 获取从表数据.
+            DataSet ds = new DataSet();
+            string[] dtlSQLs = me.Tag1.Split('*');
+            foreach (string sql in dtlSQLs)
+            {
+                if (string.IsNullOrEmpty(sql))
+                    continue;
+
+                string[] tempStrs = sql.Split('=');
+                string dtlName = tempStrs[0];
+                DataTable dtlTable = BP.DA.DBAccess.RunSQLReturnTable(sql.Replace(dtlName + "=", ""));
+                dtlTable.TableName = dtlName;
+                ds.Tables.Add(dtlTable);
+            }
+            #endregion 读取数据.
+
+            #region 检查数据源是否正确.
+            string errMsg = "";
+            // 获取主表数据.
+            DataTable dtMain = BP.DA.DBAccess.RunSQLReturnTable(me.Tag);
+            if (dtMain.Rows.Count == 0)
+            {
+                BP.DA.Log.DefaultLogWriteLineError("流程(" + fl.Name + ")此时无任务.");
+                this.SetText("流程(" + fl.Name + ")此时无任务.");
+                return;
+            }
+
+            this.SetText("@查询到("+dtMain.Rows.Count+")条任务.");
+
+            if (dtMain.Columns.Contains("Starter") == false)
+                errMsg += "@配值的主表中没有Starter列.";
+
+            if (dtMain.Columns.Contains("MainPK") == false)
+                errMsg += "@配值的主表中没有MainPK列.";
+           
+            if (errMsg.Length > 2)
+            {
+                this.SetText(errMsg);
+                BP.DA.Log.DefaultLogWriteLineError("流程(" + fl.Name + ")的开始节点设置发起数据,不完整." + errMsg);
+                return;
+            }
+            #endregion 检查数据源是否正确.
+
+            #region 处理流程发起.
+            string nodeTable = "ND" + int.Parse(fl.No) + "01";
+            int idx = 0;
+            foreach (DataRow dr in dtMain.Rows)
+            {
+                idx++;
+
+                string mainPK = dr["MainPK"].ToString();
+                string sql = "SELECT OID FROM " + nodeTable + " WHERE MainPK='" + mainPK + "'";
+                if (DBAccess.RunSQLReturnTable(sql).Rows.Count != 0)
+                {
+                    this.SetText("@第（" + idx + "）条任务，此任务在之前已经完成。");
+                    continue; /*说明已经调度过了*/
+                }
+
+                string starter = dr["Starter"].ToString();
+                if (WebUser.No != starter)
+                {
+                    BP.Web.WebUser.Exit();
+                    BP.Port.Emp emp = new BP.Port.Emp();
+                    emp.No = starter;
+                    if (emp.RetrieveFromDBSources() == 0)
+                    {
+                        this.SetText("@第（" + idx + "）条任务，设置的发起人员:" + emp.No + "不存在。");
+                        BP.DA.Log.DefaultLogWriteLineInfo("@数据驱动方式发起流程("+fl.Name+")设置的发起人员:" + emp.No + "不存在。");
+                        continue;
+                    }
+                    WebUser.SignInOfGener(emp);
+                }
+
+                #region  给值.
+                Work wk = fl.NewWork();
+                foreach (DataColumn dc in dtMain.Columns)
+                    wk.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+
+                if (ds.Tables.Count != 0)
+                {
+                    // MapData md = new MapData(nodeTable);
+                    MapDtls dtls = new MapDtls(nodeTable);
+                    foreach (MapDtl dtl in dtls)
+                    {
+                        foreach (DataTable dt in ds.Tables)
+                        {
+                            if (dt.TableName != dtl.No)
+                                continue;
+
+                            //删除原来的数据。
+                            GEDtl dtlEn = dtl.HisGEDtl;
+                            dtlEn.Delete(GEDtlAttr.RefPK, wk.OID.ToString());
+
+                            // 执行数据插入。
+                            foreach (DataRow drDtl in dt.Rows)
+                            {
+                                if (drDtl["RefMainPK"].ToString() != mainPK)
+                                    continue;
+                                 
+                                dtlEn = dtl.HisGEDtl;
+                                foreach (DataColumn dc in dt.Columns)
+                                    dtlEn.SetValByKey(dc.ColumnName, drDtl[dc.ColumnName].ToString());
+
+                                dtlEn.RefPK = wk.OID.ToString();
+                                dtlEn.OID = 0;
+                                dtlEn.Insert();
+                            }
+                        }
+                    }
+                }
+                #endregion  给值.
+
+                // 处理发送信息.
+                Node nd = fl.HisStartNode;
+                try
+                {
+                    WorkNode wn = new WorkNode(wk, nd);
+                    string msg = wn.AfterNodeSave();
+                    BP.DA.Log.DefaultLogWriteLineInfo(msg);
+                    this.SetText("@第（" + idx + "）条任务，" + WebUser.No + " - " + WebUser.Name + "已经完成。\r\n" + msg);
+                }
+                catch (Exception ex)
+                {
+                    this.SetText("@第（" + idx + "）条任务，" + WebUser.No + " - " + WebUser.Name + "，发起时出现错误."+ex.Message);
+                    BP.DA.Log.DefaultLogWriteLineWarning(ex.Message);
+                }
+            }
+            #endregion 处理流程发起.
         }
         /// <summary>
         /// 发送邮件。
