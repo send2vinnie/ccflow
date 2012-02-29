@@ -1218,7 +1218,7 @@ namespace BP.En
                         throw new Exception(ex.Message + " ===== " + ex1.Message);
                     }
                 }
-                throw new Exception(ex + "@或者检查是否有多个PK的问题.");
+                throw ex;
             }
 
             if (this.CashKey != null)

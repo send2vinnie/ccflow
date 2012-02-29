@@ -126,6 +126,13 @@ namespace BP.WF.Ext
 
 
                 //rm = new RefMethod();
+                //rm.Title = "设置自动发起"; // "报表运行";
+                //rm.Icon = "/Images/Btn/View.gif";
+                //rm.ClassMethodName = this.ToString() + ".DoOpenRpt()";
+                ////rm.Icon = "/Images/Btn/Table.gif"; 
+                //map.AddRefMethod(rm);
+
+                //rm = new RefMethod();
                 //rm.Title = this.ToE("Event", "事件"); // "报表运行";
                 //rm.Icon = "/Images/Btn/View.gif";
                 //rm.ClassMethodName = this.ToString() + ".DoOpenRpt()";

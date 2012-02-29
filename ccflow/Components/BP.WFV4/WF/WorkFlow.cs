@@ -552,7 +552,7 @@ namespace BP.WF
             DBAccess.RunSQL("DELETE WF_GenerWorkFlow   WHERE WorkID=" + this.WorkID);
             DBAccess.RunSQL("DELETE WF_GenerWorkerlist WHERE WorkID=" + this.WorkID);
 
-            string sql = "SELECT count(*) FROM WF_GenerWorkFlow WHERE FID=" + this.FID;
+            string sql = "SELECT count(*) FROM WF_GenerWorkFlow WHERE  IsEnable=1 AND FID=" + this.FID;
             int num = DBAccess.RunSQLReturnValInt(sql);
             if (DBAccess.RunSQLReturnValInt(sql) == 0)
             {
@@ -1208,9 +1208,11 @@ namespace BP.WF
 
         public WorkFlow(Flow flow, Int64 wkid)
         {
-            GenerWorkFlow gwf = new GenerWorkFlow(wkid);
-            this._FID = gwf.FID;
+            GenerWorkFlow gwf = new GenerWorkFlow();
+            gwf.WorkID = wkid;
+            gwf.RetrieveFromDBSources();
 
+            this._FID = gwf.FID;
             if (wkid == 0)
                 throw new Exception("@没有指定工作ID, 不能创建工作流程.");
             //Flow flow= new Flow(FlowNo);

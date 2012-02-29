@@ -65,6 +65,7 @@ namespace BP.WF
             #endregion 检查数据源是否正确.
 
             #region 处理流程发起.
+            
             string nodeTable = "ND" + int.Parse(fl.No) + "01";            
             foreach (DataRow dr in dtMain.Rows)
             {
@@ -80,7 +81,10 @@ namespace BP.WF
                     BP.Port.Emp emp = new BP.Port.Emp();
                     emp.No = starter;
                     if (emp.RetrieveFromDBSources() == 0)
+                    {
+                        BP.DA.Log.DefaultLogWriteLineInfo("@数据驱动方式发起流程("+fl.Name+")设置的发起人员:" + emp.No + "不存在。");
                         continue;
+                    }
 
                     BP.Web.WebUser.SignInOfGener(emp);
                 }

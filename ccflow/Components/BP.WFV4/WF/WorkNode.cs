@@ -1631,6 +1631,12 @@ namespace BP.WF
                         rm.Objs = "";
                 }
 
+                if (this.HisNode.IsFL)
+                {
+                    if (rm != null)
+                        rm.Objs = "";
+                }
+
                 // 记忆中是否存在当前的人员。
                 bool isHaveIt = false;
                 string emps = "@";
@@ -2136,9 +2142,7 @@ namespace BP.WF
                 #endregion 处理调用日志.
 
                 msg += AfterNodeSave_Do();
-
                 DBAccess.DoTransactionCommit(); //提交事务.
-                
 
                 try
                 {
@@ -2790,6 +2794,35 @@ namespace BP.WF
             #endregion
         }
         /// <summary>
+        /// 执行数据copy.
+        /// </summary>
+        /// <param name="fromWK"></param>
+        private void DoCopyRptWork(Work fromWK)
+        {
+            foreach (Attr attr in this.rptGe.EnMap.Attrs)
+            {
+                switch (attr.Key)
+                {
+                    case BP.WF.GERptAttr.FK_NY:
+                    case BP.WF.GERptAttr.FK_Dept:
+                    case BP.WF.GERptAttr.FlowDaySpan:
+                    case BP.WF.GERptAttr.FlowEmps:
+                    case BP.WF.GERptAttr.FlowEnder:
+                    case BP.WF.GERptAttr.FlowEnderRDT:
+                    case BP.WF.GERptAttr.FlowStarter:
+                    case BP.WF.GERptAttr.Title:
+                        continue;
+                    default:
+                        break;
+                }
+
+                object obj = fromWK.GetValByKey(attr.Key);
+                if (obj == null)
+                    continue;
+                this.rptGe.SetValByKey(attr.Key, obj);
+            }
+        }
+        /// <summary>
         /// 在流程节点保存后的操作.
         /// 1, 判断节点的任务是不是完成,如果完成,就设置节点的完成状态.
         /// 2, 判断是不是符合工作流完成任务任务的条件, 如果完成,就设置,工作流程任务完成. return ;
@@ -2802,52 +2835,21 @@ namespace BP.WF
         /// <returns>执行后的内容</returns>
         private string AfterNodeSave_Do()
         {
-            if (this.HisNode.IsStartNode)
-            {
-                this.InitStartWorkData();
-                this.rptGe = this.HisNode.HisFlow.HisFlowData;
-            }
-            else
-            {
-                this.rptGe = this.HisNode.HisFlow.HisFlowData;
-                rptGe.SetValByKey("OID", this.WorkID);
-                rptGe.RetrieveFromDBSources();
-            }
-
-            string msg = "";
-            switch (this.HisNode.HisNodeWorkType)
-            {
-                case NodeWorkType.StartWorkFL:
-                case NodeWorkType.WorkFL:  /* 启动分流 */
-                    this.HisWork.FID = this.HisWork.OID;
-                    msg = this.FeiLiuStartUp();
-                    break;
-                case NodeWorkType.WorkFHL:   /* 启动分流 */
-                    this.HisWork.FID = this.HisWork.OID;
-                    msg = this.FeiLiuStartUp();
-                    break;
-                case NodeWorkType.WorkHL:   /* 当前工作节点是合流 */
-                    msg = this.StartupNewNodeWork();
-                    msg += this.DoSetThisWorkOver(); // 执行此工作结束。
-                    break;
-                default: /* 其他的点的逻辑 */
-                    msg = this.StartupNewNodeWork();
-                    msg += this.DoSetThisWorkOver();
-                    break;
-            }
-
             #region 把数据放到报表表里面.
-            this.rptGe = this.HisNode.HisFlow.HisFlowData;
-            rptGe.SetValByKey("OID", this.WorkID);
             if (this.HisNode.IsStartNode)
+                this.InitStartWorkData();
+
+            this.rptGe = this.HisNode.HisFlow.HisFlowData;
+            this.rptGe.SetValByKey("OID", this.WorkID);
+            if (rptGe.RetrieveFromDBSources() == 0)
             {
                 rptGe.SetValByKey("OID", this.WorkID);
-                rptGe.DirectDelete();
+                this.DoCopyRptWork(this.HisWork);
                 rptGe.SetValByKey(GERptAttr.FlowEmps, "@" + WebUser.No + "," + WebUser.Name);
                 rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No);
                 rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
                 rptGe.SetValByKey(GERptAttr.WFState, 0);
-                rptGe.Copy(this.HisWork);
+                rptGe.SetValByKey(GERptAttr.FK_NY, DataType.CurrentYearMonth);
                 rptGe.SetValByKey(GERptAttr.FK_Dept, WebUser.FK_Dept);
                 rptGe.Insert();
             }
@@ -2880,19 +2882,47 @@ namespace BP.WF
                 {
                     string str = rptGe.GetValStrByKey(GERptAttr.FlowEmps);
                     if (str.Contains("@" + WebUser.No + "," + WebUser.Name) == false)
-                    {
                         rptGe.SetValByKey(GERptAttr.FlowEmps, str + "@" + WebUser.No + "," + WebUser.Name);
-                    }
                 }
                 catch
                 {
                     this.HisNode.HisFlow.DoCheck();
                 }
+
                 if (this.HisNode.IsEndNode)
+                {
                     rptGe.SetValByKey(GERptAttr.WFState, 1); // 更新状态。
+                    rptGe.SetValByKey(GERptAttr.FlowEnder, WebUser.No);
+                    rptGe.SetValByKey(GERptAttr.FlowEnderRDT, DataType.CurrentDataTime);
+                    rptGe.SetValByKey(GERptAttr.FlowDaySpan, DataType.GetSpanDays(this.rptGe.GetValStringByKey(GERptAttr.FlowStartRDT), DataType.CurrentDataTime));
+                }
                 rptGe.DirectUpdate();
             }
             #endregion
+
+            #region 根据当前节点类型不同处理不同的模式。
+            string msg = "";
+            switch (this.HisNode.HisNodeWorkType)
+            {
+                case NodeWorkType.StartWorkFL:
+                case NodeWorkType.WorkFL:  /* 启动分流 */
+                    this.HisWork.FID = this.HisWork.OID;
+                    msg = this.FeiLiuStartUp();
+                    break;
+                case NodeWorkType.WorkFHL:   /* 启动分流 */
+                    this.HisWork.FID = this.HisWork.OID;
+                    msg = this.FeiLiuStartUp();
+                    break;
+                case NodeWorkType.WorkHL:   /* 当前工作节点是合流 */
+                    msg = this.StartupNewNodeWork();
+                    msg += this.DoSetThisWorkOver(); // 执行此工作结束。
+                    break;
+                default: /* 其他的点的逻辑 */
+                    msg = this.StartupNewNodeWork();
+                    msg += this.DoSetThisWorkOver();
+                    break;
+            }
+            #endregion 根据当前节点类型不同处理不同的模式。
 
             #region 处理收听
             Listens lts = new Listens();
@@ -2953,7 +2983,6 @@ namespace BP.WF
                 string flowNo = this.HisNode.FK_Flow;
                 #endregion
 
-                rptGe.RetrieveFromDBSources();
                 DateTime dt = DateTime.Now;
                 Flow fl = new Flow(this.HisNode.FK_Flow);
                 string year = dt.Year.ToString();
@@ -3054,7 +3083,7 @@ namespace BP.WF
                         bill.FID = this.HisWork.FID;
                         bill.WorkID = this.HisWork.OID;
                         bill.FK_Node = this.HisNode.NodeID;
-                      //  bill.FK_Bill = func.No;
+                        //  bill.FK_Bill = func.No;
                         bill.FK_Dept = WebUser.FK_Dept;
                         bill.FK_Emp = WebUser.No;
                         bill.Url = billUrl;
@@ -3359,7 +3388,7 @@ namespace BP.WF
                                 //  this.HisWorkFlow.FID = 0;
                             }
 
-                            dt = DBAccess.RunSQLReturnTable("SELECT b.No,b.Name FROM WF_GenerWorkerList a,Port_Emp b WHERE a.FK_Emp=b.No AND IsPass=0 AND FID=" + this.HisWork.OID);
+                            dt = DBAccess.RunSQLReturnTable("SELECT b.No,b.Name FROM WF_GenerWorkerList a,Port_Emp b WHERE a.FK_Emp=b.No AND a.IsPass=0 AND a.IsEnable=1 AND FID=" + this.HisWork.OID);
                             if (dt.Rows.Count != 0)
                             {
                                 msg = "@执行完成错误，有如下人员没有完成工作。";
@@ -3721,7 +3750,7 @@ namespace BP.WF
                 string sqlOK = "SELECT COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE FK_Node IN (" + nearHLNodes + ") AND FID=" + this.HisWork.FID + " AND IsPass=1";
                 decimal ok = (decimal)DBAccess.RunSQLReturnValInt(sqlOK);
 
-                string sqlAll = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN (" + this.SpanSubTheadNodes(nd) + ")";
+                string sqlAll = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE IsEnable=1 AND FID=" + this.HisWork.FID + " AND FK_Node IN (" + this.SpanSubTheadNodes(nd) + ")";
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(sqlAll);
                 decimal passRate = ok / all * 100;
                 string numStr = "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";
@@ -3956,7 +3985,7 @@ namespace BP.WF
 
                 // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE FK_Node=" + this.HisNode.NodeID + " AND FID=" + this.HisWork.FID;
                 // sql = "SELECT COUNT(*) AS Num FROM WF_GenerWorkerList WHERE IsPass=0 AND FID=" + this.HisWork.FID;
-                sql = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE  FID=" + this.HisWork.FID + " AND FK_Node IN (" + spanNodes + ")";
+                sql = "SELECT  COUNT(distinct WorkID) AS Num FROM WF_GenerWorkerList WHERE   IsEnable=1 AND FID=" + this.HisWork.FID + " AND FK_Node IN (" + spanNodes + ")";
                 decimal all = (decimal)DBAccess.RunSQLReturnValInt(sql);
                 decimal passRate = ok / all * 100;
                 string numStr = "@您是第(" + ok + ")到达此节点上的同事，共启动了(" + all + ")个子流程。";

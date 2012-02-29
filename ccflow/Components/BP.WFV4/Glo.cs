@@ -81,7 +81,6 @@ namespace BP.WF
             DataTable dt = BP.DBLoad.GetTableByExt(xlsFile);
             string err = "";
             string info = "";
-
             foreach (DataRow dr in dt.Rows)
             {
                 string flowPK = dr["FlowPK"].ToString();
@@ -107,27 +106,27 @@ namespace BP.WF
                 if (i == 1)
                     continue; // 此数据已经调度了。
 
+                #region 检查数据是否完整。
                 //发起人发起。
                 BP.Port.Emp emp = new BP.Port.Emp();
                 emp.No = executer;
                 if (emp.RetrieveFromDBSources() == 0)
                 {
-                    info += "@账号:" + starter + ",不存在。";
+                    err += "@账号:" + starter + ",不存在。";
                     continue;
                 }
 
                 if (string.IsNullOrEmpty(emp.FK_Dept))
                 {
-                    info += "@账号:" + starter + ",没有设置部门。";
+                    err += "@账号:" + starter + ",没有设置部门。";
                     continue;
                 }
-
 
                 emp = new BP.Port.Emp();
                 emp.No = starter;
                 if (emp.RetrieveFromDBSources()==0)
                 {
-                    info += "@账号:" + starter + ",不存在。";
+                    err += "@账号:" + starter + ",不存在。";
                     continue;
                 }
                 else
@@ -135,19 +134,19 @@ namespace BP.WF
                     emp.RetrieveFromDBSources();
                     if (string.IsNullOrEmpty(emp.FK_Dept))
                     {
-                        info += "@账号:" + starter + ",没有设置部门。";
+                        err += "@账号:" + starter + ",没有设置部门。";
                         continue;
                     }
                 }
-
+                #endregion 检查数据是否完整。
 
 
                 BP.Web.WebUser.SignInOfGener(emp);
-
                 Flow fl = nd.HisFlow;
                 Work wk = fl.NewWork();
                 foreach (DataColumn dc in dt.Columns)
                     wk.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+
                 wk.Update();
 
                 Node ndStart = nd.HisFlow.HisStartNode;
@@ -164,7 +163,6 @@ namespace BP.WF
                     DBAccess.RunSQL("DELETE FROM ND" + int.Parse(nd.FK_Flow) + "01 WHERE FlowPK='" + flowPK + "'");
                     continue;
                 }
-
 
                 //结束点结束。
                 emp = new BP.Port.Emp(executer);
