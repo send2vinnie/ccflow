@@ -716,6 +716,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         me.FK_MapData = this.FK_MapData;
         me.ExtType = MapExtXmlList.PageLoadFull;
         me.RetrieveFromDBSources();
+
         me.Tag = this.Pub2.GetTextBoxByID("TB_" + MapExtAttr.Tag).Text;
         string sql = "";
         MapDtls dtls = new MapDtls(this.FK_MapData);
@@ -724,6 +725,8 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             sql += "*" + dtl.No + "=" + this.Pub2.GetTextBoxByID("TB_" + dtl.No).Text;
         }
         me.Tag1 = sql;
+
+        me.MyPK = this.FK_MapData + "_" + MapExtXmlList.PageLoadFull;
 
         string info = me.Tag1 + me.Tag;
         if (string.IsNullOrEmpty(info))
