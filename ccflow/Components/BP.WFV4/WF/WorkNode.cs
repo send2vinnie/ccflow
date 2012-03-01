@@ -224,7 +224,7 @@ namespace BP.WF
             #region 首先判断是否配置了获取下一步接受人员的sql.
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySQL)
             {
-                if (this.HisNode.RecipientSQL.Length > 4)
+                if (town.HisNode.RecipientSQL.Length > 4)
                     throw new Exception("@您设置的当前节点按照sql，决定下一步的接受人员，但是你没有设置sql.");
 
                 Attrs attrs = this.HisWork.EnMap.Attrs;
@@ -2676,10 +2676,10 @@ namespace BP.WF
             if (string.IsNullOrEmpty(titleRole) || titleRole.Contains("@") == false)
                 titleRole = "@WebUser.FK_DeptName-@WebUser.No,@WebUser.Name在@RDT发起.";
 
-            titleRole = titleRole.Replace("@WebUser.No", WebUser.No);
-            titleRole = titleRole.Replace("@WebUser.Name", WebUser.Name);
-            titleRole = titleRole.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
-            titleRole = titleRole.Replace("@RDT", DateTime.Now.ToString("MM月dd日HH时mm分"));
+            titleRole = titleRole.Replace("@WebUser.No", wk.Rec);
+            titleRole = titleRole.Replace("@WebUser.Name", wk.RecText);
+            titleRole = titleRole.Replace("@WebUser.FK_DeptName", wk.RecOfEmp.FK_DeptText);
+            titleRole = titleRole.Replace("@RDT", wk.RDT);
             if (titleRole.Contains("@"))
             {
                 foreach (Attr attr in wk.EnMap.Attrs)
