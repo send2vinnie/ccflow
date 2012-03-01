@@ -45,7 +45,7 @@ namespace BP.WF
                     continue; // 此数据已经调度了。
 
                 #region 检查数据是否完整。
-              
+
 
                 BP.Port.Emp emp = new BP.Port.Emp();
                 emp.No = executer;
@@ -105,7 +105,7 @@ namespace BP.WF
                         case DataType.AppDouble:
                         case DataType.AppRate:
                         case DataType.AppFloat:
-                            wk.SetValByKey(attr.Key,decimal.Parse(val));
+                            wk.SetValByKey(attr.Key, decimal.Parse(val));
                             break;
                         default:
                             wk.SetValByKey(attr.Key, val);
@@ -132,7 +132,53 @@ namespace BP.WF
                     err += "<hr>" + ex.Message;
                     WorkFlow wf = new WorkFlow(fl, wk.OID);
                     wf.DoDeleteWorkFlowByReal();
+                    continue;
                 }
+
+                #region 更新 下一个节点数据。
+                Work wkNext = nd.HisWork;
+                wkNext.OID = wk.OID;
+                wkNext.RetrieveFromDBSources();
+                attrs = wkNext.EnMap.Attrs;
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    Attr attr = attrs.GetAttrByKey(dc.ColumnName.Trim());
+                    if (attr == null)
+                        continue;
+
+                    string val = dr[dc.ColumnName].ToString().Trim();
+                    switch (attr.MyDataType)
+                    {
+                        case DataType.AppString:
+                        case DataType.AppDate:
+                        case DataType.AppDateTime:
+                            wkNext.SetValByKey(attr.Key, val);
+                            break;
+                        case DataType.AppInt:
+                        case DataType.AppBoolean:
+                            wkNext.SetValByKey(attr.Key, int.Parse(val));
+                            break;
+                        case DataType.AppMoney:
+                        case DataType.AppDouble:
+                        case DataType.AppRate:
+                        case DataType.AppFloat:
+                            wkNext.SetValByKey(attr.Key, decimal.Parse(val));
+                            break;
+                        default:
+                            wkNext.SetValByKey(attr.Key, val);
+                            break;
+                    }
+                }
+
+                wkNext.DirectUpdate();
+
+                GEEntity rtp = fl.HisFlowData;
+                rtp.SetValByKey("OID", wkNext.OID);
+                rtp.RetrieveFromDBSources();
+                rtp.Copy(wkNext);
+                rtp.DirectUpdate();
+
+                #endregion 更新 下一个节点数据。
             }
             return info + err;
         }
@@ -250,8 +296,8 @@ namespace BP.WF
                 wkEnd.SetValByKey(StartWorkAttr.FK_Dept, Web.WebUser.FK_Dept);
                 wkEnd.SetValByKey("FK_NY", DataType.CurrentYearMonth);
                 wkEnd.SetValByKey(WorkAttr.MyNum, 1);
-
                 wkEnd.Update();
+
                 try
                 {
                     WorkNode wnEnd = new WorkNode(wkEnd, ndOfEnd);
