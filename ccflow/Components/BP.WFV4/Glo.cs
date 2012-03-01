@@ -76,8 +76,42 @@ namespace BP.WF
                 BP.Web.WebUser.SignInOfGener(emp);
                 Flow fl = nd.HisFlow;
                 Work wk = fl.NewWork();
+
+                Attrs attrs = wk.EnMap.Attrs;
+
+                //foreach (Attr attr in wk.EnMap.Attrs)
+                //{
+                //}
+
                 foreach (DataColumn dc in dt.Columns)
-                    wk.SetValByKey(dc.ColumnName.Trim(), dr[dc.ColumnName].ToString().Trim());
+                {
+                    Attr attr = attrs.GetAttrByKey(dc.ColumnName.Trim());
+                    if (attr == null)
+                        continue;
+
+                    string val = dr[dc.ColumnName].ToString().Trim();
+                    switch (attr.MyDataType)
+                    {
+                        case DataType.AppString:
+                        case DataType.AppDate:
+                        case DataType.AppDateTime:
+                            wk.SetValByKey(attr.Key, val);
+                            break;
+                        case DataType.AppInt:
+                        case DataType.AppBoolean:
+                            wk.SetValByKey(attr.Key, int.Parse(val));
+                            break;
+                        case DataType.AppMoney:
+                        case DataType.AppDouble:
+                        case DataType.AppRate:
+                        case DataType.AppFloat:
+                            wk.SetValByKey(attr.Key,decimal.Parse(val));
+                            break;
+                        default:
+                            wk.SetValByKey(attr.Key, val);
+                            break;
+                    }
+                }
 
                 wk.SetValByKey(WorkAttr.Rec, Web.WebUser.No);
                 wk.SetValByKey(StartWorkAttr.FK_Dept, Web.WebUser.FK_Dept);
