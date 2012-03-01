@@ -144,7 +144,9 @@ namespace BP.WF
             string info = "";
             WorkNode wn = this.GetCurrentWorkNode();
 
-            DBAccess.RunSQL("DELETE FROM wf_track WHERE WorkID=" + this.WorkID);
+            DBAccess.RunSQL("DELETE FROM WF_Track WHERE WorkID=" + this.WorkID);
+            DBAccess.RunSQL("DELETE FROM ND"+int.Parse(this.HisFlow.No)+"Rpt WHERE OID=" + this.WorkID);
+
 
             #region 正常的删除信息.
             BP.DA.Log.DefaultLogWriteLineInfo("@[" + this.HisFlow.Name + "]流程被[" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "]删除，WorkID[" + this.WorkID + "]。");

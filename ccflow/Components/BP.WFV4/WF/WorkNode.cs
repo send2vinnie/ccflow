@@ -2665,16 +2665,16 @@ namespace BP.WF
         public string GenerTitle(Work wk)
         {
             // 生成标题.
-            Attr myattr = this.HisWork.EnMap.Attrs.GetAttrByKey("Title");
+            Attr myattr = wk.EnMap.Attrs.GetAttrByKey("Title");
             if (myattr == null)
-                myattr = this.HisWork.EnMap.Attrs.GetAttrByKey("Title");
+                myattr = wk.EnMap.Attrs.GetAttrByKey("Title");
 
             string titleRole = "";
             if (myattr != null)
                 titleRole = myattr.DefaultVal.ToString();
 
             if (string.IsNullOrEmpty(titleRole) || titleRole.Contains("@") == false)
-                titleRole = "@WebUser.FK_DeptName - @WebUser.No,@WebUser.Name在@RDT发起.";
+                titleRole = "@WebUser.FK_DeptName-@WebUser.No,@WebUser.Name在@RDT发起.";
 
             titleRole = titleRole.Replace("@WebUser.No", WebUser.No);
             titleRole = titleRole.Replace("@WebUser.Name", WebUser.Name);
@@ -2688,7 +2688,7 @@ namespace BP.WF
                         break;
                     if (attr.IsFKorEnum)
                         continue;
-                    titleRole = titleRole.Replace("@" + attr.Key, this.HisWork.GetValStrByKey(attr.Key));
+                    titleRole = titleRole.Replace("@" + attr.Key, wk.GetValStrByKey(attr.Key));
                 }
             }
             wk.SetValByKey("Title", titleRole);

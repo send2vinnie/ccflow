@@ -262,7 +262,14 @@ namespace BP.WF
         {
             get
             {
-                return this.HisRec.Name;
+                try
+                {
+                    return this.HisRec.Name;
+                }
+                catch
+                {
+                    return this.Rec;
+                }
             }
             set
             {
@@ -629,8 +636,13 @@ namespace BP.WF
         {
             get
             {
-
-                return new Emp(this.Rec);
+                Emp emp = this.GetValByKey("HisRec") as Emp;
+                if (emp == null)
+                {
+                    emp = new Emp(this.Rec);
+                    this.SetValByKey("HisRec", emp);
+                }
+                return emp;
             }
         }
         #endregion

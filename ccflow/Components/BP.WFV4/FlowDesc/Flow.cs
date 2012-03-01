@@ -1909,7 +1909,7 @@ namespace BP.WF
                     if (nd.NodeID == int.Parse(this.No + "01"))
                         startWork = wk;
 
-                    emps += "," + wk.Rec;
+                    emps += "@" + wk.Rec + "," + wk.RecText;
                     endWK = wk;
                 }
 
@@ -1925,6 +1925,10 @@ namespace BP.WF
                 rpt.FlowEnder = endWK.Rec;
                 rpt.FlowEnderRDT = endWK.RDT;
                 rpt.MyNum = 1;
+
+                //ÐÞ¸´±êÌâ×Ö¶Î¡£
+                WorkNode wn = new WorkNode(startWork, this.HisStartNode);
+                rpt.Title = wn.GenerTitle(startWork);
                 try
                 {
                     TimeSpan ts = endWK.RDT_DateTime - startWork.RDT_DateTime;
@@ -1932,7 +1936,6 @@ namespace BP.WF
                 }
                 catch
                 {
-
                 }
                 rpt.InsertAsOID(rpt.OID);
             }

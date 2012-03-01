@@ -578,6 +578,14 @@ namespace BP.WF
                     re.InsertAsOID(oid);
                 }
             }
+            // 生成年度月份数据.
+            string sql = "";
+            DateTime dtNow = DateTime.Now;
+            for (int num = 0; num < 12; num++)
+            {
+                sql = "INSERT INTO Pub_NY (No,Name) VALUES ('" + dtNow.ToString("yyyy-MM") + "','" + dtNow.ToString("yyyy-MM") + "')";
+                dtNow = dtNow.AddMonths(1);
+            }
             #endregion 初始化数据
         }
         public static void KillProcess(string processName) //杀掉进程的方法
