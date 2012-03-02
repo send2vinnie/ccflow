@@ -224,7 +224,7 @@ namespace BP.WF
             #region 首先判断是否配置了获取下一步接受人员的sql.
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySQL)
             {
-                if (town.HisNode.RecipientSQL.Length > 4)
+                if (town.HisNode.RecipientSQL.Length < 4)
                     throw new Exception("@您设置的当前节点按照sql，决定下一步的接受人员，但是你没有设置sql.");
 
                 Attrs attrs = this.HisWork.EnMap.Attrs;
