@@ -31,6 +31,25 @@ namespace BP.Web
     public class WebPage : PageBase
     {
         #region  Ù–‘
+        public string RequestParas
+        {
+            get
+            {
+                string urlExt = "";
+                string rawUrl = this.Request.RawUrl;
+                rawUrl = "&" + rawUrl.Substring(rawUrl.IndexOf('?') + 1);
+                string[] paras = rawUrl.Split('&');
+                foreach (string para in paras)
+                {
+                    if (para == null
+                        || para == ""
+                        || para.Contains("=") == false)
+                        continue;
+                    urlExt += "&" + para;
+                }
+                return urlExt;
+            }
+        }
         /// <summary>
         /// key.
         /// </summary>
