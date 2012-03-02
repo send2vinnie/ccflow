@@ -851,18 +851,34 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     else
                     {
                         #region 载入相关文件.
-                        this.Page.RegisterClientScriptBlock("sg",
-           "<link href='./Style/Frm/Tab.css' rel='stylesheet' type='text/css' />");
-
-                        this.Page.RegisterClientScriptBlock("s2g4",
-                 "<script language='JavaScript' src='./Style/Frm/jquery.min.js' ></script>");
-
-                        this.Page.RegisterClientScriptBlock("sdf24j",
-                "<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
-
-                        this.Page.RegisterClientScriptBlock("sdsdf24j",
-                "<script language='JavaScript' src='./Style/Frm/TabClick.js' ></script>");
+                        this.Page.RegisterClientScriptBlock("sg","<link href='./Style/Frm/Tab.css' rel='stylesheet' type='text/css' />");
+                        this.Page.RegisterClientScriptBlock("s2g4","<script language='JavaScript' src='./Style/Frm/jquery.min.js' ></script>");
+                        this.Page.RegisterClientScriptBlock("sdf24j","<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
+                        this.Page.RegisterClientScriptBlock("sdsdf24j","<script language='JavaScript' src='./Style/Frm/TabClick.js' ></script>");
                         #endregion 载入相关文件.
+
+
+                        string urlExtFrm = this.RequestParas;
+                        if (urlExtFrm.Contains("WorkID") == false)
+                            urlExtFrm += "&WorkID=" + this.WorkID;
+
+                        if (urlExtFrm.Contains("NodeID") == false)
+                            urlExtFrm += "&NodeID=" + nd.NodeID;
+
+                        if (urlExtFrm.Contains("FID") == false)
+                            urlExtFrm += "&FID=" + this.FID;
+
+                        if (urlExtFrm.Contains("FK_Node") == false)
+                            urlExtFrm += "&FK_Node=" + nd.NodeID;
+
+                        if (urlExtFrm.Contains("FID") == false)
+                            urlExtFrm += "&FID=" + wk.FID;
+
+                        if (urlExtFrm.Contains("UserNo") == false)
+                            urlExtFrm += "&UserNo=" + WebUser.No;
+
+                        if (urlExtFrm.Contains("SID") == false)
+                            urlExtFrm += "&SID=" + WebUser.SID;
 
                         this.UCEn1.Clear();
                         this.UCEn1.Add("<div  style='clear:both' ></div>");
@@ -874,7 +890,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         {
                             FrmNode fn = frm.HisFrmNode;
                             string src = "";
-                            src = fn.FrmUrl + ".aspx?FK_MapData=" + frm.No + "&FID=" + fid + "&IsEdit=" + fn.IsEditInt + "&IsPrint=" + fn.IsPrintInt + "&FK_Node=" + nd.NodeID + "&WorkID=" + this.WorkID;
+                            src = fn.FrmUrl + ".aspx?FK_MapData=" + frm.No + "&IsEdit=" + fn.IsEditInt + "&IsPrint=" + fn.IsPrintInt + urlExtFrm;
                             this.UCEn1.Add("\t\n<li><a href=\"#" + frm.No + "\" onclick=\"TabClick('" + frm.No + "','" + src + "');\" >" + frm.Name + "</a></li>");
                         }
                         this.UCEn1.Add("\t\n </ul>");
@@ -885,8 +901,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         {
                             FrmNode fn = frm.HisFrmNode;
                             this.UCEn1.Add("\t\n <DIV id='" + frm.No + "' style='width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;' >");
-                            string src = "loading.htm";
-                            this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "' src='" + src + "' frameborder=0  style='position:absolute;width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0'   /></iframe>");
+                            this.UCEn1.Add("\t\n <iframe ID='F" + frm.No + "' src='loading.htm' frameborder=0  style='position:absolute;width:" + frm.FrmW + "px; height:" + frm.FrmH + "px;text-align: left;'  leftMargin='0'  topMargin='0'   /></iframe>");
                             this.UCEn1.Add("\t\n </DIV>");
                         }
                         #endregion 输出表单 iframe 内容.
@@ -921,7 +936,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 if (urlExt.Contains("FID") == false)
                     urlExt += "&FID=" + wk.FID;
 
-                urlExt += "&UserNo=" + WebUser.No + "&SID=" + WebUser.SID;
+                if (urlExt.Contains("UserNo") == false)
+                      urlExt += "&UserNo=" + WebUser.No;
+
+                if (urlExt.Contains("SID") == false)
+                    urlExt += "&SID=" + WebUser.SID;
 
                 if (url.Contains("?") == true)
                     url += "&" + urlExt;

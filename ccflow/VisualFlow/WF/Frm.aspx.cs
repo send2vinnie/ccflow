@@ -105,6 +105,17 @@ public partial class WF_Frm : WebPage
                 return;
             }
             int i = dtlEn.RetrieveFromDBSources();
+
+            string[] paras = this.RequestParas.Split('&');
+            foreach (string str in paras)
+            {
+                if (string.IsNullOrEmpty(str) || str.Contains("=") == false)
+                    continue;
+
+                string[] kvs = str.Split('=');
+                dtlEn.SetValByKey(kvs[0], kvs[1]);
+            }
+
             this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(dtlEn);
         }
@@ -123,6 +134,16 @@ public partial class WF_Frm : WebPage
             int i = en.RetrieveFromDBSources();
             if (i == 0 && this.FID != 0)
                 en.DirectInsert();
+
+            string[] paras = this.RequestParas.Split('&');
+            foreach (string str in paras)
+            {
+                if (string.IsNullOrEmpty(str) || str.Contains("=") == false)
+                    continue;
+
+                string[] kvs = str.Split('=');
+                en.SetValByKey(kvs[0], kvs[1]);
+            }
 
             this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(en);
