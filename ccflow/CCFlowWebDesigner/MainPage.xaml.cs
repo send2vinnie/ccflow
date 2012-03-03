@@ -81,21 +81,24 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         #endregion
 
         #region Constructs
-        private FrmLogin _fl = new FrmLogin();
+        private AdminLogin adminLogin = new AdminLogin();
         /// <summary>
         /// 构造方法
         /// </summary>
         public MainPage()
         {
             InitializeComponent();
+            adminLogin.Closed += new EventHandler(frmlogin_Closed);
+            this.Loaded += new RoutedEventHandler(MainPage_Loaded);
+        }
 
-            _fl.Closed += new EventHandler(frmlogin_Closed);
-            this.Content = _fl;
-            _fl.Show();
+        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            adminLogin.Show();
         }
         void frmlogin_Closed(object sender, EventArgs e)
         {
-            if (_fl.DialogResult == false)
+            if (adminLogin.DialogResult != true)
                 return;
 
             try
@@ -135,7 +138,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 var id = e.Result;
                 if (id == null || id == "")
                     id = "CCFlow";
-
                 imageLogo.Source = new BitmapImage(new Uri(string.Format("/Images/Icons/{0}.jpg", id), UriKind.Relative));
                 var brush = new ImageBrush(); //定义图片画刷
                 brush.ImageSource = new BitmapImage(new Uri(string.Format("/Images/Icons/{0}Welcome.jpg", id), UriKind.Relative));
