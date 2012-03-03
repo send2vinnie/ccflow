@@ -162,7 +162,7 @@ public partial class Designer : System.Web.UI.Page
             DBAccess.RunSQL("DELETE Sys_MapAttr WHERE KeyOfEn='WFLog'");
             #endregion
 
-            #region 2011-12-01 升级投递规则.
+            #region 2011-12-01 升级访问规则.
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DeliveryWay'");
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='FrmEventType'");
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='EventDoType'");
