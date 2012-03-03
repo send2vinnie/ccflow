@@ -81,14 +81,23 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         #endregion
 
         #region Constructs
+        private FrmLogin _fl = new FrmLogin();
         /// <summary>
         /// 构造方法
         /// </summary>
         public MainPage()
         {
             InitializeComponent();
-            #region 处理事件
-            #endregion
+
+            _fl.Closed += new EventHandler(frmlogin_Closed);
+            this.Content = _fl;
+            _fl.Show();
+        }
+        void frmlogin_Closed(object sender, EventArgs e)
+        {
+            if (_fl.DialogResult == false)
+                return;
+
             try
             {
                 var ws = Glo.GetDesignerServiceInstance();
@@ -111,7 +120,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 ws.DoTypeCompleted += ws_DoTypeCompleted;
                 Application.Current.Host.Content.Resized += new EventHandler(Content_Resized);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

@@ -45,7 +45,7 @@ namespace BP
             var culture = new CultureInfo("zh-cn");
             Thread.CurrentThread.CurrentUICulture = culture;
 
-            Glo.BPMHost = GetHostUrl();
+            Glo.BPMHost = this.GetHostUrl();
 
             //WF.Frm.FrmLib lab = new WF.Frm.FrmLib();
             //this.RootVisual = lab;
