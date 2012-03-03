@@ -1,0 +1,20 @@
+﻿<controls:ChildWindow x:Class="WF.FrmLogin"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="400" Height="300" 
+           Title="admin login" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Button x:Name="CancelButton" Content="取消" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="1" />
+        <Button x:Name="OKButton" Content="确定" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="1" />
+        <sdk:Label HorizontalAlignment="Left" Margin="58,43,0,155" Name="label1" Width="120" Content="User No:" />
+        <sdk:Label Height="28" HorizontalAlignment="Left" Margin="58,77,0,0" Name="label2" VerticalAlignment="Top" Width="120" Content="User Name:" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="146,44,0,0" Name="textBox1" VerticalAlignment="Top" Width="120" Text="admin" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="147,77,0,0" Name="textBox2" VerticalAlignment="Top" Width="120" Text="pub" />
+    </Grid>
+</controls:ChildWindow>

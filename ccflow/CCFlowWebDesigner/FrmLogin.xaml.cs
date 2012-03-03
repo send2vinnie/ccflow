@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+
+namespace WF
+{
+    public partial class FrmLogin : ChildWindow
+    {
+        public FrmLogin()
+        {
+            InitializeComponent();
+        }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            string user = this.textBox1.Text.Trim().ToLower();
+            if (user != "admin")
+            {
+                MessageBox.Show("非管理员不能登陆", "Error", MessageBoxButton.OK);
+                return;
+            }
+            string pass = this.textBox2.Text.Trim().ToLower();
+            var da = BP.Glo.GetDesignerServiceInstance();
+            da.DoTypeAsync("AdminLogin", user, pass, null, null, null);
+            da.DoTypeCompleted += new EventHandler<WS.DoTypeCompletedEventArgs>(da_DoTypeCompleted);
+        }
+
+        void da_DoTypeCompleted(object sender, WS.DoTypeCompletedEventArgs e)
+        {
+            if (e.Result != null)
+            {
+                MessageBox.Show(e.Result, "Error", MessageBoxButton.OK);
+                return;
+            }
+
+            this.DialogResult = true;
+        }
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+    }
+}
+
