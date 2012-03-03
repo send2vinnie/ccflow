@@ -39,6 +39,13 @@ public class WSDesigner : WSBase
         {
             switch (doType)
             {
+                case "AdminLogin":
+                    Emp emp = new Emp();
+                    emp.No = v1;
+                    emp.RetrieveFromDBSources();
+                    if (emp.Pass == v2)
+                        return null;
+                    return "error password.";
                 case "DeleteFrmSort":
                     FrmSort fs = new FrmSort();
                     fs.No = v1;
