@@ -122,7 +122,12 @@ public partial class WF_Frm : WebPage
         else
         {
             GEEntity en = md.HisGEEn;
+            if (this.FID!=0)
             en.SetValByKey("OID", this.FID);
+
+            if (this.WorkID!=0)
+                en.SetValByKey("OID", this.WorkID);
+
             if (en.EnMap.Attrs.Count < 2)
             {
                 md.RepairMap();
