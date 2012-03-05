@@ -27,12 +27,11 @@ namespace WF
                 MessageBox.Show("非管理员不能登陆", "Error", MessageBoxButton.OK);
                 return;
             }
-            string pass = this.textBox2.Text.Trim().ToLower();
+            string pass = this.passwordBox1.Password.Trim().ToLower();
             var da = BP.Glo.GetDesignerServiceInstance();
             da.DoTypeAsync("AdminLogin", user, pass, null, null, null);
             da.DoTypeCompleted += new EventHandler<WS.DoTypeCompletedEventArgs>(da_DoTypeCompleted);
         }
-
         void da_DoTypeCompleted(object sender, WS.DoTypeCompletedEventArgs e)
         {
             if (e.Result != null)
@@ -40,7 +39,6 @@ namespace WF
                 MessageBox.Show(e.Result, "Error", MessageBoxButton.OK);
                 return;
             }
-
             this.DialogResult = true;
         }
         private void CancelButton_Click(object sender, RoutedEventArgs e)
