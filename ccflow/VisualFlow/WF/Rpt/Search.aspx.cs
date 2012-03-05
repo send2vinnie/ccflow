@@ -185,7 +185,8 @@ public partial class WF_Rpt_Search : WebPage
         QueryObject qo = new QueryObject(ens);
         if (this.DoType == "My")
         {
-            qo.AddWhere("FlowEmps", " LIKE ", "%" + WebUser.No + ",%");
+            qo.AddWhere(GERptAttr.FlowEmps, " LIKE ", "'%@" + WebUser.No + "%'");
+            //    qo.AddWhere("FlowEmps", " LIKE ", "%" + WebUser.No + ",%");
         }
         else
         {
