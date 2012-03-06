@@ -589,7 +589,7 @@ namespace BP.Web.Comm.UC.WF
                 }
                 #endregion 处理sql变量
 
-                if (string.IsNullOrEmpty(sql) == false)
+                    if (string.IsNullOrEmpty(sql) == false)
                 {
                     if (sql.Contains("@"))
                         throw new Exception("设置的sql有错误可能有没有替换的变量:" + sql);
@@ -620,10 +620,6 @@ namespace BP.Web.Comm.UC.WF
                     if (mysql.Contains(dtl.No + "=") == false)
                         continue;
 
-                    GEDtls gedtls = new GEDtls(dtl.No);
-                    gedtls.Delete(GEDtlAttr.RefPK, en.PKVal);
-
-
                     #region 处理sql.
                     sql = mysql;
                     sql = sql.Replace(dtl.No + "=", "");
@@ -645,6 +641,9 @@ namespace BP.Web.Comm.UC.WF
 
                     if (sql.Contains("@"))
                         throw new Exception("设置的sql有错误可能有没有替换的变量:" + sql);
+
+                    GEDtls gedtls = new GEDtls(dtl.No);
+                    gedtls.Delete(GEDtlAttr.RefPK, en.PKVal);
 
                     dt = DBAccess.RunSQLReturnTable(sql);
                     foreach (DataRow dr in dt.Rows)
