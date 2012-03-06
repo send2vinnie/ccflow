@@ -1880,6 +1880,7 @@ namespace BP.WF
             string sql = "SELECT OID FROM ND" + int.Parse(this.No) + "01 WHERE NodeState >0 AND OID NOT IN (SELECT OID FROM  ND" + int.Parse(this.No) + "Rpt ) ";
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
             this.CheckRptData(this.HisNodes, dt);
+
             return "@共有:" + dt.Rows.Count + "条(" + this.Name + ")数据被装载成功。";
         }
         /// <summary>
@@ -1909,7 +1910,14 @@ namespace BP.WF
                     if (nd.NodeID == int.Parse(this.No + "01"))
                         startWork = wk;
 
-                    emps += "@" + wk.Rec + "," + wk.RecText;
+                    try
+                    {
+                        emps += "@" + wk.Rec + ",";
+                        emps += wk.RecOfEmp.Name;
+                    }
+                    catch
+                    {
+                    }
                     endWK = wk;
                 }
 
@@ -3981,8 +3989,8 @@ namespace BP.WF
             nd.FlowName = this.Name;
             nd.HisNodePosType = NodePosType.Start;
             nd.HisNodeWorkType = NodeWorkType.StartWork;
-            nd.X = 100;
-            nd.Y = 100;
+            nd.X = 200;
+            nd.Y = 50;
             nd.Insert();
 
             nd.CreateMap();
@@ -3996,8 +4004,8 @@ namespace BP.WF
             nd.FlowName = this.Name;
             nd.HisNodePosType = NodePosType.End;
             nd.HisNodeWorkType = NodeWorkType.Work;
-            nd.X = 100;
-            nd.Y = 200;
+            nd.X = 200;
+            nd.Y = 150;
             nd.Insert();
             nd.CreateMap();
             nd.HisWork.CheckPhysicsTable();

@@ -239,7 +239,7 @@ namespace BP.WF
                             WorkFlow wf = new WorkFlow(this.HisFlow, this.FID);
                             info += "@所有的子线程已经结束。";
                             info += "@结束主流程信息。";
-                            info += "@" + wf.DoFlowOver();
+                            info += "@" + wf.DoFlowOver("");
                         }
 
                         decimal passRate = ok / all * 100;
@@ -271,7 +271,7 @@ namespace BP.WF
                                 WorkFlow wf = new WorkFlow(this.HisFlow, this.FID);
                                 info += "@所有的子线程已经结束。";
                                 info += "@结束主流程信息。";
-                                info += "@" + wf.DoFlowOver();
+                                info += "@" + wf.DoFlowOver("");
                             }
                             break;
                     }
@@ -460,7 +460,7 @@ namespace BP.WF
             gwf.WorkID = this.WorkID;
             if (gwf.RetrieveFromDBSources() == 0)
             {
-                this.DoFlowOver();
+                this.DoFlowOver("非正常结束，没有找到当前的流程记录。");
                 throw new Exception("@" + this.ToEP1("WF2", "工作流程{0}已经完成。", this.HisStartWork.Title));
             }
 
@@ -566,7 +566,7 @@ namespace BP.WF
             {
                 /*说明这是最后一个*/
                 WorkFlow wf = new WorkFlow(gwf.FK_Flow, this.FID);
-                wf.DoFlowOver();
+                wf.DoFlowOver("");
                 return "@当前子流程已完成，主流程已完成。";
             }
             else
@@ -574,13 +574,14 @@ namespace BP.WF
                 return "@当前子流程已完成，主流程还有(" + num + ")个子流程未完成。";
             }
         }
+
         /// <summary>
         /// 结束流程
         /// </summary>
+        /// <param name="stopMsg">结束原因</param>
         /// <returns></returns>
-        public string DoFlowOver()
+        public string DoFlowOver(string stopMsg)
         {
-
             string msg = this.BeforeFlowOver();
             if (this.IsMainFlow == false)
             {
@@ -657,7 +658,6 @@ namespace BP.WF
                     continue;
                 }
 
-
                 // 复制到指定的报表中。
                 foreach (GEDtl dtlData in dtlDatas)
                 {
@@ -680,11 +680,9 @@ namespace BP.WF
             DBAccess.RunSQL("DELETE FROM WF_GenerFH WHERE FID=" + this.WorkID);
 
             // 清楚流程标记.
-            // 清除流程。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + ")  AND FK_Flow='" + this.HisFlow.No + "'");
             // 清除其他的工作者。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + ")  AND FK_Node IN (SELECT NodeId FROM WF_Node WHERE FK_Flow='" + this.HisFlow.No + "') ");
-
             return msg;
         }
         /// <summary>

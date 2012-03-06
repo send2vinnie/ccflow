@@ -3314,7 +3314,7 @@ namespace BP.WF
                 if (this.HisNode.HisToNodes.Count == 0 && this.HisNode.IsStartNode)
                 {
                     /* 如果流程完成 */
-                    string overMsg = this.HisWorkFlow.DoFlowOver();
+                    string overMsg = this.HisWorkFlow.DoFlowOver("");
                     this.IsStopFlow = true;
                     this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
                         this.HisNode.NodeID, this.HisNode.Name, "流程结束");
@@ -3326,7 +3326,7 @@ namespace BP.WF
                 if ((this.HisNode.IsCCFlow && this.HisFlowCompleteConditions.IsPass))
                 {
                     /* 如果流程完成 */
-                    string overMsg = this.HisWorkFlow.DoFlowOver();
+                    string overMsg = this.HisWorkFlow.DoFlowOver("");
                     this.IsStopFlow = true;
 
                     this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
@@ -3419,7 +3419,7 @@ namespace BP.WF
             if (toNodes.Count == 0)
             {
                 /* 如果是最后一个节点，就设置流程结束。*/
-                string ovrMsg = this.HisWorkFlow.DoFlowOver();
+                string ovrMsg = this.HisWorkFlow.DoFlowOver("无");
                 
                 this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
                     this.HisNode.NodeID, this.HisNode.Name, "流程结束");

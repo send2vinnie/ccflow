@@ -522,7 +522,7 @@ namespace BP.WF
         /// </summary>
         public const string TurnToDealDoc = "TurnToDealDoc";
         /// <summary>
-        /// 投递规则
+        /// 访问规则
         /// </summary>
         public const string DeliveryWay = "DeliveryWay";
         /// <summary>
@@ -1654,7 +1654,7 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 投递规则
+        /// 访问规则
         /// </summary>
         public DeliveryWay HisDeliveryWay
         {
@@ -2268,7 +2268,7 @@ namespace BP.WF
                 map.AddBoolean(NodeAttr.IsTask, true, "允许分配工作否?", true, true);
 
                 map.AddTBInt(NodeAttr.ReturnRole, 2, "退回规则", true, true);
-                map.AddTBInt(NodeAttr.DeliveryWay, 0, "投递规则", true, true);
+                map.AddTBInt(NodeAttr.DeliveryWay, 0, "访问规则", true, true);
 
 
                 //map.AddBoolean(NodeAttr.IsCanReturn, true, "是否可以退回", true, true);

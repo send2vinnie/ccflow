@@ -18,7 +18,7 @@ namespace BP.WF
         /// </summary>
         public RepariRptTable()
         {
-            this.Title = "修复Rpt数据表";
+            this.Title = "批量:修复Rpt数据表";
             this.Help = "在老版本的程序中NDxxxRpt表有丢失字段的情况，现在自动的修复它，以保证可以查询到数据。"; 
         }
         /// <summary>
@@ -49,7 +49,7 @@ namespace BP.WF
             fls.RetrieveAll();
             foreach (Flow fl in fls)
             {
-                string flowID = int.Parse(fl.No).ToString();
+                fl.DoReloadRptData();
             }
             return null;
         }

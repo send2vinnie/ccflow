@@ -199,9 +199,7 @@ namespace BP.WF
         }
         public static DataTable DB_GenerEmpWorksOfDataTable(string fk_emp)
         {
-            string sql = null;
-            sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY ADT DESC ";
-            return BP.DA.DBAccess.RunSQLReturnTable(sql);
+            return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY ADT DESC ");
         }
         #endregion 获取当前操作员的待办工作
 
@@ -389,11 +387,12 @@ namespace BP.WF
         /// </summary>
         /// <param name="flowNo">流程编号</param>
         /// <param name="workID">工作ID</param>
+        /// <param name="msg">流程结束原因</param>
         /// <returns>执行信息</returns>
-        public static string Flow_DoFlowOver(string flowNo, Int64 workID)
+        public static string Flow_DoFlowOver(string flowNo, Int64 workID,string msg)
         {
             WorkFlow wf = new WorkFlow(flowNo, workID);
-            return wf.DoFlowOver();
+            return wf.DoFlowOver(msg);
         }
         #endregion 与流程有关的接口
 

@@ -538,7 +538,7 @@ namespace BP.Sys
                     case DataType.AppBoolean:
                         return "Bool";
                     default:
-                        throw new Exception("sdsdsd");
+                        throw new Exception("没有判断。");
                 }
             }
             set
@@ -842,14 +842,6 @@ namespace BP.Sys
                 this.SetValByKey(MapAttrAttr.UIContralType, (int)value);
             }
         }
-
-        public string UIContralTypeT
-        {
-            get
-            {
-                return this.GetValRefTextByKey(MapAttrAttr.UIContralType);
-            }
-        }
         public string F_Desc
         {
             get
@@ -963,15 +955,20 @@ namespace BP.Sys
 
                 map.AddMyPK();
 
-                map.AddTBString(MapAttrAttr.FK_MapData, null, "实体标识", true, true, 1, 30, 20);
-                map.AddTBString(MapAttrAttr.KeyOfEn, null, "属性", true, true, 1, 30, 20);
+                map.AddTBString(MapAttrAttr.FK_MapData, null, "实体标识", true, true, 1, 200, 20);
+                map.AddTBString(MapAttrAttr.KeyOfEn, null, "属性", true, true, 1, 200, 20);
 
-                map.AddTBString(MapAttrAttr.Name, null, "描述", true, false, 0, 100, 20);
-                map.AddTBString(MapAttrAttr.DefVal, null, "默认值", false, false, 0, 30, 20);
+                map.AddTBString(MapAttrAttr.Name, null, "描述", true, false, 0, 200, 20);
+                map.AddTBString(MapAttrAttr.DefVal, null, "默认值", false, false, 0, 4000, 20);
 
-                map.AddDDLSysEnum(MapAttrAttr.UIContralType, 0, "空件类型", true, false, MapAttrAttr.UIContralType, "@0=文本框@1=下拉框");
-                map.AddDDLSysEnum(MapAttrAttr.MyDataType, 0, "数据类型", true, false, MapAttrAttr.MyDataType,
-                    "@1=文本(String)@2=整型(Int)@3=浮点(Float)@4=布尔@5=Double@6=AppDate@7=AppDateTime@8=AppMoney@9=AppRate");
+             //   map.AddDDLSysEnum(MapAttrAttr.UIContralType, 0, "空件类型", true, false, MapAttrAttr.UIContralType, "@0=文本框@1=下拉框");
+             //   map.AddDDLSysEnum(MapAttrAttr.MyDataType, 0, "数据类型", true, false, MapAttrAttr.MyDataType,
+               //     "@1=文本(String)@2=整型(Int)@3=浮点(Float)@4=布尔@5=Double@6=AppDate@7=AppDateTime@8=AppMoney@9=AppRate");
+
+                map.AddTBInt(MapAttrAttr.UIContralType, 0, "控件", true, false);
+                map.AddTBInt(MapAttrAttr.MyDataType, 0, "数据类型", true, false);
+
+
 
                 map.AddDDLSysEnum(MapAttrAttr.LGType, 0, "逻辑类型", true, false, MapAttrAttr.LGType, "@0=普通@1=枚举@2=外键");
 
@@ -993,8 +990,11 @@ namespace BP.Sys
                 map.AddTBInt(MapAttrAttr.EditType, 0, "编辑类型", true, false);
 
                 map.AddTBString(MapAttrAttr.AutoFullDoc, null, "自动填写内容", false, false, 0, 500, 20);
-                map.AddDDLSysEnum(MapAttrAttr.AutoFullWay, 0, "自动填写方式", true, false, MapAttrAttr.AutoFullWay,
-                    "@0=不设置@1=本表单中数据计算@2=利用SQL自动填充@3=本表单中外键列@4=对明细表的列求值");
+               // map.AddDDLSysEnum(MapAttrAttr.AutoFullWay, 0, "自动填写方式", true, false, MapAttrAttr.AutoFullWay,
+                 //   "@0=不设置@1=本表单中数据计算@2=利用SQL自动填充@3=本表单中外键列@4=对明细表的列求值");
+
+                map.AddTBInt(MapAttrAttr.AutoFullWay, 0, "自动填写方式", true, false);
+
 
                 map.AddTBInt(MapAttrAttr.IDX, 0, "序号", true, false);
                 map.AddTBInt(MapAttrAttr.GroupID, 0, "GroupID", true, false);

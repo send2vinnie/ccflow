@@ -461,7 +461,7 @@ namespace BP.WF
         /// <summary>
         /// 安装包
         /// </summary>
-        public static void DoInstallDataBase(string lang,string yunXingHuanjing)
+        public static void DoInstallDataBase(string lang, string yunXingHuanjing)
         {
             ArrayList al = null;
             string info = "BP.En.Entity";
@@ -527,17 +527,17 @@ namespace BP.WF
             #endregion 注册枚举类型
 
             #region 3, 执行基本的 sql
-            string sqlscript =  SystemConfig.PathOfData + "\\Install\\SQLScript\\Port_" + yunXingHuanjing + "_" + lang + ".sql";
+            string sqlscript = SystemConfig.PathOfData + "\\Install\\SQLScript\\Port_" + yunXingHuanjing + "_" + lang + ".sql";
             BP.DA.DBAccess.RunSQLScript(sqlscript);
             #endregion 修复
 
             #region 4, 创建视图与系统函数
-            sqlscript =  SystemConfig.PathOfData + "\\Install\\SQLScript\\CreateViewSQL.sql";
+            sqlscript = SystemConfig.PathOfData + "\\Install\\SQLScript\\CreateViewSQL.sql";
             BP.DA.DBAccess.RunSQLScript(sqlscript);
             #endregion 创建视图与系统函数
 
             #region 5, 初始化数据。
-            sqlscript =  SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql" ;
+            sqlscript = SystemConfig.PathOfData + "\\Install\\SQLScript\\InitPublicData.sql";
             BP.DA.DBAccess.RunSQLScript(sqlscript);
             #endregion 初始化数据
 

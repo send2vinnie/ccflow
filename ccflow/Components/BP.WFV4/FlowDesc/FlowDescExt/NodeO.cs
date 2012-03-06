@@ -13,7 +13,7 @@ namespace BP.WF.Ext
     public class NodeO : Entity, IDTS
     {
         /// <summary>
-        /// 投递规则
+        /// 访问规则
         /// </summary>
         public ReturnRole HisReturnRole
         {
@@ -38,7 +38,7 @@ namespace BP.WF.Ext
             }
         }
         /// <summary>
-        /// 投递规则
+        /// 访问规则
         /// </summary>
         public DeliveryWay HisDeliveryWay
         {
@@ -210,7 +210,7 @@ namespace BP.WF.Ext
 
                 map.AddTBString(NodeAttr.FocusField, null, "焦点字段", true, false, 0, 100, 10);
 
-                map.AddDDLSysEnum(NodeAttr.DeliveryWay, 0, "投递规则", true, true);
+                map.AddDDLSysEnum(NodeAttr.DeliveryWay, 0, "访问规则", true, true);
                 map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10, true);
 
                 map.AddDDLSysEnum(NodeAttr.WhoExeIt, 0, "谁执行它",
