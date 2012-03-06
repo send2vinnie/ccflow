@@ -605,7 +605,8 @@ namespace BP.Web.Comm.UC.WF
                 }
             }
 
-            if (string.IsNullOrEmpty(item.Tag1))
+            if (string.IsNullOrEmpty(item.Tag1) 
+                || item.Tag1.Length <15 )
                 return;
 
             // 填充明细表.

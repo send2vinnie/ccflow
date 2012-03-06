@@ -1188,7 +1188,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     else
                         mywf = new WorkFlow(this.FK_Flow, this.FID);
 
-                    this.ToMsg("结束流程提示:<hr>" + mywf.DoFlowOver(), "info");
+                    this.ToMsg("结束流程提示:<hr>" + mywf.DoFlowOver(""), "info");
                     break;
                 case NamesOfBtn.Delete:
                 case "Btn_Del":

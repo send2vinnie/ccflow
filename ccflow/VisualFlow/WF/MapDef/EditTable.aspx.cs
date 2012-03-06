@@ -117,61 +117,23 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
         this.Pub1.AddTR1();
         this.Pub1.AddTDIdx(idx++);
         this.Pub1.AddTD(this.ToE("DefaultVal", "默认值")); // "默认值"
-        DDL ddl = new DDL();
-        ddl.ID = "DDL";
-        ddl.BindEntities(mapAttr.HisEntitiesNoName);
-        ddl.SetSelectItem(mapAttr.DefVal);
-        this.Pub1.AddTD(ddl);
-        if (mapAttr.UIBindKey.Contains(".") == false)
-        {
-            CheckBox cb = new CheckBox();
-            cb.Text = ToE("DefNull", "默认值为空"); //"默认值为空";
-            cb.ID = "CB_IsDefValNull";
-            if (mapAttr.DefVal == null || mapAttr.DefVal == "")
-                cb.Checked = true;
-            else
-                cb.Checked = false;
-            this.Pub1.AddTD(cb);
-        }
-        else
-        {
-            string ensName = mapAttr.HisEntitiesNoName.ToString();
-            SFTable sf = new SFTable(ensName);
-            if (sf.DefVal.Contains("@") == false)
-            {
-                CheckBox cb1 = new CheckBox();
-                cb1.Text = ToE("DefNull", "默认值为空");//"默认值为空";
-                cb1.ID = "CB_IsDefValNull";
-                if (mapAttr.DefVal == null || mapAttr.DefVal == "")
-                    cb1.Checked = true;
-                else
-                    cb1.Checked = false;
-                this.Pub1.AddTD(cb1);
-            }
-            else
-            {
-                ddl = new DDL();
-                ddl.ID = "DDL_DefVal";
-                string[] defval = sf.DefVal.Split('@');
-                foreach (string s in defval)
-                {
-                    if (s == null || s == "")
-                        continue;
 
-                    string[] labs = s.Split('=');
-                    ddl.Items.Add(new ListItem(labs[1], "@" + labs[0]));
-                }
-                ddl.Items.Add(new ListItem("默认值为空", ""));
-                ddl.Items.Add(new ListItem("默认当前选择", "@Select"));
-                string rel = mapAttr.GetValStrByKey(MapAttrAttr.DefVal);
-                if (rel.Contains("@") == false && rel != "")
-                    rel = "@Select";
+        tb = new TB();
+        tb.ID = "TB_DefVal";
+        tb.Text = mapAttr.Name;
+        tb.Attributes["width"] = "100%";
+        tb.Text = mapAttr.DefValReal;
+        this.Pub1.AddTD(tb);
 
-                ddl.SetSelectItem(rel);
-                this.Pub1.AddTD(ddl);
-            }
-        }
+        //DDL ddl = new DDL();
+        //ddl.ID = "DDL";
+        //ddl.BindEntities(mapAttr.HisEntitiesNoName);
+        //ddl.SetSelectItem(mapAttr.DefVal);
+     //   this.Pub1.AddTD(ddl);
+       // this.Pub1.AddTD(ddl);
+        this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../../Comm/PanelEns.aspx?EnsName="+mapAttr.UIBindKey+"','df');\" >打开</a>");
         this.Pub1.AddTREnd();
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
@@ -377,26 +339,27 @@ public partial class Comm_MapDef_EditTable : BP.Web.WebPage
             attr = (MapAttr)this.Pub1.Copy(attr);
             attr.FK_MapData = this.MyPK;
             attr.GroupID = this.Pub1.GetDDLByID("DDL_GroupID").SelectedItemIntVal;
+            attr.DefVal = this.Pub1.GetTBByID("TB_DefVal").Text;
 
-            if (this.Pub1.IsExit("CB_IsDefValNull"))
-            {
-                if (this.Pub1.GetCBByID("CB_IsDefValNull").Checked == false)
-                    attr.DefVal = this.Pub1.GetDDLByID("DDL").SelectedItemStringVal;
-                else
-                    attr.DefVal = "";
-            }
-            else
-            {
-                string s = this.Pub1.GetDDLByID("DDL_DefVal").SelectedItemStringVal;
-                if (s == "@Select")
-                {
-                    attr.DefVal = this.Pub1.GetDDLByID("DDL").SelectedItemStringVal;
-                }
-                else
-                {
-                    attr.DefVal = s;
-                }
-            }
+            //if (this.Pub1.IsExit("CB_IsDefValNull"))
+            //{
+            //    if (this.Pub1.GetCBByID("CB_IsDefValNull").Checked == false)
+            //        attr.DefVal = this.Pub1.GetDDLByID("DDL").SelectedItemStringVal;
+            //    else
+            //        attr.DefVal = "";
+            //}
+            //else
+            //{
+            //    string s = this.Pub1.GetDDLByID("DDL_DefVal").SelectedItemStringVal;
+            //    if (s == "@Select")
+            //    {
+            //        attr.DefVal = this.Pub1.GetDDLByID("DDL").SelectedItemStringVal;
+            //    }
+            //    else
+            //    {
+            //        attr.DefVal = s;
+            //    }
+            //}
 
             if (this.RefNo == null || this.RefNo == "")
                 attr.Insert();
