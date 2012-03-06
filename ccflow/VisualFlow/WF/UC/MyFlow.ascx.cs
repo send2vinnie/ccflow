@@ -205,7 +205,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     {
         switch (this.DoType)
         {
-        
             case "Runing":
                 ShowRuning();
                 return;
@@ -215,9 +214,42 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             case "Warting":
                 ShowWarting();
                 return;
+            case "StopFlow":
+                StopFlow();
+                return;
             default:
                 break;
         }
+    }
+    public void StopFlow()
+    {
+        GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
+        this.UCEn1.AddTable("width='70%'");
+        this.UCEn1.AddCaptionLeft("<a href='MyFlow" + this.PageSmall + ".aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "'><img src='" + this.Request.ApplicationPath + "/Images/Btn/Back.gif' border=0>返回</a> --- 结束[" + gwf.Title + "]流程");
+        this.UCEn1.AddTR();
+        this.UCEn1.AddTDTitle("请填写中止流程的原因");
+        this.UCEn1.AddTREnd();
+
+        TextBox tb = new TextBox();
+        tb.Text = "";
+        tb.ID = "TB_Doc";
+       // tb.Attributes["width"] = "100%";
+        tb.Columns = 50;
+        tb.Rows = 10; 
+        tb.TextMode = TextBoxMode.MultiLine;
+        this.UCEn1.AddTR();
+        this.UCEn1.AddTD(tb);
+        this.UCEn1.AddTREnd();
+        this.UCEn1.AddTR();
+        Btn btn = new Btn();
+        btn.ID = "Btn_OK";
+        btn.Text = "  OK  ";
+       // btn.OnClientClick = "return window.confim('您确定要执行吗？')";
+        btn.Attributes["onclick"] = " return confirm('您确定要执行吗？');";
+        btn.Click += new EventHandler(ToolBar1_ButtonClick);
+        this.UCEn1.AddTD(btn);
+        this.UCEn1.AddTREnd();
+        this.UCEn1.AddTableEnd();
     }
     public void ShowWarting()
     {
@@ -346,6 +378,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             DoDoType();
             return;
         }
+
+
 
        string appPath = this.Request.ApplicationPath;
        this.currFlow = new Flow(this.FK_Flow);
@@ -532,9 +566,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (btnLab.EndFlowEnable && this.currND.IsStartNode == false)
             {
-                this.ToolBar1.AddBtn("Btn_EndFlow", btnLab.EndFlowLab);
-                this.ToolBar1.GetBtnByID("Btn_EndFlow").OnClientClick = "return confirm('" + this.ToE("AYS", "将要执行终止流程，您确认吗？") + "')";
-                this.ToolBar1.GetBtnByID("Btn_EndFlow").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+                this.ToolBar1.Add("<input type=button value='" + btnLab.EndFlowLab + "' enable=true onclick=\"To('MyFlow" + small + ".aspx?&DoType=StopFlow&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow=" + this.FK_Flow + "'); \" />");
+                //this.ToolBar1.AddBtn("Btn_EndFlow", btnLab.EndFlowLab);
+                //this.ToolBar1.GetBtnByID("Btn_EndFlow").OnClientClick = "return confirm('" + this.ToE("AYS", "将要执行终止流程，您确认吗？") + "')";
+                //this.ToolBar1.GetBtnByID("Btn_EndFlow").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
             if (btnLab.RptEnable)
@@ -1117,7 +1152,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     {
         //try
         //{
-            Btn btn = (Btn)sender;
+        string id = "";
+        Btn btn = sender as Btn;
+        if (btn != null)
+            id = btn.ID;
+     
             switch (btn.ID)
             {
                
