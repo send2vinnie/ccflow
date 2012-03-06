@@ -116,16 +116,18 @@ public partial class WF_Frm : WebPage
                 dtlEn.SetValByKey(kvs[0], kvs[1]);
             }
 
+
             this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(dtlEn);
+
         }
         else
         {
             GEEntity en = md.HisGEEn;
-            if (this.FID!=0)
-            en.SetValByKey("OID", this.FID);
+            if (this.FID != 0)
+                en.SetValByKey("OID", this.FID);
 
-            if (this.WorkID!=0)
+            if (this.WorkID != 0)
                 en.SetValByKey("OID", this.WorkID);
 
             if (en.EnMap.Attrs.Count < 2)
@@ -228,7 +230,6 @@ public partial class WF_Frm : WebPage
     }
     protected void Btn_Save_Click(object sender, EventArgs e)
     {
-
         try
         {
             if (this.FK_MapData.Replace("ND", "") == this.FK_Node.ToString())
@@ -252,17 +253,16 @@ public partial class WF_Frm : WebPage
 
             fes.DoEventNode(FrmEventList.SaveAfter, en);
 
-            if (fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveAfter) == true 
-                || fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveBefore) == true)
-            {
-                /*如果包含保存*/
-                this.Response.Redirect("Frm.aspx?OID=" + this.RefOID + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID="+this.FID+"&FK_MapData="+this.FK_MapData, true);
-            }
+            //if (fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveAfter) == true
+            //    || fes.Contains(FrmEventAttr.FK_Event, FrmEventList.SaveBefore) == true)
+            //{
+            //    /*如果包含保存*/
+            //    this.Response.Redirect("Frm.aspx?OID=" + this.RefOID + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData,true);
+            //}
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             this.UCEn1.AddMsgOfWarning("error:", ex.Message);
         }
-
     }
 }

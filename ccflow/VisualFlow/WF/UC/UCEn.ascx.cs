@@ -1164,6 +1164,7 @@ namespace BP.Web.Comm.UC.WF
                             ddlOper.Attributes["onchange"] = "DDLFullCtrl(this.value,\'" + ddlOper.ClientID + "\', \'" + me.MyPK + "\')";
                             break;
                         case MapExtXmlList.ActiveDDL:
+
                             DDL ddlPerant = this.GetDDLByID("DDL_" + me.AttrOfOper);
                             DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
                             if (ddlPerant == null || ddlChild == null)
@@ -1175,7 +1176,7 @@ namespace BP.Web.Comm.UC.WF
                             string val = ddlPerant.SelectedItemStringVal;
                             string valClient = en.GetValStrByKey(me.AttrsOfActive); // ddlChild.SelectedItemStringVal;
 
-                             string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
+                            string fullSQL = me.Doc.Replace("@WebUser.No", WebUser.No);
                             fullSQL = fullSQL.Replace("@WebUser.Name", WebUser.Name);
                             fullSQL = fullSQL.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
                             fullSQL = fullSQL.Replace("@Key", val);
@@ -1186,7 +1187,9 @@ namespace BP.Web.Comm.UC.WF
                                 {
                                     if (fullSQL.Contains("@" + attr.KeyOfEn) == false)
                                         continue;
+
                                     fullSQL = fullSQL.Replace("@" + attr.KeyOfEn, en.GetValStrByKey(attr.KeyOfEn));
+
                                     if (fullSQL.Contains("@") == false)
                                         break;
                                 }
