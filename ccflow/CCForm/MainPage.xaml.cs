@@ -1325,7 +1325,7 @@ namespace CCForm
                             string keyOfEn = dr["KeyOfEn"];
                             string name = dr["Name"];
                             string defVal = dr["DefVal"];
-                            string UIContralType = dr["UIContralType"];
+                            string UIContralType = dr["UIContralType"]; 
                             string MyDataType = dr["MyDataType"];
                             string lgType = dr["LGType"];
                             double X = double.Parse(dr["X"]);
@@ -2902,7 +2902,6 @@ namespace CCForm
         }
         private void DeleteCurrSelectUI()
         {
-
             BPRadioBtn rb = Glo.currEle as BPRadioBtn;
             if (rb != null)
             {
