@@ -164,6 +164,8 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         else
             ddl.SetSelectItem(this.FK_Node);
 
+        cond.OperatorValue = cond.OperatorValue + "@";
+
         ddl.AutoPostBack = true;
         ddl.SelectedIndexChanged += new EventHandler(ddl_SelectedIndexChanged);
         this.Pub1.Add(ddl);
@@ -192,7 +194,7 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
                 CheckBox cb = new CheckBox();
                 cb.ID = "CB_" + st.No;
                 cb.Text = st.Name;
-                if (cond.OperatorValue.ToString().Contains("@" + st.No))
+                if (cond.OperatorValue.ToString().Contains("@" + st.No+"@"))
                     cb.Checked = true;
 
                 this.Pub1.AddTD(cb);
