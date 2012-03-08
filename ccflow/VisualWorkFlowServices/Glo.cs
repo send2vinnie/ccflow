@@ -78,12 +78,12 @@ namespace SMSServices
                 return;
             }
 
-            BP.SystemConfig.IsBSsystem_Test = false;
-            BP.SystemConfig.IsBSsystem = false;
+            SystemConfig.IsBSsystem_Test = false;
+            SystemConfig.IsBSsystem = false;
             SystemConfig.IsBSsystem = false;
          //   BP.Win.WF.Global.FlowImagePath = BP.WF.Global.PathOfVisualFlow + "\\Data\\FlowDesc\\";
-
             BP.Web.WebUser.SysLang ="CH";
+
             BP.SystemConfig.IsBSsystem_Test = false;
             BP.SystemConfig.IsBSsystem = false;
             SystemConfig.IsBSsystem = false;

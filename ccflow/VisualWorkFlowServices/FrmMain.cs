@@ -99,7 +99,7 @@ namespace SMSServices
                     //this.SetText("暂停中...");
                 }
 
-                this.SetText("检查自动发起流程....");
+                this.SetText("开始检查自动发起流程....");
 
 
                 #region 自动启动流程
@@ -190,6 +190,13 @@ namespace SMSServices
 
                         if (this.checkBox1.Checked)
                             Console.Beep();
+                    }
+
+                    if (sm.Email.Length == 0)
+                    {
+                        sm.HisSMSSta = BP.TA.SMSSta.RunOK;
+                        sm.Update();
+                        continue;
                     }
 
                     try
