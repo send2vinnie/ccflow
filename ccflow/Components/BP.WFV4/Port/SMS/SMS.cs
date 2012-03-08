@@ -86,6 +86,8 @@ namespace BP.TA
         public static void AddMsg(string pk, string fk_emp, AlertWay at, string tel, string telDoc,
             string email, string mailTitle, string emailDoc)
         {
+
+
             if (at == AlertWay.None)
                 at = AlertWay.Email;
 

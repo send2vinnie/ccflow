@@ -1335,7 +1335,6 @@ namespace BP
             }
             catch (Exception ex)
             {
-
             }
         }
 		/// <summary>
@@ -1351,11 +1350,22 @@ namespace BP
 
             try
             {
-                en.RunSQL("comment on table " + en.EnMap.PhysicsTable + " IS '" + en.EnDesc + "'");
+                string sql = "execute  sp_dropextendedproperty 'MS_Description','user',dbo,'table','" + en.EnMap.PhysicsTable + "'";
+                en.RunSQL(sql);
             }
-            catch
+            catch (Exception ex)
             {
             }
+
+            try
+            {
+                string sql = "execute  sp_addextendedproperty 'MS_Description', '" + en.EnDesc + "', 'user', dbo, 'table', '" + en.EnMap.PhysicsTable + "'";
+                en.RunSQL(sql);
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             SysEnums ses = new SysEnums();
             foreach (Attr attr in en.EnMap.Attrs)

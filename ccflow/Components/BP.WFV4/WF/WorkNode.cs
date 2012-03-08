@@ -1114,12 +1114,15 @@ namespace BP.WF
             this.AddToTrack(ActionType.Return, fk_emp, emp.Name, backtoNodeID, nd.Name, msg);
 
             WorkNode wn = new WorkNode(this.HisWork.FID, backtoNodeID);
-            WF.Port.WFEmp wfemp = new Port.WFEmp(wn.HisWork.Rec);
-            BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.FK_Node + "_" + wfemp.No, wfemp.No,
-                wfemp.HisAlertWay, wfemp.Tel,
-                  this.ToEP3("WN27", "工作退回：流程:{0}.工作:{1},退回人:{2},需您处理",
-                  wn.HisNode.FlowName, wn.HisNode.Name, WebUser.Name),
-                  wfemp.Email, null, msg);
+            if (Glo.IsEnableSysMessage)
+            {
+                WF.Port.WFEmp wfemp = new Port.WFEmp(wn.HisWork.Rec);
+                BP.TA.SMS.AddMsg(wl.WorkID + "_" + wl.FK_Node + "_" + wfemp.No, wfemp.No,
+                    wfemp.HisAlertWay, wfemp.Tel,
+                      this.ToEP3("WN27", "工作退回：流程:{0}.工作:{1},退回人:{2},需您处理",
+                      wn.HisNode.FlowName, wn.HisNode.Name, WebUser.Name),
+                      wfemp.Email, null, msg);
+            }
             return wn;
 
             throw new Exception("分流子线程退回到分流点或者分合流点功能，没有实现。");
@@ -1219,12 +1222,15 @@ namespace BP.WF
             //向他发送消息。
             WorkNode backWN = new WorkNode(this.WorkID, backtoNodeID);
 
-            WF.Port.WFEmp wfemp = new Port.WFEmp(wnOfBackTo.HisWork.Rec);
-            BP.TA.SMS.AddMsg(rw.MyPK, wfemp.No,
-                wfemp.HisAlertWay, wfemp.Tel,
-                  this.ToEP3("WN27", "工作退回：流程:{0}.工作:{1},退回人:{2},需您处理",
-                  backToNode.FlowName, backToNode.Name, WebUser.Name),
-                  wfemp.Email, null, msg);
+            if (Glo.IsEnableSysMessage ==true)
+            {
+                WF.Port.WFEmp wfemp = new Port.WFEmp(wnOfBackTo.HisWork.Rec);
+                BP.TA.SMS.AddMsg(rw.MyPK, wfemp.No,
+                    wfemp.HisAlertWay, wfemp.Tel,
+                      this.ToEP3("WN27", "工作退回：流程:{0}.工作:{1},退回人:{2},需您处理",
+                      backToNode.FlowName, backToNode.Name, WebUser.Name),
+                      wfemp.Email, null, msg);
+            }
             return wnOfBackTo;
         }
         private string infoLog = "";
@@ -2500,8 +2506,14 @@ namespace BP.WF
                         gwf.NodeName = toNode.Name;
                         gwf.FK_Dept = wl.FK_Dept;
                         gwf.DeptName = wl.FK_DeptT;
-                        gwf.DirectInsert();
-                         
+                        try
+                        {
+                            gwf.DirectInsert();
+                        }
+                        catch
+                        {
+                            gwf.DirectUpdate();
+                        }
                         DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET WorkID=" + mywk.OID + ",FID=" + this.WorkID + " WHERE FK_Emp='" + wl.FK_Emp + "' AND WorkID=" + this.WorkID + " AND FK_Node=" + toNode.NodeID);
                     }
                     break;
@@ -2925,50 +2937,53 @@ namespace BP.WF
             #endregion 根据当前节点类型不同处理不同的模式。
 
             #region 处理收听
-            Listens lts = new Listens();
-            lts.RetrieveByLike(ListenAttr.Nodes, "%" + this.HisNode.NodeID + "%");
-
-            foreach (Listen lt in lts)
+            if (Glo.IsEnableSysMessage)
             {
-                string sql = "SELECT FK_Emp FROM WF_GenerWorkerList WHERE IsEnable=1 AND IsPass=1 AND FK_Node=" + lt.FK_Node + " AND WorkID=" + this.WorkID;
-                DataTable dtRem = BP.DA.DBAccess.RunSQLReturnTable(sql);
-                foreach (DataRow dr in dtRem.Rows)
+                Listens lts = new Listens();
+                lts.RetrieveByLike(ListenAttr.Nodes, "%" + this.HisNode.NodeID + "%");
+
+                foreach (Listen lt in lts)
                 {
-                    string fk_emp = dr["FK_Emp"] as string;
-                    Port.WFEmp emp = new BP.WF.Port.WFEmp(fk_emp);
-                    if (emp.HisAlertWay == BP.WF.Port.AlertWay.None)
+                    string sql = "SELECT FK_Emp FROM WF_GenerWorkerList WHERE IsEnable=1 AND IsPass=1 AND FK_Node=" + lt.FK_Node + " AND WorkID=" + this.WorkID;
+                    DataTable dtRem = BP.DA.DBAccess.RunSQLReturnTable(sql);
+                    foreach (DataRow dr in dtRem.Rows)
                     {
-                        // msg += "@<font color=red>此信息无法发送给：" + emp.Name + "，因为他关闭了信息提醒，给他打电话："+emp.Tel+"</font>";
-                        msg += "@<font color=red>" + this.ToEP2("WN25", "此信息无法发送给：{0}，因为他关闭了信息提醒，给他打电话：{1}。", emp.Name, emp.Tel) + "</font>";
-                        continue;
+                        string fk_emp = dr["FK_Emp"] as string;
+                        Port.WFEmp emp = new BP.WF.Port.WFEmp(fk_emp);
+                        if (emp.HisAlertWay == BP.WF.Port.AlertWay.None)
+                        {
+                            // msg += "@<font color=red>此信息无法发送给：" + emp.Name + "，因为他关闭了信息提醒，给他打电话："+emp.Tel+"</font>";
+                            msg += "@<font color=red>" + this.ToEP2("WN25", "此信息无法发送给：{0}，因为他关闭了信息提醒，给他打电话：{1}。", emp.Name, emp.Tel) + "</font>";
+                            continue;
+                        }
+                        else
+                        {
+                            // msg += "@您的操作已经通过（<font color=green><b>" + emp.HisAlertWayT + "</b></font>）的方式发送给：" + emp.Name;
+                            msg += this.ToEP2("WN26", "@您的操作已经通过（<font color=green><b>{0}</b></font>）的方式发送给：{1}", emp.HisAlertWayT, emp.Name);
+                        }
+
+                        string title = lt.Title.Clone() as string;
+
+                        title = title.Replace("@WebUser.No", WebUser.No);
+                        title = title.Replace("@WebUser.Name", WebUser.Name);
+                        title = title.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                        title = title.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+
+                        string doc = lt.Doc.Clone() as string;
+                        doc = doc.Replace("@WebUser.No", WebUser.No);
+                        doc = doc.Replace("@WebUser.Name", WebUser.Name);
+                        doc = doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                        doc = doc.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+
+                        Attrs attrs = this.rptGe.EnMap.Attrs;
+                        foreach (Attr attr in attrs)
+                        {
+                            title = title.Replace("@" + attr.Key, this.rptGe.GetValStrByKey(attr.Key));
+                            doc = doc.Replace("@" + attr.Key, this.rptGe.GetValStrByKey(attr.Key));
+                        }
+
+                        BP.TA.SMS.AddMsg(lt.OID + "_" + this.WorkID, fk_emp, emp.HisAlertWay, emp.Tel, title, emp.Email, title, doc);
                     }
-                    else
-                    {
-                        // msg += "@您的操作已经通过（<font color=green><b>" + emp.HisAlertWayT + "</b></font>）的方式发送给：" + emp.Name;
-                        msg += this.ToEP2("WN26", "@您的操作已经通过（<font color=green><b>{0}</b></font>）的方式发送给：{1}", emp.HisAlertWayT, emp.Name);
-                    }
-
-                    string title = lt.Title.Clone() as string;
-
-                    title = title.Replace("@WebUser.No", WebUser.No);
-                    title = title.Replace("@WebUser.Name", WebUser.Name);
-                    title = title.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
-                    title = title.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
-
-                    string doc = lt.Doc.Clone() as string;
-                    doc = doc.Replace("@WebUser.No", WebUser.No);
-                    doc = doc.Replace("@WebUser.Name", WebUser.Name);
-                    doc = doc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
-                    doc = doc.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
-
-                    Attrs attrs = this.rptGe.EnMap.Attrs;
-                    foreach (Attr attr in attrs)
-                    {
-                        title = title.Replace("@" + attr.Key, this.rptGe.GetValStrByKey(attr.Key));
-                        doc = doc.Replace("@" + attr.Key, this.rptGe.GetValStrByKey(attr.Key));
-                    }
-
-                    BP.TA.SMS.AddMsg(lt.OID + "_" + this.WorkID, fk_emp, emp.HisAlertWay, emp.Tel, title, emp.Email, title, doc);
                 }
             }
             #endregion
@@ -3211,6 +3226,9 @@ namespace BP.WF
             if (BP.SystemConfig.IsBSsystem == false)
                 return;
 
+            if (BP.WF.Glo.IsEnableSysMessage  == false)
+                return;
+
             string basePath = "http://" + System.Web.HttpContext.Current.Request.Url.Host;
             basePath += "/" + System.Web.HttpContext.Current.Request.ApplicationPath;
 
@@ -3236,7 +3254,7 @@ namespace BP.WF
                     this.HisNode.FlowName, wl.FK_NodeText, WebUser.Name),
                     wfemp.Email, null, mytemp);
             }
-            return;
+
             /*
             string workers="";
             // 工作者

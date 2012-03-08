@@ -1136,7 +1136,16 @@ namespace BP.WF
                 return BP.SystemConfig.GetValByKeyBoolen("IsShowTitle", true);
             }
         }
-
+        /// <summary>
+        /// 是否启用消息系统消息。
+        /// </summary>
+        public static bool IsEnableSysMessage
+        {
+            get
+            {
+                return BP.SystemConfig.GetValByKeyBoolen("IsEnableSysMessage", true);
+            }
+        }
         public static string CurrPageID
         {
             get
