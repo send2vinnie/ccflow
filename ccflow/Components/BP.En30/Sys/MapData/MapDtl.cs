@@ -930,7 +930,6 @@ namespace BP.Sys
         /// </summary>
         public MapDtls()
         {
-
         }
         /// <summary>
         /// 明细s
@@ -938,7 +937,7 @@ namespace BP.Sys
         /// <param name="fk_mapdata">s</param>
         public MapDtls(string fk_mapdata)
         {
-            this.Retrieve(MapDtlAttr.FK_MapData, fk_mapdata, MapDtlAttr.GroupID);
+            this.Retrieve(MapDtlAttr.FK_MapData, fk_mapdata, MapDtlAttr.No);
         }
         /// <summary>
         /// 得到它的 Entity

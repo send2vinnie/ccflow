@@ -141,8 +141,14 @@ namespace BP.WF
         /// </summary>
         public string DoDeleteWorkFlowByReal()
         {
+
+
             string info = "";
             WorkNode wn = this.GetCurrentWorkNode();
+
+            // 处理事件。
+             wn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.BeforeFlowDel, wn.HisWork);
+
 
             DBAccess.RunSQL("DELETE FROM WF_Track WHERE WorkID=" + this.WorkID);
             DBAccess.RunSQL("DELETE FROM ND"+int.Parse(this.HisFlow.No)+"Rpt WHERE OID=" + this.WorkID);
