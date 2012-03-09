@@ -40,7 +40,7 @@ public partial class WF_Admin_LoginTest : WebPage
 
             is1 = this.Pub1.AddTR(is1);
             this.Pub1.AddTD(sdk.No);
-            this.Pub1.AddTD("<a href='/Flow/" + url + "' target=_blank >"+sdk.Name+"</a>");
+            this.Pub1.AddTD("<a href='"+this.Request.ApplicationPath + url + "' target=_blank >"+sdk.Name+"</a>");
             this.Pub1.AddTD(sdk.Url);
             this.Pub1.AddTREnd();
         }

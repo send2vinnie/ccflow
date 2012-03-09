@@ -34,6 +34,13 @@ public partial class WF_Admin_Action : WebPage
             return "ND"+this.Request.QueryString["NodeID"];
         }
     }
+    public string FK_Flow
+    {
+        get
+        {
+            return this.Request.QueryString["FK_Flow"];
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.DoType == "Del")
@@ -45,11 +52,13 @@ public partial class WF_Admin_Action : WebPage
 
         this.Pub3.AddCaptionLeft("节点表单/节点/流程:事件");
         this.Title = "设置:节点事件接口";
+
         FrmEvents ndevs = new FrmEvents();
         ndevs.Retrieve(FrmEventAttr.FK_MapData, this.FK_MapData);
 
         EventLists xmls = new EventLists();
         xmls.RetrieveAll();
+
         BP.WF.XML.EventSources ess = new EventSources();
         ess.RetrieveAll();
 
@@ -73,7 +82,7 @@ public partial class WF_Admin_Action : WebPage
                         this.Pub1.AddLi("<font color=green><b>" + xml.Name + "</b></font>");
                     }
                     else
-                        this.Pub1.AddLi("Action.aspx?NodeID=" + this.NodeID + "&Event=" + xml.No, xml.Name);
+                        this.Pub1.AddLi("Action.aspx?NodeID=" + this.NodeID + "&Event=" + xml.No + "&FK_Flow=" + this.FK_Flow, xml.Name);
                 }
                 else
                 {
@@ -84,7 +93,7 @@ public partial class WF_Admin_Action : WebPage
                     }
                     else
                     {
-                        this.Pub1.AddLi("Action.aspx?NodeID=" + this.NodeID + "&Event=" + xml.No + "&MyPK=" + nde.MyPK, "<b>" + xml.Name + "</b>");
+                        this.Pub1.AddLi("Action.aspx?NodeID=" + this.NodeID + "&Event=" + xml.No + "&MyPK=" + nde.MyPK + "&FK_Flow=" + this.FK_Flow, "<b>" + xml.Name + "</b>");
                     }
                 }
             }
@@ -123,7 +132,7 @@ public partial class WF_Admin_Action : WebPage
         this.Pub2.Add(tb);
         this.Pub2.AddBR();
         this.Pub2.AddBR();
-   
+
         tb = new TextBox();
         tb.ID = "TB_MsgOK";
         tb.Columns = 60;
