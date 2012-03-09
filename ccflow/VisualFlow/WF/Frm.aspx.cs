@@ -36,7 +36,14 @@ public partial class WF_Frm : WebPage
             }
             catch
             {
-                return 0;
+                try
+                {
+                    return int.Parse(this.Request.QueryString["OID"]);
+                }
+                catch
+                {
+                    return 0;
+                }
             }
         }
     }
@@ -159,7 +166,6 @@ public partial class WF_Frm : WebPage
         Session["Count"] = null;
         this.Btn_Save.Visible = this.IsEdit;
         this.Btn_Save.Enabled = this.IsEdit;
-
         this.Btn_Print.Visible = this.IsPrint;
         this.Btn_Print.Enabled = this.IsPrint;
         this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData + "&WorkID=" + this.WorkID + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
@@ -181,10 +187,12 @@ public partial class WF_Frm : WebPage
     /// 保存点
     /// </summary>
     public void SaveNode()
-    {   
+    {
         Node nd = new Node(this.FK_Node);
         Work wk = nd.HisWork;
         wk.OID = this.FID;
+        if (wk.OID == 0)
+            wk.OID = this.WorkID;
         wk.RetrieveFromDBSources();
         wk = this.UCEn1.Copy(wk) as Work;
         try
@@ -224,8 +232,11 @@ public partial class WF_Frm : WebPage
             this.UCEn1.AlertMsg_Warning("错误", ex.Message + "@有可能此错误被系统自动修复,请您从新保存一次.");
             return;
         }
-        wk.RetrieveFromDBSources();
-        this.UCEn1.ResetEnVal(wk);
+
+        this.Response.Redirect("Frm.aspx?OID=" + wk.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
+
+     //   wk.RetrieveFromDBSources();
+      // this.UCEn1.ResetEnVal(wk);
         return;
     }
     protected void Btn_Save_Click(object sender, EventArgs e)
@@ -261,7 +272,6 @@ public partial class WF_Frm : WebPage
             //}
 
             this.Response.Redirect("Frm.aspx?OID=" + en.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
-
         }
         catch (Exception ex)
         {
