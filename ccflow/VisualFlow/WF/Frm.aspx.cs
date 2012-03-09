@@ -139,7 +139,7 @@ public partial class WF_Frm : WebPage
             }
 
             int i = en.RetrieveFromDBSources();
-            if (i == 0 && this.FID != 0)
+            if (i == 0)
                 en.DirectInsert();
 
             string[] paras = this.RequestParas.Split('&');
