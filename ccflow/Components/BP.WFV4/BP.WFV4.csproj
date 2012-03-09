@@ -173,6 +173,7 @@
     <Compile Include="FlowDesc\FAppSet.cs" />
     <Compile Include="FlowDesc\NodeEmp.cs" />
     <Compile Include="FlowDesc\NodeReturn.cs" />
+    <Compile Include="FlowDesc\Task.cs" />
     <Compile Include="FlowDesc\SelectAccper.cs" />
     <Compile Include="FlowDesc\NodeDept.cs" />
     <Compile Include="FlowDesc\FlowStation.cs" />

@@ -147,7 +147,6 @@ namespace BP.WF
         }
         #endregion
 
-
         #region 数据接口
 
         #region 获取当前操作员可以发起的流程集合
