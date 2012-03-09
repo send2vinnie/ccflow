@@ -240,7 +240,7 @@ public partial class WF_Frm : WebPage
 
             MapData md = new MapData(this.FK_MapData);
             GEEntity en = md.HisGEEn;
-            en.SetValByKey("OID", this.FID);
+            en.SetValByKey("OID", this.WorkID);
             int i = en.RetrieveFromDBSources();
             en = this.UCEn1.Copy(en) as GEEntity;
 
@@ -259,6 +259,9 @@ public partial class WF_Frm : WebPage
             //    /*如果包含保存*/
             //    this.Response.Redirect("Frm.aspx?OID=" + this.RefOID + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData,true);
             //}
+
+            this.Response.Redirect("Frm.aspx?OID=" + en.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
+
         }
         catch (Exception ex)
         {
