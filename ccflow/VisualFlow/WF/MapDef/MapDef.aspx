@@ -354,12 +354,11 @@ body
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
                 <table width='100%' height='1300px' align=center >
                  <tr>
-
-                  <td valign=top align=left width='50px;'   bgcolor="#cccccc">
+                  <td valign=top align=left width='250px'  bgcolor="#cccccc">
                    <uc1:Pub ID="Left" runat="server" />
                  </td>
 
-                  <td valign=top align=center>
+                  <td valign=top align=center >
                    <uc1:Pub ID="Pub1" runat="server" />
                  </td>
 

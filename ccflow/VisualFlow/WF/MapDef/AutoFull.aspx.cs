@@ -54,7 +54,9 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
 
-        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' /></a>");
+        this.Left.Add("<a href='http://ccflow.org' target=_blank  ><img src='../../DataUser/LogBiger.png' style='width:180px;' /></a><hr>");
+
+        //this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' /></a><hr>");
 
         this.Left.AddUL();
         foreach (MapExtXml fs in fss)
@@ -83,7 +85,8 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
             this.Pub1.AddUL("class=''");
             foreach (MapAttr en in mattrs)
             {
-                if (en.UIVisible == false)
+              
+                if (en.UIVisible == false && en.UIIsEnable==false)
                     continue;
 
                 this.Pub1.AddLi("?FK_MapData=" + this.FK_MapData + "&RefNo=" +  en.MyPK + "&ExtType=AutoFull", en.KeyOfEn + " - " + en.Name);
@@ -92,7 +95,6 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
             this.Pub1.AddFieldSetEnd();
             return;
         }
-
 
         MapAttr mattr = new MapAttr(this.RefNo);
         Attr attr = mattr.HisAttr;

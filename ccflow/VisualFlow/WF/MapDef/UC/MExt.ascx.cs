@@ -51,6 +51,10 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     /// </summary>
     public void BindLeft()
     {
+        if (this.ExtType == MapExtXmlList.StartFlow)
+            return;
+
+
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
         this.Left.Add("<a href='http://ccflow.org' target=_blank  ><img src='../../DataUser/LogBiger.png' style='width:180px;' /></a><hr>");
@@ -390,7 +394,9 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         if (this.ExtType == null)
         {
             this.Pub2.AddFieldSet("Help");
-            this.Pub2.Add("<a href='http://ccflow.org/Help.aspx' target=_blank>官网帮助..</a>");
+            this.Pub2.AddH3("所有技术资料都整理在，《驰骋工作流程引擎-流程开发说明书.doc》与《驰骋工作流程引擎-表单设计器操作说明书.doc》两个文件中。");
+            this.Pub2.AddH3("<br>这两个文件位于:D:\\ccflow\\Documents下面.");
+            this.Pub2.AddH3("<a href='http://ccflow.org/Help.aspx' target=_blank>官网帮助..</a>");
             this.Pub2.AddFieldSetEnd();
             return;
         }
@@ -407,6 +413,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
                 this.BindLinkList();
                 break;
             case MapExtXmlList.PageLoadFull: //表单装载填充。
+            case MapExtXmlList.StartFlow: //表单装载填充。
                 this.BindPageLoadFull();
                 break;
             case MapExtXmlList.AutoFullDLL: //动态的填充下拉框。
@@ -633,7 +640,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     public void BindPageLoadFull()
     {
         MapExt me = new MapExt();
-        me.MyPK = this.FK_MapData + "_" + MapExtXmlList.PageLoadFull;
+        me.MyPK = this.FK_MapData + "_" + this.ExtType;
         me.RetrieveFromDBSources();
 
         this.Pub2.AddTable("align=left");
@@ -712,9 +719,9 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
     void btn_SavePageLoadFull_Click(object sender, EventArgs e)
     {
         MapExt me = new MapExt();
-        me.MyPK = this.FK_MapData + "_" + MapExtXmlList.PageLoadFull;
+        me.MyPK = this.FK_MapData + "_" + this.ExtType;
         me.FK_MapData = this.FK_MapData;
-        me.ExtType = MapExtXmlList.PageLoadFull;
+        me.ExtType = this.ExtType;
         me.RetrieveFromDBSources();
 
         me.Tag = this.Pub2.GetTextBoxByID("TB_" + MapExtAttr.Tag).Text;
@@ -726,7 +733,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
         }
         me.Tag1 = sql;
 
-        me.MyPK = this.FK_MapData + "_" + MapExtXmlList.PageLoadFull;
+        me.MyPK = this.FK_MapData + "_" + this.ExtType;
 
         string info = me.Tag1 + me.Tag;
         if (string.IsNullOrEmpty(info))
