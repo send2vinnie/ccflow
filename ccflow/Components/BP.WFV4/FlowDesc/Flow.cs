@@ -903,7 +903,14 @@ namespace BP.WF
             if (System.IO.Directory.Exists(path) == false)
                 System.IO.Directory.CreateDirectory(path);
 
-            DataType.SaveAsFile(path + this.Name + "_设计报告.htm", rpt);
+            try
+            {
+                DataType.SaveAsFile(path + this.Name + "_设计报告.htm", rpt);
+            }
+            catch
+            {
+
+            }
 
             msg += "<hr>" + this.ToE("CheckBaseData", "开始检查基础数据是否完整") + "<hr>";
 
