@@ -64,8 +64,6 @@ public partial class WF_MapDef_MapDef : WebPage
         #region bindleft
         this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='" + this.Request.ApplicationPath + "/DataUser/LogBiger.png' border=0/></a>");
         this.Left.AddHR();
-        this.Left.AddBR();
-
         this.Left.AddUL();
         foreach (BP.WF.XML.MapMenu item in xmls)
         {
