@@ -13,6 +13,7 @@
     <FieldExt No="Link"   CH="字段超连接"  DFor="TB" URL="MapExt.aspx?s=3" />
     <FieldExt No="PopVal"        CH="Pop返回值" DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
     <FieldExt No="Func"          CH="功能执行"  DFor="TB,DDL,Checkbox" URL="MapExt.aspx?s=3" />
+    
 
   <ExpFunc No="Word"        CH="导出Word模板"  />
   <ExpFunc No="PDF"         CH="导出PDF模板"  />
