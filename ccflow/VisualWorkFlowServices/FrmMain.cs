@@ -43,7 +43,6 @@ namespace SMSServices
         {
             // this.toolStripStatusLabel1.Text = "服务停止状态...";
             this.toolStripStatusLabel1.Text = "服务暂停";
-
             this.textBox1.Text = "服务停止...";
             this.Btn_StartStop.Text = "启动";
         }
@@ -55,15 +54,11 @@ namespace SMSServices
             {
                 if (this.thread == null)
                 {
-                 //   Glo.ScanDT = null;
-                    //  Glo.CurrPoll = this.HisPoll;
-                    ThreadStart ts = new ThreadStart(ReadFiles);
+                    ThreadStart ts = new ThreadStart(RunIt);
                     thread = new Thread(ts);
                     thread.Start();
-
                     this.Btn_StartStop.Text = "暂停";
                 }
-
                 this.HisScanSta = ScanSta.Working;
                 this.SetText("服务启动***********" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
                 this.Btn_StartStop.Text = "暂停";
@@ -78,147 +73,128 @@ namespace SMSServices
             }
         }
         public ScanSta HisScanSta = ScanSta.Pause;
+        /// <summary>
+        /// 执行自动启动流程任务 WF_Task 
+        /// </summary>
+        public void DoTask()
+        {
+            string sql = "SELECT * FROM WF_Task WHERE TaskSta=0 ORDER BY Starter";
+            DataTable dt = null;
+            try
+            {
+                dt = DBAccess.RunSQLReturnTable(sql);
+            }
+            catch
+            {
+                Task ta = new Task();
+                ta.CheckPhysicsTable();
+                dt = DBAccess.RunSQLReturnTable(sql);
+            }
 
-        public void ReadFiles()
+            if (dt.Rows.Count == 0)
+                return;
+
+            #region 自动启动流程
+            foreach (DataRow dr in dt.Rows)
+            {
+                string mypk = dr["MyPK"].ToString();
+                string taskSta = dr["TaskSta"].ToString();
+                string paras = dr["Paras"].ToString();
+                string starter = dr["Starter"].ToString();
+                string fk_flow = dr["FK_Flow"].ToString();
+                Flow fl = new Flow(fk_flow);
+                this.SetText("开始执行(" + starter + ")发起(" + fl.Name + ")流程.");
+                try
+                {
+                    string fTable = "ND"+int.Parse(fl.No + "01").ToString();
+                    sql = "SELECT * FROM " + fTable + " WHERE MainPK='" + mypk + "'";
+                    try
+                    {
+                        if (DBAccess.RunSQLReturnTable(sql).Rows.Count != 0)
+                            continue;
+                    }
+                    catch
+                    {
+                        this.SetText("开始节点表单表:" + fTable + "没有设置的默认字段MainPK. "+sql);
+                        continue;
+                    }
+
+                    if (BP.Web.WebUser.No != starter)
+                    {
+                        BP.Port.Emp empadmin = new BP.Port.Emp(starter);
+                        BP.Web.WebUser.SignInOfGener(empadmin);
+                    }
+
+                    Work wk = fl.NewWork();
+                    string[] strs = paras.Split('@');
+                    foreach (string str in strs)
+                    {
+                        if (string.IsNullOrEmpty(str))
+                            continue;
+
+                        if (str.Contains("=") == false)
+                            continue;
+
+                        string[] kv = str.Split('=');
+                        wk.SetValByKey(kv[0], kv[1]);
+                    }
+
+                    wk.SetValByKey("FK_NY", DataType.CurrentYearMonth);
+                    wk.SetValByKey(WorkAttr.Rec, WebUser.No);
+                    wk.SetValByKey(WorkAttr.RDT, DataType.CurrentDataTime);
+                    wk.SetValByKey(WorkAttr.MyNum, 1);
+                    wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
+                    wk.SetValByKey("MainPK", mypk);
+                    wk.Update();
+
+                    WorkNode wn = new WorkNode(wk, fl.HisStartNode);
+                    wn.AfterNodeSave();
+                    DBAccess.RunSQL("UPDATE WF_Task SET TaskSta=1 WHERE MyPK='" + mypk + "'");
+                }
+                catch (Exception ex)
+                {
+                    this.SetText(ex.Message);
+                }
+            }
+            #endregion 自动启动流程
+        }
+
+        public void RunIt()
         {
             BP.WF.Flows fls = new BP.WF.Flows();
             fls.RetrieveAll();
 
-            string sql = "";
             HisScanSta = ScanSta.Working;
-            int idx = 0;
             while (true)
             {
                 System.Threading.Thread.Sleep(500);
-
                 while (this.HisScanSta == ScanSta.Pause)
                 {
                     System.Threading.Thread.Sleep(3000);
                     if (this.checkBox1.Checked)
                         Console.Beep();
-                    //this.SetText("暂停中...");
                 }
 
-                this.SetText("开始检查自动发起流程....");
+                this.SetText("扫描自动发起流程表......");
+                this.DoTask();
 
+                this.SetText("检索定时发起流程....");
+                this.DoAutuFlows(fls);
 
-                #region 自动启动流程
-                foreach (BP.WF.Flow fl in fls)
+                this.SetText("扫描消息表....");
+                this.DoAutuFlows(fls);
+
+                if (DateTime.Now.Hour < 18 && DateTime.Now.Hour > 8)
                 {
-                    if (fl.IsOK == false
-                        || fl.HisFlowRunWay == BP.WF.FlowRunWay.HandWork)
-                        continue;
-
-                    if (DateTime.Now.ToString("HH:mm") == fl.Tag)
-                        continue;
-
-                    if (fl.RunObj == null || fl.RunObj == "")
+                    /* 在工作时间段才可以执行此调度。 */
+                    string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+                    if (now.Contains(":13") || now.Contains(":33") || now.Contains(":53"))
                     {
-                        string msg = "您设置自动运行流程错误，没有设置流程内容，流程编号：" + fl.No;
-                        this.SetText(msg);
-                        continue;
-                    }
-
-                    #region 判断当前时间是否可以运行它。
-                    string nowStr = DateTime.Now.ToString("yyyy-MM-dd,HH:mm");
-                    string[] strs = fl.RunObj.Split('@'); //破开时间串。
-                    bool IsCanRun = false;
-                    foreach (string str in strs)
-                    {
-                        if (string.IsNullOrEmpty(str))
-                            continue;
-                        if (nowStr.Contains(str))
-                            IsCanRun = true;
-                    }
-                    if (IsCanRun == false)
-                        continue;
-
-                    // 设置时间.
-                    fl.Tag = DateTime.Now.ToString("HH:mm");
-                    #endregion 判断当前时间是否可以运行它。
-
-                    // 以此用户进入.
-                    switch (fl.HisFlowRunWay)
-                    {
-                        case BP.WF.FlowRunWay.SpecEmp: //指定人员按时运行。
-                            string RunObj = fl.RunObj;
-                            string fk_emp = RunObj.Substring(0, RunObj.IndexOf('@'));
-
-                            BP.Port.Emp emp = new BP.Port.Emp();
-                            emp.No = fk_emp;
-                            if (emp.RetrieveFromDBSources() == 0)
-                            {
-                                this.SetText("启动自动启动流程错误：发起人(" + fk_emp + ")不存在。");
-                                continue;
-                            }
-                            BP.Web.WebUser.SignInOfGener(emp);
-                            BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
-                            continue;
-                        case BP.WF.FlowRunWay.DataModel: //按数据集合驱动的模式执行。
-                            this.SetText("@开始执行数据驱动流程调度:"+fl.Name);
-                            this.DTS_Flow(fl);
-                            //BP.WF.Dev2Interface.DTS_AutoStarterFlow(fl);
-                            continue;
-                        default:
-                            break;
+                        this.SetText("检索自动节点任务....");
+                        this.DoAutoNode();
                     }
                 }
 
-                if (BP.Web.WebUser.No != "admin")
-                {
-                    BP.Port.Emp empadmin = new BP.Port.Emp("admin");
-                    BP.Web.WebUser.SignInOfGener(empadmin);
-                }
-                #endregion 发送消息
-
-                #region 发送消息
-                BP.TA.SMSs sms = new BP.TA.SMSs();
-                BP.En.QueryObject qo = new BP.En.QueryObject(sms);
-                //    qo.AddWhere(BP.TA.SMSAttr.SMSSta, (int)BP.TA.SMSSta.UnRun);
-                sms.Retrieve(BP.TA.SMSAttr.SMSSta, (int)BP.TA.SMSSta.UnRun);
-                foreach (BP.TA.SMS sm in sms)
-                {
-                    if (this.HisScanSta == ScanSta.Stop)
-                        return;
-
-                    while (this.HisScanSta == ScanSta.Pause)
-                    {
-                        if (this.HisScanSta == ScanSta.Stop)
-                            return;
-
-                        System.Threading.Thread.Sleep(3000);
-
-                        if (this.checkBox1.Checked)
-                            Console.Beep();
-                    }
-
-                    if (sm.Email.Length == 0)
-                    {
-                        sm.HisSMSSta = BP.TA.SMSSta.RunOK;
-                        sm.Update();
-                        continue;
-                    }
-
-                    try
-                    {
-                        this.SetText("@执行：" + sm.Tel + " email: " + sm.Email);
-                        this.SendMail(sm);
-
-                        idx++;
-                        this.SetText("已完成 , 第:" + idx + " 个.");
-                        this.SetText("--------------------------------");
-
-                        if (this.checkBox1.Checked)
-                            Console.Beep();
-                    }
-                    catch (Exception ex)
-                    {
-                        this.SetText("@错误：" + ex.Message);
-                    }
-                }
-                #endregion 发送消息
-
-                //this.SetText("已执行:" + idx + " 数据.....");
                 System.Threading.Thread.Sleep(1000);
                 switch (this.toolStripStatusLabel1.Text)
                 {
@@ -237,11 +213,162 @@ namespace SMSServices
                 }
             }
         }
+        private void DoAutoNode()
+        {
+            string sql = "SELECT * FROM WF_GenerWorkerList WHERE FK_Node IN (SELECT NODEID FROM WF_Node WHERE (WhoExeIt=1 OR  WhoExeIt=2) AND IsPass=0 AND IsEnable=1) ORDER BY FK_Emp";
+            DataTable dt = DBAccess.RunSQLReturnTable(sql);
+            foreach (DataRow dr in dt.Rows)
+            {
+                Int64 workid = Int64.Parse(dr["WorkID"].ToString());
+                int fk_node = int.Parse(dr["FK_Node"].ToString());
+                string fk_emp = dr["FK_Emp"].ToString();
+                try
+                {
+                    if (WebUser.No != fk_emp)
+                    {
+                        WebUser.Exit();
+                        Emp emp = new Emp(fk_emp);
+                        WebUser.SignInOfGener(emp);
+                    }
+                    WorkNode wn = new WorkNode(workid, fk_node);
+                    string msg = wn.AfterNodeSave();
+                    this.SetText("@处理:" + WebUser.No + ",WorkID=" + workid + ",正确处理:" + msg);
+                }
+                catch (Exception ex)
+                {
+                    this.SetText("@处理:" + WebUser.No + ",WorkID=" + workid + ",工作信息:" + ex.Message);
+                }
+            }
+        }
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        private void DoSendMsg()
+        {
+            int idx = 0;
+            #region 发送消息
+            BP.TA.SMSs sms = new BP.TA.SMSs();
+            BP.En.QueryObject qo = new BP.En.QueryObject(sms);
+            sms.Retrieve(BP.TA.SMSAttr.SMSSta, (int)BP.TA.SMSSta.UnRun);
+            foreach (BP.TA.SMS sm in sms)
+            {
+                if (this.HisScanSta == ScanSta.Stop)
+                    return;
+
+                while (this.HisScanSta == ScanSta.Pause)
+                {
+                    if (this.HisScanSta == ScanSta.Stop)
+                        return;
+
+                    System.Threading.Thread.Sleep(3000);
+
+                    if (this.checkBox1.Checked)
+                        Console.Beep();
+                }
+
+                if (sm.Email.Length == 0)
+                {
+                    sm.HisSMSSta = BP.TA.SMSSta.RunOK;
+                    sm.Update();
+                    continue;
+                }
+                try
+                {
+                    this.SetText("@执行：" + sm.Tel + " email: " + sm.Email);
+                    this.SendMail(sm);
+
+                    idx++;
+                    this.SetText("已完成 , 第:" + idx + " 个.");
+                    this.SetText("--------------------------------");
+
+                    if (this.checkBox1.Checked)
+                        Console.Beep();
+                }
+                catch (Exception ex)
+                {
+                    this.SetText("@错误：" + ex.Message);
+                }
+            }
+            #endregion 发送消息
+        }
+        /// <summary>
+        /// 定时任务
+        /// </summary>
+        /// <param name="fls"></param>
+        private void DoAutuFlows(BP.WF.Flows fls)
+        {
+            #region 自动启动流程
+            foreach (BP.WF.Flow fl in fls)
+            {
+                if (fl.IsOK == false
+                    || fl.HisFlowRunWay == BP.WF.FlowRunWay.HandWork)
+                    continue;
+
+                if (DateTime.Now.ToString("HH:mm") == fl.Tag)
+                    continue;
+
+                if (fl.RunObj == null || fl.RunObj == "")
+                {
+                    string msg = "您设置自动运行流程错误，没有设置流程内容，流程编号：" + fl.No;
+                    this.SetText(msg);
+                    continue;
+                }
+
+                #region 判断当前时间是否可以运行它。
+                string nowStr = DateTime.Now.ToString("yyyy-MM-dd,HH:mm");
+                string[] strs = fl.RunObj.Split('@'); //破开时间串。
+                bool IsCanRun = false;
+                foreach (string str in strs)
+                {
+                    if (string.IsNullOrEmpty(str))
+                        continue;
+                    if (nowStr.Contains(str))
+                        IsCanRun = true;
+                }
+                if (IsCanRun == false)
+                    continue;
+
+                // 设置时间.
+                fl.Tag = DateTime.Now.ToString("HH:mm");
+                #endregion 判断当前时间是否可以运行它。
+
+                // 以此用户进入.
+                switch (fl.HisFlowRunWay)
+                {
+                    case BP.WF.FlowRunWay.SpecEmp: //指定人员按时运行。
+                        string RunObj = fl.RunObj;
+                        string fk_emp = RunObj.Substring(0, RunObj.IndexOf('@'));
+
+                        BP.Port.Emp emp = new BP.Port.Emp();
+                        emp.No = fk_emp;
+                        if (emp.RetrieveFromDBSources() == 0)
+                        {
+                            this.SetText("启动自动启动流程错误：发起人(" + fk_emp + ")不存在。");
+                            continue;
+                        }
+                        BP.Web.WebUser.SignInOfGener(emp);
+                        BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
+                        continue;
+                    case BP.WF.FlowRunWay.DataModel: //按数据集合驱动的模式执行。
+                        this.SetText("@开始执行数据驱动流程调度:" + fl.Name);
+                        this.DTS_Flow(fl);
+                        continue;
+                    default:
+                        break;
+                }
+            }
+            if (BP.Web.WebUser.No != "admin")
+            {
+                BP.Port.Emp empadmin = new BP.Port.Emp("admin");
+                BP.Web.WebUser.SignInOfGener(empadmin);
+            }
+            #endregion 发送消息
+        }
         public void DTS_Flow(BP.WF.Flow fl)
         { 
             #region 读取数据.
             BP.Sys.MapExt me = new MapExt();
-            me.MyPK = "ND" + int.Parse(fl.No) + "01" + "_" + MapExtXmlList.PageLoadFull;
+            me.MyPK = "ND" + int.Parse(fl.No) + "01" + "_" + MapExtXmlList.StartFlow;
             int i = me.RetrieveFromDBSources();
             if (i == 0)
             {
