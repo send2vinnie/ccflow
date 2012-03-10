@@ -1365,7 +1365,8 @@ namespace BP
             catch (Exception ex)
             {
 
-            }
+            }
+
 
             SysEnums ses = new SysEnums();
             foreach (Attr attr in en.EnMap.Attrs)

@@ -125,6 +125,11 @@ namespace BP.WF.Ext
                 map.AddRefMethod(rm);
 
 
+                rm = new RefMethod();
+                rm.Title = "设置自动发起数据源";
+                rm.ClassMethodName = this.ToString() + ".DoSetStartFlowDataSources()";
+                map.AddRefMethod(rm);
+
                 //rm = new RefMethod();
                 //rm.Title = "设置自动发起"; // "报表运行";
                 //rm.Icon = "/Images/Btn/View.gif";
@@ -154,6 +159,12 @@ namespace BP.WF.Ext
         #endregion
 
         #region  公共方法
+        public string DoSetStartFlowDataSources()
+        {
+            string flowID=int.Parse(this.No).ToString()+"01";
+            PubClass.WinOpen("./../WF/MapDef/MapExt.aspx?s=d34&FK_MapData=ND" + flowID + "&ExtType=StartFlow&RefNo==", 400, 500);
+            return null;
+        }
         public string DoCCNode()
         {
             PubClass.WinOpen("./../WF/Admin/CCNode.aspx?FK_Flow=" + this.No, 400, 500);

@@ -43,6 +43,10 @@ namespace BP.Sys
         /// </summary>
         public const string PageLoadFull = "PageLoadFull";
         /// <summary>
+        /// 
+        /// </summary>
+        public const string StartFlow = "StartFlow";
+        /// <summary>
         /// link.
         /// </summary>
         public const string Link = "Link";
