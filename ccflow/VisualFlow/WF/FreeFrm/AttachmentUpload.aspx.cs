@@ -37,6 +37,14 @@ public partial class WF_FreeFrm_UploadFile : WebPage
         }
     }
 
+    public string IsReadonly
+    {
+        get
+        {
+            return this.Request.QueryString["IsReadonly"];
+        }
+    }
+
     public string DelPKVal
     {
         get
@@ -133,13 +141,13 @@ public partial class WF_FreeFrm_UploadFile : WebPage
             if (athDesc.IsNote)
                 this.Pub1.AddTD(db.MyNote);
 
-            if (athDesc.IsDelete)
+            if (athDesc.IsDelete && this.IsReadonly != "1")
                 this.Pub1.AddTD("<a href=\"javascript:Del('" + this.FK_FrmAttachment + "','" + this.PKVal + "','" + db.MyPK + "')\">删除</a>");
             else
                 this.Pub1.AddTD("");
             this.Pub1.AddTREnd();
         }
-        if (athDesc.IsUpload)
+        if (athDesc.IsUpload && this.IsReadonly!="1")
         {
             this.Pub1.AddTR();
             this.Pub1.AddTDBegin("colspan=7");

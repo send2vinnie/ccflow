@@ -43,6 +43,7 @@ namespace BP.Web.Comm.UC.WF
 
         public void BindColumn2(Entity en, string enName)
         {
+            this.EnName = enName;
             this.HisEn = en;
             currGF = new GroupField();
             MapAttrs mattrs = new MapAttrs(enName);
@@ -664,6 +665,7 @@ namespace BP.Web.Comm.UC.WF
         }
         public void BindColumn4(Entity en, string enName)
         {
+            this.EnName = enName;
             this.HisEn = en;
             currGF = new GroupField();
             MapAttrs mattrs = new MapAttrs(enName);
@@ -691,7 +693,7 @@ namespace BP.Web.Comm.UC.WF
 
             //处理装载前填充.
             this.LoadData(mattrs,en);
-            this.Add("<table id=tabForm  align=center >");
+            this.Add("<table id=tabForm  align=center width='700px'>");
             string appPath = this.Page.Request.ApplicationPath;
             foreach (GroupField gf in gfs)
             {
@@ -1041,18 +1043,18 @@ namespace BP.Web.Comm.UC.WF
             }
             foreach (MapFrame fr in frames)
             {
-                if (fr.IsAutoSize)
+              //  if (fr.IsAutoSize)
                     js += "\t\n window.setInterval(\"ReinitIframe('F" + fr.NoOfObj + "','TD" + fr.NoOfObj + "')\", 200);";
             }
             foreach (MapM2M m2m in m2ms)
             {
-                if (m2m.ShowWay == FrmShowWay.FrmAutoSize)
+              //  if (m2m.ShowWay == FrmShowWay.FrmAutoSize)
                     js += "\t\n window.setInterval(\"ReinitIframe('F" + m2m.NoOfObj + "','TD" + m2m.NoOfObj + "')\", 200);";
             }
             foreach (FrmAttachment ath in aths)
             {
-                if (ath.IsAutoSize)
-                    js += "\t\n window.setInterval(\"ReinitIframe('F" + ath.NoOfObj + "','TD" + ath.NoOfObj + "')\", 200);";
+                // if (ath.IsAutoSize)
+                js += "\t\n window.setInterval(\"ReinitIframe('F" + ath.MyPK + "','TD" + ath.MyPK + "')\", 200);";
             }
             js += "\t\n</script>";
             this.Add(js);
@@ -1547,12 +1549,14 @@ namespace BP.Web.Comm.UC.WF
                 rowIdx++;
                 // myidx++;
                 this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "' ");
-                if (ath.IsAutoSize)
-                    this.Add("<TD colspan=4 ID='TD" + ath.MyPK + "' height='50px' width='100%'  >");
+                this.Add("<TD colspan=4 ID='TD" + ath.MyPK + "' height='50px' width='100%' style='align:left'>");
+                string src = "";
+                if (this.IsReadonly)
+                  src = "./FreeFrm/AttachmentUpload.aspx?PKVal="+this.HisEn.PKVal+"&Ath=" + ath.NoOfObj + "&FK_MapData=" + EnName + "&FK_FrmAttachment=" + ath.MyPK+"&IsReadonly=1";
                 else
-                    this.Add("<TD colspan=4 ID='TD" + ath.MyPK + "' height='" + ath.H + "' width='" + ath.W + "'  >");
+                    src = "./FreeFrm/AttachmentUpload.aspx?PKVal=" + this.HisEn.PKVal + "&Ath=" + ath.NoOfObj + "&FK_MapData=" + EnName + "&FK_FrmAttachment=" + ath.MyPK;
 
-                string src = "./FreeFrm/AttachmentUpload.aspx?PKVal="+this.HisEn.PKVal+"&Ath=" + ath.NoOfObj + "&FK_MapData=" + EnsName + "&FK_FrmAttachment=" + ath.MyPK;
+
                 if (ath.IsAutoSize)
                 {
                     this.Add("<iframe ID='F" + ath.MyPK + "'   src='" + src + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=auto /></iframe>");
@@ -1577,6 +1581,7 @@ namespace BP.Web.Comm.UC.WF
 
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
+            this.EnName = enName;
             this.mapData = new MapData(enName);
            
             string appPath = this.Request.ApplicationPath;
@@ -2093,7 +2098,7 @@ namespace BP.Web.Comm.UC.WF
                     this.Add(fu);
 
                     Button mybtn = new Button();
-                    if (ath.IsUpload)
+                    if (ath.IsUpload && this.IsReadonly==false)
                     {
                         mybtn.ID = ath.MyPK;
                         mybtn.Text = "上传";
@@ -2103,7 +2108,7 @@ namespace BP.Web.Comm.UC.WF
                         this.Add(mybtn);
                     }
 
-                    if (ath.IsDownload)
+                    if (ath.IsDownload )
                     {
                         mybtn = new Button();
                         mybtn.Text = "下载";
@@ -2117,7 +2122,7 @@ namespace BP.Web.Comm.UC.WF
                         this.Add(mybtn);
                     }
 
-                    if (ath.IsDelete)
+                    if (ath.IsDelete && this.IsReadonly==false)
                     {
                         mybtn = new Button();
                         mybtn.Text = "删除";
@@ -2139,7 +2144,11 @@ namespace BP.Web.Comm.UC.WF
                     this.Add("<DIV id='Fd" + ath.MyPK + "' style='position:absolute; left:" + ath.X + "px; top:" + ath.Y + "px; width:" + ath.W + "px; height:" + ath.H + "px;text-align: left;' >");
                     this.Add("<span>");
                     string src = "";
-                    src = this.Request.ApplicationPath + "/WF/FreeFrm/AttachmentUpload.aspx?PKVal=" + this.HisEn.PKVal.ToString() + "&FK_FrmAttachment=" + ath.MyPK;
+                    if (this.IsReadonly)
+                        src = this.Request.ApplicationPath + "/WF/FreeFrm/AttachmentUpload.aspx?PKVal=" + this.HisEn.PKVal.ToString() + "&FK_FrmAttachment=" + ath.MyPK + "&IsReadonly=1";
+                    else
+                        src = this.Request.ApplicationPath + "/WF/FreeFrm/AttachmentUpload.aspx?PKVal=" + this.HisEn.PKVal.ToString() + "&FK_FrmAttachment=" + ath.MyPK ;
+
                     this.Add("<iframe ID='F" + ath.MyPK + "'    src='" + src + "' frameborder=0  style='position:absolute;width:" + ath.W + "px; height:" + ath.H + "px;text-align: left;'  leftMargin='0'  topMargin='0' scrolling=auto /></iframe>");
                     this.Add("</span>");
                     this.Add("</DIV>");

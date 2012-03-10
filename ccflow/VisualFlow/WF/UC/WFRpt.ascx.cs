@@ -149,8 +149,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             {
                 /* 自由表单 */
                 this.UCEn1.Add("<div id=divFreeFrm >");
-                this.UCEn1.IsReadonly = true;
-                this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID, false); //, false, false, null);
+                this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID,true); //, false, false, null);
                 if (wk.WorkEndInfo.Length > 2)
                     this.UCEn1.Add(wk.WorkEndInfo);
                 this.UCEn1.Add("</div>");
