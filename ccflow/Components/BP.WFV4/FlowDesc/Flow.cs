@@ -4328,12 +4328,18 @@ namespace BP.WF
             msg += "\r\n</body>";
             msg += "\r\n</html>";
 
-            string pathDef = SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\" + SystemConfig.CustomerNo + "_index.htm";
-            DataType.WriteFile(pathDef, msg);
+            try
+            {
+                string pathDef = SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\" + SystemConfig.CustomerNo + "_index.htm";
+                DataType.WriteFile(pathDef, msg);
 
-            pathDef = SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\index.htm";
-            DataType.WriteFile(pathDef, msg);
-            System.Diagnostics.Process.Start(SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\");
+                pathDef = SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\index.htm";
+                DataType.WriteFile(pathDef, msg);
+                System.Diagnostics.Process.Start(SystemConfig.PathOfWorkDir + "\\VisualFlow\\DataUser\\FlowDesc\\");
+            }
+            catch
+            {
+            }
         }
         #endregion ≤È—Ø
 
