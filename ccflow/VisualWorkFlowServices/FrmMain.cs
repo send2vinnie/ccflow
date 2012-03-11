@@ -375,6 +375,11 @@ namespace SMSServices
                 BP.DA.Log.DefaultLogWriteLineError("没有为流程(" + fl.Name + ")的开始节点设置发起数据,请参考说明书解决.");
                 return;
             }
+            if (string.IsNullOrEmpty(me.Tag))
+            {
+                BP.DA.Log.DefaultLogWriteLineError("没有为流程(" + fl.Name + ")的开始节点设置发起数据,请参考说明书解决.");
+                return;
+            }
 
             // 获取从表数据.
             DataSet ds = new DataSet();
@@ -598,19 +603,12 @@ namespace SMSServices
             BP.WF.Dev2Interface.DTS_AutoStarterFlow(fl);
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void Btn_ToolBox_Click(object sender, EventArgs e)
         {
-            //  把流程运行到最后的节点上去，并且结束流程。
-            //string file = @"C:\aa\流程已完成.xls";
-            //string info = BP.WF.Glo.LoadFlowDataWithToSpecEndNode(file);
-            //BP.DA.Log.DefaultLogWriteLineInfo(info);
-
-
-            string file1 = @"C:\aa\流程未完成.xls";
-            string info1 = BP.WF.Glo.LoadFlowDataWithToSpecNode(file1);
-            BP.DA.Log.DefaultLogWriteLineInfo(info1);
-
-            MessageBox.Show("执行成功。");
+            CCFlowServices.ToolBox tb = new CCFlowServices.ToolBox();
+            tb.Show();
         }
+
+       
     }
 }
