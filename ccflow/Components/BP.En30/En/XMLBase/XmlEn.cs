@@ -553,16 +553,23 @@ namespace BP.XML
                 throw new Exception("@错误：类" + this.GetNewEntity.ToString() + " File= " + this.File + " Table=" + this.TableName + " ，没有取到数据。");
 
             int i = 0;
-            foreach (DataRow dr in dt.Rows)
+            try
             {
-                if (dr[key].ToString() == val.ToString() && dr[key1].ToString() == val1)
+                foreach (DataRow dr in dt.Rows)
                 {
-                    XmlEn en = this.GetNewEntity;
-                    en.Row = new Row();
-                    en.Row.LoadDataTable(dt, dr);
-                    this.Add(en);
-                    i++;
+                    if (dr[key].ToString() == val.ToString() && dr[key1].ToString() == val1)
+                    {
+                        XmlEn en = this.GetNewEntity;
+                        en.Row = new Row();
+                        en.Row.LoadDataTable(dt, dr);
+                        this.Add(en);
+                        i++;
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("@装载错误:file="+this.File+" xml:"+this.ToString()+"Err:"+ex.Message);
             }
             return i;
         }

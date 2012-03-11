@@ -254,7 +254,6 @@ namespace BP.WF.DTS
     /// </summary>
     public class WFDTS
     {
-        
         /// <summary>
         /// 流程统计分析
         /// </summary>

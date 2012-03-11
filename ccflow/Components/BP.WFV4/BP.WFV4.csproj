@@ -135,9 +135,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bill\BillType.cs" />
-    <Compile Include="CH\CHOfFlow.cs" />
-    <Compile Include="CH\CHOfFlowRpt.cs" />
-    <Compile Include="CH\CHOfNode.cs" />
+    <Compile Include="CH\CHOfFlow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CH\CHOfNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DemoData\Resume.cs" />
     <Compile Include="Dev2Interface\BtnState.cs" />
     <Compile Include="DTS\LoadTemplete.cs">
@@ -151,11 +154,11 @@
     <Compile Include="DTS\DTSCheckFlowAll.cs" />
     <Compile Include="DTS\GenerTemplate.cs" />
     <Compile Include="DTS\DTSDominInfo.cs" />
-    <Compile Include="DTS\ReLoadNDRpt.cs" />
+    <Compile Include="DTS\ReLoadNDxxxxxxRpt.cs" />
     <Compile Include="DTS\PackAutoErrFields.cs" />
     <Compile Include="DTS\GenerSiganture.cs" />
     <Compile Include="DTS\OneKeyBackWF.cs" />
-    <Compile Include="DTS\RepariRptTable.cs" />
+    <Compile Include="DTS\ReLoadCHOfNode.cs" />
     <Compile Include="FlowDesc\Condition\Cond.cs" />
     <Compile Include="FlowDesc\Condition\TurnTo.cs" />
     <Compile Include="FlowDesc\FlowDescExt\BtnLab.cs">

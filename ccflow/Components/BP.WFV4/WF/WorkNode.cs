@@ -2244,7 +2244,6 @@ namespace BP.WF
         }
         #region 用户到的变量
         public WorkerLists HisWorkerLists = null;
-        public CHOfFlow HisCHOfFlow = null;
         public GenerWorkFlow _HisGenerWorkFlow;
         public GenerWorkFlow HisGenerWorkFlow
         {
@@ -2750,29 +2749,29 @@ namespace BP.WF
 
             //#warning 去掉这个工作没有想到如何去写？
             // 记录到流程统计分析中去。
-            this.HisCHOfFlow = new CHOfFlow();
-            this.HisCHOfFlow.Copy(gwf);
-            this.HisCHOfFlow.WorkID = this.HisWork.OID;
-            this.HisCHOfFlow.WFState = (int)WFState.Runing;
+            //this.HisCHOfFlow = new CHOfFlow();
+            //this.HisCHOfFlow.Copy(gwf);
+            //this.HisCHOfFlow.WorkID = this.HisWork.OID;
+            //this.HisCHOfFlow.WFState = (int)WFState.Runing;
 
-            /* 说明没有这个记录 */
-            this.HisCHOfFlow.FK_Flow = this.HisNode.FK_Flow;
-            this.HisCHOfFlow.WFState = 0;
-            this.HisCHOfFlow.Title = gwf.Title;
-            this.HisCHOfFlow.FK_Emp = this.HisWork.Rec.ToString();
-            this.HisCHOfFlow.RDT = this.HisWork.RDT;
-            this.HisCHOfFlow.CDT = DataType.CurrentDataTime;
-            this.HisCHOfFlow.SpanDays = 0;
-            this.HisCHOfFlow.FK_Dept = this.HisDeptOfUse.No;
-            this.HisCHOfFlow.FK_NY = DataType.CurrentYearMonth;
-            try
-            {
-                this.HisCHOfFlow.Insert();
-            }
-            catch
-            {
-                this.HisCHOfFlow.Update();
-            }
+            ///* 说明没有这个记录 */
+            //this.HisCHOfFlow.FK_Flow = this.HisNode.FK_Flow;
+            //this.HisCHOfFlow.WFState = 0;
+            //this.HisCHOfFlow.Title = gwf.Title;
+            //this.HisCHOfFlow.FK_Emp = this.HisWork.Rec.ToString();
+            //this.HisCHOfFlow.RDT = this.HisWork.RDT;
+            //this.HisCHOfFlow.CDT = DataType.CurrentDataTime;
+            //this.HisCHOfFlow.SpanDays = 0;
+            //this.HisCHOfFlow.FK_Dept = this.HisDeptOfUse.No;
+            //this.HisCHOfFlow.FK_NY = DataType.CurrentYearMonth;
+            //try
+            //{
+            //    this.HisCHOfFlow.Insert();
+            //}
+            //catch
+            //{
+            //    this.HisCHOfFlow.Update();
+            //}
             #endregion HisCHOfFlow
 
             #region  产生开始工作者,能够执行他们的人员.
@@ -3023,7 +3022,7 @@ namespace BP.WF
                             //HisCHOfFlow.DateLitFrom = DateTime.Now.AddDays(fl.DateLit).ToString(DataType.SysDataFormat);
                             //HisCHOfFlow.DateLitTo = DateTime.Now.AddDays(fl.DateLit + 10).ToString(DataType.SysDataFormat);
                             //HisCHOfFlow.Update();
-                            rtf.AddEn(HisCHOfFlow);
+                         //   rtf.AddEn(HisCHOfFlow);
                         }
                         else
                         {

@@ -501,15 +501,14 @@ namespace BP.WF
                 map.EnType = EnType.App;
 
                 map.AddMyPK();
-                map.AddTBString(CHOfNodeAttr.FK_Flow, null, "Emps", false, true, 0, 500, 10);
-                map.AddTBInt(CHOfNodeAttr.WorkID, 0, "WorkID", false, true);
+                map.AddTBString(CHOfNodeAttr.FK_Flow, null, "FK_Flow", false, true, 0, 500, 10);
+                
                 map.AddTBInt(CHOfNodeAttr.FK_Node, 0, "FK_Node", false, true);
+                map.AddTBInt(CHOfNodeAttr.WorkID, 0, "WorkID", false, true);
+
                 map.AddTBString(CHOfNodeAttr.FK_Emp, null, "人员", false, true, 0, 500, 10);
-                map.AddTBInt(CHOfNodeAttr.NodeState, 0, "节点状态", false, true);
-                map.AddTBString(CHOfNodeAttr.FK_Station, null, "岗位", false, true, 0, 500, 10);
                 map.AddTBString(CHOfNodeAttr.FK_Dept, null, "部门", false, true, 0, 500, 10);
                 map.AddTBString(CHOfNodeAttr.FK_NY, null, "年月", false, true, 0, 500, 10);
-                map.AddTBString(CHOfNodeAttr.FK_Emp, null, "人员", false, true, 0, 500, 10);
 
                 map.AddTBDateTime(CHOfNodeAttr.RDT, "接受时间", true, true);
                 map.AddTBDateTime(CHOfNodeAttr.CDT, "实际完成时间", true, true);
@@ -523,36 +522,19 @@ namespace BP.WF
 
                 map.AddTBFloat(CHOfNodeAttr.CentOfAdd, 0, "加分", true, true);
                 map.AddTBFloat(CHOfNodeAttr.CentOfCut, 0, "扣分", true, true);
-
                 map.AddTBFloat(CHOfNodeAttr.Cent, 0, "得分", false, false);
-                map.AddTBString(CHOfNodeAttr.Spec, null, "特殊条件字段", false, true, 0, 200, 10);
-                map.AddTBString(CHOfNodeAttr.Emps, null, "Emps", false, true, 0, 500, 10);
-                map.AddTBString(CHOfNodeAttr.Note, "无", "扣分原因", false, true, 0, 2000, 20);
-                 
+
+              //  map.AddTBString(CHOfNodeAttr.Spec, null, "特殊条件字段", false, true, 0, 200, 10);
+               // map.AddTBString(CHOfNodeAttr.Emps, null, "分配人员", false, true, 0, 500, 10);
+               // map.AddTBString(CHOfNodeAttr.Note, null, "扣分原因", false, true, 0, 2000, 20);
 
                 this._enMap = map;
                 return this._enMap;
             }
         }
-		//右键添加工作报告功能链接
-        public string DoShowWorkRpt()
-        {
-            PubClass.WinOpen("../../" + SystemConfig.AppName + "/WF/WFRpt.aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID);
-            return null;
-        }
 		#endregion
 
-		#region 重载基类方法
-        protected override bool beforeUpdateInsertAction()
-        {
-            if (this.CDT == "无")
-                this.NodeState = NodeState.Init;
-            else
-                this.NodeState = NodeState.Complete;
-
-            return base.beforeUpdateInsertAction();
-        }
-		#endregion	
+	 
 	}
 	/// <summary>
 	/// 消息s BP.Port.FK.CHOfNodes

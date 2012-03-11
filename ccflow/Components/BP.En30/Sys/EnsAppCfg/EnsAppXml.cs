@@ -163,7 +163,7 @@ namespace BP.Sys.Xml
         {
             get
             {
-                return SystemConfig.PathOfXML + "\\Ens\\EnsAppXml\\";
+                return SystemConfig.PathOfXML + "\\Ens\\EnsAppXml\\GE.xml";
             }
         }
         /// <summary>

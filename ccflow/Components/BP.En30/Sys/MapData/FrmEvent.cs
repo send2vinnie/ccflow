@@ -358,6 +358,7 @@ namespace BP.Sys
             if (nev == null || nev.HisDoType == EventDoType.Disable)
                 return null;
 
+             
             string doc = nev.DoDoc.Trim();
             if (doc == null || doc == "")
                 return null;
@@ -383,6 +384,9 @@ namespace BP.Sys
             doc = doc.Replace("@WebUser.No", BP.Web.WebUser.No);
             doc = doc.Replace("@WebUser.Name", BP.Web.WebUser.Name);
             doc = doc.Replace("@WebUser.FK_Dept", BP.Web.WebUser.FK_Dept);
+
+            doc = doc.Replace("@FK_Node", nev.FK_MapData.Replace("ND",""));
+            doc = doc.Replace("@FK_MapData", nev.FK_MapData);
 
             //string str = "";
             //foreach (string s in this.Request.QueryString)

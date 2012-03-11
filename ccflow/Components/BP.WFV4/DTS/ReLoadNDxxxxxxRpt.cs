@@ -6,21 +6,20 @@ using BP.Web.Controls;
 using System.Reflection;
 using BP.Port;
 using BP.En;
-namespace BP.WF
+namespace BP.WF.DTS
 {
     /// <summary>
     /// 修复表单物理表字段长度 的摘要说明
     /// </summary>
-    public class ReLoadNDRpt : Method
+    public class ReLoadNDxxxxxxRpt : Method
     {
         /// <summary>
         /// 不带有参数的方法
         /// </summary>
-        public ReLoadNDRpt()
+        public ReLoadNDxxxxxxRpt()
         {
             this.Title = "清除并重新装载流程报表";
-            this.Help = "在节点表单发生重大变化后，用于修复数据，执行此功能不会影响数据但是会消耗时间比较长。";
-            
+            this.Help = "删除NDxxxRpt表数据，重新装载，此功能估计要执行很长时间，如果数据量较大有可能在web程序上执行失败。";
         }
         /// <summary>
         /// 设置执行变量
@@ -36,7 +35,10 @@ namespace BP.WF
         {
             get
             {
-                return true;
+                if (Web.WebUser.No == "admin")
+                    return true;
+                else
+                    return false;
             }
         }
         /// <summary>
@@ -46,6 +48,8 @@ namespace BP.WF
         public override object Do()
         {
             string msg = "";
+            msg+=Flow.RepareV_FlowData_View();
+
             Flows fls = new Flows();
             fls.RetrieveAllFromDBSource();
             foreach (Flow fl in fls)
@@ -57,7 +61,6 @@ namespace BP.WF
                 catch(Exception ex)
                 {
                     msg += "@在处理流程(" + fl.Name + ")出现异常" + ex.Message;
-                    return msg;
                 }
             }
             return "提示："+fls.Count+"个流程参与了体检，信息如下：@"+msg;

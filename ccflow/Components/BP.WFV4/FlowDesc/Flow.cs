@@ -625,8 +625,9 @@ namespace BP.WF
         /// 修补流程数据视图
         /// </summary>
         /// <returns></returns>
-        public string RepareV_FlowData_View()
+        public static string RepareV_FlowData_View()
         {
+            string err = "";
             Flows fls = new Flows();
             fls.RetrieveAllFromDBSource();
             if (fls.Count == 1)
@@ -643,27 +644,30 @@ namespace BP.WF
             }
             catch
             {
-
             }
-
-            string flowDataViewExtFields = BP.SystemConfig.AppSettings["FlowDataViewExtFields"];
-            if (flowDataViewExtFields == null)
-                flowDataViewExtFields = "";
 
             sql = "CREATE VIEW V_FlowData  ";
             //     sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
             sql += " AS ";
             foreach (Flow fl in fls)
             {
-                string mysql = "\t\n SELECT " + flowDataViewExtFields + " '" + fl.FK_FlowSort + "' AS FK_FlowSort,'" + fl.No + "' AS FK_Flow,OID,FID,Title,WFState,CDT,Emps,FK_Dept,FK_NY,FlowDaySpan,FlowEmps,FlowEnder,FlowEnderRDT,FlowStartRDT FROM ND" + int.Parse(fl.No) + "Rpt";
+                string mysql = "\t\n SELECT '" + fl.FK_FlowSort + "' AS FK_FlowSort,'" + fl.No + "' AS FK_Flow,OID,FID,Title,WFState,CDT,FlowStarter,FlowStartRDT,FK_Dept,FK_NY,FlowDaySpan,FlowEmps,FlowEnder,FlowEnderRDT FROM ND" + int.Parse(fl.No) + "Rpt";
                 try
                 {
                     DBAccess.RunSQLReturnTable(mysql);
                 }
-                catch
+                catch(Exception ex)
                 {
-                    continue;
-                    fl.DoCheck();
+                    try
+                    {
+                        fl.DoCheck();
+                        DBAccess.RunSQLReturnTable(mysql);
+                    }
+                    catch(Exception ex1)
+                    {
+                        err += ex1.Message;
+                        continue;
+                    }
                 }
                 sql += mysql;
                 sql += "\t\n UNION ";
@@ -1895,9 +1899,10 @@ namespace BP.WF
         /// </summary>
         /// <param name="nds"></param>
         /// <param name="dt"></param>
-        private void CheckRptData(Nodes nds, DataTable dt)
+        private string CheckRptData(Nodes nds, DataTable dt)
         {
             GERpt rpt = new GERpt("ND" + int.Parse(this.No) + "Rpt");
+            string err = "";
             foreach (DataRow dr in dt.Rows)
             {
                 rpt.ResetDefaultVal();
@@ -1905,38 +1910,58 @@ namespace BP.WF
                 rpt.SetValByKey("OID", oid);
                 Work startWork = null;
                 Work endWK = null;
-                string emps = "";
+                string flowEmps = "";
                 foreach (Node nd in nds)
                 {
-                    Work wk = nd.HisWork;
-                    wk.OID = oid;
-                    if (wk.RetrieveFromDBSources() == 0)
-                        continue;
-
-                    rpt.Copy(wk);
-                    if (nd.NodeID == int.Parse(this.No + "01"))
-                        startWork = wk;
-
                     try
                     {
-                        emps += "@" + wk.Rec + ",";
-                        emps += wk.RecOfEmp.Name;
+                        Work wk = nd.HisWork;
+                        wk.OID = oid;
+                        if (wk.RetrieveFromDBSources() == 0)
+                            continue;
+
+                        rpt.Copy(wk);
+                        if (nd.NodeID == int.Parse(this.No + "01"))
+                            startWork = wk;
+
+                        try
+                        {
+                            if (flowEmps.Contains("@" + wk.Rec + ","))
+                                continue;
+
+                            flowEmps += "@" + wk.Rec + "," + wk.RecOfEmp.Name;
+                        }
+                        catch
+                        {
+                        }
+                        endWK = wk;
                     }
-                    catch
+                    catch(Exception ex)
                     {
+                        err += ex.Message;
                     }
-                    endWK = wk;
                 }
 
+                if (startWork == null || endWK == null)
+                    continue ;
+
                 rpt.SetValByKey("OID", oid);
-                rpt.FK_NY = startWork.GetValStrByKey("FK_NY");
+                rpt.FK_NY = startWork.GetValStrByKey("RDT").Substring(0,7);
                 rpt.FK_Dept = startWork.GetValStrByKey("FK_Dept");
+                if (string.IsNullOrEmpty(rpt.FK_Dept))
+                {
+                    string fk_dept = DBAccess.RunSQLReturnString("SELECT FK_Dept FROM Port_Emp WHERE No='" + startWork.Rec + "'");
+                    rpt.FK_Dept = fk_dept;
+
+                    startWork.SetValByKey("FK_Dept", fk_dept);
+                    startWork.Update();
+                }
                 rpt.Title = startWork.GetValStrByKey("Title");
                 rpt.WFState = startWork.GetValIntByKey("WFState");
                 rpt.FlowStarter = startWork.Rec;
                 rpt.FlowStartRDT = startWork.RDT;
                 rpt.FID = startWork.GetValIntByKey("FID");
-                rpt.FlowEmps = emps;
+                rpt.FlowEmps = flowEmps;
                 rpt.FlowEnder = endWK.Rec;
                 rpt.FlowEnderRDT = endWK.RDT;
                 rpt.MyNum = 1;
@@ -1953,7 +1978,8 @@ namespace BP.WF
                 {
                 }
                 rpt.InsertAsOID(rpt.OID);
-            }
+            } // 结束循环。
+            return err;
         }
         /// <summary>
         /// 生成明细报表信息
@@ -4210,7 +4236,7 @@ namespace BP.WF
             #endregion
 
             this.CheckRpt();
-            this.RepareV_FlowData_View();
+            Flow.RepareV_FlowData_View();
         }
         protected override bool beforeUpdate()
         {
@@ -4288,7 +4314,7 @@ namespace BP.WF
             // 执行录制的sql scripts.
             BP.DA.DBAccess.RunSQLs(sql);
             this.Delete();
-            this.RepareV_FlowData_View();
+            Flow.RepareV_FlowData_View();
         }
         #endregion
     }
