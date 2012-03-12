@@ -138,20 +138,6 @@ namespace BP.WF
 	public class CHOfNode : EntityMyPK
 	{
 		#region 基本属性
-		/// <summary>
-		/// 追究人次
-		/// </summary>
-		public float ZJRC
-		{
-			get
-			{
-				return this.GetValIntByKey(CHOfNodeAttr.ZJRC);
-			}
-			set
-			{
-				this.SetValByKey(CHOfNodeAttr.ZJRC,value);
-			}
-		}
 		public float CentOfAdd
 		{
 			get
@@ -262,8 +248,6 @@ namespace BP.WF
 				this.SetValByKey(CHOfNodeAttr.Spec,value);
 			}
 		}
-		 
-
 		public string  RDT
 		{
 			get
@@ -286,8 +270,6 @@ namespace BP.WF
 				this.SetValByKey(CHOfNodeAttr.SDT,value);
 			}
 		}
-      
-		 
 		public string  FK_Dept
 		{
 			get
@@ -371,7 +353,6 @@ namespace BP.WF
 				return this.GetValRefTextByKey(CHOfNodeAttr.FK_Node);
 			}
 		}
-	
 		public string  FK_Emp
 		{
 			get
@@ -408,7 +389,6 @@ namespace BP.WF
 				this.SetValByKey(CHOfNodeAttr.Note,value);
 			}
 		}
-		 
 		#endregion 
 
 		#region 构造函数

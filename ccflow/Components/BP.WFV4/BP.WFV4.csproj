@@ -135,9 +135,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bill\BillType.cs" />
-    <Compile Include="CH\CHOfFlow.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="CH\CHOfNode.cs">
       <SubType>Code</SubType>
     </Compile>

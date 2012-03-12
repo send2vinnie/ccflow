@@ -7,13 +7,12 @@ using BP.Port;
 using BP.Port;
 using BP.En;
 
-
 namespace BP.WF
 {
 	/// <summary>
 	/// 流程
 	/// </summary>
-	public class CHOfFlowAttr
+	public class CHOfFlowAttr:BP.WF.GERptAttr
 	{
 		#region 基本属性
 		/// <summary>
@@ -73,7 +72,6 @@ namespace BP.WF
 		/// Note
 		/// </summary>
 		public const  string Note="Note";
-
         /// <summary>
         /// 日期从
         /// </summary>
@@ -303,48 +301,28 @@ namespace BP.WF
                 if (this._enMap != null)
                     return this._enMap;
                 Map map = new Map("WF_CHOfFlow");
-                map.EnDesc = this.ToE("FlowSearch", "流程查询"); // "流程查询";
+                map.EnDesc = this.ToE("FlowSearch", "流程数据"); //"流程查询";
                 map.EnType = EnType.App;
 
                 map.AddTBIntPK(CHOfFlowAttr.WorkID, 0, "工作ID", true, true);
                 map.AddTBInt(CHOfFlowAttr.FID, 0, "FID", true, true);
                 map.AddDDLEntities(CHOfFlowAttr.FK_Flow, null, "流程", new Flows(), false);
-
                 map.AddDDLSysEnum(CHOfFlowAttr.WFState, 0, "流程状态", true, true);
                 map.AddTBString(CHOfFlowAttr.Title, null, "标题", true, true, 0, 400, 10);
 
-                map.AddDDLEntities(CHOfFlowAttr.FK_Emp, null, "发起人", new BP.Port.Emps(), false);
-                map.AddTBDateTime(CHOfFlowAttr.RDT, "发起时间", true, true);
-                map.AddTBDateTime(CHOfFlowAttr.CDT, "完成时间", true, true);
+                map.AddDDLEntities(CHOfFlowAttr.FlowStarter, null, "发起人", new BP.Port.Emps(), false);
+                map.AddDDLEntities(CHOfFlowAttr.FK_Dept, null, "发起人部门", new Depts(), false);
+                map.AddTBDateTime(CHOfFlowAttr.FlowStartRDT, "发起时间", true, true);
 
-                map.AddDDLEntities(CHOfFlowAttr.FK_Dept, null, "部门", new Depts(), false);
+                map.AddTBString(CHOfFlowAttr.FlowEmps, null, "参与人", true, true, 0, 400, 10);
+                map.AddDDLEntities(CHOfFlowAttr.FlowEnder, null, "结束人", new BP.Port.Emps(), false);
+                map.AddDDLEntities(CHOfFlowAttr.FlowEnderRDT, null, "完成时间", new BP.Port.Emps(), false);
+
+                map.AddTBInt(CHOfFlowAttr.FlowDaySpan, 0, "流程用天", true, true);
+
                 map.AddDDLEntities(CHOfFlowAttr.FK_NY, DataType.CurrentYearMonth, "隶书年月", new BP.Pub.NYs(), false);
                 map.AddTBIntMyNum();
-
                 map.AddSearchAttr(CHOfFlowAttr.WFState);
-
-                //右键添加工作报告功能
-                RefMethod rm = new RefMethod();
-                rm.Title = this.ToE("WorkRpt", "工作报告"); ;// "工作报告";
-                rm.ClassMethodName = this.ToString() + ".DoRpt";
-                rm.Icon = "/Images/Btn/Rpt.gif";
-                map.AddRefMethod(rm);
-
-                rm = new RefMethod();
-                rm.Title = this.ToE("Del", "删除");  //"删除";
-                rm.ClassMethodName = this.ToString() + ".DoDeleteFlow";
-                rm.Warning = this.ToE("AYS","您确认吗？");
-
-                rm.Icon = "/Images/Btn/delete.gif";
-                rm.Warning = this.ToE("AYS", "您确认吗？"); //"您确定要执行物理删除该流程吗？";
-                map.AddRefMethod(rm);
-
-                rm = new RefMethod();
-                rm.Title = "体检";
-                rm.ClassMethodName = this.ToString() + ".DoSelfTest";
-                rm.Icon = "/Images/Btn/do.gif";
-               // map.AddRefMethod(rm);
-
                 this._enMap = map;
                 return this._enMap;
             }
@@ -366,27 +344,6 @@ namespace BP.WF
                 info += "<hr><b>对：" + this.Title + "，体检信息如下：</b><BR>" + wf.DoSelfTest();
             }
             return info;
-        }
-        public string DoDeleteFlow()
-        {
-            if (Web.WebUser.No.Contains("admin") == false)
-                return "@您不是系统管理员，您不能删除。";
-
-            if (this.FK_Dept_D.Contains(BP.Web.WebUser.FK_Dept) == false)
-                return "不是您单位的数据，您不能操作。";
-
-            if (this.WFState == (int)BP.WF.WFState.Complete)
-                return "流程已经结束您不能删除。";
-
-            WorkFlow wf = new WorkFlow(this.FK_Flow, this.WorkID,this.FID );
-            wf.DoDeleteWorkFlowByReal();
-            return "流程已经成功删除。";
-        }
-
-        public string DoRpt()
-        {
-            PubClass.WinOpen("../WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow);
-            return null;
         }
     }
 	/// <summary>

@@ -42,6 +42,12 @@ namespace BP.WF.DTS
             }
         }
         /// <summary>
+        /// 
+        /// </summary>
+        public void DoFlowData()
+        {
+        }
+        /// <summary>
         /// 执行
         /// </summary>
         /// <returns>返回执行结果</returns>
@@ -50,8 +56,17 @@ namespace BP.WF.DTS
             string msg = "";
             Flows fls = new Flows();
             fls.RetrieveAllFromDBSource();
+            try
+            {
+                DBAccess.RunSQL("DROP TABLE WF_CHOfNode");
+            }
+            catch
+            {
+            }
 
             CHOfNode ndData = new CHOfNode();
+            ndData.CheckPhysicsTable();
+
             DataTable dt = null;
             string sql = "";
             foreach (Flow fl in fls)
