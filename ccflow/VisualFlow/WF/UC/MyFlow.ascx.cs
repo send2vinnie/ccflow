@@ -380,7 +380,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
         }
 
 
-
        string appPath = this.Request.ApplicationPath;
        this.currFlow = new Flow(this.FK_Flow);
        this.currND = new BP.WF.Node(this.FK_Node);
@@ -524,7 +523,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             //    this.ToolBar1.Add("<input type=button value='" + btnLab.JumpWayLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
             //}
 
-            if (btnLab.JumpWayEnable )
+            if (btnLab.JumpWayEnable)
             {
                 /*如果没有焦点字段*/
                 string urlr = "JumpWay" + small + ".aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
@@ -546,7 +545,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.Btn_ReturnWork.OnClientClick = "this.disabled=true;";
                 this.Btn_ReturnWork.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
-
 
             if (btnLab.ShiftEnable)
             {
@@ -590,10 +588,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.ToolBar1.Add("<input type=button value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \"  />");
 
             if (btnLab.SearchEnable)
-                this.ToolBar1.Add("<input type=button value='" + btnLab.SearchLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Rpt/Search.aspx?EnsName=ND"+int.Parse(this.FK_Flow)+"Rpt&FK_Flow="+this.FK_Flow+ "','dsd0'); \" />");
+                this.ToolBar1.Add("<input type=button value='" + btnLab.SearchLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt&FK_Flow=" + this.FK_Flow + "','dsd0'); \" />");
             #endregion
 
             this.BindWork(currND, currWK);
+
             this.Session["Ect"] = null;
 
             if (btnLab.SelectAccepterEnable)
@@ -633,6 +632,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// </summary>
     public void BindWork(BP.WF.Node nd, Work wk)
     {
+        if (this.IsPostBack == true)
+            this.UCEn1.IsLoadData = false;
+
     //    if (wk.NodeState == NodeState.Forward
         switch (nd.HisNodeWorkType)
         {
@@ -891,7 +893,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         this.Page.RegisterClientScriptBlock("sdf24j","<script language='JavaScript' src='./Style/Frm/jquery.idTabs.min.js' ></script>");
                         this.Page.RegisterClientScriptBlock("sdsdf24j","<script language='JavaScript' src='./Style/Frm/TabClick.js' ></script>");
                         #endregion 载入相关文件.
-
 
                         string urlExtFrm = this.RequestParas;
                         if (urlExtFrm.Contains("WorkID") == false)

@@ -552,6 +552,7 @@ namespace BP.Web.Comm.UC.WF
             #endregion 多对多的关系
         }
         public MapExts mes = null;
+        public bool IsLoadData = true;
         private void LoadData(MapAttrs mattrs, Entity en)
         {
             this.LinkFields = "";
@@ -562,10 +563,8 @@ namespace BP.Web.Comm.UC.WF
                 if (myitem.ExtType == MapExtXmlList.Link)
                     this.LinkFields += "," + myitem.AttrOfOper + ",";
             }
-
-            if (this.IsReadonly)
+            if (this.IsReadonly || this.IsLoadData == false)
                 return;
-
 
             MapExt item = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.PageLoadFull) as MapExt;
             if (item == null)
@@ -1583,7 +1582,6 @@ namespace BP.Web.Comm.UC.WF
         {
             this.EnName = enName;
             this.mapData = new MapData(enName);
-           
             string appPath = this.Request.ApplicationPath;
 
             mes = new MapExts(enName);
