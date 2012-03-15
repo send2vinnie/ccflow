@@ -183,7 +183,8 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStringByKey(FrmBtnAttr.EventContext);
+                return this.GetValStringByKey(FrmBtnAttr.EventContext).Replace("#", "@");
+                //return this.GetValStringByKey(FrmBtnAttr.EventContext);
             }
             set
             {

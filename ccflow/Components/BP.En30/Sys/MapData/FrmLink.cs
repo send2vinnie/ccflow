@@ -100,7 +100,7 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStringByKey(FrmLinkAttr.URL);
+                return this.GetValStringByKey(FrmLinkAttr.URL).Replace("#","@");
             }
             set
             {
