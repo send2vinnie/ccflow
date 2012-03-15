@@ -9,6 +9,11 @@
         WinShowModalDialog(url, '');
         window.location.href = window.location.href; //aspxPage + '.aspx?WorkID=';
     }
+    function WinOpen(url, winName) {
+        var newWindow = window.open(url, winName, 'width=700,height=400,top=100,left=300,scrollbars=yes,resizable=yes,toolbar=false,location=false,center=yes,center: yes;');
+        newWindow.focus();
+        return;
+    }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">

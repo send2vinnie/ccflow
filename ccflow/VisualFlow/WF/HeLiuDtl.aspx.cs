@@ -35,12 +35,10 @@ public partial class WF_WorkOpt_HeLiuDtl : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-       
         Node nd = new Node(this.FK_Node);
         Work wk = nd.HisWork;
         wk.OID = this.WorkID;
         wk.Retrieve();
-
         if (nd.HisNodeWorkType == NodeWorkType.WorkHL || nd.HisNodeWorkType == NodeWorkType.WorkFHL)
         {
             WorkerLists wls = new WorkerLists();
@@ -48,8 +46,6 @@ public partial class WF_WorkOpt_HeLiuDtl : System.Web.UI.Page
             qo.AddWhere(WorkerListAttr.FID, wk.OID);
             qo.addAnd();
             qo.AddWhere(WorkerListAttr.IsEnable, 1);
-            qo.addAnd();
-            qo.AddWhere(WorkerListAttr.IsPass, 1);
             qo.addAnd();
             qo.AddWhere(WorkerListAttr.FK_Node,
                 nd.HisFromNodes[0].GetValByKey(NodeAttr.NodeID));
@@ -61,8 +57,6 @@ public partial class WF_WorkOpt_HeLiuDtl : System.Web.UI.Page
                 qo.AddWhere(WorkerListAttr.FID, wk.OID);
                 qo.addAnd();
                 qo.AddWhere(WorkerListAttr.IsEnable, 1);
-                qo.addAnd();
-                qo.AddWhere(WorkerListAttr.IsPass, 1);
                 qo.DoQuery();
             }
 
@@ -100,7 +94,7 @@ public partial class WF_WorkOpt_HeLiuDtl : System.Web.UI.Page
                 }
                 else
                 {
-                    this.Pub1.AddTD("未完成-<a href=\"javascript:WinOpen('');\"><img src='./Img/sms.gif' border=0/>催办</a>");
+                    this.Pub1.AddTD("未完成");
                     this.Pub1.AddTD(wl.SDT);
                     this.Pub1.AddTD();
                 }
@@ -108,7 +102,10 @@ public partial class WF_WorkOpt_HeLiuDtl : System.Web.UI.Page
                 if (wl.IsPass == false)
                 {
                     isHaveRuing = true;
-                    this.Pub1.AddTD("<a href=\"javascript:DoDelSubFlow('" + wl.FK_Flow + "','" + wl.WorkID + "')\"><img src='./../Images/Btn/Delete.gif' border=0/>终止</a>");
+                    if (nd.IsForceKill)
+                        this.Pub1.AddTD("<a href=\"javascript:DoDelSubFlow('" + wl.FK_Flow + "','" + wl.WorkID + "')\"><img src='./../Images/Btn/Delete.gif' border=0/>终止</a>");
+                    else
+                        this.Pub1.AddTD();
                 }
                 else
                 {
