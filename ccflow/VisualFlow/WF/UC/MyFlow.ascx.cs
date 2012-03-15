@@ -430,7 +430,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                    qo.AddWhere(ForwardWorkAttr.FK_Node, this.FK_Node);
                    qo.addOrderBy(ForwardWorkAttr.RDT);
                    qo.DoQuery();
-
                    if (fws.Count >= 1)
                    {
                        this.FlowMsg.AddFieldSet("移交历史信息");
@@ -501,7 +500,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
                 this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
-
 
             if (btnLab.SaveEnable)
             {
@@ -585,7 +583,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
 
             if (btnLab.OptEnable)
-                this.ToolBar1.Add("<input type=button value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \"  />");
+                this.ToolBar1.Add("<input type=button value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','opt'); \"  />");
 
             if (btnLab.SearchEnable)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.SearchLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt&FK_Flow=" + this.FK_Flow + "','dsd0'); \" />");
@@ -634,7 +632,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     {
         if (this.IsPostBack == true)
             this.UCEn1.IsLoadData = false;
-
     //    if (wk.NodeState == NodeState.Forward
         switch (nd.HisNodeWorkType)
         {
@@ -747,7 +744,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 qo.DoQuery();
             }
 
-            if (1 == 2)
+            if (1 == 1)
             {
                 this.Pub2.AddFieldSet("分流信息");
                 this.Pub2.AddTable("border=0"); // ("<table border=0 >");

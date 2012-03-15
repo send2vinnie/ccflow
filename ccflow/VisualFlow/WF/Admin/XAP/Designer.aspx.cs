@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using BP.Port;
 using BP.Sys;
 using BP.DA;
+using BP.WF;
 
 public partial class Designer : System.Web.UI.Page
 {
@@ -37,15 +38,21 @@ public partial class Designer : System.Web.UI.Page
                     return;
                 }
             }
+
+
             #endregion 测试数据库是否连接成功。
 
             #region 升级 DtlShowModel 2012-02-27
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DtlShowModel'");
+            DBAccess.RunSQL("delete Sys_MapExt where MyPK!= FK_MapData+'_'+ExtType and ExtType= 'PageLoadFull'");
             #endregion
 
 
             try
             {
+                CHOfFlow ch = new CHOfFlow();
+                ch.CheckPhysicsTable();
+
                 BP.WF.Ext.NodeO nd = new BP.WF.Ext.NodeO();
                 nd.CheckPhysicsTable();
                 BP.WF.WorkerList wl = new BP.WF.WorkerList();

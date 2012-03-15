@@ -67,6 +67,7 @@ public partial class WF_FreeFrm_UploadFile : WebPage
             delDB.MyPK = this.DelPKVal;
             delDB.DirectDelete();
         }
+
         if (this.DoType == "Down")
         {
             FrmAttachmentDB downDB = new FrmAttachmentDB();

@@ -2030,7 +2030,6 @@ namespace BP.Web.Comm.UC.WF
                 if (paras.Contains("OID=") == false)
                     paras += "&OID=" + this.HisEn.GetValStrByKey("OID");
                 src += "&r=q" + paras;
-
                 if (m2m.IsEdit)
                     src += "&IsEdit=1";
                 else
