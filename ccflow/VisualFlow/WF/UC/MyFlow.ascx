@@ -42,6 +42,11 @@
     function To(url) {
         window.location.href = url;
     }
+    function WinOpen(url, winName) {
+        var newWindow = window.open(url, winName, 'width=700,height=400,top=100,left=300,scrollbars=yes,resizable=yes,toolbar=false,location=false,center=yes,center: yes;');
+        newWindow.focus();
+        return;
+    }
 </script>
 
 <script language="javascript">
@@ -60,6 +65,7 @@
         window.location.href = url;
         // WinOpen(url);
     }
+ 
 </script>
 
 <style type="text/css">
