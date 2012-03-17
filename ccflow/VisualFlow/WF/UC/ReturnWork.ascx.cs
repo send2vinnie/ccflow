@@ -87,9 +87,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
 
     public void BindItWorkHL(BP.WF.Node nd)
     {
-        this.ToolBar1.AddBtn("Btn_OK", this.ToE("OK", "确定"));
-        this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
-        this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_HL_Click);
         //if (nd.IsCanHidReturn)
         //{
         //    this.ToolBar1.AddBtn("Btn_ReturnHid", "隐形退回");
@@ -99,21 +96,33 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         //this.ToolBar1.AddBtn("Btn_Cancel", this.ToE("Cancel", "取消"));
         //this.ToolBar1.GetBtnByID("Btn_Cancel").Click += new EventHandler(WF_UC_ReturnWork_Click);
 
+        this.ToolBar1.AddBtn("Btn_OK", this.ToE("OK", "确定退回"));
+        this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
+        this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_HL_Click);
+
+     //FHLFlow.aspx?WorkID=318&FID=120&FK_Flow=006&FK_Node=604
+
         TextBox tb = new TextBox();
         tb.TextMode = TextBoxMode.MultiLine;
         tb.ID = "TB_Doc";
         tb.Rows = 20;
         tb.Columns = 50;
         this.Pub1.Add(tb);
+
+
         if (this.IsPostBack == false)
         {
             try
             {
-                WorkNode wn = new WorkNode(this.FID, this.FK_Node);
-                Work wk = wn.HisWork;
-                this.TB1.Text = this.ToEP4("WBackInfo",
-                    "{0}同志: \n   您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
-                    wk.Rec + wk.RecText, wk.CDT, wn.HisNode.Name, WebUser.Name + BP.DA.DataType.CurrentDataTime);
+                //int fk_node = DBAccess.RunSQLReturnValInt("SELECT FK_Node FROM WF_GenerWorkFlow WHERE  WorkID=" + this.WorkID);
+                //BP.WF.Node mynd = new BP.WF.Node(fk_node);
+                //string fk_empText = DBAccess.RunSQLReturnString("SELECT FK_EmpText FROM WF_Generworkerlist WHERE FK_Node="+this.FK_Node+" AND WorkID="+this.WorkID);
+
+                this.TB1.Text = "您好: \n   您处理的工作有错误，需要您重新办理．\n\n  此致!!!   \n " + WebUser.Name + BP.DA.DataType.CurrentDataTime;
+
+                //this.TB1.Text = this.ToEP4("WBackInfo",
+                //    "{0}同志: \n   您{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
+                //   fk_empText, "", nd.Name, WebUser.Name + BP.DA.DataType.CurrentDataTime);
             }
             catch (Exception ex)
             {
@@ -121,7 +130,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             }
         }
     }
-
     public void BindItWorkFL(BP.WF.Node nd)
     {
         this.ToolBar1.AddLab("sd", "<b>退回到:</b>");
