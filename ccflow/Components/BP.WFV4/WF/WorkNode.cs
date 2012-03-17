@@ -2810,7 +2810,7 @@ namespace BP.WF
         /// <param name="fromWK"></param>
         private void DoCopyRptWork(Work fromWK)
         {
-            foreach (Attr attr in this.rptGe.EnMap.Attrs)
+            foreach (Attr attr in fromWK.EnMap.Attrs)
             {
                 switch (attr.Key)
                 {
@@ -2832,6 +2832,8 @@ namespace BP.WF
                     continue;
                 this.rptGe.SetValByKey(attr.Key, obj);
             }
+            if (this.HisNode.IsStartNode)
+                this.rptGe.SetValByKey("Title", fromWK.GetValByKey("Title"));
         }
         /// <summary>
         /// 在流程节点保存后的操作.
@@ -2856,6 +2858,7 @@ namespace BP.WF
             {
                 rptGe.SetValByKey("OID", this.WorkID);
                 this.DoCopyRptWork(this.HisWork);
+
                 rptGe.SetValByKey(GERptAttr.FlowEmps, "@" + WebUser.No + "," + WebUser.Name);
                 rptGe.SetValByKey(GERptAttr.FlowStarter, WebUser.No);
                 rptGe.SetValByKey(GERptAttr.FlowStartRDT, DataType.CurrentDataTime);
@@ -2866,7 +2869,6 @@ namespace BP.WF
             }
             else
             {
-
                 foreach (Attr attr in this.HisWork.EnMap.Attrs)
                 {
                     switch (attr.Key)

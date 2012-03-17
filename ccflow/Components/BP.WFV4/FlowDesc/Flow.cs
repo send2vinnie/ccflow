@@ -557,6 +557,181 @@ namespace BP.WF
         }
         #endregion 业务处理
 
+        /// <summary>
+        /// 自动发起
+        /// </summary>
+        /// <returns></returns>
+        public string DoAutoStartIt()
+        {
+            switch (this.HisFlowRunWay)
+            {
+                case BP.WF.FlowRunWay.SpecEmp: //指定人员按时运行。
+                    string RunObj = this.RunObj;
+                    string fk_emp = RunObj.Substring(0, RunObj.IndexOf('@'));
+                    BP.Port.Emp emp = new BP.Port.Emp();
+                    emp.No = fk_emp;
+                    if (emp.RetrieveFromDBSources() == 0)
+                    {
+                        return "启动自动启动流程错误：发起人(" + fk_emp + ")不存在。";
+                    }
+                    BP.Web.WebUser.SignInOfGener(emp);
+                    string info_send= BP.WF.Dev2Interface.Node_StartWork(this.No, null);
+                    if (WebUser.No != "admin")
+                    {
+                          emp = new BP.Port.Emp();
+                        emp.No = "admin";
+                        emp.Retrieve();
+                        BP.Web.WebUser.SignInOfGener(emp);
+                        return info_send;
+                    }
+                    return info_send;
+                case BP.WF.FlowRunWay.DataModel: //按数据集合驱动的模式执行。
+                    break;
+                default:
+                    return "@该流程您没有设置为自动启动的流程类型。";
+            }
+
+            string msg = "";
+            BP.Sys.MapExt me = new MapExt();
+            me.MyPK = "ND" + int.Parse(this.No) + "01" + "_" + MapExtXmlList.StartFlow;
+            int i = me.RetrieveFromDBSources();
+            if (i == 0)
+            {
+                BP.DA.Log.DefaultLogWriteLineError("没有为流程(" + this.Name + ")的开始节点设置发起数据,请参考说明书解决.");
+                return "没有为流程(" + this.Name + ")的开始节点设置发起数据,请参考说明书解决.";
+            }
+            if (string.IsNullOrEmpty(me.Tag))
+            {
+                BP.DA.Log.DefaultLogWriteLineError("没有为流程(" + this.Name + ")的开始节点设置发起数据,请参考说明书解决.");
+                return "没有为流程(" + this.Name + ")的开始节点设置发起数据,请参考说明书解决.";
+            }
+
+            // 获取从表数据.
+            DataSet ds = new DataSet();
+            string[] dtlSQLs = me.Tag1.Split('*');
+            foreach (string sql in dtlSQLs)
+            {
+                if (string.IsNullOrEmpty(sql))
+                    continue;
+
+                string[] tempStrs = sql.Split('=');
+                string dtlName = tempStrs[0];
+                DataTable dtlTable = BP.DA.DBAccess.RunSQLReturnTable(sql.Replace(dtlName + "=", ""));
+                dtlTable.TableName = dtlName;
+                ds.Tables.Add(dtlTable);
+            }
+
+            #region 检查数据源是否正确.
+            string errMsg = "";
+            // 获取主表数据.
+            DataTable dtMain = BP.DA.DBAccess.RunSQLReturnTable(me.Tag);
+            if (dtMain.Rows.Count == 0)
+            {
+                return "流程(" + this.Name + ")此时无任务.";
+            }
+
+            msg+="@查询到(" + dtMain.Rows.Count + ")条任务.";
+
+            if (dtMain.Columns.Contains("Starter") == false)
+                errMsg += "@配值的主表中没有Starter列.";
+
+            if (dtMain.Columns.Contains("MainPK") == false)
+                errMsg += "@配值的主表中没有MainPK列.";
+
+            if (errMsg.Length > 2)
+            {
+                return "流程(" + this.Name + ")的开始节点设置发起数据,不完整." + errMsg;
+            }
+            #endregion 检查数据源是否正确.
+
+            #region 处理流程发起.
+            string nodeTable = "ND" + int.Parse(this.No) + "01";
+            int idx = 0;
+            foreach (DataRow dr in dtMain.Rows)
+            {
+                idx++;
+
+                string mainPK = dr["MainPK"].ToString();
+                string sql = "SELECT OID FROM " + nodeTable + " WHERE MainPK='" + mainPK + "'";
+                if (DBAccess.RunSQLReturnTable(sql).Rows.Count != 0)
+                {
+                    msg+= "@" + this.Name + ",第" + idx + "条,此任务在之前已经完成。";
+                    continue; /*说明已经调度过了*/
+                }
+
+                string starter = dr["Starter"].ToString();
+                if (WebUser.No != starter)
+                {
+                    BP.Web.WebUser.Exit();
+                    BP.Port.Emp emp = new BP.Port.Emp();
+                    emp.No = starter;
+                    if (emp.RetrieveFromDBSources() == 0)
+                    {
+                        msg+="@" + this.Name + ",第" + idx + "条,设置的发起人员:" + emp.No + "不存在.";
+                       msg+="@数据驱动方式发起流程(" + this.Name + ")设置的发起人员:" + emp.No + "不存在。";
+                        continue;
+                    }
+                    WebUser.SignInOfGener(emp);
+                }
+
+                #region  给值.
+                Work wk = this.NewWork();
+                foreach (DataColumn dc in dtMain.Columns)
+                    wk.SetValByKey(dc.ColumnName, dr[dc.ColumnName].ToString());
+
+                if (ds.Tables.Count != 0)
+                {
+                    // MapData md = new MapData(nodeTable);
+                    MapDtls dtls = new MapDtls(nodeTable);
+                    foreach (MapDtl dtl in dtls)
+                    {
+                        foreach (DataTable dt in ds.Tables)
+                        {
+                            if (dt.TableName != dtl.No)
+                                continue;
+
+                            //删除原来的数据。
+                            GEDtl dtlEn = dtl.HisGEDtl;
+                            dtlEn.Delete(GEDtlAttr.RefPK, wk.OID.ToString());
+
+                            // 执行数据插入。
+                            foreach (DataRow drDtl in dt.Rows)
+                            {
+                                if (drDtl["RefMainPK"].ToString() != mainPK)
+                                    continue;
+
+                                dtlEn = dtl.HisGEDtl;
+                                foreach (DataColumn dc in dt.Columns)
+                                    dtlEn.SetValByKey(dc.ColumnName, drDtl[dc.ColumnName].ToString());
+
+                                dtlEn.RefPK = wk.OID.ToString();
+                                dtlEn.OID = 0;
+                                dtlEn.Insert();
+                            }
+                        }
+                    }
+                }
+                #endregion  给值.
+
+                // 处理发送信息.
+                Node nd = this.HisStartNode;
+                try
+                {
+                    WorkNode wn = new WorkNode(wk, nd);
+                    string infoSend = wn.AfterNodeSave();
+                    BP.DA.Log.DefaultLogWriteLineInfo(msg);
+                    msg+= "@" + this.Name + ",第" + idx + "条,发起人员:" + WebUser.No + "-" + WebUser.Name + "已完成.\r\n" + infoSend;
+                    //this.SetText("@第（" + idx + "）条任务，" + WebUser.No + " - " + WebUser.Name + "已经完成。\r\n" + msg);
+                }
+                catch (Exception ex)
+                {
+                    msg+= "@" + this.Name + ",第" + idx + "条,发起人员:" + WebUser.No + "-" + WebUser.Name + "发起时出现错误.\r\n" + ex.Message;
+                }
+                  msg+= "<hr>";
+            }
+            return msg;
+            #endregion 处理流程发起.
+        }
         public string Tag = null;
         /// <summary>
         /// 运行类型

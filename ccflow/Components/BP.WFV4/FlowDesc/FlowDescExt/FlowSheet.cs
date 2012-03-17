@@ -127,7 +127,16 @@ namespace BP.WF.Ext
 
                 rm = new RefMethod();
                 rm.Title = "设置自动发起数据源";
+                rm.Icon = "/Images/Btn/DTS.gif";
+
                 rm.ClassMethodName = this.ToString() + ".DoSetStartFlowDataSources()";
+                map.AddRefMethod(rm);
+
+                rm = new RefMethod();
+                rm.Title = "手工启动定时任务";
+                rm.Icon = "/Images/Btn/DTS.gif";
+                rm.Warning = this.ToE("AYS", "您确定要执行吗? 注意:对于数据量交大的数据因为web上执行时间的限时问题，会造成执行失败。");// "您确定要执行删除流程数据吗？";
+                rm.ClassMethodName = this.ToString() + ".DoAutoStartIt()";
                 map.AddRefMethod(rm);
 
                 //rm = new RefMethod();
@@ -159,10 +168,22 @@ namespace BP.WF.Ext
         #endregion
 
         #region  公共方法
+        /// <summary>
+        /// 定义报表
+        /// </summary>
+        /// <returns></returns>
+        public string DoAutoStartIt()
+        {
+            Flow fl = new Flow();
+            fl.No = this.No;
+            fl.RetrieveFromDBSources();
+            return fl.DoAutoStartIt();
+        }
+
         public string DoSetStartFlowDataSources()
         {
             string flowID=int.Parse(this.No).ToString()+"01";
-            PubClass.WinOpen("./../WF/MapDef/MapExt.aspx?s=d34&FK_MapData=ND" + flowID + "&ExtType=StartFlow&RefNo==", 400, 500);
+            PubClass.WinOpen("./../WF/MapDef/MapExt.aspx?s=d34&FK_MapData=ND" + flowID + "&ExtType=StartFlow&RefNo==", 700, 500);
             return null;
         }
         public string DoCCNode()
