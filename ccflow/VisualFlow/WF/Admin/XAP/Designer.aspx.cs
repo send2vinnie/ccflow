@@ -47,8 +47,8 @@ public partial class Designer : System.Web.UI.Page
             DBAccess.RunSQL("delete Sys_MapExt where MyPK!= FK_MapData+'_'+ExtType and ExtType= 'PageLoadFull'");
             #endregion
 
-            #region 升级
-            sql="CREATE  PROCEDURE CCstaff ";
+            #region 升级 CCstaff
+            sql ="CREATE  PROCEDURE CCstaff ";
             sql+="\t\n (@Sender nvarchar(100),	@Receivers nvarchar(2000),	@Title nvarchar(100),@Context nvarchar(max))  ";
             sql+="\t\n  AS ";
             sql+="\t\n  BEGIN ";
@@ -71,7 +71,7 @@ public partial class Designer : System.Web.UI.Page
             catch
             {
             }
-            #endregion shengji
+            #endregion 升级 CCstaff
 
             #region 升级 chofFlow
             try
