@@ -47,7 +47,33 @@ public partial class Designer : System.Web.UI.Page
             DBAccess.RunSQL("delete Sys_MapExt where MyPK!= FK_MapData+'_'+ExtType and ExtType= 'PageLoadFull'");
             #endregion
 
+            #region 升级
+            sql="CREATE  PROCEDURE CCstaff ";
+            sql+="\t\n (@Sender nvarchar(100),	@Receivers nvarchar(2000),	@Title nvarchar(100),@Context nvarchar(max))  ";
+            sql+="\t\n  AS ";
+            sql+="\t\n  BEGIN ";
+            sql+="\t\n  SET NOCOUNT ON; ";
+            sql+="\t\n  /* 消息发送接口:";
+            sql+="\t\n  ccflow 产生的消息通过这个存储过程接口传导到您需要处理它的程序中去。";
+            sql+="\t\n  参数如下:";
+            sql+="\t\n  ---------------------------------------";
+            sql+="\t\n  @Sender - 发送人";
+            sql+="\t\n  @Receivers 接受人，可以用逗号分开.";
+            sql+="\t\n  @Title -消息的标题";
+            sql+="\t\n  @Context - 内容";
+            sql+="\t\n  */ ";
+            sql += "\t\n  END ";
+            try
+            {
+                /*如果有了就不执行进入，没有找到如何 判断多种数据库类型的sql语句，暂时用此方法处理。*/
+                DBAccess.RunSQL(sql);
+            }
+            catch
+            {
+            }
+            #endregion shengji
 
+            #region 升级 chofFlow
             try
             {
                 CHOfFlow ch = new CHOfFlow();
@@ -63,6 +89,8 @@ public partial class Designer : System.Web.UI.Page
             catch
             {
             }
+            #endregion
+
 
             #region 2012- 01-29 增加字段。
             try
