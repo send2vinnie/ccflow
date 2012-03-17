@@ -121,6 +121,7 @@ namespace SMSServices
 
                     if (BP.Web.WebUser.No != starter)
                     {
+                        BP.Web.WebUser.Exit();
                         BP.Port.Emp empadmin = new BP.Port.Emp(starter);
                         BP.Web.WebUser.SignInOfGener(empadmin);
                     }
@@ -138,12 +139,7 @@ namespace SMSServices
                         string[] kv = str.Split('=');
                         wk.SetValByKey(kv[0], kv[1]);
                     }
-
-                    wk.SetValByKey("FK_NY", DataType.CurrentYearMonth);
-                    wk.SetValByKey(WorkAttr.Rec, WebUser.No);
-                    wk.SetValByKey(WorkAttr.RDT, DataType.CurrentDataTime);
-                    wk.SetValByKey(WorkAttr.MyNum, 1);
-                    wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
+               
                     wk.SetValByKey("MainPK", mypk);
                     wk.Update();
 
@@ -347,7 +343,8 @@ namespace SMSServices
                             continue;
                         }
                         BP.Web.WebUser.SignInOfGener(emp);
-                        BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
+                       string info_send= BP.WF.Dev2Interface.Node_StartWork(fl.No, null);
+                       this.SetText(info_send);
                         continue;
                     case BP.WF.FlowRunWay.DataModel: //按数据集合驱动的模式执行。
                         this.SetText("@开始执行数据驱动流程调度:" + fl.Name);

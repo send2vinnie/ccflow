@@ -24,11 +24,12 @@ namespace CCFlowServices
 
         private void Btn_Imp_Click(object sender, EventArgs e)
         {
-            //  把流程运行到最后的节点上去，并且结束流程。
-            //string file = @"C:\aa\流程已完成.xls";
-            //string info = BP.WF.Glo.LoadFlowDataWithToSpecEndNode(file);
-            //BP.DA.Log.DefaultLogWriteLineInfo(info);
+            // 把流程运行到最后的节点上去，并且结束流程。
+            string file = @"C:\aa\流程已完成.xls";
+            string info = BP.WF.Glo.LoadFlowDataWithToSpecEndNode(file);
+            BP.DA.Log.DefaultLogWriteLineInfo(info);
 
+            // 流程未完成
             string file1 = @"C:\aa\流程未完成.xls";
             string info1 = BP.WF.Glo.LoadFlowDataWithToSpecNode(file1);
             BP.DA.Log.DefaultLogWriteLineInfo(info1);

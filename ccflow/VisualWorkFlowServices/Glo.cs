@@ -47,7 +47,6 @@ namespace SMSServices
         public static void LoadConfigByFile()
         {
           //BP.WF.Glo.IntallPath = PathOfVisualFlow;
-
             BP.SystemConfig.IsBSsystem_Test = false;
             BP.SystemConfig.IsBSsystem = false;
             SystemConfig.IsBSsystem = false;
