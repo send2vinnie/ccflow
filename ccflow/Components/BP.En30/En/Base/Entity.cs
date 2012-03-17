@@ -1829,6 +1829,111 @@ namespace BP.En
                 default:
                     throw new Exception("@未判断的数据库类型。");
             }
+            this.CreateIndexAndPK();
+        }
+        private void CreateIndexAndPK()
+        {
+            #region 建立索引
+            try
+            {
+                int pkconut = this.PKCount;
+                if (pkconut == 1)
+                {
+                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
+                }
+                else if (pkconut == 2)
+                {
+                    string pk0 = this.PKs[0];
+                    string pk1 = this.PKs[1];
+                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
+                }
+                else if (pkconut == 3)
+                {
+                    try
+                    {
+                        string pk0 = this.PKs[0];
+                        string pk1 = this.PKs[1];
+                        string pk2 = this.PKs[2];
+                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                    }
+                    catch
+                    {
+                    }
+                }
+                else if (pkconut == 4)
+                {
+                    try
+                    {
+                        string pk0 = this.PKs[0];
+                        string pk1 = this.PKs[1];
+                        string pk2 = this.PKs[2];
+                        string pk3 = this.PKs[3];
+                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2, pk3);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.DefaultLogWriteLineError(ex.Message);
+                throw ex;
+            }
+            #endregion
+
+            #region 建立主键
+            if (DBAccess.IsExitsTabPK(this.EnMap.PhysicsTable) == false)
+            {
+                try
+                {
+                    int pkconut = this.PKCount;
+                    if (pkconut == 1)
+                    {
+                        try
+                        {
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, this.PKField);
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                    else if (pkconut == 2)
+                    {
+                        try
+                        {
+                            string pk0 = this.PKs[0];
+                            string pk1 = this.PKs[1];
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1);
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    else if (pkconut == 3)
+                    {
+                        try
+                        {
+                            string pk0 = this.PKs[0];
+                            string pk1 = this.PKs[1];
+                            string pk2 = this.PKs[2];
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.DefaultLogWriteLineError(ex.Message);
+                    throw ex;
+                }
+            }
+            #endregion
         }
         /// <summary>
         /// 如果一个属性是外键，并且它还有一个字段存储它的名称。
@@ -2382,109 +2487,8 @@ namespace BP.En
             }
             #endregion
 
-            #region 建立索引
-            try
-            {
-                int pkconut = this.PKCount;
-                if (pkconut == 1)
-                {
-                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
-                }
-                else if (pkconut == 2)
-                {
-                    string pk0 = this.PKs[0];
-                    string pk1 = this.PKs[1];
-                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
-                }
-                else if (pkconut == 3)
-                {
-                    try
-                    {
-                        string pk0 = this.PKs[0];
-                        string pk1 = this.PKs[1];
-                        string pk2 = this.PKs[2];
-                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
-                    }
-                    catch
-                    {
-                    }
-                }
-                else if (pkconut == 4)
-                {
-                    try
-                    {
-                        string pk0 = this.PKs[0];
-                        string pk1 = this.PKs[1];
-                        string pk2 = this.PKs[2];
-                        string pk3 = this.PKs[3];
-                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2, pk3);
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.DefaultLogWriteLineError(ex.Message);
-                throw ex;
-                //throw new Exception("create pk error :"+ex.Message );
-            }
-            #endregion
 
-            #region 建立主键
-            if (DBAccess.IsExitsTabPK(this.EnMap.PhysicsTable) == false)
-            {
-                try
-                {
-                    int pkconut = this.PKCount;
-                    if (pkconut == 1)
-                    {
-                        try
-                        {
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, this.PKField);
-                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
-                        }
-                        catch (Exception ex)
-                        {
-                        }
-                    }
-                    else if (pkconut == 2)
-                    {
-                        try
-                        {
-                            string pk0 = this.PKs[0];
-                            string pk1 = this.PKs[1];
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1);
-                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
-                        }
-                        catch
-                        {
-                        }
-                    }
-                    else if (pkconut == 3)
-                    {
-                        try
-                        {
-                            string pk0 = this.PKs[0];
-                            string pk1 = this.PKs[1];
-                            string pk2 = this.PKs[2];
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, pk2);
-                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.DefaultLogWriteLineError(ex.Message);
-                    throw ex;
-                }
-            }
-            #endregion
-
+            this.CreateIndexAndPK();
             //增加注释.
         }
         #endregion
