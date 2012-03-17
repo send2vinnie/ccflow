@@ -314,6 +314,8 @@ namespace BP.WF
 
             //从草稿里看看是否有新工作？
             StartWork wk = (StartWork)nd.HisWork;
+            wk.ResetDefaultVal();
+
             int num = 0;
             try
             {
@@ -462,6 +464,7 @@ namespace BP.WF
             wk.Rec = WebUser.No;
             wk.SetValByKey(WorkAttr.RDT, BP.DA.DataType.CurrentDataTime);
             wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
+            wk.SetValByKey("FK_NY", DataType.CurrentYearMonth);
             wk.WFState = 0;
             wk.NodeState = 0;
             wk.FK_Dept = WebUser.FK_Dept;
@@ -470,18 +473,16 @@ namespace BP.WF
             wk.FID = 0;
             wk.SetValByKey("RecText", WebUser.Name);
 
-            string msg = "";
-            if (WebUser.SysLang == "CH")
-                msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
-            else
-                msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
-
-            string title = wk.GetValStringByKey("Title");
-
-            if (string.IsNullOrEmpty(title))
-                wk.Title = msg;
-            else if (title.Contains("在") == true)
-                wk.Title = msg;
+            //string msg = "";
+            //if (WebUser.SysLang == "CH")
+            //    msg = WebUser.Name + "在" + DateTime.Now.ToString("MM月dd号HH:mm") + "发起";
+            //else
+            //    msg = WebUser.Name + " Date " + DateTime.Now.ToString("MM-dd HH:mm") + " " + this.ToE("Start", "发起");
+            //string title = wk.GetValStringByKey("Title");
+            //if (string.IsNullOrEmpty(title))
+            //    wk.Title = msg;
+            //else if (title.Contains("在") == true)
+            //    wk.Title = msg;
 
             return wk;
         }
