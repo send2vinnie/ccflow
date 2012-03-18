@@ -295,6 +295,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             TextBlock tbx = new TextBlock();
             tbx.Text = title;
             tbx.Width = title.Length;
+
             Canvas cs = new Canvas();
             cs.Children.Add(btnClose);
             cs.Children.Add(tbx);

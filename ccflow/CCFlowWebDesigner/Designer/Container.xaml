@@ -7,7 +7,8 @@
     xmlns:liquidMenu="clr-namespace:Liquid;assembly=Liquid.Menu"    
     xmlns:local="clr-namespace:WF.Resources" 
     KeyDown="UserControl_KeyDown"
-    KeyUp="UserControl_KeyUp"  >
+    KeyUp="UserControl_KeyUp"
+             >
   
         <Grid x:Name="LayoutRoot"   Background="#A0A0A0" ShowGridLines="False" Margin="0" 
               ScrollViewer.HorizontalScrollBarVisibility="Auto"

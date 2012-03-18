@@ -621,10 +621,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             SetGridLines();
             this.FlowID = flowID;
-            _Service.RunSQLReturnTableAsync("select nodeid,Name,X,Y,nodepostype,HisToNDs,nodeworktype from wf_node where fk_flow=" + flowID, true);
+            _Service.RunSQLReturnTableAsync("select nodeid,Name,X,Y,nodepostype,HisToNDs,nodeworktype from WF_Node WHERE FK_Flow='" + flowID+"'", true);
             _Service.RunSQLReturnTableCompleted += _service_RunSQLReturnTableCompleted;
         }
-        
+
         public void getFlows()
         {
             getFlows(this.FlowID);
