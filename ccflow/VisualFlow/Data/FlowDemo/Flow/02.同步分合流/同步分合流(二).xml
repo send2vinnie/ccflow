@@ -288,7 +288,7 @@
     <Step>4</Step>
     <Name>合流点</Name>
     <IsTask>1</IsTask>
-    <IsForceKill>0</IsForceKill>
+    <IsForceKill>1</IsForceKill>
     <RunModel>1</RunModel>
     <FocusField />
     <DeliveryWay>0</DeliveryWay>
@@ -368,7 +368,7 @@
     <Y>302</Y>
     <SearchLab>查询</SearchLab>
     <SearchEnable>1</SearchEnable>
-    <PassRate>100</PassRate>
+    <PassRate>50</PassRate>
   </WF_Node>
   <WF_Node>
     <NodeID>699</NodeID>
@@ -7640,7 +7640,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>300</GroupID>
+    <GroupID>310</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -7669,7 +7669,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>300</GroupID>
+    <GroupID>310</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -7698,7 +7698,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>300</GroupID>
+    <GroupID>310</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -7727,7 +7727,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>300</GroupID>
+    <GroupID>310</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -7756,7 +7756,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>300</GroupID>
+    <GroupID>310</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -7785,7 +7785,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>300</GroupID>
+    <GroupID>310</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -7814,7 +7814,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>300</GroupID>
+    <GroupID>310</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -7843,7 +7843,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>300</GroupID>
+    <GroupID>310</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -7959,7 +7959,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>300</GroupID>
+    <GroupID>310</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -8104,7 +8104,7 @@
     <AutoFullDoc />
     <AutoFullWay>0</AutoFullWay>
     <IDX>999</IDX>
-    <GroupID>300</GroupID>
+    <GroupID>310</GroupID>
     <IsSigan>0</IsSigan>
     <X>5</X>
     <Y>5</Y>
@@ -8170,10 +8170,10 @@
     <WhenOverSize>0</WhenOverSize>
     <DtlOpenType>0</DtlOpenType>
     <DtlShowModel>0</DtlShowModel>
-    <X>81.43</X>
-    <Y>122.9</Y>
-    <H>200</H>
-    <W>400</W>
+    <X>80.43</X>
+    <Y>120.9</Y>
+    <H>277</H>
+    <W>722</W>
     <FrmW>900</FrmW>
     <FrmH>1200</FrmH>
   </Sys_MapDtl>
@@ -8380,7 +8380,7 @@
     <Idx>0</Idx>
   </Sys_GroupField>
   <Sys_GroupField>
-    <OID>300</OID>
+    <OID>310</OID>
     <Lab>流程信息</Lab>
     <EnName>ND6Rpt</EnName>
     <Idx>-1</Idx>
@@ -10336,8 +10336,8 @@
     <MyPK>Lab120315053038</MyPK>
     <FK_MapData>ND604</FK_MapData>
     <Text>合流工作节点表单</Text>
-    <X>153.81</X>
-    <Y>8.58</Y>
+    <X>149.05</X>
+    <Y>7.63</Y>
     <FontSize>17</FontSize>
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
@@ -10349,8 +10349,8 @@
     <MyPK>Lab120315053453</MyPK>
     <FK_MapData>ND604</FK_MapData>
     <Text>明细表的数据是从上一个节点的子线程copy过来的。每条明细数据就是一个子线程。</Text>
-    <X>88.1</X>
-    <Y>84.76</Y>
+    <X>93.81</X>
+    <Y>91.57</Y>
     <FontSize>11</FontSize>
     <FontColor>#FF000000</FontColor>
     <FontName>Portable User Interface</FontName>
@@ -10395,6 +10395,21 @@
     <X>619</X>
     <Y>97</Y>
     <FontSize>11</FontSize>
+    <FontColor>Black</FontColor>
+    <FontName>Portable User Interface</FontName>
+    <FontStyle>Normal</FontStyle>
+    <IsBold>0</IsBold>
+    <IsItalic>0</IsItalic>
+  </Sys_FrmLink>
+  <Sys_FrmLink>
+    <MyPK>LK120315084001</MyPK>
+    <FK_MapData>ND604</FK_MapData>
+    <Text>用Link控件打开各个子线程信息</Text>
+    <URL>HeLiuDtl.aspx?WorkID=@OID</URL>
+    <Target>_blank</Target>
+    <X>174.19</X>
+    <Y>58.19</Y>
+    <FontSize>13</FontSize>
     <FontColor>Black</FontColor>
     <FontName>Portable User Interface</FontName>
     <FontStyle>Normal</FontStyle>
