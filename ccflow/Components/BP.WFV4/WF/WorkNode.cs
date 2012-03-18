@@ -3483,6 +3483,7 @@ namespace BP.WF
                     condMsg += "<b>@检查方向条件：到节点：" + nd.Name + "</b>";
                     condMsg += dcs.MsgOfDesc;
                 }
+
                 if (toNode != null)
                     break;
             }

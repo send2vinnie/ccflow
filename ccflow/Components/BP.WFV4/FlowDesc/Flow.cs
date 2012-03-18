@@ -628,7 +628,7 @@ namespace BP.WF
             DataTable dtMain = BP.DA.DBAccess.RunSQLReturnTable(me.Tag);
             if (dtMain.Rows.Count == 0)
             {
-                return "流程(" + this.Name + ")此时无任务.";
+                return "流程(" + this.Name + ")此时无任务,查询语句:"+me.Tag.Replace("'","”");
             }
 
             msg+="@查询到(" + dtMain.Rows.Count + ")条任务.";

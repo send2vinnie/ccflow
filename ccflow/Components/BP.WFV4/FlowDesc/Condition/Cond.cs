@@ -425,7 +425,7 @@ namespace BP.WF
                     string strs1 = "";
                     foreach (BP.Port.EmpStation st in sts)
                     {
-                        if (strs.Contains("@" + st.FK_Station))
+                        if (strs.Contains("@" + st.FK_Station+"@"))
                         {
                             this.MsgOfCond = "@以岗位判断方向，条件为true：岗位集合" + strs + "，操作员(" + en.Rec + ")岗位:" + st.FK_Station + st.FK_StationT;
                             return true;
@@ -434,6 +434,26 @@ namespace BP.WF
                     }
 
                     this.MsgOfCond = "@以岗位判断方向，条件为false：岗位集合" + strs + "，操作员(" + en.Rec + ")岗位:" + strs1;
+                    return false;
+                }
+
+                if (this.HisDataFrom == ConnDataFrom.Depts)
+                {
+                    string strs = this.OperatorValue.ToString();
+                    BP.Port.EmpDepts sts = new BP.Port.EmpDepts();
+                    sts.Retrieve("FK_Emp", en.Rec);
+                    string strs1 = "";
+                    foreach (BP.Port.EmpDept st in sts)
+                    {
+                        if (strs.Contains("@" + st.FK_Dept + "@"))
+                        {
+                            this.MsgOfCond = "@以岗位判断方向，条件为true：部门集合" + strs + "，操作员(" + en.Rec + ")部门:" + st.FK_Dept + st.FK_DeptT;
+                            return true;
+                        }
+                        strs1 += st.FK_Dept + "-" + st.FK_DeptT;
+                    }
+
+                    this.MsgOfCond = "@以部门判断方向，条件为false：部门集合" + strs + "，操作员(" + en.Rec + ")部门:" + strs1;
                     return false;
                 }
 
