@@ -632,6 +632,9 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     {
         if (this.IsPostBack == true)
             this.UCEn1.IsLoadData = false;
+        else
+            this.UCEn1.IsLoadData = true;
+
     //    if (wk.NodeState == NodeState.Forward
         switch (nd.HisNodeWorkType)
         {
@@ -735,7 +738,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 {
                     if (nd.HisFormType == FormType.FreeForm)
                     {
-                        /*自由表单*/
+                        /* 自由表单 */
                         this.UCEn1.Add("<div id=divFreeFrm >");
                         this.UCEn1.BindFreeFrm(wk, "ND" + nd.NodeID, false); //, false, false, null);
                         if (wk.WorkEndInfo.Length > 2)
@@ -828,6 +831,11 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
                         if (urlExtFrm.Contains("SID") == false)
                             urlExtFrm += "&SID=" + WebUser.SID;
+
+                        if (urlExtFrm.Contains("IsLoadData") == false)
+                            urlExtFrm += "&IsLoadData=1" ;
+
+                        
 
                         this.UCEn1.Clear();
                         this.UCEn1.Add("<div  style='clear:both' ></div>");

@@ -96,6 +96,9 @@ public partial class WF_Frm : WebPage
         if (this.Request.QueryString["IsTest"] == "1")
             BP.SystemConfig.DoClearCash();
 
+        if (this.Request.QueryString["IsLoadData"] == "1")
+            this.UCEn1.IsLoadData = true;
+
         MapData md = new MapData();
         md.No = this.FK_MapData;
         if (md.RetrieveFromDBSources() == 0 && md.Name.Length > 3)
