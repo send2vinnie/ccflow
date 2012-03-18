@@ -328,6 +328,8 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
             return;
         }
 
+        val += "@";
+
         cond.OperatorValue = val;
         cond.HisDataFrom = ConnDataFrom.Stas;
         cond.FK_Flow = this.FK_Flow;

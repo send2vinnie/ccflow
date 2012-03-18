@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="ccflow表单设计器" Language="C#" MasterPageFile="~/WF/MapDef/WinOpen.master" AutoEventWireup="true"
  CodeFile="MapDefDtlFreeFrm.aspx.cs" Inherits="WF_MapDef_MapDefDtlFreeFrm" %>
  <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <base target=_self />
 <script language=javascript>

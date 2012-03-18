@@ -313,6 +313,7 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
             cond.Delete();
             return;
         }
+        val += "@";
 
         cond.OperatorValue = val;
         cond.FK_Flow = this.FK_Flow;
@@ -331,7 +332,6 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
                 cond.Update();
                 this.Response.Redirect("CondDept.aspx?MyPK=" + cond.MyPK + "&FK_Flow=" + cond.FK_Flow + "&FK_Node=" + cond.FK_Node + "&FK_MainNode=" + cond.NodeID + "&CondType=" + (int)cond.HisCondType + "&FK_Attr=" + cond.FK_Attr + "&ToNodeID=" + this.Request.QueryString["ToNodeID"], true);
                 return;
-                break;
             default:
                 throw new Exception("未设计的情况。");
         }

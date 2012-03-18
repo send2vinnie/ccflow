@@ -1,7 +1,26 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="FHLFlow.ascx.cs" Inherits="WF_UC_FHLFlow" %>
 <%@ Register src="../../Comm/UC/ToolBar.ascx" tagname="ToolBar" tagprefix="uc1" %>
 <%@ Register src="UCEn.ascx" tagname="UCEn" tagprefix="uc2" %>
-<script language=javascript>
+<script  type="text/javascript">
+    function ReinitIframe(frmID, tdID) {
+        try {
+
+            var iframe = document.getElementById(frmID);
+            var tdF = document.getElementById(tdID);
+            iframe.height = iframe.contentWindow.document.body.scrollHeight;
+            iframe.width = iframe.contentWindow.document.body.scrollWidth;
+            if (tdF.width < iframe.width) {
+                tdF.width = iframe.width;
+            } else {
+                iframe.width = tdF.width;
+            }
+            tdF.height = iframe.height;
+            return;
+        } catch (ex) {
+            return;
+        }
+        return;
+    }
     function GroupBarClick(rowIdx) {
         var alt = document.getElementById('Img' + rowIdx).alert;
         var sta = 'block';
@@ -26,7 +45,6 @@
     function Do(warning, url) {
         if (window.confirm(warning) == false)
             return;
-
         window.location.href = url;
         // WinOpen(url);
     }

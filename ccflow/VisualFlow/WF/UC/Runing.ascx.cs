@@ -122,8 +122,11 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
                  title = dr["Title"].ToString();
                  workid = dr["WorkID"].ToString();
                  fk_flow = dr["FK_Flow"].ToString();
+
+                 this.Pub1.AddTD("<a href=\"javascript:WinOpen('./../WF/WFRpt.aspx?WorkID=" + workid + "&FK_Flow=" + fk_flow + "&FID=" + dr["FID"] + "')\" >" + title + "</a>");
+
                  
-                 this.Pub1.AddTDDoc(title, 50, title);
+               //  this.Pub1.AddTDDoc(title, 50, title);
 
                  if (this.GroupBy != "FlowName")
                      this.Pub1.AddTD(dr["FlowName"].ToString());
