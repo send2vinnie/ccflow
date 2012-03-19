@@ -131,8 +131,8 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         this.Pub1.AddTDTitle("编号");
         this.Pub1.AddTDTitle("名称");
         this.Pub1.AddTDTitle("显示方式");
-        this.Pub1.AddTDTitle("是否可打印");
         this.Pub1.AddTDTitle("是否只读");
+        this.Pub1.AddTDTitle("是否可打印");
         this.Pub1.AddTDTitle("");
         this.Pub1.AddTDTitle("");
         this.Pub1.AddTDTitle("");
@@ -149,7 +149,7 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
 
             MapData md = new MapData(fn.FK_Frm);
             md = new MapData(fn.FK_Frm);
-           // this.Pub1.AddTD(md.Name);
+            // this.Pub1.AddTD(md.Name);
             this.Pub1.AddTDA("FlowFrms.aspx?ShowType=Frm&FK_MapData=" + md.No + "&FK_Node=" + this.FK_Node, md.Name);
 
             DDL ddl = new DDL();
@@ -159,7 +159,7 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
 
             CheckBox cb = new CheckBox();
             cb.ID = "CB_IsEdit_" + md.No;
-            cb.Text = "是否可编辑";
+            cb.Text = "是否只读";
             cb.Checked = fn.IsEdit;
             this.Pub1.AddTD(cb);
 
@@ -172,10 +172,9 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
             this.Pub1.AddTDA("FlowFrms.aspx?ShowType=EditPowerOrder&FK_Node=" + this.FK_Node + "&MyPK=" + fn.MyPK + "&DoType=Up", "上移");
             this.Pub1.AddTDA("FlowFrms.aspx?ShowType=EditPowerOrder&FK_Node=" + this.FK_Node + "&MyPK=" + fn.MyPK + "&DoType=Down", "下移");
 
+            //  this.Pub1.AddTD("<a href='../MapDef/CCForm/Frm.aspx?FK_MapData=" + fn.FK_Frm + "'><img src='../../Images/Btn/View.gif' border=0 />启动自由表单设计器</a>");
+            // this.Pub1.AddTD("<a href='../MapDef/MapDef.aspx?PK=" + fn.FK_Frm + "'><img src='../../Images/Btn/View.gif' border=0 />启动傻瓜表单设计器</a>");
 
-          //  this.Pub1.AddTD("<a href='../MapDef/CCForm/Frm.aspx?FK_MapData=" + fn.FK_Frm + "'><img src='../../Images/Btn/View.gif' border=0 />启动自由表单设计器</a>");
-           // this.Pub1.AddTD("<a href='../MapDef/MapDef.aspx?PK=" + fn.FK_Frm + "'><img src='../../Images/Btn/View.gif' border=0 />启动傻瓜表单设计器</a>");
-          
             this.Pub1.AddTREnd();
         }
 

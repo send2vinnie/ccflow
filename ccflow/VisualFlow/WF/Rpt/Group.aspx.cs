@@ -35,7 +35,6 @@ namespace BP.Web.Comm
                 return s;
             }
         }
-
         public new string EnsName
         {
             get
@@ -43,7 +42,6 @@ namespace BP.Web.Comm
                 return "ND" + int.Parse(this.FK_Flow) + "Rpt";
             }
         }
-      
         /// <summary>
         /// key
         /// </summary>
@@ -177,8 +175,90 @@ namespace BP.Web.Comm
             this.Pub1.Add(" - <a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
 
             this.HisMD = new MapData(this.EnsName);
-            if (this.DoType=="Dept")
-            this.ToolBar1.InitByMapV2(this.HisMD.HisEn.EnMap, 1, this.EnsName);
+
+            AttrSearchs searchs = null;
+            #region 处理查询设的默认.
+            if (this.DoType == "My")
+            {
+                Entity en = this.HisEns.GetNewEntity;
+                Map map = en.EnMap;
+                 searchs = map.SearchAttrs;
+            }
+            else
+            {
+                #region 处理查询权限
+                Entity en = this.HisEns.GetNewEntity;
+                Map map = en.EnMap;
+                this.ToolBar1.InitByMapV2(map, 1, this.EnsName);
+                this.ToolBar1.AddBtn(BP.Web.Controls.NamesOfBtn.Export);
+                 searchs = map.SearchAttrs;
+                string defVal = "";
+                System.Data.DataTable dt = null;
+                foreach (AttrSearch attr in searchs)
+                {
+                    DDL mydll = this.ToolBar1.GetDDLByKey("DDL_" + attr.Key);
+                    if (mydll == null)
+                        continue;
+                    defVal = mydll.SelectedItemStringVal;
+                    mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'" + this.EnsName + "','" + attr.Key + "')";
+                    switch (attr.Key)
+                    {
+                        case "FK_NY":
+                            dt = DBAccess.RunSQLReturnTable("SELECT DISTINCT FK_NY FROM " + this.EnsName + " WHERE FK_NY!='' ORDER BY FK_NY");
+                            mydll.Items.Clear();
+                            mydll.Items.Add(new ListItem("=>月份", "all"));
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                mydll.Items.Add(new ListItem(dr[0].ToString(), dr[0].ToString()));
+                            }
+                            mydll.SetSelectItem(defVal);
+                            break;
+                        case "FlowStarter":
+                            dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM WF_Emp WHERE  FK_Dept IN (SELECT FK_Dept FROM  Port_DeptSearchScorp WHERE FK_Emp='" + WebUser.No + "') AND No IN (SELECT DISTINCT FlowStarter FROM " + this.EnsName + " WHERE FlowStarter!='')");
+                            mydll.Items.Clear();
+                            mydll.Items.Add(new ListItem("=>发起人", "all"));
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                            }
+                            mydll.SetSelectItem(defVal);
+                            mydll.Attributes["onchange"] = "DDL_mvals_OnChange(this,'ND" + int.Parse(this.FK_Flow) + "Rpt','" + attr.Key + "')";
+                            break;
+                        case "FK_Dept":
+
+                            if (WebUser.No != "admin")
+                            {
+                                dt = DBAccess.RunSQLReturnTable("SELECT No,Name FROM Port_Dept WHERE No IN (SELECT FK_Dept FROM  Port_DeptSearchScorp WHERE FK_Emp='" + WebUser.No + "')");
+                                if (dt.Rows.Count == 0)
+                                {
+                                    this.UCSys1.AddMsgOfWarning("提示", "<h2>系统管理员没有给您设置查询权限。</h2>");
+                                    this.ToolBar1.Controls.Clear();
+                                    return;
+                                }
+                                mydll.Items.Clear();
+                                foreach (DataRow dr in dt.Rows)
+                                    mydll.Items.Add(new ListItem(dr[1].ToString(), dr[0].ToString()));
+                            }
+
+                            if (mydll.Items.Count >= 2)
+                            {
+                                ListItem liMvals = new ListItem("*多项组合..", "mvals");
+                                liMvals.Attributes.CssStyle.Add("style", "color:green");
+                                liMvals.Attributes.Add("color", "green");
+                                liMvals.Attributes.Add("style", "color:green");
+                            }
+                            mydll.SetSelectItem(defVal);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                #endregion 处理查询权限
+                this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+                this.ToolBar1.GetBtnByID(BP.Web.Controls.NamesOfBtn.Export).Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            }
+            #endregion 处理查询设的默认。
+
 
             this.CB_IsShowPict.Text = this.ToE("IsShowPict", "显示图形");
             this.BPTabStrip1.Items[2].Text = this.ToE("Histogram", "柱状图");
@@ -286,7 +366,7 @@ namespace BP.Web.Comm
 
 
             #region 设置选择的 默认值
-            AttrSearchs searchs = this.HisMD.HisEn.EnMap.SearchAttrs;
+         //    searchs = this.HisMD.HisEn.EnMap.SearchAttrs;
             foreach (AttrSearch attr in searchs)
             {
                 string mykey = this.Request.QueryString[attr.HisAttr.Key];
@@ -358,12 +438,8 @@ namespace BP.Web.Comm
             }
             #endregion
 
-            //this.ToolBar1.InitByMapVGroup(this.HisEn.EnMap);
             this.ToolBar1.AddSpt("spt1");
             this.ToolBar1.AddBtn(NamesOfBtn.Excel);
-
-            //this.ToolBar1.AddBtn(NamesOfBtn.Excel);
-            //this.ToolBar1.AddBtn(NamesOfBtn.Help);
 
             #region 增加排序
             this.BPMultiPage1.AddPageView("Table");
@@ -381,12 +457,15 @@ namespace BP.Web.Comm
             if (this.IsPostBack == false)
                 this.BingDG();
 
+            //if (this.DoType == "My")
+            //{
+            //    this.ToolBar1.AddBtn(NamesOfBtn.Search);
+            //}
+
             this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             this.ToolBar1.GetBtnByID("Btn_Excel").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-
             this.CB_IsShowPict.CheckedChanged += new EventHandler(State_Changed);
             this.CheckBoxList1.SelectedIndexChanged += new EventHandler(State_Changed);
-            //   this.Title = "感谢您使用ccflow " + this.HisMD.Name;
         }
 
         public void BindNums()

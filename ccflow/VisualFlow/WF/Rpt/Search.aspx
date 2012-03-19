@@ -13,7 +13,6 @@
 		        var val = window.showModalDialog(url, null, s);
 		        window.location.href = window.location.href;
 		    }
-
 		    function ImgClick() {
 		    }
 		    function OpenAttrs(ensName) {

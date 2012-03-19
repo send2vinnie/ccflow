@@ -67,8 +67,9 @@ public partial class WF_Rpt_Search : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         #region 处理风格
-        this.Page.RegisterClientScriptBlock("s",
+        this.Page.RegisterClientScriptBlock("sds",
          "<link href='./../../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
+
         if (this.Request.QueryString["PageIdx"] == null)
             this.PageIdx = 1;
         else
@@ -355,8 +356,6 @@ public partial class WF_Rpt_Search : WebPage
                 if (attr.IsRefAttr || attr.Key == "MyNum")
                     continue;
 
-         
-
                 if (attr.UIContralType == UIContralType.DDL)
                 {
                     this.UCSys1.AddTD(en.GetValRefTextByKey(attr.Key));
@@ -374,7 +373,6 @@ public partial class WF_Rpt_Search : WebPage
                 {
                     //str = "<b><font color='blue' ><a href=" + urlExt + ">" + str + "</font></b></a>";
                     str = "<b><font color='blue' >" + str + "</font></a>";
-
                 }
                 switch (attr.MyDataType)
                 {
@@ -452,6 +450,7 @@ public partial class WF_Rpt_Search : WebPage
                     break;
             }
         }
+
         if (IsHJ)
         {
             this.UCSys1.Add("<TR class='TRSum' >");
@@ -461,20 +460,18 @@ public partial class WF_Rpt_Search : WebPage
                 if (attr.Key == "MyNum")
                     continue;
 
-                if (attr.UIVisible == false)
-                    continue;
-
-                if (attr.MyDataType == DataType.AppBoolean
-                    || attr.UIContralType == UIContralType.DDL
-                    || attr.MyFieldType == FieldType.RefText)
+                if (attr.UIContralType == UIContralType.DDL)
                 {
                     this.UCSys1.AddTD();
                     continue;
                 }
 
+                if (attr.UIVisible == false)
+                    continue;
+
                 if (attr.Key == "OID" || attr.Key == "MID" || attr.Key.ToUpper() == "WORKID")
                 {
-                    this.UCSys1.AddTD();
+                    this.UCSys1.AddTD(attr.Key);
                     continue;
                 }
 
@@ -496,9 +493,7 @@ public partial class WF_Rpt_Search : WebPage
                         this.UCSys1.AddTD();
                         break;
                 }
-            }
-            this.UCSys1.AddTD();
-            this.UCSys1.AddTD();
+            } /*结束循环*/
             this.UCSys1.AddTD();
             this.UCSys1.AddTREnd();
         }

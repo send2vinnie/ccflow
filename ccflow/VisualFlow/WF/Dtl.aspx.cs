@@ -939,7 +939,6 @@ public partial class Comm_Dtl : WebPage
     }
     public void Delete()
     {
-
     }
     public void Save()
     {

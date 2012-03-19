@@ -567,8 +567,8 @@ namespace BP.Web.Comm.UC.WF
             if (this.IsLoadData == false)
                 return;
 
-            if (this.IsReadonly )
-                return;
+            //if (this.IsReadonly )
+            //    return;
 
             MapExt item = mes.GetEntityByKey(MapExtAttr.ExtType, MapExtXmlList.PageLoadFull) as MapExt;
             if (item == null)
@@ -593,7 +593,7 @@ namespace BP.Web.Comm.UC.WF
                 }
                 #endregion 处理sql变量
 
-                    if (string.IsNullOrEmpty(sql) == false)
+                if (string.IsNullOrEmpty(sql) == false)
                 {
                     if (sql.Contains("@"))
                         throw new Exception("设置的sql有错误可能有没有替换的变量:" + sql);
