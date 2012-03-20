@@ -4,7 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CCOA", "http://localhost/CCOA", "{D2FC19C7-6C03-4311-998D-8261A7EF03F8}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{247F7483-86B3-442E-B8B1-2FCFB432BD75}|BP.En30.dll;{ECC628EC-8497-4BE8-9D26-51946EC8E635}|BP.OA.dll;{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}|BP.Web.Controls.dll;"
+		ProjectReferences = "{247F7483-86B3-442E-B8B1-2FCFB432BD75}|BP.En30.dll;{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}|BP.Web.Controls.dll;{ECC628EC-8497-4BE8-9D26-51946EC8E635}|BP.OA.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/CCOA"
 		Debug.AspNetCompiler.PhysicalPath = "..\OA\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\CCOA\"
@@ -26,7 +26,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.En30", "..\..\Components
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.Web.Controls30", "..\..\Components\BP.Web.Controls30\BP.Web.Controls30.csproj", "{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.OA", "C:\Users\peng\Documents\Visual Studio 2010\Projects\CCOA\BP.OA\BP.OA.csproj", "{ECC628EC-8497-4BE8-9D26-51946EC8E635}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.OA", "..\Components\BP.OA\BP.OA.csproj", "{ECC628EC-8497-4BE8-9D26-51946EC8E635}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
