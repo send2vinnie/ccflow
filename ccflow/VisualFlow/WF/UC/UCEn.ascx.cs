@@ -694,6 +694,8 @@ namespace BP.Web.Comm.UC.WF
             }
             #endregion 处理事件.
 
+            //处理默认值.
+            this.DealDefVal(mattrs);
             //处理装载前填充.
             this.LoadData(mattrs,en);
             this.Add("<table id=tabForm  align=center width='700px'>");
@@ -1582,6 +1584,17 @@ namespace BP.Web.Comm.UC.WF
         public string LinkFields = "";
         public MapData mapData = null;
 
+        private void DealDefVal(MapAttrs mattrs)
+        {
+            if (this.IsReadonly)
+                return;
+            foreach (MapAttr attr in mattrs)
+            {
+                if (attr.DefValReal.Contains("@") == false)
+                    continue;
+                this.HisEn.SetValByKey(attr.KeyOfEn, attr.DefVal);
+            }
+        }
         public void BindFreeFrm(Entity en, string enName, bool isReadonly)
         {
             this.EnName = enName;
@@ -1614,6 +1627,8 @@ namespace BP.Web.Comm.UC.WF
 
             MapData md = new MapData();
             MapAttrs mattrs = new MapAttrs(this.FK_MapData);
+
+            this.DealDefVal(mattrs);
 
             //处理装载前填充.
             this.LoadData(mattrs, en);

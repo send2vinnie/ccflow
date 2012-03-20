@@ -1262,12 +1262,13 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
         try
         {
-            // 处理表单保存后。
+            //处理表单保存后。
             fes.DoEventNode(FrmEventList.SaveAfter, currWK);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            this.Alert(ex.Message);
+            //this.Response.Write(ex.Message);
+            this.Alert(ex.Message.Replace("'", "‘"));
             return;
         }
 

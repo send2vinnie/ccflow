@@ -173,7 +173,6 @@ namespace BP.Web.Comm
 
             this.Pub1.Add("<a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=My' ><img src='../../Images/Btn/Authorize.gif' />我参与的流程</a>");
             this.Pub1.Add(" - <a href='Group.aspx?FK_Flow=" + this.FK_Flow + "&EnsName=" + this.EnsName + "&DoType=Dept' ><img src='../../Images/Btn/CC.gif' />我部门的流程</a><br>");
-
             this.HisMD = new MapData(this.EnsName);
 
             AttrSearchs searchs = null;
