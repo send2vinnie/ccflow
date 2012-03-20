@@ -526,6 +526,7 @@ namespace BP.Web.UC
                         }
                         catch
                         {
+
                         }
                         continue;
                     case UIContralType.CheckBok:
