@@ -23,7 +23,6 @@ namespace BP.Web
     // [System.Web.Script.Services.ScriptService]
     public class WSBase : System.Web.Services.WebService
     {
-      
         public DataSet TurnXmlDataSet2SLDataSet(DataSet ds)
         {
             DataSet myds = new DataSet();

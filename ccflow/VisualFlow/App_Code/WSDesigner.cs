@@ -22,6 +22,40 @@ using System.IO;
 [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
 public class WSDesigner : WSBase
 {
+    #region 建模有关的方法
+    [WebMethod]
+    public string GenerOrgModel()
+    {
+        return null;
+
+        //BP.Port.Org.Dept dept = new BP.Port.Org.Dept();
+        //dept.CheckPhysicsTable();
+
+        //BP.Port.Org.Station sta = new BP.Port.Org.Station();
+        //sta.CheckPhysicsTable();
+
+        //BP.Port.Org.Emp emp = new BP.Port.Org.Emp();
+        //emp.CheckPhysicsTable();
+
+        //DataSet ds = new DataSet();
+        //string sql = "SELECT * FROM Port_Dept";
+        //DataTable dt = DBAccess.RunSQLReturnTable(sql);
+        //dt.TableName = "Depts";
+        //ds.Tables.Add(dt);
+
+        //sql = "SELECT * FROM Port_Station";
+        //dt = DBAccess.RunSQLReturnTable(sql);
+        //dt.TableName = "Stations";
+        //ds.Tables.Add(dt);
+
+        //sql = "SELECT * FROM WF_Emp";
+        //dt = DBAccess.RunSQLReturnTable(sql);
+        //dt.TableName = "Emps";
+        //ds.Tables.Add(dt);
+        //return Connector.ToXml(ds);
+    }
+    #endregion
+
     /// <summary>
     /// 执行功能返回信息
     /// </summary>

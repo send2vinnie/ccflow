@@ -23,6 +23,7 @@ namespace BP.Web
     // [System.Web.Script.Services.ScriptService]
     public class CCForm : WSBase
     {
+       
         /// <summary>
         /// 获取值
         /// </summary>
