@@ -1633,6 +1633,34 @@ namespace BP.Web.Comm.UC.WF
             //处理装载前填充.
             this.LoadData(mattrs, en);
 
+            #region 输出Ele
+            FrmEles eles = new FrmEles(this.FK_MapData);
+            foreach (FrmEle ele in eles)
+            {
+                float y = ele.Y;
+                this.Add("\t\n<DIV id=" + ele.MyPK + " style='position:absolute;left:" + ele.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
+                switch (ele.EleType)
+                {
+                    case FrmEle.HandSiganture:
+                        if (this.IsReadonly)
+                        {
+                            this.Add("\t\n<img src='" + appPath + "/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
+                        }
+                        else
+                        {
+                            this.Add("\t\n<img src='" + appPath + "/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
+                        }
+                        break;
+                    case FrmEle.EleSiganture:
+                    default:
+                        this.Add("未处理");
+                        break;
+                }
+                this.Add("\t\n</DIV>");
+            }
+            #endregion 输出Ele
+
+
             #region 输出按钮
             FrmBtns btns =  new FrmBtns(this.FK_MapData);
             foreach (FrmBtn btn in btns)
@@ -2106,7 +2134,7 @@ namespace BP.Web.Comm.UC.WF
                     lab.ID = "Lab" + ath.MyPK;
                     this.Add(lab);
                     if (athDB != null)
-                        lab.Text = "<a href='./../DataUser/UploadFile/" + athDB.FilePathName + "' target=_blank ><img src='./../Images/FileType/" + athDB.FileExts + ".gif' border=0/>" + athDB.FileName + "</a>";
+                        lab.Text = "<a href='./../DataUser/UploadFile/" + athDB.FilePathName + "' target=_blank ><img src='"+appPath+"/Images/FileType/" + athDB.FileExts + ".gif' border=0/>" + athDB.FileName + "</a>";
 
                     FileUpload fu = new FileUpload();
                     fu.ID = ath.MyPK;

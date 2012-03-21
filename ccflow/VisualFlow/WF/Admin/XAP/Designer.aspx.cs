@@ -41,6 +41,13 @@ public partial class Designer : System.Web.UI.Page
 
             #endregion 测试数据库是否连接成功。
 
+            #region 升级表单 2012-03-21
+            FrmEle ele = new FrmEle();
+            ele.CheckPhysicsTable();
+            FrmEleDB eleDB = new FrmEleDB();
+            eleDB.CheckPhysicsTable();
+            #endregion
+
             #region 升级 DtlShowModel 2012-02-27
             DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DtlShowModel'");
             DBAccess.RunSQL("delete Sys_MapExt where MyPK!= FK_MapData+'_'+ExtType and ExtType= 'PageLoadFull'");
