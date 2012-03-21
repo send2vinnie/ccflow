@@ -933,9 +933,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                                 }
                                 if (isExists)
                                 {
-
                                     ShowMessage(Text.Message_TheSameDirectionThatAlreadyExist);
-
                                 }
                                 else
                                 {
@@ -945,7 +943,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                                     isLinked = true;
                                 }
-
                             }
                         }
                     }
@@ -981,9 +978,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                                     count--;
                                 if (count > 0)
                                 {
+                                    act.AddEndDirection(this);
+                                    if (this.IsTemporaryDirection)
+                                        this.DirectionName = Text.NewDirection + _container.NextNewDirectionIndex.ToString();
+
+                                    isLinked = true;
                                     //分支节点有且只能有一个前驱节点
-                                    ShowMessage(Text.Message_BranchFlowNodeOnlyHaveOnePreFlowNode);
-                                    isLinked = false;
+                                    //ShowMessage(Text.Message_BranchFlowNodeOnlyHaveOnePreFlowNode);
+                                    //isLinked = false;
                                     break;
                                 }
                             }
