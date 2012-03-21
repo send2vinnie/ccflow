@@ -77,6 +77,13 @@ namespace BP.WF
     abstract public class Work : Entity
     {
         #region 基本属性(必须的属性)
+        public override string PK
+        {
+            get
+            {
+                return "OID";
+            }
+        }
         /// <summary>
         /// classID
         /// </summary>

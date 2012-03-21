@@ -575,8 +575,10 @@ namespace BP.WF
                     {
                         return "启动自动启动流程错误：发起人(" + fk_emp + ")不存在。";
                     }
+
                     BP.Web.WebUser.SignInOfGener(emp);
                     string info_send= BP.WF.Dev2Interface.Node_StartWork(this.No, null);
+
                     if (WebUser.No != "admin")
                     {
                           emp = new BP.Port.Emp();
@@ -1426,6 +1428,12 @@ namespace BP.WF
             sql = "SELECT * FROM Sys_FrmLab WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
             dt = DBAccess.RunSQLReturnTable(sql);
             dt.TableName = "Sys_FrmLab";
+            ds.Tables.Add(dt);
+
+            // Sys_FrmEle.
+            sql = "SELECT * FROM Sys_FrmEle WHERE  FK_MapData LIKE 'ND" + flowID + "%'";
+            dt = DBAccess.RunSQLReturnTable(sql);
+            dt.TableName = "Sys_FrmEle";
             ds.Tables.Add(dt);
 
             // Sys_FrmLink.
@@ -3915,6 +3923,24 @@ namespace BP.WF
                                     en.SetValByKey(dc.ColumnName, val);
                                 }
                                 en.MyPK = "LIE" + timeKey + "_" + idx;
+                                en.Insert();
+                            }
+                            break;
+                        case "Sys_FrmEle":
+                            idx = 0;
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                idx++;
+                                FrmEle en = new FrmEle();
+                                foreach (DataColumn dc in dt.Columns)
+                                {
+                                    string val = dr[dc.ColumnName] as string;
+                                    if (val == null)
+                                        continue;
+
+                                    val = val.Replace("ND" + oldFlowID, "ND" + flowID);
+                                    en.SetValByKey(dc.ColumnName, val);
+                                }
                                 en.Insert();
                             }
                             break;

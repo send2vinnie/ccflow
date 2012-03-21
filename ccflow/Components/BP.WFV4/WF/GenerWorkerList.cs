@@ -99,6 +99,16 @@ namespace BP.WF
     {
         #region 基本属性
         /// <summary>
+        /// WorkID
+        /// </summary>
+        public override string PK
+        {
+            get
+            {
+                return WorkerListAttr.WorkID;
+            }
+        }
+        /// <summary>
         /// 是否可用
         /// </summary>
         public bool IsEnable

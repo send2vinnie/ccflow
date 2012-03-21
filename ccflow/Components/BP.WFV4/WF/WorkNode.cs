@@ -1363,6 +1363,8 @@ namespace BP.WF
 
                 // 删除表单附件信息。
                 BP.DA.DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE RefPKVal='" + this.WorkID + "' AND FK_MapData='ND" + nd.NodeID + "'");
+                // 删除签名信息。
+                BP.DA.DBAccess.RunSQL("DELETE Sys_FrmEleDB WHERE RefPKVal='" + this.WorkID + "' AND FK_MapData='ND" + nd.NodeID + "'");
                 #endregion 删除当前节点数据。
 
 
@@ -2298,6 +2300,9 @@ namespace BP.WF
             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                                             this.WorkID.ToString());
 
+            FrmEleDBs eleDBs = new FrmEleDBs("ND" + this.HisNode.NodeID,
+                                           this.WorkID.ToString());
+
             MapDtls dtlsFrom = new MapDtls("ND" + this.HisNode.NodeID);
             if (dtlsFrom.Count > 1)
             {
@@ -2383,8 +2388,28 @@ namespace BP.WF
                         }
                         #endregion  复制附件信息
 
+                        #region  复制签名信息
+                        if (eleDBs.Count > 0)
+                        {
+                            /* 说明当前节点有附件数据 */
+                            eleDBs.Delete(FrmEleDBAttr.FK_MapData, "ND" + toNode.NodeID,
+                                FrmEleDBAttr.RefPKVal, mywk.OID);
+                            int i = 0;
+                            foreach (FrmEleDB eleDB in eleDBs)
+                            {
+                                i++;
+                                FrmEleDB athDB_N = new FrmEleDB();
+                                athDB_N.Copy(eleDB);
+                                athDB_N.FK_MapData = "ND" + toNode.NodeID;
+                                athDB_N.RefPKVal = mywk.OID.ToString();
+                                athDB_N.DirectInsert();
+                            }
+                        }
+                        #endregion  复制附件信息
+
+
                         #region  复制明细表信息.
-                        if (dtlsFrom.Count > 0 )
+                        if (dtlsFrom.Count > 0)
                         {
                             int i = -1;
                             foreach (Sys.MapDtl dtl in dtlsFrom)
@@ -2431,8 +2456,8 @@ namespace BP.WF
                                     dtCopy.OID = 0;
                                     dtCopy.Insert();
 
-                                   //dtCopy.InsertAsOID(gedtl.OID);
-                                   //dtCopy.InsertAsOID(gedtl.OID);
+                                    //dtCopy.InsertAsOID(gedtl.OID);
+                                    //dtCopy.InsertAsOID(gedtl.OID);
 
                                     #region  复制明细表单条 - 附件信息 - M2M- M2MM
                                     if (toDtl.IsEnableAthM)
@@ -2469,7 +2494,7 @@ namespace BP.WF
                                                 M2M m2m_N = new M2M();
                                                 m2m_N.Copy(m2m);
                                                 m2m_N.FK_MapData = toDtl.No;
-                                                m2m_N.MyPK = toDtl.No + "_" + m2m.M2MNo + "_" + gedtl.ToString()+"_"+m2m.DtlObj;
+                                                m2m_N.MyPK = toDtl.No + "_" + m2m.M2MNo + "_" + gedtl.ToString() + "_" + m2m.DtlObj;
                                                 m2m_N.EnOID = gedtl.OID;
                                                 m2m_N.DirectInsert();
                                             }
@@ -2501,7 +2526,7 @@ namespace BP.WF
                         gwf.FlowName = toNode.FlowName;
                         gwf.FID = this.WorkID;
                         gwf.FK_FlowSort = toNode.HisFlow.FK_FlowSort;
-                        gwf.FK_Node =  toNode.NodeID;
+                        gwf.FK_Node = toNode.NodeID;
                         gwf.NodeName = toNode.Name;
                         gwf.FK_Dept = wl.FK_Dept;
                         gwf.DeptName = wl.FK_DeptT;
@@ -3540,9 +3565,14 @@ namespace BP.WF
             /*分别启动每个节点的信息.*/
             string msg = "";
 
-            //查询出来上一个节点的
+            //查询出来上一个节点的附件信息来。
             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + this.HisNode.NodeID,
                        this.WorkID.ToString());
+
+            //查询出来上一个Ele信息来。
+            FrmEleDBs eleDBs = new FrmEleDBs("ND" + this.HisNode.NodeID,
+                       this.WorkID.ToString());
+
             foreach (Node nd in nds)
             {
                 msg += "@"+nd.Name+"工作已经启动，处理工作者：";
@@ -3570,6 +3600,20 @@ namespace BP.WF
                             "ND" + nd.NodeID) + "_" + idx;
                         athDB_N.RefPKVal = wk.OID.ToString();
                         athDB_N.Insert();
+                    }
+                }
+
+                if (eleDBs.Count > 0)
+                {
+                    /*说明当前节点有附件数据*/
+                    int idx = 0;
+                    foreach (FrmEleDB eleDB in eleDBs)
+                    {
+                        idx++;
+                        FrmEleDB eleDB_N = new FrmEleDB();
+                        eleDB_N.Copy(eleDB);
+                        eleDB_N.FK_MapData = "ND" + nd.NodeID;
+                        eleDB_N.Insert();
                     }
                 }
 
@@ -3867,6 +3911,27 @@ namespace BP.WF
             }
             #endregion 复制附件。
 
+            #region 复制EleDB。
+            FrmEleDBs eleDBs = new FrmEleDBs("ND" + this.HisNode.NodeID,
+                  this.WorkID.ToString());
+            if (eleDBs.Count > 0)
+            {
+                /*说明当前节点有附件数据*/
+                int idx = 0;
+                foreach (FrmEleDB eleDB in eleDBs)
+                {
+                    idx++;
+                    FrmEleDB eleDB_N = new FrmEleDB();
+                    eleDB_N.Copy(eleDB);
+                    eleDB_N.FK_MapData = "ND" + nd.NodeID;
+                    eleDB_N.MyPK = eleDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
+
+                    eleDB_N.RefPKVal = this.HisWork.FID.ToString();
+                    eleDB_N.Save();
+                }
+            }
+            #endregion 复制EleDB。
+
             // 产生合流汇总明细表数据.
             this.GenerHieLiuHuiZhongDtlData(nd);
 
@@ -4109,6 +4174,26 @@ namespace BP.WF
             }
             #endregion 复制附件。
 
+            #region 复制Ele。
+            FrmEleDBs eleDBs = new FrmEleDBs("ND" + this.HisNode.NodeID,
+                  this.WorkID.ToString());
+            if (eleDBs.Count > 0)
+            {
+                /*说明当前节点有附件数据*/
+                int idx = 0;
+                foreach (FrmEleDB eleDB in eleDBs)
+                {
+                    idx++;
+                    FrmEleDB eleDB_N = new FrmEleDB();
+                    eleDB_N.Copy(eleDB);
+                    eleDB_N.FK_MapData = "ND" + nd.NodeID;
+                    eleDB_N.MyPK = eleDB_N.MyPK.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
+                    eleDB_N.RefPKVal = this.HisWork.FID.ToString();
+                    eleDB_N.Save();
+                }
+            }
+            #endregion 复制附件。
+
             /* 合流点需要等待各个分流点全部处理完后才能看到它。*/
 
             string sql1 = "";
@@ -4195,6 +4280,28 @@ namespace BP.WF
                     }
                 }
                 #endregion 复制附件。
+
+
+                #region 复制Ele。
+                FrmEleDBs eleDBs = new FrmEleDBs("ND" + this.HisNode.NodeID,
+                      this.WorkID.ToString());
+                if (eleDBs.Count > 0)
+                {
+                    eleDBs.Delete(FrmEleDBAttr.FK_MapData, "ND" + nd.NodeID,
+                        FrmEleDBAttr.RefPKVal, this.WorkID);
+
+                    /*说明当前节点有附件数据*/
+                    foreach (FrmEleDB eleDB in eleDBs)
+                    {
+                        idx++;
+                        FrmEleDB eleDB_N = new FrmEleDB();
+                        eleDB_N.Copy(eleDB);
+                        eleDB_N.FK_MapData = "ND" + nd.NodeID;
+                        eleDB_N.GenerPKVal();
+                        eleDB_N.Save();
+                    }
+                }
+                #endregion 复制Ele。
 
                 #region 复制多选数据
                 M2Ms m2ms = new M2Ms("ND"+this.HisNode.NodeID, this.WorkID);

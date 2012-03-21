@@ -29,6 +29,10 @@ namespace BP.WF
         /// 任务状态
         /// </summary>
         public const string TaskSta = "TaskSta";
+        /// <summary>
+        /// Msg
+        /// </summary>
+        public const string Msg = "Msg";
         #endregion
     }
 	/// <summary>
@@ -105,6 +109,8 @@ namespace BP.WF
                 map.AddTBString(TaskAttr.Starter, null, "发起人", true, false, 0, 200, 10);
                 map.AddTBString(TaskAttr.Paras, null, "参数", true, false, 0, 4000, 10);
                 map.AddTBInt(TaskAttr.TaskSta, 0, "TaskSta", true, false);
+
+                map.AddTBString(TaskAttr.Msg, null, "消息", true, false, 0, 4000, 10);
                 this._enMap = map;
                 return this._enMap;
             }
