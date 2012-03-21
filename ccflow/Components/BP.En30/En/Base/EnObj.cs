@@ -204,6 +204,9 @@ namespace BP.En
 		{
             foreach (Attr attr in this.EnMap.Attrs)
             {
+                if (attr.UIIsReadonly == false)
+                    continue;
+
                 this.SetValByKey(attr.Key, attr.DefaultVal);
             }
 		}
@@ -715,7 +718,7 @@ namespace BP.En
 		/// <returns></returns>
         public decimal GetValDecimalByKey(string key)
         {
-            return decimal.Round(decimal.Parse(this.GetValStringByKey(key)), 4);
+            return decimal.Round(decimal.Parse(this.GetValStrByKey(key)), 4);
         }
 		public decimal GetValDecimalByKey(string key, string items)
 		{

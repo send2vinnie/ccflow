@@ -745,6 +745,21 @@ namespace BP.Sys
                             en.Insert();
                         }
                         break;
+                    case "Sys_FrmEle":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            idx++;
+                            FrmEle en = new FrmEle();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                object val = dr[dc.ColumnName] as object;
+                                if (val == null)
+                                    continue;
+                                en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
+                            }
+                            en.Insert();
+                        }
+                        break;
                     case "Sys_FrmImg":
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -1046,6 +1061,7 @@ namespace BP.Sys
             #region 删除相关的数据。
             sql += "@DELETE Sys_MapDtl WHERE FK_MapData='" + this.No + "'";
             sql += "@DELETE Sys_FrmLine WHERE " + where;
+            sql += "@DELETE Sys_FrmEle WHERE " + where;
             sql += "@DELETE Sys_FrmEvent WHERE " + where;
             sql += "@DELETE Sys_FrmBtn WHERE " + where;
             sql += "@DELETE Sys_FrmLab WHERE " + where;
@@ -1094,6 +1110,12 @@ namespace BP.Sys
             DataTable dtLine = DBAccess.RunSQLReturnTable(sql);
             dtLine.TableName = "Sys_FrmLine";
             ds.Tables.Add(dtLine);
+            
+                // ele.
+                sql = "SELECT * FROM Sys_FrmEle WHERE " + where;
+                DataTable dtFrmEle = DBAccess.RunSQLReturnTable(sql);
+                dtFrmEle.TableName = "Sys_FrmEle";
+                ds.Tables.Add(dtFrmEle);
 
             // link.
             sql = "SELECT * FROM Sys_FrmLink WHERE " + where;

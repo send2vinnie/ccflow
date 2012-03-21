@@ -193,7 +193,14 @@ namespace BP.Sys
                     default:
                         if (mattr.IsNum)
                         {
-                            if (this.GetValDecimalByKey(mattr.KeyOfEn) == mattr.DefValDecimal)
+                            string s = this.GetValStrByKey(mattr.KeyOfEn);
+                            if (string.IsNullOrEmpty(s))
+                            {
+                                this.SetValByKey(mattr.KeyOfEn, mattr.DefVal);
+                                s = mattr.DefVal.ToString();
+                            }
+
+                            if (decimal.Parse(s) == mattr.DefValDecimal)
                                 continue;
                             isC = true;
                             break;
@@ -208,7 +215,6 @@ namespace BP.Sys
                         break;
                 }
             }
-
             if (isC == false)
                 return false;
 

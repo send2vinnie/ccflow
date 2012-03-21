@@ -13,6 +13,13 @@ namespace BP.Sys
     public class GEEntity : Entity
     {
         #region ¹¹Ôìº¯Êý
+        public override string PK
+        {
+            get
+            {
+                return "OID";
+            }
+        }
         public override string ToString()
         {
             return this.FK_MapData;

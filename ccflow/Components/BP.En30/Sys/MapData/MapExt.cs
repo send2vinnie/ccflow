@@ -321,9 +321,9 @@ namespace BP.Sys
 
                 map.AddTBStringDoc();
 
-                map.AddTBString(MapExtAttr.Tag, null, "Tag", true, false, 0, 900, 20);
-                map.AddTBString(MapExtAttr.Tag1, null, "Tag1", true, false, 0, 900, 20);
-                map.AddTBString(MapExtAttr.Tag2, null, "Tag1", true, false, 0, 900, 20);
+                map.AddTBString(MapExtAttr.Tag, null, "Tag", true, false, 0, 4000, 20);
+                map.AddTBString(MapExtAttr.Tag1, null, "Tag1", true, false, 0, 4000, 20);
+                map.AddTBString(MapExtAttr.Tag2, null, "Tag1", true, false, 0, 4000, 20);
 
 
                 map.AddTBInt(MapExtAttr.H, 500, "¸ß¶È", false, false);

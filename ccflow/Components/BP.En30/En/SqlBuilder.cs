@@ -1857,7 +1857,16 @@ namespace BP.En
 
             if (keys != null)
             {
-                ps.Add(en.PK, en.GetValIntByKey(en.PK));
+                switch (en.PK)
+                {
+                    case "OID":
+                    case "WorkID":
+                        ps.Add(en.PK, en.GetValIntByKey(en.PK));
+                        break;
+                    default:
+                        ps.Add(en.PK, en.GetValStrByKey(en.PK));
+                        break;
+                }
             }
             return ps;
         }
