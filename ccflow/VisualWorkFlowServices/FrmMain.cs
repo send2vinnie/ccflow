@@ -106,8 +106,8 @@ namespace SMSServices
                 this.SetText("开始执行(" + starter + ")发起(" + fl.Name + ")流程.");
                 try
                 {
-                    string fTable = "ND"+int.Parse(fl.No + "01").ToString();
-                    sql = "SELECT * FROM " + fTable + " WHERE MainPK='" + mypk + "'";
+                    string fTable = "ND" + int.Parse(fl.No + "01").ToString();
+                    sql = "SELECT * FROM " + fTable + " WHERE MainPK='" + mypk + "' AND NodeState=1";
                     try
                     {
                         if (DBAccess.RunSQLReturnTable(sql).Rows.Count != 0)
@@ -115,7 +115,7 @@ namespace SMSServices
                     }
                     catch
                     {
-                        this.SetText("开始节点表单表:" + fTable + "没有设置的默认字段MainPK. "+sql);
+                        this.SetText("开始节点表单表:" + fTable + "没有设置的默认字段MainPK. " + sql);
                         continue;
                     }
 
@@ -139,17 +139,29 @@ namespace SMSServices
                         string[] kv = str.Split('=');
                         wk.SetValByKey(kv[0], kv[1]);
                     }
-               
+
                     wk.SetValByKey("MainPK", mypk);
                     wk.Update();
 
                     WorkNode wn = new WorkNode(wk, fl.HisStartNode);
-                    wn.AfterNodeSave();
-                    DBAccess.RunSQL("UPDATE WF_Task SET TaskSta=1 WHERE MyPK='" + mypk + "'");
+                    string msg = wn.AfterNodeSave();
+                    msg = msg.Replace("'", "~");
+                    DBAccess.RunSQL("UPDATE WF_Task SET TaskSta=1,Msg='" + msg + "' WHERE MyPK='" + mypk + "'");
                 }
                 catch (Exception ex)
                 {
+                    //如果发送错误。
                     this.SetText(ex.Message);
+                    string msg = ex.Message;
+                    try
+                    {
+                        DBAccess.RunSQL("UPDATE WF_Task SET TaskSta=2,Msg='" + msg + "' WHERE MyPK='" + mypk + "'");
+                    }
+                    catch
+                    {
+                        Task TK = new Task();
+                        TK.CheckPhysicsTable();
+                    }
                 }
             }
             #endregion 自动启动流程
@@ -171,14 +183,16 @@ namespace SMSServices
                         Console.Beep();
                 }
 
-                this.SetText("扫描自动发起流程表......");
+                this.SetText("********************************");
+
+                this.SetText("扫描触发式自动发起流程表......");
                 this.DoTask();
 
-                this.SetText("检索定时发起流程....");
+                this.SetText("扫描定时发起流程....");
                 this.DoAutuFlows(fls);
 
                 this.SetText("扫描消息表....");
-                this.DoAutuFlows(fls);
+                this.DoSendMsg();
 
                 if (DateTime.Now.Hour < 18 && DateTime.Now.Hour > 8)
                 {
@@ -576,6 +590,7 @@ namespace SMSServices
         private void Btn_Exit_Click(object sender, EventArgs e)
         {
             this.HisScanSta = ScanSta.Stop;
+            thread.Abort();
             this.Close();
         }
 
