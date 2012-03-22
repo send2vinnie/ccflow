@@ -73,9 +73,9 @@ public partial class WF_Accpter : WebPage
         string sql = "";
 
         // 优先解决本部门的问题。
-        if (this.FK_Dept== WebUser.FK_Dept)
+        if (this.FK_Dept == WebUser.FK_Dept)
         {
-            sql = "SELECT DISTINCT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
+            sql = "SELECT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
             sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
             sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
             sql += ") AND a.No IN (SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept ='" + WebUser.FK_Dept + "')";
@@ -85,7 +85,7 @@ public partial class WF_Accpter : WebPage
                 return dt;
         }
 
-        sql = "SELECT DISTINCT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
+        sql = "SELECT A.No,A.Name, A.FK_Dept, B.Name as DeptName FROM Port_Emp A,Port_Dept B WHERE A.FK_Dept=B.No AND a.NO IN ( ";
         sql += "SELECT FK_EMP FROM Port_EmpSTATION WHERE FK_STATION ";
         sql += "IN (SELECT FK_STATION FROM WF_NodeStation WHERE FK_Node=" + MyToNode + ") ";
         sql += ") ORDER BY FK_DEPT ";
@@ -186,6 +186,7 @@ public partial class WF_Accpter : WebPage
             this.BindMStations();
             return;
         }
+
         this.BindIt();
     }
     public void BindIt()
@@ -207,8 +208,14 @@ public partial class WF_Accpter : WebPage
             else
                 info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Dept=" + WebUser.FK_Dept + "'>本部门人员...</a></b>";
         }
-
-        this.Pub1.AddCaptionLeft( "可选择范围：" + dt.Rows.Count + " 位。"+info);
+        string sql = "select tonode from wf_direction where node =" + FK_Node;
+        var o = DBAccess.RunSQLReturnVal(sql);
+#warning 刘文辉 下一步流程名
+        BP.WF.Node nd = new BP.WF.Node();
+        QueryObject qo = new QueryObject(nd);
+        qo.AddWhere("NodeID", o);
+        qo.DoQuery();
+        this.Pub1.AddCaptionLeft("<span style='color:red'>选择 [" + nd.Name + "]</span>  可选择范围：" + dt.Rows.Count + " 位。" + info);
         if (dt.Rows.Count > 50)
         {
             /*多于一定的数，就显示导航。*/
@@ -287,7 +294,7 @@ public partial class WF_Accpter : WebPage
             cb.ID = "CB_" + no;
             if (accps.Contains("FK_Emp", no))
                 cb.Checked = true;
-
+            this.Pub1.AddTR();
             switch (idx)
             {
                 case 0:
@@ -307,16 +314,19 @@ public partial class WF_Accpter : WebPage
                 default:
                     throw new Exception("error");
             }
+            this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();
 
         this.Pub1.AddHR();
         Button btn = new Button();
-        btn.Text = this.ToE("Save", " 保存 ");
+        btn.Text = this.ToE("Save", "保存");
         btn.ID = "Btn_Save";
+        btn.CssClass = "Btn1";
+        //btn.Width = 80;
         btn.Click += new EventHandler(btn_Save_Click);
         this.Pub1.Add(btn);
-     
+
     }
     /// <summary>
     /// 保存
@@ -357,6 +367,15 @@ public partial class WF_Accpter : WebPage
             en.WorkID = this.WorkID;
             en.Insert();
         }
-        this.WinCloseWithMsg("接受人的范围选择成功。");
+#warning 刘文辉 保存收件人后调用发送按钮
+        //this.WinCloseWithMsg("接受人的范围选择成功。");
+        if (Request.QueryString["type"] == null || Request.QueryString["type"] == "")
+        {
+            ScriptManager.RegisterStartupScript(this.Page, typeof(Page), "", "this.close();", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(this.Page, typeof(Page), "", "send();", true);
+        }
     }
 }

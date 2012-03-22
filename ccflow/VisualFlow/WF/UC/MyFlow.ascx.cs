@@ -489,17 +489,17 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             #region 增加按钮
             BtnLab btnLab = new BtnLab(currND.NodeID);
-            if (btnLab.SendEnable)
-            {
-                this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
-                this.Btn_Send.UseSubmitBehavior = false;
-                if (btnLab.SendJS.Trim().Length > 2)
-                    this.Btn_Send.OnClientClick = btnLab.SendJS + ";this.disabled=true;"; //this.disabled='disabled'; return true;";
-                else
-                    this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+            //if (btnLab.SendEnable)
+            //{
+            //    this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
+            //    this.Btn_Send.UseSubmitBehavior = false;
+            //    if (btnLab.SendJS.Trim().Length > 2)
+            //        this.Btn_Send.OnClientClick = btnLab.SendJS + ";this.disabled=true;"; //this.disabled='disabled'; return true;";
+            //    else
+            //        this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
 
-                this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
-            }
+            //    this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+            //}
 
             if (btnLab.SaveEnable)
             {
@@ -515,11 +515,60 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.ToolBar1.Add("<input type=button value='" + btnLab.PrintDocLab + "' enable=true onclick=\"WinOpen('" + urlr + "','dsdd'); \" />");
             }
 
-            //if (btnLab.JumpWayEnable && this.currND.IsStartNode == false)
-            //{
-            //    string urlr = "JumpWay.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow;
-            //    this.ToolBar1.Add("<input type=button value='" + btnLab.JumpWayLab + "' enable=true onclick=\"To('" + urlr + "'); \" />");
-            //}
+
+
+
+
+            if (currND.IsEndNode)
+            {
+                //this.ToolBar1.Add("<input type=button value='" + btnLab.SendLab + "' enable=true onclick=\"window.open('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','选择收件人', 'height=500, width=400');this.disabled=true \" />");
+
+                if (btnLab.SendEnable)
+                {
+                    this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
+                    // Btn_Send.Style.Add("display", "none");
+                    this.Btn_Send.UseSubmitBehavior = false;
+                    this.Btn_Send.CssClass = "Btn2";
+                    this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                    this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+                }
+
+            }
+            else
+            {
+                
+                if (btnLab.SendEnable)
+                {
+                    if (btnLab.SelectAccepterEnable == 2)
+                    {
+
+                        this.ToolBar1.Add("<input type=button value='" + btnLab.SendLab + "' enable=true onclick=\"window.open('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&type=1','选择收件人', 'height=500, width=400,scrollbars=yes'); \" />");
+                        this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
+                        Btn_Send.Style.Add("display", "none");
+                        this.Btn_Send.UseSubmitBehavior = false;
+                        this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                        this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+                    }
+                    else
+                    {
+                        this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
+                        this.Btn_Send.UseSubmitBehavior = false;
+                        if (btnLab.SendJS.Trim().Length > 2)
+                            this.Btn_Send.OnClientClick = btnLab.SendJS + ";this.disabled=true;"; //this.disabled='disabled'; return true;";
+                        else
+                            this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+
+                        this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
+                    }
+                }
+            }
+
+
+
+
+
+
+
 
             if (btnLab.JumpWayEnable)
             {
@@ -584,20 +633,20 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (btnLab.OptEnable)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.OptLab + "' onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/Home.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','opt'); \"  />");
-
+            if (btnLab.SelectAccepterEnable == 1)
+                this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
             if (btnLab.SearchEnable)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.SearchLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Rpt/Search.aspx?EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt&FK_Flow=" + this.FK_Flow + "','dsd0'); \" />");
+            
             #endregion
 
             this.BindWork(currND, currWK);
 
             this.Session["Ect"] = null;
 
-            if (btnLab.SelectAccepterEnable==1)
-                this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
-
-            if (btnLab.SelectAccepterEnable == 2) /*在发送前打开.*/
-                this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
+           
+            //if (btnLab.SelectAccepterEnable == 2) /*在发送前打开.*/
+            //    this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&type=1','dds'); \" />");
 
         }
         catch (Exception ex)

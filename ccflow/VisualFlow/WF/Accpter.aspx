@@ -3,6 +3,15 @@
 <%@ Register assembly="BP.Web.Controls" namespace="BP.Web.Controls" tagprefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <script language="JavaScript" src="../../Comm/JScript.js"　type="text/javascript"></script>
+        <script type="text/javascript">
+            //调用发送按钮
+
+            function send() {
+
+                window.opener.document.getElementById('ContentPlaceHolder1_MyFlowUC1_MyFlow1_ToolBar1_Btn_Send').click();
+                window.close();
+            }
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <table border=0 width='100%'>
