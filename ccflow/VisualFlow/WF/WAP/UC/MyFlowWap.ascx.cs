@@ -541,7 +541,7 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
             this.BindWork(currND, currWK);
             this.Session["Ect"] = null;
 
-            if (btnLab.SelectAccepterEnable)
+            if (btnLab.SelectAccepterEnable ==1)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
         }
         catch (Exception ex)

@@ -24,6 +24,20 @@ public partial class WF_WorkOpt_Draw : WebPage
             return this.Request.QueryString["PKVal"];
         }
     }
+    public string H
+    {
+        get
+        {
+            return this.Request.QueryString["H"];
+        }
+    }
+    public string W
+    {
+        get
+        {
+            return this.Request.QueryString["W"];
+        }
+    }
     public string initParams { set; get; }
     protected void Page_Load(object sender, EventArgs e)
     {

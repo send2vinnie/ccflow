@@ -1635,27 +1635,37 @@ namespace BP.Web.Comm.UC.WF
 
             #region 输出Ele
             FrmEles eles = new FrmEles(this.FK_MapData);
-            foreach (FrmEle ele in eles)
+            if (eles.Count >= 1)
             {
-                float y = ele.Y;
-                this.Add("\t\n<DIV id=" + ele.MyPK + " style='position:absolute;left:" + ele.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
-                switch (ele.EleType)
+                FrmEleDBs dbs = new FrmEleDBs(this.FK_MapData, en.PKVal.ToString());
+                foreach (FrmEle ele in eles)
                 {
-                    case FrmEle.HandSiganture:
-                        if (this.IsReadonly && ele.IsEnable==false)
-                        {
-                            this.Add("\t\n<img src='" + appPath + "/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
-                        }
-                        else
-                        {
-                            string myjs = "javascript:window.showModalDialog('" + appPath + "/WF/WorkOpt/Draw.aspx?PKVal=" + en.PKVal + "&MyPK=" + ele.MyPK + "', 'sdf', 'dialogHeight: " + ele.HandSiganture_WinOpenH + "px; dialogWidth: " + ele.HandSiganture_WinOpenW + "px;center: yes; help: no');";
-                            this.Add("\t\n<img onclick=\"" + myjs + "\" onerror=\"this.src='" + appPath + "/DataUser/Def.png'\" src='" + appPath + "/DataUser/Draw/" + en.PKVal + ".png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
-                        }
-                        break;
-                    case FrmEle.EleSiganture:
-                    default:
-                        this.Add("未处理");
-                        break;
+                    float y = ele.Y;
+                    this.Add("\t\n<DIV id=" + ele.MyPK + " style='position:absolute;left:" + ele.X + "px;top:" + y + "px;text-align:left;vertical-align:top' >");
+                    switch (ele.EleType)
+                    {
+                        case FrmEle.HandSiganture:
+                            if (this.IsReadonly && ele.IsEnable == false)
+                            {
+                                this.Add("\t\n<img src='" + appPath + "/DataUser/LogBiger.png' onerror=\"this.src='" + appPath + "/DataUser/BPPaint/Def.png'\" style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
+                            }
+                            else
+                            {
+                                FrmEleDB db = dbs.GetEntityByKey(FrmEleDBAttr.EleID, ele.EleID) as FrmEleDB;
+                                string dbFile = appPath + "/DataUser/BPPaint/Def.png";
+                                if (db != null)
+                                    dbFile = db.Tag1;
+
+                            //    string myjs = "javascript:window.showModalDialog('" + appPath + "/WF/WorkOpt/BPPaint.aspx?PKVal=" + en.PKVal + "&MyPK=" + ele.MyPK + "&H=" + ele.HandSiganture_WinOpenH + "&W=" + ele.HandSiganture_WinOpenW + "', 'sdf', 'dialogHeight: " + ele.HandSiganture_WinOpenH + "px; dialogWidth: " + ele.HandSiganture_WinOpenW + "px;center: yes; help: no');";
+                                string myjs = "javascript:window.open('" + appPath + "/WF/WorkOpt/BPPaint.aspx?PKVal=" + en.PKVal + "&MyPK=" + ele.MyPK + "&H=" + ele.HandSiganture_WinOpenH + "&W=" + ele.HandSiganture_WinOpenW + "', 'sdf', 'dialogHeight: " + ele.HandSiganture_WinOpenH + "px; dialogWidth: " + ele.HandSiganture_WinOpenW + "px;center: yes; help: no');";
+                                this.Add("\t\n<img id='" + ele.MyPK + "' onclick=\"" + myjs + "\" onerror=\"this.src='" + appPath + "/DataUser/BPPaint/Def.png'\" src='" + dbFile + "' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
+                            }
+                            break;
+                        case FrmEle.EleSiganture:
+                        default:
+                            this.Add("未处理");
+                            break;
+                    }
                 }
                 this.Add("\t\n</DIV>");
             }
