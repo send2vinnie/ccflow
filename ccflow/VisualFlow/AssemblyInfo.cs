@@ -12,7 +12,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("济南驰骋信息技术有限公司")]
 [assembly: AssemblyProduct("ccflow4.5")]
-[assembly: AssemblyCopyright("驰骋工作流2003-2011")]
+[assembly: AssemblyCopyright("驰骋工作流2003-2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]	
  
