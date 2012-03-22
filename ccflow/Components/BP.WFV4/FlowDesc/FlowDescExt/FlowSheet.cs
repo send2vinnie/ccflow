@@ -139,6 +139,13 @@ namespace BP.WF.Ext
                 rm.ClassMethodName = this.ToString() + ".DoAutoStartIt()";
                 map.AddRefMethod(rm);
 
+
+                rm = new RefMethod();
+                rm.Title = "流程数据管理";
+                rm.Icon = "/Images/Btn/DTS.gif";
+                rm.ClassMethodName = this.ToString() + ".DoDataManger()";
+                map.AddRefMethod(rm);
+
                 //rm = new RefMethod();
                 //rm.Title = "设置自动发起"; // "报表运行";
                 //rm.Icon = "/Images/Btn/View.gif";
@@ -168,6 +175,15 @@ namespace BP.WF.Ext
         #endregion
 
         #region  公共方法
+        /// <summary>
+        /// 流程数据管理
+        /// </summary>
+        /// <returns></returns>
+        public string DoDataManger()
+        {
+            PubClass.WinOpen("./../WF/Admin/FlowDB.aspx?s=d34&FK_Flow=" + this.No + "&ExtType=StartFlow&RefNo==", 700, 500);
+            return null;
+        }
         /// <summary>
         /// 定义报表
         /// </summary>

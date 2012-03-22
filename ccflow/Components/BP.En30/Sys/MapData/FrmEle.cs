@@ -67,6 +67,30 @@ namespace BP.Sys
     /// </summary>
     public class FrmEle : EntityMyPK
     {
+        #region  HandSigantureSavePath
+        public string HandSigantureSavePath
+        {
+            get
+            {
+                return this.GetValStrByKey(FrmEleAttr.Tag1);
+            }
+        }
+        public string HandSiganture_WinOpenH
+        {
+            get
+            {
+                return this.GetValStrByKey(FrmEleAttr.Tag2);
+            }
+        }
+        public string HandSiganture_WinOpenW
+        {
+            get
+            {
+                return this.GetValStrByKey(FrmEleAttr.Tag3);
+            }
+        }
+        #endregion  HandSigantureSavePath
+
         #region 类型
         /// <summary>
         /// 手工签名
@@ -77,7 +101,6 @@ namespace BP.Sys
         /// </summary>
         public const string EleSiganture = "EleSiganture";
         #endregion 类型
-
 
         #region 属性
         /// <summary>
