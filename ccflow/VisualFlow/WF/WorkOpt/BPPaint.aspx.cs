@@ -30,9 +30,6 @@ public partial class WF_WorkOpt_Draw : WebPage
         FrmEle ele = new FrmEle(this.MyPK);
         string path = ele.HandSigantureSavePath;
         string fk_mapdata = ele.FK_MapData;
-
-        this.initParams =
-                                "mypk=" + this.MyPK
-                                + ",pkval=" + PKVal;
+        this.initParams ="mypk=" + this.MyPK + ",pkval=" + PKVal+",H="+ele.H+",W="+ele.W;
     }
 }
