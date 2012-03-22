@@ -123,6 +123,53 @@ namespace BP.Web
                 return ex.Message;
             }
         }
+        /// <summary>
+        /// 获取xml数据
+        /// </summary>
+        /// <param name="xmlFileName"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public string GetXmlData(string xmlFileName)
+        {
+            string sql = "";
+             sql = "SELECT 'HandSiganture' AS DFor, '@Label=存储路径@FType=String@DefVal=D:\\ccflow\\VisualFlow\\DataUser\\Draw\\' as Tag1, '@Label=窗口打开高度@FType=Int@DefVal=400' as Tag2, '@Label=窗口打开宽度@FType=Int@DefVal=300' as Tag3, '' as 'Tag4' @Form";
+            sql += " UNION ";
+            sql += "SELECT 'EleSiganture' AS DFor, '@Label=位置@FType=String' as Tag1, '@Label=高度@FType=Int' as Tag2, '@Label=宽度@FType=Int' as Tag3, '' as 'Tag4' @Form";
+
+            if (BP.SystemConfig.AppCenterDBType == DBType.Oracle9i)
+                sql=sql.Replace("@Form", " FROM DUAL");
+            else
+                sql = sql.Replace("@Form", "");
+
+            return this.RunSQLReturnTable(sql);
+
+            //string path = SystemConfig.PathOfXML + xmlFileName;
+            //DataSet ds = new DataSet();
+            //ds.ReadXml(path);
+
+            //DataSet myds = new DataSet();
+            //foreach (DataTable dt in myds.Tables)
+            //{
+            //    DataTable dtNew = new DataTable();
+            //    dtNew.TableName = dt.TableName;
+            //    foreach (DataColumn dc in dt.Columns)
+            //    {
+            //        dtNew.Columns.Add(dc.ColumnName);
+            //    }
+            //    foreach (DataRow dr in dt.Rows)
+            //    {
+            //        DataRow myDr = dtNew.NewRow();
+            //        foreach (DataColumn dc in dt.Columns)
+            //        {
+            //            myDr[dc.ColumnName] = dr[dc.ColumnName];
+            //        }
+            //        dtNew.Rows.Add(myDr);
+            //    }
+            //    myds.Tables.Add(dtNew);
+            //}
+
+            //return Connector.ToXml(myds);
+        }
         [WebMethod]
         public string DoType(string dotype, string v1, string v2, string v3, string v4, string v5)
         {

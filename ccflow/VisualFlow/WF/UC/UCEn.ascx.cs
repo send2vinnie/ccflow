@@ -1642,13 +1642,14 @@ namespace BP.Web.Comm.UC.WF
                 switch (ele.EleType)
                 {
                     case FrmEle.HandSiganture:
-                        if (this.IsReadonly)
+                        if (this.IsReadonly && ele.IsEnable==false)
                         {
                             this.Add("\t\n<img src='" + appPath + "/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
                         }
                         else
                         {
-                            this.Add("\t\n<img src='" + appPath + "/DataUser/LogBiger.png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
+                            string myjs = "javascript:window.showModalDialog('" + appPath + "/WF/WorkOpt/Draw.aspx?PKVal=" + en.PKVal + "&MyPK=" + ele.MyPK + "', 'sdf', 'dialogHeight: " + ele.HandSiganture_WinOpenH + "px; dialogWidth: " + ele.HandSiganture_WinOpenW + "px;center: yes; help: no');";
+                            this.Add("\t\n<img onclick=\"" + myjs + "\" onerror=\"this.src='" + appPath + "/DataUser/Def.png'\" src='" + appPath + "/DataUser/Draw/" + en.PKVal + ".png' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
                         }
                         break;
                     case FrmEle.EleSiganture:
@@ -1659,7 +1660,6 @@ namespace BP.Web.Comm.UC.WF
                 this.Add("\t\n</DIV>");
             }
             #endregion 输出Ele
-
 
             #region 输出按钮
             FrmBtns btns =  new FrmBtns(this.FK_MapData);

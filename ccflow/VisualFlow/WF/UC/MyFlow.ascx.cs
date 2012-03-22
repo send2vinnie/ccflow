@@ -593,8 +593,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             this.Session["Ect"] = null;
 
-            if (btnLab.SelectAccepterEnable)
+            if (btnLab.SelectAccepterEnable==1)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
+
+            if (btnLab.SelectAccepterEnable == 2) /*在发送前打开.*/
+                this.ToolBar1.Add("<input type=button value='" + btnLab.SelectAccepterLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','dds'); \" />");
+
         }
         catch (Exception ex)
         {
