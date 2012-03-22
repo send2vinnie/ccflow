@@ -156,6 +156,7 @@
       <DependentUpon>TempleteFile.xaml</DependentUpon>
     </Compile>
     <Compile Include="Ctrl\BPAttachmentM.cs" />
+    <Compile Include="Ctrl\BPEle.cs" />
     <Compile Include="Dtl.xaml.cs">
       <DependentUpon>Dtl.xaml</DependentUpon>
     </Compile>
@@ -236,6 +237,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="FrmEle.xaml.cs">
+      <DependentUpon>FrmEle.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -379,6 +383,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="FrmEle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ctrl\BPDir.cs" />
@@ -391,6 +399,8 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\FF\CCForm.wsdl" />
+    <Resource Include="Img\FrmEle.png" />
+    <Content Include="ServiceReferences.ClientConfig" />
     <Resource Include="Img\Menu\Hidden.png" />
     <None Include="Service References\FF\CCForm.disco" />
     <None Include="Service References\FF\configuration91.svcinfo" />

@@ -103,22 +103,30 @@ namespace CCForm
             ComboBoxItem cbi = new ComboBoxItem();
             cbi.Content = "新窗口";
             cbi.Tag = "_blank";
+            if (taget == cbi.Tag.ToString())
+                cbi.IsSelected = true;
+
             cb.Items.Add(cbi);
 
             cbi = new ComboBoxItem();
             cbi.Content = "父窗口";
             cbi.Tag = "_parent";
+            if (taget == cbi.Tag.ToString())
+                cbi.IsSelected = true;
             cb.Items.Add(cbi);
 
             cbi = new ComboBoxItem();
             cbi.Content = "本窗口";
             cbi.Tag = "_self";
+            if (taget == cbi.Tag.ToString())
+                cbi.IsSelected = true;
             cb.Items.Add(cbi);
 
             cbi = new ComboBoxItem();
             cbi.Content = "自定义";
             cbi.Tag = "def";
-            cbi.IsSelected = true;
+            if ("@_blank,_self,_parent,".Contains(taget) == false)
+                cbi.IsSelected = true;
             cb.Items.Add(cbi);
             SetComboBoxSelected(cb, taget);
         }

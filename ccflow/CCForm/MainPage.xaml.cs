@@ -51,6 +51,8 @@ namespace CCForm
 
         public FrmOp winFrmOp  = new FrmOp();
         public FrmImg winFrmImg = new FrmImg();
+        public FrmEle winFrmEle = new FrmEle();
+
         public NodeFrms winNodeFrms = new NodeFrms();
         public SelectAttachment winSelectAttachment = new SelectAttachment();
         public FrmAttachmentM winFrmAttachmentM = new FrmAttachmentM();
@@ -77,6 +79,7 @@ namespace CCForm
         BPLink currLink;  //当前 linke
         BPLine currLine;  //当前 Line
         BPImg currImg;   //当前Img
+        BPEle currEle;   //当前Ele
         BPAttachment currAth;   //当前Ath
         BPAttachmentM currAthM;   //当前currAthM
         BPTextBox currTB;    //当前textbox
@@ -229,7 +232,7 @@ namespace CCForm
 
             if (c.Name == "winFrmLink")
             {
-               // this.winFrmLink.BindIt(this.currLink);
+                // this.winFrmLink.BindIt(this.currLink);
                 this.currLink.Content = this.winFrmLink.TB_Text.Text.Replace("@", "\n");
                 this.currLink.WinTarget = this.winFrmLink.TB_WinName.Text;
                 this.currLink.URL = this.winFrmLink.TB_URL.Text;
@@ -382,6 +385,28 @@ namespace CCForm
                     Interaction.GetBehaviors(btn).Add(mymdeE);
                     btn.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                     btn.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                }
+                this.SetSelectedTool(ToolBox.Mouse);
+            }
+
+            if (c.Name == "winFrmEle")
+            {
+                BPEle ele = this.winFrmEle.HisEle;
+                BPEle myEle = this.canvasMain.FindName(ele.Name) as BPEle;
+                if (myEle!=null)
+                {
+                    myEle = ele;
+                }
+                else
+                {
+                    ele.Cursor = Cursors.Hand;
+                    ele.SetValue(Canvas.LeftProperty, X);
+                    ele.SetValue(Canvas.TopProperty, Y);
+                    this.canvasMain.Children.Add(ele);
+                    MouseDragElementBehavior mymdeE = new MouseDragElementBehavior();
+                    Interaction.GetBehaviors(ele).Add(mymdeE);
+                    ele.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                    ele.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
                 }
                 this.SetSelectedTool(ToolBox.Mouse);
             }
@@ -618,6 +643,7 @@ namespace CCForm
             winSelectDDL.Name = "winSelectDDL";
             winSelectRB.Name = "winSelectRB";
             winFrmImp.Name = "winFrmImp";
+            winFrmEle.Name = "winFrmEle";
             winSelectAttachment.Name = "winSelectAttachment";
             winFrmOp.Name = "winFrmOP";
             winFrmBtn.Name = "winFrmBtn";
@@ -633,6 +659,7 @@ namespace CCForm
             winSelectDDL.Closed += new EventHandler(WindowDilag_Closed);
             winSelectRB.Closed += new EventHandler(WindowDilag_Closed);
             winFrmImp.Closed += new EventHandler(WindowDilag_Closed);
+            winFrmEle.Closed += new EventHandler(WindowDilag_Closed);
             winFrmBtn.Closed += new EventHandler(WindowDilag_Closed);
             winSelectAttachment.Closed += new EventHandler(WindowDilag_Closed);
             winFrmOp.Closed += new EventHandler(WindowDilag_Closed);
@@ -642,8 +669,6 @@ namespace CCForm
             #endregion chinwin.
 
             #region 构造
-
-
 
             this.SetSelectedTool(ToolBox.Mouse);
             e1 = new Ellipse();
@@ -1110,6 +1135,33 @@ namespace CCForm
                 Glo.TempVal = dt.TableName;
                 switch (dt.TableName)
                 {
+                    case "Sys_FrmEle":
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            if (dr["FK_MapData"] != Glo.FK_MapData)
+                                continue;
+
+                            BPEle img = new BPEle();
+                            img.Name = dr["MyPK"].ToString();
+                            img.EleType = dr["EleType"].ToString();
+                            img.EleName = dr["EleName"].ToString();
+                            img.EleID = dr["EleID"].ToString();
+
+                            img.Cursor = Cursors.Hand;
+                            img.SetValue(Canvas.LeftProperty, double.Parse(dr["X"].ToString()));
+                            img.SetValue(Canvas.TopProperty, double.Parse(dr["Y"].ToString()));
+
+                            img.Width = double.Parse(dr["W"].ToString());
+                            img.Height = double.Parse(dr["H"].ToString());
+
+                            MouseDragElementBehavior mdeImg = new MouseDragElementBehavior();
+                            Interaction.GetBehaviors(img).Add(mdeImg);
+                            this.canvasMain.Children.Add(img);
+
+                            img.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+                            img.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                        }
+                        continue;
                     case "Sys_MapData":
                         if (dt.Rows.Count == 0)
                             continue;
@@ -1221,6 +1273,9 @@ namespace CCForm
                             link.Name = dr["MyPK"];
                             link.Content = dr["Text"];
                             link.URL = dr["URL"];
+
+                            link.WinTarget = dr["Target"];
+
                             link.FontSize = double.Parse(dr["FontSize"]);
                             link.Cursor = Cursors.Hand;
                             link.SetValue(Canvas.LeftProperty, double.Parse(dr["X"]));
@@ -1838,8 +1893,15 @@ namespace CCForm
                     Glo.currEle = bpImg;
                     this.currImg = bpImg;
                     break;
+                case ToolBox.FrmEle:
+                    this.winFrmEle.SetBlank();
+                    this.winFrmEle.Show();
+                    X = e.GetPosition(this.canvasMain).X;
+                    Y = e.GetPosition(this.canvasMain).Y;
+                    this.SetSelectedTool(ToolBox.Mouse);
+                    break;
                 case ToolBox.Dtl:
-                    int num = 1;
+                    int num = 1; 
                     foreach (UIElement ctl in this.canvasMain.Children)
                     {
                         BPDtl dtl = ctl as BPDtl;
@@ -1876,31 +1938,6 @@ namespace CCForm
                     this.winSelectM2M.Y = Y;
                     this.winSelectM2M.Show();
                     this.SetSelectedTool(ToolBox.Mouse);
-                    break;
-
-                    //int numM2M = 1;
-                    //foreach (UIElement ctl in this.canvasMain.Children)
-                    //{
-                    //    BPM2M dtl = ctl as BPM2M;
-                    //    if (dtl == null)
-                    //        continue;
-                    //    numM2M++;
-                    //}
-
-                    //BPM2M myM2M = new BPM2M();
-                    //myM2M.Name = Glo.FK_MapData + "M2M" + numM2M;
-                    //myM2M.Name = "M2M" + DateTime.Now.ToString("yyyyMMddhhmmss"); //Glo.FK_MapData + "M2M" + numM2M;
-                    //myM2M.SetValue(Canvas.LeftProperty, e.GetPosition(this.canvasMain).X);
-                    //myM2M.SetValue(Canvas.TopProperty, e.GetPosition(this.canvasMain).Y);
-                    //myM2M.NewM2M(e.GetPosition(this.canvasMain).X, e.GetPosition(this.canvasMain).Y);
-
-                    //myM2M.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                    //myM2M.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
-                    //this.SetSelectedTool(ToolBox.Mouse);
-
-                    //this.canvasMain.Children.Add(myM2M);
-
-                 
                     break;
                 case ToolBox.ImgAth:
                     int num1 = 1;
@@ -2263,7 +2300,27 @@ namespace CCForm
                 _lastTime = DateTime.Now;
                 return;
             }
-            #endregion 处理标签
+            #endregion 处理 Img
+
+            #region 处理 Ele
+            BPEle ele = sender as BPEle;
+            if (ele != null)
+            {
+                this.currEle = ele;
+                Glo.currEle = ele;
+
+                this.currEle.IsSelected = true;
+                this.currEle.SetUnSelectedState();
+                if ((DateTime.Now.Subtract(_lastTime).TotalMilliseconds) < 300 || IsmuElePanel == true)
+                {
+                    IsmuElePanel = false;
+                    this.winFrmEle.BindData(ele.Name);
+                    this.winFrmEle.Show();
+                }
+                _lastTime = DateTime.Now;
+                return;
+            }
+            #endregion 处理 Img
         }
         public void UnSelectAll()
         {
@@ -3106,6 +3163,13 @@ namespace CCForm
                         UIElement_Click(bpImg, e);
                     }
 
+                    BPEle bpEle = Glo.currEle as BPEle;
+                    if (bpEle != null)
+                    {
+                        this.IsmuElePanel = true;
+                        UIElement_Click(bpEle, e);
+                    }
+
                     BPImgAth bpImgAth = Glo.currEle as BPImgAth;
                     if (bpImgAth != null)
                     {
@@ -3687,6 +3751,18 @@ namespace CCForm
             imgDT.Columns.Add(new DataColumn("LinkTarget", typeof(string)));
             #endregion img
 
+            #region eleDT
+            DataTable eleDT = new DataTable();
+            eleDT.TableName = "Sys_FrmEle";
+            eleDT.Columns.Add(new DataColumn("MyPK", typeof(string)));
+            eleDT.Columns.Add(new DataColumn("FK_MapData", typeof(string)));
+            eleDT.Columns.Add(new DataColumn("X", typeof(double)));
+            eleDT.Columns.Add(new DataColumn("Y", typeof(double)));
+            eleDT.Columns.Add(new DataColumn("W", typeof(double)));
+            eleDT.Columns.Add(new DataColumn("H", typeof(double)));
+            #endregion eleDT
+
+
             #region Sys_FrmImgAth
             DataTable imgAthDT = new DataTable();
             imgAthDT.TableName = "Sys_FrmImgAth";
@@ -3939,6 +4015,40 @@ namespace CCForm
                     drImg["LinkTarget"] = img.WinTarget;
 
                     imgDT.Rows.Add(drImg);
+                    continue;
+                }
+                #endregion lab.
+
+                #region ele.
+                BPEle ele = ctl as BPEle;
+                if (ele != null)
+                {
+                    DataRow drImg = eleDT.NewRow();
+                    drImg["MyPK"] = ele.Name;
+                    drImg["FK_MapData"] = Glo.FK_MapData;
+
+                    MatrixTransform transform = ctl.TransformToVisual(this.canvasMain)
+                        as MatrixTransform;
+                    double x = transform.Matrix.OffsetX;
+                    double y = transform.Matrix.OffsetY;
+
+                    if (x <= 0)
+                        x = 0;
+                    if (y == 0)
+                        y = 0;
+                    if (y.ToString() == "NaN")
+                    {
+                        x = Canvas.GetLeft(ctl);
+                        y = Canvas.GetTop(ctl);
+                    }
+
+                    drImg["X"] = x.ToString("0.00"); // Canvas.GetLeft(ctl).ToString("0.00");
+                    drImg["Y"] = y.ToString("0.00"); // Canvas.GetTop(ctl).ToString("0.00");
+
+                    drImg["W"] = ele.Width.ToString("0.00");
+                    drImg["H"] = ele.Height.ToString("0.00");
+
+                    eleDT.Rows.Add(drImg);
                     continue;
                 }
                 #endregion lab.
@@ -4237,6 +4347,7 @@ namespace CCForm
             myds.Tables.Add(labDT);
             myds.Tables.Add(linkDT);
             myds.Tables.Add(imgDT);
+            myds.Tables.Add(eleDT);
             myds.Tables.Add(btnDT);
             myds.Tables.Add(imgAthDT);
             myds.Tables.Add(mapAttrDT);

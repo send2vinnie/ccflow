@@ -15,7 +15,6 @@ namespace CCForm
 {
     public class ToolBox
     {
-
         #region attrs
         /// <summary>
         /// 隐藏字段
@@ -67,7 +66,7 @@ namespace CCForm
         public const string Dtl = "Dtl";
         public const string M2M = "M2M";
         public const string M2MM = "M2MM";
-
+        public const string FrmEle = "FrmEle";
         public const string Btn = "Btn";
         public const string Attachment = "Attachment";
         /// <summary>
@@ -133,9 +132,11 @@ namespace CCForm
                 new ToolBox(){ IcoName=ToolBox.DDLEnum, IcoNameText="下拉框(枚举)",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/DDLEnum.png",UriKind.RelativeOrAbsolute))},
                 new ToolBox(){ IcoName=ToolBox.DDLTable, IcoNameText="下拉框(表/视图)",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/DDLEnum.png",UriKind.RelativeOrAbsolute))},
                 new ToolBox(){ IcoName=ToolBox.RBS,  IcoNameText="单选按钮",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/RB.png",UriKind.RelativeOrAbsolute))},
+
+                new ToolBox(){ IcoName=ToolBox.FrmEle, IcoNameText="扩展控件",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/FrmEle.png",UriKind.RelativeOrAbsolute))},
+
                 new ToolBox(){ IcoName=ToolBox.Attachment, IcoNameText="单附件",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/Attachment.png",UriKind.RelativeOrAbsolute))},
                 new ToolBox(){ IcoName=ToolBox.AttachmentM, IcoNameText="多附件",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/AttachmentM.png",UriKind.RelativeOrAbsolute))},
-
                 new ToolBox(){ IcoName=ToolBox.ImgAth, IcoNameText="图片附件",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/ImgAth.png",UriKind.RelativeOrAbsolute))},
                 new ToolBox(){ IcoName=ToolBox.Dtl, IcoNameText="明细表(从表)",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/Dtl.png",UriKind.RelativeOrAbsolute))},
                 new ToolBox(){ IcoName=ToolBox.M2M, IcoNameText="一对多",IcoImage=new BitmapImage(new Uri("/CCForm;component/Img/M2M.png",UriKind.RelativeOrAbsolute))},
