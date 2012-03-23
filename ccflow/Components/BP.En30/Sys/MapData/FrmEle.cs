@@ -89,6 +89,13 @@ namespace BP.Sys
                 return this.GetValStrByKey(FrmEleAttr.Tag3);
             }
         }
+        public string HandSiganture_UrlPath
+        {
+            get
+            {
+                return this.GetValStrByKey(FrmEleAttr.Tag4);
+            }
+        }
         #endregion  HandSigantureSavePath
 
         #region ¿‡–Õ
