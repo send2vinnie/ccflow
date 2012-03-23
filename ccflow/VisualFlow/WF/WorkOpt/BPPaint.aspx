@@ -24,16 +24,8 @@
                         window.close();
                     }
                 }
-
                 function GoBack(url, mypk, workid, dd) {
-                    //                    if (url == "") {
-                    //                        alert("签名保存失败,请重试!");
-                    //                        return;
-                    //                    }
-                    //                    alert(mypk);
-                    //                    alert(workid);
-                    //                    opener.document.getElementById(mypk).src = url;
-                    //                    opener = null;
+                    window.returnValue = url;
                     this.close();
                 }
              </script> <style type="text/css">

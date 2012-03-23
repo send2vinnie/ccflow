@@ -1637,6 +1637,26 @@ namespace BP.Web.Comm.UC.WF
             FrmEles eles = new FrmEles(this.FK_MapData);
             if (eles.Count >= 1)
             {
+                string myjs = "\t\n<script type='text/javascript' >";
+                myjs += "\t\n function BPPaint(ctrl,url,w,h,fk_FrmEle)";
+                myjs += "\t\n {";
+                myjs += "\t\n  var v= window.showModalDialog(url, 'ddf', 'dialogHeight: '+h+'px; dialogWidth: '+w+'px;center: yes; help: no'); ";
+                myjs += "\t\n  if (v==null )  ";
+                myjs += "\t\n     return ; ";
+
+              //  myjs += "\t\n     alert(document.getElementById('Ele'+fk_FrmEle ));";
+                myjs += "\t\n  ctrl.src='dsdsd'; ";
+               myjs += "\t\n  alert('已经执行成功，谢谢使用')";
+                myjs += "\t\n  ctrl.src=v; ";
+             //   myjs += "\t\n  alert(ctrl.src)";
+
+                //myjs += "\t\n  ctrl.setAttribute('src',v); ";
+                //myjs += "\t\n  document.getElementById('Ele'+fk_FrmEle ).src=v; ";
+                //myjs += "\t\n  document.getElementById('Ele'+fk_FrmEle ).setAttribute('src', v); ";
+                myjs += "\t\n }";
+                myjs += "\t\n</script>";
+                this.Add(myjs);
+
                 FrmEleDBs dbs = new FrmEleDBs(this.FK_MapData, en.PKVal.ToString());
                 foreach (FrmEle ele in eles)
                 {
@@ -1656,9 +1676,11 @@ namespace BP.Web.Comm.UC.WF
                                 if (db != null)
                                     dbFile = db.Tag1;
 
-                            //    string myjs = "javascript:window.showModalDialog('" + appPath + "/WF/WorkOpt/BPPaint.aspx?PKVal=" + en.PKVal + "&MyPK=" + ele.MyPK + "&H=" + ele.HandSiganture_WinOpenH + "&W=" + ele.HandSiganture_WinOpenW + "', 'sdf', 'dialogHeight: " + ele.HandSiganture_WinOpenH + "px; dialogWidth: " + ele.HandSiganture_WinOpenW + "px;center: yes; help: no');";
-                                string myjs = "javascript:window.open('" + appPath + "/WF/WorkOpt/BPPaint.aspx?PKVal=" + en.PKVal + "&MyPK=" + ele.MyPK + "&H=" + ele.HandSiganture_WinOpenH + "&W=" + ele.HandSiganture_WinOpenW + "', 'sdf', 'dialogHeight: " + ele.HandSiganture_WinOpenH + "px; dialogWidth: " + ele.HandSiganture_WinOpenW + "px;center: yes; help: no');";
-                                this.Add("\t\n<img id='" + ele.MyPK + "' onclick=\"" + myjs + "\" onerror=\"this.src='" + appPath + "/DataUser/BPPaint/Def.png'\" src='" + dbFile + "' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
+                                string url = appPath + "/WF/WorkOpt/BPPaint.aspx?W=" + ele.HandSiganture_WinOpenW + "&H=" + ele.HandSiganture_WinOpenH + "&MyPK=" + ele.PKVal + "&PKVal=" + en.PKVal;
+                                //  myjs = "javascript:window.showModalDialog('"+url+"', 'sdf', 'dialogHeight: " + ele.HandSiganture_WinOpenH + "px; dialogWidth: " + ele.HandSiganture_WinOpenW + "px;center: yes; help: no');";
+                                myjs = "javascript:BPPaint(this,'" + url + "','" + ele.HandSiganture_WinOpenW + "','" + ele.HandSiganture_WinOpenH + "','" + ele.MyPK + "');";
+                                //string myjs = "javascript:window.open('" + appPath + "/WF/WorkOpt/BPPaint.aspx?PKVal=" + en.PKVal + "&MyPK=" + ele.MyPK + "&H=" + ele.HandSiganture_WinOpenH + "&W=" + ele.HandSiganture_WinOpenW + "', 'sdf', 'dialogHeight: " + ele.HandSiganture_WinOpenH + "px; dialogWidth: " + ele.HandSiganture_WinOpenW + "px;center: yes; help: no');";
+                                this.Add("\t\n<img id='Ele" + ele.MyPK + "' onclick=\"" + myjs + "\" onerror=\"this.src='" + appPath + "/DataUser/BPPaint/Def.png'\" src='" + dbFile + "' style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
                             }
                             break;
                         case FrmEle.EleSiganture:
