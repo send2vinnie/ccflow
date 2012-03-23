@@ -3220,7 +3220,7 @@ namespace BP.WF
                     dr["OID"] = gf.OID;
 
                     // 属性。
-                    if (myDTAttr != null)
+                    if (myDTAttr != null && myDTAttr.Columns.Contains("GroupID"))
                     {
                         foreach (DataRow dr1 in myDTAttr.Rows)
                         {
@@ -3232,7 +3232,7 @@ namespace BP.WF
                         }
                     }
 
-                    if (myDTAth != null)
+                    if (myDTAth != null && myDTAth.Columns.Contains("GroupID"))
                     {
                         // 附件。
                         foreach (DataRow dr1 in myDTAth.Rows)
@@ -3245,7 +3245,7 @@ namespace BP.WF
                         }
                     }
 
-                    if (myDTDtl != null)
+                    if (myDTDtl != null && myDTDtl.Columns.Contains("GroupID"))
                     {
                         // 明细表。
                         foreach (DataRow dr1 in myDTDtl.Rows)
@@ -3258,7 +3258,7 @@ namespace BP.WF
                         }
                     }
 
-                    if (myDFrm != null)
+                    if (myDFrm != null && myDFrm.Columns.Contains("GroupID"))
                     {
                         // frm.
                         foreach (DataRow dr1 in myDFrm.Rows)
@@ -3271,7 +3271,7 @@ namespace BP.WF
                         }
                     }
 
-                    if (myDM2M != null)
+                    if (myDM2M != null && myDM2M.Columns.Contains("GroupID"))
                     {
                         // m2m.
                         foreach (DataRow dr1 in myDM2M.Rows)
@@ -4168,7 +4168,7 @@ namespace BP.WF
                 }
                 catch (Exception ex1)
                 {
-                    throw new Exception("@删除已经产生的错误的流程数据期间错误:" + ex1.Message);
+                    throw new Exception("@删除已经产生的错误的流程数据期间错误:" + ex1.Message );
                 }
             }
         }

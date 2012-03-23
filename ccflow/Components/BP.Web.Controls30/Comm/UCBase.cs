@@ -1959,7 +1959,7 @@ namespace BP.Web.UC
             this.Response.Write("<script language='JavaScript'> window.close()</script>");
         }
 
-        protected void WinClose(string val)
+        protected void WinClose(string val) 
         {
             string clientscript = "<script language='javascript'> window.returnValue = '" + val + "'; window.close(); </script>";
             this.Page.Response.Write(clientscript);
