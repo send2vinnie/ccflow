@@ -10,6 +10,9 @@ using BP.Web;
 using BP.En;
 using BP.WF;
 using Silverlight.DataSetConnector;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.Configuration;
 
 namespace BP.Web
 {
@@ -23,7 +26,37 @@ namespace BP.Web
     // [System.Web.Script.Services.ScriptService]
     public class CCForm : WSBase
     {
-       
+        [WebMethod]
+        public string SaveImageAsFile(byte[] img, string pkval, string fk_Frm_Ele)
+        {
+            FrmEle fe = new FrmEle(fk_Frm_Ele);
+            System.Drawing.Image newImage;
+            using (MemoryStream ms = new MemoryStream(img, 0, img.Length))
+            {
+                ms.Write(img, 0, img.Length);
+                newImage = Image.FromStream(ms, true);
+                Bitmap bitmap = new Bitmap(newImage, new Size(fe.W, fe.H));
+                if (System.IO.Directory.Exists(fe.HandSigantureSavePath + "\\" + fe.FK_MapData + "\\") == false)
+                    System.IO.Directory.CreateDirectory(fe.HandSigantureSavePath + "\\" + fe.FK_MapData + "\\");
+
+                bitmap.Save(fe.HandSigantureSavePath + "\\"+fe.FK_MapData+"\\" + pkval + ".png");
+
+                string pathFile = System.Web.HttpContext.Current.Request.ApplicationPath + fe.HandSiganture_UrlPath  + fe.FK_MapData + "/" + pkval + ".png";
+                FrmEleDB ele = new FrmEleDB();
+                ele.FK_MapData = fe.FK_MapData;
+                ele.EleID = fe.EleID;
+                ele.RefPKVal = pkval;
+                ele.Tag1 = pathFile;
+                ele.GenerPKVal();
+                ele.Save();
+                
+                return pathFile;
+                // return "../DataUser/" + realpath + strFileName + ".png";
+            }
+            //FrmEleDB db = new FrmEleDB();
+            //db.MyPK= 
+            //return "error";
+        }
         /// <summary>
         /// 获取值
         /// </summary>
@@ -132,7 +165,7 @@ namespace BP.Web
         public string GetXmlData(string xmlFileName)
         {
             string sql = "";
-             sql = "SELECT 'HandSiganture' AS DFor, '@Label=存储路径@FType=String@DefVal=D:\\ccflow\\VisualFlow\\DataUser\\Draw\\' as Tag1, '@Label=窗口打开高度@FType=Int@DefVal=400' as Tag2, '@Label=窗口打开宽度@FType=Int@DefVal=300' as Tag3, '' as 'Tag4' @Form";
+            sql = "SELECT 'HandSiganture' AS DFor, '@Label=存储路径@FType=String@DefVal=D:\\ccflow\\VisualFlow\\DataUser\\BPPaint\\' as Tag1, '@Label=窗口打开高度@FType=Int@DefVal=300' as Tag2, '@Label=窗口打开宽度@FType=Int@DefVal=450' as Tag3, '@Label=UrlPath@FType=String@DefVal=/DataUser/BPPaint/' as 'Tag4' @Form";
             sql += " UNION ";
             sql += "SELECT 'EleSiganture' AS DFor, '@Label=位置@FType=String' as Tag1, '@Label=高度@FType=Int' as Tag2, '@Label=宽度@FType=Int' as Tag3, '' as 'Tag4' @Form";
 
