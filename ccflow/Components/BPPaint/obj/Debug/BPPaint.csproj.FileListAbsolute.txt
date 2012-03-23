@@ -1,0 +1,13 @@
+D:\ccflow\BPPaint\BPPaint\Bin\Debug\BPPaint.dll
+D:\ccflow\BPPaint\BPPaint\Bin\Debug\BPPaint.pdb
+D:\ccflow\BPPaint\BPPaint\Bin\Debug\AppManifest.xaml
+D:\ccflow\BPPaint\BPPaint\Bin\Debug\BPPaint.xap
+D:\ccflow\BPPaint\BPPaint\Bin\Debug\BPPaintTestPage.html
+D:\ccflow\BPPaint\BPPaint\obj\Debug\ResolveAssemblyReference.cache
+D:\ccflow\BPPaint\BPPaint\obj\Debug\App.g.i.cs
+D:\ccflow\BPPaint\BPPaint\obj\Debug\MainPage.g.i.cs
+D:\ccflow\BPPaint\BPPaint\obj\Debug\BPPaint.g.resources
+D:\ccflow\BPPaint\BPPaint\obj\Debug\BPPaint.dll
+D:\ccflow\BPPaint\BPPaint\obj\Debug\BPPaint.pdb
+D:\ccflow\BPPaint\BPPaint\obj\Debug\XapCacheFile.xml
+D:\ccflow\BPPaint\BPPaint\obj\Debug\SignControl.g.i.cs
