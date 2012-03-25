@@ -23,13 +23,11 @@ public partial class FileUpload : BP.Web.WebPage
                 fileUpload.Sizes = 2048;
                 fileUpload.FileType = "bmp|BMP|jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF";
                 //fileUpload.Path = "~/UploadFiles";
-                fileUpload.Path = "../DataUser/ImgAth/Upload";
+                fileUpload.Path = "../../DataUser/ImgAth/Upload";
                 fileUpload.PostedFile = file;
-
                 string newName = this.Request.QueryString["ImgAth"] + "_" + this.MyPK + ".png";
-
                 string picName = fileUpload.Upload(newName);
-                msg = "../DataUser/ImgAth/Upload/" + picName;
+                msg = "../../DataUser/ImgAth/Upload/" + picName;
             }
             //    ToLog("上传了一个名称为" + msg + "的图片!");
             string result = "{ error:'" + error + "', msg:'" + msg + "',msgWidth:'" + GetImage( msg , 120) + "'}";
@@ -37,7 +35,6 @@ public partial class FileUpload : BP.Web.WebPage
             Response.End();
         }
     }
-
     public int GetImage(string url, int widthSize)
     {
         if (File.Exists(System.Web.HttpContext.Current.Server.MapPath(url)))
@@ -56,6 +53,5 @@ public partial class FileUpload : BP.Web.WebPage
         {
             return 1;
         }
-
     }
 }

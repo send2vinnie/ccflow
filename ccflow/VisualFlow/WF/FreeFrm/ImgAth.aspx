@@ -1,19 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WF/WinOpen.master" AutoEventWireup="true" CodeFile="ImgAth.aspx.cs" Inherits="WF_ImgAth" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <script type="text/javascript" src="Style/ImgAth/jquery-1.3.1.min.js"></script>
-    <script type="text/javascript" src="Style/ImgAth/jquery.bitmapcutter.js"></script>
-    <link rel="Stylesheet" type="text/css" href="Style/ImgAth/jquery.bitmapcutter.css" />
-    <script type="text/javascript" src="Style/ImgAth/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="./ImgAth/jquery-1.3.1.min.js"></script>
+    <script type="text/javascript" src="./ImgAth/jquery.bitmapcutter.js"></script>
+    <link rel="Stylesheet" type="text/css" href="./ImgAth/jquery.bitmapcutter.css" />
+    <script type="text/javascript" src="./ImgAth/ajaxfileupload.js"></script>
     <!--剪切图片-->
-
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <style type="text/css">
         #container
         {
-        	
         	margin:0px auto;
         	background-color:#fff;
         	border:solid 1px #7d9edb;
@@ -37,15 +34,12 @@
 </script>
 
 <script type="text/javascript">
-
  var ImgAth= '<%=ImgAth%>';
  var MyPK= '<%=MyPK%>';
-
     function ajaxFileUpload() {
         jQuery.ajaxFileUpload
 	    (
 	          {
-                   
 	              url: 'FileUpload.aspx?ImgAth=' + ImgAth+ '&MyPK='+ MyPK,
 	              secureuri: false,
 	              fileElementId: 'fileToUpload',
@@ -83,7 +77,6 @@
     </tr>
     <tr><td colspan="2">
      <asp:TextBox ID="txtPhotoUrl" runat="server"></asp:TextBox>
-
      <asp:Button ID="btnSubmit" runat="server" Text="保 存" 
             onclick="btnSubmit_Click"  />
     &nbsp;&nbsp;

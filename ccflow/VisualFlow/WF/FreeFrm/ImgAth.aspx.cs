@@ -55,22 +55,15 @@ public partial class WF_ImgAth : BP.Web.WebPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!IsPostBack)
         {
-
-            string url = "../DataUser/ImgAth/Def.jpg";
-            string newName = this.ImgAth + "_" + this.MyPK+".png";
-            string sourceFile = Server.MapPath("../DataUser/ImgAth/Upload/" + newName);
+            string url = "../../DataUser/ImgAth/Def.jpg";
+            string newName = this.ImgAth + "_" + this.MyPK + ".png";
+            string sourceFile = Server.MapPath("../../DataUser/ImgAth/Upload/" + newName);
             if (System.IO.File.Exists(sourceFile))
-            {
-                url = "../DataUser/ImgAth/Upload/" + newName;
-            }
+                url = "../../DataUser/ImgAth/Upload/" + newName;
             else
-            {
-                url = "../DataUser/ImgAth/Def.jpg";
-            }
-            
+                url = "../../DataUser/ImgAth/Def.jpg";
 
             txtPhotoUrl.Text = url;
             Page.ClientScript.RegisterStartupScript(this.GetType(),
@@ -85,7 +78,7 @@ public partial class WF_ImgAth : BP.Web.WebPage
 
         string type = str.Substring(str.LastIndexOf(".") + 1); //得到文件后缀名 
 
-        CopyFile(str, "../DataUser/ImgAth/Data/" + myName + ".png");
+        CopyFile(str, "../../DataUser/ImgAth/Data/" + myName + ".png");
 
         //string temp = "Temp" + BP.Web.WebUser.No + "_" + DateTime.Now.ToString("yyMMddhhmmss");
         //CopyFile(str, "../Temp/" + temp + ".png");
@@ -105,10 +98,8 @@ public partial class WF_ImgAth : BP.Web.WebPage
             System.IO.File.Copy(sourceFile, objectFile, true);
         }
     }
-
     //取消按钮
     protected void btnCancle_Click(object sender, EventArgs e)
     {
-
     }
 }
