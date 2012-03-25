@@ -39,14 +39,20 @@ namespace BP.Web
                 if (System.IO.Directory.Exists(fe.HandSigantureSavePath + "\\" + fe.FK_MapData + "\\") == false)
                     System.IO.Directory.CreateDirectory(fe.HandSigantureSavePath + "\\" + fe.FK_MapData + "\\");
 
-                bitmap.Save(fe.HandSigantureSavePath + "\\"+fe.FK_MapData+"\\" + pkval + ".png");
+                string saveTo = fe.HandSigantureSavePath + "\\" + fe.FK_MapData + "\\" + pkval + ".png";
+                bitmap.Save(saveTo);
 
                 string pathFile = System.Web.HttpContext.Current.Request.ApplicationPath + fe.HandSiganture_UrlPath  + fe.FK_MapData + "/" + pkval + ".png";
                 FrmEleDB ele = new FrmEleDB();
                 ele.FK_MapData = fe.FK_MapData;
                 ele.EleID = fe.EleID;
                 ele.RefPKVal = pkval;
-                ele.Tag1 = pathFile;
+                ele.Tag1 = pathFile.Replace("\\\\","\\");
+                ele.Tag1 = pathFile.Replace("////", "//");
+
+                ele.Tag2 = saveTo.Replace("\\\\", "\\");
+                ele.Tag2 = saveTo.Replace("////", "//");
+
                 ele.GenerPKVal();
                 ele.Save();
                 
