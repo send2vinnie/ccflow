@@ -239,23 +239,16 @@ namespace BP.WF
                 if (this._enMap != null)
                     return this._enMap;
                 Map map = new Map("WF_GenerFH");
-                map.EnDesc = "产生分合流程控制";
-                map.EnDBUrl = new DBUrl();
+                map.EnDesc = "分合流程控制";
 
                 map.AddTBIntPK(GenerFHAttr.FID, 0, "流程ID", true, true);
-
-                map.AddTBString(GenerFHAttr.Title, null, "标题", true, false, 0, 100, 10);
-
-                map.AddTBString(GenerFHAttr.GroupKey, null, "分组主键", true, false, 0, 500, 10);
+                map.AddTBString(GenerFHAttr.Title, null, "标题", true, false, 0, 4000, 10);
+                map.AddTBString(GenerFHAttr.GroupKey, null, "分组主键", true, false, 0, 3000, 10);
                 map.AddTBString(GenerFHAttr.FK_Flow, null, "流程", true, false, 0, 500, 10);
-
-                map.AddTBString(GenerFHAttr.ToEmpsMsg, null, "接受人员", true, false, 0, 3000, 10);
-
+                map.AddTBString(GenerFHAttr.ToEmpsMsg, null, "接受人员", true, false, 0, 4000, 10);
                 map.AddTBInt(GenerFHAttr.FK_Node, 0, "停留节点", true, false);
                 map.AddTBInt(GenerFHAttr.WFState, 0, "WFState", true, false);
-
                 map.AddTBDate(GenerFHAttr.RDT, null, "RDT", true, false);
-
 
                 //RefMethod rm = new RefMethod();
                 //rm.Title = this.ToE("WorkRpt", "工作报告");  // "工作报告";

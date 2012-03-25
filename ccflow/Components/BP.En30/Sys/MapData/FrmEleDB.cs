@@ -180,10 +180,10 @@ namespace BP.Sys
                 map.AddTBString(FrmEleDBAttr.EleID, null, "EleID", true, false, 0, 50, 20);
                 map.AddTBString(FrmEleDBAttr.RefPKVal, null, "RefPKVal", true, false, 0, 50, 20);
 
-                map.AddTBString(FrmEleDBAttr.Tag1, null, "Tag1", true, false, 0, 50, 20);
-                map.AddTBString(FrmEleDBAttr.Tag2, null, "Tag2", true, false, 0, 50, 20);
-                map.AddTBString(FrmEleDBAttr.Tag3, null, "Tag3", true, false, 0, 50, 20);
-                map.AddTBString(FrmEleDBAttr.Tag4, null, "Tag4", true, false, 0, 50, 20);
+                map.AddTBString(FrmEleDBAttr.Tag1, null, "Tag1", true, false, 0, 4000, 20);
+                map.AddTBString(FrmEleDBAttr.Tag2, null, "Tag2", true, false, 0, 4000, 20);
+                map.AddTBString(FrmEleDBAttr.Tag3, null, "Tag3", true, false, 0, 4000, 20);
+                map.AddTBString(FrmEleDBAttr.Tag4, null, "Tag4", true, false, 0, 4000, 20);
 
                 this._enMap = map;
                 return this._enMap;

@@ -251,11 +251,11 @@ namespace BP.Rpt.RTF
 			} 
 			throw new Exception("step4参数设置错误"+strs  );
 		}
-        public static string GetImgHexString(System.Drawing.Image img)
+        public static string GetImgHexString(System.Drawing.Image img,System.Drawing.Imaging.ImageFormat ext)
         {
             StringBuilder imgs = new StringBuilder();
             MemoryStream stream = new MemoryStream();
-            img.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
+            img.Save(stream, ext);
             stream.Close();
 
             byte[] buffer = stream.ToArray();
@@ -307,7 +307,7 @@ namespace BP.Rpt.RTF
                     System.Drawing.Image imgAth = System.Drawing.Image.FromFile(path1);
 
                     //将要插入的图片转换为16进制字符串
-                    string imgHexStringImgAth = GetImgHexString(imgAth);
+                    string imgHexStringImgAth = GetImgHexString(imgAth, System.Drawing.Imaging.ImageFormat.Jpeg);
                     //生成rtf中图片字符串
                     mypict.AppendLine();
                     mypict.Append(@"{\pict");
@@ -320,6 +320,33 @@ namespace BP.Rpt.RTF
                     mypict.AppendLine();
                     return mypict.ToString();
                 }
+
+                if (strs[1].Trim() == "BPPaint")
+                {
+                    string path1 = DBAccess.RunSQLReturnString("SELECT  Tag2 FROM Sys_FrmEleDB WHERE REFPKVAL=" + this.HisGEEntity.PKVal + " AND EleID='" + strs[0].Trim() + "'");
+                    
+                  //  string path1 = BP.SystemConfig.PathOfDataUser + "\\BPPaint\\" + this.HisGEEntity.ToString().Trim() + "\\" + this.HisGEEntity.PKVal + ".png";
+
+                    //定义rtf中图片字符串.
+                    StringBuilder mypict = new StringBuilder();
+                    //获取要插入的图片
+                    System.Drawing.Image imgAth = System.Drawing.Image.FromFile(path1);
+
+                    //将要插入的图片转换为16进制字符串
+                    string imgHexStringImgAth = GetImgHexString(imgAth, System.Drawing.Imaging.ImageFormat.Png);
+                    //生成rtf中图片字符串
+                    mypict.AppendLine();
+                    mypict.Append(@"{\pict");
+                    mypict.Append(@"\pngblip");
+                    mypict.Append(@"\picscalex100");
+                    mypict.Append(@"\picscaley100");
+                    mypict.Append(@"\picwgoal" + imgAth.Size.Width * 15);
+                    mypict.Append(@"\pichgoal" + imgAth.Size.Height * 15);
+                    mypict.Append(imgHexStringImgAth + "}");
+                    mypict.AppendLine();
+                    return mypict.ToString();
+                }
+
 
                 if (strs.Length == 2)
                 {
@@ -352,7 +379,7 @@ namespace BP.Rpt.RTF
                             System.Drawing.Image img = System.Drawing.Image.FromFile(path);
 
                             //将要插入的图片转换为16进制字符串
-                            string imgHexString = GetImgHexString(img);
+                            string imgHexString = GetImgHexString(img,System.Drawing.Imaging.ImageFormat.Jpeg);
                             //生成rtf中图片字符串
                             pict.AppendLine();
                             pict.Append(@"{\pict");
@@ -418,7 +445,7 @@ namespace BP.Rpt.RTF
                         System.Drawing.Image imgAth = System.Drawing.Image.FromFile(path1);
 
                         //将要插入的图片转换为16进制字符串
-                        string imgHexStringImgAth = GetImgHexString(imgAth);
+                        string imgHexStringImgAth = GetImgHexString(imgAth, System.Drawing.Imaging.ImageFormat.Jpeg);
                         //生成rtf中图片字符串
                         mypict.AppendLine();
                         mypict.Append(@"{\pict");
@@ -462,7 +489,7 @@ namespace BP.Rpt.RTF
                             System.Drawing.Image imgAth = System.Drawing.Image.FromFile(path1);
 
                             //将要插入的图片转换为16进制字符串
-                            string imgHexStringImgAth = GetImgHexString(imgAth);
+                            string imgHexStringImgAth = GetImgHexString(imgAth, System.Drawing.Imaging.ImageFormat.Jpeg);
                             //生成rtf中图片字符串
                             mypict.AppendLine();
                             mypict.Append(@"{\pict");
@@ -482,7 +509,7 @@ namespace BP.Rpt.RTF
                             System.Drawing.Image img = System.Drawing.Image.FromFile(path);
 
                             //将要插入的图片转换为16进制字符串
-                            string imgHexString = GetImgHexString(img);
+                            string imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Jpeg);
                             //生成rtf中图片字符串
                             pict.AppendLine();
                             pict.Append(@"{\pict");

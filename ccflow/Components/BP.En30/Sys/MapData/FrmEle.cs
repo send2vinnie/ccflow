@@ -324,6 +324,9 @@ namespace BP.Sys
                 map.AddTBFloat(FrmEleAttr.H, 20, "H", true, false);
                 map.AddTBFloat(FrmEleAttr.W, 20, "W", false, false);
 
+                map.AddTBInt(FrmEleAttr.IsEnable, 1, "IsEnable", false, false);
+
+
                 map.AddTBString(FrmEleAttr.Tag1, null, "Tag1", true, false, 0, 50, 20);
                 map.AddTBString(FrmEleAttr.Tag2, null, "Tag2", true, false, 0, 50, 20);
                 map.AddTBString(FrmEleAttr.Tag3, null, "Tag3", true, false, 0, 50, 20);
