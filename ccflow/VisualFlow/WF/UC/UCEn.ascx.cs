@@ -1665,16 +1665,18 @@ namespace BP.Web.Comm.UC.WF
                     switch (ele.EleType)
                     {
                         case FrmEle.HandSiganture:
-                            if (this.IsReadonly && ele.IsEnable == false)
-                            {
-                                this.Add("\t\n<img src='" + appPath + "/DataUser/LogBiger.png' onerror=\"this.src='" + appPath + "/DataUser/BPPaint/Def.png'\" style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
-                            }
-                            else
-                            {
-                                FrmEleDB db = dbs.GetEntityByKey(FrmEleDBAttr.EleID, ele.EleID) as FrmEleDB;
+                             FrmEleDB db = dbs.GetEntityByKey(FrmEleDBAttr.EleID, ele.EleID) as FrmEleDB;
                                 string dbFile = appPath + "/DataUser/BPPaint/Def.png";
                                 if (db != null)
                                     dbFile = db.Tag1;
+
+                            if (this.IsReadonly || ele.IsEnable == false)
+                            {
+                                this.Add("\t\n<img src='" + dbFile + "' onerror=\"this.src='" + appPath + "/DataUser/BPPaint/Def.png'\" style='padding: 0px;margin: 0px;border-width: 0px;width:" + ele.W + "px;height:" + ele.H + "px;' />");
+                            }
+                            else
+                            {
+                               
 
                                 string url = appPath + "/WF/WorkOpt/BPPaint.aspx?W=" + ele.HandSiganture_WinOpenW + "&H=" + ele.HandSiganture_WinOpenH + "&MyPK=" + ele.PKVal + "&PKVal=" + en.PKVal;
                                 //  myjs = "javascript:window.showModalDialog('"+url+"', 'sdf', 'dialogHeight: " + ele.HandSiganture_WinOpenH + "px; dialogWidth: " + ele.HandSiganture_WinOpenW + "px;center: yes; help: no');";

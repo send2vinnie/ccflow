@@ -163,6 +163,19 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                 if (wk.WorkEndInfo.Length > 2)
                     this.UCEn1.Add(wk.WorkEndInfo);
             }
+
+            BillTemplates bills = new BillTemplates();
+            bills.Retrieve(BillTemplateAttr.NodeID, nd.NodeID);
+            if (bills.Count >= 1)
+            {
+                string title = "";
+                foreach (BillTemplate item in bills)
+                    title += "<img src='../Images/Btn/Word.gif' border=0/>" + item.Name + "</a>";
+
+                string urlr = "./WorkOpt/PrintDoc.aspx?FK_Node=" + nd.NodeID + "&FID=" + tk.FID + "&WorkID=" + tk.WorkID + "&FK_Flow=" + tk.FK_Flow;
+                this.UCEn1.Add("<p><a  href=\"javascript:WinOpen('" + urlr + "','dsdd');\"  />" + title + "</a></p>");
+                //this.UCEn1.Add("<a href='' target=_blank><img src='../Images/Btn/Word.gif' border=0/>" + bt.Name + "</a>");
+            }
         }
         else
         {
