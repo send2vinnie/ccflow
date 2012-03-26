@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+    <!-- 信息发布  -->
+    <Item No="01" Name="爱好者管理" Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
+    <Item No="0101" Name="题库" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+    <Item No="0101" Name="申请者审核" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
+
+    <!-- 模板管理  -->
+    <Item No="02" Name="模板管理" Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
+    <Item No="0201" Name="流程模板审核" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+    <Item No="0201" Name="表单模板审核" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
+
+  <!-- 系统维护  -->
+  <Item No="99" Name="系统管理" Url="" Img="../../Images/Btn/Help.gif" ForUser=",admin," DESC=""  DFor=""  />
+  <Item No="9901" Name="新闻" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="9901" Name="公告" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="9901" Name="通讯录" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="9901" Name="网盘" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+
+</NewDataSet>
