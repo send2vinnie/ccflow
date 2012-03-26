@@ -7,8 +7,6 @@
     using System.Net;
     using System.Net.Browser;
     using System.Threading;
-    using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Input;
     using System.Windows.Media;
@@ -64,7 +62,6 @@
 
             bool registerResult = WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
             bool httpsResult = WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
-
 
             //获取bmpHost. 
             var location = (HtmlPage.Window.GetProperty("location")) as ScriptObject;
