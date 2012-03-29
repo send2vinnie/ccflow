@@ -157,7 +157,7 @@ namespace BP.Web
                 ds.ReadXml(filePath);
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex.Message;
             }
@@ -171,12 +171,12 @@ namespace BP.Web
         public string GetXmlData(string xmlFileName)
         {
             string sql = "";
-            sql = "SELECT 'HandSiganture' AS DFor, '@Label=存储路径@FType=String@DefVal=D:\\ccflow\\VisualFlow\\DataUser\\BPPaint\\' as Tag1, '@Label=窗口打开高度@FType=Int@DefVal=300' as Tag2, '@Label=窗口打开宽度@FType=Int@DefVal=450' as Tag3, '@Label=UrlPath@FType=String@DefVal=/DataUser/BPPaint/' as 'Tag4' @Form";
+            sql = "SELECT 'HandSiganture' AS DFor, '@Label=存储路径@FType=String@DefVal=D:\\ccflow\\VisualFlow\\DataUser\\BPPaint\\' as Tag1, '@Label=窗口打开高度@FType=Int@DefVal=300' as Tag2, '@Label=窗口打开宽度@FType=Int@DefVal=450' as Tag3, '@Label=UrlPath@FType=String@DefVal=/DataUser/BPPaint/' as Tag4 @Form";
             sql += " UNION ";
-            sql += "SELECT 'EleSiganture' AS DFor, '@Label=位置@FType=String' as Tag1, '@Label=高度@FType=Int' as Tag2, '@Label=宽度@FType=Int' as Tag3, '' as 'Tag4' @Form";
+            sql += "SELECT 'EleSiganture' AS DFor, '@Label=位置@FType=String' as Tag1, '@Label=高度@FType=Int' as Tag2, '@Label=宽度@FType=Int' as Tag3, '' as  Tag4 @Form";
 
             if (BP.SystemConfig.AppCenterDBType == DBType.Oracle9i)
-                sql=sql.Replace("@Form", " FROM DUAL");
+                sql = sql.Replace("@Form", " FROM DUAL");
             else
                 sql = sql.Replace("@Form", "");
 

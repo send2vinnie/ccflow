@@ -167,7 +167,6 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle("colspan=4", "部门选择");
         this.Pub1.AddTREnd();
 
-        SysEnums ses = new SysEnums("StaGrade");
         Depts sts = new Depts();
         sts.RetrieveAll();
 
@@ -181,7 +180,7 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
                 CheckBox cb = new CheckBox();
                 cb.ID = "CB_" + st.No;
                 cb.Text = st.Name;
-                if (cond.OperatorValue.ToString().Contains("@" + st.No))
+                if (cond.OperatorValue.ToString().Contains("@" + st.No+"@"))
                     cb.Checked = true;
 
                 this.Pub1.AddTD(cb);
@@ -291,7 +290,7 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         cond.MyPK = this.GenerMyPK;
         if (cond.RetrieveFromDBSources() == 0)
         {
-            cond.HisDataFrom = ConnDataFrom.Stas;
+            cond.HisDataFrom = ConnDataFrom.Depts;
             cond.NodeID = this.FK_MainNode;
             cond.FK_Flow = this.FK_Flow;
             cond.ToNodeID = this.ToNodeID;
