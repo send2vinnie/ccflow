@@ -234,48 +234,63 @@ namespace BP.Sys
                 this.SetValByKey(FrmEleAttr.EleType, value);
             }
         }
-        public int X
+        public float X
         {
             get
             {
-                return this.GetValIntByKey(FrmEleAttr.X);
+                return this.GetValFloatByKey(FrmEleAttr.X);
             }
             set
             {
                 this.SetValByKey(FrmEleAttr.X, value);
             }
         }
-        public int Y
+        public float Y
         {
             get
             {
-                return this.GetValIntByKey(FrmEleAttr.Y);
+                return this.GetValFloatByKey(FrmEleAttr.Y);
             }
             set
             {
                 this.SetValByKey(FrmEleAttr.Y, value);
             }
         }
-        public int H
+        public float H
         {
             get
             {
-                return this.GetValIntByKey(FrmEleAttr.H);
+                return this.GetValFloatByKey(FrmEleAttr.H);
             }
             set
             {
                 this.SetValByKey(FrmEleAttr.H, value);
             }
         }
-        public int W
+        public float W
         {
             get
             {
-                return this.GetValIntByKey(FrmEleAttr.W);
+                return this.GetValFloatByKey(FrmEleAttr.W);
             }
             set
             {
                 this.SetValByKey(FrmEleAttr.W, value);
+            }
+        }
+
+        public int HOfInt
+        {
+            get
+            {
+                return int.Parse(this.H.ToString("0"));
+            }
+        }
+        public int WOfInt
+        {
+            get
+            {
+                return int.Parse(this.W.ToString("0"));
             }
         }
         #endregion
