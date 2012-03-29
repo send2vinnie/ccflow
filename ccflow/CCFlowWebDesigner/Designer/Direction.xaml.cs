@@ -1750,19 +1750,27 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         }
         public void Worklist(DataSet dataSet)
         {
+            var brush = new SolidColorBrush();
+            //brush.Color = Colors.Red;
+            //this.begin.Fill = brush;
+            //this.endArrow.Stroke = brush;
+            //this.line.Stroke = brush;
             if (dataSet == null || dataSet.Tables.Count == 0)
-            {
                 return;
-            }
+
             foreach (DataRow dr in dataSet.Tables[0].Rows)
             {
-                if (this.EndFlowNode.FlowNodeID == dr["FK_Node"].ToString())
+                string begin = dr["NDFrom"].ToString();
+                string to = dr["NDTo"].ToString();
+
+                if (this.BeginFlowNode.FlowNodeID == begin && this.EndFlowNode.FlowNodeID == to)
                 {
-                    var brush = new SolidColorBrush();
+                    brush = new SolidColorBrush();
                     brush.Color = Colors.Red;
                     this.begin.Fill = brush;
                     this.endArrow.Stroke = brush;
                     this.line.Stroke = brush;
+                 //   this.line.Width = 3;
                 }
             }
         }

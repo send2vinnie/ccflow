@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="889f44bd-3c10-43bd-bd8b-efe796cce95a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1b079213-6b77-4884-88c9-b9423a6e9fe9" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -23,8 +23,8 @@
     <MetadataSource Address="http://localhost/ccflow/WF/Admin/XAP/WebService.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="WebService.wsdl" MetadataType="Wsdl" ID="c8129aef-64e7-42f3-b00f-d1a3b05668d8" SourceId="1" SourceUrl="http://localhost/ccflow/WF/Admin/XAP/WebService.asmx?wsdl" />
-    <MetadataFile FileName="WebService.disco" MetadataType="Disco" ID="974c43e7-4515-4eae-83e5-3a7d20798a61" SourceId="1" SourceUrl="http://localhost/ccflow/WF/Admin/XAP/WebService.asmx?disco" />
+    <MetadataFile FileName="WebService.wsdl" MetadataType="Wsdl" ID="442274e7-da41-4718-bd8a-d20c5787da81" SourceId="1" SourceUrl="http://localhost/ccflow/WF/Admin/XAP/WebService.asmx?wsdl" />
+    <MetadataFile FileName="WebService.disco" MetadataType="Disco" ID="00199361-e0ee-49f1-aeba-a1a75ee856ae" SourceId="1" SourceUrl="http://localhost/ccflow/WF/Admin/XAP/WebService.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

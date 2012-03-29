@@ -117,6 +117,10 @@ namespace BP
             var hrefObject = location.GetProperty("href");
             string url = hrefObject.ToString();
             string[] strs = url.Split('/');
+
+            if (strs[3].ToLower().Contains("flow") == false)
+                throw new Exception("@您没有把ccflow安装在虚拟目录上，导致无法工作。请参考安装常见问题与安装步骤，位于D:\\ccflow\\Documents。");
+
             return strs[0] + "//" + strs[1] + strs[2] + "/" + strs[3];
             //string url = hrefObject.ToString().Substring(0, hrefObject.ToString().IndexOf("Flow/") + 5);
             //return url;

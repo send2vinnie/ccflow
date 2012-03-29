@@ -1296,6 +1296,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     }
                     break;
                 case "Btn_ToolBarNewLine": // 添加线事件.
+                    if (MessageBox.Show("创建连接线，您可按下一个节点的中间，然后拖动到另外一个节点中间后松开手就完成了。现在试一下？",
+                        "您知道吗？", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        return;
+
                     if (SelectedContainer != null)
                     {
                         SelectedContainer.AddDirection();

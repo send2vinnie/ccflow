@@ -252,16 +252,6 @@
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
-    <None Include="Service References\WS\WebService.disco" />
-    <None Include="Service References\WS\configuration91.svcinfo" />
-    <None Include="Service References\WS\configuration.svcinfo" />
-    <None Include="Service References\WS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <Resource Include="Images\Form.png" />
-    <Resource Include="Images\FormNew.png" />
-    <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\WS\WebService.wsdl" />
     <None Include="Service References\WS\WF.WS.UploadfileCCFormResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -272,6 +262,16 @@
     <None Include="Service References\WS\WF.WS.UploadFileResponse1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <Resource Include="Images\Form.png" />
+    <Resource Include="Images\FormNew.png" />
+    <None Include="Service References\WS\WebService.disco" />
+    <None Include="Service References\WS\configuration91.svcinfo" />
+    <None Include="Service References\WS\configuration.svcinfo" />
+    <None Include="Service References\WS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

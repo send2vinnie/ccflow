@@ -48,7 +48,7 @@ namespace BP
             //如果传递过来workid 说明要显示轨图.
             {
                 WSDesignerSoapClient ws = BP.Glo.GetDesignerServiceInstance();
-                ws.GetDTOfWorkListAsync(this.FK_Flow, workid);
+                ws.GetDTOfWorkListAsync(this.FK_Flow,  workid);
                 ws.GetDTOfWorkListCompleted += new EventHandler<GetDTOfWorkListCompletedEventArgs>(ws_GetDTOfWorkListCompleted);
             }
             else
@@ -56,8 +56,10 @@ namespace BP
                 this.GenerFlowChart(FK_Flow);
             }
         }
+
         void ws_GetDTOfWorkListCompleted(object sender, GetDTOfWorkListCompletedEventArgs e)
         {
+             
             workListDataSet = new DataSet();
             workListDataSet.FromXml(e.Result);
             this.GenerFlowChart(FK_Flow);
@@ -369,7 +371,7 @@ namespace BP
         {
             r.Worklist(workListDataSet);
 
-            if (!cnsDesignerContainer.Children.Contains(r))
+            if (cnsDesignerContainer.Children.Contains(r)==false)
             {
                 cnsDesignerContainer.Children.Add(r);
                 r.Container = this;

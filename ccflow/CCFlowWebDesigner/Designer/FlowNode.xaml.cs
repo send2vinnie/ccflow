@@ -804,7 +804,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             bool isChanged = false;
 
-
             if (FlowNodeData.FlowNodeName != FlowNodeData.FlowNodeName
                 || FlowNodeData.FlowNodeType != FlowNodeData.FlowNodeType
                 || FlowNodeData.RepeatDirection != FlowNodeData.RepeatDirection)
@@ -812,7 +811,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 isChanged = true;
 
             }
-
 
             setUIValueByFlowNodeData(FlowNodeData);
             if (isChanged)
@@ -832,8 +830,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             Type = type;
             RepeatDirection = repeatDirection;
             SubFlow = FlowNodeData.SubFlow;
-
-
         }
 
         public PointCollection ThisPointCollection
@@ -878,10 +874,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             xml.Append(Environment.NewLine);
             xml.Append("        </FlowNode>");
-
-
-
-
             return xml.ToString();
         }
 
@@ -947,8 +939,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         bool isDeleted = false;
         public void Delete()
         {
-
-
             if (!isDeleted)
             {
                 isDeleted = true;
@@ -989,7 +979,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             sdPicture.PictureHeight = origPictureHeight * zoomDeep;
             sdPicture.PictureWidth = origPictureWidth * zoomDeep;
             this.Position = new Point(origPosition.X * zoomDeep, origPosition.Y * zoomDeep);
-
         }
 
         public void Edit()
@@ -1009,7 +998,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             clone.CenterPoint = this.CenterPoint;
             clone.ZIndex = this.ZIndex;
             //_container.AddFlowNode(clone);
-
             return clone;
         }
 
@@ -1028,14 +1016,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         private void OnContextMenu(object sender, System.Windows.Browser.HtmlEventArgs e)
         {
-
             //if (_container.MouseIsInContainer)
             //{
             //    e.PreventDefault();
-
             //    if (canShowMenu && !IsDeleted)
             //    {
-
             //        _container.ShowFlowNodeContentMenu(this, sender, e);
             //    }
             //}
@@ -1455,10 +1440,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return;
 
             bool ishave = false;
-            string empName = "：";
+            string empName = "";
             string sdt = "";
             int rowIndex = 0;
-            foreach (DataRow dr in dataSet.Tables[0].Rows)
+            foreach (DataRow dr in dataSet.Tables[1].Rows)
             {
                 if (this.FlowNodeID == dr["FK_Node"].ToString())
                 {
@@ -1489,6 +1474,10 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             stationTipControl.Visibility = Visibility.Visible;
             stationTipControl.StationMessage = empName.TrimEnd(';') + "\n" + sdt;
             _stationTipControl = null;
+
+          //  stationTipControl.Width = stationTipControl.Width + 40;
+          //  stationTipControl.Height = stationTipControl.Height -20;
+            //   _container.ContainerHeight = _container.ContainerHeight / 3;
         }
         public string StationMessage
         {
