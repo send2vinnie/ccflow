@@ -209,9 +209,6 @@
     <Compile Include="Port\EmpStation.cs" />
     <Compile Include="Port\Station.cs" />
     <Compile Include="Port\DeptSearchScorp.cs" />
-    <Compile Include="RunRecorde.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Port\SMS\SMS.cs" />
     <Compile Include="WF.cs" />
     <Compile Include="WF\GERpt.cs" />

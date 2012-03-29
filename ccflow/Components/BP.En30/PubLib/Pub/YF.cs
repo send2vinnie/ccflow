@@ -6,7 +6,7 @@ using BP.En;
 namespace BP.Pub
 {
 	/// <summary>
-	/// 会计期间
+	/// 月份
 	/// </summary>
 	public class YF :SimpleNoNameFix
 	{
@@ -53,7 +53,7 @@ namespace BP.Pub
 	public class YFs :SimpleNoNameFixs
 	{
 		/// <summary>
-		/// 会计期间集合
+		/// 月份集合
 		/// </summary>
 		public YFs()
 		{

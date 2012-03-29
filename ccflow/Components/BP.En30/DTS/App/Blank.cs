@@ -31,34 +31,34 @@ namespace BP.DTS
         }
         public void GenerWeek()
         {
-            BP.DA.DBAccess.RunSQL("delete pub_week");
-            for (int i = 1; i < 55; i++)
-            {
-                BP.Pub.Week wk = new BP.Pub.Week();
-                wk.No = i.ToString().PadLeft(2, '0');
-                wk.Name = "第" + i + "周";
-                wk.Insert();
-            }
+            //BP.DA.DBAccess.RunSQL("delete pub_week");
+            //for (int i = 1; i < 55; i++)
+            //{
+            //    BP.Pub.Week wk = new BP.Pub.Week();
+            //    wk.No = i.ToString().PadLeft(2, '0');
+            //    wk.Name = "第" + i + "周";
+            //    wk.Insert();
+            //}
         }
         public void GenerNYR()
         {
-            Pub.NYR nyr = new BP.Pub.NYR();
-            DateTime dt = DateTime.Now.AddYears(-2);
-            DateTime dt2 = DateTime.Now.AddYears(1);
-            while (dt.ToString(DataType.SysDataFormat) != dt2.ToString(DataType.SysDataFormat))
-            {
-                nyr.No = dt.ToString(DataType.SysDataFormat);
-                nyr.Name = dt.ToString(DataType.SysDataFormatCN);
-                try
-                {
-                    nyr.Save();
-                }
-                catch
-                {
-                    break;
-                }
-                dt = dt.AddDays(1);
-            }
+            //Pub.NYR nyr = new BP.Pub.NYR();
+            //DateTime dt = DateTime.Now.AddYears(-2);
+            //DateTime dt2 = DateTime.Now.AddYears(1);
+            //while (dt.ToString(DataType.SysDataFormat) != dt2.ToString(DataType.SysDataFormat))
+            //{
+            //    nyr.No = dt.ToString(DataType.SysDataFormat);
+            //    nyr.Name = dt.ToString(DataType.SysDataFormatCN);
+            //    try
+            //    {
+            //        nyr.Save();
+            //    }
+            //    catch
+            //    {
+            //        break;
+            //    }
+            //    dt = dt.AddDays(1);
+            //}
         }
 
         public void GenerMonth()
@@ -86,27 +86,27 @@ namespace BP.DTS
         }
         public void GenerDay()
         {
-            DateTime dt = DataType.ParseSysDate2DateTime("2008-01-01");
-            int i = -2;
-            while (true)
-            {
-                i++;
-                if (i > 366)
-                    break;
+            //DateTime dt = DataType.ParseSysDate2DateTime("2008-01-01");
+            //int i = -2;
+            //while (true)
+            //{
+            //    i++;
+            //    if (i > 366)
+            //        break;
 
-                dt = dt.AddDays(1);
+            //    dt = dt.AddDays(1);
 
-                try
-                {
-                    BP.Pub.Day d = new BP.Pub.Day();
-                    d.No = dt.ToString("yyyy-MM-dd");
-                    d.Name = dt.ToString("yy年MM月dd日");
-                    d.Insert();
-                }
-                catch
-                {
-                }
-            }
+            //    try
+            //    {
+            //        BP.Pub.Day d = new BP.Pub.Day();
+            //        d.No = dt.ToString("yyyy-MM-dd");
+            //        d.Name = dt.ToString("yy年MM月dd日");
+            //        d.Insert();
+            //    }
+            //    catch
+            //    {
+            //    }
+            //}
         }
     }
 

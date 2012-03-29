@@ -545,11 +545,11 @@ namespace BP.WF
                 map.AddTBString(CondAttr.FK_Attr, null, "属性", true, true, 0, 80, 20);
 
                 map.AddTBString(CondAttr.AttrKey, null, "属性键", true, true, 0, 60, 20);
-                map.AddTBString(CondAttr.AttrName, null, "中文名称", true, true, 0, 60, 20);
+                map.AddTBString(CondAttr.AttrName, null, "中文名称", true, true, 0, 500, 20);
 
                 map.AddTBString(CondAttr.FK_Operator, "=", "运算符号", true, true, 0, 60, 20);
-                map.AddTBString(CondAttr.OperatorValue, "", "要运算的值", true, true, 0, 60, 20);
-                map.AddTBString(CondAttr.OperatorValueT, "", "要运算的值T", true, true, 0, 60, 20);
+                map.AddTBString(CondAttr.OperatorValue, "", "要运算的值", true, true, 0, 4000, 20);
+                map.AddTBString(CondAttr.OperatorValueT, "", "要运算的值T", true, true, 0, 4000, 20);
 
                 map.AddTBInt(CondAttr.ToNodeID, 0, "ToNodeID（对方向条件有效）", true, true);
 

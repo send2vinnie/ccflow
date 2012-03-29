@@ -375,7 +375,7 @@ namespace BP.Web
                 string token = WebUser.Token;
                 System.Web.HttpContext.Current.Response.Cookies.Clear();
                 System.Web.HttpContext.Current.Request.Cookies.Clear();
-                return;
+               // return;
 
                 HttpCookie cookie = new HttpCookie("CCS", string.Empty);
                 cookie.Expires = DateTime.Now.AddMinutes(1);
@@ -386,7 +386,28 @@ namespace BP.Web
             }
             else
             {
+                try
+                {
+                    string token = WebUser.Token;
+                    System.Web.HttpContext.Current.Response.Cookies.Clear();
+                    System.Web.HttpContext.Current.Request.Cookies.Clear();
+                    // return;
+
+                    HttpCookie cookie = new HttpCookie("CCS", string.Empty);
+                    cookie.Expires = DateTime.Now.AddMinutes(1);
+                    cookie.Values.Add("No", string.Empty);
+                    cookie.Values.Add("Name", string.Empty);
+                    System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+                    WebUser.Token = token;
+                }
+                catch
+                {
+                }
+
+
                 BP.Port.Win.Current.Session.Clear();
+
+
             }
         }
         /// <summary>

@@ -6,7 +6,7 @@ using BP.En;
 namespace BP.Pub
 {
 	/// <summary>
-	/// 会计期间
+	/// 日期
 	/// </summary>
 	public class Day :SimpleNoNameFix
 	{
@@ -51,7 +51,7 @@ namespace BP.Pub
 	public class Days :SimpleNoNameFixs
 	{
 		/// <summary>
-		/// 会计期间集合
+		/// 日期集合
 		/// </summary>
 		public Days()
 		{

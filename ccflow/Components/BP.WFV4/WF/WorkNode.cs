@@ -266,8 +266,22 @@ namespace BP.WF
             // 按照节点指定的人员处理。
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpcEmp)
             {
+                dt = DBAccess.RunSQLReturnTable("SELECT FK_Emp FROM WF_NodeEmp WHERE FK_Node=" + town.HisNode.NodeID);
+                if (dt.Rows.Count==0)
+                    throw new Exception("@您设置的当前节点按照节点绑定人员，但是你没有为("+town.HisNode.NodeID+","+town.HisNode.Name+")节点绑定人员。");
+
+                //fk_emp = this.HisWork.GetValStringByKey("FK_Emp");
+                //DataRow dr = dt.NewRow();
+                //dr[0] = fk_emp;
+                //dt.Rows.Add(dr);
+                return WorkerListWayOfDept(town, dt);
+            }
+
+            // 按照表单字段人员处理。
+            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByEmp)
+            {
                 if (this.HisWork.EnMap.Attrs.Contains("FK_Emp") == false)
-                    throw new Exception("@您设置的当前节点按照指定的人员，决定下一步的接受人员，但是你没有在节点表单中设置该表单FK_Emp字段。");
+                    throw new Exception("@您设置的当前节点按照指定节点表单字段人员，决定下一步的接受人员，但是你没有在节点(" + town.HisNode.NodeID + "," + town.HisNode.Name + ")表单中设置该表单FK_Emp字段。");
 
                 fk_emp = this.HisWork.GetValStringByKey("FK_Emp");
                 DataRow dr = dt.NewRow();
@@ -521,6 +535,21 @@ namespace BP.WF
 
             // 按照节点指定的人员处理。
             if (town.HisNode.HisDeliveryWay == DeliveryWay.BySpcEmp)
+            {
+                dt = DBAccess.RunSQLReturnTable("SELECT FK_Emp FROM WF_NodeEmp WHERE FK_Node=" + town.HisNode.NodeID);
+                if (dt.Rows.Count == 0)
+                    throw new Exception("@您设置的当前节点按照节点绑定人员，但是你没有为(" + town.HisNode.NodeID + "," + town.HisNode.Name + ")节点绑定人员。");
+
+                //fk_emp = this.HisWork.GetValStringByKey("FK_Emp");
+                //DataRow dr = dt.NewRow();
+                //dr[0] = fk_emp;
+                //dt.Rows.Add(dr);
+                return WorkerListWayOfDept(town, dt);
+            }
+
+
+            // 按照节点指定的人员处理。
+            if (town.HisNode.HisDeliveryWay == DeliveryWay.ByEmp)
             {
                 if (this.HisWork.EnMap.Attrs.Contains("FK_Emp") == false)
                     throw new Exception("@您设置的当前节点按照指定的人员，决定下一步的接受人员，但是你没有在节点表单中设置该表单FK_Emp字段。");
