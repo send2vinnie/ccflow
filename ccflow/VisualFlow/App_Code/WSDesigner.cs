@@ -117,14 +117,14 @@ public class WSDesigner : WSBase
     /// </summary>
     /// <param name="workid">workid</param>
     /// <returns></returns>
-    [WebMethod(EnableSession = true)]
+    [WebMethod(EnableSession = false)]
     public string GetDTOfWorkList(string fk_flow, string workid)
     {
         try
         {
             string sql = " SELECT A.FK_Node, A.RDT,A.SDT,A.FK_Emp,b.Name as EmpName";
             sql += " FROM WF_GenerWorkerList A, WF_Emp B WHERE A.FK_Emp=b.No AND A.IsEnable=1 AND A.WorkID=" + workid + " Order by A.SDT";
-            
+
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
             if (dt.Rows.Count == 0)
             {
@@ -132,7 +132,14 @@ public class WSDesigner : WSBase
                 sql += " FROM V" + fk_flow + " A, WF_Emp B WHERE A.Rec=b.No AND A.OID=" + workid;
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
             }
+
             DataSet ds = new DataSet();
+
+
+            sql = "SELECT NDFrom, NDTo FROM WF_TRACK WHERE WorkID=" + workid;
+            DataTable mydt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            mydt.TableName = "WF_TRACK";
+            ds.Tables.Add(mydt);
             ds.Tables.Add(dt);
             return Connector.ToXml(ds);
         }
