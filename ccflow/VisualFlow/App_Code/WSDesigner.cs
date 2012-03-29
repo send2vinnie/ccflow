@@ -134,8 +134,6 @@ public class WSDesigner : WSBase
             }
 
             DataSet ds = new DataSet();
-
-
             sql = "SELECT NDFrom, NDTo FROM WF_TRACK WHERE WorkID=" + workid;
             DataTable mydt = BP.DA.DBAccess.RunSQLReturnTable(sql);
             mydt.TableName = "WF_TRACK";
