@@ -134,7 +134,7 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
 
         html += "<Table border=1 width=100% height=100% class='CTable' alt='双击日期出现当天的内容' style='border-collapse: collapse' bordercolor='#111111' valign=top  >";
         html += "<TR>";
-        html += " <TD align=center colspan=7 ><a href='" + this.PageID + ".aspx?FK_NY=" + dt.AddMonths(-1).ToString("yyyy-MM") + "&CalendarType=1'  ><img src='./Images/Arrowhead_Previous_S.gif' border=0 /></a>" + year + "年" + month + "月<a href='" + this.PageID + ".aspx?CalendarType=1&FK_NY=" + dt.AddMonths(+1).ToString("yyyy-MM") + "'  ><img src='./Images/Arrowhead_Next_S.gif' border=0 /></a></TD>";
+        html += " <TD align=center colspan=7 ><a href='" + this.PageID + ".aspx?FK_NY=" + dt.AddMonths(-1).ToString("yyyy-MM") + "&CalendarType=1'  ><img src='./../Images/Arrowhead_Previous_S.gif' border=0 /></a>" + year + "年" + month + "月<a href='" + this.PageID + ".aspx?CalendarType=1&FK_NY=" + dt.AddMonths(+1).ToString("yyyy-MM") + "'  ><img src='./../Images/Arrowhead_Next_S.gif' border=0 /></a></TD>";
         html += "</TR>";
 
         html += "<TR >";

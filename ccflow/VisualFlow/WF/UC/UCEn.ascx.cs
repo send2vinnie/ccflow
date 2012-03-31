@@ -1644,11 +1644,13 @@ namespace BP.Web.Comm.UC.WF
                 myjs += "\t\n  if (v==null )  ";
                 myjs += "\t\n     return ; ";
 
-              //  myjs += "\t\n     alert(document.getElementById('Ele'+fk_FrmEle ));";
-                myjs += "\t\n  ctrl.src='dsdsd'; ";
-               myjs += "\t\n  alert('已经执行成功，谢谢使用')";
-                myjs += "\t\n  ctrl.src=v; ";
-             //   myjs += "\t\n  alert(ctrl.src)";
+                ////  myjs += "\t\n     alert(document.getElementById('Ele'+fk_FrmEle ));";
+                //  myjs += "\t\n  ctrl.src='dsdsd'; ";
+                // myjs += "\t\n  alert('已经执行成功，谢谢使用')";
+                //  myjs += "\t\n  ctrl.src=v; ";
+                myjs += "\t\n  ctrl.src=v+'?temp='+new Date(); ";
+
+                //   myjs += "\t\n  alert(ctrl.src)";
 
                 //myjs += "\t\n  ctrl.setAttribute('src',v); ";
                 //myjs += "\t\n  document.getElementById('Ele'+fk_FrmEle ).src=v; ";
@@ -1665,10 +1667,10 @@ namespace BP.Web.Comm.UC.WF
                     switch (ele.EleType)
                     {
                         case FrmEle.HandSiganture:
-                             FrmEleDB db = dbs.GetEntityByKey(FrmEleDBAttr.EleID, ele.EleID) as FrmEleDB;
-                                string dbFile = appPath + "/DataUser/BPPaint/Def.png";
-                                if (db != null)
-                                    dbFile = db.Tag1;
+                            FrmEleDB db = dbs.GetEntityByKey(FrmEleDBAttr.EleID, ele.EleID) as FrmEleDB;
+                            string dbFile = appPath + "/DataUser/BPPaint/Def.png";
+                            if (db != null)
+                                dbFile = db.Tag1;
 
                             if (this.IsReadonly || ele.IsEnable == false)
                             {
