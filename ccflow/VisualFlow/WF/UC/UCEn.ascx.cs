@@ -761,14 +761,28 @@ namespace BP.Web.Comm.UC.WF
                         this.Add("</div>");
 
 
+                       
+
                         TB mytbLine = new TB();
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
 
+                        /*
+                        * ligf 
+                        * 2012-04-05 
+                        * 修改文本信息disabled为readonly
+                        * 
+                       mytbLine.Enabled = attr.UIIsEnable;
+                       if (mytbLine.Enabled == false) 
+                           mytbLine.Attributes["class"] = "TBReadonly";                                                        
+                       else
+                           mytbLine.Attributes["class"] = "TBDoc";
+                        * */
+
                         mytbLine.Enabled = attr.UIIsEnable;
                         if (mytbLine.Enabled == false)
-                            mytbLine.Attributes["class"] = "TBReadonly";
+                             mytbLine.Attributes.Add("readonly", "true");
                         else
                             mytbLine.Attributes["class"] = "TBDoc";
 
