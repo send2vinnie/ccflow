@@ -138,8 +138,6 @@ namespace BP.DA
 			return CalculateParenthesesExpressionEx(ExpressionString);
 
 		}
-
-
 		// 第二步:把转换成后序表达的式子计算
 		//23|56|102|100|-|/|*|36|24|-|8|6|-|/|*|+"
 		private string  CalculateParenthesesExpressionEx(string Expression)
@@ -172,7 +170,6 @@ namespace BP.DA
 			return operandList[0].ToString(); 
 		}
 
- 
 
 		//判断两个运算符优先级别
 		private bool verifyOperatorPriority(string Operator1,string Operator2)

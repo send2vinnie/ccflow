@@ -28,7 +28,9 @@ namespace BP
             image.Source = wb;
             thumbs.Children.Add(image);
             ScreenshotViewer.ScrollToHorizontalOffset(ScreenshotViewer.ExtentWidth);
-
+           
+            //this.LayoutRoot.Children.Clear();
+            //this.LayoutRoot.Children.Add(new TextBlock() { Text ="我是最新的"});
             BPPaint.FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
             da.SaveImageAsFileAsync(ImageHandle.ImageToByte(image.Source), App.pkval, App.mypk);
             da.SaveImageAsFileCompleted += new EventHandler<SaveImageAsFileCompletedEventArgs>(da_SaveImageAsFileCompleted);
@@ -63,7 +65,9 @@ namespace BP
                 new FillColor(){ Color = new SolidColorBrush(Colors.Magenta), Name="洋红"},               
                 new FillColor(){ Color = new SolidColorBrush(Colors.Orange), Name="橙色"},
             };
-
+            //this.LayoutRoot.Height = App.H; this.LayoutRoot.Width = App.W;
+            //this.LayoutRoot.Children.Clear();
+            //this.LayoutRoot.Children.Add(new TextBlock() { Text = "我是最新的" });
             lstSizeData = new List<SizeData>()
             {
                 new SizeData(){ Size=1.0},
@@ -95,7 +99,7 @@ namespace BP
             Height = App.H;
             LayoutRoot.Width = App.W;
             LayoutRoot.Height = App.H;
-            rg.Rect = new Rect() { X = 0, Y = 0, Height = App.H, Width = App.W };
+            rg.Rect = new Rect() { X = 0, Y = 0, Height = App.H , Width = App.W  };
         }
         void Page_Loaded(object sender, RoutedEventArgs e)
         {

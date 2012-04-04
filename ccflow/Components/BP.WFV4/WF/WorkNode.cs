@@ -2431,6 +2431,7 @@ namespace BP.WF
                                 athDB_N.Copy(eleDB);
                                 athDB_N.FK_MapData = "ND" + toNode.NodeID;
                                 athDB_N.RefPKVal = mywk.OID.ToString();
+                                athDB_N.GenerPKVal();
                                 athDB_N.DirectInsert();
                             }
                         }
@@ -3158,6 +3159,7 @@ namespace BP.WF
                         bill.FK_Emp = WebUser.No;
                         bill.Url = billUrl;
                         bill.RDT = DataType.CurrentDataTime;
+                        bill.FullPath = path + file;
                         bill.FK_NY = DataType.CurrentYearMonth;
                         bill.FK_Flow = this.HisNode.FK_Flow;
                         bill.FK_BillType = func.FK_BillType;

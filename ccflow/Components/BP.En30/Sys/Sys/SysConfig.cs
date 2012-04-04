@@ -207,7 +207,6 @@ namespace BP.Sys
 				Map map = new Map("Sys_Config");
 				map.EnDesc="选项";
 				map.EnType=EnType.Sys;
-				
 				 
 				map.AddTBStringPK(SysConfigAttr.ParaKey,null,"参数键",true,true,3,50,10);
 				//map.AddTBStringPK(SysConfigAttr.SysNo,BP.SystemConfig.ThirdPartySoftWareKey, "第三方软件",false,true,2,50,10);

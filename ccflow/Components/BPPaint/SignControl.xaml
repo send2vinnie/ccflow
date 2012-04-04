@@ -3,9 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" d:DesignHeight="422" d:DesignWidth="651">
+    mc:Ignorable="d" >
     
-    <Grid x:Name="LayoutRoot" Width="650" Height="370" Background="LightGray">
+    <Grid x:Name="LayoutRoot" Background="LightGray">
     	<!--<TextBlock x:Name="txtTitle" Text="InkPresenter 演 示" FontWeight="Bold" Grid.Row="0" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Foreground="White" />-->
 
     	<StackPanel x:Name="spToolBar" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,26,0,0" d:LayoutOverrides="GridBox" Height="25" VerticalAlignment="Top" Visibility="Collapsed">
@@ -68,7 +68,7 @@
     			MouseMove="OnMouseMove"
     			LostMouseCapture="OnLostMouseCapture">
     			<InkPresenter.Clip>
-    				<RectangleGeometry x:Name="rg" Rect="0,0,650,370"/>
+                    <RectangleGeometry x:Name="rg" Rect="0,0,650,370"/>
     			</InkPresenter.Clip>
                 
             </InkPresenter>
@@ -86,7 +86,7 @@
     	<ScrollViewer x:Name="ScreenshotViewer" Margin="0" Background="#FFFFFF99" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" Height="150" VerticalAlignment="Bottom" Visibility="Collapsed">
     		<StackPanel x:Name="thumbs"  Orientation="Horizontal"/>
     	</ScrollViewer>
-    	<Button x:Name="btnSave"  HorizontalAlignment="Right"  Width="80" Content="保存图片" VerticalAlignment="Bottom" Click="btnSave_Click" Margin="0,0,477,-26" />
-        <Button x:Name="btnClear" Width="80" Content="清空" Click="btnClear_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,563,-26" />
+    	<Button x:Name="btnSave"  HorizontalAlignment="Right"  Width="40" Content="保存" VerticalAlignment="Bottom" Click="btnSave_Click"  />
+        <Button x:Name="btnClear" Width="40" Content="清空" Click="btnClear_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,45,0"  />
     </Grid>
 </UserControl>

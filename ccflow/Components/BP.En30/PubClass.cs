@@ -49,7 +49,7 @@ namespace BP
         public static string GetTextByValue(Entities ens, string no, string isNullAsVal)
         {
             try
-            {
+            { 
                 return GetTextByValue(ens, no);
             }
             catch
@@ -981,7 +981,6 @@ namespace BP
                 if (myen.EnMap.EnType == EnType.View)
                     continue;
 
-
                 #region create table
                 switch (dbtype)
                 {
@@ -1564,7 +1563,6 @@ namespace BP
         }
 		#endregion
 
-		
 		#region 转化格式  chen
 		/// <summary>
 		/// 将某控件中的数据转化为Excel文件
@@ -1685,7 +1683,6 @@ namespace BP
         }
 		#endregion
 		
-
 		#region
 
 		#region

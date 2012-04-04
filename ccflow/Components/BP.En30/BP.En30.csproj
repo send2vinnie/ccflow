@@ -151,20 +151,11 @@
     <Compile Include="DA\Cash.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DA\Cash1.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DA\Conn\ConnBase.cs" />
     <Compile Include="DA\Conn\ConnOfOra.cs" />
     <Compile Include="DA\Conn\ConnOfSQL.cs" />
     <Compile Include="DA\Conn\ConnOfOLE.cs" />
-    <Compile Include="DA\DataLoad\DataLoad.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DA\DataLoad\DataLoadType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DA\DataLoad\DBLoad.cs">
+    <Compile Include="DA\DBLoad.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DA\DataType.cs">
@@ -181,38 +172,7 @@
     <Compile Include="DA\Ext\chs2py.cs" />
     <Compile Include="DA\Ext\JSON.cs" />
     <Compile Include="DA\Log.cs" />
-    <Compile Include="DTS\App\Blank.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DTS\App\DTSXml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DTS\App\EnDTS.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DTS\App\AppUpdate.cs" />
-    <Compile Include="DTS\App\DataToCash.cs" />
-    <Compile Include="DTS\DataIOEn.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DTS\Enum.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DTS\FF.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DTS\SysDTS.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DTS\SysDTSSort.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DA\Exp\Class1.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DA\Exp\Class2.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="DTS\DataToCash.cs" />
     <Compile Include="DA\IDTS.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -229,6 +189,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DA\SystemConfig.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DTS\DataIOEn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DTS\Enum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DTS\FF.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="En\Base\EntityOIDName.cs" />
@@ -263,11 +232,16 @@
     <Compile Include="En\Base\Map\ControlsEnum.cs" />
     <Compile Include="En\Base\Map\Map.cs" />
     <Compile Include="En\Base\Map\Row.cs" />
+    <Compile Include="En\Base\SimpleNoNameFix.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="En\DBSimpleNoName.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="En\XMLBase\XmlMenu.cs" />
     <Compile Include="PubLib\Port\Unit.cs" />
-    <Compile Include="Right.cs">
+    <Compile Include="DA\Right.cs">
     </Compile>
-    <Compile Include="Sys\db\Msg.cs" />
     <Compile Include="Sys\GroupEnsTemplate.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -296,19 +270,10 @@
     <Compile Include="En\Base\SimpleNoName.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="En\Base\SimpleNoNameFix.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\Base\SimpleNoNameNote.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="En\Base\EntityMyPK.cs" />
     <Compile Include="En\Base\Map\SQLCash.cs" />
     <Compile Include="PubLib\Enum.cs" />
     <Compile Include="En\ClassFactory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="En\DBSimpleNoName.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="En\EnDa.cs">
@@ -324,22 +289,10 @@
     <Compile Include="En\XMLBase\XmlEn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PubLib\CN\City.cs" />
-    <Compile Include="PubLib\CN\DQ.cs" />
-    <Compile Include="PubLib\CN\PQ.cs" />
-    <Compile Include="PubLib\CN\SF.cs" />
-    <Compile Include="PubLib\CN\QXS.cs" />
-    <Compile Include="PubLib\CN\Area.cs" />
     <Compile Include="PubLib\Port\Current.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PubLib\Port\Emp.cs" />
-    <Compile Include="PubLib\Port\Mail\Mail.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PubLib\Port\Mail\MailDtl.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PubLib\PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -395,12 +348,10 @@
     <Compile Include="Sys\MapData\FrmBtn.cs" />
     <Compile Include="Sys\MapData\FrmAttachmentDB.cs" />
     <Compile Include="Sys\Sys\GloVer.cs" />
-    <Compile Include="Sys\PTable\SFTable.cs" />
+    <Compile Include="Sys\SFTable.cs" />
     <Compile Include="Sys\SysFileManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Sys\Sys\NewFolder1\SMS.cs" />
-    <Compile Include="Sys\Sys\NewFolder1\SMSLog.cs" />
     <Compile Include="Sys\XML\Language.cs" />
     <Compile Include="Sys\XML\WebConfig.cs" />
     <Compile Include="Sys\XML\EnumInfoXml.cs" />
@@ -540,8 +491,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DA\Pub\" />
-    <Folder Include="En\Base\MBase\" />
-    <Folder Include="OrgModel\" />
     <Folder Include="PubLib\SysApp\" />
     <Folder Include="Rpt\RptEn\RptEn\" />
     <Folder Include="Rpt\Self\" />

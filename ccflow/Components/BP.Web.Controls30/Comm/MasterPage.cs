@@ -65,7 +65,7 @@ namespace BP.Web
         }
         #endregion 
 
-        public void LoadPop()
+        public void LoadPop_del()
         {
             this.Page.RegisterClientScriptBlock("sdds",
   "<link href='" + this.Request.ApplicationPath + "/Comm/JS/jquery-easyui/themes/default/easyui.css' rel='stylesheet' type='text/css' />");

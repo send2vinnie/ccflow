@@ -228,15 +228,14 @@ namespace BP.Sys
 		public UserRegedit(string fk_emp, string cfgkey)
 		{
             this.MyPK = fk_emp + cfgkey;
-
             this.CfgKey = cfgkey;
             this.FK_Emp = fk_emp;
-
             int i = this.RetrieveFromDBSources();
             if (i == 0)
             {
                 this.CfgKey = cfgkey;
                 this.FK_Emp = fk_emp;
+                this.DirectInsert();
                // this.DirectInsert();
             }
 		}

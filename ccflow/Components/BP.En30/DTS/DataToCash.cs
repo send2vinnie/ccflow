@@ -88,7 +88,6 @@ namespace BP.DTS
             }
             #endregion
 
-
             #region  把xml 数据放进cash.
             al = ClassFactory.GetObjects("BP.XML.XmlEns");
             foreach (BP.XML.XmlEns ens in al)

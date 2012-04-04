@@ -59,26 +59,7 @@ namespace BP.Rpt.Doc
 	/// </summary>
 	public class Dimensions :CollectionBase
 	{
-//		private string _url = "";
-//		/// <summary>
-//		/// 维度对应的链接
-//		/// </summary>
-//		public string URL
-//		{
-//			get{ return _url;}
-//			set{ _url =value;}
-//		}
-//		private string _target = "_Dimensions";
-//		/// <summary>
-//		/// 维度对应的链接的目标窗口
-//		/// </summary>
-//		public string Target
-//		{
-//			get{ return _target;}
-//			set{ _target =value;}
-//		}
-//		
-//		
+ 
 		#region 公共方法
 		public  void BindDataCols3(DataView dv)
 		{

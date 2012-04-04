@@ -6,7 +6,6 @@ using BP.XML;
 
 namespace BP.WF.XML
 {
-	 
     /// <summary>
     /// 表单事件
     /// </summary>

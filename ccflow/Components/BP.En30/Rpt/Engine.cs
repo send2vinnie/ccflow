@@ -279,6 +279,96 @@ namespace BP.Rpt.RTF
             return imgs.ToString();
         }
         public GEEntity HisGEEntity = null;
+        /// <summary>
+        /// 获取ICON图片的数据。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string GetValueImgStrs(string key)
+        {
+            key = key.Replace(" ", "");
+            key = key.Replace("\r\n", "");
+
+            /*说明是图片文件.*/
+            string path = key.Replace("OID.Img@AppPath", SystemConfig.PathOfWebApp);
+
+            //定义rtf中图片字符串
+            StringBuilder pict = new StringBuilder();
+            //获取要插入的图片
+            System.Drawing.Image img = System.Drawing.Image.FromFile(path);
+
+            //将要插入的图片转换为16进制字符串
+            string imgHexString;
+            key = key.ToLower();
+
+            if (key.Contains(".png"))
+                imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Png);
+            else if (key.Contains(".jp"))
+                imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Jpeg);
+            else if (key.Contains(".gif"))
+                imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Gif);
+            else if (key.Contains(".ico"))
+                imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Icon);
+            else
+                imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            //生成rtf中图片字符串
+            pict.AppendLine();
+            pict.Append(@"{\pict");
+            pict.Append(@"\jpegblip");
+            pict.Append(@"\picscalex100");
+            pict.Append(@"\picscaley100");
+            pict.Append(@"\picwgoal" + img.Size.Width * 15);
+            pict.Append(@"\pichgoal" + img.Size.Height * 15);
+            pict.Append(imgHexString + "}");
+            pict.AppendLine();
+            return pict.ToString();
+        }
+        /// <summary>
+        /// 获取写字版的数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string GetValueBPPaintStrs(string key)
+        {
+            key = key.Replace(" ", "");
+            key = key.Replace("\r\n", "");
+
+            string[] strs = key.Split('.');
+            string filePath = DBAccess.RunSQLReturnString("SELECT Tag2 From Sys_FrmEleDB WHERE RefPKVal=" + this.HisGEEntity.PKVal + " AND EleID='" + strs[2].Trim() + "'");
+
+            //定义rtf中图片字符串
+            StringBuilder pict = new StringBuilder();
+            //获取要插入的图片
+            System.Drawing.Image img = System.Drawing.Image.FromFile(filePath);
+
+            //将要插入的图片转换为16进制字符串
+            string imgHexString;
+            filePath = filePath.ToLower();
+
+            if (filePath.Contains(".png"))
+                imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Png);
+            else if (filePath.Contains(".jp"))
+                imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Jpeg);
+            else if (filePath.Contains(".gif"))
+                imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Gif);
+            else if (filePath.Contains(".ico"))
+                imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Icon);
+            else
+                imgHexString = GetImgHexString(img, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            //生成rtf中图片字符串
+            pict.AppendLine();
+            pict.Append(@"{\pict");
+            pict.Append(@"\jpegblip");
+            pict.Append(@"\picscalex100");
+            pict.Append(@"\picscaley100");
+            pict.Append(@"\picwgoal" + img.Size.Width * 15);
+            pict.Append(@"\pichgoal" + img.Size.Height * 15);
+            pict.Append(imgHexString + "}");
+            pict.AppendLine();
+            return pict.ToString();
+        }
 		/// <summary>
 		/// 审核节点的表示方法是 节点ID.Attr.
 		/// </summary>
@@ -324,24 +414,23 @@ namespace BP.Rpt.RTF
                 if (strs[1].Trim() == "BPPaint")
                 {
                     string path1 = DBAccess.RunSQLReturnString("SELECT  Tag2 FROM Sys_FrmEleDB WHERE REFPKVAL=" + this.HisGEEntity.PKVal + " AND EleID='" + strs[0].Trim() + "'");
-                    
                   //  string path1 = BP.SystemConfig.PathOfDataUser + "\\BPPaint\\" + this.HisGEEntity.ToString().Trim() + "\\" + this.HisGEEntity.PKVal + ".png";
 
                     //定义rtf中图片字符串.
                     StringBuilder mypict = new StringBuilder();
                     //获取要插入的图片
-                    System.Drawing.Image imgAth = System.Drawing.Image.FromFile(path1);
+                    System.Drawing.Image myBPPaint = System.Drawing.Image.FromFile(path1);
 
                     //将要插入的图片转换为16进制字符串
-                    string imgHexStringImgAth = GetImgHexString(imgAth, System.Drawing.Imaging.ImageFormat.Png);
+                    string imgHexStringImgAth = GetImgHexString(myBPPaint, System.Drawing.Imaging.ImageFormat.Jpeg);
                     //生成rtf中图片字符串
                     mypict.AppendLine();
                     mypict.Append(@"{\pict");
-                    mypict.Append(@"\pngblip");
+                    mypict.Append(@"\jpegblip");
                     mypict.Append(@"\picscalex100");
                     mypict.Append(@"\picscaley100");
-                    mypict.Append(@"\picwgoal" + imgAth.Size.Width * 15);
-                    mypict.Append(@"\pichgoal" + imgAth.Size.Height * 15);
+                    mypict.Append(@"\picwgoal" + myBPPaint.Size.Width * 15);
+                    mypict.Append(@"\pichgoal" + myBPPaint.Size.Height * 15);
                     mypict.Append(imgHexStringImgAth + "}");
                     mypict.AppendLine();
                     return mypict.ToString();
@@ -592,6 +681,10 @@ namespace BP.Rpt.RTF
                             str = str.Replace("<" + para + ">", this.GetValueByKey(para));
                         else if (para.Contains("Siganture"))
                             str = str.Replace("<" + para + ">", this.GetValueByKey(para));
+                        else if (para.Contains("Img@AppPath"))
+                            str = str.Replace("<" + para + ">", this.GetValueImgStrs(para));
+                        else if (para.Contains(".BPPaint"))
+                            str = str.Replace("<" + para + ">", this.GetValueBPPaintStrs(para));
                         else
                             str = str.Replace("<" + para + ">", this.GetCode(this.GetValueByKey(para)));
                     }

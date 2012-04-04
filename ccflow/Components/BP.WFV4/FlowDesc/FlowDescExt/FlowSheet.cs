@@ -119,7 +119,7 @@ namespace BP.WF.Ext
 
                 rm = new RefMethod();
                 rm.Icon = "/Images/Btn/DTS.gif";
-                rm.Title = "重新生成本流程报表数据"; // "删除数据";
+                rm.Title = "重新生成报表数据"; // "删除数据";
                 rm.Warning = this.ToE("AYS", "您确定要执行吗? 注意:此方法耗费资源。");// "您确定要执行删除流程数据吗？";
                 rm.ClassMethodName = this.ToString() + ".DoReloadRptData";
                 map.AddRefMethod(rm);

@@ -139,8 +139,16 @@
     <Compile Include="CH\CHOfNode.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DemoData\CN\Area.cs" />
+    <Compile Include="DemoData\CN\City.cs" />
+    <Compile Include="DemoData\CN\DQ.cs" />
+    <Compile Include="DemoData\CN\PQ.cs" />
+    <Compile Include="DemoData\CN\QXS.cs" />
+    <Compile Include="DemoData\CN\SF.cs" />
+    <Compile Include="DemoData\Mail\Mail.cs" />
+    <Compile Include="DemoData\Mail\MailDtl.cs" />
     <Compile Include="DemoData\Resume.cs" />
-    <Compile Include="Dev2Interface\BtnState.cs" />
+    <Compile Include="FlowDesc\BtnState.cs" />
     <Compile Include="DTS\LoadTemplete.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -197,11 +205,12 @@
     <Compile Include="FlowDesc\NodeStation.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Dev2Interface\Dev2Interface.cs" />
+    <Compile Include="Dev2Interface.cs" />
     <Compile Include="NodeExt.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Port\Dept.cs" />
+    <Compile Include="Port\DeptStation.cs" />
     <Compile Include="Port\Emp.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -209,7 +218,7 @@
     <Compile Include="Port\EmpStation.cs" />
     <Compile Include="Port\Station.cs" />
     <Compile Include="Port\DeptSearchScorp.cs" />
-    <Compile Include="Port\SMS\SMS.cs" />
+    <Compile Include="Port\SMS.cs" />
     <Compile Include="WF.cs" />
     <Compile Include="WF\GERpt.cs" />
     <Compile Include="WF\DataApply.cs" />
@@ -275,6 +284,7 @@
     <Compile Include="Xml\WatchDogXml.cs" />
     <Compile Include="Xml\EventListDtl.cs" />
     <Compile Include="Xml\MapDef\FrmEventXml.cs" />
+    <Compile Include="TestNDRpt.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

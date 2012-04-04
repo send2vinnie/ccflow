@@ -339,7 +339,6 @@ namespace BP.TA
 	/// </summary> 
 	public class Mails: Entities
 	{
-		
 		/// <summary>
 		/// Ö´ÐÐ·¢ËÍ
 		/// </summary>

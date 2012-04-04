@@ -104,7 +104,9 @@
     </None>
     <None Include="Service References\FF\CCForm.wsdl" />
     <Content Include="Libs\System.Windows.Controls.Data.DataForm.Toolkit.dll" />
-    <Content Include="ServiceReferences.ClientConfig" />
+    <Content Include="ServiceReferences.ClientConfig">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Page Include="App.xaml">

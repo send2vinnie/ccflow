@@ -63,7 +63,10 @@ namespace BP.TA
         public const string EmailTitle = "EmailTitle";
         public const string EmailDoc = "EmailDoc";
         public const string Email = "Email";
-
+        /// <summary>
+        /// 发送人
+        /// </summary>
+        public const string Sender = "Sender";
 	}
 	/// <summary>
 	/// 消息
@@ -134,6 +137,17 @@ namespace BP.TA
                 this.SetValByKey(SMSAttr.SMSSta, (int)value);
             }
         }
+        public string Sender
+        {
+            get
+            {
+                return this.GetValStringByKey(SMSAttr.Sender);
+            }
+            set
+            {
+                SetValByKey(SMSAttr.Sender, value);
+            }
+        }
         public string RDT
         {
             get
@@ -192,6 +206,17 @@ namespace BP.TA
                 SetValByKey(SMSAttr.EmailDoc, value);
             }
         }
+        public string Accepter
+        {
+            get
+            {
+                return this.FK_Emp;
+            }
+            set
+            {
+               this.FK_Emp= value;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -204,6 +229,17 @@ namespace BP.TA
             set
             {
                 SetValByKey(SMSAttr.FK_Emp, value);
+            }
+        }
+        public string  Title
+        {
+            get
+            {
+                return this.EmailTitle;
+            }
+            set
+            {
+                this.EmailTitle = value;
             }
         }
         public string Tel
@@ -250,6 +286,8 @@ namespace BP.TA
                 map.EnDesc = "待办事项";
 
                 map.AddMyPK();
+
+                map.AddTBString(SMSAttr.Sender, null, "发送人", false, true, 0, 20, 20);
 
                 map.AddTBString(SMSAttr.Tel, null, "手机号", false, true, 0, 20, 20);
                 map.AddTBString(SMSAttr.TelDoc, null, "内容", false, true, 0, 3000, 20);

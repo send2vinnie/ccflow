@@ -10,14 +10,12 @@ using BP.Web;
 
 namespace BP.DTS
 {
-    
-
     public class AddEmpLeng : DataIOEn2
     {
         public AddEmpLeng()
         {
             this.HisDoType = DoType.UnName;
-            this.Title = "为操作员编号长度生级ssss";
+            this.Title = "为操作员编号长度生级";
             this.HisRunTimeType = RunTimeType.UnName;
             this.FromDBUrl = DBUrlType.AppCenterDSN;
             this.ToDBUrl = DBUrlType.AppCenterDSN;
@@ -119,13 +117,15 @@ namespace BP.DTS
 		/// <returns></returns>
 		public string GetNoInDTS()
 		{
-			DTS.SysDTS dts =new SysDTS();
-			QueryObject qo = new QueryObject(dts);
-			qo.AddWhere(DTSAttr.RunText,this.ToString());
-			if (qo.DoQuery()==0)
-				throw new Exception("没有取道调度的编号.");
-			else
-				return dts.No;
+            //DTS.SysDTS dts =new SysDTS();
+            //QueryObject qo = new QueryObject(dts);
+            //qo.AddWhere(DTSAttr.RunText,this.ToString());
+            //if (qo.DoQuery()==0)
+            //    throw new Exception("没有取道调度的编号.");
+            //else
+            //    return dts.No;
+
+            return null;
 		}
         /// <summary>
         /// 执行它 在线程中。
