@@ -104,7 +104,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
    http://ccflow.googlecode.com/svn/ccflow/
    如果你不会使用svn请看这里: http://hi.baidu.com/ccflow/blog/item/427ceff4ff96d03bbc3109b9.html
 
-2，在IIS里面新建一个应用程序池，应用程序池ID号为：ccflow
+2，在IIS里面新建一个应用程序池，应用程序池ID号为：ccflow , 托管管道模式为集成.
 
 3, 建立虚拟目录 ccflow 在80 端口下  映射目录为 D:\ccflow\VisualFlow\
    执行权限为纯脚本，应用程序池选择为：步骤2新增的应用程序池。
