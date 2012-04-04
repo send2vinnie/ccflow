@@ -42,6 +42,9 @@ public partial class Designer : System.Web.UI.Page
             #endregion 测试数据库是否连接成功。
 
             #region 升级表单 2012-03-21
+            BP.TA.SMS sms = new BP.TA.SMS();
+            sms.CheckPhysicsTable();
+                 
             FrmEle ele = new FrmEle();
             ele.CheckPhysicsTable();
             FrmEleDB eleDB = new FrmEleDB();

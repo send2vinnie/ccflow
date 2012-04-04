@@ -18,11 +18,11 @@ th, .Title
     font-size: 14px;
     border: 1px solid #C2D5E3;
     text-align: center;
-    height: 25px;
-    line-height: 25px;
-    color: #336699;
-    white-space: nowrap;
-    padding: 0 2px;
+	height:25px;
+	line-height:25px;
+	color:#336699;
+	white-space:nowrap;
+	 padding: 0 2px;
 }
 
 th .idx
@@ -257,10 +257,8 @@ StartColorStr=#FFFFFF, EndColorStr=#9DBCEA);
  
 .TRSum
 {
-    background-color: AliceBlue;
-    font-size: 12px;
-    font-family: ºÚÌå;
-    font-weight: bold;
+	background-color: infobackground;
+	font-size: 14px;
 }
 
 .BigDoc

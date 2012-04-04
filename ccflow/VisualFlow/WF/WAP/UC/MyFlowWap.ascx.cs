@@ -443,7 +443,7 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
                 return;
             }
         }
-        this.LoadPop();
+        this.LoadPop_del();
         #endregion 判断权限
 
         try

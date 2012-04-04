@@ -28,6 +28,8 @@
         }
 		</script>
 		<LINK href="./Style/Table.css" type="text/css" rel="stylesheet">
+		<LINK href="./Style/Table0.css" type="text/css" rel="stylesheet">
+
 		<base  target="_self" /> 
 	</HEAD>
 	<body onkeypress="Esc()" leftMargin="0" topMargin="0" onkeydown='DoKeyDown();'>

@@ -47,18 +47,18 @@ public partial class WF_Msg_Write : WebPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        BP.Sys.Msg msg = new BP.Sys.Msg();
+        BP.TA.SMS msg = new BP.TA.SMS();
         switch (this.DoType)
         {
             case "Re":
-                msg.OID = this.RefOID;
-                if (msg.Accepter != WebUser.No)
-                {
-                    //return;
-                }
-                msg.Title = "RE:" + msg.Title;
-                msg.Doc = " ----------------- "+msg.Doc;
-                msg.Accepter = msg.Sender;
+                //msg.MyPK = this.RefOID;
+                //if (msg.Accepter != WebUser.No)
+                //{
+                //    //return;
+                //}
+                //msg.Title = "RE:" + msg.Title;
+                //msg.EmailDoc = " ----------------- " + msg.Doc;
+                //msg.Accepter = msg.Sender;
                 break;
             default:
                 if (this.WorkID!= 0 && this.FK_Node!=0)
@@ -80,7 +80,7 @@ public partial class WF_Msg_Write : WebPage
 
                         msgInfo+="\t\n"+attr.Desc+": "+wk.GetValStrByKey(attr.Key);
                     }
-                    msg.Doc = msgInfo;
+                    msg.EmailDoc = msgInfo;
                 }
                 break;
         }
@@ -115,7 +115,7 @@ public partial class WF_Msg_Write : WebPage
         tb.ID = "TB_Doc";
         tb.Rows = 15;
         tb.Columns = 70;
-        tb.Text = msg.Doc;
+        tb.Text = msg.EmailDoc;
         tb.TextMode = TextBoxMode.MultiLine;
         tb.Attributes["Width"] = "100%";
         this.Pub1.AddTD("colspan=2", tb);
@@ -132,11 +132,10 @@ public partial class WF_Msg_Write : WebPage
     }
     void btn_Click(object sender, EventArgs e)
     {
-        BP.Sys.Msg msg = new BP.Sys.Msg();
+        BP.TA.SMS msg = new BP.TA.SMS();
         msg.Title = this.Pub1.GetTextBoxByID("TB_Title").Text;
-        msg.Doc = this.Pub1.GetTextBoxByID("TB_Doc").Text;
+        msg.EmailDoc = this.Pub1.GetTextBoxByID("TB_Doc").Text;
         msg.Sender = WebUser.No;
-        msg.SenderText = WebUser.Name;
         msg.RDT = DataType.CurrentDataTime;
 
         string acces = this.Pub1.GetTextBoxByID("TB_Emps").Text.Trim();
@@ -158,7 +157,7 @@ public partial class WF_Msg_Write : WebPage
                 continue;
 
             msg.Accepter = str;
-            msg.OID = 0;
+            msg.MyPK = DBAccess.GenerOID().ToString();
             msg.Insert();
         }
 
@@ -166,7 +165,7 @@ public partial class WF_Msg_Write : WebPage
         ps.Add("Sender", WebUser.No);
         ps.Add("Receivers", msg.Accepter);
         ps.Add("Title", msg.Title);
-        ps.Add("Context", msg.Doc);
+        ps.Add("Context", msg.EmailDoc);
         try
         {
             DBAccess.RunSP("CCstaff", ps);

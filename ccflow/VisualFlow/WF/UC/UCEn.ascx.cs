@@ -1588,6 +1588,10 @@ namespace BP.Web.Comm.UC.WF
         {
             if (this.IsReadonly)
                 return;
+
+            this.Page.RegisterClientScriptBlock("y7",
+          "<script language='JavaScript' src='./../DataUser/JSLibData/" + this.EnName + "_Self.js' ></script>");
+
             foreach (MapAttr attr in mattrs)
             {
                 if (attr.DefValReal.Contains("@") == false)
@@ -1651,7 +1655,6 @@ namespace BP.Web.Comm.UC.WF
                 myjs += "\t\n  ctrl.src=v+'?temp='+new Date(); ";
 
                 //   myjs += "\t\n  alert(ctrl.src)";
-
                 //myjs += "\t\n  ctrl.setAttribute('src',v); ";
                 //myjs += "\t\n  document.getElementById('Ele'+fk_FrmEle ).src=v; ";
                 //myjs += "\t\n  document.getElementById('Ele'+fk_FrmEle ).setAttribute('src', v); ";

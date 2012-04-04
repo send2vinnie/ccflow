@@ -750,13 +750,18 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
                 if (fl.NumOfBill == 0)
                 {
-                    this.Pub1.AddTD("...");
+                    this.Pub1.AddTD("无");
                 }
                 else
                 {
-                    string src = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=BP.WF.Bills&FK_Flow=" + fl.No;
+                  //  string src = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=BP.WF.Bills&FK_Flow=" + fl.No;
+                   // this.Pub1.AddTD("<a href=\"javascript:WinOpen('" + src + "');\"  ><img src='./../Images/Btn/Word.gif' border=0/>" + bill + "</a>");
+
+                    string src = this.Request.ApplicationPath + "/WF/Rpt/Bill.aspx?EnsName=BP.WF.Bills&FK_Flow=" + fl.No;
                     this.Pub1.AddTD("<a href=\"javascript:WinOpen('" + src + "');\"  ><img src='./../Images/Btn/Word.gif' border=0/>" + bill + "</a>");
+
                 }
+
 
                 this.Pub1.AddTDBegin();
                 //   string src1 = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=ND" + int.Parse(fl.No) + "Rpt";

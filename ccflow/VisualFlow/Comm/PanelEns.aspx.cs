@@ -171,7 +171,6 @@ namespace BP.Web.Comm
         {
             this.Page.RegisterClientScriptBlock("s",
            "<link href='./Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
-
             // this.BPToolBar1.Visible = this.IsShowToolBar1;
             UAC uac = this.HisEn.HisUAC;
             if (uac.IsView == false)
@@ -184,72 +183,60 @@ namespace BP.Web.Comm
                 uac.IsUpdate = false;
             }
 
-
             if (this.Request.QueryString["PageIdx"] == null)
                 this.PageIdx = 1;
             else
                 this.PageIdx = int.Parse(this.Request.QueryString["PageIdx"]);
 
-            try
+
+            Entity en = this.HisEn;
+            Map map = en.EnMap;
+            this.ShowWay = ShowWay.Dtl;
+
+            if (uac.IsView == false)
+                throw new Exception("@对不起，您没有查看的权限！");
+
+            #region 设置toolbar2 的 contral  设置查寻功能.
+
+            this.ToolBar1.InitByMapV2(map, 1);
+
+
+            this.ToolBar1.AddSpt("spt2");
+            this.ToolBar1.AddBtn(NamesOfBtn.Excel);
+
+            bool isEdit = true;
+            if (this.IsReadonly)
+                isEdit = false;
+
+            if (uac.IsInsert == false)
+                isEdit = false;
+
+            if (isEdit)
+                this.ToolBar1.AddLab("inse",
+      "<input type=button id='ToolBar1$Btn_New' class=Btn name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='" + this.ToE("New", "新建(N)") + "'  />");
+
+            this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' class=Btn name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置(P)") + "'  />");
+            #endregion
+
+            #region 设置选择的 默认值
+            AttrSearchs searchs = map.SearchAttrs;
+            foreach (AttrSearch attr in searchs)
             {
-                Entity en = this.HisEn;
-                Map map = en.EnMap;
-                this.ShowWay = ShowWay.Dtl;
-
-                if (uac.IsView == false)
-                    throw new Exception("@对不起，您没有查看的权限！");
-
-                #region 设置toolbar2 的 contral  设置查寻功能.
-
-                this.ToolBar1.InitByMapV2(map, 1);
-
-
-                this.ToolBar1.AddSpt("spt2");
-                this.ToolBar1.AddBtn(NamesOfBtn.Excel);
-
-                bool isEdit = true;
-                if (this.IsReadonly)
-                    isEdit = false;
-
-                if (uac.IsInsert == false)
-                    isEdit = false;
-
-                if (isEdit)
-                    this.ToolBar1.AddLab("inse",
-          "<input type=button id='ToolBar1$Btn_New' class=Btn name='ToolBar1$Btn_New' onclick=\"javascript:ShowEn('UIEn.aspx?EnsName=" + this.EnsName + "','cd','" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardH") + "' , '" + BP.Sys.EnsAppCfgs.GetValInt(this.EnsName, "WinCardW") + "');\"  value='" + this.ToE("New", "新建(N)") + "'  />");
-
-                this.ToolBar1.AddLab("sw", "<input type=button  id='ToolBar1$Btn_P' class=Btn name='ToolBar1$Btn_P'  onclick=\"javascript:OpenAttrs('" + this.EnsName + "');\"  value='" + this.ToE("Set", "设置(P)") + "'  />");
-                #endregion
-
-                #region 设置选择的 默认值
-                AttrSearchs searchs = map.SearchAttrs;
-                foreach (AttrSearch attr in searchs)
-                {
-                    string mykey = this.Request.QueryString[attr.Key];
-                    if (mykey == "" || mykey == null)
-                        continue;
-                    else
-                        this.ToolBar1.GetDDLByKey("DDL_" + attr.Key).SetSelectItem(mykey, attr.HisAttr);
-                }
-
-                if (this.Request.QueryString["Key"] != null)
-                {
-                    this.ToolBar1.GetTBByID("TB_Key").Text = this.Request.QueryString["Key"];
-                }
-                #endregion
-
-                this.SetDGData();
+                string mykey = this.Request.QueryString[attr.Key];
+                if (mykey == "" || mykey == null)
+                    continue;
+                else
+                    this.ToolBar1.GetDDLByKey("DDL_" + attr.Key).SetSelectItem(mykey, attr.HisAttr);
             }
-            catch (Exception ex)
+
+            if (this.Request.QueryString["Key"] != null)
             {
-                this.HisEns.DoDBCheck(DBLevel.High);
-                if (ex.Message.Contains("枚举操作") || ex.Message.Contains("集合已修改"))
-                {
-                    this.Response.Redirect(this.Request.RawUrl);
-                    return;
-                }
-                throw new Exception("@装载出现错误:" + ex.Message);
+                this.ToolBar1.GetTBByID("TB_Key").Text = this.Request.QueryString["Key"];
             }
+            #endregion
+
+            this.SetDGData();
+
 
             this.ToolBar1.GetBtnByID("Btn_Search").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             this.ToolBar1.GetBtnByID("Btn_Excel").Click += new System.EventHandler(this.ToolBar1_ButtonClick);
@@ -270,11 +257,19 @@ namespace BP.Web.Comm
             Entity en = ens.GetNewEntity;
             QueryObject qo = new QueryObject(ens);
             qo = this.ToolBar1.GetnQueryObject(ens, en);
-
-            this.UCSys2.Clear();
-            int maxPageNum = this.UCSys2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, "PanelEns.aspx?EnsName=" + this.EnsName);
-            if (maxPageNum > 1)
-                this.UCSys2.Add("翻页键:← → PageUp PageDown");
+            int maxPageNum = 0;
+            try
+            {
+                this.UCSys2.Clear();
+                  maxPageNum = this.UCSys2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, "PanelEns.aspx?EnsName=" + this.EnsName);
+                if (maxPageNum > 1)
+                    this.UCSys2.Add("翻页键:← → PageUp PageDown");
+            }
+            catch(Exception ex)
+            {
+                en.CheckPhysicsTable();
+                maxPageNum = this.UCSys2.BindPageIdx(qo.GetCount(), SystemConfig.PageSize, pageIdx, "PanelEns.aspx?EnsName=" + this.EnsName);
+            }
 
             qo.DoQuery(en.PK, SystemConfig.PageSize, pageIdx);
 

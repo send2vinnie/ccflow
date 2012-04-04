@@ -220,8 +220,6 @@ namespace BP.Web.Comm
             this.Response.Redirect(url,true);
             return;
 
-          // UIEn.aspx?EnsName=BP.WF.Ext.NodeOs&PK=2801
-
             #region Çå³ý»º´æ;
             this.Response.Expires = -1;
             this.Response.ExpiresAbsolute = DateTime.Now.AddMonths(-1);

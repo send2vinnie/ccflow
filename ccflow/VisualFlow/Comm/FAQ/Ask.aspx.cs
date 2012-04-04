@@ -9,7 +9,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 
-
 namespace BP.Web.WF.Portal
 {
 	/// <summary>

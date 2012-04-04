@@ -39,10 +39,18 @@ namespace BP.Web.Comm
                     enGrade.Delete();
                     this.WinClose();
                     return;
+                case "DownFile":
+                    Entity enF = BP.DA.ClassFactory.GetEn(this.EnName);
+                    enF.PKVal = this.Request.QueryString["PK"];
+                    enF.Retrieve();
+                    string pPath = enF.GetValStringByKey("MyFilePath") + "\\" + enF.PKVal + "." + enF.GetValStringByKey("MyFileExt");
+                    BP.PubClass.DownloadFile(pPath,
+                        enF.GetValStringByKey("MyFileName"));
+                    this.WinClose();
+                    return;
                 default:
                     break;
             }
-
 			switch(this.GetActionType)
 			{
 				case ActionType.DeleteFile:

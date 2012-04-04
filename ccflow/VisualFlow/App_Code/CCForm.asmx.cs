@@ -36,13 +36,14 @@ namespace BP.Web
                 ms.Write(img, 0, img.Length);
                 newImage = Image.FromStream(ms, true);
                 Bitmap bitmap = new Bitmap(newImage, new Size(fe.WOfInt, fe.HOfInt));
+
                 if (System.IO.Directory.Exists(fe.HandSigantureSavePath + "\\" + fe.FK_MapData + "\\") == false)
                     System.IO.Directory.CreateDirectory(fe.HandSigantureSavePath + "\\" + fe.FK_MapData + "\\");
 
-                string saveTo = fe.HandSigantureSavePath + "\\" + fe.FK_MapData + "\\" + pkval + ".png";
-                bitmap.Save(saveTo);
+                string saveTo = fe.HandSigantureSavePath + "\\" + fe.FK_MapData + "\\" + pkval + ".jpg";
+                bitmap.Save(saveTo, ImageFormat.Jpeg);
 
-                string pathFile = System.Web.HttpContext.Current.Request.ApplicationPath + fe.HandSiganture_UrlPath  + fe.FK_MapData + "/" + pkval + ".png";
+                string pathFile = System.Web.HttpContext.Current.Request.ApplicationPath + fe.HandSiganture_UrlPath + fe.FK_MapData + "/" + pkval + ".jpg";
                 FrmEleDB ele = new FrmEleDB();
                 ele.FK_MapData = fe.FK_MapData;
                 ele.EleID = fe.EleID;

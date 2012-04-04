@@ -72,7 +72,7 @@
     </tr>
     
      <tr>
-    <td    >
+    <td  align=left   >
         <uc1:ucsys ID="ucsys1" runat="server" />
         <uc1:ucsys ID="ucsys2" runat="server" />
     </td>

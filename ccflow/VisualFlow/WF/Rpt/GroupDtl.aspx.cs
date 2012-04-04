@@ -119,7 +119,6 @@ namespace BP.Web.WF.Comm
 
             this.Label1.Text =this.GenerCaption( ens.GetNewEntity.EnMap.EnDesc +"，数据："+ num+" 条");
 			this.UCSys1.DataPanelDtl(ens,null);
-
 		}
 
 		#region Web 窗体设计器生成的代码

@@ -1450,7 +1450,9 @@ namespace BP.Web.Comm.UC
                     string path = this.Request.PhysicalApplicationPath.ToLower();
                     string path1 = filePath.ToLower();
                     path1 = path1.Replace(path, "");
-                    url = "&nbsp;&nbsp;<a href='" + cf.FJWebPath + "/" + en.PKVal + "." + fileExt + "' target=_blank ><img src='"+this.Request.ApplicationPath+"/Images/FileType/" + fileExt + ".gif' border=0 />" + fileName + "</a>";
+                   // url = "&nbsp;&nbsp;<a href='" + cf.FJWebPath + "/" + en.PKVal + "." + fileExt + "' target=_blank ><img src='"+this.Request.ApplicationPath+"/Images/FileType/" + fileExt + ".gif' border=0 />" + fileName + "</a>";
+                    url = "&nbsp;&nbsp;<a href='../Do.aspx?DoType=DownFile&EnName="+enName+"&PK="+en.PKVal+"' target=_blank ><img src='" + this.Request.ApplicationPath + "/Images/FileType/" + fileExt + ".gif' border=0 />" + fileName + "</a>";
+
                 }
 
                 this.AddTR();
@@ -1478,7 +1480,6 @@ namespace BP.Web.Comm.UC
                 this.AddTREnd();
             }
             #endregion
-
 
             #region 绑定属性控件。
             AttrFiles fileAttrs = en.EnMap.HisAttrFiles;
@@ -1519,16 +1520,14 @@ namespace BP.Web.Comm.UC
             }
             #endregion 绑定属性控件。
 
-
             if (en.EnMap.Attrs.Contains("MyFileNum"))
             {
-
                 this.AddTR();
                 this.AddTD("nowrap=true class='FDesc' ", " ");
                 if (en.PKVal == null || en.PKVal == "" || en.PKVal == "0")
                     this.Add("<TD  colspan=3 ><a href=\"javascript:alert('请在保存后在执行。');\" target=_self>附件批量上传(请在保存后在执行)</a></TD>");
                 else
-                    this.Add("<TD  colspan=3 ><a href=\"FileManager.aspx?EnName=" + en.ToString() + "&PK=" + en.PKVal + "\" target=_self >附件批量上传</a></TD>");
+                    this.Add("<TD  colspan=3 ><a href=\"../FileManager.aspx?EnName=" + en.ToString() + "&PK=" + en.PKVal + "\" target=_self >附件批量上传&编辑</a></TD>");
                 this.AddTREnd();
             }
             this.AddTableEnd();

@@ -403,7 +403,7 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
     {
         // this.Pub1.AddH2(fl.Name + " - 查询设计");
 
-        this.Pub1.Add("<img src='../../../DataUser/LogBiger.png' border=0/>");
+        this.Pub1.Add("<a href='http://ccflow.org' target=_b><img src='../../../DataUser/LogBiger.png' border=0/></a>");
 
         this.Pub1.AddHR();
 

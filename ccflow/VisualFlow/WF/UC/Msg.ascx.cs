@@ -35,13 +35,13 @@ public partial class WF_UC_Msg : BP.Web.UC.UCBase3
         switch (this.DoType)
         {
             case "Del":
-                BP.Sys.Msg msg = new BP.Sys.Msg();
-                msg.OID = this.RefOID;
-                msg.Retrieve();
-                if (msg.Accepter == WebUser.No)
-                {
-                    msg.Delete();
-                }
+                //BP.Sys.Msg msg = new BP.Sys.Msg();
+                //msg.OID = this.RefOID;
+                //msg.Retrieve();
+                //if (msg.Accepter == WebUser.No)
+                //{
+                //    msg.Delete();
+                //}
                 break;
             default:
                 break;
@@ -64,11 +64,11 @@ public partial class WF_UC_Msg : BP.Web.UC.UCBase3
         this.Left.AddULEnd();
 
         int colspan = 5;
-        BP.Sys.Msgs ens = new BP.Sys.Msgs();
-        if (this.MsgSta == 9)
-            ens.Retrieve(BP.Sys.MsgAttr.Sender, WebUser.No);
-        else
-            ens.Retrieve(BP.Sys.MsgAttr.Accepter, WebUser.No, BP.Sys.MsgAttr.MsgSta, this.MsgSta);
+        //BP.TA.Msgs ens = new BP.Sys.Msgs();
+        //if (this.MsgSta == 9)
+        //    ens.Retrieve(BP.Sys.MsgAttr.Sender, WebUser.No);
+        //else
+        //    ens.Retrieve(BP.Sys.MsgAttr.Accepter, WebUser.No, BP.Sys.MsgAttr.MsgSta, this.MsgSta);
 
 
         this.Pub1.AddTable("width='90%'");
@@ -85,19 +85,19 @@ public partial class WF_UC_Msg : BP.Web.UC.UCBase3
         this.Pub1.AddTREnd();
         int i = 0;
         bool is1 = false;
-        foreach (BP.Sys.Msg en in ens)
-        {
-            i++;
-            is1 = this.Pub1.AddTR(is1);
-            CheckBox cb = new CheckBox();
-            cb.ID = "CB_" + en.OID;
-            this.Pub1.AddTDIdx(i);
-            this.Pub1.AddTD(cb);
-            this.Pub1.AddTDA("javascript:WinOpen('./Msg/Read.aspx?RefOID=" + en.OID + "','sd');", en.Title);
-            this.Pub1.AddTD(en.SenderText);
-            this.Pub1.AddTD(en.RDT);
-            this.Pub1.AddTREnd();
-        }
+        //foreach (BP.Sys.Msg en in ens)
+        //{
+        //    i++;
+        //    is1 = this.Pub1.AddTR(is1);
+        //    CheckBox cb = new CheckBox();
+        //    cb.ID = "CB_" + en.OID;
+        //    this.Pub1.AddTDIdx(i);
+        //    this.Pub1.AddTD(cb);
+        //    this.Pub1.AddTDA("javascript:WinOpen('./Msg/Read.aspx?RefOID=" + en.OID + "','sd');", en.Title);
+        //    this.Pub1.AddTD(en.SenderText);
+        //    this.Pub1.AddTD(en.RDT);
+        //    this.Pub1.AddTREnd();
+        //}
         this.Pub1.AddTableEnd();
     }
 

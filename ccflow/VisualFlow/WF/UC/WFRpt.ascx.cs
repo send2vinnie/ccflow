@@ -338,7 +338,8 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         {
             this.AddTR();
             this.AddTDIdx(idx++);
-            this.AddTD(item.RDT);
+            DateTime dt = DataType.ParseSysDateTime2DateTime(item.RDT);
+            this.AddTD(dt.ToString("MM月dd分HH:mm"));
 
             this.AddTD(item.NDFromT);
             this.AddTD(item.EmpFromT);

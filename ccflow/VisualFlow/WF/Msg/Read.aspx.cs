@@ -17,44 +17,44 @@ public partial class WF_Msg_Read : WebPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        BP.Sys.Msg msg = new BP.Sys.Msg(this.RefOID);
-        if (msg.Accepter != WebUser.No)
-            return;
+        //BP.TA.SMS msg = new BP.TA.SMS(this.RefOID);
+        //if (msg.Accepter != WebUser.No)
+        //    return;
 
-        if (msg.HisMsgSta == BP.Sys.MsgSta.UnRead)
-        {
-            msg.HisMsgSta = BP.Sys.MsgSta.Read;
-            msg.Update();
-        }
+        //if (msg.HisMsgSta == BP.Sys.MsgSta.UnRead)
+        //{
+        //    msg.HisMsgSta = BP.Sys.MsgSta.Read;
+        //    msg.Update();
+        //}
 
-        this.Pub1.AddTable("width='95%'");
-        this.Pub1.AddTR();
-        this.Pub1.AddTD("width=10%", "发送人");
-        TextBox tb = new TextBox();
-        tb.ID = "TB_Emps";
-        tb.Columns = 80;
-        tb.Text = msg.SenderText;
-        this.Pub1.AddTD(tb);
-        this.Pub1.AddTREnd();
+        //this.Pub1.AddTable("width='95%'");
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTD("width=10%", "发送人");
+        //TextBox tb = new TextBox();
+        //tb.ID = "TB_Emps";
+        //tb.Columns = 80;
+        //tb.Text = msg.SenderText;
+        //this.Pub1.AddTD(tb);
+        //this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
-        this.Pub1.AddTD("width=10%", "标题");
-        tb = new TextBox();
-        tb.ID = "TB_Title";
-        tb.Columns = 80;
-        tb.Text = msg.Title;
-        this.Pub1.AddTD(tb);
-        this.Pub1.AddTREnd();
+        //this.Pub1.AddTR();
+        //this.Pub1.AddTD("width=10%", "标题");
+        //tb = new TextBox();
+        //tb.ID = "TB_Title";
+        //tb.Columns = 80;
+        //tb.Text = msg.Title;
+        //this.Pub1.AddTD(tb);
+        //this.Pub1.AddTREnd();
 
-        this.Pub1.AddTR();
-        tb = new TextBox();
-        tb.ID = "TB_Doc";
-        tb.Rows = 15;
-        tb.Columns = 70;
-        tb.TextMode = TextBoxMode.MultiLine;
-        tb.Text = msg.Doc;
-        this.Pub1.AddTD("colspan=2", tb);
-        this.Pub1.AddTREnd();
+        //this.Pub1.AddTR();
+        //tb = new TextBox();
+        //tb.ID = "TB_Doc";
+        //tb.Rows = 15;
+        //tb.Columns = 70;
+        //tb.TextMode = TextBoxMode.MultiLine;
+        //tb.Text = msg.Doc;
+        //this.Pub1.AddTD("colspan=2", tb);
+        //this.Pub1.AddTREnd();
 
 
         //this.Pub1.AddTR();

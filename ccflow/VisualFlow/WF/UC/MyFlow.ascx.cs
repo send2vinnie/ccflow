@@ -479,7 +479,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 return;
             }
         }
-        this.LoadPop();
+        this.LoadPop_del();
         #endregion 判断权限
 
         try
