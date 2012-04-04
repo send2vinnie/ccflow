@@ -77,7 +77,9 @@ namespace CCForm
             this.Height = 200;
 
             ImageBrush ib = new ImageBrush();
-            BitmapImage png = new BitmapImage(new Uri("/CCForm;component/Img/LogoH.png", UriKind.Relative)); 
+          //  BitmapImage png = new BitmapImage(new Uri("/CCForm;component/Img/LogoH.png", UriKind.Relative));
+            BitmapImage png = new BitmapImage(new Uri("/CCForm;component/Img/Logo/" + Glo.CompanyID + "/LogoH.png", UriKind.Relative));
+
             ib.ImageSource = png;
             this.Background = ib;
             this.TextWrapping = System.Windows.TextWrapping.Wrap;

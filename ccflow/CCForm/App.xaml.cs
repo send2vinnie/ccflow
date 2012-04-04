@@ -44,6 +44,7 @@ namespace CCForm
             string[] strs = url.Split('/');
             Glo.BPMHost = strs[0] + "//" + strs[1] + strs[2] + "/" + strs[3];
 
+
             //启动主界面。 
             this.RootVisual = new MainPage();
         }

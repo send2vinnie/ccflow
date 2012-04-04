@@ -340,6 +340,7 @@ namespace CCForm
 
             base.OnKeyDown(e);
         }
+        public bool IsDelete = false;
         public void DeleteIt()
         {
             if (this.IsCanDel == false)
@@ -347,6 +348,15 @@ namespace CCForm
                 MessageBox.Show("该字段[" + this.Name + "]不可删除!", "提示", MessageBoxButton.OK);
                 return;
             }
+
+            if (this.Name != null)
+            {
+                FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
+                string sqls = "DELETE Sys_MapAttr WHERE FK_MapData='" + Glo.FK_MapData + "' AND KeyOfEn='" + this.Name + "'";
+                da.RunSQLsAsync(sqls);
+            }
+
+            IsDelete = true;
             Canvas c = this.Parent as Canvas;
             c.Children.Remove(this);
         }

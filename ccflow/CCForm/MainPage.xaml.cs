@@ -630,6 +630,11 @@ namespace CCForm
         {
             InitializeComponent();
 
+            FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
+            da.CfgKeyAsync("CompanyID");
+            da.CfgKeyCompleted += new EventHandler<FF.CfgKeyCompletedEventArgs>(da_CfgKeyCompleted);
+
+
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, 400);
             _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
@@ -669,7 +674,6 @@ namespace CCForm
             #endregion chinwin.
 
             #region 构造
-
             this.SetSelectedTool(ToolBox.Mouse);
             e1 = new Ellipse();
             e1.Tag = "e1";
@@ -748,7 +752,13 @@ namespace CCForm
             this.BindTreeView();
             #endregion 其它.
         }
-
+        void da_CfgKeyCompleted(object sender, FF.CfgKeyCompletedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(e.Result))
+                Glo.CompanyID = "CCFlow";
+            else
+                Glo.CompanyID = e.Result;
+        }
         void canvasMain_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
@@ -2975,6 +2985,13 @@ namespace CCForm
                     return;
                 }
 
+                BPCheckBox cb = Glo.currEle as BPCheckBox;
+                if (cb != null)
+                {
+                    cb.DeleteIt();
+                    return;
+                }
+
                 BPDDL ddl = Glo.currEle as BPDDL;
                 if (ddl != null)
                 {
@@ -4057,6 +4074,9 @@ namespace CCForm
                 BPTextBox tb = ctl as BPTextBox;
                 if (tb != null)
                 {
+                    if (tb.IsDelete == true)
+                        continue;
+
                     DataRow mapAttrDR = mapAttrDT.NewRow();
                     mapAttrDR["MyPK"] = Glo.FK_MapData + "_" + tb.Name;
                     mapAttrDR["FK_MapData"] = Glo.FK_MapData;
@@ -4116,6 +4136,9 @@ namespace CCForm
                 BPDDL ddl = ctl as BPDDL;
                 if (ddl != null)
                 {
+                    if (ddl.IsDelete == true)
+                        continue;
+
                     DataRow mapAttrDR = mapAttrDT.NewRow();
                     mapAttrDR["MyPK"] = Glo.FK_MapData + "_" + ddl.Name;
                     mapAttrDR["FK_MapData"] = Glo.FK_MapData;
@@ -4148,6 +4171,9 @@ namespace CCForm
                 BPCheckBox cb = ctl as BPCheckBox;
                 if (cb != null)
                 {
+                    if (cb.IsDelete == true)
+                        continue;
+
                     DataRow mapAttrDR = mapAttrDT.NewRow();
                     mapAttrDR["MyPK"] = Glo.FK_MapData + "_" + cb.Name;
                     mapAttrDR["FK_MapData"] = Glo.FK_MapData;
@@ -4565,6 +4591,13 @@ namespace CCForm
                             }
                             continue;
                         }
+
+                        BPLabel lab = item as BPLabel;
+                        if (lab != null)
+                        {
+                            lab.ToUp();
+                            continue;
+                        }
                         item.SetValue(Canvas.TopProperty, Canvas.GetTop(item) - 1);
                     }
                     break;
@@ -4592,6 +4625,14 @@ namespace CCForm
                             }
                             continue;
                         }
+
+                        BPLabel lab = item as BPLabel;
+                        if (lab != null)
+                        {
+                            lab.ToDown();
+                            continue;
+                        }
+
                         item.SetValue(Canvas.TopProperty, Canvas.GetTop(item) + 1);
                     }
                     break;
@@ -4614,6 +4655,14 @@ namespace CCForm
                             }
                             continue;
                         }
+
+                        BPLabel lab = item as BPLabel;
+                        if (lab != null)
+                        {
+                            lab.ToRight();
+                            continue;
+                        }
+
                         item.SetValue(Canvas.LeftProperty, Canvas.GetLeft(item) + 1);
                     }
                     break;
@@ -4634,6 +4683,13 @@ namespace CCForm
                                 line.MyLine.X1 = line.MyLine.X1 - 1;
                                 line.MyLine.X2 = line.MyLine.X2 - 1;
                             }
+                            continue;
+                        }
+
+                        BPLabel lab = item as BPLabel;
+                        if (lab != null)
+                        {
+                            lab.ToLeft();
                             continue;
                         }
                         item.SetValue(Canvas.LeftProperty, Canvas.GetLeft(item) - 1);

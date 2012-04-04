@@ -245,11 +245,20 @@ namespace CCForm
         }
         #endregion 移动事件
 
+        public bool IsDelete = false;
         public void DeleteIt()
         {
+            if (this.Name != null)
+            {
+                FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
+                string sqls = "DELETE Sys_MapAttr WHERE FK_MapData='" + Glo.FK_MapData + "' AND KeyOfEn='" + this.Name + "'";
+                da.RunSQLsAsync(sqls);
+            }
             Canvas c = this.Parent as Canvas;
             c.Children.Remove(this);
+            IsDelete = true;
         }
+
         public void HidIt()
         {
             FF.CCFormSoapClient hidDA = Glo.GetCCFormSoapClientServiceInstance();

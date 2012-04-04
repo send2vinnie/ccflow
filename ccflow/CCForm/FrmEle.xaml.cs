@@ -135,7 +135,6 @@ namespace CCForm
         {
             this.DialogResult = false;
         }
-
         private void DDL_EleType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dtConfig == null)

@@ -225,7 +225,7 @@ namespace CCForm
                             return;
                     }
 
-                    DeleteIt();
+                    this.DeleteIt();
                     Canvas c = this.Parent as Canvas;
                     c.Children.Remove(this);
                     break;

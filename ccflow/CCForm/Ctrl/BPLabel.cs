@@ -92,6 +92,34 @@ namespace CCForm
             }
             base.OnMouseMove(e);
         }
+        #region 转向方法.
+        public void ToLeft()
+        {
+            double x = (double)this.GetValue(Canvas.LeftProperty);
+            double y = (double)this.GetValue(Canvas.TopProperty);
+            this.SetValue(Canvas.LeftProperty, x - 1);
+        }
+        public void ToRight()
+        {
+            double x = (double)this.GetValue(Canvas.LeftProperty);
+            double y = (double)this.GetValue(Canvas.TopProperty);
+            this.SetValue(Canvas.LeftProperty, x + 1);
+        }
+
+        public void ToUp()
+        {
+            double x = (double)this.GetValue(Canvas.LeftProperty);
+            double y = (double)this.GetValue(Canvas.TopProperty);
+            this.SetValue(Canvas.TopProperty, y - 1);
+        }
+        public void ToDown()
+        {
+            double x = (double)this.GetValue(Canvas.LeftProperty);
+            double y = (double)this.GetValue(Canvas.TopProperty);
+            this.SetValue(Canvas.TopProperty, y + 1);
+        }
+        #endregion 转向方法.
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             e.Handled = true;
@@ -106,16 +134,20 @@ namespace CCForm
                 // Up 键所对应的 e.PlatformKeyCode == 38 
                 // 当获得的 e.Key == Key.Unknown 时，可以使用 e.PlatformKeyCode 来确定用户所按的键
                 case Key.Up:
-                    this.SetValue(Canvas.TopProperty, y - 1);
+                case Key.W:
+                    this.ToUp();
                     break;
                 case Key.Down:
-                    this.SetValue(Canvas.TopProperty, y + 1);
+                case Key.S:
+                    this.ToDown();
                     break;
                 case Key.Left:
-                    this.SetValue(Canvas.LeftProperty, x - 1);
+                case Key.A:
+                    this.ToLeft();
                     break;
                 case Key.Right:
-                    this.SetValue(Canvas.LeftProperty, x + 1);
+                case Key.D:
+                    this.ToRight();
                     break;
                 case Key.Delete:
                     if (this.Name.Contains("_blank_") == false)

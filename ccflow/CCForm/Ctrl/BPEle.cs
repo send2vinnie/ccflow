@@ -78,10 +78,10 @@ namespace CCForm
         public BPEle()
         {
             this.IsReadOnly = true;
-            this.Width = 150;
+            this.Width = 200;
             this.Height = 150;
             ImageBrush ib = new ImageBrush();
-            BitmapImage png = new BitmapImage(new Uri("/CCForm;component/Img/LogoBig.png", UriKind.Relative));
+            BitmapImage png = new BitmapImage(new Uri("/CCForm;component/Img/FrmEleDef.png", UriKind.Relative));
             ib.ImageSource = png;
             this.Background = ib;
 

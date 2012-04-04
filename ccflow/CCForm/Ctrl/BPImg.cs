@@ -80,7 +80,7 @@ namespace CCForm
             this.Height = 120;
 
             ImageBrush ib = new ImageBrush();
-            BitmapImage png = new BitmapImage(new Uri("/CCForm;component/Img/LogoBig.png", UriKind.Relative));
+            BitmapImage png = new BitmapImage(new Uri("/CCForm;component/Img/Logo/"+Glo.CompanyID+"/LogoBig.png", UriKind.Relative));
             ib.ImageSource = png;
             this.Background = ib;
 

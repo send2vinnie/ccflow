@@ -53,6 +53,7 @@ namespace CCForm
         public static bool IsMouseDown = false;
         public static bool IsDtlFrm = false;
         public static string BPMHost = null;
+        public static string CompanyID = "CCFlow";
         public static void BindComboBoxFrontName(ComboBox cb, string selectVal)
         {
             cb.Items.Clear();

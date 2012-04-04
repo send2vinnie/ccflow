@@ -42,7 +42,6 @@ namespace CCForm
             Glo.BindComboBoxWinOpenTarget(this.DDL_WinName, img.WinTarget);
             this.Show();
         }
-
         private void DDL_WinName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem it = (ComboBoxItem)this.DDL_WinName.SelectedItem;

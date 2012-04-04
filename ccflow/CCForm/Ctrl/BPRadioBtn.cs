@@ -128,9 +128,9 @@ namespace CCForm
             }
             base.OnMouseMove(e);
         }
+        public bool IsDelete = false;
         public void DoDeleteIt()
         {
-
             Canvas c = this.Parent as Canvas;
             string ids = "";
             foreach (UIElement uiCtl in c.Children)
@@ -155,12 +155,15 @@ namespace CCForm
                     if (ctl.Name == str)
                     {
                         c.Children.Remove(ctl);
+                        BPRadioBtn eleBtn = ctl as BPRadioBtn;
+                        eleBtn.IsDelete = true;
                         break;
                     }
                 }
             }
             c.Children.Remove(this);
             Glo.currEle = null;
+            this.IsDelete = true;
         }
         protected override void OnKeyDown(KeyEventArgs e)
         {
