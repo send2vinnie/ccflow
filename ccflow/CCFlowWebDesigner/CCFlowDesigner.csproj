@@ -271,6 +271,10 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Resource Include="Images\Logo\CCFlow\LogoW.jpg" />
+    <Resource Include="Images\Logo\CCFlow\Welcome.jpg" />
+    <Resource Include="Images\Logo\SQ\LogoW.jpg" />
+    <Resource Include="Images\Logo\SQ\Welcome.jpg" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
@@ -449,10 +453,6 @@
     <Resource Include="Images\MenuItem\Property.png" />
     <Resource Include="Images\MenuItem\Report.png" />
     <Resource Include="Images\MenuItem\Post.png" />
-    <Content Include="Images\Icons\CCFlow.jpg" />
-    <Content Include="Images\Icons\CCFlowWelcome.jpg" />
-    <Content Include="Images\Icons\Flow.jpg" />
-    <Content Include="Images\Icons\FlowWelcome.jpg" />
     <Content Include="Images\ToolBarHelp.png" />
     <Content Include="Images\loading.png" />
     <Resource Include="Images\MenuItem\deFrm.png" />

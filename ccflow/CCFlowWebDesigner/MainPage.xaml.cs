@@ -138,9 +138,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 var id = e.Result;
                 if (id == null || id == "")
                     id = "CCFlow";
-                imageLogo.Source = new BitmapImage(new Uri(string.Format("/Images/Icons/{0}.jpg", id), UriKind.Relative));
+                imageLogo.Source = new BitmapImage(new Uri(string.Format("./Images/Logo/{0}/LogoW.jpg", id), UriKind.Relative));
                 var brush = new ImageBrush(); //定义图片画刷
-                brush.ImageSource = new BitmapImage(new Uri(string.Format("/Images/Icons/{0}Welcome.jpg", id), UriKind.Relative));
+                brush.ImageSource = new BitmapImage(new Uri(string.Format("./Images/Logo/{0}/Welcome.jpg", id), UriKind.Relative));
                 tbDesigner.Background = brush;
             }
             catch (Exception ex)
@@ -644,7 +644,6 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                                 break;
                             }
                         }
-
                     }
                     else
                     {
@@ -932,16 +931,19 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 _doubleClickTimer.Stop();
 
-                if (null == this.FromTree.Selected 
+                if (null == this.FromTree.Selected
                     || ((TreeNode)FromTree.Selected).IsSort)
                     return;
 
                 TreeNode tn = FromTree.Selected as TreeNode;
                 this.CurrFK_FrmSort = tn.ID;
-                WF.Frm.Frm frm = new WF.Frm.Frm();
-                frm.BindFrm(tn.Name);
-                frm.HisMainPage = this;
-                frm.Show();
+
+                Glo.WinOpenByDoType("CH", UrlFlag.FormFreeModel, tn.Name, null, null);
+
+                //WF.Frm.Frm frm = new WF.Frm.Frm();
+                //frm.BindFrm(tn.Name);
+                //frm.HisMainPage = this;
+                //frm.Show();
             }
             else
             {
