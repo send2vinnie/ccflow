@@ -1201,10 +1201,6 @@ namespace BP.WF
             {
                 return this.GetValStrByKey(NodeAttr.FocusField);
             }
-            set
-            {
-                SetValByKey(NodeAttr.FocusField, value);
-            }
         }
         /// <summary>
         /// 节点的事务编号
@@ -2986,8 +2982,8 @@ namespace BP.WF
                 if (attr.IsExit(MapAttrAttr.KeyOfEn, this.FocusField, MapAttrAttr.FK_MapData, md.No) == false)
                 {
                     msg += "@焦点字段 " + this.FocusField + " 被非法删除了.";
-                    this.FocusField = "";
-                    this.DirectUpdate();
+                    //this.FocusField = "";
+                    //this.DirectUpdate();
                 }
             }
             return msg;
