@@ -1529,8 +1529,6 @@ namespace BP.Web.Comm.UC
 
             this.AddTREnd();
 
-
-
             string urlExt = "";
             foreach (Entity en in ens)
             {
@@ -1539,7 +1537,7 @@ namespace BP.Web.Comm.UC
                 string url = this.GenerEnUrl(en, attrs);
                 #endregion
 
-                urlExt = "\"javascript:ShowEn('UIEn.aspx?EnsName=" + ens.ToString() + "&PK=" + en.GetValByKey(pk) + url + "', 'cd','" + WinCardH + "','" + WinCardW + "');\"";
+                urlExt = "\"javascript:ShowEn('"+this.Request.ApplicationPath+"/Comm/UIEn.aspx?EnsName=" + ens.ToString() + "&PK=" + en.GetValByKey(pk) + url + "', 'cd','" + WinCardH + "','" + WinCardW + "');\"";
                 switch (tableStyle)
                 {
                     case UIRowStyleGlo.None:
