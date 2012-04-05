@@ -422,8 +422,16 @@ namespace BP
                 }
             }
         }
-
-
+        public static string CompanyID
+        {
+            get
+            {
+                string s= AppSettings["CompanyID"];
+                if (string.IsNullOrEmpty(s))
+                    return "CCFlow";
+                return s;
+            }
+        }
         /// <summary>
         /// ¿ª·¢ÉÌquan ³Æ£¨£©		 
         /// </summary>

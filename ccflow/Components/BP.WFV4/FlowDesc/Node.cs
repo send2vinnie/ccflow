@@ -745,6 +745,86 @@ namespace BP.WF
                 this.SetValByKey(BtnAttr.EndFlowEnable, 0);
             }
 
+            #region 对访问规则进行检查
+            switch (this.HisDeliveryWay)
+            {
+                case DeliveryWay.ByStation:
+                    if (nd.HisStations.Count == 0)
+                        rpt += "<font color=red>您设置了该节点的访问规则是按岗位，但是您没有为节点绑定岗位。</font>";
+                    break;
+                case DeliveryWay.ByDept:
+                    if (nd.HisDepts.Count == 0)
+                        rpt += "<font color=red>您设置了该节点的访问规则是按部门，但是您没有为节点绑定部门。</font>";
+                    break;
+                case DeliveryWay.ByEmp:
+                    if (nd.HisNodeEmps.Count == 0)
+                        rpt += "<font color=red>您设置了该节点的访问规则是按人员，但是您没有为节点绑定人员。</font>";
+                    break;
+                case DeliveryWay.BySQL:
+                    if (nd.IsStartNode)
+                    {
+                        rpt += "<font color=red>开始节点不支持按SQL 设置访问规则。</font>";
+                        break;
+                    }
+
+                    if (nd.RecipientSQL.Trim().Length == 0)
+                        rpt += "<font color=red>您设置了该节点的访问规则是按SQL查询，但是您没有在节点属性里设置查询sql，此sql的要求是查询必须包含No,Name两个列，sql表达式里支持@+字段变量，详细参考开发手册 。</font>";
+                    else
+                    {
+                        try
+                        {
+                            DataTable testDB = DBAccess.RunSQLReturnTable(nd.RecipientSQL);
+                            if (testDB.Columns.Contains("No") == false || testDB.Columns.Contains("Name") == false)
+                            {
+                                rpt += "<font color=red>您设置了该节点的访问规则是按SQL查询，设置的sql不符合规则，此sql的要求是查询必须包含No,Name两个列，sql表达式里支持@+字段变量，详细参考开发手册 。</font>";
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            rpt += "<font color=red>您设置了该节点的访问规则是按SQL查询,执行此语句错误." + ex.Message + "</font>";
+                        }
+                    }
+                    break;
+                case DeliveryWay.BySpcEmp:
+                    if (nd.IsStartNode)
+                    {
+                        rpt += "<font color=red>开始节点不能设置指定的人员访问规则。</font>";
+                        break;
+                    }
+                    if (attrs.Contains(BP.Sys.MapAttrAttr.KeyOfEn, "FK_Emp") == false)
+                    {
+                        /*检查节点字段是否有FK_Emp字段*/
+                        rpt += "<font color=red>您设置了该节点的访问规则是按指定节点表单人员，但是您没有在节点表单中增加FK_Emp字段，详细参考开发手册 。</font>";
+                    }
+                    break;
+                case DeliveryWay.BySelected: /* 由上一步发送人员选择 */
+                    if (nd.IsStartNode)
+                    {
+                        rpt += "<font color=red>开始节点不能设置指定的选择人员访问规则。</font>";
+                        break;
+                    }
+
+                    if (attrs.Contains(BP.Sys.MapAttrAttr.KeyOfEn, "FK_Emp") == false)
+                    {
+                        /*检查节点字段是否有FK_Emp字段*/
+                        rpt += "<font color=red>您设置了该节点的访问规则是按指定节点表单人员，但是您没有在节点表单中增加FK_Emp字段，详细参考开发手册 。</font>";
+                    }
+                    break;
+                case DeliveryWay.ByPreviousOper: /* 由上一步发送人员选择 */
+                case DeliveryWay.ByPreviousOperSkip: /* 由上一步发送人员选择 */
+                    if (nd.IsStartNode)
+                    {
+                        rpt += "<font color=red>节点访问规则设置错误:开始节点。</font>";
+                        break;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            #endregion
+
+
             #region 更新流程判断条件的标记。
             DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=0,IsCCFlow=0  WHERE FK_Flow='" + this.FK_Flow + "'");
             DBAccess.RunSQL("UPDATE WF_Node SET IsCCNode=1 WHERE NodeID IN (SELECT NodeID FROM WF_Cond WHERE CondType=0) AND FK_Flow='" + this.FK_Flow + "'");
