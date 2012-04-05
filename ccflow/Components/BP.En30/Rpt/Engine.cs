@@ -336,6 +336,8 @@ namespace BP.Rpt.RTF
 
             string[] strs = key.Split('.');
             string filePath = DBAccess.RunSQLReturnString("SELECT Tag2 From Sys_FrmEleDB WHERE RefPKVal=" + this.HisGEEntity.PKVal + " AND EleID='" + strs[2].Trim() + "'");
+            if (filePath == null)
+                return "";
 
             //¶¨ÒårtfÖÐÍ¼Æ¬×Ö·û´®
             StringBuilder pict = new StringBuilder();
