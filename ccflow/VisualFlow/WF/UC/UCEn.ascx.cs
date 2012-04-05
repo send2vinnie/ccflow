@@ -820,7 +820,7 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
                         if (mytbLine.Enabled == false)
                         {
-                            mytbLine.Attributes["class"] = "TBReadonly";
+                           mytbLine.Attributes["class"] = "TBReadonly";
                             mytbLine.Attributes.Add("readonly", "true");
                         }
                         mytbLine.Attributes["style"] = "width:98%;height:100%;padding: 0px;margin: 0px;";

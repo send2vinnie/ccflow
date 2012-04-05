@@ -322,8 +322,12 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
             int count = 0;
             foreach (MapAttr mattr1 in mattrs1)
             {
+                if (mattr1.LGType != FieldTypeS.Normal)
+                    continue;
+
                 if (mattr1.KeyOfEn == MapAttrAttr.MyPK)
                     continue;
+
                 if (mattr1.IsNum == false)
                     continue;
                 switch (mattr1.KeyOfEn)
