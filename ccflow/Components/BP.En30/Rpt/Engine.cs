@@ -335,9 +335,17 @@ namespace BP.Rpt.RTF
             key = key.Replace("\r\n", "");
 
             string[] strs = key.Split('.');
-            string filePath = DBAccess.RunSQLReturnString("SELECT Tag2 From Sys_FrmEleDB WHERE RefPKVal=" + this.HisGEEntity.PKVal + " AND EleID='" + strs[2].Trim() + "'");
-            if (filePath == null)
+            string filePath = "";
+            try
+            {
+                filePath = DBAccess.RunSQLReturnString("SELECT Tag2 From Sys_FrmEleDB WHERE RefPKVal=" + this.HisGEEntity.PKVal + " AND EleID='" + strs[2].Trim() + "'");
+                if (filePath == null)
+                    return "";
+            }
+            catch
+            {
                 return "";
+            }
 
             //¶¨ÒårtfÖÐÍ¼Æ¬×Ö·û´®
             StringBuilder pict = new StringBuilder();
