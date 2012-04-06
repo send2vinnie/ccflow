@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Configuration;
 using System.Data;
+using BP;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI; 
@@ -90,7 +91,7 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         if (BP.WF.Glo.IsShowTitle)
         {
             this.Pub1.Add("<DIV class='wp' >");
-            this.Pub1.Add("<div  id='Top' class='top' /><h2><img src='"+this.Request.ApplicationPath+"/DataUser/LogBiger.png'  border=0 /></h2></div>");
+            this.Pub1.Add("<div  id='Top' class='top' /><h2><img src='" + this.Request.ApplicationPath + "/DataUser/ICON/" + SystemConfig.CompanyID + "/LogBiger.png'  border=0 /></h2></div>");
         }
 
         this.Page.RegisterClientScriptBlock("d",

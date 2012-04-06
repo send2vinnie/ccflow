@@ -65,7 +65,7 @@ div#Top
     margin: 0px;
     padding: 0px 30px 0px 0px;
     height: 100%;
-   <%-- background-image: url('./../../DataUser/LogBiger.png'); --%>
+   <%-- background-image: url('./../../DataUser/CCFlow/LogBiger.png'); --%>
     background-repeat: no-repeat;
     vertical-align: middle;
 }

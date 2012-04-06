@@ -10,6 +10,8 @@ using BP.Port;
 using BP.Web.Controls;
 using BP.Web;
 using BP.Sys;
+using BP;
+
 
 public partial class WF_Admin_Action : WebPage
 {
@@ -48,7 +50,7 @@ public partial class WF_Admin_Action : WebPage
         string myEvent = this.Event;
         BP.WF.XML.EventListDtl myEnentXml = null;
 
-        this.Pub1.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' /></a>");
+        this.Pub1.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/ICON/" + SystemConfig.CompanyID + "/LogBiger.png' /></a>");
         this.Pub1.AddUL();
         foreach (BP.WF.XML.EventListDtl xml in xmls)
         {

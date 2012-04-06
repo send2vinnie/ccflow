@@ -13,6 +13,9 @@ using BP.En;
 using BP.Web.Controls;
 using BP.DA;
 using BP.Web;
+using BP;
+
+
 public partial class WF_MapDef_MapDef : WebPage
 {
     public new string MyPK
@@ -62,7 +65,7 @@ public partial class WF_MapDef_MapDef : WebPage
         xmls.RetrieveAll();
 
         #region bindleft
-        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='" + this.Request.ApplicationPath + "/DataUser/LogBiger.png' border=0/></a>");
+        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='" + this.Request.ApplicationPath + "/DataUser/ICON/" + SystemConfig.CompanyID + "/LogBiger.png' border=0/></a>");
         this.Left.AddHR();
         this.Left.AddUL();
         foreach (BP.WF.XML.MapMenu item in xmls)
@@ -467,6 +470,12 @@ public partial class WF_MapDef_MapDef : WebPage
                 case MapExtXmlList.ActiveDDL:
                     DDL ddlPerant = this.Pub1.GetDDLByID("DDL_" + me.AttrOfOper);
                     DDL ddlChild = this.Pub1.GetDDLByID("DDL_" + me.AttrsOfActive);
+                    if (ddlChild == null || ddlPerant==null)
+                    {
+                        me.Delete();
+                        continue;
+                    }
+
                     ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
                     // ddlChild.Attributes["onchange"] = "ddlCity_onchange(this.value,'" + me.MyPK + "')";
                     break;

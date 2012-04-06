@@ -561,16 +561,15 @@ namespace BP.Web.Comm
             this.UCSys2.Add("<table border=0 cellPadding=0 >");
             foreach (Attr attr in attrs)
             {
-                if (attr.IsPK || attr.IsNum == false)
+                if (attr.UIContralType != UIContralType.TB)
                     continue;
-                if (attr.UIContralType == UIContralType.TB == false)
+
+                if (attr.UIVisible == false && attr.Key!="MyNum")
                     continue;
-                if (attr.UIVisible == false)
+
+                if (attr.IsNum == false)
                     continue;
-                if (attr.MyFieldType == FieldType.FK)
-                    continue;
-                if (attr.MyFieldType == FieldType.Enum)
-                    continue;
+               
                 if (attr.Key == "OID" || attr.Key == "WorkID" || attr.Key == "MID")
                     continue;
 
@@ -821,7 +820,7 @@ namespace BP.Web.Comm
 
             if (groupKey == "")
             {
-                this.UCSys1.AddMsgOfWarning(this.ToE("Warning", "预警"),
+                this.UCSys1.AddMsgOfWarning(this.ToE("Warning", "警告"),
                     "<img src='../../Images/Pub/warning.gif' /><b><font color=red>" + this.ToE("NoSelectGroupData", "您没有选择分析的数据") + "</font></b>"); //您没有选择分析的数据。
                 return null;
             }
@@ -1293,7 +1292,7 @@ namespace BP.Web.Comm
             }
             foreach (Attr attr in AttrsOfGroup)
             {
-                if (attr.UIBindKey.IndexOf(".") == -1)
+                if (attr.IsEnum)
                 {
                     /* 说明它是枚举类型 */
                     SysEnums ses = new SysEnums(attr.UIBindKey);
@@ -1320,8 +1319,22 @@ namespace BP.Web.Comm
                 }
                 foreach (DataRow dr in dt.Rows)
                 {
-                    Entity myen = attr.HisFKEn;
                     string val = dr[attr.Key].ToString();
+
+                    if (attr.UIBindKey.Contains(".") == false)
+                    {
+                        try
+                        {
+                            dr[attr.Key + "T"] = DBAccess.RunSQLReturnStringIsNull("SELECT Name FROM " + attr.UIBindKey + " WHERE No='" + val + "'", val);
+                        }
+                        catch
+                        {
+                            dr[attr.Key + "T"] = val;
+                        }
+                        continue;
+                    }
+
+                    Entity myen = attr.HisFKEn;
                     myen.SetValByKey(attr.UIRefKeyValue, val);
                     try
                     {

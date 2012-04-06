@@ -8,6 +8,7 @@ using BP.WF;
 using BP.En;
 using BP.DA;
 using BP.Sys;
+using BP;
 
 public partial class WF_Admin_FlowFrms : BP.Web.WebPage
 {
@@ -619,7 +620,7 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
     }
     public void BindLeft()
     {
-        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' border=0/></a>");
+        this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/ICON/" + SystemConfig.CompanyID + "/LogBiger.png' border=0/></a>");
         this.Left.AddHR();
 
         this.Left.AddUL();

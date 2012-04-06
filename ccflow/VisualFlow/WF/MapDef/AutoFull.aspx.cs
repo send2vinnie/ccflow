@@ -54,7 +54,7 @@ public partial class WF_MapDef_AutoFull : BP.Web.WebPage
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
 
-        this.Left.Add("<a href='http://ccflow.org' target=_blank  ><img src='../../DataUser/LogBiger.png' style='width:180px;' /></a><hr>");
+        this.Left.Add("<a href='http://ccflow.org' target=_blank  ><img src='../../DataUser/ICON/"+BP.SystemConfig.CompanyID+"/LogBiger.png' style='width:180px;' /></a><hr>");
 
         //this.Left.Add("<a href='http://ccflow.org' target=_blank ><img src='../../DataUser/LogBiger.png' /></a><hr>");
 

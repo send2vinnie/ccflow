@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.WF;
 using BP.En;
+using BP;
 using BP.Sys;
 
 public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
@@ -57,7 +58,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
 
         MapExtXmls fss = new MapExtXmls();
         fss.RetrieveAll();
-        this.Left.Add("<a href='http://ccflow.org' target=_blank  ><img src='../../DataUser/LogBiger.png' style='width:180px;' /></a><hr>");
+        this.Left.Add("<a href='http://ccflow.org' target=_blank  ><img src='../../DataUser/ICON/" + SystemConfig.CompanyID + "/LogBiger.png' style='width:180px;' /></a><hr>");
         this.Left.AddUL();
         foreach (MapExtXml fs in fss)
         {

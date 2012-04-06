@@ -9,6 +9,7 @@ using BP.En;
 using BP.DA;
 using BP.Web;
 using BP.Sys;
+using BP;
 
 public partial class WF_MapDef_FrmEvent : WebPage
 {
@@ -26,7 +27,7 @@ public partial class WF_MapDef_FrmEvent : WebPage
         xmls.RetrieveAll();
 
         FrmEventXml curr = null;
-        this.Pub1.Add("<a href='http://ccflow.org' target=_blank ><img src='./../../DataUser/LogBiger.png' border=0 width='120px;' /></a><hr>");
+        this.Pub1.Add("<a href='http://ccflow.org' target=_blank ><img src='./../../DataUser/ICON/" + SystemConfig.CompanyID + "/LogBiger.png' border=0 width='120px;' /></a><hr>");
         this.Pub1.AddUL();
         foreach (FrmEventXml xml in xmls)
         {
