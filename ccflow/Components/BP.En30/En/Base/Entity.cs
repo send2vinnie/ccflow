@@ -2537,7 +2537,6 @@ namespace BP.En
                         //  sql = sql.Replace("'''", "''");
 
                         sql = sql.Replace("''", "'");
-
                         string val = "";
                         try
                         {
@@ -2545,7 +2544,7 @@ namespace BP.En
                         }
                         catch (Exception ex)
                         {
-                            throw new Exception("@自动获取数据期间错误:" + sql.Replace("'", "“") + " @Tech Info:" + ex.Message.Replace("'", "“") + "@" + sql);
+                            throw new Exception("@字段("+attr.Key+","+attr.Desc+")自动获取数据期间错误(有可能是您写的sql语句会返回多列多行的table,现在只要一列一行的table才能填充，请检查sql.):" + sql.Replace("'", "“") + " @Tech Info:" + ex.Message.Replace("'", "“") + "@执行的sql:" + sql);
                         }
 
                         if (attr.IsNum)

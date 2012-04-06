@@ -449,24 +449,11 @@ namespace BP.DA
             }
         }
         private static bool l_OID = false;
-        /// <summary>
-        /// 产生一个OID
-        /// </summary>
-        /// <returns></returns>
-        public static int GenerOID_del()
-        {
-            string sql = "";
-            sql = "UPDATE Sys_Serial SET IntVal=IntVal+1 WHERE CfgKey='OID'";
-            DBAccess.RunSQL(sql);
-            sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey='OID'";
-            int i = DBAccess.RunSQLReturnValInt(sql);
-            return i;
-        }
         public static int GenerOID()
         {
             string sql = "";
             if (DBAccess.RunSQL("UPDATE Sys_Serial SET IntVal=IntVal+1 WHERE CfgKey='OID'") == 0)
-                DBAccess.RunSQL("INSERT INTO Sys_Serial (CfgKey,IntVal) VALUES ('OID',1)");
+                DBAccess.RunSQL("INSERT INTO Sys_Serial (CfgKey,IntVal) VALUES ('OID',100)");
             sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey='OID'";
             return DBAccess.RunSQLReturnValInt(sql);
         }
