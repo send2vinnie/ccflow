@@ -355,8 +355,8 @@ namespace BP.WF
         public static string Flow_DoDeleteFlow(string flowNo, Int64 workID)
         {
             WorkFlow wf = new WorkFlow(flowNo, workID);
-             wf.DoDeleteWorkFlowByReal();
-             return "删除成功";
+            wf.DoDeleteWorkFlowByReal();
+            return "删除成功";
         }
         /// <summary>
         /// 执行撤销发送
@@ -536,6 +536,19 @@ namespace BP.WF
             {
                 return "保存失败:" + ex.Message;
             }
+        }
+        /// <summary>
+        /// 执行工作退回
+        /// </summary>
+        /// <param name="nodeID">节点ID</param>
+        /// <param name="workID">工作ID</param>
+        /// <param name="msg">信息</param>
+        /// <param name="returnToNode">要退回的节点</param>
+        /// <returns>返回执行信息</returns>
+        public static void Node_ReturnWork(string fk_flow, Int64 workID, string msg, int returnToNode)
+        {
+            WorkNode wn = new WorkNode(workID, returnToNode);
+            wn.DoReturnWork(msg);
         }
         /// <summary>
         /// 执行工作退回

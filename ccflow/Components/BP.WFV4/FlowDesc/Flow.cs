@@ -3226,6 +3226,11 @@ namespace BP.WF
             DataSet ds = new DataSet();
             ds.ReadXml(path);
 
+
+            if (ds.Tables.Contains("WF_Flow") == false)
+                throw new Exception( "导入错误，非流程模版文件。");
+
+
             DataTable dtFlow = ds.Tables["WF_Flow"];
             Flow fl = new Flow();
             fl.No = fl.GenerNewNo;

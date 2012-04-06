@@ -422,6 +422,10 @@ namespace BP.WF
             while (true)
             {
                 lengthStep += 2;
+                int toLen = WebUser.FK_Dept.Length - lengthStep;
+                if (toLen <= 0)
+                    throw new Exception("@已经列举到最高部门，仍然没有找到接受人员。");
+
                 sql = "SELECT NO FROM Port_Emp WHERE No IN "
                    + "(SELECT  FK_Emp  FROM Port_EmpStation WHERE FK_Station IN (SELECT FK_Station FROM WF_NodeStation WHERE FK_Node=" + town.HisNode.NodeID + ") )"
                    + " AND  NO IN "
