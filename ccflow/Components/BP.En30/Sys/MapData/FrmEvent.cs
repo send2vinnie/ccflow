@@ -432,6 +432,10 @@ namespace BP.Sys
                     {
                         Paras ps = new Paras();
                         DBAccess.RunSP(doc, ps);
+
+                        if (FrmEventAttr.FK_Event == FrmEventList.FrmLoadBefore)
+                            en.Retrieve();
+             
                         return nev.MsgOK(en);
                     }
                     catch (Exception ex)
@@ -444,6 +448,8 @@ namespace BP.Sys
                     {
                         // 允许执行带有GO的sql.
                         DBAccess.RunSQLs(doc);
+                        if (FrmEventAttr.FK_Event == FrmEventList.FrmLoadBefore)
+                            en.Retrieve();
                         return nev.MsgOK(en);
                     }
                     catch (Exception ex)
