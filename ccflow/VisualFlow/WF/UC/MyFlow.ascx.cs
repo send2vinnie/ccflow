@@ -501,8 +501,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             //    this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             //}
 
-           
-
             if (currND.IsEndNode)
             {
                 //this.ToolBar1.Add("<input type=button value='" + btnLab.SendLab + "' enable=true onclick=\"window.open('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','选择收件人', 'height=500, width=400');this.disabled=true \" />");
@@ -513,6 +511,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     // Btn_Send.Style.Add("display", "none");
                     this.Btn_Send.UseSubmitBehavior = false;
                     this.Btn_Send.CssClass = "Btn2";
+
+                    //this.Btn_Send.Attributes["Type"] = "submit";
+                    //Btn_Send.Style.Add("Type", "submit");
+
                     this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
                     this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                 }
@@ -536,11 +538,15 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     else
                     {
                         this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
-                        this.Btn_Send.UseSubmitBehavior = false;
                         if (btnLab.SendJS.Trim().Length > 2)
+                        {
                             this.Btn_Send.OnClientClick = btnLab.SendJS + ";this.disabled=true;"; //this.disabled='disabled'; return true;";
+                        }
                         else
+                        {
+                            this.Btn_Send.UseSubmitBehavior = false;
                             this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
+                        }
 
                         this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                     }
