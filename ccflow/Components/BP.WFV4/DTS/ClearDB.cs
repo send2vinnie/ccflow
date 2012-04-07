@@ -50,6 +50,11 @@ namespace BP.WF
         /// <returns>返回执行结果</returns>
         public override object Do()
         {
+            if (Web.WebUser.No != "admin")
+            {
+                return "非法的用户执行。";
+            }
+
             DA.DBAccess.RunSQL("DELETE FROM WF_CHOfFlow");
             DA.DBAccess.RunSQL("DELETE FROM WF_Bill");
             DA.DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist");
@@ -59,7 +64,7 @@ namespace BP.WF
             DA.DBAccess.RunSQL("DELETE FROM WF_SelectAccper");
             DA.DBAccess.RunSQL("DELETE FROM WF_FileManager");
             DA.DBAccess.RunSQL("DELETE FROM WF_RememberMe");
-            DA.DBAccess.RunSQL("DELETE FROM WF_RunRecord");
+       //     DA.DBAccess.RunSQL("DELETE FROM WF_RunRecord");
             DA.DBAccess.RunSQL("DELETE FROM Sys_FrmAttachmentDB");
             DA.DBAccess.RunSQL("DELETE FROM WF_Track");
 
