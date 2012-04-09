@@ -1,8 +1,8 @@
-﻿DELETE Port_Dept @GO
-DELETE Port_Station @GO
-DELETE Port_Emp @GO
-DELETE Port_EmpStation @GO
-DELETE Port_EmpDept @GO
+﻿DELETE FROM Port_Dept @GO
+DELETE FROM Port_Station @GO
+DELETE FROM Port_Emp @GO
+DELETE FROM Port_EmpStation @GO
+DELETE FROM Port_EmpDept @GO
 
 -- Port_Dept @GO
 INSERT INTO Port_Dept (No,Name) VALUES('01','XXX市局') @GO

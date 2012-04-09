@@ -171,17 +171,49 @@ namespace BP.Web
         [WebMethod]
         public string GetXmlData(string xmlFileName)
         {
-            string sql = "";
-            sql = "SELECT 'HandSiganture' AS DFor, '@Label=存储路径@FType=String@DefVal=D:\\ccflow\\VisualFlow\\DataUser\\BPPaint\\' as Tag1, '@Label=窗口打开高度@FType=Int@DefVal=300' as Tag2, '@Label=窗口打开宽度@FType=Int@DefVal=450' as Tag3, '@Label=UrlPath@FType=String@DefVal=/DataUser/BPPaint/' as Tag4 @Form";
-            sql += " UNION ";
-            sql += "SELECT 'EleSiganture' AS DFor, '@Label=位置@FType=String' as Tag1, '@Label=高度@FType=Int' as Tag2, '@Label=宽度@FType=Int' as Tag3, '' as  Tag4 @Form";
+            DataTable dt = new DataTable("o");
+            dt.Columns.Add(new DataColumn("DFor"));
+            dt.Columns.Add(new DataColumn("Tag1"));
+            dt.Columns.Add(new DataColumn("Tag2"));
+            dt.Columns.Add(new DataColumn("Tag3"));
+            dt.Columns.Add(new DataColumn("Tag4"));
 
-            if (BP.SystemConfig.AppCenterDBType == DBType.Oracle9i)
-                sql = sql.Replace("@Form", " FROM DUAL");
-            else
-                sql = sql.Replace("@Form", "");
+            DataRow dr = dt.NewRow();
+            dr["DFor"] = "HandSiganture";
+            dr["Tag1"] = "@Label=存储路径@FType=String@DefVal=D:\\ccflow\\VisualFlow\\DataUser\\BPPaint\\";
+            dr["Tag2"] = "@Label=窗口打开高度@FType=Int@DefVal=300";
+            dr["Tag3"] = "@Label=窗口打开宽度@FType=Int@DefVal=450";
+            dr["Tag4"] = "@Label=UrlPath@FType=String@DefVal=/DataUser/BPPaint/";
+            dt.Rows.Add(dr);
 
-            return this.RunSQLReturnTable(sql);
+            dr = dt.NewRow();
+            dr["DFor"] = "EleSiganture";
+            dr["Tag1"] = "@Label=位置@FType=String";
+            dr["Tag2"] = "@Label=高度@FType=Int";
+            dr["Tag3"] = "@Label=宽度@FType=Int";
+            dr["Tag4"] = "";
+            dt.Rows.Add(dr);
+
+            DataSet myds = new DataSet();
+            myds.Tables.Add(dt);
+            return Connector.ToXml(myds);
+
+            //string sql = "";
+            //sql = "SELECT 'HandSiganture' AS DFor, '@Label=存储路径@FType=String@DefVal=D:\\ccflow\\VisualFlow\\DataUser\\BPPaint\\' as Tag1, '@Label=窗口打开高度@FType=Int@DefVal=300' as Tag2, '@Label=窗口打开宽度@FType=Int@DefVal=450' as Tag3, '@Label=UrlPath@FType=String@DefVal=/DataUser/BPPaint/' as Tag4 @Form";
+            //sql += " UNION ";
+            //sql += "SELECT 'EleSiganture' AS DFor, '@Label=位置@FType=String' as Tag1, '@Label=高度@FType=Int' as Tag2, '@Label=宽度@FType=Int' as Tag3, '' as  Tag4 @Form";
+
+            //switch (BP.SystemConfig.AppCenterDBType)
+            //{
+            //    case DBType.Oracle9i:
+            //    case DBType.MySQL:
+            //        sql = sql.Replace("@Form", " FROM DUAL");
+            //        break;
+            //    default:
+            //        sql = sql.Replace("@Form", "");
+            //        break;
+            //}
+            //return this.RunSQLReturnTable(sql);
 
             //string path = SystemConfig.PathOfXML + xmlFileName;
             //DataSet ds = new DataSet();
@@ -296,8 +328,8 @@ namespace BP.Web
                         if (msgDelEnum != "")
                             return "该枚举已经被如下字段所引用，您不能删除它。" + msgDelEnum;
 
-                        sql = "DELETE Sys_EnumMain WHERE No='" + v1 + "'";
-                        sql += "@DELETE Sys_Enum WHERE EnumKey='" + v1 + "' ";
+                        sql = "DELETE FROM Sys_EnumMain WHERE No='" + v1 + "'";
+                        sql += "@DELETE FROM Sys_Enum WHERE EnumKey='" + v1 + "' ";
                         DBAccess.RunSQLs(sql);
                         return null;
                     case "DelSFTable": /* 删除自定义的物理表. */
@@ -420,8 +452,8 @@ namespace BP.Web
                         string delFK_Frm = v1;
                         MapData mdDel = new MapData(delFK_Frm);
                         mdDel.Delete();
-                        sql = "@DELETE Sys_MapData WHERE No='" + delFK_Frm + "'";
-                        sql = "@DELETE WF_FrmNode WHERE FK_Frm='" + delFK_Frm + "'";
+                        sql = "@DELETE FROM Sys_MapData WHERE No='" + delFK_Frm + "'";
+                        sql = "@DELETE FROM WF_FrmNode WHERE FK_Frm='" + delFK_Frm + "'";
                         DBAccess.RunSQLs(sql);
                         return null;
                     case "FrmUp":

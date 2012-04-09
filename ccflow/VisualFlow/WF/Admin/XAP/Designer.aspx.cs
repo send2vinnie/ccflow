@@ -52,8 +52,8 @@ public partial class Designer : System.Web.UI.Page
             #endregion
 
             #region 升级 DtlShowModel 2012-02-27
-            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DtlShowModel'");
-            DBAccess.RunSQL("delete Sys_MapExt where MyPK!= FK_MapData+'_'+ExtType and ExtType= 'PageLoadFull'");
+            DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='DtlShowModel'");
+            DBAccess.RunSQL("DELETE FROM Sys_MapExt where MyPK!= FK_MapData+'_'+ExtType and ExtType= 'PageLoadFull'");
             #endregion
 
             #region 升级 CCstaff
@@ -189,8 +189,8 @@ public partial class Designer : System.Web.UI.Page
             
 
             #region 2011-12-21 升级节点属性规则.
-            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='RunModel'");
-            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='FlowRunWay'");
+            DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='RunModel'");
+            DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='FlowRunWay'");
             #endregion
 
             msg = "@执行升级出现错误。"; 
@@ -203,18 +203,18 @@ public partial class Designer : System.Web.UI.Page
 
 
             #region 2011-12-13 删除了流程日志字段.
-            DBAccess.RunSQL("DELETE Sys_MapAttr WHERE KeyOfEn='WFLog'");
+            DBAccess.RunSQL("DELETE FROM Sys_MapAttr WHERE KeyOfEn='WFLog'");
             #endregion
 
             #region 2011-12-01 升级访问规则.
-            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='DeliveryWay'");
-            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='FrmEventType'");
-            DBAccess.RunSQL("DELETE Sys_Enum WHERE EnumKey='EventDoType'");
+            DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='DeliveryWay'");
+            DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='FrmEventType'");
+            DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='EventDoType'");
             #endregion
 
 
             #region 手动升级. 2011-07-08 补充节点字段分组.
-            //string sql = "DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
+            //string sql = "DELETE FROM Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
             //BP.DA.DBAccess.RunSQL(sql);
             //sql = "INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态')";
             //BP.DA.DBAccess.RunSQL(sql);
@@ -262,10 +262,21 @@ public partial class Designer : System.Web.UI.Page
             BP.DA.DBAccess.RunSQLs(sql);
 
             //// 更新老版本的字段长度。
-            if (DBAccess.AppCenterDBType == DBType.Oracle9i)
-                sql = "ALTER TABLE WF_Track modify RDT varchar(20)";
-            else
-                sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
+            switch (DBAccess.AppCenterDBType)
+            {
+                case DBType.Oracle9i:
+                case DBType.MySQL:
+                    sql = "ALTER TABLE WF_Track modify RDT varchar(20)";
+                    break;
+                case DBType.SQL2000:
+                default:
+                    sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
+                    break;
+            }
+
+            //if (DBAccess.AppCenterDBType == DBType.Oracle9i)
+            //else
+            //    sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
             BP.DA.DBAccess.RunSQLs(sql);
             #endregion 更新 WF_EmpWorks. 2011-11-09
 

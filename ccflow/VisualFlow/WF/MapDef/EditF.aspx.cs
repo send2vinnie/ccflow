@@ -544,25 +544,32 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         //cb.Items.Add(new ListItem("FCKEditer编辑框", "3"));
 
         this.Pub1.AddTD(tb);
-        CheckBox cb = new CheckBox();
-        cb.CheckedChanged += new EventHandler(cb_CheckedChanged);
-        cb.ID = "CB_IsM";
-        cb.Text = this.ToE("IsBigDoc", "是否大块文本(对傻瓜表单有效)");
-        cb.AutoPostBack = true;
-        if (mapAttr.MaxLen >= 3000)
-        {
-            cb.Checked = true;
-            tb.Enabled = false;
-        }
-        else
-        {
-            cb.Checked = false;
-            tb.Enabled = true;
-        }
 
-        this.Pub1.AddTD(cb);
-        if (mapAttr.IsTableAttr)
-            cb.Enabled = false;
+        DDL ddlBig = new DDL();
+        ddlBig.ID = "DDL_TBModel";
+        ddlBig.BindSysEnum("TBModel", mapAttr.TBModel);
+        ddlBig.AutoPostBack = true;
+        ddlBig.SelectedIndexChanged += new EventHandler(ddlBig_SelectedIndexChanged);
+        this.Pub1.AddTD(ddlBig);
+
+        //CheckBox cb = new CheckBox();
+        //cb.CheckedChanged += new EventHandler(cb_CheckedChanged);
+        //cb.ID = "CB_IsM";
+        //cb.Text = this.ToE("IsBigDoc", "是否大块文本(对傻瓜表单有效)");
+        //cb.AutoPostBack = true;
+        //if (mapAttr.MaxLen >= 3000)
+        //{
+        //    cb.Checked = true;
+        //    tb.Enabled = false;
+        //}
+        //else
+        //{
+        //    cb.Checked = false;
+        //    tb.Enabled = true;
+        //}
+        //this.Pub1.AddTD(cb);
+        //if (mapAttr.IsTableAttr)
+        //    cb.Enabled = false;
 
         this.Pub1.AddTREnd();
 
@@ -588,6 +595,22 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
         this.Pub1.AddTD("");
         this.Pub1.AddTREnd();
         this.EditBeforeEnd(mapAttr);
+    }
+
+    void ddlBig_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DDL ddl = this.Pub1.GetDDLByID("DDL_TBModel");
+        if (ddl.SelectedItemIntVal != 0)
+        {
+            this.Pub1.GetTBByID("TB_MaxLen").Enabled = false;
+            this.Pub1.GetTBByID("TB_MaxLen").Text = "4000";
+            this.Pub1.GetTBByID("TB_UIHeight").Text = "90";
+        }
+        else
+        {
+            this.Pub1.GetTBByID("TB_MaxLen").Enabled = true;
+            this.Pub1.GetTBByID("TB_MaxLen").Text = "50";
+        }
     }
     void cb_CheckedChanged_rdt(object sender, EventArgs e)
     {
@@ -840,6 +863,9 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                         //else
                         //    attr.DefValReal = "0";
                         break;
+                    case DataType.AppString:
+                        attr.UIBindKey = this.Pub1.GetDDLByID("DDL_TBModel").SelectedItemStringVal;
+                        break;
                     default:
                         break;
                 }
@@ -870,6 +896,9 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
                         attr.MyDataType = BP.DA.DataType.AppBoolean;
                         attr.UIContralType = UIContralType.CheckBok;
                         attr.DefValOfBool = this.Pub1.GetCBByID("CB_DefVal").Checked;
+                        break;
+                    case DataType.AppString:
+                        attr.UIBindKey = this.Pub1.GetDDLByID("DDL_TBModel").SelectedItemStringVal;
                         break;
                     default:
                         break;

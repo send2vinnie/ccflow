@@ -20,8 +20,8 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
             return;
         }
 
-        try
-        {
+        //try
+        //{
             if (BP.DA.DBAccess.IsExitsObject("WF_Flow") == true)
             {
                 this.Pub1.AddFieldSet("提示");
@@ -44,16 +44,16 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
                 }
                 return;
             }
-        }
-        catch (Exception ex)
-        {
-            this.Pub1.AddFieldSet("提示:数据库连接没有配置好");
-            this.Pub1.Add("1, 请打开web.config文件配置 appSettings - AppCenterDSN 节点中的数据库连接信息。");
-            this.Pub1.AddBR("2, 支持的数据库类型在，AppCenterDBType中配置，分别是MSSQL2000,Oracle,DB2,Access,MySQL ");
-            this.Pub1.AddBR("<hr>错误信息:" + ex.Message);
-            this.Pub1.AddFieldSetEnd();
-            return;
-        }
+        //}
+        //catch (Exception ex)
+        //{
+        //    this.Pub1.AddFieldSet("提示:数据库连接没有配置好");
+        //    this.Pub1.Add("1, 请打开web.config文件配置 appSettings - AppCenterDSN 节点中的数据库连接信息。");
+        //    this.Pub1.AddBR("2, 支持的数据库类型在，AppCenterDBType中配置，分别是MSSQL2000,Oracle,DB2,Access,MySQL ");
+        //    this.Pub1.AddBR("<hr>错误信息:" + ex.Message);
+        //    this.Pub1.AddFieldSetEnd();
+        //    return;
+        //}
 
        // this.Pub1.AddH2("数据库安装向导...");
 

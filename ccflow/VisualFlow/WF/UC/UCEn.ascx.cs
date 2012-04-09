@@ -1823,6 +1823,7 @@ namespace BP.Web.Comm.UC.WF
 
                 this.Add("<DIV id='F" + attr.KeyOfEn + "' style='position:absolute; left:" + attr.X + "px; top:" + attr.Y + "px; width:" + attr.UIWidth + "px; height:16px;text-align: left;word-break: keep-all;' >");
                 this.Add("<span>");
+
                 #region add contrals.
                 if (attr.UIIsEnable == false && this.LinkFields.Contains("," + attr.KeyOfEn + ","))
                 {
@@ -1855,6 +1856,34 @@ namespace BP.Web.Comm.UC.WF
                         this.Add("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                     else
                         this.Add("<img src='../DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                    this.Add("</span>");
+                    this.Add("</DIV>");
+                    continue;
+                }
+
+                if (attr.MaxLen >= 3999 && attr.TBModel == 2)
+                {
+#warning 富文本输出
+                    //        /*说明这是富文本输出*/
+                    //        this.Page.RegisterClientScriptBlock("c1",
+                    // "<script language='JavaScript' src='"+this.Request.ApplicationPath+"/Comm/ckeditor/ckeditor.js' ></script>");
+                    //        this.Page.RegisterClientScriptBlock("c2",
+                    //"<script language='JavaScript' src='" + this.Request.ApplicationPath + "/Comm/ckeditor/config.js' ></script>");
+
+                    //        CKEditor.NET.CKEditorControl ctl=new CKEditor.NET.CKEditorControl();
+                    //        ctl.ID = "TB_" + attr.KeyOfEn;
+                    //        ctl.Text = en.GetValStrByKey(attr.KeyOfEn);
+                    //        this.Add(ctl);
+
+                    //        TB tbd=new TB();
+                    //        tbd.TextMode= TextBoxMode.MultiLine;
+                    //        tbd.ID="TB_T"+attr.KeyOfEn;
+                    //        tbd.Text = en.GetValStrByKey(attr.KeyOfEn);
+                    //        this.Add(tbd);
+
+                    //        this.Add("<script type='text/javascript'>CKEDITOR.replace('"+tbd.ID+"')</script>");
+
+                    this.Add("富文本输出未完成。");
                     this.Add("</span>");
                     this.Add("</DIV>");
                     continue;

@@ -1696,7 +1696,7 @@ namespace BP.Web.Comm
             ur.OrderBy = this.OrderBy;
             ur.OrderWay = this.OrderWay;
             ur.IsPic = this.CB_IsShowPict.Checked;
-            ur.SQL = myps.SQL;
+            ur.GenerSQL = myps.SQL;
             ur.NumKey = this.NumKey;
             ur.Paras = "";
             foreach (Para para in myps)
@@ -1710,7 +1710,7 @@ namespace BP.Web.Comm
             this.SetValueByKey("OrderBy", ur.OrderBy);
             this.SetValueByKey("OrderWay", ur.OrderWay);
             this.SetValueByKey("IsPic", ur.IsPic);
-            this.SetValueByKey("SQL", ur.SQL);
+            this.SetValueByKey("SQL", ur.GenerSQL);
             this.SetValueByKey("NumKey", ur.NumKey);
             this.CfgVal = ur.Vals;
             #endregion

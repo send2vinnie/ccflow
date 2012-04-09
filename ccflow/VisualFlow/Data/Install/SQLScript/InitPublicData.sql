@@ -1,41 +1,41 @@
-﻿DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO';
+﻿DELETE FROM Sys_EnCfg WHERE No='BP.WF.Ext.NodeO';
 INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态');
 
-DELETE Sys_SFTable WHERE No='BP.CN.Citys';
+DELETE FROM Sys_SFTable WHERE No='BP.CN.Citys';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.CN.Citys','城市','FK_City','2','中国的市级城市','','1');
 
-DELETE Sys_SFTable WHERE No='BP.CN.PQs';
+DELETE FROM Sys_SFTable WHERE No='BP.CN.PQs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.CN.PQs','地区','FK_DQ','2','华北、西北、西南。。。','','1');
 
-DELETE Sys_SFTable WHERE No='BP.CN.SFs';
+DELETE FROM Sys_SFTable WHERE No='BP.CN.SFs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.CN.SFs','省份','FK_SF','2','中国的省份。','','1');
 
-DELETE Sys_SFTable WHERE No='BP.Port.Depts';
+DELETE FROM Sys_SFTable WHERE No='BP.Port.Depts';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Port.Depts','部门','FK_Dept','2','部门','','1');
 
-DELETE Sys_SFTable WHERE No='BP.Port.Emps';
+DELETE FROM Sys_SFTable WHERE No='BP.Port.Emps';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Port.Emps','人员','FK_Emp','2','系统中的操作员','','1');
 
-DELETE Sys_SFTable WHERE No='BP.Port.Stations';
+DELETE FROM Sys_SFTable WHERE No='BP.Port.Stations';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Port.Stations','岗位','FK_Station','2','工作岗位','','1');
 
-DELETE Sys_SFTable WHERE No='BP.Pub.Days';
+DELETE FROM Sys_SFTable WHERE No='BP.Pub.Days';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.Days','日','FK_Day','0','1-31日','','1');
 
-DELETE Sys_SFTable WHERE No='BP.Pub.YFs';
+DELETE FROM Sys_SFTable WHERE No='BP.Pub.YFs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.YFs','月','FK_NY','0','1-12月','','1');
 
-DELETE Sys_SFTable WHERE No='BP.Pub.NYs';
+DELETE FROM Sys_SFTable WHERE No='BP.Pub.NYs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.NYs','年月','FK_NY','0','年度与月份','','1');
 
-DELETE Sys_SFTable WHERE No='BP.Pub.NDs';
+DELETE FROM Sys_SFTable WHERE No='BP.Pub.NDs';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.NDs','年度','FK_ND','0','年度','','1');
 
-DELETE Sys_FrmSort WHERE No='01';
+DELETE FROM Sys_FrmSort WHERE No='01';
 INSERT INTO Sys_FrmSort (No,Name)VALUES ('01','默认表单类别');
 
 
-DELETE CN_PQ ;
+DELETE FROM CN_PQ ;
 INSERT INTO CN_PQ (No,Name) VALUES('AA','城市');
 INSERT INTO CN_PQ (No,Name) VALUES('DB','东北');
 INSERT INTO CN_PQ (No,Name) VALUES('HB','华北');
@@ -44,7 +44,7 @@ INSERT INTO CN_PQ (No,Name) VALUES('XB','西北');
 INSERT INTO CN_PQ (No,Name) VALUES('XN','西南');
 INSERT INTO CN_PQ (No,Name) VALUES('ZN','中南');
 INSERT INTO CN_PQ (No,Name) VALUES('ZZ','香澳台');
-DELETE CN_SF ;
+DELETE FROM CN_SF ;
 INSERT INTO CN_SF (No,Name,Names,JC,FK_PQ) VALUES('11','北京','北京市','京','AA');
 INSERT INTO CN_SF (No,Name,Names,JC,FK_PQ) VALUES('12','天津','天津市','津','AA');
 INSERT INTO CN_SF (No,Name,Names,JC,FK_PQ) VALUES('13','河北','河北省','冀','HB');
@@ -79,7 +79,7 @@ INSERT INTO CN_SF (No,Name,Names,JC,FK_PQ) VALUES('65','新疆','新疆维吾尔
 INSERT INTO CN_SF (No,Name,Names,JC,FK_PQ) VALUES('71','台湾','台湾省','台','ZZ');
 INSERT INTO CN_SF (No,Name,Names,JC,FK_PQ) VALUES('81','香港','香港特别行政区','港','ZZ');
 INSERT INTO CN_SF (No,Name,Names,JC,FK_PQ) VALUES('82','澳门','澳门特别行政区','澳','ZZ');
-DELETE CN_City ;
+DELETE FROM CN_City ;
 INSERT INTO CN_City (No,Name,Names,Grade,FK_SF,FK_PQ) VALUES('5303','云南省曲靖市','曲靖','2','53','XN');
 INSERT INTO CN_City (No,Name,Names,Grade,FK_SF,FK_PQ) VALUES('5304','云南省玉溪市','玉溪','2','53','XN');
 INSERT INTO CN_City (No,Name,Names,Grade,FK_SF,FK_PQ) VALUES('5305','云南省保山市','保山','2','53','XN');

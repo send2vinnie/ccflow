@@ -1,8 +1,8 @@
-﻿DELETE Port_Dept  ;
-DELETE Port_Station  ;
-DELETE Port_Emp  ;
-DELETE Port_EmpStation  ;
-DELETE Port_EmpDept  ;
+﻿DELETE FROM Port_Dept  ;
+DELETE FROM Port_Station  ;
+DELETE FROM Port_Emp  ;
+DELETE FROM Port_EmpStation  ;
+DELETE FROM Port_EmpDept  ;
  
 -- Port_Dept ;
 INSERT INTO Port_Dept (No,Name) VALUES('01','总经理室')  ;
