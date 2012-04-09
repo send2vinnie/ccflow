@@ -278,14 +278,16 @@ namespace BP.En
             switch (en.EnMap.EnDBUrl.DBType)
             {
                 case DBType.SQL2000:
-                case DBType.MySQL:
-                    sql = SqlBuilder.SelectSQLOfMS(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
+                     sql = SqlBuilder.SelectSQLOfMS(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;
-                case DBType.Access:
-                    sql = SqlBuilder.SelectSQLOfOLE(en, 1) + " AND "+ SqlBuilder.GenerWhereByPK(en, "@");
+                case DBType.MySQL:
+                    sql = SqlBuilder.SelectSQLOfMySQL(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;
                 case DBType.Oracle9i:
                     sql = SqlBuilder.SelectSQLOfOra(en, 1) + "AND (" + SqlBuilder.GenerWhereByPK(en, ":") + " )";
+                    break;
+                case DBType.Access:
+                    sql = SqlBuilder.SelectSQLOfOLE(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;
                 case DBType.DB2:
                 default:
@@ -512,7 +514,7 @@ namespace BP.En
         public static string GenerCreateTableSQLOfMS(Entity en)
         {
             if (en.EnMap.PhysicsTable == "" || en.EnMap.PhysicsTable == null)
-                return "delete sys_enum where enumkey='sdsf44a23'";
+                return "DELETE FROM Sys_enum where enumkey='sdsf44a23'";
 
             //    throw new Exception(en.ToString() +" map error "+en.GetType() );
 
@@ -1065,12 +1067,14 @@ namespace BP.En
             {
                 case DBType.SQL2000:
                     return SqlBuilder.SelectSQLOfMS(en, topNum);
+                case DBType.MySQL:
+                    return SqlBuilder.SelectSQLOfMySQL(en, topNum);
                 case DBType.Access:
                     return SqlBuilder.SelectSQLOfOLE(en, topNum);
                 case DBType.Oracle9i:
                     return SqlBuilder.SelectSQLOfOra(en, topNum);
                 default:
-                    return null;
+                    throw new Exception("没有判断的情况");
             }
         }
 
@@ -1260,6 +1264,94 @@ namespace BP.En
             if (topNum == -1 || topNum == 0)
                 topNum = 99999;
             return " SELECT  TOP " + topNum.ToString() + " " + val.Substring(1) + SqlBuilder.GenerFormWhereOfMS(en);
+        }
+        public static string SelectSQLOfMySQL(Entity en, int topNum)
+        {
+            string val = ""; // key = null;
+            string mainTable = "";
+
+            if (en.EnMap.HisFKAttrs.Count != 0)
+                mainTable = en.EnMap.PhysicsTable + ".";
+
+            foreach (Attr attr in en.EnMap.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+                switch (attr.MyDataType)
+                {
+                    case DataType.AppString:
+                        if (attr.DefaultVal == null || attr.DefaultVal as string == "")
+                        {
+                            if (attr.IsKeyEqualField)
+                                val = val + ", " + mainTable + attr.Field;
+                            else
+                                val = val + "," + mainTable + attr.Field + " " + attr.Key;
+                        }
+                        else
+                        {
+                            val = val + ",IFNULL(" + mainTable + attr.Field + ", '" + attr.DefaultVal + "') " + attr.Key;
+                        }
+
+                        if (attr.MyFieldType == FieldType.FK || attr.MyFieldType == FieldType.PKFK)
+                        {
+                            Map map = attr.HisFKEn.EnMap;
+                            val = val + ", " + map.PhysicsTable + "_" + attr.Key + "." + map.GetFieldByKey(attr.UIRefKeyText) + " AS " + attr.Key + "Text";
+                        }
+                        break;
+                    case DataType.AppInt:
+                        val = val + ",IFNULL(" + mainTable + attr.Field + "," +
+                        attr.DefaultVal + ")   " + attr.Key + "";
+                        if (attr.MyFieldType == FieldType.Enum || attr.MyFieldType == FieldType.PKEnum)
+                        {
+#warning 2011-12-03 不应出现异常。
+                            if (attr.UIBindKey.Contains("."))
+                                throw new Exception("@" + en.ToString() + " &UIBindKey=" + attr.UIBindKey + " @Key=" + attr.Key);
+
+                            Sys.SysEnums ses = new BP.Sys.SysEnums(attr.UIBindKey, attr.UITag);
+                            val = val + "," + ses.GenerCaseWhenForOracle(mainTable, attr.Key, attr.Field, attr.UIBindKey, int.Parse(attr.DefaultVal.ToString()));
+                        }
+
+                        if (attr.MyFieldType == FieldType.FK || attr.MyFieldType == FieldType.PKFK)
+                        {
+                            Map map = attr.HisFKEn.EnMap;
+                            val = val + ", " + map.PhysicsTable + "_" + attr.Key + "." + map.GetFieldByKey(attr.UIRefKeyText) + "  AS " + attr.Key + "Text";
+                        }
+                        break;
+                    case DataType.AppFloat:
+                        val = val + ", IFNULL( round(" + mainTable + attr.Field + ",4) ," +
+                            attr.DefaultVal.ToString() + ") AS  " + attr.Key;
+                        break;
+                    case DataType.AppBoolean:
+                        if (attr.DefaultVal.ToString() == "0")
+                            val = val + ", IFNULL( " + mainTable + attr.Field + ",0) " + attr.Key;
+                        else
+                            val = val + ", IFNULL(" + mainTable + attr.Field + ",1) " +
+                                attr.Key;
+                        break;
+                    case DataType.AppDouble:
+                        val = val + ", IFNULL( round(" + mainTable + attr.Field + " ,4) ," +
+                            attr.DefaultVal.ToString() + ") " + attr.Key;
+                        break;
+                    case DataType.AppMoney:
+                        val = val + ", IFNULL( round(" + mainTable + attr.Field + ",4)," +
+                            attr.DefaultVal.ToString() + ") " + attr.Key;
+                        break;
+                    case DataType.AppDate:
+                    case DataType.AppDateTime:
+                        if (attr.DefaultVal == null || attr.DefaultVal.ToString() == "")
+                            val = val + "," + mainTable + attr.Field + " " + attr.Key;
+                        else
+                        {
+                            val = val + ",IFNULL(" + mainTable + attr.Field + ",'" +
+                                                         attr.DefaultVal.ToString() + "') " + attr.Key;
+                        }
+                        break;
+                    default:
+                        throw new Exception("@没有定义的数据类型! attr=" + attr.Key + " MyDataType =" + attr.MyDataType);
+                }
+            }
+
+            return " SELECT   " + val.Substring(1) + SqlBuilder.GenerFormWhereOfMS(en);
         }
         /// <summary>
         /// 建立selectSQL 

@@ -52,11 +52,11 @@ namespace BP.WF
             string domainHost = "127.0.0.1";
 
             string sqls = "";
-            sqls += "@DELETE Port_Emp";
-            sqls += "@DELETE Port_Dept";
-            sqls += "@DELETE Port_Station";
-            sqls += "@DELETE Port_EmpStation";
-            sqls += "@DELETE Port_EmpDept";
+            sqls += "@DELETE FROM Port_Emp";
+            sqls += "@DELETE FROM Port_Dept";
+            sqls += "@DELETE FROM Port_Station";
+            sqls += "@DELETE FROM Port_EmpStation";
+            sqls += "@DELETE FROM Port_EmpDept";
             DBAccess.RunSQLs(sqls);
 
            

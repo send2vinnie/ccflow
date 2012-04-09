@@ -79,6 +79,7 @@ namespace BP.DA
                 {
                     case DBType.Oracle9i:
                         return ":";
+                    case DBType.MySQL:
                     case DBType.SQL2000:
                     default:
                         return "@";

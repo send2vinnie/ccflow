@@ -1395,9 +1395,9 @@ namespace BP.WF
                 }
 
                 // 删除表单附件信息。
-                BP.DA.DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE RefPKVal='" + this.WorkID + "' AND FK_MapData='ND" + nd.NodeID + "'");
+                BP.DA.DBAccess.RunSQL("DELETE FROM Sys_FrmAttachmentDB WHERE RefPKVal='" + this.WorkID + "' AND FK_MapData='ND" + nd.NodeID + "'");
                 // 删除签名信息。
-                BP.DA.DBAccess.RunSQL("DELETE Sys_FrmEleDB WHERE RefPKVal='" + this.WorkID + "' AND FK_MapData='ND" + nd.NodeID + "'");
+                BP.DA.DBAccess.RunSQL("DELETE FROM Sys_FrmEleDB WHERE RefPKVal='" + this.WorkID + "' AND FK_MapData='ND" + nd.NodeID + "'");
                 #endregion 删除当前节点数据。
 
 

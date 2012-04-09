@@ -92,6 +92,7 @@ namespace BP.DA
                         {
                             case DBType.SQL2000:
                             case DBType.Oracle9i:
+                            case DBType.MySQL:
                                 return DBAccess.RunSQL(en.SQLCash.GetUpdateSQL(en, keys), SqlBuilder.GenerParas(en, keys));
                             case DBType.Access:
                                 return DBAccess.RunSQL(SqlBuilder.UpdateOfMSAccess(en, keys));

@@ -229,7 +229,6 @@ namespace BP.Sys
                 return attr;
             }
         }
-
         /// <summary>
         /// 是否主键
         /// </summary>
@@ -767,6 +766,24 @@ namespace BP.Sys
             }
         }
         /// <summary>
+        /// TextBox类型
+        /// </summary>
+        public int TBModel
+        {
+            get
+            {
+                string s= this.GetValStrByKey(MapAttrAttr.UIBindKey);
+                if (string.IsNullOrEmpty(s))
+                    return 0;
+                else
+                    return int.Parse(s);
+            }
+            set
+            {
+                this.SetValByKey(MapAttrAttr.UIBindKey, value);
+            }
+        }
+        /// <summary>
         /// 绑定的值
         /// </summary>
         public string UIBindKey
@@ -968,15 +985,13 @@ namespace BP.Sys
                 map.AddTBInt(MapAttrAttr.UIContralType, 0, "控件", true, false);
                 map.AddTBInt(MapAttrAttr.MyDataType, 0, "数据类型", true, false);
 
-
-
                 map.AddDDLSysEnum(MapAttrAttr.LGType, 0, "逻辑类型", true, false, MapAttrAttr.LGType, "@0=普通@1=枚举@2=外键");
 
                 map.AddTBInt(MapAttrAttr.UIWidth, 100, "宽度", true, false);
                 map.AddTBInt(MapAttrAttr.UIHeight, 23, "高度", true, false);
 
                 map.AddTBInt(MapAttrAttr.MinLen, 0, "最小长度", true, false);
-                map.AddTBInt(MapAttrAttr.MaxLen, 500, "最大长度", true, false);
+                map.AddTBInt(MapAttrAttr.MaxLen, 300, "最大长度", true, false);
 
                 map.AddTBString(MapAttrAttr.UIBindKey, null, "绑定的信息", true, false, 0, 100, 20);
                 map.AddTBString(MapAttrAttr.UIRefKey, null, "绑定的Key", true, false, 0, 30, 20);

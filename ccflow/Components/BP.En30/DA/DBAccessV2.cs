@@ -50,75 +50,76 @@ namespace BP.DA
 			return ds.Tables[table] ;
 		}
 	}
-	/// <summary>
-	/// 第三方系统 数据库访问配置。
-	/// </summary>
-	public class DBAccessOfThirdParty
-	{
-		public static int RunSQLReturnIntVal(string sql )
-		{
-			switch( SystemConfig.ThirdPartySoftDBType)
-			{
-				case DBType.Sybase:
-					return  DBAccessOfODBC.RunSQLReturnValInt(sql);
-				case DBType.SQL2000:
-					return (int)BP.DA.DBAccessOfMSSQL2000.RunSQLReturnVal(sql);
-				case DBType.Oracle9i:
-                    return DBAccess.RunSQLReturnValInt(sql);
-				default:
-					throw new Exception("error dbtype..");
-			}
-		}
-		public static float RunSQLReturnFloatVal(string sql )
-		{
-            switch (SystemConfig.ThirdPartySoftDBType)
-            {
-                case DBType.Sybase:
-                    return DBAccessOfODBC.RunSQLReturnFloatVal(sql);
-                case DBType.SQL2000:
-                    return (float)DBAccessOfMSSQL2000.RunSQLReturnVal(sql);
-                case DBType.Oracle9i:
-                    return DBAccess.RunSQLReturnValFloat(sql);
-                default:
-                    throw new Exception("error dbtype..");
-            }
-		}
+    ///// <summary>
+    ///// 第三方系统 数据库访问配置。
+    ///// </summary>
+    //public class DBAccessOfThirdParty
+    //{
+    //    public static int RunSQLReturnIntVal(string sql )
+    //    {
+    //        switch( SystemConfig.ThirdPartySoftDBType)
+    //        {
+    //            case DBType.Sybase:
+    //                return  DBAccessOfODBC.RunSQLReturnValInt(sql);
+    //            case DBType.SQL2000:
+    //            case DBType.MySQL:
+    //                return (int)BP.DA.DBAccessOfMSSQL2000.RunSQLReturnVal(sql);
+    //            case DBType.Oracle9i:
+    //                return DBAccess.RunSQLReturnValInt(sql);
+    //            default:
+    //                throw new Exception("error dbtype..");
+    //        }
+    //    }
+    //    public static float RunSQLReturnFloatVal(string sql )
+    //    {
+    //        switch (SystemConfig.ThirdPartySoftDBType)
+    //        {
+    //            case DBType.Sybase:
+    //                return DBAccessOfODBC.RunSQLReturnFloatVal(sql);
+    //            case DBType.SQL2000:
+    //                return (float)DBAccessOfMSSQL2000.RunSQLReturnVal(sql);
+    //            case DBType.Oracle9i:
+    //                return DBAccess.RunSQLReturnValFloat(sql);
+    //            default:
+    //                throw new Exception("error dbtype..");
+    //        }
+    //    }
 
-		public static int RunSQL(string sql)
-		{
-			switch( SystemConfig.ThirdPartySoftDBType)
-			{
-				case DBType.Sybase:
-					return DBAccessOfODBC.RunSQL(sql);
+    //    public static int RunSQL(string sql)
+    //    {
+    //        switch( SystemConfig.ThirdPartySoftDBType)
+    //        {
+    //            case DBType.Sybase:
+    //                return DBAccessOfODBC.RunSQL(sql);
 				 
-				case DBType.SQL2000:
-					return DBAccessOfMSSQL2000.RunSQL(sql);
+    //            case DBType.SQL2000:
+    //                return DBAccessOfMSSQL2000.RunSQL(sql);
 					 
-				case DBType.Oracle9i:
-					return DBAccess.RunSQL(sql);
+    //            case DBType.Oracle9i:
+    //                return DBAccess.RunSQL(sql);
  
-				default:
-					throw new Exception("error dbtype..");
-			}
-		}
-		public static DataTable RunSQLReturnTable(string sql)
-		{
+    //            default:
+    //                throw new Exception("error dbtype..");
+    //        }
+    //    }
+    //    public static DataTable RunSQLReturnTable(string sql)
+    //    {
 
-            switch (SystemConfig.ThirdPartySoftDBType)
-            {
-                case DBType.Sybase:
-                    return DBAccessOfODBC.RunSQLReturnTable(sql);
+    //        switch (SystemConfig.ThirdPartySoftDBType)
+    //        {
+    //            case DBType.Sybase:
+    //                return DBAccessOfODBC.RunSQLReturnTable(sql);
 
-                case DBType.SQL2000:
-                    return DBAccessOfMSSQL2000.RunSQLReturnTable(sql);
+    //            case DBType.SQL2000:
+    //                return DBAccessOfMSSQL2000.RunSQLReturnTable(sql);
 
-                case DBType.Oracle9i:
-                    return DBAccess.RunSQLReturnTable(sql);
-                default:
-                    throw new Exception("error dbtype..");
-            }
-		}
-	}
+    //            case DBType.Oracle9i:
+    //                return DBAccess.RunSQLReturnTable(sql);
+    //            default:
+    //                throw new Exception("error dbtype..");
+    //        }
+    //    }
+    //}
 	/// <summary>
 	/// 数据库访问。
 	/// 这个类负责处理了。实体信息
@@ -249,6 +250,7 @@ namespace BP.DA
             switch (BP.SystemConfig.AppCenterDBType)
             {
                 case DBType.SQL2000:
+                case DBType.MySQL:
                 case DBType.Access:
 
                     return DBProcedure.RunSP(spName, (SqlConnection)DBAccess.GetAppCenterDBConn);
@@ -275,6 +277,7 @@ namespace BP.DA
             switch (BP.SystemConfig.AppCenterDBType)
             {
                 case DBType.SQL2000:
+                case DBType.MySQL:
                 case DBType.Access:
                     ConnOfSQL conn = GetAppCenterDBConn as ConnOfSQL;
                     try
@@ -1249,43 +1252,7 @@ namespace BP.DA
         /// <returns>执行结果</returns>
         private static int RunSQL_200705_MySQL(string sql)
         {
-            ConnOfMySQL connofora = DBAccess.GetAppCenterDBConn  as ConnOfMySQL;
-            MySqlConnection conn = connofora.Conn;
-            try
-            {
-                if (conn == null)
-                    conn = new MySqlConnection(SystemConfig.AppCenterDSN);
-
-                if (conn.State != System.Data.ConnectionState.Open)
-                    conn.Open();
-
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.CommandType = CommandType.Text;
-                int i = cmd.ExecuteNonQuery();
-                cmd.Dispose();
-                HisConnOfMySQLs.PutPool(connofora);
-                return i;
-            }
-            catch (System.Exception ex)
-            {
-                HisConnOfMySQLs.PutPool(connofora);
-                if (BP.SystemConfig.IsDebug)
-                {
-                    string msg = "RunSQL2   SQL=" + sql + ex.Message;
-                    Log.DebugWriteError(msg);
-                    throw new Exception(msg);
-                }
-                else
-                {
-                    throw new Exception(ex.Message + " Run SQL=" + sql);
-                }
-            }
-            finally
-            {
-                if (SystemConfig.IsBSsystem_Test == false)
-                    conn.Close();
-                HisConnOfMySQLs.PutPool(connofora);
-            }
+            return RunSQL_200705_MySQL(sql, new Paras());
         }
         /// <summary>
         /// RunSQL_200705_MySQL
@@ -1295,14 +1262,10 @@ namespace BP.DA
         /// <returns></returns>
         private static int RunSQL_200705_MySQL(string sql, Paras paras)
         {
-            ConnOfMySQL connofora = (ConnOfMySQL)DBAccess.GetAppCenterDBConn;
-            connofora.AddSQL(sql);
-            MySqlConnection conn = connofora.Conn;
+            MySqlConnection conn = new MySqlConnection(SystemConfig.AppCenterDSN);
+            int i = 0;
             try
             {
-                if (conn == null)
-                    conn = new MySqlConnection(SystemConfig.AppCenterDSN);
-
                 if (conn.State != System.Data.ConnectionState.Open)
                 {
                     conn.ConnectionString = SystemConfig.AppCenterDSN;
@@ -1311,36 +1274,30 @@ namespace BP.DA
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.CommandType = CommandType.Text;
-
                 foreach (Para para in paras)
                 {
                     MySqlParameter oraP = new MySqlParameter(para.ParaName, para.val);
                     cmd.Parameters.Add(oraP);
                 }
-
-                int i = cmd.ExecuteNonQuery();
+                i = cmd.ExecuteNonQuery();
                 cmd.Dispose();
-                HisConnOfMySQLs.PutPool(connofora);
+
+                conn.Close();
+                conn.Dispose();
                 return i;
             }
             catch (System.Exception ex)
             {
-                HisConnOfMySQLs.PutPool(connofora);
-                if (BP.SystemConfig.IsDebug)
-                {
-                    string msg = "RunSQL2   SQL=" + sql + ex.Message;
-                    Log.DebugWriteError(msg);
-                    throw new Exception(msg);
-                }
-                else
-                    throw ex;
+                conn.Close();
+                conn.Dispose();
+                throw new Exception(ex.Message+"@SQL:"+sql);
             }
-            finally
-            {
-                if (SystemConfig.IsBSsystem_Test == false)
-                    conn.Close();
-                HisConnOfMySQLs.PutPool(connofora);
-            }
+            //finally
+            //{
+            //    conn.Close();
+            //    conn.Dispose();
+            //    return i;
+            //}
         }
         private static int RunSQL_200705_Ora(string sql,Paras paras)
         {
@@ -1905,32 +1862,34 @@ namespace BP.DA
         /// <returns>返回table</returns>
         private static DataTable RunSQLReturnTable_200705_MySQL(string selectSQL)
         {
-            ConnOfMySQL connofObj = GetAppCenterDBConn as ConnOfMySQL;
-            MySqlConnection conn = connofObj.Conn;
-            try
-            {
-                if (conn.State != ConnectionState.Open)
-                    conn.Open();
+            return RunSQLReturnTable_200705_MySQL(selectSQL, new Paras());
 
-                MySqlDataAdapter ada = new MySqlDataAdapter(selectSQL, conn);
-                ada.SelectCommand.CommandType = CommandType.Text;
-                DataTable oratb = new DataTable("otb");
-                ada.Fill(oratb);
-                ada.Dispose();
-                HisConnOfMySQLs.PutPool(connofObj);
-                return oratb;
-            }
-            catch (System.Exception ex)
-            {
-                HisConnOfMySQLs.PutPool(connofObj);
-                string msg = "@运行查询在(RunSQLReturnTable_200705_MySQL)出错 sql=" + selectSQL + " @异常信息：" + ex.Message;
-                Log.DebugWriteError(msg);
-                throw new Exception(msg);
-            }
-            finally
-            {
-                HisConnOfMySQLs.PutPool(connofObj);
-            }
+            //ConnOfMySQL connofObj = GetAppCenterDBConn as ConnOfMySQL;
+            //MySqlConnection conn = connofObj.Conn;
+            //try
+            //{
+            //    if (conn.State != ConnectionState.Open)
+            //        conn.Open();
+
+            //    MySqlDataAdapter ada = new MySqlDataAdapter(selectSQL, conn);
+            //    ada.SelectCommand.CommandType = CommandType.Text;
+            //    DataTable oratb = new DataTable("otb");
+            //    ada.Fill(oratb);
+            //    ada.Dispose();
+            //    HisConnOfMySQLs.PutPool(connofObj);
+            //    return oratb;
+            //}
+            //catch (System.Exception ex)
+            //{
+            //    HisConnOfMySQLs.PutPool(connofObj);
+            //    string msg = "@运行查询在(RunSQLReturnTable_200705_MySQL)出错 sql=" + selectSQL + " @异常信息：" + ex.Message;
+            //    Log.DebugWriteError(msg);
+            //    throw new Exception(msg);
+            //}
+            //finally
+            //{
+            //    HisConnOfMySQLs.PutPool(connofObj);
+            //}
         }
         /// <summary>
         /// RunSQLReturnTable_200705_SQL
@@ -1939,13 +1898,22 @@ namespace BP.DA
         /// <returns>返回table</returns>
         private static DataTable RunSQLReturnTable_200705_MySQL(string sql, Paras paras)
         {
+          //  string mcs = "Data Source=127.0.0.1;User ID=root;Password=root;DataBase=wk;Charset=gb2312;";
+          //  MySqlConnection conn = new MySqlConnection(SystemConfig.AppCenterDSN);
+          //  SqlDataAdapter ad = new SqlDataAdapter("select username,password from person", conn);
+          //  DataTable dt = new DataTable();
+          //  conn.Open();
+          //  ad.Fill(dt);
+          //  conn.Close();
+          //  return dt;
+
             MySqlConnection conn = new MySqlConnection(SystemConfig.AppCenterDSN);
             if (conn.State != ConnectionState.Open)
                 conn.Open();
 
             MySqlDataAdapter ada = new MySqlDataAdapter(sql, conn);
             ada.SelectCommand.CommandType = CommandType.Text;
-
+           
             // 加入参数
             foreach (Para para in paras)
             {
@@ -1959,7 +1927,9 @@ namespace BP.DA
                 DataTable oratb = new DataTable("otb");
                 ada.Fill(oratb);
                 ada.Dispose();
+
                 conn.Close();
+                conn.Dispose();
                 return oratb;
             }
             catch (Exception ex)
@@ -2654,6 +2624,9 @@ namespace BP.DA
                     break;
                 case DBType.SQL2000:
                     i = DBAccess.RunSQLReturnValInt("SELECT  COUNT(*)  FROM information_schema.COLUMNS  WHERE TABLE_NAME='"+table+"' AND COLUMN_NAME='"+col+"'", 0);
+                    break;
+                case DBType.MySQL:
+                    i = DBAccess.RunSQLReturnValInt("SELECT  COUNT(*)  FROM information_schema.COLUMNS  WHERE TABLE_NAME='" + table + "' AND COLUMN_NAME='" + col + "'", 0);
                     break;
                 case DBType.Oracle9i:
                     if (table.IndexOf(".") != -1)

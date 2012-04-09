@@ -52,7 +52,7 @@ namespace BP.WF
             string rpt = BP.PubClass.DBRpt(BP.DBLevel.High);
 
             // 手动升级. 2011-07-08 补充节点字段分组.
-            string sql = "DELETE Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
+            string sql = "DELETE FROM Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";
             BP.DA.DBAccess.RunSQL(sql);
 
             sql = "INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态')";

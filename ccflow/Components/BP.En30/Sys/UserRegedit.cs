@@ -41,7 +41,7 @@ namespace BP.Sys
         /// </summary>
         public const string OrderWay = "OrderWay";
 
-        public const string SQL = "SQL";
+        public const string GenerSQL = "GenerSQL";
         public const string Paras = "Paras";
         public const string NumKey = "NumKey";
         /// <summary>
@@ -91,17 +91,17 @@ namespace BP.Sys
                 this.SetValByKey(UserRegeditAttr.Paras, value);
             }
         }
-        public string SQL
+        public string GenerSQL
         {
             get
             {
-                string sql = this.GetValStringByKey(UserRegeditAttr.SQL);
-                sql = sql.Replace("~", "'");
-                return sql;
+                string GenerSQL = this.GetValStringByKey(UserRegeditAttr.GenerSQL);
+                GenerSQL = GenerSQL.Replace("~", "'");
+                return GenerSQL;
             }
             set
             {
-                this.SetValByKey(UserRegeditAttr.SQL, value);
+                this.SetValByKey(UserRegeditAttr.GenerSQL, value);
             }
         }
         public string OrderWay
@@ -258,18 +258,15 @@ namespace BP.Sys
                 map.AddMyPK();
 
                 map.AddTBString(UserRegeditAttr.FK_Emp, null, "用户", false, false, 1, 30, 20);
-                map.AddTBString(UserRegeditAttr.CfgKey, null, "键", true, false, 1, 4000, 20);
-                map.AddTBString(UserRegeditAttr.Vals, null, "值", true, false, 0, 4000, 20);
-                map.AddTBString(UserRegeditAttr.SQL, null, "SQL", true, false, 0, 4000, 20);
-                map.AddTBString(UserRegeditAttr.Paras, null, "Paras", true, false, 0, 4000, 20);
-                map.AddTBString(UserRegeditAttr.NumKey, null, "分析的Key", true, false, 0, 4000, 20);
-                map.AddTBString(UserRegeditAttr.OrderBy, null, "OrderBy", true, false, 0, 4000, 20);
-                map.AddTBString(UserRegeditAttr.OrderWay, null, "OrderWay", true, false, 0, 4000, 20);
-                map.AddTBString(UserRegeditAttr.SearchKey, null, "SearchKey", true, false, 0, 4000, 20);
-
-                map.AddTBString(UserRegeditAttr.MVals, null, "MVals", true, false, 0, 4000, 20);
-
-
+                map.AddTBString(UserRegeditAttr.CfgKey, null, "键", true, false, 1, 200, 20);
+                map.AddTBString(UserRegeditAttr.Vals, null, "值", true, false, 0, 2000, 20);
+                map.AddTBString(UserRegeditAttr.GenerSQL, null, "GenerSQL", true, false, 0, 2000, 20);
+                map.AddTBString(UserRegeditAttr.Paras, null, "Paras", true, false, 0, 2000, 20);
+                map.AddTBString(UserRegeditAttr.NumKey, null, "分析的Key", true, false, 0, 300, 20);
+                map.AddTBString(UserRegeditAttr.OrderBy, null, "OrderBy", true, false, 0, 300, 20);
+                map.AddTBString(UserRegeditAttr.OrderWay, null, "OrderWay", true, false, 0, 300, 20);
+                map.AddTBString(UserRegeditAttr.SearchKey, null, "SearchKey", true, false, 0, 300, 20);
+                map.AddTBString(UserRegeditAttr.MVals, null, "MVals", true, false, 0, 300, 20);
                 map.AddBoolean(UserRegeditAttr.IsPic, false, "是否图片", true, false);
 
                 this._enMap = map;

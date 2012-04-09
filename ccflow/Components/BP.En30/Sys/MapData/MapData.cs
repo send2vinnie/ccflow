@@ -1059,24 +1059,24 @@ namespace BP.Sys
             string where = " FK_MapData IN (" + ids + ")";
 
             #region 删除相关的数据。
-            sql += "@DELETE Sys_MapDtl WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmLine WHERE " + where;
-            sql += "@DELETE Sys_FrmEle WHERE " + where;
-            sql += "@DELETE Sys_FrmEvent WHERE " + where;
-            sql += "@DELETE Sys_FrmBtn WHERE " + where;
-            sql += "@DELETE Sys_FrmLab WHERE " + where;
-            sql += "@DELETE Sys_FrmLink WHERE " + where;
-            sql += "@DELETE Sys_FrmImg WHERE " + where;
-            sql += "@DELETE Sys_FrmImgAth WHERE " + where;
-            sql += "@DELETE Sys_FrmRB WHERE " + where;
-            sql += "@DELETE Sys_FrmAttachment WHERE " + where;
-            sql += "@DELETE Sys_MapM2M WHERE " + where;
-            sql += "@DELETE Sys_MapFrame WHERE " + where;
-            sql += "@DELETE Sys_MapExt WHERE " + where;
-            sql += "@DELETE Sys_MapAttr WHERE " + where;
-            sql += "@DELETE Sys_GroupField WHERE EnName IN (" + ids + ")";
-            sql += "@DELETE Sys_MapData WHERE No IN (" + ids + ")";
-            sql += "@DELETE Sys_M2M WHERE " + where;
+            sql += "@DELETE FROM Sys_MapDtl WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_FrmLine WHERE " + where;
+            sql += "@DELETE FROM Sys_FrmEle WHERE " + where;
+            sql += "@DELETE FROM Sys_FrmEvent WHERE " + where;
+            sql += "@DELETE FROM Sys_FrmBtn WHERE " + where;
+            sql += "@DELETE FROM Sys_FrmLab WHERE " + where;
+            sql += "@DELETE FROM Sys_FrmLink WHERE " + where;
+            sql += "@DELETE FROM Sys_FrmImg WHERE " + where;
+            sql += "@DELETE FROM Sys_FrmImgAth WHERE " + where;
+            sql += "@DELETE FROM Sys_FrmRB WHERE " + where;
+            sql += "@DELETE FROM Sys_FrmAttachment WHERE " + where;
+            sql += "@DELETE FROM Sys_MapM2M WHERE " + where;
+            sql += "@DELETE FROM Sys_MapFrame WHERE " + where;
+            sql += "@DELETE FROM Sys_MapExt WHERE " + where;
+            sql += "@DELETE FROM Sys_MapAttr WHERE " + where;
+            sql += "@DELETE FROM Sys_GroupField WHERE EnName IN (" + ids + ")";
+            sql += "@DELETE FROM Sys_MapData WHERE No IN (" + ids + ")";
+            sql += "@DELETE FROM Sys_M2M WHERE " + where;
             DBAccess.RunSQLs(sql);
             #endregion 删除相关的数据。
 

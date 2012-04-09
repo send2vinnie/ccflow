@@ -362,7 +362,7 @@ namespace BP.WF
                         DBAccess.RunSQL("DELETE " + dtl.PTable + " WHERE RefPK=" + oid);
 
                     //删除附件数据。
-                    DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND" + wk.NodeID + "' AND RefPKVal='" + wk.OID + "'");
+                    DBAccess.RunSQL("DELETE FROM Sys_FrmAttachmentDB WHERE FK_MapData='ND" + wk.NodeID + "' AND RefPKVal='" + wk.OID + "'");
                     wk.OID = newOID;
                 }
                 #endregion 处理删除草稿的需求。
@@ -440,7 +440,7 @@ namespace BP.WF
                         if (wkFrom.HisFrmAttachments.Count > 0)
                         {
                             //删除数据。
-                            DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND" + wk.NodeID + "' AND RefPKVal='" + wk.OID + "'");
+                            DBAccess.RunSQL("DELETE FROM Sys_FrmAttachmentDB WHERE FK_MapData='ND" + wk.NodeID + "' AND RefPKVal='" + wk.OID + "'");
                             FrmAttachmentDBs athDBs = new FrmAttachmentDBs("ND" + fromNode, fromWorkID.ToString());
                             int idx = 0;
                             foreach (FrmAttachmentDB athDB in athDBs)
@@ -834,14 +834,14 @@ namespace BP.WF
                 {
                     DBAccess.RunSQLReturnTable(mysql);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     try
                     {
                         fl.DoCheck();
                         DBAccess.RunSQLReturnTable(mysql);
                     }
-                    catch(Exception ex1)
+                    catch (Exception ex1)
                     {
                         err += ex1.Message;
                         continue;
@@ -851,7 +851,8 @@ namespace BP.WF
                 sql += "\t\n UNION ";
             }
             sql = sql.Substring(0, sql.Length - 6);
-            DBAccess.RunSQL(sql);
+            if (sql.Length > 50)
+                DBAccess.RunSQL(sql);
             return null;
         }
         /// <summary>
@@ -2137,7 +2138,7 @@ namespace BP.WF
             this.CheckRpt();
 
             // 检查报表数据是否丢失。
-            DBAccess.RunSQL("DELETE ND" + int.Parse(this.No) + "Rpt");
+            DBAccess.RunSQL("DELETE FROM ND" + int.Parse(this.No) + "Rpt");
             string sql = "SELECT OID FROM ND" + int.Parse(this.No) + "01 WHERE NodeState >0 AND OID NOT IN (SELECT OID FROM  ND" + int.Parse(this.No) + "Rpt ) ";
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
             this.CheckRptData(this.HisNodes, dt);
@@ -2337,6 +2338,9 @@ namespace BP.WF
                     case DBType.Oracle9i:
                         sql += "\r\n SELECT '" + nd.NodeID + "' || '_'|| OID||'_'|| FID  AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT,SUBSTR(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
                         break;
+                    case DBType.MySQL:
+                        sql += "\r\n SELECT '" + nd.NodeID + "'+'_'+CHAR(OID)  +'_'+CHAR(FID)  AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT," + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
+                        break;
                     default:
                         sql += "\r\n SELECT '" + nd.NodeID + "'+'_'+CAST(OID AS varchar(10)) +'_'+CAST(FID AS VARCHAR(10)) AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT," + BP.SystemConfig.AppCenterDBSubstringStr + "(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
                         break;
@@ -2361,12 +2365,54 @@ namespace BP.WF
             string flowId = int.Parse(this.No).ToString();
 
             #region 插入字段。
-            string sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
-            string sql2 = "DELETE FROM Sys_MapAttr WHERE KeyOfEn NOT IN (" + sql + ") AND FK_MapData='ND" + flowId + "Rpt' ";
-            DBAccess.RunSQL(sql2); // 删除不存在的字段.
+            string sql = "";
+
+            switch (SystemConfig.AppCenterDBType)
+            {
+                case DBType.Oracle9i:
+                case DBType.SQL2000:
+                      sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+                    break;
+                case DBType.MySQL:
+                    sql = "SELECT  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " CHAR(NodeID) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+                    break;
+                default:
+                    sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+                    break;
+            }
+
+            if (SystemConfig.AppCenterDBType == DBType.MySQL)
+            {
+                #warning 没有处理好mysql的删除。
+                //DataTable delDt = DBAccess.RunSQLReturnTable(sql);
+                //foreach (DataRow dr in delDt.Rows)
+                //{
+                //    string sql2 = "DELETE FROM Sys_MapAttr WHERE KeyOfEn NOT IN (" + sql + ") AND FK_MapData='ND" + flowId + "Rpt' ";
+                //    DBAccess.RunSQL(sql2); // 删除不存在的字段.
+                //}
+            }
+            else
+            {
+                string sql2 = "DELETE FROM Sys_MapAttr WHERE KeyOfEn NOT IN (" + sql + ") AND FK_MapData='ND" + flowId + "Rpt' ";
+                DBAccess.RunSQL(sql2); // 删除不存在的字段.
+            }
+
 
             // 补充上没有字段。
-            sql = "SELECT MyPK, KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+
+            switch (SystemConfig.AppCenterDBType)
+            {
+                case DBType.Oracle9i:
+                    sql = "SELECT MyPK, KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+                    break;
+                case DBType.MySQL:
+                    sql = "SELECT MyPK, KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " CHAR(NodeID) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+                    break;
+                default:
+                    sql = "SELECT MyPK, KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+                    break;
+            }
+
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
 
             sql = "SELECT KeyOfEn FROM Sys_MapAttr WHERE FK_MapData='ND" + flowId + "Rpt'";
@@ -3174,7 +3220,7 @@ namespace BP.WF
                 DBAccess.RunSQL("DELETE FROM ND" + int.Parse(this.No) + "Rpt ");
 
             //DA.DBAccess.RunSQL("DELETE FROM WF_WorkList WHERE FK_Flow='" + this.No + "'");
-            //DA.DBAccess.RunSQL("DELETE Sys_MapExt WHERE FK_MapData LIKE 'ND"+int.Parse(this.No)+"%'" );
+            //DA.DBAccess.RunSQL("DELETE FROM Sys_MapExt WHERE FK_MapData LIKE 'ND"+int.Parse(this.No)+"%'" );
 
             //删除节点数据。
             Nodes nds = new Nodes(this.No);
@@ -4538,17 +4584,17 @@ namespace BP.WF
 
 
             //删除侦听.
-            sql += "@ DELETE WF_Listen WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql += "@ DELETE FROM WF_Listen WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             // 删除d2d数据.
             //  sql += "@GO DELETE WF_M2M WHERE FK_Node IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
             // 删除配置.
-            sql += "@ DELETE WF_FAppSet WHERE NodeID IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+            sql += "@ DELETE FROM WF_FAppSet WHERE NodeID IN (SELECT NodeID FROM WF_Node WHERE FK_Flow='" + this.No + "')";
 
 
             // 删除配置.
-            sql += "@ DELETE WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
+            sql += "@ DELETE FROM WF_FlowEmp WHERE FK_Flow='" + this.No + "' ";
 
 
             // 外部程序设置

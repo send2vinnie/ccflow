@@ -162,6 +162,7 @@ namespace BP.En
                 {
                     case DBType.SQL2000:
                     case DBType.Access:
+                    case DBType.MySQL:
                         return "@";
                     default:
                         return ":";

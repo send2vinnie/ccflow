@@ -118,6 +118,7 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data">
       <Name>system.data</Name>
     </Reference>
@@ -180,6 +181,8 @@
     <Compile Include="IWCW\Tree.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="NewFolder1\CKEditorConfig.cs" />
+    <Compile Include="NewFolder1\CKEditorControl.cs" />
     <Compile Include="NextPreviouRec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

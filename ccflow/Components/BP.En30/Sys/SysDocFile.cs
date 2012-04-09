@@ -420,12 +420,14 @@ namespace BP.Sys
                 map.AddTBString("D4", null, "D4", true, true, 0, 4000, 20);
                 map.AddTBString("D5", null, "D5", true, true, 0, 4000, 20);
                 map.AddTBString("D6", null, "D6", true, true, 0, 4000, 20);
-                map.AddTBString("D7", null, "D7", true, true, 0, 4000, 20);
-                map.AddTBString("D8", null, "D8", true, true, 0, 4000, 20);
-                map.AddTBString("D9", null, "D9", true, true, 0, 4000, 20);
+             
 
                 if (map.EnDBUrl.DBType != DBType.MySQL)
                 {
+                    map.AddTBString("D7", null, "D7", true, true, 0, 4000, 20);
+                    map.AddTBString("D8", null, "D8", true, true, 0, 4000, 20);
+                    map.AddTBString("D9", null, "D9", true, true, 0, 4000, 20);
+
                     map.AddTBString("D10", null, "D10", true, true, 0, 4000, 20);
                     map.AddTBString("D11", null, "D11", true, true, 0, 4000, 20);
 

@@ -100,7 +100,7 @@ namespace BP.En
 		#region override ·½·¨
 		public override void DirectInsert()
 		{
-            this.OID = DBAccess.GenerOIDByKey32(this.SerialKey);
+            this.OID =DBAccess.GenerOID();
 			base.DirectInsert ();
 		}
 

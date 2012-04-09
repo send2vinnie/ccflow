@@ -895,19 +895,19 @@ namespace BP.Sys
         protected override bool beforeDelete()
         {
             string sql = "";
-            sql += "@DELETE Sys_FrmLine WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmLab WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmLink WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmImg WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmImgAth WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmRB WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_FrmAttachment WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_MapFrame WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_MapExt WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_MapAttr WHERE FK_MapData='" + this.No + "'";
-            sql += "@DELETE Sys_MapData WHERE No='" + this.No + "'";
-            sql += "@DELETE Sys_GroupField WHERE EnName='" + this.No + "'";
-            sql += "@DELETE Sys_MapM2M WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_FrmLine WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_FrmLab WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_FrmLink WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_FrmImg WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_FrmImgAth WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_FrmRB WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_FrmAttachment WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_MapFrame WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_MapExt WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_MapAttr WHERE FK_MapData='" + this.No + "'";
+            sql += "@DELETE FROM Sys_MapData WHERE No='" + this.No + "'";
+            sql += "@DELETE FROM Sys_GroupField WHERE EnName='" + this.No + "'";
+            sql += "@DELETE FROM Sys_MapM2M WHERE FK_MapData='" + this.No + "'";
             DBAccess.RunSQLs(sql);
             try
             {

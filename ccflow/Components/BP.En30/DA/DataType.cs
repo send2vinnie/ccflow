@@ -607,6 +607,7 @@ namespace BP.DA
             if (exp.Trim() == "")
                 throw new Exception("DataType.ParseExpToDecimal要转换的表达式为空。");
 
+
 			exp=exp.Replace("+-","-");
 			exp=exp.Replace("￥","");
 			//exp=exp.Replace(" ",""); 不能替换，因为有sql表达公式时间，会出现错误。

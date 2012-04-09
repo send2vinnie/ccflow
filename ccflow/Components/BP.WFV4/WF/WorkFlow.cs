@@ -1664,7 +1664,7 @@ namespace BP.WF
             wn.HisWork.Delete();
 
             // 删除附件信息。
-            DBAccess.RunSQL("DELETE Sys_FrmAttachmentDB WHERE FK_MapData='ND" + gwf.FK_Node + "' AND RefPKVal='" + this.WorkID + "'");
+            DBAccess.RunSQL("DELETE FROM Sys_FrmAttachmentDB WHERE FK_MapData='ND" + gwf.FK_Node + "' AND RefPKVal='" + this.WorkID + "'");
             #endregion 删除当前节点数据。
 
             // 更新.

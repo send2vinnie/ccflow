@@ -1393,8 +1393,6 @@ namespace BP
                 }
             }
         }
-
-
         public static string AppCenterDBAddStringStr
         {
             get
@@ -1402,6 +1400,7 @@ namespace BP
                 switch (SystemConfig.AppCenterDBType)
                 {
                     case BP.DA.DBType.Oracle9i:
+                    case BP.DA.DBType.MySQL:
                         return "||";
                     default:
                         return "+";

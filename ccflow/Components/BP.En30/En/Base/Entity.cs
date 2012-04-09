@@ -307,12 +307,12 @@ namespace BP.En
                     case DBType.SQL2000:
                         sql = "SELECT CONVERT(INT, MAX(" + field + ") )+1 AS No FROM " + this.EnMap.PhysicsTable;
                         break;
+                    case DBType.Oracle9i:
+                    case DBType.MySQL:
+                        sql = "SELECT MAX(" + field + ") +1 AS No FROM " + this.EnMap.PhysicsTable;
+                        break;
                     case DBType.Access:
                         sql = "SELECT MAX( [" + field + "]) +1 AS  No FROM " + this.EnMap.PhysicsTable;
-                        break;
-                    case DBType.Oracle9i:
-                        //sql = "SELECT MAX("+field+") +1 AS No FROM "+this.EnMap.PhysicsTable+" WHERE  "+ field +" LIKE '%0%'";
-                        sql = "SELECT MAX(" + field + ") +1 AS No FROM " + this.EnMap.PhysicsTable;
                         break;
                     default:
                         throw new Exception("error");
@@ -353,15 +353,14 @@ namespace BP.En
                 case DBType.SQL2000:
                     sql = "SELECT CONVERT(INT, MAX([" + field + "]) )+1 AS Num FROM " + this.EnMap.PhysicsTable + " WHERE " + attrGroupKey + "='" + attrGroupVal + "'";
                     break;
+                case DBType.Oracle9i:
+                    sql = "SELECT MAX( :f )+1 AS No FROM " + this.EnMap.PhysicsTable + " WHERE " + this.HisDBVarStr + "groupKey=" + this.HisDBVarStr + "groupVal ";
+                    break;
+                case DBType.MySQL:
+                    sql = "SELECT MAX("+field+") +1 AS Num FROM " + this.EnMap.PhysicsTable + " WHERE " + attrGroupKey + "='" + attrGroupVal + "'";
+                    break;
                 case DBType.Access:
                     sql = "SELECT MAX([" + field + "]) +1 AS Num FROM " + this.EnMap.PhysicsTable + " WHERE " + attrGroupKey + "='" + attrGroupVal + "'";
-                    break;
-                case DBType.Oracle9i:
-                    //sql = "SELECT   MAX( :f )+1 AS No FROM " + this.EnMap.PhysicsTable + " WHERE :groupKey=:groupVal AND :f LIKE '%0%'";
-                    sql = "SELECT   MAX( :f )+1 AS No FROM " + this.EnMap.PhysicsTable + " WHERE " + this.HisDBVarStr + "groupKey=" + this.HisDBVarStr + "groupVal ";
-                    // sql = "SELECT   MAX( :f )+1 AS No FROM " + this.EnMap.PhysicsTable + " WHERE :groupKey=:groupVal AND :f LIKE '%0%'";
-                    // sql = "SELECT   MAX( " + field + " )+1 AS No FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetFieldByKey(attrGroupKey) + "='" + attrGroupVal + "'";
-                    //sql = "SELECT "+this.EnMap.GetFieldByKey( attrKey )+" +1 AS No FROM "+this.EnMap.PhysicsTable;
                     break;
                 default:
                     throw new Exception("error");
@@ -563,7 +562,40 @@ namespace BP.En
         /// </summary>
         public virtual void DirectInsert()
         {
-            this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
+            try
+            {
+                switch (SystemConfig.AppCenterDBType)
+                {
+                    case DBType.SQL2000:
+                        this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
+                        break;
+                    case DBType.Access:
+                        this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
+                        break;
+                    case DBType.MySQL:
+                    default:
+                        this.RunSQL(this.SQLCash.Insert.Replace("[", "").Replace("]", ""), SqlBuilder.GenerParas(this, null));
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.roll();
+                if (SystemConfig.IsDebug)
+                {
+                    try
+                    {
+                        this.CheckPhysicsTable();
+                    }
+                    catch (Exception ex1)
+                    {
+                        throw new Exception(ex.Message + " == " + ex1.Message);
+                    }
+                }
+                throw ex;
+            }
+
+            //this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
         }
         /// <summary>
         /// 直接的Delete
@@ -868,14 +900,18 @@ namespace BP.En
                     string selectSQL = "SELECT " + this.PKField + " FROM " + this.EnMap.PhysicsTable + " WHERE ";
                     switch (this.EnMap.EnDBUrl.DBType)
                     {
+
                         case DBType.SQL2000:
+                            selectSQL += SqlBuilder.GetKeyConditionOfMS(this);
+                            break;
+                        case DBType.Oracle9i:
+                            selectSQL += SqlBuilder.GetKeyConditionOfOraForPara(this);
+                            break;
+                        case DBType.MySQL:
                             selectSQL += SqlBuilder.GetKeyConditionOfMS(this);
                             break;
                         case DBType.Access:
                             selectSQL += SqlBuilder.GetKeyConditionOfOLE(this);
-                            break;
-                        case DBType.Oracle9i:
-                            selectSQL += SqlBuilder.GetKeyConditionOfOraForPara(this);
                             break;
                         default:
                             throw new Exception("@没有设计到。" + this.EnMap.EnDBUrl.DBUrlType);
@@ -1189,37 +1225,7 @@ namespace BP.En
             if (this.beforeUpdateInsertAction() == false)
                 return;
 
-            try
-            {
-                switch (SystemConfig.AppCenterDBType)
-                {
-                    case DBType.SQL2000:
-                        this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
-                        break;
-                    case DBType.Access:
-                        this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
-                        break;
-                    default:
-                        this.RunSQL(this.SQLCash.Insert.Replace("[", "").Replace("]", ""), SqlBuilder.GenerParas(this, null));
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                this.roll();
-                if (SystemConfig.IsDebug)
-                {
-                    try
-                    {
-                        this.CheckPhysicsTable();
-                    }
-                    catch (Exception ex1)
-                    {
-                        throw new Exception(ex.Message + " ===== " + ex1.Message);
-                    }
-                }
-                throw ex;
-            }
+            this.DirectInsert();
 
             if (this.CashKey != null)
                 Cash1.Set(this.CashKey, this.PKVal.ToString(), this, 0);
@@ -2061,8 +2067,10 @@ namespace BP.En
                                     case DBType.SQL2000:
                                         DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " alter column " + attr.Key + " varchar(" + attr.MaxLength + ")");
                                         continue;
-                                    case DBType.Oracle9i:
                                     case DBType.MySQL:
+                                        DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " MODIFY column " + attr.Key + " varchar(" + attr.MaxLength + ")");
+                                        continue;
+                                    case DBType.Oracle9i:
                                         DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " modify " + attr.Key + " varchar2(" + attr.MaxLength + ")");
                                         continue;
                                     default:
