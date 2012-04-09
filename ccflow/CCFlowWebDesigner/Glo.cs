@@ -54,7 +54,6 @@ namespace BP
         /// 节点表单设计-自由
         /// </summary>
         public const string MapDefFreeModel = "MapDefFreeModel";
-
         /// <summary>
         /// 表单设计-傻瓜
         /// </summary>
@@ -63,7 +62,6 @@ namespace BP
         /// 表单设计-自由
         /// </summary>
         public const string FormFreeModel = "FormFreeModel";
-
         /// <summary>
         /// 节点岗位
         /// </summary>

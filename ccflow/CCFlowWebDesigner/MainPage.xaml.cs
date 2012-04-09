@@ -1046,7 +1046,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     // 返回值的格式为FlowSortID,FlowId,FlowName  
                     if (3 != result.Length)
                     {
-                        MessageBox.Show(eArgs.Result, "错误", MessageBoxButton.OK);
+                        MessageBox.Show(eArgs.Result, "错误1", MessageBoxButton.OK);
                         return;
                     }
 
@@ -1055,7 +1055,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "错误", MessageBoxButton.OK);
+                    MessageBox.Show(ex.Message, "错误2", MessageBoxButton.OK);
                 }
             };
             fu.Show();
@@ -1107,7 +1107,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             loadingWin(false);
             if (e.Result.IndexOf(";") < 0)
             {
-                MessageBox.Show(e.Result, "错误", MessageBoxButton.OK);
+                MessageBox.Show(e.Result, "错误3", MessageBoxButton.OK);
                 return;
             }
             string[] flow = e.Result.Split(';');
