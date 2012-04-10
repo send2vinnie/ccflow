@@ -256,6 +256,25 @@ namespace BP
                 typeof(WSDesignerSoapClient).GetConstructor(new Type[] { typeof(Binding), typeof(EndpointAddress) });
             return (WSDesignerSoapClient)ctor.Invoke(new object[] { basicBinding, endPoint });
         }
+
+        /// <summary>
+        /// 得到WebService对象
+        /// </summary>
+        /// <returns></returns>
+        public static WF.CYFtpClient.CYFtpSoapClient GetFtpServiceInstance()
+        {
+            var basicBinding = new BasicHttpBinding()
+            {
+                MaxBufferSize = 2147483647,
+                MaxReceivedMessageSize = 2147483647,
+                Name = "CYFtp"
+            };
+            basicBinding.Security.Mode = BasicHttpSecurityMode.None;
+            var endPoint = new EndpointAddress(Glo.BPMHost + "/WF/Admin/XAP/CYFtp.asmx");
+            var ctor =
+                typeof(WF.CYFtpClient.CYFtpSoapClient).GetConstructor(new Type[] { typeof(Binding), typeof(EndpointAddress) });
+            return (WF.CYFtpClient.CYFtpSoapClient)ctor.Invoke(new object[] { basicBinding, endPoint });
+        }
         #endregion 共用方法
 
         /// <summary>

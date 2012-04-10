@@ -95,7 +95,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// </summary>
         string WinTitle;
 
-       
+        Point pos;
         #endregion
 
         #region 属性
@@ -106,7 +106,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <summary>
         /// 流程当前是否保存
         /// </summary>
-        private bool isNeedSave ;
+        private bool isNeedSave;
         public bool IsNeedSave
         {
             get { return isNeedSave; }
@@ -114,26 +114,26 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 isNeedSave = value;
                 //如果需要保存变化时，将流程名称加粗并在前面加一个星号，反之则恢复正常模式
-                if( null != this.Designer)
+                if (null != this.Designer)
                 {
                     var currentItem = this.Designer.tbDesigner.SelectedItem as TabItemEx;
-                    if(null != currentItem)
+                    if (null != currentItem)
                     {
-                        var txtTitle = ((Panel) (currentItem.Header)).Children[1] as TextBlock;
-                        if(null != txtTitle)
+                        var txtTitle = ((Panel)(currentItem.Header)).Children[1] as TextBlock;
+                        if (null != txtTitle)
                         {
-                            if(isNeedSave && !txtTitle.Text.StartsWith("*"))
+                            if (isNeedSave && !txtTitle.Text.StartsWith("*"))
                             {
-                                txtTitle.Text =   "*" + txtTitle.Text;
-                                txtTitle.FontWeight =  FontWeights.Bold;
+                                txtTitle.Text = "*" + txtTitle.Text;
+                                txtTitle.FontWeight = FontWeights.Bold;
                             }
-                            if(!isNeedSave)
+                            if (!isNeedSave)
                             {
-                                txtTitle.Text  = txtTitle.Text.Trim('*');
+                                txtTitle.Text = txtTitle.Text.Trim('*');
                                 txtTitle.FontWeight = FontWeights.Normal;
                             }
 
-                         }
+                        }
                     }
                 }
             }
@@ -463,7 +463,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             double top = 0;
             double left = 0;
 
-          //  this.Parent.SetValue(canContainerCover DependencyProperty 
+            //  this.Parent.SetValue(canContainerCover DependencyProperty 
             //cnsDesignerContainer.Width = 500;
             //cnsDesignerContainer.Height = 9000;
 
@@ -513,7 +513,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
 
         }
-        
+
         public bool Contains(UIElement uie)
         {
             return cnsDesignerContainer.Children.Contains(uie);
@@ -612,7 +612,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             else
             {
                 _Service.DoAsync("NewFlow", null, true);
-            } 
+            }
             _Service.DoCompleted += _service_DoCompleted;
             //_Service.GetFlowSortAsync();
         }
@@ -621,7 +621,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             SetGridLines();
             this.FlowID = flowID;
-            _Service.RunSQLReturnTableAsync("select nodeid,Name,X,Y,nodepostype,HisToNDs,nodeworktype from WF_Node WHERE FK_Flow='" + flowID+"'", true);
+            _Service.RunSQLReturnTableAsync("select nodeid,Name,X,Y,nodepostype,HisToNDs,nodeworktype from WF_Node WHERE FK_Flow='" + flowID + "'", true);
             _Service.RunSQLReturnTableCompleted += _service_RunSQLReturnTableCompleted;
         }
 
@@ -629,7 +629,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             getFlows(this.FlowID);
         }
-      
+
         /// <summary>
         /// 设计报表
         /// </summary>
@@ -850,8 +850,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public void SetProper(string lang, string dotype, string fk_flow, string node1, string node2, string title)
         {
             this.WinTitle = title;
-           // _Service.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
-           // _Service.GetRelativeUrlCompleted += _Service_GetRelativeUrlCompleted;
+            // _Service.GetRelativeUrlAsync(lang, dotype, fk_flow, node1, node2, true);
+            // _Service.GetRelativeUrlCompleted += _Service_GetRelativeUrlCompleted;
         }
         public string ToXmlString()
         {
@@ -953,7 +953,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             if (DirectionCollections.Contains(r))
             {
                 DirectionCollections.Remove(r);
-                
+
             }
         }
 
@@ -980,7 +980,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 FlowNodeCollections.Add(a);
             }
         }
-        
+
         public void RemoveFlowNode(FlowNode a)
         {
 
@@ -1008,7 +1008,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public void WinOpen(string url, string title)
         {
             Designer.IsRefresh = IsContainerRefresh;
-            Designer.OpenWindow(url, title, 600,800);
+            Designer.OpenWindow(url, title, 600, 800);
 
         }
 
@@ -1038,6 +1038,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         public void AddLabel(int x, int y)
         {
+            this.pos = new Point(x, y);
             _Service.DoNewLabelAsync(FlowID, x, y, Text.NewLable + NextNewLabelIndex.ToString(), null);
             _Service.DoNewLabelCompleted += _Service_DoNewLabelCompleted;
         }
@@ -1046,6 +1047,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             NodeLabel r = new NodeLabel((IContainer)this);
             r.LabelName = Text.NewLable + NextNewLabelIndex.ToString();
             r.LableID = e.Result;
+            r.SetValue(Canvas.LeftProperty, this.pos.X);
+            r.SetValue(Canvas.TopProperty, this.pos.Y);
+
             AddLabel(r);
 
             SaveChange(HistoryType.New);
@@ -1130,7 +1134,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 MessageBox.Show(e.Result, "保存流程错误", MessageBoxButton.OK);
                 return;
             }
-      //      MessageBox.Show("保存成功", "ccflow", MessageBoxButton.OK);
+            //      MessageBox.Show("保存成功", "ccflow", MessageBoxButton.OK);
             this.IsNeedSave = false;
         }
         FlowNode getFlowNode(string FlowNodeFlowID)
@@ -1144,7 +1148,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             return null;
         }
-        
+
         public Canvas GridLinesContainer
         {
             get
@@ -1162,7 +1166,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
 
         }
-        
+
         public void clearContainer()
         {
             cnsDesignerContainer.Children.Clear();
@@ -1233,31 +1237,31 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
         }
-        
+
         public void PreviousAction()
         {
             SaveChange(HistoryType.Previous);
 
         }
-        
+
         public void NextAction()
         {
             SaveChange(HistoryType.Next);
 
         }
-        
+
         public void AddSelectedControl(System.Windows.Controls.Control uc)
         {
             if (!CurrentSelectedControlCollection.Contains(uc))
                 CurrentSelectedControlCollection.Add(uc);
         }
-        
+
         public void RemoveSelectedControl(System.Windows.Controls.Control uc)
         {
             if (CurrentSelectedControlCollection.Contains(uc))
                 CurrentSelectedControlCollection.Remove(uc);
         }
-        
+
         public void SetWorkFlowElementSelected(System.Windows.Controls.Control uc, bool isSelected)
         {
             if (isSelected)
@@ -1268,7 +1272,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 ClearSelectFlowElement(uc);
 
         }
-        
+
         public void ClearSelectFlowElement(System.Windows.Controls.Control uc)
         {
 
@@ -1291,7 +1295,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
 
         }
-        
+
         public void DeleteSeletedControl()
         {
             if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
@@ -1320,7 +1324,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             ClearSelectFlowElement(null);
 
         }
-        
+
         public void AlignTop()
         {
             if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
@@ -1347,7 +1351,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
         }
-        
+
         public void AlignBottom()
         {
             if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
@@ -1374,7 +1378,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
         }
-        
+
         public void AlignLeft()
         {
 
@@ -1402,7 +1406,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
 
         }
-        
+
         public void AlignRight()
         {
             if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
@@ -1429,34 +1433,34 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
         }
-        
+
         public void MoveUp()
         {
             MoveControlCollectionByDisplacement(0, -MoveStepLenght, null);
             SaveChange(HistoryType.New);
         }
-        
+
         public void MoveLeft()
         {
             MoveControlCollectionByDisplacement(-MoveStepLenght, 0, null);
             SaveChange(HistoryType.New);
 
         }
-        
+
         public void MoveDown()
         {
             MoveControlCollectionByDisplacement(0, MoveStepLenght, null);
             SaveChange(HistoryType.New);
 
         }
-        
+
         public void MoveRight()
         {
             MoveControlCollectionByDisplacement(MoveStepLenght, 0, null);
             SaveChange(HistoryType.New);
 
         }
-        
+
         public void MoveControlCollectionByDisplacement(double x, double y, UserControl uc)
         {
             if (CurrentSelectedControlCollection == null || CurrentSelectedControlCollection.Count == 0)
@@ -1466,7 +1470,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             // 如果光标所在的节点没有被选中，则不移动所有被选中的节点，光移动光标所有的节点即可。
             var element = uc as IElement;
-            if(element != null && !element.IsSelectd)
+            if (element != null && !element.IsSelectd)
             {
                 return;
             }
@@ -1518,8 +1522,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             IsNeedSave = true;
         }
-        
-        
+
+
 
         public void PastMemoryToContainer()
         {
@@ -1600,7 +1604,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             }
         }
-        
+
         public void CopySelectedControlToMemory(System.Windows.Controls.Control currentControl)
         {
             copyElementCollectionInMemory = null;
@@ -1717,14 +1721,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             ll.tbLabelName.Focus();
             ll.tbLabelName.LostFocus += new RoutedEventHandler(tbLabelName_LostFocus);
         }
-        
+
         public void UpDateSelectedNode(System.Windows.Controls.Control currentControl)
         {
             FlowNode f = (FlowNode)currentControl;
             f.sdPicture.tbNodeName.Visibility = Visibility.Visible;
             f.sdPicture.txtFlowNodeName.Visibility = Visibility.Collapsed;
         }
-        
+
         public void NewFlow()
         {
             NewFlow(null);
@@ -1746,7 +1750,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
                 AddLabel(r);
 
-            } 
+            }
             _Service.GetLablesCompleted -= _service_GetLablesCompleted;
 
         }
@@ -1820,7 +1824,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 AddFlowNode(a);
             }
 
-          
+
 
 
             _Service.GetLablesAsync(FlowID);
@@ -1838,7 +1842,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             DataSet ds = new DataSet();
             ds.FromXml(e.Result);
 
-             foreach (FlowNode bfn in FlowNodeCollections)
+            foreach (FlowNode bfn in FlowNodeCollections)
             {
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
@@ -1864,13 +1868,13 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             _Service.GetDirectionCompleted -= _service_GetDirectionCompleted;
 
         }
-       
+
         void DoubleClick_Timer(object sender, EventArgs e)
         {
             _doubleClickTimer.Stop();
         }
 
-        
+
 
         private void Container_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -1883,7 +1887,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             MouseIsInContainer = false;
 
         }
-        
+
         private void cnsDesignerContainer_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (MouseIsInContainer)
@@ -1925,7 +1929,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
 
         }
-        
+
         public void ShowFlowNodeContentMenu(FlowNode a, object sender, MouseButtonEventArgs e)
         {
 
@@ -1941,7 +1945,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             menuFlowNode.ShowMenu();
             e.Handled = true;
         }
-        
+
         public void ShowLabelContentMenu(NodeLabel l, object sender, MouseButtonEventArgs e)
         {
             menuLabel.RelatedLabel = l;
@@ -1954,7 +1958,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             menuLabel.ShowMenu();
             e.Handled = true;
         }
-        
+
         public void ShowDirectionContentMenu(Direction r, object sender, MouseButtonEventArgs e)
         {
             menuDirection.RelatedDirection = r;
@@ -1972,7 +1976,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             MessageBody.Visibility = Visibility.Collapsed;
             CloseContainerCover();
         }
-      
+
 
         void _Service_DoNewNodeCompleted(object sender, DoNewNodeCompletedEventArgs e)
         {
@@ -1987,20 +1991,20 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             SaveChange(HistoryType.New);
             _Service.DoNewNodeCompleted -= _Service_DoNewNodeCompleted;
         }
-        
+
         void sbContainerCoverClose_Completed(object sender, EventArgs e)
         {
             canContainerCover.Visibility = Visibility.Collapsed;
         }
-        
+
         void wfClient_UpdateWorkFlowXMLCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             MessageBox.Show(Text.Message_Saved);
         }
-        
+
         private void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            
+
         }
 
         private void Container_MouseMove(object sender, MouseEventArgs e)
@@ -2080,7 +2084,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
 
         }
-        
+
         private void Container_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             trackingMouseMove = false;
@@ -2174,7 +2178,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
 
         }
-        
+
         void tbLabelName_LostFocus(object sender, RoutedEventArgs e)
         {
             _Service.DoNewLabelAsync(FlowID, (int)l.Position.X, (int)l.Position.Y, l.LabelName, l.LableID);
@@ -2187,7 +2191,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 case Key.Delete:
                     // 如果有节点在编辑状态,则delete按钮只能删除字符,不能删除选中的节点
-                    if(IsSomeChildEditing)
+                    if (IsSomeChildEditing)
                     {
                         return;
                     }
@@ -2215,7 +2219,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
             }
         }
-        
+
         private void UserControl_KeyDown(object sender, KeyEventArgs e)
         {
             //if (Keyboard.Modifiers == ModifierKeys.Control)
@@ -2296,7 +2300,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             SetGridLines();
 
             HtmlPage.Document.AttachEvent("oncontextmenu", OnContextMenu);
-            
+
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
             _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, SystemConst.DoubleClickTime);
             _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
@@ -2306,7 +2310,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         }
 
-        public Container(string flowid): this()
+        public Container(string flowid)
+            : this()
         {
             this.FlowID = flowid;
         }

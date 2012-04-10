@@ -50,7 +50,9 @@
                             <liquidMenu:MenuItem ID="Edit" Text="编辑流程类别"  Icon="../Images/MenuItem/Edit.png" />
                             <liquidMenu:MenuDivider />
                             <liquidMenu:MenuItem ID="Delete" Text="删除" Icon="../Images/MenuItem/Delete.png" />
-                                <liquidMenu:MenuDivider />
+                            <liquidMenu:MenuDivider />
+                            <liquidMenu:MenuItem ID="Share" Text="共享" Icon="../Images/MenuItem/Share.png" />
+                            <liquidMenu:MenuDivider />
                             <liquidMenu:MenuItem ID="Refresh" Text="刷新" Icon="../Images/MenuItem/Refresh.png"  />
                         </liquidMenu:Menu>
                     </Canvas>
@@ -79,7 +81,7 @@
                             <liquidMenu:MenuDivider />
                             <liquidMenu:MenuItem ID="Frm_Exp"  Text="导出"   Icon="../Images/MenuItem/Edit.png"  />
                             <liquidMenu:MenuItem ID="Frm_Imp" Text="导入"   Icon="../Images/MenuItem/Edit.png" />
-                            
+
                             <liquidMenu:MenuDivider />
                             <liquidMenu:MenuItem ID="Frm_NewFormSort" Text="新建表单类别" Icon="../Images/MenuItem/FlowSort.png"  />
                             <liquidMenu:MenuItem ID="Frm_EditSort" Text="编辑表单类别"  Icon="../Images/MenuItem/Edit.png" />
@@ -90,7 +92,7 @@
                         </liquidMenu:Menu>
                     </Canvas>
                 </sdk:TabItem>
-                
+
                 <sdk:TabItem Header="流程优化" Name="Tbwf" Background="white"  Visibility="Collapsed"  >
                     <liquidTreeView:Tree x:Name="TvwFlowDataEnum"  
                                              BorderThickness="0" Width="210"  
@@ -100,7 +102,7 @@
                                              EnableLines="True"    
                                              MouseLeftButtonDown="TreeViewSysMenu_li_MouseLeftButtonDown" >
                     </liquidTreeView:Tree>
-                </sdk:TabItem>                
+                </sdk:TabItem>
                 <sdk:TabItem Header="系统维护" Name="TbSystemMaintain" Background="white"   >
                     <liquidTreeView:Tree x:Name="TvwSysMenu"  BorderThickness="0" Width="210"  
                                              HorizontalScrollBarVisibility="Auto"
@@ -114,7 +116,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1"  Grid.Row="0" HorizontalAlignment="Left" Name="stackPanel2" VerticalAlignment="Bottom"  Orientation="Horizontal">
-           <my:Toolbar x:Name="toolbar1">
+            <my:Toolbar x:Name="toolbar1">
             </my:Toolbar>
         </StackPanel>
 
@@ -124,7 +126,7 @@
             <my:TabControlEx.Background>
                 <ImageBrush ImageSource="./Images/Logo/CCFlow/Welcome.jpg" Stretch="Fill"/>
             </my:TabControlEx.Background>
-            
+
             <my:TabControlEx.Template>
                 <ControlTemplate>
                     <!-- TabStripPlacement Top -->

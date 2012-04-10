@@ -24,9 +24,10 @@
             </Storyboard>
         </Canvas.Resources>
         <Border  BorderThickness="2" BorderBrush="#A0A0A0" >
-        <TextBlock Name="txtLabelName" >
+        <TextBlock Name="txtLabelName">
         </TextBlock>
         </Border>
-        <TextBox Name="tbLabelName"  TextChanged="TextBox_TextChanged"  Visibility="Collapsed" LostFocus="tbLabelName_LostFocus"></TextBox>
+        <TextBox Name="tbLabelName" AcceptsReturn="True"  TextChanged="TextBox_TextChanged"  
+                 Visibility="Collapsed" LostFocus="tbLabelName_LostFocus"></TextBox>
     </Canvas>
 </UserControl>

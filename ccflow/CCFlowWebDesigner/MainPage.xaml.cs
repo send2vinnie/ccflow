@@ -21,6 +21,8 @@ using WF.Designer;
 using System.IO;
 using BP;
 
+using WF.CYFtpClient;
+
 namespace Ccflow.Web.UI.Control.Workflow.Designer
 {
     /// <summary>
@@ -35,19 +37,21 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private string FlowTempleteUrl = "";
         private string title; // 子窗体标题       
         private WSDesignerSoapClient _service = Glo.GetDesignerServiceInstance();
-        
+
         // 最后的流程类型，用于重新绑定流程树后，再打开最后操作的流程类别
-        private string CurrFK_FlowSort="01";
+        private string CurrFK_FlowSort = "01";
 
         private List<ToolbarButton> ToolBarButtonList = new List<ToolbarButton>();
         private const string ToolBarEnableIsFlowSensitived = "EnableIsFlowSensitived";
 
+        private FrmShareFlow frmShareFlow;
+        WF.CYFtpClient.CYFtpSoapClient ftpClient = null;
         #endregion
 
         #region 属性
 
         public static readonly string CustomerId = "CCFlow";
-   
+
 
         public WSDesignerSoapClient _Service
         {
@@ -60,7 +64,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             get
             {
-                var c = (Container) tbDesigner.SelectedContent;
+                var c = (Container)tbDesigner.SelectedContent;
                 return c;
             }
         }
@@ -77,7 +81,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         {
             Dialog,
             Window
-        } 
+        }
         #endregion
 
         #region Constructs
@@ -88,6 +92,8 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         public MainPage()
         {
             InitializeComponent();
+            ftpClient = Glo.GetFtpServiceInstance();
+
             adminLogin.Closed += new EventHandler(frmlogin_Closed);
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
         }
@@ -250,7 +256,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             return;
         }
 
- 
+
         #region Flow CRUD related
         /// <summary>
         /// 打开工作流
@@ -371,18 +377,18 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
 
         public void OpenDialog(string url, string title, int h, int w)
         {
-            OpenWindowOrDialog(  url, title, string.Format("dialogHeight:{0}px;dialogWidth:{1}px", h, w), WindowModelEnum.Dialog);
+            OpenWindowOrDialog(url, title, string.Format("dialogHeight:{0}px;dialogWidth:{1}px", h, w), WindowModelEnum.Dialog);
         }
 
         public void OpenWindow(string url, string title, int h, int w)
         {
 
-            OpenWindowOrDialog(  url, title, string.Format("height={0},width={1}", h, w), WindowModelEnum.Window);
+            OpenWindowOrDialog(url, title, string.Format("height={0},width={1}", h, w), WindowModelEnum.Window);
         }
 
         public void OpenDialog(string url, string title)
         {
-            OpenWindowOrDialog(  url, title, "dialogHeight:600px;dialogWidth:800px", WindowModelEnum.Dialog);
+            OpenWindowOrDialog(url, title, "dialogHeight:600px;dialogWidth:800px", WindowModelEnum.Dialog);
         }
 
         /// <summary>
@@ -650,6 +656,11 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                         DeleteFlowSort(deleteFlowNode.ID);
                     }
                     break;
+                case "Share":
+                    {
+                        ShareFlowTemplate();
+                        break;
+                    }
                 case "Refresh":
                     this.BindFlowAndFlowSort();
                     break;
@@ -665,7 +676,149 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             MuFlowTree.Hide();
             MuFormTree.Hide();
         }
-        public string CurrFK_FrmSort="01";
+
+        #region 共享模板
+
+        private string flowShareRoot = string.Empty;
+        private string bitmap_str;
+        private string bitmap_part;
+        private int bitmap_part_length = 3999999;
+        private string temDes = string.Empty;//模板描述
+
+        /// <summary>
+        /// 分享模板
+        /// </summary>
+        private void ShareFlowTemplate()
+        {
+            temDes = string.Empty;
+
+            if (SelectedContainer == null || SelectedContainer.FlowID != TvwFlow.Selected.Name)
+            {
+                MessageBox.Show("请先打开流程图");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(flowShareRoot))
+            {
+                ftpClient.GetFlowShareRootCompleted += GetFlowShareRoot_Completed;
+                ftpClient.GetFlowShareRootAsync();
+            }
+            else
+            {
+                GetFlowShareRoot_Completed(null, null);
+            }
+        }
+
+        private void GetFlowShareRoot_Completed(object sender, GetFlowShareRootCompletedEventArgs e)
+        {
+            ftpClient.GetFlowShareRootCompleted -= GetFlowShareRoot_Completed;
+            if (string.IsNullOrEmpty(flowShareRoot) && e != null)
+            {
+                flowShareRoot = e.Result;
+            }
+
+            if (SessionManager.Session.ContainsKey("user"))
+            {
+                FrmTemNote temNote = new FrmTemNote();
+                temNote.Closed += (sender2, e2) =>
+                {
+                    temDes = temNote.TemDescription;
+                    ShareFlow_Start(flowShareRoot);
+                };
+                temNote.Show();
+            }
+            else
+            {
+                FrmLoginTemLib loginTemLib = new FrmLoginTemLib();
+                loginTemLib.Closed += (sender1, e1) =>
+                {
+                    if (loginTemLib.LoginSuccess)
+                    {
+                        FrmTemNote temNote = new FrmTemNote();
+                        temNote.Closed += (sender2, e2) =>
+                        {
+                            temDes = temNote.TemDescription;
+                            ShareFlow_Start(flowShareRoot);
+                        };
+                        temNote.Show();
+                    }
+                };
+                loginTemLib.Show();
+            }
+        }
+
+        /// <summary>
+        /// 上传工作流
+        /// </summary>
+        /// <param name="path"></param>
+        private void ShareFlow_Start(string path)
+        {
+            loadingWin(true);
+            CY.SL.ExportAsPNG.ElementToPNG eleToPng = new CY.SL.ExportAsPNG.ElementToPNG();
+
+            bitmap_str = CY.SL.StringHandler.ToString(eleToPng.GetPNGStream(tbDesigner.SelectedContent as UIElement));
+            if (bitmap_str.Length > bitmap_part_length)
+            {
+                bitmap_part = bitmap_str.Substring(0, bitmap_part_length);
+                bitmap_str = bitmap_str.Substring(bitmap_part_length);
+            }
+            else
+            {
+                bitmap_part = bitmap_str;
+                bitmap_str = "";
+            }
+            ftpClient.SaveFlowBitmapCompleted += SaveFlowBitmap_Completed;
+
+            ftpClient.SaveFlowBitmapAsync(SelectedContainer.FlowID, bitmap_part, false);
+        }
+
+        /// <summary>
+        /// 保存流程模板图片
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveFlowBitmap_Completed(object sender, SaveFlowBitmapCompletedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(bitmap_str))
+            {
+                if (bitmap_str.Length > bitmap_part_length)
+                {
+                    bitmap_part = bitmap_str.Substring(0, bitmap_part_length);
+                    bitmap_str = bitmap_str.Substring(bitmap_part_length);
+                }
+                else
+                {
+                    bitmap_part = bitmap_str;
+                    bitmap_str = "";
+                }
+
+                ftpClient.SaveFlowBitmapAsync(SelectedContainer.FlowID, bitmap_part, true);
+            }
+            else//保存流程模板图片完成,开始上传模板
+            {
+                ftpClient.SaveFlowBitmapCompleted -= SaveFlowBitmap_Completed;
+
+                ftpClient.UploadFlowCompleted += UploadFlow_Completed;
+                ftpClient.UploadFlowAsync(SelectedContainer.FlowID, flowShareRoot, temDes);
+            }
+        }
+
+        /// <summary>
+        /// 上传流程模板完成
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UploadFlow_Completed(object sender, UploadFlowCompletedEventArgs e)
+        {
+            ftpClient.UploadFlowCompleted -= UploadFlow_Completed;
+            loadingWin(false);
+
+            MessageBox.Show("模板共享成功！");
+        }
+
+        #endregion
+
+        public string CurrFK_FrmSort = "01";
         private void MuFrmTree_ItemSelected(object sender, MenuEventArgs e)
         {
             var selectedNode = this.FromTree.Selected as TreeNode;
@@ -785,7 +938,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     }
                     break;
                 default:
-                    MessageBox.Show("未判断的标记:"+Glo.TempVar);
+                    MessageBox.Show("未判断的标记:" + Glo.TempVar);
                     break;
             }
         }
@@ -852,7 +1005,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 else
                 {
                     MuFlowTree.Get("OpenFlow").IsEnabled = true;
-                  //  MuFlowTree.Get("NewFlow").IsEnabled = true;
+                    //  MuFlowTree.Get("NewFlow").IsEnabled = true;
                     MuFlowTree.Get("Delete").IsEnabled = true;
                     MuFlowTree.Get("Edit").IsEnabled = true;
                 }
@@ -1012,7 +1165,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
             e.Handled = true;
         }
-#endregion
+        #endregion
 
         /// <summary>
         /// 报表设计事件
@@ -1026,7 +1179,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 SelectedContainer.btnDesignerTable();
             }
         }
-      
+
         public void NewFlowHandler(int tabIdx)
         {
             this.CurrFK_FlowSort = TvwFlow.Selected.ID;
@@ -1060,7 +1213,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             };
             fu.Show();
         }
-        
+
         /// <summary>
         /// 关闭选项卡事件
         /// </summary>
@@ -1072,7 +1225,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 if (SelectedContainer.IsNeedSave)
                 {
-                    if(HtmlPage.Window.Confirm(Text.IsSave))
+                    if (HtmlPage.Window.Confirm(Text.IsSave))
                     {
                         if (SelectedContainer.Save(null))
                         {
@@ -1091,7 +1244,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
 
-            if(tbDesigner.Items.Count == 0)
+            if (tbDesigner.Items.Count == 0)
             {
                 setToolBarButtonEnableStatus(false);
             }
@@ -1111,7 +1264,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return;
             }
             string[] flow = e.Result.Split(';');
-          //  FlowID = flow[0];
+            //  FlowID = flow[0];
             _Service.DoCompleted -= _service_DoCompleted;
             this.BindFlowAndFlowSort();
             OpenFlow(flow[0], flow[1]);
@@ -1126,14 +1279,14 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             {
                 case "FlowNodeProperty":
                     var paras = para.Split(','); //id,namevalue
-                    
+
                     foreach (TabItem t in tbDesigner.Items)
                     {
                         Container ct = t.Content as Container;
 
                         foreach (var flowNode in ct.FlowNodeCollections)
                         {
-                            if(paras[0] == flowNode.FlowNodeID && paras[0] != flowNode.FlowNodeName)
+                            if (paras[0] == flowNode.FlowNodeID && paras[0] != flowNode.FlowNodeName)
                             {
                                 ct.IsNeedSave = true;
                                 flowNode.FlowNodeName = paras[1];
@@ -1148,7 +1301,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     paras = para.Split(','); //id,namevalue
                     var oldValue = string.Empty;
                     int index = 0;
-                     
+
                     foreach (TabItem t in tbDesigner.Items)
                     {
                         Container ct = t.Content as Container;
@@ -1185,7 +1338,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                             break;
 
                         }
-                        index ++;
+                        index++;
                     }
 
                     this.BindFlowAndFlowSort();
@@ -1217,9 +1370,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private void Content_Resized(object sender, EventArgs e)
         {
             LayoutRoot.Height = Application.Current.Host.Content.ActualHeight;
-            if(LayoutRoot.Height < 100)
+            if (LayoutRoot.Height < 100)
             {
-                return;     
+                return;
             }
             TbcFDS.Height = LayoutRoot.Height - 75;
             TvwFlow.Height = Application.Current.Host.Content.ActualHeight - 35 - 100;
@@ -1281,12 +1434,12 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             switch (control.Name)
             {
                 case "Btn_ToolBarFrmLab":
-                    Glo.WinOpenByDoType("CH", "FrmLib", "","0", null);
+                    Glo.WinOpenByDoType("CH", "FrmLib", "", "0", null);
                     //string  url = "/WF/Admin/XAP/DoPort.aspx?DoType=FrmLib&FK_Node=0&Lang=CH";
                     //Glo.WinOpen(Glo.BPMHost + url, "执行", 800, 760);
                     return;
-                    //WF.Frm.FrmLib lib = new WF.Frm.FrmLib();
-                    //lib.Show();
+                //WF.Frm.FrmLib lib = new WF.Frm.FrmLib();
+                //lib.Show();
                 case "Btn_ToolBarLogin":
                     Glo.WinOpen("/WF/Login.aspx", "登陆", 800, 900);
                     return;
@@ -1344,6 +1497,27 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 case "Btn_ToolBarGenerateModel":
                     Glo.WinOpen("/WF/Admin/XAP/DoPort.aspx?DoType=ExpFlowTemplete&FK_Flow=" + SelectedContainer.FlowID + "&Lang=CH", "Help", 50, 50);
                     break;
+                case "Btn_ToolBarShareModel":
+                    {
+                        if (SessionManager.Session.ContainsKey("user"))
+                        {
+                            ShowTemplateLib();
+                        }
+                        else
+                        {
+                            FrmLoginTemLib loginTemLib = new FrmLoginTemLib();
+                            loginTemLib.Closed += (sender1, e1) =>
+                            {
+                                if (loginTemLib.LoginSuccess)
+                                {
+                                    ShowTemplateLib();
+                                }
+                            };
+                            loginTemLib.Show();
+                        }
+
+                        break;
+                    }
                 case "Btn_ToolBarLoadModel":
                     NewFlowHandler(0);
                     break;
@@ -1352,7 +1526,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                     break;
             }
         }
-        private void  setToolBarButtonEnableStatus(bool isEnable)
+        private void setToolBarButtonEnableStatus(bool isEnable)
         {
             foreach (var toolbarButton in ToolBarButtonList)
             {
@@ -1362,6 +1536,37 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 }
             }
         }
+
+        /// <summary>
+        /// 显示模板库
+        /// </summary>
+        private void ShowTemplateLib()
+        {
+            frmShareFlow = new FrmShareFlow();
+            frmShareFlow.FlowID = SelectedContainer.FlowID;
+            frmShareFlow.fileView.FlowTempleteLoadCompeleted += (sender1, eArgs) =>
+            {
+                try
+                {
+                    var result = eArgs.Result.Split(',');
+                    // 返回值的格式为FlowSortID,FlowId,FlowName  
+                    if (3 != result.Length)
+                    {
+                        MessageBox.Show(eArgs.Result, "错误", MessageBoxButton.OK);
+                        return;
+                    }
+
+                    this.BindFlowAndFlowSort();
+                    OpenFlow(result[0], result[1], result[2]);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "错误", MessageBoxButton.OK);
+                }
+            };
+            frmShareFlow.Show();
+        }
+
         #endregion
 
         /// <summary>
@@ -1393,7 +1598,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             }
         }
 
-        #region UserControl Related 
+        #region UserControl Related
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             MuFlowTree.Hide();
@@ -1439,7 +1644,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         /// <param name="e"></param>
         private void UserControl_KeyUp(object sender, KeyEventArgs e)
         {
-        } 
+        }
         #endregion
 
         #endregion
@@ -1457,7 +1662,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
                 return;
             }
             cwLoading.Show();
-        } 
+        }
         #endregion
 
     }
