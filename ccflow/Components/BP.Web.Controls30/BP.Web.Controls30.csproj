@@ -181,8 +181,6 @@
     <Compile Include="IWCW\Tree.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="NewFolder1\CKEditorConfig.cs" />
-    <Compile Include="NewFolder1\CKEditorControl.cs" />
     <Compile Include="NextPreviouRec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

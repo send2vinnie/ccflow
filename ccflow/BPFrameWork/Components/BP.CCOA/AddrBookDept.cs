@@ -2,7 +2,7 @@
 using System.Collections;
 using BP.DA;
 using BP.En;
-namespace BP.OA
+namespace BP.CCOA
 {
     /// <summary>
     /// 部门

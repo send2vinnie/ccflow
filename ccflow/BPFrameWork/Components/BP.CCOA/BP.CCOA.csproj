@@ -39,6 +39,9 @@
   <ItemGroup>
     <Compile Include="AddrBook.cs" />
     <Compile Include="AddrBookDept.cs" />
+    <Compile Include="Article.cs" />
+    <Compile Include="Channel.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

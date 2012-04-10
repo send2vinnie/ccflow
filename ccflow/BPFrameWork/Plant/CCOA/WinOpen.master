@@ -1,19 +1,51 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="WinOpen.master.cs" Inherits="Model_WinOpen" %>
 
+<%@ Register Src="~/CCOA/Menu.ascx" TagName="Menu" TagPrefix="uc" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <asp:ContentPlaceHolder id="head" runat="server">
+    <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <link href="Style/master.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
-        
-        </asp:ContentPlaceHolder>
+        <table>
+            <tr>
+                <td>
+                    <div id="divTop">
+                        <img alt="" class="style2" src="../../CCOA/Images/bg_top.jpg" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="divBody">
+                        <table border="0" width="100%;">
+                            <tr>
+                                <td style="width: 20%; height: 479px; border-right: 1px solid #e5e5e5; vertical-align: top;">
+                                    <%--<iframe name="lform" marginwidth="0" marginheight="0" src="MenuTree.aspx" frameborder="0"
+                    bordercolor="#EDEDED" height="475px" style="border-style: none; height: 506px;
+                    width: 287px;"></iframe>--%><uc:Menu ID="Menu1" runat="server" />
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                                    </asp:ContentPlaceHolder>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="divBottom">
+                        <img alt="" class="style1" src="../../CCOA/Images/bg_bottom.jpg" /></div>
+                </td>
+            </tr>
+        </table>
     </div>
     </form>
 </body>

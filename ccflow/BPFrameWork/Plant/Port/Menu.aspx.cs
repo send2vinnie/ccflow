@@ -16,9 +16,8 @@ public partial class Port_Menu : System.Web.UI.Page
 
         foreach (Model xml in xmls)
         {
-            //xml.Name;
-            //xml.Name;
+            var url = xml.Url;
+            var img = xml.Img;
         }
-        
     }
 }

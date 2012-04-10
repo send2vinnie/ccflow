@@ -160,7 +160,7 @@ namespace BP.DevDemo
                 map.AddTBStringPK(StudentAttr.No, null, "编号", true, false, 4, 4, 4); 
                 map.AddTBString(StudentAttr.Name, null, "姓名", true, false, 0, 500, 20);
 
-                map.AddDDLEntities(StudentAttr.FK_SF, null, "籍贯", new BP.CN.SFs(),true);
+                //map.AddDDLEntities(StudentAttr.FK_SF, null, "籍贯", new BP.CN.SFs(),true);
                 map.AddDDLSysEnum(StudentAttr.Sex, 0, "性别", false, false, StudentAttr.Sex, "@0=女@1=男");
 
                 map.AddTBDate(StudentAttr.BDT, null, "出生年月", true, false);

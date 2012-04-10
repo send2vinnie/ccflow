@@ -1,0 +1,23 @@
+﻿body
+{
+}
+#divBody
+{
+}
+#tdMain tr td
+{
+     vertical-align:top;
+}
+#divBottom
+{
+    height: 39px;
+}
+.style1
+{
+    width: 1280px;
+}
+.style2
+{
+    width: 1279px;
+    height: 79px;
+}
