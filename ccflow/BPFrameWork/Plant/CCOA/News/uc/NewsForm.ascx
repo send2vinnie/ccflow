@@ -6,10 +6,11 @@
                 栏目
             </th>
             <td>
-                <base:XDropDownList ID="ddrChannel" runat="server" />
+                <base:XDropDownList ID="ddrChannel" runat="server" >
+                    <asp:ListItem Selected="True" Value="news">新闻报道</asp:ListItem>
+                </base:XDropDownList>
             </td>
             <td>
-               
             </td>
         </tr>
         <tr>
@@ -20,7 +21,6 @@
                 <base:XTextBox ID="txtTitle" runat="server" />
             </td>
             <td>
-               
             </td>
         </tr>
         <tr>
@@ -31,10 +31,8 @@
                 <base:XTextBox ID="txtContent" runat="server" TextMode="MultiLine" />
             </td>
             <td>
-              
             </td>
         </tr>
-    
         <tr>
             <th>
                 标题样式
@@ -49,7 +47,10 @@
                 文章类型
             </th>
             <td>
-                <base:XDropDownList ID="ddrType" runat="server" />
+                <base:XDropDownList ID="ddrType" runat="server" >
+                    <asp:ListItem Selected="True" Value="0">原创</asp:ListItem>
+                    <asp:ListItem Value="1">转发</asp:ListItem>
+                </base:XDropDownList>
             </td>
             <td>
             </td>
@@ -118,13 +119,22 @@
                 状态
             </th>
             <td>
-                <base:XDropDownList ID="ddlState" runat="server">
+                <base:XDropDownList ID="ddlState" runat="server" Width="80">
                     <asp:ListItem Text="启用" Value="1" />
                     <asp:ListItem Text="禁用" Value="0" />
                 </base:XDropDownList>
             </td>
             <td>
             </td>
+        </tr>
+        <tr>
+        <td ></td>
+            <td >
+                <base:XButton ID="btnCommit" runat="server" Text="保存" 
+                    onclick="btnCommit_Click" />
+                <base:XButton ID="btnCancle" runat="server" Text="取消" 
+                    onclick="btnCancle_Click" />
+            </td> <td ></td>
         </tr>
     </table>
 </div>

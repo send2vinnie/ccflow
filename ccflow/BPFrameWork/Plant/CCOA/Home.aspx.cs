@@ -12,5 +12,8 @@ public partial class CCOA_Home : System.Web.UI.Page
     {
         Channel channel = new Channel();
         channel.CheckPhysicsTable();
+
+        Article article = new Article();
+        article.CheckPhysicsTable();
     }
 }
