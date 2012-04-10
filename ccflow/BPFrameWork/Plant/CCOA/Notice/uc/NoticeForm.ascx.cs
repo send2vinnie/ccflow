@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.CCOA;
 
-public partial class CCOA_News_uc_NewsForm : System.Web.UI.UserControl
+public partial class CCOA_News_uc_NoticeForm : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {

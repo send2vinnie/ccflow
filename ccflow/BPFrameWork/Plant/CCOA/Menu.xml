@@ -13,7 +13,7 @@
   <!-- 系统维护  -->
   <Item No="99" Name="系统管理" Url="" Img="../../Images/Btn/Help.gif" ForUser=",admin," DESC=""  DFor=""  />
   <Item No="9901" Name="新闻" Url=" ../../CCOA/News/NewsList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
-  <Item No="9901" Name="公告" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="9901" Name="公告" Url=" ../../CCOA/Notice/NoticeList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
   <Item No="9901" Name="通讯录" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
   <Item No="9901" Name="网盘" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
 

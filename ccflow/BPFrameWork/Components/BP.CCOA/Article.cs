@@ -12,7 +12,6 @@ namespace BP.CCOA
 {
     public class ArticleAttr : EntityNoNameAttr
     {
-        public const string Id = "Id";
         public const string Title = "Title";
         public const string Description = "Description";
         public const string OwnerId = "OwnerId";
@@ -30,6 +29,16 @@ namespace BP.CCOA
         public const string IsShow = "IsShow";
         public const string SubTitle = "SubTitle";
         public const string Thumbnail = "Thumbnail";
+
+        //点击记录
+        public const string Clicks = "Clicks";
+        public const string DayClicks = "DayClicks";
+        public const string YesterdayClicks = "YesterdayClicks";
+        public const string WeekClicks = "WeekClicks";
+        public const string MonthClicks = "MonthClicks";
+        public const string QuarterClicks = "QuarterClicks";
+        public const string Yearclicks = "Yearclicks";
+
         public const string IsDeleted = "IsDeleted";
         //public const string ContentUrl="ContentUrl";
         //public const string ContentType;
@@ -65,13 +74,7 @@ namespace BP.CCOA
         //public const string _modelschema;
         //private int? _privacylevel;
         //public const string _photos;
-        //private int? _clicks;
-        //private int? _dayclicks;
-        //private int? _yesterdayclicks;
-        //private int? _weekclicks;
-        //private int? _monthclicks;
-        //private int? _quarterclicks;
-        //private int? _yearclicks;
+
         //public const string _color;
         //public const string _fontweight;
         //private string _fontstyle;
@@ -79,24 +82,24 @@ namespace BP.CCOA
         public const string Created = "Created";
         public const string Updated = "Updated";
         public const string State = "State";
+
+        public const string ContentUrl = "ContentUrl";
+        public const string FullTitle = "FullTitle";
+
+        public const string ChannelFullUrl = "ChannelFullUrl";
+
+        public const string ChannelName = "ChannelName";
+
+        public const string CommentCount = "CommentCount";
+
+        public const string ArticleType = "ArticleType";
     }
     /// <summary>
     /// 文章信息类
     /// </summary>
     [Serializable]
-    public class Article : Entity
+    public class Article : EntityNo
     {
-        public string Id
-        {
-            get
-            {
-                return this.GetValStringByKey(ArticleAttr.Id);
-            }
-            set
-            {
-                this.SetValByKey(ArticleAttr.Id, value);
-            }
-        }
         /// <summary>
         /// 文章标题
         /// </summary>
@@ -174,11 +177,11 @@ namespace BP.CCOA
         {
             get
             {
-                return this.GetValStringByKey(ArticleAttr.Id);
+                return this.GetValStringByKey(ArticleAttr.Author);
             }
             set
             {
-                this.SetValByKey(ArticleAttr.Id, value);
+                this.SetValByKey(ArticleAttr.Author, value);
             }
         }
         /// <summary>
@@ -384,18 +387,111 @@ namespace BP.CCOA
         }
 
         /// <summary>
+        /// 内容URL
+        /// </summary>
+        public string ContentUrl
+        {
+            get
+            {
+                return this.GetValStringByKey(ArticleAttr.ContentUrl);
+            }
+            set
+            {
+                this.SetValByKey(ArticleAttr.ContentUrl, value);
+            }
+        }
+
+        /// <summary>
+        /// 点击数
+        /// </summary>
+        public int Clicks
+        {
+            get
+            {
+                return this.GetValIntByKey(ArticleAttr.Clicks);
+            }
+            set
+            {
+                this.SetValByKey(ArticleAttr.Clicks, value);
+            }
+        }
+
+        /// <summary>
+        /// 完整的标题
+        /// </summary>
+        public string FullTitle
+        {
+            get
+            {
+                return this.GetValStringByKey(ArticleAttr.FullTitle);
+            }
+            set
+            {
+                this.SetValByKey(ArticleAttr.FullTitle, value);
+            }
+        }
+
+        /// <summary>
         /// 栏目地址
         /// </summary>
-        public string ChannelFullUrl { get; set; }
+        public string ChannelFullUrl
+        {
+            get
+            {
+                return this.GetValStringByKey(ArticleAttr.ChannelFullUrl);
+            }
+            set
+            {
+                this.SetValByKey(ArticleAttr.ChannelFullUrl, value);
+            }
+        }
 
         /// <summary>
         /// 栏目名称
         /// </summary>
-        public string ChannelName { get; set; }
+        public string ChannelName
+        {
+            get
+            {
+                return this.GetValStringByKey(ArticleAttr.ChannelName);
+            }
+            set
+            {
+                this.SetValByKey(ArticleAttr.ChannelName, value);
+            }
+        }
         /// <summary>
         /// 评论总数
         /// </summary>
-        public int CommentCount { get; set; }
+        public int CommentCount
+        {
+            get
+            {
+                return this.GetValIntByKey(ArticleAttr.CommentCount);
+            }
+            set
+            {
+                this.SetValByKey(ArticleAttr.CommentCount, value);
+            }
+        }
+
+
+        /// <summary>
+        /// 参考TypeOfArticle枚举
+        /// </summary>
+        public int ArticleType
+        {
+            get
+            {
+                return this.GetValIntByKey(ArticleAttr.ArticleType);
+            }
+            set
+            {
+                this.SetValByKey(ArticleAttr.ArticleType, value);
+            }
+        }
+
+
         /// <summary>
         /// 存放扩展信息XML数据
         /// </summary>
@@ -645,20 +741,7 @@ namespace BP.CCOA
             }
         }
 
-        /// <summary>
-        /// 内容URL
-        /// </summary>
-        public string ContentUrl { get; set; }
 
-        /// <summary>
-        /// 点击数
-        /// </summary>
-        public int Clicks { get; set; }
-
-        /// <summary>
-        /// 完整的标题
-        /// </summary>
-        public string FullTitle { get; set; }
 
 
         /// <summary>
@@ -785,7 +868,7 @@ namespace BP.CCOA
                 string year = Created.Value.Year.ToString();
                 string month = Created.Value.Month.ToString();
                 string day = Created.Value.Day.ToString();
-                string sn = Helper.GUIDToFormatString(Id);
+                string sn = Helper.GUIDToFormatString(No);
                 return string.Format("/_data/{0}/{1}/{2}/{3}", year, month, day, sn);
             }
         }
@@ -941,6 +1024,24 @@ namespace BP.CCOA
         //}
         #endregion
 
+        #region 构造方法
+        /// <summary>
+        /// 文章
+        /// </summary>
+        public Article()
+        {
+        }
+        /// <summary>
+        /// 文章
+        /// </summary>
+        /// <param name="mypk"></param>
+        public Article(string no)
+        {
+            this.No = no;
+            this.Retrieve();
+        }
+        #endregion
+
 
         public override Map EnMap
         {
@@ -949,37 +1050,59 @@ namespace BP.CCOA
                 if (this._enMap != null)
                     return this._enMap;
                 Map map = new Map("OA_Article");
-                map.DepositaryOfEntity = Depositary.None;
+                //map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "文章";
-                map.EnType = EnType.Sys;
+                //map.EnType = EnType.Sys;
+                //map.CodeStruct = "20";
+                map.IsAutoGenerNo = false;
 
-                map.AddTBStringPK(ArticleAttr.Id, "", "ID", true, false, 20, 20, 20);
-                map.AddTBString(ArticleAttr.Title, null, "标题", true, true, 2, 20, 20);
-                map.AddTBString(ArticleAttr.Description, null, "描述", true, true, 2, 20, 20);
-                map.AddTBString(ArticleAttr.OwnerId, null, "所属栏目", true, true, 2, 20, 20);
-                map.AddTBString(ArticleAttr.ParentId, null, "父栏目", true, true, 2, 20, 20);
-                map.AddTBString(ArticleAttr.AccountId, null, "用户ID", true, true, 2, 20, 20);
-                map.AddTBString(ArticleAttr.Author, null, "作者", true, true, 2, 20, 20);
-                map.AddTBString(ArticleAttr.Content, null, "内容", true, true, 2, 20, 20);
-                map.AddTBDateTime(ArticleAttr.Overdue,"过期日期", true,false);
-                map.AddTBString(ArticleAttr.SequenceIndex, null, "序号", true, true, 2, 20, 20);
-                map.AddTBString(ArticleAttr.Source, null, "", true, true, 2, 20, 20);
-                map.AddTBString(ArticleAttr.Keyword, null, "关键字", true, true, 2, 20, 20);
+                map.AddTBStringPK(ArticleAttr.No, "", "主键No", true, false, 0, 50, 50);
+                map.AddTBString(ArticleAttr.Title, null, "标题", true, true, 1, 100, 100);
+                map.AddTBString(ArticleAttr.Description, null, "描述", true, true, 0, 1000, 1000);
+                map.AddTBString(ArticleAttr.OwnerId, null, "所属栏目", true, true, 0, 200, 200);
+                map.AddTBString(ArticleAttr.ParentId, null, "父栏目", true, true, 0, 200, 200);
+                map.AddTBString(ArticleAttr.AccountId, null, "用户ID", true, true, 10, 10, 10);
+                map.AddTBString(ArticleAttr.Author, null, "作者", true, true, 0, 20, 20);
+                map.AddTBString(ArticleAttr.Content, null, "内容", true, true, 0, 2000, 2000);
+                map.AddTBDateTime(ArticleAttr.Overdue, "过期日期", true, false);
+                map.AddTBInt(ArticleAttr.SequenceIndex, 999, "序号", true, false);
+                map.AddTBString(ArticleAttr.Source, null, "", true, true, 0, 20, 20);
+                map.AddTBString(ArticleAttr.Keyword, null, "关键字", true, true, 0, 20, 20);
                 map.AddTBInt(ArticleAttr.AllowComments, 0, "是否允许评论", true, false);
                 map.AddTBString(ArticleAttr.Permission, null, "权限", true, true, 2, 20, 20);
                 map.AddTBInt(ArticleAttr.IsImage, 0, "是否有缩略图", true, false);
                 map.AddTBInt(ArticleAttr.IsShow, 0, "是否置顶", true, false);
-                map.AddTBString(ArticleAttr.SubTitle, null, "副标题", true, true, 2, 20, 20);
-                map.AddTBString(ArticleAttr.Thumbnail, null, "缩略图", true, true, 2, 20, 20);
-                map.AddTBString(ArticleAttr.IsDeleted, null, "是否删除", true, true, 2, 20, 20);
+                map.AddTBString(ArticleAttr.SubTitle, null, "副标题", true, true, 0, 100, 100);
+                map.AddTBString(ArticleAttr.Thumbnail, null, "缩略图", true, true, 0, 255, 255);
+                map.AddTBInt(ArticleAttr.IsDeleted, 0, "是否删除", true, false);
                 map.AddTBDateTime(ArticleAttr.Created, "创建日期", true, false);
                 map.AddTBDateTime(ArticleAttr.Updated, "更新日期", true, false);
                 map.AddTBInt(ArticleAttr.State, 1, "状态", true, false);
 
+                map.AddTBInt(ArticleAttr.ArticleType, 0, "文章类型", true, false);
+                map.AddTBString(ArticleAttr.ContentUrl, null, "内容Url", true, true, 0, 1000, 1000);
+                map.AddTBString(ArticleAttr.FullTitle, null, "完整标题", true, true, 0, 200, 200);
+                map.AddTBInt(ArticleAttr.Clicks, 0, "点击次数", true, false);
+
+                map.AddTBString(ArticleAttr.ChannelFullUrl, null, "栏目完整Url", true, true, 0, 1000, 1000);
+
+                map.AddTBString(ArticleAttr.ChannelName, null, "栏目名称", true, true, 0, 1000, 1000);
+
+                map.AddTBInt(ArticleAttr.CommentCount, 0, "评论点击次数", true, false);
+
+
                 this._enMap = map;
                 return this._enMap;
             }
+        }
+    }
+
+    public class Articles : Entities
+    {
+        public override Entity GetNewEntity
+        {
+            get { return new Article(); }
         }
     }
 }

@@ -8,7 +8,7 @@ using XControls.Base;
 using System.Data;
 using BP.CCOA;
 
-public partial class CCOA_News_uc_NewsGrid : BP.Web.UC.UCBase3
+public partial class CCOA_News_uc_NoticeGrid : BP.Web.UC.UCBase3
 {
     public int PageSize { get; set; }
     public bool DisplayOperatingColumn { get; set; }

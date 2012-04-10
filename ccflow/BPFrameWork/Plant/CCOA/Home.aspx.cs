@@ -10,10 +10,14 @@ public partial class CCOA_Home : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        Channel channel = new Channel();
-        channel.CheckPhysicsTable();
+        if (!Page.IsPostBack)
+        {
+            Channel channel = new Channel();
+            channel.CheckPhysicsTable();
 
-        Article article = new Article();
-        article.CheckPhysicsTable();
+            Article article = new Article();
+            article.CheckPhysicsTable();
+        }
+
     }
 }

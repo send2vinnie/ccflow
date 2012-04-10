@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="NewsGrid.ascx.cs" Inherits="CCOA_News_uc_NewsGrid" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="NoticeGrid.ascx.cs" Inherits="CCOA_News_uc_NoticeGrid" %>
 <%@ Register Src="~/CCOA/Controls/XSearch.ascx" TagName="XSearch" TagPrefix="uc" %>
 
     <table width="96%" cellpadding="0" cellspacing="0" >
