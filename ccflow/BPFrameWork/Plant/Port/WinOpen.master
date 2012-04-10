@@ -10,8 +10,6 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <p>
-            This is master page.</p>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
     </div>
