@@ -186,7 +186,7 @@ namespace BP.Web.Comm
                 ur.OrderBy = this.GetValueByKey("OrderBy");
                 ur.OrderWay = this.GetValueByKey("OrderWay");
                 ur.IsPic = this.GetValueByKeyBool("IsPic");
-                ur.SQL = this.GetValueByKey("SQL");
+                ur.GenerSQL = this.GetValueByKey("SQL");
                 ur.NumKey = this.GetValueByKey("NumKey");
                 ur.MVals = this.GetValueByKey("MVals");
                 ur.Save();
@@ -1451,7 +1451,7 @@ namespace BP.Web.Comm
             ur.OrderBy = this.OrderBy;
             ur.OrderWay = this.OrderWay;
             ur.IsPic = this.CB_IsShowPict.Checked;
-            ur.SQL = myps.SQL;
+            ur.GenerSQL = myps.SQL;
             ur.NumKey = this.NumKey;
             ur.Paras = "";
             foreach (Para para in myps)
@@ -1460,13 +1460,12 @@ namespace BP.Web.Comm
             }
             ur.Save();
 
-
             this.SetValueByKey("Vals", ur.Vals);
             this.SetValueByKey("CfgKey", ur.CfgKey);
             this.SetValueByKey("OrderBy", ur.OrderBy);
             this.SetValueByKey("OrderWay", ur.OrderWay);
             this.SetValueByKey("IsPic", ur.IsPic);
-            this.SetValueByKey("SQL", ur.SQL);
+            this.SetValueByKey("SQL", ur.GenerSQL);
             this.SetValueByKey("NumKey", ur.NumKey);
 
             //ur.Save();
@@ -1667,7 +1666,7 @@ namespace BP.Web.Comm
                         ur.OrderBy = this.GetValueByKey("OrderBy");
                         ur.OrderWay = this.GetValueByKey("OrderWay");
                         ur.IsPic = bool.Parse(this.GetValueByKey("IsPic"));
-                        ur.SQL = this.GetValueByKey("SQL");
+                        ur.GenerSQL = this.GetValueByKey("SQL");
                         ur.NumKey = this.GetValueByKey("NumKey");
                         ur.Save();
                     }

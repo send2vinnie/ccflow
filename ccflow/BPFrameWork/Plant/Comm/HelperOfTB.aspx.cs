@@ -282,7 +282,7 @@ namespace BP.Web.Comm.UI
                                 dv.Delete(DefValAttr.Val, li.Text,
                                     DefValAttr.EnsName, this.EnsName,
                                     DefValAttr.FK_Emp, "0");
-                                // DBAccess.RunSQL("delete Sys_UIDefaultValue WHERE DefaultVal='" + li.Text + "' AND ENSCLASSNAME='" + this.EnsName + "' AND AttrKey='" + this.AttrKey + "' AND No='0'");
+                                // DBAccess.RunSQL("DELETE FROM Sys_UIDefaultValue WHERE DefaultVal='" + li.Text + "' AND ENSCLASSNAME='" + this.EnsName + "' AND AttrKey='" + this.AttrKey + "' AND No='0'");
                             }
                         }
                         this.ResponseWriteBlueMsg_DeleteOK();
