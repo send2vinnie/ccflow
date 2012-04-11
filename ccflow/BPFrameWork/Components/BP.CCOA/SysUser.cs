@@ -21,6 +21,10 @@ namespace BP.CCOA
         /// 系统ID
         /// </summary>
         public const string SysID = "SysID";
+        /// <summary>
+        /// 系统用户ID
+        /// </summary>
+        public const string SysUserNo = "SysUserNo";
     }
     public class SysUser : EntityNoName
     {
@@ -60,6 +64,18 @@ namespace BP.CCOA
             }
         }
 
+        public string SysUserNo
+        {
+            get
+            {
+                return this.GetValStringByKey(SysUserAttr.SysUserNo);
+            }
+            set
+            {
+                this.SetValByKey(SysUserAttr.SysUserNo, value);
+            }
+        }
+
         public SysUser()
         {
         }
@@ -86,7 +102,8 @@ namespace BP.CCOA
                 map.AddTBStringPK(SysUserAttr.No, null, "编号", true, true, 2, 50, 20);
                 map.AddTBString(SysUserAttr.UserName, null, "用户名", true, false, 0, 100, 20);
                 map.AddTBString(SysUserAttr.Password, null, "密码", true, false, 0, 100, 20);
-                map.AddTBString(SysUserAttr.SysID, null, "系统ID", true, false, 0, 30, 20);
+                map.AddTBString(SysUserAttr.SysID, null, "系统ID", true, false, 0, 50, 20);
+                map.AddTBString(SysUserAttr.SysUserNo, null, "系统用户ID", true, false, 0, 50, 20);
 
                 this._enMap = map;
                 return this._enMap;
