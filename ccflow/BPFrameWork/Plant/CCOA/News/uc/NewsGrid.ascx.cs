@@ -36,6 +36,7 @@ public partial class CCOA_News_uc_NewsGrid : BP.Web.UC.UCBase3
         get
         {
             Articles articles = new Articles();
+            //articles.Filter("ArticleType", "0");
             articles.RetrieveAll();
             return articles;      
         }

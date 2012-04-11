@@ -61,6 +61,21 @@ namespace BP.CCOA
         }
 
         /// <summary>
+        /// 全URL
+        /// </summary>
+        public string FullUrl
+        {
+            get
+            {
+                return this.GetValStringByKey(ChannelAttr.FullUrl);
+            }
+            set
+            {
+                this.SetValByKey(ChannelAttr.FullUrl, value);
+            }
+        }
+
+        /// <summary>
         /// 备注
         /// </summary>
         public string Description
@@ -279,10 +294,11 @@ namespace BP.CCOA
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "栏目";
                 map.EnType = EnType.Sys;
+                map.IsAutoGenerNo = false;
 
-                map.AddTBStringPK(ChannelAttr.No, null, "编号", true, true, 2, 20, 20);
+                map.AddTBStringPK(ChannelAttr.No, null, "编号", true, true, 0, 50, 50);
                 map.AddTBString(ChannelAttr.Name, null, "名称", true, false, 0, 50, 50);
-                map.AddTBString(ChannelAttr.ParentNo, null, "ParentID", true, false, 2, 20, 20);
+                map.AddTBString(ChannelAttr.ParentNo, null, "ParentID", true, false, 0, 50, 50);
                 map.AddTBString(ChannelAttr.ChannelName, null, "ChannelName", true, false, 0, 50, 50);
                 map.AddTBString(ChannelAttr.FullPath, null, "FullPath", true, false, 0, 100, 100);
                 map.AddTBString(ChannelAttr.FullUrl, null, "FullUrl", true, false, 0, 100, 100);
@@ -291,17 +307,26 @@ namespace BP.CCOA
                 map.AddTBString(ChannelAttr.DetailTemplate, null, "DetailTemplate", true, false, 0, 100, 100);
                 map.AddTBInt(ChannelAttr.Sequence, 0, "Sequence", true, false);
                 map.AddTBInt(ChannelAttr.IsComment, 0, "IsComment", true, false);
-                map.AddTBString(ChannelAttr.ReferenceID, null, "ReferenceID", true, false, 2, 20, 20);
+                map.AddTBString(ChannelAttr.ReferenceID, null, "ReferenceID", true, false, 0, 50, 50);
                 map.AddTBInt(ChannelAttr.Process, 0, "Process", true, false);
                 map.AddTBString(ChannelAttr.Type, null, "Type", true, false, 1, 1, 1);
                 map.AddTBString(ChannelAttr.Tags, null, "Tags", true, false, 0, 30, 30);
                 map.AddTBDateTime(ChannelAttr.Created, "Created", true, false);
                 map.AddTBDateTime(ChannelAttr.Created, "Updated", true, false);
-                map.AddTBString(ChannelAttr.State, null, "State", true, false, 2, 30, 20);
+                map.AddTBInt(ChannelAttr.State, 1, "State", true, false);
 
                 this._enMap = map;
                 return this._enMap;
             }
+        }
+    }
+
+    public class Channels : Entities
+    {
+
+        public override Entity GetNewEntity
+        {
+            get { return new Channel(); }
         }
     }
 }

@@ -4,17 +4,17 @@
   <Item No="01" Name="爱好者管理" Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
   <Item No="0101" Name="题库" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
   <Item No="0102" Name="申请者审核" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
-
+  <Item No="0103" Name="申请者审核" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="0104" Name="申请者审核" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
   <!-- 模板管理  -->
   <Item No="02" Name="模板管理" Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
   <Item No="0201" Name="流程模板审核" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
   <Item No="0202" Name="表单模板审核" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
 
   <!-- 系统维护  -->
-  <Item No="99" Name="系统管理" Url="" Img="../../Images/Btn/Help.gif" ForUser=",admin," DESC=""  DFor=""  />
+  <Item No="99" Name="栏目管理" Url="../../CCOA/Admin/Channel.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Btn/Help.gif" ForUser=",admin," DESC=""  DFor=""  />
   <Item No="9901" Name="新闻" Url=" ../../CCOA/News/NewsList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
   <Item No="9901" Name="公告" Url=" ../../CCOA/Notice/NoticeList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
   <Item No="9901" Name="通讯录" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
   <Item No="9901" Name="网盘" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
-
 </NewDataSet>

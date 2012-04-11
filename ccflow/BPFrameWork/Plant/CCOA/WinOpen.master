@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="WinOpen.master.cs" Inherits="Model_WinOpen" %>
 
 <%@ Register Src="~/CCOA/Menu.ascx" TagName="Menu" TagPrefix="uc" %>
-<%@ Register Src="~/CCOA/TopMenu.ascx" TagName="TopMenu" TagPrefix="uc" %>
+<%@ Register Src="~/CCOA/Header.ascx" TagName="Header" TagPrefix="uc" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -17,8 +17,9 @@
             <tr>
                 <td>
                     <div id="divTop">
-                        <img alt="" class="style2" src="../../CCOA/Images/bg_top.jpg" />
-                        <uc:TopMenu ID="TopMenu1" runat="server" />
+                        <%--<img alt="" class="style2" src="../../CCOA/Images/bg_top.jpg" />--%>
+                        <uc:Header ID="Header1" runat="server" />
+                       
                     </div>
                 </td>
             </tr>

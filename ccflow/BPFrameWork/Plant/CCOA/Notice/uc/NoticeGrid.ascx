@@ -34,7 +34,7 @@
             </th>
         </tr>
         <% foreach (BP.CCOA.Article item in Articles)
-           {%>
+           {%><tr>
         <td>
             <%=item.Title %>
         </td>
@@ -52,7 +52,7 @@
         </td>
         <td>
             <a href="#">评论</a>
-        </td>
+        </td></tr>
         <%} %>
     </table>
 </div>

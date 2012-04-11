@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class CCOA_TopMenu : System.Web.UI.UserControl
+public partial class CCOA_Header : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {

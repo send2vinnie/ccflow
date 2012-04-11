@@ -6,7 +6,7 @@
 }
 #tdMain tr td
 {
-     vertical-align:top;
+    vertical-align: top;
 }
 #divBottom
 {
@@ -20,4 +20,53 @@
 {
     width: 1279px;
     height: 79px;
+}
+
+.header
+{
+    background: url(../../CCOA/Images/menu2/topbg.jpg);
+    height: 121px;
+}
+.header table
+{
+    border: 0;
+}
+.header tr
+{
+    background: transparent;
+    border: 0;
+}
+.header td
+{
+    background: transparent;
+    border: 0;
+}
+.header td a
+{
+    text-decoration: none;
+}
+.header td span
+{
+    width: 50px;
+}
+
+.header_menu
+{
+  
+}
+.header_menu ul
+{
+    padding: 0;
+    margin-top:10px;
+   margin-right:20px;
+    height: 50px;
+    float:right;
+    line-height:50px;
+}
+.header_menu ul li
+{
+    float: left;
+    list-style-type: none;
+    padding-left:5px;
+    padding-right:5px;
 }
