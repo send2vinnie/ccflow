@@ -28,7 +28,7 @@
                 <div id="primary" class="clear-block">
                     <ul class="links-menu">
                         <li><a href="#" title="退出">退出</a></li>
-                        <li><a href="#" title="修改配置" target="_blank">
+                        <li><a href="UserSetting.aspx" title="修改配置" target="_blank">
                             修改配置</a></li>
                         <li><a href="#" title="修改口令"
                             target="_blank">修改口令</a></li>

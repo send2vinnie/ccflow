@@ -1,0 +1,382 @@
+
+HTML { width:100%;min-width: 100%;height:100%;}
+body { width:100%;min-width: 100%;height:100%;font-family:Verdana, Arial, sans-serif;background-color:#F7F7F3 }
+
+.productName
+{
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.welcomeUser
+{
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.links
+{
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.back
+{
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.mail
+{
+	font-size: 12px;
+	font-weight: normal
+}
+
+.pageTitle
+{
+	height: 22px;
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 14px;
+}
+
+.appTitle
+{
+	height: 22px;
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 2px;
+}
+
+.appData
+{
+	padding-left: 2px;
+}
+
+.mainData
+{
+	padding-left: 14px;
+}
+
+.secTitle
+{
+	font-size: 13px;
+	font-weight: bold;
+	text-align: left;
+	padding-left: 8px;
+ 	vertical-align: bottom;
+ }
+
+.secTitle2
+{
+	padding-left: 8px;
+	padding-Right: 17px;
+	background-color: #E5E5DA
+}
+
+.arrow
+{
+ 	vertical-align: bottom;
+	padding-left: 18px;
+}
+
+.Organize
+{
+	text-align: right;
+	padding-right: 8px;
+	padding-left: 4px;
+ 	vertical-align: bottom;
+	padding-bottom: 3px;
+}
+
+.OrganizeLink
+{
+	color: black;
+ 	font-size: 11px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.NavigateTab
+{
+	color: white;
+ 	font-size: 11px;
+	text-align: center;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.NavigateTab_on
+{
+	color: #ECC182;
+ 	font-size: 11px;
+	text-align: center;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.Label
+{
+	color: black;
+	font-size: 12px;
+}
+
+.Annotation
+{
+	font-family: Verdana;
+	color: black;
+	font-size: 10px;
+	padding-left: 3px;
+}
+
+.inputText
+{
+	height: 21px;
+	color: black;
+	font-size: 12px;
+}
+
+.tableURL
+{
+	width: 100%;
+}
+
+.tableEDIT
+{
+	width: 97%;
+}
+
+.tableName
+{
+	color: black;
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 8px;
+	line-height: 22px; 
+	background-color: #FDC778;
+	border-bottom: 1px solid black;
+}
+
+.tableTitle
+{
+	color: black;
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 20px;
+}
+
+.dataTable
+{
+	border-top: 1px solid #809ACD;
+}
+
+.TDtableURL
+{
+}
+
+.UrlLinks
+{
+	color: #0144BD;
+	font-size: 12px;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+.UrlLinksOn
+{
+	color: #0144BD;
+	font-size: 12px;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+.UrlLinks1
+{
+	color: #0144BD;
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+.UrlTD
+{
+	font-size: 11px;
+	font-weight: normal;
+	background-color: #E1EAF9;
+	border-bottom: 1px solid #809ACD;
+}
+
+.editTD
+{
+	border-bottom: 1px solid #809ACD;
+}
+
+.UrlTD_On_hand
+{
+	background-color: #E5E5DA;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.UrlTD_On
+{
+	font-size: 11px;
+	font-weight: normal;
+	border-bottom: 1px solid #809ACD;
+	background-color: white;
+}
+
+.deleteCB
+{
+	text-align: center;
+}
+
+.barTD_On
+{
+	background-color: #FDF2DC;
+	cursor: hand;
+	cursor: pointer;	
+}
+.barTD_Off
+{
+	background-color: #DDE9FF;
+	cursor: default;
+}
+
+.inputField
+{
+	height: 20px;
+	font-size: 12px;
+	font-weight: normal;
+	border-top: 1px inset #808080;
+	border-left: 1px inset #808080;
+	border-bottom: 1px inset #D3D0C7;
+	border-right: 1px inset #D3D0C7;
+}
+
+.go
+{
+	height: 18px;
+	color: white;
+	font-size: 11px;
+	letter-spacing : 1px;
+	font-weight: normal;
+	background-color: #202082;
+	border-top: 1px solid white;
+	border-left: 1px solid white;
+	border-bottom: 1px solid #808080;
+	border-right: 1px solid #808080;
+}
+
+.butt
+{
+	height: 22px;
+	color: #482801;
+	font-size: 13px;
+	font-weight: bold;
+	letter-spacing : 1px;
+	background-color: #ECE9D8;
+	padding-top : 2px;
+	padding-bottom : 2px;
+	padding-left : 6px;
+	padding-right : 6px;
+	border: 1px solid #DFAA5C;
+	border-style : groove;
+	border-collapse : separate;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.butt_dis
+{
+	height: 21px;
+	color: #482801;
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing : 1px;
+	background-color: Gray;
+	padding-left : 8px;
+	padding-right : 8px;
+	border: 1px solid #DFAA5C;
+	border-style : groove;
+	border-collapse : separate;
+}
+
+.netBrowse
+{
+	color: #0144BD;
+	font-size: 9px;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+.Copyright
+{
+	font-family: Arial;
+	color: #60648A;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.errorPage
+{
+	color: red;
+	font-size: 18px;
+	font-weight: bold;
+	padding-left: 40px;
+}
+
+.errorMessage
+{
+	color: red;
+	font-size: 12px;
+}
+
+.extend
+{
+	height: 100%;
+}
+
+.divStyle
+{
+	position: relative;
+	vertical-align: top;
+	width: 100%;
+	overflow: hidden;
+}
+
+.ToolsDiv,.HeaderToolsDiv
+{
+	position: absolute;
+	top: 72px;
+	padding-left: 40px;
+	width: 182px;
+	overflow: hidden;
+	display: none;
+	z-index: 1;
+}
+
+.HeaderToolsDiv
+{
+	top: 4px;
+}
+
+.dropTable
+{
+	width: 140px;
+	background-color: #DDE9FF;
+	border: 1px solid #DF9208;
+}
+ 
+.blueLine
+{
+	border-top: 2px solid #202082;
+}
+
+.ssoTable
+{
+	font-size: 12px;
+	color: #0144BD;
+	font-weight: normal;
+}
