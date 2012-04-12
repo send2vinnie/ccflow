@@ -205,7 +205,7 @@ namespace BP.Web.Port
                         if (this.FK_Flow == null)
                             this.Response.Redirect("FlowSearch.aspx", true);
                         else
-                            this.Response.Redirect("../Comm/PanelEns.aspx?EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt" + paras, true);
+                            this.Response.Redirect("/Rpt/Search.aspx?Endse=s&FK_Flow=001&EnsName=ND" + int.Parse(this.FK_Flow) + "Rpt" + paras, true);
                         break;
                     case DoWhatList.FlowSearchSmall: // Á÷³Ì²éÑ¯¡£
                         if (this.FK_Flow == null)

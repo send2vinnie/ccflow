@@ -100,7 +100,6 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion
 
-
             #region 2012- 01-29 增加字段。
             try
             {
@@ -110,7 +109,6 @@ public partial class Designer : System.Web.UI.Page
             {
             }
             #endregion
-
             
             #region 2012- 01-29 增加字段。
             try
@@ -187,12 +185,12 @@ public partial class Designer : System.Web.UI.Page
             }
             #endregion
             
-
             #region 2011-12-21 升级节点属性规则.
             DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='RunModel'");
             DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='FlowRunWay'");
             #endregion
 
+            #region 2011-12-15 处理更新错误.
             msg = "@执行升级出现错误。"; 
             //保障升级后的数据完整性. 2011-11-26.
             sql = "UPDATE SYS_MAPEXT SET ExtType='TBFullCtrl' WHERE ExtType='FullCtrl'";
@@ -200,7 +198,7 @@ public partial class Designer : System.Web.UI.Page
 
             sql = "UPDATE WF_GenerWorkFlow SET NodeName=(SELECT NAME FROM WF_Node WHERE WF_Node.NodeID=WF_GenerWorkFlow.FK_Node)";
             DBAccess.RunSQL(sql);
-
+            #endregion
 
             #region 2011-12-13 删除了流程日志字段.
             DBAccess.RunSQL("DELETE FROM Sys_MapAttr WHERE KeyOfEn='WFLog'");
@@ -211,7 +209,6 @@ public partial class Designer : System.Web.UI.Page
             DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='FrmEventType'");
             DBAccess.RunSQL("DELETE FROM Sys_Enum WHERE EnumKey='EventDoType'");
             #endregion
-
 
             #region 手动升级. 2011-07-08 补充节点字段分组.
             //string sql = "DELETE FROM Sys_EnCfg WHERE No='BP.WF.Ext.NodeO'";

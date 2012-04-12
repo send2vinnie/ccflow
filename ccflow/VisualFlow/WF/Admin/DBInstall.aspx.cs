@@ -22,28 +22,28 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
 
         //try
         //{
-            if (BP.DA.DBAccess.IsExitsObject("WF_Flow") == true)
+        if (BP.DA.DBAccess.IsExitsObject("WF_Flow") == true)
+        {
+            this.Pub1.AddFieldSet("提示");
+            this.Pub1.Add("数据已经安装，如果您要重新安装，您需要手工的清除数据库里对象。");
+            this.Pub1.AddFieldSetEnd();
+
+            this.Pub1.AddFieldSet("修复数据表");
+            this.Pub1.Add("把最新的版本的与当前的数据表结构，做一个自动修复, 修复内容：缺少列，缺少列注释，列注释不完整或者有变化。 <br> <a href='DBInstall.aspx?DoType=FixDB' >执行...</a>。");
+            this.Pub1.AddFieldSetEnd();
+
+            if (this.Request.QueryString["DoType"] == "FixDB")
             {
-                this.Pub1.AddFieldSet("提示");
-                this.Pub1.Add("数据已经安装，如果您要重新安装，您需要手工的清除数据库里对象。");
-                this.Pub1.AddFieldSetEnd();
+                string rpt = BP.PubClass.DBRpt(BP.DBLevel.High);
 
-                this.Pub1.AddFieldSet("修复数据表");
-                this.Pub1.Add("把最新的版本的与当前的数据表结构，做一个自动修复, 修复内容：缺少列，缺少列注释，列注释不完整或者有变化。 <br> <a href='DBInstall.aspx?DoType=FixDB' >执行...</a>。");
-                this.Pub1.AddFieldSetEnd();
+                this.Pub1.AddMsgGreen("同步数据表结构成功, 部分错误不会影响系统运行.",
+                    "执行成功，希望在系统每次升级后执行此功能，不会对你的数据库数据产生影响。<br> <a href='./XAP/Designer.aspx'>进入流程设计器.</a>");
 
-                if (this.Request.QueryString["DoType"] == "FixDB")
-                {
-                    string rpt = BP.PubClass.DBRpt(BP.DBLevel.High);
-
-                    this.Pub1.AddMsgGreen("同步数据表结构成功, 部分错误不会影响系统运行.",
-                        "执行成功，希望在系统每次升级后执行此功能，不会对你的数据库数据产生影响。<br> <a href='./XAP/Designer.aspx'>进入流程设计器.</a>");
-
-                    //string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
-                    //BP.DA.DBAccess.RunSQLScript(scrpts);
-                }
-                return;
+                //string scrpts = BP.SystemConfig.PhysicalApplicationPath + "\\WF\\Admin\\DBInstall.sql";
+                //BP.DA.DBAccess.RunSQLScript(scrpts);
             }
+            return;
+        }
         //}
         //catch (Exception ex)
         //{
@@ -55,7 +55,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         //    return;
         //}
 
-       // this.Pub1.AddH2("数据库安装向导...");
+        // this.Pub1.AddH2("数据库安装向导...");
 
         this.Pub1.AddFieldSet("选择安装语言.");
         BP.WF.XML.Langs langs = new BP.WF.XML.Langs();
@@ -142,7 +142,7 @@ public partial class WF_Admin_DBInstall : System.Web.UI.Page
         btn.ID = "Btn_s";
         btn.Text = "下一步";
         btn.UseSubmitBehavior = false;
-        btn.OnClientClick = "this.disabled=true;"; 
+        btn.OnClientClick = "this.disabled=true;";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
     }
