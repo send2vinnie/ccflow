@@ -7,11 +7,13 @@
     <title></title>
     <style type="text/css">
         * { font-family: "微软雅黑"; font-size:12px; }
-        .grid { text-align:center; width:80%; }
+        .bg { width:80%; margin:auto; }
+        .grid { text-align:center; width:98%; }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
+    <div class="bg">
     <table>
         <tr>
             <td>所属分组：</td>
@@ -80,6 +82,7 @@
         <SortedDescendingCellStyle BackColor="#EAEAD3" />
         <SortedDescendingHeaderStyle BackColor="#575357" />
     </asp:GridView>
+    </div>
     </form>
 </body>
 </html>

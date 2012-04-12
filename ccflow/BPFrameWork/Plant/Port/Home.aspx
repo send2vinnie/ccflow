@@ -28,10 +28,13 @@
                 <div id="primary" class="clear-block">
                     <ul class="links-menu">
                         <li><a href="#" title="退出">退出</a></li>
+                        <li><a href="SysManager.aspx" title="系统维护"
+                            target="_blank">系统维护</a></li>
                         <li><a href="UserSetting.aspx" title="修改配置" target="_blank">
                             修改配置</a></li>
                         <li><a href="PassConf.aspx" title="修改口令"
                             target="_blank">修改口令</a></li>
+                            
                         <li class="active"><a href="Home.aspx" title="主页" class="active">主页</a></li>
                     </ul>
                 </div>
