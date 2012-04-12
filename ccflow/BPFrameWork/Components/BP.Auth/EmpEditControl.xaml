@@ -3,10 +3,34 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
-    
-    <Grid x:Name="LayoutRoot" Background="White">
 
+    <Grid x:Name="LayoutRoot">
+        <Grid HorizontalAlignment="Left" Height="183" Margin="28,22,0,0" VerticalAlignment="Top" Width="234">
+            <StackPanel Height="23" Margin="0,0,50,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <TextBlock Margin="0,0,10,0" TextWrapping="Wrap" Text="姓名" d:LayoutOverrides="Height" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBox TextWrapping="Wrap" Width="150" BorderThickness="0,0,0,1" Text="{Binding Name, Mode=TwoWay}" d:LayoutOverrides="Height" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Height="23" Margin="0,27,50,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <TextBlock Margin="0,0,10,0" TextWrapping="Wrap" Text="岗位" d:LayoutOverrides="Height"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <telerik:RadComboBox Width="150" x:Name="stationcombo"/>
+            </StackPanel>
+            <StackPanel Height="23" Margin="0,54,50,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <TextBlock Margin="0,0,10,0" TextWrapping="Wrap" Text="部门" d:LayoutOverrides="Height"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <telerik:RadComboBox Width="150" x:Name="deptcombo"
+                                     DisplayMemberPath="Name"
+                                     SelectedValuePath="No" SelectedValue="{Binding FK_Dept, Mode=TwoWay}"/>
+            </StackPanel>
+            <Button Content="保存" Height="25" Margin="0,0,69,0" x:Name="Save" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="65"/>
+            <Button Content="关闭" Height="25" x:Name="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="65"/>
+            <StackPanel Margin="0,81,50,79" Orientation="Horizontal">
+                <TextBlock Margin="0,0,10,0" TextWrapping="Wrap" Text="权限" d:LayoutOverrides="Height" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <telerik:RadComboBox Width="150" x:Name="passcombo" SelectedValue="{Binding Pass, Mode=TwoWay}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

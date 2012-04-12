@@ -11,8 +11,10 @@ using System.Windows.Shapes;
 
 namespace BP.Auth
 {
-    public class OperationType
+    public enum OperationType
     {
-
+        AddNew = 1,
+        Edit,
+        Delete
     }
 }

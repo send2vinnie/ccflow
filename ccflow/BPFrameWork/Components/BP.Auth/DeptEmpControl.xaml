@@ -4,9 +4,44 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     d:DesignHeight="300" d:DesignWidth="400">
-    
-    <Grid x:Name="LayoutRoot" Background="White">
 
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.209*"/>
+            <ColumnDefinition Width="0.791*"/>
+        </Grid.ColumnDefinitions>
+
+        <telerik:RadTreeView x:Name="treeview" BorderBrush="{x:Null}" >
+        </telerik:RadTreeView>
+        <Grid Grid.Column="1">
+            <ListBox Name="EmpList"  Grid.Row="4" Background="White" Grid.ColumnSpan="2" 
+                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="10,0,0,0">
+                            <StackPanel Orientation="Horizontal" Cursor="Hand">
+                                <Image Source="Emp.jpg" Width="32" Height="32" ></Image>
+                                <TextBlock Text="{Binding Name}"
+                                   VerticalAlignment="Center"/>
+                                <!--, Converter={StaticResource WageAccoutDetailToWageItemConverter}}"-->
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <toolkit:WrapPanel ItemHeight="60" ItemWidth="150">
+                        </toolkit:WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <telerik:RadBusyIndicator x:Name="ListBusy" Content="" BusyContent="数据读取中..."/>
+        </Grid>
+        <telerik:RadBusyIndicator x:Name="TreeBusy" Content="" BusyContent="数据读取中..."/>
     </Grid>
 </UserControl>
