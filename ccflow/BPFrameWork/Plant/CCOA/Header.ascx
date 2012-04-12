@@ -36,6 +36,7 @@
             <li><a href="../Home.aspx">文档</a></li>
             <li><a href="../Home.aspx">备忘录</a></li>
             <li><a href="../Home.aspx">工作日历</a></li>
+            <li><a href="../Home.aspx">短信平台</a></li>
         </ul>
     </div>
 </div>

@@ -1,64 +1,64 @@
-﻿ body
-        {
-            font: 12px Arial, Helvetica, sans-serif;
-            color: #000;
-        }
-        #container
-        {
-            width: 184px;
-        }
-        H1
-        {
-            font-size: 11px;
-            margin: 0px;
-            width: 184px;
-            cursor: pointer;
-            height: 22px;
-            line-height: 20px;
-        }
-        H1 a
-        {
-            display: block;
-            padding-top: 1px;
-            padding-right: 8px;
-            padding-bottom: 0px;
-            padding-left: 8px;
-            width: 184px;
-            color: #000;
-            height: 22px;
-            text-decoration: none;
-            moz-outline-style: none;
-            background-image: url(title.gif);
-            background-repeat: repeat-x;
-        }
-        .content
-        {
-            padding-left: 8px;
-        }
-        A:link
-        {
-            font-size: 12px;
-            color: #444659;
-            text-decoration: none;
-        }
-        
-        A:visited
-        {
-            font-size: 12px;
-            color: #444659;
-            text-decoration: none;
-        }
-        
-        A:active
-        {
-            color: #000000;
-            font-size: 12px;
-            text-decoration: none;
-        }
-        
-        A:hover
-        {
-            color: #000000;
-            font-size: 12px;
-            text-decoration: none;
-        }
+﻿body
+{
+    font: 12px Arial, Helvetica, sans-serif;
+    color: #000;
+}
+#container
+{
+    width: 184px;
+}
+H1
+{
+    font-size: 11px;
+    margin: 0px;
+    width: 184px;
+    cursor: pointer;
+    height: 22px;
+    line-height: 20px;
+}
+H1 a
+{
+    display: block;
+    padding-top: 1px;
+    padding-right: 8px;
+    padding-bottom: 0px;
+    padding-left: 8px;
+    width: 184px;
+    color: #000;
+    height: 22px;
+    text-decoration: none;
+    moz-outline-style: none;
+    background-image: url(title.gif);
+    background-repeat: repeat-x;
+}
+.content
+{
+    padding-left: 8px;
+}
+A:link
+{
+    font-size: 12px;
+    color: #444659;
+    text-decoration: none;
+}
+
+A:visited
+{
+    font-size: 12px;
+    color: #444659;
+    text-decoration: none;
+}
+
+A:active
+{
+    color: #000000;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+A:hover
+{
+    color: #000000;
+    font-size: 12px;
+    text-decoration: none;
+}

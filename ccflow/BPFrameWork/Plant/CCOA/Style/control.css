@@ -1,2 +1,31 @@
 ﻿.Article_Single
-{}
+{
+}
+
+.Article_Newest
+{
+    border:solid 1px #e5e5e5;
+    padding-left:5px;
+    padding-right:5px;
+    padding-bottom:5px;
+}
+.Article_Newest h3
+{
+    background:#EFF5FF;
+    height:30px;
+    line-height:30px;
+    padding-left:20px;
+}
+.Article_Newest h3 ul
+{
+    height:auto;
+}
+.Article_Newest h3 ul li
+{
+    
+}
+.Article_Newest h3 ul li a:link
+{
+    text-decoration: none;
+    color:Red;
+}

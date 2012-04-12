@@ -11,12 +11,5 @@ public partial class CCOA_Admin_ChannelManage : System.Web.UI.Page
     {
 
     }
-    protected void btnCommit_Click(object sender, EventArgs e)
-    {
-
-    }
-    protected void btnCancle_Click(object sender, EventArgs e)
-    {
-
-    }
+   
 }

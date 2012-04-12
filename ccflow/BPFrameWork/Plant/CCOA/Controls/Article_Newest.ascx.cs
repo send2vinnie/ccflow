@@ -8,7 +8,7 @@ using BP.CCOA;
 
 public partial class CCOA_ComUC_Article_Newest : BP.Web.UC.UCBase3
 {
-    private List<Article> articles;
+    private Articles articles;
     private Channel channel;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -61,7 +61,7 @@ public partial class CCOA_ComUC_Article_Newest : BP.Web.UC.UCBase3
     /// <summary>
     /// 文章列表
     /// </summary>
-    protected List<Article> Articles
+    protected Articles Articles
     {
         get
         {
@@ -84,7 +84,8 @@ public partial class CCOA_ComUC_Article_Newest : BP.Web.UC.UCBase3
 
                 //Order[] os = IsShow ? new Order[] { new Order("IsShow", OrderMode.Desc), new Order("Updated", OrderMode.Desc) } : new Order[] { new Order("Updated", OrderMode.Desc) };
                 //articles = Assistant.List<Article>(c, os, 0, PageSize);
-                
+                articles = new BP.CCOA.Articles();
+                articles.RetrieveAll();               
             }
             return articles;
         }

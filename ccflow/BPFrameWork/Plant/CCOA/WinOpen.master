@@ -9,6 +9,9 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link href="Style/master.css" rel="stylesheet" type="text/css" />
+    <link href="Style/menu.css" rel="stylesheet" type="text/css" />
+    <link href="Style/main.css" rel="stylesheet" type="text/css" />
+    <link href="Style/control.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
