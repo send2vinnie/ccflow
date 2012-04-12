@@ -29,6 +29,10 @@ namespace BP.CCOA
         /// 组别
         /// </summary>
         public const string SysGroup = "SysGroup";
+        /// <summary>
+        /// 组别名称
+        /// </summary>
+        public const string SysGroupName = "SysGroupName";
     }
 
     public class SysInfo : EntityNoName
@@ -79,6 +83,7 @@ namespace BP.CCOA
                 this.SetValByKey(SysInfoAttr.SysOrder, value);
             }
         }
+
         public string SysGroup
         {
             get
@@ -90,6 +95,19 @@ namespace BP.CCOA
                 this.SetValByKey(SysInfoAttr.SysGroup, value);
             }
         }
+
+        public string SysGroupName
+        {
+            get
+            {
+                return this.GetValStringByKey(SysInfoAttr.SysGroupName);
+            }
+            set
+            {
+                this.SetValByKey(SysInfoAttr.SysGroupName, value);
+            }
+        }
+        
         public SysInfo()
         {
         }
@@ -118,7 +136,8 @@ namespace BP.CCOA
                 map.AddTBString(SysInfoAttr.SysUrl, null, "系统地址", true, false, 0, 200, 20);
                 map.AddTBString(SysInfoAttr.SysOrder, null, "显示排序", true, false, 0, 10, 20);
                 map.AddTBString(SysInfoAttr.SysGroup, null, "所属组别", true, false, 0, 10, 20);
-
+                map.AddTBString(SysInfoAttr.SysGroupName, null, "组别名称", true, false, 0, 30, 20);
+                
                 this._enMap = map;
                 return this._enMap;
             }
