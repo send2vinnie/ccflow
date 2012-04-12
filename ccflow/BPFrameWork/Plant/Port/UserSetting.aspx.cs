@@ -24,7 +24,7 @@ public partial class Port_UserSetting : System.Web.UI.Page
         this.rptSysList.DataSource = sysTable;
         this.rptSysList.DataBind();
 
-        string userSql = "select u.SysID, u.UserName, u.Password from Port_SysUser u where u.SysUserNo = 'admin'";
+        string userSql = "select u.SysID, u.UserName, u.Password from Port_SysUser u where u.SysUserNo = '" + BP.Web.WebUser.No + "'";
         System.Data.DataTable userTable = new System.Data.DataTable();
         userTable = DBAccess.RunSQLReturnTable(userSql);
 
@@ -43,7 +43,7 @@ public partial class Port_UserSetting : System.Web.UI.Page
 
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
-        string deleteSql = "delete from Port_SysUser where SysUserNo = 'admin'";
+        string deleteSql = "delete from Port_SysUser where SysUserNo = '" + BP.Web.WebUser.No + "'";
 
         BP.CCOA.SysUser sysUser = new BP.CCOA.SysUser();
 
@@ -59,9 +59,10 @@ public partial class Port_UserSetting : System.Web.UI.Page
             sysUser.UserName = username;
             sysUser.Password = password;
             sysUser.SysID = id;
-            sysUser.SysUserNo = "admin";
+            sysUser.SysUserNo = BP.Web.WebUser.No;
 
             sysUser.Insert();
         }
+        this.BindData();
     }
 }

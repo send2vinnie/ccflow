@@ -18,10 +18,10 @@
         <div id="header">
             <div id="logo-title">
                 <h1 id='site-name'>
-                    <a href="javascript:void(0)">单点登录系统 </a>
+                    <a href="javascript:void(0)">陕西重卡，汽车工程研究院 </a>
                 </h1>
                 <div id='site-slogan'>
-                    让登录更简单
+                    
                 </div>
             </div>
             <div class="menu withprimary ">
@@ -30,9 +30,9 @@
                         <li><a href="#" title="退出">退出</a></li>
                         <li><a href="UserSetting.aspx" title="修改配置" target="_blank">
                             修改配置</a></li>
-                        <li><a href="#" title="修改口令"
+                        <li><a href="PassConf.aspx" title="修改口令"
                             target="_blank">修改口令</a></li>
-                        <li class="active"><a href="#" title="主页" class="active">主页</a></li>
+                        <li class="active"><a href="Home.aspx" title="主页" class="active">主页</a></li>
                     </ul>
                 </div>
             </div>
@@ -205,21 +205,7 @@
                         </div>
                         <div class="panel-col-bottom">
                             <div>
-                                <div class="panel-custom">
-                                    <h2 class="title">
-                                        雅虎股市行情及汇率</h2>
-                                    <table width="500">
-                                        <tr>
-                                            <td>
-                                                <iframe src='http://yahoo.compass.cn/stock/modblock.php' width='350' height='236'
-                                                    scrolling='no' frameborder='0'></iframe>
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
+                             
                             </div>
                         </div>
                     </div>
@@ -227,87 +213,27 @@
                 </div>
             </div>
             <div id="sidebar-left" class="sidebar">
-                <div class="block block-block" id="block-block-1">
-                    <div class="blockinner">
-                        <h2 class="title">
-                            免费邮箱
-                        </h2>
-                        <div class="content">
-                            <ul>
-                                <li><a href="http://portal.ssodemo.com/mail.sina.com.cn.php?sso_host=mail.sina.com.cn"
-                                    target="_blank">新浪免费邮箱</a> </li>
-                                <li><a href="http://portal.ssodemo.com/mail.sohu.com.cn.php?sso_host=mail.sohu.com.cn"
-                                    target="_blank">搜狐免费邮箱</a> </li>
-                                <li><a href="http://portal.ssodemo.com/cn.mail.yahoo.com.php?sso_host=cn.mail.yahoo.com"
-                                    target="_blank">雅虎免费邮箱</a> </li>
-                            </ul>
+            <% 
+                foreach (string key in DataSource.Keys)
+               {%>
+                    <div class="block block-block" >
+                        <div class="blockinner">
+                            <h2 class="title">
+                                <%= key %>
+                            </h2>
+                            <div class="content">
+                                <ul>
+                                    <% foreach (System.Data.DataRow row in DataSource[key])
+                                       {%>
+                                    <li><a href='<%= row["SysUrl"] %>'
+                                        target="_blank"><%= row["SysName"] %></a> </li>
+                                        <% }%>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="block block-block" id="block-block-2">
-                    <div class="blockinner">
-                        <h2 class="title">
-                            论坛社区
-                        </h2>
-                        <div class="content">
-                            <ul>
-                                <li><a href="http://portal.ssodemo.com/bbs.chinabroadcast.cn.php?sso_host=bbs.chinabroadcast.cn"
-                                    target="_blank">国际在线论坛</a> </li>
-                                <li><a href="http://portal.ssodemo.com/pop.pcpop.com.php?sso_host=pop.pcpop.com"
-                                    target="_blank">泡泡俱乐部</a> </li>
-                                <li><a href="http://portal.ssodemo.com/club.autohome.com.cn.php?sso_host=club.autohome.com.cn"
-                                    target="_blank">汽车之家</a> </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="block block-block" id="block-block-4">
-                    <div class="blockinner">
-                        <h2 class="title">
-                            商城
-                        </h2>
-                        <div class="content">
-                            <ul>
-                                <li><a href="http://portal.ssodemo.com/www.joyo.com.php?sso_host=www.joyo.com" target="_blank">
-                                    卓越网</a> </li>
-                                <li><a href="http://portal.ssodemo.com/www.taobao.com.php?sso_host=www.taobao.com"
-                                    target="_blank">淘宝网</a> </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="block block-block" id="block-block-6">
-                    <div class="blockinner">
-                        <h2 class="title">
-                            科教
-                        </h2>
-                        <div class="content">
-                            <ul>
-                                <li><a href="http://portal.ssodemo.com/matrix.hongen.com.php?sso_host=matrix.hongen.com"
-                                    target="_blank">洪恩在线</a> </li>
-                                <li><a href="http://portal.ssodemo.com/www.china-pub.com.php?sso_host=www.china-pub.com"
-                                    target="_blank">博客中国</a> </li>
-                                <li><a href="http://portal.ssodemo.com/pcbbs.pconline.com.cn.php?sso_host=pcbbs.pconline.com.cn"
-                                    target="_blank">太平洋电脑网</a> </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="block block-block" id="block-block-5">
-                    <div class="blockinner">
-                        <h2 class="title">
-                            游戏
-                        </h2>
-                        <div class="content">
-                            <ul>
-                                <li><a href="http://portal.ssodemo.com/www.egchina.com.php?sso_host=www.egchina.com"
-                                    target="_blank">电玩中国</a> </li>
-                                <li><a href="http://portal.ssodemo.com/bbs.52pk.net.php?sso_host=bbs.52pk.net" target="_blank">
-                                    52pk游戏论坛</a> </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+
+                <%} %>
             </div>
             <div id="sidebar-right" class="sidebar">
                 <div class="block block-block" id="block-block-7">
@@ -343,221 +269,13 @@
                 </div>
                 <div class="block block-views" id="block-views-calendar">
                     <div class="blockinner">
-                        <h2 class="title">
-                            日历
-                        </h2>
-                        <div class="content">
-                            <div class='view view-calendar'>
-                                <div class='view-empty view-empty-calendar'>
-                                    <div class="calendar-calendar">
-                                        <div class="month-view">
-                                            <table class="mini">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="heading" colspan="7">
-                                                            <a href="/portal/index.php?q=calendar/2012/04">Apr 2012</a>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr class="odd">
-                                                        <td class="days mon">
-                                                            一
-                                                        </td>
-                                                        <td class="days tue">
-                                                            二
-                                                        </td>
-                                                        <td class="days wed">
-                                                            三
-                                                        </td>
-                                                        <td class="days thu">
-                                                            四
-                                                        </td>
-                                                        <td class="days fri">
-                                                            五
-                                                        </td>
-                                                        <td class="days sat">
-                                                            六
-                                                        </td>
-                                                        <td class="days sun">
-                                                            日
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="even">
-                                                        <td>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                        <td>
-                                                        </td>
-                                                        <td class="四月 sun mini" id="四月1">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/1">1</a></div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd">
-                                                        <td class="四月 mon mini" id="四月2">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/2">2</a></div>
-                                                        </td>
-                                                        <td class="四月 tue mini" id="四月3">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/3">3</a></div>
-                                                        </td>
-                                                        <td class="四月 wed mini" id="四月4">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/4">4</a></div>
-                                                        </td>
-                                                        <td class="四月 thu mini" id="四月5">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/5">5</a></div>
-                                                        </td>
-                                                        <td class="四月 fri mini" id="四月6">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/6">6</a></div>
-                                                        </td>
-                                                        <td class="四月 sat mini" id="四月7">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/7">7</a></div>
-                                                        </td>
-                                                        <td class="四月 sun mini" id="四月8">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/8">8</a></div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="even">
-                                                        <td class="四月 mon mini" id="四月9">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/9">9</a></div>
-                                                        </td>
-                                                        <td class="四月 tue today mini" id="四月10">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/10">10</a></div>
-                                                        </td>
-                                                        <td class="四月 wed mini" id="四月11">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/11">11</a></div>
-                                                        </td>
-                                                        <td class="四月 thu mini" id="四月12">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/12">12</a></div>
-                                                        </td>
-                                                        <td class="四月 fri mini" id="四月13">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/13">13</a></div>
-                                                        </td>
-                                                        <td class="四月 sat mini" id="四月14">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/14">14</a></div>
-                                                        </td>
-                                                        <td class="四月 sun mini" id="四月15">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/15">15</a></div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd">
-                                                        <td class="四月 mon mini" id="四月16">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/16">16</a></div>
-                                                        </td>
-                                                        <td class="四月 tue mini" id="四月17">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/17">17</a></div>
-                                                        </td>
-                                                        <td class="四月 wed mini" id="四月18">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/18">18</a></div>
-                                                        </td>
-                                                        <td class="四月 thu mini" id="四月19">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/19">19</a></div>
-                                                        </td>
-                                                        <td class="四月 fri mini" id="四月20">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/20">20</a></div>
-                                                        </td>
-                                                        <td class="四月 sat mini" id="四月21">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/21">21</a></div>
-                                                        </td>
-                                                        <td class="四月 sun mini" id="四月22">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/22">22</a></div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="even">
-                                                        <td class="四月 mon mini" id="四月23">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/23">23</a></div>
-                                                        </td>
-                                                        <td class="四月 tue mini" id="四月24">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/24">24</a></div>
-                                                        </td>
-                                                        <td class="四月 wed mini" id="四月25">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/25">25</a></div>
-                                                        </td>
-                                                        <td class="四月 thu mini" id="四月26">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/26">26</a></div>
-                                                        </td>
-                                                        <td class="四月 fri mini" id="四月27">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/27">27</a></div>
-                                                        </td>
-                                                        <td class="四月 sat mini" id="四月28">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/28">28</a></div>
-                                                        </td>
-                                                        <td class="四月 sun mini" id="四月29">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/29">29</a></div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd">
-                                                        <td class="四月 mon mini" id="四月30">
-                                                            <div class="mini-day-off">
-                                                                <a href="/portal/index.php?q=calendar/2012/04/30">30</a></div>
-                                                        </td>
-                                                        <td>
-                                                            &nbsp;
-                                                        </td>
-                                                        <td>
-                                                            &nbsp;
-                                                        </td>
-                                                        <td>
-                                                            &nbsp;
-                                                        </td>
-                                                        <td>
-                                                            &nbsp;
-                                                        </td>
-                                                        <td>
-                                                            &nbsp;
-                                                        </td>
-                                                        <td>
-                                                            &nbsp;
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
-        <div id="footer">
-            &#169; 2006-2007 Hewlett-Packard Development Company, L.P.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话8610-82783473、8610-82783469
+        <div id="footer" style="background:#cdcdff;">
+            &#169; 2011-2012 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话####-########、####-########
         </div>
     </div>
 </asp:Content>

@@ -64,9 +64,9 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         //this.AddTREnd();
 
         this.AddTR();
-        this.Add("<TD align=center >");
+        this.Add("<TD align=left >");
 
-        this.AddTable("border=1px align=center ");
+        this.AddTable("border=1px align=left ");
         //this.AddTRSum();
         //this.AddTD();
         //this.AddTD();
@@ -85,7 +85,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
 
 
         this.AddTR();
-        this.AddTD(this.ToE("PassWord", "密&nbsp;&nbsp;码："));
+        this.AddTD(this.ToE("PassWord", "密码："));
         tb = new TextBox();
         tb.ID = "TB_Pass";
         tb.TextMode = TextBoxMode.Password;

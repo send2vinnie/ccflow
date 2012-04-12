@@ -33,6 +33,7 @@ public partial class Port_SysManager : System.Web.UI.Page
         string sysDescription = this.txtSysDescription.Text.Trim();
         string sysOrder = this.txtSysOrder.Text.Trim();
         string sysGroup = this.ddlGroup.SelectedValue;
+        string sysGroupName = this.ddlGroup.SelectedItem.Text;
 
         BP.CCOA.SysInfo sysInfo = new BP.CCOA.SysInfo();
         sysInfo.No = Guid.NewGuid().ToString();
@@ -41,6 +42,7 @@ public partial class Port_SysManager : System.Web.UI.Page
         sysInfo.SysDescription = sysDescription;
         sysInfo.SysOrder = sysOrder;
         sysInfo.SysGroup = sysGroup;
+        sysInfo.SysGroupName = sysGroupName;
 
         sysInfo.Insert();
 
