@@ -9,7 +9,7 @@
     <table width="100%">
         <tr>
             <td>
-                <uc:Article_Newest ID="Article_Newest1" runat="server" Title="新闻" />
+                <uc:Article_Newest ID="Article_Newest1" runat="server" Title="新闻" ShowUrl="../CCOA/News/NewsShow.aspx" />
             </td>
             <td>
                 <uc:Article_Newest ID="Article_Newest2" runat="server" Title="公告通知" />

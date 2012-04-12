@@ -7,7 +7,7 @@
     <ul>
         <%foreach (BP.CCOA.Article item in Articles)
           {%>
-        <li><a href="<%= item.Url %>">
+        <li><a href="<%=SetUrl(item.No)%>">
             <%= item.Title %></a>&nbsp;(<%=item.Clicks %>)&nbsp;(<%=item.Created.ToShortDateString() %>)</li>
         <% } %>
     </ul>

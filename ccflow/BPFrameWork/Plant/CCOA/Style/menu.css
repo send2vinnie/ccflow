@@ -1,7 +1,12 @@
-﻿body
+﻿.Menu
 {
     font: 12px Arial, Helvetica, sans-serif;
     color: #000;
+}
+
+.Menu ul li
+{
+    list-style-type:none;
 }
 #container
 {

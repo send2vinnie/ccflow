@@ -8,10 +8,32 @@ using BP.CCOA;
 
 public partial class CCOA_News_uc_NewsForm : System.Web.UI.UserControl
 {
+    public string ArticleId { get; set; }
+
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!string.IsNullOrEmpty(ArticleId))
+        {
+            SetData();
+        }
     }
+
+    protected void SetData()
+    {
+        Article article = new Article(ArticleId);
+        //article.RetrieveByNo(ArticleId);
+
+        txtTitle.Text = article.Title;
+        txtContent.Text = article.Content;
+        txtDescribe.Text = article.Description;
+        txtKeyWords.Text = article.Keyword;
+        txtOrder.Text = article.SequenceIndex;
+        txtSubTitle.Text = article.SubTitle;
+        ddrChannel.SelectedValue = article.ChannelFullUrl;
+        ddlState.SelectedValue = article.State.ToString();
+        ddrType.SelectedValue = article.ContentType.ToString();
+    }
+
     protected void btnCommit_Click(object sender, EventArgs e)
     {
         Article article = new Article();

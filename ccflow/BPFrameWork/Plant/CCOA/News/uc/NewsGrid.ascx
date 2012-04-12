@@ -35,7 +35,7 @@
         <% foreach (BP.CCOA.Article item in Articles)
            {%><tr>
                <td>
-                   <a href="<%=item.ContentUrl %>">
+                   <a href="../News/NewsManage.aspx?id=<%=item.No %>">
                        <%=item.Title %></a>
                </td>
                <td>
