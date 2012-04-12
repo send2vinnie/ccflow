@@ -27,7 +27,7 @@
             <div class="menu withprimary ">
                 <div id="primary" class="clear-block">
                     <ul class="links-menu">
-                        <li><a href="#" title="退出">退出</a></li>
+                        <li><asp:LinkButton ID="lbtnExit" runat="server" Text="退出" onclick="lbtnExit_Click"></asp:LinkButton></li>
                         <li><a href="SysManager.aspx" title="系统维护"
                             target="_blank">系统维护</a></li>
                         <li><a href="UserSetting.aspx" title="修改配置" target="_blank">
