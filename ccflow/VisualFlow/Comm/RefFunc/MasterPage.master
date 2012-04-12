@@ -28,7 +28,7 @@
     </asp:ContentPlaceHolder>
     <Meta http-equiv="Page-Enter" Content="blendTrans(Duration=0.5)" />
 		<script language="JavaScript" src="../JScript.js"></script>
-		<script language="JavaScript" src="../JS/Calendar/WdatePicker.js" ></script>
+        <script language="JavaScript" src="../JS/Calendar/WdatePicker.js" defer="defer"></script>
 		<script language="JavaScript" src="../ActiveX.js"></script>
 		<script language="JavaScript" src="../Menu.js"></script>
 		<script language="JavaScript" src="../ShortKey.js"></script>
