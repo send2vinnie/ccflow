@@ -32,6 +32,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.DevDemo", "..\Components
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.Plant", "..\Components\BP.Plant\BP.Plant.csproj", "{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.Auth", "..\Components\BP.Auth\BP.Auth.csproj", "{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.Auth.Web", "..\Components\BP.Auth.Web\BP.Auth.Web.csproj", "{991849A0-E5B3-4D98-A973-BC00BBEFF783}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +66,14 @@ Global
 		{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{991849A0-E5B3-4D98-A973-BC00BBEFF783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991849A0-E5B3-4D98-A973-BC00BBEFF783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991849A0-E5B3-4D98-A973-BC00BBEFF783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991849A0-E5B3-4D98-A973-BC00BBEFF783}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
