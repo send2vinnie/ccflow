@@ -323,7 +323,6 @@ namespace BP.CCOA
 
     public class Channels : Entities
     {
-
         public override Entity GetNewEntity
         {
             get { return new Channel(); }

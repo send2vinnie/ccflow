@@ -346,7 +346,7 @@ namespace BP.CCOA
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime? Created
+        public DateTime Created
         {
             get
             {
@@ -593,13 +593,13 @@ namespace BP.CCOA
         /// <summary>
         /// 通过ID生成的url，如e6b4ed25_263c_4dc6_81f8_f7e06c214099.shtml或1008.html
         /// </summary>
-        //public string FullUrl
-        //{
-        //    get
-        //    {
-        //        return GenerateArticleUrl(SN, Created, ID);
-        //    }
-        //}
+        public string FullUrl
+        {
+            get
+            {
+                return GenerateArticleUrl(SN, Created, No);
+            }
+        }
 
         /// <summary>
         /// 按照变量生成文章URL
@@ -608,21 +608,25 @@ namespace BP.CCOA
         /// <param name="create"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        //public string GenerateArticleUrl(long sn, DateTime create, string id)
-        //{
-        //    GeneralConfigInfo si = GeneralConfigs.GetConfig();
-        //    string ext = si.UrlFormat;
-        //    string snRex = si.ArticleUrlGenerator;
-        //    if (snRex != null && snRex.Trim().Length > 0)
-        //    {
-        //        if (snRex == "0")
-        //            return sn.ToString() + "." + ext;
-        //        else
-        //            return create.ToString(snRex) + "-" + sn.ToString() + "." + ext;
-        //    }
-        //    else
-        //        return Helper.GUIDToFormatString(id) + "." + ext;
-        //}
+        public string GenerateArticleUrl(long sn, DateTime create, string id)
+        {
+            //GeneralConfigInfo si = GeneralConfigs.GetConfig();
+            //string ext = si.UrlFormat;
+            //string snRex = si.ArticleUrlGenerator;
+
+            string ext = "html";
+            string snRex = "yyyy-MM-dd";
+
+            if (snRex != null && snRex.Trim().Length > 0)
+            {
+                if (snRex == "0")
+                    return sn.ToString() + "." + ext;
+                else
+                    return create.ToString(snRex) + "-" + sn.ToString() + "." + ext;
+            }
+            else
+                return Helper.GUIDToFormatString(id) + "." + ext;
+        }
 
         /// <summary>
         /// 按照变量生成文章URL
@@ -742,18 +746,16 @@ namespace BP.CCOA
         }
 
 
-
-
         /// <summary>
         /// 失生前端可用的Url;
         /// </summary>
-        //public string Url
-        //{
-        //    get
-        //    {
-        //        return ChannelFullUrl + FullUrl;
-        //    }
-        //}
+        public string Url
+        {
+            get
+            {
+                return ChannelFullUrl + FullUrl;
+            }
+        }
 
         /// <summary>
         /// 大缩略图
@@ -865,9 +867,9 @@ namespace BP.CCOA
         {
             get
             {
-                string year = Created.Value.Year.ToString();
-                string month = Created.Value.Month.ToString();
-                string day = Created.Value.Day.ToString();
+                string year = Created.Year.ToString();
+                string month = Created.Month.ToString();
+                string day = Created.Day.ToString();
                 string sn = Helper.GUIDToFormatString(No);
                 return string.Format("/_data/{0}/{1}/{2}/{3}", year, month, day, sn);
             }
@@ -1058,7 +1060,7 @@ namespace BP.CCOA
                 map.IsAutoGenerNo = false;
 
                 map.AddTBStringPK(ArticleAttr.No, "", "主键No", true, false, 0, 50, 50);
-                map.AddTBString(ArticleAttr.Title, null, "标题", true, true, 1, 100, 100);
+                map.AddTBString(ArticleAttr.Title, null, "标题", true, true, 0, 100, 100);
                 map.AddTBString(ArticleAttr.Description, null, "描述", true, true, 0, 1000, 1000);
                 map.AddTBString(ArticleAttr.OwnerId, null, "所属栏目", true, true, 0, 200, 200);
                 map.AddTBString(ArticleAttr.ParentId, null, "父栏目", true, true, 0, 200, 200);
@@ -1068,7 +1070,7 @@ namespace BP.CCOA
                 map.AddTBDateTime(ArticleAttr.Overdue, "过期日期", true, false);
                 map.AddTBInt(ArticleAttr.SequenceIndex, 999, "序号", true, false);
                 map.AddTBString(ArticleAttr.Source, null, "", true, true, 0, 20, 20);
-                map.AddTBString(ArticleAttr.Keyword, null, "关键字", true, true, 0, 20, 20);
+                map.AddTBString(ArticleAttr.Keyword, null, "关键字", true, true, 0, 100, 100);
                 map.AddTBInt(ArticleAttr.AllowComments, 0, "是否允许评论", true, false);
                 map.AddTBString(ArticleAttr.Permission, null, "权限", true, true, 2, 20, 20);
                 map.AddTBInt(ArticleAttr.IsImage, 0, "是否有缩略图", true, false);
