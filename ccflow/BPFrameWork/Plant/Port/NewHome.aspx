@@ -9,10 +9,10 @@
 	    .portlet { margin: 0 1em 1em 0; }
 	    .portlet-header { margin: 0.3em; padding: 4px 4px; }
 	    .portlet-header .ui-icon { float: right; }
-	    .portlet-content { padding: 0.4em; height:80px; overflow:hidden; }
+	    .portlet-content { padding: 0.4em; height:90px; overflow:hidden; }
 	    .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
 	    .ui-sortable-placeholder * { visibility: hidden; }
-        
+        .portlet-content li { list-style-type:circle; }
     </style>
 
     <script type="text/javascript">
@@ -129,6 +129,13 @@
 	<div class="portlet" title="1">
 		<div class="portlet-header">自定义模块一</div>
 		<div class="portlet-content">
+            <ul>
+            <asp:Repeater ID="rpt1" runat="server">
+                <ItemTemplate>
+                    <li><a href="#" ><%# Eval("Title") %></a></li>
+                </ItemTemplate>
+            </asp:Repeater>
+            </ul>
         </div>
 	</div>
     <div class="portlet" title="2">
