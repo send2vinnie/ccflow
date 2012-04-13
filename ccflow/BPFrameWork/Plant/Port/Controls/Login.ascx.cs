@@ -2,6 +2,7 @@
 using System.Web.UI.WebControls;
 using BP.Port;
 using BP.Web;
+using System.Web.UI;
 
 public partial class WF_UC_Login : BP.Web.UC.UCBase3
 {
@@ -99,11 +100,15 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         this.AddTDBegin("colspan=3 align=center");
         Button btn = new Button();
 
-        btn.Text = this.ToE("Login", "登 陆");
-
+        btn.Text = this.ToE("Login", "登 陆");       
         btn.Click += new EventHandler(btn_Click);
         this.Add(btn);
+        Button btn1 = new Button();
 
+        btn1.Text = this.ToE("Login", "登 陆");
+        btn1.Attributes.Add("Style", "display:none");
+        btn1.Click += new EventHandler(btn1_Click);
+        this.Add(btn1);
         if (WebUser.No != null)
         {
             string home = "";
@@ -175,11 +180,17 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
             em.No = user;
             if (em.RetrieveFromDBSources() == 0)
             {
-                this.Alert("用户名或密码错误，注意两者区分大小写，请检查是否按下了CapsLock。");
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "", "alert('用户名或密码错误，注意两者区分大小写，请检查是否按下了CapsLock。');", true);
                 return;
             }
             if (em.CheckPass(pass))
             {
+                if ("1".Equals(em.IsUSBKEY))
+                {
+                    string script = string.Format("Check('{0}','{1}','{2}');", em.PID, em.PIN, em.KeyPass);
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "", script, true);
+                    return;
+                }
                 WebUser.SignInOfGenerLang(em, this.Lang);
 
                 if (this.Request.RawUrl.ToLower().Contains("wap"))
@@ -196,11 +207,46 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
                 Response.Redirect(this.ToWhere, false);
                 return;
             }
-            this.Alert("用户名或密码错误，注意两者区分大小写，请检查是否按下了CapsLock。");
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "", "alert('用户名或密码错误，注意两者区分大小写，请检查是否按下了CapsLock。');", true);
         }
         catch (System.Exception ex)
         {
-            this.Response.Write("<font color=red ><b>@用户名密码错误!@检查是否按下了CapsLock.@更详细的信息:" + ex.Message + "</b></font>");
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "", "alert('用户名或密码错误，注意两者区分大小写，请检查是否按下了CapsLock。@更详细的信息:" + ex.Message + "');", true);
+        }
+    }
+
+    void btn1_Click(object sender, EventArgs e)
+    {
+         string user = this.GetTextBoxByID("TB_User").Text.Trim();
+        string pass = this.GetTextBoxByID("TB_Pass").Text;
+        try
+        {
+            Emp em = new Emp();
+            em.No = user;
+            if (em.RetrieveFromDBSources() == 0)
+            {
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "", "alert('用户名或密码错误，注意两者区分大小写，请检查是否按下了CapsLock。');", true);
+                return;
+            } 
+            WebUser.SignInOfGenerLang(em, this.Lang);
+
+            if (this.Request.RawUrl.ToLower().Contains("wap"))
+                WebUser.IsWap = true;
+            else
+                WebUser.IsWap = false;
+
+            WebUser.Token = this.Session.SessionID;
+            if (WebUser.IsWap)
+            {
+                Response.Redirect("Home.aspx", true);
+                return;
+            }
+            Response.Redirect(this.ToWhere, false);
+            return;
+        }
+        catch(Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "", "alert('用户名或密码错误，注意两者区分大小写，请检查是否按下了CapsLock。@更详细的信息:" + ex.Message + "');", true);
         }
     }
 }

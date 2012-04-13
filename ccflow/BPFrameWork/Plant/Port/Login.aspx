@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Port_Login" %>
 
-<%@ Register Src="Controls/Login.ascx" TagName="Login" TagPrefix="lizard" %>
+<%@ Register Src="Controls/Log.ascx" TagName="Login" TagPrefix="lizard" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -16,6 +16,7 @@
         .Table td { height:30px; line-height:30px; }
         .Table a { font-size:12px; }
     </style>
+   
 </head>
 <body>
     <form id="form1" runat="server">

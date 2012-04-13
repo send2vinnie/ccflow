@@ -9,3 +9,4 @@
         window.location.href = 'Tools.aspx';
     }
 </script>
+ <script src="../CCOA/Js/usbkey.js" type="text/javascript" language="javascript"></script>
