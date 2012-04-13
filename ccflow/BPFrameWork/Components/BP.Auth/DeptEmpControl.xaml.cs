@@ -47,7 +47,7 @@ namespace BP.Auth
             listEdit.Click += new Telerik.Windows.RadRoutedEventHandler(listEdit_Click);
             listboxrcm.Items.Add(listAddNew);
             listboxrcm.Items.Add(listEdit);
-            listboxrcm.Items.Add(listDelete);
+            //listboxrcm.Items.Add(listDelete);
 
             RadContextMenu.SetContextMenu(EmpList, listboxrcm);
 
