@@ -79,7 +79,7 @@ public partial class Port_Controls_log : System.Web.UI.UserControl
                 //    return "EmpWorksSmall.aspx";
                 //else
                 //    return "EmpWorks.aspx";
-                return "Home.aspx";
+                return "NewHome.aspx";
             }
             else
             {
