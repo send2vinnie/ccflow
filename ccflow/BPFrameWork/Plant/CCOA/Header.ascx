@@ -33,7 +33,7 @@
             <li><a href="../../CCOA/Attendance/Attendance.aspx">考勤</a></li>
             <li><a href="../../CCOA/News/NewsList.aspx">新闻公告</a></li>
             <%-- <li><a href="../../CCOA/Notice/NoticeList.aspx">公告通知</a></li>--%>
-            <li><a href="../../CCOA/Forum/Forum.aspx">工作论坛</a></li>
+           <%-- <li><a href="../../CCOA/Forum/Forum.aspx">工作论坛</a></li>--%>
             <li><a href="../../CCOA/Document/Document.aspx">文档</a></li>
             <li><a href="../../CCOA/Memo/Memo.aspx">个人备忘</a></li>
             <%--<li><a href="../../CCOA/Calendar/Calendar.aspx">工作日历</a></li>--%>

@@ -1,20 +1,56 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Port/WinOpen.master" AutoEventWireup="true" CodeFile="NewHome.aspx.cs" Inherits="Port_NewHome" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Port/WinOpen.master" AutoEventWireup="true"
+    CodeFile="NewHome.aspx.cs" Inherits="Port_NewHome" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <style type="text/css">
+        .module
+        {
+            float: left;
+            width: 800px;
+            margin-left: 10px;
+            margin-top: 10px;
+            display: inline;
+        }
         
-        .module { float:left; width:800px; margin-left:10px; margin-top:10px; display:inline;}
-        
-        .column { width: 50%; float: left;}
-	    .portlet { margin: 0 1em 1em 0; }
-	    .portlet-header { margin: 0.3em; padding: 4px 4px; }
-	    .portlet-header .ui-icon { float: right; }
-	    .portlet-content { padding: 0.4em; height:90px; overflow:hidden; }
-	    .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
-	    .ui-sortable-placeholder * { visibility: hidden; }
-        .portlet-content li { list-style-type:circle; }
+        .column
+        {
+            width: 50%;
+            float: left;
+        }
+        .portlet
+        {
+            margin: 0 1em 1em 0;
+        }
+        .portlet-header
+        {
+            margin: 0.3em;
+            padding: 4px 4px;
+        }
+        .portlet-header .ui-icon
+        {
+            float: right;
+        }
+        .portlet-content
+        {
+            padding: 0.4em;
+            height: 90px;
+            overflow: hidden;
+        }
+        .ui-sortable-placeholder
+        {
+            border: 1px dotted black;
+            visibility: visible !important;
+            height: 50px !important;
+        }
+        .ui-sortable-placeholder *
+        {
+            visibility: hidden;
+        }
+        .portlet-content li
+        {
+            list-style-type: circle;
+        }
     </style>
-
     <script type="text/javascript">
         $(function () {
 
@@ -62,7 +98,7 @@
                 $.ajax({
                     type: "POST",
                     url: "ashx/SetCustomerSetting.ashx",
-                    data : "moduleOrder=" + moduleOrder
+                    data: "moduleOrder=" + moduleOrder
                 });
 
             });
@@ -117,68 +153,69 @@
                 }
             });
         });
-	</script>
-
+    </script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    
-
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="module">
-<div class="column" id="column_left">
- 
-	<div class="portlet" title="1">
-		<div class="portlet-header">自定义模块一</div>
-		<div class="portlet-content">
-            <ul>
-            <asp:Repeater ID="rpt1" runat="server">
-                <ItemTemplate>
-                    <li><a href="#" ><%# Eval("Title") %></a></li>
-                </ItemTemplate>
-            </asp:Repeater>
-            </ul>
+        <div class="column" id="column_left">
+            <div class="portlet" title="1">
+                <div class="portlet-header">
+                    自定义模块一</div>
+                <div class="portlet-content">
+                    <ul>
+                        <asp:Repeater ID="rpt1" runat="server">
+                            <ItemTemplate>
+                                <li><a href="#">
+                                    <%# Eval("Title") %></a></li>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </ul>
+                </div>
+            </div>
+            <div class="portlet" title="2">
+                <div class="portlet-header">
+                    自定义模块二</div>
+                <div class="portlet-content">
+                </div>
+            </div>
+            <div class="portlet" title="3">
+                <div class="portlet-header">
+                    自定义模块三</div>
+                <div class="portlet-content">
+                </div>
+            </div>
+            <div class="portlet" title="4">
+                <div class="portlet-header">
+                    自定义模块四</div>
+                <div class="portlet-content">
+                </div>
+            </div>
         </div>
-	</div>
-    <div class="portlet" title="2">
-		<div class="portlet-header">自定义模块二</div>
-		<div class="portlet-content">
+        <div class="column" id="column_right">
+            <div class="portlet" title="5">
+                <div class="portlet-header">
+                    自定义模块五</div>
+                <div class="portlet-content">
+                </div>
+            </div>
+            <div class="portlet" title="6">
+                <div class="portlet-header">
+                    自定义模块六</div>
+                <div class="portlet-content">
+                </div>
+            </div>
+            <div class="portlet" title="7">
+                <div class="portlet-header">
+                    自定义模块七</div>
+                <div class="portlet-content">
+                </div>
+            </div>
+            <div class="portlet" title="8">
+                <div class="portlet-header">
+                    自定义模块八</div>
+                <div class="portlet-content">
+                </div>
+            </div>
         </div>
-	</div>
-    <div class="portlet" title="3">
-		<div class="portlet-header">自定义模块三</div>
-		<div class="portlet-content">
-        </div>
-	</div>
-    <div class="portlet" title="4">
-		<div class="portlet-header">自定义模块四</div>
-		<div class="portlet-content">
-        </div>
-	</div>
-
-</div>
-
-<div class="column" id="column_right">
- 
-	<div class="portlet" title="5">
-		<div class="portlet-header">自定义模块五</div>
-		<div class="portlet-content">
-        </div>
-	</div>
-    <div class="portlet" title="6">
-		<div class="portlet-header">自定义模块六</div>
-		<div class="portlet-content">
-        </div>
-	</div>
-    <div class="portlet" title="7">
-		<div class="portlet-header">自定义模块七</div>
-		<div class="portlet-content">
-        </div>
-	</div>
-    <div class="portlet" title="8">
-		<div class="portlet-header">自定义模块八</div>
-		<div class="portlet-content">
-        </div>
-	</div>
-</div>
     </div>
 </asp:Content>
-

@@ -1,18 +1,5 @@
 -----------------------------------------------------------------------------------------------------
-13日10时26分43秒Info:System');"成功[BP.Port.Emp-18]放入缓存。
 -----------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------
-13日13时54分54秒Info:System');"成功[BP.Port.Emp-18]放入缓存。
 -----------------------------------------------------------------------------------------------------
-13日14时09分52秒Info:System');"成功[BP.Port.Emp-18]放入缓存。
-13日14时11分12秒Info:System');"成功[BP.Port.Dept-13]放入缓存。
-13日14时13分30秒Fatal:System');"@没有[SSO用户自定义表  SSO_CustomerModule, 类[BP.CCOA.SSOCustomerModule], 物理表[SSO_CustomerModule] 实例。PK = admin
-13日14时24分10秒Fatal:System');"@没有[SSO用户自定义表  SSO_CustomerModule, 类[BP.CCOA.SSOCustomerModule], 物理表[SSO_CustomerModule] 实例。PK = admin
-13日14时25分44秒Fatal:System');"@没有[SSO用户自定义表  SSO_CustomerModule, 类[BP.CCOA.SSOCustomerModule], 物理表[SSO_CustomerModule] 实例。PK = admin
-13日14时26分04秒Fatal:System');"@没有[SSO用户自定义表  SSO_CustomerModule, 类[BP.CCOA.SSOCustomerModule], 物理表[SSO_CustomerModule] 实例。PK = admin
-13日14时39分21秒Fatal:System');"@没有[SSO用户自定义表  SSO_CustomerModule, 类[BP.CCOA.SSOCustomerModule], 物理表[SSO_CustomerModule] 实例。PK = admin
-13日14时39分32秒Fatal:System');"@没有[SSO用户自定义表  SSO_CustomerModule, 类[BP.CCOA.SSOCustomerModule], 物理表[SSO_CustomerModule] 实例。PK = admin
------------------------------------------------------------------------------------------------------
-13日15时28分29秒Info:System');"成功[BP.Port.Emp-18]放入缓存。
------------------------------------------------------------------------------------------------------
-13日15时54分15秒Info:System');"成功[BP.Port.Emp-18]放入缓存。
+13日17时01分50秒Fatal:System');"@没有[文章  OA_Article, 类[BP.CCOA.Article], 物理表[OA_Article] 实例。PK = 
