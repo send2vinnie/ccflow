@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using System.Security.Cryptography;
 using BP.WF;
 using BP.Port;
 using BP.En;
@@ -194,6 +195,9 @@ namespace SMSServices
                 this.SetText("扫描消息表....");
                 this.DoSendMsg();
 
+                //this.SetText("向CCIM里发送消息...");
+                //this.DoSendMsgOfCCIM();
+
                 if (DateTime.Now.Hour < 18 && DateTime.Now.Hour > 8)
                 {
                     /* 在工作时间段才可以执行此调度。 */
@@ -376,7 +380,7 @@ namespace SMSServices
             #endregion 发送消息
         }
         public void DTS_Flow(BP.WF.Flow fl)
-        { 
+        {
             #region 读取数据.
             BP.Sys.MapExt me = new MapExt();
             me.MyPK = "ND" + int.Parse(fl.No) + "01" + "_" + MapExtXmlList.StartFlow;
@@ -419,14 +423,14 @@ namespace SMSServices
                 return;
             }
 
-            this.SetText("@查询到("+dtMain.Rows.Count+")条任务.");
+            this.SetText("@查询到(" + dtMain.Rows.Count + ")条任务.");
 
             if (dtMain.Columns.Contains("Starter") == false)
                 errMsg += "@配值的主表中没有Starter列.";
 
             if (dtMain.Columns.Contains("MainPK") == false)
                 errMsg += "@配值的主表中没有MainPK列.";
-           
+
             if (errMsg.Length > 2)
             {
                 this.SetText(errMsg);
@@ -528,6 +532,15 @@ namespace SMSServices
         /// <param name="sms"></param>
         public void SendMail(BP.TA.SMS sms)
         {
+            try
+            {
+                Glo.SendMessage(sms.MyPK, DateTime.Now.ToString(), sms.Title + "\t\n" + sms.EmailDoc, sms.Accepter);
+            }
+            catch
+            {
+
+            }
+
             System.Net.Mail.MailMessage myEmail = new System.Net.Mail.MailMessage();
             myEmail.From = new MailAddress("ccflow.cn@gmail.com", "ccflow", System.Text.Encoding.UTF8);
 

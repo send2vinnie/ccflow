@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Text;
+using System.Security.Cryptography;
+using System;
 using System.Collections;
 using System.IO;
 using System.Data;
@@ -7,11 +9,69 @@ using BP.WF;
 using BP.Sys;
 using BP;
 using BP.En;
+using System.Data.Sql;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 
 namespace SMSServices
 {
     public class Glo
     {
+        #region 向CCIM发送消息
+        //产生消息,userid是为了保证写入消息的唯一性，receiveid才是真正的接收者
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="now"></param>
+        /// <param name="msg"></param>
+        /// <param name="receiveid"></param>
+        public static void SendMessage(string userid, string now, string msg, string receiveid)
+        {
+            //保存系统通知消息
+            StringBuilder strHql1 = new StringBuilder();
+            //加密处理
+            msg = CCFlowServices.SecurityDES.Encrypt(msg);
+
+            strHql1.Append("Insert into [CCIM.dbo.RecordMsg]([sendID],[msgDateTime],[msgContent],[ImageInfo],[fontName],[fontSize],[fontBold],");
+            strHql1.Append("[fontColor],[InfoClass],[GroupID],[SendUserID]) values(");
+
+            strHql1.Append("'SYSTEM',");
+            strHql1.Append("'").Append(now).Append("',");
+            strHql1.Append("'").Append(msg).Append("',");
+            strHql1.Append("'',");
+            strHql1.Append("'宋体',");
+            strHql1.Append("10,");
+            strHql1.Append("0,");
+            strHql1.Append("-16777216,");
+            strHql1.Append("15,");
+            strHql1.Append("-1,");
+            strHql1.Append("'").Append(userid).Append("')");
+
+            BP.DA.DBAccess.RunSQL(strHql1.ToString());
+
+            //取出刚保存的msgID
+            string msgID;
+            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable("SELECT MsgID FROM CCIM.dbo.RecordMsg WHERE sendID='SYSTEM' AND msgDateTime='" + now + "' AND SendUserID='" + userid + "'");
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                msgID = dr["MsgID"].ToString();
+
+                //保存消息发送对象
+                StringBuilder strHql2 = new StringBuilder();
+                strHql2.Append("Insert into [CCIM.dbo.RecordMsgUser]([MsgId],[ReceiveID]) values(");
+
+                strHql2.Append(msgID).Append(",");
+                strHql2.Append("'").Append(receiveid).Append("')");
+
+                BP.DA.DBAccess.RunSQL(strHql2.ToString());
+            }
+        }
+     
+        #endregion
+
         public static bool IsExitProcess(string name)
         {
             System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcesses();
@@ -46,7 +106,7 @@ namespace SMSServices
         }
         public static void LoadConfigByFile()
         {
-          //BP.WF.Glo.IntallPath = PathOfVisualFlow;
+            //BP.WF.Glo.IntallPath = PathOfVisualFlow;
             BP.SystemConfig.IsBSsystem_Test = false;
             BP.SystemConfig.IsBSsystem = false;
             SystemConfig.IsBSsystem = false;
@@ -71,7 +131,7 @@ namespace SMSServices
                     BP.Port.Emp em = new BP.Port.Emp("admin");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("连接数据库出现异常:" + ex.Message);
                 return;
@@ -80,8 +140,8 @@ namespace SMSServices
             SystemConfig.IsBSsystem_Test = false;
             SystemConfig.IsBSsystem = false;
             SystemConfig.IsBSsystem = false;
-         //   BP.Win.WF.Global.FlowImagePath = BP.WF.Global.PathOfVisualFlow + "\\Data\\FlowDesc\\";
-            BP.Web.WebUser.SysLang ="CH";
+            //   BP.Win.WF.Global.FlowImagePath = BP.WF.Global.PathOfVisualFlow + "\\Data\\FlowDesc\\";
+            BP.Web.WebUser.SysLang = "CH";
 
             BP.SystemConfig.IsBSsystem_Test = false;
             BP.SystemConfig.IsBSsystem = false;
