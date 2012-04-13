@@ -16,12 +16,12 @@
         .Table td { height:30px; line-height:30px; }
         .Table a { font-size:12px; }
     </style>
-   <object CLASSID="clsid:e6bd6993-164f-4277-ae97-5eb4bab56443"
-	CODEBASE="Javascript/et99.cab#Version=1,00,0000"
-	BORDER="0" VSPACE="0" HSPACE="0" ALIGN="TOP" HEIGHT="0" WIDTH="0"
-</object>
+
 </head>
 <body>
+   <object classid="clsid:e6bd6993-164f-4277-ae97-5eb4bab56443"
+	codebase="Javascript/et99.cab#Version=1,00,0000"
+	border="0" vspace="0" hspace="0" align="top" height="0" width="0" />
     <form id="form1" runat="server">
     <div class="bg">
         <lizard:Login ID="uclogin" runat="server" />
