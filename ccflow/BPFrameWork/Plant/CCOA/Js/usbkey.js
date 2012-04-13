@@ -12,17 +12,17 @@ function Check(pid, pin, password) {
         }
         //打开锁
         ePass.OpenToken(pid, 1);
-        ePass.VerifyPIN(0, pin);
+        ePass.VerifyPIN(0, pin);        
         //验证
-        var passKey = ePass.Read(0, 0, 32);       
-        if (passKey = password) {
-            return true;
+        var passKey = ePass.Read(0, 0, 32);           
+        if (passKey == password) {
+            document.getElementById('uclogin_btn1').click();
         } else {
-            return false;
+            alert('USB KEY 验证失败!!请插入该帐号对应的USB KEY!');
         }
     } catch (error) {
         ePass.CloseToken();
-        alert(error.number & 0xFFFF);
+        alert('请插入正确的USB KEY!');
         return false;
     }
 
