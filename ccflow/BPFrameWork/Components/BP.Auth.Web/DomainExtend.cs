@@ -37,5 +37,16 @@ namespace BP.Auth.Web
                          select e;
             return result;
         }
+
+        public IQueryable<Port_Emp> GetEmpByDeptNo(string DeptNo)
+        {
+            var result = 
+                         from ed in ObjectContext.Port_EmpDept
+                         join e in ObjectContext.Port_Emp
+                         on ed.FK_Emp equals e.No
+                         where ed.FK_Dept == DeptNo
+                         select e;
+            return result;
+        }
     }
 }

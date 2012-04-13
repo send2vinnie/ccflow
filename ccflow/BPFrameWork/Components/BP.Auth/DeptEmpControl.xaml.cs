@@ -68,8 +68,8 @@ namespace BP.Auth
             {
                 ListBusy.IsBusy = true;
                 LoadOperation<Port_Emp> LoadEmp =
-                    domain.Load<Port_Emp>(domain.GetPort_EmpQuery().Where
-                    (a => a.FK_Dept == (SelectedItem.DataContext as Port_Dept).No));
+                    domain.Load<Port_Emp>(domain.GetEmpByDeptNoQuery
+                    ((SelectedItem.DataContext as Port_Dept).No));
                 LoadEmp.Completed += new EventHandler(LoadEmp_Completed);
             }
             else
