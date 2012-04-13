@@ -10,8 +10,16 @@
                 <h1>
                     <%=ThisArticle.Title%>
                 </h1>
+                <div class="article_info">
+                    作者：<%=ThisArticle.Author %>
+                    来源：<%=ThisArticle.Source %>
+                    发布时间：
+                    <%=ThisArticle.Updated%>
+                    点击数：
+                    <%=ThisArticle.Clicks %>
+                </div>
                 <!--网站内容开始-->
-                <div id="articleContnet">
+                <div class="Content" id="articleContnet">
                     <%=ThisArticle.Content%>
                 </div>
                 <!--网站内容结束-->

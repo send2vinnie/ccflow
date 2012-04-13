@@ -1,24 +1,23 @@
 <?xml version="1.0" standalone="yes" ?>
 <NewDataSet>
   <!-- 新闻发布  -->
-  <Item No="01" Name="新闻发布" Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-  <Item No="0101" Name="新闻列表" Url=" ../../CCOA/News/NewsList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
-  <Item No="0102" Name="新闻订阅" Url=" ../../CCOA/News/NewsList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
-  <Item No="0103" Name="新闻检索" Url=" ../../CCOA/News/NewsList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
-  <Item No="0103" Name="类型维护" Url=" ../../CCOA/News/NewsList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="01" Name="新闻发布" Url="../../CCOA/News/NewsList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
+  <Item No="0101" Name="新闻列表" Url="../../CCOA/News/NewsList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="0102" Name="新闻订阅" Url="../../CCOA/News/NewsList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="0103" Name="新闻检索" Url="../../CCOA/News/NewsList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
   <!-- 公告通知  -->
-  <Item No="02" Name="公告通知" Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-  <Item No="0201" Name="公告列表" Url=" ../../CCOA/Notice/NoticeList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
-  <Item No="0202" Name="公告订阅" Url=" ../../CCOA/Notice/NoticeList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
-  <Item No="0203" Name="公告检索" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="02" Name="公告通知" Url="../../CCOA/Notice/NoticeList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
+  <Item No="0201" Name="公告列表" Url="../../CCOA/Notice/NoticeList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="0202" Name="公告订阅" Url="../../CCOA/Notice/NoticeList.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="0203" Name="公告检索" Url="../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
   <!-- 工作论坛  -->
   <!-- 考勤  -->
   <!-- 文档  -->
   <Item No="9901" Name="网盘" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" />
   <!-- 备忘录  -->
-  <Item No="9901" Name="通讯录" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
+  <Item No="9901" Name="通讯录" Url=" ../../CCOA/AddressBook/List.aspx?EnsName=BP.CRM.VIPs" Img="../../Images/Arrowhead_Next.gif" />
   <!-- 工作日历  -->
   <!-- 控制面板  -->
   <Item No="99" Name="控制面板" Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" />
-  <Item No="9901" Name="栏目管理" Url="../../CCOA/Admin/Channel.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" ForUser=",admin," DESC=""  DFor=""  />
+  <Item No="9901" Name="栏目管理" Url="../../CCOA/Admin/ChannelManage.aspx?EnsName=BP.CRM.Customers" Img="../../Images/Arrowhead_Next.gif" ForUser=",admin," DESC=""  DFor=""  />
 </NewDataSet>

@@ -13,13 +13,22 @@ public partial class CCOA_Admin_ChannelTree : BP.Web.UC.UCBase3
 
     }
 
-    public Channels Channels
+    public Channels NewsChannels
     {
         get
         {
             Channels channels = new Channels();
-            //articles.Filter("ArticleType", "0");
-            channels.RetrieveAll();
+            channels.RetrieveByAttr("Type", "0");
+            return channels;
+        }
+    }
+
+    public Channels NoticeChannels
+    {
+        get
+        {
+            Channels channels = new Channels();
+            channels.RetrieveByAttr("Type", "1");
             return channels;
         }
     }

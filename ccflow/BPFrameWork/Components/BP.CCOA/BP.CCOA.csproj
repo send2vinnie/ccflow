@@ -37,6 +37,9 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="XControls">
+      <HintPath>..\..\..\DLL\XControls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddrBook.cs" />
@@ -45,9 +48,13 @@
     <Compile Include="Base\FrontBasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Utility\XTools.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Channel.cs" />
     <Compile Include="Enum\ArticleStates.cs" />
     <Compile Include="Enum\TypeOfArticle.cs" />
+    <Compile Include="Enum\XEnum.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="ProcessObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

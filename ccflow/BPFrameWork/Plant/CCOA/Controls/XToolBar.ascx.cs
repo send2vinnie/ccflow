@@ -13,6 +13,8 @@ public partial class CCOA_Controls_XToolBar : System.Web.UI.UserControl
     //[Parameter(Title = "标题", Type = "String", DefaultValue = "")]
     public string Title = "";
 
+    public string ImgScr = "../../CCOA/Images/ico/list.png";
+
     /// <summary>
     /// 
     /// </summary>

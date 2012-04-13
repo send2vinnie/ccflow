@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class CCOA_Admin_Channel : System.Web.UI.Page
+public partial class CCOA_Forum_Forum : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {

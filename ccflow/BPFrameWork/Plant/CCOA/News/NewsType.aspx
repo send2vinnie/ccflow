@@ -1,10 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/CCOA/WinOpen.master" AutoEventWireup="true"
     CodeFile="NewsType.aspx.cs" Inherits="CCOA_News_NewsType" %>
-   
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    新闻类型：
+    <xuc:XToolBar ID="XToolBar1" runat="server" title="新闻类型" />
     <div>
         <table width="96%;">
             <tr>
@@ -17,13 +17,13 @@
             </tr>
             <% foreach (BP.CCOA.ArticleType item in ArticleTypes)
                {%><tr>
-               <td>
-                   <%=item.Name %>
-               </td>
-               <td>
-                   <%=item.Desc%>
-               </td>
-           </tr>
+                   <td>
+                       <%=item.Name %>
+                   </td>
+                   <td>
+                       <%=item.Description%>
+                   </td>
+               </tr>
             <%} %>
         </table>
     </div>

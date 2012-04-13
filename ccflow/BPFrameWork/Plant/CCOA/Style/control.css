@@ -1,4 +1,49 @@
-﻿.Article_Single
+﻿.xtoolbar
+{
+    margin:1px;
+    background:#e5e5e5;
+    border:2px;
+}
+.xtoolbar #divTitle
+{
+    font-size: 15px;
+    font-family: Adobe 黑体 Std R;
+    line-height: 22px;
+    padding-top: 10px;
+    text-align:center;
+}
+.xtoolbar table tr
+{
+    padding: 2px;
+    background:#e5e5e5;
+}
+.xtoolbar table tr td
+{
+    vertical-align: middle;
+    padding: 2px;
+    height: 24px;
+    background:#e5e5e5;
+}
+.xtoolbar ul
+{
+    float: right;
+    height: 22px;
+    padding: 0px;
+    margin: 0px;
+    line-height: 22px;
+    background:#e5e5e5;
+}
+.xtoolbar ul li
+{
+    width: 50px;
+    float: left;
+    list-style-type: none;
+    height: 22px;
+    background:#e5e5e5;
+}
+
+
+.Article_Single
 {
 }
 

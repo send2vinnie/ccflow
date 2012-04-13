@@ -9,19 +9,19 @@ namespace BP.CCOA
 {
     public class ArticleTypeAttr : EntityNoNameAttr
     {
-        public const string Desc = "Desc";
+        public const string Description = "Description";
     }
     public class ArticleType : EntityNoName
     {
-        public string Desc
+        public string Description
         {
             get
             {
-                return this.GetValStringByKey(ArticleTypeAttr.Desc);
+                return this.GetValStringByKey(ArticleTypeAttr.Description);
             }
             set
             {
-                this.SetValByKey(ArticleTypeAttr.Desc, value);
+                this.SetValByKey(ArticleTypeAttr.Description, value);
             }
         }
 
@@ -45,14 +45,14 @@ namespace BP.CCOA
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("OA_Article");
+                Map map = new Map("OA_ArticleType");
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "文章类型";
                 map.IsAutoGenerNo = true;
 
                 map.AddTBIntPK(ArticleTypeAttr.No, 1, "主键NO", true, false);
                 map.AddTBString(ArticleTypeAttr.Name, null, "类型名称", true, true, 0, 20, 20);
-                map.AddTBString(ArticleTypeAttr.Desc, null, "类型描述", true, true, 0, 100, 100);
+                map.AddTBString(ArticleTypeAttr.Description, null, "类型描述", true, true, 0, 100, 100);
 
                 this._enMap = map;
                 return this._enMap;

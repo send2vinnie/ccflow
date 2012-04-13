@@ -6,8 +6,7 @@
                 栏目
             </th>
             <td>
-                <base:XDropDownList ID="ddrChannel" runat="server" >
-                    <asp:ListItem Selected="True" Value="news">新闻报道</asp:ListItem>
+                <base:XDropDownList ID="ddrChannel" runat="server" DataTextField="Name" DataValueField="No">
                 </base:XDropDownList>
             </td>
             <td>
@@ -28,12 +27,12 @@
                 内容
             </th>
             <td>
-                <base:XTextBox ID="txtContent" runat="server" TextMode="MultiLine" />
+                <base:XTextBox ID="txtContent" runat="server" TextMode="MultiLine" Height="240" />
             </td>
             <td>
             </td>
         </tr>
-        <tr>
+        <tr style="display: none;">
             <th>
                 标题样式
             </th>
@@ -47,7 +46,7 @@
                 文章类型
             </th>
             <td>
-                <base:XDropDownList ID="ddrType" runat="server" >
+                <base:XDropDownList ID="ddrType" runat="server">
                     <asp:ListItem Selected="True" Value="0">原创</asp:ListItem>
                     <asp:ListItem Value="1">转发</asp:ListItem>
                 </base:XDropDownList>
@@ -128,13 +127,14 @@
             </td>
         </tr>
         <tr>
-        <td ></td>
-            <td >
-                <base:XButton ID="btnCommit" runat="server" Text="保存" 
-                    onclick="btnCommit_Click" />
-                <base:XButton ID="btnCancle" runat="server" Text="取消" 
-                    onclick="btnCancle_Click" />
-            </td> <td ></td>
+            <td>
+            </td>
+            <td>
+                <base:XButton ID="btnCommit" runat="server" Text="保存" OnClick="btnCommit_Click" />
+                <base:XButton ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" />
+            </td>
+            <td>
+            </td>
         </tr>
     </table>
 </div>

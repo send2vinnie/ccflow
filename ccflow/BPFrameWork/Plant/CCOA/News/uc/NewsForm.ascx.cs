@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.CCOA;
+using System.Data;
 
 public partial class CCOA_News_uc_NewsForm : System.Web.UI.UserControl
 {
@@ -12,9 +13,25 @@ public partial class CCOA_News_uc_NewsForm : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!string.IsNullOrEmpty(ArticleId))
+        
+        if (!Page.IsPostBack)
         {
-            SetData();
+            this.ddrChannel.DataSource = DTChannels;
+            this.ddrChannel.DataBind();
+
+            if (!string.IsNullOrEmpty(ArticleId))
+            {
+                SetData();
+            }
+        }
+    }
+
+    public DataTable DTChannels
+    {
+        get
+        {
+            Channels channels = new Channels();
+            return channels.RetrieveAllToTable();
         }
     }
 
@@ -50,9 +67,11 @@ public partial class CCOA_News_uc_NewsForm : System.Web.UI.UserControl
         article.ContentType = int.Parse(ddrType.Text);
 
         article.Insert();
+
+        btnCommit.Enabled = false;
     }
     protected void btnCancle_Click(object sender, EventArgs e)
     {
-
+        Response.Redirect("NewsList.aspx");
     }
 }

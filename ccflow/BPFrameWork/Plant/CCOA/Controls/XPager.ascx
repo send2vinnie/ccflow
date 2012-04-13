@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="XPager.ascx.cs" Inherits="CCOA_Control_XPager" %>
-<table style=" width:96%; font-family:'微软雅黑';">
+<table style=" width:100%; font-family:'微软雅黑';">
 	<tr>
 		<td><font style="FONT-SIZE: 12px" size="2"><span>共有</span>&nbsp;&nbsp;
 				<asp:label id="lblRecordCount"  CssClass="font12pxgreen" runat="server"></asp:label>&nbsp;&nbsp;<span>条记录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

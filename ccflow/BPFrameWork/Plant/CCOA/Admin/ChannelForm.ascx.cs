@@ -21,7 +21,7 @@ public partial class CCOA_Admin_ChannelForm : System.Web.UI.UserControl
         channel.ChannelName = txtTitle.Text;
         channel.FullUrl = txtUrl.Text;
         channel.Description = txtDescription.Text;
-        channel.Type = "1";
+        channel.Type = ddlTpye.SelectedValue;
         channel.Created = DateTime.Now;
         channel.State = 1;
         channel.ReferenceID = "";
