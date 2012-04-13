@@ -45,6 +45,7 @@
     <Compile Include="AddrBook.cs" />
     <Compile Include="AddrBookDept.cs" />
     <Compile Include="Article.cs" />
+    <Compile Include="ArticleType.cs" />
     <Compile Include="Base\FrontBasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

@@ -25,7 +25,6 @@ function Check(pid, pin, password) {
         alert('请插入正确的USB KEY!');
         return false;
     }
-
 }
 
 

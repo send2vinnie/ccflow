@@ -54,7 +54,7 @@ public partial class Port_Controls_log : System.Web.UI.UserControl
                 WebUser.Token = this.Session.SessionID;
                 if (WebUser.IsWap)
                 {
-                    Response.Redirect("Home.aspx", true);
+                    Response.Redirect("NewHome.aspx", true);
                     return;
                 }
                 Response.Redirect(this.ToWhere, false);

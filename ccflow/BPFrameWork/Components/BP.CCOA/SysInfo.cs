@@ -9,6 +9,11 @@ namespace BP.CCOA
 {
     public class SysInfoAttr : EntityNoNameAttr
     {
+        
+        /// <summary>
+        /// 系统编号
+        /// </summary>
+        public const string SysCustomerNo = "SysCustomerNo";
         /// <summary>
         /// 系统名称
         /// </summary>
@@ -37,6 +42,18 @@ namespace BP.CCOA
 
     public class SysInfo : EntityNoName
     {
+
+        public string SysCustomerNo
+        {
+            get
+            {
+                return this.GetValStringByKey(SysInfoAttr.SysCustomerNo);
+            }
+            set
+            {
+                this.SetValByKey(SysInfoAttr.SysCustomerNo, value);
+            }
+        }
         public string SysName
         {
             get
@@ -131,6 +148,7 @@ namespace BP.CCOA
                 map.IsAutoGenerNo = true;
 
                 map.AddTBStringPK(SysUserAttr.No, null, "编号", true, true, 2, 50, 20);
+                map.AddTBString(SysInfoAttr.SysCustomerNo, null, "系统编号", true, false, 0, 100, 20);
                 map.AddTBString(SysInfoAttr.SysName, null, "系统名称", true, false, 0, 100, 20);
                 map.AddTBString(SysInfoAttr.SysDescription, null, "描述", true, false, 0, 100, 20);
                 map.AddTBString(SysInfoAttr.SysUrl, null, "系统地址", true, false, 0, 200, 20);

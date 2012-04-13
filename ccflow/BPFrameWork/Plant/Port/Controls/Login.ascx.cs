@@ -113,7 +113,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         {
             string home = "";
             if (WebUser.IsWap)
-                home = "-<a href='Home.aspx'>Home</a>";
+                home = "-<a href='NewHome.aspx'>Home</a>";
 
             if (WebUser.IsAuthorize)
                 this.Add(" - <a href=\"javascript:ExitAuth('" + WebUser.Auth + "')\" >退出授权模式[" + WebUser.Auth + "]</a>" + home);

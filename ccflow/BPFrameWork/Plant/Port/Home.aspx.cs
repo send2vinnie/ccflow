@@ -18,6 +18,12 @@ public partial class Port_Home : System.Web.UI.Page
         BP.CCOA.SysInfo sysInfo = new BP.CCOA.SysInfo();
         sysInfo.CheckPhysicsTable();
 
+        BP.CCOA.SSOModule ssom = new BP.CCOA.SSOModule();
+        ssom.CheckPhysicsTable();
+        BP.CCOA.SSOCustomerModule ssocm = new BP.CCOA.SSOCustomerModule();
+        ssocm.CheckPhysicsTable();
+
+
         if (!IsPostBack)
         {
             this.BindSystem();
@@ -44,8 +50,6 @@ public partial class Port_Home : System.Web.UI.Page
 
             DataSource.Add(groupName, rows);
         }
-
-
     }
     protected void lbtnExit_Click(object sender, EventArgs e)
     {

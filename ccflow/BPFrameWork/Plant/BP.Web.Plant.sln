@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.CCOA", "..\Components\BP
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Plant", "http://localhost/Plant", "{BA115CB8-19FC-47C4-8FA0-DA9299DC43A3}"
 	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		ProjectReferences = "{ECC628EC-8497-4BE8-9D26-51946EC8E635}|BP.CCOA.dll;{247F7483-86B3-442E-B8B1-2FCFB432BD75}|BP.En30.dll;{795DDA68-1F56-4B5D-8BFC-E8B73BEC407A}|BP.WebAppDemo.dll;{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}|BP.Web.Controls.dll;{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}|BP.Plant.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Plant"
