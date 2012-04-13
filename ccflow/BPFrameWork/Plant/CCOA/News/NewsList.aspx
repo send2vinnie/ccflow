@@ -7,7 +7,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <uc:XToolBar ID="XToolBar1" runat="server" Title="新闻" AddUrl="NewsManage.aspx" />
+    <uc:XToolBar ID="XToolBar1" runat="server" Title="新闻公告" AddUrl="NewsManage.aspx" />
     <uc:NewsGrid id="NewsGrid1" runat="server" />
     <uc:XPager ID="XPager1" runat="server" />
 </asp:Content>

@@ -18,6 +18,13 @@ public partial class CCOA_SMS_SMS : System.Web.UI.Page
         string content = txtContent.Text;
         SMSMessage.Send(telephoneNumber, content, "");
 
-        
+        string strMsg = "发送成功！";
+
+        ScriptManager.RegisterStartupScript(
+            Page, 
+            typeof(Page), 
+            "SS", 
+            "alert('" + strMsg + "')", 
+            true);
     }
 }

@@ -22,6 +22,8 @@
             open();
         }
 
+
+
         function open() {
             $('#w').window('open');
         }
@@ -104,15 +106,50 @@
             </td>
             <% }%></tr>
     </table>
-    <div id="w" class="easyui-window" title="新备忘" style="width:500px;height:200px;padding:5px;">
-		<div class="easyui-layout" fit="true">
-			<div region="center" border="false" style="padding:10px;background:#fff;border:1px solid #ccc;">
-			
-			</div>
-			<div region="south" border="false" style="text-align:right;height:30px;line-height:30px;">
-				<a class="easyui-linkbutton" iconCls="icon-ok" href="javascript:void(0)" onclick="closeWindow()">Ok</a>
-				<a class="easyui-linkbutton" iconCls="icon-cancel" href="javascript:void(0)" onclick="closeWindow()">Cancel</a>
-			</div>
-		</div>
-	</div>
+    <div id="w" class="easyui-window" title="新备忘" closed="true" modal="true" style="width: 500px;
+        height: 250px; padding: 5px;">
+        <div class="easyui-layout" fit="true">
+            <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+                <table width="100%">
+                    <tr>
+                        <th>
+                            主题:
+                        </th>
+                        <td colspan="3">
+                            <input type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            描述：
+                        </th>
+                        <td colspan="3">
+                            <textarea id="TextArea1" cols="20" rows="4" style="width:100%;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            提醒类型:
+                        </th>
+                        <td>
+                            <asp:DropDownList ID="ddlType" runat="server" Width="100px">
+                                <asp:ListItem Text="无" Value="" />
+                            </asp:DropDownList>
+                        </td>
+                        <th>
+                            提醒时间：
+                        </th>
+                        <td>
+                        <input type="text" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
+                <a class="easyui-linkbutton" iconcls="icon-ok" href="javascript:void(0)" onclick="closeWindow()">
+                    Ok</a> <a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:void(0)"
+                        onclick="closeWindow()">Cancel</a>
+            </div>
+        </div>
+    </div>
 </asp:Content>
