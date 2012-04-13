@@ -19,13 +19,14 @@
 
 </head>
 <body>
-   <object classid="clsid:e6bd6993-164f-4277-ae97-5eb4bab56443"
-	codebase="Javascript/et99.cab#Version=1,00,0000"
-	border="0" vspace="0" hspace="0" align="top" height="0" width="0" />
+   
     <form id="form1" runat="server">
     <div class="bg">
         <lizard:Login ID="uclogin" runat="server" />
     </div>
     </form>
+    <object classid="clsid:e6bd6993-164f-4277-ae97-5eb4bab56443"
+	codebase="Javascript/et99.cab#Version=1,00,0000"
+	border="0" vspace="0" hspace="0" align="top" height="0" width="0" />
 </body>
 </html>
