@@ -95,6 +95,8 @@ namespace BP.Auth
 
         void listEdit_Click(object sender, Telerik.Windows.RadRoutedEventArgs e)
         {
+            if (EmpList.SelectedItem == null)
+                return;
             var uri = "http://localhost/Plant/(S(aym4qrya2bjchgnuckuudt5s))/Comm/RefFunc/UIEn.aspx?EnName=BP.WF.Port.Emp&PK=" 
                 + (EmpList.SelectedItem as Port_Emp).No;
 
