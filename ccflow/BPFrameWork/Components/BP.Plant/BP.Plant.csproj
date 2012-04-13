@@ -41,6 +41,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model.cs" />
+    <Compile Include="Port\Dept.cs" />
+    <Compile Include="Port\DeptSearchScorp.cs" />
+    <Compile Include="Port\DeptStation.cs" />
+    <Compile Include="Port\Emp.cs" />
+    <Compile Include="Port\EmpDept.cs" />
+    <Compile Include="Port\EmpStation.cs" />
+    <Compile Include="Port\SMS.cs" />
+    <Compile Include="Port\Station.cs" />
+    <Compile Include="Port\WFEmp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +57,21 @@
       <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
       <Name>BP.En30</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\BP.En30.dll" />
+    <Content Include="bin\Debug\BP.En30.pdb" />
+    <Content Include="bin\Debug\BP.Plant.dll" />
+    <Content Include="bin\Debug\BP.Plant.pdb" />
+    <Content Include="bin\Debug\ChineseConverter.dll" />
+    <Content Include="bin\Debug\MySql.Data.dll" />
+    <Content Include="BP.Plant.sln" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BP.Plant.suo" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
