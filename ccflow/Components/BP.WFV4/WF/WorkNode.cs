@@ -4423,6 +4423,12 @@ namespace BP.WF
                         if (isEnablePass == true)
                         {
                             /*判断当前节点该明细表上是否有，isPass 审核字段，如果没有抛出异常信息。*/
+                            if (gedtls.Count != 0)
+                            {
+                                GEDtl dtl1 = gedtls[0] as GEDtl;
+                                if (dtl1.EnMap.Attrs.Contains("IsPass") == false)
+                                    isEnablePass = false;
+                            }
                         }
 
                         DBAccess.RunSQL("DELETE " + toDtl.PTable + " WHERE RefPK=" + this.WorkID);
