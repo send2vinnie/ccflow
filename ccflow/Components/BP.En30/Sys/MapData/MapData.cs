@@ -828,7 +828,13 @@ namespace BP.Sys
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
                             en.MyPK = "Ath" + timeKey + "_" + idx;
-                            en.Insert();
+                            try
+                            {
+                                en.Insert();
+                            }
+                            catch
+                            {
+                            }
                         }
                         break;
                     case "Sys_MapM2M":

@@ -626,7 +626,6 @@ namespace BP.Sys
                 map.AddBoolean(MapDtlAttr.IsExp, true, "IsExp", false, false);
                 map.AddBoolean(MapDtlAttr.IsImp, true, "IsImp", false, false);
 
-
                 map.AddBoolean(MapDtlAttr.IsInsert, true, "IsInsert", false, false);
                 map.AddBoolean(MapDtlAttr.IsDelete, true, "IsDelete", false, false);
                 map.AddBoolean(MapDtlAttr.IsUpdate, true, "IsUpdate", false, false);
@@ -636,9 +635,6 @@ namespace BP.Sys
 
                 map.AddBoolean(MapDtlAttr.IsEnableM2M, false, "是否启用M2M", false, false);
                 map.AddBoolean(MapDtlAttr.IsEnableM2MM, false, "是否启用M2M", false, false);
-
-
-
 
                 map.AddDDLSysEnum(MapDtlAttr.WhenOverSize, 0, "WhenOverSize", true, true,
                  MapDtlAttr.WhenOverSize, "@0=不处理@1=向下顺增行@2=次页显示");
@@ -879,6 +875,18 @@ namespace BP.Sys
         {
             this.InitExtMembers();
             return base.beforeInsert();
+        }
+        protected override bool beforeUpdateInsertAction()
+        {
+            if (this.IsEnablePass)
+            {
+                /*判断是否有IsPass 字段。*/
+                MapAttrs attrs = new MapAttrs(this.No);
+                if (attrs.Contains(MapAttrAttr.KeyOfEn, "IsPass") == false)
+                    throw new Exception("您启用了明细表单条数据审核选项，但是该明细表里没的IsPass字段，请参考帮助文档。");
+
+            }
+            return base.beforeUpdateInsertAction();
         }
         protected override bool beforeUpdate()
         {
