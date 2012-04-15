@@ -332,7 +332,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddUL();
         this.AddLi("在白纸上写下您的签名");
         this.AddLi("送入扫描仪扫描，并得到jpg文件。");
-        this.AddLi("利用出片处理工具把他们处理缩小到 90*30像素大小。");
+        this.AddLi("利用图片处理工具把他们处理缩小到 90*30像素大小。");
         this.AddULEnd();
 
         this.AddB("手写设置:");

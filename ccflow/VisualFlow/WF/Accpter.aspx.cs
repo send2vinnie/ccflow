@@ -61,7 +61,7 @@ public partial class WF_Accpter : WebPage
     public DataTable GetTable()
     {
         if (this.MyToNode == 0)
-            throw new Exception("@流程设计错误，没有转向的节点。");
+            throw new Exception("@流程设计错误，没有转向的节点。举例说明: 当前是A节点。如果您在A点的属性里启用了[接受人]按钮，那么他的转向节点集合中(就是A可以转到的节点集合比如:A到B，A到C, 那么B,C节点就是转向节点集合)，必须有一个节点是的节点属性的[访问规则]设置为[由上一步发送人员选择]");
 
         NodeStations stas = new NodeStations(this.MyToNode);
         if (stas.Count == 0)
@@ -180,14 +180,23 @@ public partial class WF_Accpter : WebPage
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Title = "选择下一步骤接受的人员";
-        /* 首先判断是否有多个分支的情况。*/
-        if (this.IsMFZ)
-        {
-            this.BindMStations();
-            return;
-        }
 
-        this.BindIt();
+        try
+        {
+            /* 首先判断是否有多个分支的情况。*/
+            if (this.IsMFZ)
+            {
+                this.BindMStations();
+                return;
+            }
+
+            this.BindIt();
+        }
+        catch(Exception ex)
+        {
+            this.Pub1.Clear();
+            this.Pub1.AddMsgOfWarning("错误", ex.Message);
+        }
     }
     public void BindIt()
     {
