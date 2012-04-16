@@ -12,6 +12,7 @@ using System.Web.UI.HtmlControls;
 using BP.En;
 using BP.DA;
 using BP.Port;
+using BP.Web;
 using System.Xml;
 using System.IO ; 
 
@@ -45,28 +46,17 @@ namespace BP.Web
 					return true;
 			}
 		}
-//		public void BeforeLoad()
-//		{
-//
-//		}
-	
 		public void Page_Load(object sender, System.EventArgs e)
 		{
             string userNo = this.Request.QueryString["UserNo"];
             if (userNo != null && userNo.Length > 1)
             {
                 string sid = this.Request.QueryString["SID"];
-
-                string mysid = DBAccess.RunSQLReturnStringIsNull("SELECT SID FROM PORT_EMP WHERE No='" + Web.WebUser.No + "'", null);
-                if (sid == mysid)
+                if (WebUser.CheckSID(sid) == true)
                 {
                     Response.Redirect("Home.aspx", false);
+                    return;
                 }
-                else
-                {
-                    Response.Redirect("Home.aspx", false);
-                }
-                return;
             }
 
 
@@ -167,21 +157,7 @@ namespace BP.Web
 
 					WebUser.SignInOfGener(em,true);
 					WebUser.Token=this.Session.SessionID;
-
-                    if (this.RawUrl == null)
-                    {
-                        Response.Redirect("Home.aspx", false);
-                    }
-                    else
-                    {
-                        string url = this.RawUrl;
-                        if (url.ToLower().IndexOf("signin.aspx") > 0)
-                        {
-                            Response.Redirect("../Paper/ExamLink.aspx", true);
-                            return;
-                        }
-                        Response.Redirect(url, true);
-                    }
+                    Response.Redirect("../../SSO/Default.aspx", false);
 					return;
 				}
 				else
