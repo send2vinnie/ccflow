@@ -10,7 +10,6 @@ public partial class CCOA_News_NewsType : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
 
     public ArticleTypes ArticleTypes
