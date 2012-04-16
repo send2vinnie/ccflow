@@ -1,0 +1,35 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="SSO_MasterPage" %>
+
+<%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+      <table width='80%' style="align:center " border=1  aligen=center>
+    <tr>
+      <td colspan=2 height='80px'><h2> 汽车工程研究院 - 单点登陆系统<h2> </td>
+    </tr>
+
+    <tr>
+    <td colspan=1  valign=top> 
+       <a href='/GPM/SSO/'>单点登陆</a><hr>
+       工作系统列表<hr>
+
+       <uc1:Pub ID="Pub1" runat="server" />
+        </td>
+    <td colspan=1 width='80%'  valign=top> 
+    <asp:ContentPlaceHolder id="ContentPlaceHolder2" runat="server">
+        </asp:ContentPlaceHolder>
+        </td>
+    </tr>
+    </table>
+    </form>
+</body>
+</html>
