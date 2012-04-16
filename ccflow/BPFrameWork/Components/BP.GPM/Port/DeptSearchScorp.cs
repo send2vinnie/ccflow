@@ -3,7 +3,7 @@ using System.Data;
 using BP.DA;
 using BP.En;
 
-namespace BP.SSO
+namespace BP.GPM
 {
     /// <summary>
     /// 部门查询权限

@@ -6,7 +6,7 @@ using BP.Web;
 using System.Text;
 using System.IO;
 
-namespace BP.SSO
+namespace BP.GPM
 {
 	/// <summary>
 	/// ²Ù×÷Ô±
@@ -58,17 +58,6 @@ namespace BP.SSO
             get
             {
                 return this.GetValRefTextByKey(WFEmpAttr.AlertWay);
-            }
-        }
-        public AlertWay HisAlertWay
-        {
-            get
-            {
-                return (AlertWay)this.GetValIntByKey(WFEmpAttr.AlertWay);
-            }
-            set
-            {
-                SetValByKey(WFEmpAttr.AlertWay, (int)value);
             }
         }
         public string FK_Dept

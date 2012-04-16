@@ -3,7 +3,7 @@ using System.Data;
 using BP.DA;
 using BP.En;
 
-namespace BP.WF.Port
+namespace BP.SSO
 {
 	/// <summary>
 	/// ╡©це╦зн╩

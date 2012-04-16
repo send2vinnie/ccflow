@@ -167,7 +167,7 @@ namespace BP.CCOA
                 map.EnDesc = "通讯录";
                 map.EnType = EnType.Sys;
 
-                map.AddTBStringPK(AddrBookAttr.No, null, "编号", true, true, 2, 50, 20);
+                map.AddTBStringPK(AddrBookAttr.No, null, "编号", true, true, 2, 30, 20);
                 map.AddTBString(AddrBookAttr.Name, null, "名称", true, false, 0, 3900, 20);
                 map.AddTBString(AddrBookAttr.Addr, null, "Addr", true, false, 0, 50, 20);
                 map.AddTBString(AddrBookAttr.Tel, null, "Tel", true, false, 0, 50, 20);

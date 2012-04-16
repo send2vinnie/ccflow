@@ -4,7 +4,7 @@ using BP.DA;
 using BP.En;
 using BP.Web;
 
-namespace BP.SSO
+namespace BP.GPM
 {
 	/// <summary>
 	/// ≤ø√≈ Ù–‘

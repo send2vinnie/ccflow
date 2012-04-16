@@ -5,7 +5,6 @@ using BP.DA;
 using BP.En;
 using BP.XML;
 
-
 namespace BP.Port.Xml
 {
 	/// <summary>
@@ -25,7 +24,6 @@ namespace BP.Port.Xml
         /// Img
         /// </summary>
         public const string Img = "Img";
-
     }
 	/// <summary>
 	/// Model 的摘要说明，属性的配置。

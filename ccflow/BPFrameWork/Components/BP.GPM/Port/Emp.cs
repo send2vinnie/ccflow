@@ -4,7 +4,7 @@ using BP.DA;
 using BP.En;
 using BP.Port;
 
-namespace BP.SSO
+namespace BP.GPM
 {
 	/// <summary>
 	/// 工作人员属性
@@ -20,6 +20,10 @@ namespace BP.SSO
         /// 密码
         /// </summary>
         public const string Pass = "Pass";
+        /// <summary>
+        /// SID
+        /// </summary>
+        public const string SID = "SID";
 		#endregion 
 	}
 	/// <summary>
@@ -33,7 +37,6 @@ namespace BP.SSO
             {
                 if (BP.Web.WebUser.SysLang == "B5")
                     return Sys.Language.Turn2Traditional(this.GetValStrByKey("Name"));
-
                 return this.GetValStrByKey("Name");
             }
             set
@@ -109,6 +112,20 @@ namespace BP.SSO
                 this.SetValByKey(EmpAttr.Pass, value);
             }
         }
+        /// <summary>
+        /// SID
+        /// </summary>
+        public string SID
+        {
+            get
+            {
+                return this.GetValStrByKey(EmpAttr.SID);
+            }
+            set
+            {
+                this.SetValByKey(EmpAttr.SID, value);
+            }
+        }
         #endregion
 
         public bool CheckPass(string pass)
@@ -182,6 +199,8 @@ namespace BP.SSO
                 map.AddTBString(EmpAttr.Name, null, "名称", true, false, 0, 100, 100);
                 map.AddTBString(EmpAttr.Pass, "pub", "密码", false, false, 0, 20, 10);
                 map.AddDDLEntities(EmpAttr.FK_Dept, null, "部门", new BP.Port.Depts(), true);
+
+                map.AddTBString(EmpAttr.SID, null, "SID", false, false, 0, 200, 10);
                 #endregion 字段
 
                 map.AddSearchAttr(EmpAttr.FK_Dept);

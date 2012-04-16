@@ -5,7 +5,7 @@ using BP.En;
 //using BP.ZHZS.DS;
 
 
-namespace BP.SSO
+namespace BP.GPM
 {
 	/// <summary>
 	/// »À‘±∏⁄Œª

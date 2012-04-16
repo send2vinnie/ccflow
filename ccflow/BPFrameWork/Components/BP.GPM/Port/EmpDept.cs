@@ -4,7 +4,7 @@ using BP.DA;
 using BP.En;
 
 
-namespace BP.SSO
+namespace BP.GPM
 {
 	
 	/// <summary>
