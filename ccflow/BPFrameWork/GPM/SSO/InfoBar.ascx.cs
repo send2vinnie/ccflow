@@ -17,29 +17,13 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
             return this.Request.QueryString["FK_Bar"];
         }
     }
-    /// <summary>
-    /// 个人信息提醒
-    /// </summary>
-    public void PerAlert()
-    {
-        BP.GPM.PerAlerts pls = new PerAlerts();
-        pls.RetrieveAll();
-        foreach (PerAlert pl in pls)
-        {
-            int num = BP.DA.DBAccess.RunSQLReturnValInt(pl.GetSQL);
 
-            if (num == 0)
-                this.Add("<a href='" + pl.Url + "'><img src='" + pl.ICON + "' border=0/>" + pl.Name + "(" + num + ")</a>");
-            else
-                this.Add("<b><a href='" + pl.Url + "'><img src='" + pl.ICON + "' border=0/>" + pl.Name + "(" + num + ")</a></b>");
-        }
-    }
     protected void Page_Load(object sender, EventArgs e)
     {
         switch (this.DoType)
         {
             case "Setting":
-                this.PerAlert();
+                //this.PerAlert();
                 this.BindSetting();
                 break;
             case "Up":
@@ -67,7 +51,7 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
             case "Disktop":
             case "":
             default:
-                this.PerAlert();
+                //this.PerAlert();
                 this.Disktop();
                 break;
         }
@@ -87,7 +71,7 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
         bes.InitMyBars();
         bes.Retrieve(BarEmpAttr.FK_Emp, WebUser.No, BarEmpAttr.Idx);
 
-        this.AddTable();
+        this.Add("<table width='100%' class='Desktop'>");
         int idx = -1;
         bool is1 = false;
         foreach (BarEmp be in bes)
@@ -110,8 +94,12 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
 
             #region 输出bar信息.
             this.AddTDBegin();
-            this.Add("<span style='float:left' height='67px' ><b>" + en.Title + "</b></span> <span style='float:right' height='67px'><a href='" + en.MoreUrl + "'>" + en.MoreLab + "</a></span>");
-            this.AddBR();
+            this.Add(@"<h4 style='background:url(Img/back.png) repeat-x;'><span style='float:left' height='38px'><b>" 
+                + en.Title 
+                + "</b></span> <span style='float:right; font-size:12px;'><a  style='text-decoration: none' href='" 
+                + en.MoreUrl + "'>" 
+                + en.MoreLab + "</a></span></h4>");
+            //this.AddBR();
 
             this.Add(en.Doc);
            
