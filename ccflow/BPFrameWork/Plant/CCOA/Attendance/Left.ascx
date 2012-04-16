@@ -6,8 +6,8 @@
                 <ul>
                     <%--  <li><a id="check" onclick="setframe(this)">考勤打卡</a></li>
                         <li><a id="list" onclick="setframe(this)">我的考勤</a></li>--%>
-                    <li><a id="check">考勤打卡</a></li>
-                    <li><a id="list">我的考勤</a></li>
+                    <li><a id="check" href="#" onclick="setframe('check')">考勤打卡</a></li>
+                    <li><a id="list" href="#" onclick="setframe('list')">我的考勤</a></li>
                 </ul>
             </div>
         </td>

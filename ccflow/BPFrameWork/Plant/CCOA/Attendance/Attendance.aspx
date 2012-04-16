@@ -5,6 +5,40 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script type="text/javascript">
 
+        function time() {
+            var date = new Date();
+            var month = date.getMonth() + 1;
+            var d = date.getDate();
+            var day = date.getDay();
+            var Hours = date.getHours();
+            var Minutes = date.getMinutes();
+            var Seconds = date.getSeconds()
+            var y = date.getFullYear();
+            if (Minutes <= 9) {
+                Minutes = "0" + Minutes;
+            }
+            if (Seconds <= 9) {
+                Seconds = "0" + Seconds;
+            }
+            var times = new Array("日", "一", "二", "三", "四", "五", "六");
+//            var liveclock = document.getElementById('liveclock');
+//            liveclock.innerHTML = "今天是" + y + "年" + month + "月" + d + "号 星期" + times[day] + Hours + ":" + Minutes + ":" + Seconds;
+            setTimeout("time()", 1000);
+        }
+        time();
+
+        function setframe(id) {
+            var frame = document.getElementById('iframe1');
+//            alert(id);
+            if (frame!=null) {
+                if (id == "check") {
+                    frame.src = "Check.aspx";
+                }
+                else
+                    frame.src = "List.aspx";
+            }
+        }
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -13,31 +47,10 @@
             <td style="width: 200px; background: #F2F9FF; height: 500px; vertical-align: top;">
                 <uc:Left ID="Left" runat="server" />
             </td>
-            <td style="vertical-align: top;">
-                <div style="background: url(Img/check.png) no-repeat; height: 100px; border: solid 1px #E5e5e5;
-                    line-height: 100px; text-align: center;">
+            <td>
+                <div>
                     <span id="liveclock" style="width: 109px; height: 15px"></span>
-                    <script type="text/javascript">
-                        function www_codefans_net() {
-                            var Digital = new Date()
-                            var hours = Digital.getHours()
-                            var minutes = Digital.getMinutes()
-                            var seconds = Digital.getSeconds()
-                            if (minutes <= 9)
-                                minutes = "0" + minutes
-                            if (seconds <= 9)
-                                seconds = "0" + seconds
-                            myclock = "<font size='6' face='Arial black'>" + hours + ":" + minutes + ":" + seconds + "</font>"
-                            if (document.layers) {
-                                document.layers.liveclock.document.write(myclock)
-                                document.layers.liveclock.document.close()
-                            } else if (document.all)
-                                liveclock.innerHTML = myclock
-                            setTimeout("www_codefans_net()", 1000)
-                        }
-                        www_codefans_net();
-                    </script>
-                    <asp:ImageButton ID="ibtnCheck" runat="server" ImageUrl="Img/kq.png" />
+                    <iframe id="iframe1" style="none" src="check.aspx" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
                 </div>
             </td>
         </tr>
