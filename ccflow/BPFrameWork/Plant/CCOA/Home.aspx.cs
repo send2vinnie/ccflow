@@ -16,14 +16,14 @@ public partial class CCOA_Home : System.Web.UI.Page
             Channel channel = new Channel();
             channel.CheckPhysicsTable();
 
-            Article article = new Article();
-            article.CheckPhysicsTable();
+            //Article article = new Article();
+            //article.CheckPhysicsTable();
 
-            ArticleType type = new ArticleType();
-            type.CheckPhysicsTable();
+            //ArticleType type = new ArticleType();
+            //type.CheckPhysicsTable();
 
-            EmpInfo empinfo = new EmpInfo();
-            empinfo.CheckPhysicsTable();
+            //EmpInfo empinfo = new EmpInfo();
+            //empinfo.CheckPhysicsTable();
 
             AddrBook ab = new AddrBook();
             ab.CheckPhysicsTable();

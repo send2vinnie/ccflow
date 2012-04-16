@@ -5,9 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class CCOA_News_NoticeList : System.Web.UI.Page
+public partial class CCOA_DaliyRecord_DaliyRecord : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
     }
 }
