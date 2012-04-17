@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="PerAlert.ascx.cs" Inherits="SSO_PerAlert" %>
 <div class="PerAlert">
     <ul>
+        <li><a href="Default.aspx">首页</a> &nbsp;&nbsp;</li>
         <%foreach (BP.GPM.PerAlert pl in PerAlerts)
           {%>
         <li><a href="<%=pl.Url %>">

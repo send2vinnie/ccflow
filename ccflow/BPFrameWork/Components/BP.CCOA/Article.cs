@@ -16,7 +16,7 @@ namespace BP.CCOA
         public const string Description = "Description";
         public const string OwnerId = "OwnerId";
         public const string ParentId = "ParentId";
-        public const string AccountId = "AccountId";
+        public const string Rec = "Rec";
         public const string Author = "Author";
         public const string Content = "Content";
         public const string Overdue = "Overdue";
@@ -160,15 +160,15 @@ namespace BP.CCOA
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string AccountId
+        public string Rec
         {
             get
             {
-                return this.GetValStringByKey(ArticleAttr.AccountId);
+                return this.GetValStringByKey(ArticleAttr.Rec);
             }
             set
             {
-                this.SetValByKey(ArticleAttr.AccountId, value);
+                this.SetValByKey(ArticleAttr.Rec, value);
             }
         }
         /// <summary>
@@ -1065,32 +1065,36 @@ namespace BP.CCOA
                 if (this._enMap != null)
                     return this._enMap;
                 Map map = new Map("OA_Article");
-                //map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "文章";
-                //map.EnType = EnType.Sys;
-                //map.CodeStruct = "20";
-                map.IsAutoGenerNo = false;
+                map.CodeStruct = "5";
+                map.IsAutoGenerNo = true;
+                map.AddTBStringPK(ArticleAttr.No, null, "编号", true, true, 5, 5, 5);
+                map.AddTBString(ArticleAttr.Author, null, "作者", true, false, 0, 20, 20);
 
-                map.AddTBStringPK(ArticleAttr.No, "", "主键No", true, false, 0, 50, 50);
-                map.AddTBString(ArticleAttr.Title, null, "标题", true, true, 0, 100, 100);
-                map.AddTBString(ArticleAttr.Description, null, "描述", true, true, 0, 1000, 1000);
-                map.AddTBString(ArticleAttr.OwnerId, null, "所属栏目", true, true, 0, 200, 200);
+                map.AddTBString(ArticleAttr.Title, null, "标题", true, false, 0, 100, 100,true);
+                map.AddTBString(ArticleAttr.SubTitle, null, "副标题", true, false, 0, 100, 100, true);
+
+                map.AddTBString(ArticleAttr.Description, null, "描述", true, false, 0, 1000, 1000, true);
+
+                map.AddTBString(ArticleAttr.OwnerId, null, "所属栏目", true, false, 0, 200, 200);
                 map.AddTBString(ArticleAttr.ParentId, null, "父栏目", true, true, 0, 200, 200);
-                map.AddTBString(ArticleAttr.AccountId, null, "用户ID", true, true, 10, 10, 10);
-                map.AddTBString(ArticleAttr.Author, null, "作者", true, true, 0, 20, 20);
 
-                map.AddTBStringDoc(ArticleAttr.Content, null, "内容", true, true,true);
+                map.AddTBString(ArticleAttr.Rec, null, "录入人", false, false, 0, 50, 10);
 
+                map.AddTBStringDoc(ArticleAttr.Content, null, "内容", true, false,true);
                 map.AddTBDateTime(ArticleAttr.Overdue, "过期日期", true, false);
+
                 map.AddTBInt(ArticleAttr.SequenceIndex, 999, "序号", true, false);
+
                 map.AddTBString(ArticleAttr.Source, null, "", true, true, 0, 20, 20);
-                map.AddTBString(ArticleAttr.Keyword, null, "关键字", true, true, 0, 100, 100);
-                map.AddTBInt(ArticleAttr.AllowComments, 0, "是否允许评论", true, false);
-                map.AddTBString(ArticleAttr.Permission, null, "权限", true, true, 2, 20, 20);
-                map.AddTBInt(ArticleAttr.IsImage, 0, "是否有缩略图", true, false);
-                map.AddTBInt(ArticleAttr.IsShow, 0, "是否置顶", true, false);
-                map.AddTBString(ArticleAttr.SubTitle, null, "副标题", true, true, 0, 100, 100);
+                map.AddTBString(ArticleAttr.Keyword, null, "关键字", true, false, 0, 100, 100, true);
+                map.AddBoolean(ArticleAttr.AllowComments, true, "是否允许评论", true, false);
+
+                map.AddBoolean(ArticleAttr.IsImage, true, "是否有缩略图", true, false);
+
+                map.AddBoolean(ArticleAttr.IsShow, true, "是否置顶", true, false);
+
                 map.AddTBString(ArticleAttr.Thumbnail, null, "缩略图", true, true, 0, 255, 255);
                 map.AddTBInt(ArticleAttr.IsDeleted, 0, "是否删除", true, false);
                 map.AddTBDateTime(ArticleAttr.Created, "创建日期", true, false);
@@ -1100,14 +1104,18 @@ namespace BP.CCOA
                 map.AddTBInt(ArticleAttr.ArticleType, 0, "文章类型", true, false);
                 map.AddTBString(ArticleAttr.ContentUrl, null, "内容Url", true, true, 0, 1000, 1000);
                 map.AddTBString(ArticleAttr.FullTitle, null, "完整标题", true, true, 0, 200, 200);
-                map.AddTBInt(ArticleAttr.Clicks, 0, "点击次数", true, false);
 
                 map.AddTBString(ArticleAttr.ChannelFullUrl, null, "栏目完整Url", true, true, 0, 1000, 1000);
                 map.AddTBString(ArticleAttr.ChannelName, null, "栏目名称", true, true, 0, 1000, 1000);
                 map.AddTBInt(ArticleAttr.CommentCount, 0, "评论点击次数", true, false);
 
+                map.AddTBInt(ArticleAttr.Clicks, 0, "点击次数", false, false);
+
+
                 map.AddDDLSysEnum(ArticleAttr.CtrlWay, 0, "控制方式", true, true,
                     ArticleAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员@4=按SQL");
+
+
                 map.AttrsOfOneVSM.Add(new BP.GPM.ByStations(), new BP.Port.Stations(), BP.GPM.ByStationAttr.RefObj, BP.GPM.ByStationAttr.FK_Station, BP.Port.StationAttr.Name, BP.Port.StationAttr.No, "可访问的岗位");
                 map.AttrsOfOneVSM.Add(new BP.GPM.ByDepts(), new BP.Port.Depts(), BP.GPM.ByStationAttr.RefObj, BP.GPM.ByDeptAttr.FK_Dept, BP.Port.DeptAttr.Name, BP.Port.DeptAttr.No, "可访问的部门");
                 map.AttrsOfOneVSM.Add(new BP.GPM.ByEmps(), new BP.Port.Emps(), BP.GPM.ByStationAttr.RefObj, BP.GPM.ByEmpAttr.FK_Emp, BP.Port.EmpAttr.Name, BP.Port.EmpAttr.No, "可访问的人员");
@@ -1116,6 +1124,12 @@ namespace BP.CCOA
                 return this._enMap;
             }
         }
+        protected override bool beforeUpdateInsertAction()
+        {
+            this.Rec = BP.Web.WebUser.No;
+            return base.beforeUpdateInsertAction();
+        }
+      
     }
 
     public class Articles : Entities

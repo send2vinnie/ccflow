@@ -25,6 +25,7 @@
     height: 24px;
     line-height: 24px;
     color: #fff;
+    padding-right: 10px;
 }
 
 .PerAlert ul li a
@@ -128,30 +129,28 @@
 .Desktop tr td
 {
     background: url(Img/back_1.png);
-    width:33%;
-    border:solid 1px #f1f6fa;
-    
+    width: 33%;
+    border: solid 1px #f1f6fa;
 }
 .Desktop tr td ul
 {
-        margin:5px;
-        padding-left:20px;
-    }
+    margin: 5px;
+    padding-left: 20px;
+}
 .Desktop tr td ul li
 {
-    padding-top:7px;
-    font-size:13px;
-    font-family:宋体;
-    padding-left:10px;
-
+    padding-top: 7px;
+    font-size: 13px;
+    font-family: 宋体;
+    padding-left: 10px;
 }
 .Desktop tr td ul li a
 {
-    padding-top:5px;
-    font-size:13px;
-    font-family:宋体;
-    text-decoration:none;
-    color:#656565;
+    padding-top: 5px;
+    font-size: 13px;
+    font-family: 宋体;
+    text-decoration: none;
+    color: #656565;
 }
 
 
@@ -165,8 +164,24 @@
     height: 30px;
     line-height: 30px;
     font-size: 14px;
-    font-family:微软雅黑;
-    color:#045395;
+    font-family: 微软雅黑;
+    color: #045395;
 }
 
+.STemSetting
+{
+    width: 600px;
+    border: solid 1px #e5e5e5;
+}
+.STemSetting #title
+{
+    background: #e5e5e5;
+}
+.STemSetting tr td
+{
+    font-size: 14px;
+}
+.STemSetting tr td a
+{ text-decoration:none;
+}
 

@@ -66,9 +66,10 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
         Bars ens = new Bars();
         ens.RetrieveAll();
 
-        int cols = 2; //定义显示列数 从0开始。
+        int cols = 3; //定义显示列数 从0开始。
         BarEmps bes = new BarEmps();
         bes.InitMyBars();
+
         bes.Retrieve(BarEmpAttr.FK_Emp, WebUser.No, BarEmpAttr.Idx);
 
         this.Add("<table width='100%' class='Desktop'>");
@@ -139,8 +140,10 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
     /// </summary>
     public void BindSetting()
     {
-        this.AddTable();
-        this.AddTR();
+        //this.AddTable();
+        this.Add("<table class='STemSetting'>");
+        //this.AddTR();
+        this.Add("<tr id='title'>");
         this.AddTDTitle("序号");
         this.AddTDTitle("编号");
         this.AddTDTitle("名称");

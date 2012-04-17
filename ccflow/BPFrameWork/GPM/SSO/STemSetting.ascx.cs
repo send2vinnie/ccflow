@@ -11,7 +11,8 @@ public partial class SSO_PerSetting : BP.Web.UC.UCBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.AddTable();
+        //this.AddTable();
+        this.Add("<table class='STemSetting'>");
         this.AddTR();
         this.AddTDTitle("序号");
         this.AddTDTitle("系统编号");

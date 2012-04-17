@@ -46,28 +46,11 @@
     <Compile Include="Port\Emp.cs" />
     <Compile Include="Port\EmpDept.cs" />
     <Compile Include="Port\EmpStation.cs" />
+    <Compile Include="Port\SMS.cs" />
     <Compile Include="Port\Station.cs" />
     <Compile Include="Model.cs" />
+    <Compile Include="Port\WFEmp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SSO\Bar.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SSO\CtrlWay\ByDept.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SSO\CtrlWay\ByEmp.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SSO\CtrlWay\ByStation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SSO\Menu.cs" />
-    <Compile Include="SSO\STem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SSO\STemStation.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Components\BP.En30\BP.En30.csproj">
