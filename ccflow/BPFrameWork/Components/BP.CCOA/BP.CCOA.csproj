@@ -62,6 +62,10 @@
     <Compile Include="Utility\IHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BP.GPM\BP.GPM.csproj">
+      <Project>{88E210E2-1877-40D8-B669-EC08CA80DC34}</Project>
+      <Name>BP.GPM</Name>
+    </ProjectReference>
     <ProjectReference Include="D:\ccflow\Components\BP.En30\BP.En30.csproj">
       <Project>{247F7483-86B3-442E-B8B1-2FCFB432BD75}</Project>
       <Name>BP.En30</Name>
