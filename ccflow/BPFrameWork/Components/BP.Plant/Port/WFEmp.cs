@@ -8,6 +8,29 @@ using System.IO;
 
 namespace BP.SSO
 {
+    public enum AlertWay
+    {
+        /// <summary>
+        /// 不提示
+        /// </summary>
+        None,
+        /// <summary>
+        /// 手机短信
+        /// </summary>
+        SMS,
+        /// <summary>
+        /// 邮件
+        /// </summary>
+        Email,
+        /// <summary>
+        /// 手机短信+邮件
+        /// </summary>
+        SMSAndEmail,
+        /// <summary>
+        /// 内部消息
+        /// </summary>
+        AppSystemMsg
+    }
 	/// <summary>
 	/// 操作员
 	/// </summary>
