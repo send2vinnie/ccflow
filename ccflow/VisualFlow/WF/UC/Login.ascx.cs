@@ -31,6 +31,19 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        string userNo = this.Request.QueryString["UserNo"];
+        if (userNo != null && userNo.Length > 1)
+        {
+            string sid = this.Request.QueryString["SID"];
+            if (WebUser.CheckSID(sid) == true)
+            {
+                Response.Redirect(this.ToWhere, false);
+//                Response.Redirect("Home.aspx", false);
+                return;
+            }
+        }
+
+
 
         if (this.Request.Browser.Cookies == false)
         {
@@ -131,7 +144,6 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
 
             this.Add(" - <a href='" + this.PageID + ".aspx?DoType=Logout' ><font color=green><b>安全退出</b></a>");
         }
-
         this.AddTDEnd();
 
         this.AddTREnd();
@@ -143,7 +155,6 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
 
         this.AddTDEnd();
         this.AddTREnd();
-
 
         //this.AddTR();
         //this.AddTDBegin();
@@ -155,11 +166,7 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
         //}
         //this.AddTDEnd();
         //this.AddTREnd();
-
         this.AddTableEnd();
-
-
-
     }
     public string ToWhere
     {
