@@ -13,7 +13,8 @@
     <RootNamespace>BP.Auth.Web</RootNamespace>
     <AssemblyName>BP.Auth.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SilverlightApplicationList>{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}|..\BP.Auth\BP.Auth.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>
+    </SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

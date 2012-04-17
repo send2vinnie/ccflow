@@ -1067,7 +1067,9 @@ namespace BP.CCOA
                 map.AddTBString(ArticleAttr.ParentId, null, "父栏目", true, true, 0, 200, 200);
                 map.AddTBString(ArticleAttr.AccountId, null, "用户ID", true, true, 10, 10, 10);
                 map.AddTBString(ArticleAttr.Author, null, "作者", true, true, 0, 20, 20);
-                map.AddTBString(ArticleAttr.Content, null, "内容", true, true, 0, 2000, 2000);
+
+                map.AddTBStringDoc(ArticleAttr.Content, null, "内容", true, true,true);
+
                 map.AddTBDateTime(ArticleAttr.Overdue, "过期日期", true, false);
                 map.AddTBInt(ArticleAttr.SequenceIndex, 999, "序号", true, false);
                 map.AddTBString(ArticleAttr.Source, null, "", true, true, 0, 20, 20);

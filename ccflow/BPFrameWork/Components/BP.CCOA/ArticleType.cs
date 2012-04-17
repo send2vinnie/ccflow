@@ -52,7 +52,7 @@ namespace BP.CCOA
 
                 map.AddTBIntPK(ArticleTypeAttr.No, 1, "主键NO", true, false);
                 map.AddTBString(ArticleTypeAttr.Name, null, "类型名称", true, true, 0, 20, 20);
-                map.AddTBString(ArticleTypeAttr.Desc, null, "类型描述", true, true, 0, 100, 100);
+               // map.AddTBString(ArticleTypeAttr.Desc, null, "类型描述", true, true, 0, 100, 100);
 
                 this._enMap = map;
                 return this._enMap;
