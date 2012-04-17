@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GPM\BarEmp.cs" />
+    <Compile Include="GPM\MenuDot.cs" />
     <Compile Include="GPM\PerAlert.cs" />
     <Compile Include="Group\DTSGenerDir.cs" />
     <Compile Include="Group\EmpPrj.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="Group\Prj.cs" />
     <Compile Include="Port\Dept.cs" />
     <Compile Include="Port\DeptSearchScorp.cs" />
+    <Compile Include="Port\DeptStation.cs" />
     <Compile Include="Port\Emp.cs" />
     <Compile Include="Port\EmpDept.cs" />
     <Compile Include="Port\EmpStation.cs" />
@@ -59,7 +61,8 @@
     <Compile Include="GPM\CtrlWay\ByStation.cs" />
     <Compile Include="GPM\Menu.cs" />
     <Compile Include="GPM\STem.cs" />
-    <Compile Include="GPM\PerSetting.cs" />
+    <Compile Include="GPM\STemStation.cs" />
+    <Compile Include="SSO\PerSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Components\BP.En30\BP.En30.csproj">

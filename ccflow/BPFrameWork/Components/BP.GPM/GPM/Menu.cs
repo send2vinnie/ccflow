@@ -27,6 +27,8 @@ namespace BP.GPM
         /// </summary>
         public const string FK_STem = "FK_STem";
         public const string TreeNo = "TreeNo";
+        public const string Img = "Img";
+        public const string Url = "Url";
     }
     /// <summary>
     /// 菜单
@@ -34,6 +36,19 @@ namespace BP.GPM
     public class Menu : EntityOID
     {
         #region 属性
+
+        public string Name
+        {
+            get
+            {
+                return this.GetValStringByKey(MenuAttr.Name);
+            }
+            set
+            {
+                this.SetValByKey(MenuAttr.Name, value);
+            }
+        }
+
         /// <summary>
         /// 是否是ccSytem
         /// </summary>
@@ -57,6 +72,51 @@ namespace BP.GPM
             set
             {
                 this.SetValByKey(MenuAttr.Idx, value);
+            }
+        }
+
+        public string FK_STem
+        {
+            get
+            {
+                return this.GetValStringByKey(MenuAttr.FK_STem);
+            }
+            set
+            {
+                this.SetValByKey(MenuAttr.FK_STem, value);
+            }
+        }
+        public string TreeNo
+        {
+            get
+            {
+                return this.GetValStringByKey(MenuAttr.TreeNo);
+            }
+            set
+            {
+                this.SetValByKey(MenuAttr.TreeNo, value);
+            }
+        }
+        public string Img
+        {
+            get
+            {
+                return this.GetValStringByKey(MenuAttr.Img);
+            }
+            set
+            {
+                this.SetValByKey(MenuAttr.Img, value);
+            }
+        }
+        public string Url
+        {
+            get
+            {
+                return this.GetValStringByKey(MenuAttr.Url);
+            }
+            set
+            {
+                this.SetValByKey(MenuAttr.Url, value);
             }
         }
         #endregion
@@ -85,7 +145,7 @@ namespace BP.GPM
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("GPM_Menu");
+                Map map = new Map("GPM.dbo.GPM_Menu");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "系统";
@@ -94,23 +154,24 @@ namespace BP.GPM
                 map.AddTBIntPKOID();
 
                 map.AddTBString(MenuAttr.TreeNo, null, "编号", true, false, 2, 30, 20);
-                map.AddTBString(MenuAttr.Name, null, "名称", true, false, 0, 200, 20);
+                map.AddTBString(MenuAttr.Name, null, "名称", true, false, 0, 3900, 20);
                 map.AddDDLSysEnum(MenuAttr.MenuType, 0, "菜单类型", true, true,
                     MenuAttr.MenuType, "@0=目录@1=功能@2=功能控制点");
 
                 map.AddDDLEntities(MenuAttr.FK_STem, null, "系统", new STems(), true);
                 map.AddDDLSysEnum(MenuAttr.CtrlWay, 0, "控制方式", true, true,
-                    MenuAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员@4=按SQL");
-                map.AddTBString(STemAttr.BySQL, null, "SQL表达式", true, false, 0, 2000, 20);
+                    MenuAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员");
 
-                map.AddTBString(STemAttr.Url, null, "连接", true, false, 0, 2000, 20, true);
+                map.AddTBString(STemAttr.Url, null, "连接", true, false, 0, 3900, 20, true);
                 map.AddSearchAttr(MenuAttr.FK_STem);
+
+                map.AddTBString(MenuAttr.Img, "#", "图标", true, false, 0, 100, 20);
 
                 map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj, ByStationAttr.FK_Station, StationAttr.Name, StationAttr.No, "可访问的岗位");
                 map.AttrsOfOneVSM.Add(new ByDepts(), new Depts(), ByStationAttr.RefObj, ByDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "可访问的部门");
                 map.AttrsOfOneVSM.Add(new ByEmps(), new Emps(), ByStationAttr.RefObj, ByEmpAttr.FK_Emp, EmpAttr.Name, EmpAttr.No, "可访问的人员");
 
-              //  map.AddDtl(new MenuDots(), MenuDotAttr.RefOID);
+                //  map.AddDtl(new MenuDots(), MenuDotAttr.RefOID);
                 //map.AttrsOfOneVSM.Add(new MenuStations(), new Stations(), MenuStationAttr.FK_Menu, MenuStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "可访问的岗位");
                 //map.AttrsOfOneVSM.Add(new MenuDepts(), new Depts(), MenuDeptAttr.FK_Menu, MenuDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "可访问的部门");
                 //map.AttrsOfOneVSM.Add(new MenuEmps(), new Emps(), MenuEmpAttr.FK_Menu, MenuEmpAttr.FK_Emp, DeptAttr.Name, DeptAttr.No, "可访问的人员");

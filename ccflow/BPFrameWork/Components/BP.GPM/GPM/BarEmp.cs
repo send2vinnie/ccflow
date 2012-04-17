@@ -112,8 +112,8 @@ namespace BP.GPM
 
                 map.AddMyPK();
 
-                map.AddTBString(BarEmpAttr.FK_Bar, null, "FK_Bar", true, false, 0, 90, 20);
-                map.AddTBString(BarEmpAttr.FK_Emp, null, "FK_Emp", true, false, 0, 90, 20);
+                map.AddTBString(BarEmpAttr.FK_Bar, null, "FK_Bar", true, false, 0, 3900, 20);
+                map.AddTBString(BarEmpAttr.FK_Emp, null, "FK_Emp", true, false, 0, 3900, 20);
 
                 map.AddTBInt(BarEmpAttr.IsShow, 0, "是否显示", false, true);
                 map.AddTBInt(BarEmpAttr.Idx, 0, "显示顺序", false, true);
@@ -123,8 +123,6 @@ namespace BP.GPM
             }
         }
         #endregion
-
-      
 
         public void DoUp()
         {
@@ -163,22 +161,5 @@ namespace BP.GPM
             }
         }
         #endregion
-
-        public void InitMyBars()
-        {
-            Bars bars = new Bars();
-            bars.RetrieveAll();
-            foreach (Bar b in bars)
-            {
-                BarEmp be = new BarEmp();
-                be.MyPK = be.FK_Emp + "_" + be.FK_Bar;
-                if (be.RetrieveFromDBSources() == 1)
-                    continue;
-
-                be.FK_Bar = b.No;
-                be.FK_Emp = BP.Web.WebUser.No;
-                be.Insert();
-            }
-        }
     }
 }

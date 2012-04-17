@@ -34,10 +34,7 @@ namespace BP.GPM
         /// 
         /// </summary>
         public const string IsEnable = "IsEnable";
-        /// <summary>
-        /// BySQL
-        /// </summary>
-        public const string BySQL = "BySQL";
+
     }
     /// <summary>
     /// 单点登陆系统
@@ -173,10 +170,7 @@ namespace BP.GPM
 
 
                 map.AddDDLSysEnum(STemAttr.CtrlWay, 0, "控制方式", true, true,
-                    STemAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员@4=按SQL");
-
-                map.AddTBString(STemAttr.BySQL, null, "SQL表达式", true, false, 0, 3900, 20);
-
+                    STemAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员");
 
                 map.AddDDLSysEnum(STemAttr.AppModel, 0, "应用类型", true, true,
                 STemAttr.AppModel, "@0=BS系统@1=CS系统");
@@ -188,6 +182,7 @@ namespace BP.GPM
 
                 map.AddTBInt(STemAttr.Idx, 0, "显示顺序", true, false);
                 map.AddBoolean(STemAttr.IsEnable, true, "是否启用", true, false);
+
 
                 map.AddMyFile("ICON");
 

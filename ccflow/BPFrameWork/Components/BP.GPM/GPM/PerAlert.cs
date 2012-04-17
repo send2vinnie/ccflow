@@ -85,13 +85,7 @@ namespace BP.GPM
         {
             get
             {
-                string s= this.GetValStringByKey(PerAlertAttr.Url);
-                if (s.Contains("?"))
-                    s += "&UserNo=" + Web.WebUser.No + "&SID=" + Web.WebUser.SID;
-                else
-                    s += "?UserNo=" + Web.WebUser.No + "&SID=" + Web.WebUser.SID;
-
-                return s;
+                return this.GetValStringByKey(PerAlertAttr.Url);
             }
             set
             {
@@ -132,8 +126,8 @@ namespace BP.GPM
                 map.EnType = EnType.Sys;
 
                 map.AddTBStringPK(PerAlertAttr.No, null, "编号", true, false, 2, 30, 20);
-                map.AddTBString(PerAlertAttr.Name, null, "名称", true, false, 0, 200, 20);
-                map.AddTBString(PerAlertAttr.Url, null, "连接", true, false, 0, 200, 20, true);
+                map.AddTBString(PerAlertAttr.Name, null, "名称", true, false, 0, 3900, 20);
+                map.AddTBString(PerAlertAttr.Url, null, "连接", true, false, 0, 3900, 20, true);
                 map.AddDDLSysEnum(BarAttr.OpenWay, 0, "打开方式", true, true,
                 BarAttr.OpenWay, "@0=新窗口@1=本窗口@2=覆盖新窗口");
 

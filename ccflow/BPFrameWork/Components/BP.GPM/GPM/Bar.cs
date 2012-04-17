@@ -58,6 +58,14 @@ namespace BP.GPM
         /// 产生时间
         /// </summary>
         public const string DocGenerRDT = "DocGenerRDT";
+        /// <summary>
+        /// 显示宽度
+        /// </summary>
+        public const string Width = "Width";
+        /// <summary>
+        /// 显示高度
+        /// </summary>
+        public const string Height = "Height";
     }
     /// <summary>
     /// 信息块
@@ -193,6 +201,28 @@ namespace BP.GPM
                 this.SetValByKey(BarAttr.DocGenerRDT, value);
             }
         }
+        public string Width
+        {
+            get
+            {
+                return this.GetValStrByKey(BarAttr.Width);
+            }
+            set
+            {
+                this.SetValByKey(BarAttr.Width, value);
+            }
+        }
+        public string Height
+        {
+            get
+            {
+                return this.GetValStrByKey(BarAttr.Height);
+            }
+            set
+            {
+                this.SetValByKey(BarAttr.Height, value);
+            }
+        }
         public string Doc
         {
             get
@@ -296,6 +326,9 @@ namespace BP.GPM
 
                 map.AddTBString(BarAttr.Doc, null, "Doc", false, false, 0, 3900, 20, false);
                 map.AddTBDateTime(BarAttr.DocGenerRDT, null, "Doc生成日期", false, false);
+
+                map.AddTBInt(BarAttr.Width, 200, "显示宽度", false, true);
+                map.AddTBInt(BarAttr.Height, 100, "显示高度", false, true);
 
                 map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj, ByStationAttr.FK_Station, StationAttr.Name, StationAttr.No, "可访问的岗位");
                 map.AttrsOfOneVSM.Add(new ByDepts(), new Depts(), ByStationAttr.RefObj, ByDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "可访问的部门");

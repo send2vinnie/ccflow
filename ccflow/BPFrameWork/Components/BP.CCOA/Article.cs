@@ -544,6 +544,18 @@ namespace BP.CCOA
             }
         }
 
+        public int CtrlWay
+        {
+            get
+            {
+                return this.GetValIntByKey(ArticleAttr.CtrlWay);
+            }
+            set
+            {
+                this.SetValByKey(ArticleAttr.CtrlWay, value);
+            }
+        }
+
         /// <summary>
         /// 文章内容
         /// </summary>
@@ -1091,9 +1103,7 @@ namespace BP.CCOA
                 map.AddTBInt(ArticleAttr.Clicks, 0, "点击次数", true, false);
 
                 map.AddTBString(ArticleAttr.ChannelFullUrl, null, "栏目完整Url", true, true, 0, 1000, 1000);
-
                 map.AddTBString(ArticleAttr.ChannelName, null, "栏目名称", true, true, 0, 1000, 1000);
-
                 map.AddTBInt(ArticleAttr.CommentCount, 0, "评论点击次数", true, false);
 
                 map.AddDDLSysEnum(ArticleAttr.CtrlWay, 0, "控制方式", true, true,
