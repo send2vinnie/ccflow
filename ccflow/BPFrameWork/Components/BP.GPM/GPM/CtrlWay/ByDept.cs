@@ -103,7 +103,7 @@ namespace BP.GPM
                 if (this._enMap != null)
                     return this._enMap;
 
-                Map map = new Map("GPM.dbo.GPM_ByDept");
+                Map map = new Map("GPM_ByDept");
                 map.EnDesc = "µΩ≤ø√≈";
                 map.EnType = EnType.Dot2Dot;
 

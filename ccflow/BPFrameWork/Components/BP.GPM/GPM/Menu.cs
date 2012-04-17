@@ -6,6 +6,47 @@ using BP.En;
 namespace BP.GPM
 {
     /// <summary>
+    /// 控制方式
+    /// </summary>
+    public enum CtrlWay
+    {
+        /// <summary>
+        /// 任何人
+        /// </summary>
+        AnyOne,
+        /// <summary>
+        /// 按岗位
+        /// </summary>
+        ByStation,
+        /// <summary>
+        /// 按部门
+        /// </summary>
+        ByDept,
+        /// <summary>
+        /// 按人员
+        /// </summary>
+        ByEmp,
+        /// <summary>
+        /// 按sql
+        /// </summary>
+        BySQL
+    }
+    public enum MenuType
+    {
+        /// <summary>
+        /// 目录
+        /// </summary>
+        Dir,
+        /// <summary>
+        /// 功能
+        /// </summary>
+        Func,
+        /// <summary>
+        /// 功能点
+        /// </summary>
+        FuncDot
+    }
+    /// <summary>
     /// 菜单
     /// </summary>
     public class MenuAttr : EntityNoNameAttr
@@ -36,7 +77,6 @@ namespace BP.GPM
     public class Menu : EntityOID
     {
         #region 属性
-
         public string Name
         {
             get
@@ -48,7 +88,31 @@ namespace BP.GPM
                 this.SetValByKey(MenuAttr.Name, value);
             }
         }
-
+        public CtrlWay HisCtrlWay
+        {
+            get
+            {
+                return (CtrlWay)this.GetValIntByKey(MenuAttr.CtrlWay);
+            }
+            set
+            {
+                this.SetValByKey(MenuAttr.CtrlWay, (int)value);
+            }
+        }
+        /// <summary>
+        /// 功能
+        /// </summary>
+        public MenuType HisMenuType
+        {
+            get
+            {
+                return (MenuType)this.GetValIntByKey(MenuAttr.MenuType);
+            }
+            set
+            {
+                this.SetValByKey(MenuAttr.MenuType, (int)value);
+            }
+        }
         /// <summary>
         /// 是否是ccSytem
         /// </summary>
@@ -101,11 +165,18 @@ namespace BP.GPM
         {
             get
             {
-                return this.GetValStringByKey(MenuAttr.Img);
-            }
-            set
-            {
-                this.SetValByKey(MenuAttr.Img, value);
+                string s = this.GetValStringByKey("WebPath");
+                if (string.IsNullOrEmpty(s))
+                {
+                    if (this.HisMenuType == GPM.MenuType.Dir)
+                        return "../../Images/Btn/View.gif";
+                    else
+                        return "../../Images/Btn/Go.gif";
+                }
+                else
+                {
+                    return s;
+                }
             }
         }
         public string Url
@@ -145,7 +216,7 @@ namespace BP.GPM
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("GPM.dbo.GPM_Menu");
+                Map map = new Map("GPM_Menu");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "系统";
@@ -163,13 +234,14 @@ namespace BP.GPM
                     MenuAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员");
 
                 map.AddTBString(STemAttr.Url, null, "连接", true, false, 0, 3900, 20, true);
-                map.AddSearchAttr(MenuAttr.FK_STem);
 
-                map.AddTBString(MenuAttr.Img, "#", "图标", true, false, 0, 100, 20);
+
+                map.AddMyFile("图标");
 
                 map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj, ByStationAttr.FK_Station, StationAttr.Name, StationAttr.No, "可访问的岗位");
                 map.AttrsOfOneVSM.Add(new ByDepts(), new Depts(), ByStationAttr.RefObj, ByDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "可访问的部门");
                 map.AttrsOfOneVSM.Add(new ByEmps(), new Emps(), ByStationAttr.RefObj, ByEmpAttr.FK_Emp, EmpAttr.Name, EmpAttr.No, "可访问的人员");
+                map.AddSearchAttr(MenuAttr.FK_STem);
 
                 //  map.AddDtl(new MenuDots(), MenuDotAttr.RefOID);
                 //map.AttrsOfOneVSM.Add(new MenuStations(), new Stations(), MenuStationAttr.FK_Menu, MenuStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "可访问的岗位");

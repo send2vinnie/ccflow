@@ -103,7 +103,7 @@ namespace BP.GPM
                 if (this._enMap != null)
                     return this._enMap;
 
-                Map map = new Map("GPM.dbo.GPM_ByStation");
+                Map map = new Map("GPM_ByStation");
                 map.EnDesc = "µ½¸ÚÎ»";
                 map.EnType = EnType.Dot2Dot;
 
