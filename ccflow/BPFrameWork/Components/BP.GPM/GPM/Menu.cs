@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Data;
 using BP.DA;
 using BP.En;
 
@@ -70,6 +71,11 @@ namespace BP.GPM
         public const string TreeNo = "TreeNo";
         public const string Img = "Img";
         public const string Url = "Url";
+
+        /// <summary>
+        /// 控制内容
+        /// </summary>
+        public const string CtrlObjs = "CtrlObjs";
     }
     /// <summary>
     /// 菜单
@@ -77,6 +83,17 @@ namespace BP.GPM
     public class Menu : EntityOID
     {
         #region 属性
+        public string CtrlObjs
+        {
+            get
+            {
+                return this.GetValStringByKey(MenuAttr.CtrlObjs);
+            }
+            set
+            {
+                this.SetValByKey(MenuAttr.CtrlObjs, value);
+            }
+        }
         public string Name
         {
             get
@@ -233,6 +250,8 @@ namespace BP.GPM
                 map.AddDDLSysEnum(MenuAttr.CtrlWay, 0, "控制方式", true, true,
                     MenuAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员");
 
+                map.AddTBString(MenuAttr.CtrlObjs, null, "控制内容", false, false, 0, 4000, 20);
+
                 map.AddTBString(STemAttr.Url, null, "连接", true, false, 0, 3900, 20, true);
 
 
@@ -253,6 +272,12 @@ namespace BP.GPM
             }
         }
         #endregion
+
+        protected override bool beforeUpdateInsertAction()
+        {
+            BP.Sys.SysConfigs.SetValByKey(BP.GPM.EmpAttr.UpdateMenu, DateTime.Now.ToString(DataType.CurrentDataTime));
+            return true;
+        }
     }
     /// <summary>
     /// 菜单s

@@ -24,6 +24,10 @@ namespace BP.GPM
         /// SID
         /// </summary>
         public const string SID = "SID";
+        /// <summary>
+        /// 菜单更新时间
+        /// </summary>
+        public const string UpdateMenu = "UpdateMenu";
 		#endregion 
 	}
 	/// <summary>
@@ -96,6 +100,20 @@ namespace BP.GPM
             get
             {
                 return this.GetValRefTextByKey(EmpAttr.FK_Dept);
+            }
+        }
+        /// <summary>
+        /// 菜单更新时间
+        /// </summary>
+        public string UpdateMenu
+        {
+            get
+            {
+                return this.GetValStrByKey(EmpAttr.UpdateMenu);
+            }
+            set
+            {
+                this.SetValByKey(EmpAttr.UpdateMenu, value);
             }
         }
         /// <summary>
@@ -201,6 +219,8 @@ namespace BP.GPM
                 map.AddDDLEntities(EmpAttr.FK_Dept, null, "部门", new BP.Port.Depts(), true);
 
                 map.AddTBString(EmpAttr.SID, null, "SID", false, false, 0, 200, 10);
+
+                map.AddTBString(EmpAttr.UpdateMenu, null, "菜单更新时间", false, false, 0, 22, 10);
                 #endregion 字段
 
                 map.AddSearchAttr(EmpAttr.FK_Dept);
