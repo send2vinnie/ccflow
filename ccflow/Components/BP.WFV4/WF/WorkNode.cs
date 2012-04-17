@@ -1169,6 +1169,7 @@ namespace BP.WF
         /// <returns></returns>
         public WorkNode DoReturnWork(int backtoNodeID, string msg, bool isHiden)
         {
+
             if (this.HisNode.FocusField != "")
             {
                 // 把数据更新它。
@@ -1242,8 +1243,15 @@ namespace BP.WF
             this.AddToTrack(ActionType.Return, wnOfBackTo.HisWork.Rec, wnOfBackTo.HisWork.RecText, 
                 backtoNodeID, wnOfBackTo.HisNode.Name, msg);
 
-            // 记录退回日志.
-            ReorderLog(backToNode, this.HisNode,rw);
+            try
+            {
+                // 记录退回日志.
+                ReorderLog(backToNode, this.HisNode, rw);
+            }
+            catch(Exception ex)
+            {
+                Log.DebugWriteWarning(ex.Message);
+            }
 
             // 以退回到的节点向前数据用递归删除它。
             DeleteToNodesData(backToNode.HisToNodes);
@@ -2940,6 +2948,7 @@ namespace BP.WF
                         case StartWorkAttr.Sender:
                         case StartWorkAttr.NodeState:
                         case StartWorkAttr.OID:
+                        case StartWorkAttr.Title:
                             continue;
                         default:
                             break;
@@ -3083,7 +3092,7 @@ namespace BP.WF
                             //HisCHOfFlow.DateLitFrom = DateTime.Now.AddDays(fl.DateLit).ToString(DataType.SysDataFormat);
                             //HisCHOfFlow.DateLitTo = DateTime.Now.AddDays(fl.DateLit + 10).ToString(DataType.SysDataFormat);
                             //HisCHOfFlow.Update();
-                         //   rtf.AddEn(HisCHOfFlow);
+                            //   rtf.AddEn(HisCHOfFlow);
                         }
                         else
                         {

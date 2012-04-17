@@ -557,6 +557,28 @@ namespace BP.Web
                 SetSessionByKey("FK_Station", value);
             }
         }
+        /// <summary>
+        /// 检查权限控制
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        public static bool CheckSID(string sid)
+        {
+            try
+            {
+                return true;
+
+                string mysid = DBAccess.RunSQLReturnStringIsNull("SELECT SID FROM PORT_EMP WHERE No='" + Web.WebUser.No + "'", null);
+                if (sid == mysid)
+                    return true;
+                else
+                    return false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
         public static string FK_Unit
         {
             get
