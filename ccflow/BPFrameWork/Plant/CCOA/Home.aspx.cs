@@ -30,6 +30,9 @@ public partial class CCOA_Home : System.Web.UI.Page
 
             AddrBookDept abd = new AddrBookDept();
             abd.CheckPhysicsTable();
+
+            //BP.GPM.Menu menu = new BP.GPM.Menu();
+            //menu.CheckPhysicsTable();
         }
 
     }

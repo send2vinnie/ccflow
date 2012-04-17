@@ -15,15 +15,23 @@ public partial class CCOA_Menu : BP.Web.UC.UCBase3
         this.divPop.Visible = true;
     }
 
-    public Menus MenuList
+    public BP.GPM.Menus MenuList
     {
         get
         {
-            BP.CCOA.Menus menus = new Menus();
+            //BP.CCOA.Menus menus = new Menus();
+            //menus.RetrieveAll();
+
+            //return menus;
+
+            BP.GPM.Menus menus = new BP.GPM.Menus();
+            //menus.RetrieveByAttr("FK_STem", "CCOA");
             menus.RetrieveAll();
 
             return menus;
         }
     }
+
+
 
 }

@@ -8,7 +8,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Plant", "http://localhost/Plant", "{BA115CB8-19FC-47C4-8FA0-DA9299DC43A3}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{ECC628EC-8497-4BE8-9D26-51946EC8E635}|BP.CCOA.dll;{247F7483-86B3-442E-B8B1-2FCFB432BD75}|BP.En30.dll;{795DDA68-1F56-4B5D-8BFC-E8B73BEC407A}|BP.WebAppDemo.dll;{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}|BP.Web.Controls.dll;{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}|BP.Plant.dll;"
+		ProjectReferences = "{ECC628EC-8497-4BE8-9D26-51946EC8E635}|BP.CCOA.dll;{247F7483-86B3-442E-B8B1-2FCFB432BD75}|BP.En30.dll;{795DDA68-1F56-4B5D-8BFC-E8B73BEC407A}|BP.WebAppDemo.dll;{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}|BP.Web.Controls.dll;{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}|BP.Plant.dll;{88E210E2-1877-40D8-B669-EC08CA80DC34}|BP.GPM.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Plant"
 		Debug.AspNetCompiler.PhysicalPath = "..\Plant\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Plant\"
@@ -30,11 +30,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.DevDemo", "..\Components
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.Plant", "..\Components\BP.Plant\BP.Plant.csproj", "{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.Auth", "..\Components\BP.Auth\BP.Auth.csproj", "{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.Auth.Web", "..\Components\BP.Auth.Web\BP.Auth.Web.csproj", "{991849A0-E5B3-4D98-A973-BC00BBEFF783}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.CCOA", "..\Components\BP.CCOA\BP.CCOA.csproj", "{ECC628EC-8497-4BE8-9D26-51946EC8E635}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.GPM", "..\Components\BP.GPM\BP.GPM.csproj", "{88E210E2-1877-40D8-B669-EC08CA80DC34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,18 +60,14 @@ Global
 		{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C8017A24-43EE-4C9F-AA34-2C5A1B8239AC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{991849A0-E5B3-4D98-A973-BC00BBEFF783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{991849A0-E5B3-4D98-A973-BC00BBEFF783}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{991849A0-E5B3-4D98-A973-BC00BBEFF783}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{991849A0-E5B3-4D98-A973-BC00BBEFF783}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ECC628EC-8497-4BE8-9D26-51946EC8E635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ECC628EC-8497-4BE8-9D26-51946EC8E635}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECC628EC-8497-4BE8-9D26-51946EC8E635}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECC628EC-8497-4BE8-9D26-51946EC8E635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88E210E2-1877-40D8-B669-EC08CA80DC34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88E210E2-1877-40D8-B669-EC08CA80DC34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88E210E2-1877-40D8-B669-EC08CA80DC34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88E210E2-1877-40D8-B669-EC08CA80DC34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -30,6 +30,7 @@ public partial class CCOA_News_uc_NewsGrid : BP.Web.UC.UCBase3
         }
     }
 
+    // ArticleAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员@4=按SQL");
 
     public Articles Articles
     {
@@ -37,11 +38,53 @@ public partial class CCOA_News_uc_NewsGrid : BP.Web.UC.UCBase3
         {
             Articles articles = new Articles();
             //articles.Filter("ArticleType", "0");
-            articles.RetrieveByAttr("CtrlWay",0);
+            articles.RetrieveByAttr("CtrlWay", 0);
             //articles.RetrieveAll();
-            return articles;      
+            return articles;
         }
     }
+
+    private void GetCtlWay(int ctlway)
+    {
+        string strSql = string.Empty;
+
+        if (ctlway == 1)
+        {
+            strSql = "select * from gpm.dbo.GPM_ByStation";
+        }
+        if (ctlway == 2)
+        {
+            strSql = "select * from gpm.dbo.GPM_ByDept";
+        }
+        if (ctlway == 3)
+        {
+            strSql = "select * from gpm.dbo.GPM_ByEmp";
+        }
+
+    }
+
+    private List<Article> GetArticleList()
+    {
+        List<Article> lstArticle = new List<Article>();
+        Article article = new Article();
+        switch (article.CtrlWay)
+        {
+            case 0:
+
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            
+        }
+
+        return lstArticle;
+    }
+
+
 
 
     private void BindSearch()
