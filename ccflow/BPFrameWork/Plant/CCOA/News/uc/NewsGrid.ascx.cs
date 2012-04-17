@@ -37,7 +37,8 @@ public partial class CCOA_News_uc_NewsGrid : BP.Web.UC.UCBase3
         {
             Articles articles = new Articles();
             //articles.Filter("ArticleType", "0");
-            articles.RetrieveAll();
+            articles.RetrieveByAttr("CtrlWay",0);
+            //articles.RetrieveAll();
             return articles;      
         }
     }
@@ -52,17 +53,7 @@ public partial class CCOA_News_uc_NewsGrid : BP.Web.UC.UCBase3
         this.xSearch.AddItem(new ListItem("对方单位", "F_CONSTRUCTION_ORGANIZATION"));
     }
 
-    //void PageCounter_OnPagerChanged(object sender, CurrentPageEventArgs e)
-    //{
-    //    DataTable dt = m_Dal.SelectAll(e.currentPage, e.pageSize);
-    //    Bind(dt);
-    //}
 
-    //public void Bind(DataTable dt)
-    //{
-    //    this.grid.DataSource = dt.DefaultView;
-    //    this.grid.DataBind();
-    //}
     protected void grid_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
@@ -91,18 +82,6 @@ public partial class CCOA_News_uc_NewsGrid : BP.Web.UC.UCBase3
         //this.Bind(dt);
     }
 
-    //public string SelectedItemValue
-    //{
-    //    get
-    //    {
-    //        string selectedValue = string.Empty;
-    //        if (this.grid.SelectedRow != null)
-    //        {
-    //            selectedValue = (this.grid.SelectedRow.FindControl("lblNo") as Label).Text.Trim();
-    //        }
-    //        return selectedValue;
-    //    }
-    //}
     protected void lnkEdit_Click(object sender, EventArgs e)
     {
         string pid = ((XLinkButton)sender).CommandArgument.ToString();
