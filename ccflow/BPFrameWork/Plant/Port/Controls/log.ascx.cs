@@ -54,7 +54,7 @@ public partial class Port_Controls_log : System.Web.UI.UserControl
                 WebUser.Token = this.Session.SessionID;
                 if (WebUser.IsWap)
                 {
-                    Response.Redirect("NewHome.aspx", true);
+                    Response.Redirect("Home.aspx", true);
                     return;
                 }
                 Response.Redirect(this.ToWhere, false);
@@ -79,7 +79,7 @@ public partial class Port_Controls_log : System.Web.UI.UserControl
                 //    return "EmpWorksSmall.aspx";
                 //else
                 //    return "EmpWorks.aspx";
-                return "NewHome.aspx";
+                return "Home.aspx";
             }
             else
             {
@@ -110,7 +110,7 @@ public partial class Port_Controls_log : System.Web.UI.UserControl
             WebUser.Token = this.Session.SessionID;
             if (WebUser.IsWap)
             {
-                Response.Redirect("NewHome.aspx", true);
+                Response.Redirect("Home.aspx", true);
                 return;
             }
             Response.Redirect(this.ToWhere, false);

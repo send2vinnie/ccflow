@@ -9,20 +9,45 @@ using BP.DA;
 
 public partial class Port_NewHome : System.Web.UI.Page
 {
+    public Dictionary<string, DataRow[]> DataSource { get; set; }
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        BP.CCOA.SysUser sysUser = new BP.CCOA.SysUser();
+        sysUser.CheckPhysicsTable();
+        BP.CCOA.SysInfo sysInfo = new BP.CCOA.SysInfo();
+        sysInfo.CheckPhysicsTable();
+
         if (!IsPostBack)
         {
-            BindData();
+            this.BindSystem();
+        }
+
+    }
+
+    public void BindSystem()
+    {
+        string sql = "select * from Port_SysInfo order by SysGroup, SysOrder";
+        DataTable table = new DataTable();
+        table = DBAccess.RunSQLReturnTable(sql);
+
+        var groups = (from row in table.AsEnumerable()
+                      select row["SysGroupName"].ToString()).Distinct().ToList();
+
+        DataSource = new Dictionary<string, DataRow[]>();
+
+        foreach (string groupName in groups)
+        {
+            DataRow[] rows = (from row in table.AsEnumerable()
+                              where row["SysGroupName"].ToString() == groupName
+                              select row).ToArray();
+
+            DataSource.Add(groupName, rows);
         }
     }
-
-    public void BindData()
+    protected void lbtnExit_Click(object sender, EventArgs e)
     {
-        string sql = "select top 5 * from OA_Article where ArticleType = 0";
-        DataTable table = DBAccess.RunSQLReturnTable(sql);
-        rpt1.DataSource = table;
-        rpt1.DataBind();
+        BP.Web.WebUser.Exit();
+        Response.Redirect("Login.aspx");
     }
-
 }

@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Port/WinOpen.master" AutoEventWireup="true" CodeFile="Home.aspx.cs" Inherits="Port_Home" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <link href="Style/master.css" rel="stylesheet" type="text/css" />
+<link href="Style/master.css" rel="stylesheet" type="text/css" />
     <script src="Javascript/jquery.js" type="text/javascript"></script>
     <script src="Javascript/drupal.js" type="text/javascript"></script>
     <script src="Javascript/jstools.js" type="text/javascript"></script>
@@ -14,7 +14,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div id="page" class="one-sidebar two-sidebars">
+<div id="page" class="one-sidebar two-sidebars">
         <div id="header">
             <div id="logo-title">
                 <h1 id='site-name'>
@@ -24,7 +24,7 @@
                     
                 </div>
             </div>
-            <div class="menu withprimary">
+            <div class="menu withprimary ">
                 <div id="primary" class="clear-block">
                     <ul class="links-menu">
                         <li><asp:LinkButton ID="lbtnExit" runat="server" Text="退出" onclick="lbtnExit_Click"></asp:LinkButton></li>

@@ -18,13 +18,13 @@ public partial class Port_UserSetting : System.Web.UI.Page
 
     public void BindData()
     {
-        string sysSql = "select i.No, i.SysCustomerNo, i.SysName, SysDescription from Port_SysInfo i order by i.SysOrder";
+        string sysSql = "select i.No, i.SysName, SysDescription from Port_SysInfo i order by i.SysOrder";
         System.Data.DataTable sysTable = new System.Data.DataTable();
         sysTable = DBAccess.RunSQLReturnTable(sysSql);
         this.rptSysList.DataSource = sysTable;
         this.rptSysList.DataBind();
 
-        string userSql = "select u.SysID, u.UserName, u.Password, i.SysUrl from Port_SysUser u left join Port_SysInfo i on u.SysID = i.No where u.SysUserNo = '" + BP.Web.WebUser.No + "'";
+        string userSql = "select u.SysID, u.UserName, u.Password from Port_SysUser u where u.SysUserNo = '" + BP.Web.WebUser.No + "'";
         System.Data.DataTable userTable = new System.Data.DataTable();
         userTable = DBAccess.RunSQLReturnTable(userSql);
 
@@ -36,7 +36,6 @@ public partial class Port_UserSetting : System.Web.UI.Page
             {
                 ((TextBox)ri.FindControl("txtUserName")).Text = rows[0]["UserName"].ToString();
                 ((TextBox)ri.FindControl("txtPassword")).Attributes["value"] = rows[0]["Password"].ToString();
-                ((HyperLink)ri.FindControl("nyText")).NavigateUrl = rows[0]["SysUrl"].ToString();
             }
         }
 

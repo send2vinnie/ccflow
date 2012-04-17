@@ -12,5 +12,5 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <p>
-        <img alt="" class="style1" src="Port/CCFlowWelcome.jpg" /></p>
+        <img alt="" class="style1" src="Port/Img/CCFlowWelcome.jpg" /></p>
 </asp:Content>

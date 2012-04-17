@@ -1,5 +1,25 @@
 -----------------------------------------------------------------------------------------------------
+13日09时53分23秒Fatal:System');"@两次内存查询 EnName=BP.Port.Emp,PKVal=admin
 -----------------------------------------------------------------------------------------------------
+13日09时53分47秒Fatal:System');"@两次内存查询 EnName=BP.Port.Emp,PKVal=admin
 -----------------------------------------------------------------------------------------------------
+13日09时53分53秒Info:System');"成功[BP.Port.Emp-18]放入缓存。
 -----------------------------------------------------------------------------------------------------
-13日17时01分50秒Fatal:System');"@没有[文章  OA_Article, 类[BP.CCOA.Article], 物理表[OA_Article] 实例。PK = 
+13日09时55分06秒Info:System');"成功[BP.Port.Emp-18]放入缓存。
+-----------------------------------------------------------------------------------------------------
+13日14时57分32秒Info:System');"成功[BP.Port.Emp-18]放入缓存。
+-----------------------------------------------------------------------------------------------------
+13日20时21分30秒Info:System');"成功[BP.Port.Emp-18]放入缓存。
+-----------------------------------------------------------------------------------------------------
+13日20时40分16秒Info:System');"成功[BP.Sys.EnsAppCfg-0]放入缓存。
+13日20时40分16秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.SSO.Bars@WinCardH
+13日20时40分16秒Info:System');"成功[BP.Sys.EnsAppCfg-0]放入缓存。
+13日20时40分16秒Info:System');"成功[BP.Sys.EnsAppCfg-1]放入缓存。
+13日20时40分16秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.SSO.Bars@WinCardW
+13日20时40分16秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.SSO.Bars@UIRowStyleGlo
+13日20时40分16秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.SSO.Bars@IsEnableDouclickGlo
+13日20时40分16秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.SSO.Bars@IsEnableRefFunc
+13日20时40分16秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.SSO.Bars@IsEnableFocusField
+13日20时40分16秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.SSO.Bars@IsEnableOpenICON
+13日20时40分16秒Fatal:System');"@两次内存查询 EnName=BP.Sys.EnsAppCfg,PKVal=BP.SSO.Bars@FocusField
+13日20时40分16秒Info:System');"成功[BP.Sys.EnsAppCfg-8]放入缓存。

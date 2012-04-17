@@ -26,7 +26,7 @@ namespace BP.Web.PG.App.Port
             }
             else
             {
-                str = "<a href=\"SignInOfRe.aspx\"  target='mainfrm' ><img src='OnlineUser.gif'  border='0' /><font color='#000000' size='1' >&nbsp;切换" + WebUser.Name + "</a>"; //"<a href=\"javascript: WinOpen('"+path+"/Comm/Port/OnlineUsers.aspx','online' ) ; \" >在线("+OnlineUserManager.GetUserCount()+")</font></a>";
+                str = "<a href=\"SignInOfRe.aspx\"  target='mainfrm' ><img src='Img/OnlineUser.gif'  border='0' /><font color='#000000' size='1' >&nbsp;切换" + WebUser.Name + "</a>"; //"<a href=\"javascript: WinOpen('"+path+"/Comm/Port/OnlineUsers.aspx','online' ) ; \" >在线("+OnlineUserManager.GetUserCount()+")</font></a>";
             }
             this.Response.Write(str );
             return;
