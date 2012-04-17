@@ -13,7 +13,7 @@ namespace BP.GPM
         /// <summary>
         /// 系统类型
         /// </summary>
-        public const string STemType = "STemType";
+        public const string XieYi = "XieYi";
         /// <summary>
         /// 控制方法
         /// </summary>
@@ -100,15 +100,15 @@ namespace BP.GPM
         /// <summary>
         /// 是否是ccSytem
         /// </summary>
-        public int STemType
+        public int XieYi
         {
             get
             {
-                return this.GetValIntByKey(STemAttr.STemType);
+                return this.GetValIntByKey(STemAttr.XieYi);
             }
             set
             {
-                this.SetValByKey(STemAttr.STemType, value);
+                this.SetValByKey(STemAttr.XieYi, value);
             }
         }
         public bool IsEnable
@@ -166,12 +166,11 @@ namespace BP.GPM
                 map.EnDesc = "系统";
                 map.EnType = EnType.Sys;
 
-
-
                 map.AddTBStringPK(STemAttr.No, null, "编号", true, false, 2, 30, 20);
                 map.AddTBString(STemAttr.Name, null, "名称", true, false, 0, 3900, 20);
-                map.AddDDLSysEnum(STemAttr.STemType, 0, "系统类型", true, false,
-                    STemAttr.STemType, "@0=外部系统@1=内部系统");
+                map.AddDDLSysEnum(STemAttr.XieYi, 0, "连接协议", true, false,
+                    STemAttr.XieYi, "@0=基于SID@1=基于SSL@2=基于ACL@3=基于LDAP@4=基于http");
+
 
                 map.AddDDLSysEnum(STemAttr.CtrlWay, 0, "控制方式", true, true,
                     STemAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员@4=按SQL");
