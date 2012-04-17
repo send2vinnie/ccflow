@@ -19,19 +19,10 @@ public partial class CCOA_Menu : BP.Web.UC.UCBase3
     {
         get
         {
-            //BP.CCOA.Menus menus = new Menus();
-            //menus.RetrieveAll();
-
-            //return menus;
 
             BP.GPM.Menus menus = new BP.GPM.Menus();
-            //menus.RetrieveByAttr("FK_STem", "CCOA");
-            menus.RetrieveAll();
-
+            menus.Retrieve(BP.GPM.MenuAttr.FK_STem, "CCOA", BP.GPM.MenuAttr.TreeNo);
             return menus;
         }
     }
-
-
-
 }

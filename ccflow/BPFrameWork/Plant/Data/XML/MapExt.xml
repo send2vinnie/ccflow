@@ -24,7 +24,6 @@
     
   <TBEvent No="kepress"     CH="Pop返回值"  />
   <TBEvent No="PopVal"      CH="Pop返回值"  />
-
   
   <!--<InputCheck No="100" DFor="String" CH="文本框只能输入数字代码(小数点也不能输入)"
               AlertCH="您必须输入只能输入数字代码" />
@@ -66,5 +65,4 @@
 
   <InputCheck No="300" DFor="Data" CH="日期输入不能为空"
               JS="this.value=this.value.replace(/\D/g,'')" />-->
-  
 </NewDataSet>
