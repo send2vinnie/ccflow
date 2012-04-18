@@ -21,10 +21,10 @@ public partial class Comm_Sys_GloVar : BP.Web.WebPageAdmin
         this.UCSys1.AddTDTitle("操作");
         this.UCSys1.AddTREnd();
 
-        GloVers ens = new GloVers();
+        GloVars ens = new GloVars();
         ens.RetrieveAll();
         int i = 0;
-        foreach (GloVer en in ens)
+        foreach (GloVar en in ens)
         {
             i++;
             this.UCSys1.AddTR();
