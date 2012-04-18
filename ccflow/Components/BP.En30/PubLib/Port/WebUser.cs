@@ -174,7 +174,11 @@ namespace BP.Web
                 System.Web.HttpContext.Current.Session.Clear();
             }
 
-            //WebUser.FontSize = "12px";
+            if (em.No == "admin")
+            {
+                if (em.FK_Dept.Length != 2)
+                    throw new Exception("@您没有把admin设置成最高的部门，这样会造成数据查询权限的错误，当然部门编号是("+em.FK_Dept+")");
+            }
 
             WebUser.Auth = auth;
             WebUser.No = em.No;
