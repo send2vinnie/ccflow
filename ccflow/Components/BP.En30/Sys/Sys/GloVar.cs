@@ -7,7 +7,7 @@ namespace BP.Sys
     /// <summary>
     /// 全局变量
     /// </summary>
-    public class GloVerAttr : EntityNoNameAttr
+    public class GloVarAttr : EntityNoNameAttr
     {
         /// <summary>
         /// Val
@@ -21,7 +21,7 @@ namespace BP.Sys
     /// <summary>
     /// 全局变量
     /// </summary>
-    public class GloVer : EntityNoName
+    public class GloVar : EntityNoName
     {
         #region 属性
         /// <summary>
@@ -31,11 +31,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStringByKey(GloVerAttr.Val);
+                return this.GetValStringByKey(GloVarAttr.Val);
             }
             set
             {
-                this.SetValByKey(GloVerAttr.Val, value);
+                this.SetValByKey(GloVarAttr.Val, value);
             }
         }
         /// <summary>
@@ -45,11 +45,11 @@ namespace BP.Sys
         {
             get
             {
-                return this.GetValStringByKey(GloVerAttr.Note);
+                return this.GetValStringByKey(GloVarAttr.Note);
             }
             set
             {
-                this.SetValByKey(GloVerAttr.Note, value);
+                this.SetValByKey(GloVarAttr.Note, value);
             }
         }
         #endregion
@@ -58,14 +58,14 @@ namespace BP.Sys
         /// <summary>
         /// 全局变量
         /// </summary>
-        public GloVer()
+        public GloVar()
         {
         }
         /// <summary>
         /// 全局变量
         /// </summary>
         /// <param name="mypk"></param>
-        public GloVer(string no)
+        public GloVar(string no)
         {
             this.No = no;
             this.Retrieve();
@@ -79,15 +79,15 @@ namespace BP.Sys
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("Sys_GloVer");
+                Map map = new Map("Sys_GloVar");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "全局变量";
                 map.EnType = EnType.Sys;
 
-                map.AddTBStringPK(GloVerAttr.No, null, "No", true, false, 1, 30, 20);
-                map.AddTBString(GloVerAttr.Name, null, "Name", true, false, 0, 120, 20);
-                map.AddTBString(GloVerAttr.Note, null, "Note", true, false, 0, 4000, 20);
+                map.AddTBStringPK(GloVarAttr.No, null, "No", true, false, 1, 30, 20);
+                map.AddTBString(GloVarAttr.Name, null, "Name", true, false, 0, 120, 20);
+                map.AddTBString(GloVarAttr.Note, null, "Note", true, false, 0, 4000, 20);
                 this._enMap = map;
                 return this._enMap;
             }
@@ -97,20 +97,20 @@ namespace BP.Sys
     /// <summary>
     /// 全局变量s
     /// </summary>
-    public class GloVers : EntitiesNoName
+    public class GloVars : EntitiesNoName
     {
         #region 构造
         /// <summary>
         /// 全局变量s
         /// </summary>
-        public GloVers()
+        public GloVars()
         {
         }
         /// <summary>
         /// 全局变量s
         /// </summary>
         /// <param name="fk_mapdata">s</param>
-        public GloVers(string fk_mapdata)
+        public GloVars(string fk_mapdata)
         {
             if (SystemConfig.IsDebug)
                 this.Retrieve(FrmLineAttr.FK_MapData, fk_mapdata);
@@ -124,7 +124,7 @@ namespace BP.Sys
         {
             get
             {
-                return new GloVer();
+                return new GloVar();
             }
         }
         #endregion
