@@ -88,7 +88,7 @@ namespace BP.Sys
                 map.AddTBStringPK(GloVarAttr.No, null, "键", true, false, 1, 30, 20);
                 map.AddTBString(GloVarAttr.Name, null, "名称", true, false, 0, 120, 20);
                 map.AddTBString(GloVarAttr.Val, null, "值", true, false, 0, 120, 20);
-                map.AddTBString(GloVarAttr.Note, null, "Note", true, false, 0, 4000, 20);
+                map.AddTBStringDoc(GloVarAttr.Note, null, "说明", true, false,true);
                 this._enMap = map;
                 return this._enMap;
             }

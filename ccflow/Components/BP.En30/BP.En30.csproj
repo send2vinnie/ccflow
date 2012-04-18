@@ -347,7 +347,7 @@
     <Compile Include="Sys\MapData\FrmImgAth.cs" />
     <Compile Include="Sys\MapData\FrmBtn.cs" />
     <Compile Include="Sys\MapData\FrmAttachmentDB.cs" />
-    <Compile Include="Sys\Sys\GloVer.cs" />
+    <Compile Include="Sys\Sys\GloVar.cs" />
     <Compile Include="Sys\SFTable.cs" />
     <Compile Include="Sys\SysFileManager.cs">
       <SubType>Code</SubType>
