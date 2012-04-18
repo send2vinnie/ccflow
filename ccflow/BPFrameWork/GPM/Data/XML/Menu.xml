@@ -2,7 +2,7 @@
 <NewDataSet>
  
     <!-- 信息发布  -->
-    <Item No="01" Name="权限管理系统" Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" Enable="" />
+    <Item No="01" Name="权限管理" Url="" Img="../../Images/Btn/Help.gif" ForUser="" DESC=""  DFor="" Enable="" />
     <Item No="0101" Name="系统" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.GPM.STems" Img="../../Images/Arrowhead_Next.gif" />
     <Item No="0101" Name="菜单权限" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.GPM.Menus" Img="../../Images/Arrowhead_Next.gif" />
     <Item No="0101" Name="信息块权限" Url=" ../../Comm/PanelEns.aspx?EnsName=BP.GPM.Bars" Img="../../Images/Arrowhead_Next.gif" />
@@ -17,7 +17,10 @@
 	<Item No="03"  Name="项目管理"  Url=""    Img="../../Images/Btn/Help.gif" />
 	<Item No="0301"   Name="项目维护"  Url="../../Comm/PanelEns.aspx?EnsName=BP.PRJ.Prjs"  Img="../../Images/Arrowhead_Next.gif" />
 	<Item1 No="0302"   Name="资料树节点访问规则"   Url="/PRJ/NodeAccess.aspx"  Img="../../Images/Arrowhead_Next.gif" />
-	
+  
+    <Item No="99"  Name="其它管理"  Url=""    Img="../../Images/Btn/Help.gif" />
+    <Item No="9901"   Name="全局变量"  Url="../../Comm/PanelEns.aspx?EnsName=BP.Sys.GloVars"  Img="../../Images/Arrowhead_Next.gif" />
+
 
     <!-- fast keys . -->
     <!--<ShortKey No="01" Name="发起" URL="../../App/CCFlowGuide.aspx?DoType=Start" Img="../Images/ccflow/Start.gif"  CH="发起"  />
