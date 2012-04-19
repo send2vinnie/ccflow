@@ -95,13 +95,15 @@ namespace SMSServices
             }
             return false;
         }
-
         public static string PathOfVisualFlow
         {
             get
             {
-                return @"D:\ccflow\VisualFlow";
-                //return Application.StartupPath + @"\.\..\..\..\VisualFlow\";
+                //return @"D:\ccflow\VisualFlow";
+                string path= Application.StartupPath + @"\.\..\..\..\VisualFlow\";
+                if (System.IO.Directory.Exists(path) == false)
+                    throw new Exception("@没有找到web的应用程序文件夹，此程序需要读取web.config文件才能运行。");
+                return path;
             }
         }
         public static void LoadConfigByFile()
