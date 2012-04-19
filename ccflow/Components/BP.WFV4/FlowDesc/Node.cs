@@ -2388,16 +2388,15 @@ namespace BP.WF
                 map.AddTBString(NodeAttr.TurnToDealDoc, null, "发送后提示信息", true, false, 0, 2000, 10, true);
                 map.AddTBInt(NodeAttr.NodePosType, 0, "位置", false, false);
 
-
                 map.AddTBInt(NodeAttr.IsCCNode, 0, "是否有节点完成条件", false, false);
                 map.AddTBInt(NodeAttr.IsCCFlow, 0, "是否有流程完成条件", false, false);
 
                 map.AddTBString(NodeAttr.HisStas, null, "岗位", false, false, 0, 4000, 10);
                 map.AddTBString(NodeAttr.HisDeptStrs, null, "部门", false, false, 0, 4000, 10);
 
-                map.AddTBString(NodeAttr.HisToNDs, null, "转到的节点", false, false, 0, 100, 10);
+                map.AddTBString(NodeAttr.HisToNDs, null, "转到的节点", false, false, 0, 300, 10);
                 map.AddTBString(NodeAttr.HisBillIDs, null, "单据IDs", false, false, 0, 200, 10);
-                map.AddTBString(NodeAttr.HisEmps, null, "HisEmps", false, false, 0, 600, 10);
+                map.AddTBString(NodeAttr.HisEmps, null, "HisEmps", false, false, 0, 4000, 10);
                 map.AddTBString(NodeAttr.HisSubFlows, null, "HisSubFlows", false, false, 0, 200, 10);
 
                 map.AddTBString(NodeAttr.PTable, null, "物理表", false, false, 0, 100, 10);

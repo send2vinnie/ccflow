@@ -9,13 +9,13 @@ namespace BP.Port
 	/// <summary>
 	/// 工作人员属性
 	/// </summary>
-	public class EmpAttr: BP.En.EntityNoNameAttr
-	{
-		#region 基本属性
-		/// <summary>
-		/// 部门
-		/// </summary>
-		public const  string FK_Dept="FK_Dept";
+    public class EmpAttr : BP.En.EntityNoNameAttr
+    {
+        #region 基本属性
+        /// <summary>
+        /// 部门
+        /// </summary>
+        public const string FK_Dept = "FK_Dept";
         /// <summary>
         /// FK_Unit
         /// </summary>
@@ -24,31 +24,29 @@ namespace BP.Port
         /// 密码
         /// </summary>
         public const string Pass = "Pass";
-        /// <summary>
-        /// PID
-        /// </summary>
-        public const string PID = "PID";
-        /// <summary>
-        /// pin
-        /// </summary>
-        public const string PIN = "PIN";
-        /// <summary>
-        /// UKEY密码
-        ///</summary>
-        public const string KeyPass = "KeyPass";
-        /// <summary>
-        /// 是否使用UKEY
-        /// </summary>
-         public const string IsUSBKEY = "IsUSBKEY";
-        
-		#endregion 
-	}
+        ///// <summary>
+        ///// PID
+        ///// </summary>
+        //public const string PID = "PID";
+        ///// <summary>
+        ///// pin
+        ///// </summary>
+        //public const string PIN = "PIN";
+        ///// <summary>
+        ///// UKEY密码
+        /////</summary>
+        //public const string KeyPass = "KeyPass";
+        ///// <summary>
+        ///// 是否使用UKEY
+        ///// </summary>
+        //public const string IsUSBKEY = "IsUSBKEY";
+        #endregion
+    }
 	/// <summary>
 	/// Emp 的摘要说明。
 	/// </summary>
     public class Emp : EntityNoName
     {
-
         public new string Name
         {
             get
@@ -64,52 +62,52 @@ namespace BP.Port
             }
         }
 
-        public new string PID
-        {
-            get
-            {              
-                return this.GetValStrByKey("PID");
-            }
-            set
-            {
-                this.SetValByKey("PID", value);
-            }
-        }
-        public new string PIN
-        {
-            get
-            {
-                return this.GetValStrByKey("PIN");
-            }
-            set
-            {
-                this.SetValByKey("PIN", value);
-            }
-        }
+        //public new string PID
+        //{
+        //    get
+        //    {              
+        //        return this.GetValStrByKey("PID");
+        //    }
+        //    set
+        //    {
+        //        this.SetValByKey("PID", value);
+        //    }
+        //}
+        //public new string PIN
+        //{
+        //    get
+        //    {
+        //        return this.GetValStrByKey("PIN");
+        //    }
+        //    set
+        //    {
+        //        this.SetValByKey("PIN", value);
+        //    }
+        //}
 
-        public new string KeyPass
-        {
-            get
-            {
-                return this.GetValStrByKey("KeyPass");
-            }
-            set
-            {
-                this.SetValByKey("KeyPass", value);
-            }
-        }
+        //public new string KeyPass
+        //{
+        //    get
+        //    {
+        //        return this.GetValStrByKey("KeyPass");
+        //    }
+        //    set
+        //    {
+        //        this.SetValByKey("KeyPass", value);
+        //    }
+        //}
 
-        public new string IsUSBKEY
-        {
-            get
-            {
-                return this.GetValStrByKey("IsUSBKEY");
-            }
-            set
-            {
-                this.SetValByKey("IsUSBKEY", value);
-            }
-        }
+        //public new string IsUSBKEY
+        //{
+        //    get
+        //    {
+        //        return this.GetValStrByKey("IsUSBKEY");
+        //    }
+        //    set
+        //    {
+        //        this.SetValByKey("IsUSBKEY", value);
+        //    }
+        //}
         #region 扩展属性
         /// <summary>
         /// 主要的部门。
@@ -303,12 +301,16 @@ namespace BP.Port
                 /*关于字段属性的增加 */
                 map.AddTBStringPK(EmpAttr.No, null, this.ToE("No", "编号"), true, false, 1, 20, 30);
                 map.AddTBString(EmpAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 100, 30);
-                map.AddTBString(EmpAttr.PID, null, this.ToE("PID", "UKEY的PID"), true, false, 0, 100, 30);
-                map.AddTBString(EmpAttr.PIN, null, this.ToE("PIN", "UKEY的PIN"), true, false, 0, 100, 30);
-                map.AddTBString(EmpAttr.KeyPass, null, this.ToE("KeyPass", "UKEY的KeyPass"), true, false, 0, 100, 30);
-                map.AddTBString(EmpAttr.IsUSBKEY, null, this.ToE("IsUSBKEY", "是否使用usbkey"), true, false, 0, 100, 30);
+
+                
                 map.AddTBString(EmpAttr.Pass, "pub", this.ToE("Pass", "密码"), false, false, 0, 20, 10);
                 map.AddDDLEntities(EmpAttr.FK_Dept, null, this.ToE("Dept", "部门"), new Port.Depts(), true);
+
+
+                //map.AddTBString(EmpAttr.PID, null, this.ToE("PID", "UKEY的PID"), true, false, 0, 100, 30);
+                //map.AddTBString(EmpAttr.PIN, null, this.ToE("PIN", "UKEY的PIN"), true, false, 0, 100, 30);
+                //map.AddTBString(EmpAttr.KeyPass, null, this.ToE("KeyPass", "UKEY的KeyPass"), true, false, 0, 100, 30);
+                //map.AddTBString(EmpAttr.IsUSBKEY, null, this.ToE("IsUSBKEY", "是否使用usbkey"), true, false, 0, 100, 30);
                 // map.AddDDLSysEnum("Sex", 0, "性别", "@0=女@1=男");
                 #endregion 字段
 
