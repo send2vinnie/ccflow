@@ -66,7 +66,7 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
         Bars ens = new Bars();
         ens.RetrieveAll();
 
-        int cols = 3; //定义显示列数 从0开始。
+        int cols = BP.Sys.GloVars.GetValByKeyInt("ColsOfSSO", 3);
         BarEmps bes = new BarEmps();
         bes.InitMyBars();
 
