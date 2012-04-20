@@ -27,14 +27,12 @@ public partial class SSO_Home : System.Web.UI.Page
             return pls;
         }
     }
-
     public int GetNum(PerAlert pa)
     {
         int num = BP.DA.DBAccess.RunSQLReturnValInt(pa.GetSQL);
 
         return num;
     }
-
     private BarEmps BarEmps
     {
         get
@@ -44,16 +42,6 @@ public partial class SSO_Home : System.Web.UI.Page
             return bes;
         }
     }
-
-    public Bars bars
-    {
-        get {
-            Bars bars = new Bars();
-            bars.
-        }
-
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
 
