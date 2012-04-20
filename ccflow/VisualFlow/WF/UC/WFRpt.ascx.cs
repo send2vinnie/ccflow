@@ -131,11 +131,9 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         Node nd = new Node(tk.NDFrom);
         Work wk = nd.HisWork;
         wk.OID = tk.WorkID;
-
         if (wk.RetrieveFromDBSources() == 0)
         {
-            this.Clear();
-            this.UCEn1.AddFieldSet("打开("+nd.Name+")错误");
+            this.UCEn1.AddFieldSet("打开(" + nd.Name + ")错误");
             this.UCEn1.AddH1("当前的节点数据已经被删除！！！<br> 造成此问题出现的原因如下。");
             this.UCEn1.AddBR("1、当前节点数据被非法删除。");
             this.UCEn1.AddBR("2、节点数据是退回人与被退回人中间的节点，这部分节点数据查看不支持。");
