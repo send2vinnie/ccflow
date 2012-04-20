@@ -70,6 +70,11 @@ public partial class WF_DtlOpt : WebPage
         if (this.Request.QueryString["Flag"] == "ExpTemplete")
         {
             string file = this.Request.PhysicalApplicationPath + @"\DataUser\DtlTemplete\" + this.FK_MapDtl + ".xls";
+            if (System.IO.File.Exists(file) == false)
+            {
+                this.WinCloseWithMsg("设计错误：流程设计人员没有把该导入的明细表模版放入"+file);
+                return;
+            }
             BP.PubClass.OpenExcel(file, dtl.Name + ".xls");
             this.WinClose();
         }
@@ -77,6 +82,11 @@ public partial class WF_DtlOpt : WebPage
         if (this.Request.QueryString["Flag"] == "ExpTemplete")
         {
             string file = this.Request.PhysicalApplicationPath + @"\DataUser\DtlTemplete\" + this.FK_MapDtl + ".xls";
+            if (System.IO.File.Exists(file) == false)
+            {
+                this.WinCloseWithMsg("设计错误：流程设计人员没有把该导入的明细表模版放入" + file);
+                return;
+            }
             BP.PubClass.OpenExcel(file, dtl.Name + ".xls");
             this.WinClose();
             return;

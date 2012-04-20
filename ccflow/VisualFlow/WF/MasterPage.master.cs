@@ -20,7 +20,7 @@ public partial class Face_MasterPage : BP.Web.MasterPage
             {
                 string url = System.Web.HttpContext.Current.Request.RawUrl;
                 int i = url.LastIndexOf("/") + 1;
-                int i2 = url.IndexOf(".aspx") - 6;
+                int i2 = url.IndexOf(".aspx") - 5;
                 try
                 {
                     url = url.Substring(i);
