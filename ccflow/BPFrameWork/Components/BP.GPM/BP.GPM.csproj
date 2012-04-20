@@ -40,6 +40,7 @@
     <Compile Include="GPM\BarEmp.cs" />
     <Compile Include="GPM\PerAlert.cs" />
     <Compile Include="GPM\PerSetting.cs" />
+    <Compile Include="GPM\MenuEmp.cs" />
     <Compile Include="Group\DTSGenerDir.cs" />
     <Compile Include="Group\EmpPrj.cs" />
     <Compile Include="Group\EmpPrjExt.cs" />

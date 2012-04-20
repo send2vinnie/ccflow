@@ -2,85 +2,20 @@
 using System.Collections;
 using System.Data;
 using BP.DA;
+using BP.Web;
 using BP.En;
 
 namespace BP.GPM
 {
-    /// <summary>
-    /// 控制方式
-    /// </summary>
-    public enum CtrlWay
+    public class MenuEmpAttr
     {
-        /// <summary>
-        /// 任何人
-        /// </summary>
-        AnyOne,
-        /// <summary>
-        /// 按岗位
-        /// </summary>
-        ByStation,
-        /// <summary>
-        /// 按部门
-        /// </summary>
-        ByDept,
-        /// <summary>
-        /// 按人员
-        /// </summary>
-        ByEmp,
-        /// <summary>
-        /// 按sql
-        /// </summary>
-        BySQL
-    }
-    public enum MenuType
-    {
-        /// <summary>
-        /// 目录
-        /// </summary>
-        Dir,
-        /// <summary>
-        /// 功能
-        /// </summary>
-        Func,
-        /// <summary>
-        /// 功能点
-        /// </summary>
-        FuncDot
+        public const string FK_Emp = "FK_Emp";
+        public const string FK_Menu = "FK_Menu";
     }
     /// <summary>
     /// 菜单
     /// </summary>
-    public class MenuAttr : EntityNoNameAttr
-    {
-        /// <summary>
-        /// 系统类型
-        /// </summary>
-        public const string MenuType = "MenuType";
-        /// <summary>
-        /// 控制方法
-        /// </summary>
-        public const string CtrlWay = "CtrlWay";
-        /// <summary>
-        /// 顺序
-        /// </summary>
-        public const string Idx = "Idx";
-        /// <summary>
-        /// 系统
-        /// </summary>
-        public const string FK_STem = "FK_STem";
-        public const string TreeNo = "TreeNo";
-        public const string Img = "Img";
-        public const string Url = "Url";
-
-        /// <summary>
-        /// 控制内容
-        /// </summary>
-        public const string CtrlObjs = "CtrlObjs";
-    }
-    /// <summary>
-    /// 菜单
-    /// </summary>
-    public class Menu : EntityOID
+    public class MenuEmp : EntityMyPK
     {
         #region 属性
         public string CtrlObjs
@@ -92,6 +27,28 @@ namespace BP.GPM
             set
             {
                 this.SetValByKey(MenuAttr.CtrlObjs, value);
+            }
+        }
+        public string FK_Emp
+        {
+            get
+            {
+                return this.GetValStringByKey(MenuEmpAttr.FK_Emp);
+            }
+            set
+            {
+                this.SetValByKey(MenuEmpAttr.FK_Emp, value);
+            }
+        }
+        public int FK_Menu
+        {
+            get
+            {
+                return this.GetValIntByKey(MenuEmpAttr.FK_Menu);
+            }
+            set
+            {
+                this.SetValByKey(MenuEmpAttr.FK_Menu, value);
             }
         }
         public string Name
@@ -213,14 +170,14 @@ namespace BP.GPM
         /// <summary>
         /// 菜单
         /// </summary>
-        public Menu()
+        public MenuEmp()
         {
         }
         /// <summary>
         /// 菜单
         /// </summary>
         /// <param name="mypk"></param>
-        public Menu(string no)
+        public MenuEmp(string no)
         {
             this.Retrieve();
         }
@@ -233,40 +190,25 @@ namespace BP.GPM
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("GPM_Menu");
+                Map map = new Map("GPM_MenuEmp");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
-                map.EnDesc = "系统";
+                map.EnDesc = "人员菜单";
                 map.EnType = EnType.Sys;
 
-                map.AddTBIntPKOID();
+                map.AddMyPK();
+
+                map.AddTBString(MenuEmpAttr.FK_Emp, null, "FK_Emp", true, false, 0, 30, 20);
+                map.AddTBInt(MenuEmpAttr.FK_Menu, 0, "FK_Menu", true, false);
 
                 map.AddTBString(MenuAttr.TreeNo, null, "编号", true, false, 2, 30, 20);
                 map.AddTBString(MenuAttr.Name, null, "名称", true, false, 0, 3900, 20);
                 map.AddDDLSysEnum(MenuAttr.MenuType, 0, "菜单类型", true, true,
                     MenuAttr.MenuType, "@0=目录@1=功能@2=功能控制点");
 
-                map.AddDDLEntities(MenuAttr.FK_STem, null, "系统", new STems(), true);
-
-                map.AddDDLSysEnum(STemAttr.CtrlWay, 1, "控制方式", true, true,
-                  STemAttr.CtrlWay, "@0=游客@1=所有人员@2=按岗位@3=按部门@4=按人员@5=按SQL");
-
-                map.AddTBString(MenuAttr.CtrlObjs, null, "控制内容", false, false, 0, 4000, 20);
-
+                map.AddTBString(MenuAttr.FK_STem, null, "FK_Emp", true, false, 0, 30, 20);
                 map.AddTBString(STemAttr.Url, null, "连接", true, false, 0, 3900, 20, true);
-
-
                 map.AddMyFile("图标");
-
-                map.AttrsOfOneVSM.Add(new ByStations(), new Stations(), ByStationAttr.RefObj, ByStationAttr.FK_Station, StationAttr.Name, StationAttr.No, "可访问的岗位");
-                map.AttrsOfOneVSM.Add(new ByDepts(), new Depts(), ByStationAttr.RefObj, ByDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "可访问的部门");
-                map.AttrsOfOneVSM.Add(new ByEmps(), new Emps(), ByStationAttr.RefObj, ByEmpAttr.FK_Emp, EmpAttr.Name, EmpAttr.No, "可访问的人员");
-                map.AddSearchAttr(MenuAttr.FK_STem);
-
-                //  map.AddDtl(new MenuDots(), MenuDotAttr.RefOID);
-                //map.AttrsOfOneVSM.Add(new MenuStations(), new Stations(), MenuStationAttr.FK_Menu, MenuStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "可访问的岗位");
-                //map.AttrsOfOneVSM.Add(new MenuDepts(), new Depts(), MenuDeptAttr.FK_Menu, MenuDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "可访问的部门");
-                //map.AttrsOfOneVSM.Add(new MenuEmps(), new Emps(), MenuEmpAttr.FK_Menu, MenuEmpAttr.FK_Emp, DeptAttr.Name, DeptAttr.No, "可访问的人员");
 
                 this._enMap = map;
                 return this._enMap;
@@ -274,22 +216,45 @@ namespace BP.GPM
         }
         #endregion
 
-        protected override bool beforeUpdateInsertAction()
+        public void InitMenu()
         {
-            BP.Sys.SysConfigs.SetValByKey(BP.GPM.EmpAttr.UpdateMenu, DateTime.Now.ToString(DataType.CurrentDataTime));
-            return true;
+            string val = DBAccess.RunSQLReturnStringIsNull("SELECT " + EmpAttr.UpdateMenu + " FROM Port_Emp WHERE No='" + Web.WebUser.No + "'", "asd");
+            string v2 = BP.Sys.SysConfigs.GetValByKey(BP.GPM.EmpAttr.UpdateMenu);
+            if (val == v2)
+                return;
+
+            MenuEmp myme = new MenuEmp();
+            myme.Delete(MenuEmpAttr.FK_Emp, WebUser.No);
+
+            Menus ens = new Menus();
+            ens.RetrieveAllFromDBSource();
+            foreach (Menu en in ens)
+            {
+                /* 把此人能看到的菜单init 里面去。*/
+
+                if (Glo.IsCanDoIt(en.OID, en.HisCtrlWay) == false)
+                    continue;
+
+                MenuEmp me = new MenuEmp();
+                me.Copy(en);
+                me.FK_Emp = WebUser.No;
+                me.FK_Menu = en.OID;
+                me.MyPK = me.FK_Menu + "_" + me.FK_Emp;
+                me.Insert();
+            }
+            DBAccess.RunSQL("UPDATE Port_Emp set  " + EmpAttr.UpdateMenu + "='" + v2 + "' where no='" + WebUser.No + "'");
         }
     }
     /// <summary>
     /// 菜单s
     /// </summary>
-    public class Menus : EntitiesOID
+    public class MenuEmps : EntitiesOID
     {
         #region 构造
         /// <summary>
         /// 菜单s
         /// </summary>
-        public Menus()
+        public MenuEmps()
         {
         }
         /// <summary>
@@ -299,7 +264,7 @@ namespace BP.GPM
         {
             get
             {
-                return new Menu();
+                return new MenuEmp();
             }
         }
         #endregion

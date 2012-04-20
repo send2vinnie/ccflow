@@ -316,8 +316,8 @@ namespace BP.GPM
                 map.AddDDLSysEnum(BarAttr.OpenWay, 0, "打开方式", true, true,
                   BarAttr.OpenWay, "@0=新窗口@1=本窗口@2=覆盖新窗口");
 
-                map.AddDDLSysEnum(BarAttr.CtrlWay, 0, "控制方式", true, true,
-                    BarAttr.CtrlWay, "@0=所有人员@1=按岗位@2=按部门@3=按人员");
+                map.AddDDLSysEnum(STemAttr.CtrlWay, 0, "控制方式", true, true,
+                   STemAttr.CtrlWay, "@0=游客@1=所有人员@2=按岗位@3=按部门@4=按人员@5=按SQL");
 
                 map.AddTBInt(BarAttr.Idx, 0, "显示顺序", false, true);
 

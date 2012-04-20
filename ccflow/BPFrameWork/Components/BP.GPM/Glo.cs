@@ -7,6 +7,19 @@ namespace BP.GPM
 {
     public class Glo
     {
+        /// <summary>
+        /// 安装
+        /// </summary>
+        public static void Install()
+        {
+
+        }
+        /// <summary>
+        /// 是否可以执行判断
+        /// </summary>
+        /// <param name="obj">判断对象</param>
+        /// <param name="cw">方式</param>
+        /// <returns>是否可以执行</returns>
         public static bool IsCanDoIt(object obj, BP.GPM.CtrlWay cw)
         {
             int n = 0;

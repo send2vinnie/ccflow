@@ -130,12 +130,12 @@ namespace BP.GPM
                 map.AddTBString(PerAlertAttr.Url, null, "连接", true, false, 0, 3900, 20, true);
                 map.AddDDLSysEnum(BarAttr.OpenWay, 0, "打开方式", true, true,
                 BarAttr.OpenWay, "@0=新窗口@1=本窗口@2=覆盖新窗口");
-
-                map.AddTBString(PerAlertAttr.GetSQL, null, "获取的SQL", true, false, 0, 3900, 20, true);
-                //map.AddTBString(PerAlertAttr.ICON, null, "ICON", true, false, 0, 3900, 20);
                 map.AddTBInt(PerAlertAttr.Idx, 0, "显示顺序", true, false);
 
-                map.AddMyFile("ICON");
+                map.AddTBStringDoc(PerAlertAttr.GetSQL, null, "获取待处理数量的SQL", true, false, true);
+                //map.AddTBString(PerAlertAttr.ICON, null, "ICON", true, false, 0, 3900, 20);
+
+                map.AddMyFile("图标");
                 this._enMap = map;
                 return this._enMap;
             }

@@ -230,12 +230,21 @@ namespace BP.GPM
                 map.AttrsOfOneVSM.Add(new EmpStations(), new Stations(), EmpStationAttr.FK_Emp, EmpStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "岗位权限");
                 map.AttrsOfOneVSM.Add(new EmpDepts(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "工作部门");
                 map.AttrsOfOneVSM.Add(new DeptSearchScorps(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "查询权限");
-
                 #endregion
+
+                RefMethod rm = new RefMethod();
+                rm.Title = "与CCIM数据同步";
+                rm.ClassMethodName = this.ToString() + ".DoSubmitToCCIM";
+                map.AddRefMethod(rm);
 
                 this._enMap = map;
                 return this._enMap;
             }
+        }
+        public string DoSubmitToCCIM()
+        {
+
+            return "同步成功";
         }
         public override Entities GetNewEntities
         {
