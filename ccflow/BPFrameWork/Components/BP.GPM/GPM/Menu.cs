@@ -276,7 +276,8 @@ namespace BP.GPM
 
         protected override bool beforeUpdateInsertAction()
         {
-            BP.Sys.SysConfigs.SetValByKey(BP.GPM.EmpAttr.UpdateMenu, DateTime.Now.ToString(DataType.CurrentDataTime));
+           // BP.DA.DBAccess.RunSQL("DELETE ");
+            //BP.Sys.SysConfigs.SetValByKey(BP.GPM.EmpAttr.UpdateMenu, DateTime.Now.ToString(DataType.CurrentDataTime));
             return true;
         }
     }

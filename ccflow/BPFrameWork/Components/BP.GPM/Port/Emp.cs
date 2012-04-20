@@ -103,20 +103,6 @@ namespace BP.GPM
             }
         }
         /// <summary>
-        /// 菜单更新时间
-        /// </summary>
-        public string UpdateMenu
-        {
-            get
-            {
-                return this.GetValStrByKey(EmpAttr.UpdateMenu);
-            }
-            set
-            {
-                this.SetValByKey(EmpAttr.UpdateMenu, value);
-            }
-        }
-        /// <summary>
         /// 密码
         /// </summary>
         public string Pass
@@ -217,10 +203,7 @@ namespace BP.GPM
                 map.AddTBString(EmpAttr.Name, null, "名称", true, false, 0, 100, 100);
                 map.AddTBString(EmpAttr.Pass, "pub", "密码", false, false, 0, 20, 10);
                 map.AddDDLEntities(EmpAttr.FK_Dept, null, "部门", new BP.Port.Depts(), true);
-
                 map.AddTBString(EmpAttr.SID, null, "SID", false, false, 0, 200, 10);
-
-                map.AddTBString(EmpAttr.UpdateMenu, null, "菜单更新时间", false, false, 0, 22, 10);
                 #endregion 字段
 
                 map.AddSearchAttr(EmpAttr.FK_Dept);
@@ -243,7 +226,6 @@ namespace BP.GPM
         }
         public string DoSubmitToCCIM()
         {
-
             return "同步成功";
         }
         public override Entities GetNewEntities

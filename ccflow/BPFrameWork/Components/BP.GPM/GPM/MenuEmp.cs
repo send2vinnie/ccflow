@@ -218,11 +218,6 @@ namespace BP.GPM
 
         public void InitMenu()
         {
-            string val = DBAccess.RunSQLReturnStringIsNull("SELECT " + EmpAttr.UpdateMenu + " FROM Port_Emp WHERE No='" + Web.WebUser.No + "'", "asd");
-            string v2 = BP.Sys.SysConfigs.GetValByKey(BP.GPM.EmpAttr.UpdateMenu);
-            if (val == v2)
-                return;
-
             MenuEmp myme = new MenuEmp();
             myme.Delete(MenuEmpAttr.FK_Emp, WebUser.No);
 
@@ -242,7 +237,6 @@ namespace BP.GPM
                 me.MyPK = me.FK_Menu + "_" + me.FK_Emp;
                 me.Insert();
             }
-            DBAccess.RunSQL("UPDATE Port_Emp set  " + EmpAttr.UpdateMenu + "='" + v2 + "' where no='" + WebUser.No + "'");
         }
     }
     /// <summary>
