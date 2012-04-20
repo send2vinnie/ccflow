@@ -17,6 +17,11 @@ namespace BP.Sys
         /// Note
         /// </summary>
         public const string Note = "Note";
+        /// <summary>
+        /// GroupKey
+        /// </summary>
+        public const string GroupKey = "GroupKey";
+
     }
     /// <summary>
     /// 全局变量
@@ -87,7 +92,8 @@ namespace BP.Sys
 
                 map.AddTBStringPK(GloVarAttr.No, null, "键", true, false, 1, 30, 20);
                 map.AddTBString(GloVarAttr.Name, null, "名称", true, false, 0, 120, 20);
-                map.AddTBString(GloVarAttr.Val, null, "值", true, false, 0, 120, 20);
+                map.AddTBString(GloVarAttr.Val, null, "值", true, false, 0, 120, 20,true);
+                map.AddTBString(GloVarAttr.GroupKey, null, "分组值", true, false, 0, 120, 20, true);
                 map.AddTBStringDoc(GloVarAttr.Note, null, "说明", true, false,true);
                 this._enMap = map;
                 return this._enMap;
