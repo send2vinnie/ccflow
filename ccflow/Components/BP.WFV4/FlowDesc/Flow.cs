@@ -346,8 +346,23 @@ namespace BP.WF
                 // 记录这个id ,不让其它在复制时间被修改。
                 Int64 newOID = wk.OID;
                 // 处理传递过来的参数。
+                int i = 0;
                 foreach (string k in System.Web.HttpContext.Current.Request.QueryString.AllKeys)
+                {
                     wk.SetValByKey(k, System.Web.HttpContext.Current.Request.QueryString[k]);
+                    //switch (k)
+                    //{
+                    //    case "FK_Flow":
+                    //    case "IsDeleteDraft":
+                    //    case "FK_":
+                    //        break;
+                    //    default:
+                    //        i++;
+                    //        break;
+                    //}
+                }
+                if (i > 4)
+                    wk.DirectUpdate();
 
                 #region 处理删除草稿的需求。
                 if (System.Web.HttpContext.Current.Request.QueryString["IsDeleteDraft"] == "1" && num == 1)
