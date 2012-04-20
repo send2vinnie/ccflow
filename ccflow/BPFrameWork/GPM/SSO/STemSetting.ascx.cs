@@ -19,7 +19,6 @@ public partial class SSO_PerSetting : BP.Web.UC.UCBase
         this.AddTDTitle("名称");
         this.AddTDTitle("用户名");
         this.AddTDTitle("密码");
-        this.AddTDTitle("操作");
         this.AddTREnd();
 
         STems ens = new STems();
@@ -42,7 +41,7 @@ public partial class SSO_PerSetting : BP.Web.UC.UCBase
                 ps = new PerSetting();
 
             TextBox tb = new TextBox();
-            tb.ID = en.No+"_No";
+            tb.ID = en.No + "_No";
             tb.Text = ps.UserNo;
             this.AddTD(tb);
 
@@ -51,16 +50,22 @@ public partial class SSO_PerSetting : BP.Web.UC.UCBase
             tb.TextMode = TextBoxMode.Password;
             tb.Text = ps.UserPass;
             this.AddTD(tb);
-            this.AddTD("测试");
             this.AddTREnd();
         }
-        this.AddTableEnd();
+
+        this.AddTR();
+        this.AddTDBegin("colspan=5");
 
         Button btn = new Button();
         btn.Text = " 保 存 ";
         btn.ID = "Save";
         btn.Click += new EventHandler(btn_Click);
         this.Add(btn);
+        this.AddTDEnd();
+        this.AddTREnd();
+        this.AddTableEnd();
+
+     
     }
     void btn_Click(object sender, EventArgs e)
     {
@@ -79,6 +84,6 @@ public partial class SSO_PerSetting : BP.Web.UC.UCBase
             ps.UserPass = this.GetTextBoxByID(en.No + "_Pass").Text;
             ps.Save();
         }
-        this.Alert("保存成功.");
+        this.Response.Redirect(this.Request.RawUrl);
     }
 }
