@@ -10,24 +10,19 @@ public partial class SSO_PerAlert : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
-
     public PerAlerts PerAlerts
     {
         get
         {
             BP.GPM.PerAlerts pls = new PerAlerts();
             pls.RetrieveAll();
-
             return pls;
         }
     }
-
     public int GetNum(PerAlert pa)
     {
         int num = BP.DA.DBAccess.RunSQLReturnValInt(pa.GetSQL);
-
         return num;
     }
 }

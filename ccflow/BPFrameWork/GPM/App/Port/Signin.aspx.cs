@@ -57,8 +57,12 @@ namespace BP.Web
                     Response.Redirect("Home.aspx", false);
                     return;
                 }
+                else
+                {
+                    this.Response.Write(" ⁄»®—È÷§ ß∞‹°£");
+                    this.TB_No.Text = userNo;
+                }
             }
-
 
 			string script="<script language=javascript>function setFocus(ctl) {if (document.forms[0][ctl] !=null )  { document.forms[0][ctl].focus(); } } setFocus('"+this.TB_Pass.ClientID+"'); </script>";
 			this.RegisterStartupScript("func", script);
@@ -128,7 +132,7 @@ namespace BP.Web
 		{
 			try
 			{
-				 Emp em = new Emp(this.TB_No.Text);
+				Emp em = new Emp(this.TB_No.Text);
 				if ( em.Pass.Trim().Equals(this.TB_Pass.Text.Trim() ) || this.TB_Pass.Text.ToLower().Trim()== BP.SystemConfig.AppSettings["GenerPass"] || SystemConfig.IsDebug ) 
 				{
 					//OnlineUserManager.AddUser(em,"ss",em.FK_DeptText);
@@ -139,7 +143,6 @@ namespace BP.Web
                         {
                             string oid = WebUser.No;
                             this.Session.Clear();
-                           // OnlineUserManager.ReomveUser(oid);
                         }
                     }
 
@@ -155,7 +158,7 @@ namespace BP.Web
 						string oid= this.Session["UserNo"].ToString() ;
 					}
 
-					WebUser.SignInOfGener(em,true);
+					WebUser.SignInOfGener(em,"CH","",true,true);
 					WebUser.Token=this.Session.SessionID;
                     Response.Redirect("../../SSO/Default.aspx", false);
 					return;

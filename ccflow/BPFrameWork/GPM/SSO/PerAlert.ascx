@@ -4,7 +4,7 @@
         <li><a href="Default.aspx">首页</a> &nbsp;&nbsp;</li>
         <%foreach (BP.GPM.PerAlert pl in PerAlerts)
           {%>
-        <li><a href="<%=pl.Url %>">
+        <li><a href="<%=pl.Url%>" target="_blank" >
             <img alt="" src="<%=pl.ICON%>" width="16px" height="16px" border="0" />
             <%=pl.Name%>(<%=GetNum(pl)%>)</a>&nbsp;&nbsp;</li>
         <% } %>
