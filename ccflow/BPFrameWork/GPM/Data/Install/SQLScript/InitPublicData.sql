@@ -25,3 +25,8 @@ INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('MyWork','待办工
 INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('News','未读新闻','http://sina.com.cn','SELECT COUNT(*) FROM PORT_EMP','/GPM/DataUser/BP.GPM.PerAlert/News.gif');
 INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('Notice','未读公告','http://sina.com.cn','SELECT COUNT(*) FROM PORT_EMP','/GPM/DataUser/BP.GPM.PerAlert/Notice.gif');
 INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('Ontheway','在途工作','http://sina.com.cn','SELECT COUNT(*) FROM PORT_EMP','/GPM/DataUser/BP.GPM.PerAlert/Ontheway.gif');
+
+DELETE SYS_GloVar;
+INSERT INTO SYS_GloVar(No,Name,Val,GroupKey,Note) VALUES ('ColsOfSSO','SSO界面信息列数','3','SSO','SSO界面信息列数,单点登陆界面中的列数。');
+INSERT INTO SYS_GloVar(No,Name,Val,GroupKey,Note) VALUES ('UnitFullName','单位全称','济南驰骋信息技术有限公司','Glo','');
+INSERT INTO SYS_GloVar(No,Name,Val,GroupKey,Note) VALUES ('UnitSimpleName','单位简称','驰骋软件','Glo','');
