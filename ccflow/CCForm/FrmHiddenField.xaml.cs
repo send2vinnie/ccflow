@@ -105,7 +105,7 @@ namespace CCForm
                     if (MessageBox.Show("您确定要执行删除吗？", "删除提示", MessageBoxButton.OK) == MessageBoxResult.OK)
                     {
                         FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-                        da.RunSQLsAsync("DELETE Sys_MapAttr WHERE FK_MapData='" + Glo.FK_MapData + "' AND KeyOfEn='" + key + "'");
+                        da.RunSQLsAsync("DELETE FROM Sys_MapAttr WHERE FK_MapData='" + Glo.FK_MapData + "' AND KeyOfEn='" + key + "'");
                         da.RunSQLsCompleted += new EventHandler<FF.RunSQLsCompletedEventArgs>(da_RunSQLsCompleted);
                         return;
                     }

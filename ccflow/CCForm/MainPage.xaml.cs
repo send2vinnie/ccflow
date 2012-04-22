@@ -630,9 +630,15 @@ namespace CCForm
         {
             InitializeComponent();
 
+            #region 获取参数
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
             da.CfgKeyAsync("CompanyID");
             da.CfgKeyCompleted += new EventHandler<FF.CfgKeyCompletedEventArgs>(da_CfgKeyCompleted);
+
+            FF.CCFormSoapClient daAppCenter = Glo.GetCCFormSoapClientServiceInstance();
+            daAppCenter.CfgKeyAsync("AppCenterDBType");
+            daAppCenter.CfgKeyCompleted += new EventHandler<FF.CfgKeyCompletedEventArgs>(daAppCenter_CfgKeyCompleted);
+            #endregion 获取参数
 
 
             _doubleClickTimer = new System.Windows.Threading.DispatcherTimer();
@@ -751,6 +757,11 @@ namespace CCForm
             this.canvasMain.KeyDown += new KeyEventHandler(canvasMain_KeyDown);
             this.BindTreeView();
             #endregion 其它.
+        }
+
+        void daAppCenter_CfgKeyCompleted(object sender, FF.CfgKeyCompletedEventArgs e)
+        {
+            Glo.AppCenterDBType = e.Result;
         }
         void da_CfgKeyCompleted(object sender, FF.CfgKeyCompletedEventArgs e)
         {
@@ -4460,12 +4471,14 @@ namespace CCForm
                         }
                     }
                     if (isHave == false)
-                        sqls += "@DELETE " + ysdt.TableName + " WHERE " + pk + "='" + pkVal + "'";
+                        sqls += "@DELETE FROM " + ysdt.TableName + " WHERE " + pk + "='" + pkVal + "'";
                 }
             }
             #endregion
 
             #region save label.
+            string len = Glo.LEN_Function;
+          //  if (Glo.ap
             foreach (UIElement ctl in this.canvasMain.Children)
             {
                 BPCheckBox cb = ctl as BPCheckBox;
@@ -4478,7 +4491,7 @@ namespace CCForm
                         continue;
 
                     Label mylab = cb.Content as Label;
-                    sqls += "@UPDATE Sys_MapAttr SET Name='" + mylab.Content + "'  WHERE MyPK='" + Glo.FK_MapData + "_" + cb.Name + "' AND LEN(Name)=0";
+                    sqls += "@UPDATE Sys_MapAttr SET Name='" + mylab.Content + "'  WHERE MyPK='" + Glo.FK_MapData + "_" + cb.Name + "' AND " + len + "(Name)=0";
                     continue;
                 }
 
@@ -4488,7 +4501,7 @@ namespace CCForm
                     if (string.IsNullOrEmpty(tb.KeyName))
                         continue;
 
-                    sqls += "@UPDATE Sys_MapAttr SET Name='" + tb.KeyName + "' WHERE MyPK='" + Glo.FK_MapData + "_" + tb.Name + "' AND ( LEN(Name)=0 OR KeyOfEn=Name )";
+                    sqls += "@UPDATE Sys_MapAttr SET Name='" + tb.KeyName + "' WHERE MyPK='" + Glo.FK_MapData + "_" + tb.Name + "' AND ( " + len + "(Name)=0 OR KeyOfEn=Name )";
                     continue;
                 }
 
@@ -4498,7 +4511,7 @@ namespace CCForm
                     if (string.IsNullOrEmpty(ddl.KeyName))
                         continue;
 
-                    sqls += "@UPDATE Sys_MapAttr SET Name='" + ddl.KeyName + "' WHERE MyPK='" + Glo.FK_MapData + "_" + ddl.Name + "' AND LEN(Name)=0";
+                    sqls += "@UPDATE Sys_MapAttr SET Name='" + ddl.KeyName + "' WHERE MyPK='" + Glo.FK_MapData + "_" + ddl.Name + "' AND " + len + "(Name)=0";
                     continue;
                 }
 
@@ -4511,7 +4524,7 @@ namespace CCForm
                     if (sqls.Contains("_" + rb.GroupName))
                         continue;
 
-                    sqls += "@UPDATE Sys_MapAttr SET Name='" + rb.KeyName + "' WHERE MyPK='" + Glo.FK_MapData + "_" + rb.GroupName + "' AND LEN(Name)=0";
+                    sqls += "@UPDATE Sys_MapAttr SET Name='" + rb.KeyName + "' WHERE MyPK='" + Glo.FK_MapData + "_" + rb.GroupName + "' AND " + len + "(Name)=0";
                     continue;
                 }
             }

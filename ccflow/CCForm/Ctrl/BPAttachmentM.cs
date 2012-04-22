@@ -172,7 +172,7 @@ namespace CCForm
                 return;
 
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-            da.RunSQLsAsync("DELETE Sys_FrmAttachment WHERE NoOfObj='" + this.Name + "' AND FK_MapData='" + Glo.FK_MapData + "'");
+            da.RunSQLsAsync("DELETE FROM Sys_FrmAttachment WHERE NoOfObj='" + this.Name + "' AND FK_MapData='" + Glo.FK_MapData + "'");
             da.RunSQLsCompleted += new EventHandler<FF.RunSQLsCompletedEventArgs>(da_RunSQLsCompleted);
         }
         void da_RunSQLsCompleted(object sender, FF.RunSQLsCompletedEventArgs e)

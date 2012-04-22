@@ -19,8 +19,41 @@ using CCForm.FF;
 
 namespace CCForm
 {
+    public class DBType
+    {
+        public const string  MSSQL="MSSQL";
+        public const string  Oracle="Oracle";
+        public const string MySQL = "MySQL";
+        public const string DB2 = "DB2";
+    }
+
     public class Glo
     {
+        private static string _Len_Function = null;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string LEN_Function
+        {
+            get
+            {
+                if (_Len_Function == null)
+                {
+                    switch (Glo.AppCenterDBType)
+                    {
+                        case DBType.MSSQL:
+                            _Len_Function = "LEN";
+                            break;
+                        default:
+                            _Len_Function = "LENGTH";
+                            break;
+                    }
+                }
+                return _Len_Function;
+            }
+        }
+
         #region 操作步骤的恢复
         public static int CurrOpStep = 0;
         private static List<FuncStep> _FuncSteps = null;
@@ -54,6 +87,7 @@ namespace CCForm
         public static bool IsDtlFrm = false;
         public static string BPMHost = null;
         public static string CompanyID = "CCFlow";
+        public static string AppCenterDBType = "MSSQL";
         public static void BindComboBoxFrontName(ComboBox cb, string selectVal)
         {
             cb.Items.Clear();

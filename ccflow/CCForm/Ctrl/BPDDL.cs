@@ -251,7 +251,7 @@ namespace CCForm
             if (this.Name != null)
             {
                 FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-                string sqls = "DELETE Sys_MapAttr WHERE FK_MapData='" + Glo.FK_MapData + "' AND KeyOfEn='" + this.Name + "'";
+                string sqls = "DELETE FROM Sys_MapAttr WHERE FK_MapData='" + Glo.FK_MapData + "' AND KeyOfEn='" + this.Name + "'";
                 da.RunSQLsAsync(sqls);
             }
             Canvas c = this.Parent as Canvas;
