@@ -361,7 +361,7 @@ namespace BP.WF
                     //        break;
                     //}
                 }
-                if (i > 4)
+                if (i > 3)
                     wk.DirectUpdate();
 
                 #region 处理删除草稿的需求。
@@ -1148,14 +1148,8 @@ namespace BP.WF
             {
                 if (nd.FocusField.Trim() == "")
                     continue;
-                try
-                {
-                    string s = nd.HisWork.GetValStrByKey(nd.FocusField);
-                }
-                catch
-                {
+                if (nd.HisWork.EnMap.Attrs.Contains(nd.FocusField) == false)
                     msg += "<font color=red><br>@焦点字段（" + nd.FocusField + "）在节点(step:" + nd.Step + " 名称:" + nd.Name + ")属性里的设置已无效，表单里不存在该字段。</font>";
-                }
             }
             #endregion
 
