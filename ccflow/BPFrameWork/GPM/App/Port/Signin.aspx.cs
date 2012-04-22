@@ -48,6 +48,8 @@ namespace BP.Web
 		}
 		public void Page_Load(object sender, System.EventArgs e)
 		{
+            
+
             string userNo = this.Request.QueryString["UserNo"];
             if (userNo != null && userNo.Length > 1)
             {
@@ -63,6 +65,13 @@ namespace BP.Web
                     this.TB_No.Text = userNo;
                 }
             }
+
+            if (DBAccess.IsExitsObject("Port_Emp") == false)
+            {
+                Response.Redirect("../GPM/DBInstall.aspx", false);
+                return;
+            }
+            
 
 			string script="<script language=javascript>function setFocus(ctl) {if (document.forms[0][ctl] !=null )  { document.forms[0][ctl].focus(); } } setFocus('"+this.TB_Pass.ClientID+"'); </script>";
 			this.RegisterStartupScript("func", script);
@@ -132,6 +141,8 @@ namespace BP.Web
 		{
 			try
 			{
+
+
 				Emp em = new Emp(this.TB_No.Text);
 				if ( em.Pass.Trim().Equals(this.TB_Pass.Text.Trim() ) || this.TB_Pass.Text.ToLower().Trim()== BP.SystemConfig.AppSettings["GenerPass"] || SystemConfig.IsDebug ) 
 				{

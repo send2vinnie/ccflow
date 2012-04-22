@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BP.WF;
 
-public partial class SSO_Default : System.Web.UI.Page
+public partial class GPM_WinOpen : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (BP.Web.WebUser.No == null)
-        {
-            this.Response.Redirect("../App/Port/Signin.aspx", true);
-        }
+
     }
 }
