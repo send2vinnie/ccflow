@@ -176,7 +176,7 @@ namespace BP
                     return;
                 case UrlFlag.NodeP:
                     url = "/WF/Admin/XAP/DoPort.aspx?DoType=En&EnName=BP.WF.Node&PK=" + node1 + "&Lang=CH";
-                    Glo.OpenDialog(Glo.BPMHost + url, "执行", 500, 400);
+                    Glo.OpenDialog(Glo.BPMHost + url, "执行", 600, 500);
                     return;
                 case UrlFlag.FlowP: // 节点属性与流程属性。
                     url = "/WF/Admin/XAP/DoPort.aspx?DoType=En&EnName=BP.WF.Flow&PK=" + fk_flow + "&Lang=CH";
