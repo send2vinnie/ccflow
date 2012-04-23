@@ -637,7 +637,6 @@ namespace BP.WF
             //设置时间跨度。
             geRpt.SetValByKey(GERptAttr.FlowDaySpan,
                 DataType.GetSpanDays(geRpt.GetValStringByKey(GERptAttr.FlowStartRDT), DataType.CurrentDataTime));
-
             geRpt.Save();
 
             //geRpt.Update("Emps", emps);
@@ -689,6 +688,10 @@ namespace BP.WF
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkFlow WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + ")  AND FK_Flow='" + this.HisFlow.No + "'");
             // 清除其他的工作者。
             DBAccess.RunSQL("DELETE FROM WF_GenerWorkerlist WHERE (WorkID=" + this.WorkID + " OR FID=" + this.WorkID + ")  AND FK_Node IN (SELECT NodeId FROM WF_Node WHERE FK_Flow='" + this.HisFlow.No + "') ");
+
+            // 记录日志 thanks for itdos ,提出了这个bug.
+            WorkNode wn = new WorkNode(WorkID, gwf.FK_Node);
+            wn.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name, wn.HisNode.NodeID, wn.HisNode.Name, "执行流程结束");
             return msg;
         }
         /// <summary>

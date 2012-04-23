@@ -1169,6 +1169,8 @@ namespace BP.WF
         /// <returns></returns>
         public WorkNode DoReturnWork(int backtoNodeID, string msg, bool isHiden)
         {
+            //退回前事件
+           this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnBefore, this.HisWork);
 
             if (this.HisNode.FocusField != "")
             {
@@ -1272,6 +1274,9 @@ namespace BP.WF
                       backToNode.FlowName, backToNode.Name, WebUser.Name),
                       wfemp.Email, null, msg);
             }
+
+            //退回后事件
+            this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, this.HisWork);
             return wnOfBackTo;
         }
         private string infoLog = "";
