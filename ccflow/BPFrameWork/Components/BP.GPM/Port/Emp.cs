@@ -226,7 +226,22 @@ namespace BP.GPM
         }
         public string DoSubmitToCCIM()
         {
-            return "同步成功";
+            try
+            {
+                Emps ens = new Emps();
+                ens.RetrieveAllFromDBSource();
+                foreach (Emp en in ens)
+                {
+                    Paras ps = new Paras();
+                    ps.Add("UserID", en.No);
+                    BP.DA.DBProcedure.RunSP("sp_UpdateUser", ps);
+                }
+                return "同步成功";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
         public override Entities GetNewEntities
         {

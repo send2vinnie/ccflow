@@ -106,10 +106,40 @@ namespace BP.GPM
                 map.AddTBString(DeptAttr.Name, null,null, true, false, 0, 60, 400);
                 //   map.AddTBInt(DeptAttr.Grade, 0, "级次", true, false);
                 //  map.AddBoolean(DeptAttr.IsDtl, false, "是否明细", true, true);
+
+                RefMethod rm = new RefMethod();
+                rm.Title = "与CCIM数据同步";
+                rm.ClassMethodName = this.ToString() + ".DoSubmitToCCIM";
+                map.AddRefMethod(rm);
+
                 this._enMap = map;
                 return this._enMap;
             }
 		}
+        /// <summary>
+        /// 提交到ccim中去。
+        /// </summary>
+        /// <returns></returns>
+        public string DoSubmitToCCIM()
+        {
+            try
+            {
+                Emps ens = new Emps();
+                ens.RetrieveAllFromDBSource();
+                foreach (Emp en in ens)
+                {
+                    Paras ps = new Paras();
+                    ps.Add("UserID", en.No);
+                    BP.DA.DBProcedure.RunSP("sp_UpdateUser", ps);
+                }
+                return "同步成功";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
         protected override bool beforeUpdateInsertAction()
         {
            // this.Grade = this.No.Length / 2;
