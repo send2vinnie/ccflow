@@ -28,7 +28,7 @@ INSERT INTO GPM_STem(No,Name,CtrlWay,AppModel,Url,MyFileName,MyFilePath,MyFileEx
 DELETE GPM_PerAlert;
 INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('Email','新邮件','http://mail.google.com','SELECT COUNT(*) FROM PORT_EMP','Img/email.png');
 INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('Msg','系统消息','http://mail.google.com','SELECT COUNT(*) FROM PORT_EMP','Img/msg.png');
-INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('MyWork','待办工作','http://localhost/ccflow/WF/EmpWorks.aspx','SELECT COUNT(*) FROM ZHONGQI.dbo.WF_EMPWORKS WHERE FK_EMP=@WebUser.No','/GPM/DataUser/BP.GPM.PerAlert/MyWork.gif');
+INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('MyWork','待办工作','http://localhost/ccflow/WF/EmpWorks.aspx','SELECT COUNT(*) FROM PORT_EMP','/GPM/DataUser/BP.GPM.PerAlert/MyWork.gif');
 INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('News','未读新闻','http://sina.com.cn','SELECT COUNT(*) FROM PORT_EMP','/GPM/DataUser/BP.GPM.PerAlert/News.gif');
 INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('Notice','未读公告','http://sina.com.cn','SELECT COUNT(*) FROM PORT_EMP','/GPM/DataUser/BP.GPM.PerAlert/Notice.gif');
 INSERT INTO GPM_PerAlert(No,Name,Url,GetSQL,WebPath) VALUES ('Ontheway','在途工作','http://sina.com.cn','SELECT COUNT(*) FROM PORT_EMP','/GPM/DataUser/BP.GPM.PerAlert/Ontheway.gif');
