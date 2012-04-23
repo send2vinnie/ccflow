@@ -347,7 +347,7 @@
     <Compile Include="Sys\MapData\FrmImgAth.cs" />
     <Compile Include="Sys\MapData\FrmBtn.cs" />
     <Compile Include="Sys\MapData\FrmAttachmentDB.cs" />
-    <Compile Include="Sys\Sys\GloVar.cs" />
+    <Compile Include="Sys\GloVar.cs" />
     <Compile Include="Sys\SFTable.cs" />
     <Compile Include="Sys\SysFileManager.cs">
       <SubType>Code</SubType>
@@ -458,9 +458,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sys\SysFileType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Sys\Sys\SysConfig.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sys\UserRegedit.cs">

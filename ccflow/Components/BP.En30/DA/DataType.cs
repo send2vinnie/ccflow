@@ -184,17 +184,10 @@ namespace BP.DA
         /// <returns>内容</returns>
         public static string ReadTextFile(string file)
         {
-            try
-            {
-                System.IO.StreamReader read = new System.IO.StreamReader(file, System.Text.Encoding.UTF8); // 文件流.
-                string doc = read.ReadToEnd();  //读取完毕。
-                read.Close(); // 关闭。
-                return doc;
-            }
-            catch
-            {
-                return "";
-            }
+            System.IO.StreamReader read = new System.IO.StreamReader(file, System.Text.Encoding.UTF8); // 文件流.
+            string doc = read.ReadToEnd();  //读取完毕。
+            read.Close(); // 关闭。
+            return doc;
         }
         public static bool SaveAsFile(string filePath, string doc)
         {

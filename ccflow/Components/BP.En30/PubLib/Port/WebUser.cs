@@ -113,7 +113,7 @@ namespace BP.Web
         /// <param name="em"></param>
         public static void SignInOfGener(Emp em)
         {
-            SignInOfGener(em, "CH", null,true);
+            SignInOfGener(em, "CH", null,true,false);
         }
       
         /// <summary>
@@ -123,7 +123,7 @@ namespace BP.Web
         /// <param name="isRememberMe"></param>
         public static void SignInOfGener(Emp em, bool isRememberMe)
         {
-            SignInOfGener(em, "CH", null, isRememberMe);
+            SignInOfGener(em, "CH", null, isRememberMe, false);
         }
         /// <summary>
         /// 登陆
@@ -132,7 +132,7 @@ namespace BP.Web
         /// <param name="auth"></param>
         public static void SignInOfGenerAuth(Emp em, string auth)
         {
-            SignInOfGener(em, "CH", auth,true);
+            SignInOfGener(em, "CH", auth, true, false);
         }
         /// <summary>
         /// 登陆
@@ -141,7 +141,7 @@ namespace BP.Web
         /// <param name="lang"></param>
         public static void SignInOfGenerLang(Emp em, string lang, bool isRememberMe)
         {
-            SignInOfGener(em, lang, null, isRememberMe);
+            SignInOfGener(em, lang, null, isRememberMe, false);
         }
         /// <summary>
         /// 登陆
@@ -150,19 +150,21 @@ namespace BP.Web
         /// <param name="lang"></param>
         public static void SignInOfGenerLang(Emp em, string lang)
         {
-            SignInOfGener(em, lang, null, true);
+            SignInOfGener(em, lang, null, true,false);
         }
         public static void SignInOfGener(Emp em, string lang)
         {
-            SignInOfGener(em, lang, em.No, true);
+            SignInOfGener(em, lang, em.No, true,false);
         }
         /// <summary>
         /// 通用的登录
         /// </summary>
-        /// <param name="em"></param>
-        /// <param name="isAuthorize"></param>
-        /// <param name="isAddHerToOnlineUsers"></param>
-        public static void SignInOfGener(Emp em, string lang, string auth, bool isRememberMe)
+        /// <param name="em">人员</param>
+        /// <param name="lang">语言</param>
+        /// <param name="auth">授权人</param>
+        /// <param name="isRememberMe">是否记录cookies</param>
+        /// <param name="IsRecSID">是否记录SID</param>
+        public static void SignInOfGener(Emp em, string lang, string auth, bool isRememberMe,bool IsRecSID)
         {
             if (System.Web.HttpContext.Current == null)
                 SystemConfig.IsBSsystem = false;
@@ -198,6 +200,14 @@ namespace BP.Web
             if (lang == null)
                 lang = WebUser.LangOfcookie;
 
+            if (IsRecSID)
+            {
+                /*如果记录sid*/
+                string sid1 = DateTime.Now.ToString("MMddHHmmss");
+                DBAccess.RunSQL("UPDATE Port_Emp SET SID='" + sid1 + "' WHERE No='" + WebUser.No + "'");
+                WebUser.SID = sid1;
+            }
+
             WebUser.SysLang = lang;
             if (BP.SystemConfig.IsBSsystem)
             {
@@ -232,7 +242,6 @@ namespace BP.Web
                     {
                     }
                 }
-
 
                 if (SystemConfig.IsUnit)
                 {
@@ -568,20 +577,11 @@ namespace BP.Web
         /// <returns></returns>
         public static bool CheckSID(string sid)
         {
-            try
-            {
+            string mysid = DBAccess.RunSQLReturnStringIsNull("SELECT SID FROM PORT_EMP WHERE No='" + Web.WebUser.No + "'", null);
+            if (sid == mysid)
                 return true;
-
-                string mysid = DBAccess.RunSQLReturnStringIsNull("SELECT SID FROM PORT_EMP WHERE No='" + Web.WebUser.No + "'", null);
-                if (sid == mysid)
-                    return true;
-                else
-                    return false;
-            }
-            catch(Exception ex)
-            {
+            else
                 return false;
-            }
         }
         public static string FK_Unit
         {
