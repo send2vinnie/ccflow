@@ -532,14 +532,8 @@ namespace SMSServices
         /// <param name="sms"></param>
         public void SendMail(BP.TA.SMS sms)
         {
-            try
-            {
+            
                 Glo.SendMessage(sms.MyPK, DateTime.Now.ToString(), sms.Title + "\t\n" + sms.EmailDoc, sms.Accepter);
-            }
-            catch
-            {
-
-            }
 
             System.Net.Mail.MailMessage myEmail = new System.Net.Mail.MailMessage();
             myEmail.From = new MailAddress("ccflow.cn@gmail.com", "ccflow", System.Text.Encoding.UTF8);

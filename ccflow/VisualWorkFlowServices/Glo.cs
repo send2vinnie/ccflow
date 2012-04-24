@@ -34,7 +34,7 @@ namespace SMSServices
             //加密处理
             msg = CCFlowServices.SecurityDES.Encrypt(msg);
 
-            strHql1.Append("Insert into [CCIM.dbo.RecordMsg]([sendID],[msgDateTime],[msgContent],[ImageInfo],[fontName],[fontSize],[fontBold],");
+            strHql1.Append("Insert into GPM.dbo.RecordMsg ([sendID],[msgDateTime],[msgContent],[ImageInfo],[fontName],[fontSize],[fontBold],");
             strHql1.Append("[fontColor],[InfoClass],[GroupID],[SendUserID]) values(");
 
             strHql1.Append("'SYSTEM',");
@@ -53,7 +53,7 @@ namespace SMSServices
 
             //取出刚保存的msgID
             string msgID;
-            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable("SELECT MsgID FROM CCIM.dbo.RecordMsg WHERE sendID='SYSTEM' AND msgDateTime='" + now + "' AND SendUserID='" + userid + "'");
+            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable("SELECT MsgID FROM GPM.dbo.RecordMsg WHERE sendID='SYSTEM' AND msgDateTime='" + now + "' AND SendUserID='" + userid + "'");
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -61,7 +61,7 @@ namespace SMSServices
 
                 //保存消息发送对象
                 StringBuilder strHql2 = new StringBuilder();
-                strHql2.Append("Insert into [CCIM.dbo.RecordMsgUser]([MsgId],[ReceiveID]) values(");
+                strHql2.Append("Insert into GPM.dbo.RecordMsgUser ([MsgId],[ReceiveID]) values(");
 
                 strHql2.Append(msgID).Append(",");
                 strHql2.Append("'").Append(receiveid).Append("')");
