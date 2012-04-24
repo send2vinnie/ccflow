@@ -27,6 +27,13 @@ namespace BP.GPM
 		/// 部门性质
 		/// </summary>
 		public const string DeptType="DeptType";
+        /// <summary>
+        /// DepartmentID
+        /// </summary>
+        public const string DepartmentID = "DepartmentID";
+        public const string ParentID = "ParentID";
+
+        
 	}
 	/// <summary>
 	/// 部门
@@ -52,6 +59,28 @@ namespace BP.GPM
             get
             {
                 return this.No.Length / 2;
+            }
+        }
+        public int DepartmentID
+        {
+            get
+            {
+                return this.GetValIntByKey(DeptAttr.DepartmentID);
+            }
+            set
+            {
+                this.SetValByKey(DeptAttr.DepartmentID, value);
+            }
+        }
+        public int ParentID
+        {
+            get
+            {
+                return this.GetValIntByKey(DeptAttr.ParentID);
+            }
+            set
+            {
+                this.SetValByKey(DeptAttr.ParentID, value);
             }
         }
 		#endregion
@@ -104,12 +133,18 @@ namespace BP.GPM
                 map.AdjunctType = AdjunctType.None;
                 map.AddTBStringPK(DeptAttr.No, null, null, true, false, 2, 20, 40);
                 map.AddTBString(DeptAttr.Name, null,null, true, false, 0, 60, 400);
+
+                map.AddTBInt(DeptAttr.DepartmentID, 0, "DepartmentID", false, false);
+                map.AddTBInt(DeptAttr.ParentID, 0, "ParentID", false, false);
+
+                
                 //   map.AddTBInt(DeptAttr.Grade, 0, "级次", true, false);
                 //  map.AddBoolean(DeptAttr.IsDtl, false, "是否明细", true, true);
 
                 RefMethod rm = new RefMethod();
                 rm.Title = "与CCIM数据同步";
                 rm.ClassMethodName = this.ToString() + ".DoSubmitToCCIM";
+                rm.IsForEns = false;
                 map.AddRefMethod(rm);
 
                 this._enMap = map;
@@ -124,19 +159,45 @@ namespace BP.GPM
         {
             try
             {
-                Emps ens = new Emps();
-                ens.RetrieveAllFromDBSource();
-                foreach (Emp en in ens)
+                string sql = "";
+                Depts ens = new Depts();
+                ens.RetrieveAll(DeptAttr.No);
+                foreach (Dept en in ens)
                 {
+                    if (en.DepartmentID == 0)
+                    {
+                        en.DepartmentID = DBAccess.GenerOID();
+                        if (this.No.Length == 2)
+                        {
+                            en.ParentID = 0;
+                            en.Update();
+                        }
+                    }
+
+                    if (en.ParentID == 0 && en.No.Length > 2)
+                    {
+                        //找出它的父节点的ID号.
+                        string no = en.No.Substring(0, en.No.Length - 2);
+                        no = no.Trim();
+                        sql = "SELECT " + DeptAttr.DepartmentID + " FROM Port_Dept WHERE No='" + no + "'";
+                        int pID = DBAccess.RunSQLReturnValInt(sql, 0);
+                        if (pID == 0)
+                            throw new Exception("编码机制不对，没有获取上级编号 SQL=" + sql);
+                        en.ParentID = pID;
+                        en.Update();
+                    }
+
+                    DBAccess.RunSQL("UPDATE Port_Emp SET " + EmpAttr.DepartmentID + "=" + en.DepartmentID + " WHERE FK_Dept='" + en.No + "' ");
+
                     Paras ps = new Paras();
-                    ps.Add("UserID", en.No);
-                    BP.DA.DBProcedure.RunSP("sp_UpdateUser", ps);
+                    ps.Add("@DeptID", en.DepartmentID);
+                    BP.DA.DBProcedure.RunSP("sp_UpdateDept", ps);
                 }
-                return "同步成功";
+                return "所有的数据同步执行成功。";
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return ex.Message.Replace("'","‘");
             }
         }
 

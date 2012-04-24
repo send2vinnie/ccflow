@@ -9,13 +9,13 @@ namespace BP.GPM
 	/// <summary>
 	/// 工作人员属性
 	/// </summary>
-	public class EmpAttr: BP.En.EntityNoNameAttr
-	{
-		#region 基本属性
-		/// <summary>
-		/// 部门
-		/// </summary>
-		public const  string FK_Dept="FK_Dept";
+    public class EmpAttr : BP.En.EntityNoNameAttr
+    {
+        #region 基本属性
+        /// <summary>
+        /// 部门
+        /// </summary>
+        public const string FK_Dept = "FK_Dept";
         /// <summary>
         /// 密码
         /// </summary>
@@ -28,8 +28,16 @@ namespace BP.GPM
         /// 菜单更新时间
         /// </summary>
         public const string UpdateMenu = "UpdateMenu";
-		#endregion 
-	}
+        /// <summary>
+        /// StaffID
+        /// </summary>
+        public const string StaffID = "StaffID";
+        /// <summary>
+        /// DepartmentID
+        /// </summary>
+        public const string DepartmentID = "DepartmentID";
+        #endregion
+    }
 	/// <summary>
 	/// Emp 的摘要说明。
 	/// </summary>
@@ -50,6 +58,17 @@ namespace BP.GPM
         }
 
         #region 扩展属性
+        public int StaffID
+        {
+            get
+            {
+                return this.GetValIntByKey(EmpAttr.StaffID);
+            }
+            set
+            {
+                this.SetValByKey(EmpAttr.StaffID, value);
+            }
+        }
         /// <summary>
         /// 主要的部门。
         /// </summary>
@@ -204,6 +223,11 @@ namespace BP.GPM
                 map.AddTBString(EmpAttr.Pass, "pub", "密码", false, false, 0, 20, 10);
                 map.AddDDLEntities(EmpAttr.FK_Dept, null, "部门", new BP.Port.Depts(), true);
                 map.AddTBString(EmpAttr.SID, null, "SID", false, false, 0, 200, 10);
+
+                map.AddTBInt(EmpAttr.StaffID, 0, "StaffID", false, false);
+                map.AddTBInt(EmpAttr.DepartmentID, 0, "DepartmentID", false, false);
+                
+                
                 #endregion 字段
 
                 map.AddSearchAttr(EmpAttr.FK_Dept);
@@ -218,6 +242,7 @@ namespace BP.GPM
                 RefMethod rm = new RefMethod();
                 rm.Title = "与CCIM数据同步";
                 rm.ClassMethodName = this.ToString() + ".DoSubmitToCCIM";
+                rm.IsForEns = false;
                 map.AddRefMethod(rm);
 
                 this._enMap = map;
@@ -232,16 +257,29 @@ namespace BP.GPM
                 ens.RetrieveAllFromDBSource();
                 foreach (Emp en in ens)
                 {
+                    if (en.StaffID == 0)
+                    {
+                        en.StaffID = DBAccess.GenerOID();
+                        en.Update();
+                    }
+
                     Paras ps = new Paras();
-                    ps.Add("UserID", en.No);
+                    ps.Add("UserID", en.StaffID);
                     BP.DA.DBProcedure.RunSP("sp_UpdateUser", ps);
                 }
-                return "同步成功";
+
+                /* 有可能是部门发生变化. */
+                Dept dept = new Dept();
+                dept.DoSubmitToCCIM();
+
+                return "所有的数据同步执行成功。";
             }
             catch (Exception ex)
             {
                 return ex.Message;
             }
+
+             
         }
         public override Entities GetNewEntities
         {
