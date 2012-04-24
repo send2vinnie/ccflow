@@ -10,9 +10,7 @@ INSERT INTO SYS_GloVar(No,Name,Val,GroupKey,Note) VALUES
 ('NetHardDiskUserName','网络硬盘:访问用户名','administrator','CCIM','');
 INSERT INTO SYS_GloVar(No,Name,Val,GroupKey,Note) VALUES 
 ('NetHardDiskURI','网络硬盘:密码','http://127.0.0.1/HardDisk/','CCIM','');
-*/
-
- 
+*/ 
 GO
 CREATE TABLE [dbo].[plDepartment](
 	[DepartmentID] [int]  NOT NULL,
