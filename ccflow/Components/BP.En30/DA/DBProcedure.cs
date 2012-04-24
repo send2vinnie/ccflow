@@ -73,29 +73,26 @@ namespace BP.DA
 		/// <param name="spName"></param>
 		/// <param name="conn"></param>
 		/// <param name="paras"></param>
-		public static int  RunSP(string spName,  Paras paras, SqlConnection conn)
-		{
-			if (conn.State != ConnectionState.Open)
-				conn.Open();
+        public static int RunSP(string spName, Paras paras, SqlConnection conn)
+        {
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
 
-			SqlCommand salesCMD = new SqlCommand(spName, conn);
-			salesCMD.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand(spName, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
 
-			/// 加上他们的参数
+            // 加入参数
             foreach (Para para in paras)
             {
-                SqlParameter myParm = salesCMD.Parameters.AddWithValue(para.ParaName, para.DAType);
-                myParm.Value = para.val;
-
-                //SqlParameter myParm = new SqlParameter();
-                //myParm.Value = para.val;
-                //myParm.ParameterName = para.ParaName;
-                //myParm.DbType = para.DAType;
-                //salesCMD.Parameters.Add(myParm);
+                SqlParameter myParameter = new SqlParameter(para.ParaName, para.val);
+                myParameter.Size = para.Size;
+                cmd.Parameters.Add(myParameter);
             }
-			
-			return salesCMD.ExecuteNonQuery();			 
-		}
+
+            int i = cmd.ExecuteNonQuery();
+            conn.Close();
+            return i;
+        }
         public static int RunSP(string spName, Paras paras, OracleConnection conn)
         {
             if (conn.State != ConnectionState.Open)
@@ -115,11 +112,18 @@ namespace BP.DA
         }
 		public static int  RunSP(string spName,  Paras paras )
 		{
-			if (DBAccess.AppCenterDBType==DBType.SQL2000)			
-				return DBProcedure.RunSP(spName,paras,(SqlConnection)DBAccess.GetAppCenterDBConn );
-			else
-				return DBProcedure.RunSP(spName,paras,(SqlConnection)DBAccess.GetAppCenterDBConn ); 	
-
+            switch (DBAccess.AppCenterDBType)
+            {
+                case DBType.SQL2000:
+                    SqlConnection conn = new SqlConnection(SystemConfig.AppCenterDSN);
+                    if (conn.State != ConnectionState.Open)
+                        conn.Open();
+                    return DBProcedure.RunSP(spName, paras, conn);
+                    break;
+                default:
+                    throw new Exception("尚未处理。");
+                    break;
+            }
 		}
 		#endregion 
 
