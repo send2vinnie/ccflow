@@ -407,8 +407,15 @@ namespace BP.Sys
                     if (doc.Contains("@" + s) == false)
                         continue;
 
+
                     string[] mys = s.Split('=');
-                    doc = doc.Replace("@" + s, mys[1]);
+                    if (doc.Contains("@" + mys[0]) == false)
+                        continue;
+
+                    doc = doc.Replace("@" + mys[0], mys[1]);
+                    // 刘文辉 提出并修改。
+                    //string[] mys = s.Split('=');
+                    //doc = doc.Replace("@" + s, mys[1]);
                 }
             }
             if (nev.HisDoType == EventDoType.URLOfSelf)
