@@ -1,0 +1,57 @@
+﻿服务正在启动。。。
+SQL数据库连接字符串：'Password=jiaozi;Persist Security Info=True;User ID=sa;Initial Catalog=GPM1;Data Source=.;Timeout=2'
+Oracle数据库连接字符串：' ' 2012/4/24 0:06:17
+
+初始化组织机构：，部门数：0，用户版本：，用户数：0。数据库读取成功！ 2012/4/24 0:06:19
+
+服务启动成功 2012/4/24 0:06:19
+
+服务停止成功 2012/4/24 0:06:41
+
+UDP套接字错误：2:System,正在中止线程。 2012/4/24 0:06:41
+
+服务正在启动。。。
+SQL数据库连接字符串：'Password=jiaozi;Persist Security Info=True;User ID=sa;Initial Catalog=GPM1;Data Source=.;Timeout=2'
+Oracle数据库连接字符串：' ' 2012/4/24 0:10:08
+
+初始化组织机构：，部门数：0，用户版本：，用户数：0。数据库读取成功！ 2012/4/24 0:10:09
+
+服务启动成功 2012/4/24 0:10:09
+
+服务正在启动。。。
+SQL数据库连接字符串：'Password=jiaozi;Persist Security Info=True;User ID=sa;Initial Catalog=GPM1;Data Source=.;Timeout=2'
+Oracle数据库连接字符串：' ' 2012/4/24 12:41:04
+
+初始化组织机构：，部门数：0，用户版本：，用户数：0。数据库读取成功！ 2012/4/24 12:41:10
+
+服务启动成功 2012/4/24 12:41:10
+
+服务停止成功 2012/4/24 12:41:35
+
+UDP套接字错误：2:System,正在中止线程。 2012/4/24 12:41:35
+
+服务正在启动。。。
+SQL数据库连接字符串：'Password=jiaozi;Persist Security Info=True;User ID=sa;Initial Catalog=GPM;Data Source=.;Timeout=2'
+Oracle数据库连接字符串：' ' 2012/4/24 12:41:38
+
+获取用户ctk组织机构版本信息出错！无法打开登录所请求的数据库 "GPM"。登录失败。
+用户 'sa' 登录失败。.Net SqlClient Data Provider 2012/4/24 12:41:38
+
+初始化组织机构：，部门数：0，用户版本：，用户数：0。数据库读取成功！ 2012/4/24 12:41:38
+
+服务启动成功 2012/4/24 12:41:38
+
+获取系统和离线消息出错！找不到存储过程 'SYSTEMRecordMsgGet'。.Net SqlClient Data Provider 2012/4/24 12:45:39
+
+服务停止成功 2012/4/24 12:50:50
+
+UDP套接字错误：2:System,正在中止线程。 2012/4/24 12:50:50
+
+服务正在启动。。。
+SQL数据库连接字符串：'Password=jiaozi;Persist Security Info=True;User ID=sa;Initial Catalog=GPM;Data Source=.;Timeout=2'
+Oracle数据库连接字符串：' ' 2012/4/24 12:50:55
+
+初始化组织机构：，部门数：0，用户版本：，用户数：0。数据库读取成功！ 2012/4/24 12:50:55
+
+服务启动成功 2012/4/24 12:50:55
+

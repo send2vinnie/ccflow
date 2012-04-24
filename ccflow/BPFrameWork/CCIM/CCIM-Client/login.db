@@ -1,0 +1,17 @@
+<?xml version="1.0" standalone="yes"?>
+<DataSetOrganization xmlns="http://tempuri.org/DataSetOrganization.xsd">
+  <LoginLog>
+    <UserID>jE7knFqK3Ro=</UserID>
+    <password>9ysirPguvfw=</password>
+    <lastLoginDate>2012-04-13T09:26:06+08:00</lastLoginDate>
+    <autoLogin>false</autoLogin>
+    <md5>96E79218965EB72C92A549DD5A330112</md5>
+  </LoginLog>
+  <LoginLog>
+    <UserID>KE2MpunCPEc=</UserID>
+    <password>dArh7Tb7Ra4=</password>
+    <lastLoginDate>2012-04-24T11:40:30+08:00</lastLoginDate>
+    <autoLogin>false</autoLogin>
+    <md5>E3CEB5881A0A1FDAAD01296D7554868D</md5>
+  </LoginLog>
+</DataSetOrganization>
