@@ -160,8 +160,7 @@ public class WSDesigner : WSBase
             if (islogin)
             {
                 Emp emp = new Emp("admin");
-                WebUser.SignInOfGener(emp, lang, "admin", true);
-
+                WebUser.SignInOfGener(emp, lang, "admin", true, false);
             }
         }
         catch (Exception exception)
