@@ -174,10 +174,10 @@ namespace BP.GPM
                         }
                     }
 
-                    if (en.ParentID == 0 && en.No.Length > 2)
+                    if (en.ParentID == 0 && en.No.Trim().Length > 2)
                     {
                         //找出它的父节点的ID号.
-                        string no = en.No.Substring(0, en.No.Length - 2);
+                        string no = en.No.Trim().Substring(0, en.No.Trim().Length - 2);
                         no = no.Trim();
                         sql = "SELECT " + DeptAttr.DepartmentID + " FROM Port_Dept WHERE No='" + no + "'";
                         int pID = DBAccess.RunSQLReturnValInt(sql, 0);
