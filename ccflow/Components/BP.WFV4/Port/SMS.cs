@@ -90,7 +90,6 @@ namespace BP.TA
             string email, string mailTitle, string emailDoc)
         {
 
-
             if (at == AlertWay.None)
                 at = AlertWay.Email;
 
@@ -116,7 +115,7 @@ namespace BP.TA
             sms.FK_Emp = fk_emp;
             sms.Tel = tel;
             sms.TelDoc = telDoc;
-
+            sms.Sender = BP.Web.WebUser.No;
             sms.Email = email;
             sms.EmailTitle = mailTitle;
             sms.EmailDoc = emailDoc;

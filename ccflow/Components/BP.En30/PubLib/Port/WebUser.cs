@@ -156,6 +156,10 @@ namespace BP.Web
         {
             SignInOfGener(em, lang, em.No, true,false);
         }
+        public static void SignInOfGener(Emp em, string lang, string auth, bool isRememberMe)
+        {
+            SignInOfGener(em, lang, auth, isRememberMe, false);
+        }
         /// <summary>
         /// ͨ�õĵ�¼
         /// </summary>

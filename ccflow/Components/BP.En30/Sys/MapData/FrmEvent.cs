@@ -407,7 +407,6 @@ namespace BP.Sys
                     if (doc.Contains("@" + s) == false)
                         continue;
 
-
                     string[] mys = s.Split('=');
                     if (doc.Contains("@" + mys[0]) == false)
                         continue;
