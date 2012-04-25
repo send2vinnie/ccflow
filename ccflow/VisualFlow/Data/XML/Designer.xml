@@ -7,7 +7,7 @@
   <Menu No="0102" Name="" CH="系统枚举值"  W="700" H="800" Url="/Comm/Sys/EnumList.aspx" Icon=""  />
   <Menu No="0103" Name="" CH="编码表"  W="700" H="800" Url="/Comm/Sys/SFTableList.aspx" Icon=""  />
   <Menu No="0103" Name="" CH="JS校验库"  W="700" H="800" Url="/Comm/Sys/FuncLib.aspx"  Icon="" />
-  <Menu No="0103" Name="" CH="全局变量"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.Sys.GloVers" Icon=""  />
+  <Menu No="0103" Name="" CH="全局变量"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.Sys.GloVars" Icon=""  />
   <Menu No="0103" Name="" CH="功能执行"  W="700" H="800" Url="/Comm/MethodLink.aspx"  Icon="" />
 
 
