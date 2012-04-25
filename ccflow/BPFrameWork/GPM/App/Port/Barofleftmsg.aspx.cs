@@ -18,6 +18,7 @@ namespace BP.Web.PG.App.Port
 	{
         protected void Page_Load(object sender, System.EventArgs e)
         {
+            return;
             string path = this.Request.ApplicationPath;
             string str = "";
             if (WebUser.No == null)
