@@ -19,9 +19,14 @@ namespace BP.WF
     {
         public const string DoNode = "DoNode";
         public const string Start = "Start";
+        ///// <summary>
+        ///// 调起我的流程
+        ///// </summary>
+        //public const string CallMyFlow = "CallMyFlow";
+        //public const string CallMyFlowSmall = "CallMyFlowSmall";
+
         public const string StartSmall = "StartSmall";
         public const string StartSmallSingle = "StartSmallSingle";
-
         public const string MyWork = "MyWork";
         public const string Login = "Login";
         public const string FlowSearch = "FlowSearch";

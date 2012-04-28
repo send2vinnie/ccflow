@@ -370,7 +370,16 @@ namespace BP.WF
                     /*ÊÇ·ñÒªÉ¾³ýDraft */
                     Int64 oid = wk.OID;
                     if (num != 0)
+                    {
                         wk.ResetDefaultVal();
+                        try
+                        {
+                            wk.DirectUpdate();
+                        }
+                        catch
+                        {
+                        }
+                    }
 
                     MapDtls dtls = wk.HisMapDtls;
                     foreach (MapDtl dtl in dtls)
