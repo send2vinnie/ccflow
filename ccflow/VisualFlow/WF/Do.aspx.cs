@@ -160,7 +160,7 @@ namespace BP.Web.WF
                         return;
                     case "LogAs":
                         BP.Port.Emp emp1 = new BP.Port.Emp(this.FK_Emp);
-                        BP.Web.WebUser.SignInOfGener(emp1, WebUser.SysLang, WebUser.No, true);
+                        BP.Web.WebUser.SignInOfGener(emp1, WebUser.SysLang, WebUser.No, true,false);
                         this.WinClose();
                         return;
                     case "TakeBack": // È¡ÏûÊÚÈ¨¡£

@@ -225,7 +225,10 @@ namespace BP.Web
         {
             try
             {
-                return BP.DA.DataType.ParseStringToPinyin(name);
+                string s= BP.DA.DataType.ParseStringToPinyin(name);
+                if (s.Length>15)
+                    s = BP.DA.DataType.ParseStringToPinyinWordFirst(name);
+                return s;
             }
             catch
             {

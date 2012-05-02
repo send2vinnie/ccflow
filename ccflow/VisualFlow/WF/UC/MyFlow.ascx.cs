@@ -379,7 +379,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             return;
         }
 
-
        string appPath = this.Request.ApplicationPath;
        this.currFlow = new Flow(this.FK_Flow);
        this.currND = new BP.WF.Node(this.FK_Node);
@@ -504,7 +503,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             if (currND.IsEndNode)
             {
                 //this.ToolBar1.Add("<input type=button value='" + btnLab.SendLab + "' enable=true onclick=\"window.open('" + appPath + "/WF/Accpter.aspx?WorkID=" + this.WorkID + "&FK_Node=" + currND.NodeID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','选择收件人', 'height=500, width=400');this.disabled=true \" />");
-
                 if (btnLab.SendEnable)
                 {
                     this.ToolBar1.AddBtn(NamesOfBtn.Send, btnLab.SendLab);
@@ -522,7 +520,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             }
             else
             {
-                
                 if (btnLab.SendEnable)
                 {
                     if (btnLab.SelectAccepterEnable == 2)
@@ -593,12 +590,16 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
 
             if (btnLab.ShiftEnable)
             {
+                /*移交*/
                 this.ToolBar1.AddBtn("Btn_Shift", btnLab.ShiftLab);
                 this.Btn_Shift.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
-            if (btnLab.CCEnable)
+            if (btnLab.CCRole == CCRole.HandCC || btnLab.CCRole == CCRole.HandAndAuto)
+            {
+                /* 抄送 */
                 this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
+            }
 
             if (btnLab.DeleteEnable)
             {

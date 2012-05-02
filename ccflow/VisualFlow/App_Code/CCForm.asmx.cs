@@ -181,8 +181,8 @@ namespace BP.Web
             DataRow dr = dt.NewRow();
             dr["DFor"] = "HandSiganture";
             dr["Tag1"] = "@Label=存储路径@FType=String@DefVal=D:\\ccflow\\VisualFlow\\DataUser\\BPPaint\\";
-            dr["Tag2"] = "@Label=窗口打开高度@FType=Int@DefVal=300";
-            dr["Tag3"] = "@Label=窗口打开宽度@FType=Int@DefVal=450";
+            dr["Tag2"] = "@Label=窗口打开高度@FType=Int@DefVal=500";
+            dr["Tag3"] = "@Label=窗口打开宽度@FType=Int@DefVal=200";
             dr["Tag4"] = "@Label=UrlPath@FType=String@DefVal=/DataUser/BPPaint/";
             dt.Rows.Add(dr);
 
@@ -193,6 +193,14 @@ namespace BP.Web
             dr["Tag3"] = "@Label=宽度@FType=Int";
             dr["Tag4"] = "";
             dt.Rows.Add(dr);
+
+            //dr = dt.NewRow();
+            //dr["DFor"] = "CheckGroup";
+            //dr["Tag1"] = "@Label=审核分组名称@FType=String";
+            //dr["Tag2"] = "@Label=审核分组标记@FType=String";
+            //dr["Tag3"] = "";
+            //dr["Tag4"] = "";
+            //dt.Rows.Add(dr);
 
             DataSet myds = new DataSet();
             myds.Tables.Add(dt);
@@ -250,14 +258,68 @@ namespace BP.Web
             {
                 switch (dotype)
                 {
-                    //case "NewM2Mss":
-                    //MapM2M m2m = new MapM2M();
-                    //m2m.FK_MapData = v1;
-                    //m2m.NoOfObj = v2;
-                    //m2m.MyPK=m2m.FK_MapData+"_"+m2m.NoOfObj;
-                    //if (m2m.IsExits == false)
-                    //    return null;
-                    //return "名称("+v2+")已经存在.";
+                    case "CreateCheckGroup":
+                        string gKey = v1;
+                        string gName = v2;
+                        string enName1 = v3;
+
+                        MapAttr attrN = new MapAttr();
+                        int i = attrN.Retrieve(MapAttrAttr.FK_MapData, enName1, MapAttrAttr.KeyOfEn, gKey + "_Note");
+                        i += attrN.Retrieve(MapAttrAttr.FK_MapData, enName1, MapAttrAttr.KeyOfEn, gKey + "_Checker");
+                        i += attrN.Retrieve(MapAttrAttr.FK_MapData, enName1, MapAttrAttr.KeyOfEn, gKey + "_RDT");
+                        if (i > 0)
+                            return "前缀已经使用：" + gKey + " ， 请确认您是否增加了这个审核分组或者，请您更换其他的前缀。";
+
+                        GroupField gf = new GroupField();
+                        gf.Lab = gName;
+                        gf.EnName = enName1;
+                        gf.Insert();
+
+                        attrN = new MapAttr();
+                        attrN.FK_MapData = enName1;
+                        attrN.KeyOfEn = gKey + "_Note";
+                        attrN.Name = "审核意见";
+                        attrN.MyDataType = DataType.AppString;
+                        attrN.UIContralType = UIContralType.TB;
+                        attrN.UIIsEnable = true;
+                        attrN.UIIsLine = true;
+                        attrN.MaxLen = 4000;
+                        attrN.GroupID = gf.OID;
+                        attrN.UIHeight = 23 * 3;
+                        attrN.IDX = 1;
+                        attrN.Insert();
+
+                        attrN = new MapAttr();
+                        attrN.FK_MapData = enName1;
+                        attrN.KeyOfEn = gKey + "_Checker";
+                        attrN.Name = "审核人";// "审核人";
+                        attrN.MyDataType = DataType.AppString;
+                        attrN.UIContralType = UIContralType.TB;
+                        attrN.MaxLen = 50;
+                        attrN.MinLen = 0;
+                        attrN.UIIsEnable = true;
+                        attrN.UIIsLine = false;
+                        attrN.DefVal = "@WebUser.Name";
+                        attrN.UIIsEnable = false;
+                        attrN.GroupID = gf.OID;
+                        attrN.IsSigan = true;
+                        attrN.IDX = 2;
+                        attrN.Insert();
+
+                        attrN = new MapAttr();
+                        attrN.FK_MapData = enName1;
+                        attrN.KeyOfEn = gKey + "_RDT";
+                        attrN.Name = "审核日期"; // "审核日期";
+                        attrN.MyDataType = DataType.AppDateTime;
+                        attrN.UIContralType = UIContralType.TB;
+                        attrN.UIIsEnable = true;
+                        attrN.UIIsLine = false;
+                        attrN.DefVal = "@RDT";
+                        attrN.UIIsEnable = false;
+                        attrN.GroupID = gf.OID;
+                        attrN.IDX = 3;
+                        attrN.Insert();
+                        return null;
                     case "NewDtl":
                         MapDtl dtlN = new MapDtl();
                         dtlN.No = v1;
@@ -349,22 +411,21 @@ namespace BP.Web
                         sfDel.No = v1;
                         sfDel.DirectDelete();
                         return null;
-                    case "CreateTable":
+                    case "SaveSFTable":
                         string enName = v1;
                         string chName = v2;
                         if (string.IsNullOrEmpty(v1) || string.IsNullOrEmpty(v2))
-                            return "创建或者视图中的中英文名称不能为空。";
+                            return "视图中的中英文名称不能为空。";
 
                         SFTable sf = new SFTable();
                         sf.No = enName;
-                        if (sf.IsExits == true)
-                            return "表名:" + sf.No + "已经存在.";
+                        sf.Name = chName;
 
                         sf.No = enName;
                         sf.Name = chName;
                         sf.FK_Val = enName;
-                        sf.Insert();
-                        if (DBAccess.IsExitsObject(enName))
+                        sf.Save();
+                        if (DBAccess.IsExitsObject(enName) == true)
                         {
                             /*已经存在此对象，检查一下是否有No,Name列。*/
                             sql = "SELECT No,Name FROM " + enName;
@@ -378,20 +439,23 @@ namespace BP.Web
                             }
                             return null;
                         }
-
-                        try
+                        else
                         {
-                            // 如果没有该表或者视图，就要创建它。
-                            sql = "CREATE TABLE " + enName + "(No varchar(30) NOT NULL,Name varchar(50) NULL)";
-                            DBAccess.RunSQL(sql);
-                            DBAccess.RunSQL("INSERT INTO " + enName + " (No,Name) VALUES('001','Item1')");
-                            DBAccess.RunSQL("INSERT INTO " + enName + " (No,Name) VALUES('002','Item2')");
-                            DBAccess.RunSQL("INSERT INTO " + enName + " (No,Name) VALUES('003','Item3')");
-                        }
-                        catch (Exception ex)
-                        {
-                            sf.DirectDelete();
-                            return "创建物理表期间出现错误,可能是非法的物理表名.技术信息:" + ex.Message;
+                            /*创建这个表，并且插入基础数据。*/
+                            try
+                            {
+                                // 如果没有该表或者视图，就要创建它。
+                                sql = "CREATE TABLE " + enName + "(No varchar(30) NOT NULL,Name varchar(50) NULL)";
+                                DBAccess.RunSQL(sql);
+                                DBAccess.RunSQL("INSERT INTO " + enName + " (No,Name) VALUES('001','Item1')");
+                                DBAccess.RunSQL("INSERT INTO " + enName + " (No,Name) VALUES('002','Item2')");
+                                DBAccess.RunSQL("INSERT INTO " + enName + " (No,Name) VALUES('003','Item3')");
+                            }
+                            catch (Exception ex)
+                            {
+                                sf.DirectDelete();
+                                return "创建物理表期间出现错误,可能是非法的物理表名.技术信息:" + ex.Message;
+                            }
                         }
                         return null; /*创建成功后返回空值*/
                     case "FrmTempleteExp":  //导出表单.
@@ -558,7 +622,7 @@ namespace BP.Web
                         attr.Insert();
                         return fk_frm;
                     default:
-                        return "Error:"+ dotype+" , 未设置此标记.";
+                        return "Error:" + dotype + " , 未设置此标记.";
                 }
             }
             catch (Exception ex)

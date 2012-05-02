@@ -56,6 +56,7 @@ public partial class WF_MapDef_GroupField : WebPage
 
         if (i > 0)
         {
+           
             this.Alert("前缀已经使用：" + Prx + " ， 请确认您是否增加了这个审核分组或者，请您更换其他的前缀。");
             return;
         }

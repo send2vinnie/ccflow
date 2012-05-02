@@ -165,11 +165,9 @@ public class WSDesigner : WSBase
         }
         catch (Exception exception)
         {
-
             return exception.Message;
         }
         return string.Empty;
-
     }
     [WebMethod(EnableSession = true)]
     [Obsolete]

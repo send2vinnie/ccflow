@@ -123,6 +123,7 @@ namespace BP.Web.Port
                     case DoWhatList.FlowFX:
                     case DoWhatList.DealWork:
                     case DoWhatList.DealWorkInSmall:
+                 //   case DoWhatList.CallMyFlow:
                     case "FK_Flow":
                     case "WorkID":
                     case "FK_Node":
@@ -149,6 +150,12 @@ namespace BP.Web.Port
                 string nodeID = int.Parse(this.FK_Flow + "01").ToString();
                 switch (this.DoWhat)
                 {
+                    //case DoWhatList.CallMyFlow: // 调起指定的工作
+                    //     this.Response.Redirect("MyFlow.aspx?WorkID="+this.WorkID+"&FK_Flow=" + this.FK_Flow + paras + "&FK_Node="+this.FK_Node, true);
+                    //    break;
+                    //case DoWhatList.CallMyFlowSmall: // 调起指定的工作
+                    //    this.Response.Redirect("MyFlowSmall.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + paras + "&FK_Node=" + this.FK_Node, true);
+                    //    break;
                     case DoWhatList.Start: // 发起工作
                         if (this.FK_Flow == null)
                             this.Response.Redirect("Start.aspx", true);

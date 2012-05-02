@@ -499,7 +499,7 @@ public partial class WF_WAP_UC_MyFlowWap : BP.Web.UC.UCBase3
                 this.Btn_Shift.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
             }
 
-            if (btnLab.CCEnable)
+            if (btnLab.CCRole== CCRole.HandCC)
                 this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
 
             if (btnLab.DeleteEnable)

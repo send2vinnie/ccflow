@@ -299,7 +299,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             return;
         }
 
-        Flow fl=new Flow(this.FK_Flow);
+        Flow fl = new Flow(this.FK_Flow);
         this.AddTable("width='100%'");
         this.AddCaptionLeft("流程日志:" + fl.Name);
         this.AddTR();
@@ -354,16 +354,40 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
 
             this.AddTD(item.NDToT);
             this.AddTD(item.EmpToT);
-
             this.AddTD(item.HisActionTypeT);
-
             this.AddTD(item.MsgHtml);
 
             this.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?DoType=View&MyPK=" + item.MyPK + "','" + item.MyPK + "');\">日志</a>");
             this.AddTREnd();
         }
         this.AddTableEnd();
+
+        if (this.CCID != null)
+        {
+            CCList cl = new CCList();
+            cl.MyPK = this.CCID;
+            cl.RetrieveFromDBSources();
+            this.AddFieldSet(cl.Title);
+            this.Add("抄送人:" + cl.Rec + ", 抄送日期:" + cl.RDT);
+            this.AddHR();
+            this.Add(cl.DocHtml);
+            this.AddFieldSetEnd();
+
+            if (cl.IsRead == false)
+            {
+                cl.IsRead = true;
+                cl.Update();
+            }
+        }
     }
+    public string CCID
+    {
+        get
+        {
+            return this.Request.QueryString["CCID"];
+        }
+    }
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
