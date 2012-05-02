@@ -45,7 +45,7 @@
         }
     </style>
 	<script language="JavaScript" src="./../Comm/JScript.js"></script>
-    <script language="JavaScript" src="./../Comm/JS/Calendar.js" type="text/javascript"></script>  
+   
     <base target=_self />  
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()" style="font-size:smaller"> 

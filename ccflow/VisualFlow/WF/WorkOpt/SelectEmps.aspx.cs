@@ -1,81 +1,42 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
+using System.Collections.Generic;
 using System.Web;
-using System.Web.Security;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using BP.Web;
-using BP.DA;
-using BP.En;
-using BP.Sys;
-using BP.Web.Controls;
 
-public partial class Comm_M2M : WebPage
+public partial class WF_WorkOpt_SelectEmps : System.Web.UI.Page
 {
-    public Int64 OID
+    public string DBOfGroups
     {
         get
         {
-            return Int64.Parse(this.Request.QueryString["OID"]);
+            return "SELECT No,Name FROM Port_Dept ";
         }
     }
-    public string IsOpen
+    public string DBOfObjs
     {
         get
         {
-            return this.Request.QueryString["IsOpen"];
+            return "SELECT No,Name,FK_Dept FROM Port_Emp ";
         }
     }
-    public string FK_MapData
+    public int Cols
     {
         get
         {
-            return this.Request.QueryString["FK_MapData"];
-        }
-    }
-    public string NoOfObj
-    {
-        get
-        {
-            return this.Request.QueryString["NoOfObj"];
-        }
-    }
-    public string IsEdit
-    {
-        get
-        {
-            return this.Request.QueryString["IsEdit"];
-        }
-    }
-    public string FK_MapExt
-    {
-        get
-        {
-            return this.Request.QueryString["FK_MapExt"];
+            return 3;
         }
     }
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.RegisterClientScriptBlock("s",
-            "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
-        MapM2M mapM2M = new MapM2M(this.FK_MapData, this.NoOfObj);
-        if (mapM2M.HisM2MType == M2MType.M2MM)
-        {
-            this.Response.Redirect("M2MM.aspx?FK_MapData=" + this.FK_MapData + "&NoOfObj=" + this.NoOfObj + "&IsOpen=" + this.IsOpen + "&OID=" + this.OID, true);
-            return;
-        }
-
-        BP.Sys.M2M m2m = new BP.Sys.M2M();
-        m2m.MyPK = this.FK_MapData + "_" + this.NoOfObj + "_" + this.OID + "_";
-        m2m.RetrieveFromDBSources();
+           "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
+        
         DataTable dtGroup = new DataTable();
-        if (mapM2M.DBOfGroups.Length > 5)
+        if (this.DBOfGroups.Length > 5)
         {
-            dtGroup = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfGroupsRun);
+            dtGroup = BP.DA.DBAccess.RunSQLReturnTable(this.DBOfGroups);
         }
         else
         {
@@ -87,7 +48,7 @@ public partial class Comm_M2M : WebPage
             dtGroup.Rows.Add(dr);
         }
 
-        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjsRun);
+        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(this.DBOfObjs);
         if (dtObj.Columns.Count == 2)
         {
             dtObj.Columns.Add("Group", typeof(string));
@@ -95,16 +56,8 @@ public partial class Comm_M2M : WebPage
                 dr["Group"] = "01";
         }
 
-        bool isInsert = mapM2M.IsInsert;
-        bool isDelete = mapM2M.IsDelete;
-
-        //if (isDelete == false && isInsert == false)
-        //    this.Button1.Enabled = false;
-
-        if ((isDelete || isInsert) && string.IsNullOrEmpty(this.IsOpen) == false)
-            this.Button1.Visible = true;
-
         this.Pub1.AddTable("width=100% border=0");
+        this.Pub1.AddCaptionLeft("选择人员");
         foreach (DataRow drGroup in dtGroup.Rows)
         {
             string ctlIDs = "";
@@ -140,11 +93,11 @@ public partial class Comm_M2M : WebPage
                 ctlIDs += cb.ID + ",";
                 cb.Attributes["onclick"] = "isChange=true;";
                 cb.Text = name;
-                cb.Checked = m2m.Vals.Contains("," + no + ",");
+                //cb.Checked = m2m.Vals.Contains("," + no + ",");
                 if (cb.Checked)
                     cb.Text = "<font color=green>" + cb.Text + "</font>";
                 this.Pub1.AddTD(cb);
-                if (mapM2M.Cols - 1 == colIdx)
+                if (this.Cols - 1 == colIdx)
                 {
                     this.Pub1.AddTREnd();
                     colIdx = -1;
@@ -154,7 +107,7 @@ public partial class Comm_M2M : WebPage
 
             if (colIdx != -1)
             {
-                while (colIdx != mapM2M.Cols - 1)
+                while (colIdx != this.Cols - 1)
                 {
                     colIdx++;
                     this.Pub1.AddTD();
@@ -185,7 +138,7 @@ public partial class Comm_M2M : WebPage
             if (isHaveUnGroup == false)
                 continue;
         }
-         
+
 
         if (isHaveUnGroup == true)
         {
@@ -222,13 +175,11 @@ public partial class Comm_M2M : WebPage
                 cb.ID = "CB_" + no;
                 ctlIDs += cb.ID + ",";
                 cb.Text = name + group;
-                cb.Checked = m2m.Vals.Contains("," + no + ",");
+             //   cb.Checked = m2m.Vals.Contains("," + no + ",");
                 if (cb.Checked)
                     cb.Text = "<font color=green>" + cb.Text + "</font>";
-
                 this.Pub1.AddTD(cb);
-
-                if (mapM2M.Cols - 1 == colIdx)
+                if (this.Cols - 1 == colIdx)
                 {
                     this.Pub1.AddTREnd();
                     colIdx = -1;
@@ -236,7 +187,7 @@ public partial class Comm_M2M : WebPage
             }
             if (colIdx != -1)
             {
-                while (colIdx != mapM2M.Cols - 1)
+                while (colIdx != this.Cols - 1)
                 {
                     colIdx++;
                     this.Pub1.AddTD();
@@ -249,43 +200,16 @@ public partial class Comm_M2M : WebPage
             this.Pub1.AddTREnd();
         }
         #endregion 处理未分组的情况.
-
         this.Pub1.AddTableEnd();
+
+        Button btn = new Button();
+        btn.ID = "Btn_OK";
+        btn.Text = "确定";
+        btn.Click += new EventHandler(btn_Click);
+        this.Pub1.Add(btn);
     }
-    protected void Button1_Click(object sender, EventArgs e)
+    void btn_Click(object sender, EventArgs e)
     {
-        if (this.OID == 0)
-            return;
 
-        MapM2M mapM2M = new MapM2M(this.FK_MapData, this.NoOfObj);
-
-        BP.Sys.M2M m2m = new BP.Sys.M2M();
-        m2m.FK_MapData = this.FK_MapData;
-        m2m.EnOID = this.OID;
-        m2m.M2MNo = this.NoOfObj;
-
-        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjs);
-        string str = ",";
-        string strT = "";
-        int numOfselected = 0;
-        foreach (DataRow dr in dtObj.Rows)
-        {
-            string id = dr[0].ToString();
-            CheckBox cb = this.Pub1.GetCBByID("CB_" + id);
-            if (cb == null)
-                continue;
-
-            if (cb.Checked == false)
-                continue;
-
-            str += id + ",";
-            strT += "@" + id + "," + cb.Text;
-            numOfselected++;
-        }
-        m2m.Vals = str;
-        m2m.ValsName = strT;
-        m2m.InitMyPK();
-        m2m.NumSelected = numOfselected;
-        m2m.Save();
     }
 }

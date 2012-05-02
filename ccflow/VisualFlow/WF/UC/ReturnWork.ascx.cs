@@ -281,53 +281,10 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             try
             {
                 WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
-                WorkNodes wns = new WorkNodes();
-
-                string turnTo = "xxx";
-                switch (nd.HisReturnRole)
+                DataTable dt = BP.WF.Dev2Interface.DB_GenerWillReturnNodes(this.FK_Node, this.WorkID);
+                foreach (DataRow dr in dt.Rows)
                 {
-                    case ReturnRole.CanNotReturn:
-                        return;
-                    case ReturnRole.ReturnAnyNodes:
-                        if (wns.Count == 0)
-                            wns.GenerByWorkID(wn.HisNode.HisFlow, this.WorkID);
-                        foreach (WorkNode mywn in wns)
-                        {
-                            if (mywn.HisNode.NodeID == this.FK_Node)
-                                continue;
-
-                            this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
-                        }
-                        break;
-                    case ReturnRole.ReturnPreviousNode:
-                        WorkNode mywnP = wn.GetPreviousWorkNode();
-                        turnTo = mywnP.HisWork.Rec + mywnP.HisWork.RecText;
-                        this.DDL1.Items.Add(new ListItem(mywnP.HisWork.RecText + "=>" + mywnP.HisNode.Name, mywnP.HisNode.NodeID.ToString()));
-                        break;
-                    case ReturnRole.ReturnSpecifiedNodes: //退回指定的节点。
-                        if (wns.Count == 0)
-                            wns.GenerByWorkID(wn.HisNode.HisFlow, this.WorkID);
-                        NodeReturns rnds = new NodeReturns();
-                        rnds.Retrieve(NodeReturnAttr.FK_Node, this.FK_Node);
-                        if (rnds.Count == 0)
-                            throw new Exception("@流程设计错误，您设置该节点可以退回指定的节点，但是指定的节点集合为空，请在节点属性设置它的制订节点。");
-                        foreach (WorkNode mywn in wns)
-                        {
-                            if (mywn.HisNode.NodeID == this.FK_Node)
-                                continue;
-
-                            if (rnds.Contains(NodeReturnAttr.ReturnN,
-                                mywn.HisNode.NodeID) == false)
-                                continue;
-
-                            turnTo = mywn.HisWork.Rec + mywn.HisWork.RecText;
-                            this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
-                        }
-                        if (this.DDL1.Items.Count != 1)
-                            turnTo = " xxx ";
-                        break;
-                    default:
-                        throw new Exception("@没有判断的退回类型。");
+                    this.DDL1.Items.Add(new ListItem(dr["Name"].ToString(), dr["No"].ToString()));
                 }
 
                 WorkNode pwn = wn.GetPreviousWorkNode();
@@ -342,7 +299,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 {
                     this.TB1.Text = this.ToEP4("WBackInfo",
                   "{0}同志: \n  您在{1}处理的“{2}”工作有错误，需要您重新办理．\n\n此致!!!   \n\n  {3}",
-                  turnTo, wk.CDT, pwn.HisNode.Name, WebUser.Name + "\n  " + BP.DA.DataType.CurrentDataTime);
+                  "", wk.CDT, pwn.HisNode.Name, WebUser.Name + "\n  " + BP.DA.DataType.CurrentDataTime);
                 }
             }
             catch (Exception ex)

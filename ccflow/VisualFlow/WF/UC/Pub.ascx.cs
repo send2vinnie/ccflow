@@ -22,7 +22,6 @@ public partial class WF_UC_Pub : BP.Web.UC.UCBase3
     public void BindWorkDtl(Node nd, Works wks)
     {
         Attrs attrs = wks.GetNewEntity.EnMap.Attrs;
-
         this.AddTable("width='100%' align=center class=Table");
         this.AddTR();
         this.AddTDTitle("序");
