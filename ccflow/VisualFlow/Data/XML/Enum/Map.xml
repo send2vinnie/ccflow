@@ -6,6 +6,13 @@
     JP=""
     RU=""    />
 
+    <Item Key="CtrlWay"
+  CH="@0=按岗位@1=按部门@2=按人员@3=按SQL"
+  EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+  JP="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
+  RU="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file" />
+    
+
     <Item Key="FrmUrlShowWay"
     CH="@0=不显示@1=自动大小@2=指定大小@3=新窗口"
     EN="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"

@@ -36,6 +36,15 @@
     JP="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
     RU="@0=Disable@1=SQL/Produces@2=URL@3=WebServices@4=exe file"
         />
+
+    <!-- 抄送规则 -->
+    <Item Key="CCRole"
+    CH="@0=不能抄送@1=手工抄送@2=自动抄送@3=手工与自动"
+    EN="@0=不能抄送@1=手工抄送@2=自动抄送@3=手工与自动"
+    JP="@0=不能抄送@1=手工抄送@2=自动抄送@3=手工与自动"
+    RU="@0=不能抄送@1=手工抄送@2=自动抄送@3=手工与自动"
+          />
+    
     
 	<Item Key="EventDoType" 
         CH="@0=禁用@1=执行存储过程@2=执行SQL语句@3=执行URL@4=WebServices@5=exe文件"
