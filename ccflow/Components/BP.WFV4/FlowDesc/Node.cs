@@ -283,6 +283,24 @@ namespace BP.WF
     /// <summary>
     /// 谁执行它
     /// </summary>
+    public enum CCRole
+    {
+        /// <summary>
+        /// 不能抄送
+        /// </summary>
+        UnCC,
+        /// <summary>
+        /// 手工抄送
+        /// </summary>
+        HandCC,
+        /// <summary>
+        /// 自动抄送
+        /// </summary>
+        AutoCC
+    }
+    /// <summary>
+    /// 谁执行它
+    /// </summary>
     public enum WhoDoIt
     {
         /// <summary>
@@ -366,7 +384,6 @@ namespace BP.WF
         public const string GroupStaNDs = "GroupStaNDs";
         public const string FJOpen = "FJOpen";
         public const string IsCanReturn = "IsCanReturn";
-        public const string IsCanCC = "IsCanCC";
         public const string IsHandOver = "IsHandOver";
         public const string IsCanDelFlow = "IsCanDelFlow";
 
@@ -537,6 +554,10 @@ namespace BP.WF
         /// 可跳转的节点
         /// </summary>
         public const string JumpSQL = "JumpSQL";
+        /// <summary>
+        /// 操送规则
+        /// </summary>
+        public const string CCRole = "CCRole";
         #endregion
     }
     /// <summary>
@@ -737,7 +758,7 @@ namespace BP.WF
             {
                 this.SetValByKey(BtnAttr.ReturnRole, (int)ReturnRole.CanNotReturn);
                 this.SetValByKey(BtnAttr.ShiftEnable, 0);
-                this.SetValByKey(BtnAttr.CCEnable, 0);
+                //  this.SetValByKey(BtnAttr.CCRole, 0);
                 this.SetValByKey(BtnAttr.EndFlowEnable, 0);
                 this.SetValByKey(BtnAttr.RptEnable, 0);
                 this.SetValByKey(BtnAttr.EndFlowEnable, 0);
@@ -1742,6 +1763,20 @@ namespace BP.WF
             }
         }
         /// <summary>
+        /// 抄送规则
+        /// </summary>
+        public CCRole HisCCRole
+        {
+            get
+            {
+                return (CCRole)this.GetValIntByKey(NodeAttr.CCRole);
+            }
+            set
+            {
+                this.SetValByKey(NodeAttr.CCRole, (int)value);
+            }
+        }
+        /// <summary>
         /// 附件开放类型
         /// </summary>
         public FJOpen HisFJOpen
@@ -1945,20 +1980,6 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(NodeAttr.IsHandOver, value);
-            }
-        }
-        /// <summary>
-        /// 是否可以抄送
-        /// </summary>
-        public bool IsCanCC
-        {
-            get
-            {
-                return this.GetValBooleanByKey(NodeAttr.IsCanCC);
-            }
-            set
-            {
-                this.SetValByKey(NodeAttr.IsCanCC, value);
             }
         }
         public bool IsCanHidReturn_del
@@ -2345,10 +2366,13 @@ namespace BP.WF
                 map.AddTBInt(NodeAttr.DeliveryWay, 0, "访问规则", true, true);
 
 
+                map.AddTBInt(NodeAttr.CCRole, 0, "抄送规则", true, true);
+
+
                 //map.AddBoolean(NodeAttr.IsCanReturn, true, "是否可以退回", true, true);
                 //map.AddBoolean(NodeAttr.IsCanHidReturn, false, "是否可以隐性退回", true, true);
+                //map.AddBoolean(NodeAttr.CCRole, true, "是否可以抄送", true, true);
 
-                map.AddBoolean(NodeAttr.IsCanCC, true, "是否可以抄送", true, true);
                 map.AddBoolean(NodeAttr.IsCanRpt, true, "是否可以查看工作报告?", true, true, true);
                 map.AddBoolean(NodeAttr.IsCanOver, false, "是否可以终止流程", true, true);
                 map.AddBoolean(NodeAttr.IsSecret, false, "是否是保密步骤", true, true);
@@ -2363,7 +2387,6 @@ namespace BP.WF
 
                 map.AddDDLSysEnum(NodeAttr.RunModel, 0, "运行模式(对普通节点有效)", true, true,
                     NodeAttr.RunModel, "@0=普通@1=合流@2=分流@3=分合流@4=子线程");
-
 
                 //map.AddDDLSysEnum(NodeAttr.FLRole, 0, "分流规则", true, true, 
                 //    NodeAttr.FLRole, "@0=按接受人@1=按部门@2=按岗位");
@@ -2407,7 +2430,6 @@ namespace BP.WF
                 map.AddTBInt(NodeAttr.Y, 0, "Y坐标", false, false);
 
                 map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 100, 10);
-
                 map.AddTBString(NodeAttr.JumpSQL, null, "可跳转的节点", true, false, 0, 2000, 10, true);
 
 

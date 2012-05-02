@@ -165,6 +165,10 @@
     <Compile Include="DTS\GenerSiganture.cs" />
     <Compile Include="DTS\OneKeyBackWF.cs" />
     <Compile Include="DTS\ReLoadCHOfNode.cs" />
+    <Compile Include="FlowDesc\CC\CCDept.cs" />
+    <Compile Include="FlowDesc\CC\CCEmp.cs" />
+    <Compile Include="FlowDesc\CC\CCStation.cs" />
+    <Compile Include="FlowDesc\CC\CCList.cs" />
     <Compile Include="FlowDesc\Condition\Cond.cs" />
     <Compile Include="FlowDesc\Condition\TurnTo.cs" />
     <Compile Include="FlowDesc\FlowDescExt\BtnLab.cs">
@@ -189,6 +193,7 @@
     <Compile Include="FlowDesc\NodeUnitData.cs" />
     <Compile Include="FlowData.cs" />
     <Compile Include="FlowDesc\FrmNode.cs" />
+    <Compile Include="FlowDesc\CC\CC.cs" />
     <Compile Include="Glo.cs" />
     <Compile Include="FlowDesc\Direction.cs">
       <SubType>Code</SubType>

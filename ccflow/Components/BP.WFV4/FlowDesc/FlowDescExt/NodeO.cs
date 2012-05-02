@@ -253,7 +253,9 @@ namespace BP.WF.Ext
            true, true, NodeAttr.ReturnRole);
 
                 map.AddTBString(BtnAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.CCEnable, true, "是否启用", true, true);
+                map.AddDDLSysEnum(NodeAttr.CCRole, 0, "操作规则",
+           true, true, NodeAttr.CCRole);
+
 
                 map.AddTBString(BtnAttr.ShiftLab, "移交", "移交按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.ShiftEnable, true, "是否启用", true, true);
@@ -327,6 +329,11 @@ namespace BP.WF.Ext
                 map.AddRefMethod(rm);
 
                 rm = new RefMethod();
+                rm.Title = "抄送规则"; // "抄送规则";
+                rm.ClassMethodName = this.ToString() + ".DoCCRole";
+                map.AddRefMethod(rm);
+
+                rm = new RefMethod();
                 rm.Title = this.ToE("DesignSheet", "设计表单"); // "设计表单";
                 rm.ClassMethodName = this.ToString() + ".DoMapData";
                 map.AddRefMethod(rm);
@@ -387,12 +394,24 @@ namespace BP.WF.Ext
             return nd.DoTurn();
         }
 
+        /// <summary>
+        /// 抄送规则
+        /// </summary>
+        /// <returns></returns>
+        public string DoCCRole()
+        {
+            PubClass.WinOpen("./RefFunc/UIEn.aspx?EnName=BP.WF.CC&PK=" + this.NodeID , "抄送规则", "Bill", 800, 500, 200, 300);
+            return null;
+        }
+        /// <summary>
+        /// 退回节点
+        /// </summary>
+        /// <returns></returns>
         public string DoCanReturnNodes()
         {
             PubClass.WinOpen("./../WF/Admin/CanReturnNodes.aspx?FK_Node=" + this.NodeID + "&FK_Flow=" + this.FK_Flow, "可退回的节点", "Bill", 500, 300, 200, 300);
             return null;
         }
-
         public string DoListen()
         {
             BP.WF.Node nd = new BP.WF.Node(this.NodeID);

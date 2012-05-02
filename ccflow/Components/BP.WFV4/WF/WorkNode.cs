@@ -3218,6 +3218,53 @@ namespace BP.WF
 
             // this.HisWork.DoCopy(); // copy 本地的数据到指定的系统.
             DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=1 WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID);
+
+            #region 执行抄送.
+            if (this.HisNode.HisCCRole == CCRole.AutoCC)
+            {
+                /*如果是自动抄送*/
+                CC cc = new CC();
+                cc.NodeID = this.HisNode.NodeID;
+                cc.Retrieve();
+                string ccTitle = cc.CCTitle;
+                string ccDoc = cc.CCDoc;
+
+              //  ccDoc += "\t\n ------------------- ";
+              //  string msgPK = "SELECT MyPK FROM WF_Track WHERE WorkID="+this.WorkID+" AND NDFrom="+this.HisNode.NodeID+" ORDER BY RDT";
+
+                DataTable ccers = cc.GenerCCers(this.rptGe);
+                if (ccers.Rows.Count > 0)
+                {
+                    msg += "@消息自动抄送给";
+                    foreach (DataRow dr in ccers.Rows)
+                    {
+                        CCList list = new CCList();
+                        list.MyPK = this.WorkID + "_" + this.HisNode.NodeID + "_" + dr[0].ToString();
+                        list.FK_Flow = this.HisNode.FK_Flow;
+                        list.FK_Node = this.HisNode.NodeID;
+                        list.Title = ccTitle;
+                        list.Doc = ccDoc;
+                        list.CCTo = dr[0].ToString();
+                        list.RDT = DataType.CurrentDataTime;
+                        list.Rec = WebUser.No;
+                        list.RefWorkID = this.WorkID;
+                        list.FID = this.HisWork.FID;
+                        try
+                        {
+                            list.Insert();
+                        }
+                        catch
+                        {
+                            list.CheckPhysicsTable();
+                            list.Update();
+                        }
+                        msg += list.CCTo + "(" + dr[1].ToString() + ");";
+                    }
+                }
+                //    BP.TA.SMS.AddMsg(
+                //   this.WorkerListWayOfDept
+            }
+            #endregion 执行抄送.
             return msg;
         }
         /// <summary>

@@ -178,7 +178,8 @@ namespace BP.WF
         /// <summary>
         /// 获取当前操作员可以发起的流程集合
         /// </summary>
-        /// <returns>datatable</returns>
+        /// <param name="userNo"></param>
+        /// <returns></returns>
         public static DataTable DB_GenerCanStartFlowsOfDataTable(string userNo)
         {
             return DB_GenerCanStartFlowsOfEntities(userNo).ToDataTableField();

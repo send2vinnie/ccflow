@@ -78,7 +78,7 @@ namespace BP.WF
         public const string OptEnable = "OptEnable";
 
         public const string CCLab = "CCLab";
-        public const string CCEnable = "CCEnable";
+        public const string CCRole = "CCRole";
 
         public const string DelLab = "DelLab";
         public const string DelEnable = "DelEnable";
@@ -111,6 +111,18 @@ namespace BP.WF
         /// 发送按钮
         /// </summary>
         public const string SendJS = "SendJS";
+        /// <summary>
+        /// 抄送标题
+        /// </summary>
+        public const string CCTitle = "CCTitle";
+        /// <summary>
+        /// 抄送内容
+        /// </summary>
+        public const string CCDoc = "CCDoc";
+        /// <summary>
+        /// 抄送对象
+        /// </summary>
+        public const string CCEmps = "CCEmps";
     }
     /// <summary>
     /// Btn
@@ -338,7 +350,6 @@ namespace BP.WF
                 return this.GetValBooleanByKey(BtnAttr.OptEnable);
             }
         }
-
         public string CCLab
         {
             get
@@ -346,11 +357,11 @@ namespace BP.WF
                 return this.GetValStringByKey(BtnAttr.CCLab);
             }
         }
-        public bool CCEnable
+        public CCRole CCRole
         {
             get
             {
-                return this.GetValBooleanByKey(BtnAttr.CCEnable);
+                return (CCRole)this.GetValIntByKey(BtnAttr.CCRole);
             }
         }
         public string DeleteLab
@@ -441,7 +452,9 @@ namespace BP.WF
                 map.AddBoolean(BtnAttr.ReturnRole, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
-                map.AddBoolean(BtnAttr.CCEnable, true, "是否启用", true, true);
+                map.AddDDLSysEnum(BtnAttr.CCRole, 0, "抄送方式",true, true, BtnAttr.CCRole);
+
+            //  map.AddBoolean(BtnAttr, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.ShiftLab, "移交", "移交按钮标签", true, false, 0, 50, 10);
                 map.AddBoolean(BtnAttr.ShiftEnable, true, "是否启用", true, true);
