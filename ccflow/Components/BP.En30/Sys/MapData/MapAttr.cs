@@ -936,7 +936,7 @@ namespace BP.Sys
         }
         #endregion
 
-        #region 构造方法
+        #region 构造方法b
         /// <summary>
         /// 实体属性
         /// </summary>
@@ -1175,6 +1175,7 @@ namespace BP.Sys
                 throw new Exception("@在["+this.MyPK+"]已经存在字段名称[" + this.Name + "]字段[" + this.KeyOfEn + "]");
             }
 
+             
             this.IDX = 999; // BP.DA.DBAccess.RunSQLReturnValInt("SELECT COUNT(*) FROM Sys_MapAttr WHERE FK_MapData='" + this.FK_MapData + "'") + 1;
             this.MyPK = this.FK_MapData + "_" + this.KeyOfEn;
             return base.beforeInsert();
