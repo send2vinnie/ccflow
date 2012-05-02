@@ -329,8 +329,9 @@ namespace BP.WF.Ext
                 map.AddRefMethod(rm);
 
                 rm = new RefMethod();
-                rm.Title = "抄送规则"; // "抄送规则";
+                rm.Title = "自动抄送设置"; // "抄送规则";
                 rm.ClassMethodName = this.ToString() + ".DoCCRole";
+                //rm.Warning = "";
                 map.AddRefMethod(rm);
 
                 rm = new RefMethod();
@@ -393,7 +394,6 @@ namespace BP.WF.Ext
             BP.WF.Node nd = new BP.WF.Node(this.NodeID);
             return nd.DoTurn();
         }
-
         /// <summary>
         /// 抄送规则
         /// </summary>

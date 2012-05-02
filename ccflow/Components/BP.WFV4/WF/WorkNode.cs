@@ -3220,14 +3220,32 @@ namespace BP.WF
             DBAccess.RunSQL("UPDATE WF_GenerWorkerList SET IsPass=1 WHERE FK_Node=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID);
 
             #region 执行抄送.
-            if (this.HisNode.HisCCRole == CCRole.AutoCC)
+            if (this.HisNode.HisCCRole == CCRole.AutoCC || this.HisNode.HisCCRole == CCRole.HandAndAuto)
             {
                 /*如果是自动抄送*/
                 CC cc = new CC();
                 cc.NodeID = this.HisNode.NodeID;
                 cc.Retrieve();
-                string ccTitle = cc.CCTitle;
-                string ccDoc = cc.CCDoc;
+                string ccTitle = cc.CCTitle.Clone() as string;
+                string ccDoc = cc.CCDoc.Clone() as string;
+
+                ccTitle = ccTitle.Replace("@WebUser.No", WebUser.No);
+                ccTitle = ccTitle.Replace("@WebUser.Name", WebUser.Name);
+
+                ccDoc = ccDoc.Replace("@WebUser.No", WebUser.No);
+                ccDoc = ccDoc.Replace("@WebUser.Name", WebUser.Name);
+
+
+                ccDoc = ccDoc.Replace("@RDT", DataType.CurrentData);
+
+                foreach (Attr item in this.rptGe.EnMap.Attrs)
+                {
+                    if (ccDoc.Contains("@" + item.Key) == true)
+                        ccDoc = ccDoc.Replace("@" + item.Key, this.rptGe.GetValStrByKey(item.Key));
+
+                    if (ccTitle.Contains("@" + item.Key) == true)
+                        ccTitle = ccTitle.Replace("@" + item.Key, this.rptGe.GetValStrByKey(item.Key));
+                }
 
               //  ccDoc += "\t\n ------------------- ";
               //  string msgPK = "SELECT MyPK FROM WF_Track WHERE WorkID="+this.WorkID+" AND NDFrom="+this.HisNode.NodeID+" ORDER BY RDT";
@@ -3238,10 +3256,15 @@ namespace BP.WF
                     msg += "@消息自动抄送给";
                     foreach (DataRow dr in ccers.Rows)
                     {
+                        ccDoc = ccDoc.Replace("@Accepter", dr[1].ToString());
+                        ccTitle = ccTitle.Replace("@Accepter", dr[1].ToString());
+
                         CCList list = new CCList();
                         list.MyPK = this.WorkID + "_" + this.HisNode.NodeID + "_" + dr[0].ToString();
                         list.FK_Flow = this.HisNode.FK_Flow;
+                        list.FlowName = this.HisNode.FlowName;
                         list.FK_Node = this.HisNode.NodeID;
+                        list.NodeName = this.HisNode.Name;
                         list.Title = ccTitle;
                         list.Doc = ccDoc;
                         list.CCTo = dr[0].ToString();

@@ -195,6 +195,13 @@ namespace BP.WF
                 this.SetValByKey(CCListAttr.Doc, value);
             }
         }
+        public string DocHtml
+        {
+            get
+            {
+                return this.GetValHtmlStringByKey(CCListAttr.Doc);
+            }
+        }
         /// <summary>
         /// 抄送对象
         /// </summary>
@@ -260,7 +267,6 @@ namespace BP.WF
                 map.AddTBString(CCListAttr.NodeName, null, "节点名称", true, true, 0, 500, 10, true);
                 map.AddTBInt(CCListAttr.RefWorkID, 0, "工作ID", true, true);
                 map.AddTBInt(CCListAttr.FID, 0, "FID", true, true);
-
 
                 map.AddTBString(CCListAttr.Title, null, "标题", true, true, 0, 500, 10, true);
                 map.AddTBStringDoc();

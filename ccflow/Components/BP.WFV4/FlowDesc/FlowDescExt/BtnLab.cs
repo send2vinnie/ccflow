@@ -452,7 +452,7 @@ namespace BP.WF
                 map.AddBoolean(BtnAttr.ReturnRole, true, "是否启用", true, true);
 
                 map.AddTBString(BtnAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
-                map.AddDDLSysEnum(BtnAttr.CCRole, 0, "抄送方式",true, true, BtnAttr.CCRole);
+                map.AddDDLSysEnum(BtnAttr.CCRole, 0, "抄送规则",true, true, BtnAttr.CCRole);
 
             //  map.AddBoolean(BtnAttr, true, "是否启用", true, true);
 

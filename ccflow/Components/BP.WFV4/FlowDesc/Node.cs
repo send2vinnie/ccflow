@@ -296,7 +296,11 @@ namespace BP.WF
         /// <summary>
         /// 自动抄送
         /// </summary>
-        AutoCC
+        AutoCC,
+        /// <summary>
+        /// 手工与自动并存
+        /// </summary>
+        HandAndAuto
     }
     /// <summary>
     /// 谁执行它
