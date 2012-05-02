@@ -204,6 +204,80 @@ namespace BP.WF
         #endregion 获取当前操作员的待办工作
 
 
+        #region 获取当前操作员的待办工作
+        /// <summary>
+        /// 获取当前节点可以退回的节点，以方便退回的二次开发。
+        /// </summary>
+        /// <param name="fk_node">当前节点</param>
+        /// <param name="workid">工作ID</param>
+        /// <returns></returns>
+        public static DataTable DB_GenerWillReturnNodes(int fk_node, Int64 workid)
+        {
+            DataTable dt = new DataTable("obt");
+            dt.Columns.Add("No");
+            dt.Columns.Add("Name");
+
+            Node nd = new Node(fk_node);
+            WorkNode wn = new WorkNode(workid, fk_node);
+            WorkNodes wns = new WorkNodes();
+            switch (nd.HisReturnRole)
+            {
+                case ReturnRole.CanNotReturn:
+                    return dt;
+                case ReturnRole.ReturnAnyNodes:
+                    if (wns.Count == 0)
+                        wns.GenerByWorkID(wn.HisNode.HisFlow, workid);
+
+                    foreach (WorkNode mywn in wns)
+                    {
+                        if (mywn.HisNode.NodeID == fk_node)
+                            continue;
+
+                        DataRow dr = dt.NewRow();
+                        dr["No"] = mywn.HisNode.NodeID.ToString();
+                        dr["Name"] = mywn.HisWork.RecText + "=>" + mywn.HisNode.Name;
+                        dt.Rows.Add(dr);
+                    }
+                    break;
+                case ReturnRole.ReturnPreviousNode:
+                    WorkNode mywnP = wn.GetPreviousWorkNode();
+                  //  turnTo = mywnP.HisWork.Rec + mywnP.HisWork.RecText;
+                    DataRow dr1 = dt.NewRow();
+                    dr1["No"] = mywnP.HisNode.NodeID.ToString();
+                    dr1["Name"] = mywnP.HisWork.RecText + "=>" + mywnP.HisNode.Name;
+                    dt.Rows.Add(dr1);
+                    break;
+                case ReturnRole.ReturnSpecifiedNodes: //退回指定的节点。
+                    if (wns.Count == 0)
+                        wns.GenerByWorkID(wn.HisNode.HisFlow, workid);
+                    NodeReturns rnds = new NodeReturns();
+                    rnds.Retrieve(NodeReturnAttr.FK_Node, fk_node);
+                    if (rnds.Count == 0)
+                        throw new Exception("@流程设计错误，您设置该节点可以退回指定的节点，但是指定的节点集合为空，请在节点属性设置它的制订节点。");
+                    foreach (WorkNode mywn in wns)
+                    {
+                        if (mywn.HisNode.NodeID == fk_node)
+                            continue;
+
+                        if (rnds.Contains(NodeReturnAttr.ReturnN,
+                            mywn.HisNode.NodeID) == false)
+                            continue;
+
+                        DataRow dr = dt.NewRow();
+                        dr["No"] = mywn.HisNode.NodeID.ToString();
+                        dr["Name"] = mywn.HisWork.RecText + "=>" + mywn.HisNode.Name;
+                        dt.Rows.Add(dr);
+                    }
+                    break;
+                default:
+                    throw new Exception("@没有判断的退回类型。");
+            }
+            return dt;
+        }
+        #endregion 获取当前操作员的待办工作
+
+
+
         #region 获取当前操作员的在途工作
         /// <summary>m
         /// 获取当前操作员的在途工作
@@ -488,12 +562,48 @@ namespace BP.WF
                     sw.SetValByKey(str, htWork[str]);
             }
             sw.BeforeSave();
-            //sw.RDT = DataType.CurrentDataTime;
-            //sw.CDT = DataType.CurrentDataTime;
-            //sw.Title = sw.Title + "(自动发起)";
             sw.Save();
             WorkNode wn = new WorkNode(sw, nd);
             return wn.AfterNodeSave();
+        }
+        /// <summary>
+        /// 执行抄送
+        /// </summary>
+        /// <param name="empNo">抄送人员编号</param>
+        /// <param name="empName">名称</param>
+        /// <param name="msgTitle">表态</param>
+        /// <param name="msgDoc">消息</param>
+        /// <param name="fk_node">节点</param>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="workid">工作ID</param>
+        /// <param name="fid">流程ID</param>
+        public static void Node_CC(string empNo, string empName, string msgTitle, string msgDoc, int fk_node, string fk_flow, Int64 workid, Int64 fid)
+        {
+            CCList list = new CCList();
+            list.MyPK = workid + "_" + fk_node + "_" + empNo;
+            list.FK_Flow = fk_flow;
+            Flow fl = new Flow(fk_flow);
+            list.FlowName = fl.Name;
+            list.FK_Node = fk_node;
+
+            Node nd = new Node(fk_node);
+            list.NodeName = nd.Name;
+            list.Title = msgTitle;
+            list.Doc = msgDoc;
+            list.CCTo = empNo;
+            list.RDT = DataType.CurrentDataTime;
+            list.Rec = WebUser.No;
+            list.RefWorkID = workid;
+            list.FID = fid;
+            try
+            {
+                list.Insert();
+            }
+            catch
+            {
+                list.CheckPhysicsTable();
+                list.Update();
+            }
         }
         /// <summary>
         /// 保存

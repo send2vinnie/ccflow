@@ -3234,8 +3234,6 @@ namespace BP.WF
 
                 ccDoc = ccDoc.Replace("@WebUser.No", WebUser.No);
                 ccDoc = ccDoc.Replace("@WebUser.Name", WebUser.Name);
-
-
                 ccDoc = ccDoc.Replace("@RDT", DataType.CurrentData);
 
                 foreach (Attr item in this.rptGe.EnMap.Attrs)
