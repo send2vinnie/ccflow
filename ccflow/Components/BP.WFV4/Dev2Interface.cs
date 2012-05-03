@@ -6,6 +6,7 @@ using System.Text;
 using BP.WF;
 using BP.DA;
 using BP.Web;
+using BP.En;
 using BP.Sys;
 
 namespace BP.WF
@@ -148,6 +149,45 @@ namespace BP.WF
         #endregion
 
         #region 数据接口
+
+        #region 轨迹获取轨迹
+        /// <summary>
+        /// 获取流程事例的轨迹图
+        /// </summary>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="workid">工作ID</param>
+        /// <param name="fid">流程ID</param>
+        /// <returns></returns>
+        public static DataTable DB_GenerTrack(string fk_flow, Int64 workid, Int64 fid)
+        {
+            Tracks tks = new Tracks();
+            QueryObject qo = new QueryObject(tks);
+            if (fid == 0)
+            {
+                qo.addLeftBracket();
+                qo.AddWhere(TrackAttr.FID, workid);
+                qo.addOr();
+                qo.AddWhere(TrackAttr.WorkID, workid);
+                qo.addRightBracket();
+                qo.addAnd();
+                qo.AddWhere(TrackAttr.FK_Flow, fk_flow);
+                qo.addOrderBy(TrackAttr.RDT);
+            }
+            else
+            {
+                qo.addLeftBracket();
+                qo.AddWhere(TrackAttr.FID, fid);
+                qo.addOr();
+                qo.AddWhere(TrackAttr.WorkID, fid);
+                qo.addRightBracket();
+                qo.addAnd();
+                qo.AddWhere(TrackAttr.FK_Flow, fk_flow);
+                qo.addOrderBy(TrackAttr.RDT);
+            }
+            return qo.DoQueryToTable();
+        }
+        #endregion 获取当前操作员可以发起的流程集合
+
 
         #region 获取当前操作员可以发起的流程集合
         /// <summary>
