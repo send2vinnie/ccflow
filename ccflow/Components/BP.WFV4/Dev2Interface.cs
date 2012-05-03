@@ -150,7 +150,7 @@ namespace BP.WF
 
         #region 数据接口
 
-        #region 轨迹获取轨迹
+        #region 获取流程事例的轨迹图
         /// <summary>
         /// 获取流程事例的轨迹图
         /// </summary>
@@ -186,7 +186,7 @@ namespace BP.WF
             }
             return qo.DoQueryToTable();
         }
-        #endregion 获取当前操作员可以发起的流程集合
+        #endregion 获取流程事例的轨迹图
 
 
         #region 获取当前操作员可以发起的流程集合
