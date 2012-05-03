@@ -2143,6 +2143,11 @@ namespace BP.WF
         /// <returns></returns>
         public string AfterNodeSave()
         {
+            // 检查是否是当前节点，如果不是就可能存在sdk用户刷新的可能，导致数据重复提交。
+            if (this.HisGenerWorkFlow.FK_Node != this.HisNode.NodeID)
+                throw new Exception("@您不能重复提交，或者刷新界面。");
+
+
             DBAccess.DoTransactionBegin();
             DateTime dt = DateTime.Now;
             this.HisWork.Rec = Web.WebUser.No;
