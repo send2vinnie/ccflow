@@ -5,7 +5,7 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class WF_WorkOpt_SelectEmps : System.Web.UI.Page
+public partial class WF_WorkOpt_SelectEmps : BP.Web.WebPage
 {
     public string DBOfGroups
     {
@@ -32,7 +32,13 @@ public partial class WF_WorkOpt_SelectEmps : System.Web.UI.Page
     {
         this.Page.RegisterClientScriptBlock("s",
            "<link href='" + this.Request.ApplicationPath + "/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
-        
+
+        string ctrlVal = ","+this.Request.QueryString["CtrlVal"]+",";
+        ctrlVal = ctrlVal.Replace(";", ",");
+        ctrlVal = ctrlVal.Replace(" ", "");
+        ctrlVal = ctrlVal.Replace(" ", "");
+        ctrlVal = ctrlVal.Replace(" ", "");
+
         DataTable dtGroup = new DataTable();
         if (this.DBOfGroups.Length > 5)
         {
@@ -93,7 +99,7 @@ public partial class WF_WorkOpt_SelectEmps : System.Web.UI.Page
                 ctlIDs += cb.ID + ",";
                 cb.Attributes["onclick"] = "isChange=true;";
                 cb.Text = name;
-                //cb.Checked = m2m.Vals.Contains("," + no + ",");
+                cb.Checked = ctrlVal.Contains("," + no + ",");
                 if (cb.Checked)
                     cb.Text = "<font color=green>" + cb.Text + "</font>";
                 this.Pub1.AddTD(cb);
@@ -175,7 +181,7 @@ public partial class WF_WorkOpt_SelectEmps : System.Web.UI.Page
                 cb.ID = "CB_" + no;
                 ctlIDs += cb.ID + ",";
                 cb.Text = name + group;
-             //   cb.Checked = m2m.Vals.Contains("," + no + ",");
+                cb.Checked = ctrlVal.Contains("," + no + ",");
                 if (cb.Checked)
                     cb.Text = "<font color=green>" + cb.Text + "</font>";
                 this.Pub1.AddTD(cb);
@@ -210,6 +216,19 @@ public partial class WF_WorkOpt_SelectEmps : System.Web.UI.Page
     }
     void btn_Click(object sender, EventArgs e)
     {
+        DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(this.DBOfObjs);
+        string keys = "";
+        foreach (DataRow dr in dt.Rows)
+        {
+            CheckBox cb = this.Pub1.GetCBByID("CB_" + dr[0].ToString());
+            if (cb == null)
+                continue;
+            if (cb.Checked == false)
+                continue;
+            keys += dr[0].ToString() + ",";
+        }
 
+        keys = keys.Substring(0,keys.Length-1);
+        this.WinClose(keys);
     }
 }

@@ -598,7 +598,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             if (btnLab.CCRole == CCRole.HandCC || btnLab.CCRole == CCRole.HandAndAuto)
             {
                 /* 抄送 */
-                this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
+               // this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Msg/Write.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "','ds'); \" />");
+                this.ToolBar1.Add("<input type=button value='" + btnLab.CCLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WorkOpt/CC.aspx?WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Flow="+this.FK_Flow+"&FID="+this.FID+"','ds'); \" />");
             }
 
             if (btnLab.DeleteEnable)
