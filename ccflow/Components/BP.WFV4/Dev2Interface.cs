@@ -204,7 +204,7 @@ namespace BP.WF
         #endregion 获取当前操作员的待办工作
 
 
-        #region 获取当前操作员的待办工作
+        #region 获取当前可以退回的节点。
         /// <summary>
         /// 获取当前节点可以退回的节点，以方便退回的二次开发。
         /// </summary>
@@ -274,7 +274,7 @@ namespace BP.WF
             }
             return dt;
         }
-        #endregion 获取当前操作员的待办工作
+        #endregion 获取当前可以退回的节点
 
 
 
@@ -649,7 +649,7 @@ namespace BP.WF
             }
         }
         /// <summary>
-        /// 执行工作退回
+        /// 执行工作退回(退回指定的点)
         /// </summary>
         /// <param name="nodeID">节点ID</param>
         /// <param name="workID">工作ID</param>
@@ -658,11 +658,11 @@ namespace BP.WF
         /// <returns>返回执行信息</returns>
         public static void Node_ReturnWork(string fk_flow, Int64 workID, string msg, int returnToNode)
         {
-            WorkNode wn = new WorkNode(workID, returnToNode);
-            wn.DoReturnWork(msg);
+            WorkNode wn = new WorkNode(workID, Dev2Interface.Node_GetCurrentNodeID(fk_flow, workID));
+            wn.DoReturnWork(returnToNode,msg);
         }
         /// <summary>
-        /// 执行工作退回
+        /// 执行工作退回(退回上一个点)
         /// </summary>
         /// <param name="nodeID">节点ID</param>
         /// <param name="workID">工作ID</param>
