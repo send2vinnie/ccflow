@@ -2147,7 +2147,6 @@ namespace BP.WF
             if (this.HisGenerWorkFlow.FK_Node != this.HisNode.NodeID)
                 throw new Exception("@您不能重复提交，或者刷新界面。");
 
-
             DBAccess.DoTransactionBegin();
             DateTime dt = DateTime.Now;
             this.HisWork.Rec = Web.WebUser.No;

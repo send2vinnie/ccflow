@@ -688,6 +688,32 @@ namespace BP.WF
                 return "保存失败:" + ex.Message;
             }
         }
+      
+        /// <summary>
+        /// 增加下一步骤的接受人(用于当前步骤向下一步骤发送时增加接受人)
+        /// </summary>
+        /// <param name="workID">工作ID</param>
+        /// <param name="nextNodeID">节点ID</param>
+        /// <param name="emps">如果多个就用逗号分开</param>
+        public static void Node_AddNextStepAccepters(Int64 workID, int nextNodeID, string emps)
+        {
+            SelectAccper sa = new SelectAccper();
+            sa.Delete(SelectAccperAttr.FK_Node, nextNodeID, SelectAccperAttr.WorkID, workID);
+            emps = emps.Replace(" ", "");
+            emps = emps.Replace(";", ",");
+            emps = emps.Replace("@", ",");
+            string[] strs = emps.Split(',');
+            foreach (string emp in strs)
+            {
+                if (string.IsNullOrEmpty(emp))
+                    continue;
+                sa.MyPK = nextNodeID + "_" + workID + "_" + emp;
+                sa.FK_Emp = emp;
+                sa.FK_Node = nextNodeID;
+                sa.WorkID = workID;
+                sa.Insert();
+            }
+        }
         /// <summary>
         /// 执行工作退回(退回指定的点)
         /// </summary>

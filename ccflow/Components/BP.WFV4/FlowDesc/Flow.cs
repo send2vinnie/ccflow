@@ -3113,25 +3113,15 @@ namespace BP.WF
 
                 map.AddTBInt(FlowAttr.NumOfBill, 0, "是否有单据", false, false);
                 map.AddTBInt(FlowAttr.NumOfDtl, 0, "NumOfDtl", false, false);
-
-
                 map.AddBoolean(FlowAttr.IsOK, true, this.ToE("IsEnable", "是否起用"), true, true);
                 map.AddBoolean(FlowAttr.IsCCAll, false, "流程完成后抄送参与人员", true, true);
-
                 map.AddBoolean(FlowAttr.IsCanStart, true, "可以独立启动否？", true, true, true);
-
                 map.AddTBString(FlowAttr.CCStas, null, "要抄送的岗位", false, false, 0, 2000, 10);
-
                 map.AddTBDecimal(FlowAttr.AvgDay, 0, "平均运行用天", false, false);
-
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
-
-
                 map.AddTBInt(FlowAttr.AppType, 0, "应用类型", false, false);
-
                 map.AddSearchAttr(FlowAttr.FK_FlowSort);
                 map.AddSearchAttr(FlowAttr.FlowRunWay);
-
 
                 RefMethod rm = new RefMethod();
                 rm.Title = this.ToE("DesignCheckRpt", "设计检查报告"); // "设计检查报告";
