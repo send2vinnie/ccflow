@@ -5,6 +5,7 @@ using System.Data;
 using System.Text;
 using BP.WF;
 using BP.DA;
+using BP.Port;
 using BP.Web;
 using BP.En;
 using BP.Sys;
@@ -688,17 +689,16 @@ namespace BP.WF
                 return "保存失败:" + ex.Message;
             }
         }
-      
         /// <summary>
         /// 增加下一步骤的接受人(用于当前步骤向下一步骤发送时增加接受人)
         /// </summary>
         /// <param name="workID">工作ID</param>
-        /// <param name="nextNodeID">节点ID</param>
+        /// <param name="formNodeID">节点ID</param>
         /// <param name="emps">如果多个就用逗号分开</param>
-        public static void Node_AddNextStepAccepters(Int64 workID, int nextNodeID, string emps)
+        public static void Node_AddNextStepAccepters(Int64 workID, int formNodeID, string emps)
         {
             SelectAccper sa = new SelectAccper();
-            sa.Delete(SelectAccperAttr.FK_Node, nextNodeID, SelectAccperAttr.WorkID, workID);
+            sa.Delete(SelectAccperAttr.FK_Node, formNodeID, SelectAccperAttr.WorkID, workID);
             emps = emps.Replace(" ", "");
             emps = emps.Replace(";", ",");
             emps = emps.Replace("@", ",");
@@ -707,12 +707,86 @@ namespace BP.WF
             {
                 if (string.IsNullOrEmpty(emp))
                     continue;
-                sa.MyPK = nextNodeID + "_" + workID + "_" + emp;
+                sa.MyPK = formNodeID + "_" + workID + "_" + emp;
                 sa.FK_Emp = emp;
-                sa.FK_Node = nextNodeID;
+                sa.FK_Node = formNodeID;
                 sa.WorkID = workID;
                 sa.Insert();
             }
+        }
+        /// <summary>
+        /// 工作移交
+        /// </summary>
+        /// <param name="workid">工作ID</param>
+        /// <param name="toEmp">移交到人员(只给移交给一个人)</param>
+        /// <param name="msg">移交消息</param>
+        public static string Node_Forward(Int64 workid, string toEmp, string msg)
+        {
+            //ArrayList al = new ArrayList();
+            //al.Add(toEmp);
+
+            // 删除当前非配的工作。
+            // 已经非配或者自动分配的任务。
+            GenerWorkFlow gwf = new GenerWorkFlow(workid);
+            int nodeId = gwf.FK_Node;
+            Int64 workId = workid;
+
+            DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + workid + " AND FK_Node=" + nodeId);
+            int i = DBAccess.RunSQL("UPDATE WF_GenerWorkerlist set IsEnable=1  WHERE WorkID=" + workid + " AND FK_Node=" + nodeId + " AND FK_Emp='" + toEmp + "'");
+            Emp emp = new Emp(toEmp);
+            WorkerLists wls = null;
+            WorkerList wl = null;
+            if (i == 0)
+            {
+                /*说明: 用其它的岗位上的人来处理的，就给他增加待办工作。*/
+                wls = new WorkerLists(workid, nodeId);
+                wl = wls[0] as WorkerList;
+                wl.FK_Emp = toEmp.ToString();
+                wl.FK_EmpText = emp.Name;
+                wl.IsEnable = true;
+                wl.Insert();
+
+                // 清楚工作者，为转发消息所用.
+                wls.Clear();
+                wls.AddEntity(wl);
+            }
+
+            BP.WF.Node nd = new BP.WF.Node(nodeId);
+            Work wk = nd.HisWork;
+            wk.OID = workid;
+            wk.Retrieve();
+            wk.Emps = "," + toEmp + ".";
+            wk.Rec = toEmp;
+            wk.NodeState = NodeState.Forward;
+            wk.Update();
+
+            ForwardWork fw = new ForwardWork();
+            fw.WorkID = workid;
+            fw.FK_Node = nodeId;
+            fw.ToEmp = toEmp;
+            fw.ToEmpName = emp.Name;
+            fw.Note =msg;
+            fw.FK_Emp = WebUser.No;
+            fw.FK_EmpName = WebUser.Name;
+            fw.Insert();
+
+            // 记录日志.
+            WorkNode wn = new WorkNode(wk, nd);
+            wn.AddToTrack(ActionType.Shift, toEmp, emp.Name, nd.NodeID, nd.Name, fw.Note);
+            if (wn.HisNode.FocusField != "")
+            {
+                wn.HisWork.Update(wn.HisNode.FocusField, "");
+            }
+
+            if (wls == null)
+                wls = new WorkerLists(workid, nodeId, WebUser.No);
+
+            // 写入消息。
+            wn.AddIntoWacthDog(wls);
+
+            string info = "@工作移交成功。@您已经成功的把工作移交给：" + emp.No + " , " + emp.Name;
+            info += "@<a href='MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnShift&FK_Flow=" + nd.FK_Flow + "&WorkID=" + workid + "' ><img src='./Img/UnDo.gif' border=0 />撤消工作移交</a>.";
+            return info;
         }
         /// <summary>
         /// 执行工作退回(退回指定的点)
