@@ -1,14 +1,14 @@
 ﻿DELETE FROM Sys_EnCfg WHERE No='BP.WF.Ext.NodeO';
 INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态');
 
-DELETE FROM Sys_SFTable WHERE No='City';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('City','城市','FK_City','0','中国的市级城市','','1');
+DELETE FROM Sys_SFTable WHERE No='CN_City';
+INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('CN_City','城市','FK_City','0','中国的市级城市','','1');
 
-DELETE FROM Sys_SFTable WHERE No='PQ';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('PQ','地区','FK_DQ','0','华北、西北、西南。。。','','1');
+DELETE FROM Sys_SFTable WHERE No='CN_PQ';
+INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('CN_PQ','地区','FK_DQ','0','华北、西北、西南。。。','','1');
 
-DELETE FROM Sys_SFTable WHERE No='SF';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('SF','省份','FK_SF','0','中国的省份。','','1');
+DELETE FROM Sys_SFTable WHERE No='CN_SF';
+INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('CN_SF','省份','FK_SF','0','中国的省份。','','1');
 
 DELETE FROM Sys_SFTable WHERE No='BP.Port.Depts';
 INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Port.Depts','部门','FK_Dept','2','部门','','1');
