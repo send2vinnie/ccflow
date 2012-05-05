@@ -601,7 +601,7 @@ namespace BP.WF
             {
                 if (town.HisNode.HisStations.Count == 0)
                 {
-                    sql = "SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + town.HisNode.NodeID + ")";
+                    sql = "SELECT DISTINCT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + town.HisNode.NodeID + ")";
                     dt = DBAccess.RunSQLReturnTable(sql);
                     if (dt.Rows.Count > 0)
                         return WorkerListWayOfDept(town, dt);
@@ -610,7 +610,7 @@ namespace BP.WF
                 {
                     if (flowAppType == FlowAppType.Normal)
                     {
-                        sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
+                        sql = "SELECT No FROM Port_Emp WHERE No IN ";
                         sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
                         sql += "( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + town.HisNode.NodeID + ")";
                         sql += ")";
@@ -623,7 +623,7 @@ namespace BP.WF
 
                     if (flowAppType == FlowAppType.PRJ)
                     {
-                        sql = "SELECT NO FROM Port_Emp WHERE NO IN ";
+                        sql = "SELECT No FROM Port_Emp WHERE No IN ";
                         sql += "(SELECT FK_Emp FROM Port_EmpDept WHERE FK_Dept IN ";
                         sql += "( SELECT FK_Dept FROM WF_NodeDept WHERE FK_Node=" + town.HisNode.NodeID + ")";
                         sql += ")";
@@ -1708,6 +1708,7 @@ namespace BP.WF
                     /* 记忆里面没有当前生成的操作人员 */
                     /* 已经保证了没有重复的人员。*/
                     string myemps = "";
+                    Emp emp = null;
                     foreach (DataRow dr in dt.Rows)
                     {
                         if (myemps.IndexOf(dr[0].ToString()) != -1)
@@ -1721,8 +1722,6 @@ namespace BP.WF
                         wl.FK_Node = toNodeId;
                         wl.FK_NodeText = town.HisNode.Name;
                         wl.FK_Emp = dr[0].ToString();
-
-                        Emp emp = new Emp();
                         try
                         {
                             emp = new Emp(wl.FK_Emp);
@@ -2144,8 +2143,8 @@ namespace BP.WF
         public string AfterNodeSave()
         {
             // 检查是否是当前节点，如果不是就可能存在sdk用户刷新的可能，导致数据重复提交。
-            if (this.HisGenerWorkFlow.FK_Node != this.HisNode.NodeID)
-                throw new Exception("@您不能重复提交，或者刷新界面。");
+            //if (this.HisGenerWorkFlow.FK_Node != this.HisNode.NodeID)
+            //    throw new Exception("@您不能重复提交，或者刷新界面。");
 
             DBAccess.DoTransactionBegin();
             DateTime dt = DateTime.Now;

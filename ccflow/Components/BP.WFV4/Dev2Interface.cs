@@ -765,7 +765,7 @@ namespace BP.WF
             fw.FK_Node = nodeId;
             fw.ToEmp = toEmp;
             fw.ToEmpName = emp.Name;
-            fw.Note =msg;
+            fw.Note = msg;
             fw.FK_Emp = WebUser.No;
             fw.FK_EmpName = WebUser.Name;
             fw.Insert();
