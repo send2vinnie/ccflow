@@ -99,14 +99,13 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
 
         try
         {
-            if (this.Pub1.GetTextBoxByID("TB_Doc").Text == "请输入移交原因...")
+            string msg = this.Pub1.GetTextBoxByID("TB_Doc").Text;
+            if (msg == "请输入移交原因...")
                 throw new Exception("@您必须输入移交原因。");
 
             string sql = "";
-            //sql = " SELECT No,Name FROM Port_Emp WHERE NO IN (SELECT FK_EMP FROM Port_EmpDept WHERE FK_Dept IN (SELECT FK_Dept FROM Port_EmpDept WHERE fk_emp='" + BP.Web.WebUser.No + "') ) or FK_Dept Like '" + BP.Web.WebUser.FK_Dept + "%'";
             sql = " SELECT No,Name FROM Port_Emp WHERE FK_Dept='" + this.FK_Dept + "'";
             DataTable dt = DBAccess.RunSQLReturnTable(sql);
-
             string toEmp = "";
             foreach (DataRow dr in dt.Rows)
             {
@@ -115,7 +114,6 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
                 RadioButton rb = this.Top.GetRadioButtonByID("RB_" + dr["No"]);
                 if (rb == null || rb.Checked == false)
                     continue;
-
                 toEmp = dr["No"].ToString();
             }
 
@@ -124,70 +122,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
                 this.Alert("请选择要移交的人员。");
                 return;
             }
-            ArrayList al = new ArrayList();
-            al.Add(toEmp);
-
-            // 删除当前非配的工作。
-            // 已经非配或者自动分配的任务。
-            GenerWorkFlow gwf = new GenerWorkFlow(this.WorkID);
-            int nodeId = gwf.FK_Node;
-            Int64 workId = this.WorkID;
-
-            DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsEnable=0  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId);
-            int i = DBAccess.RunSQL("UPDATE WF_GenerWorkerlist set IsEnable=1  WHERE WorkID=" + this.WorkID + " AND FK_Node=" + nodeId + " AND FK_Emp='" + toEmp + "'");
-            Emp emp = new Emp(toEmp);
-            WorkerLists wls = null;
-            WorkerList wl = null;
-            if (i == 0)
-            {
-                /*说明: 用其它的岗位上的人来处理的，就给他增加待办工作。*/
-                wls = new WorkerLists(this.WorkID, nodeId);
-                wl = wls[0] as WorkerList;
-                wl.FK_Emp = toEmp.ToString();
-                wl.FK_EmpText = emp.Name;
-                wl.IsEnable = true;
-                wl.Insert();
-
-                // 清楚工作者，为转发消息所用.
-                wls.Clear();
-                wls.AddEntity(wl);
-            }
-
-            BP.WF.Node nd = new BP.WF.Node(nodeId);
-            Work wk = nd.HisWork;
-            wk.OID = this.WorkID;
-            wk.Retrieve();
-            wk.Emps = ","+toEmp+".";
-            wk.Rec = toEmp;
-            wk.NodeState = NodeState.Forward;
-            wk.Update();
-
-            ForwardWork fw = new ForwardWork();
-            fw.WorkID = this.WorkID;
-            fw.FK_Node = nodeId;
-            fw.ToEmp = toEmp;
-            fw.ToEmpName = emp.Name;
-            fw.Note = this.Pub1.GetTextBoxByID("TB_Doc").Text;
-            fw.FK_Emp = WebUser.No;
-            fw.FK_EmpName = WebUser.Name;
-            fw.Insert();
-
-            // 记录日志.
-            WorkNode wn = new WorkNode(wk, nd);
-            wn.AddToTrack(ActionType.Shift, toEmp, emp.Name, nd.NodeID, nd.Name, fw.Note);
-            if (wn.HisNode.FocusField != "")
-            {
-                wn.HisWork.Update(wn.HisNode.FocusField, "");
-            }
-
-            if (wls == null)
-                wls = new WorkerLists(this.WorkID, nodeId,WebUser.No);
-
-            // 写入消息。
-            wn.AddIntoWacthDog(wls);
-
-            string info = "@工作移交成功。@您已经成功的把工作移交给：" + emp.No + " , " + emp.Name;
-            info += "@<a href='MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=UnShift&FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "' ><img src='./Img/UnDo.gif' border=0 />撤消工作移交</a>.";
+            string info = BP.WF.Dev2Interface.Node_Forward(this.WorkID, toEmp, msg);
             this.Session["info"] = info;
             this.Response.Redirect("MyFlowInfo" + Glo.FromPageType + ".aspx?DoType=Msg&FK_Flow=" + this.FK_Flow, true);
             return;
