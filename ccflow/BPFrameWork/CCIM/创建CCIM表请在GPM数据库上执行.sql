@@ -149,11 +149,11 @@ GO
 
 CREATE TABLE [dbo].[RecordMsg](
 	[MsgID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
-	[sendID] [nchar](20) NULL,
+	[sendID] [nchar](90) NULL,
 	[msgDateTime] [datetime] NULL CONSTRAINT [DF_RecordMsg_msgDateTime]  DEFAULT (getdate()),
 	[msgContent] [text] NULL,
 	[ImageInfo] [ntext] NULL,
-	[fontName] [nchar](30) NULL,
+	[fontName] [nchar](90) NULL,
 	[fontSize] [float] NULL,
 	[fontBold] [bit] NULL CONSTRAINT [DF_RecordMsg_fontBold]  DEFAULT ((0)),
 	[fontItalic] [bit] NULL CONSTRAINT [DF_RecordMsg_fontItalic]  DEFAULT ((0)),
@@ -163,7 +163,7 @@ CREATE TABLE [dbo].[RecordMsg](
 	[InfoClass] [int] NULL,
 	[SMSInfo] [tinyint] NULL CONSTRAINT [DF_RecordMsg_isSendSMS]  DEFAULT ((0)),
 	[GroupID] [int] NULL CONSTRAINT [DF_RecordMsg_GroupID]  DEFAULT ((-1)),
-	[SendUserID] [nchar](20) NULL,
+	[SendUserID] [nchar](990) NULL,
  CONSTRAINT [PK_RecordMsg] PRIMARY KEY CLUSTERED 
 (
 	[MsgID] ASC
