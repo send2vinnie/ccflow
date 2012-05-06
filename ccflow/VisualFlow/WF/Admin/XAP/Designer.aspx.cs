@@ -41,6 +41,11 @@ public partial class Designer : System.Web.UI.Page
 
             #endregion 测试数据库是否连接成功。
 
+            #region 升级转发功能 2012-05-05
+            CCList cc = new CCList();
+            cc.CheckPhysicsTable();
+            #endregion
+
             #region 升级表单 2012-03-21
             BP.TA.SMS sms = new BP.TA.SMS();
             sms.CheckPhysicsTable();

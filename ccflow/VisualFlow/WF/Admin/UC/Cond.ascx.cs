@@ -434,6 +434,14 @@ public partial class WF_Admin_UC_Cond : BP.Web.UC.UCBase3
             this.AddTREnd();
         }
 
+        //this.AddTR();
+        //this.AddTD("优先计算级别");
+        //ddl = new DDL();
+        //this.AddTD(ddl);
+        //this.AddTD("对于多个条件有效");
+        //this.AddTREnd();
+        //this.AddTableEnd();
+
         this.AddTRSum();
         this.Add("<TD class=TD colspan=3 align=center>");
         Button btn = new Button();

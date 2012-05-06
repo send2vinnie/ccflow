@@ -145,7 +145,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
 
         this.Pub1.AddFieldSet("岗位类型:条件设置");
 
-
         this.Pub1.AddB(this.ToE("Node", "选择节点"));
 
        // this.Pub1.Add("节点从:<b>" + nd.Name + "</b> 节点到:<b>" + tond.Name + "</b> <br>要计算的节点:");
@@ -226,7 +225,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
             }
         }
 
-
         this.Pub1.AddTRSum();
         this.Pub1.Add("<TD class=TD colspan=4 align=center>");
         Button btn = new Button();
@@ -236,7 +234,6 @@ public partial class WF_Admin_UC_CondSta : BP.Web.UC.UCBase3
         this.Pub1.Add(btn);
         this.Pub1.Add("</TD>");
         this.Pub1.AddTREnd();
-
 
         this.Pub1.AddFieldSetEnd(); // ("岗位类型:条件设置");
 
