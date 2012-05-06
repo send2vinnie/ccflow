@@ -29,6 +29,9 @@ namespace SMSServices
         /// <param name="receiveid"></param>
         public static void SendMessage(string userid, string now, string msg, string receiveid)
         {
+
+            
+
             //保存系统通知消息
             StringBuilder strHql1 = new StringBuilder();
             //加密处理

@@ -51,6 +51,17 @@ namespace SMSServices
         Thread thread = null;
         private void Btn_StartStop_Click(object sender, EventArgs e)
         {
+
+            #region 升级脚本.
+            try
+            {
+                BP.DA.DBAccess.RunSQL("alter table GPM.dbo.RecordMsg alter column  SendUserID nvarchar(900)");
+            }catch
+            {
+            }
+            #endregion
+
+
             if (this.Btn_StartStop.Text == "启动")
             {
                 if (this.thread == null)
@@ -532,8 +543,19 @@ namespace SMSServices
         /// <param name="sms"></param>
         public void SendMail(BP.TA.SMS sms)
         {
-            
-                Glo.SendMessage(sms.MyPK, DateTime.Now.ToString(), sms.Title + "\t\n" + sms.EmailDoc, sms.Accepter);
+            //如果向 ccim 写入消息。
+            if (this.CB_IsWriteToCCIM.Checked)
+            {
+                try
+                {
+                    Glo.SendMessage(sms.MyPK, DateTime.Now.ToString(), sms.Title + "\t\n" + sms.EmailDoc, sms.Accepter);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "错误");
+                    return;
+                }
+            }
 
             System.Net.Mail.MailMessage myEmail = new System.Net.Mail.MailMessage();
             myEmail.From = new MailAddress("ccflow.cn@gmail.com", "ccflow", System.Text.Encoding.UTF8);
@@ -550,12 +572,12 @@ namespace SMSServices
             myEmail.Priority = MailPriority.High;//邮件优先级
 
             SmtpClient client = new SmtpClient();
-            client.Credentials = new System.Net.NetworkCredential("ccflow.cn@gmail.com", "ccflow123");
-
-            //上述写你的GMail邮箱和密码
-            client.Port = 587;//Gmail使用的端口
-            client.Host = "smtp.gmail.com";
-            client.EnableSsl = true;//经过ssl加密
+            client.Credentials = new System.Net.NetworkCredential(SystemConfig.GetValByKey("SendEmailAddress", "ccflow.cn@gmail.com"),
+                SystemConfig.GetValByKey("SendEmailPass", "ccflow123"));
+            //上述写你的邮箱和密码
+            client.Port = SystemConfig.GetValByKeyInt("SendEmailHost", 587); //使用的端口
+            client.Host = SystemConfig.GetValByKey("SendEmailHost","smtp.gmail.com");
+            client.EnableSsl = true; //经过ssl加密.
             object userState = myEmail;
             try
             {

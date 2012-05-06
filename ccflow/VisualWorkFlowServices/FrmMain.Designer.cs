@@ -41,6 +41,7 @@
             this.Btn_Min = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.Btn_ToolBox = new System.Windows.Forms.Button();
+            this.CB_IsWriteToCCIM = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -150,11 +151,22 @@
             this.Btn_ToolBox.UseVisualStyleBackColor = true;
             this.Btn_ToolBox.Click += new System.EventHandler(this.Btn_ToolBox_Click);
             // 
+            // CB_IsWriteToCCIM
+            // 
+            this.CB_IsWriteToCCIM.AutoSize = true;
+            this.CB_IsWriteToCCIM.Location = new System.Drawing.Point(207, 446);
+            this.CB_IsWriteToCCIM.Name = "CB_IsWriteToCCIM";
+            this.CB_IsWriteToCCIM.Size = new System.Drawing.Size(108, 16);
+            this.CB_IsWriteToCCIM.TabIndex = 8;
+            this.CB_IsWriteToCCIM.Text = "向CCIM写入消息";
+            this.CB_IsWriteToCCIM.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(425, 496);
+            this.Controls.Add(this.CB_IsWriteToCCIM);
             this.Controls.Add(this.Btn_ToolBox);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.Btn_Min);
@@ -193,6 +205,7 @@
         private System.Windows.Forms.Button Btn_Min;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button Btn_ToolBox;
+        private System.Windows.Forms.CheckBox CB_IsWriteToCCIM;
     }
 }
 
