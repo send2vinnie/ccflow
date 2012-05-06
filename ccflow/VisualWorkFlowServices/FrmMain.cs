@@ -564,7 +564,6 @@ namespace SMSServices
             myEmail.Subject = sms.EmailTitle;
             myEmail.SubjectEncoding = System.Text.Encoding.UTF8;//邮件标题编码
 
-
             myEmail.Body = sms.EmailDoc;
             myEmail.BodyEncoding = System.Text.Encoding.UTF8;//邮件内容编码
             myEmail.IsBodyHtml = true;//是否是HTML邮件
@@ -575,7 +574,7 @@ namespace SMSServices
             client.Credentials = new System.Net.NetworkCredential(SystemConfig.GetValByKey("SendEmailAddress", "ccflow.cn@gmail.com"),
                 SystemConfig.GetValByKey("SendEmailPass", "ccflow123"));
             //上述写你的邮箱和密码
-            client.Port = SystemConfig.GetValByKeyInt("SendEmailHost", 587); //使用的端口
+            client.Port = SystemConfig.GetValByKeyInt("SendEmailPort", 587); //使用的端口
             client.Host = SystemConfig.GetValByKey("SendEmailHost","smtp.gmail.com");
             client.EnableSsl = true; //经过ssl加密.
             object userState = myEmail;
