@@ -290,6 +290,7 @@
     <Compile Include="Xml\EventListDtl.cs" />
     <Compile Include="Xml\MapDef\FrmEventXml.cs" />
     <Compile Include="TestNDRpt.cs" />
+    <Compile Include="Xml\OneWorkXml.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

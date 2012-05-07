@@ -383,6 +383,15 @@ namespace BP.WF
         }
         public Int64 WorkID = 0;
         public string MsgOfCond = "";
+
+        public void DoUp(int fk_node)
+        {
+            this.DoOrderUp(CondAttr.FK_Node, fk_node.ToString(), CondAttr.PRI);
+        }
+        public void DoDown(int fk_node)
+        {
+            this.DoOrderDown(CondAttr.FK_Node, fk_node.ToString(), CondAttr.PRI);
+        }
         #endregion
 
         #region 构造方法

@@ -132,6 +132,10 @@ namespace BP.Sys
         /// IsEnableM2MM
         /// </summary>
         public const string IsEnableM2MM = "IsEnableM2MM";
+        /// <summary>
+        /// 多表头列
+        /// </summary>
+        public const string MTR = "MTR";
     }
     /// <summary>
     /// 明细
@@ -537,6 +541,28 @@ namespace BP.Sys
                 this.SetValByKey(MapDtlAttr.PTable, value);
             }
         }
+        /// <summary>
+        /// 多表头
+        /// </summary>
+        public string MTR
+        {
+            get
+            {
+                string s= this.GetValStrByKey(MapDtlAttr.MTR);
+                s = s.Replace("《","<");
+                s = s.Replace( "》",">");
+                s = s.Replace("‘","'");
+                return s;
+            }
+            set
+            {
+                string s = value;
+                s = s.Replace("<","《");
+                s = s.Replace(">", "》");
+                s = s.Replace("'", "‘");
+                this.SetValByKey(MapDtlAttr.MTR, value);
+            }
+        }
         #endregion
 
         #region 构造方法
@@ -653,6 +679,10 @@ namespace BP.Sys
 
                 map.AddTBFloat(MapDtlAttr.FrmW, 900, "FrmW", true, true);
                 map.AddTBFloat(MapDtlAttr.FrmH, 1200, "FrmH", true, true);
+
+                //MTR 多表头列.
+                map.AddTBString(MapDtlAttr.MTR, null, "多表头列", true, false, 0, 3000, 20);
+
 
                 this._enMap = map;
                 return this._enMap;
@@ -883,8 +913,7 @@ namespace BP.Sys
                 /*判断是否有IsPass 字段。*/
                 MapAttrs attrs = new MapAttrs(this.No);
                 if (attrs.Contains(MapAttrAttr.KeyOfEn, "IsPass") == false)
-                    throw new Exception("您启用了明细表单条数据审核选项，但是该明细表里没的IsPass字段，请参考帮助文档。");
-
+                    throw new Exception("您启用了明细表单(" + this.Name + ")条数据审核选项，但是该明细表里没IsPass字段，请参考帮助文档。");
             }
             return base.beforeUpdateInsertAction();
         }
