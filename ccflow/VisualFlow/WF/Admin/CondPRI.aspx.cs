@@ -80,6 +80,7 @@ public partial class WF_Admin_CondPRI : BP.Web.WebPage
                 break;
         }
 
+
         BP.WF.Node nd = new BP.WF.Node(this.FK_MainNode);
         this.Pub1.AddTable();
         this.Pub1.AddCaptionLeft(nd.Name);

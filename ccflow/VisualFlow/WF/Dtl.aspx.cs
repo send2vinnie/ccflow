@@ -223,6 +223,7 @@ public partial class Comm_Dtl : WebPage
         MapAttrs attrs = new MapAttrs(this.EnsName);
         MapAttrs attrs2 = new MapAttrs();
         this.Pub1.Add("<Table border=1 style='padding:0px' >");
+        this.Pub1.Add(mdtl.MTR);
         if (mdtl.IsShowTitle)
         {
             this.Pub1.AddTR();

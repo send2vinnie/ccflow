@@ -107,7 +107,7 @@ public partial class Comm_MapDef_MapDtlDe : WebPage
         this.Title = md.Name + " - " + this.ToE("DesignDtl", "设计明细");
         this.Pub1.Add("<Table border=0 ID='Tab' style='padding:0px;align:left;width:10%' align='left' >");
    //     this.Pub1.AddCaptionLeftTX("<a href='MapDef.aspx?MyPK=" + md.No + "' ><img src='../../Images/Btn/Back.gif' border=0/>" + this.ToE("Back","返回") + ":" + md.Name + "</a> - <img src='../../Images/Btn/Table.gif' border=0/>" + dtl.Name + " - <a href=\"javascript:AddF('" + this.MyPK + "');\" ><img src='../../Images/Btn/New.gif' border=0/>" + this.ToE("NewField", "新建字段") + "</a> ");
-        
+        this.Pub1.Add(dtl.MTR);
         this.Pub1.AddTR();
         if (dtl.IsShowIdx)
             this.Pub1.AddTDTitle();

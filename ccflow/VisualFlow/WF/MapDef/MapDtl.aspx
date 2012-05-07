@@ -21,10 +21,9 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-	function AddF(mypk)
-    {
-        var url='Do.aspx?DoType=AddF&MyPK='+mypk;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+    function AddF(mypk) {
+        var url = 'Do.aspx?DoType=AddF&MyPK=' + mypk;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
     function Edit(mypk,refno, ftype)
@@ -33,52 +32,43 @@
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 500px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-    function EditEnum(mypk,refno)
-    {
-        var url='EditEnum.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refno;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+    function EditEnum(mypk, refno) {
+        var url = 'EditEnum.aspx?DoType=Edit&MyPK=' + mypk + '&RefNo=' + refno;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
-     function EditTable(mypk,refno)
-    {
-        var url='EditTable.aspx?DoType=Edit&MyPK='+mypk+'&RefNo='+refno;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+    function EditTable(mypk, refno) {
+        var url = 'EditTable.aspx?DoType=Edit&MyPK=' + mypk + '&RefNo=' + refno;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
         window.location.href = window.location.href;
     }
-    
-	function Up(mypk,refoid)
-    {
-        var url='Do.aspx?DoType=Up&MyPK='+mypk+'&RefOID='+refoid;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+    function Up(mypk, refoid) {
+        var url = 'Do.aspx?DoType=Up&MyPK=' + mypk + '&RefOID=' + refoid;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
         //window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
-        window.location.href = window.location.href ;
-    }
-    function Down(mypk,refoid)
-    {
-        var url='Do.aspx?DoType=Down&MyPK='+mypk+'&RefOID='+refoid;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
-        window.location.href = window.location.href;
-       //   window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
-      //  window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
-    }
-    function Del(mypk,refoid)
-    {
-        if (window.confirm('您确定要删除吗？') ==false)
-            return ;
-    
-        var url='Do.aspx?DoType=Del&MyPK='+mypk+'&RefOID='+refoid;
-        var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
         window.location.href = window.location.href;
     }
-	
-	function Esc()
-    {
-        if (event.keyCode == 27)     
-        window.close();
-       return true;
+    function Down(mypk, refoid) {
+        var url = 'Do.aspx?DoType=Down&MyPK=' + mypk + '&RefOID=' + refoid;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
+        window.location.href = window.location.href;
+        //   window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
+        //  window.location.href ='MapDef.aspx?PK='+mypk+'&IsOpen=1';
+    }
+    function Del(mypk, refoid) {
+        if (window.confirm('您确定要删除吗？') == false)
+            return;
+
+        var url = 'Do.aspx?DoType=Del&MyPK=' + mypk + '&RefOID=' + refoid;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no');
+        window.location.href = window.location.href;
+    }
+    function Esc() {
+        if (event.keyCode == 27)
+            window.close();
+        return true;
     }
 	</script>
-     
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()"  >
     <form id="form1" runat="server">

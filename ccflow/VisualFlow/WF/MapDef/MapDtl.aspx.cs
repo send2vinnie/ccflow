@@ -194,7 +194,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Response.Redirect("MapDtlDe.aspx?DoType=Edit&FK_MapData=" + this.FK_MapData + "&FK_MapDtl=" + this.FK_MapDtl, true);
     }
 
-    public void BindEdit(MapData md,MapDtl dtl)
+    public void BindEdit(MapData md, MapDtl dtl)
     {
         this.Pub1.AddTable();
         this.Pub1.AddCaptionLeft("明细表属性");
@@ -202,7 +202,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTDTitle("ID");
         this.Pub1.AddTDTitle(this.ToE("Item", "项目"));
         this.Pub1.AddTDTitle(this.ToE("Gather", "采集"));
-        this.Pub1.AddTDTitle(this.ToE("Note","备注") );
+        this.Pub1.AddTDTitle(this.ToE("Note", "备注"));
         this.Pub1.AddTREnd();
 
         int idx = 1;
@@ -241,7 +241,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTD(tb);
         this.Pub1.AddTD();
         //this.Pub1.AddTD("存储数据的物理表名称");
-      //  this.Pub1.AddTD("存储数据的物理表名称");
+        //  this.Pub1.AddTD("存储数据的物理表名称");
         this.Pub1.AddTREnd();
 
 
@@ -253,7 +253,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         ddl.ID = "DDL_DtlOpenType";
         this.Pub1.AddTD(ddl);
         this.Pub1.AddTD();
-       // this.Pub1.AddTD("用于明细表的权限控制");
+        // this.Pub1.AddTD("用于明细表的权限控制");
         this.Pub1.AddTREnd();
 
 
@@ -261,7 +261,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTDIdx(idx++);
         CheckBox cb = new CheckBox();
         cb.ID = "CB_IsView";
-        cb.Text = this.ToE("IsView", "是否可见"); 
+        cb.Text = this.ToE("IsView", "是否可见");
         cb.Checked = dtl.IsView;
         this.Pub1.AddTD(cb);
 
@@ -277,7 +277,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         cb.Checked = dtl.IsInsert;
         this.Pub1.AddTD(cb);
         this.Pub1.AddTREnd();
- 
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
@@ -291,7 +291,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         cb.ID = "CB_IsShowIdx";
         cb.Text = this.ToE("IsShowIdx", "是否显示序号列"); //"是否显示序号列";
         cb.Checked = dtl.IsShowIdx;
-        this.Pub1.AddTD( cb);
+        this.Pub1.AddTD(cb);
 
         cb = new CheckBox();
         cb.ID = "CB_IsShowSum";
@@ -300,14 +300,14 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTD(cb);
         this.Pub1.AddTREnd();
 
-        
+
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
         cb = new CheckBox();
         cb.ID = "CB_IsShowTitle";
         cb.Text = this.ToE("IsShowTitle", "是否显示标头");// "是否显示标头";
         cb.Checked = dtl.IsShowTitle;
-        this.Pub1.AddTD( cb);
+        this.Pub1.AddTD(cb);
 
         cb = new CheckBox();
         cb.ID = "CB_IsExp";
@@ -319,9 +319,9 @@ public partial class Comm_MapDef_MapDtl : WebPage
         cb.ID = "CB_IsImp";
         cb.Text = this.ToE("IsImp", "是否可以导入？");// "是否可以导出";
         cb.Checked = dtl.IsShowTitle;
-        this.Pub1.AddTD( cb);
+        this.Pub1.AddTD(cb);
         this.Pub1.AddTREnd();
-         
+
 
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
@@ -335,7 +335,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         cb.ID = "CB_IsHLDtl";
         cb.Text = "是否是分流汇总从表(当前节点是合流节点有效)";
         cb.Checked = dtl.IsHLDtl;
-        this.Pub1.AddTD("colspan=2",cb);
+        this.Pub1.AddTD("colspan=2", cb);
         this.Pub1.AddTREnd();
 
 
@@ -348,7 +348,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTD(cb);
 
         cb = new CheckBox();
-        cb.ID = "CB_"+MapDtlAttr.IsEnableM2M;
+        cb.ID = "CB_" + MapDtlAttr.IsEnableM2M;
         cb.Text = "是否启用一对多";
         cb.Checked = dtl.IsEnableM2M;
         this.Pub1.AddTD(cb);
@@ -418,12 +418,12 @@ public partial class Comm_MapDef_MapDtl : WebPage
         {
             this.Pub1.AddTR1();
             this.Pub1.AddTDIdx(idx++);
-            this.Pub1.AddTD( this.ToE("ShowInGroup","显示在分组") );
+            this.Pub1.AddTD(this.ToE("ShowInGroup", "显示在分组"));
             ddl = new DDL();
             ddl.ID = "DDL_GroupField";
             ddl.BindEntities(gfs, GroupFieldAttr.OID, GroupFieldAttr.Lab, false, AddAllLocation.None);
             ddl.SetSelectItem(dtl.GroupID);
-            this.Pub1.AddTD("colspan=2",ddl);
+            this.Pub1.AddTD("colspan=2", ddl);
             this.Pub1.AddTREnd();
         }
         if (gfs.Count > 1)
@@ -437,7 +437,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
 
         Button btn = new Button();
         btn.ID = "Btn_Save";
-        btn.Text = " "+this.ToE("Save","保存")+" ";
+        btn.Text = " " + this.ToE("Save", "保存") + " ";
         btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
 
@@ -472,7 +472,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
             btn = new Button();
             btn.ID = "Btn_MapExt";
             btn.Text = this.ToE("MapExt", "扩展设置"); // "删除";
-             
+
             btn.Click += new EventHandler(btn_MapExt_Click);
             this.Pub1.Add(btn);
 
@@ -484,8 +484,14 @@ public partial class Comm_MapDef_MapDtl : WebPage
                 btn.Click += new EventHandler(btn_MapAth_Click);
                 this.Pub1.Add(btn);
             }
+
+           // btn = new Button();
+           // btn.ID = "Btn_DtlTR";
+           // btn.Text = "多表头";
+           // btn.Attributes["onclick"] = "javascript:WinOpen('')";
+           //// btn.Click += new EventHandler(btn_DtlTR_Click);
+           // this.Pub1.Add(btn);
         }
-     
         this.Pub1.AddTDEnd();
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();

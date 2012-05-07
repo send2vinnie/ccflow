@@ -49,7 +49,7 @@ function DtlOpt(workId, fk_mapdtl) {
         }
     </style>
 	<script language="JavaScript" src="./../Comm/JScript.js"></script>
-   <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" ></script>
+   <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js"  defer="defer" ></script>
 </head>
 <body topmargin="0" leftmargin="0" onkeypress="Esc()" style="font-size:smaller"> 
     <form id="form1" runat="server">

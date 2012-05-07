@@ -40,10 +40,8 @@ body
         window.location.href = window.location.href;
     }
 	function AddF(mypk) {
-
         var url='Do.aspx?DoType=AddF&MyPK='+mypk;
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no'); 
-
         window.location.href = window.location.href;
     }
     function AddTable(mypk)
@@ -143,7 +141,7 @@ body
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 500px; dialogWidth: 700px;center: yes; help: no');
         window.location.href = window.location.href;
     }
-
+   
     function DtlDoUp(MyPK)
     {
         var url='Do.aspx?DoType=DtlDoUp&MyPK='+MyPK ;

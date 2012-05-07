@@ -2,7 +2,7 @@
 <%@ Register src="UC/MyFlowUC.ascx" tagname="MyFlowUC" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <script language="JavaScript" src="../Comm/JScript.js"></script>
-    <script language="JavaScript" src="../Comm/JS/Calendar/WdatePicker.js" ></script>
+    <script language="JavaScript" src="../Comm/JS/Calendar/WdatePicker.js" defer="defer" ></script>
     <style type="text/css">
     
     .D

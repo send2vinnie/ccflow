@@ -6,9 +6,10 @@
 <head id="Head1" runat="server">
     <title>表单设计</title>
 	<script language="JavaScript" src="../../Comm/JScript.js" ></script>
-    <script language="JavaScript" src="./../../Comm/JS/Calendar/WdatePicker.js" ></script>
+    <script language="JavaScript" src="./../../Comm/JS/Calendar/WdatePicker.js"  defer="defer" ></script>
 	<base target="_self" />
 	<script language="javascript">
+	  
 	function Insert(mypk,IDX)
     {
         var url='Do.aspx?DoType=AddF&MyPK='+mypk+'&IDX=' +IDX ;
@@ -76,6 +77,11 @@
     
         var url='Do.aspx?DoType=Del&MyPK='+mypk+'&RefNo='+refNo;
         var b=window.showModalDialog( url , 'ass' ,'dialogHeight: 400px; dialogWidth: 600px;center: yes; help: no'); 
+        window.location.href = window.location.href;
+    }
+    function DtlMTR(MyPK) {
+        var url = 'MapDtlMTR.aspx?MyPK=' + MyPK;
+        var b = window.showModalDialog(url, 'ass', 'dialogHeight: 350px; dialogWidth: 550px;center: yes; help: no');
         window.location.href = window.location.href;
     }
 	function Esc()

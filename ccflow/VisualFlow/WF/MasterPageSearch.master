@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/WF/MasterPage.master" AutoEventWireup="false" CodeFile="MasterPageSearch.master.cs" Inherits="WF_MasterPageSearch" %>
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-		<script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" ></script>
+		<script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" defer="defer" ></script>
     <style type="text/css">
         .style1
         {

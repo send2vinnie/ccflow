@@ -12,7 +12,7 @@
         }
     </style>
 	<script language="JavaScript" src="./../Comm/JScript.js"></script>
-    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" ></script>
+    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" defer="defer" ></script>
     <script language=javascript>
         function ss() {
             document.getElementById()
