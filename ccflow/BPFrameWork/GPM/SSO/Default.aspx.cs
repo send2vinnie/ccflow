@@ -9,7 +9,14 @@ public partial class SSO_Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (BP.Web.WebUser.No == null || BP.Web.WebUser.SID==null)
+        try
+        {
+            if (BP.Web.WebUser.No == null || BP.Web.WebUser.SID == null)
+            {
+                this.Response.Redirect("../App/Port/Signin.aspx", true);
+            }
+        }
+        catch
         {
             this.Response.Redirect("../App/Port/Signin.aspx", true);
         }
