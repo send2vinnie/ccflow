@@ -67,7 +67,7 @@
       <HintPath>..\DLL\ColorPicker.dll</HintPath>
     </Reference>
     <Reference Include="CY.SL">
-      <HintPath>D:\ccflow\CY.SL\Bin\Debug\CY.SL.dll</HintPath>
+      <HintPath>..\DLL\CY.SL.dll</HintPath>
     </Reference>
     <Reference Include="FJ.Core">
       <HintPath>..\DLL\FJ.Core.dll</HintPath>
