@@ -6,7 +6,7 @@ using BP.En;
 namespace BP.WF.Port
 {
     /// <summary>
-    /// 部门查询权限
+    /// 部门数据查询权限
     /// </summary>
     public class DeptSearchScorpAttr
     {
@@ -22,11 +22,10 @@ namespace BP.WF.Port
         #endregion
     }
     /// <summary>
-    /// 部门查询权限 的摘要说明。
+    /// 部门数据查询权限 的摘要说明。
     /// </summary>
     public class DeptSearchScorp : Entity
     {
-
         public override UAC HisUAC
         {
             get
@@ -43,7 +42,6 @@ namespace BP.WF.Port
                 return uac;
             }
         }
-
 
         #region 基本属性
         /// <summary>
@@ -89,11 +87,11 @@ namespace BP.WF.Port
 
         #region 构造函数
         /// <summary>
-        /// 工作人员岗位
+        /// 部门数据查询权限
         /// </summary> 
         public DeptSearchScorp() { }
         /// <summary>
-        /// 工作人员部门对应
+        /// 部门数据查询权限
         /// </summary>
         /// <param name="_empoid">工作人员ID</param>
         /// <param name="wsNo">部门编号</param> 	
@@ -114,8 +112,8 @@ namespace BP.WF.Port
                 if (this._enMap != null)
                     return this._enMap;
 
-                Map map = new Map("Port_DeptSearchScorp");
-                map.EnDesc = "部门查询权限";
+                Map map = new Map("Port_DeptFlowScorp");
+                map.EnDesc = "部门数据查询权限";
                 map.EnType = EnType.Dot2Dot;
 
                 map.AddTBStringPK(DeptSearchScorpAttr.FK_Emp, null, "操作员", true, true, 1, 50, 11);
@@ -155,17 +153,17 @@ namespace BP.WF.Port
         #endregion
     }
     /// <summary>
-    /// 部门查询权限 
+    /// 部门数据查询权限 
     /// </summary>
     public class DeptSearchScorps : Entities
     {
         #region 构造
         /// <summary>
-        /// 部门查询权限
+        /// 部门数据查询权限
         /// </summary>
         public DeptSearchScorps() { }
         /// <summary>
-        /// 部门查询权限
+        /// 部门数据查询权限
         /// </summary>
         /// <param name="FK_Emp">FK_Emp</param>
         public DeptSearchScorps(string FK_Emp)
@@ -190,9 +188,6 @@ namespace BP.WF.Port
         #endregion
 
         #region 查询方法
-
         #endregion
-
     }
-
 }
