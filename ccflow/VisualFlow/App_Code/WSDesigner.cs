@@ -76,7 +76,14 @@ public class WSDesigner : WSBase
                 case "AdminLogin":
                     Emp emp = new Emp();
                     emp.No = v1;
-                    emp.RetrieveFromDBSources();
+                    try
+                    {
+                        emp.RetrieveFromDBSources();
+                    }
+                    catch(Exception ex)
+                    {
+                        return ex.Message;
+                    }
                     if (emp.Pass == v2)
                         return null;
                     return "error password.";
