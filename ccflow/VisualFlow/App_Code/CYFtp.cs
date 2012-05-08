@@ -9,7 +9,8 @@ using System.Data;
 using System.Configuration;
 
 using Silverlight.DataSetConnector;
-using CY.Net;
+using BP.CY;
+using BP.CY.Net;
 
 /// <summary>
 ///CYFtp 的摘要说明
@@ -28,7 +29,7 @@ public class CYFtp : System.Web.Services.WebService
 
         //如果使用设计的组件，请取消注释以下行 
         //InitializeComponent(); 
-        dicFtpConfig = CY.Config.ParseDic(ConfigurationManager.AppSettings["TemplateFtpConfig"]);
+        dicFtpConfig = Config.ParseDic(ConfigurationManager.AppSettings["TemplateFtpConfig"]);
         if (dicFtpConfig != null && dicFtpConfig.ContainsKey("server") && dicFtpConfig.ContainsKey("username") && dicFtpConfig.ContainsKey("pwd"))
         {
             ftp = new IISFtp(dicFtpConfig["server"], dicFtpConfig["username"], dicFtpConfig["pwd"]);
@@ -158,7 +159,7 @@ public class CYFtp : System.Web.Services.WebService
     {
         if (string.IsNullOrEmpty(serverDirectoryPath))
         {
-            serverDirectoryPath = "Flow.流程模板";
+            serverDirectoryPath = GetDefaultFlowRoot();
         }
 
         List<FsFileItem> lstFileItem = new List<FsFileItem>();
@@ -229,7 +230,7 @@ public class CYFtp : System.Web.Services.WebService
     {
         if (string.IsNullOrEmpty(serverDirectoryPath))
         {
-            serverDirectoryPath = "Flow.流程模板";
+            serverDirectoryPath = GetDefaultFlowRoot();
         }
 
         List<FsItem> items = ftp.GetDirectoryList(serverDirectoryPath);

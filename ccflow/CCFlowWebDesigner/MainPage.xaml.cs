@@ -20,6 +20,8 @@ using WF.Resources;
 using WF.Designer;
 using System.IO;
 using BP;
+using BP.CY;
+using BP.CY.ExportAsPNG;
 
 using WF.CYFtpClient;
 
@@ -173,7 +175,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             ds.FromXml(e.Result);
 
             this.TvwSysMenu.Nodes.Clear();
-            DataTable dt = ds.Tables[0];
+            DataTable dt = ds.Tables[1];
             TreeNode liP = new TreeNode();
             foreach (DataRow dr in dt.Rows)
             {
@@ -206,7 +208,7 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
             TvwSysMenu.ExpandAll();
 
             this.TvwFlowDataEnum.Nodes.Clear();
-            dt = ds.Tables[1];
+            dt = ds.Tables[0];
             liP = new TreeNode();
             foreach (DataRow dr in dt.Rows)
             {
@@ -754,9 +756,9 @@ namespace Ccflow.Web.UI.Control.Workflow.Designer
         private void ShareFlow_Start(string path)
         {
             loadingWin(true);
-            CY.SL.ExportAsPNG.ElementToPNG eleToPng = new CY.SL.ExportAsPNG.ElementToPNG();
+            ElementToPNG eleToPng = new ElementToPNG();
 
-            bitmap_str = CY.SL.StringHandler.ToString(eleToPng.GetPNGStream(tbDesigner.SelectedContent as UIElement));
+            bitmap_str = StringHandler.ToString(eleToPng.GetPNGStream(tbDesigner.SelectedContent as UIElement));
             if (bitmap_str.Length > bitmap_part_length)
             {
                 bitmap_part = bitmap_str.Substring(0, bitmap_part_length);

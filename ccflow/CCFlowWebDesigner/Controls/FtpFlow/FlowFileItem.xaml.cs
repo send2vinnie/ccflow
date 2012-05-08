@@ -16,6 +16,7 @@ using Ccflow.Web.UI.Control.Workflow.Designer;
 using WF.CYFtpClient;
 using WF.WS;
 using BP;
+using BP.CY;
 
 namespace WF.Controls
 {
@@ -367,7 +368,7 @@ namespace WF.Controls
                 else if (!string.IsNullOrEmpty(value))
                 {
                     BitmapImage bitmap = new BitmapImage();
-                    bitmap.SetSource(CY.SL.StringHandler.ToStream(value));
+                    bitmap.SetSource(StringHandler.ToStream(value));
                     flowImg.Source = bitmap;
                 }
                 else

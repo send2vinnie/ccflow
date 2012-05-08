@@ -10,6 +10,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
+using BP.CY;
+
 namespace WF.Controls
 {
     public partial class FrmFlowPreview : ChildWindow
@@ -26,7 +28,7 @@ namespace WF.Controls
                 if (value != null && !string.IsNullOrEmpty(value.FlowImg))
                 {
                     BitmapImage bitmap = new BitmapImage();
-                    bitmap.SetSource(CY.SL.StringHandler.ToStream(value.FlowImg));
+                    bitmap.SetSource(StringHandler.ToStream(value.FlowImg));
                     flowBitmap.Source = bitmap;
                 }
                 else

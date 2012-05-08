@@ -66,9 +66,6 @@
     <Reference Include="ColorPicker">
       <HintPath>..\DLL\ColorPicker.dll</HintPath>
     </Reference>
-    <Reference Include="CY.SL">
-      <HintPath>..\DLL\CY.SL.dll</HintPath>
-    </Reference>
     <Reference Include="FJ.Core">
       <HintPath>..\DLL\FJ.Core.dll</HintPath>
     </Reference>
@@ -645,6 +642,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Logo\SQ\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Components\BP.SL.CY\BP.SL.CY.csproj">
+      <Project>{5F87398E-1346-48AB-9735-8D8B1BD0DC89}</Project>
+      <Name>BP.SL.CY</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
