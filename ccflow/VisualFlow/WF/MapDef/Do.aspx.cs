@@ -594,7 +594,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
             this.Pub1.AddTD("<a  href=\"javascript:AddSFTable('" + this.MyPK + "','" + this.IDX + "','" + sem.No + "')\" >" + sem.No + "</a>");
             this.Pub1.AddTD(sem.Name);
 
-            this.Pub1.AddTD(sem.SFTableTypeT);
+      //      this.Pub1.AddTD(sem.SFTableTypeT);
 
             if (sem.IsClass)
                 this.Pub1.AddTD("<a href=\"javascript:WinOpen('../../Comm/PanelEns.aspx?EnsName=" + sem.No + "','sg')\"  ><img src='../../Images/Btn/Edit.gif' border=0/>" + sem.TableDesc + "</a>");

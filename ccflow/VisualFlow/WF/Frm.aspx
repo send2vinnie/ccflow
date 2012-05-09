@@ -104,9 +104,10 @@
         	visibility:visible;
         }
     </style>
-	<script language="JavaScript" src="./../Comm/JScript.js"></script>
-   <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" defer="defer" ></script>
-	<script language="JavaScript" src="./Scripts/MapExt.js"></script>
+	<script language="JavaScript" src="./../Comm/JScript.js" />
+   <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" defer="defer" />
+	<script language="JavaScript" src="./Scripts/MapExt.js" />
+    <script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' >
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server" >

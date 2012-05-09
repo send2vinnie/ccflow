@@ -131,7 +131,7 @@ public partial class WF_WorkOpt_CC : BP.Web.WebPage
             myemp.Retrieve();
 
             //执行抄送.
-            BP.WF.Dev2Interface.Node_CC(emp, myemp.Name, title, doc, this.FK_Node, this.FK_Flow, this.WorkID, this.FID);
+            BP.WF.Dev2Interface.Node_CC(emp, myemp.Name, this.FK_Node, this.WorkID, this.FID, title, doc);
         }
         this.WinCloseWithMsg("抄送成功...");
     }

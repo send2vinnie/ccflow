@@ -81,6 +81,9 @@
     }
     function DtlMTR(MyPK) {
         var url = 'MapDtlMTR.aspx?MyPK=' + MyPK;
+     //   window.open(url);
+        //return;
+
         var b = window.showModalDialog(url, 'ass', 'dialogHeight: 350px; dialogWidth: 550px;center: yes; help: no');
         window.location.href = window.location.href;
     }

@@ -201,7 +201,7 @@ public partial class WF_UC_Forward_UC : BP.Web.UC.UCBase3
         {
             Work wk = nd.HisWork;
             wk.OID = this.WorkID;
-            wk.Retrieve();
+            wk.RetrieveFromDBSources();
             tb.Text = wk.GetValStringByKey(nd.FocusField);
         }
         this.Pub1.Add(tb);

@@ -24,6 +24,7 @@ public partial class WF_MapDef_MapDtlMTR : WebPage
         tb.Rows = 15;
         tb.Columns = 60;
         tb.Text = dtl.MTR;
+      //  tb.Attributes["onblur"] = "Rep('"+tb.ClientID+"')";
         this.Pub1.AddTD(tb);
         this.Pub1.AddTREnd();
         this.Pub1.AddTableEnd();
@@ -31,8 +32,9 @@ public partial class WF_MapDef_MapDtlMTR : WebPage
         Button btn = new Button();
         btn.ID = "Btn_Save";
         btn.Text = "保存";
-        btn.Attributes["onclick"] = "javascript:Rep('" + tb.ClientID + "');";
-        btn.Click += new EventHandler(btn_Click);
+        btn.OnClientClick += "javascript:Rep();";
+       // btn.Attributes["onclick"] = "return Rep('" + tb.ClientID + "');";
+       btn.Click += new EventHandler(btn_Click);
         this.Pub1.Add(btn);
     }
     void btn_Click(object sender, EventArgs e)

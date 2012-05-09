@@ -160,9 +160,7 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         string sql1 = "SELECT COUNT(MyPK) FROM WF_CCList WHERE CCTO='"+BP.Web.WebUser.No+"' AND IsRead=0";
         string sql2 = "SELECT COUNT(MyPK) FROM WF_CCList WHERE CCTO='" + WebUser.No + "'";
         string cc = "<b>抄送(" + DBAccess.RunSQLReturnValInt(sql1) + "/" + DBAccess.RunSQLReturnValInt(sql2) + ")</b>";
-
-        DataTable dt = DBAccess.RunSQLReturnTable("SELECT * FROM WF_CCList WHERE CCTo='"+BP.Web.WebUser.No+"'");
-
+        DataTable dt = BP.WF.Dev2Interface.DB_CCList();
         string groupVals = "";
         foreach (DataRow dr in dt.Rows)
         {
