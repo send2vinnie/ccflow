@@ -18,7 +18,6 @@ namespace WF
         {
             InitializeComponent();
         }
-
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             string user = this.textBox1.Text.Trim().ToLower();
