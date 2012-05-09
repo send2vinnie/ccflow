@@ -189,6 +189,17 @@ namespace BP.WF
         }
         #endregion 获取流程事例的轨迹图
 
+        #region 获取操送列表
+        public static DataTable DB_CCList(string fk_emp)
+        {
+            return DBAccess.RunSQLReturnTable("SELECT * FROM WF_CCList WHERE CCTo='" + fk_emp + "'");
+        }
+        public static DataTable DB_CCList()
+        {
+            return DB_CCList(WebUser.No);
+        }
+        #endregion
+
 
         #region 获取当前操作员可以发起的流程集合
         /// <summary>
@@ -587,9 +598,9 @@ namespace BP.WF
         /// <param name="workID">工作ID</param>
         /// <param name="htWork">工作数据</param>
         /// <returns>返回执行信息</returns>
-        public static string Node_SendWork(string fk_flow,Int64 workID, Hashtable htWork)
+        public static string Node_SendWork(string fk_flow, Int64 workID, Hashtable htWork)
         {
-            Node nd = new Node(Dev2Interface.Node_GetCurrentNodeID(fk_flow,workID));
+            Node nd = new Node(Dev2Interface.Node_GetCurrentNodeID(fk_flow, workID));
             Work sw = nd.HisWork;
             if (workID != 0)
             {
@@ -611,23 +622,35 @@ namespace BP.WF
         /// 执行抄送
         /// </summary>
         /// <param name="empNo">抄送人员编号</param>
-        /// <param name="empName">名称</param>
-        /// <param name="msgTitle">表态</param>
-        /// <param name="msgDoc">消息</param>
-        /// <param name="fk_node">节点</param>
-        /// <param name="fk_flow">流程编号</param>
+        /// <param name="empName">抄送人员人员名称</param>
+        /// <param name="fk_node">节点编号</param>
         /// <param name="workid">工作ID</param>
-        /// <param name="fid">流程ID</param>
-        public static void Node_CC(string empNo, string empName, string msgTitle, string msgDoc, int fk_node, string fk_flow, Int64 workid, Int64 fid)
+        /// <param name="fid">FID</param>
+        public static void Node_CC(string empNo, string empName, int fk_node, Int64 workid, Int64 fid)
         {
+            string title = BP.DA.DBAccess.RunSQLReturnStringIsNull("SELECT Title FROM WF_GenerWorkFlow WHERE WorkID=" + workid, "无标题");
+            Node_CC(empNo, empName, fk_node, workid, fid, title, "");
+        }
+        /// <summary>
+        /// 执行抄送
+        /// </summary>
+        /// <param name="empNo">抄送人员编号</param>
+        /// <param name="empName">抄送人员人员名称</param>
+        /// <param name="fk_node">节点编号</param>
+        /// <param name="workid">工作ID</param>
+        /// <param name="fid">FID</param>
+        /// <param name="msgTitle">标题</param>
+        /// <param name="msgDoc">内容</param>
+        public static void Node_CC(string empNo, string empName, int fk_node, Int64 workid, Int64 fid, string msgTitle, string msgDoc)
+        {
+            Node nd = new Node(fk_node);
             CCList list = new CCList();
             list.MyPK = workid + "_" + fk_node + "_" + empNo;
-            list.FK_Flow = fk_flow;
-            Flow fl = new Flow(fk_flow);
+            list.FK_Flow = nd.FK_Flow;
+
+            Flow fl = nd.HisFlow;
             list.FlowName = fl.Name;
             list.FK_Node = fk_node;
-
-            Node nd = new Node(fk_node);
             list.NodeName = nd.Name;
             list.Title = msgTitle;
             list.Doc = msgDoc;
