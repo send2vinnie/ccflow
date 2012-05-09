@@ -21,20 +21,20 @@ namespace CCForm
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.OKButton.Content.ToString() == "创建")
-            {
-
-                FF.CCFormSoapClient fc = Glo.GetCCFormSoapClientServiceInstance();
-                fc.DoTypeAsync("CreateTable", this.TB_EnName.Text, this.TB_CHName.Text, null, null, null, null);
-                fc.DoTypeCompleted += new EventHandler<FF.DoTypeCompletedEventArgs>(fc_DoTypeCompleted);
-                return;
-            }
-
             FF.CCFormSoapClient ff = Glo.GetCCFormSoapClientServiceInstance();
-            ff.RunSQLsAsync("UPDATE Sys_SFTable SET NAME='" + this.TB_CHName.Text + "' WHERE NO='" + this.TB_EnName.Text + "'");
-            ff.RunSQLsCompleted += new EventHandler<FF.RunSQLsCompletedEventArgs>(ff_RunSQLsCompleted);
+            ff.DoTypeAsync("SaveSFTable", this.TB_CHName.Text, this.TB_EnName.Text, null, null, null);
+            ff.DoTypeCompleted += new EventHandler<FF.DoTypeCompletedEventArgs>(ff_DoTypeCompleted);
         }
 
+        void ff_DoTypeCompleted(object sender, FF.DoTypeCompletedEventArgs e)
+        {
+            if (e.Result == null)
+            {
+                this.DialogResult = true;
+                return;
+            }
+            MessageBox.Show(e.Result);
+        }
         void ff_RunSQLsCompleted(object sender, FF.RunSQLsCompletedEventArgs e)
         {
             /*开始执行保存数据.*/
@@ -51,7 +51,7 @@ namespace CCForm
             }
 
             this.TB_EnName.IsEnabled = false;
-            this.tabItem2.IsEnabled = false;
+           // this.tabItem2.IsEnabled = false;
             this.OKButton.Content = "保存";
         }
 

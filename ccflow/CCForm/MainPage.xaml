@@ -78,7 +78,6 @@ xmlns:my="clr-namespace:Toolbar"
 
                         <liquidMenu:MenuItem Name="FrmAction" Text="表单事件" Icon="./Img/Menu/Event.png"
                                              MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
-
                         <liquidMenu:MenuDivider />
                         <liquidMenu:MenuItem Name="RefFrm" Text="增加/移除表单"
                                              MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
@@ -90,7 +89,6 @@ xmlns:my="clr-namespace:Toolbar"
                         <liquidMenu:MenuDivider />
                         <liquidMenu:MenuItem Name="DeleteFrm" Text="删除" Icon="./Img/Menu/Delete.png"
                                              MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
-
                         <liquidMenu:MenuItem Name="FrmRef" Text="刷新"
                                              MouseLeftButtonDown="muItem_MouseLeftButtonDown"  />
                     </liquidMenu:Menu>
@@ -187,17 +185,21 @@ xmlns:my="clr-namespace:Toolbar"
                     <liquidMenu:Menu x:Name="muElePanel"  Visibility="Collapsed" Width="190" >
                         <liquidMenu:MenuItem Name="eleEdit" Text="编辑"  Icon="./Img/Menu/Edit.png"
                                              MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        
                         <liquidMenu:MenuItem Name="eleDel" Text="删除" Icon="./Img/Menu/Delete.png"
                                              MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
 
                         <liquidMenu:MenuItem Name="eleHid" Text="隐藏" Icon="./Img/Menu/Hidden.png"
                                              MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+
+                        <liquidMenu:MenuItem Name="eleCopyTo" Text="批处理" Icon="./Img/Copy.png"
+                                             MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown" />
+                        
                         <!--<liquidMenu:MenuItem Name="eleCancel" Text="取消" Icon="./Img/Menu/Cancel.png"
                                              MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown"  />-->
                         <liquidMenu:MenuDivider />
-                        <liquidMenu:MenuItem Name="eleDtlFrm" Text="设计表单"
+                        <liquidMenu:MenuItem Name="eleDtlFrm" Text="设计明细表表单"
                                              MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown"  />
-
                         <liquidMenu:MenuDivider />
 
                         <liquidMenu:MenuItem Name="FrmTempleteExp_Ext" Text="导出表单模版" Icon="./Img/Menu/Download.png" MouseLeftButtonDown="UI_muElePanel_Btn_MouseLeftButtonDown"/>

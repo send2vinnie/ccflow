@@ -123,42 +123,62 @@ namespace CCForm
         }
         void da_RequestSFTableCompleted(object sender, FF.RequestSFTableCompletedEventArgs e)
         {
-            Silverlight.DataSet ds = new Silverlight.DataSet();
-            ds.FromXml(e.Result);
-            this.Items.Clear();
-            foreach (Silverlight.DataRow dr in ds.Tables[0].Rows)
+            try
             {
-                ListBoxItem li = new ListBoxItem();
-                li.Tag = dr["No"];
-                li.Content = dr["Name"];
-                this.Items.Add(li);
+                Silverlight.DataSet ds = new Silverlight.DataSet();
+                ds.FromXml(e.Result);
+                this.Items.Clear();
+                foreach (Silverlight.DataRow dr in ds.Tables[0].Rows)
+                {
+                    ListBoxItem li = new ListBoxItem();
+                    li.Tag = dr["No"];
+                    li.Content = dr["Name"];
+                    this.Items.Add(li);
+                }
+                if (this.Items.Count != 0)
+                    this.SelectedIndex = 0;
             }
-            if (this.Items.Count != 0)
-                this.SelectedIndex = 0;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\t\n数据:" + e.Error.Message);
+            }
         }
         #endregion bing Enum
 
         #region bind table
         public void BindSQL(string sql)
         {
-            
-            FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-            da.RunSQLReturnTableAsync(sql);
-            da.RunSQLReturnTableCompleted += new EventHandler<FF.RunSQLReturnTableCompletedEventArgs>(da_RunSQLReturnTableCompleted);
+            try
+            {
+                FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
+                da.RunSQLReturnTableAsync(sql);
+                da.RunSQLReturnTableCompleted += new EventHandler<FF.RunSQLReturnTableCompletedEventArgs>(da_RunSQLReturnTableCompleted);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         void da_RunSQLReturnTableCompleted(object sender, FF.RunSQLReturnTableCompletedEventArgs e)
         {
-            Silverlight.DataSet ds = new Silverlight.DataSet();
-            ds.FromXml(e.Result);
-
-            this.Items.Clear();
-            foreach (Silverlight.DataRow dr in ds.Tables[0].Rows)
+            try
             {
-                this.Items.Add(dr["No"] + ":" + dr["Name"]);
-            }
+                Silverlight.DataSet ds = new Silverlight.DataSet();
+                ds.FromXml(e.Result);
 
-            if (this.Items.Count != 0)
-                this.SelectedIndex = 0;
+                this.Items.Clear();
+                foreach (Silverlight.DataRow dr in ds.Tables[0].Rows)
+                {
+                    this.Items.Add(dr["No"] + ":" + dr["Name"]);
+                }
+
+                if (this.Items.Count != 0)
+                    this.SelectedIndex = 0;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         #endregion bing Enum
 

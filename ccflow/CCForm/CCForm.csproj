@@ -171,6 +171,9 @@
     <Compile Include="FrmBtn.xaml.cs">
       <DependentUpon>FrmBtn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FrmCopyEleTo.xaml.cs">
+      <DependentUpon>FrmCopyEleTo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FrmEvent.xaml.cs">
       <DependentUpon>FrmEvent.xaml</DependentUpon>
     </Compile>
@@ -214,6 +217,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectAttachment.xaml.cs">
       <DependentUpon>SelectAttachment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectCheckGroup.xaml.cs">
+      <DependentUpon>SelectCheckGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectDDLTable.xaml.cs">
       <DependentUpon>SelectDDLTable.xaml</DependentUpon>
@@ -303,6 +309,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FrmCopyEleTo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FrmEvent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -356,6 +366,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SelectAttachment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectCheckGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

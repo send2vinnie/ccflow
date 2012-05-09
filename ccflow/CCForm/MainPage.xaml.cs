@@ -273,6 +273,23 @@ namespace CCForm
 
             if (c.Name == "winSelectTB")
             {
+                #region 增加审核分组.
+                if (this.winSelectTB.IsCheckGroup == true)
+                {
+                    if (X > 300)
+                        X = 300;
+
+                    /*如果是增加的审核分组.*/
+                    string gName = this.winSelectTB.TB_Name.Text;
+                    string gKey = this.winSelectTB.TB_KeyOfEn.Text;
+                    this.SetSelectedTool(ToolBox.Mouse);
+                    FF.CCFormSoapClient daCreateCheckGroup = Glo.GetCCFormSoapClientServiceInstance();
+                    daCreateCheckGroup.DoTypeAsync("CreateCheckGroup", gKey, gName, Glo.FK_MapData, null, null, null);
+                    daCreateCheckGroup.DoTypeCompleted += new EventHandler<FF.DoTypeCompletedEventArgs>(daCreateCheckGroup_DoTypeCompleted);
+                    return;
+                }
+                #endregion
+
                 TBType tp = TBType.String;
                 if (winSelectTB.RB_String.IsChecked == true)
                     tp = TBType.String;
@@ -341,8 +358,8 @@ namespace CCForm
                     return;
                 }
 
-                MouseDragElementBehavior mymdeEdp = new MouseDragElementBehavior();
-                Interaction.GetBehaviors(mytb).Add(mymdeEdp);
+                MouseDragElementBehavior mymdeEdpTB = new MouseDragElementBehavior();
+                Interaction.GetBehaviors(mytb).Add(mymdeEdpTB);
 
                 mytb.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                 mytb.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
@@ -399,6 +416,10 @@ namespace CCForm
                 }
                 else
                 {
+                    if (ele.EleType == "")
+                    {
+                        /*如果是建立字段分组*/
+                    }
                     ele.Cursor = Cursors.Hand;
                     ele.SetValue(Canvas.LeftProperty, X);
                     ele.SetValue(Canvas.TopProperty, Y);
@@ -449,22 +470,33 @@ namespace CCForm
                 if (this.canvasMain.Children.Contains(atth) == true)
                     return;
 
-                atth.Label = this.winSelectAttachment.TB_Name.Text;
-                atth.Exts = this.winSelectAttachment.TB_Exts.Text;
-                atth.SaveTo = this.winSelectAttachment.TB_SaveTo.Text;
-                atth.Cursor = Cursors.Hand;
-                atth.SetValue(Canvas.LeftProperty, X);
-                atth.SetValue(Canvas.TopProperty, Y);
-                this.canvasMain.Children.Add(atth);
+                BPAttachment atthMy = new BPAttachment(this.winSelectAttachment.TB_No.Text, this.winSelectAttachment.TB_Name.Text,
+                   this.winSelectAttachment.TB_Exts.Text, 70, this.winSelectAttachment.TB_SaveTo.Text);
+                atthMy.SetValue(Canvas.LeftProperty, X);
+                atthMy.SetValue(Canvas.TopProperty, Y);
 
-                MouseDragElementBehavior mymdeE = new MouseDragElementBehavior();
-                Interaction.GetBehaviors(atth).Add(mymdeE);
-                atth.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
-                atth.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                //atthMy.Label = dr["Name"] as string;
+                //atthMy.Exts = dr["Exts"] as string;
+                //atthMy.SaveTo = dr["SaveTo"] as string;
+
+                atthMy.X = X;
+                atthMy.Y = Y;
+
+                atthMy.IsUpload = (bool)this.winSelectAttachment.CB_IsUpload.IsChecked;
+                atthMy.IsDelete = (bool)this.winSelectAttachment.CB_IsDelete.IsChecked;
+                atthMy.IsDownload = (bool)this.winSelectAttachment.CB_IsDownload.IsChecked;
+
+                MouseDragElementBehavior mde = new MouseDragElementBehavior();
+                Interaction.GetBehaviors(atthMy).Add(mde);
+                this.canvasMain.Children.Add(atthMy);
+
+                atthMy.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+                atthMy.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
 
                 /*要生成标签*/
                 BPLabel lab = new BPLabel();
                 lab.Content = this.winSelectAttachment.TB_Name.Text;
+                lab.Name = "lb" + DateTime.Now.ToString("yyyyMMddhhmmss");
                 lab.Cursor = Cursors.Hand;
                 lab.SetValue(Canvas.LeftProperty, X - 20);
                 lab.SetValue(Canvas.TopProperty, Y);
@@ -474,7 +506,9 @@ namespace CCForm
                 lab.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
                 lab.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
                 this.SetSelectedTool(ToolBox.Mouse);
-                this.BindFrm();
+
+                // this.Save_Click(null, null);
+                //  this.BindFrm();
             }
 
 
@@ -620,6 +654,111 @@ namespace CCForm
                     }
                 }
             }
+        }
+
+        void daCreateCheckGroup_DoTypeCompleted(object sender, FF.DoTypeCompletedEventArgs e)
+        {
+            if (e.Result != null)
+            {
+                MessageBox.Show(e.Result);
+                return;
+            }
+
+            if (X > 300)
+                X = 300;
+
+            /*如果是增加的审核分组.*/
+            string gName = this.winSelectTB.TB_Name.Text;
+            string gKey = this.winSelectTB.TB_KeyOfEn.Text;
+
+
+            BPTextBox tbNote = new BPTextBox(TBType.String, gKey + "_Note");
+            tbNote.KeyName = "审核意见";
+            tbNote.Cursor = Cursors.Hand;
+            tbNote.SetValue(Canvas.LeftProperty, X - 10);
+            tbNote.SetValue(Canvas.TopProperty, Y);
+            tbNote.Width = 550;
+            tbNote.Height = 70;
+            try
+            {
+                this.canvasMain.Children.Add(tbNote);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("可能是同名的字段(" + tbNote.Name + ")已经存在. 异常信息:\t\n" + ex.Message, "错误", MessageBoxButton.OK);
+                return;
+            }
+
+            MouseDragElementBehavior mymdeNote = new MouseDragElementBehavior();
+            Interaction.GetBehaviors(tbNote).Add(mymdeNote);
+            tbNote.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+            tbNote.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+
+
+            BPTextBox tbChecker = new BPTextBox(TBType.String, gKey + "_Checker");
+            tbChecker.KeyName = "审核人";
+            tbChecker.Cursor = Cursors.Hand;
+            tbChecker.SetValue(Canvas.LeftProperty, X + 80);
+            tbChecker.SetValue(Canvas.TopProperty, Y + 75);
+
+            this.canvasMain.Children.Add(tbChecker);
+
+            MouseDragElementBehavior mymdeEdp = new MouseDragElementBehavior();
+            Interaction.GetBehaviors(tbChecker).Add(mymdeEdp);
+            tbChecker.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+            tbChecker.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+
+            BPTextBox tbRDT = new BPTextBox(TBType.DateTime, gKey + "_RDT");
+            tbRDT.KeyName = "审核时间";
+            tbRDT.Cursor = Cursors.Hand;
+            tbRDT.SetValue(Canvas.LeftProperty, X + 320);
+            tbRDT.SetValue(Canvas.TopProperty, Y + 75);
+            this.canvasMain.Children.Add(tbRDT);
+            MouseDragElementBehavior mymdeRDT = new MouseDragElementBehavior();
+            Interaction.GetBehaviors(tbRDT).Add(mymdeRDT);
+            tbRDT.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+            tbRDT.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+
+
+            /*要生成标签*/
+            BPLabel abCheckNote = new BPLabel();
+            abCheckNote.Content = "审核意见";
+            abCheckNote.Name = "Lab" + gKey + "Note";
+            abCheckNote.Cursor = Cursors.Hand;
+            abCheckNote.SetValue(Canvas.LeftProperty, X - 20);
+            abCheckNote.SetValue(Canvas.TopProperty, Y);
+            this.canvasMain.Children.Add(abCheckNote);
+            MouseDragElementBehavior DragBehaviorNote = new MouseDragElementBehavior();
+            Interaction.GetBehaviors(abCheckNote).Add(DragBehaviorNote);
+            abCheckNote.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+            abCheckNote.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+
+
+            BPLabel labChecker = new BPLabel();
+            labChecker.Content = "审核人";
+            labChecker.Name = "Lab" + gKey + "Checker";
+            labChecker.Cursor = Cursors.Hand;
+            labChecker.SetValue(Canvas.LeftProperty, X + 40);
+            labChecker.SetValue(Canvas.TopProperty, Y + 75);
+
+            this.canvasMain.Children.Add(labChecker);
+            MouseDragElementBehavior DragBehavior = new MouseDragElementBehavior();
+            Interaction.GetBehaviors(labChecker).Add(DragBehavior);
+            labChecker.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+            labChecker.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
+
+            BPLabel abCheckRDT = new BPLabel();
+            abCheckRDT.Content = "日期";
+            abCheckRDT.Name = "Lab" + gKey + "RDT";
+            abCheckRDT.Cursor = Cursors.Hand;
+            abCheckRDT.SetValue(Canvas.LeftProperty, X + 290);
+            abCheckRDT.SetValue(Canvas.TopProperty, Y + 75);
+
+            this.canvasMain.Children.Add(abCheckRDT);
+            MouseDragElementBehavior DragBehaviorRDT = new MouseDragElementBehavior();
+            Interaction.GetBehaviors(abCheckRDT).Add(DragBehaviorRDT);
+            abCheckRDT.MouseLeftButtonDown += new MouseButtonEventHandler(UIElement_Click);
+            abCheckRDT.MouseRightButtonDown += new MouseButtonEventHandler(UIElement_MouseRightButtonDown);
         }
         private void DoubleClick_Timer(object sender, EventArgs e)
         {
@@ -2937,7 +3076,6 @@ namespace CCForm
                 == MessageBoxResult.No)
                 return;
 
-
             BPRadioBtn rb = Glo.currEle as BPRadioBtn;
             if (rb != null)
             {
@@ -2974,7 +3112,10 @@ namespace CCForm
                     m2m.DeleteIt();
                     return;
                 }
-                this.canvasMain.Children.Remove(Glo.currEle);
+
+                MessageBox.Show("您选择的元素不支持隐藏", "执行错误", MessageBoxButton.OK);
+                return;
+                //this.canvasMain.Children.Remove(Glo.currEle);
             }
             Glo.currEle = null;
         }
@@ -3069,10 +3210,6 @@ namespace CCForm
                     Glo.WinOpen(Glo.BPMHost + "/WF/Admin/XAP/DoPort.aspx?DoType=DownFormTemplete&FK_MapData=" + Glo.FK_MapData,
                         100, 100);
                     return;
-
-                    //FrmExp expfrm = new FrmExp();
-                    //expfrm.Show();
-                    break;
                 case "FrmTempleteImp": //导入表单模版
                 case "FrmTempleteImp_Ext": //导入表单模版
                     winFrmImp.HisMainPage = this;
@@ -3081,6 +3218,11 @@ namespace CCForm
                 case "eleDel":
                     this.DeleteCurrSelectUI();
                     break;
+                case "eleCopyTo": //复制到其它表单
+                    FrmCopyEleTo copyIt = new FrmCopyEleTo();
+                    copyIt.Tag =sender;
+                    copyIt.Show();
+                    break;                    
                 case "eleHid":
                     this.HidCurrSelectUI();
                     break;
@@ -4545,6 +4687,7 @@ namespace CCForm
                 MessageBox.Show(e.Result, "保存错误", MessageBoxButton.OK);
                 return;
             }
+
             this.BindFrm();
 
             if (Keyboard.Modifiers == ModifierKeys.Windows)

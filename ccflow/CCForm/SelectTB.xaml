@@ -27,5 +27,6 @@
         <CheckBox Content="是否根据名称生成标签" Height="16" HorizontalAlignment="Left" IsChecked="True" Margin="10,127,0,0" Name="CB_IsGenerLabel" VerticalAlignment="Top" />
         <RadioButton Content="Boolen型(是否同意，是否结算)" GroupName="s" Height="16" HorizontalAlignment="Left" Margin="163,202,0,0" Name="RB_Boolen" VerticalAlignment="Top" />
         <CheckBox Content="是否隐藏字段？" Height="16" HorizontalAlignment="Left" IsChecked="False" Margin="10,157,0,0" Name="CB_IsHid" VerticalAlignment="Top" IsEnabled="True" />
+        <Button Content="创建审核分组" Height="23" HorizontalAlignment="Left" Margin="0,12,0,0" Name="Btn_CreateCheckGroup" Width="89" Grid.Row="1" Click="Btn_CreateCheckGroup_Click" />
     </Grid>
 </controls:ChildWindow>

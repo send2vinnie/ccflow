@@ -21,11 +21,14 @@ namespace CCForm
             get
             {
                 string eleType = this.DDL_EleType.SelectedIndex.ToString();
-            if (eleType == "0")
-                eleType = "HandSiganture";
+                if (eleType == "0")
+                    eleType = "HandSiganture";
 
-            if (eleType == "1")
-                eleType = "EleSiganture";
+                if (eleType == "1")
+                    eleType = "EleSiganture";
+
+                if (eleType == "2")
+                    eleType = "CheckGroup";
 
                 BPEle ele = new BPEle();
                 ele.Name = Glo.FK_MapData + "_" + eleType + "_" + this.TB_EleID.Text;
@@ -62,13 +65,13 @@ namespace CCForm
         public void BindData(string mypk)
         {
             FF.CCFormSoapClient da = Glo.GetCCFormSoapClientServiceInstance();
-            da.RunSQLReturnTableAsync("SELECT * FROM Sys_FrmEle WHERE MyPK='"+mypk+"'");
+            da.RunSQLReturnTableAsync("SELECT * FROM Sys_FrmEle WHERE MyPK='" + mypk + "'");
             da.RunSQLReturnTableCompleted += new EventHandler<FF.RunSQLReturnTableCompletedEventArgs>(da_RunSQLReturnTableCompleted);
         }
 
         void da_RunSQLReturnTableCompleted(object sender, FF.RunSQLReturnTableCompletedEventArgs e)
         {
-            DataSet ds= new DataSet();
+            DataSet ds = new DataSet();
             ds.FromXml(e.Result);
             DataTable dt = ds.Tables[0];
             if (dt.Rows.Count == 0)
@@ -90,6 +93,9 @@ namespace CCForm
                 if (dt.Rows[0]["EleType"] == "EleSiganture")
                     idx = 1;
 
+                if (dt.Rows[0]["EleType"] == "CheckGroup")
+                    idx = 2;
+
                 this.DDL_EleType.SelectedIndex = idx;
                 this.TB_Tag1.Text = dt.Rows[0]["Tag1"].ToString();
                 this.TB_Tag2.Text = dt.Rows[0]["Tag2"].ToString();
@@ -105,6 +111,9 @@ namespace CCForm
 
             if (eleType == "1")
                 eleType = "EleSiganture";
+
+            if (eleType == "2")
+                eleType = "CheckGroup";
 
             string mypk = Glo.FK_MapData + "_" + eleType + "_" + this.TB_EleID.Text.Trim();
             string strs = "@EnName=BP.Sys.FrmEle@PKVal=" + mypk;
@@ -171,6 +180,9 @@ namespace CCForm
             if (eleType == "1")
                 eleType = "EleSiganture";
 
+            if (eleType == "2")
+                eleType = "CheckGroup";
+
             foreach (DataRow dr in dtConfig.Rows)
             {
                 if (dr["DFor"].ToString() != eleType)
@@ -185,7 +197,7 @@ namespace CCForm
                     string[] kvs = str.Split('@');
                     foreach (string k in kvs)
                     {
-                        string[] kk=k.Split('=');
+                        string[] kk = k.Split('=');
                         switch (kk[0])
                         {
                             case "Label":
@@ -194,8 +206,8 @@ namespace CCForm
                                 break;
                             case "DefVal":
                                 TextBox tb = this.FindName("TB_Tag" + i) as TextBox;
-                                if (tb.Text.Trim()=="")
-                                    tb.Text= kk[1];
+                                if (tb.Text.Trim() == "")
+                                    tb.Text = kk[1];
 
                                 break;
                             case "FType":

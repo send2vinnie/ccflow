@@ -93,10 +93,22 @@ namespace CCForm
         /// 保存到
         /// </summary>
         public string SaveTo = @"D:\ccflow\VisualFlow\DataUser\UploadFile";
-        /// <summary>
-        /// 
-        /// </summary>
-        public BPTextBox HisTB = new BPTextBox();
+        private BPTextBox _HisTB =null;
+        public BPTextBox HisTB
+        {
+            get{
+                if (_HisTB==null)
+                {
+                    _HisTB =new BPTextBox();
+                    _HisTB.Name = "TB_" + this.Name+"_"+DateTime.Now.ToString("hhmmss");
+                }
+                return _HisTB;
+            }
+            set
+            {
+                _HisTB = value;
+            }
+        } 
         /// <summary>
         /// BPAttachment
         /// </summary>
@@ -117,7 +129,7 @@ namespace CCForm
             sp.Name = "sp" + NoOfObj;
             sp.Orientation = Orientation.Horizontal;
             this.HisTB = new BPTextBox();
-            this.HisTB.Name = "No:" + NoOfObj;
+            this.HisTB.Name = "No" + NoOfObj;
             this.HisTB.Width = tbWidth;
             this.Exts = exts;
             this.SaveTo = _saveTo;

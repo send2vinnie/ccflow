@@ -159,10 +159,10 @@ namespace CCForm
         public SelectDDLTableEntity tableEntity = new SelectDDLTableEntity();
         private void Btn_Create_Click(object sender, RoutedEventArgs e)
         {
-            this.tableEntity.tabItem2.IsEnabled = false;
+         //   this.tableEntity.tabItem2.IsEnabled = false;
             this.tableEntity.TB_EnName.IsEnabled = true;
 
-            this.tableEntity.OKButton.Content = "创建";
+            this.tableEntity.OKButton.Content = "确定";
             this.tableEntity.TB_CHName.Text = "";
             this.tableEntity.TB_EnName.Text = "";
             this.tableEntity.Show();
@@ -179,8 +179,8 @@ namespace CCForm
             ListBoxItem item = this.listBox1.SelectedItem as ListBoxItem;
             string[] kv = item.Content.ToString().Split(':');
 
-            this.tableEntity.tabItem2.IsEnabled = false;
-            this.tableEntity.OKButton.Content = "保存";
+         //   this.tableEntity.tabItem2.IsEnabled = false;
+            this.tableEntity.OKButton.Content = "确定";
             this.tableEntity.TB_EnName.Text = kv[0];
             this.tableEntity.TB_EnName.IsEnabled=false;
 

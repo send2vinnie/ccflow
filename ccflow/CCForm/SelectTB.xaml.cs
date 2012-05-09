@@ -13,18 +13,33 @@ namespace CCForm
 {
     public partial class SelectTB : ChildWindow
     {
+        public bool IsCheckGroup = false;
         public UIElementCollection eles = null;
         public SelectTB()
         {
             InitializeComponent();
+            this.HisFrmSelectCheckGroup.Closed += new EventHandler(HisFrmSelectCheckGroup_Closed);
         }
 
         protected override void OnOpened()
         {
+            this.IsCheckGroup = false;
             this.TB_KeyOfEn.Text = "";
             this.TB_Name.Text = "";
             this.CB_IsHid.IsChecked = false;
+            this.HisFrmSelectCheckGroup.Closed += new EventHandler(HisFrmSelectCheckGroup_Closed);
             base.OnOpened();
+        }
+
+        void HisFrmSelectCheckGroup_Closed(object sender, EventArgs e)
+        {
+            if (this.HisFrmSelectCheckGroup.DialogResult == false)
+                return;
+
+            this.TB_Name.Text = this.HisFrmSelectCheckGroup.TB_GroupName.Text;
+            this.TB_KeyOfEn.Text = this.HisFrmSelectCheckGroup.TB_GroupKey.Text;
+            this.IsCheckGroup = true;
+            this.DialogResult = true;
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
@@ -101,6 +116,17 @@ namespace CCForm
             if (e.Result != null)
                 this.TB_KeyOfEn.Text = e.Result;
         }
+
+        private void Btn_CreateCheckGroup_Click(object sender, RoutedEventArgs e)
+        {
+            HisFrmSelectCheckGroup = new SelectCheckGroup();
+            HisFrmSelectCheckGroup.TB_GroupKey.Text = "";
+            HisFrmSelectCheckGroup.TB_GroupName.Text = "";
+            HisFrmSelectCheckGroup.Show();
+            this.HisFrmSelectCheckGroup.Closed += new EventHandler(HisFrmSelectCheckGroup_Closed);
+        }
+        public SelectCheckGroup HisFrmSelectCheckGroup = new SelectCheckGroup();
+
     }
 }
 
