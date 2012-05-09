@@ -18,9 +18,9 @@
   <Menu No="0301" Name="" CH="项目维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.PRJ.Prjs"  Icon="" />
   <Menu No="0302" Name="" CH="资料树节点访问规则"  W="700" H="800" Url="/PRJ/NodeAccess.aspx"  Icon="" />-->
 
-    <!-- 流程数据  --><!--
+     <!--流程数据-->  
   <FlowData No="01" Name="" CH="流程优化"  W="700" H="800" Url="" Icon="../Images/TreeMenu/FlowOrg.png"  />
   <FlowData No="0101" Name="" CH="流程查询"  W="700" H="800" Url="/WF/FlowSearch.aspx" Icon=""  />
   <FlowData No="0102" Name="" CH="节点查询"  W="700" H="800" Url="/WF/FlowSearch.aspx" Icon=""  />
-  <FlowData No="0103" Name="" CH="成本分析"  W="700" H="800" Url="/WF/FlowSearch.aspx" Icon=""  />-->
+  <FlowData No="0103" Name="" CH="成本分析"  W="700" H="800" Url="/WF/FlowSearch.aspx" Icon=""  />
 </NewDataSet>
