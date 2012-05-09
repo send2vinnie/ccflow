@@ -4,21 +4,6 @@ using BP.DA;
 using BP.En;
 namespace BP.Sys
 {
-    public enum SFTableType
-    {
-        /// <summary>
-        /// 自定义表
-        /// </summary>
-        SFTable,
-        /// <summary>
-        /// 类库
-        /// </summary>
-        ClsLab,
-        /// <summary>
-        /// 系统表
-        /// </summary>
-        SysTable
-    }
 	/// <summary>
 	/// 用户自定义表
 	/// </summary>
@@ -33,10 +18,6 @@ namespace BP.Sys
         /// </summary>
         public const string FK_Val = "FK_Val";
         /// <summary>
-        /// 类型
-        /// </summary>
-        public const string SFTableType = "SFTableType";
-        /// <summary>
         /// 描述
         /// </summary>
         public const string TableDesc = "TableDesc";
@@ -48,7 +29,6 @@ namespace BP.Sys
         /// IsEdit
         /// </summary>
         public const string IsEdit = "IsEdit";
-
     }
 	/// <summary>
 	/// 用户自定义表
@@ -116,37 +96,6 @@ namespace BP.Sys
                 this.SetValByKey(SFTableAttr.DefVal, value);
             }
         }
-        /// <summary>
-        /// 类型
-        /// </summary>
-        public string SFTableTypeT
-        {
-            get
-            {
-                return this.GetValRefTextByKey(SFTableAttr.SFTableType);
-            }
-        }
-        public SFTableType HisSFTableType
-        {
-            get
-            {
-                return (SFTableType)this.GetValIntByKey(SFTableAttr.SFTableType);
-            }
-            set
-            {
-                this.SetValByKey(SFTableAttr.SFTableType, (int)value);
-            }
-        }
-        public bool IsDel
-        {
-            get
-            {
-                if (this.HisSFTableType== SFTableType.SFTable )
-                    return true;
-                else
-                    return false;
-            }
-        }
         public EntitiesNoName HisEns
         {
             get
@@ -186,28 +135,28 @@ namespace BP.Sys
                 {
                     case "BP.Pub.NYs":
                         this.Name = "年月";
-                        this.HisSFTableType = SFTableType.ClsLab;
+                      //  this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_NY";
                         this.IsEdit = true;
                         this.Insert();
                         break;
                     case "BP.Pub.YFs":
                         this.Name = "月";
-                        this.HisSFTableType = SFTableType.ClsLab;
+                      //  this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_YF";
                         this.IsEdit = true;
                         this.Insert();
                         break;
                     case "BP.Pub.Days":
                         this.Name = "天";
-                        this.HisSFTableType = SFTableType.ClsLab;
+                     //   this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_Day";
                         this.IsEdit = true;
                         this.Insert();
                         break;
                     case "BP.Pub.NDs":
                         this.Name = "年";
-                        this.HisSFTableType = SFTableType.ClsLab;
+                     //   this.HisSFTableType = SFTableType.ClsLab;
                         this.FK_Val = "FK_ND";
                         this.IsEdit = true;
                         this.Insert();
@@ -235,10 +184,10 @@ namespace BP.Sys
                 map.AddTBStringPK(SFTableAttr.No, null, "编号", true, false, 1, 20, 20);
                 map.AddTBString(SFTableAttr.Name, null, "表名称", true, false, 0, 30, 20);
                 map.AddTBString(SFTableAttr.FK_Val, null, "字段（显示在物理表）", true, false, 0, 50, 20);
-                map.AddDDLSysEnum(SFTableAttr.SFTableType, 0, "表类型", true, false, SFTableAttr.SFTableType, "@0=用户定义@1=类库@2=系统表");
+           //     map.AddDDLSysEnum(SFTableAttr.SFTableType, 0, "表类型", true, false, SFTableAttr.SFTableType, "@0=用户定义@1=类库@2=系统表");
                 map.AddTBString(SFTableAttr.TableDesc, null, "表描述", true, false, 0, 50, 20);
                 map.AddTBString(SFTableAttr.DefVal, null, "默认值(特殊)", true, false, 0, 200, 20);
-                map.AddBoolean(SFTableAttr.IsEdit, true, "是否可编辑", true, true);
+             //   map.AddBoolean(SFTableAttr.IsEdit, true, "是否可编辑", true, true);
                 this._enMap = map;
                 return this._enMap;
             }
