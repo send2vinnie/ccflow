@@ -423,7 +423,9 @@ namespace BP.WF
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("@在取得判断条件实体[" + nd.EnDesc + "], 出现错误:" + ex.Message + "@错误原因是定义流程的判断条件出现错误,可能是你选择的判断条件工作类是当前工作节点的下一步工作造成,取不到该实体的实例.");
+                    //this.Delete();
+                    return false;
+                    //throw new Exception("@在取得判断条件实体[" + nd.EnDesc + "], 出现错误:" + ex.Message + "@错误原因是定义流程的判断条件出现错误,可能是你选择的判断条件工作类是当前工作节点的下一步工作造成,取不到该实体的实例.");
                 }
 
                 if (this.HisDataFrom == ConnDataFrom.Stas)
