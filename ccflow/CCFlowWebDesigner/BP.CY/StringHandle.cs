@@ -80,7 +80,6 @@ namespace BP.CY
         public static Stream ToStream(string str)
         {
             byte[] b = Convert.FromBase64String(str);
-
             return (new MemoryStream(b));
         }
     }

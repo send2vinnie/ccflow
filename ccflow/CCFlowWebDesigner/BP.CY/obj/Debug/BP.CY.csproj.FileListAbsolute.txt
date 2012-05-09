@@ -1,0 +1,5 @@
+D:\ccflow\CCFlowWebDesigner\BP.CY\bin\Debug\BP.CY.dll
+D:\ccflow\CCFlowWebDesigner\BP.CY\bin\Debug\BP.CY.pdb
+D:\ccflow\CCFlowWebDesigner\BP.CY\obj\Debug\ResolveAssemblyReference.cache
+D:\ccflow\CCFlowWebDesigner\BP.CY\obj\Debug\BP.CY.dll
+D:\ccflow\CCFlowWebDesigner\BP.CY\obj\Debug\BP.CY.pdb
