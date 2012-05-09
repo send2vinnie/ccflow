@@ -152,7 +152,7 @@ public partial class WF_Accpter : WebPage
                 this.WinCloseWithMsg("流程设计错误：\n\n 当前节点的所有分支节点没有一个接受人员规则为按照选择接受。");
                 return;
             }
-            this.Response.Redirect("Accpter.aspx?FK_Node=" + this.FK_Node + "&ToNode=" + this.MyToNode + "&WorkID=" + this.WorkID, true);
+            this.Response.Redirect("Accpter.aspx?FK_Node=" + this.FK_Node + "&ToNode=" + this.MyToNode + "&type=1&WorkID=" + this.WorkID, true);
         }
         else
         {
@@ -172,7 +172,7 @@ public partial class WF_Accpter : WebPage
             if (this.ToNode == mynd.NodeID)
                 str += "&nbsp;&nbsp;<b><font color='red' >" + mynd.Name + "</font></B>";
             else
-                str += "&nbsp;&nbsp;<b><a href='Accpter.aspx?FK_Node=" + this.FK_Node + "&ToNode=" + mynd.NodeID + "&WorkID=" + this.WorkID + "' >" + mynd.Name + "</a></b>";
+                str += "&nbsp;&nbsp;<b><a href='Accpter.aspx?FK_Node=" + this.FK_Node + "&type=1&ToNode=" + mynd.NodeID + "&WorkID=" + this.WorkID + "' >" + mynd.Name + "</a></b>";
         }
         this.Left.Add(str + "</p>");
         this.Left.AddFieldSetEnd();
@@ -213,9 +213,9 @@ public partial class WF_Accpter : WebPage
         if (WebUser.FK_Dept.Length > 2)
         {
             if (this.FK_Dept == WebUser.FK_Dept)
-                info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Dept=" + WebUser.FK_Dept.Substring(0, WebUser.FK_Dept.Length - 2) + "'>更多人员...</b></a>";
+                info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&type=1&FK_Dept=" + WebUser.FK_Dept.Substring(0, WebUser.FK_Dept.Length - 2) + "'>更多人员...</b></a>";
             else
-                info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&FK_Dept=" + WebUser.FK_Dept + "'>本部门人员...</a></b>";
+                info = "<b><a href='Accpter.aspx?ToNode=" + this.ToNode + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node + "&type=1&FK_Dept=" + WebUser.FK_Dept + "'>本部门人员...</a></b>";
         }
         string sql = "select tonode from wf_direction where node =" + FK_Node;
         var o = DBAccess.RunSQLReturnVal(sql);
