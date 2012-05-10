@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 		<LINK href="../Style/Table0.css" type="text/css" rel="stylesheet">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:Pub ID="Pub1" runat="server" />
     <uc1:Pub ID="Pub2" runat="server" />
     

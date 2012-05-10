@@ -57,7 +57,7 @@
     <table border="0"  width='100%' height='400px'  align=left >
     <tr>
     <th  valign=top bgcolor="#e6f5ff" width='200px'   nowarp=true >
-      <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+      <asp:ContentPlaceHolder id="MainContent" runat="server">
         </asp:ContentPlaceHolder>
     </th>
     <td    valign=top  style="text-align:left;bgcolor:red" >

@@ -6,6 +6,6 @@ Inherits="Comm_Sys_EnumList" %>
     <link href="../Style/Table0.css" rel="stylesheet" type="text/css" />
     <link href="../Style/Table.css" rel="stylesheet" type="text/css" />
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:UCSys ID="UCSys1" runat="server" />
 </asp:Content>

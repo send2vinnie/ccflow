@@ -29,7 +29,7 @@
 <body onload="RSize();">
     <form id="form1" runat="server">
     <div>
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        <asp:ContentPlaceHolder id="MainContent" runat="server">
         </asp:ContentPlaceHolder>
     </div>
     </form>

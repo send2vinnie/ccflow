@@ -57,7 +57,7 @@
        }
     </script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
 <div align=left>
     <table id="Table1" align="left"  border=0 width='100%'>
         <tr>

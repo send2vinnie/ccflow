@@ -5,6 +5,6 @@
     <link href="../Style/Table0.css" rel="stylesheet" type="text/css" />
 		<script language="JavaScript" src="../JScript.js" type="text/javascript" ></script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:Pub ID="Pub1" runat="server" />
 </asp:Content>

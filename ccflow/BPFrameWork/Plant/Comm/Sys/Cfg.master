@@ -14,7 +14,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        <asp:ContentPlaceHolder id="MainContent" runat="server">
             <uc2:Pub ID="Pub1" runat="server" />
         </asp:ContentPlaceHolder>
     </form>

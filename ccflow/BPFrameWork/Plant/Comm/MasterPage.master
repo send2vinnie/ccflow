@@ -12,7 +12,7 @@
 <body topmargin="0" leftmargin="0"   >
     <form id="aspnetForm" runat="server">
     <div align=left>
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        <asp:ContentPlaceHolder id="MainContent" runat="server">
         </asp:ContentPlaceHolder>
     </div>
     </form>
