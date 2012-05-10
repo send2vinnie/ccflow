@@ -2,34 +2,34 @@
 INSERT INTO Sys_EnCfg(No,GroupTitle) VALUES ('BP.WF.Ext.NodeO','NodeID=基本配置@WarningDays=考核属性@SendLab=功能按钮标签与状态');
 
 DELETE FROM Sys_SFTable WHERE No='CN_City';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('CN_City','城市','FK_City','0','中国的市级城市','','1');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal,IsEdit)VALUES ('CN_City','城市','FK_City','中国的市级城市','','1');
 
 DELETE FROM Sys_SFTable WHERE No='CN_PQ';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('CN_PQ','地区','FK_DQ','0','华北、西北、西南。。。','','1');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal,IsEdit)VALUES ('CN_PQ','地区','FK_DQ','华北、西北、西南。。。','','1');
 
 DELETE FROM Sys_SFTable WHERE No='CN_SF';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('CN_SF','省份','FK_SF','0','中国的省份。','','1');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal,IsEdit)VALUES ('CN_SF','省份','FK_SF','中国的省份。','','1');
 
 DELETE FROM Sys_SFTable WHERE No='BP.Port.Depts';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Port.Depts','部门','FK_Dept','2','部门','','1');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal,IsEdit)VALUES ('BP.Port.Depts','部门','FK_Dept','部门','','1');
 
 DELETE FROM Sys_SFTable WHERE No='BP.Port.Emps';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Port.Emps','人员','FK_Emp','2','系统中的操作员','','1');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal,IsEdit)VALUES ('BP.Port.Emps','人员','FK_Emp','系统中的操作员','','1');
 
 DELETE FROM Sys_SFTable WHERE No='BP.Port.Stations';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Port.Stations','岗位','FK_Station','2','工作岗位','','1');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal,IsEdit)VALUES ('BP.Port.Stations','岗位','FK_Station','工作岗位','','1');
 
 DELETE FROM Sys_SFTable WHERE No='BP.Pub.Days';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.Days','日','FK_Day','0','1-31日','','1');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.Days','日','FK_Day','1-31日','','1');
 
 DELETE FROM Sys_SFTable WHERE No='BP.Pub.YFs';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.YFs','月','FK_NY','0','1-12月','','1');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.YFs','月','FK_NY','1-12月','','1');
 
 DELETE FROM Sys_SFTable WHERE No='BP.Pub.NYs';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.NYs','年月','FK_NY','0','年度与月份','','1');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.NYs','年月','FK_NY','年度与月份','','1');
 
 DELETE FROM Sys_SFTable WHERE No='BP.Pub.NDs';
-INSERT INTO Sys_SFTable (No,Name,FK_Val,SFTableType,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.NDs','年度','FK_ND','0','年度','','1');
+INSERT INTO Sys_SFTable (No,Name,FK_Val,TableDesc,DefVal,IsEdit)VALUES ('BP.Pub.NDs','年度','FK_ND','年度','','1');
 
 DELETE FROM Sys_FrmSort WHERE No='01';
 INSERT INTO Sys_FrmSort (No,Name)VALUES ('01','默认表单类别');
