@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lizard.DBUtility">
+      <HintPath>..\..\..\DLL\Lizard.DBUtility.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
@@ -50,6 +53,42 @@
     <Compile Include="Enum\ArticleStates.cs" />
     <Compile Include="Enum\TypeOfArticle.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="Model\APP_ChangeLog.cs" />
+    <Compile Include="Model\APP_Domain.cs" />
+    <Compile Include="Model\APP_Function.cs" />
+    <Compile Include="Model\APP_FunctionOperate.cs" />
+    <Compile Include="Model\APP_Role.cs" />
+    <Compile Include="Model\APP_RoleDomain.cs" />
+    <Compile Include="Model\APP_Rule.cs" />
+    <Compile Include="Model\APP_User.cs" />
+    <Compile Include="Model\APP_UserDomain.cs" />
+    <Compile Include="Model\APP_UserRole.cs" />
+    <Compile Include="Model\EIP_Dept.cs" />
+    <Compile Include="Model\EIP_Emp.cs" />
+    <Compile Include="Model\EIP_EmpPost.cs" />
+    <Compile Include="Model\EIP_Layout.cs" />
+    <Compile Include="Model\EIP_LayoutDetail.cs" />
+    <Compile Include="Model\EIP_Menu.cs" />
+    <Compile Include="Model\EIP_MenuOperate.cs" />
+    <Compile Include="Model\EIP_Post.cs" />
+    <Compile Include="Model\EIP_PostDept.cs" />
+    <Compile Include="Model\EIP_UserEPD.cs" />
+    <Compile Include="Model\Extend\EIP_LayoutDetail.ext.cs" />
+    <Compile Include="Model\Extend\EIP_Menu.ext.cs" />
+    <Compile Include="Model\OA_AddrBook.cs" />
+    <Compile Include="Model\OA_AddrGrouping.cs" />
+    <Compile Include="Model\OA_Attachment.cs" />
+    <Compile Include="Model\OA_Channel.cs" />
+    <Compile Include="Model\OA_Email.cs" />
+    <Compile Include="Model\OA_EmailAttach.cs" />
+    <Compile Include="Model\OA_Meeting.cs" />
+    <Compile Include="Model\OA_MeetingAttach.cs" />
+    <Compile Include="Model\OA_Message.cs" />
+    <Compile Include="Model\OA_News.cs" />
+    <Compile Include="Model\OA_NewsAttach.cs" />
+    <Compile Include="Model\OA_Notice.cs" />
+    <Compile Include="Model\OA_NoticeAttach.cs" />
+    <Compile Include="Model\OA_SMS.cs" />
     <Compile Include="ProcessObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSOCustomerModule.cs" />

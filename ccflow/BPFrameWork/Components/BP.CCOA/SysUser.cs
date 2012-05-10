@@ -99,7 +99,7 @@ namespace BP.CCOA
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = true;
 
-                map.AddTBStringPK(SysUserAttr.No, null, "编号", true, true, 2, 50, 20);
+                map.AddTBStringPK(SysUserAttr.No, null, "编号", true, true,2, 50, 20);
                 map.AddTBString(SysUserAttr.UserName, null, "用户名", true, false, 0, 100, 20);
                 map.AddTBString(SysUserAttr.Password, null, "密码", true, false, 0, 100, 20);
                 map.AddTBString(SysUserAttr.SysID, null, "系统ID", true, false, 0, 50, 20);
