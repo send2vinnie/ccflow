@@ -9,7 +9,6 @@ namespace BP.CCOA
 {
     public partial class OA_NoticeAttr : EntityNoNameAttr
     {
-        public const string No = "No";
         public const string Author = "Author";
         public const string Clicks = "Clicks";
         public const string UpUser = "UpUser";
@@ -26,21 +25,6 @@ namespace BP.CCOA
     public partial class OA_Notice : EntityNoName
     {
         #region 属性
-        
-        /// <summary>
-        /// 主键Id
-        /// </summary>
-        public String No
-        {
-            get
-            {
-                return this.GetValStringByKey(OA_NoticeAttr.No);
-            }
-            set
-            {
-                this.SetValByKey(OA_NoticeAttr.No, value);
-            }
-        }
         
         /// <summary>
         /// 发布人
@@ -150,11 +134,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public String CreateTime
+        public DateTime CreateTime
         {
             get
             {
-                return this.GetValStringByKey(OA_NoticeAttr.CreateTime);
+                return this.GetValDateTime(OA_NoticeAttr.CreateTime);
             }
             set
             {
@@ -180,11 +164,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public String UpDT
+        public DateTime UpDT
         {
             get
             {
-                return this.GetValStringByKey(OA_NoticeAttr.UpDT);
+                return this.GetValDateTime(OA_NoticeAttr.UpDT);
             }
             set
             {
@@ -247,10 +231,10 @@ namespace BP.CCOA
                 map.AddTBString(OA_NoticeAttr.NoticeTitle, null, "", true, false, 0,  200, 200);
                 map.AddTBString(OA_NoticeAttr.NoticeSubTitle, null, "", true, false, 0,  200, 200);
                 map.AddTBString(OA_NoticeAttr.NoticeType, null, "", true, false, 0,  1, 1);
-                map.AddTBString(OA_NoticeAttr.NoticeContent, null, "", true, false, 0,  16, 16);
-                map.AddTBString(OA_NoticeAttr.CreateTime, null, "", true, false, 0,  50, 50);
+                map.AddTBStringDoc(OA_NoticeAttr.NoticeContent, "", "内容", true, false);
+                map.AddTBDateTime(OA_NoticeAttr.CreateTime, "创建时间", false, false);
                 map.AddTBInt(OA_NoticeAttr.IsRead, 0, "", true, false);
-                map.AddTBString(OA_NoticeAttr.UpDT, null, "", true, false, 0,  50, 50);
+                map.AddTBDateTime(OA_NoticeAttr.UpDT, "更新时间", false, false);
                 map.AddTBInt(OA_NoticeAttr.Status, 0, "", true, false);
               
                 this._enMap = map;

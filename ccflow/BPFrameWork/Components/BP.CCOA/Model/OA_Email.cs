@@ -9,7 +9,6 @@ namespace BP.CCOA
 {
     public partial class OA_EmailAttr : EntityNoNameAttr
     {
-        public const string No = "No";
         public const string Addresser = "Addresser";
         public const string Addressee = "Addressee";
         public const string Subject = "Subject";
@@ -25,21 +24,6 @@ namespace BP.CCOA
     public partial class OA_Email : EntityNoName
     {
         #region 属性
-        
-        /// <summary>
-        /// 主键Id
-        /// </summary>
-        public String No
-        {
-            get
-            {
-                return this.GetValStringByKey(OA_EmailAttr.No);
-            }
-            set
-            {
-                this.SetValByKey(OA_EmailAttr.No, value);
-            }
-        }
         
         /// <summary>
         /// 发件人
@@ -134,11 +118,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public String CreateTime
+        public DateTime CreateTime
         {
             get
             {
-                return this.GetValStringByKey(OA_EmailAttr.CreateTime);
+                return this.GetValDateTime(OA_EmailAttr.CreateTime);
             }
             set
             {
@@ -149,11 +133,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public String SendTime
+        public DateTime SendTime
         {
             get
             {
-                return this.GetValStringByKey(OA_EmailAttr.SendTime);
+                return this.GetValDateTime(OA_EmailAttr.SendTime);
             }
             set
             {
@@ -179,11 +163,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public String UpDT
+        public DateTime UpDT
         {
             get
             {
-                return this.GetValStringByKey(OA_EmailAttr.UpDT);
+                return this.GetValDateTime(OA_EmailAttr.UpDT);
             }
             set
             {
