@@ -24,21 +24,9 @@ namespace Lizard.OA.Web.OA_Message
         {
 
             string strErr = "";
-            if (!PageValidate.IsNumber(txtMessageId.Text))
-            {
-                strErr += "主键Id格式错误！\\n";
-            }
             if (this.txtMessageName.Text.Trim().Length == 0)
             {
                 strErr += "消息名称（标题）不能为空！\\n";
-            }
-            if (!PageValidate.IsNumber(txtMeaageType.Text))
-            {
-                strErr += "消息类型格式错误！\\n";
-            }
-            if (!PageValidate.IsNumber(txtAuthor.Text))
-            {
-                strErr += "发布人格式错误！\\n";
             }
             if (!PageValidate.IsDateTime(txtCreateTime.Text))
             {

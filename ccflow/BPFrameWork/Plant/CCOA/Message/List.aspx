@@ -1,16 +1,19 @@
-﻿<%@ Page Title="OA_Message" Language="C#" MasterPageFile="~/CCOA/WinOpen.master"
-    AutoEventWireup="true" CodeFile="List.aspx.cs" Inherits="Lizard.OA.Web.OA_Message.List" %>
+﻿<%@ Page Title="OA_Message" Language="C#" AutoEventWireup="true" CodeFile="List.aspx.cs"
+    Inherits="Lizard.OA.Web.OA_Message.List" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<%@ Register Src="../Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
     <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <!--Title -->
-    <!--Title end -->
-    <!--Add  -->
-    <!--Add end -->
-    <!--Search -->
-    <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
+</head>
+<body>
+    <form id="Form1" runat="server">
+    <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
+    &nbsp;<table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
         <tr>
             <td style="width: 80px" align="right" class="tdbg">
                 <b>关键字：</b>
@@ -28,16 +31,15 @@
     <br />
     <asp:GridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
         OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
-        OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
-        RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">
+        OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="False" RowStyle-HorizontalAlign="Center"
+        OnRowCreated="gridView_OnRowCreated" CssClass="lizard-grid">
         <Columns>
             <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
                 <ItemTemplate>
                     <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:BoundField DataField="No" HeaderText="主键Id" SortExpression="No"
-                ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="No" HeaderText="主键Id" SortExpression="No" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="MessageName" HeaderText="消息名称（标题）" SortExpression="MessageName"
                 ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="MeaageType" HeaderText="消息类型" SortExpression="MeaageType"
@@ -69,6 +71,6 @@
             </td>
         </tr>
     </table>
-</asp:Content>
-<%--<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceCheckright" runat="server">
-</asp:Content>--%>
+    </form>
+</body>
+</html>

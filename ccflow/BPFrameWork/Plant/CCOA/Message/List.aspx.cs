@@ -68,7 +68,7 @@ namespace Lizard.OA.Web.OA_Message
             }            
             //ds = bll.GetList(strWhere.ToString());            
             //gridView.DataSource = ds;
-            BP.CCOA.OA_Emails list = new BP.CCOA.OA_Emails();
+            BP.CCOA.OA_Messages list = new BP.CCOA.OA_Messages();
             list.RetrieveAll();
             gridView.DataSource = list;
             gridView.DataBind();

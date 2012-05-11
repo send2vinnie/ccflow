@@ -30,7 +30,7 @@ namespace Lizard.OA.Web.OA_Message
         {
             //BP.CCOA.OA_Message bll=new BP.CCOA.OA_Message();
             //Lizard.OA.Model.OA_Message model=bll.GetModel(MessageId);
-            BP.CCOA.OA_Message model = new BP.CCOA.OA_Message();
+            BP.CCOA.OA_Message model = new BP.CCOA.OA_Message(MessageId);
             this.lblMessageId.Text = model.No;
             this.lblMessageName.Text = model.MessageName;
             this.lblMeaageType.Text = model.MeaageType.ToString();
