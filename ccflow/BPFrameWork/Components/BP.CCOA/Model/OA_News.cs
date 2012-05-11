@@ -9,7 +9,6 @@ namespace BP.CCOA
 {
     public partial class OA_NewsAttr : EntityNoNameAttr
     {
-        public const string No = "No";
         public const string Author = "Author";
         public const string Clicks = "Clicks";
         public const string UpUser = "UpUser";
@@ -22,26 +21,11 @@ namespace BP.CCOA
         public const string UpDT = "UpDT";
         public const string Status = "Status";
     }
-    
+
     public partial class OA_News : EntityNoName
     {
         #region 属性
-        
-        /// <summary>
-        /// 主键Id
-        /// </summary>
-        public String No
-        {
-            get
-            {
-                return this.GetValStringByKey(OA_NewsAttr.No);
-            }
-            set
-            {
-                this.SetValByKey(OA_NewsAttr.No, value);
-            }
-        }
-        
+
         /// <summary>
         /// 发布人
         /// </summary>
@@ -56,7 +40,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NewsAttr.Author, value);
             }
         }
-        
+
         /// <summary>
         /// 点击量
         /// </summary>
@@ -71,7 +55,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NewsAttr.Clicks, value);
             }
         }
-        
+
         /// <summary>
         /// 更新人
         /// </summary>
@@ -86,7 +70,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NewsAttr.UpUser, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -101,7 +85,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NewsAttr.NewsTitle, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -116,7 +100,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NewsAttr.NewsSubTitle, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -131,7 +115,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NewsAttr.NewsType, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -146,52 +130,52 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NewsAttr.NewsContent, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
-        public String CreateTime
+        public DateTime CreateTime
         {
             get
             {
-                return this.GetValStringByKey(OA_NewsAttr.CreateTime);
+                return this.GetValDateTime(OA_NewsAttr.CreateTime);
             }
             set
             {
                 this.SetValByKey(OA_NewsAttr.CreateTime, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
-        public int IsRead
+        public bool IsRead
         {
             get
             {
-                return this.GetValIntByKey(OA_NewsAttr.IsRead);
+                return this.GetValBooleanByKey(OA_NewsAttr.IsRead);
             }
             set
             {
                 this.SetValByKey(OA_NewsAttr.IsRead, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
-        public String UpDT
+        public DateTime UpDT
         {
             get
             {
-                return this.GetValStringByKey(OA_NewsAttr.UpDT);
+                return this.GetValDateTime(OA_NewsAttr.UpDT);
             }
             set
             {
                 this.SetValByKey(OA_NewsAttr.UpDT, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -206,9 +190,9 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NewsAttr.Status, value);
             }
         }
-        
+
         #endregion
-        
+
         #region 构造方法
         /// <summary>
         /// 
@@ -226,7 +210,7 @@ namespace BP.CCOA
             this.Retrieve();
         }
         #endregion
-        
+
         public override Map EnMap
         {
             get
@@ -239,26 +223,26 @@ namespace BP.CCOA
                 map.EnDesc = "";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
-                
+
                 map.AddTBStringPK(OA_NewsAttr.No, null, "主键Id", true, true, 0, 50, 50);
-                map.AddTBString(OA_NewsAttr.Author, null, "发布人", true, false, 0,  10, 10);
+                map.AddTBString(OA_NewsAttr.Author, null, "发布人", true, false, 0, 10, 10);
                 map.AddTBInt(OA_NewsAttr.Clicks, 0, "点击量", true, false);
-                map.AddTBString(OA_NewsAttr.UpUser, null, "更新人", true, false, 0,  50, 50);
-                map.AddTBString(OA_NewsAttr.NewsTitle, null, "", true, false, 0,  200, 200);
-                map.AddTBString(OA_NewsAttr.NewsSubTitle, null, "", true, false, 0,  200, 200);
-                map.AddTBString(OA_NewsAttr.NewsType, null, "", true, false, 0,  1, 1);
-                map.AddTBString(OA_NewsAttr.NewsContent, null, "", true, false, 0,  16, 16);
-                map.AddTBString(OA_NewsAttr.CreateTime, null, "", true, false, 0,  50, 50);
+                map.AddTBString(OA_NewsAttr.UpUser, null, "更新人", true, false, 0, 50, 50);
+                map.AddTBString(OA_NewsAttr.NewsTitle, null, "", true, false, 0, 200, 200);
+                map.AddTBString(OA_NewsAttr.NewsSubTitle, null, "", true, false, 0, 200, 200);
+                map.AddTBString(OA_NewsAttr.NewsType, null, "", true, false, 0, 1, 1);
+                map.AddTBStringDoc(OA_NewsAttr.NewsContent, "", "内容", true, false);
+                map.AddTBDateTime(OA_NewsAttr.CreateTime, "创建时间", false, true);
                 map.AddTBInt(OA_NewsAttr.IsRead, 0, "", true, false);
-                map.AddTBString(OA_NewsAttr.UpDT, null, "", true, false, 0,  50, 50);
+                map.AddTBDateTime(OA_NewsAttr.UpDT, "更新时间", false, true);
                 map.AddTBInt(OA_NewsAttr.Status, 0, "", true, false);
-              
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
-    
+
     public partial class OA_Newss : Entities
     {
         public override Entity GetNewEntity
