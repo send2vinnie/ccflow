@@ -1,40 +1,39 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Port/WinOpen.master" AutoEventWireup="true" CodeFile="Home.aspx.cs" Inherits="Port_Home" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Port/WinOpen.master" AutoEventWireup="true"
+    CodeFile="Home.aspx.cs" Inherits="Port_Home" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-<link href="Style/master.css" rel="stylesheet" type="text/css" />
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <link href="Style/master.css" rel="stylesheet" type="text/css" />
     <script src="Javascript/jquery.js" type="text/javascript"></script>
     <script src="Javascript/drupal.js" type="text/javascript"></script>
     <script src="Javascript/jstools.js" type="text/javascript"></script>
     <script src="Javascript/collapsiblock.js" type="text/javascript"></script>
     <script src="Javascript/jquery.cookie.js" type="text/javascript"></script>
     <script type="text/javascript">        Drupal.extend({ settings: { "jstools": { "cleanurls": false, "basePath": "/portal/" }, "collapsiblock": { "block-block-1": "2", "block-block-2": "2", "block-block-3": "2", "block-block-4": "2", "block-block-5": "2", "block-block-6": "2", "block-user-3": "2", "block-block-7": "2", "block-block-8": "2", "block-views-calendar": "2"}} });</script>
-
     <style type="text/css">
-        * { font-family: "微软雅黑" }
+        *
+        {
+            font-family: "微软雅黑";
+        }
     </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<div id="page" class="one-sidebar two-sidebars">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+    <div id="page" class="one-sidebar two-sidebars">
         <div id="header">
             <div id="logo-title">
                 <h1 id='site-name'>
                     <a href="javascript:void(0)">陕西重卡，汽车工程研究院 </a>
                 </h1>
                 <div id='site-slogan'>
-                    
                 </div>
             </div>
             <div class="menu withprimary ">
                 <div id="primary" class="clear-block">
                     <ul class="links-menu">
-                        <li><asp:LinkButton ID="lbtnExit" runat="server" Text="退出" onclick="lbtnExit_Click"></asp:LinkButton></li>
-                        <li><a href="SysManager.aspx" title="系统维护"
-                            target="_blank">系统维护</a></li>
-                        <li><a href="UserSetting.aspx" title="修改配置" target="_blank">
-                            修改配置</a></li>
-                        <li><a href="PassConf.aspx" title="修改口令"
-                            target="_blank">修改口令</a></li>
-                            
+                        <li>
+                            <asp:LinkButton ID="lbtnExit" runat="server" Text="退出" OnClick="lbtnExit_Click"></asp:LinkButton></li>
+                        <li><a href="SysManager.aspx" title="系统维护" target="_blank">系统维护</a></li>
+                        <li><a href="UserSetting.aspx" title="修改配置" target="_blank">修改配置</a></li>
+                        <li><a href="PassConf.aspx" title="修改口令" target="_blank">修改口令</a></li>
                         <li class="active"><a href="Home.aspx" title="主页" class="active">主页</a></li>
                     </ul>
                 </div>
@@ -208,7 +207,6 @@
                         </div>
                         <div class="panel-col-bottom">
                             <div>
-                             
                             </div>
                         </div>
                     </div>
@@ -216,26 +214,25 @@
                 </div>
             </div>
             <div id="sidebar-left" class="sidebar">
-            <% 
-                foreach (string key in DataSource.Keys)
-               {%>
-                    <div class="block block-block" >
-                        <div class="blockinner">
-                            <h2 class="title">
-                                <%= key %>
-                            </h2>
-                            <div class="content">
-                                <ul>
-                                    <% foreach (System.Data.DataRow row in DataSource[key])
-                                       {%>
-                                    <li><a href='<%= row["SysUrl"] %>'
-                                        target="_blank"><%= row["SysName"] %></a> </li>
-                                        <% }%>
-                                </ul>
-                            </div>
+                <% 
+                    foreach (string key in DataSource.Keys)
+                    {%>
+                <div class="block block-block">
+                    <div class="blockinner">
+                        <h2 class="title">
+                            <%= key %>
+                        </h2>
+                        <div class="content">
+                            <ul>
+                                <% foreach (System.Data.DataRow row in DataSource[key])
+                                   {%>
+                                <li><a href='<%= row["SysUrl"] %>' target="_blank">
+                                    <%= row["SysName"] %></a> </li>
+                                <% }%>
+                            </ul>
                         </div>
                     </div>
-
+                </div>
                 <%} %>
             </div>
             <div id="sidebar-right" class="sidebar">
@@ -272,14 +269,12 @@
                 </div>
                 <div class="block block-views" id="block-views-calendar">
                     <div class="blockinner">
-                        
                     </div>
                 </div>
             </div>
         </div>
-        <div id="footer" style="background:#cdcdff;">
+        <div id="footer" style="background: #cdcdff;">
             &#169; 2011-2012 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话####-########、####-########
         </div>
     </div>
 </asp:Content>
-
