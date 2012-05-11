@@ -175,8 +175,8 @@ namespace BP.En
 
             foreach (Attr attr in en.EnMap.Attrs)
             {
-                if (attr.MyFieldType == FieldType.PK 
-                    || attr.MyFieldType == FieldType.PKFK 
+                if (attr.MyFieldType == FieldType.PK
+                    || attr.MyFieldType == FieldType.PKFK
                     || attr.MyFieldType == FieldType.PKEnum)
                 {
                     if (attr.MyDataType == DataType.AppString)
@@ -256,7 +256,7 @@ namespace BP.En
                     sql = SqlBuilder.SelectSQLOfMS(en, 1) + "   AND ( " + SqlBuilder.GenerWhereByPK(en, "@") + " )";
                     break;
                 case DBType.Access:
-                   // sql = SqlBuilder.SelectSQLOfOLE(en, 1) + "  AND ( " + SqlBuilder.GetKeyConditionOfOLE(en,"@") + " )";
+                    // sql = SqlBuilder.SelectSQLOfOLE(en, 1) + "  AND ( " + SqlBuilder.GetKeyConditionOfOLE(en,"@") + " )";
                     sql = SqlBuilder.SelectSQLOfOLE(en, 1) + "  AND ( " + SqlBuilder.GenerWhereByPK(en, "@") + " )";
                     break;
                 case DBType.Oracle9i:
@@ -278,7 +278,7 @@ namespace BP.En
             switch (en.EnMap.EnDBUrl.DBType)
             {
                 case DBType.SQL2000:
-                     sql = SqlBuilder.SelectSQLOfMS(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
+                    sql = SqlBuilder.SelectSQLOfMS(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;
                 case DBType.MySQL:
                     sql = SqlBuilder.SelectSQLOfMySQL(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
@@ -536,7 +536,7 @@ namespace BP.En
                     case DataType.AppDate:
                     case DataType.AppDateTime:
 
-                        if ( attr.IsPK)
+                        if (attr.IsPK)
                             sql += "[" + attr.Field + "]  VARCHAR (" + attr.MaxLength + ") NOT NULL,";
                         else
                             sql += "[" + attr.Field + "]  VARCHAR (" + attr.MaxLength + ") NULL,";
@@ -582,14 +582,14 @@ namespace BP.En
                     case DataType.AppDateTime:
                         if (attr.MaxLength <= 254)
                         {
-                            if (  attr.IsPK)
+                            if (attr.IsPK)
                                 sql += "[" + attr.Field + "]  varchar (" + attr.MaxLength + ") NOT NULL,";
                             else
                                 sql += "[" + attr.Field + "]  varchar (" + attr.MaxLength + ") NULL,";
                         }
                         else
                         {
-                            if ( attr.IsPK)
+                            if (attr.IsPK)
                                 sql += "[" + attr.Field + "]  text  NOT NULL,";
                             else
                                 sql += "[" + attr.Field + "] text ,";
@@ -656,7 +656,7 @@ namespace BP.En
                     case DataType.AppString:
                     case DataType.AppDate:
                     case DataType.AppDateTime:
-                        if (  attr.IsPK)
+                        if (attr.IsPK)
                             sql += attr.Field + " varchar (" + attr.MaxLength + ") NOT NULL,";
                         else
                             sql += attr.Field + " varchar (" + attr.MaxLength + ") NULL,";
@@ -785,7 +785,7 @@ namespace BP.En
             foreach (Attr attr in fkAttrs)
             {
 
-                if (attr.IsFK==false)
+                if (attr.IsFK == false)
                     continue;
 
                 if (attr.MyFieldType == FieldType.RefText)
@@ -1168,7 +1168,7 @@ namespace BP.En
                         throw new Exception("@没有定义的数据类型! attr=" + attr.Key + " MyDataType =" + attr.MyDataType);
                 }
             }
-            if (topNum == -1 || topNum ==0 )
+            if (topNum == -1 || topNum == 0)
                 topNum = 99999;
 
             //return  " SELECT TOP " +topNum.ToString()+" " +val.Substring(1) + " FROM "+en.EnMap.PhysicsTable;
@@ -1231,7 +1231,7 @@ namespace BP.En
                             attr.DefaultVal.ToString() + ") AS  " + attr.Key;
                         break;
                     case DataType.AppBoolean:
-                        if (attr.DefaultVal.ToString()  == "0")
+                        if (attr.DefaultVal.ToString() == "0")
                             val = val + ", ISNULL( " + mainTable + attr.Field + ",0) " + attr.Key;
                         else
                             val = val + ", ISNULL(" + mainTable + attr.Field + ",1) " +
@@ -1718,8 +1718,8 @@ namespace BP.En
                     continue;
 
                 /*有可能是两个主键的情况。*/
-              //  if (attr.IsPK)
-                  //  continue;
+                //  if (attr.IsPK)
+                //  continue;
 
                 switch (attr.MyDataType)
                 {
@@ -1923,6 +1923,8 @@ namespace BP.En
                         }
                         break;
                     case DataType.AppBoolean:
+                        ps.Add(attr.Key, en.GetValBooleanByKey(attr.Key));
+                        break;
                     case DataType.AppInt:
                         ps.Add(attr.Key, en.GetValIntByKey(attr.Key));
                         break;
@@ -1981,8 +1983,8 @@ namespace BP.En
                 {
                     // #warning add 2009 - 11- 04
                     // 两个PK 的情况。
-                   // continue;
-                    if (en.PKCount==1)
+                    // continue;
+                    if (en.PKCount == 1)
                         continue;
                 }
                 else
@@ -1995,7 +1997,7 @@ namespace BP.En
                 val = val + "," + attr.Field + "=" + en.HisDBVarStr + attr.Key;
             }
             if (string.IsNullOrEmpty(val))
-                throw new Exception("@生成sql出现错误:"+map.EnDesc+"，"+en.ToString()+"，要更新的字段为空。");
+                throw new Exception("@生成sql出现错误:" + map.EnDesc + "，" + en.ToString() + "，要更新的字段为空。");
 
             string sql = "";
             switch (en.EnMap.EnDBUrl.DBType)
@@ -2050,7 +2052,7 @@ namespace BP.En
                 }
 
                 key = attr.Key;
-                field = field + ",[" + attr.Field+"]";
+                field = field + ",[" + attr.Field + "]";
                 val = val + "," + dbstr + attr.Key;
             }
             string sql = "INSERT INTO " + en.EnMap.PhysicsTable + " (" +

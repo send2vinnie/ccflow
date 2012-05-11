@@ -7,9 +7,9 @@ using BP.En;
 
 namespace BP.En
 {
-	/// <summary>
-	/// 访问控制
-	/// </summary>
+    /// <summary>
+    /// 访问控制
+    /// </summary>
     public class UAC
     {
         #region 常用方法
@@ -106,24 +106,24 @@ namespace BP.En
         #endregion
 
     }
-	/// <summary>
-	/// Entity 的摘要说明。
-	/// </summary>	
-	[Serializable]
-	abstract public class EnObj
-	{
-		#region 访问控制.
-        public string ToE(string no,string chVal)
+    /// <summary>
+    /// Entity 的摘要说明。
+    /// </summary>	
+    [Serializable]
+    abstract public class EnObj
+    {
+        #region 访问控制.
+        public string ToE(string no, string chVal)
         {
             return Sys.Language.GetValByUserLang(no, chVal);
         }
-        public string ToEP1(string no,string chVal, string v)
+        public string ToEP1(string no, string chVal, string v)
         {
             return string.Format(Sys.Language.GetValByUserLang(no, chVal), v);
         }
-        public string ToEP2(string no,string chVal, string v, string v1)
+        public string ToEP2(string no, string chVal, string v, string v1)
         {
-            return string.Format(Sys.Language.GetValByUserLang(no,chVal), v, v1);
+            return string.Format(Sys.Language.GetValByUserLang(no, chVal), v, v1);
         }
         private string _DBVarStr = null;
         public string HisDBVarStr
@@ -137,16 +137,16 @@ namespace BP.En
                 return _DBVarStr;
             }
         }
-		/// <summary>
-		/// 他的访问控制.
-		/// </summary>
-		protected  UAC _HisUAC=null;
-		/// <summary>
-		/// 得到 uac 控制.
-		/// </summary>
-		/// <returns></returns>
-		public virtual UAC HisUAC
-		{
+        /// <summary>
+        /// 他的访问控制.
+        /// </summary>
+        protected UAC _HisUAC = null;
+        /// <summary>
+        /// 得到 uac 控制.
+        /// </summary>
+        /// <returns></returns>
+        public virtual UAC HisUAC
+        {
             get
             {
                 if (_HisUAC == null)
@@ -163,45 +163,45 @@ namespace BP.En
                 }
                 return _HisUAC;
             }
-		}
-		#endregion
-	 
-		#region 取出外部配置的属性信息
-		/// <summary>
-		/// 取出Map 的扩展属性。
-		/// 用于第3方的扩展属性开发。
-		/// </summary>
-		/// <param name="key">属性Key</param>
-		/// <returns>设置的属性</returns>
-		public string  GetMapExtAttrByKey(string key)
-		{
+        }
+        #endregion
+
+        #region 取出外部配置的属性信息
+        /// <summary>
+        /// 取出Map 的扩展属性。
+        /// 用于第3方的扩展属性开发。
+        /// </summary>
+        /// <param name="key">属性Key</param>
+        /// <returns>设置的属性</returns>
+        public string GetMapExtAttrByKey(string key)
+        {
             Paras ps = new Paras();
-            ps.Add("enName", this.ToString() );
+            ps.Add("enName", this.ToString());
             ps.Add("key", key);
 
-            return (string)DBAccess.RunSQLReturnVal("select attrValue from Sys_ExtMap WHERE className=" + SystemConfig.AppCenterDBVarStr + "enName AND attrKey=" + SystemConfig.AppCenterDBVarStr + "key", ps); 
-		}
-		#endregion
+            return (string)DBAccess.RunSQLReturnVal("select attrValue from Sys_ExtMap WHERE className=" + SystemConfig.AppCenterDBVarStr + "enName AND attrKey=" + SystemConfig.AppCenterDBVarStr + "key", ps);
+        }
+        #endregion
 
-		#region CreateInstance
-		/// <summary>
-		/// 创建一个实例
-		/// </summary>
-		/// <returns>自身的实例</returns>
-		public Entity CreateInstance()
-		{
-			return this.GetType().Assembly.CreateInstance(this.ToString()) as Entity;
-			//return ClassFactory.GetEn(this.ToString());
-		}
-		private Entities _GetNewEntities=null;
-		#endregion
+        #region CreateInstance
+        /// <summary>
+        /// 创建一个实例
+        /// </summary>
+        /// <returns>自身的实例</returns>
+        public Entity CreateInstance()
+        {
+            return this.GetType().Assembly.CreateInstance(this.ToString()) as Entity;
+            //return ClassFactory.GetEn(this.ToString());
+        }
+        private Entities _GetNewEntities = null;
+        #endregion
 
-		#region 方法
-		/// <summary>
-		/// 重新设置默信息.
-		/// </summary>
-		public void ResetDefaultVal()
-		{
+        #region 方法
+        /// <summary>
+        /// 重新设置默信息.
+        /// </summary>
+        public void ResetDefaultVal()
+        {
             foreach (Attr attr in this.EnMap.Attrs)
             {
                 if (attr.UIIsReadonly == false)
@@ -209,20 +209,20 @@ namespace BP.En
 
                 this.SetValByKey(attr.Key, attr.DefaultVal);
             }
-		}
-		#endregion 
+        }
+        #endregion
 
-		#region 构造
-		/// <summary>
-		/// 实体
-		/// </summary>
-		public EnObj()
-		{
-		}
-		private Map _tmpEnMap=null;
-		/// <summary>
-		/// Map
-		/// </summary>
+        #region 构造
+        /// <summary>
+        /// 实体
+        /// </summary>
+        public EnObj()
+        {
+        }
+        private Map _tmpEnMap = null;
+        /// <summary>
+        /// Map
+        /// </summary>
         protected Map _enMap
         {
             get
@@ -301,21 +301,21 @@ namespace BP.En
                 _tmpEnMap = mp;
             }
         }
-		/// <summary>
-		/// 子类需要继承
-		/// </summary>
+        /// <summary>
+        /// 子类需要继承
+        /// </summary>
         public abstract Map EnMap
         {
             get;
         }
-		#endregion
+        #endregion
 
-		#region row
-		/// <summary>
-		/// 实体的 map 信息。	
-		/// </summary>		
-		//public abstract void EnMap();		
-		private Row _row = null;
+        #region row
+        /// <summary>
+        /// 实体的 map 信息。	
+        /// </summary>		
+        //public abstract void EnMap();		
+        private Row _row = null;
         public Row Row
         {
             get
@@ -332,21 +332,21 @@ namespace BP.En
                 this._row = value;
             }
         }
-		#endregion
+        #endregion
 
-		#region 关于属性的操作。
+        #region 关于属性的操作。
 
-		#region 设置值方法
-        public void SetValByKeySuperLink(string attrKey, string val )
+        #region 设置值方法
+        public void SetValByKeySuperLink(string attrKey, string val)
         {
             this.SetValByKey(attrKey, DataType.DealSuperLink(val));
         }
-        
-		/// <summary>
-		/// 设置object类型的值
-		/// </summary>
-		/// <param name="attrKey">attrKey</param>
-		/// <param name="val">val</param>
+
+        /// <summary>
+        /// 设置object类型的值
+        /// </summary>
+        /// <param name="attrKey">attrKey</param>
+        /// <param name="val">val</param>
         public void SetValByKey(string attrKey, string val)
         {
             switch (val)
@@ -394,62 +394,62 @@ namespace BP.En
                 throw new Exception("@不能设置属性[" + attrDesc + "]null 值。");
             this.Row.SetValByKey(this.EnMap.GetAttrByDesc(attrDesc).Key, val);
         }
-	 
-		/// <summary>
-		/// 设置关联类型的值
-		/// </summary>
-		/// <param name="attrKey">attrKey</param>
-		/// <param name="val">val</param>
-		public void SetValRefTextByKey(string attrKey, object val)
-		{
-			this.SetValByKey(attrKey+"Text",val);
-		}
-		/// <summary>
-		/// 设置bool类型的值
-		/// </summary>
-		/// <param name="attrKey">attrKey</param>
-		/// <param name="val">val</param>
-		public void SetValByKey(string attrKey, bool val)
-		{
-			if (val)
-				this.SetValByKey(attrKey,1);
-			else
-				this.SetValByKey(attrKey,0);
-		}
-		/// <summary>
-		/// 设置默认值
-		/// </summary>
-		public void SetDefaultVals()
-		{
-			foreach(Attr attr in this.EnMap.Attrs)
-			{
-				this.SetValByKey(attr.Key,attr.DefaultVal);
-			}
-		}
-		/// <summary>
-		/// 设置日期类型的值
-		/// </summary>
-		/// <param name="attrKey">attrKey</param>
-		/// <param name="val">val</param>
-		public void SetDateValByKey(string attrKey, string val)
-		{
-			try
-			{				 
-				this.SetValByKey(attrKey,DataType.StringToDateStr(val) );
-			}
-			catch(System.Exception ex)
-			{
-				throw new Exception("@不合法的日期数据格式:key=["+attrKey+"],value="+val+" "+ex.Message) ;
-			}
-		} 
-		#endregion
-	
-		#region 取值方法
-		/// <summary>
-		/// 取得Object
-		/// </summary>
-		/// <param name="attrKey"></param>
-		/// <returns></returns>
+
+        /// <summary>
+        /// 设置关联类型的值
+        /// </summary>
+        /// <param name="attrKey">attrKey</param>
+        /// <param name="val">val</param>
+        public void SetValRefTextByKey(string attrKey, object val)
+        {
+            this.SetValByKey(attrKey + "Text", val);
+        }
+        /// <summary>
+        /// 设置bool类型的值
+        /// </summary>
+        /// <param name="attrKey">attrKey</param>
+        /// <param name="val">val</param>
+        public void SetValByKey(string attrKey, bool val)
+        {
+            if (val)
+                this.SetValByKey(attrKey, 1);
+            else
+                this.SetValByKey(attrKey, 0);
+        }
+        /// <summary>
+        /// 设置默认值
+        /// </summary>
+        public void SetDefaultVals()
+        {
+            foreach (Attr attr in this.EnMap.Attrs)
+            {
+                this.SetValByKey(attr.Key, attr.DefaultVal);
+            }
+        }
+        /// <summary>
+        /// 设置日期类型的值
+        /// </summary>
+        /// <param name="attrKey">attrKey</param>
+        /// <param name="val">val</param>
+        public void SetDateValByKey(string attrKey, string val)
+        {
+            try
+            {
+                this.SetValByKey(attrKey, DataType.StringToDateStr(val));
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception("@不合法的日期数据格式:key=[" + attrKey + "],value=" + val + " " + ex.Message);
+            }
+        }
+        #endregion
+
+        #region 取值方法
+        /// <summary>
+        /// 取得Object
+        /// </summary>
+        /// <param name="attrKey"></param>
+        /// <returns></returns>
         public Object GetValByKey(string attrKey)
         {
             return this.Row.GetValByKey(attrKey);
@@ -463,11 +463,11 @@ namespace BP.En
             //    throw new Exception(ex.Message+"  "+attrKey+" EnsName="+this.ToString() );
             //}
         }
-		/// <summary>
-		/// GetValDateTime
-		/// </summary>
-		/// <param name="attrKey"></param>
-		/// <returns></returns>
+        /// <summary>
+        /// GetValDateTime
+        /// </summary>
+        /// <param name="attrKey"></param>
+        /// <returns></returns>
         public DateTime GetValDateTime(string attrKey)
         {
             return DataType.ParseSysDateTime2DateTime(this.GetValStringByKey(attrKey));
@@ -492,11 +492,11 @@ namespace BP.En
                 return isNullAs;
             }
         }
-		/// <summary>
-		/// 取得String
-		/// </summary>
-		/// <param name="attrKey"></param>
-		/// <returns></returns>
+        /// <summary>
+        /// 取得String
+        /// </summary>
+        /// <param name="attrKey"></param>
+        /// <returns></returns>
         public string GetValStringByKey(string attrKey)
         {
             switch (attrKey)
@@ -552,30 +552,30 @@ namespace BP.En
             this.SetValByKey("Doc", s);
             return s;
         }
-		/// <summary>
-		/// 取到Html 信息。
-		/// </summary>
-		/// <param name="attrKey">attr</param>
-		/// <returns>html.</returns>
+        /// <summary>
+        /// 取到Html 信息。
+        /// </summary>
+        /// <param name="attrKey">attr</param>
+        /// <returns>html.</returns>
         public string GetValHtmlStringByKey(string attrKey)
         {
             return DataType.ParseText2Html(this.GetValStringByKey(attrKey));
         }
         public string GetValHtmlStringByKey(string attrKey, string defval)
         {
-            return DataType.ParseText2Html(this.GetValStringByKey(attrKey, defval) );
+            return DataType.ParseText2Html(this.GetValStringByKey(attrKey, defval));
         }
         public string GetValRefNameByKey(string attrKey)
         {
             return this.GetValStrByKey(attrKey + "Name");
         }
-		/// <summary>
-		/// 取得RefText属性
-		/// </summary>
-		/// <param name="attrKey"></param>
-		/// <returns></returns>
-		public string GetValRefTextByKey(string attrKey)
-		{
+        /// <summary>
+        /// 取得RefText属性
+        /// </summary>
+        /// <param name="attrKey"></param>
+        /// <returns></returns>
+        public string GetValRefTextByKey(string attrKey)
+        {
             string str = "";
             try
             {
@@ -611,9 +611,9 @@ namespace BP.En
                 //    str = en.GetValByKey(attr.UIRefKeyText).ToString();
                 //}
                 //this.SetValByKey(attrKey + "Text", str);
-            } 
-			return str;
-		}
+            }
+            return str;
+        }
         public Int64 GetValInt64ByKey(string key)
         {
             return Int64.Parse(this.GetValStringByKey(key));
@@ -625,11 +625,11 @@ namespace BP.En
                 i = IsZeroAs;
             return i;
         }
-		/// <summary>
-		/// 根据key 得到int val
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
+        /// <summary>
+        /// 根据key 得到int val
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public int GetValIntByKey(string key)
         {
 
@@ -655,18 +655,22 @@ namespace BP.En
                     throw new Exception("@表[" + this.EnDesc + "]在获取属性[" + key + "]值,出现错误，不能将[" + this.GetValStringByKey(key) + "]转换为int类型.错误信息：" + ex.Message + "@请检查是否在存储枚举类型时，您在SetValbyKey中没有转换。正确做法是:this.SetValByKey( Key ,(int)value)  ");
             }
         }
-		/// <summary>
-		/// 根据key 得到 bool val
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		public bool GetValBooleanByKey(string key)
-		{
-			if (  int.Parse(this.GetValStringByKey(key)) ==0 ) 
-				return false;
-			else
-				return true;
-		}
+        /// <summary>
+        /// 根据key 得到 bool val
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public bool GetValBooleanByKey(string key)
+        {
+            if (this.GetValStringByKey(key).ToUpper() == "FALSE")
+                return false;
+            if (this.GetValStringByKey(key).ToUpper() == "TRUE")
+                return true;
+            if (int.Parse(this.GetValStringByKey(key)) == 0)
+                return false;
+            else
+                return true;
+        }
         public bool GetValBooleanByKey(string key, bool defval)
         {
             try
@@ -682,27 +686,27 @@ namespace BP.En
                 return defval;
             }
         }
-		public string GetValBoolStrByKey(string key)
-		{
-			if (  int.Parse(this.GetValStringByKey(key)) ==0 ) 
-				return "否";
-			else
-				return "是";
-		}
-		/// <summary>
-		/// 根据key 得到flaot val
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		public float GetValFloatByKey(string key,int blNum)
-		{
-			return float.Parse( float.Parse( this.Row.GetValByKey(key).ToString() ).ToString("0.00")) ; 
-		}
-		/// <summary>
-		/// 根据key 得到flaot val
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
+        public string GetValBoolStrByKey(string key)
+        {
+            if (int.Parse(this.GetValStringByKey(key)) == 0)
+                return "否";
+            else
+                return "是";
+        }
+        /// <summary>
+        /// 根据key 得到flaot val
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public float GetValFloatByKey(string key, int blNum)
+        {
+            return float.Parse(float.Parse(this.Row.GetValByKey(key).ToString()).ToString("0.00"));
+        }
+        /// <summary>
+        /// 根据key 得到flaot val
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public float GetValFloatByKey(string key)
         {
             return float.Parse(float.Parse(this.Row.GetValByKey(key).ToString()).ToString("0.00"));
@@ -711,56 +715,56 @@ namespace BP.En
         {
             return decimal.Parse(this.GetValDecimalByKey(key).ToString("0.00"));
         }
-		/// <summary>
-		/// 根据key 得到flaot val
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
+        /// <summary>
+        /// 根据key 得到flaot val
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public decimal GetValDecimalByKey(string key)
         {
             return decimal.Round(decimal.Parse(this.GetValStrByKey(key)), 4);
         }
-		public decimal GetValDecimalByKey(string key, string items)
-		{
-			if (items=="" || items==null)
-				return 0;
+        public decimal GetValDecimalByKey(string key, string items)
+        {
+            if (items == "" || items == null)
+                return 0;
 
-			if (items.IndexOf("@"+key)==-1)
-				return 0;
+            if (items.IndexOf("@" + key) == -1)
+                return 0;
 
-			string str=items.Substring( items.IndexOf("@"+key) ) ;
+            string str = items.Substring(items.IndexOf("@" + key));
 
-			return decimal.Round(decimal.Parse(this.GetValStringByKey(key)), 4 ) ;
-		}
-		public double GetValDoubleByKey(string key)
-		{
-			try
-			{
-				return double.Parse( this.GetValStrByKey(key) );
-			}
-			catch(Exception ex)
-			{
-				throw new Exception("@表["+this.EnDesc+"]在获取属性["+key+"]值,出现错误，不能将["+this.GetValStringByKey(key)+"]转换为double类型.错误信息："+ex.Message);
-			}
-		}
-		public string GetValAppDateByKey(string key)
-		{
-			try
-			{
-				string str = this.GetValStringByKey(key);
-				if (str==null || str =="" )
-					return str;
-				return DataType.StringToDateStr( str );
-			}
-			catch(System.Exception ex)
-			{
-				throw new Exception("@实例：["+this.EnMap.EnDesc+"] "+" 属性["+key+"]值["+this.GetValStringByKey(key).ToString()+"]日期格式转换出现错误："+ex.Message) ;
-			}
-			//return "2003-08-01";
-		}
-		#endregion
+            return decimal.Round(decimal.Parse(this.GetValStringByKey(key)), 4);
+        }
+        public double GetValDoubleByKey(string key)
+        {
+            try
+            {
+                return double.Parse(this.GetValStrByKey(key));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("@表[" + this.EnDesc + "]在获取属性[" + key + "]值,出现错误，不能将[" + this.GetValStringByKey(key) + "]转换为double类型.错误信息：" + ex.Message);
+            }
+        }
+        public string GetValAppDateByKey(string key)
+        {
+            try
+            {
+                string str = this.GetValStringByKey(key);
+                if (str == null || str == "")
+                    return str;
+                return DataType.StringToDateStr(str);
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception("@实例：[" + this.EnMap.EnDesc + "] " + " 属性[" + key + "]值[" + this.GetValStringByKey(key).ToString() + "]日期格式转换出现错误：" + ex.Message);
+            }
+            //return "2003-08-01";
+        }
+        #endregion
 
-		#endregion
+        #endregion
 
         #region 获取配置信息
         public string GetCfgValStr(string key)
@@ -792,15 +796,15 @@ namespace BP.En
 
         #region 属性
         /// <summary>
-		/// 文件管理者
-		/// </summary>
+        /// 文件管理者
+        /// </summary>
         public SysFileManagers HisSysFileManagers
-		{
-			get
-			{
-				return new SysFileManagers(this.ToString(),this.PKVal.ToString());
-			}
-		}
+        {
+            get
+            {
+                return new SysFileManagers(this.ToString(), this.PKVal.ToString());
+            }
+        }
         public bool IsBlank
         {
             get
@@ -844,62 +848,62 @@ namespace BP.En
                 return true;
             }
         }
-		/// <summary>
-		/// 获取或者设置
-		/// 是不是空的实体.
-		/// </summary>
-		public bool IsEmpty
-		{
-			get
-			{
-				if (this._row==null )
-				{
-					return true;
-				}
-				else
-				{
-					if (this.PKVal==null || this.PKVal.ToString()=="0" || this.PKVal.ToString()=="" )
-						return true;
-					return false;
-				}
-			}
-			set
-			{
-				this._row=null;
-			}
-		}
-		/// <summary>
-		/// 对这个实体的描述
-		/// </summary>
-		public String EnDesc
-		{
-			get
-			{
-				return this.EnMap.EnDesc;
-			}
-		}		 
-		/// <summary>
-		/// 取到主健值。如果它的主健不唯一，就返回第一个值。
-		/// 获取或设置
-		/// </summary>
-		public Object PKVal
-		{
-			get
-			{
-				return this.GetValByKey(this.PK);
-			}
-			set
-			{
-				this.SetValByKey(this.PK,value);
-			}
-		}		
-		/// <summary>
-		/// 如果只有一个主键,就返回PK,如果有多个就返回第一个.PK
-		/// </summary>
-		public int PKCount
-		{
-			get
-			{
+        /// <summary>
+        /// 获取或者设置
+        /// 是不是空的实体.
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                if (this._row == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (this.PKVal == null || this.PKVal.ToString() == "0" || this.PKVal.ToString() == "")
+                        return true;
+                    return false;
+                }
+            }
+            set
+            {
+                this._row = null;
+            }
+        }
+        /// <summary>
+        /// 对这个实体的描述
+        /// </summary>
+        public String EnDesc
+        {
+            get
+            {
+                return this.EnMap.EnDesc;
+            }
+        }
+        /// <summary>
+        /// 取到主健值。如果它的主健不唯一，就返回第一个值。
+        /// 获取或设置
+        /// </summary>
+        public Object PKVal
+        {
+            get
+            {
+                return this.GetValByKey(this.PK);
+            }
+            set
+            {
+                this.SetValByKey(this.PK, value);
+            }
+        }
+        /// <summary>
+        /// 如果只有一个主键,就返回PK,如果有多个就返回第一个.PK
+        /// </summary>
+        public int PKCount
+        {
+            get
+            {
                 switch (this.PK)
                 {
                     case "OID":
@@ -910,45 +914,45 @@ namespace BP.En
                         break;
                 }
 
-				int i=0;
-				foreach(Attr attr in this.EnMap.Attrs)
-				{
-					if (attr.MyFieldType==FieldType.PK || attr.MyFieldType==FieldType.PKEnum  || attr.MyFieldType==FieldType.PKFK )
-						i++;
-				}
-				if (i==0)
-                    throw new Exception("@没有给【" + this.EnDesc + "，" + this.EnMap.PhysicsTable+ "】定义主键。");
-				else
-					return i;
-			}
-		} 
-		/// <summary>
-		/// 是不是OIDEntity
-		/// </summary>
-		public bool IsOIDEntity
-		{
+                int i = 0;
+                foreach (Attr attr in this.EnMap.Attrs)
+                {
+                    if (attr.MyFieldType == FieldType.PK || attr.MyFieldType == FieldType.PKEnum || attr.MyFieldType == FieldType.PKFK)
+                        i++;
+                }
+                if (i == 0)
+                    throw new Exception("@没有给【" + this.EnDesc + "，" + this.EnMap.PhysicsTable + "】定义主键。");
+                else
+                    return i;
+            }
+        }
+        /// <summary>
+        /// 是不是OIDEntity
+        /// </summary>
+        public bool IsOIDEntity
+        {
             get
             {
                 if (this.PK == "OID")
                     return true;
                 return false;
             }
-		}
-		/// <summary>
-		/// 是不是OIDEntity
-		/// </summary>
-		public bool IsNoEntity
-		{
-			get
-			{
+        }
+        /// <summary>
+        /// 是不是OIDEntity
+        /// </summary>
+        public bool IsNoEntity
+        {
+            get
+            {
                 if (this.PK == "No")
                     return true;
                 return false;
-			}
-		}
-		/// <summary>
-		/// 是不是IsMIDEntity
-		/// </summary>
+            }
+        }
+        /// <summary>
+        /// 是不是IsMIDEntity
+        /// </summary>
         public bool IsMIDEntity
         {
             get
@@ -958,9 +962,9 @@ namespace BP.En
                 return false;
             }
         }
-		/// <summary>
-		/// 如果只有一个主键,就返回PK,如果有多个就返回第一个.PK
-		/// </summary>
+        /// <summary>
+        /// 如果只有一个主键,就返回PK,如果有多个就返回第一个.PK
+        /// </summary>
         public virtual string PK
         {
             get
@@ -972,7 +976,7 @@ namespace BP.En
                         return attr.Key;
                 }
                 throw new Exception("@没有给【" + this.EnDesc + "，" + this.EnMap.PhysicsTable + "】定义主键。");
-               // throw new Exception("@没有给【" + this.EnDesc + "】定义主键。");
+                // throw new Exception("@没有给【" + this.EnDesc + "】定义主键。");
             }
         }
         public virtual string PKField
@@ -982,57 +986,57 @@ namespace BP.En
                 // throw new Exception(this.ToString()+"求PK");
                 foreach (Attr attr in this.EnMap.Attrs)
                 {
-                    if (attr.MyFieldType == FieldType.PK 
-                        || attr.MyFieldType == FieldType.PKEnum 
+                    if (attr.MyFieldType == FieldType.PK
+                        || attr.MyFieldType == FieldType.PKEnum
                         || attr.MyFieldType == FieldType.PKFK)
                         return attr.Field;
                 }
                 throw new Exception("@没有给【" + this.EnDesc + "】定义主键。");
             }
         }
-		/// <summary>
-		/// 如果只有一个主键,就返回PK,如果有多个就返回第一个.PK
-		/// </summary>
-		public string[] PKs
-		{
-			get
-			{
-				string[] strs1= new string[this.PKCount];
-				int i = 0 ;
-				foreach(Attr attr in this.EnMap.Attrs)
-				{
-					if (attr.MyFieldType==FieldType.PK || attr.MyFieldType==FieldType.PKEnum  || attr.MyFieldType==FieldType.PKFK )
-					{
-						strs1[i]=attr.Key;
-						i++;
-					}
-				}
-				return strs1;
-			}
-		}
-		/// <summary>
-		/// 取到主健值。
-		/// </summary>
-		public Hashtable PKVals
-		{
-			get
-			{
-				Hashtable ht = new Hashtable();
-				string[] strs= this.PKs;			 
-				foreach(string str in strs)
-				{					 
-					ht.Add( str,this.GetValStringByKey(str)  );
-				}
-				return ht;
-			}
-		}
-		#endregion
+        /// <summary>
+        /// 如果只有一个主键,就返回PK,如果有多个就返回第一个.PK
+        /// </summary>
+        public string[] PKs
+        {
+            get
+            {
+                string[] strs1 = new string[this.PKCount];
+                int i = 0;
+                foreach (Attr attr in this.EnMap.Attrs)
+                {
+                    if (attr.MyFieldType == FieldType.PK || attr.MyFieldType == FieldType.PKEnum || attr.MyFieldType == FieldType.PKFK)
+                    {
+                        strs1[i] = attr.Key;
+                        i++;
+                    }
+                }
+                return strs1;
+            }
+        }
+        /// <summary>
+        /// 取到主健值。
+        /// </summary>
+        public Hashtable PKVals
+        {
+            get
+            {
+                Hashtable ht = new Hashtable();
+                string[] strs = this.PKs;
+                foreach (string str in strs)
+                {
+                    ht.Add(str, this.GetValStringByKey(str));
+                }
+                return ht;
+            }
+        }
+        #endregion
 
 
-		public void domens()
-		{
-		}
+        public void domens()
+        {
+        }
 
-	}
- 
+    }
+
 }
