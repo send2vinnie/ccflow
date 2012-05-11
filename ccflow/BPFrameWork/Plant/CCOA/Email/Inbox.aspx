@@ -1,17 +1,19 @@
 ﻿<%@ Page Title="OA_Email" Language="C#" AutoEventWireup="true" CodeFile="Inbox.aspx.cs"
     Inherits="Lizard.OA.Web.OA_Email.Inbox" %>
 
+<%@ Register Src="../Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title></title>
-    <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
+    <script src="../../Comm/Scripts/CheckBox.js" type="text/javascript"></script>
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
-    <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
+    <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="Inbox.aspx" />
+    <table style="width: 100%; display: none;" cellpadding="2" cellspacing="1" class="border">
         <tr>
             <td style="width: 80px" align="right" class="tdbg">
                 <b>关键字：</b>
@@ -32,7 +34,7 @@
         OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
         RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated" CssClass="lizard-grid">
         <Columns>
-            <asp:TemplateField ControlStyle-Width="30" HeaderText="选择" >
+            <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
                 <ItemTemplate>
                     <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
                 </ItemTemplate>

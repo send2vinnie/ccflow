@@ -41,7 +41,7 @@
         <tr>
             <td class="tdbg">
                 <table cellspacing="0" cellpadding="0" width="100%" border="0">
-                    <tr style="display:none">
+                    <tr style="display: none">
                         <td height="25" width="30%" align="right">
                             主键Id ：
                         </td>
@@ -83,20 +83,24 @@
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            类型：0-普通1-重要2-紧急 ：
+                            类型：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtPriorityLevel" runat="server" Width="200px"></asp:TextBox>
+                            <asp:CheckBoxList ID="chklstPriorityLevel" runat="server" RepeatDirection="Horizontal">
+                                <asp:ListItem Text="普通" Value="0" />
+                                <asp:ListItem Text="重要" Value="1" />
+                                <asp:ListItem Text="紧急" Value="2" />
+                            </asp:CheckBoxList>
                         </td>
                     </tr>
-                    <tr>
+                    <%-- <tr>
                         <td height="25" width="30%" align="right">
                             分类：0-收件箱1-草稿箱2- ：
                         </td>
                         <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtCategory" runat="server" Width="200px"></asp:TextBox>
                         </td>
-                    </tr>
+                    </tr>--%>
                 </table>
                 <script src="/js/calendar1.js" type="text/javascript"></script>
             </td>

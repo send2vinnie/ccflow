@@ -10,7 +10,7 @@ using System.Drawing;
 using LTP.Accounts.Bus;
 namespace Lizard.OA.Web.OA_Email
 {
-    public partial class List : Page
+    public partial class OutBox : Page
     {
 		BP.CCOA.OA_Email bll = new BP.CCOA.OA_Email();
 

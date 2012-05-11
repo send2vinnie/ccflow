@@ -5,14 +5,14 @@
     type="text/css" />
 <link href="../../Comm/Scripts/miniui/themes/default/miniui.css" rel="stylesheet"
     type="text/css" />
-<div class="mini-toolbar" style="padding: 4px;">
+<div class="mini-toolbar">
     <table style="width: 100%;">
         <tr>
             <td style="width: 100%;">
                 <a class="mini-button" iconcls="icon-addfolder" plain="true" href="<%=AddUrl %>">增加</a>
                 <a class="mini-button" iconcls="icon-remove" plain="true">删除</a> <span class="separator">
-                </span><a class="mini-button" iconcls="icon-reload" plain="true">刷新</a> <a class="mini-button"
-                    iconcls="icon-download" plain="true">下载</a>
+                </span><a class="mini-button" iconcls="icon-reload" plain="true" href="<%=RefreshUrl %>">
+                    刷新</a> <a class="mini-button" iconcls="icon-download" plain="true">下载</a>
             </td>
             <td style="white-space: nowrap;">
                 <input class="mini-textbox" />

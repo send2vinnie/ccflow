@@ -22,6 +22,10 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     /// <summary>
     /// 
     /// </summary>
+    public string RefreshUrl = "List.aspx";
+    /// <summary>
+    /// 
+    /// </summary>
     public string ViewUrl = "#";
     /// <summary>
     /// 

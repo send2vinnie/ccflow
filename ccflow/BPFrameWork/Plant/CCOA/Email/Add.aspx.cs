@@ -39,14 +39,14 @@ public partial class CCOA_Email_Add : Page
         {
             strErr += "邮件内容不能为空！\\n";
         }
-        if (this.txtPriorityLevel.Text.Trim().Length == 0)
+        if (this.chklstPriorityLevel.Text.Trim().Length == 0)
         {
             strErr += "类型：0-普通1-重要2-紧急不能为空！\\n";
         }
-        if (this.txtCategory.Text.Trim().Length == 0)
-        {
-            strErr += "分类：0-收件箱1-草稿箱2-不能为空！\\n";
-        }
+        //if (this.txtCategory.Text.Trim().Length == 0)
+        //{
+        //    strErr += "分类：0-收件箱1-草稿箱2-不能为空！\\n";
+        //}
 
         if (strErr != "")
         {
@@ -58,8 +58,8 @@ public partial class CCOA_Email_Add : Page
         string Addresser = this.txtAddresser.Text;
         string Addressee = this.txtAddressee.Text;
         string Content = this.txtContent.Text;
-        string PriorityLevel = this.txtPriorityLevel.Text;
-        string Category = this.txtCategory.Text;
+        string PriorityLevel = this.chklstPriorityLevel.SelectedValue;
+        string Category = "3";//发件箱
         DateTime CreateTime = DateTime.Now;
         DateTime SendTime = DateTime.Now;
         DateTime UpDT = DateTime.Now;
