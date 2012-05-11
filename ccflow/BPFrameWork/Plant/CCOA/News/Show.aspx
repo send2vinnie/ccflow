@@ -5,12 +5,14 @@
 <head>
     <title></title>
     <style type="text/css">
+        body
+        {
+           text-align:center;
+        }
         .NewsShow
         {
             font-family: 宋体, Arial, Helvetica, sans-serif;
             font-size: small;
-            margin-right: auto;
-            margin-left: auto;
             margin-top: 10px;
         }
         .NewsTitle
@@ -18,17 +20,12 @@
             font-family: 宋体, Arial, Helvetica, sans-serif;
             font-size: 18px;
         }
-        body
-        {
-            width: 960px;
-        }
     </style>
 </head>
 <body>
-    <form id="form1" runat="server">
-    <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
+    <table style="display: none" cellpadding="2" cellspacing="1" class="border">
         <tr>
-            <td class="tdbg" style="display: none">
+            <td class="tdbg">
                 <table cellspacing="0" cellpadding="0" width="100%" border="0">
                     <tr>
                         <td height="25" width="30%" align="right">
@@ -58,55 +55,56 @@
             </td>
         </tr>
     </table>
-    <table class="NewsShow" style="width: 100%;">
-        <tr>
-            <td bgcolor="#0099FF" colspan="3">
-                <asp:Label ID="lblNewsTitle" runat="server" CssClass="NewsTitle"></asp:Label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-            <td bgcolor="#CCCCFF" colspan="2" style="text-align: right">
-                发布部门：发布人：<asp:Label ID="lblAuthor" runat="server"></asp:Label>
-                发布于：<asp:Label ID="lblCreateTime" runat="server"></asp:Label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" style="text-align: center">
-                <asp:Label ID="lblNewsTitle0" runat="server" CssClass="NewsTitle"></asp:Label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" style="text-align: center">
-                <asp:Label ID="lblNewsSubTitle" runat="server"></asp:Label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3">
-                <asp:Label ID="lblNewsContent" runat="server" Width="600px" Height="500px"></asp:Label>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#CCCCFF" colspan="3">
-                <asp:Label ID="lblUpUser" runat="server"></asp:Label>
-                最后更新于<asp:Label ID="lblUpDT" runat="server"></asp:Label>
-                &nbsp; &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                &nbsp;
-            </td>
-            <td>
-                &nbsp;
-            </td>
-        </tr>
-    </table>
-    &nbsp;</form>
+    <div style="width: 960px; margin-left: auto; margin-right: auto;">
+        <table width="100%" class="NewsShow">
+            <tr>
+                <td bgcolor="#0099FF" colspan="3">
+                    <asp:Label ID="lblNewsTitle" runat="server" CssClass="NewsTitle"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+                <td bgcolor="#CCCCFF" colspan="2" style="text-align: right">
+                    发布部门：发布人：<asp:Label ID="lblAuthor" runat="server"></asp:Label>
+                    发布于：<asp:Label ID="lblCreateTime" runat="server"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center">
+                    <asp:Label ID="lblNewsTitle0" runat="server" CssClass="NewsTitle"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center">
+                    <asp:Label ID="lblNewsSubTitle" runat="server"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <asp:Label ID="lblNewsContent" runat="server" Width="600px" Height="500px"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#CCCCFF" colspan="3">
+                    <asp:Label ID="lblUpUser" runat="server"></asp:Label>
+                    最后更新于<asp:Label ID="lblUpDT" runat="server"></asp:Label>
+                    &nbsp; &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>

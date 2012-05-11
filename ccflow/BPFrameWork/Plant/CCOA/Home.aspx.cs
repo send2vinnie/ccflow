@@ -55,9 +55,6 @@ public partial class CCOA_Home : System.Web.UI.Page
             BP.CCOA.EIP_Emp emp = new EIP_Emp();
             emp.CheckPhysicsTable();
 
-            BP.CCOA.EIP_Menu emenu = new EIP_Menu();
-            emenu.CheckPhysicsTable();
-
             BP.CCOA.OA_AddrBook ad = new OA_AddrBook();
             ad.CheckPhysicsTable();
 
@@ -70,23 +67,14 @@ public partial class CCOA_Home : System.Web.UI.Page
             BP.CCOA.OA_Channel oa_channel = new OA_Channel();
             oa_channel.CheckPhysicsTable();
 
-            BP.CCOA.OA_Email em = new OA_Email();
-            em.CheckPhysicsTable();
-
             BP.CCOA.OA_Meeting me = new OA_Meeting();
+            me.CheckPhysicsTable();
 
             BP.CCOA.OA_Message message = new OA_Message();
             message.CheckPhysicsTable();
 
-            BP.CCOA.OA_News ns = new OA_News();
-            ns.CheckPhysicsTable();
-
-            BP.CCOA.OA_Notice notice = new OA_Notice();
-            notice.CheckPhysicsTable();
-
             BP.CCOA.OA_SMS sms = new OA_SMS();
             sms.CheckPhysicsTable();
         }
-
     }
 }

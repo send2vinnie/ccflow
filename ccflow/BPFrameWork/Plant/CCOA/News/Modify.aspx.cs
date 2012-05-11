@@ -30,21 +30,15 @@ namespace Lizard.OA.Web.OA_News
 			
 	private void ShowInfo(string NewsId)
 	{
-		BP.CCOA.OA_News bll=new BP.CCOA.OA_News();
-		Lizard.OA.Model.OA_News model=bll.GetModel(NewsId);
-		this.lblNewsId.Text=model.NewsId;
+		BP.CCOA.OA_News model=new BP.CCOA.OA_News(NewsId);
+
+        this.lblNewsId.Text = model.No;
 		this.txtNewsTitle.Text=model.NewsTitle;
 		this.txtNewsSubTitle.Text=model.NewsSubTitle;
 		this.txtNewsType.Text=model.NewsType;
 		this.txtNewsContent.Text=model.NewsContent;
 		this.txtAuthor.Text=model.Author;
-		this.txtCreateTime.Text=model.CreateTime.ToString();
-		this.txtClicks.Text=model.Clicks.ToString();
-		this.chkIsRead.Checked=model.IsRead;
-		this.txtUpDT.Text=model.UpDT.ToString();
-		this.txtUpUser.Text=model.UpUser.ToString();
-		this.chkStatus.Checked=model.Status;
-
+		this.chkStatus.Checked=Convert.ToBoolean(model.Status);
 	}
 
 		public void btnSave_Click(object sender, EventArgs e)
@@ -71,22 +65,22 @@ namespace Lizard.OA.Web.OA_News
 			{
 				strErr+="发布人不能为空！\\n";	
 			}
-			if(!PageValidate.IsDateTime(txtCreateTime.Text))
-			{
-				strErr+="发布时间格式错误！\\n";	
-			}
-			if(!PageValidate.IsNumber(txtClicks.Text))
-			{
-				strErr+="点击量格式错误！\\n";	
-			}
-			if(!PageValidate.IsDateTime(txtUpDT.Text))
-			{
-				strErr+="更新时间格式错误！\\n";	
-			}
-			if(!PageValidate.IsNumber(txtUpUser.Text))
-			{
-				strErr+="更新人格式错误！\\n";	
-			}
+            //if(!PageValidate.IsDateTime(txtCreateTime.Text))
+            //{
+            //    strErr+="发布时间格式错误！\\n";	
+            //}
+            //if(!PageValidate.IsNumber(txtClicks.Text))
+            //{
+            //    strErr+="点击量格式错误！\\n";	
+            //}
+            //if(!PageValidate.IsDateTime(txtUpDT.Text))
+            //{
+            //    strErr+="更新时间格式错误！\\n";	
+            //}
+            //if(!PageValidate.IsNumber(txtUpUser.Text))
+            //{
+            //    strErr+="更新人格式错误！\\n";	
+            //}
 
 			if(strErr!="")
 			{
@@ -99,30 +93,24 @@ namespace Lizard.OA.Web.OA_News
 			string NewsType=this.txtNewsType.Text;
 			string NewsContent=this.txtNewsContent.Text;
 			string Author=this.txtAuthor.Text;
-			DateTime CreateTime=DateTime.Parse(this.txtCreateTime.Text);
-			int Clicks=int.Parse(this.txtClicks.Text);
-			bool IsRead=this.chkIsRead.Checked;
-			DateTime UpDT=DateTime.Parse(this.txtUpDT.Text);
-			int UpUser=int.Parse(this.txtUpUser.Text);
+            //DateTime CreateTime=DateTime.Parse(this.txtCreateTime.Text);
+            //int Clicks=int.Parse(this.txtClicks.Text);
+            //bool IsRead=this.chkIsRead.Checked;
+            DateTime UpDT = DateTime.Now;
+            string UpUser = BP.Web.WebUser.No;
 			bool Status=this.chkStatus.Checked;
 
-
-			Lizard.OA.Model.OA_News model=new Lizard.OA.Model.OA_News();
-			model.NewsId=NewsId;
+            BP.CCOA.OA_News model = new BP.CCOA.OA_News(NewsId);
+			
 			model.NewsTitle=NewsTitle;
 			model.NewsSubTitle=NewsSubTitle;
 			model.NewsType=NewsType;
 			model.NewsContent=NewsContent;
 			model.Author=Author;
-			model.CreateTime=CreateTime;
-			model.Clicks=Clicks;
-			model.IsRead=IsRead;
 			model.UpDT=UpDT;
-			model.UpUser=UpUser;
-			model.Status=Status;
+            model.UpUser = BP.Web.WebUser.No;
 
-			BP.CCOA.OA_News bll=new BP.CCOA.OA_News();
-			bll.Update(model);
+            model.Update();
 			Lizard.Common.MessageBox.ShowAndRedirect(this,"保存成功！","list.aspx");
 
 		}

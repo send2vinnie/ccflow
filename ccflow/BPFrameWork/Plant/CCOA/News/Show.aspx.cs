@@ -40,7 +40,7 @@ namespace Lizard.OA.Web.OA_News
             this.lblAuthor.Text = model.Author;
             this.lblCreateTime.Text = model.CreateTime.ToString();
             this.lblClicks.Text = model.Clicks.ToString();
-            this.lblIsRead.Text = model.IsRead == 1 ? "是" : "否";
+            this.lblIsRead.Text = model.IsRead ? "是" : "否";
             this.lblUpDT.Text = model.UpDT.ToString();
             this.lblUpUser.Text = model.UpUser.ToString();
             //this.lblStatus.Text = model.Status ? "是" : "否";

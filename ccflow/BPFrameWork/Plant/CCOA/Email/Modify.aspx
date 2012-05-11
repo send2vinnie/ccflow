@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Modify.aspx.cs" Inherits="Lizard.OA.Web.OA_Notice.Modify"
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Modify.aspx.cs" Inherits="CCOA_Email_Modify"
     Title="修改页" ValidateRequest="false" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -17,7 +17,7 @@
 
         $(function () {
             mini.parse();
-            var editorId = "txtNoticeContent";
+            var editorId = "txtContent";
 
             //-------------------------------------------------------------
             var editor = KindEditor.create('#' + editorId, {
@@ -41,58 +41,57 @@
         <tr>
             <td class="tdbg">
                 <table cellspacing="0" cellpadding="0" width="100%" border="0">
-                    <tr style="display: none;">
+                    <tr style="display:none;">
                         <td height="25" width="30%" align="right">
                             主键Id ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:Label ID="lblNoticeId" runat="server"></asp:Label>
+                            <asp:Label ID="lblEmailId" runat="server"></asp:Label>
                         </td>
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            通告标题 ：
+                            主题 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeTitle" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtSubject" runat="server" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            副标题 ：
+                            发件人 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeSubTitle" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtAddresser" runat="server" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            通告类型 ：
+                            收件人 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeType" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtAddressee" runat="server" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            通告内容 ：
+                            邮件内容 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeContent" runat="server" Width="600px" TextMode="MultiLine"
-                                Height="240px"></asp:TextBox>
+                            <asp:TextBox ID="txtContent" runat="server" Width="600px" TextMode="MultiLine" Height="240px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            发布人 ：
+                            类型：0-普通1-重要2-紧急 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtAuthor" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtPriorityLevel" runat="server" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            发布时间 ：
+                            创建时间 ：
                         </td>
                         <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtCreateTime" runat="server" Width="70px"></asp:TextBox>
@@ -100,10 +99,10 @@
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            状态 ：
+                            发送时间 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:CheckBox ID="chkStatus" Text="状态" runat="server" Checked="False" />
+                            <asp:TextBox ID="txtSendTime" runat="server" Width="70px"></asp:TextBox>
                         </td>
                     </tr>
                 </table>

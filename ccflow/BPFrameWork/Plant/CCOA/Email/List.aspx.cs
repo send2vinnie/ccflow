@@ -8,11 +8,11 @@ using System.Data;
 using Lizard.Common;
 using System.Drawing;
 using LTP.Accounts.Bus;
-namespace Lizard.OA.Web.OA_Notice
+namespace Lizard.OA.Web.OA_Email
 {
     public partial class List : Page
     {
-		BP.CCOA.OA_Notice bll = new BP.CCOA.OA_Notice();
+		BP.CCOA.OA_Email bll = new BP.CCOA.OA_Email();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,7 +33,7 @@ namespace Lizard.OA.Web.OA_Notice
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             //string idlist = GetSelIDlist();
-            //if (idlist.Trim().Length == 0) 
+            //if (idlist.Trim().Length == 0)
             //    return;
             //bll.DeleteList(idlist);
             //BindData();
@@ -67,7 +67,7 @@ namespace Lizard.OA.Web.OA_Notice
                 //strWhere.AppendFormat("keywordField like '%{0}%'", txtKeyword.Text.Trim());
             }            
             //ds = bll.GetList(strWhere.ToString());            
-            BP.CCOA.OA_Notices list = new BP.CCOA.OA_Notices();
+            BP.CCOA.OA_Emails list = new BP.CCOA.OA_Emails();
             list.RetrieveAll();
             //gridView.DataSource = ds;
             gridView.DataSource = list;
@@ -99,6 +99,7 @@ namespace Lizard.OA.Web.OA_Notice
                 //{
                 //    e.Row.Cells[1].Text = obj1.ToString();
                 //}
+               
             }
         }
         

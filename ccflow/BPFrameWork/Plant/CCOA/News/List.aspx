@@ -2,22 +2,18 @@
     Inherits="Lizard.OA.Web.OA_News.List" %>
 
 <%@ Register Src="~/CCOA/Controls/MiniPager.ascx" TagPrefix="xuc" TagName="MiniPager" %>
+<%@ Register Src="../Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
+<head>
     <title></title>
-    <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
-    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
+     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form runat="server">
     <div>
-        <!--Title -->
-        <!--Title end -->
-        <!--Add  -->
-        <!--Add end -->
-        <!--Search -->
+        <%--  <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />--%>
         <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
             <tr>
                 <td style="width: 80px" align="right" class="tdbg">

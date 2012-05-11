@@ -14,6 +14,14 @@
     var index = 1;
     function addTab(itemTitle, itemUrl) {
         var tabs = mini.get("tabs1");
+        var objTabs = tabs.tabs;
+        for (var i = 0; i < objTabs.length; i++) {
+            if (objTabs[i].title == itemTitle) {
+                tabs.activeTab(objTabs[i]);
+                return;
+            }
+        }
+
         //add tab
         var i = index++;
         var tab = { title: itemTitle, url: itemUrl, showCloseButton: true };
@@ -24,7 +32,7 @@
             //获取子页面返回数据
             var pageReturnData = iframe.contentWindow.getData ? iframe.contentWindow.getData() : "";
 
-            alert(e.tab.removeAction + " : " + pageReturnData);
+            //alert(e.tab.removeAction + " : " + pageReturnData);
 
             //如果禁止销毁的时候，自动active一个新tab：e.autoActive = false;
         }
