@@ -108,8 +108,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         tb.Rows = 20;
         tb.Columns = 50;
         this.Pub1.Add(tb);
-
-
         if (this.IsPostBack == false)
         {
             try
@@ -117,9 +115,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 //int fk_node = DBAccess.RunSQLReturnValInt("SELECT FK_Node FROM WF_GenerWorkFlow WHERE  WorkID=" + this.WorkID);
                 //BP.WF.Node mynd = new BP.WF.Node(fk_node);
                 //string fk_empText = DBAccess.RunSQLReturnString("SELECT FK_EmpText FROM WF_Generworkerlist WHERE FK_Node="+this.FK_Node+" AND WorkID="+this.WorkID);
-
                 this.TB1.Text = "您好: \n   您处理的工作有错误，需要您重新办理．\n\n  此致!!!   \n " + WebUser.Name + BP.DA.DataType.CurrentDataTime;
-
                 //this.TB1.Text = this.ToEP4("WBackInfo",
                 //    "{0}同志: \n   您{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
                 //   fk_empText, "", nd.Name, WebUser.Name + BP.DA.DataType.CurrentDataTime);
@@ -268,8 +264,18 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         this.ToolBar1.AddBtn("Btn_Cancel", this.ToE("Cancel", "取消"));
         this.ToolBar1.GetBtnByID("Btn_Cancel").Click += new EventHandler(WF_UC_ReturnWork_Click);
         string appPath = this.Request.ApplicationPath;
-        this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "','ds'); \" />");
-
+        if (nd.IsBackTracking)
+        {
+            /*如果允许原路退回*/
+            CheckBox cb = new CheckBox();
+            cb.ID = "CB_IsBackTracking";
+            cb.Text = "退回后是否要原路返回?";
+            this.ToolBar1.Add(cb);
+        }
+        else
+        {
+            this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "','ds'); \" />");
+        }
         TextBox tb = new TextBox();
         tb.TextMode = TextBoxMode.MultiLine;
         tb.ID = "TB_Doc";
@@ -326,15 +332,16 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
             Work wk = wn.HisWork;
             WorkNode mywn = null;
-            //if (btn.ID == "Btn_ReturnHid")
-            //{
-            //    mywn = wn.DoReturnWork(this.DDL1.SelectedItemIntVal, this.TB1.Text, true);
-            //}
-            //else
-            //{
+            if (wn.HisNode.IsBackTracking)
+            {
+                bool IsBackTracking= this.Pub1.GetCBByID("CB_IsBackTracking").Checked;
+                mywn = wn.DoReturnWork(this.DDL1.SelectedItemIntVal, this.TB1.Text, IsBackTracking);
+            }
+            else
+            {
                 mywn = wn.DoReturnWork(this.DDL1.SelectedItemIntVal, this.TB1.Text);
-           // }
-
+            }
+            
             // 退回事件。
             string msg = mywn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
 

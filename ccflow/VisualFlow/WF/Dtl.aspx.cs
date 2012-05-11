@@ -88,14 +88,14 @@ public partial class Comm_Dtl : WebPage
             return str;
         }
     }
-    public string FID
+    public Int64 FID
     {
         get
         {
             string str = this.Request.QueryString["FID"];
             if (str == null)
-                return "1";
-            return str;
+                return 1;
+            return Int64.Parse(str);
         }
     }
     #endregion 属性
@@ -219,7 +219,6 @@ public partial class Comm_Dtl : WebPage
         this.FK_MapData = mdtl.FK_MapData;
 
         #region 生成标题
-
         MapAttrs attrs = new MapAttrs(this.EnsName);
         MapAttrs attrs2 = new MapAttrs();
         this.Pub1.Add("<Table border=1 style='padding:0px' >");
@@ -271,11 +270,12 @@ public partial class Comm_Dtl : WebPage
         try
         {
             qo = new QueryObject(dtls);
-
             switch (mdtl.DtlOpenType)
             {
                 case DtlOpenType.ForEmp:
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
+                    qo.addAnd();
+                    qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
                     break;
                 case DtlOpenType.ForWorkID:
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
@@ -1005,10 +1005,12 @@ public partial class Comm_Dtl : WebPage
                         isTurnPage = true;
 
                     dtl.RefPK = this.RefPKVal;
+                    dtl.FID = this.FID;
                     dtl.InsertAsNew();
                 }
                 else
                 {
+                    dtl.FID = this.FID;
                     dtl.Update();
                 }
             }

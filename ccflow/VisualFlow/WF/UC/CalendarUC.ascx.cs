@@ -61,7 +61,7 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
     public void BindLog(DateTime dt)
     {
         this.Pub1.AddTable("width=100%");
-        this.Pub1.AddCaptionLeft("工作日历:" +dt.ToString("yyyy年MM月dd日"));
+        this.Pub1.AddCaptionLeft("工作日历:" + dt.ToString("yyyy年MM月dd日"));
         this.Pub1.AddTR();
         this.Pub1.AddTDTitle("IDX");
         this.Pub1.AddTDTitle("时间");
@@ -74,25 +74,24 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle("日志");
         this.Pub1.AddTREnd();
 
-        DataTable dtLog = DBAccess.RunSQLReturnTable("SELECT a.*,b.Name FROM WF_Track a, WF_Flow b WHERE a.FK_Flow=b.No  AND  a.RDT LIKE '" + dt.ToString("yyyy-MM-dd")  + "%' AND a.EmpFrom='" + WebUser.No + "'");
+        DataTable dtLog = DBAccess.RunSQLReturnTable("SELECT a.*,b.Name FROM WF_Track a, WF_Flow b WHERE a.FK_Flow=b.No  AND  a.RDT LIKE '" + dt.ToString("yyyy-MM-dd") + "%' AND a.EmpFrom='" + WebUser.No + "'");
         int idx = 0;
         foreach (DataRow dr in dtLog.Rows)
         {
             this.Pub1.AddTR();
             this.Pub1.AddTDIdx(idx);
-            this.Pub1.AddTD(dr["RDT"].ToString().Substring(10,6));
-            this.Pub1.AddTD( BP.WF.Track.GetActionTypeT( (ActionType)int.Parse(dr["ActionType"].ToString()) ));
+            this.Pub1.AddTD(dr["RDT"].ToString().Substring(10, 6));
+            this.Pub1.AddTD(BP.WF.Track.GetActionTypeT((ActionType)int.Parse(dr["ActionType"].ToString())));
             this.Pub1.AddTD(dr["Name"].ToString());
             this.Pub1.AddTD(dr["NDFromT"].ToString());
             this.Pub1.AddTD(dr["NDToT"].ToString());
             this.Pub1.AddTD(dr["EmpToT"].ToString());
-            this.Pub1.AddTD(dr["Msg"].ToString());
+            this.Pub1.AddTD(DataType.ParseText2Html(dr["Msg"].ToString()));
             this.Pub1.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?DoType=View&MyPK=" + dr["MyPK"].ToString() + "','" + dr["MyPK"].ToString() + "');\">日志</a>");
             this.Pub1.AddTREnd();
             idx++;
         }
         this.Pub1.AddTableEnd();
-
     }
     public void BindMonth(DateTime dt)
     {

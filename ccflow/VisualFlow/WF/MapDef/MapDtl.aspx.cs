@@ -322,7 +322,6 @@ public partial class Comm_MapDef_MapDtl : WebPage
         this.Pub1.AddTD(cb);
         this.Pub1.AddTREnd();
 
-
         this.Pub1.AddTR();
         this.Pub1.AddTDIdx(idx++);
         cb = new CheckBox();
@@ -333,7 +332,7 @@ public partial class Comm_MapDef_MapDtl : WebPage
 
         cb = new CheckBox();
         cb.ID = "CB_IsHLDtl";
-        cb.Text = "是否是分流汇总从表(当前节点是合流节点有效)";
+        cb.Text = "是否是合流汇总从表(当前节点是合流节点有效)";
         cb.Checked = dtl.IsHLDtl;
         this.Pub1.AddTD("colspan=2", cb);
         this.Pub1.AddTREnd();

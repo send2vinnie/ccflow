@@ -107,7 +107,7 @@ public partial class WF_Admin_CondPRI : BP.Web.WebPage
             this.Pub1.AddTD(mynd.Name);
             this.Pub1.AddTD(cd.PRI);
             this.Pub1.AddTD("<a href='CondPRI.aspx?CondType=2&DoType=Up&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + this.FK_MainNode + "&ToNodeID=" + this.ToNodeID + "&MyPK=" + cd.MyPK + "'>上移</a>");
-            this.Pub1.AddTD("<a href='CondPRI.aspx?CondType=2&DoType=Down&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + this.FK_MainNode + "&ToNodeID=" + this.ToNodeID + "&MyPK=" + cd.MyPK + "'>上移</a>");
+            this.Pub1.AddTD("<a href='CondPRI.aspx?CondType=2&DoType=Down&FK_Flow=" + this.FK_Flow + "&FK_MainNode=" + this.FK_MainNode + "&ToNodeID=" + this.ToNodeID + "&MyPK=" + cd.MyPK + "'>下移</a>");
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();

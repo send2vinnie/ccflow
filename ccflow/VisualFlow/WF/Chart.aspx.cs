@@ -44,6 +44,13 @@ public partial class WF_Chart : WebPage
             return this.Request.QueryString["FK_Flow"];
         }
     }
+    public string DoType
+    {
+        get
+        {
+            return this.Request.QueryString["DoType"];
+        }
+    }
     #endregion attrs
 
     protected void Page_Load(object sender, EventArgs e)
@@ -61,6 +68,7 @@ public partial class WF_Chart : WebPage
                 FlowALS(this.FK_Flow);
                 break;
             default:
+            //    throw new Exception("参数不完整.");
                 break;
         }
     }

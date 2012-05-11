@@ -19,6 +19,10 @@ public partial class Designer : System.Web.UI.Page
         {
             msg = "@在检查数据库连接出现错误。";
 
+            ReturnWork rw1 = new ReturnWork();
+            rw1.CheckPhysicsTable();
+
+
             #region 测试数据库是否连接成功。
             try
             {
