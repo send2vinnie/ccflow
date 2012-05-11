@@ -32,11 +32,11 @@ namespace Lizard.OA.Web.OA_Message
         
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            string idlist = GetSelIDlist();
-            if (idlist.Trim().Length == 0) 
-                return;
-            bll.DeleteList(idlist);
-            BindData();
+            //string idlist = GetSelIDlist();
+            //if (idlist.Trim().Length == 0) 
+            //    return;
+            //bll.DeleteList(idlist);
+            //BindData();
         }
         
         #region gridView
