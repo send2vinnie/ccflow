@@ -1,9 +1,15 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/CCOA/WinOpen.master" AutoEventWireup="true"
-    CodeFile="Show.aspx.cs" Inherits="Lizard.OA.Web.OA_SMS.Show" Title="显示页" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Show.aspx.cs" Inherits="Lizard.OA.Web.OA_SMS.Show"
+    Title="显示页" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="Form1" runat="server">
     <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
         <tr>
             <td class="tdbg">
@@ -68,6 +74,6 @@
             </td>
         </tr>
     </table>
-</asp:Content>
-<%--<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceCheckright" runat="server">
-</asp:Content>--%>
+    </form>
+</body>
+</html>

@@ -1,10 +1,15 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/CCOA/WinOpen.master" AutoEventWireup="true"
-    CodeFile="SMS.aspx.cs" Inherits="CCOA_SMS_SMS" %>
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeFile="SMS.aspx.cs" Inherits="CCOA_SMS_SMS" %>
 
-<%@ Register Src="~/CCOA/AddressBook/AddrBook.ascx" TagName="AddrBook" TagPrefix="uc" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="Form1" runat="server">
+    <%@ register src="~/CCOA/AddressBook/AddrBook.ascx" tagname="AddrBook" tagprefix="uc" %>
     <xuc:XToolBar ID="XToolbar1" runat="server" title="短信平台" />
     <table width="100%">
         <tr>
@@ -42,4 +47,6 @@
             </td>
         </tr>
     </table>
-</asp:Content>
+    </form>
+</body>
+</html>
