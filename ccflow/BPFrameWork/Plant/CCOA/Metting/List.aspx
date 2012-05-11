@@ -27,7 +27,7 @@
     <!--Search end-->
     <br />
     <asp:GridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
-        OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="MeetingId"
+        OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
         OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
         RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">
         <Columns>
@@ -36,7 +36,7 @@
                     <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:BoundField DataField="MeetingId" HeaderText="主键Id" SortExpression="MeetingId"
+            <asp:BoundField DataField="No" HeaderText="主键Id" SortExpression="No"
                 ItemStyle-HorizontalAlign="Center" Visible="false" />
             <asp:BoundField DataField="Topic" HeaderText="议题" SortExpression="Topic" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="PlanStartTime" HeaderText="计划开始时间" SortExpression="PlanStartTime"
@@ -61,9 +61,9 @@
             <asp:BoundField DataField="UpDT" HeaderText="更新时间" SortExpression="UpDT" ItemStyle-HorizontalAlign="Center"  Visible="false"/>
             <asp:BoundField DataField="Status" HeaderText="状态：0-未召开1-已召开" SortExpression="Status"
                 ItemStyle-HorizontalAlign="Center" />
-            <asp:HyperLinkField HeaderText="详细" ControlStyle-Width="50" DataNavigateUrlFields="MeetingId"
+            <asp:HyperLinkField HeaderText="详细" ControlStyle-Width="50" DataNavigateUrlFields="No"
                 DataNavigateUrlFormatString="Show.aspx?id={0}" Text="详细" />
-            <asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="MeetingId"
+            <asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="No"
                 DataNavigateUrlFormatString="Modify.aspx?id={0}" Text="编辑" />
             <asp:TemplateField ControlStyle-Width="50" HeaderText="删除" Visible="false">
                 <ItemTemplate>

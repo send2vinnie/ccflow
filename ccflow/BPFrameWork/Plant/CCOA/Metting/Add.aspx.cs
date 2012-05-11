@@ -72,7 +72,7 @@ namespace Lizard.OA.Web.OA_Meeting
             {
                 strErr += "会议纪要不能为空！\\n";
             }
-           
+
             if (strErr != "")
             {
                 MessageBox.Show(this, strErr);
@@ -90,12 +90,12 @@ namespace Lizard.OA.Web.OA_Meeting
             string RealMembers = this.txtRealMembers.Text;
             string Recorder = this.txtRecorder.Text;
             string Summary = this.txtSummary.Text;
-            int UpUser = CurrentUser.UserId;
+            ////int UpUser = int.Parse(BP.Web.WebUser.No);
             DateTime UpDT = DateTime.Now;
             bool Status = this.chkStatus.Checked;
 
-            Lizard.OA.Model.OA_Meeting model = new Lizard.OA.Model.OA_Meeting();
-            model.MeetingId = MeetingId;
+            BP.CCOA.OA_Meeting model = new BP.CCOA.OA_Meeting();
+            model.No = MeetingId;
             model.Topic = Topic;
             model.PlanStartTime = PlanStartTime;
             model.PlanEndTime = PlanEndTime;
@@ -107,12 +107,13 @@ namespace Lizard.OA.Web.OA_Meeting
             model.RealMembers = RealMembers;
             model.Recorder = Recorder;
             model.Summary = Summary;
-            model.UpUser = UpUser;
+            model.UpUser = BP.Web.WebUser.No;
             model.UpDT = UpDT;
             model.Status = Status;
 
-            BP.CCOA.OA_Meeting bll = new BP.CCOA.OA_Meeting();
-            bll.Add(model);
+            model.Insert();
+            //BP.CCOA.OA_Meeting bll = new BP.CCOA.OA_Meeting();
+            //bll.Add(model);
             Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "add.aspx");
 
         }

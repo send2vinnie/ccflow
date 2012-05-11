@@ -35,11 +35,11 @@ namespace Lizard.OA.Web.OA_Meeting
         
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            string idlist = GetSelIDlist();
-            if (idlist.Trim().Length == 0) 
-                return;
-            bll.DeleteList(idlist);
-            BindData();
+            //string idlist = GetSelIDlist();
+            //if (idlist.Trim().Length == 0) 
+            //    return;
+            //bll.DeleteList(idlist);
+            //BindData();
         }
         
         #region gridView
@@ -66,11 +66,14 @@ namespace Lizard.OA.Web.OA_Meeting
             StringBuilder strWhere = new StringBuilder();
             if (txtKeyword.Text.Trim() != "")
             {      
-                #warning 代码生成警告：请修改 keywordField 为需要匹配查询的真实字段名称
+                //#warning 代码生成警告：请修改 keywordField 为需要匹配查询的真实字段名称
                 //strWhere.AppendFormat("keywordField like '%{0}%'", txtKeyword.Text.Trim());
             }            
-            ds = bll.GetList(strWhere.ToString());            
-            gridView.DataSource = ds;
+            //ds = bll.GetList(strWhere.ToString());            
+            //gridView.DataSource = ds;
+            BP.CCOA.OA_Meetings list = new BP.CCOA.OA_Meetings();
+            list.RetrieveAll();
+            gridView.DataSource = list;
             gridView.DataBind();
         }
 
