@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <xuc:XToolBar ID="XToolBar1" runat="server" title="新闻类型" />
     <div>
         <table width="96%;">
@@ -21,7 +21,7 @@
                        <%=item.Name %>
                    </td>
                    <td>
-                       <%=item.Description%>
+                       <%=item.Desc%>
                    </td>
                </tr>
             <%} %>

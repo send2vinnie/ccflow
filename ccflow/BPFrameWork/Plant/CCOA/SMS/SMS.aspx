@@ -4,7 +4,7 @@
 <%@ Register Src="~/CCOA/AddressBook/AddrBook.ascx" TagName="AddrBook" TagPrefix="uc" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <xuc:XToolBar ID="XToolbar1" runat="server" title="短信平台" />
     <table width="100%">
         <tr>
@@ -18,7 +18,7 @@
                             手机号码
                         </th>
                         <td>
-                            <base:XTextBox ID="txtPhoneNumber" runat="server" />
+                            <asp:TextBox ID="txtPhoneNumber" runat="server" />
                         </td>
                     </tr>
                     <tr>
@@ -26,14 +26,14 @@
                             短信内容
                         </th>
                         <td>
-                            <base:XTextBox ID="txtContent" runat="server" TextMode="MultiLine" Height="80" />
+                            <asp:TextBox ID="txtContent" runat="server" TextMode="MultiLine" Height="80" />
                         </td>
                     </tr>
                     <tr>
                         <th>
                         </th>
                         <td>
-                            <base:XButton ID="btnSend" runat="server" Text="发送" OnClick="btnSend_Click" />
+                            <asp:Button ID="btnSend" runat="server" Text="发送" OnClick="btnSend_Click" />
                         </td>
                     </tr>
                 </table>

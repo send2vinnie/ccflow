@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.CCOA;
+using Lizard.Controls;
 
 public partial class CCOA_AddressBook_Form : System.Web.UI.UserControl
 {

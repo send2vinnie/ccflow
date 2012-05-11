@@ -6,8 +6,8 @@
                 栏目
             </th>
             <td>
-                <base:XDropDownList ID="ddrChannel" runat="server" DataTextField="Name" DataValueField="No">
-                </base:XDropDownList>
+                <asp:DropDownList ID="ddrChannel" runat="server" DataTextField="Name" DataValueField="No">
+                </asp:DropDownList>
             </td>
             <td>
             </td>
@@ -17,7 +17,7 @@
                 标题
             </th>
             <td>
-                <base:XTextBox ID="txtTitle" runat="server" />
+                <asp:TextBox ID="txtTitle" runat="server" />
             </td>
             <td>
             </td>
@@ -27,7 +27,7 @@
                 内容
             </th>
             <td>
-                <base:XTextBox ID="txtContent" runat="server" TextMode="MultiLine" Height="240" />
+                <asp:TextBox ID="txtContent" runat="server" TextMode="MultiLine" Height="240" />
             </td>
             <td>
             </td>
@@ -46,10 +46,10 @@
                 文章类型
             </th>
             <td>
-                <base:XDropDownList ID="ddrType" runat="server">
+                <asp:DropDownList ID="ddrType" runat="server">
                     <asp:ListItem Selected="True" Value="0">原创</asp:ListItem>
                     <asp:ListItem Value="1">转发</asp:ListItem>
-                </base:XDropDownList>
+                </asp:DropDownList>
             </td>
             <td>
             </td>
@@ -59,7 +59,7 @@
                 副标题
             </th>
             <td>
-                <base:XTextBox ID="txtSubTitle" runat="server" />
+                <asp:TextBox ID="txtSubTitle" runat="server" />
             </td>
             <td>
             </td>
@@ -69,7 +69,7 @@
                 摘要
             </th>
             <td>
-                <base:XTextBox ID="txtSummary" runat="server" />
+                <asp:TextBox ID="txtSummary" runat="server" />
             </td>
             <td>
             </td>
@@ -79,7 +79,7 @@
                 关键字
             </th>
             <td>
-                <base:XTextBox ID="txtKeyWords" runat="server" />
+                <asp:TextBox ID="txtKeyWords" runat="server" />
             </td>
             <td>
             </td>
@@ -89,7 +89,7 @@
                 文章描述
             </th>
             <td>
-                <base:XTextBox ID="txtDescribe" runat="server" />
+                <asp:TextBox ID="txtDescribe" runat="server" />
             </td>
             <td>
             </td>
@@ -99,7 +99,7 @@
                 排序
             </th>
             <td>
-                <base:XTextBox ID="txtOrder" runat="server" />
+                <asp:TextBox ID="txtOrder" runat="server" />
             </td>
             <td>
             </td>
@@ -118,10 +118,10 @@
                 状态
             </th>
             <td>
-                <base:XDropDownList ID="ddlState" runat="server" Width="80">
+                <asp:DropDownList ID="ddlState" runat="server" Width="80">
                     <asp:ListItem Text="启用" Value="1" />
                     <asp:ListItem Text="禁用" Value="0" />
-                </base:XDropDownList>
+                </asp:DropDownList>
             </td>
             <td>
             </td>
@@ -130,8 +130,8 @@
             <td>
             </td>
             <td>
-                <base:XButton ID="btnCommit" runat="server" Text="保存" OnClick="btnCommit_Click" />
-                <base:XButton ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" />
+                <asp:Button ID="btnCommit" runat="server" Text="保存" OnClick="btnCommit_Click" />
+                <asp:Button ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" />
             </td>
             <td>
             </td>

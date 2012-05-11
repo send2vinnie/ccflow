@@ -6,7 +6,7 @@
                 标题
             </th>
             <td>
-                <base:XTextBox ID="txtTitle" runat="server" />
+                <asp:TextBox ID="txtTitle" runat="server" />
             </td>
             <td>
             </td>
@@ -16,7 +16,7 @@
                 URL地址
             </th>
             <td>
-                <base:XTextBox ID="txtUrl" runat="server" />
+                <asp:TextBox ID="txtUrl" runat="server" />
             </td>
             <td>
             </td>
@@ -26,7 +26,7 @@
                 描述
             </th>
             <td>
-                <base:XTextBox ID="txtDescription" runat="server" TextMode="MultiLine" Height="60px" />
+                <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" Height="60px" />
             </td>
             <td>
             </td>
@@ -36,10 +36,10 @@
                 类型
             </th>
             <td>
-                <base:XDropDownList ID="ddlTpye" runat="server" Width="80">
+                <asp:DropDownList ID="ddlTpye" runat="server" Width="80">
                     <asp:ListItem Text="新闻" Value="0" />
                     <asp:ListItem Text="公告" Value="1" />
-                </base:XDropDownList>
+                </asp:DropDownList>
             </td>
             <td>
             </td>
@@ -49,10 +49,10 @@
                 状态
             </th>
             <td>
-                <base:XDropDownList ID="ddlState" runat="server" Width="80">
+                <asp:DropDownList ID="ddlState" runat="server" Width="80">
                     <asp:ListItem Text="启用" Value="1" />
                     <asp:ListItem Text="禁用" Value="0" />
-                </base:XDropDownList>
+                </asp:DropDownList>
             </td>
             <td>
             </td>
@@ -61,8 +61,8 @@
             <td>
             </td>
             <td>
-                <base:XButton ID="btnCommit" runat="server" Text="保存" OnClick="btnCommit_Click" />
-                <base:XButton ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" />
+                <asp:Button ID="btnCommit" runat="server" Text="保存" OnClick="btnCommit_Click" />
+                <asp:Button ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" />
             </td>
             <td>
             </td>

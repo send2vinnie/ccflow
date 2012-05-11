@@ -7,9 +7,9 @@
             </asp:Label>&nbsp;
         </td>
         <td>
-            <base:XDropDownList ID="ddlFilter" runat="server" Width="100px">
+            <asp:DropDownList ID="ddlFilter" runat="server" Width="100px">
                 <asp:ListItem Text="<-全部->" Value="ALL" Selected="True" />
-            </base:XDropDownList>
+            </asp:DropDownList>
             <asp:TextBox ID="txtFilter" runat="server"></asp:TextBox>&nbsp;&nbsp;
         </td>
         <td>

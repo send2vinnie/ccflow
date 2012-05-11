@@ -1,11 +1,12 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Form.ascx.cs" Inherits="CCOA_AddressBook_Form" %>
+
 <table style="width: 80%;">
     <tr>
         <th>
             姓名
         </th>
         <td>
-            <base:XTextBox ID="txtTitle" runat="server" />
+            <asp:TextBox ID="txtTitle" runat="server" />
         </td>
         <td>
         </td>
@@ -15,10 +16,10 @@
             分类
         </th>
         <td>
-            <base:XDropDownList ID="ddrType" runat="server">
+            <asp:DropDownList ID="ddrType" runat="server">
                 <asp:ListItem Selected="True" Value="0">原创</asp:ListItem>
                 <asp:ListItem Value="1">转发</asp:ListItem>
-            </base:XDropDownList>
+            </asp:DropDownList>
         </td>
         <td>
         </td>
@@ -28,7 +29,7 @@
            电话
         </th>
         <td>
-            <base:XTextBox ID="txtTel" runat="server" />
+            <asp:TextBox ID="txtTel" runat="server" />
         </td>
         <td>
         </td>
@@ -38,7 +39,7 @@
             邮箱
         </th>
         <td>
-            <base:XTextBox ID="txtEmail" runat="server" />
+            <asp:TextBox ID="txtEmail" runat="server" />
         </td>
         <td>
         </td>
@@ -48,7 +49,7 @@
             地址
         </th>
         <td>
-            <base:XTextBox ID="txtAddress" runat="server" />
+            <asp:TextBox ID="txtAddress" runat="server" />
         </td>
         <td>
         </td>
@@ -59,7 +60,7 @@
             职责
         </th>
         <td>
-            <base:XTextBox ID="txtDuty" runat="server" />
+            <asp:TextBox ID="txtDuty" runat="server" />
         </td>
         <td>
         </td>
@@ -70,8 +71,8 @@
         <td>
         </td>
         <td>
-            <base:XButton ID="btnCommit" runat="server" Text="保存" OnClick="btnCommit_Click" />
-            <base:XButton ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" />
+            <asp:Button ID="btnCommit" runat="server" Text="保存" OnClick="btnCommit_Click" />
+            <asp:Button ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" />
         </td>
         <td>
         </td>

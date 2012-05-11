@@ -19,7 +19,7 @@
         <%}
                 else
           {%>
-        <li>&nbsp;&nbsp;<img src="<%= item.Img %>" alt="" /><a href="<%= item.Url %>" target=_blank ><%=item.Name%></a>
+        <li>&nbsp;&nbsp;<img src="<%= item.Img %>" alt="" /><a href="<%= item.Url %>" target="_blank" ><%=item.Name%></a>
         </li>
         <%}%>
         <%}%>

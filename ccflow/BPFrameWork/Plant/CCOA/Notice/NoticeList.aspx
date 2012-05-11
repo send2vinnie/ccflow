@@ -6,7 +6,7 @@
 <%@ Register Src="~/CCOA/Notice/uc/NoticeGrid.ascx" TagName="NoticeGrid" TagPrefix="uc" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <uc:XToolBar ID="XToolBar1" runat="server" Title="公告" AddUrl="NewsManage.aspx" />
     <uc:NoticeGrid id="NoticeGrid1" runat="server" />
     <uc:XPager ID="XPager1" runat="server" />

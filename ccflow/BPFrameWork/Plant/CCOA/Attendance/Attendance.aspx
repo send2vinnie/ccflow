@@ -41,7 +41,7 @@
 
     </script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <table width="100%">
         <tr>
             <td style="width: 200px; background: #F2F9FF; height: 500px; vertical-align: top;">

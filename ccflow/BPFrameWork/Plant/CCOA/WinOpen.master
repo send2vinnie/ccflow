@@ -1,50 +1,87 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="WinOpen.master.cs" Inherits="Model_WinOpen" %>
 
-<%@ Register Src="~/CCOA/Menu.ascx" TagName="Menu" TagPrefix="uc" %>
-<%@ Register Src="~/CCOA/Header.ascx" TagName="Header" TagPrefix="uc" %>
+<%@ Register Src="~/CCOA/Controls/Menu.ascx" TagName="Menu" TagPrefix="uc" %>
+<%@ Register Src="~/CCOA/Controls/Header.ascx" TagName="Header" TagPrefix="uc" %>
+<%@ Register Src="Controls/NavBar.ascx" TagName="NavBar" TagPrefix="uc1" %>
+<%@ Register Src="Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc2" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
-    <script src="../Comm/JS/jquery-1.6.min.js" type="text/javascript"></script>
-    <script src="../Comm/JS/jquery.easyui.min.js" type="text/javascript"></script>
-    <script src="../Comm/JS/plugins/jquery.tree.js" type="text/javascript"></script>
+    <script src='<%=Page.ResolveUrl("../Comm/Scripts/jquery-1.6.2.min.js") %>' type="text/javascript"></script>
+    <script src='<%=Page.ResolveUrl("../Comm/Scripts/miniui/miniui.js") %>' type="text/javascript"></script>
+    <script src='<%=Page.ResolveUrl("../Comm/Scripts/calendar.js") %>' type="text/javascript"></script>
+    <script src='<%=Page.ResolveUrl("../Comm/Scripts/CheckBox.js") %>' type="text/javascript"></script>
     <link href="Style/master.css" rel="stylesheet" type="text/css" />
     <link href="Style/menu.css" rel="stylesheet" type="text/css" />
     <link href="Style/main.css" rel="stylesheet" type="text/css" />
     <link href="Style/control.css" rel="stylesheet" type="text/css" />
+    <link href="Style/demo.css" rel="stylesheet" type="text/css" />
+    <link href="Style/Site.css" rel="stylesheet" type="text/css" />
+    <link href="../Comm/Scripts/miniui/themes/icons.css" rel="stylesheet" type="text/css" />
+    <link href="../Comm/Scripts/miniui/themes/default/miniui.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
         <table width="100%">
-            <tr style="height:121px;">
+            <tr style="height: 80px;">
                 <td>
                     <div id="divTop">
-                        <%--<img alt="" class="style2" src="../../CCOA/Images/bg_top.jpg" />--%>
                         <uc:Header ID="Header1" runat="server" />
                     </div>
-                    <div style="clear:both;"></div>
+                    <div>
+                        <div class="clear hideSkiplink">
+                            <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false"
+                                IncludeStyleBlock="false" Orientation="Horizontal">
+                                <Items>
+                                    <asp:MenuItem NavigateUrl="~/CCOA/Home.aspx" Text="主页" />
+                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_AddrBook/List.aspx" Text="通讯录" />
+                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_AddrGrouping/List.aspx" Text="通讯录分组" />
+                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_Attachment/List.aspx" Text="附件" />
+                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_Email/List.aspx" Text="邮件" />
+                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_Meeting/List.aspx" Text="会议" />
+                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_Message/List.aspx" Text="短消息" />
+                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_News/List.aspx" Text="新闻" />
+                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_Notice/List.aspx" Text="通告" />
+                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_SMS/List.aspx" Text="短信" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/App_Domain/List.aspx" Text="管理域" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/App_Role/List.aspx" Text="角色" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/App_User/List.aspx" Text="用户" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/EIP_Emp/List.aspx" Text="员工" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/EIP_Dept/List.aspx" Text="部门" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/EIP_Post/List.aspx" Text="岗位" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/EIP_Menu/List.aspx" Text="菜单" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/App_Rule/List.aspx" Text="规则" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/App_RoleDomain/List.aspx" Text="角色域" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/App_UserDomain/List.aspx" Text="用户域" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/App_UserRole/List.aspx" Text="用户角色" />
+                                    <asp:MenuItem NavigateUrl="~/GPM/App_Rule/List.aspx" Text="规则" />
+                                    <asp:MenuItem NavigateUrl="~/CCOA/Home.aspx" Text="OA" />
+                                    <asp:MenuItem NavigateUrl="~/About.aspx" Text="关于" />
+                                </Items>
+                            </asp:Menu>
+                        </div>
+                    </div>
+                    <div style="clear: both;">
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div id="divBody">
-                        <table border="0" width="100%;">
-                            <tr>
-                                <td style="width: 20%; height: 450px; border-right: 1px solid #e5e5e5; vertical-align: top;">
-                                    <%--<iframe name="lform" marginwidth="0" marginheight="0" src="MenuTree.aspx" frameborder="0"
-                    bordercolor="#EDEDED" height="475px" style="border-style: none; height: 506px;
-                    width: 287px;"></iframe>--%><uc:Menu ID="Menu1" runat="server" />
-                                </td>
-                                <td style="vertical-align: top;">
-                                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                                    </asp:ContentPlaceHolder>
-                                </td>
-                            </tr>
-                        </table>
+                        <a href="LayoutSetting.aspx">布局设置</a>
+                        <div class="mini-splitter" style="width: 100%; height: 520px;">
+                            <div size="16%" showcollapsebutton="true">
+                                <uc1:NavBar ID="NavBar1" runat="server" MenuUrl="AjaxMenu.aspx" />
+                            </div>
+                            <div showcollapsebutton="false">
+                                <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>
