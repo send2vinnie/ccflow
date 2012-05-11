@@ -66,8 +66,9 @@ namespace Lizard.OA.Web.OA_SMS
 			DateTime SendTime=DateTime.Parse(this.txtSendTime.Text);
 			DateTime ReciveTime=DateTime.Parse(this.txtReciveTime.Text);
 
-			Lizard.OA.Model.OA_SMS model=new Lizard.OA.Model.OA_SMS();
-			model.SmsId=SmsId;
+            //Lizard.OA.Model.OA_SMS model = new Lizard.OA.Model.OA_SMS();
+            BP.CCOA.OA_SMS model = new BP.CCOA.OA_SMS();
+			model.No=SmsId;
 			model.SenderNumber=SenderNumber;
 			model.ReciveNumber=ReciveNumber;
 			model.SendContent=SendContent;
@@ -75,8 +76,9 @@ namespace Lizard.OA.Web.OA_SMS
 			model.SendTime=SendTime;
 			model.ReciveTime=ReciveTime;
 
-			BP.CCOA.OA_SMS bll=new BP.CCOA.OA_SMS();
-			bll.Add(model);
+            model.Insert();
+            //BP.CCOA.OA_SMS bll=new BP.CCOA.OA_SMS();
+            //bll.Add(model);
 			Lizard.Common.MessageBox.ShowAndRedirect(this,"保存成功！","add.aspx");
 
 		}
