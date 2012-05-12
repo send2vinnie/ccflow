@@ -31,29 +31,31 @@ public partial class WF_UC_Login : BP.Web.UC.UCBase3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-//        string userNo = this.Request.QueryString["UserNo"];
-//        if (userNo != null && userNo.Length > 1)
-//        {
-//            string sid = this.Request.QueryString["SID"];
-//            if (WebUser.CheckSID(sid) == true)
-//            {
-//                Response.Redirect(this.ToWhere, false);
-////                Response.Redirect("Home.aspx", false);
-//                return;
-//            }
-//        }
-
+        string userNo = this.Request.QueryString["UserNo"];
+        if (userNo != null && userNo.Length > 1)
+        {
+            string sid = this.Request.QueryString["SID"];
+            if (WebUser.CheckSID(sid) == true)
+            {
+                Emp emp = new Emp(userNo);
+                BP.Web.WebUser.SignInOfGener(emp);
+                Response.Redirect(this.ToWhere, false);
+                return;
+            }
+        }
+         
         if (this.Request.Browser.Cookies == false)
         {
             this.Alert("您的浏览器不支持cookies功能，无法使用改系统。");
             return;
         }
 
-        if (this.DoType == "Logout")
+       // if (this.DoType == "Logout")
+        if (this.DoType != null)
         {
             BP.Web.WebUser.Exit();
-            this.Response.Redirect(this.PageID + ".aspx?DoType=del", true);
-            return;
+            //this.Response.Redirect(this.PageID + ".aspx?DoType=del", true);
+            //return;
         }
 
         WebUser.SysLang = this.Lang;
