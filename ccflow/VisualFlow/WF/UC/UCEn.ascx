@@ -22,7 +22,7 @@
             sta = 'none';
             alt = 'Max';
         }
-        document.getElementById('Img' + rowIdx).src = './Img/' + alt + '.gif';
+        document.getElementById('Img' + rowIdx).src = '/ccflow/WF/Img/' + alt + '.gif';
         document.getElementById('Img' + rowIdx).alert = alt;
         var i = 0
         for (i = 0; i <= 40; i++) {

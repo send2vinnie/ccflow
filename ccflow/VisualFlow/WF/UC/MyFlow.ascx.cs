@@ -621,7 +621,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 this.ToolBar1.Add("<input type=button value='" + btnLab.RptLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/WFRpt.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds0'); \" />");
 
             if (btnLab.TrackEnable)
-                this.ToolBar1.Add("<input type=button value='" + btnLab.TrackLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "','ds'); \" />");
+                this.ToolBar1.Add("<input type=button value='" + btnLab.TrackLab + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "&FID=" + this.FID + "&FK_Node="+this.FK_Node+"','ds'); \" />");
 
             if (currND.HisFJOpen != FJOpen.None)
             {
@@ -957,6 +957,8 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 else
                     url += "?" + urlExt;
 
+                url = url.Replace("?&", "?");
+
                 if (nd.HisFormType == FormType.SDKForm)
                 {
                     this.Response.Redirect(url, true);
@@ -964,8 +966,21 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 else
                 {
                     //  this.UCEn1.AddIframeExt(url, nd.FrmAttr);
-                    this.UCEn1.AddIframeAutoSize(url, "D" + this.FK_Flow, "WorkPlace");
+                    this.UCEn1.AddTable("width='93%'  id=ere ");
+                    this.UCEn1.Add("<TR id=to >");
+                    //   this.UCEn1.Add("<TD ID='WorkPlace' Name='WorkPlace' height='900px' >");
+                    this.UCEn1.Add("<TD ID='TDWorkPlace' height='700px' >");
+                    this.UCEn1.AddIframeAutoSize(url, "FWorkPlace", "TDWorkPlace");
+                    this.UCEn1.Add("</TD>");
+                    this.UCEn1.Add("</TR>");
+
+                    this.UCEn1.Add("<TR id=er >");
+                    this.UCEn1.Add("<TD id=fd >");
                     this.UCEn1.Add(wk.WorkEndInfo);
+                    this.UCEn1.Add("</TD>");
+                    this.UCEn1.AddTREnd();
+                    this.UCEn1.AddTableEnd();
+
                 }
                 return;
             default:

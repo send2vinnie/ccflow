@@ -669,7 +669,7 @@ namespace BP.Web.Comm.UC.WF
         public void BindColumn4(Entity en, string enName)
         {
             this.EnName = enName;
-            this.HisEn = en;
+            this.HisEn = en; 
             currGF = new GroupField();
             MapAttrs mattrs = new MapAttrs(enName);
             gfs = new GroupFields(enName);
@@ -707,7 +707,7 @@ namespace BP.Web.Comm.UC.WF
                 if (gfs.Count == 1)
                     this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
                 else
-                    this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;<img src='./Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+                    this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;<img src='"+appPath+"/WF/Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
                 this.AddTREnd();
 
                 bool isHaveH = false;
@@ -900,9 +900,9 @@ namespace BP.Web.Comm.UC.WF
                                     {
                                         string v = en.GetValStrByKey(attr.KeyOfEn);
                                         if (v.Length == 0)
-                                            this.AddTD("<img src='../DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                            this.AddTD("<img src='"+appPath+"/DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                                         else
-                                            this.AddTD("<img src='../DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                            this.AddTD("<img src='" + appPath + "/DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                                     }
                                     else
                                     {
@@ -1051,6 +1051,8 @@ namespace BP.Web.Comm.UC.WF
             }
             this.AddTableEnd();
 
+           
+
             #region 处理iFrom 的自适应的问题。
             string js = "\t\n<script type='text/javascript' >";
             foreach (MapDtl dtl in dtls)
@@ -1092,7 +1094,7 @@ namespace BP.Web.Comm.UC.WF
                 this.Add(js);
                 #endregion 处理iFrom SaveDtlData。
 
-                #region 处理iFrom  SaveM2M Save。
+                #region 处理iFrom  SaveM2M Save
                 js = "\t\n<script type='text/javascript' >";
                 js += "\t\n function SaveM2M(dtl) { ";
                 js += "\t\n document.getElementById('F' + dtl ).contentWindow.SaveM2M();";

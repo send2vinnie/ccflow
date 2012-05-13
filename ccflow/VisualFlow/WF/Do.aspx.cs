@@ -165,6 +165,7 @@ namespace BP.Web.WF
                         return;
                     case "TakeBack": // 取消授权。
                         BP.WF.Port.WFEmp myau = new BP.WF.Port.WFEmp(WebUser.No);
+                        BP.DA.Log.DefaultLogWriteLineInfo("取消授权:" + WebUser.No + "取消了对(" + myau.Author + ")的授权。");
                         myau.Author ="";
                         myau.AuthorIsOK = false;
                         myau.Update();
@@ -179,6 +180,7 @@ namespace BP.Web.WF
                         au.Author = this.FK_Emp;
                         au.AuthorIsOK = true;
                         au.Save();
+                        BP.DA.Log.DefaultLogWriteLineInfo("执行授权:" + WebUser.No + "执行了对(" + au.Author + ")的授权。");
                         this.WinClose();
                         return;
                     case "UnSend": // 执行撤消发送。

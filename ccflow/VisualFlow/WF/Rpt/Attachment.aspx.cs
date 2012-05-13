@@ -39,7 +39,7 @@ public partial class WF_Rpt_Attachment : WebPage
     {
         #region 处理风格
         this.Page.RegisterClientScriptBlock("s",
-         "<link href='./../../Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
+         "<link href='"+this.Request.ApplicationPath+"/Comm/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
         if (this.Request.QueryString["PageIdx"] == null)
             this.PageIdx = 1;
         else
@@ -72,7 +72,7 @@ public partial class WF_Rpt_Attachment : WebPage
             this.Pub1.AddTR();
             this.Pub1.AddTDIdx(i);
             this.Pub1.AddTD(dr["FK_FrmAttachment"].ToString());
-            this.Pub1.AddTD("<a href='../FreeFrm/AttachmentUpload.aspx?DoType=Down&MyPK=" + dr["MyPK"] + "' target=_sd ><img src='../../Images/FileType/" + dr["FileExts"] + ".gif' onerror=\"this.src='../../Images/FileType/Undefined.gif'\" border=0/>" + dr["FileName"].ToString() + "</a>");
+            this.Pub1.AddTD("<a href='" + this.Request.ApplicationPath + "/WF/FreeFrm/AttachmentUpload.aspx?DoType=Down&MyPK=" + dr["MyPK"] + "' target=_sd ><img src='../../Images/FileType/" + dr["FileExts"] + ".gif' onerror=\"this.src='../../Images/FileType/Undefined.gif'\" border=0/>" + dr["FileName"].ToString() + "</a>");
             this.Pub1.AddTD(dr["FileSize"].ToString());
             this.Pub1.AddTD(dr["RecName"].ToString());
             this.Pub1.AddTD(dr["RDT"].ToString());
