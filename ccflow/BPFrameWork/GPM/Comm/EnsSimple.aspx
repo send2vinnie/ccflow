@@ -9,7 +9,7 @@
     <title></title>
     <LINK href="./Style/Table.css" type="text/css" rel="stylesheet">
 		<script language="JavaScript" src="JScript.js"></script>
-		 <script language="JavaScript" src="./JS/Calendar/WdatePicker.js"></script>
+		 <script language="JavaScript" src="./JS/Calendar/WdatePicker.js" defer="defer" ></script>
 		    <script language="javascript">
 　　 function selectAll()
 　　 {

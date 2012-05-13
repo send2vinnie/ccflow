@@ -9,7 +9,7 @@
 		<Meta http-equiv="Page-Enter" Content="revealTrans(duration=0.5, transition=8)" />
 		<script language="JavaScript" src="JScript.js"></script>
 		<script language="JavaScript" src="ShortKey.js"></script>
-		 <script language="JavaScript" src="./JS/Calendar/WdatePicker.js"></script>
+		 <script language="JavaScript" src="./JS/Calendar/WdatePicker.js" defer="defer" ></script>
 		    <script language="javascript">
 
 		        function SelectAll() {

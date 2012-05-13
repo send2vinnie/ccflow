@@ -21,20 +21,20 @@ public partial class Comm_Sys_GloVar : BP.Web.WebPageAdmin
         this.UCSys1.AddTDTitle("操作");
         this.UCSys1.AddTREnd();
 
-        //GloVers ens = new GloVers();
-        //ens.RetrieveAll();
-        //int i = 0;
-        //foreach (GloVer en in ens)
-        //{
-        //    i++;
-        //    this.UCSys1.AddTR();
-        //    this.UCSys1.AddTDIdx(i);
-        //    this.UCSys1.AddTDTitle("变量");
-        //    this.UCSys1.AddTDTitle("变量名称");
-        //    this.UCSys1.AddTDTitle("变量值");
-        //    this.UCSys1.AddTDTitle("操作");
-        //    this.UCSys1.AddTREnd();
-        //}
+        GloVars ens = new GloVars();
+        ens.RetrieveAll();
+        int i = 0;
+        foreach (GloVar en in ens)
+        {
+            i++;
+            this.UCSys1.AddTR();
+            this.UCSys1.AddTDIdx(i);
+            this.UCSys1.AddTDTitle("变量");
+            this.UCSys1.AddTDTitle("变量名称");
+            this.UCSys1.AddTDTitle("变量值");
+            this.UCSys1.AddTDTitle("操作");
+            this.UCSys1.AddTREnd();
+        }
         this.UCSys1.AddTableEnd();
     }
 }

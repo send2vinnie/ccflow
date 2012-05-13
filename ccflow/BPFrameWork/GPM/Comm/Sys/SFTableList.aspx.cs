@@ -128,7 +128,7 @@ public partial class Comm_Sys_SFTableList : BP.Web.WebPageAdmin
             this.Alert("编码表名称不能为空");
             return;
         }
-        m.HisSFTableType = SFTableType.SFTable;
+      //  m.HisSFTableType = SFTableType.SFTable;
         m.Save();
         this.Response.Redirect("SFTableList.aspx?RefNo=" + m.No, true);
          
@@ -151,8 +151,7 @@ public partial class Comm_Sys_SFTableList : BP.Web.WebPageAdmin
             this.Alert("编码表名称不能为空");
             return;
         }
-
-        m.HisSFTableType = SFTableType.SFTable;
+        //  m.HisSFTableType = SFTableType.SFTable;
         m.Insert();
         this.Response.Redirect("SFTableList.aspx?RefNo=" + m.No, true);
     }
@@ -223,20 +222,21 @@ public partial class Comm_Sys_SFTableList : BP.Web.WebPageAdmin
             this.UCSys1.AddTDIdx(i);
             this.UCSys1.AddTD(se.No);
             this.UCSys1.AddTDA("SFTableList.aspx?RefNo=" + se.No, se.Name);
-            this.UCSys1.AddTD(se.SFTableTypeT);
+          //  this.UCSys1.AddTD(se.SFTableTypeT);
             this.UCSys1.AddTD(se.TableDesc);
+            this.UCSys1.AddTDA("SFTableList.aspx?RefNo=" + se.No + "&DoType=Del", "<img src='./../../Images/Btn/Delete.gif' border=0 />删除");
 
-            switch (se.HisSFTableType)
-            {
-                case SFTableType.SFTable:
-                    this.UCSys1.AddTDA("SFTableList.aspx?RefNo=" + se.No + "&DoType=Del", "<img src='./../../Images/Btn/Delete.gif' border=0 />删除");
-                    break;
-                case SFTableType.ClsLab:
-                case SFTableType.SysTable:
-                default:
-                    this.UCSys1.AddTD();
-                    break;
-            }
+            //switch (se.HisSFTableType)
+            //{
+            //    case SFTableType.SFTable:
+            //        this.UCSys1.AddTDA("SFTableList.aspx?RefNo=" + se.No + "&DoType=Del", "<img src='./../../Images/Btn/Delete.gif' border=0 />删除");
+            //        break;
+            //    case SFTableType.ClsLab:
+            //    case SFTableType.SysTable:
+            //    default:
+            //        this.UCSys1.AddTD();
+            //        break;
+            //}
             this.UCSys1.AddTREnd();
         }
         this.UCSys1.AddTableEnd();

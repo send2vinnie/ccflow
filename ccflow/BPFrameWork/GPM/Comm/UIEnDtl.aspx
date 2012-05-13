@@ -11,7 +11,7 @@
 		<LINK href="Menu.css" type="text/css" rel="stylesheet" />
 		<LINK href="./Style/Table.css" type="text/css" rel="stylesheet" />
 		<script language="JavaScript" type="text/javascript" src="JScript.js"></script>
-		<script language="JavaScript" type="text/javascript" src="./JS/Calendar/WdatePicker.js"></script>
+		<script language="JavaScript" type="text/javascript" src="./JS/Calendar/WdatePicker.js" defer="defer" ></script>
 		<script language="JavaScript" type="text/javascript" src="ShortKey.js"></script>
 		<base target=_self />
     <style type="text/css">
