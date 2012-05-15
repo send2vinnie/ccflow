@@ -8,6 +8,7 @@ using System.Data;
 using Lizard.Common;
 using System.Drawing;
 using LTP.Accounts.Bus;
+using BP.DA;
 namespace Lizard.OA.Web.OA_AddrBook
 {
     public partial class List : Page
@@ -60,18 +61,33 @@ namespace Lizard.OA.Web.OA_AddrBook
             //}
             #endregion
 
-            DataSet ds = new DataSet();
-            StringBuilder strWhere = new StringBuilder();
-            if (txtKeyword.Text.Trim() != "")
-            {      
-                //#warning 代码生成警告：请修改 keywordField 为需要匹配查询的真实字段名称
-                //strWhere.AppendFormat("keywordField like '%{0}%'", txtKeyword.Text.Trim());
-            }            
-            //ds = bll.GetList(strWhere.ToString());            
-            //gridView.DataSource = ds;
-            BP.CCOA.OA_AddrBooks list = new BP.CCOA.OA_AddrBooks();
-            gridView.DataSource = list;
+           
+            //BP.CCOA.OA_AddrBooks list = new BP.CCOA.OA_AddrBooks();
+            //list.RetrieveAll();
+            //gridView.DataSource = list;
+            //gridView.DataBind();
+            string searchValue = Request.QueryString["searchvalue"];
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.Append("SELECT * FROM OA_AddrBook ");
+            sqlBuilder.Append(" WHERE Name LIKE '%{0}%'");
+            sqlBuilder.Append(" OR NickName LIKE '%{0}%'");
+            sqlBuilder.Append(" OR Mobile LIKE '%{0}%'");
+            sqlBuilder.Append(" OR WorkPhone LIKE '%{0}%'");
+            sqlBuilder.Append(" OR HomePhone LIKE '%{0}%'");
+            sqlBuilder.Append(" OR Email LIKE '%{0}%'");
+            sqlBuilder.Append(" OR QQ LIKE '%{0}%'");
+            sqlBuilder.Append(" OR Remarks LIKE '%{0}%'");
+            sqlBuilder.Append(" OR WorkAddress LIKE '%{0}%'");
+            sqlBuilder.Append(" OR HomeAddress LIKE '%{0}%'");
+            sqlBuilder.Append(" OR Birthday LIKE '%{0}%'");
+            sqlBuilder.Append(" OR Birthday LIKE '%{0}%'");
+            sqlBuilder.Append(" OR WorkUnit LIKE '%{0}%'");
+            string sql = sqlBuilder.ToString();
+            sql = string.Format(sql, searchValue);
+            DataTable addressTable = DBAccess.RunSQLReturnTable(sql);
+            gridView.DataSource = addressTable;
             gridView.DataBind();
+
         }
 
         protected void gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
