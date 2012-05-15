@@ -8,6 +8,8 @@ using System.Data;
 using Lizard.Common;
 using System.Drawing;
 using LTP.Accounts.Bus;
+using BP.DA;
+using BP.CCOA;
 namespace Lizard.OA.Web.OA_Email
 {
     public partial class DraftBox : Page
@@ -59,18 +61,14 @@ namespace Lizard.OA.Web.OA_Email
             //}
             #endregion
 
-            DataSet ds = new DataSet();
-            StringBuilder strWhere = new StringBuilder();
-            if (txtKeyword.Text.Trim() != "")
-            {      
-                //#warning 代码生成警告：请修改 keywordField 为需要匹配查询的真实字段名称
-                //strWhere.AppendFormat("keywordField like '%{0}%'", txtKeyword.Text.Trim());
-            }            
-            //ds = bll.GetList(strWhere.ToString());            
-            BP.CCOA.OA_Emails list = new BP.CCOA.OA_Emails();
-            list.RetrieveByAttr("Category", "1");
-        
-            gridView.DataSource = list;
+            string searchValue = Request.QueryString["searchvalue"];
+            string[] columns = { OA_EmailAttr.Addressee, OA_EmailAttr.Addresser, OA_EmailAttr.Subject };
+            BP.CCOA.OA_Email email = new BP.CCOA.OA_Email();
+            IDictionary<string, object> dicts = new Dictionary<string, object>();
+            dicts.Add(OA_EmailAttr.PriorityLevel, 1);
+            DataTable OA_EmailTable = XQueryTool.Query<BP.CCOA.OA_Email>(email, columns, searchValue, dicts);
+
+            gridView.DataSource = OA_EmailTable;
             gridView.DataBind();
         }
 

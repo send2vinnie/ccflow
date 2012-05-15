@@ -8,11 +8,14 @@ using System.Data;
 using Lizard.Common;
 using System.Drawing;
 using LTP.Accounts.Bus;
+using BP.DA;
+using BP.En;
+using BP.CCOA;
 namespace Lizard.OA.Web.OA_Email
 {
     public partial class Inbox : Page
     {
-		BP.CCOA.OA_Email bll = new BP.CCOA.OA_Email();
+        BP.CCOA.OA_Email bll = new BP.CCOA.OA_Email();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,12 +27,12 @@ namespace Lizard.OA.Web.OA_Email
                 BindData();
             }
         }
-        
+
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             BindData();
         }
-        
+
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             //string idlist = GetSelIDlist();
@@ -38,9 +41,9 @@ namespace Lizard.OA.Web.OA_Email
             //bll.DeleteList(idlist);
             //BindData();
         }
-        
+
         #region gridView
-                        
+
         public void BindData()
         {
             #region
@@ -59,19 +62,16 @@ namespace Lizard.OA.Web.OA_Email
             //}
             #endregion
 
-            DataSet ds = new DataSet();
-            StringBuilder strWhere = new StringBuilder();
-            if (txtKeyword.Text.Trim() != "")
-            {      
-                //#warning 代码生成警告：请修改 keywordField 为需要匹配查询的真实字段名称
-                //strWhere.AppendFormat("keywordField like '%{0}%'", txtKeyword.Text.Trim());
-            }            
-            //ds = bll.GetList(strWhere.ToString());            
-            BP.CCOA.OA_Emails list = new BP.CCOA.OA_Emails();
-            list.RetrieveAll();
-            //gridView.DataSource = ds;
-            gridView.DataSource = list;
+            string searchValue = Request.QueryString["searchvalue"];
+            string[] columns = { OA_EmailAttr.Addressee, OA_EmailAttr.Addresser, OA_EmailAttr.Subject };
+            BP.CCOA.OA_Email email = new BP.CCOA.OA_Email();
+            IDictionary<string, object> dicts = new Dictionary<string, object>();
+            dicts.Add(OA_EmailAttr.PriorityLevel, 0);
+            DataTable OA_EmailTable = XQueryTool.Query<BP.CCOA.OA_Email>(email, columns, searchValue, dicts);
+
+            gridView.DataSource = OA_EmailTable;
             gridView.DataBind();
+
         }
 
         protected void gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -93,16 +93,16 @@ namespace Lizard.OA.Web.OA_Email
             {
                 LinkButton linkbtnDel = (LinkButton)e.Row.FindControl("LinkButton1");
                 linkbtnDel.Attributes.Add("onclick", "return confirm(\"你确认要删除吗\")");
-                
+
                 //object obj1 = DataBinder.Eval(e.Row.DataItem, "Levels");
                 //if ((obj1 != null) && ((obj1.ToString() != "")))
                 //{
                 //    e.Row.Cells[1].Text = obj1.ToString();
                 //}
-               
+
             }
         }
-        
+
         protected void gridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             //#warning 代码生成警告：请检查确认真实主键的名称和类型是否正确
@@ -123,7 +123,7 @@ namespace Lizard.OA.Web.OA_Email
                     BxsChkd = true;
                     //#warning 代码生成警告：请检查确认Cells的列索引是否正确
                     if (gridView.DataKeys[i].Value != null)
-                    {                        
+                    {
                         idlist += gridView.DataKeys[i].Value.ToString() + ",";
                     }
                 }
