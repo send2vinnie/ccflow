@@ -710,7 +710,6 @@ namespace BP.WF
         {
             get
             {
-                return "";
                 string tp = "";
                 FAppSets sets = new FAppSets(this.NodeID);
                 foreach (FAppSet set in sets)

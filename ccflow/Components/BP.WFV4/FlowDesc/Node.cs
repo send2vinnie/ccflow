@@ -390,7 +390,10 @@ namespace BP.WF
         public const string IsCanReturn = "IsCanReturn";
         public const string IsHandOver = "IsHandOver";
         public const string IsCanDelFlow = "IsCanDelFlow";
-
+        /// <summary>
+        /// 是否可以原路返回
+        /// </summary>
+        public const string IsBackTracking = "IsBackTracking";
         public const string FormType = "FormType";
         public const string FormUrl = "FormUrl";
         /// <summary>
@@ -405,7 +408,6 @@ namespace BP.WF
         /// 是否可以强制删除线程
         /// </summary>
         public const string IsForceKill = "IsForceKill";
-
         /// <summary>
         /// 接受人sql
         /// </summary>
@@ -1908,6 +1910,16 @@ namespace BP.WF
                     return false;
             }
         }
+        /// <summary>
+        /// 是否可以在退回后原路返回？
+        /// </summary>
+        public bool IsBackTracking
+        {
+            get
+            {
+                return this.GetValBooleanByKey(NodeAttr.IsBackTracking);
+            }
+        }
         public bool IsCanDelFlow
         {
             get
@@ -2382,6 +2394,7 @@ namespace BP.WF
                 map.AddBoolean(NodeAttr.IsSecret, false, "是否是保密步骤", true, true);
                 map.AddBoolean(NodeAttr.IsCanDelFlow, false, "是否可以删除流程", true, true);
                 map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除了流程(对合流点有效)", true, true);
+                map.AddBoolean(NodeAttr.IsBackTracking, false, "是否可以在退回后原路返回(只有启用退回功能才有效)", true, true, true);
 
                 map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交", true, true);
                 map.AddTBInt(NodeAttr.PassRate, 100, "通过率", true, true);

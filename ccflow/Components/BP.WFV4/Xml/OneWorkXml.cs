@@ -18,7 +18,13 @@ namespace BP.WF.XML
                 return this.GetValStringByKey(Web.WebUser.SysLang);
             }
         }
-
+        public new string URL
+        {
+            get
+            {
+                return this.GetValStringByKey("No");
+            }
+        }
         #region 构造
         /// <summary>
         /// 节点扩展信息

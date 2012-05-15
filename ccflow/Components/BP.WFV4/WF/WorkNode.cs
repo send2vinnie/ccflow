@@ -1165,18 +1165,17 @@ namespace BP.WF
         /// </summary>
         /// <param name="backtoNodeID">退回到节点</param>
         /// <param name="msg">退回信息</param>
-        /// <param name="isHiden">是否隐性退回</param>
+        /// <param name="IsBackTracking">退回后是否原路返回？</param>
         /// <returns></returns>
-        public WorkNode DoReturnWork(int backtoNodeID, string msg, bool isHiden)
+        public WorkNode DoReturnWork(int backtoNodeID, string msg, bool isBackTracking)
         {
             //退回前事件
            this.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnBefore, this.HisWork);
-
-            if (this.HisNode.FocusField != "")
-            {
-                // 把数据更新它。
-                this.HisWork.Update(this.HisNode.FocusField, "");
-            }
+           if (this.HisNode.FocusField != "")
+           {
+               // 把数据更新它。
+               this.HisWork.Update(this.HisNode.FocusField, "");
+           }
 
             Node backToNode = new Node(backtoNodeID);
             switch (this.HisNode.HisNodeWorkType)
@@ -1209,7 +1208,7 @@ namespace BP.WF
                             if (this.IsSubFlowWorkNode)
                             {
                                 /* 如果是支流，并且向分流或者分合流节点上退回. */
-                                return DoReturnSubFlow(backtoNodeID, msg, isHiden);
+                                return DoReturnSubFlow(backtoNodeID, msg, isBackTracking);
                             }
                             // return DoReturnSubFlow(backtoNodeID, msg, isHiden);
                             break;
@@ -1239,6 +1238,7 @@ namespace BP.WF
 
             rw.MyPK = rw.ReturnToNode + "_" + rw.WorkID + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
             rw.Note = msg;
+            rw.IsBackTracking = isBackTracking;
             rw.Insert();
 
             // 加入track.
@@ -1256,7 +1256,11 @@ namespace BP.WF
             }
 
             // 以退回到的节点向前数据用递归删除它。
-            DeleteToNodesData(backToNode.HisToNodes);
+            if (isBackTracking == false)
+            {
+                /*如果退回不需要原路返回，就删除中间点的数据。*/
+                DeleteToNodesData(backToNode.HisToNodes);
+            }
 
             //删除正常的垃圾数据。
             DBAccess.RunSQL("DELETE WF_GenerWorkFlow WHERE WorkID NOT IN (SELECT WorkID FROM WF_GenerWorkerList )");
@@ -2986,6 +2990,15 @@ namespace BP.WF
                     rptGe.SetValByKey(GERptAttr.FlowDaySpan, DataType.GetSpanDays(this.rptGe.GetValStringByKey(GERptAttr.FlowStartRDT), DataType.CurrentDataTime));
                 }
                 rptGe.DirectUpdate();
+
+                /* 查看一下本路径是否是原路退回的可能？*/
+                //string retoNode = DBAccess.RunSQLReturnString("SELECT ReturnNode FROM WF_ReturnWork WHERE ReturnToNode=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID + " AND IsBackTracking=1", null);
+                //if (retoNode != null)
+                //{
+                //    /*说明有原路退回的问题。*/
+                //    this.JumpToEmp = DBAccess.RunSQLReturnString("SELECT Returner FROM WF_ReturnWork WHERE ReturnToNode=" + this.HisNode.NodeID + " AND WorkID=" + this.WorkID + " AND IsBackTracking=1", null);
+                //    this.JumpToNode = new Node(int.Parse(retoNode));
+                //}
             }
             #endregion
 
@@ -3259,7 +3272,7 @@ namespace BP.WF
                     {
                         ccDoc = ccDoc.Replace("@Accepter", dr[1].ToString());
                         ccTitle = ccTitle.Replace("@Accepter", dr[1].ToString());
-
+                        
                         CCList list = new CCList();
                         list.MyPK = this.WorkID + "_" + this.HisNode.NodeID + "_" + dr[0].ToString();
                         list.FK_Flow = this.HisNode.FK_Flow;

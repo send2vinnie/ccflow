@@ -54,6 +54,10 @@ namespace BP.WF
         /// 退回给
         /// </summary>
         public const string ReturnToEmp = "ReturnToEmp";
+        /// <summary>
+        /// 退回后是否需要原路返回？
+        /// </summary>
+        public const string IsBackTracking = "IsBackTracking";
 		#endregion
 	}
 	/// <summary>
@@ -186,6 +190,20 @@ namespace BP.WF
                 SetValByKey(ReturnWorkAttr.RDT, value);
             }
         }
+        /// <summary>
+        /// 是否要原路返回？
+        /// </summary>
+        public bool IsBackTracking
+        {
+            get
+            {
+                return this.GetValBooleanByKey(ReturnWorkAttr.IsBackTracking);
+            }
+            set
+            {
+                SetValByKey(ReturnWorkAttr.IsBackTracking, value);
+            }
+        }
         #endregion
 
         #region 构造函数
@@ -221,6 +239,8 @@ namespace BP.WF
 
                 map.AddTBString(ReturnWorkAttr.Note, "", "退回原因", true, true, 0, 4000, 10);
                 map.AddTBDateTime(ReturnWorkAttr.RDT, null, "退回日期", true, true);
+
+                map.AddTBInt(ReturnWorkAttr.IsBackTracking, 0, "是否要原路返回?", true, true);
                 this._enMap = map;
                 return this._enMap;
             }
