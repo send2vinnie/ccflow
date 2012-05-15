@@ -14,20 +14,6 @@
     <form runat="server">
     <div>
         <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
-        <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
-            <tr>
-                <td style="width: 80px" align="right" class="tdbg">
-                    <b>关键字：</b>
-                </td>
-                <td class="tdbg">
-                    <asp:TextBox ID="txtKeyword" runat="server"></asp:TextBox>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click"></asp:Button>
-                </td>
-                <td class="tdbg">
-                </td>
-            </tr>
-        </table>
         <!--Search end-->
         <br />
         <asp:GridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"

@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="OA_SMS" Language="C#" AutoEventWireup="true" CodeFile="List.aspx.cs"
     Inherits="Lizard.OA.Web.OA_SMS.List" %>
 
+<%@ Register src="../Controls/MiniToolBar.ascx" tagname="MiniToolBar" tagprefix="uc1" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -15,21 +17,8 @@
     <!--Add  -->
     <!--Add end -->
     <!--Search -->
-    <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
-        <tr>
-            <td style="width: 80px" align="right" class="tdbg">
-                <b>关键字：</b>
-            </td>
-            <td class="tdbg">
-                <asp:TextBox ID="txtKeyword" runat="server"></asp:TextBox>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click"></asp:Button>
-            </td>
-            <td class="tdbg">
-            </td>
-        </tr>
-    </table>
     <!--Search end-->
+    <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
     <br />
     <asp:GridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
         OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
