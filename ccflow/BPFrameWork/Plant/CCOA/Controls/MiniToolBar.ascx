@@ -8,7 +8,8 @@
 <script type="text/javascript">
     function getsearchvalue() {
         var searchVaue = mini.get("#txtValue").getValue();
-        window.location.href = "list.aspx?searchvalue=" + searchVaue;
+        //window.location.href = "list.aspx?searchvalue=" + searchVaue;
+        window.location.href = "<%=RefreshUrl %>?searchvalue=" + searchVaue;
     }
 </script>
 <div class="mini-toolbar">
