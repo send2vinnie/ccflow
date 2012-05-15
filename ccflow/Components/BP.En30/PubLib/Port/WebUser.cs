@@ -387,19 +387,24 @@ namespace BP.Web
 
         public static void Exit()
         {
-            if (IsBSMode)
+            if (IsBSMode == false)
             {
-                string token = WebUser.Token;
-                System.Web.HttpContext.Current.Response.Cookies.Clear();
-                System.Web.HttpContext.Current.Request.Cookies.Clear();
-               // return;
-
-                HttpCookie cookie = new HttpCookie("CCS", string.Empty);
-                cookie.Expires = DateTime.Now.AddMinutes(1);
-                cookie.Values.Add("No", string.Empty);
-                cookie.Values.Add("Name", string.Empty);
-                System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
-                WebUser.Token = token;
+                try
+                {
+                    string token = WebUser.Token;
+                    System.Web.HttpContext.Current.Response.Cookies.Clear();
+                    System.Web.HttpContext.Current.Request.Cookies.Clear();
+                    HttpCookie cookie = new HttpCookie("CCS", string.Empty);
+                    cookie.Expires = DateTime.Now.AddMinutes(1);
+                    cookie.Values.Add("No", string.Empty);
+                    cookie.Values.Add("Name", string.Empty);
+                    System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+                    WebUser.Token = token;
+                    BP.Port.Win.Current.Session.Clear();
+                }
+                catch
+                {
+                }
             }
             else
             {
@@ -408,7 +413,9 @@ namespace BP.Web
                     string token = WebUser.Token;
                     System.Web.HttpContext.Current.Response.Cookies.Clear();
                     System.Web.HttpContext.Current.Request.Cookies.Clear();
-                    // return;
+
+                    System.Web.HttpContext.Current.Application.Clear();
+                    System.Web.HttpContext.Current.Session.Clear();
 
                     HttpCookie cookie = new HttpCookie("CCS", string.Empty);
                     cookie.Expires = DateTime.Now.AddMinutes(1);
@@ -420,11 +427,6 @@ namespace BP.Web
                 catch
                 {
                 }
-
-
-                BP.Port.Win.Current.Session.Clear();
-
-
             }
         }
         /// <summary>

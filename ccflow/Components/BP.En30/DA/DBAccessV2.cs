@@ -490,8 +490,8 @@ namespace BP.DA
             int num = DBAccess.RunSQL(sql, ps);
             if (num == 0)
             {
-                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES (" + SystemConfig.AppCenterDBVarStr + "CfgKey,100)";
-                DBAccess.RunSQL(sql, ps);
+                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES ('OID',100)";
+                DBAccess.RunSQL(sql);
                 return 100;
             }
             sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
