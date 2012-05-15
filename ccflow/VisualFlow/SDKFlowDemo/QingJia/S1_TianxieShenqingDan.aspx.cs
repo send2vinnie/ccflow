@@ -31,7 +31,10 @@ public partial class Demo_QingJiaTiao_S1_TianxieShenqingDan : FlowPage
     }
     protected void Btn_Send_Click(object sender, EventArgs e)
     {
+        //书写您的表单保存逻辑。
 
+
+        // 处理ccflow的业务逻辑，仅把关键字段传递给ccflow的节点表单中去，用户判断方向。
         Hashtable ht = new Hashtable();
         ht.Add("Title", this.TB_Title.Text);
         ht.Add("qingjiatian", float.Parse(this.TB_qingjiatian.Text));

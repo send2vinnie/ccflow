@@ -35,7 +35,7 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
     public void DataBaseAccess()
     {
         // 执行Insert ,delete, update 语句.
-        BP.DA.DBAccess.RunSQL("DELETE Port_Emp WHERE 1=2");
+        BP.DA.DBAccess.RunSQL("DELETE FROM Port_Emp WHERE 1=2");
 
         //执行查询返回datatable.
         string sql = "SELECT * FROM Port_Emp";
@@ -57,6 +57,8 @@ public partial class SDKFlowDemo_DemoEntity : System.Web.UI.Page
         // 插入一条数据.
         BP.Port.Emp emp = new BP.Port.Emp();
         emp.No = "zhangsan";
+     //   emp.Retrieve();
+
         emp.Name = "张三";
         emp.FK_Dept = "01";
         emp.Pass = "pub";
