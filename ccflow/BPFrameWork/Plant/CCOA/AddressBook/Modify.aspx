@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/OA/OAMaster.master" AutoEventWireup="true" CodeFile="Modify.aspx.cs" Inherits="Lizard.OA.Web.OA_AddrBook.Modify" Title="修改页" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/CCOA/WinOpen.master" AutoEventWireup="true" CodeFile="Modify.aspx.cs" Inherits="Lizard.OA.Web.OA_AddrBook.Modify" Title="修改页" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">    

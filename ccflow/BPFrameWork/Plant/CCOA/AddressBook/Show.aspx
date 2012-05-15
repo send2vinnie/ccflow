@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/OA/OAMaster.master" AutoEventWireup="true" CodeFile="Show.aspx.cs" Inherits="Lizard.OA.Web.OA_AddrBook.Show" Title="显示页" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/CCOA/WinOpen.master" AutoEventWireup="true" CodeFile="Show.aspx.cs" Inherits="Lizard.OA.Web.OA_AddrBook.Show" Title="显示页" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
