@@ -300,6 +300,7 @@ namespace BP.WF
                     DataRow dr = dt.NewRow();
                     dr["No"] = ndFrom.NodeID;
                     dr["Name"] = wk.RecText + "=>" + ndFrom.Name;
+                    dt.Rows.Add(dr);
                 }
                 return dt;
             }
