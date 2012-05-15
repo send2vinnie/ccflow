@@ -263,7 +263,7 @@ namespace BP.WF
         /// <param name="fk_node">当前节点</param>
         /// <param name="workid">工作ID</param>
         /// <returns></returns>
-        public static DataTable DB_GenerWillReturnNodes(int fk_node, Int64 workid)
+        public static DataTable DB_GenerWillReturnNodes(int fk_node, Int64 workid, Int64 fid)
         {
             DataTable dt = new DataTable("obt");
             dt.Columns.Add("No");
@@ -276,11 +276,27 @@ namespace BP.WF
                 Nodes nds = nd.HisFromNodes;
                 foreach (Node ndFrom in nds)
                 {
-                    Work wk = ndFrom.HisWork;
-                    wk.OID = workid;
-                    if (wk.RetrieveFromDBSources() == 0)
-                        continue;
-
+                    Work wk;
+                    switch (ndFrom.HisRunModel)
+                    {
+                        case RunModel.FL:
+                        case RunModel.FHL:
+                            wk = ndFrom.HisWork;
+                            wk.OID = fid;
+                            if (wk.RetrieveFromDBSources() == 0)
+                                continue;
+                            break;
+                        case RunModel.SubThread:
+                            wk = ndFrom.HisWork;
+                            wk.OID = workid;
+                            if (wk.RetrieveFromDBSources() == 0)
+                                continue;
+                            break;
+                        case RunModel.Ordinary:
+                        default:
+                            throw new Exception("流程设计异常，子线程的上一个节点不能是普通节点。");
+                            break;
+                    }
                     DataRow dr = dt.NewRow();
                     dr["No"] = ndFrom.NodeID;
                     dr["Name"] = wk.RecText + "=>" + ndFrom.Name;
