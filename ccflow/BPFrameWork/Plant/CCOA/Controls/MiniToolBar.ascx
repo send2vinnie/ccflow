@@ -5,6 +5,12 @@
     type="text/css" />
 <link href="../../Comm/Scripts/miniui/themes/default/miniui.css" rel="stylesheet"
     type="text/css" />
+<script type="text/javascript">
+    function getsearchvalue() {
+        var searchVaue = mini.get("#txtValue").getValue();
+        window.location.href = "list.aspx?searchvalue=" + searchVaue;
+    }
+</script>
 <div class="mini-toolbar">
     <table style="width: 100%;">
         <tr>
@@ -16,8 +22,8 @@
                     刷新</a> <a class="mini-button" iconcls="icon-download" plain="true">下载</a>
             </td>
             <td style="white-space: nowrap;">
-                <input class="mini-textbox" />
-                <a class="mini-button" plain="true">查询</a>
+                <input id="txtValue" class="mini-textbox" />
+                <a class="mini-button" plain="true" onclick="getsearchvalue()">查询</a>
             </td>
         </tr>
     </table>
