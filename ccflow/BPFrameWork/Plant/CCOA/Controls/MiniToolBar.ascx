@@ -9,6 +9,7 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 100%;">
+                <a class="mini-button" iconcls="icon-reload" plain="true" href="<%=RetrunUrl %>">返回</a>
                 <a class="mini-button" iconcls="icon-addfolder" plain="true" href="<%=AddUrl %>">增加</a>
                 <a class="mini-button" iconcls="icon-remove" plain="true">删除</a> <span class="separator">
                 </span><a class="mini-button" iconcls="icon-reload" plain="true" href="<%=RefreshUrl %>">

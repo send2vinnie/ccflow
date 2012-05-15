@@ -13,7 +13,7 @@
 <body>
     <form runat="server">
     <div>
-        <%--  <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />--%>
+        <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
         <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
             <tr>
                 <td style="width: 80px" align="right" class="tdbg">
@@ -44,7 +44,7 @@
                     Visible="false" />
                 <asp:TemplateField HeaderText="新闻标题" SortExpression="NewsTitle" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <a href="Show.aspx?id=<%#Eval("No") %>">
+                        <a href="Show.aspx?id=<%#Eval("No") %>" target="_blank">
                             <%# Eval("NewsTitle") %></a>
                     </ItemTemplate>
                 </asp:TemplateField>

@@ -10,7 +10,7 @@
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body style="margin:0px;">
     <form id="form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="Inbox.aspx" />
     <table style="width: 100%; display: none;" cellpadding="2" cellspacing="1" class="border">

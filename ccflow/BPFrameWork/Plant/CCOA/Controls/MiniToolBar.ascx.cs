@@ -26,6 +26,10 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     /// <summary>
     /// 
     /// </summary>
+    public string RetrunUrl = "List.aspx";
+    /// <summary>
+    /// 
+    /// </summary>
     public string ViewUrl = "#";
     /// <summary>
     /// 
@@ -39,7 +43,7 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     /// 
     /// </summary>
     public string SearchUrl = "#";
-    
+
 
     protected void Page_Load(object sender, EventArgs e)
     {

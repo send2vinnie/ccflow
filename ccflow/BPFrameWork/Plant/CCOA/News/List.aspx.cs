@@ -99,7 +99,6 @@ namespace Lizard.OA.Web.OA_News
                 //{
                 //    e.Row.Cells[1].Text = obj1.ToString();
                 //}
-               
             }
         }
         

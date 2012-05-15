@@ -1,13 +1,14 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Show.aspx.cs" Inherits="Lizard.OA.Web.OA_News.Show"
     Title="显示页" %>
 
+<%@ Register Src="../Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
     <style type="text/css">
         body
         {
-           text-align:center;
+            text-align: center;
         }
         .NewsShow
         {
@@ -23,6 +24,7 @@
     </style>
 </head>
 <body>
+    <form id="form1" runat="server">
     <table style="display: none" cellpadding="2" cellspacing="1" class="border">
         <tr>
             <td class="tdbg">
@@ -106,5 +108,6 @@
             </tr>
         </table>
     </div>
+    </form>
 </body>
 </html>

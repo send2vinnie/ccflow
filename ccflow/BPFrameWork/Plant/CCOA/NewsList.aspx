@@ -29,7 +29,7 @@
             <ul>
                 <% foreach (BP.CCOA.OA_News item in NewsList)
                    {%>
-                <li><a href="Notice/Show.aspx?id=<%=item.No%>" target="_blank">
+                <li><a href="News/Show.aspx?id=<%=item.No%>" target="_blank">
                     <%=item.NewsTitle %></a>&nbsp;&nbsp;&nbsp;&nbsp;<%=item.Author %>&nbsp;&nbsp;&nbsp;&nbsp;<%=item.CreateTime.ToShortDateString()%></li>
                 <%} %>
             </ul>
