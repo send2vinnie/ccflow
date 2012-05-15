@@ -270,6 +270,24 @@ namespace BP.WF
             dt.Columns.Add("Name");
 
             Node nd = new Node(fk_node);
+            if (nd.HisRunModel == RunModel.SubThread)
+            {
+                /*如果是子线程，它只能退回它的上一个节点，现在写死了，其它的设置不起作用了。*/
+                Nodes nds = nd.HisFromNodes;
+                foreach (Node ndFrom in nds)
+                {
+                    Work wk = ndFrom.HisWork;
+                    wk.OID = workid;
+                    if (wk.RetrieveFromDBSources() == 0)
+                        continue;
+
+                    DataRow dr = dt.NewRow();
+                    dr["No"] = ndFrom.NodeID;
+                    dr["Name"] = wk.RecText + "=>" + ndFrom.Name;
+                }
+                return dt;
+            }
+
             WorkNode wn = new WorkNode(workid, fk_node);
             WorkNodes wns = new WorkNodes();
             switch (nd.HisReturnRole)
@@ -538,10 +556,7 @@ namespace BP.WF
                 foreach (string str in ht.Keys)
                     sw.SetValByKey(str, ht[str]);
             }
-
             sw.Title = sw.Title + "(自动发起)";
-
-
             sw.SetValByKey("RDT", DataType.CurrentDataTime);
             sw.SetValByKey("CDT", DataType.CurrentDataTime);
             sw.SetValByKey("FK_NY", DataType.CurrentYearMonth);
@@ -549,7 +564,6 @@ namespace BP.WF
             sw.SetValByKey("Emps", WebUser.No);
             sw.SetValByKey("FK_Dept", WebUser.FK_Dept);
             sw.InsertAsOID(BP.DA.DBAccess.GenerOID());
-
             WorkNode wn = new WorkNode(sw, nd);
             return wn.AfterNodeSave();
         }
