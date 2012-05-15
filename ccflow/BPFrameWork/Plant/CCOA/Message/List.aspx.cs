@@ -8,11 +8,13 @@ using System.Data;
 using Lizard.Common;
 using System.Drawing;
 using LTP.Accounts.Bus;
+using BP.DA;
+using BP.CCOA;
 namespace Lizard.OA.Web.OA_Message
 {
     public partial class List : Page
     {
-		BP.CCOA.OA_Message bll = new BP.CCOA.OA_Message();
+        BP.CCOA.OA_Message bll = new BP.CCOA.OA_Message();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,12 +26,12 @@ namespace Lizard.OA.Web.OA_Message
                 BindData();
             }
         }
-        
+
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             BindData();
         }
-        
+
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             //string idlist = GetSelIDlist();
@@ -38,9 +40,9 @@ namespace Lizard.OA.Web.OA_Message
             //bll.DeleteList(idlist);
             //BindData();
         }
-        
+
         #region gridView
-                        
+
         public void BindData()
         {
             #region
@@ -59,19 +61,23 @@ namespace Lizard.OA.Web.OA_Message
             //}
             #endregion
 
-            DataSet ds = new DataSet();
-            StringBuilder strWhere = new StringBuilder();
-            if (txtKeyword.Text.Trim() != "")
-            {      
-                //#warning 代码生成警告：请修改 keywordField 为需要匹配查询的真实字段名称
-                //strWhere.AppendFormat("keywordField like '%{0}%'", txtKeyword.Text.Trim());
-            }            
-            //ds = bll.GetList(strWhere.ToString());            
-            //gridView.DataSource = ds;
-            BP.CCOA.OA_Messages list = new BP.CCOA.OA_Messages();
-            list.RetrieveAll();
-            gridView.DataSource = list;
+            //BP.CCOA.OA_Messages list = new BP.CCOA.OA_Messages();
+            //list.RetrieveAll();
+            //gridView.DataSource = list;
+            //gridView.DataBind();
+
+            string searchValue = Request.QueryString["searchvalue"];
+            string[] columns = { 
+                   OA_MessageAttr.MeaageType,
+                   OA_MessageAttr.Author
+                   };
+            BP.CCOA.OA_Message OA_Message = new BP.CCOA.OA_Message();
+            DataTable OA_MessageTable = XQueryTool.Query<BP.CCOA.OA_Message>(OA_Message, columns, searchValue, null);
+
+            gridView.DataSource = OA_MessageTable;
             gridView.DataBind();
+
+
         }
 
         protected void gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -93,16 +99,16 @@ namespace Lizard.OA.Web.OA_Message
             {
                 LinkButton linkbtnDel = (LinkButton)e.Row.FindControl("LinkButton1");
                 linkbtnDel.Attributes.Add("onclick", "return confirm(\"你确认要删除吗\")");
-                
+
                 //object obj1 = DataBinder.Eval(e.Row.DataItem, "Levels");
                 //if ((obj1 != null) && ((obj1.ToString() != "")))
                 //{
                 //    e.Row.Cells[1].Text = obj1.ToString();
                 //}
-               
+
             }
         }
-        
+
         protected void gridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             //#warning 代码生成警告：请检查确认真实主键的名称和类型是否正确
@@ -123,7 +129,7 @@ namespace Lizard.OA.Web.OA_Message
                     BxsChkd = true;
                     //#warning 代码生成警告：请检查确认Cells的列索引是否正确
                     if (gridView.DataKeys[i].Value != null)
-                    {                        
+                    {
                         idlist += gridView.DataKeys[i].Value.ToString() + ",";
                     }
                 }
