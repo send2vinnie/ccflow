@@ -102,6 +102,7 @@
     <Compile Include="SysUser.cs" />
     <Compile Include="Utility\Helper.cs" />
     <Compile Include="Utility\IHelper.cs" />
+    <Compile Include="XQueryTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BP.GPM\BP.GPM.csproj">

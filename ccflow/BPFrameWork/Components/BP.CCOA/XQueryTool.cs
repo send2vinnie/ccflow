@@ -10,9 +10,56 @@ namespace BP.CCOA
 {
     public partial class XQueryTool
     {
-        public static DataTable Query<T>(T entity, string[] columnNames, string value, IDictionary<string, object> whereValues = null) where T : EntityNoName
+        public static DataTable Query<T>(
+            T entity, 
+            string[] columnNames, 
+            string value, 
+            IDictionary<string, object> whereValues = null) where T : EntityNoName
         {
             EntityNoName entityNoName = entity as EntityNoName;
+            string tableName = entityNoName.EnMap.PhysicsTable;
+            string sql = "SELECT * FROM " + tableName + " WHERE 1=1 ";
+            if (whereValues != null)
+            {
+                string where = "";
+                foreach (KeyValuePair<string, object> keyAndValue in whereValues)
+                {
+                    string fieldName = keyAndValue.Key;
+                    object objValue = keyAndValue.Value;
+                    where = GetQueryString(objValue);
+                    where = string.Format(where, fieldName, objValue);
+                }
+                sql += where;
+            }
+            if (value != string.Empty && columnNames.Length > 0)
+            {
+                sql += " AND (";
+                int loopNo = 0;
+                foreach (string columnName in columnNames)
+                {
+                    loopNo += 1;
+                    if (loopNo != 1)
+                    {
+                        sql += " OR ";
+                    }
+                    string strSql = " {0} LIKE '%{1}%' ";
+                    strSql = string.Format(strSql, columnName, value);
+                    sql += strSql;
+                }
+
+                sql += ")";
+            }
+            return DBAccess.RunSQLReturnTable(sql);
+        }
+
+        public static DataTable Query(
+            EntityNoName entityNoName,
+            string[] columnNames,
+            string value,
+            int pageIndex,
+            int pageSize,
+            IDictionary<string, object> whereValues = null)
+        {
             string tableName = entityNoName.EnMap.PhysicsTable;
             string sql = "SELECT * FROM " + tableName + " WHERE 1=1 ";
             if (whereValues != null)

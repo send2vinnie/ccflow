@@ -9,7 +9,6 @@ namespace BP.CCOA
 {
     public partial class OA_AttachmentAttr : EntityNoNameAttr
     {
-        public const string No = "No";
         public const string Suffix = "Suffix";
         public const string Uploader = "Uploader";
         public const string AttachmentName = "AttachmentName";
@@ -23,21 +22,6 @@ namespace BP.CCOA
     public partial class OA_Attachment : EntityNoName
     {
         #region 属性
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public String No
-        {
-            get
-            {
-                return this.GetValStringByKey(OA_AttachmentAttr.No);
-            }
-            set
-            {
-                this.SetValByKey(OA_AttachmentAttr.No, value);
-            }
-        }
         
         /// <summary>
         /// 后缀（类型）
@@ -117,11 +101,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public String CreateTime
+        public DateTime CreateTime
         {
             get
             {
-                return this.GetValStringByKey(OA_AttachmentAttr.CreateTime);
+                return this.GetValDateTime(OA_AttachmentAttr.CreateTime);
             }
             set
             {
@@ -132,11 +116,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public int IsDel
+        public bool IsDel
         {
             get
             {
-                return this.GetValIntByKey(OA_AttachmentAttr.IsDel);
+                return this.GetValBooleanByKey(OA_AttachmentAttr.IsDel);
             }
             set
             {
@@ -194,12 +178,12 @@ namespace BP.CCOA
                 
                 map.AddTBStringPK(OA_AttachmentAttr.No, null, "", true, true, 0, 50, 50);
                 map.AddTBString(OA_AttachmentAttr.Suffix, null, "后缀（类型）", true, false, 0,  10, 10);
-                map.AddTBString(OA_AttachmentAttr.Uploader, null, "", true, false, 0,  10, 10);
+                map.AddTBString(OA_AttachmentAttr.Uploader, null, "", true, false, 0,  50, 50);
                 map.AddTBString(OA_AttachmentAttr.AttachmentName, null, "", true, false, 0,  100, 100);
                 map.AddTBString(OA_AttachmentAttr.FileNeme, null, "", true, false, 0,  200, 200);
                 map.AddTBString(OA_AttachmentAttr.FilePath, null, "", true, false, 0,  1000, 1000);
-                map.AddTBString(OA_AttachmentAttr.CreateTime, null, "", true, false, 0,  50, 50);
-                map.AddTBInt(OA_AttachmentAttr.IsDel, 0, "", true, false);
+                map.AddTBDateTime(OA_AttachmentAttr.CreateTime, "创建时间", false, false);
+                map.AddBoolean(OA_AttachmentAttr.IsDel, false, "是否删除", false, false);
                 map.AddTBString(OA_AttachmentAttr.Remarks, null, "", true, false, 0,  1000, 1000);
               
                 this._enMap = map;
