@@ -20,21 +20,40 @@ public partial class WF_Chart : WebPage
     {
         get
         {
+            try{
             return Int64.Parse(this.Request.QueryString["WorkID"]);
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
     public Int64 FID
     {
         get
         {
-            return Int64.Parse(this.Request.QueryString["FID"]);
+            try
+            {
+                return Int64.Parse(this.Request.QueryString["FID"]);
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
     public int FK_Node
     {
         get
         {
+            try{
             return int.Parse(this.Request.QueryString["FK_Node"]);
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
     public string FK_Flow
