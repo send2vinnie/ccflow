@@ -486,11 +486,11 @@ namespace BP.DA
         {
             Paras ps = new Paras();
             ps.Add("CfgKey", cfgKey);
-            string sql="UPDATE Sys_Serial SET IntVal=IntVal+1 WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
+            string sql = "UPDATE Sys_Serial SET IntVal=IntVal+1 WHERE CfgKey=" + SystemConfig.AppCenterDBVarStr + "CfgKey";
             int num = DBAccess.RunSQL(sql, ps);
             if (num == 0)
             {
-                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES ('OID',100)";
+                sql = "INSERT INTO Sys_Serial (CFGKEY,INTVAL) VALUES ('" + cfgKey + "',100)";
                 DBAccess.RunSQL(sql);
                 return 100;
             }

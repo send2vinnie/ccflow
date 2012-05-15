@@ -59,7 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BPEnum.cs" />
+    <Compile Include="ExportAsPNG\EditableImage.cs" />
+    <Compile Include="ExportAsPNG\ElementToPNG.cs" />
+    <Compile Include="ExportAsPNG\PngEncoder.cs" />
     <Compile Include="MapData.cs" />
+    <Compile Include="StringHandler.cs" />
     <Compile Include="WebUser.cs" />
     <Compile Include="En30.cs" />
     <Compile Include="Entity.cs" />

@@ -33,7 +33,6 @@ namespace BP.En
 				map.DepositaryOfEntity=Depositary.Application;
 				map.DepositaryOfMap=Depositary.Application;
 
-
                 map.AddTBStringPK(SimpleNoNameAttr.No, null, "±àºÅ", true, true, 1, 20, 10);
                 map.AddTBString(SimpleNoNameAttr.Name, null, "Ãû³Æ", true, false, 0, 400, 100);
 				 

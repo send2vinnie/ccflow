@@ -1001,7 +1001,6 @@ namespace BP.Web.UC
             js += "\t\n</script>";
             this.Add(js);
 
-
             //this.Add("<table border=0 width='100%' >");
             //this.Add("<TR><TD ID='" + tdID + "' width='20' height='20' >");
             //this.Add("<iframe ID='" + frmID + "'     src='" + url + "' frameborder=0 style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' width='100%' height='10px' scrolling=no /></iframe>");
