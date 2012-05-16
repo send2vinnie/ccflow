@@ -9,8 +9,11 @@
     <script src="../../Comm/Scripts/jquery-1.6.2.min.js" type="text/javascript"></script>
     <script src="../../Comm/Scripts/miniui/miniui.js" type="text/javascript"></script>
     <script src="../../Comm/Scripts/kindeditor/kindeditor.js" type="text/javascript"></script>
+    <script src="../Upload/swfupload/swfupload.js" type="text/javascript"></script>
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+    <link href="../../Comm/Scripts/miniui/themes/default/miniui.css" rel="stylesheet"
+        type="text/css" />
     <link href="../../Comm/Scripts/kindeditor/themes/default/default.css" rel="stylesheet"
         type="text/css" />
     <script type="text/javascript">
@@ -32,6 +35,17 @@
 		    'insertunorderedlist', '|', 'emoticons', 'image', 'link']
             });
         });
+
+        function onUploadSuccess(e) {
+
+            alert("上传成功：" + e.serverData);
+            this.setText("");
+        }
+
+        function startUpload() {
+            var fileupload = mini.get("fileupload1");
+            fileupload.startUpload();
+        }
         
     </script>
 </head>
@@ -62,7 +76,8 @@
                             新闻类型 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNewsType" runat="server" Width="200px"></asp:TextBox>
+                            <%--  <asp:TextBox ID="txtNewsType" runat="server" Width="200px"></asp:TextBox>--%>
+                            <lizard:XDropDownList ID="ddlNewsType" runat="server" Width="100px" />
                         </td>
                     </tr>
                     <tr>
@@ -87,7 +102,15 @@
                             发布时间 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtCreateTime" runat="server" Width="70px"></asp:TextBox>
+                            <asp:TextBox ID="txtCreateTime" runat="server" Width="100px" CssClass="mini-datepicker"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="25" width="30%" align="right">
+                            附件 ：
+                        </td>
+                        <td height="25" width="*" align="left">
+                            <asp:FileUpload ID="FileUpload1" runat="server" />
                         </td>
                     </tr>
                 </table>
