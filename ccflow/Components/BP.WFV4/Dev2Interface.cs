@@ -150,7 +150,6 @@ namespace BP.WF
         #endregion
 
         #region 数据接口
-
         #region 获取流程事例的轨迹图
         /// <summary>
         /// 获取流程事例的轨迹图
@@ -200,7 +199,6 @@ namespace BP.WF
         }
         #endregion
 
-
         #region 获取当前操作员可以发起的流程集合
         /// <summary>
         /// 获取当前操作员可以发起的流程集合
@@ -238,7 +236,6 @@ namespace BP.WF
         }
         #endregion 获取当前操作员可以发起的流程集合
 
-
         #region 获取当前操作员的待办工作
         /// <summary>
         /// 获取当前操作员的待办工作
@@ -254,7 +251,6 @@ namespace BP.WF
             return BP.DA.DBAccess.RunSQLReturnTable("SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + fk_emp + "'  ORDER BY ADT DESC ");
         }
         #endregion 获取当前操作员的待办工作
-
 
         #region 获取当前可以退回的节点。
         /// <summary>
@@ -363,8 +359,6 @@ namespace BP.WF
         }
         #endregion 获取当前可以退回的节点
 
-
-
         #region 获取当前操作员的在途工作
         /// <summary>m
         /// 获取当前操作员的在途工作
@@ -394,8 +388,6 @@ namespace BP.WF
             return DB_GenerRuningOfEntities(userNo).ToDataTableField();
         }
         #endregion 获取当前操作员的待办工作
-
-
         #endregion
 
         #region UI 接口
@@ -894,6 +886,17 @@ namespace BP.WF
         {
             Node nd = new Node(nodeId);
             return nd.HisWork;
+        }
+        /// <summary>
+        /// 删除子线程
+        /// </summary>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="fid">流程ID</param>
+        /// <param name="workid">工作ID</param>
+        public static void KillSubFlow(string fk_flow, Int64 fid, Int64 workid)
+        {
+            WorkFlow wkf = new WorkFlow(fk_flow, workid);
+            wkf.DoDeleteWorkFlowByReal();
         }
         #endregion 工作有关接口
     }
