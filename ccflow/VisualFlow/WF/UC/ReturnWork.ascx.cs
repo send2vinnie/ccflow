@@ -149,7 +149,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
                 continue;
 
             string sql = "SELECT IsPass FROM WF_GenerWorkerList WHERE WorkID=" + this.FID + " AND FK_Node=" + mywn.HisNode.NodeID;
-            DataTable dt= DBAccess.RunSQLReturnTable(sql);
+            DataTable dt = DBAccess.RunSQLReturnTable(sql);
             if (dt.Rows.Count != 0)
             {
                 string val = dt.Rows[0][0].ToString();
