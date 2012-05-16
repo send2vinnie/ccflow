@@ -924,6 +924,9 @@ namespace BP.WF
             Work wk = wn.HisWork;
             WorkNode mywn = null;
             mywn = wn.DoReturnWorkHL(workid, msg);
+
+            // 调用退回事件.
+            mywn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
             return "@任务被你成功退回到【{" + mywn.HisNode.Name + "}】，退回给【{" + mywn.HisWork.Rec + "}】。";
         }
         #endregion 工作有关接口
