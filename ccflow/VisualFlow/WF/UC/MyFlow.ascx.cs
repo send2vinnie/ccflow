@@ -773,10 +773,7 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
             wk.SetValByKey(attr.KeyOfEn, attr.DefVal);
         }
         #endregion 设置默认值。
-
-        #region 判断是否合流节点。。
-        //此部分代码移植到了WorkOpt/HeLiuDtl.aspx中去了。
-        #endregion 判断是否合流节点。
+       
 
         if (nd.HisFormType == FormType.DisableIt)
             wk.DirectUpdate();
@@ -809,6 +806,10 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                 }
                 else
                 {
+                    // 让其直接update，来接受外部传递过来的信息。
+                    if (nd.HisFormType != FormType.DisableIt)
+                         wk.DirectUpdate();
+
                     /*涉及到多个表单的情况...*/
                     if (nd.HisFormType != FormType.DisableIt)
                     {
@@ -888,7 +889,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                         if (urlExtFrm.Contains("IsLoadData") == false)
                             urlExtFrm += "&IsLoadData=1" ;
 
-                        
 
                         this.UCEn1.Clear();
                         this.UCEn1.Add("<div  style='clear:both' ></div>");
