@@ -16,6 +16,18 @@ namespace Lizard.OA.Web.OA_Notice
     {
         BP.CCOA.OA_Notice bll = new BP.CCOA.OA_Notice();
 
+        private int m_PageIndex = 1;
+
+        private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
+
+        string[] columns = { 
+                   OA_NoticeAttr.Author,
+                   OA_NoticeAttr.NoticeTitle,
+                   OA_NoticeAttr.NoticeSubTitle,
+                   OA_NoticeAttr.NoticeType
+                   };
+        BP.CCOA.OA_Notice OA_Notice = new BP.CCOA.OA_Notice();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -23,8 +35,26 @@ namespace Lizard.OA.Web.OA_Notice
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
                 //gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
                 btnDelete.Attributes.Add("onclick", "return confirm(\"你确认要删除吗？\")");
+
+                int rowsCount = this.GetQueryRowsCount();
+                this.XPager1.InitControl(this.m_PageSize, rowsCount);
+
                 BindData();
             }
+        }
+
+        protected void XPager1_PagerChanged(object sender, CurrentPageEventArgs e)
+        {
+            m_PageIndex = e.pageSize;
+            m_PageIndex = e.currentPage;
+            this.BindData();
+        }
+
+        private int GetQueryRowsCount()
+        {
+            string searchValue = Request.QueryString["searchvalue"];
+         
+            return XQueryTool.GetRowCount<BP.CCOA.OA_Notice>(OA_Notice, columns, searchValue);
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -60,16 +90,9 @@ namespace Lizard.OA.Web.OA_Notice
             //    gridView.Columns[7].Visible = true;
             //}
             #endregion
-
             string searchValue = Request.QueryString["searchvalue"];
-            string[] columns = { 
-                   OA_NoticeAttr.Author,
-                   OA_NoticeAttr.NoticeTitle,
-                   OA_NoticeAttr.NoticeSubTitle,
-                   OA_NoticeAttr.NoticeType
-                   };
-            BP.CCOA.OA_Notice OA_Notice = new BP.CCOA.OA_Notice();
-            DataTable OA_NoticeTable = XQueryTool.Query<BP.CCOA.OA_Notice>(OA_Notice, columns, searchValue, null);
+            DataTable OA_NoticeTable = XQueryTool.Query<BP.CCOA.OA_Notice>(OA_Notice, columns, searchValue,
+                m_PageIndex, m_PageSize, null);
 
             gridView.DataSource = OA_NoticeTable;
             gridView.DataBind();
