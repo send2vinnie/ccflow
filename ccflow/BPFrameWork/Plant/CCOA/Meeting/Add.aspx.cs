@@ -90,12 +90,13 @@ namespace Lizard.OA.Web.OA_Meeting
             string RealMembers = this.txtRealMembers.Text;
             string Recorder = this.txtRecorder.Text;
             string Summary = this.txtSummary.Text;
-            int UpUser = CurrentUser.UserId;
+            string UpUser = BP.Web.WebUser.No;
             DateTime UpDT = DateTime.Now;
             bool Status = this.chkStatus.Checked;
 
-            Lizard.OA.Model.OA_Meeting model = new Lizard.OA.Model.OA_Meeting();
-            model.MeetingId = MeetingId;
+            //Lizard.OA.Model.OA_Meeting model = new Lizard.OA.Model.OA_Meeting();
+            BP.CCOA.OA_Meeting model = new BP.CCOA.OA_Meeting();
+            model.No = MeetingId;
             model.Topic = Topic;
             model.PlanStartTime = PlanStartTime;
             model.PlanEndTime = PlanEndTime;
@@ -111,8 +112,8 @@ namespace Lizard.OA.Web.OA_Meeting
             model.UpDT = UpDT;
             model.Status = Status;
 
-            BP.CCOA.OA_Meeting bll = new BP.CCOA.OA_Meeting();
-            bll.Add(model);
+            model.Insert();
+
             Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "add.aspx");
 
         }
