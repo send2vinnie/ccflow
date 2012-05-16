@@ -10,15 +10,16 @@ namespace BP.CCOA
 {
     public partial class XQueryTool
     {
-        public static DataTable Query<T>(
-            T entity, 
-            string[] columnNames, 
-            string value, 
-            IDictionary<string, object> whereValues = null) where T : EntityNoName
+        public static DataTable Query<T>(T entity, string[] columnNames,
+            string value, int pageIndex, int pageSize,
+            IDictionary<string, object> whereValues = null,
+            string rowNumFieldName = "No") where T : EntityNoName
         {
             EntityNoName entityNoName = entity as EntityNoName;
             string tableName = entityNoName.EnMap.PhysicsTable;
-            string sql = "SELECT * FROM " + tableName + " WHERE 1=1 ";
+
+            string sql = "SELECT row_number () OVER (ORDER BY {0}) AS RowNum,* FROM " + tableName + " WHERE 1=1 ";
+            sql = string.Format(sql, rowNumFieldName);
             if (whereValues != null)
             {
                 string where = "";
@@ -31,7 +32,7 @@ namespace BP.CCOA
                 }
                 sql += where;
             }
-            if (value != string.Empty && columnNames.Length > 0)
+            if (!string.IsNullOrEmpty(value) && columnNames.Length > 0)
             {
                 sql += " AND (";
                 int loopNo = 0;
@@ -49,19 +50,28 @@ namespace BP.CCOA
 
                 sql += ")";
             }
+
+            int startNo = (pageIndex - 1) * pageSize + 1;
+            int endNo = startNo + pageSize - 1;
+
+            sql = "SELECT * FROM ( " + sql + " ) T WHERE RowNum BETWEEN {0} AND {1}";
+            sql = string.Format(sql, startNo, endNo);
+
             return DBAccess.RunSQLReturnTable(sql);
         }
 
-        public static DataTable Query(
-            EntityNoName entityNoName,
-            string[] columnNames,
+        public static int GetRowCount<T>(T entity, string[] columnNames,
             string value,
-            int pageIndex,
-            int pageSize,
-            IDictionary<string, object> whereValues = null)
+            IDictionary<string, object> whereValues = null,
+            string rowNumFieldName = "No") where T : EntityNoName
         {
+            //获取记录条数
+            EntityNoName entityNoName = entity as EntityNoName;
             string tableName = entityNoName.EnMap.PhysicsTable;
-            string sql = "SELECT * FROM " + tableName + " WHERE 1=1 ";
+
+            string sql = "SELECT COUNT(*) FROM " + tableName + " WHERE 1=1 ";
+            sql = string.Format(sql, rowNumFieldName);
+
             if (whereValues != null)
             {
                 string where = "";
@@ -74,7 +84,7 @@ namespace BP.CCOA
                 }
                 sql += where;
             }
-            if (value != string.Empty && columnNames.Length > 0)
+            if (!string.IsNullOrEmpty(value) && columnNames.Length > 0)
             {
                 sql += " AND (";
                 int loopNo = 0;
@@ -92,7 +102,8 @@ namespace BP.CCOA
 
                 sql += ")";
             }
-            return DBAccess.RunSQLReturnTable(sql);
+
+            return DBAccess.RunSQLReturnValInt(sql);
         }
 
         private static string GetQueryString(object objValue)
