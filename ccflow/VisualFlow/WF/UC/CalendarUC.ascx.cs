@@ -20,6 +20,8 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
         get
         {
             string s = this.Request.QueryString["FK_Date"];
+            if (s == null)
+                s = DataType.CurrentData;
             return s;
         }
     }

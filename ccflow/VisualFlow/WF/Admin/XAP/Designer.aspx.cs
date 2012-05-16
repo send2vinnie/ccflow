@@ -50,6 +50,7 @@ public partial class Designer : System.Web.UI.Page
 
             #region 修改Title在自由表单设计器中不能编辑。 5-15.
             DBAccess.RunSQL("UPDATE Sys_MapAttr SET EditType=0,UIVISIBLE=0 WHERE KeyOfEn='Title'");
+            DBAccess.RunSQL("UPDATE Sys_MapDtl SET DtlOpenType=1 WHERE DtlOpenType=0");
             #endregion
 
 

@@ -175,7 +175,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
 
             // 退回事件。
             string msg = mywn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
-
             this.ToMsg(this.ToEP2("WReInfo", "@任务被你成功退回到【{0}】，退回给【{1}】。", mywn.HisNode.Name, mywn.HisWork.Rec),
                 "info");
             return;
@@ -190,9 +189,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         try
         {
             string info = BP.WF.Dev2Interface.Node_FHL_Return(this.FK_Node, this.FID, this.WorkID, this.TB1.Text);
-            // 退回事件。
-            //  string msg = mywn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
-
             if (this.PageID == "ReturnWorkSmall")
                 this.WinCloseWithMsg(info);
             else
