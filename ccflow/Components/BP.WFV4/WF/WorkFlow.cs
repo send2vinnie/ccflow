@@ -102,7 +102,7 @@ namespace BP.WF
         /// 应用场景:子流程向分合点驳回时
         /// </summary>
         /// <param name="fid"></param>
-        /// <param name="fk_node"></param>
+        /// <param name="fk_node">被驳回的节点</param>
         /// <param name="msg"></param>
         /// <returns></returns>
         public string DoReject(Int64 fid, int fk_node, string msg)
@@ -111,23 +111,24 @@ namespace BP.WF
             int i = wl.Retrieve(WorkerListAttr.FID, fid,
                 WorkerListAttr.WorkID, this.WorkID,
                 WorkerListAttr.FK_Node, fk_node);
-            if (i == 0)
-                throw new Exception("系统错误，没有找到应该找到的数据。");
+            //if (i == 0)
+            //    throw new Exception("系统错误，没有找到应该找到的数据。");
 
             i = wl.Delete();
-            if (i == 0)
-                throw new Exception("系统错误，没有删除应该删除的数据。");
+            //if (i == 0)
+            //    throw new Exception("系统错误，没有删除应该删除的数据。");
 
             wl = new WorkerList();
             i = wl.Retrieve(WorkerListAttr.FID, fid,
                 WorkerListAttr.WorkID, this.WorkID,
                 WorkerListAttr.IsPass, 3);
 
-            if (i == 0)
-                throw new Exception("系统错误，想找到退回的原始起点没有找到。");
+            //if (i == 0)
+            //    throw new Exception("系统错误，想找到退回的原始起点没有找到。");
 
+            Node nd = new Node(fk_node);
             // 更新当前流程管理表的设置当前的节点。
-            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + wl.FK_Node + ", NodeName='" + wl.FK_NodeText + "' WHERE WorkID=" + this.WorkID);
+            DBAccess.RunSQL("UPDATE WF_GenerWorkFlow SET FK_Node=" + fk_node + ", NodeName='" + nd.Name + "' WHERE WorkID=" + this.WorkID);
             
             wl.RDT = DataType.CurrentDataTime;
             wl.IsPass = false;
@@ -141,18 +142,13 @@ namespace BP.WF
         /// </summary>
         public string DoDeleteWorkFlowByReal()
         {
-
-
             string info = "";
             WorkNode wn = this.GetCurrentWorkNode();
-
             // 处理事件。
              wn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.BeforeFlowDel, wn.HisWork);
 
-
             DBAccess.RunSQL("DELETE FROM WF_Track WHERE WorkID=" + this.WorkID);
             DBAccess.RunSQL("DELETE FROM ND"+int.Parse(this.HisFlow.No)+"Rpt WHERE OID=" + this.WorkID);
-
 
             #region 正常的删除信息.
             BP.DA.Log.DefaultLogWriteLineInfo("@[" + this.HisFlow.Name + "]流程被[" + BP.Web.WebUser.No + BP.Web.WebUser.Name + "]删除，WorkID[" + this.WorkID + "]。");
