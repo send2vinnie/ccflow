@@ -234,6 +234,39 @@ namespace BP.WF
         {
             return DB_GenerCanStartFlowsOfEntities(userNo).ToDataTableField();
         }
+        /// <summary>
+        /// 获取合流
+        /// </summary>
+        /// <param name="nodeIDOfHL">合流点ID</param>
+        /// <param name="workid">流程ID</param>
+        /// <returns></returns>
+        public static DataTable DB_GenerHLSubFlowDtl(int nodeIDOfHL, Int64 workid)
+        {
+            Node nd = new Node(nodeIDOfHL);
+            Work wk = nd.HisWork;
+            wk.OID = workid;
+            wk.Retrieve();
+
+            WorkerLists wls = new WorkerLists();
+            QueryObject qo = new QueryObject(wls);
+            qo.AddWhere(WorkerListAttr.FID, wk.OID);
+            qo.addAnd();
+            qo.AddWhere(WorkerListAttr.IsEnable, 1);
+            qo.addAnd();
+            qo.AddWhere(WorkerListAttr.FK_Node,
+                nd.HisFromNodes[0].GetValByKey(NodeAttr.NodeID));
+
+            DataTable dt = qo.DoQueryToTable();
+            if (dt.Rows.Count == 1)
+            {
+                qo.clear();
+                qo.AddWhere(WorkerListAttr.FID, wk.OID);
+                qo.addAnd();
+                qo.AddWhere(WorkerListAttr.IsEnable, 1);
+                return qo.DoQueryToTable();
+            }
+            return dt;
+        }
         #endregion 获取当前操作员可以发起的流程集合
 
         #region 获取当前操作员的待办工作
