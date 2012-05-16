@@ -126,10 +126,8 @@ public partial class WF_Frm : WebPage
                 dtlEn.SetValByKey(kvs[0], kvs[1]);
             }
 
-
             this.UCEn1.BindFreeFrm(dtlEn, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(dtlEn);
-
         }
         else
         {
@@ -161,6 +159,7 @@ public partial class WF_Frm : WebPage
                 string[] kvs = str.Split('=');
                 en.SetValByKey(kvs[0], kvs[1]);
             }
+            en.ResetDefaultVal();
 
             this.UCEn1.BindFreeFrm(en, this.FK_MapData, !this.IsEdit);
             this.AddJSEvent(en);

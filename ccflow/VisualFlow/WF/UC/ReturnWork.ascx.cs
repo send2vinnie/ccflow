@@ -135,6 +135,11 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
         this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_FL_Click);
 
+
+
+      //DataTable dt = BP.WF.Dev2Interface.DB_GenerWillReturnNodes(this.FK_Node, this.WorkID, this.FID);
+
+
         WorkNodes wns = new WorkNodes();
         if (wns.Count == 0)
             wns.GenerByFID(nd.HisFlow, this.FID);
@@ -287,7 +292,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             try
             {
                 WorkNode wn = new WorkNode(this.WorkID, this.FK_Node);
-                DataTable dt = BP.WF.Dev2Interface.DB_GenerWillReturnNodes(this.FK_Node, this.WorkID);
+                DataTable dt = BP.WF.Dev2Interface.DB_GenerWillReturnNodes(this.FK_Node, this.WorkID,this.FID);
                 foreach (DataRow dr in dt.Rows)
                 {
                     this.DDL1.Items.Add(new ListItem(dr["Name"].ToString(), dr["No"].ToString()));
