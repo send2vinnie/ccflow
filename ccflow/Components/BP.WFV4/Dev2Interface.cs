@@ -893,10 +893,22 @@ namespace BP.WF
         /// <param name="fk_flow">流程编号</param>
         /// <param name="fid">流程ID</param>
         /// <param name="workid">工作ID</param>
-        public static void KillSubFlow(string fk_flow, Int64 fid, Int64 workid)
+        public static void Node_FHL_KillSubFlow(string fk_flow, Int64 fid, Int64 workid)
         {
             WorkFlow wkf = new WorkFlow(fk_flow, workid);
             wkf.DoDeleteWorkFlowByReal();
+        }
+        /// <summary>
+        /// 合流点驳回子线程
+        /// </summary>
+        /// <param name="fk_flow">流程编号</param>
+        /// <param name="fid">流程ID</param>
+        /// <param name="workid">子线程ID</param>
+        /// <param name="msg">驳回消息</param>
+        public static string  Node_FHL_DoReject(string fk_flow,int nodeOfReject, Int64 fid, Int64 workid, string msg)
+        {
+            WorkFlow wkf = new WorkFlow(fk_flow, workid);
+            return wkf.DoReject(fid, nodeOfReject, msg);
         }
         #endregion 工作有关接口
     }
