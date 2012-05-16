@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="OA_Email" Language="C#" AutoEventWireup="true" CodeFile="OutBox.aspx.cs"
     Inherits="Lizard.OA.Web.OA_Email.OutBox" %>
 
-<%@ Register src="../Controls/MiniToolBar.ascx" tagname="MiniToolBar" tagprefix="uc1" %>
-
+<%@ Register Src="../Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
+<%@ Register Src="../Controls/MiniPager.ascx" TagName="MiniPager" TagPrefix="uc2" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
@@ -13,14 +13,14 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="OutBox.aspx"/>
+    <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="OutBox.aspx" />
     <br />
     <asp:GridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
         OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
         OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
         RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated" CssClass="lizard-grid">
         <Columns>
-            <asp:TemplateField ControlStyle-Width="30" HeaderText="选择" >
+            <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
                 <ItemTemplate>
                     <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
                 </ItemTemplate>
@@ -52,7 +52,8 @@
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
-    <table border="0" cellpadding="0" cellspacing="1" style="width: 100%;">
+    <xuc:XPager ID="XPager1" runat="server" OnPagerChanged="XPager1_PagerChanged" />
+    &nbsp;<table border="0" cellpadding="0" cellspacing="1" style="width: 100%;">
         <tr>
             <td style="width: 1px;">
             </td>
