@@ -9,7 +9,7 @@ public partial class CCOA_Control_XPager : System.Web.UI.UserControl
 {
     public delegate void RefreshEventHandler(object sender, CurrentPageEventArgs e);
 
-    public event RefreshEventHandler OnPagerChanged;
+    public event RefreshEventHandler PagerChanged;
     
     //当前页
     public int CurrentPage
@@ -111,9 +111,9 @@ public partial class CCOA_Control_XPager : System.Web.UI.UserControl
     protected virtual void PagerChange(CurrentPageEventArgs e)
     {
         InitButton();
-        if (OnPagerChanged != null)
+        if (PagerChanged != null)
         {
-            OnPagerChanged(this, e);
+            PagerChanged(this, e);
         }
     }
     protected void lbnFirstPage_Click(object sender, EventArgs e)
