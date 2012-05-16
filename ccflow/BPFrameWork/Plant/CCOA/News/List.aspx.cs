@@ -16,6 +16,19 @@ namespace Lizard.OA.Web.OA_News
     {
         BP.CCOA.OA_News bll = new BP.CCOA.OA_News();
 
+        private int m_PageIndex = 1;
+
+        private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
+
+        string[] columns = { 
+                   OA_NewsAttr.Author,
+                   OA_NewsAttr.UpUser,
+                   OA_NewsAttr.NewsTitle,
+                   OA_NewsAttr.NewsSubTitle,
+                   OA_NewsAttr.NewsType
+                   };
+        BP.CCOA.OA_News OA_News = new BP.CCOA.OA_News();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -23,8 +36,25 @@ namespace Lizard.OA.Web.OA_News
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
                 //gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
                 btnDelete.Attributes.Add("onclick", "return confirm(\"你确认要删除吗？\")");
+
+                int rowsCount = this.GetQueryRowsCount();
+                this.XPager1.InitControl(this.m_PageSize, rowsCount);
+
                 BindData();
             }
+        }
+
+        protected void XPager1_PagerChanged(object sender, CurrentPageEventArgs e)
+        {
+            m_PageIndex = e.pageSize;
+            m_PageIndex = e.currentPage;
+            this.BindData();
+        }
+
+        private int GetQueryRowsCount()
+        {
+            string searchValue = Request.QueryString["searchvalue"];
+            return XQueryTool.GetRowCount<BP.CCOA.OA_News>(OA_News, columns, searchValue);
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -61,16 +91,10 @@ namespace Lizard.OA.Web.OA_News
             //}
             #endregion
 
+
             string searchValue = Request.QueryString["searchvalue"];
-            string[] columns = { 
-                   OA_NewsAttr.Author,
-                   OA_NewsAttr.UpUser,
-                   OA_NewsAttr.NewsTitle,
-                   OA_NewsAttr.NewsSubTitle,
-                   OA_NewsAttr.NewsType
-                   };
-            BP.CCOA.OA_News OA_News = new BP.CCOA.OA_News();
-            DataTable OA_NewsTable = XQueryTool.Query<BP.CCOA.OA_News>(OA_News, columns, searchValue, null);
+            DataTable OA_NewsTable = XQueryTool.Query<BP.CCOA.OA_News>(OA_News, columns, searchValue,
+                m_PageIndex, m_PageSize, null);
 
             gridView.DataSource = OA_NewsTable;
             gridView.DataBind();

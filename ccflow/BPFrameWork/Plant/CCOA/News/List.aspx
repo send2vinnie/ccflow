@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -61,8 +61,8 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <xuc:MiniPager ID="MiniPager" runat="server" />
-        <table border="0" cellpadding="0" cellspacing="1" style="width: 100%;">
+        <xuc:XPager ID="XPager1" runat="server" OnPagerChanged="XPager1_PagerChanged" />
+        &nbsp;<table border="0" cellpadding="0" cellspacing="1" style="width: 100%;">
             <tr>
                 <td style="width: 1px;">
                 </td>
