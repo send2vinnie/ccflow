@@ -1149,7 +1149,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
      
             switch (btn.ID)
             {
-               
                 case "Btn_Reject":
                 case "Btn_KillSubFlow":
                     try

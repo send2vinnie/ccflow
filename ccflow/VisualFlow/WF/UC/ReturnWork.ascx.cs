@@ -87,20 +87,9 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
 
     public void BindItWorkHL(BP.WF.Node nd)
     {
-        //if (nd.IsCanHidReturn)
-        //{
-        //    this.ToolBar1.AddBtn("Btn_ReturnHid", "隐形退回");
-        //    this.ToolBar1.GetBtnByID("Btn_ReturnHid").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
-        //    this.ToolBar1.GetBtnByID("Btn_ReturnHid").Click += new EventHandler(WF_UC_ReturnWork_HL_Click);
-        //}
-        //this.ToolBar1.AddBtn("Btn_Cancel", this.ToE("Cancel", "取消"));
-        //this.ToolBar1.GetBtnByID("Btn_Cancel").Click += new EventHandler(WF_UC_ReturnWork_Click);
-
         this.ToolBar1.AddBtn("Btn_OK", this.ToE("OK", "确定退回"));
         this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
         this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_HL_Click);
-
-     //FHLFlow.aspx?WorkID=318&FID=120&FK_Flow=006&FK_Node=604
 
         TextBox tb = new TextBox();
         tb.TextMode = TextBoxMode.MultiLine;
@@ -112,13 +101,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         {
             try
             {
-                //int fk_node = DBAccess.RunSQLReturnValInt("SELECT FK_Node FROM WF_GenerWorkFlow WHERE  WorkID=" + this.WorkID);
-                //BP.WF.Node mynd = new BP.WF.Node(fk_node);
-                //string fk_empText = DBAccess.RunSQLReturnString("SELECT FK_EmpText FROM WF_Generworkerlist WHERE FK_Node="+this.FK_Node+" AND WorkID="+this.WorkID);
                 this.TB1.Text = "您好: \n   您处理的工作有错误，需要您重新办理．\n\n  此致!!!   \n " + WebUser.Name + BP.DA.DataType.CurrentDataTime;
-                //this.TB1.Text = this.ToEP4("WBackInfo",
-                //    "{0}同志: \n   您{1}处理的“{2}”工作有错误，需要您重新办理．\n\n  此致!!!   \n {3}",
-                //   fk_empText, "", nd.Name, WebUser.Name + BP.DA.DataType.CurrentDataTime);
             }
             catch (Exception ex)
             {
@@ -135,10 +118,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
         this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_FL_Click);
 
-
-
       //DataTable dt = BP.WF.Dev2Interface.DB_GenerWillReturnNodes(this.FK_Node, this.WorkID, this.FID);
-
 
         WorkNodes wns = new WorkNodes();
         if (wns.Count == 0)
@@ -209,17 +189,14 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
     {
         try
         {
-            WorkNode wn = new WorkNode(this.FID, this.FK_Node);
-            Work wk = wn.HisWork;
-            WorkNode mywn = null;
-            mywn = wn.DoReturnWorkHL(this.WorkID, this.TB1.Text);
-
+            string info = BP.WF.Dev2Interface.Node_FHL_Return(this.FK_Node, this.FID, this.WorkID, this.TB1.Text);
             // 退回事件。
-            string msg = mywn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
+            //  string msg = mywn.HisNode.HisNDEvents.DoEventNode(EventListOfNode.ReturnAfter, wk);
+
             if (this.PageID == "ReturnWorkSmall")
-                this.WinCloseWithMsg(this.ToEP2("WReInfo", "@任务被你成功退回到【{0}】，退回给【{1}】。", mywn.HisNode.Name, mywn.HisWork.Rec));
+                this.WinCloseWithMsg(info);
             else
-                this.ToMsg(this.ToEP2("WReInfo", "@任务被你成功退回到【{0}】，退回给【{1}】。", mywn.HisNode.Name, mywn.HisWork.Rec), "info");
+                this.ToMsg(info, "info");
         }
         catch (Exception ex)
         {

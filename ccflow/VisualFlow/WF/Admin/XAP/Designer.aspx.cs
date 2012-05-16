@@ -19,9 +19,7 @@ public partial class Designer : System.Web.UI.Page
         {
             msg = "@在检查数据库连接出现错误。";
 
-            #region 修改Title在自由表单设计器中不能编辑。 5-15.
-            DBAccess.RunSQL("UPDATE Sys_MapAttr SET EditType=0,UIVISIBLE=0 WHERE KeyOfEn='Title'");
-            #endregion
+           
 
             #region 升级退回规则 05-10
             ReturnWork rw1 = new ReturnWork();
@@ -49,6 +47,11 @@ public partial class Designer : System.Web.UI.Page
             }
 
             #endregion 测试数据库是否连接成功。
+
+            #region 修改Title在自由表单设计器中不能编辑。 5-15.
+            DBAccess.RunSQL("UPDATE Sys_MapAttr SET EditType=0,UIVISIBLE=0 WHERE KeyOfEn='Title'");
+            #endregion
+
 
             #region 升级转发功能 2012-05-05
             CCList cc = new CCList();

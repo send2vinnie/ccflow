@@ -35,14 +35,22 @@ public partial class WF_Admin_FlowDB : BP.Web.WebPage
     {
         if (this.DoType == "DelIt")
         {
-            WorkFlow wf = new WorkFlow(this.FK_Flow, this.WorkID);
-            wf.DoDeleteWorkFlowByReal();
+            try
+            {
+                WorkFlow wf = new WorkFlow(this.FK_Flow, this.WorkID);
+                wf.DoDeleteWorkFlowByReal();
+            }
+            catch (Exception ex)
+            {
+                 
+                this.Response.Write(ex.Message);
+                this.Alert(ex.Message);
+            }
             return;
         }
 
 
         Flow fl = new Flow(this.FK_Flow);
-
         GenerWorkFlows gwfs = new GenerWorkFlows();
         gwfs.Retrieve(GenerWorkFlowAttr.FK_Flow, this.FK_Flow, GenerWorkFlowAttr.FK_Dept);
         this.Pub1.AddTable("width='100%'");
