@@ -910,6 +910,22 @@ namespace BP.WF
             WorkFlow wkf = new WorkFlow(fk_flow, workid);
             return wkf.DoReject(fid, nodeOfReject, msg);
         }
+        /// <summary>
+        /// 合流点把工作退回.
+        /// </summary>
+        /// <param name="fk_nodeOfHL">合流点编号</param>
+        /// <param name="fid">FID</param>
+        /// <param name="workid">子线程ID</param>
+        /// <param name="msg">退回原因</param>
+        /// <returns></returns>
+        public static string Node_FHL_Return(int fk_nodeOfHL, Int64 fid, Int64 workid, string msg)
+        {
+            WorkNode wn = new WorkNode(fid, fk_nodeOfHL);
+            Work wk = wn.HisWork;
+            WorkNode mywn = null;
+            mywn = wn.DoReturnWorkHL(workid, msg);
+            return "@任务被你成功退回到【{" + mywn.HisNode.Name + "}】，退回给【{" + mywn.HisWork.Rec + "}】。";
+        }
         #endregion 工作有关接口
     }
 }

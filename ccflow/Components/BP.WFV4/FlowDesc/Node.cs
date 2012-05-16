@@ -3254,12 +3254,12 @@ namespace BP.WF
                 attr.UIVisible = false;
                 attr.UIIsEnable = false;
                 attr.Insert();
-
                
 
                 attr = new BP.Sys.MapAttr();
                 attr.FK_MapData = md.No;
-                attr.HisEditType = BP.En.EditType.UnDel;
+                attr.HisEditType = BP.En.EditType.Edit;
+             //   attr.edit
                 attr.KeyOfEn = "Title";
                 attr.Name = BP.Sys.Language.GetValByUserLang("Title", "标题"); // "流程标题";
                 attr.MyDataType = BP.DA.DataType.AppString;
