@@ -49,4 +49,9 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     {
 
     }
+
+    public void AddButton(string icon, string name)
+    {
+        
+    }
 }

@@ -11,16 +11,35 @@
         //window.location.href = "list.aspx?searchvalue=" + searchVaue;
         window.location.href = "<%=RefreshUrl %>?searchvalue=" + searchVaue;
     }
+
+    function getSelectedIdList() {
+        var chks = $("input[type='checkbox']:checkbox:checked");
+        //var hiddens = $("input[type='hidden']");
+        var idList = "";
+        for (var i = 0; i < chks.length; i++) {
+            var regS = new RegExp("DeleteThis", "g");
+            var hiddenId = chks[i].id.replace(regS,"DeleteNo");
+            var chkedNo = $("#" + hiddenId).val();
+            idList = idList + chkedNo + ",";
+        }
+        if (idList.length > 0) {
+            idList = idList.substring(0, idList.length - 1);
+        }
+        
+        return idList;
+    }
 </script>
 <div class="mini-toolbar">
     <table style="width: 100%;">
         <tr>
             <td style="width: 100%;">
-                <a class="mini-button" iconcls="icon-reload" plain="true" href="<%=RetrunUrl %>">返回</a>
-                <a class="mini-button" iconcls="icon-addfolder" plain="true" href="<%=AddUrl %>">增加</a>
-                <a class="mini-button" iconcls="icon-remove" plain="true">删除</a> <span class="separator">
-                </span><a class="mini-button" iconcls="icon-reload" plain="true" href="<%=RefreshUrl %>">
-                    刷新</a> <a class="mini-button" iconcls="icon-download" plain="true">下载</a>
+                <div id="ButtonContainers" runat="server" style="float:left;">
+                    <a class="mini-button" iconcls="icon-reload" plain="true" href="<%=RetrunUrl %>">返回</a>
+                    <a class="mini-button" iconcls="icon-addfolder" plain="true" href="<%=AddUrl %>">增加</a>
+                    <a class="mini-button" iconcls="icon-remove" plain="true" onclick="getSelectedIdList()">删除</a></div>
+                <span class="separator"></span><a class="mini-button" iconcls="icon-reload" plain="true"
+                    href="<%=RefreshUrl %>">刷新</a> <a class="mini-button" iconcls="icon-download" plain="true">
+                        下载</a>
             </td>
             <td style="white-space: nowrap;">
                 <input id="txtValue" class="mini-textbox" />
