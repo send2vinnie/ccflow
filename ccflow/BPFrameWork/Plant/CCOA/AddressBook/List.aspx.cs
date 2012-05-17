@@ -9,12 +9,32 @@ using Lizard.Common;
 using System.Drawing;
 using LTP.Accounts.Bus;
 using BP.DA;
+using BP.CCOA;
 namespace Lizard.OA.Web.OA_AddrBook
 {
     public partial class List : Page
     {
-		//Lizard.OA.BLL.OA_AddrBook bll = new Lizard.OA.BLL.OA_AddrBook();
-        
+        //Lizard.OA.BLL.OA_AddrBook bll = new Lizard.OA.BLL.OA_AddrBook();
+        private int m_PageIndex = 1;
+
+        private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
+
+
+        private BP.CCOA.OA_AddrBook OA_AddrBook = new BP.CCOA.OA_AddrBook();
+
+        string[] columns = {
+        		                   OA_AddrBookAttr.Mobile,
+        		                   OA_AddrBookAttr.WorkPhone,
+        		                   OA_AddrBookAttr.HomePhone,
+        		                   OA_AddrBookAttr.Name,
+        		                   OA_AddrBookAttr.NickName,
+        		                   OA_AddrBookAttr.Email,
+        		                   OA_AddrBookAttr.QQ,
+        		                   OA_AddrBookAttr.WorkUnit,
+        		                   OA_AddrBookAttr.WorkAddress,
+        		                   OA_AddrBookAttr.HomeAddress,
+        		                   OA_AddrBookAttr.Remarks,
+        		                   };
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,15 +43,32 @@ namespace Lizard.OA.Web.OA_AddrBook
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
                 //gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
                 btnDelete.Attributes.Add("onclick", "return confirm(\"你确认要删除吗？\")");
+
+                int rowsCount = this.GetQueryRowsCount();
+                this.XPager1.InitControl(m_PageSize, rowsCount);
+
                 BindData();
             }
         }
-        
+
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             BindData();
         }
-        
+
+        protected void XPager1_PagerChanged(object sender, CurrentPageEventArgs e)
+        {
+            m_PageIndex = e.pageSize;
+            m_PageIndex = e.currentPage;
+            this.BindData();
+        }
+
+        private int GetQueryRowsCount()
+        {
+            string searchValue = Request.QueryString["searchvalue"];
+            return XQueryTool.GetRowCount(this.OA_AddrBook, this.columns, searchValue);
+        }
+
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             //string idlist = GetSelIDlist();
@@ -40,9 +77,9 @@ namespace Lizard.OA.Web.OA_AddrBook
             //bll.DeleteList(idlist);
             //BindData();
         }
-        
+
         #region gridView
-                        
+
         public void BindData()
         {
             #region
@@ -60,32 +97,10 @@ namespace Lizard.OA.Web.OA_AddrBook
             //    gridView.Columns[7].Visible = true;
             //}
             #endregion
-
-           
-            //BP.CCOA.OA_AddrBooks list = new BP.CCOA.OA_AddrBooks();
-            //list.RetrieveAll();
-            //gridView.DataSource = list;
-            //gridView.DataBind();
             string searchValue = Request.QueryString["searchvalue"];
-            StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.Append("SELECT * FROM OA_AddrBook ");
-            sqlBuilder.Append(" WHERE Name LIKE '%{0}%'");
-            sqlBuilder.Append(" OR NickName LIKE '%{0}%'");
-            sqlBuilder.Append(" OR Mobile LIKE '%{0}%'");
-            sqlBuilder.Append(" OR WorkPhone LIKE '%{0}%'");
-            sqlBuilder.Append(" OR HomePhone LIKE '%{0}%'");
-            sqlBuilder.Append(" OR Email LIKE '%{0}%'");
-            sqlBuilder.Append(" OR QQ LIKE '%{0}%'");
-            sqlBuilder.Append(" OR Remarks LIKE '%{0}%'");
-            sqlBuilder.Append(" OR WorkAddress LIKE '%{0}%'");
-            sqlBuilder.Append(" OR HomeAddress LIKE '%{0}%'");
-            sqlBuilder.Append(" OR Birthday LIKE '%{0}%'");
-            sqlBuilder.Append(" OR Birthday LIKE '%{0}%'");
-            sqlBuilder.Append(" OR WorkUnit LIKE '%{0}%'");
-            string sql = sqlBuilder.ToString();
-            sql = string.Format(sql, searchValue);
-            DataTable addressTable = DBAccess.RunSQLReturnTable(sql);
-            gridView.DataSource = addressTable;
+            DataTable OA_AddrBookTable = XQueryTool.Query<BP.CCOA.OA_AddrBook>(this.OA_AddrBook, columns, searchValue, m_PageIndex, m_PageSize, null);
+
+            gridView.DataSource = OA_AddrBookTable;
             gridView.DataBind();
 
         }
@@ -109,16 +124,16 @@ namespace Lizard.OA.Web.OA_AddrBook
             {
                 LinkButton linkbtnDel = (LinkButton)e.Row.FindControl("LinkButton1");
                 linkbtnDel.Attributes.Add("onclick", "return confirm(\"你确认要删除吗\")");
-                
+
                 //object obj1 = DataBinder.Eval(e.Row.DataItem, "Levels");
                 //if ((obj1 != null) && ((obj1.ToString() != "")))
                 //{
                 //    e.Row.Cells[1].Text = obj1.ToString();
                 //}
-               
+
             }
         }
-        
+
         protected void gridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             //#warning 代码生成警告：请检查确认真实主键的名称和类型是否正确
@@ -139,7 +154,7 @@ namespace Lizard.OA.Web.OA_AddrBook
                     BxsChkd = true;
                     //#warning 代码生成警告：请检查确认Cells的列索引是否正确
                     if (gridView.DataKeys[i].Value != null)
-                    {                        
+                    {
                         idlist += gridView.DataKeys[i].Value.ToString() + ",";
                     }
                 }
