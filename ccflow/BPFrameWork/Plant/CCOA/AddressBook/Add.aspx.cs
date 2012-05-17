@@ -13,7 +13,7 @@ using Lizard.Common;
 using LTP.Accounts.Bus;
 namespace Lizard.OA.Web.OA_AddrBook
 {
-    public partial class Add : Page
+    public partial class Add : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

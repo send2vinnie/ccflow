@@ -12,9 +12,8 @@ using BP.DA;
 using BP.CCOA;
 namespace Lizard.OA.Web.OA_AddrBook
 {
-    public partial class List : Page
+    public partial class List : BasePage
     {
-        //Lizard.OA.BLL.OA_AddrBook bll = new Lizard.OA.BLL.OA_AddrBook();
         private int m_PageIndex = 1;
 
         private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
@@ -23,27 +22,23 @@ namespace Lizard.OA.Web.OA_AddrBook
         private BP.CCOA.OA_AddrBook OA_AddrBook = new BP.CCOA.OA_AddrBook();
 
         string[] columns = {
-        		                   OA_AddrBookAttr.Mobile,
-        		                   OA_AddrBookAttr.WorkPhone,
-        		                   OA_AddrBookAttr.HomePhone,
-        		                   OA_AddrBookAttr.Name,
-        		                   OA_AddrBookAttr.NickName,
-        		                   OA_AddrBookAttr.Email,
-        		                   OA_AddrBookAttr.QQ,
-        		                   OA_AddrBookAttr.WorkUnit,
-        		                   OA_AddrBookAttr.WorkAddress,
-        		                   OA_AddrBookAttr.HomeAddress,
-        		                   OA_AddrBookAttr.Remarks,
-        		                   };
+        		                OA_AddrBookAttr.Mobile,
+        		                OA_AddrBookAttr.WorkPhone,
+        		                OA_AddrBookAttr.HomePhone,
+        		                OA_AddrBookAttr.Name,
+        		                OA_AddrBookAttr.NickName,
+        		                OA_AddrBookAttr.Email,
+        		                OA_AddrBookAttr.QQ,
+        		                OA_AddrBookAttr.WorkUnit,
+        		                OA_AddrBookAttr.WorkAddress,
+        		                OA_AddrBookAttr.HomeAddress,
+        		                OA_AddrBookAttr.Remarks,
+        		                };
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
-                //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
-                //gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
-                btnDelete.Attributes.Add("onclick", "return confirm(\"你确认要删除吗？\")");
-
                 int rowsCount = this.GetQueryRowsCount();
                 this.XPager1.InitControl(m_PageSize, rowsCount);
 
@@ -67,15 +62,6 @@ namespace Lizard.OA.Web.OA_AddrBook
         {
             string searchValue = Request.QueryString["searchvalue"];
             return XQueryTool.GetRowCount(this.OA_AddrBook, this.columns, searchValue);
-        }
-
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            //string idlist = GetSelIDlist();
-            //if (idlist.Trim().Length == 0) 
-            //    return;
-            //bll.DeleteList(idlist);
-            //BindData();
         }
 
         #region gridView
@@ -132,38 +118,6 @@ namespace Lizard.OA.Web.OA_AddrBook
                 //}
 
             }
-        }
-
-        protected void gridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            //#warning 代码生成警告：请检查确认真实主键的名称和类型是否正确
-            //int ID = (int)gridView.DataKeys[e.RowIndex].Value;
-            //bll.Delete(ID);
-            //gridView.OnBind();
-        }
-
-        private string GetSelIDlist()
-        {
-            string idlist = "";
-            bool BxsChkd = false;
-            for (int i = 0; i < gridView.Rows.Count; i++)
-            {
-                CheckBox ChkBxItem = (CheckBox)gridView.Rows[i].FindControl("DeleteThis");
-                if (ChkBxItem != null && ChkBxItem.Checked)
-                {
-                    BxsChkd = true;
-                    //#warning 代码生成警告：请检查确认Cells的列索引是否正确
-                    if (gridView.DataKeys[i].Value != null)
-                    {
-                        idlist += gridView.DataKeys[i].Value.ToString() + ",";
-                    }
-                }
-            }
-            if (BxsChkd)
-            {
-                idlist = idlist.Substring(0, idlist.LastIndexOf(","));
-            }
-            return idlist;
         }
 
         #endregion
