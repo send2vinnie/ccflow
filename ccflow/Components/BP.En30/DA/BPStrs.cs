@@ -17,7 +17,6 @@ namespace BP.DA
             string pattern = @"^[+-]?\d+$";
             return Regex.IsMatch(value, pattern);
         }
-
         /// <summary>
         /// 判断是否是小数
         /// </summary>
@@ -79,7 +78,6 @@ namespace BP.DA
             string pattern = @"^(\w|\s|[`~!@#\$%\^&\*\(\)_\+\-=\{\}\[\]\:\'\<\>,\.\?\|/\\;""])*$";
             return Regex.IsMatch(value, pattern);
         }
-
         /// <summary>
         /// 判断是否为有效的用户名，包含英文字母、数字、和特殊字符（'_-.&）,特殊字符必须在字母或数字之后，并且只能在字串中间
         /// </summary>
@@ -90,7 +88,6 @@ namespace BP.DA
             string pattern = @"^(([a-zA-z0-9][\'_\-\.\&])*)?[a-zA-z0-9]+$";
             return Regex.IsMatch(value, pattern);
         }
-
         /// <summary>
         /// 判断是否是中文、字母、数字和特殊字符（-_.'&）的组合
         /// </summary>
@@ -101,8 +98,6 @@ namespace BP.DA
             string pattern = @"^(\w|\s|[\'_\-\.\&])*$";
             return Regex.IsMatch(value, pattern);
         }
-
-
         /// <summary>
         /// 获取批量字符
         /// </summary>
@@ -112,7 +107,6 @@ namespace BP.DA
         {
             return Regex.Replace(unit, @"[0-9]", "", RegexOptions.IgnoreCase).ToString();
         }
-
         /// <summary>
         /// 得到批量单位中的数字
         /// </summary>

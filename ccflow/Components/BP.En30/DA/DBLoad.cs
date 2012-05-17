@@ -42,8 +42,6 @@ namespace BP
 			conn.Close();
 			return Table;
 		}
-
-	
 		public static int ImportTableInto(DataTable impTb ,string intoTb, string select ,int clear)
 		{
 			int count = 0;
@@ -89,8 +87,6 @@ namespace BP
 			target.Dispose();
 			return count;
 		}
-
-
 		private static int ImportTable( DataTable source ,DataTable target , SqlDataAdapter sqlada )
 		{
 			int count = 0;

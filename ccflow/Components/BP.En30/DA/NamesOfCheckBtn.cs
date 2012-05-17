@@ -3,21 +3,6 @@ using System;
 namespace BP.Web.Controls
 {
 	/// <summary>
-	/// 名称NamesOfCheckBtn
-	/// </summary>
-	public class NamesOfCheckBtn
-	{
-		/// <summary>
-		/// SelectAll
-		/// </summary>
-		public const string SelectAll="CheckBtn_SelectAll";
-		/// <summary>
-		/// SelectNone
-		/// </summary>
-		public const string SelectNone="CheckBtn_SelectNone";
-
-	}
-	/// <summary>
 	/// 系统自己定义的名称NamesOfBtn
 	/// </summary>
 	public class NamesOfBtn
@@ -46,7 +31,6 @@ namespace BP.Web.Controls
 		/// 到
 		/// </summary>
 		public const string Go="Btn_Go";
-
 		/// <summary>
 		/// 上升
 		/// </summary>
@@ -55,7 +39,6 @@ namespace BP.Web.Controls
 		/// 上传
 		/// </summary>
 		public const string Upload="Btn_Upload";
-
 		/// <summary>
 		/// 下降
 		/// </summary>
@@ -89,7 +72,6 @@ namespace BP.Web.Controls
 		/// </summary>
 	    public const string Excel="Btn_Excel";
         public const string Excel_S = "Btn_Excel_S";
-
 		/// <summary>
 		/// 导出model
 		/// </summary>

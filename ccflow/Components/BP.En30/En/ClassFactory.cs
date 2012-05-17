@@ -16,7 +16,7 @@ namespace BP.DA
 	/// <summary>
 	/// ClassFactory 的摘要说明。
 	/// </summary>
-    public class ClassFactory : IDTS
+    public class ClassFactory 
     {
         #region public moen
         /// <summary>

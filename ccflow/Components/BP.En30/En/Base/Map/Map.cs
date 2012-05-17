@@ -890,30 +890,6 @@ namespace BP.En
         /// 图片DefaultImageUrl
         /// </summary>
         public string Icon = "../Images/En/Default.gif";
-        //public string Icon=null;
-
-        /// <summary>
-        /// 帮助文件
-        /// </summary>
-        //private string _Helper = "./Helper/Helper.htm";
-
-        private string _Helper = null;
-        /// <summary>
-        /// 帮助文件
-        /// </summary>
-        public string Helper
-        {
-            get
-            {
-                if (_Helper == null)
-                    return SystemConfig.HelpUrl;
-                return _Helper;
-            }
-            set
-            {
-                _Helper = value;
-            }
-        }
         /// <summary>
         /// 实体类型
         /// </summary>
@@ -990,9 +966,6 @@ namespace BP.En
                         break;
                     case "ICON":
                         this.Icon = val;
-                        break;
-                    case "Helper":
-                        this.Helper = val;
                         break;
                     case "CodeStruct":
                         this.CodeStruct = val;

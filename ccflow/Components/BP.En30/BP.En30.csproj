@@ -173,16 +173,13 @@
     <Compile Include="DA\Ext\JSON.cs" />
     <Compile Include="DA\Log.cs" />
     <Compile Include="DTS\DataToCash.cs" />
-    <Compile Include="DA\IDTS.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DA\NamesOfCheckBtn.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DA\Para.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DA\RMB.cs">
+    <Compile Include="DA\Ext\RMB.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DA\StringExpressionCalculate.cs">
@@ -487,7 +484,6 @@
     <Compile Include="Sys\EnsAppCfg\EnsAppCfg.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DA\Pub\" />
     <Folder Include="PubLib\SysApp\" />
     <Folder Include="Rpt\RptEn\RptEn\" />
     <Folder Include="Rpt\Self\" />

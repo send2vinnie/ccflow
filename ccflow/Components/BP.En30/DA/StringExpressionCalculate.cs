@@ -46,7 +46,6 @@ namespace BP.DA
 			Expression = Expression.Replace("%","");
             Expression = Expression.Replace("ге", "");
 
-
 			while(Expression.Length > 0)
 			{
 				operand3 = "";

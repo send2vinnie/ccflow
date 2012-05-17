@@ -711,7 +711,6 @@ namespace BP.En
             qo.AddWhere(key2, val2);
             qo.addAnd();
             qo.AddWhere(key3, val3);
-            // qo.AddWhere("sd", " like >" , "sds")
             return qo.DoQuery();
         }
         public virtual int Retrieve()

@@ -20,7 +20,6 @@ namespace BP.DA
                     case System.Data.DbType.Int32:
                     case System.Data.DbType.Int16:
                         return System.Data.OracleClient.OracleType.Number;
-
                     case System.Data.DbType.Int64:
                         return System.Data.OracleClient.OracleType.UInt32;
                     case System.Data.DbType.Decimal:

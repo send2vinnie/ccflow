@@ -25,222 +25,7 @@ using System.Data;
 using System.IO;
 
 namespace BP
-{	 
-	/// <summary>
-	/// 用户编号(用来区分那家用户在使用它)
-	/// </summary>
-    public class CustomerNoList
-    {
-
-        #region 地税局
-        /// <summary>
-        /// 青海地税
-        /// </summary>
-        public const string QHDS = "QHDS";
-        /// <summary>
-        /// 海南地税
-        /// </summary>
-        public const string HNDS = "HNDS";
-        /// <summary>
-        /// 时代智囊
-        /// </summary>
-        public const string CCS = "CCS";
-        /// <summary>
-        /// 莒南县地方税务局
-        /// </summary>
-        public const string DS371327 = "DS371327";
-        /// <summary>
-        /// 蒙阴县地税局
-        /// </summary>
-        public const string DS371328 = "DS371328";
-        /// <summary>
-        /// 费县地税局
-        /// </summary>
-        public const string DS371325 = "DS371325";
-        /// <summary>
-        /// 罗庄区地税局罗庄征收局
-        /// </summary>
-        public const string DS371311 = "DS371311";
-        /// <summary>
-        /// 经济开发区分局
-        /// </summary>
-        public const string DS371307 = "DS371307";
-        /// <summary>
-        /// 苍山县地方税务局
-        /// </summary>
-        public const string DS371324 = "DS371324";
-        /// <summary>
-        /// 沂南县地方税务局
-        /// </summary>
-        public const string DS371321 = "DS371321";
-        /// <summary>
-        /// 市开发区分局
-        /// </summary>
-        public const string DS371306 = "DS371306";
-        /// <summary>
-        /// 临沭县地方税务局
-        /// </summary>
-        public const string DS371329 = "371329";
-        /// <summary>
-        /// 平邑县地税局
-        /// </summary>
-        public const string DS371326 = "DS371326";
-        /// <summary>
-        /// 兰山区地方税务局
-        /// </summary>
-        public const string DS371301 = "DS371301";
-        /// <summary>
-        /// 河东区地方税务局
-        /// </summary>
-        public const string DS371312 = "DS371312";
-        /// <summary>
-        /// DS371323
-        /// </summary>
-        public const string DS371323 = "DS371323";
-        /// <summary>
-        /// 廊坊地税
-        /// </summary>
-        public const string DS1310 = "DS1310";
-        /// <summary>
-        /// 
-        /// </summary>
-        public const string DS5109 = "DS5109";
-        #endregion
-
-        /// <summary>
-        /// 湖北地税
-        /// </summary>
-        public const string HBDS = "HBDS";
-        /// <summary>
-        /// 宣城地税
-        /// </summary>
-        public const string XCDS = "XCDS";
-        /// <summary>
-        /// 沂水国税
-        /// </summary>
-        public const string YSGS = "YSGS";
-        /// <summary>
-        /// 沂水地税
-        /// </summary>
-        public const string YSDS = "YSDS";
-        /// <summary>
-        /// 泰安
-        /// </summary>
-        public const string TA = "TA";
-        /// <summary>
-        /// binbin
-        /// </summary>
-        public const string XinBin = "XinBin";
-        /// <summary>
-        /// 沂水网通
-        /// </summary>
-        public const string YSNet = "YSNet";
-        /// <summary>
-        /// 临沂地税
-        /// </summary>
-        public const string LYTax = "LYTax";
-        /// <summary>
-        /// 海南文昌
-        /// </summary>
-        public const string HNWC = "HNWC";
-    }
-	public class ConfigKeyEns
-	{
-		/// <summary>
-		/// 在新建之前是否插入
-		/// </summary>
-		public const string IsInsertBeforeNew="IsInsertBeforeNew";
-		/// <summary>
-		/// 是否显示导入
-		/// </summary>
-		public const string IsShowDataIn="IsShowDataIn";
-	}
-	/// <summary>
-	/// 系统编号(用系统编号来区分是什么样的系统)
-	/// </summary>
-	public class SysNoList
-	{
-        public const string SG = "SG";
-        /// <summary>
-        /// CDH
-        /// </summary>
-        public const string CDH = "CDH";
-		/// <summary>
-		/// 通用考试系统
-		/// </summary>
-		public const string GTS="GTS";
-		/// <summary>
-		/// 资产管理
-		/// </summary>
-		public const string AM="AM";
-		/// <summary>
-		/// 沂水国税
-		/// </summary>
-		public const string GS="GS";
-		/// <summary>
-		/// 地税流程
-		/// </summary>
-		public const string WF="WF";
-		/// <summary>
-		/// 执法系统
-		/// </summary>
-		public const string ZF="ZF";
-		/// <summary>
-		/// 房地产
-		/// </summary>
-		public const string FDC="FDC";
-		/// <summary>
-		/// 数据门户
-		/// </summary>
-		public const string DP="DP";
-		/// <summary>
-		/// PING GU
-		/// </summary>
-		public const string PG="PG";
-		/// <summary>
-		/// 办公自动化
-		/// </summary>
-		public const string OA="OA";
-		/// <summary>
-		/// 服务器
-		/// </summary>
-		public const string CTISRV="CTISRV";
-		/// <summary>
-		/// 客户
-		/// </summary>
-		public const string CTIClient="CTIClient";
-		/// <summary>
-		/// CT
-		/// </summary>
-		public const string CT="CT";
-		/// <summary>
-		/// 网上申报
-		/// </summary>
-		public const string TP="TP";
-		/// <summary>
-		/// KM
-		/// </summary>
-		public const string KM="KM";
-		/// <summary>
-		/// 公用组件
-		/// </summary>
-		public const string PubComponents="PubComponents";
-		/// <summary>
-		/// 调度
-		/// </summary>
-		public const string DTS="DTS";
-        /// <summary>
-        /// JGLicence
-        /// </summary>
-        public const string JGLicence = "JGLicence";
-
-        public const string CaiShuiRen = "CaiShuiRen";
-        public const string YaoCai = "YaoCai";
-
-
-        public const string Volunteer = "Volunteer";
-        public const string EduAdmin = "EduAdmin";
-	}
+{
     public class ConfigEns
     {
         public const string IsShowRefFunc = "IsShowRefFunc";
@@ -259,17 +44,17 @@ namespace BP
         /// </summary>
         public const string DefSearchAttr = "DefSearchAttr";
     }
-	/// <summary>
-	/// 系统配值
-	/// </summary>
+    /// <summary>
+    /// 系统配值
+    /// </summary>
     public class SystemConfig
     {
-
-
-        #region clear cash date .
+        /// <summary>
+        /// 读取配置文件
+        /// </summary>
+        /// <param name="cfgFile"></param>
         public static void ReadConfigFile(string cfgFile)
         {
-
             try
             {
                 BP.DA.DBAccess.HisConnOfOLEs.Clear();
@@ -291,7 +76,6 @@ namespace BP
             catch
             {
             }
-
             try
             {
 
@@ -331,7 +115,6 @@ namespace BP
             catch
             {
             }
-        #endregion
 
             #region 加载 Web.Config 文件配置
 
@@ -360,7 +143,6 @@ namespace BP
 
             DataSet dscfg = new DataSet("cfg");
             dscfg.ReadXml(tempFile);
-
 
             //    BP.SystemConfig.CS_AppSettings = new System.Collections.Specialized.NameValueCollection();
             BP.SystemConfig.CS_DBConnctionDic.Clear();
@@ -400,14 +182,6 @@ namespace BP
                 }
             }
         }
-        public static string CityNo
-        {
-            get
-            {
-                return AppSettings["CityNo"] as string;
-            }
-        }
-
         public static string CopyRight
         {
             get
@@ -426,21 +200,21 @@ namespace BP
         {
             get
             {
-                string s= AppSettings["CompanyID"];
+                string s = AppSettings["CompanyID"];
                 if (string.IsNullOrEmpty(s))
                     return "CCFlow";
                 return s;
             }
         }
         /// <summary>
-        /// 开发商quan 称（）		 
+        /// 开发商全称		 
         /// </summary>
         public static string DeveloperName
         {
             get { return AppSettings["DeveloperName"]; }
         }
         /// <summary>
-        /// 开发商简称		 
+        /// 开发商简称
         /// </summary>
         public static string DeveloperShortName
         {
@@ -477,8 +251,6 @@ namespace BP
                 return s;
             }
         }
-
-
         #endregion
 
         #region 逻辑处理
@@ -499,7 +271,6 @@ namespace BP
                 _CS_AppSettings = value;
             }
         }
-
         /// <summary>
         /// 封装了AppSettings
         /// </summary>
@@ -509,11 +280,7 @@ namespace BP
             {
                 if (SystemConfig.IsBSsystem)
                 {
-                    //return System.Configuration.ConfigurationSettings.AppSettings;
                     return System.Configuration.ConfigurationManager.AppSettings;
-
-                    //System.Configuration.ConfigurationSettings.GetConfig
-                    // return System.Configuration.con.ConfigurationSettings.AppSettings;
 
                 }
                 else
@@ -577,6 +344,16 @@ namespace BP
                 }
             }
         }
+        public static string PathOfFDB
+        {
+            get
+            {
+                string s = SystemConfig.AppSettings["FDB"];
+                if (s == "" || s == null)
+                    return PathOfWebApp + "\\DataUser\\FDB\\";
+                return s;
+            }
+        }
         public static string PathOfData
         {
             get
@@ -625,7 +402,6 @@ namespace BP
                 return System.Web.HttpContext.Current.Request.ApplicationPath.Replace("/", "");
             }
         }
-
         /// <summary>
         /// WebApp Path.
         /// </summary>
@@ -648,9 +424,8 @@ namespace BP
         }
         #endregion
 
-        #region
+        #region 共同变量。
         public static bool IsBSsystem_Test = true;
-
         /// <summary>
         /// 是不是BS系统结构。
         /// </summary>
@@ -716,30 +491,12 @@ namespace BP
         {
             get
             {
-
-                if (SystemConfig.SysNo == SysNoList.PG)
-                {
-                    switch (SystemConfig.CustomerNo)
-                    {
-                        case "DS1310":
-                            return "廊坊市地税局 - 纳税评估管理系统";
-                        case "DS5115_":
-                            return "宜宾市地税局 - 纳税评估管理系统";
-                        case "DS5109":
-                            return "遂宁市地税局 - 纳税评估管理系统";
-                        case "DS3713":
-                            return "临沂市地税局 - 纳税评估管理系统";
-                        default:
-                            return "未授权软件-没有数据安全的保证";
-                    }
-                }
-                else
-                {
-                    return AppSettings["SysName"];
-                }
+                string s = AppSettings["SysName"];
+                if (s == null)
+                    s = "请在web.config中配置SysName名称。";
+                return s;
             }
         }
-
         public static string OrderWay
         {
             get
@@ -747,7 +504,6 @@ namespace BP
                 return AppSettings["OrderWay"];
             }
         }
-
         public static int PageSize
         {
             get
@@ -762,7 +518,6 @@ namespace BP
                 }
             }
         }
-
         public static int MaxDDLNum
         {
             get
@@ -777,7 +532,6 @@ namespace BP
                 }
             }
         }
-
         public static int PageSpan
         {
             get
@@ -792,7 +546,6 @@ namespace BP
                 }
             }
         }
-
         /// <summary>
         ///  到的路径.PageOfAfterAuthorizeLogin
         /// </summary>
@@ -806,23 +559,6 @@ namespace BP
         public static string PageOfLostSession
         {
             get { return System.Web.HttpContext.Current.Request.ApplicationPath + "/" + AppSettings["PageOfLostSession"]; }
-        }
-        /// <summary>
-        /// BBS
-        /// </summary>
-        public static string PageOfBBS
-        {
-            get { return AppSettings["PageOfBBS"]; }
-        }
-        public static string PathOfFDB
-        {
-            get
-            {
-                string s = SystemConfig.AppSettings["FDB"];
-                if (s == "" || s == null)
-                    return PathOfWebApp + "\\Data\\FDB\\";
-                return s;
-            }
         }
         /// <summary>
         /// 日志路径
@@ -874,31 +610,6 @@ namespace BP
             }
         }
         /// <summary>
-        /// 第3方软件db类型．
-        /// </summary>
-        public static DA.DBType ThirdPartySoftDBType
-        {
-            get
-            {
-                if (AppSettings["ThirdPartySoftDBType"] == "Oracle")
-                {
-                    return DA.DBType.Oracle9i;
-                }
-                else if (AppSettings["ThirdPartySoftDBType"] == "Sybase")
-                {
-                    return DA.DBType.Sybase;
-                }
-                else if (AppSettings["ThirdPartySoftDBType"] == "SQL2000")
-                {
-                    return DA.DBType.SQL2000;
-                }
-                else
-                {
-                    throw new Exception("ThirdPartySoftDBType error ");
-                }
-            }
-        }
-        /// <summary>
         /// 是否 debug 状态
         /// </summary>
         public static bool IsDebug
@@ -921,7 +632,7 @@ namespace BP
                     return false;
             }
         }
-        
+
         public static bool IsOpenSQLCheck
         {
             get
@@ -958,7 +669,6 @@ namespace BP
                     return false;
             }
         }
-
         /// <summary>
         /// 是不是多语言版本
         /// </summary>
@@ -1090,11 +800,7 @@ namespace BP
         /// <returns></returns>
         public static NameValueCollection GetConfig(string key)
         {
-            //Hashtable ht = (Hashtable)ConfigurationSettings.GetConfig("NestedNamesSection");
-
             Hashtable ht = (Hashtable)System.Configuration.ConfigurationManager.GetSection("NestedNamesSection");
-            //Hashtable ht = (Hashtable)System.Configuration.ConfigurationManager.GetSection("NestedNamesSection");
-
             return (NameValueCollection)ht[key];
         }
         public static string GetValByKey(string key, string isNullas)
@@ -1258,16 +964,6 @@ namespace BP
         }
 
         #region dsn
-        public static string HelpUrl
-        {
-            get
-            {
-                string url = AppSettings["HelpUrl"] as string;
-                if (url == null || url == "")
-                    url = "./Helper/Helper.htm";
-                return url;
-            }
-        }
         public static string AppCenterDSN
         {
             get
@@ -1360,7 +1056,7 @@ namespace BP
             }
         }
         /// <summary>
-        /// 
+        /// 获取不同类型的数据库变量标记
         /// </summary>
         public static string AppCenterDBVarStr
         {
@@ -1375,7 +1071,9 @@ namespace BP
                 }
             }
         }
-
+        /// <summary>
+        /// 获取不同类型的substring函数的书写
+        /// </summary>
         public static string AppCenterDBSubstringStr
         {
             get

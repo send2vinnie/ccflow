@@ -429,7 +429,6 @@ namespace BP.En
 							return 0;
 							//throw new Exception("@设置["+this.Key+"]默认值出现错误，["+_defaultVal.ToString()+"]不能向 int 转换。");
 						}
-					 
 					case   DataType.AppMoney :
 						if (this._defaultVal==null)
 							return 0;
@@ -458,7 +457,6 @@ namespace BP.En
 					case   DataType.AppBoolean :
 						if (this._defaultVal==null || this._defaultVal.ToString()=="" ) 
 							return 0;
-					 
 						try
 						{ 
 							if ( DataType.StringToBoolean(this._defaultVal.ToString())  )

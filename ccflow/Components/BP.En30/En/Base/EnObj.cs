@@ -632,13 +632,24 @@ namespace BP.En
         /// <returns></returns>
         public int GetValIntByKey(string key)
         {
-
             try
             {
                 return int.Parse(this.GetValStrByKey(key));
             }
             catch (Exception ex)
             {
+                string v=this.GetValStrByKey(key).ToLower();
+                if (v == "true")
+                {
+                    this.SetValByKey(key, 1);
+                    return 1;
+                }
+                if (v == "false")
+                {
+                    this.SetValByKey(key, 0);
+                    return 0;
+                }
+
                 if (key == "OID")
                 {
                     this.SetValByKey("OID", 0);

@@ -460,24 +460,7 @@ namespace BP.DA
             sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey='OID'";
             return DBAccess.RunSQLReturnValInt(sql);
         }
-        public static int GenerOID_BAK2010_08_09()
-        {
-            int i = 0;
-            while (l_OID == true)
-            {
-                ;
-            }
-            l_OID = true;
-            string sql = "";
-
-            if (DBAccess.RunSQL("UPDATE Sys_Serial SET IntVal=IntVal+1 WHERE CfgKey='OID'") == 0)
-                DBAccess.RunSQL("INSERT INTO Sys_Serial (CfgKey,IntVal) VALUES ('OID',1)");
-
-            sql = "SELECT  IntVal FROM Sys_Serial WHERE CfgKey='OID'";
-            i = DBAccess.RunSQLReturnValInt(sql);
-            l_OID = false;
-            return i;
-        }
+       
         public static int GenerOIDV2()
         {
             return DBAccess.RunSPReturnInt("GenerOID");
@@ -1135,14 +1118,12 @@ namespace BP.DA
             catch (Exception ex)
             {
                 string msg = "";
-
                 string mysql = sql.Clone() as string;
                 foreach (Para p in paras)
                 {
                     msg += "@" + p.ParaName + "=" + p.val + "," + p.DAType.ToString();
                     mysql = mysql.Replace(":" + p.ParaName + ",", "'" + p.val + "',");
                 }
-
                 throw new Exception(ex.Message + " Paras=" + msg + "<hr>" + mysql);
             }
         }
@@ -1215,8 +1196,6 @@ namespace BP.DA
                 foreach (Para para in paras)
                 {
                     SqlParameter oraP = new SqlParameter(para.ParaName, para.val);
-                    //oraP.Size = para.Size;
-                    //oraP.Value = para.val;
                     cmd.Parameters.Add(oraP);
                 }
 

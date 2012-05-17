@@ -665,7 +665,7 @@ namespace BP.Sys
                 map.AddDDLSysEnum(MapDtlAttr.WhenOverSize, 0, "WhenOverSize", true, true,
                  MapDtlAttr.WhenOverSize, "@0=不处理@1=向下顺增行@2=次页显示");
 
-                map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 0, "数据开放类型", true, true,
+                map.AddDDLSysEnum(MapDtlAttr.DtlOpenType, 1, "数据开放类型", true, true,
                     MapDtlAttr.DtlOpenType, "@0=操作员@1=工作ID@2=流程ID");
 
                 map.AddDDLSysEnum(MapDtlAttr.DtlShowModel, 0, "显示格式", true, true,
