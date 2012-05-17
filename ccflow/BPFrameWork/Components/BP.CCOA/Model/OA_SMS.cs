@@ -100,11 +100,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public String SendTime
+        public DateTime SendTime
         {
             get
             {
-                return this.GetValStringByKey(OA_SMSAttr.SendTime);
+                return this.GetValDateTime(OA_SMSAttr.SendTime);
             }
             set
             {
@@ -115,11 +115,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public String ReciveTime
+        public DateTime ReciveTime
         {
             get
             {
-                return this.GetValStringByKey(OA_SMSAttr.ReciveTime);
+                return this.GetValDateTime(OA_SMSAttr.ReciveTime);
             }
             set
             {

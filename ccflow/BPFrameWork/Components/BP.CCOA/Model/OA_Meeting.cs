@@ -243,7 +243,7 @@ namespace BP.CCOA
         /// <summary>
         /// 状态：0-未召开1-已召开
         /// </summary>
-        public Object Status
+        public bool Status
         {
             get
             {
