@@ -80,18 +80,60 @@
 }
 .lizard-grid tr
 {
-    border:solid 1px #e5e5e5;
+    border: solid 1px #e5e5e5;
 }
 .lizard-grid tr th
 {
-    color:Gray;
-    border:none;
-    background:#e5e5e5;
-    height:20px;
-    line-height:20px;
+    color: Gray;
+    border: none;
+    height: 20px;
+    line-height: 20px;
+    background: #E7EBEF url(default/images/grid/header.png) repeat-x 0 0;
 }
 .lizard-grid tr td
 {
-    color:Gray;
-    border:none;
+    color: Gray;
+    border: none;
 }
+
+.attachment
+{
+    border-top: solid 1px #e5e5e5;
+}
+
+.attachment h3
+{
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    margin: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.attachment-file
+{
+    font-size: 12px;
+    height: 40px;
+}
+.attachment-file th
+{
+    width: 40px;
+}
+.attachment-file tr td ul
+{
+    margin: 0;
+}
+.attachment-file tr td ul li
+{
+    list-style-type: none;
+}
+
+.lizard-pager
+{
+    font-family:微软雅黑;
+    border:1px solid #e5e5e5;
+    background: #E7EBEF url(default/images/grid/footer.png) repeat-x 0 0;
+}
+
+
+
