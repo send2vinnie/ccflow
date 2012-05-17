@@ -13,8 +13,8 @@ public partial class CCOA_Home : System.Web.UI.Page
     {
         if (!Page.IsPostBack)
         {
-            Channel channel = new Channel();
-            channel.CheckPhysicsTable();
+            //Channel channel = new Channel();
+            //channel.CheckPhysicsTable();
 
             //Article article = new Article();
             //article.CheckPhysicsTable();
@@ -25,56 +25,56 @@ public partial class CCOA_Home : System.Web.UI.Page
             //EmpInfo empinfo = new EmpInfo();
             //empinfo.CheckPhysicsTable();
 
-            AddrBook ab = new AddrBook();
-            ab.CheckPhysicsTable();
+            //AddrBook ab = new AddrBook();
+            //ab.CheckPhysicsTable();
 
-            AddrBookDept abd = new AddrBookDept();
-            abd.CheckPhysicsTable();
+            //AddrBookDept abd = new AddrBookDept();
+            //abd.CheckPhysicsTable();
 
-            BP.GPM.Menu menu = new BP.GPM.Menu();
-            menu.CheckPhysicsTable();
+            //BP.GPM.Menu menu = new BP.GPM.Menu();
+            //menu.CheckPhysicsTable();
 
-            BP.CCOA.APP_ChangeLog cl = new APP_ChangeLog();
-            cl.CheckPhysicsTable();
+            //BP.CCOA.APP_ChangeLog cl = new APP_ChangeLog();
+            //cl.CheckPhysicsTable();
 
-            BP.CCOA.APP_Domain domain = new APP_Domain();
-            domain.CheckPhysicsTable();
+            //BP.CCOA.APP_Domain domain = new APP_Domain();
+            //domain.CheckPhysicsTable();
 
-            BP.CCOA.APP_Function f = new APP_Function();
-            f.CheckPhysicsTable();
+            //BP.CCOA.APP_Function f = new APP_Function();
+            //f.CheckPhysicsTable();
 
-            BP.CCOA.APP_Role r = new APP_Role();
-            r.CheckPhysicsTable();
+            //BP.CCOA.APP_Role r = new APP_Role();
+            //r.CheckPhysicsTable();
 
-            BP.CCOA.APP_Rule rule = new APP_Rule();
-            rule.CheckPhysicsTable();
+            //BP.CCOA.APP_Rule rule = new APP_Rule();
+            //rule.CheckPhysicsTable();
 
-            BP.CCOA.APP_User user = new APP_User();
-            user.CheckPhysicsTable();
+            //BP.CCOA.APP_User user = new APP_User();
+            //user.CheckPhysicsTable();
 
-            BP.CCOA.EIP_Emp emp = new EIP_Emp();
-            emp.CheckPhysicsTable();
+            //BP.CCOA.EIP_Emp emp = new EIP_Emp();
+            //emp.CheckPhysicsTable();
 
-            BP.CCOA.OA_AddrBook ad = new OA_AddrBook();
-            ad.CheckPhysicsTable();
+            //BP.CCOA.OA_AddrBook ad = new OA_AddrBook();
+            //ad.CheckPhysicsTable();
 
-            BP.CCOA.OA_AddrGrouping ag = new OA_AddrGrouping();
-            ag.CheckPhysicsTable();
+            //BP.CCOA.OA_AddrGrouping ag = new OA_AddrGrouping();
+            //ag.CheckPhysicsTable();
 
-            BP.CCOA.OA_Attachment oa = new OA_Attachment();
-            oa.CheckPhysicsTable();
+            //BP.CCOA.OA_Attachment oa = new OA_Attachment();
+            //oa.CheckPhysicsTable();
 
-            BP.CCOA.OA_Channel oa_channel = new OA_Channel();
-            oa_channel.CheckPhysicsTable();
+            //BP.CCOA.OA_Channel oa_channel = new OA_Channel();
+            //oa_channel.CheckPhysicsTable();
 
-            BP.CCOA.OA_Meeting me = new OA_Meeting();
-            me.CheckPhysicsTable();
+            //BP.CCOA.OA_Meeting me = new OA_Meeting();
+            //me.CheckPhysicsTable();
 
-            BP.CCOA.OA_Message message = new OA_Message();
-            message.CheckPhysicsTable();
+            //BP.CCOA.OA_Message message = new OA_Message();
+            //message.CheckPhysicsTable();
 
-            BP.CCOA.OA_SMS sms = new OA_SMS();
-            sms.CheckPhysicsTable();
+            //BP.CCOA.OA_SMS sms = new OA_SMS();
+            //sms.CheckPhysicsTable();
         }
     }
 }

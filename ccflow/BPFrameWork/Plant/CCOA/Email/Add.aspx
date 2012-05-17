@@ -9,8 +9,11 @@
     <script src="../../Comm/Scripts/jquery-1.6.2.min.js" type="text/javascript"></script>
     <script src="../../Comm/Scripts/miniui/miniui.js" type="text/javascript"></script>
     <script src="../../Comm/Scripts/kindeditor/kindeditor.js" type="text/javascript"></script>
+    <script src="../../Comm/Scripts/CommonLibs/TreeSelectWindow.js" type="text/javascript"></script>
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+    <link href="../../Comm/Scripts/miniui/themes/default/miniui.css" rel="stylesheet"
+        type="text/css" />
     <link href="../../Comm/Scripts/kindeditor/themes/default/default.css" rel="stylesheet"
         type="text/css" />
     <script type="text/javascript">
@@ -32,6 +35,35 @@
 		    'insertunorderedlist', '|', 'emoticons', 'image', 'link']
             });
         });
+
+        function onButtonEdit() {
+            //var buttonEdit = e.sender;
+            var buttonEdit = $("#txtAddressee");
+
+            mini.openTop({
+                url: "../../CCOA/AddressBook/AddrTree.aspx",
+                showMaxButton: false,
+                title: "从通讯录中添加",
+                width: 400,
+                height: 420,
+                onload: function () {
+                    var iframe = this.getIFrameEl();
+                    //iframe.contentWindow.SetData(null);
+                },
+                ondestory: function (action) {
+
+                    if (action == "ok") {
+                        var iframe = this.getIFrameEl();
+
+                        var data = iframe.contentWindow.GetData();
+                        data = mini.clone(data);
+
+                        //btnEdit1.setValue(data.id);
+                        //btnEdit1.setText(data.text);
+                    }
+                }
+            });
+        }
         
     </script>
 </head>
@@ -42,7 +74,7 @@
             <td class="tdbg">
                 <table cellspacing="0" cellpadding="0" width="100%" border="0">
                     <tr style="display: none">
-                        <td height="25" width="30%" align="right">
+                        <td height="25" width="10%" align="right">
                             主键Id ：
                         </td>
                         <td height="25" width="*" align="left">
@@ -50,7 +82,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td height="25" width="30%" align="right">
+                        <td height="25" width="10%" align="right">
                             主题 ：
                         </td>
                         <td height="25" width="*" align="left">
@@ -58,31 +90,31 @@
                         </td>
                     </tr>
                     <tr>
-                        <td height="25" width="30%" align="right">
+                        <td height="25" width="10%" align="right">
                             发件人 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtAddresser" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtAddresser" runat="server" Width="200px" ReadOnly="true"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
-                        <td height="25" width="30%" align="right">
-                            收件人 ：
+                        <td height="25" width="10%" align="right">
+                            <a href="#" onclick="onButtonEdit()">收件人</a> ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtAddressee" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtAddressee" runat="server" class="mini-textbox" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
-                        <td height="25" width="30%" align="right">
+                        <td height="25" width="10%" align="right">
                             邮件内容 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtContent" runat="server" Width="600px" TextMode="MultiLine" Height="240px"></asp:TextBox>
+                            <asp:TextBox ID="txtContent" runat="server" Width="100%" TextMode="MultiLine" Height="300px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
-                        <td height="25" width="30%" align="right">
+                        <td height="25" width="10%" align="right">
                             类型：
                         </td>
                         <td height="25" width="*" align="left">
@@ -93,22 +125,17 @@
                             </asp:CheckBoxList>
                         </td>
                     </tr>
-                    <%-- <tr>
-                        <td height="25" width="30%" align="right">
-                            分类：0-收件箱1-草稿箱2- ：
-                        </td>
-                        <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtCategory" runat="server" Width="200px"></asp:TextBox>
-                        </td>
-                    </tr>--%>
                 </table>
                 <script src="/js/calendar1.js" type="text/javascript"></script>
             </td>
         </tr>
         <tr>
             <td class="tdbg" align="center" valign="bottom">
-                <asp:Button ID="btnSave" runat="server" Text="保存" OnClick="btnSave_Click" class="inputbutton"
+                <asp:Button ID="btnSave" runat="server" Text="发送" OnClick="btnSave_Click" class="inputbutton"
                     onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
+                </asp:Button>
+                <asp:Button ID="btnSaveDraft" runat="server" Text="存草稿" OnClick="btnSaveDraft_Click"
+                    class="inputbutton" onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
                 </asp:Button>
                 <asp:Button ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" class="inputbutton"
                     onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">

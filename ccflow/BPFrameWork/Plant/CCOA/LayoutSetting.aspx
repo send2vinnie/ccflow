@@ -1,9 +1,17 @@
-﻿<%@ Page Title="EIP_LayoutDetail" MasterPageFile="~/CCOA/WinOpen.master" Language="C#"
-    AutoEventWireup="true" CodeFile="LayoutSetting.aspx.cs" Inherits="Lizard.OA.Web.EIP_LayoutDetail.List" %>
+﻿<%@ Page Title="EIP_LayoutDetail" Language="C#" AutoEventWireup="true" CodeFile="LayoutSetting.aspx.cs"
+    Inherits="Lizard.OA.Web.EIP_LayoutDetail.List" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+    <link href="Style/control.css" rel="stylesheet" type="text/css" />
+    <link href="Style/demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form runat="server">
     <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
         <tr>
             <td style="width: 80px" align="right" class="tdbg">
@@ -20,7 +28,7 @@
     </table>
     <!--Search end-->
     <br />
-    <asp:GridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
+    <lizard:XGridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
         OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
         OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
         RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">
@@ -50,7 +58,7 @@
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
-    </asp:GridView>
+    </lizard:XGridView>
     <table border="0" cellpadding="0" cellspacing="1" style="width: 100%;">
         <tr>
             <td style="width: 1px;">
@@ -60,4 +68,6 @@
             </td>
         </tr>
     </table>
-</asp:Content>
+    </form>
+</body>
+</html>

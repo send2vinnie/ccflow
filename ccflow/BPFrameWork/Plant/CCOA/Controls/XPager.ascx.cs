@@ -38,7 +38,7 @@ public partial class CCOA_Control_XPager : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        this.PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
     }
 
     public void InitControl()
@@ -53,7 +53,8 @@ public partial class CCOA_Control_XPager : System.Web.UI.UserControl
     /// <param name="recordCount">全部记录条数</param>
     public void InitControl(int pageSize, int recordCount)
     {
-        this.PageSize = pageSize == 0 ? 10 : pageSize;
+        //this.PageSize = pageSize == 0 ? 10 : PageSize;
+        this.PageSize = pageSize;
         this.RecordCount = recordCount;
 
         PageCount = RecordCount / PageSize;

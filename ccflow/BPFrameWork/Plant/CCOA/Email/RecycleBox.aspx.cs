@@ -12,7 +12,7 @@ using BP.DA;
 using BP.CCOA;
 namespace Lizard.OA.Web.OA_Email
 {
-    public partial class RecycleBox : Page
+    public partial class RecycleBox : BasePage
     {
         BP.CCOA.OA_Email bll = new BP.CCOA.OA_Email();
 

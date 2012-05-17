@@ -10,7 +10,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Text;
 
-public partial class CCOA_Email_Show : Page
+public partial class CCOA_Email_Show : BasePage
 {
     public string strid = "";
     protected void Page_Load(object sender, EventArgs e)

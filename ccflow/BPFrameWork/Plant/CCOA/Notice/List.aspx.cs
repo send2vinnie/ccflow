@@ -12,7 +12,7 @@ using BP.DA;
 using BP.CCOA;
 namespace Lizard.OA.Web.OA_Notice
 {
-    public partial class List : Page
+    public partial class List : BasePage
     {
         BP.CCOA.OA_Notice bll = new BP.CCOA.OA_Notice();
 

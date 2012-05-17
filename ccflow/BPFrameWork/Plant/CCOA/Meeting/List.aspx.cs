@@ -13,7 +13,7 @@ using BP.CCOA;
 using System.Configuration;
 namespace Lizard.OA.Web.OA_Meeting
 {
-    public partial class List : Page
+    public partial class List : BasePage
     {
 
         private int m_PageIndex = 1;

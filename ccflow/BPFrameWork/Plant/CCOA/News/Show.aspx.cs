@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Text;
 namespace Lizard.OA.Web.OA_News
 {
-    public partial class Show : Page
+    public partial class Show : BasePage
     {
         public string strid = "";
         protected void Page_Load(object sender, EventArgs e)

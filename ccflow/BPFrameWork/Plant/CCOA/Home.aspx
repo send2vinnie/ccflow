@@ -70,13 +70,46 @@
                 }
             });
         }
+
+        function openLayout() {
+
+            var index = 1;
+            var tabs = mini.get("tabs1");
+            var objTabs = tabs.tabs;
+            for (var i = 0; i < objTabs.length; i++) {
+                if (objTabs[i].title == "布局设置") {
+                    tabs.activeTab(objTabs[i]);
+                    return;
+                }
+            }
+
+            //add tab
+            var i = index++;
+            var tab = { title: "布局设置", url: "LayoutSetting.aspx", showCloseButton: true };
+            tab.ondestroy = function (e) {
+                var tabs = e.sender;
+                var iframe = tabs.getTabIFrameEl(e.tab);
+
+                //获取子页面返回数据
+                var pageReturnData = iframe.contentWindow.getData ? iframe.contentWindow.getData() : "";
+
+                //alert(e.tab.removeAction + " : " + pageReturnData);
+
+                //如果禁止销毁的时候，自动active一个新tab：e.autoActive = false;
+            }
+            tabs.addTab(tab);
+
+            //active tab
+            tabs.activeTab(tab);
+        }
        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <div id="tabs1" class="mini-tabs" activeindex="0" style="width: 100%; height: 515px;">
         <div title="工作台" iconcls="icon-add">
-            <input type="button" onclick="saveLayout()" value="保存配置" />
+            <a href="#" onclick="openLayout()">布局设置</a> 
+            <a href="#" onclick="saveLayout()">保存配置</a>
             <div id="content">
             </div>
         </div>

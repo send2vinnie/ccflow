@@ -13,7 +13,7 @@ using Lizard.Common;
 using LTP.Accounts.Bus;
 namespace Lizard.OA.Web.OA_News
 {
-    public partial class Modify : Page
+    public partial class Modify : BasePage
     {       
 
         		protected void Page_Load(object sender, EventArgs e)

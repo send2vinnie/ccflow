@@ -15,7 +15,7 @@
     <form id="form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="OutBox.aspx" />
     <br />
-    <asp:GridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
+    <lizard:XGridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
         OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
         OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
         RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated" CssClass="lizard-grid">
@@ -52,7 +52,7 @@
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
-    </asp:GridView>
+    </lizard:XGridView>
     <xuc:XPager ID="XPager1" runat="server" OnPagerChanged="XPager1_PagerChanged" />
     &nbsp;<table border="0" cellpadding="0" cellspacing="1" style="width: 100%;">
         <tr>

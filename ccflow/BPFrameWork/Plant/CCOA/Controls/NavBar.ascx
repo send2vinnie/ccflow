@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="NavBar.ascx.cs" Inherits="XControls_NavBar" %>
-<div id="navbar1" class="mini-navbarmenu" url="<%=MenuUrl %>" activeindex="0" style="width: 100%;
+<div id="navbar1" class="mini-navbartree" url="<%=MenuUrl %>" activeindex="0" style="width: 100%;
     height: 500px;" autocollapse="true" idfield="id" parentfield="pid" textfield="text"
-    resultastree="false" onitemselect="onItemSelect">
+    resultastree="false" showTreeLines="false" onnodeselect="onNodeSelect">
 </div>
 <script type="text/javascript">
 
@@ -9,7 +9,20 @@
         var item = e.item;
         //iframe.src = item.url;
         //alert(item.url);
+        //alert(window.location.href);
+        //        if (window.location.href!="") {
+
+        //        }
         addTab(item.text, item.url);
+    }
+
+    function onNodeSelect(e) {
+        var node = e.node;
+        var isLeaf = e.isLeaf;
+
+        if (isLeaf) {
+            addTab(node.text,node.url);
+        }
     }
     var index = 1;
     function addTab(itemTitle, itemUrl) {

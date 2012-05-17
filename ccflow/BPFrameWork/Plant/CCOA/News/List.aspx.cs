@@ -12,7 +12,7 @@ using BP.DA;
 using BP.CCOA;
 namespace Lizard.OA.Web.OA_News
 {
-    public partial class List : Page
+    public partial class List : BasePage
     {
         BP.CCOA.OA_News bll = new BP.CCOA.OA_News();
 
@@ -33,10 +33,6 @@ namespace Lizard.OA.Web.OA_News
         {
             if (!Page.IsPostBack)
             {
-                //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
-                //gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
-                btnDelete.Attributes.Add("onclick", "return confirm(\"你确认要删除吗？\")");
-
                 int rowsCount = this.GetQueryRowsCount();
                 this.XPager1.InitControl(this.m_PageSize, rowsCount);
 
@@ -59,15 +55,6 @@ namespace Lizard.OA.Web.OA_News
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            BindData();
-        }
-
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            //string idlist = GetSelIDlist();
-            //if (idlist.Trim().Length == 0) 
-            //    return;
-            //bll.DeleteList(idlist);
             BindData();
         }
 
@@ -128,14 +115,6 @@ namespace Lizard.OA.Web.OA_News
                 //    e.Row.Cells[1].Text = obj1.ToString();
                 //}
             }
-        }
-
-        protected void gridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            //#warning 代码生成警告：请检查确认真实主键的名称和类型是否正确
-            //int ID = (int)gridView.DataKeys[e.RowIndex].Value;
-            //bll.Delete(ID);
-            //gridView.OnBind();
         }
 
         private string GetSelIDlist()

@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Text;
 using Lizard.Common;
 
-public partial class CCOA_Email_Add : Page
+public partial class CCOA_Email_Add : BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -20,9 +20,13 @@ public partial class CCOA_Email_Add : Page
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
+        Save();
+    }
 
+    private void Save()
+    {
         string strErr = "";
-     
+
         if (this.txtSubject.Text.Trim().Length == 0)
         {
             strErr += "主题不能为空！\\n";
@@ -81,12 +85,16 @@ public partial class CCOA_Email_Add : Page
         //BP.CCOA.OA_Email bll = new BP.CCOA.OA_Email();
         //bll.Add(model);
         Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "add.aspx");
+    }
 
+    protected void btnSaveDraft_Click(object sender, EventArgs e)
+    {
+        Save();
     }
 
     public void btnCancle_Click(object sender, EventArgs e)
     {
-        Response.Redirect("list.aspx");
+        Response.Redirect("Inbox.aspx");
     }
 }
 

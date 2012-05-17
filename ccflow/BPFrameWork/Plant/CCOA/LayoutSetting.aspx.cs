@@ -10,7 +10,7 @@ using System.Drawing;
 using LTP.Accounts.Bus;
 namespace Lizard.OA.Web.EIP_LayoutDetail
 {
-    public partial class List : Page
+    public partial class List : BasePage
     {
         BP.CCOA.EIP_LayoutDetail bll = new BP.CCOA.EIP_LayoutDetail();
 

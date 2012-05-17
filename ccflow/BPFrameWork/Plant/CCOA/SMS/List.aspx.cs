@@ -12,7 +12,7 @@ using BP.DA;
 using BP.CCOA;
 namespace Lizard.OA.Web.OA_SMS
 {
-    public partial class List : Page
+    public partial class List : BasePage
     {
 
         private int m_PageIndex = 1;

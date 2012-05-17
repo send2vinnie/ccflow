@@ -34,7 +34,7 @@
                     </div>
                     <div>
                         <div class="clear hideSkiplink">
-                            <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false"
+                           <%-- <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false"
                                 IncludeStyleBlock="false" Orientation="Horizontal">
                                 <Items>
                                     <asp:MenuItem NavigateUrl="~/CCOA/Home.aspx" Text="主页" />
@@ -62,7 +62,7 @@
                                     <asp:MenuItem NavigateUrl="~/CCOA/Home.aspx" Text="OA" />
                                     <asp:MenuItem NavigateUrl="~/About.aspx" Text="关于" />
                                 </Items>
-                            </asp:Menu>
+                            </asp:Menu>--%>
                         </div>
                     </div>
                     <div style="clear: both;">
@@ -72,7 +72,7 @@
             <tr>
                 <td>
                     <div id="divBody">
-                        <a href="LayoutSetting.aspx">布局设置</a>
+                      
                         <div class="mini-splitter" style="width: 100%; height: 520px;">
                             <div size="16%" showcollapsebutton="true">
                                 <uc1:NavBar ID="NavBar1" runat="server" MenuUrl="AjaxMenu.aspx" />

@@ -12,7 +12,7 @@ using System.Text;
 using Lizard.Common;
 using LTP.Accounts.Bus;
 
-public partial class CCOA_Email_Modify : Page
+public partial class CCOA_Email_Modify : BasePage
 {
 
     protected void Page_Load(object sender, EventArgs e)

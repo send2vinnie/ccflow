@@ -13,7 +13,7 @@ using BP.En;
 using BP.CCOA;
 namespace Lizard.OA.Web.OA_Email
 {
-    public partial class Inbox : Page
+    public partial class Inbox : BasePage
     {
         BP.CCOA.OA_Email bll = new BP.CCOA.OA_Email();
 

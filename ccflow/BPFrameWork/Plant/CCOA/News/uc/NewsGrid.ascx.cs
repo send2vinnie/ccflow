@@ -22,7 +22,7 @@ public partial class CCOA_News_uc_NewsGrid : BP.Web.UC.UCBase3
         {
             int count = 0;
             //Attachment a = new Attachment();
-            //DataTable dt = m_Dal.SelectAll(1, PageSize == 0 ? 10 : PageSize, out count);
+            //DataTable dt = m_Dal.SelectAll(1, PageSize == 0 ? 10 : BasePageSize, out count);
             //PageCounter.InitControl(this.PageSize, count);
             //this.Bind(dt);
             //this.BindSearch();
@@ -120,7 +120,7 @@ public partial class CCOA_News_uc_NewsGrid : BP.Web.UC.UCBase3
     public void Rebind()
     {
         //int count = 0;
-        //DataTable dt = m_Dal.SelectAll(1, PageSize == 0 ? 10 : PageSize, out count);
+        //DataTable dt = m_Dal.SelectAll(1, PageSize == 0 ? 10 : BasePageSize, out count);
         //PageCounter.InitControl(this.PageSize, count);
         //this.Bind(dt);
     }
