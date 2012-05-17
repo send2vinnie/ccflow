@@ -2,6 +2,7 @@
     Title="显示页" %>
 
 <%@ Register Src="../Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
+<%@ Register Src="../Controls/Attachment.ascx" TagName="Attachment" TagPrefix="uc2" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
@@ -85,7 +86,7 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <asp:Label ID="lblNewsContent" runat="server" Width="600px" Height="500px"></asp:Label>
+                    <asp:Label ID="lblNewsContent" runat="server" Width="600px" ></asp:Label>
                 </td>
             </tr>
             <tr>
@@ -96,14 +97,8 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
+                <td bgcolor="#CCCCFF" colspan="3">
+                    <uc2:Attachment ID="Attachment1" runat="server" EnumType="News" />
                 </td>
             </tr>
         </table>
