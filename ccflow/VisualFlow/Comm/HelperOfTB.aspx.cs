@@ -39,16 +39,6 @@ namespace BP.Web.Comm.UI
             }
         }
         /// <summary>
-        /// CheckBtn
-        /// </summary>
-        public BP.Web.Controls.ToolbarCheckBtn CheckBtn
-        {
-            get
-            {
-                return this.BPToolBar1.GetCheckBtnByKey(NamesOfCheckBtn.SelectAll);
-            }
-        }
-        /// <summary>
         /// ¿‡√˚≥∆
         /// </summary>
         public string EnsName
@@ -291,8 +281,6 @@ namespace BP.Web.Comm.UI
                     case NamesOfBtn.New:
                         //this.DG1.SelectedIndex =-1;
                         this.TB_Key.Text = "";
-                        break;
-                    case NamesOfCheckBtn.SelectAll:
                         break;
                     case NamesOfBtn.Help:
                         this.Helper();

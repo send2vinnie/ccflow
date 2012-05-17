@@ -376,9 +376,9 @@ namespace BP.Web.Comm
                     case NamesOfBtn.Copy:
                         Copy();
                         break;
-                    case NamesOfBtn.Help:
-                        this.Helper(this.GetEns.GetNewEntity.EnMap.Helper);
-                        break;
+                    //case NamesOfBtn.Help:
+                    //  //  this.Helper(this.GetEns.GetNewEntity.EnMap.Helper);
+                    //    break;
                     case NamesOfBtn.New:
                         //   New();
                         this.Response.Redirect("UIEn.aspx?EnsName=" + this.EnsName, true);
@@ -504,12 +504,12 @@ namespace BP.Web.Comm
                     if (this.CurrEn.GetValStringByKey("No") == "")
                     {
                         this.CurrEn.SetValByKey("No", this.CurrEn.GenerNewNoByKey("No"));
-                        string val = SystemConfig.GetConfigXmlEns(ConfigKeyEns.IsInsertBeforeNew, CurrEn.ToString());
-                        if (val == "1")
-                        {
-                            //CurrEn.SetValByKey("No",dr[attr.Key]);
-                            CurrEn.Insert();
-                        }
+                        //string val = SystemConfig.GetConfigXmlEns(ConfigKeyEns.IsInsertBeforeNew, CurrEn.ToString());
+                        //if (val == "1")
+                        //{
+                        //    //CurrEn.SetValByKey("No",dr[attr.Key]);
+                        //    CurrEn.Insert();
+                        //}
                     }
                 }
             }
