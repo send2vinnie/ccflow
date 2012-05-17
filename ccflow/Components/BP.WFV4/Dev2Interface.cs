@@ -235,7 +235,7 @@ namespace BP.WF
             return DB_GenerCanStartFlowsOfEntities(userNo).ToDataTableField();
         }
         /// <summary>
-        /// 获取合流
+        /// 获取合流点上的子线程
         /// </summary>
         /// <param name="nodeIDOfHL">合流点ID</param>
         /// <param name="workid">流程ID</param>

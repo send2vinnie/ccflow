@@ -10,7 +10,7 @@ namespace BP.WF.Ext
     /// <summary>
     /// 这里存放每个节点的信息.
     /// </summary>
-    public class NodeO : Entity, IDTS
+    public class NodeO : Entity
     {
         /// <summary>
         /// 访问规则

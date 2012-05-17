@@ -569,7 +569,7 @@ namespace BP.WF
     /// <summary>
     /// 这里存放每个节点的信息.	 
     /// </summary>
-    public class Node : Entity, IDTS
+    public class Node : Entity
     {
         #region 初试化全局的 Nod
         private FrmEvents _HisNDEvents = null;
