@@ -547,8 +547,6 @@ namespace BP.En
                         sql += "[" + attr.Field + "] FLOAT  NULL,";
                         break;
                     case DataType.AppBoolean:
-                        sql += "[" + attr.Field + "] INT  NULL,";
-                        break;
                     case DataType.AppInt:
                         if (attr.IsPK)
                             sql += "[" + attr.Field + "] INT NOT NULL,";
@@ -1029,11 +1027,10 @@ namespace BP.En
                             attr.DefaultVal.ToString() + ") AS  " + attr.Key;
                         break;
                     case DataType.AppBoolean:
-                        if (attr.DefaultVal.ToString().ToLower() == "false")
+                        if (attr.DefaultVal.ToString() == "0")
                             val = val + ", NVL( " + mainTable + attr.Field + ",0) " + attr.Key;
                         else
-                            val = val + ", NVL(" + mainTable + attr.Field + ",1) " +
-                                attr.Key;
+                            val = val + ", NVL(" + mainTable + attr.Field + ",1) " + attr.Key;
                         break;
                     case DataType.AppDouble:
                         val = val + ", NVL( round(" + mainTable + attr.Field + " ,4) ," +
@@ -1141,7 +1138,7 @@ namespace BP.En
                             attr.DefaultVal.ToString() + "," + mainTable + attr.Field + ") AS [" + attr.Key + "]";
                         break;
                     case DataType.AppBoolean:
-                        if (attr.DefaultVal.ToString().ToLower() == "false")
+                        if (attr.DefaultVal.ToString() == "0")
                             val = val + ", IIf( ISNULL(" + mainTable + attr.Field + "),0 ," + mainTable + attr.Field + ") AS [" +
                                 attr.Key + "]";
                         else
@@ -1234,8 +1231,7 @@ namespace BP.En
                         if (attr.DefaultVal.ToString() == "0")
                             val = val + ", ISNULL( " + mainTable + attr.Field + ",0) " + attr.Key;
                         else
-                            val = val + ", ISNULL(" + mainTable + attr.Field + ",1) " +
-                                attr.Key;
+                            val = val + ", ISNULL(" + mainTable + attr.Field + ",1) " + attr.Key;
                         break;
                     case DataType.AppDouble:
                         val = val + ", ISNULL( round(" + mainTable + attr.Field + " ,4) ," +
@@ -1442,7 +1438,7 @@ namespace BP.En
                             attr.DefaultVal.ToString() + ") AS  " + attr.Key;
                         break;
                     case DataType.AppBoolean:
-                        if (attr.DefaultVal.ToString().ToLower() == "false")
+                        if (attr.DefaultVal.ToString() == "0")
                             val = val + ", NVL( " + mainTable + attr.Field + " , 0)  AS " + attr.Key;
                         else
                             val = val + ", NVL(  " + mainTable + attr.Field + ", 1)  AS " +
@@ -1516,7 +1512,7 @@ namespace BP.En
                             attr.DefaultVal.ToString() + ") AS [" + attr.Key + "]";
                         break;
                     case DataType.AppBoolean:
-                        if (attr.DefaultVal.ToString().ToLower() == "false")
+                        if (attr.DefaultVal.ToString() == "0")
                             val = val + ", ISNULL(" + mainTable + attr.Field + ",0) AS [" +
                                 attr.Key + "]";
                         else
@@ -2101,6 +2097,7 @@ namespace BP.En
                         }
                         break;
                     case DataType.AppInt:
+                    case DataType.AppBoolean:
                         val = val + "," + en.GetValIntByKey(key);
                         break;
                     case DataType.AppFloat:
@@ -2112,9 +2109,6 @@ namespace BP.En
                         if (str == "")
                             str = "0";
                         val = val + "," + str;
-                        break;
-                    case DataType.AppBoolean:
-                        val = val + "," + en.GetValIntByKey(key);
                         break;
                     case DataType.AppDate:
                     case DataType.AppDateTime:
@@ -2147,6 +2141,7 @@ namespace BP.En
                         val = val + ", '" + en.GetValStringByKey(key) + "'";
                         break;
                     case DataType.AppInt:
+                    case DataType.AppBoolean:
                         val = val + "," + en.GetValIntByKey(key);
                         break;
                     case DataType.AppFloat:
@@ -2158,9 +2153,6 @@ namespace BP.En
                         if (str == "")
                             str = "0";
                         val = val + "," + str;
-                        break;
-                    case DataType.AppBoolean:
-                        val = val + "," + en.GetValIntByKey(key);
                         break;
                     case DataType.AppDate:
                     case DataType.AppDateTime:
