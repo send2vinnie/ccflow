@@ -103,6 +103,7 @@
     <Compile Include="SysUser.cs" />
     <Compile Include="Utility\Helper.cs" />
     <Compile Include="Utility\IHelper.cs" />
+    <Compile Include="XDeleteTool.cs" />
     <Compile Include="XQueryTool.cs" />
   </ItemGroup>
   <ItemGroup>
