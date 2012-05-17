@@ -272,15 +272,15 @@ public partial class Comm_Dtl : WebPage
             qo = new QueryObject(dtls);
             switch (mdtl.DtlOpenType)
             {
-                case DtlOpenType.ForEmp:
+                case DtlOpenType.ForEmp:  // 按人员来控制.
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
                     qo.addAnd();
                     qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
                     break;
-                case DtlOpenType.ForWorkID:
+                case DtlOpenType.ForWorkID: // 按工作ID来控制
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
                     break;
-                case DtlOpenType.ForFID:
+                case DtlOpenType.ForFID: // 按流程ID来控制.
                     qo.AddWhere(GEDtlAttr.FID, this.FID);
                     break;
             }
