@@ -79,6 +79,7 @@
     <Compile Include="Model\OA_AddrBook.cs" />
     <Compile Include="Model\OA_AddrGrouping.cs" />
     <Compile Include="Model\OA_Attachment.cs" />
+    <Compile Include="Model\OA_Category.cs" />
     <Compile Include="Model\OA_Channel.cs" />
     <Compile Include="Model\OA_Email.cs" />
     <Compile Include="Model\OA_EmailAttach.cs" />
