@@ -50,15 +50,6 @@
         </Columns>
     </lizard:XGridView>
     <xuc:XPager ID="XPager1" runat="server" OnPagerChanged="XPager1_PagerChanged" />
-    &nbsp;<table border="0" cellpadding="0" cellspacing="1" style="width: 100%;">
-        <tr>
-            <td style="width: 1px;">
-            </td>
-            <td align="left">
-                <asp:Button ID="btnDelete" runat="server" Text="删除" OnClick="btnDelete_Click" />
-            </td>
-        </tr>
-    </table>
     </form>
 </body>
 </html>
