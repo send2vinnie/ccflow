@@ -24,6 +24,7 @@
             <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
                 <ItemTemplate>
                     <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
+                    <asp:HiddenField ID="DeleteNo" runat="server" Value='<%#Eval("No") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="No" HeaderText="主键Id" SortExpression="No" ItemStyle-HorizontalAlign="Center"

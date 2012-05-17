@@ -6,15 +6,15 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.CCOA;
 
-public partial class CCOA_News_Delete : System.Web.UI.Page
+public partial class CCOA_Notice_Delete : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         string idList = Request.QueryString["idList"];
         if (!string.IsNullOrEmpty(idList))
         {
-            BP.CCOA.OA_News news = new OA_News();
-            XDeleteTool.DeleteByIds(news, idList);
+            BP.CCOA.OA_Notice OA_Notice = new OA_Notice();
+            XDeleteTool.DeleteByIds(OA_Notice, idList);
         }
     }
 }
