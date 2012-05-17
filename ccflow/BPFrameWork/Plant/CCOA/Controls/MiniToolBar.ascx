@@ -14,13 +14,18 @@
 
     var idList = "";
     function getSelectedIdList() {
+
+        if (!confirm("确定要删除选中的数据吗？")) {
+            return;
+        }
+
         var chks = $("input[type='checkbox']:checkbox:checked");
         //var hiddens = $("input[type='hidden']");
         for (var i = 0; i < chks.length; i++) {
             var regS = new RegExp("DeleteThis", "g");
             var hiddenId = chks[i].id.replace(regS, "DeleteNo");
             var chkedNo = $("#" + hiddenId).val();
-            idList = idList + chkedNo + ",";
+            idList = idList + "'" + chkedNo + "',";
         }
         if (idList.length > 0) {
             idList = idList.substring(0, idList.length - 1);
@@ -29,7 +34,11 @@
         $.ajax({
             url: "Delete.aspx?idList=" + idList,
             success: function (data) {
-                alert(data);
+                window.location.href = "<%=RefreshUrl %>";
+                //alert(data);
+            },
+            error: function () {
+                alert('删除失败！');
             }
         });
     }
