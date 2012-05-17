@@ -419,11 +419,7 @@ namespace BP.Web.Controls
             //if (this.Controls.Count != 0)
             //    this.AddSpt("spt");
 
-            if (en.EnMap.Helper.Length > 4)
-            {
-              //  this.AddSpt("spt");
-             //   this.AddBtn(NamesOfBtn.Help);
-            }
+            
         }
         /// <summary>
         /// 初始化功能
@@ -574,9 +570,6 @@ namespace BP.Web.Controls
             }
 
             this.AddSpt(new ToolbarSpt("ref_Help", "s2s1"));
-            if (BP.SystemConfig.SysNo == BP.SysNoList.DP)
-                this.AddBtn(NamesOfBtn.DataIO);
-            //this.AddBtn(NamesOfBtn.DataCheck);
 
             if (this.Items.Count > 1)
             {
