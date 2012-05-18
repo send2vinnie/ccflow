@@ -6,7 +6,7 @@
 
 2, 创建CCIM 快捷方式 到您的桌面上.(点CCIM.exe 文件右键，发送到桌面快捷方式.)
 
-3，用计事本打开app.config文件 , 并修改
+3，用计事本打开CCIM.exe.config文件 , 并修改
    <setting name="ServerIP" serializeAs="String">
                 <value>127.0.0.1</value>
             </setting>。
