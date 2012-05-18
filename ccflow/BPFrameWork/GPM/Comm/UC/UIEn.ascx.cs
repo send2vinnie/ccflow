@@ -517,12 +517,12 @@ public partial class Comm_UC_UIEn : BP.Web.UC.UCBase3
                 if (this.CurrEn.GetValStringByKey("No") == "")
                 {
                     this.CurrEn.SetValByKey("No", this.CurrEn.GenerNewNoByKey("No"));
-                    string val = BP.SystemConfig.GetConfigXmlEns(ConfigKeyEns.IsInsertBeforeNew, CurrEn.ToString());
-                    if (val == "1")
-                    {
-                        //CurrEn.SetValByKey("No",dr[attr.Key]);
-                        CurrEn.Insert();
-                    }
+                    //string val = BP.SystemConfig.GetConfigXmlEns(ConfigKeyEns.IsInsertBeforeNew, CurrEn.ToString());
+                    //if (val == "1")
+                    //{
+                    //    //CurrEn.SetValByKey("No",dr[attr.Key]);
+                    //    CurrEn.Insert();
+                    //}
                 }
             }
         }

@@ -129,8 +129,7 @@ namespace BP.Web.Comm.UI
 						break;
 					case NamesOfBtn.New:
 						break;
-					case NamesOfCheckBtn.SelectAll:
-						break;
+					 
 					case NamesOfBtn.Help:
 						this.Helper();
 						break;

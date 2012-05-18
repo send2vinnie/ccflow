@@ -638,11 +638,7 @@ public partial class Comm_UC_ToolBar : BP.Web.UC.UCBase3
             }
         }
 
-        if (en.EnMap.Helper.Length > 4)
-        {
-            //  this.AddSpt("spt");
-            //   this.AddBtn(NamesOfBtn.Help);
-        }
+    
     }
     public void InitByMapV2(Map map, int page)
     {
