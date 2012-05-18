@@ -3713,7 +3713,7 @@ namespace BP.WF
                 Work wk = nd.HisWork;
                 wk.Copy(this.HisWork);
                 wk.FID = this.HisWork.OID;
-                wk.OID = BP.DA.DBAccess.GenerOID( WebUser.FK_Dept);
+                wk.OID = BP.DA.DBAccess.GenerOID();
                 wk.NodeState = NodeState.Init;
                 wk.BeforeSave();
                 wk.DirectInsert();

@@ -373,18 +373,13 @@ namespace BP.WF
                 map.EnDesc = "单据";
 
                 map.AddMyPKNoVisable();
-
                 map.AddTBInt(BillAttr.WorkID, 0, "工作ID", false, true);
                 map.AddTBInt(BillAttr.FID, 0, "FID", false, true);
-
                 map.AddTBString(BillAttr.FK_Flow, null, "流程", false, false, 0, 300, 5);
-
              //   map.AddDDLEntities(BillAttr.FK_Flow, null, "流程", new Flows(), false);
                 //  map.AddTBString(BillAttr.FK_Flow, null, "流程", false, false, 0, 30, 5);
-
                 map.AddTBString(BillAttr.FK_BillType, null, "单据类型", false, false, 0, 300, 5);
                 //map.AddDDLEntities(BillAttr.FK_BillType, null, "单据类型", new BillTypes(), false);
-
                 map.AddTBString(BillAttr.Title, null, "标题", false, false, 0, 300, 5);
                 //map.AddDDLEntities(BillAttr.FK_Starter, null, "发起人", new BP.WF.Port.Emps(), false);
                 map.AddTBString(BillAttr.FK_Starter, null, "发起人", true, true, 0, 300, 5);

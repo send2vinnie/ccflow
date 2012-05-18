@@ -186,7 +186,7 @@ namespace BP.WF
             if (this.OID > 0)
                 throw new Exception("@实体[" + this.EnDesc + "], 已经被实例化，不能Insert.");
 
-            this.SetValByKey("OID", DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2)));
+            this.SetValByKey("OID", DBAccess.GenerOID());
             return base.beforeInsert();
         }
         protected override bool beforeUpdateInsertAction()

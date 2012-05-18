@@ -337,7 +337,7 @@ namespace BP.WF
                 wk.SetValByKey(WorkAttr.CDT, BP.DA.DataType.CurrentDataTime);
                 wk.WFState = 0;
                 wk.NodeState = 0;
-                wk.OID = DBAccess.GenerOID("WID");
+                wk.OID = DBAccess.GenerOID();
                 wk.DirectInsert();
             }
 

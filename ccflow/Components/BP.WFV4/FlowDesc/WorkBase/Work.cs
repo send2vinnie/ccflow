@@ -920,7 +920,7 @@ namespace BP.WF
         {
             if ( this.OID==0 || this.IsExits == false)
             {
-                this.OID = DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
+                this.OID = DBAccess.GenerOID();
                 this.InsertAsOID( this.OID);
                 return 0;
             }
@@ -1017,7 +1017,7 @@ namespace BP.WF
 
             //this.InitBiillNo();
             if (this.OID == 0)
-                this.OID = DBAccess.GenerOID(BP.Web.WebUser.FK_Dept.Substring(2));
+                this.OID = DBAccess.GenerOID();
 
             return base.beforeInsert();
         }
