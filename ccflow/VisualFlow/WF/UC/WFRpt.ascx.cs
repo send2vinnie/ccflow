@@ -127,6 +127,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
     /// </summary>
     public void BindTrack_ViewWork()
     {
+        string appPath = this.Request.ApplicationPath;
         Track tk = new Track(this.MyPK);
         Node nd = new Node(tk.NDFrom);
         Work wk = nd.HisWork;
@@ -178,9 +179,9 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             {
                 string title = "";
                 foreach (BillTemplate item in bills)
-                    title += "<img src='../Images/Btn/Word.gif' border=0/>" + item.Name + "</a>";
+                    title += "<img src='" + appPath + "/Images/Btn/Word.gif' border=0/>" + item.Name + "</a>";
 
-                string urlr = "./WorkOpt/PrintDoc.aspx?FK_Node=" + nd.NodeID + "&FID=" + tk.FID + "&WorkID=" + tk.WorkID + "&FK_Flow=" + tk.FK_Flow;
+                string urlr = appPath + "/WF/WorkOpt/PrintDoc.aspx?FK_Node=" + nd.NodeID + "&FID=" + tk.FID + "&WorkID=" + tk.WorkID + "&FK_Flow=" + tk.FK_Flow;
                 this.UCEn1.Add("<p><a  href=\"javascript:WinOpen('" + urlr + "','dsdd');\"  />" + title + "</a></p>");
                 //this.UCEn1.Add("<a href='' target=_blank><img src='../Images/Btn/Word.gif' border=0/>" + bt.Name + "</a>");
             }
@@ -357,7 +358,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.AddTD(item.HisActionTypeT);
             this.AddTD(item.MsgHtml);
 
-            this.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?DoType=View&MyPK=" + item.MyPK + "','" + item.MyPK + "');\">日志</a>");
+            this.AddTD("<a href=\"javascript:WinOpen('" + this.Request.ApplicationPath + "/WF/WFRpt.aspx?WorkID="+item.WorkID+"&FK_Flow="+item.FK_Flow+"&DoType=View&MyPK=" + item.MyPK + "','" + item.MyPK + "');\">日志</a>");
             this.AddTREnd();
         }
         this.AddTableEnd();
@@ -402,6 +403,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             default:
                 break;
         }
+
 
         this.Clear();
         this.Page.Title = "ccflow WorkFlow Rpt";
@@ -573,7 +575,6 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
     }
     #endregion 分流
 
-
     #region 合流
     /// <summary>
     /// 合流干流
@@ -625,7 +626,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
             this.AddTD(gwf.Title);
             this.AddTD(gwf.Rec);
             this.AddTD(gwf.RDT);
-            this.AddTD("<a href='WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=" + gwf.FID + "' target=_b" + gwf.WorkID + ">工作报告</a>");
+            this.AddTD("<a href='"+this.Request.ApplicationPath+"/WF/WFRpt.aspx?WorkID=" + gwf.WorkID + "&FK_Flow=" + gwf.FK_Flow + "&FID=" + gwf.FID + "' target=_b" + gwf.WorkID + ">工作报告</a>");
             this.AddTREnd();
         }
         this.AddTableEndWithBR();
@@ -676,13 +677,12 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
         //判断当前人员是否管理员。
         if (WebUser.No == "admin" && wf.IsComplete == false)
         {
-            this.Add("<BR><a href='../../WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + workid + "&FK_Flow=" + wf.HisFlow.No + "' /><img src='../Images/Btn/Delete.gif' border=0/>强制删除流程:(请慎重操作，系统会记录在操作日志中)</a><BR>");
+            this.Add("<BR><a href='"+this.Request.ApplicationPath+"/WF/Do.aspx?ActionType=DeleteFlow&WorkID=" + workid + "&FK_Flow=" + wf.HisFlow.No + "' /><img src='"+this.Request.ApplicationPath+"/Images/Btn/Delete.gif' border=0/>强制删除流程:(请慎重操作，系统会记录在操作日志中)</a><BR>");
         }
 
         WorkNodes wns = wf.HisWorkNodesOfWorkID;
 
         this.Add("<p align='left' style='line-height: 100%' > &nbsp;&nbsp;&nbsp; " + wf.HisStartWork.Title + " " + this.ToE("Work", "工作") + ", " + this.ToE("From", "从") + " " + wf.HisStartWork.HisRec.Name + "  " + wf.HisStartWork.RDT + " " + wns.Count + " " + this.ToE("WorkStep", "工作步骤"));
-        //this.AddHtml(wf.IsCompleteStr + "结束，<a href=\"javascript:WinOpen('Option.aspx?WorkID=" + workid + "&FK_Flow=" + wf.HisFlow.No + "');\" >流程操作</a>。现在历经如下步骤,详细报告如下:</p>");
         this.Add(wf.IsCompleteStr + this.ToE("WFRpt1", "结束，现在历经如下步骤,详细报告如下:") + "</p>");
         int i = 0;
         foreach (WorkNode wn in wns)
@@ -758,14 +758,14 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                 {
                     if (wn.HisWork.NodeState == 0)
                     {
-                        this.Add("<img src='../Images/Btn/Word.gif' /> " + func.Name);
+                        this.Add("<img src='"+this.Request.ApplicationPath+"/Images/Btn/Word.gif' /> " + func.Name);
                     }
                     else
                     {
                         string file = year + "_" + WebUser.FK_Dept + "_" + func.No + "_" + workid + ".doc";
                         string[] paths = file.Split('_');
                         string path = paths[0] + "/" + paths[1] + "/" + paths[2] + "/";
-                        string BillInfo = "<img src='./../Images/Btn/Word.gif' /><a href='./../DataUser/Bill/" + path + file + "' target=_blank >" + func.Name + "</a>";
+                        string BillInfo = "<img src='" + this.Request.ApplicationPath + "/Images/Btn/Word.gif' /><a href='" + this.Request.ApplicationPath + "/DataUser/Bill/" + path + file + "' target=_blank >" + func.Name + "</a>";
                         this.Add(BillInfo);
                     }
                 }
@@ -803,7 +803,7 @@ public partial class WF_UC_WFRpt : BP.Web.UC.UCBase3
                         }
                     }
 
-                    string strs = "<img src='./../Images/Btn/DTS.gif' /><a href=\"javascript:WinOpen('" + url + "'," + s.W + "," + s.H + ");\" >" + s.Name + "</a>";
+                    string strs = "<img src='" + this.Request.ApplicationPath + "/Images/Btn/DTS.gif' /><a href=\"javascript:WinOpen('" + url + "'," + s.W + "," + s.H + ");\" >" + s.Name + "</a>";
                     this.Add(strs);
                 }
                 this.Add("</p>");
