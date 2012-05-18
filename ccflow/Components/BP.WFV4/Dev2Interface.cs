@@ -235,12 +235,12 @@ namespace BP.WF
             return DB_GenerCanStartFlowsOfEntities(userNo).ToDataTableField();
         }
         /// <summary>
-        /// 获取合流点上的子线程
+        /// 获取(同步)合流点上的子线程
         /// </summary>
         /// <param name="nodeIDOfHL">合流点ID</param>
         /// <param name="workid">流程ID</param>
         /// <returns></returns>
-        public static DataTable DB_GenerHLSubFlowDtl(int nodeIDOfHL, Int64 workid)
+        public static DataTable DB_GenerHLSubFlowDtl_TB(int nodeIDOfHL, Int64 workid)
         {
             Node nd = new Node(nodeIDOfHL);
             Work wk = nd.HisWork;
@@ -266,6 +266,28 @@ namespace BP.WF
                 return qo.DoQueryToTable();
             }
             return dt;
+        }
+        /// <summary>
+        /// 获取(异步)合流点上的子线程
+        /// </summary>
+        /// <param name="nodeIDOfHL">合流点ID</param>
+        /// <param name="workid">流程ID</param>
+        /// <returns></returns>
+        public static DataTable DB_GenerHLSubFlowDtl_YB(int nodeIDOfHL, Int64 workid)
+        {
+            Node nd = new Node(nodeIDOfHL);
+            Work wk = nd.HisWork;
+            wk.OID = workid;
+            wk.Retrieve();
+
+            WorkerLists wls = new WorkerLists();
+            QueryObject qo = new QueryObject(wls);
+            qo.AddWhere(WorkerListAttr.FID, wk.OID);
+            qo.addAnd();
+            qo.AddWhere(WorkerListAttr.IsEnable, 1);
+            qo.addAnd();
+            qo.AddWhere(WorkerListAttr.IsPass, 0);
+            return qo.DoQueryToTable();
         }
         #endregion 获取当前操作员可以发起的流程集合
 
