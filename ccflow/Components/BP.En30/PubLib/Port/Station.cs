@@ -12,8 +12,6 @@ namespace BP.Port
     {
         public const string IsDtl = "IsDtl";
         public const string StaGrade = "StaGrade";
-
-
     }
 	/// <summary>
 	/// 岗位
@@ -55,7 +53,7 @@ namespace BP.Port
             }
         }
 
-        
+
         public bool IsDtl
         {
             get
@@ -98,7 +96,8 @@ namespace BP.Port
 
                 map.AddTBStringPK(EmpAttr.No, null, this.ToE("No", "编号"), true, false, 1, 20, 100);
                 map.AddTBString(EmpAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 100, 100);
-                
+                map.AddDDLSysEnum(StationAttr.StaGrade, 0, "类型", true, false, StationAttr.StaGrade, "@1=高层岗@2=中层岗@3=执行岗");
+
                 //switch (BP.SystemConfig.SysNo)
                 //{
                 //    case BP.SysNoList.WF:
