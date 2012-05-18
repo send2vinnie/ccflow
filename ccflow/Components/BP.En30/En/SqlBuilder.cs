@@ -1919,8 +1919,6 @@ namespace BP.En
                         }
                         break;
                     case DataType.AppBoolean:
-                        ps.Add(attr.Key, en.GetValBooleanByKey(attr.Key));
-                        break;
                     case DataType.AppInt:
                         ps.Add(attr.Key, en.GetValIntByKey(attr.Key));
                         break;
