@@ -854,12 +854,14 @@ namespace CCForm
                 Image img = new Image();
                 BitmapImage png = new BitmapImage(new Uri("/CCForm;component/Img/" + en.No + ".png", UriKind.Relative));
                 img.Source = png;
+                img.Width = 13;
+                img.Height = 13;
                 mysp.Children.Add(img);
 
                 TextBlock tb = new TextBlock();
                 tb.Name = "tbT" + en.No;
                 tb.Text = en.Name + " ";
-                tb.FontSize = 15;
+                tb.FontSize = 13;
                 mysp.Children.Add(tb);
                 btn.Content = mysp;
 
@@ -1269,9 +1271,9 @@ namespace CCForm
             {
                 BindFrm(e.Result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception("在绑定控件时出现错误,技术信息:Table="+Glo.TempVal+" Ex="+ex.Message);
+                throw new Exception("在绑定控件时出现错误,技术信息:Table=" + Glo.TempVal + " Ex=" + ex.Message);
             }
         }
         void BindFrm(string xmlStrs)
