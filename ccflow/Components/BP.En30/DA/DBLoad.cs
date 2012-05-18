@@ -16,32 +16,6 @@ namespace BP
 		static  DBLoad()
 		{
 		}
-		public static DataTable GetTableFromExcel_del(string filePath , string tbName ,string selectCols,int topCount)
-		{
-			DataTable Table = null;
-			string strConn="Provider=Microsoft.Jet.OLEDB.4.0;Data Source ="+ filePath +";Extended Properties=Excel 8.0";
-			OleDbConnection conn = new OleDbConnection(strConn );
-			string sql = " select ";
-			if(topCount == -1)
-				sql += selectCols + " from ["+tbName+"]";
-			else
-				sql +="top " + topCount +" "+ selectCols + " from ["+tbName+"]";
-			OleDbDataAdapter ada = new OleDbDataAdapter( sql,conn);
-			ada.SelectCommand.CommandType = CommandType.Text;
-			try
-			{
-				conn.Open();
-				Table = new DataTable( tbName);
-				ada.Fill( Table );
-			}
-			catch(Exception ex)
-			{
-				conn.Close();
-				throw new Exception(ex.Message);
-			}
-			conn.Close();
-			return Table;
-		}
 		public static int ImportTableInto(DataTable impTb ,string intoTb, string select ,int clear)
 		{
 			int count = 0;

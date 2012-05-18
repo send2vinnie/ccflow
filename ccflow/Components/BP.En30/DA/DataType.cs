@@ -7,36 +7,7 @@ using System.IO;
 
 namespace BP.DA
 {
-    public class DT_
-    {
-        public override string ToString()
-        {
-            return "";
-        }
-
-        public DT_()
-        {
-        }
-
-        public DT_(string dt)
-        {
-            this.MyDT = dt;
-        }
-
-        public DT_(DateTime dt)
-        {
-            this.MyDT = dt.ToString();
-        }
-
-        public string MyDT = null;
-        public string CNShortType
-        {
-            get
-            {
-                return "06年07月12时23分";
-            }
-        }
-    }
+   
     public class FormatProvider : IFormatProvider
     {
         #region IFormatProvider 成员

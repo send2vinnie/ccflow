@@ -36,107 +36,99 @@ namespace BP.DA
 		// 如：23+56/(102-100)*((36-24)/(8-6))
 		// 转换成：23|56|102|100|-|/|*|36|24|-|8|6|-|/|*|+"
 		//以便利用栈的方式都进行计算。
-		public string  CalculateParenthesesExpression(string Expression)
-		{
-			ArrayList operatorList = new ArrayList();
-			string operator1;
-			string ExpressionString = "";
-			string operand3;
-			Expression = Expression.Replace(" ","");
-			Expression = Expression.Replace("%","");
+        public string CalculateParenthesesExpression(string Expression)
+        {
+            ArrayList operatorList = new ArrayList();
+            string operator1;
+            string ExpressionString = "";
+            string operand3;
+            Expression = Expression.Replace(" ", "");
+            Expression = Expression.Replace("%", "");
             Expression = Expression.Replace("％", "");
 
-			while(Expression.Length > 0)
-			{
-				operand3 = "";
-				//取数字处理
-				if(Char.IsNumber(Expression[0])  || Expression[0]=='.'    )
-				{
-					while(Char.IsNumber(Expression[0]) ||  Expression[0]=='.'   )
-					{
-						operand3 += Expression[0].ToString() ;
-						Expression = Expression.Substring(1);
-						if(Expression == "")break;
+            while (Expression.Length > 0)
+            {
+                operand3 = "";
+                //取数字处理
+                if (Char.IsNumber(Expression[0]) || Expression[0] == '.')
+                {
+                    while (Char.IsNumber(Expression[0]) || Expression[0] == '.')
+                    {
+                        operand3 += Expression[0].ToString();
+                        Expression = Expression.Substring(1);
+                        if (Expression == "") break;
 
 
-					}
-					ExpressionString += operand3 + "|";
-				}
+                    }
+                    ExpressionString += operand3 + "|";
+                }
 
-				//取“C”处理
-				if(Expression.Length >0 && Expression[0].ToString() == "(")
-				{
-					operatorList.Add("(");  
-					Expression = Expression.Substring(1); 
-				}
+                //取“C”处理
+                if (Expression.Length > 0 && Expression[0].ToString() == "(")
+                {
+                    operatorList.Add("(");
+                    Expression = Expression.Substring(1);
+                }
 
-				//取“)”处理
-				operand3 = "";
-				if(Expression.Length >0 && Expression[0].ToString() == ")")
-				{
-					do
-					{
-      
-						if(operatorList[operatorList.Count -1].ToString() != "(")
-						{
-							operand3 += operatorList[operatorList.Count -1].ToString() + "|" ;
-							operatorList.RemoveAt(operatorList.Count - 1) ;
-						}
-						else
-						{
-							operatorList.RemoveAt(operatorList.Count - 1) ;
-							break;
-						}
-      
-					}while(true);
-					ExpressionString += operand3;
-					Expression = Expression.Substring(1); 
-				}
+                //取“)”处理
+                operand3 = "";
+                if (Expression.Length > 0 && Expression[0].ToString() == ")")
+                {
+                    do
+                    {
 
-				//取运算符号处理
-				operand3 = "";
-				if(Expression.Length >0 &&  (Expression[0].ToString() == "*" || Expression[0].ToString() == "/" || Expression[0].ToString() == "+" || Expression[0].ToString() == "-"))
-				{
-					operator1 = Expression[0].ToString();
-					if(operatorList.Count>0)
-					{
-       
-						if(operatorList[operatorList.Count -1].ToString() == "(" || verifyOperatorPriority(operator1,operatorList[operatorList.Count - 1].ToString()))
-       
-						{
-							operatorList.Add(operator1); 
-						}
-						else  
-						{
-							operand3 += operatorList[operatorList.Count - 1].ToString() + "|"; 
-							operatorList.RemoveAt(operatorList.Count - 1);
-							operatorList.Add(operator1); 
-							ExpressionString += operand3 ;
-        
-						}
-      
-					}
-					else
-					{
-						operatorList.Add(operator1); 
-					}
-					Expression = Expression.Substring(1); 
-				}
-			}
+                        if (operatorList[operatorList.Count - 1].ToString() != "(")
+                        {
+                            operand3 += operatorList[operatorList.Count - 1].ToString() + "|";
+                            operatorList.RemoveAt(operatorList.Count - 1);
+                        }
+                        else
+                        {
+                            operatorList.RemoveAt(operatorList.Count - 1);
+                            break;
+                        }
 
-			operand3 = "";
-			while(operatorList.Count != 0)
-			{
-				operand3 += operatorList[operatorList.Count -1].ToString () + "|";
-				operatorList.RemoveAt(operatorList.Count -1); 
-			} 
+                    } while (true);
+                    ExpressionString += operand3;
+                    Expression = Expression.Substring(1);
+                }
 
-			ExpressionString += operand3.Substring(0, operand3.Length -1);  ;
-   
+                //取运算符号处理
+                operand3 = "";
+                if (Expression.Length > 0 && (Expression[0].ToString() == "*" || Expression[0].ToString() == "/" || Expression[0].ToString() == "+" || Expression[0].ToString() == "-"))
+                {
+                    operator1 = Expression[0].ToString();
+                    if (operatorList.Count > 0)
+                    {
 
-			return CalculateParenthesesExpressionEx(ExpressionString);
-
-		}
+                        if (operatorList[operatorList.Count - 1].ToString() == "(" || verifyOperatorPriority(operator1, operatorList[operatorList.Count - 1].ToString()))
+                        {
+                            operatorList.Add(operator1);
+                        }
+                        else
+                        {
+                            operand3 += operatorList[operatorList.Count - 1].ToString() + "|";
+                            operatorList.RemoveAt(operatorList.Count - 1);
+                            operatorList.Add(operator1);
+                            ExpressionString += operand3;
+                        }
+                    }
+                    else
+                    {
+                        operatorList.Add(operator1);
+                    }
+                    Expression = Expression.Substring(1);
+                }
+            }
+            operand3 = "";
+            while (operatorList.Count != 0)
+            {
+                operand3 += operatorList[operatorList.Count - 1].ToString() + "|";
+                operatorList.RemoveAt(operatorList.Count - 1);
+            }
+            ExpressionString += operand3.Substring(0, operand3.Length - 1); ;
+            return CalculateParenthesesExpressionEx(ExpressionString);
+        }
 		// 第二步:把转换成后序表达的式子计算
 		//23|56|102|100|-|/|*|36|24|-|8|6|-|/|*|+"
 		private string  CalculateParenthesesExpressionEx(string Expression)
