@@ -312,7 +312,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             WorkNode mywn = null;
             if (wn.HisNode.IsBackTracking)
             {
-                bool IsBackTracking= this.Pub1.GetCBByID("CB_IsBackTracking").Checked;
+                bool IsBackTracking = this.ToolBar1.GetCBByID("CB_IsBackTracking").Checked;
                 mywn = wn.DoReturnWork(this.DDL1.SelectedItemIntVal, this.TB1.Text, IsBackTracking);
             }
             else
