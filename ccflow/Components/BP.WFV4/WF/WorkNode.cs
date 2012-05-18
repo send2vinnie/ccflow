@@ -3759,8 +3759,10 @@ namespace BP.WF
 
                     // 产生工作的信息。
                     GenerWorkFlow gwf = new GenerWorkFlow();
-                    gwf.FID = this.WorkID;
                     gwf.WorkID = wk.OID;
+                    if (gwf.IsExits)
+                        continue;
+                    gwf.FID = this.WorkID;
 
 #warning 需要修改成标题生成规则。
                     
