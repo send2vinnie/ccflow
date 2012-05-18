@@ -213,7 +213,6 @@ namespace BP.GPM
                 map.DepositaryOfEntity = Depositary.Application; //实体存放位置
                 map.EnDesc = this.ToE("Emp", "用户"); // "用户";       // 实体的描述.
                 map.EnType = EnType.App;   //实体类型。
-                map.Helper = "Emp.html";
                 #endregion
 
                 #region 字段
