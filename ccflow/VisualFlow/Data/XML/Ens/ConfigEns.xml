@@ -6,7 +6,6 @@
    <!--  默认的查询配置　-->
    <Item Key="DefaultSelectedAttrs" Val="@No@Name@FR@Addr@CWR@JJFW@Tel@"  For="BP.Tax.Taxpayers"  />
    <Item Key="NoShowSum" Val="@NodeDeductDays@NodeDeductCent@"  For="BP.WF.V_CHOfNodes"  />
-  
    <Item Key="NoShowSum" Val="@RateVal@RateValTZ@"  For="BP.ZF1.RDEs"  />
    <Item Key="NoShowSum" Val="@RateVal@"  For="BP.ZF1.RDZs"  />
    <Item Key="NoShowSum" Val="@MinGrade@LifeCycle@"  For="BP.ZF1.Rates"  />
