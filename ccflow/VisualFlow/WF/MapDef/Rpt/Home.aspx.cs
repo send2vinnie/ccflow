@@ -229,7 +229,8 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
     #region 查询列表字段筛选
     public void SelectColumns()
     {
-        this.Pub2.AddH2("请选择要显示的字段,然后点保存按钮.");
+        this.Pub2.AddH2("请选择要显示的字段,然后点保存按钮,系统的查询列表就以您设计的体现.");
+        this.Pub2.AddHR();
 
         this.Pub2.AddTable("width=90% align=left");
         GroupFields gfs = new GroupFields(this.FK_Flow);
@@ -398,7 +399,33 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
 
     public void BindHome()
     {
-        this.Pub2.AddH3("欢迎使用ccflow报表设计器.");
+        this.Pub2.AddH2("欢迎使用ccflow报表设计器.");
+        this.Pub2.AddHR();
+
+        this.Pub2.AddFieldSet("什么是流程数据？");
+        this.Pub2.AddUL();
+        this.Pub2.AddLi("流程数据查询");
+        this.Pub2.AddLi("流程数据统计分析");
+        this.Pub2.AddLi("流程数对比分析");
+        this.Pub2.AddULEnd();
+        this.Pub2.AddFieldSetEnd();
+
+        this.Pub2.AddFieldSet("设计者必读？");
+        string info = "";
+        info += "<b>关于流程数据表:</b><br>";
+        info += "流程数据是一个流程上所有节点表单字段合集组成的物理表，是以NDxxxRpt命名的，流程发起后就向这个物理表中增加一条数据。";
+
+        info += "<br><b>如何进行权限控制:</b><br>";
+        info += "数据权限是以查询与分析的部门条件进行控制的，一个操作员能够查询那些部门的数据是管理员在系统中维护的，存放在Port_DeptSearchScorp物理表中。";
+
+
+        this.Pub2.Add(info);
+
+
+        this.Pub2.AddULEnd();
+        this.Pub2.AddFieldSetEnd();
+
+
     }
     public void BindLeft(Flow fl)
     {
@@ -409,6 +436,9 @@ public partial class WF_MapDef_Rpt_Home : BP.Web.WebPage
         this.Pub1.AddHR();
 
         this.Pub1.AddUL();
+
+        this.Pub1.AddLi("<a href=\"Home.aspx?FK_Flow=" + this.FK_Flow + "&FK_MapData=" + this.FK_MapData + "\"><b>帮助</b></a>");
+        this.Pub1.Add("流程报表设计器的基础使用方法。<br><br>");
 
         this.Pub1.AddLi("<a href=\"Home.aspx?DoType=SelectColumns&FK_Flow=" + this.FK_Flow + "&FK_MapData=" + this.FK_MapData + "\"><b>查询列表字段筛选</b></a>");
         this.Pub1.Add("增加或移除查询结果集合中的列内容。<br><br>");
