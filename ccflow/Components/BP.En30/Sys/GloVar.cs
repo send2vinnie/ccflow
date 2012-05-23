@@ -21,7 +21,6 @@ namespace BP.Sys
         /// GroupKey
         /// </summary>
         public const string GroupKey = "GroupKey";
-
     }
     /// <summary>
     /// 全局变量

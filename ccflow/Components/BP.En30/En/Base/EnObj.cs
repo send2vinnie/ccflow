@@ -565,12 +565,10 @@ namespace BP.En
         {
             return DataType.ParseText2Html(this.GetValStringByKey(attrKey, defval));
         }
-        public string GetValRefNameByKey(string attrKey)
-        {
-            return this.GetValStrByKey(attrKey + "Name");
-        }
         /// <summary>
-        /// 取得RefText属性
+        /// 取得枚举或者外键的标签
+        /// 如果是枚举就获取枚举标签.
+        /// 如果是外键就获取为外键的名称.
         /// </summary>
         /// <param name="attrKey"></param>
         /// <returns></returns>
@@ -579,38 +577,11 @@ namespace BP.En
             string str = "";
             try
             {
-                str = this.Row.GetValByKey(attrKey + "Text").ToString().Trim();
+                str = this.Row.GetValByKey(attrKey + "Text") as string;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message + attrKey);
-            }
-
-            if (str == "")
-            {
-                return "";
-
-                /* 如果没有取到．*/
-                //Attr attr = this.EnMap.GetAttrByKey(attrKey);
-                //if (attr.MyFieldType == FieldType.Enum
-                //    || attr.MyFieldType == FieldType.PKEnum)
-                //{
-                //    BP.Sys.SysEnums ens = new BP.Sys.SysEnums(attr.UIBindKey);
-                //    foreach (SysEnum se in ens)
-                //        if (se.IntKey == this.GetValIntByKey(attrKey))
-                //            str = se.Lab;
-
-                //    BP.Sys.SysEnum en = new BP.Sys.SysEnum(attr.UIBindKey, int.Parse(attr.DefaultVal.ToString()));
-                //    str = en.Lab;
-                //}
-                //else
-                //{
-                //    Entity en = ClassFactory.GetEn(attr.UIBindKeyOfEn);
-                //    en.PKVal = attrKey;
-                //    en.Retrieve();
-                //    str = en.GetValByKey(attr.UIRefKeyText).ToString();
-                //}
-                //this.SetValByKey(attrKey + "Text", str);
             }
             return str;
         }
@@ -638,7 +609,7 @@ namespace BP.En
             }
             catch (Exception ex)
             {
-                string v=this.GetValStrByKey(key).ToLower();
+                string v = this.GetValStrByKey(key).ToLower();
                 if (v == "true")
                 {
                     this.SetValByKey(key, 1);
@@ -659,7 +630,6 @@ namespace BP.En
                 if (this.GetValStringByKey(key) == "")
                     return int.Parse(this.EnMap.GetAttrByKey(key).DefaultVal.ToString());
 
-                //throw new Exception("值:"+
                 if (SystemConfig.IsDebug == false)
                     throw new Exception("@[" + this.EnMap.GetAttrByKey(key).Desc + "]请输入数字，您输入的是[" + this.GetValStrByKey(key) + "]。");
                 else

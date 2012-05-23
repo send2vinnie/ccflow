@@ -10,7 +10,6 @@ namespace BP.Port
 	/// </summary>
     public class StationAttr : EntityNoNameAttr
     {
-        public const string IsDtl = "IsDtl";
         public const string StaGrade = "StaGrade";
     }
 	/// <summary>
@@ -52,16 +51,6 @@ namespace BP.Port
                 return this.GetValIntByKey(StationAttr.StaGrade);
             }
         }
-
-
-        public bool IsDtl
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         #endregion
 
         #region 构造方法
@@ -96,19 +85,9 @@ namespace BP.Port
 
                 map.AddTBStringPK(EmpAttr.No, null, this.ToE("No", "编号"), true, false, 1, 20, 100);
                 map.AddTBString(EmpAttr.Name, null, this.ToE("Name", "名称"), true, false, 0, 100, 100);
-                map.AddDDLSysEnum(StationAttr.StaGrade, 0, "类型", true, false, StationAttr.StaGrade, "@1=高层岗@2=中层岗@3=执行岗");
+                map.AddDDLSysEnum(StationAttr.StaGrade, 0, "类型", true, false, StationAttr.StaGrade,
+                    "@1=高层岗@2=中层岗@3=执行岗");
 
-                //switch (BP.SystemConfig.SysNo)
-                //{
-                //    case BP.SysNoList.WF:
-                //        map.AddDDLSysEnum(StationAttr.StaGrade, 0, "类型", true, false, StationAttr.StaGrade, "@1=高层岗@2=中层岗@3=执行岗");
-                //        break;
-                //    default:
-                //        break;
-                //}
-
-                // map.AddTBInt(DeptAttr.Grade, 0, "级次", true, true);
-                //map.AddBoolean(DeptAttr.IsDtl, true, "是否明细", true, true);
                 this._enMap = map;
                 return this._enMap;
             }

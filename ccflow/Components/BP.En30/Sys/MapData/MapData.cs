@@ -627,7 +627,7 @@ namespace BP.Sys
             MapData mdOld = new MapData();
             mdOld.No = fk_mapdata;
             mdOld.Delete();
- 
+
             // 求出dataset的map.
             string oldMapID = "";
             DataTable dtMap = ds.Tables["Sys_MapData"];
@@ -638,8 +638,8 @@ namespace BP.Sys
                 oldMapID = dr["No"].ToString();
             }
 
-           string timeKey = DateTime.Now.ToString("yyMMddHHmmss");
-           // string timeKey = fk_mapdata;
+            string timeKey = DateTime.Now.ToString("MMddHHmmss");
+            // string timeKey = fk_mapdata;
             foreach (DataTable dt in ds.Tables)
             {
                 int idx = 0;
@@ -663,7 +663,7 @@ namespace BP.Sys
                         foreach (DataRow dr in dt.Rows)
                         {
                             MapData md = new MapData();
-                            
+
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 object val = dr[dc.ColumnName] as object;
@@ -691,7 +691,7 @@ namespace BP.Sys
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
 
-                            en.MyPK = "Btn" + timeKey + "_" + idx;
+                            en.MyPK = "Btn_" + idx + "_" + fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -708,7 +708,7 @@ namespace BP.Sys
 
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.MyPK = "LE" + timeKey + "_" + idx;
+                            en.MyPK = "LE_" + idx + "_" + fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -724,8 +724,8 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                          //  en.FK_MapData = fk_mapdata; 删除此行解决从表lab的问题。
-                            en.MyPK = "LB" + timeKey + "_" + idx;
+                            //  en.FK_MapData = fk_mapdata; 删除此行解决从表lab的问题。
+                            en.MyPK = "LB_" + idx + "_" + fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -741,7 +741,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.MyPK = "LK" + timeKey + "_" + idx;
+                            en.MyPK = "LK_" + idx + "_" + fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -773,7 +773,7 @@ namespace BP.Sys
 
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.MyPK = "Img" + timeKey + "_" + idx;
+                            en.MyPK = "Img_" + idx + "_" + fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -789,7 +789,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.MyPK = "ImgA" + timeKey + "_" + idx;
+                            en.MyPK = "ImgA_" + idx + "_" + fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -827,7 +827,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.MyPK = "Ath" + timeKey + "_" + idx;
+                            en.MyPK = "Ath_" + idx + "_" + fk_mapdata;
                             try
                             {
                                 en.Insert();
@@ -849,7 +849,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.NoOfObj = "M2M" + timeKey + "_" + idx;
+                            en.NoOfObj = "M2M_" + idx + "_" + fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -865,7 +865,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.NoOfObj = "Fra" + timeKey + "_" + idx;
+                            en.NoOfObj = "Fra_" + idx + "_" + fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -881,7 +881,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.MyPK = "Ext" + timeKey + "_" + idx;
+                            en.MyPK = "Ext_" + idx + "_" + fk_mapdata;
                             en.Insert();
                         }
                         break;
@@ -919,7 +919,7 @@ namespace BP.Sys
                             endDoSQL += "@UPDATE Sys_MapAttr SET GroupID=" + en.OID + " WHERE FK_MapData='" + fk_mapdata + "' AND GroupID=" + beforeID;
                         }
                         break;
-                    case "Sys_Enum":  
+                    case "Sys_Enum":
                         foreach (DataRow dr in dt.Rows)
                         {
                             Sys.SysEnum se = new Sys.SysEnum();
@@ -934,7 +934,7 @@ namespace BP.Sys
                             se.Insert();
                         }
                         break;
-                    case "Sys_EnumMain": 
+                    case "Sys_EnumMain":
                         foreach (DataRow dr in dt.Rows)
                         {
                             Sys.SysEnumMain sem = new Sys.SysEnumMain();
@@ -954,7 +954,6 @@ namespace BP.Sys
                         break;
                 }
             }
-
             //执行最后结束的sql.
             DBAccess.RunSQLs(endDoSQL);
 
