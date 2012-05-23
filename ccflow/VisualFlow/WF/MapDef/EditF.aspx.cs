@@ -456,11 +456,12 @@ public partial class Comm_MapDef_EditF : BP.Web.WebPage
 
         if (this.RefNo != null)
         {
-            btn = new Button();
-            btn.ID = "Btn_AutoFull";
-            btn.Text = this.ToE("AutoFull", "扩展设置");
-            btn.Attributes["onclick"] = "javascript:WinOpen('AutoFull.aspx?RefNo=" + this.RefNo + "&FK_MapData=" + mapAttr.FK_MapData + "',''); return false;";
-            this.Pub1.Add(btn);
+            //btn = new Button();
+            //btn.ID = "Btn_AutoFull";
+            //btn.Text = this.ToE("AutoFull", "扩展设置");
+            //btn.Attributes["onclick"] = "javascript:WinOpen('AutoFull.aspx?RefNo=" + this.RefNo + "&FK_MapData=" + mapAttr.FK_MapData + "',''); return false;";
+
+            this.Pub1.Add("<input type=button class=Btn value='扩展设置' onclick=\"javascript:WinOpen('AutoFull.aspx?RefNo=" + this.RefNo + "&FK_MapData=" + mapAttr.FK_MapData + "',''); return false;\" />");
 
             if (mapAttr.HisEditType == EditType.Edit)
             {

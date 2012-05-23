@@ -90,7 +90,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         this.ToolBar1.AddBtn("Btn_OK", this.ToE("OK", "确定退回"));
         this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
         this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_HL_Click);
-
         TextBox tb = new TextBox();
         tb.TextMode = TextBoxMode.MultiLine;
         tb.ID = "TB_Doc";
@@ -109,34 +108,17 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             }
         }
     }
-    public void BindItWorkFL(BP.WF.Node nd)
+    public void BindItWork_SubWork_Return(BP.WF.Node nd)
     {
         this.ToolBar1.AddLab("sd", "<b>退回到:</b>");
         this.ToolBar1.AddDDL("DDL1");
-
-        this.ToolBar1.AddBtn("Btn_OK", this.ToE("OK", "确定"));
+        this.ToolBar1.AddBtn("Btn_OK", "确定");  
         this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
         this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_FL_Click);
-
-      //DataTable dt = BP.WF.Dev2Interface.DB_GenerWillReturnNodes(this.FK_Node, this.WorkID, this.FID);
-
-        WorkNodes wns = new WorkNodes();
-        if (wns.Count == 0)
-            wns.GenerByFID(nd.HisFlow, this.FID);
-        foreach (WorkNode mywn in wns)
+        DataTable dt = BP.WF.Dev2Interface.DB_GenerWillReturnNodes(this.FK_Node, this.WorkID, this.FID);
+        foreach (DataRow dr in dt.Rows)
         {
-            if (mywn.HisNode.NodeID == this.FK_Node)
-                continue;
-
-            string sql = "SELECT IsPass FROM WF_GenerWorkerList WHERE WorkID=" + this.FID + " AND FK_Node=" + mywn.HisNode.NodeID;
-            DataTable dt = DBAccess.RunSQLReturnTable(sql);
-            if (dt.Rows.Count != 0)
-            {
-                string val = dt.Rows[0][0].ToString();
-                if (val == "3")
-                    continue;
-            }
-            this.DDL1.Items.Add(new ListItem(mywn.HisWork.RecText + "=>" + mywn.HisNode.Name, mywn.HisNode.NodeID.ToString()));
+            this.DDL1.Items.Add(new ListItem(dr["Name"].ToString(), dr["No"].ToString()));
         }
 
         TB tb = new TB();
@@ -215,12 +197,13 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             case NodeWorkType.WorkFHL:
                 throw new Exception("系统没有判断的情况。");
             case NodeWorkType.WorkFL:
+                //throw new Exception("系统没有判断的情况。");
                 // this.BindItWorkFL(nd);
                 break;
             default:
                 if (this.FID != 0)
                 {
-                    this.BindItWorkFL(nd);
+                    this.BindItWork_SubWork_Return(nd);
                     return;
                 }
                 break;
@@ -231,14 +214,6 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
         this.ToolBar1.AddBtn("Btn_OK", this.ToE("OK", "确定"));
         this.ToolBar1.GetBtnByID("Btn_OK").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
         this.ToolBar1.GetBtnByID("Btn_OK").Click += new EventHandler(WF_UC_ReturnWork_Click);
-
-        //if (nd.IsCanHidReturn)
-        //{
-        //    this.ToolBar1.AddBtn("Btn_ReturnHid", "隐形退回");
-        //    this.ToolBar1.GetBtnByID("Btn_ReturnHid").Attributes["onclick"] = " return confirm('" + this.ToE("AYS", "您确定要执行吗?") + "');";
-        //    this.ToolBar1.GetBtnByID("Btn_ReturnHid").Click += new EventHandler(WF_UC_ReturnWork_Click);
-        //}
-
         this.ToolBar1.AddBtn("Btn_Cancel", this.ToE("Cancel", "取消"));
         this.ToolBar1.GetBtnByID("Btn_Cancel").Click += new EventHandler(WF_UC_ReturnWork_Click);
         string appPath = this.Request.ApplicationPath;
@@ -250,10 +225,7 @@ public partial class WF_UC_ReturnWork : BP.Web.UC.UCBase3
             cb.Text = "退回后是否要原路返回?";
             this.ToolBar1.Add(cb);
         }
-        else
-        {
-            this.ToolBar1.Add("<input type=button value='" + this.ToE("Track", "轨迹") + "' enable=true onclick=\"WinOpen('" + appPath + "/WF/Chart.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow + "','ds'); \" />");
-        }
+       
         TextBox tb = new TextBox();
         tb.TextMode = TextBoxMode.MultiLine;
         tb.ID = "TB_Doc";
