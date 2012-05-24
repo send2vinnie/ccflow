@@ -1,9 +1,0 @@
-D:\ccflow\BPFrameWork\Components\BP.Plant\bin\Debug\BP.Plant.dll
-D:\ccflow\BPFrameWork\Components\BP.Plant\bin\Debug\BP.Plant.pdb
-D:\ccflow\BPFrameWork\Components\BP.Plant\bin\Debug\BP.En30.dll
-D:\ccflow\BPFrameWork\Components\BP.Plant\bin\Debug\MySql.Data.dll
-D:\ccflow\BPFrameWork\Components\BP.Plant\bin\Debug\ChineseConverter.dll
-D:\ccflow\BPFrameWork\Components\BP.Plant\bin\Debug\BP.En30.pdb
-D:\ccflow\BPFrameWork\Components\BP.Plant\obj\Debug\ResolveAssemblyReference.cache
-D:\ccflow\BPFrameWork\Components\BP.Plant\obj\Debug\BP.Plant.dll
-D:\ccflow\BPFrameWork\Components\BP.Plant\obj\Debug\BP.Plant.pdb
