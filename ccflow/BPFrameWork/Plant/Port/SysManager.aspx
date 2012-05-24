@@ -43,7 +43,7 @@
                     onclick="btnAdd_Click" /></td>
         </tr>
     </table>
-    <asp:GridView ID="grid" runat="server" AutoGenerateColumns="False" 
+    <lizard:XGridView ID="grid" runat="server" AutoGenerateColumns="False" 
         BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" 
         CellPadding="4" ForeColor="Black" GridLines="Vertical" CssClass="grid" 
         onrowcancelingedit="grid_RowCancelingEdit" onrowdeleting="grid_RowDeleting" 
@@ -81,7 +81,7 @@
         <SortedAscendingHeaderStyle BackColor="#848384" />
         <SortedDescendingCellStyle BackColor="#EAEAD3" />
         <SortedDescendingHeaderStyle BackColor="#575357" />
-    </asp:GridView>
+    </lizard:XGridView>
     </div>
     </form>
 </body>
