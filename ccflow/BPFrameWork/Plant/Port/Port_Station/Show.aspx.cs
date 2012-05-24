@@ -12,32 +12,31 @@ using System.Text;
 namespace BP.EIP.Web.Port_Station
 {
     public partial class Show : Page
-    {        
-        		public string strid=""; 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!Page.IsPostBack)
-			{
-				if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
-				{
-					strid = Request.Params["id"];
-					string No= strid;
-					ShowInfo(No);
-				}
-			}
-		}
-		
-	private void ShowInfo(string No)
-	{
-		BP.EIP.BLL.Port_Station bll=new BP.EIP.BLL.Port_Station();
-		BP.EIP.Model.Port_Station model=bll.GetModel(No);
-		this.lblNo.Text=model.No;
-		this.lblName.Text=model.Name;
-		this.lblStaGrade.Text=model.StaGrade.ToString();
-		this.lblDescription.Text=model.Description;
-		this.lblStatus.Text=model.Status.ToString();
+    {
+        public string strid = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
+                {
+                    strid = Request.Params["id"];
+                    string No = strid;
+                    ShowInfo(No);
+                }
+            }
+        }
 
-	}
+        private void ShowInfo(string No)
+        {
+            BP.EIP.Port_Station model = new EIP.Port_Station(No);
+            this.lblNo.Text = model.No;
+            this.lblName.Text = model.Name;
+            this.lblStaGrade.Text = model.StaGrade.ToString();
+            this.lblDescription.Text = model.Description;
+            this.lblStatus.Text = model.Status.ToString();
+
+        }
 
 
     }
