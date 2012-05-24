@@ -12,35 +12,34 @@ using System.Text;
 namespace BP.EIP.Web.Port_Rule
 {
     public partial class Show : Page
-    {        
-        		public string strid=""; 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!Page.IsPostBack)
-			{
-				if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
-				{
-					strid = Request.Params["id"];
-					string No= strid;
-					ShowInfo(No);
-				}
-			}
-		}
-		
-	private void ShowInfo(string No)
-	{
-		BP.EIP.BLL.Port_Rule bll=new BP.EIP.BLL.Port_Rule();
-		BP.EIP.Model.Port_Rule model=bll.GetModel(No);
-		this.lblNo.Text=model.No;
-		this.lblPermission.Text=model.Permission;
-		this.lblRulePolicy.Text=model.RulePolicy;
-		this.lblRuleGroup.Text=model.RuleGroup;
-		this.lblDescription.Text=model.Description;
-		this.lblPerfix.Text=model.Perfix;
-		this.lblRuleType.Text=model.RuleType;
-		this.lblFK_Domain.Text=model.FK_Domain;
+    {
+        public string strid = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
+                {
+                    strid = Request.Params["id"];
+                    string No = strid;
+                    ShowInfo(No);
+                }
+            }
+        }
 
-	}
+        private void ShowInfo(string No)
+        {
+            BP.EIP.Port_Rule model = new EIP.Port_Rule(No);
+            this.lblNo.Text = model.No;
+            this.lblPermission.Text = model.Permission;
+            this.lblRulePolicy.Text = model.RulePolicy;
+            this.lblRuleGroup.Text = model.RuleGroup;
+            this.lblDescription.Text = model.Description;
+            this.lblPerfix.Text = model.Perfix;
+            this.lblRuleType.Text = model.RuleType;
+            this.lblFK_Domain.Text = model.FK_Domain;
+
+        }
 
 
     }

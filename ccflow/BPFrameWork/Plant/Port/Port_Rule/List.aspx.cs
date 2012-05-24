@@ -8,42 +8,61 @@ using System.Data;
 using Lizard.Common;
 using System.Drawing;
 using LTP.Accounts.Bus;
+using BP.CCOA;
 namespace BP.EIP.Web.Port_Rule
 {
     public partial class List : Page
     {
-        
-        
-        
-		BP.EIP.BLL.Port_Rule bll = new BP.EIP.BLL.Port_Rule();
+
+        private int m_PageIndex = 1;
+        private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
+        BP.EIP.Port_Rule Port_Rule = new BP.EIP.Port_Rule();
+        string[] columns = { 
+                   Port_RuleAttr.Permission,
+                   Port_RuleAttr.RulePolicy,
+                   Port_RuleAttr.RuleGroup,
+                   Port_RuleAttr.Description,
+                   Port_RuleAttr.Perfix,
+                   Port_RuleAttr.RuleType
+                   };
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
-                gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
-                gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
-                btnDelete.Attributes.Add("onclick", "return confirm(\"你确认要删除吗？\")");
+                int rowsCount = this.GetQueryRowsCount();
+                this.XPager1.InitControl(this.m_PageSize, rowsCount);
                 BindData();
             }
         }
-        
+
+        protected void XPager1_PagerChanged(object sender, CurrentPageEventArgs e)
+        {
+            m_PageIndex = e.pageSize;
+            m_PageIndex = e.currentPage;
+            this.BindData();
+        }
+
+        private int GetQueryRowsCount()
+        {
+            string searchValue = Request.QueryString["searchvalue"];
+
+            return XQueryTool.GetRowCount<BP.EIP.Port_Rule>(Port_Rule, columns, searchValue);
+        }
+
+
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             BindData();
         }
-        
+
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            string idlist = GetSelIDlist();
-            if (idlist.Trim().Length == 0) 
-                return;
-            bll.DeleteList(idlist);
-            BindData();
+          
         }
-        
+
         #region gridView
-                        
+
         public void BindData()
         {
             #region
@@ -62,15 +81,11 @@ namespace BP.EIP.Web.Port_Rule
             //}
             #endregion
 
-            DataSet ds = new DataSet();
-            StringBuilder strWhere = new StringBuilder();
-            if (txtKeyword.Text.Trim() != "")
-            {      
-                #warning 代码生成警告：请修改 keywordField 为需要匹配查询的真实字段名称
-                //strWhere.AppendFormat("keywordField like '%{0}%'", txtKeyword.Text.Trim());
-            }            
-            ds = bll.GetList(strWhere.ToString());            
-            gridView.DataSource = ds;
+            string searchValue = Request.QueryString["searchvalue"];
+            BP.EIP.Port_Rule Port_Rule = new BP.EIP.Port_Rule();
+            DataTable Port_RuleTable = XQueryTool.Query<BP.EIP.Port_Rule>(Port_Rule, columns, searchValue, m_PageIndex, m_PageSize, null);
+
+            gridView.DataSource = Port_RuleTable;
             gridView.DataBind();
         }
 
@@ -93,16 +108,16 @@ namespace BP.EIP.Web.Port_Rule
             {
                 LinkButton linkbtnDel = (LinkButton)e.Row.FindControl("LinkButton1");
                 linkbtnDel.Attributes.Add("onclick", "return confirm(\"你确认要删除吗\")");
-                
+
                 //object obj1 = DataBinder.Eval(e.Row.DataItem, "Levels");
                 //if ((obj1 != null) && ((obj1.ToString() != "")))
                 //{
                 //    e.Row.Cells[1].Text = obj1.ToString();
                 //}
-               
+
             }
         }
-        
+
         protected void gridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             //#warning 代码生成警告：请检查确认真实主键的名称和类型是否正确
@@ -123,7 +138,7 @@ namespace BP.EIP.Web.Port_Rule
                     BxsChkd = true;
                     //#warning 代码生成警告：请检查确认Cells的列索引是否正确
                     if (gridView.DataKeys[i].Value != null)
-                    {                        
+                    {
                         idlist += gridView.DataKeys[i].Value.ToString() + ",";
                     }
                 }
