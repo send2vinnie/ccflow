@@ -1,5 +1,5 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true"
-    CodeBehind="Add.aspx.cs" Inherits="BP.EIP.Web.Port_StationDomain.Add" Title="增加页" %>
+﻿<%@ Page Language="C#"  AutoEventWireup="true"
+    CodeFile="Add.aspx.cs" Inherits="BP.EIP.Web.Port_StationDomain.Add" Title="增加页" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
