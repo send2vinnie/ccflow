@@ -12,32 +12,31 @@ using System.Text;
 namespace BP.EIP.Web.Port_FunctionOperate
 {
     public partial class Show : Page
-    {        
-        		public string strid=""; 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!Page.IsPostBack)
-			{
-				if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
-				{
-					strid = Request.Params["id"];
-					string No= strid;
-					ShowInfo(No);
-				}
-			}
-		}
-		
-	private void ShowInfo(string No)
-	{
-		BP.EIP.BLL.Port_FunctionOperate bll=new BP.EIP.BLL.Port_FunctionOperate();
-		BP.EIP.Model.Port_FunctionOperate model=bll.GetModel(No);
-		this.lblNo.Text=model.No;
-		this.lblFK_Function.Text=model.FK_Function;
-		this.lblOperateName.Text=model.OperateName;
-		this.lblOperateDesc.Text=model.OperateDesc;
-		this.lblControl_Name.Text=model.Control_Name;
+    {
+        public string strid = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
+                {
+                    strid = Request.Params["id"];
+                    string No = strid;
+                    ShowInfo(No);
+                }
+            }
+        }
 
-	}
+        private void ShowInfo(string No)
+        {
+            BP.EIP.Port_FunctionOperate model = new EIP.Port_FunctionOperate(No);
+            this.lblNo.Text = model.No;
+            this.lblFK_Function.Text = model.FK_Function;
+            this.lblOperateName.Text = model.OperateName;
+            this.lblOperateDesc.Text = model.OperateDesc;
+            this.lblControl_Name.Text = model.Control_Name;
+
+        }
 
 
     }
