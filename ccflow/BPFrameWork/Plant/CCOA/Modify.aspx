@@ -1,9 +1,17 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/CCOA/WinOpen.master"
-    CodeFile="Modify.aspx.cs" Inherits="Lizard.OA.Web.EIP_LayoutDetail.Modify" Title="修改页" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Modify.aspx.cs" Inherits="Lizard.OA.Web.EIP_LayoutDetail.Modify"
+    Title="修改页" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+    <link href="Style/control.css" rel="stylesheet" type="text/css" />
+    <link href="Style/demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="Form1" runat="server">
     <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
         <tr>
             <td class="tdbg">
@@ -72,6 +80,14 @@
                             <asp:TextBox ID="txtHeight" runat="server" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
+                    <tr>
+                        <td height="25" width="30%" align="right">
+                            链接地址 ：
+                        </td>
+                        <td height="25" width="*" align="left">
+                            <asp:TextBox ID="txtUrl" runat="server" Width="200px"></asp:TextBox>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>
@@ -86,4 +102,6 @@
             </td>
         </tr>
     </table>
-</asp:Content>
+    </form>
+</body>
+</html>

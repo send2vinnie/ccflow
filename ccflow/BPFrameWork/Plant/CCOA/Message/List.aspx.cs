@@ -33,6 +33,8 @@ namespace Lizard.OA.Web.OA_Message
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
                 //gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
 
+                this.MiniToolBar1.AddLinkButton("icon-add", "标记为已读","Show.aspx");
+
                 int rowsCount = this.GetQueryRowsCount();
                 this.XPager1.InitControl(this.m_PageSize, rowsCount);
 

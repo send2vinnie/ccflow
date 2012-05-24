@@ -23,8 +23,16 @@ namespace Lizard.OA.Web.OA_News
                     strid = Request.Params["id"];
                     string NewsId = strid;
                     ShowInfo(NewsId);
+                    AddClicks(NewsId);
                 }
             }
+        }
+
+        private void AddClicks(string NewsId)
+        {
+            BP.CCOA.OA_News model = new BP.CCOA.OA_News(NewsId);
+            model.Clicks = model.Clicks + 1;
+            model.Update();
         }
 
         private void ShowInfo(string NewsId)

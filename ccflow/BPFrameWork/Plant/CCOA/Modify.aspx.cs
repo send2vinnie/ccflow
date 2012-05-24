@@ -83,6 +83,7 @@ namespace Lizard.OA.Web.EIP_LayoutDetail
             bool IsShwo = this.chkIsShow.Checked;
             int Width = int.Parse(this.txtWidth.Text);
             int Height = int.Parse(this.txtHeight.Text);
+            string Url = this.txtUrl.Text;
 
             //Lizard.GPM.Model.EIP_LayoutDetail model = new Lizard.GPM.Model.EIP_LayoutDetail();
             BP.CCOA.EIP_LayoutDetail model = new BP.CCOA.EIP_LayoutDetail(DetailId);
@@ -95,6 +96,7 @@ namespace Lizard.OA.Web.EIP_LayoutDetail
             model.IsShow = IsShwo;
             model.Width = Width;
             model.Height = Height;
+            model.Url = Url;
 
             //Lizard.GPM.BLL.EIP_LayoutDetail bll = new Lizard.GPM.BLL.EIP_LayoutDetail();
             model.Update();

@@ -22,12 +22,12 @@
             portal.render(content);
 
             //panel
-            var test = JSON.parse(data);
-            for (var i = 0; i < test.length; i++) {
-                test[i].column = parseInt(test[i].column);
+            var panels = JSON.parse(data);
+            for (var i = 0; i < panels.length; i++) {
+                panels[i].column = parseInt(panels[i].column);
             }
             //alert(JSON.stringify(test));
-            portal.setPanels(test);
+            portal.setPanels(panels);
 
             var bodyEl = portal.getPanelBodyEl("p2");
             //bodyEl.appendChild(document.getElementById(""));

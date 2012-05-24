@@ -15,11 +15,16 @@
     <link href="Style/demo.css" rel="stylesheet" type="text/css" />
     <link href="../Comm/Scripts/miniui/themes/icons.css" rel="stylesheet" type="text/css" />
     <link href="../Comm/Scripts/miniui/themes/default/miniui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        function onDateClick(e) {
+            window.parent.location.href = "Memo/CalendarMemo.aspx";
+        }
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
-        <div id="calendar1" class="mini-calendar" value="2011-12-11" showFooter="false" width="90">
+        <div id="calendar1" class="mini-calendar" value="2011-12-11" showFooter="false" width="90" ondateclick="onDateClick">
         </div>
     </div>
     </form>

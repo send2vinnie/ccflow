@@ -49,6 +49,7 @@
             <asp:BoundField DataField="Width" HeaderText="宽度" SortExpression="Width" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="Height" HeaderText="高度" SortExpression="Height" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="IsShow" HeaderText="是否显示" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="Url" HeaderText="链接地址" ItemStyle-HorizontalAlign="Center" />
             <asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="No"
                 DataNavigateUrlFormatString="Modify.aspx?id={0}" Text="编辑" />
             <asp:TemplateField ControlStyle-Width="50" HeaderText="删除" Visible="false">

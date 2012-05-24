@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BP.CCOA;
 using BP.Port;
+using BP.EIP;
 
 public partial class CCOA_Home : System.Web.UI.Page
 {
@@ -22,8 +23,8 @@ public partial class CCOA_Home : System.Web.UI.Page
             //ArticleType type = new ArticleType();
             //type.CheckPhysicsTable();
 
-            //EmpInfo empinfo = new EmpInfo();
-            //empinfo.CheckPhysicsTable();
+            ////EmpInfo empinfo = new EmpInfo();
+            ////empinfo.CheckPhysicsTable();
 
             //AddrBook ab = new AddrBook();
             //ab.CheckPhysicsTable();
@@ -75,6 +76,8 @@ public partial class CCOA_Home : System.Web.UI.Page
 
             //BP.CCOA.OA_SMS sms = new OA_SMS();
             //sms.CheckPhysicsTable();
+
+            
         }
     }
 }

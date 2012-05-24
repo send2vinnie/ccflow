@@ -29,7 +29,7 @@
                 </asp:TemplateField>
                 <asp:BoundField DataField="No" HeaderText="主键Id" SortExpression="No" ItemStyle-HorizontalAlign="Center"
                     Visible="false" />
-                <asp:TemplateField HeaderText="新闻标题" SortExpression="NewsTitle" ItemStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="新闻标题" SortExpression="NewsTitle" ItemStyle-HorizontalAlign="Left">
                     <ItemTemplate>
                         <a href="Show.aspx?id=<%#Eval("No") %>" target="_blank">
                             <%# Eval("NewsTitle") %></a>

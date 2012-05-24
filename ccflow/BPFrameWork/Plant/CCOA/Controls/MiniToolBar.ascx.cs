@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Text;
 
 public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
 {
@@ -47,11 +48,44 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        InitToolBar();
     }
 
-    public void AddButton(string icon, string name)
+    private void InitToolBar()
     {
-        
+        AddLinkButton("icon-reload", "返回", RetrunUrl);
+        AddLinkButton("icon-addfolder", "增加", AddUrl);
+        AddClickButton("icon-remove", "删除", "getSelectedIdList()");
+        //AddSeparator();
+        //AddLinkButton("icon-reload", "刷新", RefreshUrl);
+        //AddLinkButton("icon-download", "下载", AddUrl);
+    }
+
+    public void AddLinkButton(string icon, string name, string url)
+    {
+        StringBuilder sbrHtml = new StringBuilder();
+        sbrHtml.Append(this.ButtonContainers.InnerHtml);
+        sbrHtml.AppendFormat("<a class='mini-button' iconcls='{0}' href='{1}'>{2}</a> ", new string[] { icon, url, name });
+
+        this.ButtonContainers.InnerHtml = sbrHtml.ToString();
+    }
+
+    public void AddClickButton(string icon, string name, string clickevent)
+    {
+        StringBuilder sbrHtml = new StringBuilder();
+        sbrHtml.Append(this.ButtonContainers.InnerHtml);
+        sbrHtml.AppendFormat("<a class='mini-button' iconcls='{0}' onclick='{1}'>{2}</a> ",
+            new string[] { icon, clickevent, name });
+
+        this.ButtonContainers.InnerHtml = sbrHtml.ToString();
+    }
+
+    public void AddSeparator()
+    {
+        StringBuilder sbrHtml = new StringBuilder();
+        sbrHtml.Append(this.ButtonContainers.InnerHtml);
+        sbrHtml.Append("<span class='separator'></span>");
+
+        this.ButtonContainers.InnerHtml = sbrHtml.ToString();
     }
 }

@@ -48,12 +48,9 @@
         <tr>
             <td style="width: 100%;">
                 <div id="ButtonContainers" runat="server" style="float: left;">
-                    <a class="mini-button" iconcls="icon-reload" plain="true" href="<%=RetrunUrl %>">返回</a>
-                    <a class="mini-button" iconcls="icon-addfolder" plain="true" href="<%=AddUrl %>">增加</a>
-                    <a class="mini-button" iconcls="icon-remove" plain="true" onclick="getSelectedIdList()">
-                        删除</a></div>
-                <span class="separator"></span><a class="mini-button" iconcls="icon-reload" plain="true"
-                    href="<%=RefreshUrl %>">刷新</a> <a class="mini-button" iconcls="icon-download" plain="true">
+                </div>
+                <span class="separator"></span><a class="mini-button" iconcls="icon-reload" plain="false"
+                    href="<%=RefreshUrl %>">刷新</a> <a class="mini-button" iconcls="icon-download" plain="false">
                         下载</a>
             </td>
             <td style="white-space: nowrap;">

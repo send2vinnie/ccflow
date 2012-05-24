@@ -30,7 +30,7 @@
                 Visible="false" />
             <asp:TemplateField HeaderText="通告标题" SortExpression="NoticeTitle" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
-                    <a href="Show.aspx?id=<%#Eval("No") %>">
+                    <a href="Show.aspx?id=<%#Eval("No") %>" target="_blank">
                         <%# Eval("NoticeTitle")%></a>
                 </ItemTemplate>
             </asp:TemplateField>
