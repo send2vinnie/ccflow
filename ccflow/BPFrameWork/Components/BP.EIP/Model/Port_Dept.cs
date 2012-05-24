@@ -9,6 +9,7 @@ namespace BP.EIP
 {
     public partial class Port_DeptAttr : EntityNoNameAttr
     {
+        public const string Code = "Code";
         public const string FullName = "FullName";
         public const string Pid = "Pid";
         public const string Status = "Status";
@@ -17,7 +18,20 @@ namespace BP.EIP
     public partial class Port_Dept : EntityNoName
     {
         #region 属性
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        public String Code
+        {
+            get
+            {
+                return this.GetValStringByKey(Port_DeptAttr.Code);
+            }
+            set
+            {
+                this.SetValByKey(Port_DeptAttr.Code, value);
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -97,6 +111,7 @@ namespace BP.EIP
                 map.IsAutoGenerNo = false;
                 
                 map.AddTBStringPK(Port_DeptAttr.No, null, "", true, true, 0, 50, 50);
+                map.AddTBString(Port_DeptAttr.Code, null, "简码", true, false, 0, 20, 20);
                 map.AddTBString(Port_DeptAttr.Name, null, "名称", true, false, 0,  100, 100);
                 map.AddTBString(Port_DeptAttr.FullName, null, "", true, false, 0,  100, 100);
                 map.AddTBString(Port_DeptAttr.Pid, null, "", true, false, 0,  50, 50);

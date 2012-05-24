@@ -11,13 +11,14 @@ namespace BP.EIP
     {
         public const string MenuNo = "MenuNo";
         public const string Pid = "Pid";
-        public const string FK_Function = "FK_Function";
         public const string MenuName = "MenuName";
         public const string Title = "Title";
         public const string Img = "Img";
         public const string Url = "Url";
         public const string Path = "Path";
         public const string Status = "Status";
+        public const string FK_App = "FK_App";
+        public const string FK_Function = "FK_Function";
     }
     
     public partial class Port_Menu : EntityNoName
@@ -51,6 +52,21 @@ namespace BP.EIP
             set
             {
                 this.SetValByKey(Port_MenuAttr.Pid, value);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String FK_App
+        {
+            get
+            {
+                return this.GetValStringByKey(Port_MenuAttr.FK_App);
+            }
+            set
+            {
+                this.SetValByKey(Port_MenuAttr.FK_App, value);
             }
         }
         
@@ -195,13 +211,14 @@ namespace BP.EIP
                 map.AddTBStringPK(Port_MenuAttr.No, null, "", true, true, 0, 50, 50);
                 map.AddTBString(Port_MenuAttr.MenuNo, null, "", true, false, 0,  10, 10);
                 map.AddTBString(Port_MenuAttr.Pid, null, "", true, false, 0,  50, 50);
-                map.AddTBString(Port_MenuAttr.FK_Function, null, "", true, false, 0,  50, 50);
                 map.AddTBString(Port_MenuAttr.MenuName, null, "", true, false, 0,  100, 100);
                 map.AddTBString(Port_MenuAttr.Title, null, "", true, false, 0,  100, 100);
                 map.AddTBString(Port_MenuAttr.Img, null, "", true, false, 0,  100, 100);
                 map.AddTBString(Port_MenuAttr.Url, null, "", true, false, 0,  1000, 1000);
                 map.AddTBString(Port_MenuAttr.Path, null, "", true, false, 0,  1000, 1000);
                 map.AddTBInt(Port_MenuAttr.Status, 0, "", true, false);
+                map.AddTBString(Port_MenuAttr.FK_App, null, "", true, false, 0, 50, 50);
+                map.AddTBString(Port_MenuAttr.FK_Function, null, "", true, false, 0, 50, 50);
               
                 this._enMap = map;
                 return this._enMap;

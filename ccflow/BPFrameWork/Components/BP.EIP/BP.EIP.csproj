@@ -40,6 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrentUser.cs" />
+    <Compile Include="DAL\RuleDAL.cs" />
+    <Compile Include="DAL\UserDAL.cs" />
+    <Compile Include="Interface\IDepartment.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="Enum\AuditStatus.cs" />
+    <Compile Include="Interface\IBase.cs" />
+    <Compile Include="Interface\IDomain.cs" />
+    <Compile Include="Interface\IRole.cs" />
+    <Compile Include="Interface\IRule.cs" />
+    <Compile Include="Interface\IStaff.cs" />
+    <Compile Include="Interface\IUser.cs" />
+    <Compile Include="Model\Port_Post.cs" />
+    <Compile Include="Model\Port_PostDept.cs" />
+    <Compile Include="Model\Port_Staff.cs" />
     <Compile Include="Model\Port_ChangeLog.cs" />
     <Compile Include="Model\Port_Dept.cs" />
     <Compile Include="Model\Port_Domain.cs" />
@@ -55,6 +70,8 @@
     <Compile Include="Model\Port_Rule.cs" />
     <Compile Include="Model\Port_Station.cs" />
     <Compile Include="Model\Port_StationDomain.cs" />
+    <Compile Include="Model\Port_StaffDept.cs" />
+    <Compile Include="Model\Port_App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +80,7 @@
       <Name>BP.En30</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
