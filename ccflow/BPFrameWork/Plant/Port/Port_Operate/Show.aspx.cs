@@ -12,29 +12,28 @@ using System.Text;
 namespace BP.EIP.Web.Port_Operate
 {
     public partial class Show : Page
-    {        
-        		public string strid=""; 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!Page.IsPostBack)
-			{
-				if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
-				{
-					strid = Request.Params["id"];
-					string No= strid;
-					ShowInfo(No);
-				}
-			}
-		}
-		
-	private void ShowInfo(string No)
-	{
-		BP.EIP.BLL.Port_Operate bll=new BP.EIP.BLL.Port_Operate();
-		BP.EIP.Model.Port_Operate model=bll.GetModel(No);
-		this.lblNo.Text=model.No;
-		this.lblOperateName.Text=model.OperateName;
+    {
+        public string strid = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
+                {
+                    strid = Request.Params["id"];
+                    string No = strid;
+                    ShowInfo(No);
+                }
+            }
+        }
 
-	}
+        private void ShowInfo(string No)
+        {
+            BP.EIP.Port_Operate model = new EIP.Port_Operate(No);
+            this.lblNo.Text = model.No;
+            this.lblOperateName.Text = model.OperateName;
+
+        }
 
 
     }

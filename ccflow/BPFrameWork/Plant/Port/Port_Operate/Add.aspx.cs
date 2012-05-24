@@ -17,39 +17,39 @@ namespace BP.EIP.Web.Port_Operate
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-                       
+
         }
 
-        		protected void btnSave_Click(object sender, EventArgs e)
-		{
-			
-			string strErr="";
-			if(this.txtNo.Text.Trim().Length==0)
-			{
-				strErr+="No不能为空！\\n";	
-			}
-			if(this.txtOperateName.Text.Trim().Length==0)
-			{
-				strErr+="OperateName不能为空！\\n";	
-			}
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
 
-			if(strErr!="")
-			{
-				MessageBox.Show(this,strErr);
-				return;
-			}
-			string No=this.txtNo.Text;
-			string OperateName=this.txtOperateName.Text;
+            string strErr = "";
+            if (this.txtNo.Text.Trim().Length == 0)
+            {
+                strErr += "No不能为空！\\n";
+            }
+            if (this.txtOperateName.Text.Trim().Length == 0)
+            {
+                strErr += "OperateName不能为空！\\n";
+            }
 
-			BP.EIP.Model.Port_Operate model=new BP.EIP.Model.Port_Operate();
-			model.No=No;
-			model.OperateName=OperateName;
+            if (strErr != "")
+            {
+                MessageBox.Show(this, strErr);
+                return;
+            }
+            string No = this.txtNo.Text;
+            string OperateName = this.txtOperateName.Text;
 
-			BP.EIP.BLL.Port_Operate bll=new BP.EIP.BLL.Port_Operate();
-			bll.Add(model);
-			Lizard.Common.MessageBox.ShowAndRedirect(this,"保存成功！","add.aspx");
+            BP.EIP.Port_Operate model = new EIP.Port_Operate();
+            model.No = No;
+            model.OperateName = OperateName;
 
-		}
+            model.Insert();
+
+            Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "add.aspx");
+
+        }
 
 
         public void btnCancle_Click(object sender, EventArgs e)
