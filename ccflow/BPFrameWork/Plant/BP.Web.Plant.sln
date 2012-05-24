@@ -8,7 +8,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Plant", "http://localhost/Plant", "{BA115CB8-19FC-47C4-8FA0-DA9299DC43A3}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{ECC628EC-8497-4BE8-9D26-51946EC8E635}|BP.CCOA.dll;{247F7483-86B3-442E-B8B1-2FCFB432BD75}|BP.En30.dll;{795DDA68-1F56-4B5D-8BFC-E8B73BEC407A}|BP.WebAppDemo.dll;{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}|BP.Web.Controls.dll;{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}|BP.Plant.dll;{88E210E2-1877-40D8-B669-EC08CA80DC34}|BP.GPM.dll;"
+		ProjectReferences = "{ECC628EC-8497-4BE8-9D26-51946EC8E635}|BP.CCOA.dll;{247F7483-86B3-442E-B8B1-2FCFB432BD75}|BP.En30.dll;{795DDA68-1F56-4B5D-8BFC-E8B73BEC407A}|BP.WebAppDemo.dll;{B04D173B-69F6-4BF3-8EA4-8DB2FC7F33F4}|BP.Web.Controls.dll;{F3A30F83-8A95-48A8-836D-3AD26D2E1AE7}|BP.Plant.dll;{88E210E2-1877-40D8-B669-EC08CA80DC34}|BP.GPM.dll;{6EB21285-F55F-4942-BCD0-2EFAC1EE69E8}|BP.EIP.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Plant"
 		Debug.AspNetCompiler.PhysicalPath = "..\Plant\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Plant\"
@@ -33,6 +33,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.CCOA", "..\Components\BP.CCOA\BP.CCOA.csproj", "{ECC628EC-8497-4BE8-9D26-51946EC8E635}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.GPM", "..\Components\BP.GPM\BP.GPM.csproj", "{88E210E2-1877-40D8-B669-EC08CA80DC34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BP.EIP", "..\Components\BP.EIP\BP.EIP.csproj", "{6EB21285-F55F-4942-BCD0-2EFAC1EE69E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,10 @@ Global
 		{88E210E2-1877-40D8-B669-EC08CA80DC34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88E210E2-1877-40D8-B669-EC08CA80DC34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88E210E2-1877-40D8-B669-EC08CA80DC34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EB21285-F55F-4942-BCD0-2EFAC1EE69E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EB21285-F55F-4942-BCD0-2EFAC1EE69E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EB21285-F55F-4942-BCD0-2EFAC1EE69E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EB21285-F55F-4942-BCD0-2EFAC1EE69E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
