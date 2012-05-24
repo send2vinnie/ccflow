@@ -35,6 +35,7 @@
       <HintPath>..\..\..\DLL\Lizard.DBUtility.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
@@ -53,6 +54,8 @@
     <Compile Include="Enum\ArticleStates.cs" />
     <Compile Include="Enum\MailCategory.cs" />
     <Compile Include="Enum\TypeOfArticle.cs" />
+    <Compile Include="XOracleQueryTool.cs" />
+    <Compile Include="XQueryToolBase.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Model\APP_ChangeLog.cs" />
     <Compile Include="Model\APP_Domain.cs" />
@@ -105,6 +108,7 @@
     <Compile Include="Utility\IHelper.cs" />
     <Compile Include="XDeleteTool.cs" />
     <Compile Include="XQueryTool.cs" />
+    <Compile Include="XSqlServerQueryTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BP.GPM\BP.GPM.csproj">
