@@ -14,8 +14,6 @@ namespace Lizard.OA.Web.OA_Message
 {
     public partial class List : BasePage
     {
-        BP.CCOA.OA_Message bll = new BP.CCOA.OA_Message();
-
         private int m_PageIndex = 1;
 
         private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
@@ -33,7 +31,7 @@ namespace Lizard.OA.Web.OA_Message
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
                 //gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
 
-                this.MiniToolBar1.AddLinkButton("icon-add", "标记为已读","Show.aspx");
+                this.MiniToolBar1.AddLinkButton("icon-add", "标记为已读", "Show.aspx");
 
                 int rowsCount = this.GetQueryRowsCount();
                 this.XPager1.InitControl(this.m_PageSize, rowsCount);
@@ -52,7 +50,7 @@ namespace Lizard.OA.Web.OA_Message
         private int GetQueryRowsCount()
         {
             string searchValue = Request.QueryString["searchvalue"];
-           
+
             return XQueryTool.GetRowCount<BP.CCOA.OA_Message>(OA_Message, columns, searchValue);
         }
 
