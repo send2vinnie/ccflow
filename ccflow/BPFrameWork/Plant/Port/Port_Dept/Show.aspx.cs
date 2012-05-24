@@ -12,32 +12,30 @@ using System.Text;
 namespace BP.EIP.Web.Port_Dept
 {
     public partial class Show : Page
-    {        
-        		public string strid=""; 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!Page.IsPostBack)
-			{
-				if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
-				{
-					strid = Request.Params["id"];
-					string No= strid;
-					ShowInfo(No);
-				}
-			}
-		}
-		
-	private void ShowInfo(string No)
-	{
-		BP.EIP.BLL.Port_Dept bll=new BP.EIP.BLL.Port_Dept();
-		BP.EIP.Model.Port_Dept model=bll.GetModel(No);
-		this.lblNo.Text=model.No;
-		this.lblName.Text=model.Name;
-		this.lblFullName.Text=model.FullName;
-		this.lblPid.Text=model.Pid;
-		this.lblStatus.Text=model.Status.ToString();
+    {
+        public string strid = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
+                {
+                    strid = Request.Params["id"];
+                    string No = strid;
+                    ShowInfo(No);
+                }
+            }
+        }
 
-	}
+        private void ShowInfo(string No)
+        {
+            BP.EIP.Port_Dept model = new EIP.Port_Dept(No);
+            this.lblNo.Text = model.No;
+            this.lblName.Text = model.Name;
+            this.lblFullName.Text = model.FullName;
+            this.lblPid.Text = model.Pid;
+            this.lblStatus.Text = model.Status.ToString();
+        }
 
 
     }
