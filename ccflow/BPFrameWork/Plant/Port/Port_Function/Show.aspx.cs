@@ -12,32 +12,31 @@ using System.Text;
 namespace BP.EIP.Web.Port_Function
 {
     public partial class Show : Page
-    {        
-        		public string strid=""; 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (!Page.IsPostBack)
-			{
-				if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
-				{
-					strid = Request.Params["id"];
-					string No= strid;
-					ShowInfo(No);
-				}
-			}
-		}
-		
-	private void ShowInfo(string No)
-	{
-		BP.EIP.BLL.Port_Function bll=new BP.EIP.BLL.Port_Function();
-		BP.EIP.Model.Port_Function model=bll.GetModel(No);
-		this.lblNo.Text=model.No;
-		this.lblFunctionName.Text=model.FunctionName;
-		this.lblFunctionDesc.Text=model.FunctionDesc;
-		this.lblClassName.Text=model.ClassName;
-		this.lblFK_Domain.Text=model.FK_Domain;
+    {
+        public string strid = "";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
+                {
+                    strid = Request.Params["id"];
+                    string No = strid;
+                    ShowInfo(No);
+                }
+            }
+        }
 
-	}
+        private void ShowInfo(string No)
+        {
+            BP.EIP.Port_Function model = new EIP.Port_Function(No);
+            this.lblNo.Text = model.No;
+            this.lblFunctionName.Text = model.FunctionName;
+            this.lblFunctionDesc.Text = model.FunctionDesc;
+            this.lblClassName.Text = model.ClassName;
+            this.lblFK_Domain.Text = model.FK_Domain;
+
+        }
 
 
     }

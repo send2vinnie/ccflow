@@ -17,57 +17,56 @@ namespace BP.EIP.Web.Port_Function
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-                       
+
         }
 
-        		protected void btnSave_Click(object sender, EventArgs e)
-		{
-			
-			string strErr="";
-			if(this.txtNo.Text.Trim().Length==0)
-			{
-				strErr+="主键不能为空！\\n";	
-			}
-			if(this.txtFunctionName.Text.Trim().Length==0)
-			{
-				strErr+="功能名称不能为空！\\n";	
-			}
-			if(this.txtFunctionDesc.Text.Trim().Length==0)
-			{
-				strErr+="功能描述不能为空！\\n";	
-			}
-			if(this.txtClassName.Text.Trim().Length==0)
-			{
-				strErr+="类名不能为空！\\n";	
-			}
-			if(this.txtFK_Domain.Text.Trim().Length==0)
-			{
-				strErr+="FK_Domain不能为空！\\n";	
-			}
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
 
-			if(strErr!="")
-			{
-				MessageBox.Show(this,strErr);
-				return;
-			}
-			string No=this.txtNo.Text;
-			string FunctionName=this.txtFunctionName.Text;
-			string FunctionDesc=this.txtFunctionDesc.Text;
-			string ClassName=this.txtClassName.Text;
-			string FK_Domain=this.txtFK_Domain.Text;
+            string strErr = "";
+            if (this.txtNo.Text.Trim().Length == 0)
+            {
+                strErr += "主键不能为空！\\n";
+            }
+            if (this.txtFunctionName.Text.Trim().Length == 0)
+            {
+                strErr += "功能名称不能为空！\\n";
+            }
+            if (this.txtFunctionDesc.Text.Trim().Length == 0)
+            {
+                strErr += "功能描述不能为空！\\n";
+            }
+            if (this.txtClassName.Text.Trim().Length == 0)
+            {
+                strErr += "类名不能为空！\\n";
+            }
+            if (this.txtFK_Domain.Text.Trim().Length == 0)
+            {
+                strErr += "FK_Domain不能为空！\\n";
+            }
 
-			BP.EIP.Model.Port_Function model=new BP.EIP.Model.Port_Function();
-			model.No=No;
-			model.FunctionName=FunctionName;
-			model.FunctionDesc=FunctionDesc;
-			model.ClassName=ClassName;
-			model.FK_Domain=FK_Domain;
+            if (strErr != "")
+            {
+                MessageBox.Show(this, strErr);
+                return;
+            }
+            string No = this.txtNo.Text;
+            string FunctionName = this.txtFunctionName.Text;
+            string FunctionDesc = this.txtFunctionDesc.Text;
+            string ClassName = this.txtClassName.Text;
+            string FK_Domain = this.txtFK_Domain.Text;
 
-			BP.EIP.BLL.Port_Function bll=new BP.EIP.BLL.Port_Function();
-			bll.Add(model);
-			Lizard.Common.MessageBox.ShowAndRedirect(this,"保存成功！","add.aspx");
+            BP.EIP.Port_Function model = new EIP.Port_Function();
+            model.No = No;
+            model.FunctionName = FunctionName;
+            model.FunctionDesc = FunctionDesc;
+            model.ClassName = ClassName;
+            model.FK_Domain = FK_Domain;
 
-		}
+            model.Insert();
+            Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "add.aspx");
+
+        }
 
 
         public void btnCancle_Click(object sender, EventArgs e)
