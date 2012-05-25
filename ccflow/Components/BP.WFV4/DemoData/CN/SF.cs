@@ -3,43 +3,65 @@ using System.Data;
 using BP.DA;
 using BP.En;
 using BP.Port;
-//using BP.ZHZS.DS;
-
 
 namespace BP.CN
 {
-	/// <summary>
-	/// 省份
-	/// </summary>
-	public class SFAttr: EntityNoNameAttr
-	{
-		#region 基本属性
-		public const  string FK_PQ="FK_PQ";
+    /// <summary>
+    /// 省份
+    /// </summary>
+    public class SFAttr : EntityNoNameAttr
+    {
+        public const string FK_PQ = "FK_PQ";
         public const string Names = "Names";
         public const string JC = "JC";
-
-		#endregion
-	}
-	/// <summary>
+    }
+    /// <summary>
     /// 省份
-	/// </summary>
-	public class SF :EntityNoName
-	{	
-		#region 基本属性
+    /// </summary>
+    public class SF : EntityNoName
+    {
+        #region 基本属性
+        /// <summary>
+        /// 片区编号
+        /// </summary>
         public string FK_PQ
         {
             get
             {
                 return this.GetValStrByKey(SFAttr.FK_PQ);
             }
+            set
+            {
+                this.SetValByKey(SFAttr.FK_PQ, value);
+            }
         }
+        /// <summary>
+        /// 片区名称
+        /// </summary>
+        public string FK_PQT
+        {
+            get
+            {
+                return this.GetValRefTextByKey(SFAttr.FK_PQ);
+            }
+        }
+        /// <summary>
+        /// 小名称
+        /// </summary>
         public string Names
         {
             get
             {
                 return this.GetValStrByKey(SFAttr.Names);
             }
+            set
+            {
+                this.SetValByKey(SFAttr.Names, value);
+            }
         }
+        /// <summary>
+        /// 简称
+        /// </summary>
         public string JC
         {
             get
@@ -47,34 +69,38 @@ namespace BP.CN
                 return this.GetValStrByKey(SFAttr.JC);
             }
         }
+        #endregion
 
-		 
-		#endregion 
-
-		#region 构造函数
-		public override UAC HisUAC
-		{
-			get
-			{
-				UAC uac = new UAC();
-				uac.OpenForSysAdmin();
-				return uac;
-			}
-		}
-		/// <summary>
-		/// 省份
-		/// </summary>		
-		public SF(){}
-		public SF(string no):base(no)
-		{
-		}
-
-		
-		/// <summary>
-		/// Map
-		/// </summary>
-		public override Map EnMap
-		{
+        #region 构造函数
+        /// <summary>
+        /// 访问权限.
+        /// </summary>
+        public override UAC HisUAC
+        {
+            get
+            {
+                UAC uac = new UAC();
+                uac.OpenForSysAdmin();
+                return uac;
+            }
+        }
+        /// <summary>
+        /// 省份
+        /// </summary>		
+        public SF() { }
+        /// <summary>
+        /// 省份
+        /// </summary>
+        /// <param name="no"></param>
+        public SF(string no)
+            : base(no)
+        {
+        }
+        /// <summary>
+        /// Map
+        /// </summary>
+        public override Map EnMap
+        {
             get
             {
                 if (this._enMap != null)
@@ -95,46 +121,43 @@ namespace BP.CN
                 #endregion
 
                 #region 字段
-                map.AddTBStringPK(SFAttr.No, null, "编号", true, false, 0, 50, 50);
+                map.AddTBStringPK(SFAttr.No, null, "编号", true, false, 2, 2, 2);
                 map.AddTBString(SFAttr.Name, null, "名称", true, false, 0, 50, 200);
-                map.AddTBString(SFAttr.Names, null, "小名", true, false, 0, 50, 200);
+                map.AddTBString(SFAttr.Names, null, "小名称", true, false, 0, 50, 200);
                 map.AddTBString(SFAttr.JC, null, "简称", true, false, 0, 50, 200);
-
-
                 map.AddDDLEntities(SFAttr.FK_PQ, null, "片区", new PQs(), true);
                 #endregion
 
                 this._enMap = map;
                 return this._enMap;
             }
-		}
-		#endregion
-		 
-	}
-	/// <summary>
-	/// 省份
-	/// </summary>
-	public class SFs : EntitiesNoName
-	{
-		#region 
-		/// <summary>
-		/// 得到它的 Entity 
-		/// </summary>
-		public override Entity GetNewEntity
-		{
-			get
-			{
-				return new SF();
-			}
-		}	
-		#endregion 
+        }
+        #endregion
 
-		#region 构造方法
-		/// <summary>
-		/// 省份s
-		/// </summary>
-		public SFs(){}
-		#endregion
-	}
-	
+    }
+    /// <summary>
+    /// 省份s
+    /// </summary>
+    public class SFs : EntitiesNoName
+    {
+        #region 省份.
+        /// <summary>
+        /// 得到它的 Entity 
+        /// </summary>
+        public override Entity GetNewEntity
+        {
+            get
+            {
+                return new SF();
+            }
+        }
+        #endregion
+
+        #region 构造方法
+        /// <summary>
+        /// 省份s
+        /// </summary>
+        public SFs() { }
+        #endregion
+    }
 }

@@ -7,9 +7,9 @@ using BP.Port;
 
 namespace BP.WF.Demo
 {
-	/// <summary>
-	/// 简历 属性
-	/// </summary>
+    /// <summary>
+    /// 简历 属性
+    /// </summary>
     public class ResumeAttr
     {
         #region 基本属性
@@ -35,9 +35,9 @@ namespace BP.WF.Demo
         public const string NianYue = "NianYue";
         #endregion
     }
-	/// <summary>
-	/// 简历
-	/// </summary>
+    /// <summary>
+    /// 简历
+    /// </summary>
     public class Resume : EntityOID
     {
         #region 属性
@@ -115,7 +115,7 @@ namespace BP.WF.Demo
 
         #region 构造函数
         /// <summary>
-        /// Resume
+        /// 简历
         /// </summary>
         public Resume()
         {
@@ -131,7 +131,6 @@ namespace BP.WF.Demo
                     return this._enMap;
                 Map map = new Map("Demo_Resume");
                 map.EnDesc = "简历";
-                map.EnType = EnType.Admin;
 
                 map.AddTBIntPKOID();
                 map.AddTBString(ResumeAttr.FK_Emp, null, "人员", true, false, 0, 200, 10);
@@ -146,26 +145,26 @@ namespace BP.WF.Demo
         }
         #endregion
     }
-	/// <summary>
-	/// 简历
-	/// </summary>
-	public class Resumes: Entities
-	{
-		#region 方法
-		/// <summary>
-		/// 得到它的 Entity 
-		/// </summary>
-		public override Entity GetNewEntity
-		{
-			get
-			{
-				return new Resume();
-			}
-		}
-		/// <summary>
-		/// Resume
-		/// </summary>
-		public Resumes(){} 		 
-		#endregion
-	}
+    /// <summary>
+    /// 简历s
+    /// </summary>
+    public class Resumes : Entities
+    {
+        #region 方法
+        /// <summary>
+        /// 得到它的 Entity 
+        /// </summary>
+        public override Entity GetNewEntity
+        {
+            get
+            {
+                return new Resume();
+            }
+        }
+        /// <summary>
+        /// 简历s
+        /// </summary>
+        public Resumes() { }
+        #endregion
+    }
 }

@@ -420,6 +420,14 @@ namespace BP.WF
         /// 转向处理
         /// </summary>
         public const string TurnToDeal = "TurnToDeal";
+        /// <summary>
+        /// 考核方式
+        /// </summary>
+        public const string CHWay = "CHWay";
+        /// <summary>
+        /// 工作量
+        /// </summary>
+        public const string Workload = "Workload";
         #endregion
 
         #region 基本属性

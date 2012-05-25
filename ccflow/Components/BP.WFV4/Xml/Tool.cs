@@ -7,10 +7,10 @@ using BP.XML;
 
 namespace BP.WF.XML
 {
-	 
-	public class Tool:XmlEn
-	{
-		#region 属性
+
+    public class Tool : XmlEn
+    {
+        #region 属性
         public string No
         {
             get
@@ -25,16 +25,16 @@ namespace BP.WF.XML
                 return this.GetValStringByKey(BP.Web.WebUser.SysLang);
             }
         }
-		/// <summary>
-		/// 图片
-		/// </summary>
-		public string Img
-		{
-			get
-			{
-				return  this.GetValStringByKey("Img") ;
-			}
-		}
+        /// <summary>
+        /// 图片
+        /// </summary>
+        public string Img
+        {
+            get
+            {
+                return this.GetValStringByKey("Img");
+            }
+        }
         public string Title
         {
             get
@@ -49,27 +49,27 @@ namespace BP.WF.XML
                 return this.GetValStringByKey("Url");
             }
         }
-		#endregion
+        #endregion
 
-		#region 构造
-		/// <summary>
-		/// 节点扩展信息
-		/// </summary>
-		public Tool()
-		{
-		}
-		/// <summary>
-		/// 获取一个实例
-		/// </summary>
-		public override XmlEns GetNewEntities
-		{
-			get
-			{
-				return new Tools();
-			}
-		}
-		#endregion
-	}
+        #region 构造
+        /// <summary>
+        /// 节点扩展信息
+        /// </summary>
+        public Tool()
+        {
+        }
+        /// <summary>
+        /// 获取一个实例
+        /// </summary>
+        public override XmlEns GetNewEntities
+        {
+            get
+            {
+                return new Tools();
+            }
+        }
+        #endregion
+    }
 	/// <summary>
 	/// 
 	/// </summary>

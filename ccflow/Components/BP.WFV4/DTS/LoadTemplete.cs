@@ -123,7 +123,7 @@ namespace BP.WF.DTS
                 }
             }
 
-            BP.DA.Log.DebugWriteError(msg);
+            BP.DA.Log.DefaultLogWriteLineInfo(msg);
             return msg;
         }
         /// <summary>

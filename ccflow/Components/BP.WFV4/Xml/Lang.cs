@@ -4,10 +4,22 @@ using BP.DA;
 using BP.En;
 using BP.XML;
 
-
 namespace BP.WF.XML
 {
-	 
+    public class LangAttr
+    {
+        /// <summary>
+        /// 编号
+        /// </summary>
+        public const string No = "No";
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public const string Name = "Name";
+    }
+    /// <summary>
+    /// 语言
+    /// </summary>
 	public class Lang:XmlEnNoName
 	{
 		#region 构造
@@ -30,7 +42,7 @@ namespace BP.WF.XML
 		#endregion
 	}
 	/// <summary>
-	/// 
+	/// 语言s
 	/// </summary>
 	public class Langs:XmlEns
 	{
@@ -52,6 +64,9 @@ namespace BP.WF.XML
 				return new Lang();
 			}
 		}
+        /// <summary>
+        /// XML文件位置.
+        /// </summary>
 		public override string File
 		{
 			get
@@ -73,7 +88,7 @@ namespace BP.WF.XML
 		{
 			get
 			{
-				return null; //new BP.ZF1.AdminLangs();
+				return null;
 			}
 		}
 		#endregion

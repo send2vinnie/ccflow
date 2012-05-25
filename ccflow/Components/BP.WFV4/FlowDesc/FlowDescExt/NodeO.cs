@@ -148,12 +148,9 @@ namespace BP.WF.Ext
         }
         protected override bool beforeUpdate()
         {
-
             Node nd = new Node(this.NodeID);
             nd.Update();
             return base.beforeUpdate();
-
-        
         }
 
 
@@ -218,7 +215,6 @@ namespace BP.WF.Ext
 
                 map.AddDDLSysEnum(NodeAttr.FormType, 0, this.ToE("FormType", "表单类型"), true, true);
                 map.AddTBString(NodeAttr.FormUrl, null, this.ToE("FormUrl", "表单URL"), true, false, 0, 500, 10, true);
-
                 map.AddTBString(NodeAttr.FocusField, null, "焦点字段", false, false, 0, 500, 10, false);
 
                 map.AddDDLSysEnum(NodeAttr.TurnToDeal, 0, "发送后转向",
@@ -296,12 +292,14 @@ namespace BP.WF.Ext
 
                 map.AddTBFloat(NodeAttr.MaxDeductCent, 0, this.ToE(NodeAttr.MaxDeductCent, "最高扣分"), true, false);   //"最高扣分"
                 map.AddTBFloat(NodeAttr.SwinkCent, float.Parse("0.1"), this.ToE("SwinkCent", "工作得分"), true, false); //"工作得分"
-
                 map.AddDDLSysEnum(NodeAttr.OutTimeDeal, 0, this.ToE("OutTimeDeal", "超时处理"),
                 true, true, NodeAttr.OutTimeDeal, "@0=不处理@1=自动转入下一步@2=自动转到指定的人员@3=向指定的人员发送消息@4=删除流程@5=执行SQL");
 
                 map.AddTBString(NodeAttr.DoOutTime, null, "处理内容", true, false, 0, 500, 10, true);
                 map.AddTBString(NodeAttr.FK_Flow, null, "flow", false, false, 0, 100, 10);
+
+                map.AddDDLSysEnum(NodeAttr.CHWay, 0, "考核方式", true, true, NodeAttr.CHWay, "@0=不考核@1=按时效@2=按工作量");
+                map.AddTBFloat(NodeAttr.Workload, 0, "工作量(单位:小时)", true, false);
 
 
                 // 相关功能。

@@ -18,7 +18,6 @@ namespace BP.WF.XML
                 return this.GetValStringByKey(Web.WebUser.SysLang);
             }
         }
-
         public new string CSS
         {
             get

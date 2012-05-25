@@ -2264,6 +2264,9 @@ namespace BP.WF
                     gwf.Update();
                 }
 
+                //执行数据.
+                DBAccess.RunSQL("UPDATE WF_GenerWorkerlist SET IsPass=0 WHERE FK_Emp='"+WebUser.No+"' AND WorkID="+this.WorkID+" AND FK_Node="+this.HisNode.NodeID);
+
                 Node startND = this.HisNode.HisFlow.HisStartNode;
                 StartWork wk = startND.HisWork as StartWork;
                 switch (startND.HisNodeWorkType)
@@ -2272,13 +2275,17 @@ namespace BP.WF
                     case NodeWorkType.WorkFL:
                         break;
                     default:
-                        // 把开始节点的装态设置回来。
-                        wk.OID = this.WorkID;
-                        wk.Retrieve();
-                        if (wk.WFState == WFState.Complete)
-                        {
-                            wk.Update("WFState", (int)WFState.Runing);
-                        }
+                        /*
+                         要考虑删除WFState 节点字段的问题。
+                         */
+                        //// 把开始节点的装态设置回来。
+                        //DBAccess.RunSQL("UPDATE " + wk.EnMap.PhysicsTable + " SET WFState=0 WHERE OID="+this.WorkID+" OR OID="+this);
+                        //wk.OID = this.WorkID;
+                        //int i =wk.RetrieveFromDBSources();
+                        //if (wk.WFState == WFState.Complete)
+                        //{
+                        //    wk.Update("WFState", (int)WFState.Runing);
+                        //}
                         break;
                 }
                 Nodes nds = this.HisNode.HisToNodes;
@@ -3765,7 +3772,7 @@ namespace BP.WF
                     gwf.FID = this.WorkID;
 
 #warning 需要修改成标题生成规则。
-                    
+
                     gwf.Title = this.GenerTitle(this.HisWork);
 
                     gwf.WFState = 0;

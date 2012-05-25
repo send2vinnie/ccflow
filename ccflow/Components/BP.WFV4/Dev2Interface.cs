@@ -227,6 +227,7 @@ namespace BP.WF
         }
         /// <summary>
         /// 获取当前操作员可以发起的流程集合
+        /// 此方法用于sdk表单上合流点查看未完成的子线程。
         /// </summary>
         /// <param name="userNo"></param>
         /// <returns></returns>
@@ -236,6 +237,7 @@ namespace BP.WF
         }
         /// <summary>
         /// 获取(同步)合流点上的子线程
+        /// 此方法用于sdk表单上合流点查看未完成的子线程。
         /// </summary>
         /// <param name="nodeIDOfHL">合流点ID</param>
         /// <param name="workid">流程ID</param>
