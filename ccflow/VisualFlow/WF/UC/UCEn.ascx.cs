@@ -1606,7 +1606,10 @@ namespace BP.Web.Comm.UC.WF
                 return;
 
             this.Page.RegisterClientScriptBlock("y7",
-          "<script language='JavaScript' src='./../DataUser/JSLibData/" + this.EnName + "_Self.js' ></script>");
+          "<script language='JavaScript' src='"+this.Request.ApplicationPath+"/DataUser/JSLibData/" + this.EnName + "_Self.js' ></script>");
+
+            this.Page.RegisterClientScriptBlock("yd7",
+      "<script language='JavaScript' src='" + this.Request.ApplicationPath + "/DataUser/JSLibData/" + this.EnName + ".js' ></script>");
 
             foreach (MapAttr attr in mattrs)
             {

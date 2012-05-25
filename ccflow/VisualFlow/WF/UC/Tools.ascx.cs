@@ -20,6 +20,21 @@ using BP.Web;
 
 public partial class WF_UC_Tools : BP.Web.UC.UCBase3
 {
+    public string _PageSamll = null;
+    public string PageSmall
+    {
+        get
+        {
+            if (_PageSamll == null)
+            {
+                if (this.PageID.ToLower().Contains("small"))
+                    _PageSamll = "Small";
+                else
+                    _PageSamll = "";
+            }
+            return _PageSamll;
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         BP.WF.XML.Tools tools = new BP.WF.XML.Tools();
@@ -48,11 +63,11 @@ public partial class WF_UC_Tools : BP.Web.UC.UCBase3
             if (tool.No == refno)
                 this.Left.AddLi("<b>" + tool.Name + "</b>");
             else
-                this.Left.AddLi("Tools.aspx?RefNo=" + tool.No, tool.Name, "_self");
+                this.Left.AddLi("Tools" + this.PageSmall + ".aspx?RefNo=" + tool.No, tool.Name, "_self");
         }
 
         if (WebUser.No == "admin")
-            this.Left.AddLi("Tools.aspx?RefNo=AdminSet", this.ToE("SiteSet", "网站设置"), "_self");
+            this.Left.AddLi("Tools" + this.PageSmall + ".aspx?RefNo=AdminSet", this.ToE("SiteSet", "网站设置"), "_self");
         this.Left.AddULEnd();
 
         this.Left.AddTDEnd();

@@ -281,7 +281,7 @@ public partial class Comm_Dtl : WebPage
                     qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
                     break;
                 case DtlOpenType.ForFID: // 按流程ID来控制.
-                    qo.AddWhere(GEDtlAttr.FID, this.FID);
+                    qo.AddWhere(GEDtlAttr.FID, this.RefPKVal);
                     break;
             }
         }

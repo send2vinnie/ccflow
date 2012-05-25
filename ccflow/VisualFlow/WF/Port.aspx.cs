@@ -72,30 +72,25 @@ namespace BP.Web.Port
         protected void Page_Load(object sender, System.EventArgs e)
         {
             Response.AddHeader("P3P", "CP=CAO PSA OUR");
-            //if (this.UserNo != null && this.SID != null)
-            //{
-            //    string sql = "SELECT SID  FROM Port_Emp WHERE No='" + this.UserNo + "'";
-            //    string sid = BP.DA.DBAccess.RunSQLReturnVal(sql) as string;
-            //    if (sid != this.SID)
-            //    {
-            //        this.Response.Write("非法的访问，请与管理员联系。sid=" + sid);
-            //        //this.UCSys1.AddMsgOfWarning("错误：", "非法的访问，请与管理员联系。");
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        Emp em = new Emp(this.UserNo);
-            //        WebUser.Token = this.Session.SessionID;
-            //        WebUser.SignInOfGenerLang(em, SystemConfig.SysLanguage);
-            //    }
-            //    //  this.Response.Redirect("EmpWorks.aspx", true);
-            //    //  return;
-            //}
+            if (this.UserNo != null && this.SID != null)
+            {
+                string sql = "SELECT SID  FROM Port_Emp WHERE No='" + this.UserNo + "'";
+                string sid = BP.DA.DBAccess.RunSQLReturnVal(sql) as string;
+                if (sid != this.SID)
+                {
+                    this.Response.Write("非法的访问，请与管理员联系。sid=" + sid);
+                    return;
+                }
+                else
+                {
+                    Emp emL = new Emp(this.UserNo);
+                    WebUser.Token = this.Session.SessionID;
+                    WebUser.SignInOfGenerLang(emL, SystemConfig.SysLanguage);
+                }
+            }
 
-           
             
             BP.SystemConfig.DoClearCash();
-
             Emp em = new Emp(this.UserNo);
             WebUser.Token = this.Session.SessionID;
             WebUser.SignInOfGenerLang(em, SystemConfig.SysLanguage);

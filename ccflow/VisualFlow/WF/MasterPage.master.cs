@@ -49,7 +49,6 @@ public partial class Face_MasterPage : BP.Web.MasterPage
         this.Page.RegisterClientScriptBlock("s",
             "<link href='" + this.Request.ApplicationPath + "/DataUser/Style/Table" + BP.Web.WebUser.Style + ".css' rel='stylesheet' type='text/css' />");
 
-
         if (this.Request.RawUrl.ToLower().Contains("login.aspx") == false)
         {
             if (BP.Web.WebUser.No == null)
