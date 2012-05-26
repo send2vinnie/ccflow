@@ -19,7 +19,6 @@ namespace BP.WF
         /// 流程编号
         /// </summary>
         public const string FK_Flow = "FK_Flow";
-      
         /// <summary>
         /// 参与成员
         /// </summary>

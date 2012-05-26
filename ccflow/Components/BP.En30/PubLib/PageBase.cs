@@ -29,9 +29,34 @@ namespace BP.Web
         /// <summary>
         /// ¹Ø±Õ´°¿Ú
         /// </summary>
-        protected void WinCloseWithMsg(string msg)
+        protected void WinCloseWithMsg(string mess)
         {
-            this.Response.Write("<script language='JavaScript'>alert('" + msg + "'); window.close()</script>");
+            //this.ResponseWriteRedMsg(mess);
+            //return;
+            mess = mess.Replace("'", "£§");
+
+            mess = mess.Replace("\"", "£¢");
+
+            mess = mess.Replace(";", "£»");
+            mess = mess.Replace(")", "£©");
+            mess = mess.Replace("(", "£¨");
+
+            mess = mess.Replace(",", "£¬");
+            mess = mess.Replace(":", "£º");
+
+
+            mess = mess.Replace("<", "£Û");
+            mess = mess.Replace(">", "£Ý");
+
+            mess = mess.Replace("[", "£Û");
+            mess = mess.Replace("]", "£Ý");
+
+
+            mess = mess.Replace("@", "\\n@");
+
+            mess = mess.Replace("\r\n", "");
+
+            this.Response.Write("<script language='JavaScript'>alert('" + mess + "'); window.close()</script>");
         }
         public string RefEnKey
         {

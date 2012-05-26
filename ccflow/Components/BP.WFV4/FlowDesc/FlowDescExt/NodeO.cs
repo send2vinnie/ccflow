@@ -299,7 +299,7 @@ namespace BP.WF.Ext
                 map.AddTBString(NodeAttr.FK_Flow, null, "flow", false, false, 0, 100, 10);
 
                 map.AddDDLSysEnum(NodeAttr.CHWay, 0, "考核方式", true, true, NodeAttr.CHWay, "@0=不考核@1=按时效@2=按工作量");
-                map.AddTBFloat(NodeAttr.Workload, 0, "工作量(单位:小时)", true, false);
+                map.AddTBFloat(NodeAttr.Workload, 0, "工作量(单位:分钟)", true, false);
 
 
                 // 相关功能。

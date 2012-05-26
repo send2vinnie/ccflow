@@ -108,7 +108,7 @@ namespace BP.WF.Ext
 
                 rm = new RefMethod();
                 rm.Icon = "/Images/Btn/Delete.gif";
-                rm.Title = this.ToE("DelFlowData", "删除数据"); // "删除数据";
+                rm.Title = "删除数据"; // this.ToE("DelFlowData", "删除数据"); // "删除数据";
                 rm.Warning = this.ToE("AYS", "您确定要执行删除流程数据吗?");// "您确定要执行删除流程数据吗？";
 
                 //rm.Warning = "您确定要执行删除流程数据吗？";
