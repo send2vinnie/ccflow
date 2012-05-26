@@ -77,7 +77,7 @@ namespace BP.Web.WF
         }
         protected void Page_Load(object sender, System.EventArgs e)
         {
-           
+
             Response.AddHeader("P3P", "CP=CAO PSA OUR");
             Response.AddHeader("Cache-Control", "no-store");
             Response.AddHeader("Expires", "0");
@@ -100,7 +100,7 @@ namespace BP.Web.WF
                             wf14.DoDeleteWorkFlowByReal();
                             this.WinClose();
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             this.WinCloseWithMsg(ex.Message);
                         }
@@ -109,18 +109,43 @@ namespace BP.Web.WF
                         BP.WF.Bill b = new Bill(this.MyPK);
                         b.DoOpen();
                         break;
-                    case  "DelDtl":
-                         GEDtls dtls = new GEDtls(this.EnsName);
-                         GEDtl dtl = (GEDtl)dtls.GetNewEntity;
-                         dtl.OID = this.RefOID;
-                         dtl.Delete();
-                         this.WinClose();
+                    case "DelDtl":
+                        GEDtls dtls = new GEDtls(this.EnsName);
+                        GEDtl dtl = (GEDtl)dtls.GetNewEntity;
+                        dtl.OID = this.RefOID;
+                        if (dtl.RetrieveFromDBSources() == 0)
+                            break;
+
+                        FrmEvents fes = new FrmEvents(this.EnsName); //获得事件.
+
+                        // 处理删除前事件.
+                        try
+                        {
+                            fes.DoEventNode(BP.WF.XML.EventListDtlList.DtlItemDelBefore, dtl);
+                        }
+                        catch (Exception ex)
+                        {
+                            this.WinCloseWithMsg(ex.Message);
+                            break;
+                        }
+                        dtl.Delete();
+
+                        // 处理删除后事件.
+                        try
+                        {
+                            fes.DoEventNode(BP.WF.XML.EventListDtlList.DtlItemDelAfter, dtl);
+                        }
+                        catch (Exception ex)
+                        {
+                            this.WinCloseWithMsg(ex.Message);
+                            break;
+                        }
                         break;
                     case "EmpDoUp":
                         BP.WF.Port.WFEmp ep = new BP.WF.Port.WFEmp(this.RefNo);
                         ep.DoUp();
 
-                        BP.WF.Port.WFEmps emps111=new BP.WF.Port.WFEmps();
+                        BP.WF.Port.WFEmps emps111 = new BP.WF.Port.WFEmps();
                         emps111.RemoveCash();
                         emps111.RetrieveAll();
                         this.WinClose();
@@ -148,7 +173,7 @@ namespace BP.Web.WF
                         }
                         BP.Port.Emp emp155 = new BP.Port.Emp(wl.FK_Emp);
                         Web.WebUser.SignInOfGener(emp155, true);
-                        string u="MyFlow.aspx?FK_Flow=" + wl.FK_Flow + "&WorkID=" + wl.WorkID;
+                        string u = "MyFlow.aspx?FK_Flow=" + wl.FK_Flow + "&WorkID=" + wl.WorkID;
                         if (this.Request.QueryString["IsWap"] != null)
                             u = "./../WF/WAP/" + u;
                         this.Response.Write("<script> window.location.href='" + u + "'</script> *^_^*  <br><br>正在进入系统请稍后，如果长时间没有反应，请<a href='" + u + "'>点这里进入。</a>");
@@ -160,13 +185,13 @@ namespace BP.Web.WF
                         return;
                     case "LogAs":
                         BP.Port.Emp emp1 = new BP.Port.Emp(this.FK_Emp);
-                        BP.Web.WebUser.SignInOfGener(emp1, WebUser.SysLang, WebUser.No, true,false);
+                        BP.Web.WebUser.SignInOfGener(emp1, WebUser.SysLang, WebUser.No, true, false);
                         this.WinClose();
                         return;
                     case "TakeBack": // 取消授权。
                         BP.WF.Port.WFEmp myau = new BP.WF.Port.WFEmp(WebUser.No);
                         BP.DA.Log.DefaultLogWriteLineInfo("取消授权:" + WebUser.No + "取消了对(" + myau.Author + ")的授权。");
-                        myau.Author ="";
+                        myau.Author = "";
                         myau.AuthorIsOK = false;
                         myau.Update();
                         //myau.Update(BP.WF.Port.WFEmpAttr.Author, "",BP.WF.Port.WFEmpAttr.AuthorIsOK, 0);
@@ -189,7 +214,7 @@ namespace BP.Web.WF
                             WorkFlow mwf = new WorkFlow(this.FK_Flow, this.WorkID);
                             str = mwf.DoUnSend();
                             this.Session["info"] = str;
-                            this.Response.Redirect("MyFlowInfo"+Glo.FromPageType+".aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID, true);
+                            this.Response.Redirect("MyFlowInfo" + Glo.FromPageType + ".aspx?FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID, true);
                             return;
                         }
                         catch (Exception ex)
@@ -199,7 +224,7 @@ namespace BP.Web.WF
                             return;
                             //  this.ToMsgPage("@执行撤消失败。@失败信息"+ex.Message);
                         }
-                        // this.Response.Redirect("MyFlow.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow, true);
+                    // this.Response.Redirect("MyFlow.aspx?WorkID=" + this.WorkID + "&FK_Flow=" + this.FK_Flow, true);
                     case "SetBillState":
                         break;
                     case "WorkRpt":

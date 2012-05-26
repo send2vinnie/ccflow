@@ -938,13 +938,31 @@ public partial class Comm_Dtl : WebPage
 
         this.Response.Redirect(url, true);
     }
-    public void Delete()
-    {
-    }
     public void Save()
     {
         MapDtl mdtl = new MapDtl(this.EnsName);
         GEDtls dtls = new GEDtls(this.EnsName);
+        FrmEvents fes = new FrmEvents(this.EnsName); //获得事件.
+        GEEntity mainEn = mdtl.GenerGEMainEntity(this.RefPKVal);
+
+        #region 从表保存前处理事件.
+        if (fes.Count > 0)
+        {
+            try
+            {
+                string msg = fes.DoEventNode(EventListDtlList.DtlSaveEnd, mainEn);
+                if (msg != null)
+                    this.Alert(msg);
+            }
+            catch (Exception ex)
+            {
+                this.Alert(ex.Message);
+                return;
+            }
+        }
+        #endregion 从表保存前处理事件.
+
+
 
         QueryObject qo = new QueryObject(dtls);
         switch (mdtl.DtlOpenType)
@@ -987,12 +1005,30 @@ public partial class Comm_Dtl : WebPage
         bool isTurnPage = false;
         string err = "";
         int idx = 0;
+
+        // 判断是否有事件.
+        bool isHaveBefore = false;
+        bool isHaveEnd = false;
+        FrmEvent fe_Before = fes.GetEntityByKey(FrmEventAttr.FK_Event, EventListDtlList.DtlItemSaveBefore) as FrmEvent;
+        if (fe_Before == null)
+            isHaveBefore = false;
+        else
+            isHaveBefore = true;
+
+        FrmEvent fe_End = fes.GetEntityByKey(FrmEventAttr.FK_Event, EventListDtlList.DtlItemSaveAfter) as FrmEvent;
+        if (fe_End == null)
+            isHaveEnd = false;
+        else
+            isHaveEnd = true;
+
+        //...................................
         foreach (GEDtl dtl in dtls)
         {
             idx++;
             try
             {
                 this.Pub1.Copy(dtl, dtl.OID.ToString(), map);
+
                 if (dtl.OID < mdtl.RowsOfList + 2)
                 {
                     int myOID = dtl.OID;
@@ -1006,12 +1042,48 @@ public partial class Comm_Dtl : WebPage
 
                     dtl.RefPK = this.RefPKVal;
                     dtl.FID = this.FID;
+                    if (isHaveBefore)
+                    {
+                        try
+                        {
+                            err += fes.DoEventNode(EventListDtlList.DtlItemSaveBefore, dtl);
+                        }
+                        catch (Exception ex)
+                        {
+                            err += ex.Message;
+                            continue;
+                        }
+                    }
                     dtl.InsertAsNew();
                 }
                 else
                 {
                     dtl.FID = this.FID;
-                    dtl.Update();
+                    if (isHaveBefore)
+                    {
+                        try
+                        {
+                            err += fes.DoEventNode(EventListDtlList.DtlItemSaveBefore, dtl);
+                        }
+                        catch (Exception ex)
+                        {
+                            err += ex.Message;
+                            continue;
+                        }
+                        dtl.Update();
+                    }
+                }
+                if (isHaveEnd)
+                {
+                    /* 如果有保存后的事件。*/
+                    try
+                    {
+                        fes.DoEventNode(EventListDtlList.DtlItemSaveAfter, dtl);
+                    }
+                    catch (Exception ex)
+                    {
+                        err += ex.Message;
+                    }
                 }
             }
             catch (Exception ex)
@@ -1022,18 +1094,20 @@ public partial class Comm_Dtl : WebPage
         }
 
         if (err != "")
+        {
+            BP.DA.Log.DefaultLogWriteLineInfo(err);
             this.Alert(err);
+            return;
+        }
 
         if (isAddDDLSelectIdxChange == true)
             return;
 
-        #region 处理事件,这是仅仅判断了，保存后的处理内容。
-        FrmEvents fes = new FrmEvents(this.FK_MapData);
+        #region 从表保存后处理事件。
         if (fes.Count > 0)
         {
             try
             {
-                GEEntity mainEn = mdtl.GenerGEMainEntity(this.RefPKVal);
                 string msg = fes.DoEventNode(EventListDtlList.DtlSaveEnd, mainEn);
                 if (msg != null)
                     this.Alert(msg);

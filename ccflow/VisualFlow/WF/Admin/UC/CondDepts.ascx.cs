@@ -168,7 +168,7 @@ public partial class WF_Admin_UC_CondDept : BP.Web.UC.UCBase3
         this.Pub1.AddTREnd();
 
         Depts sts = new Depts();
-        sts.RetrieveAll();
+        sts.RetrieveAllFromDBSource();
 
             int idx = -1;
             foreach (Dept st in sts)
