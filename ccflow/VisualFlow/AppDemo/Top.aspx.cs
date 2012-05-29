@@ -53,14 +53,14 @@ public partial class AppDemo_Top : System.Web.UI.Page
         dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();
         foreach (DataRow dr in dt.Rows)
         {
-            if (dr["SFCK"].ToString().Trim() == "0")
-            {
-                DateTime myjssj = DataType.ParseSysDate2DateTime(dr["ADT"].ToString());
-                if (myjssj.AddMinutes(1) > System.DateTime.Now)
-                {
-                    tempcount++;
-                }
-            }
+            //if (dr["SFCK"].ToString().Trim() == "0")
+            //{
+            //    DateTime myjssj = DataType.ParseSysDate2DateTime(dr["ADT"].ToString());
+            //    if (myjssj.AddMinutes(1) > System.DateTime.Now)
+            //    {
+            //        tempcount++;
+            //    }
+            //}
         }
         Session["abc"] = tempcount;
     }
