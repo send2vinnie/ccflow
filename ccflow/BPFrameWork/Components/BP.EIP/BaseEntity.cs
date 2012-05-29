@@ -5,11 +5,8 @@ using System.Text;
 
 namespace BP.EIP
 {
-    public class BaseEntity : BP.En.EntitiesNo
+    public abstract class BaseEntity : BP.En.EntityNoName
     {
-        public override En.Entity GetNewEntity
-        {
-            get { throw new NotImplementedException(); }
-        }
+       
     }
 }
