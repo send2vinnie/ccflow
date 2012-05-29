@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BP.EIP.Interface;
+using BP.EIP.Enum;
 
 namespace BP.EIP.DAL
 {
@@ -49,7 +50,7 @@ namespace BP.EIP.DAL
             throw new NotImplementedException();
         }
 
-        public void Add(BaseEntity entity, out string statusCode, out string statusMessage)
+        public void Add(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }

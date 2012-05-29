@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BP.EIP.Interface;
 using BP.DA;
+using BP.EIP.Enum;
 
 namespace BP.EIP.DAL
 {
@@ -69,14 +70,7 @@ namespace BP.EIP.DAL
 
         public int BatchMoveTo(string[] departmentIds, string parentId)
         {
-            string departmentId = string.Empty;
-
-            foreach (string deptId in departmentIds)
-            {
-                departmentId += "'" + deptId + "',";
-            }
-
-            departmentId = departmentId.TrimEnd(',');
+            string departmentId = Tool.ArrayToString(departmentIds);
 
             string sql = "UPDATE PORT_DEPT SET PID='{0}' WHERE NO IN '({1})'";
             sql = string.Format(sql, parentId, departmentId);
@@ -85,16 +79,24 @@ namespace BP.EIP.DAL
 
         public int BatchSetCode(IDictionary<string, string> idAndCodes)
         {
-            throw new NotImplementedException();
-           
+            IList<string> sqlList = new List<string>();
+            foreach (KeyValuePair<string, string> keyAndValue in idAndCodes)
+            {
+                string sql = "UPDATE PORT_DEPT SET CODE='{0}' WHERE NO='{1}'";
+                sql = string.Format(sql, keyAndValue.Key, keyAndValue.Value);
+                sqlList.Add(sql);
+            }
+            return XDBHelper.RunSql(sqlList);
         }
 
         public bool Exists(string No)
         {
-            throw new NotImplementedException();
+            string sql = "SELECT NO FROM PORT_DEPT WHERE NO='{0}'";
+            sql = string.Format(sql, No);
+            return XDBHelper.RunSQLReturnCOUNT(sql) > 0;
         }
 
-        public void Add(BaseEntity entity, out string statusCode, out string statusMessage)
+        public void Add(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
