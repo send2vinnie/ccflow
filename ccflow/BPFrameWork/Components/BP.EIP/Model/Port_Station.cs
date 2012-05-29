@@ -13,8 +13,8 @@ namespace BP.EIP
         public const string Description = "Description";
         public const string Status = "Status";
     }
-    
-    public partial class Port_Station : EntityNoName
+
+    public partial class Port_Station : BaseEntity
     {
         #region 属性
         

@@ -21,7 +21,7 @@ namespace BP.EIP
         public const string FK_Function = "FK_Function";
     }
     
-    public partial class Port_Menu : EntityNoName
+    public partial class Port_Menu : BaseEntity
     {
         #region 属性
         

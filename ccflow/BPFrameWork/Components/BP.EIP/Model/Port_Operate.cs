@@ -11,8 +11,8 @@ namespace BP.EIP
     {
         public const string OperateName = "OperateName";
     }
-    
-    public partial class Port_Operate : EntityNoName
+
+    public partial class Port_Operate : BaseEntity
     {
         #region 属性
         

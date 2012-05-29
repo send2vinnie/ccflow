@@ -12,8 +12,8 @@ namespace BP.EIP
         public const string FK_Menu = "FK_Menu";
         public const string FK_Operate = "FK_Operate";
     }
-    
-    public partial class Port_MenuOperate : EntityNoName
+
+    public partial class Port_MenuOperate : BaseEntity
     {
         #region 属性
         

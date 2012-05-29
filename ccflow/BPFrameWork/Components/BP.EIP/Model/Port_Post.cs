@@ -17,8 +17,8 @@ namespace BP.EIP
         public const string UpUser = "UpUser";
         public const string Status = "Status";
     }
-    
-    public partial class Port_Post : EntityNoName
+
+    public partial class Port_Post : BaseEntity
     {
         #region 属性
         

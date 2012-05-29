@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BP.DA;
 using BP.En;
+using BP.EIP;
 
 namespace BP.CCOA
 {
@@ -13,8 +14,8 @@ namespace BP.CCOA
         public const string OrgId = "OrgId";
         public const string No = "No";
     }
-    
-    public partial class EIP_PostDept : EntityNoName
+
+    public partial class EIP_PostDept : BaseEntity
     {
         #region 属性
         

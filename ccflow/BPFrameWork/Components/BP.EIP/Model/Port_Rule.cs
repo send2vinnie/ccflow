@@ -17,8 +17,8 @@ namespace BP.EIP
         public const string RuleType = "RuleType";
         public const string FK_Domain = "FK_Domain";
     }
-    
-    public partial class Port_Rule : EntityNoName
+
+    public partial class Port_Rule : BaseEntity
     {
         #region 属性
         

@@ -24,8 +24,8 @@ namespace BP.EIP
         public const string UpDT = "UpDT";
         public const string Status = "Status";
     }
-    
-    public partial class Port_Staff : EntityNoName
+
+    public partial class Port_Staff : BaseEntity
     {
         #region 属性
         
