@@ -97,12 +97,32 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 0, 确认升级到IE7 以上，并且做如下设置.
    1, 菜单->工具->Internet 选项-> 隐私 -> 把打开弹出窗口阻止程序 关闭上，否则一些功能就不能使用.
    2, 菜单->工具->Internet 选项-> 常规 -> 浏览历史记录设置-> 选中 () 每次访问此网页时. 单选按钮. 点确定，以避免缓存对程序有影响。 
+   3, 确认你是以administrator 超级用户进行安装的。
 
 1，使用 svn下载源程序,请查看如下连接.
    http://ccflow.googlecode.com/svn/ccflow/
    如果你不会使用svn请看这里: http://hi.baidu.com/ccflow/blog/item/427ceff4ff96d03bbc3109b9.html
 
-2，在IIS里面新建一个应用程序池，应用程序池ID号为：ccflow , 托管管道模式为经典.
+2，在IIS7及以上版本里面新建一个应用程序池，应用程序池ID号为：ccflow , (如果是iis7 托管管道模式为经典.)
+（注ccflow可以设为集成模式在web.config须加入配置
+<system.webServer>
+<modules runAllManagedModulesForAllRequests="true"> 
+        </modules>
+        <httpProtocol>
+            <customHeaders>
+                <remove name="X-Powered-By" />
+            </customHeaders>
+        </httpProtocol>
+        <caching>
+            <profiles>
+                <add extension=".css" policy="CacheUntilChange" kernelCachePolicy="DontCache" />
+                <add extension=".gif" policy="CacheUntilChange" kernelCachePolicy="DontCache" />
+            </profiles>
+        </caching>
+        <urlCompression doDynamicCompression="false" />        
+    </system.webServer>
+如果web.config中有httphandler和httpmodule节点须删除
+）
 
 3, 建立虚拟目录 ccflow 在80 端口下  映射目录为 D:\ccflow\VisualFlow\
    执行权限为纯脚本，应用程序池选择为：步骤2新增的应用程序池。
@@ -113,7 +133,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 
     2, 请看下面第5步骤, 为数据库配置链接.
 
-    3, 执行数据库安装向导: http://localhost/ccFlow/ (如果这个网页打不开，这是你的iis配置不正确.)
+    3, 执行数据库安装向导: http://localhost/ccflow/ (如果这个网页打不开，这是你的iis配置不正确.)
 
 
 5, 修改 D:\ccflow\VisualFlow\web.config Appsetting 节点中的数据库连接。
@@ -127,7 +147,7 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
   <!-- 数据库连接url. -->
   <add key="AppCenterDSN" value="Password=;Persist Security Info=True;User ID=sa;Initial Catalog=ccflow;Data Source=.;Timeout=2" />
 
-  <!--ccflow 支持的数据库类型, MSSQL, Oracle, DB2, MySQL  注意区分大小写. 还要检查此数据库用户是否具有足够的权限 sa  -->
+  <!--ccflow 支持的数据库类型, MSSQL, Oracle, DB2, MySQL,InforMix  注意区分大小写. 还要检查此数据库用户是否具有足够的权限 sa  -->
   <add key="AppCenterDBType" value="MSSQL" />
 
 6, 启动流程设计器
@@ -152,9 +172,11 @@ CCFlowDesigner.xap流程设计器，CCForm.xap表单设计器。
 3, 在internet 信息服务(iis) 中， web 服务扩展 asp.net v4.xxxxxx 的dll 没有被允许.
 
 4, 没有注册 asp.net 到iis 上. 需要执行如下命令.
-   cd C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319
+   cd C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319   (32位)
+   cd C:\WINDOWS\Microsoft.NET\Framework64\v4.0.30319 (64位)
    aspnet_regiis.exe -ua
    aspnet_regiis.exe -i
+ 
 
 5, 没有配置mime 类型, 导致流程轨迹图,流程设计器不能被使用. 处理方法.
 
