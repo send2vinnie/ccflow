@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using BP.EIP.Enum;
 
 namespace BP.EIP.Interface
 {
@@ -20,7 +21,7 @@ namespace BP.EIP.Interface
         /// <param name="entity">实体</param>
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状态信息</param>
-        void Add(BaseEntity entity, out string statusCode, out string statusMessage);
+        void Add(BaseEntity entity, out StatusCode statusCode, out string statusMessage);
         /// <summary>
         /// 根据No获取实体
         /// </summary>
