@@ -110,11 +110,15 @@ namespace BP.WF.Ext
                 rm.Icon = "/Images/Btn/Delete.gif";
                 rm.Title = "删除数据"; // this.ToE("DelFlowData", "删除数据"); // "删除数据";
                 rm.Warning = this.ToE("AYS", "您确定要执行删除流程数据吗?");// "您确定要执行删除流程数据吗？";
-
-                //rm.Warning = "您确定要执行删除流程数据吗？";
-                //rm.ToolTip = "清除历史流程数据。";
-
                 rm.ClassMethodName = this.ToString() + ".DoDelData";
+                map.AddRefMethod(rm);
+
+                rm = new RefMethod();
+                rm.Icon = "/Images/Btn/Delete.gif";
+                rm.Title = "删除单个流程"; // this.ToE("DelFlowData", "删除数据"); // "删除数据";
+                rm.ClassMethodName = this.ToString() + ".DoDelDataOne";
+                rm.HisAttrs.AddTBInt("WorkID",0, "输入工作ID",true,false);
+                rm.HisAttrs.AddTBString("sd", null, "删除理由ID", true, false,0,100,100);
                 map.AddRefMethod(rm);
 
                 rm = new RefMethod();
@@ -195,6 +199,13 @@ namespace BP.WF.Ext
             fl.RetrieveFromDBSources();
             return fl.DoAutoStartIt();
         }
+
+        public string DoDelDataOne(int workid, string sd)
+        {
+            return "删除成功 workid="+workid+"  理由:"+sd;
+        }
+
+        
 
         public string DoSetStartFlowDataSources()
         {

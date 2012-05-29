@@ -3550,7 +3550,14 @@ namespace BP.WF
                                 {
                                     cd.MyPK = DA.DBAccess.GenerOID().ToString();
                                 }
-                                cd.Insert();
+                                try
+                                {
+                                    cd.Insert();
+                                }
+                                catch
+                                {
+                                    cd.Update();
+                                }
                             }
                             break;
                         case "WF_NodeReturn"://可退回的节点。
