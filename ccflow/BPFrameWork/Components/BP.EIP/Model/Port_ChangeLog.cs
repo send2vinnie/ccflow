@@ -16,8 +16,8 @@ namespace BP.EIP
         public const string UpUser = "UpUser";
         public const string UpDT = "UpDT";
     }
-    
-    public partial class Port_ChangeLog : EntityNoName
+
+    public partial class Port_ChangeLog : BaseEntity
     {
         #region 属性
         

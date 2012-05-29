@@ -14,8 +14,8 @@ namespace BP.EIP
         public const string Pid = "Pid";
         public const string Status = "Status";
     }
-    
-    public partial class Port_Dept : EntityNoName
+
+    public partial class Port_Dept : BaseEntity
     {
         #region 属性
         /// <summary>

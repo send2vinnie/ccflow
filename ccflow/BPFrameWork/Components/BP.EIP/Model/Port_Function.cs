@@ -14,8 +14,8 @@ namespace BP.EIP
         public const string ClassName = "ClassName";
         public const string FK_Domain = "FK_Domain";
     }
-    
-    public partial class Port_Function : EntityNoName
+
+    public partial class Port_Function : BaseEntity
     {
         #region 属性
         

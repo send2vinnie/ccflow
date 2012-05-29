@@ -13,8 +13,8 @@ namespace BP.EIP
         public const string DomainName = "DomainName";
         public const string Description = "Description";
     }
-    
-    public partial class Port_Domain : EntityNoName
+
+    public partial class Port_Domain : BaseEntity
     {
         #region 属性
       
