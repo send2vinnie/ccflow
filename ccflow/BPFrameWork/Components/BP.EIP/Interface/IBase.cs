@@ -69,7 +69,7 @@ namespace BP.EIP.Interface
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状消息</param>
         /// <returns>影响行数</returns>
-        int Update(BaseEntity entity, out string statusCode, out string statusMessage);
+        int Update(BaseEntity entity, out StatusCode statusCode, out string statusMessage);
         /// <summary>
         /// 批量保存
         /// </summary>
