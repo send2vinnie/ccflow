@@ -43,7 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CurrentUser.cs" />
+    <Compile Include="DAL\DepartmentDAL.cs" />
+    <Compile Include="DAL\DomainDAL.cs" />
+    <Compile Include="DAL\RoleDAL.cs" />
     <Compile Include="DAL\RuleDAL.cs" />
+    <Compile Include="DAL\StaffDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="DALFactory\DataAccess.cs" />
     <Compile Include="DALFactory\DataCache.cs" />
