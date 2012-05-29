@@ -20,12 +20,12 @@ namespace BP.EIP.DAL
             throw new NotImplementedException();
         }
 
-        public int UpdateAddress(Port_Staff staffEntity, out string statusCode, out string statusMessage)
+        public int UpdateAddress(Port_Staff staffEntity, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
 
-        public int BatchUpdateAddress(List<Port_Staff> staffEntites, out string statusCode, out string statusMessage)
+        public int BatchUpdateAddress(List<Port_Staff> staffEntites, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }

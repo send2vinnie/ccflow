@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data;
+using System.Data;using BP.EIP.Enum;
 using BP.EIP.Enum;
 
 namespace BP.EIP.Interface

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data;
+using System.Data;using BP.EIP.Enum;
 
 namespace BP.EIP.Interface
 {
@@ -28,13 +28,13 @@ namespace BP.EIP.Interface
         /// </summary>
         /// <param name="staffEntity">实体</param>
         /// <returns>影响行数</returns>
-        int UpdateAddress(Port_Staff staffEntity, out string statusCode, out string statusMessage);
+        int UpdateAddress(Port_Staff staffEntity, out StatusCode statusCode, out string statusMessage);
         /// <summary>
         /// 更新通讯地址
         /// </summary>
         /// <param name="staffEntites">实体</param>
         /// <returns>影响行数</returns>
-        int BatchUpdateAddress(List<Port_Staff> staffEntites, out string statusCode, out string statusMessage);
+        int BatchUpdateAddress(List<Port_Staff> staffEntites, out StatusCode statusCode, out string statusMessage);
         /// <summary>
         /// 设置职员关联的用户
         /// </summary>

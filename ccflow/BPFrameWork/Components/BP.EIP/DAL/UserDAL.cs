@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using BP.EIP.Interface;
 using BP.DA;
-using System.Data;
+using System.Data;using BP.EIP.Enum;
 
 namespace BP.EIP.DAL
 {
@@ -143,27 +143,27 @@ namespace BP.EIP.DAL
             return DBAccess.RunSQLReturnTable(strSQL);
         }
 
-        public CurrentUser AccountActivation(string uid, out string statusCode, out string statusMessage)
+        public CurrentUser AccountActivation(string uid, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
 
-        public CurrentUser LoginByUid(string uid, out string statusCode, out string statusMessage)
+        public CurrentUser LoginByUid(string uid, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
 
-        public CurrentUser LoginByUserName(string userName, out string statusCode, out string statusMessage)
+        public CurrentUser LoginByUserName(string userName, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
 
-        public CurrentUser UserLogOn(string userName, string password, out string statusCode, out string statusMessage)
+        public CurrentUser UserLogOn(string userName, string password, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
 
-        public CurrentUser UserLogOn(string userName, string password, string ipAddress, out string statusCode, out string statusMessage)
+        public CurrentUser UserLogOn(string userName, string password, string ipAddress, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
@@ -178,12 +178,12 @@ namespace BP.EIP.DAL
             throw new NotImplementedException();
         }
 
-        public int SetPassword(string[] userIds, string password, out string statusCode, out string statusMessage)
+        public int SetPassword(string[] userIds, string password, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
 
-        public int ChangePassword(string oldPassword, string newPassword, out string statusCode, out string statusMessage)
+        public int ChangePassword(string oldPassword, string newPassword, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
@@ -193,7 +193,7 @@ namespace BP.EIP.DAL
             throw new NotImplementedException();
         }
 
-        public void Add(BaseEntity entity, out string statusCode, out string statusMessage)
+        public void Add(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
@@ -233,7 +233,7 @@ namespace BP.EIP.DAL
             throw new NotImplementedException();
         }
 
-        public int Update(BaseEntity entity, out string statusCode, out string statusMessage)
+        public int Update(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }

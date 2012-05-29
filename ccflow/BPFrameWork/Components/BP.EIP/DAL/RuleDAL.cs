@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using BP.EIP.Interface;
 using BP.DA;
-using System.Data;
+using System.Data;using BP.EIP.Enum;
 using BP.EIP.Enum;
 
 namespace BP.EIP.DAL

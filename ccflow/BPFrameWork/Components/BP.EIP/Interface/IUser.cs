@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BP.En;
-using System.Data;
+using System.Data;using BP.EIP.Enum;
 using BP.EIP.Enum;
 
 namespace BP.EIP.Interface
@@ -82,7 +82,7 @@ namespace BP.EIP.Interface
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状消息</param>
         /// <returns>用户实体</returns>
-        CurrentUser AccountActivation(string uid, out string statusCode, out string statusMessage);
+        CurrentUser AccountActivation(string uid, out StatusCode statusCode, out string statusMessage);
         /// <summary>
         /// 按唯一识别码登录
         /// </summary>
@@ -90,7 +90,7 @@ namespace BP.EIP.Interface
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状消息</param>
         /// <returns>用户实体</returns>
-        CurrentUser LoginByUid(string uid, out string statusCode, out string statusMessage);
+        CurrentUser LoginByUid(string uid, out StatusCode statusCode, out string statusMessage);
         /// <summary>
         /// 按用户名登录
         /// </summary>
@@ -98,7 +98,7 @@ namespace BP.EIP.Interface
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状消息</param>
         /// <returns>用户实体</returns>
-        CurrentUser LoginByUserName(string userName, out string statusCode, out string statusMessage);
+        CurrentUser LoginByUserName(string userName, out StatusCode statusCode, out string statusMessage);
         /// <summary>
         /// 登录
         /// </summary>
@@ -108,7 +108,7 @@ namespace BP.EIP.Interface
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状消息</param>
         /// <returns>登录实体类</returns>
-        CurrentUser UserLogOn(string userName, string password, out string statusCode, out string statusMessage);
+        CurrentUser UserLogOn(string userName, string password, out StatusCode statusCode, out string statusMessage);
         /// <summary>
         /// 登录
         /// </summary>
@@ -118,7 +118,7 @@ namespace BP.EIP.Interface
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状消息</param>
         /// <returns>登录实体类</returns>
-        CurrentUser UserLogOn(string userName, string password, string ipAddress, out string statusCode, out string statusMessage);
+        CurrentUser UserLogOn(string userName, string password, string ipAddress, out StatusCode statusCode, out string statusMessage);
         /// <summary>
         /// 操作员退出应用程序
         /// </summary>
@@ -136,7 +136,7 @@ namespace BP.EIP.Interface
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状消息</param>
         /// <returns>影响行数</returns>
-        int SetPassword(string[] userIds, string password, out string statusCode, out string statusMessage);
+        int SetPassword(string[] userIds, string password, out StatusCode statusCode, out string statusMessage);
         /// <summary>
         /// 修改密码
         /// </summary>
@@ -145,6 +145,6 @@ namespace BP.EIP.Interface
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状消息</param>
         /// <returns>影响行数</returns>
-        int ChangePassword(string oldPassword, string newPassword, out string statusCode, out string statusMessage);
+        int ChangePassword(string oldPassword, string newPassword, out StatusCode statusCode, out string statusMessage);
     }
 }
