@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,6 +44,8 @@
     <Compile Include="CurrentUser.cs" />
     <Compile Include="DAL\RuleDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
+    <Compile Include="DALFactory\DataAccess.cs" />
+    <Compile Include="DALFactory\DataCache.cs" />
     <Compile Include="Interface\IDepartment.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Enum\AuditStatus.cs" />
