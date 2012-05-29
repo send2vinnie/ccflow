@@ -264,7 +264,7 @@ public partial class Comm_M2M : WebPage
         m2m.EnOID = this.OID;
         m2m.M2MNo = this.NoOfObj;
 
-        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjs);
+        DataTable dtObj = BP.DA.DBAccess.RunSQLReturnTable(mapM2M.DBOfObjsRun);
         string str = ",";
         string strT = "";
         int numOfselected = 0;
