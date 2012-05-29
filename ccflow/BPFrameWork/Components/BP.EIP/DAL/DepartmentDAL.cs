@@ -98,52 +98,109 @@ namespace BP.EIP.DAL
 
         public void Add(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
-            throw new NotImplementedException();
+            Port_Dept portDept = entity as Port_Dept;
+            try
+            {
+                portDept.Insert();
+                statusCode = StatusCode.Success;
+                statusMessage = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                statusCode = StatusCode.Exception;
+                statusMessage = ex.ToString();
+            }
         }
 
         public BaseEntity GetEntity(string No)
         {
-            throw new NotImplementedException();
+            return new Port_Dept(No);
         }
 
         public System.Data.DataTable GetDT()
         {
-            throw new NotImplementedException();
+            var list = new BP.EIP.Port_Depts();
+            list.RetrieveAll();
+            return list.ToDataSet().Tables[0];
         }
 
         public System.Data.DataTable GetDT(string[] Ids)
         {
-            throw new NotImplementedException();
+            string selectIds = Tool.ArrayToString(Ids);
+            string sql = "SELECT * FROM PORT_DEPT WHERE NO IN ({0})";
+            sql = string.Format(sql, selectIds);
+            return DBAccess.RunSQLReturnTable(sql);
         }
 
         public int Delete(string Id)
         {
-            throw new NotImplementedException();
+            BP.EIP.Port_Dept portDept = new Port_Dept(Id);
+            return portDept.Delete();
         }
 
         public int BatchDelete(string[] ids)
         {
-            throw new NotImplementedException();
+            string deleteIds = Tool.ArrayToString(ids);
+            string sql = "DELETE FROM PORT_DEPT WHERE NO IN ({0})";
+            sql = string.Format(sql, deleteIds);
+            return DBAccess.RunSQL(sql);
         }
 
         public int SetDeleted(string[] ids)
         {
-            throw new NotImplementedException();
+            string deleteIds = Tool.ArrayToString(ids);
+            string sql = "UPDATE PORT_DEPT SET STATUS='0' WHERE ID IN {0}";
+            sql = string.Format(sql, deleteIds);
+            return DBAccess.RunSQL(sql);
         }
 
         public System.Data.DataTable Search(string searchValue)
         {
-            throw new NotImplementedException();
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.Append("SELECT * FROM PORT_DEPT WHERE NAME LIKE '%{0}%' ");
+            sqlBuilder.Append(" OR FULL_NAME LIKE '%{0}%'");
+            string sql = sqlBuilder.ToString();
+            sql = string.Format(sql, searchValue);
+            return DBAccess.RunSQLReturnTable(sql);
         }
 
-        public int Update(BaseEntity entity, out string statusCode, out string statusMessage)
+        public int Update(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
-            throw new NotImplementedException();
+            try
+            {
+                BP.EIP.Port_Dept portDept = entity as BP.EIP.Port_Dept;
+                statusCode = StatusCode.Success;
+                statusMessage = "";
+                return portDept.Update();
+            }
+            catch (Exception ex)
+            {
+                statusCode = StatusCode.Exception;
+                statusMessage = ex.ToString();
+                return -1;
+            }
         }
 
         public int BatchSave(List<BaseEntity> entityList)
         {
-            throw new NotImplementedException();
+            BP.EIP.Port_Depts portDepts = new Port_Depts();
+            foreach (BaseEntity entity in entityList)
+            {
+                BP.EIP.Port_Dept portDept = entity as BP.EIP.Port_Dept;
+                if (portDept != null)
+                {
+                    portDepts.AddEntity(portDept);
+                }
+            }
+            try
+            {
+                portDepts.Save();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

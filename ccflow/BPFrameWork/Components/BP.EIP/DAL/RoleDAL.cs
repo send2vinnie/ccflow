@@ -70,7 +70,7 @@ namespace BP.EIP.DAL
             throw new NotImplementedException();
         }
 
-        public int Update(BaseEntity entity, out string statusCode, out string statusMessage)
+        public int Update(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
             throw new NotImplementedException();
         }
