@@ -16,13 +16,15 @@ namespace BP.EIP
         public const string KeyPass = "KeyPass";
         public const string IsUSBKEY = "IsUSBKEY";
         public const string FK_Emp = "FK_Emp";
+        public const string IsLogin = "IsLogin";
+        public const string AuditStatus = "AuditStatus";
         public const string Status = "Status";
     }
 
     public partial class Port_Emp : BaseEntity
     {
         #region 属性
-        
+
         /// <summary>
         /// 密码
         /// </summary>
@@ -37,7 +39,7 @@ namespace BP.EIP
                 this.SetValByKey(Port_EmpAttr.Pass, value);
             }
         }
-        
+
         /// <summary>
         /// 部门, 外键:对应物理表:Port_Dept,表描述:部门
         /// </summary>
@@ -52,7 +54,7 @@ namespace BP.EIP
                 this.SetValByKey(Port_EmpAttr.FK_Dept, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -67,7 +69,7 @@ namespace BP.EIP
                 this.SetValByKey(Port_EmpAttr.PID, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -82,7 +84,7 @@ namespace BP.EIP
                 this.SetValByKey(Port_EmpAttr.PIN, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -97,7 +99,7 @@ namespace BP.EIP
                 this.SetValByKey(Port_EmpAttr.KeyPass, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -112,7 +114,7 @@ namespace BP.EIP
                 this.SetValByKey(Port_EmpAttr.IsUSBKEY, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -127,24 +129,54 @@ namespace BP.EIP
                 this.SetValByKey(Port_EmpAttr.FK_Emp, value);
             }
         }
-        
+
         /// <summary>
-        /// 
+        /// 是否已登录
         /// </summary>
-        public Object Status
+        public int IsLogin
         {
             get
             {
-                return this.GetValBooleanByKey(Port_EmpAttr.Status);
+                return this.GetValIntByKey(Port_EmpAttr.IsLogin);
+            }
+            set
+            {
+                this.SetValByKey(Port_EmpAttr.IsLogin, value);
+            }
+        }
+
+        /// <summary>
+        /// 授权状态
+        /// </summary>
+        public int AuditStatus
+        {
+            get
+            {
+                return this.GetValIntByKey(Port_EmpAttr.AuditStatus);
+            }
+            set
+            {
+                this.SetValByKey(Port_EmpAttr.AuditStatus, value);
+            }
+        }
+
+        /// <summary>
+        /// 状态：0-失效；1-有效
+        /// </summary>
+        public int Status
+        {
+            get
+            {
+                return this.GetValIntByKey(Port_EmpAttr.Status);
             }
             set
             {
                 this.SetValByKey(Port_EmpAttr.Status, value);
             }
         }
-        
+
         #endregion
-        
+
         #region 构造方法
         /// <summary>
         /// 用户
@@ -162,7 +194,7 @@ namespace BP.EIP
             this.Retrieve();
         }
         #endregion
-        
+
         public override Map EnMap
         {
             get
@@ -175,24 +207,26 @@ namespace BP.EIP
                 map.EnDesc = "用户";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
-                
+
                 map.AddTBStringPK(Port_EmpAttr.No, null, "", true, true, 0, 20, 20);
-                map.AddTBString(Port_EmpAttr.Name, null, "名称", true, false, 0,  100, 100);
-                map.AddTBString(Port_EmpAttr.Pass, null, "密码", true, false, 0,  20, 20);
-                map.AddTBString(Port_EmpAttr.FK_Dept, null, "部门, 外键:对应物理表:Port_Dept,表描述:部门", true, false, 0,  50, 50);
-                map.AddTBString(Port_EmpAttr.PID, null, "", true, false, 0,  100, 100);
-                map.AddTBString(Port_EmpAttr.PIN, null, "", true, false, 0,  100, 100);
-                map.AddTBString(Port_EmpAttr.KeyPass, null, "", true, false, 0,  100, 100);
-                map.AddTBString(Port_EmpAttr.IsUSBKEY, null, "", true, false, 0,  100, 100);
-                map.AddTBString(Port_EmpAttr.FK_Emp, null, "", true, false, 0,  50, 50);
-                map.AddBoolean(Port_EmpAttr.Status, true, "", true, false);
-              
+                map.AddTBString(Port_EmpAttr.Name, null, "名称", true, false, 0, 100, 100);
+                map.AddTBString(Port_EmpAttr.Pass, null, "密码", true, false, 0, 20, 20);
+                map.AddTBString(Port_EmpAttr.FK_Dept, null, "部门, 外键:对应物理表:Port_Dept,表描述:部门", true, false, 0, 50, 50);
+                map.AddTBString(Port_EmpAttr.PID, null, "", true, false, 0, 100, 100);
+                map.AddTBString(Port_EmpAttr.PIN, null, "", true, false, 0, 100, 100);
+                map.AddTBString(Port_EmpAttr.KeyPass, null, "", true, false, 0, 100, 100);
+                map.AddTBString(Port_EmpAttr.IsUSBKEY, null, "", true, false, 0, 100, 100);
+                map.AddTBString(Port_EmpAttr.FK_Emp, null, "", true, false, 0, 50, 50);
+                map.AddTBInt(Port_EmpAttr.IsLogin, 1, "是否已登录", true, false);
+                map.AddTBInt(Port_EmpAttr.AuditStatus, 1, "授权状态", true, false);
+                map.AddTBInt(Port_EmpAttr.Status, 1, "状态", true, false);
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
-    
+
     public partial class Port_Emps : Entities
     {
         public override Entity GetNewEntity
