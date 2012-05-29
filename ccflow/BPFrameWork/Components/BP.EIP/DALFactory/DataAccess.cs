@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Configuration;
+using BP.EIP.DAL;
 namespace BP.EIP.DALFactory
 {
     /// <summary>
@@ -64,16 +65,37 @@ namespace BP.EIP.DALFactory
         #endregion
 
         #region CreateSysManage
-        //public static BP.EIP.Interface.ISysManage CreateSysManage()
-        //{
-        //    //方式1			
-        //    //return (BP.EIP.IDAL.ISysManage)Assembly.Load(AssemblyPath).CreateInstance(AssemblyPath+".SysManage");
 
-        //    //方式2 			
-        //    string classNamespace = AssemblyPath + ".SysManage";
-        //    object objType = CreateObject(AssemblyPath, classNamespace);
-        //    return (BP.EIP.IDAL.ISysManage)objType;
-        //}
+        public static BP.EIP.Interface.IRule CreateRule()
+        {
+            return new RuleDAL();
+        }
+
+        public static BP.EIP.Interface.IUser CreateUser()
+        {
+            return new UserDAL();
+        }
+
+        public static BP.EIP.Interface.IDepartment CreateDepartment()
+        {
+            return new DepartmentDAL();
+        }
+
+        public static BP.EIP.Interface.IDomain CreateDomain()
+        {
+            return new DomainDAL();
+        }
+
+        public static BP.EIP.Interface.IRole CreateRole()
+        {
+            return new RoleDAL();
+        }
+
+        public static BP.EIP.Interface.IStaff CreateStaff()
+        {
+            return new StaffDAL();
+        }
+
         #endregion
     }
 }
