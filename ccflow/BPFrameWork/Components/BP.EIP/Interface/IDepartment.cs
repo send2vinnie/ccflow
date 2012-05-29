@@ -6,14 +6,14 @@ using System.Data;
 
 namespace BP.EIP.Interface
 {
-    public interface IDepartment:IBase
+    public interface IDepartment : IBase
     {
         /// <summary>
         /// 获得上级部门列表
         /// </summary>
         /// <param name="parentId">父亲节点主键</param>
         /// <returns>数据表</returns>
-        DataTable GetDTByParent(string parentId);
+        DataTable GetParentDepartments(string departmentId);
         /// <summary>
         /// 获取内部部门列表
         /// </summary>
@@ -31,7 +31,7 @@ namespace BP.EIP.Interface
         /// </summary>
         /// <param name="parentId">主键</param>
         /// <returns>数据表</returns>
-        DataTable GetParentStaffs(string parentId);
+        DataTable GetParentStaffs(string departmentId);
         /// <summary>
         /// 移动数据
         /// </summary>
@@ -49,9 +49,8 @@ namespace BP.EIP.Interface
         /// <summary>
         /// 保存组织机构编号
         /// </summary>
-        /// <param name="ids">主键数组</param>
-        /// <param name="codes">编号数组</param>
+        /// <param name="idAndCodes">id和机构代码字典</param>
         /// <returns>影响行数</returns>
-        int BatchSetCode(string[] ids, string[] codes);
+        int BatchSetCode(IDictionary<string, string> idAndCodes);
     }
 }
