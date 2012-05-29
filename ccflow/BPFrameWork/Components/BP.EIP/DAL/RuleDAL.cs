@@ -80,6 +80,8 @@ namespace BP.EIP.DAL
             throw new NotImplementedException();
         }
 
+
+
         public int BatchSave(List<BaseEntity> entityList)
         {
             throw new NotImplementedException();
