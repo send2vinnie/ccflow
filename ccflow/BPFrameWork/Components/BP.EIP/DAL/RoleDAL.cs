@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BP.EIP.Interface;
 using BP.EIP.Enum;
+using BP.DA;
 
 namespace BP.EIP.DAL
 {
@@ -17,67 +18,118 @@ namespace BP.EIP.DAL
 
         public System.Data.DataTable GetDTUserByRole(string roleId)
         {
-            throw new NotImplementedException();
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.Append("SELECT PE.* FROM PORT_EMPSTATION PES ");
+            sqlBuilder.Append("LEFT JOIN PORT_EMP PE ");
+            sqlBuilder.Append("ON PES.FK_EMP = PE.NO ");
+            sqlBuilder.Append("WHERE PES.FK_STATION='{0}'");
+            string sql = sqlBuilder.ToString();
+            sql = string.Format(sql, roleId);
+            return DBAccess.RunSQLReturnTable(sql);
         }
 
         public int ClearRoleUser(string roleId)
         {
-            throw new NotImplementedException();
+            string sql = "DELETE PORT_EMPSTATION WHERE FK_STATION='{0}'";
+            sql = string.Format(sql, roleId);
+            return DBAccess.RunSQLReturnValInt(sql);
         }
 
         public bool Exists(string No)
         {
-            throw new NotImplementedException();
+            string sql = "SELECT NO FROM PORT_STATION WHERE NO='{0}'";
+            sql = string.Format(sql, No);
+            return XDBHelper.RunSQLReturnCOUNT(sql) > 0;
         }
 
         public void Add(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
-            throw new NotImplementedException();
+            try
+            {
+                statusCode = StatusCode.Success;
+                statusMessage = string.Empty;
+                entity.Insert();
+            }
+            catch (Exception ex)
+            {
+                statusCode = StatusCode.Exception;
+                statusMessage = ex.ToString();
+            }
         }
 
         public BaseEntity GetEntity(string No)
         {
-            throw new NotImplementedException();
+            return new BP.EIP.Port_Station(No);
         }
 
         public System.Data.DataTable GetDT()
         {
-            throw new NotImplementedException();
+            BP.EIP.Port_Stations portStations = new Port_Stations();
+            portStations.RetrieveAll();
+            return portStations.ToDataSet().Tables[0];
         }
 
         public System.Data.DataTable GetDT(string[] Ids)
         {
-            throw new NotImplementedException();
+            string queryIds = Tool.ArrayToString(Ids);
+            string sql = "SELECT * FROM PORT_STATION WHERE NO IN ({0}) ";
+            sql = string.Format(sql, queryIds);
+            return DBAccess.RunSQLReturnTable(sql);
         }
 
         public int Delete(string Id)
         {
-            throw new NotImplementedException();
+            Port_Station portStation = new Port_Station(Id);
+            return portStation.Delete();
         }
 
         public int BatchDelete(string[] ids)
         {
-            throw new NotImplementedException();
+            string deleteIds = Tool.ArrayToString(ids);
+            string sql = "DELETE FROM PORT_STATION WHERE NO IN ({0})";
+            sql = string.Format(sql, deleteIds);
+            return DBAccess.RunSQLReturnValInt(sql);
         }
 
         public int SetDeleted(string[] ids)
         {
-            throw new NotImplementedException();
+            string deleteIds = Tool.ArrayToString(ids);
+            string sql = "UPDATE PORT_STATION SET STATUS='0' WHERE NO IN ('{0}')";
+            sql = string.Format(sql, deleteIds);
+            return DBAccess.RunSQLReturnValInt(sql);
         }
 
         public System.Data.DataTable Search(string searchValue)
         {
-            throw new NotImplementedException();
+            string sql = "SELECT * FROM PORT_STATION WHERE NAME LIKE '%{0}%' OR DESCRIPTION LIKE '%{0}%'";
+            sql = string.Format(sql, searchValue);
+            return DBAccess.RunSQLReturnTable(sql);
         }
 
         public int Update(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
-            throw new NotImplementedException();
+            try
+            {
+                statusCode = StatusCode.Success;
+                statusMessage = string.Empty;
+                return entity.Update();
+            }
+            catch (Exception ex)
+            {
+                statusCode = StatusCode.Exception;
+                statusMessage = ex.ToString();
+                return -1;
+            }
         }
 
         public int BatchSave(List<BaseEntity> entityList)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            foreach (BaseEntity entity in entityList)
+            {
+                result += entity.Save();
+            }
+            return result;
         }
     }
 }

@@ -183,24 +183,12 @@ namespace BP.EIP.DAL
 
         public int BatchSave(List<BaseEntity> entityList)
         {
-            BP.EIP.Port_Depts portDepts = new Port_Depts();
+            int result = 0;
             foreach (BaseEntity entity in entityList)
             {
-                BP.EIP.Port_Dept portDept = entity as BP.EIP.Port_Dept;
-                if (portDept != null)
-                {
-                    portDepts.AddEntity(portDept);
-                }
+                result += entity.Save();
             }
-            try
-            {
-                portDepts.Save();
-                return 1;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return result;
         }
     }
 }

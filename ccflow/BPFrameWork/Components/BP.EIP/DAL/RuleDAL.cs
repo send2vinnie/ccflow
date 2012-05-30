@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using BP.EIP.Interface;
 using BP.DA;
-using System.Data;using BP.EIP.Enum;
+using System.Data;
+using BP.EIP.Enum;
 using BP.EIP.Enum;
 
 namespace BP.EIP.DAL
@@ -13,7 +14,9 @@ namespace BP.EIP.DAL
     {
         public bool IsUserInRole(string userId, string roleId)
         {
-            throw new NotImplementedException();
+            string sql = "SELECT NO FROM PORT_EMPSTATION WHERE FK_EMP = '{0}' AND FK_STATION = '{1}'";
+            sql = string.Format(sql, userId, roleId);
+            return DBAccess.RunSQLReturnTable(sql).Rows.Count > 0;
         }
 
         public bool IsAuthorized(string permissionItemCode)
@@ -33,59 +36,99 @@ namespace BP.EIP.DAL
 
         public bool Exists(string No)
         {
-            throw new NotImplementedException();
+            string sql = "SELECT NO FROM PORT_RULE WHERE NO='{0}'";
+            sql = string.Format(sql, No);
+            return DBAccess.RunSQLReturnCOUNT(sql) > 0;
         }
 
         public void Add(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
-            throw new NotImplementedException();
+            try
+            {
+                statusCode = Enum.StatusCode.Success;
+                statusMessage = string.Empty;
+                entity.Insert();
+            }
+            catch (Exception ex)
+            {
+                statusCode = Enum.StatusCode.Exception;
+                statusMessage = ex.ToString();
+            }
         }
 
         public BaseEntity GetEntity(string No)
         {
-            throw new NotImplementedException();
+            return new BP.EIP.Port_Rule(No);
         }
 
         public System.Data.DataTable GetDT()
         {
-            throw new NotImplementedException();
+            BP.EIP.Port_Rules rules = new Port_Rules();
+            rules.RetrieveAll();
+            return rules.ToDataSet().Tables[0];
         }
 
         public System.Data.DataTable GetDT(string[] Ids)
         {
-            throw new NotImplementedException();
+            string queryIds = Tool.ArrayToString(Ids);
+            string sql = "SELECT * FROM PORT_RULE WHERE NO IN ({0})";
+            sql = string.Format(sql, queryIds);
+            return DBAccess.RunSQLReturnTable(sql);
         }
 
         public int Delete(string Id)
         {
-            throw new NotImplementedException();
+            BP.EIP.Port_Rule portRule = new Port_Rule(Id);
+            return portRule.Delete();
         }
 
         public int BatchDelete(string[] ids)
         {
-            throw new NotImplementedException();
+            string deleteIds = Tool.ArrayToString(ids);
+            string sql = "DELETE FROM PORT_RULE WHERE NO IN ({0})";
+            sql = string.Format(sql, deleteIds);
+            return DBAccess.RunSQLReturnValInt(sql);
         }
 
         public int SetDeleted(string[] ids)
         {
-            throw new NotImplementedException();
+            string deleteIds = Tool.ArrayToString(ids);
+            string sql = "UPDATE PORT_RULE SET STATUS='0' WHERE NO IN ({0})";
+            sql = string.Format(sql, deleteIds);
+            return DBAccess.RunSQLReturnValInt(sql);
         }
 
         public System.Data.DataTable Search(string searchValue)
         {
-            throw new NotImplementedException();
+            string sql = "SELECT * FOM PORT_RULE WHERE PERMISSION LIKE '%{0}%' OR DESCRIPTION LIKE '%{0}%'";
+            sql = string.Format(sql, searchValue);
+            return DBAccess.RunSQLReturnTable(sql);
         }
 
         public int Update(BaseEntity entity, out StatusCode statusCode, out string statusMessage)
         {
-            throw new NotImplementedException();
+            try
+            {
+                statusCode = Enum.StatusCode.Success;
+                statusMessage = string.Empty;
+                return entity.Update();
+            }
+            catch (Exception ex)
+            {
+                statusCode = Enum.StatusCode.Exception;
+                statusMessage = ex.ToString();
+                return -1;
+            }
         }
-
-
 
         public int BatchSave(List<BaseEntity> entityList)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            foreach (BaseEntity entity in entityList)
+            {
+                result += entity.Save();
+            }
+            return result;
         }
     }
 }
