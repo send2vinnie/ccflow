@@ -53,8 +53,6 @@ public partial class WF_UC_JumpWay : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
 
-
-
         if (this.DoType != null)
         {
             Node ndJump = new Node(this.GoNode);
@@ -112,6 +110,7 @@ public partial class WF_UC_JumpWay : BP.Web.UC.UCBase3
         string small = this.PageID;
         small = small.Replace("JumpWay", "");
 
+        sql = sql.Replace("~", "'");
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
         this.Add("<div align='center' ><div style='width:500px;text-align:center'>");
 
