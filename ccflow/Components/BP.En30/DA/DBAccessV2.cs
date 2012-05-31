@@ -454,7 +454,7 @@ namespace BP.DA
                 foreach (DataRow row in tb.Rows)
                 {
                     string str = row[0].ToString().Trim();
-                    int id = int.Parse(row[1].ToString());
+                    int id = Convert.ToInt32(row[1]);
                     try
                     {
                         CurrentSys_Serial.Add(str, id);
@@ -2386,10 +2386,12 @@ namespace BP.DA
         {
             object obj = "";
             obj = DA.DBAccess.RunSQLReturnVal(sql);
-            if (obj == null || obj.ToString() == "")
+            if (obj == null || obj.ToString() == "" || obj == DBNull.Value)
                 return IsNullReturnVal;
             else
-                return int.Parse(obj.ToString());
+                return Convert.ToInt32(obj);
+
+            
         }
         public static int RunSQLReturnValInt(string sql, int IsNullReturnVal, Paras paras)
         {
@@ -2399,7 +2401,7 @@ namespace BP.DA
             if (obj == null || obj.ToString() == "")
                 return IsNullReturnVal;
             else
-                return int.Parse(obj.ToString());
+                return Convert.ToInt32(obj);
         }
         public static decimal RunSQLReturnValDecimal(string sql, decimal IsNullReturnVal, int blws)
         {
@@ -2430,7 +2432,7 @@ namespace BP.DA
             string str = DBAccess.RunSQLReturnString(ps.SQL, ps);
             try
             {
-                return int.Parse(str);
+                return Convert.ToInt32(str);
             }
             catch (Exception ex)
             {
@@ -3740,7 +3742,7 @@ namespace BP.DA
         {
             try
             {
-                return int.Parse(DBAccessOfOracle9i.RunSQLReturnVal(sql).ToString());
+                return Convert.ToInt32(DBAccessOfOracle9i.RunSQLReturnVal(sql));
             }
             catch (Exception ex)
             {
