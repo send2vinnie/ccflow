@@ -55,7 +55,7 @@ namespace BP.En
                     sql = selecSQL + this._groupBy + this._orderBy;
                 else
                 {
-                    if (selecSQL.Contains("1=1"))
+                    if (selecSQL.Contains(" WHERE "))
                         sql = selecSQL + "  AND ( " + this._sql + " ) " + _groupBy + this._orderBy;
                     else
                         sql = selecSQL + " WHERE   ( " + this._sql + " ) " + _groupBy + this._orderBy;
