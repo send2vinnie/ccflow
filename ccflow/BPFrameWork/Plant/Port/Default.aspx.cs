@@ -24,5 +24,9 @@ public partial class Port_Default : System.Web.UI.Page
         new BP.EIP.Port_Rule().CheckPhysicsTable();
         new BP.EIP.Port_Station().CheckPhysicsTable();
         new BP.EIP.Port_StationDomain().CheckPhysicsTable();
+
+        new BP.EIP.Port_Staff().CheckPhysicsTable();
+        new BP.EIP.Port_StaffDept().CheckPhysicsTable();
+        new BP.EIP.Port_App().CheckPhysicsTable();
     }
 }

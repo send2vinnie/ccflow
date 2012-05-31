@@ -8,12 +8,12 @@ using System.Data;
 using Lizard.Common;
 using System.Drawing;
 using LTP.Accounts.Bus;
-namespace Lizard.GPM.Web.EIP_Menu
+namespace Lizard.Web.OA_Category
 {
-    public partial class List : BP.Web.WebPage
+    public partial class List : BasePage
     {
-        //Lizard.GPM.BLL.EIP_Menu bll = new Lizard.GPM.BLL.EIP_Menu();
-        BP.CCOA.EIP_Menu bll = new BP.CCOA.EIP_Menu();
+		//Lizard.BLL.OA_Category bll = new Lizard.BLL.OA_Category();
+        BP.CCOA.OA_Category bll = new BP.CCOA.OA_Category();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,23 +25,23 @@ namespace Lizard.GPM.Web.EIP_Menu
                 BindData();
             }
         }
-
+        
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             BindData();
         }
-
+        
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             //string idlist = GetSelIDlist();
-            //if (idlist.Trim().Length == 0)
+            //if (idlist.Trim().Length == 0) 
             //    return;
             //bll.DeleteList(idlist);
             //BindData();
         }
-
+        
         #region gridView
-
+                        
         public void BindData()
         {
             #region
@@ -63,15 +63,15 @@ namespace Lizard.GPM.Web.EIP_Menu
             DataSet ds = new DataSet();
             StringBuilder strWhere = new StringBuilder();
             if (txtKeyword.Text.Trim() != "")
-            {
+            {      
                 //#warning 代码生成警告：请修改 keywordField 为需要匹配查询的真实字段名称
                 //strWhere.AppendFormat("keywordField like '%{0}%'", txtKeyword.Text.Trim());
-            }
-            //ds = bll.GetList(strWhere.ToString());
-            BP.CCOA.EIP_Menus list = new BP.CCOA.EIP_Menus();
+            }            
+            //ds = bll.GetList(strWhere.ToString());            
+            BP.CCOA.OA_Categorys list = new BP.CCOA.OA_Categorys();
             list.RetrieveAll();
-            gridView.DataSource = list;
             //gridView.DataSource = ds;
+            gridView.DataSource = list;
             gridView.DataBind();
         }
 
@@ -94,15 +94,16 @@ namespace Lizard.GPM.Web.EIP_Menu
             {
                 LinkButton linkbtnDel = (LinkButton)e.Row.FindControl("LinkButton1");
                 linkbtnDel.Attributes.Add("onclick", "return confirm(\"你确认要删除吗\")");
-
+                
                 //object obj1 = DataBinder.Eval(e.Row.DataItem, "Levels");
                 //if ((obj1 != null) && ((obj1.ToString() != "")))
                 //{
                 //    e.Row.Cells[1].Text = obj1.ToString();
                 //}
+               
             }
         }
-
+        
         protected void gridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             //#warning 代码生成警告：请检查确认真实主键的名称和类型是否正确
@@ -123,7 +124,7 @@ namespace Lizard.GPM.Web.EIP_Menu
                     BxsChkd = true;
                     //#warning 代码生成警告：请检查确认Cells的列索引是否正确
                     if (gridView.DataKeys[i].Value != null)
-                    {
+                    {                        
                         idlist += gridView.DataKeys[i].Value.ToString() + ",";
                     }
                 }

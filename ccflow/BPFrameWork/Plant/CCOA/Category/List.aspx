@@ -1,16 +1,13 @@
-﻿<%@ Page Title="EIP_Menu" Language="C#" MasterPageFile="~/GPM/GPMMaster.master" AutoEventWireup="true"
-    CodeFile="List.aspx.cs" Inherits="Lizard.GPM.Web.EIP_Menu.List" %>
+﻿<%@ Page Title="OA_Category" Language="C#" AutoEventWireup="true" CodeFile="List.aspx.cs"
+    Inherits="Lizard.Web.OA_Category.List" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-    <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <xuc:XToolBar ID="XToolBar1" runat="server" />
-    <!--Title -->
-    <!--Title end -->
-    <!--Add  -->
-    <!--Add end -->
-    <!--Search -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
     <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
         <tr>
             <td style="width: 80px" align="right" class="tdbg">
@@ -27,7 +24,7 @@
     </table>
     <!--Search end-->
     <br />
-    <asp:GridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
+    <lizard:XGridView ID="gridView" runat="server"  Width="100%" CellPadding="3"
         OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
         OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
         RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">
@@ -38,15 +35,11 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="No" HeaderText="No" SortExpression="No" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="MenuNo" HeaderText="MenuNo" SortExpression="MenuNo" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="MenuName" HeaderText="MenuName" SortExpression="MenuName"
+            <asp:BoundField DataField="CategoryName" HeaderText="类别名称" SortExpression="CategoryName"
                 ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Title" HeaderText="Title" SortExpression="Title" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Img" HeaderText="Img" SortExpression="Img" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Url" HeaderText="Url" SortExpression="Url" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Path" HeaderText="Path" SortExpression="Path" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Pid" HeaderText="Pid" SortExpression="Pid" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="Type" HeaderText="类型：0-news" SortExpression="Type" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="Description" HeaderText="描述" SortExpression="Description"
+                ItemStyle-HorizontalAlign="Center" />
             <asp:HyperLinkField HeaderText="详细" ControlStyle-Width="50" DataNavigateUrlFields="No"
                 DataNavigateUrlFormatString="Show.aspx?id={0}" Text="详细" />
             <asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="No"
@@ -58,7 +51,7 @@
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
-    </asp:GridView>
+    </lizard:XGridView>
     <table border="0" cellpadding="0" cellspacing="1" style="width: 100%;">
         <tr>
             <td style="width: 1px;">
@@ -68,4 +61,6 @@
             </td>
         </tr>
     </table>
-</asp:Content>
+    </form>
+</body>
+</html>

@@ -126,3 +126,7 @@
 </div>,String@CreateTime=2012-05-11 10:00,String@IsRead=0,Int32@UpDT=2012/5/11 10:08:34,String@Status=1,Int32<hr>UPDATE OA_Notice SET Author=@Author,Clicks=@Clicks,UpUser=@UpUser,NoticeTitle=@NoticeTitle,NoticeSubTitle=@NoticeSubTitle,NoticeType=@NoticeType,NoticeContent=@NoticeContent,CreateTime=@CreateTime,IsRead=@IsRead,UpDT=@UpDT,Status=@Status WHERE OA_Notice.No=@No
 -----------------------------------------------------------------------------------------------------
 11日10时17分14秒Fatal:System');"@没有[  OA_News, 类[BP.CCOA.OA_News], 物理表[OA_News] 实例。PK = 5bf34bb9-0256-4173-b3cd-4859f9a13662
+-----------------------------------------------------------------------------------------------------
+11日16时14分54秒Fatal:System');"@没有[  OA_Notice, 类[BP.CCOA.OA_Notice], 物理表[OA_Notice] 实例。PK = fc8c7958-1f7a-4db8-a0ec-f5e476a4e576
+11日16时15分01秒Fatal:System');"@没有[  OA_Notice, 类[BP.CCOA.OA_Notice], 物理表[OA_Notice] 实例。PK = fc8c7958-1f7a-4db8-a0ec-f5e476a4e576
+11日16时15分06秒Fatal:System');"@没有[  OA_Notice, 类[BP.CCOA.OA_Notice], 物理表[OA_Notice] 实例。PK = 2

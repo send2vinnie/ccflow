@@ -22,7 +22,6 @@ public partial class Port_Home : System.Web.UI.Page
         {
             this.BindSystem();
         }
-
     }
 
     public void BindSystem()
@@ -47,9 +46,5 @@ public partial class Port_Home : System.Web.UI.Page
 
 
     }
-    protected void lbtnExit_Click(object sender, EventArgs e)
-    {
-        BP.Web.WebUser.Exit();
-        Response.Redirect("Login.aspx");
-    }
+   
 }

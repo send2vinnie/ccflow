@@ -28,7 +28,7 @@
     </table>
     <!--Search end-->
     <br />
-    <lizard:XGridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
+    <lizard:XGridView ID="gridView" runat="server"  Width="100%" CellPadding="3"
         OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
         OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
         RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">

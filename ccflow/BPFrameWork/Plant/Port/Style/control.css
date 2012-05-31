@@ -1,0 +1,139 @@
+﻿.xtoolbar
+{
+    margin: 1px;
+    background: #e5e5e5;
+    border: 2px;
+}
+.xtoolbar #divTitle
+{
+    font-size: 15px;
+    font-family: Adobe 黑体 Std R;
+    line-height: 22px;
+    padding-top: 10px;
+    text-align: center;
+}
+.xtoolbar table tr
+{
+    padding: 2px;
+    background: #e5e5e5;
+}
+.xtoolbar table tr td
+{
+    vertical-align: middle;
+    padding: 2px;
+    height: 24px;
+    background: #e5e5e5;
+}
+.xtoolbar ul
+{
+    float: right;
+    height: 22px;
+    padding: 0px;
+    margin: 0px;
+    line-height: 22px;
+    background: #e5e5e5;
+}
+.xtoolbar ul li
+{
+    width: 50px;
+    float: left;
+    list-style-type: none;
+    height: 22px;
+    background: #e5e5e5;
+}
+
+
+.Article_Single
+{
+}
+
+.Article_Newest
+{
+    border: solid 1px #e5e5e5;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+.Article_Newest h3
+{
+    background: #EFF5FF;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 20px;
+}
+.Article_Newest h3 ul
+{
+    height: auto;
+}
+.Article_Newest h3 ul li
+{
+}
+.Article_Newest h3 ul li a:link
+{
+    text-decoration: none;
+    color: Red;
+}
+
+.lizard-grid
+{
+    font-size: 12px;
+}
+.lizard-grid tr
+{
+    border: solid 1px #e5e5e5;
+}
+.lizard-grid tr th
+{
+    color: Gray;
+    border: none;
+    height: 20px;
+    line-height: 20px;
+    background: #E7EBEF url(default/images/grid/header.png) repeat-x 0 0;
+}
+.lizard-grid tr td
+{
+    color: Gray;
+    border: none;
+}
+
+.attachment
+{
+    border-top: solid 1px #e5e5e5;
+}
+
+.attachment h3
+{
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    margin: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.attachment-file
+{
+    font-size: 12px;
+    height: 40px;
+}
+.attachment-file th
+{
+    width: 40px;
+}
+.attachment-file tr td ul
+{
+    margin: 0;
+}
+.attachment-file tr td ul li
+{
+    list-style-type: none;
+}
+
+.lizard-pager
+{
+    font-family:微软雅黑;
+    border:1px solid #e5e5e5;
+    background: #E7EBEF url(default/images/grid/footer.png) repeat-x 0 0;
+}
+
+
+

@@ -15,7 +15,7 @@
     <form id="Form1" runat="server">
     <!--Search end-->
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
-    &nbsp;<lizard:XGridView ID="gridView" runat="server" AllowPaging="True" Width="100%"
+    &nbsp;<lizard:XGridView ID="gridView" runat="server"  Width="100%"
         CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px"
         DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
         PageSize="10" RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">

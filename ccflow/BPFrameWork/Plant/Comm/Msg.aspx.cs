@@ -18,7 +18,7 @@ namespace BP.Web.Comm
 	/// <summary>
 	/// Style 的摘要说明。
 	/// </summary>
-	public partial class UIMsg: PageBase
+	public partial class UIMsg: BasePageBase
 	{
 		protected BP.Web.Controls.DDL DDL1;
 	

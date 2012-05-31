@@ -14,42 +14,58 @@
     <form id="Form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
     <br />
-    <asp:GridView ID="gridView" runat="server" AllowPaging="True" Width="100%" CellPadding="3"
-        OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
-        OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
-        RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">
-        <Columns>
-            <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
-                <ItemTemplate>
-                    <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
-                    <asp:HiddenField ID="DeleteNo" runat="server" Value='<%#Eval("No") %>' />
-                </ItemTemplate>
-            </asp:TemplateField>
-            <asp:BoundField DataField="No" HeaderText="No" SortExpression="No" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="MenuNo" HeaderText="MenuNo" SortExpression="MenuNo" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Pid" HeaderText="Pid" SortExpression="Pid" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="FK_Function" HeaderText="FK_Function" SortExpression="FK_Function"
-                ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="MenuName" HeaderText="MenuName" SortExpression="MenuName"
-                ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Title" HeaderText="Title" SortExpression="Title" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Img" HeaderText="Img" SortExpression="Img" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Url" HeaderText="Url" SortExpression="Url" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Path" HeaderText="Path" SortExpression="Path" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" ItemStyle-HorizontalAlign="Center" />
-            <asp:HyperLinkField HeaderText="详细" ControlStyle-Width="50" DataNavigateUrlFields="No"
-                DataNavigateUrlFormatString="Show.aspx?id={0}" Text="详细" />
-            <asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="No"
-                DataNavigateUrlFormatString="Modify.aspx?id={0}" Text="编辑" />
-            <asp:TemplateField ControlStyle-Width="50" HeaderText="删除" Visible="false">
-                <ItemTemplate>
-                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Delete"
-                        Text="删除"></asp:LinkButton>
-                </ItemTemplate>
-            </asp:TemplateField>
-        </Columns>
-    </asp:GridView>
-    <xuc:XPager ID="XPager1" runat="server" OnPagerChanged="XPager1_PagerChanged" />
+    <table width="100%">
+        <tr>
+            <td style="width: 200px; vertical-align: top;">
+                <div>
+                    <h3>
+                        选择系统</h3>
+                    <ul id="tree1" class="mini-tree" url="../../DataUser/tree.txt" style="width: 200px;
+                        padding: 5px;" showtreeicon="true" textfield="text" idfield="id">
+                    </ul>
+                </div>
+            </td>
+            <td>
+                <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
+                    BorderWidth="1px" DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
+                    PageSize="10" RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">
+                    <Columns>
+                        <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
+                            <ItemTemplate>
+                                <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
+                                <asp:HiddenField ID="DeleteNo" runat="server" Value='<%#Eval("No") %>' />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="No" HeaderText="No" SortExpression="No" ItemStyle-HorizontalAlign="Center"
+                            Visible="false" />
+                        <asp:BoundField DataField="MenuNo" HeaderText="菜单号" SortExpression="MenuNo" ItemStyle-HorizontalAlign="Center" />
+                        <asp:BoundField DataField="Pid" HeaderText="父级编号" SortExpression="Pid" ItemStyle-HorizontalAlign="Center" />
+                        <asp:BoundField DataField="FK_Function" HeaderText="FK_Function" SortExpression="FK_Function"
+                            ItemStyle-HorizontalAlign="Center" Visible="false" />
+                        <asp:BoundField DataField="MenuName" HeaderText="MenuName" SortExpression="MenuName"
+                            ItemStyle-HorizontalAlign="Center" Visible="false" />
+                        <asp:BoundField DataField="Title" HeaderText="标题" SortExpression="Title" ItemStyle-HorizontalAlign="Center" />
+                        <asp:BoundField DataField="Img" HeaderText="图标" SortExpression="Img" ItemStyle-HorizontalAlign="Center" />
+                        <asp:BoundField DataField="Url" HeaderText="Url地址" SortExpression="Url" ItemStyle-HorizontalAlign="Center" />
+                        <asp:BoundField DataField="Path" HeaderText="路径" SortExpression="Path" ItemStyle-HorizontalAlign="Center"
+                            Visible="false" />
+                        <asp:BoundField DataField="Status" HeaderText="状态" SortExpression="Status" ItemStyle-HorizontalAlign="Center" />
+                        <asp:HyperLinkField HeaderText="详细" ControlStyle-Width="50" DataNavigateUrlFields="No"
+                            DataNavigateUrlFormatString="Show.aspx?id={0}" Text="详细" Visible="false" />
+                        <asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="No"
+                            DataNavigateUrlFormatString="Modify.aspx?id={0}" Text="编辑" />
+                        <asp:TemplateField ControlStyle-Width="50" HeaderText="删除" Visible="false">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Delete"
+                                    Text="删除"></asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </lizard:XGridView>
+                <xuc:XPager ID="XPager1" runat="server" OnPagerChanged="XPager1_PagerChanged" />
+            </td>
+        </tr>
+    </table>
     </form>
 </body>
 </html>

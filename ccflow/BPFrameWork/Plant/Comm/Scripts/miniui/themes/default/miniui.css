@@ -151,12 +151,14 @@
     background:url(images/tools/refresh.gif) no-repeat 50% 50%;
 }
 
-
-
 .mini-toolbar
 {
-    border:solid 1px #909aa6;
-    padding:5px;   
+    /*border:solid 1px #909aa6;*/
+    border:solid 1px #e5e5e5;
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:0px;
+    padding-bottom:0px;
     background:#E7EAEE url(images/toolbar/toolbar.png) repeat-x 0 0;
 }
 .separator
