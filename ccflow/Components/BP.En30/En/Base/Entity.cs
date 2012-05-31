@@ -320,7 +320,7 @@ namespace BP.En
                     default:
                         throw new Exception("error");
                 }
-                string str = DBAccess.RunSQLReturnValInt(sql).ToString();
+                string str = DBAccess.RunSQLReturnValInt(sql,1).ToString();
                 if (str == "0" || str == "")
                     str = "1";
                 return str.PadLeft(int.Parse(this.EnMap.CodeStruct), '0');
