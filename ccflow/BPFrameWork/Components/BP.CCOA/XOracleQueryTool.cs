@@ -50,8 +50,12 @@ namespace BP.CCOA
             int startNo = (pageIndex - 1) * pageSize + 1;
             int endNo = startNo + pageSize - 1;
 
-            sql += " AND ROWNUM BETWEEN {0} AND {1}";
-            sql = string.Format(sql, startNo, endNo);
+            //sql += " AND ROWNUM BETWEEN {0} AND {1}";
+            sql = "SELECT T.*,ROWNUM ROW_NUM FROM ( " + sql + " ) T WHERE ROWNUM<={0}";
+            sql = string.Format(sql, endNo);
+            sql = "SELECT * FROM ( "+sql+") WHERE ROW_NUM>={0}";
+            sql = string.Format(sql, startNo);
+            //sql = string.Format(sql, startNo, endNo);
 
             return DBAccess.RunSQLReturnTable(sql);
         }
