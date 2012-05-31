@@ -16,7 +16,7 @@ public partial class CCOA_AjaxMenu : System.Web.UI.Page
         {
             app = Session["CurrentApp"].ToString();
         }
-        BP.CCOA.EIP_Menu dal = new BP.CCOA.EIP_Menu();
+        BP.EIP.Port_Menu dal = new BP.EIP.Port_Menu();
         DataSet ds = new DataSet();
         if (app != string.Empty)
         {
