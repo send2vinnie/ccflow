@@ -9,6 +9,17 @@
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
     <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function getSelectedNode() {
+            var tree = mini.get("tree1");
+            var node = tree.getSelectedNode();
+            if (node) {
+                alert(node.text);
+            } else {
+                alert("请选中节点");
+            }
+        }
+    </script>
 </head>
 <body>
     <form id="Form1" runat="server">
@@ -21,11 +32,11 @@
                     <h3>
                         选择系统</h3>
                     <ul id="tree1" class="mini-tree" url="../../DataUser/tree.txt" style="width: 200px;
-                        padding: 5px;" showtreeicon="true" textfield="text" idfield="id">
+                        padding: 5px;" showtreeicon="true" textfield="text" idfield="id" onnodeclick="getSelectedNode">
                     </ul>
                 </div>
             </td>
-            <td>
+            <td style="vertical-align: top;">
                 <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
                     BorderWidth="1px" DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
                     PageSize="10" RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">

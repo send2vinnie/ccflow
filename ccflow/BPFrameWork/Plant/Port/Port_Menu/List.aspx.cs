@@ -13,7 +13,6 @@ namespace BP.EIP.Web.Port_Menu
 {
     public partial class List : Page
     {
-
         private int m_PageIndex = 1;
         private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
         BP.EIP.Port_Menu Port_Menu = new BP.EIP.Port_Menu();
@@ -81,7 +80,8 @@ namespace BP.EIP.Web.Port_Menu
 
             string searchValue = Request.QueryString["searchvalue"];
             BP.EIP.Port_Menu Port_Menu = new BP.EIP.Port_Menu();
-            DataTable Port_MenuTable = XQueryTool.Query<BP.EIP.Port_Menu>(Port_Menu, columns, searchValue, m_PageIndex, m_PageSize, null);
+            DataTable Port_MenuTable = XQueryTool.Query<BP.EIP.Port_Menu>(
+                Port_Menu, columns, searchValue, m_PageIndex, m_PageSize, null);
 
             gridView.DataSource = Port_MenuTable;
             gridView.DataBind();
