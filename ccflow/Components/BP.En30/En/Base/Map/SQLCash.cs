@@ -14,7 +14,6 @@ namespace BP.En
         public string Select = null;
         public SQLCash()
         { 
-
         }
         public SQLCash(Entity en)
         {

@@ -6,7 +6,12 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Web;
+using IBM.Data.Informix;
+using IBM.Data.Utilities;
 using System.Data.OracleClient;
+using MySql.Data;
+using MySql.Data.Common;
+using MySql.Data.MySqlClient;
 
 
 namespace BP.DA
@@ -31,6 +36,16 @@ namespace BP.DA
 			}
 			return cmd.ExecuteNonQuery();
 		}
+        public static int RunSP(string spName, MySqlConnection conn)
+        {
+            MySqlCommand cmd = new MySqlCommand(spName, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (conn.State == System.Data.ConnectionState.Closed)
+            {
+                conn.Open();
+            }
+            return cmd.ExecuteNonQuery();
+        }
 		public static int RunSP(string spName, OracleConnection conn)
 		{
 			OracleCommand cmd = new OracleCommand(spName, conn);
@@ -40,6 +55,14 @@ namespace BP.DA
 
 			return cmd.ExecuteNonQuery();
 		}
+        public static int RunSP(string spName, IfxConnection conn)
+        {
+            IfxCommand cmd = new IfxCommand(spName, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (conn.State == System.Data.ConnectionState.Closed)
+                conn.Open();
+            return cmd.ExecuteNonQuery();
+        }
         public static object RunSPReturnObj(string spName, OracleConnection conn)
         {
             OracleCommand cmd = new OracleCommand(spName, conn);
@@ -67,6 +90,33 @@ namespace BP.DA
 		#endregion
 
 		#region 带有参数的 DBProcedure
+        /// <summary>
+        /// 运行存储过程,有Para。返回影响的行。
+        /// </summary>
+        /// <param name="spName"></param>
+        /// <param name="conn"></param>
+        /// <param name="paras"></param>
+        public static int RunSP(string spName, Paras paras, IfxConnection conn)
+        {
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
+
+            IfxCommand cmd = new IfxCommand(spName, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // 加入参数
+            foreach (Para para in paras)
+            {
+                IfxParameter myParameter = new IfxParameter(para.ParaName, para.val);
+                myParameter.Size = para.Size;
+                cmd.Parameters.Add(myParameter);
+            }
+
+            int i = cmd.ExecuteNonQuery();
+            conn.Close();
+            return i;
+        }
+        
 		/// <summary>
 		/// 运行存储过程,有Para。返回影响的行。
 		/// </summary>
@@ -110,15 +160,21 @@ namespace BP.DA
             }
             return salesCMD.ExecuteNonQuery();
         }
-		public static int  RunSP(string spName,  Paras paras )
+		public static int RunSP(string spName,  Paras paras )
 		{
             switch (DBAccess.AppCenterDBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     SqlConnection conn = new SqlConnection(SystemConfig.AppCenterDSN);
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
                     return DBProcedure.RunSP(spName, paras, conn);
+                    break;
+                case DBType.InforMix:
+                    IfxConnection conn1 = new IfxConnection(SystemConfig.AppCenterDSN);
+                    if (conn1.State != ConnectionState.Open)
+                        conn1.Open();
+                    return DBProcedure.RunSP(spName, paras, conn1);
                     break;
                 default:
                     throw new Exception("尚未处理。");
@@ -128,13 +184,13 @@ namespace BP.DA
 		#endregion 
 
 		#region 运行存储过程返回 DataTable 不带有参数
-		public static DataTable RunSPReturnDataTable(string spName )
-		{
-			if (DBAccess.AppCenterDBType==DBType.SQL2000)
-				return DBProcedure.RunSPReturnDataTable(spName, new Paras(),(SqlConnection)DBAccess.GetAppCenterDBConn );
-			else
-				return DBProcedure.RunSPReturnDataTable(spName,new Paras(),(SqlConnection)DBAccess.GetAppCenterDBConn ); 
-		}
+        //public static DataTable RunSPReturnDataTable(string spName )
+        //{
+        //    if (DBAccess.AppCenterDBType==DBType.SQL2000)
+        //        return DBProcedure.RunSPReturnDataTable(spName, new Paras(),(SqlConnection)DBAccess.GetAppCenterDBConn );
+        //    else
+        //        return DBProcedure.RunSPReturnDataTable(spName,new Paras(),(SqlConnection)DBAccess.GetAppCenterDBConn ); 
+        //}
 		/// <summary>
 		/// 运行存储过程返回Table
 		/// </summary>
@@ -145,6 +201,11 @@ namespace BP.DA
 			Paras ens =new Paras();
 			return  DBProcedure.RunSPReturnDataTable(spName,ens,conn);
 		}
+        public static DataTable RunSPReturnDataTable(string spName, IfxConnection conn)
+        {
+            Paras ens = new Paras();
+            return DBProcedure.RunSPReturnDataTable(spName, ens, conn);
+        }
 		public static DataTable RunSPReturnDataTable(string spName,  OracleConnection conn)
 		{
 			Paras ens =new Paras();
@@ -158,7 +219,7 @@ namespace BP.DA
 		/// <returns>执行后的Table</returns>
 		public static DataTable RunSPReturnDataTable(string spName,  Paras paras )
 		{
-			if (DBAccess.AppCenterDBType==DBType.SQL2000)
+			if (DBAccess.AppCenterDBType==DBType.SQL2000_OK)
 				return DBProcedure.RunSPReturnDataTable(spName,paras,(SqlConnection)DBAccess.GetAppCenterDBConn );
 			else
 				return DBProcedure.RunSPReturnDataTable(spName,paras,(SqlConnection)DBAccess.GetAppCenterDBConn ); 
@@ -225,15 +286,41 @@ namespace BP.DA
 				sda.Fill(dt);
 				sda.Dispose();					
 				return dt;
- 
-
-
 			}
 			catch(System.Exception ex)
 			{
 				throw ex;
 			}
 		}
+
+        public static DataTable RunSPReturnDataTable(string spName, Paras paras, IfxConnection conn)
+        {
+            try
+            {
+                IfxCommand salesCMD = new IfxCommand(spName, conn);
+                salesCMD.CommandType = CommandType.StoredProcedure;
+
+                /// 加上他们的餐数			
+                foreach (Para para in paras)
+                {
+                    IfxParameter myParm = salesCMD.Parameters.Add(para.ParaName, para.DAType);
+                    myParm.Value = para.val;
+                }
+
+                //selectCMD.CommandTimeout =60;
+                IfxDataAdapter sda = new IfxDataAdapter(salesCMD);
+                if (conn.State == System.Data.ConnectionState.Closed)
+                    conn.Open();
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                sda.Dispose();
+                return dt;
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
 		#endregion
 	 
 	}

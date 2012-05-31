@@ -2557,6 +2557,7 @@ namespace BP.WF
                                                 m2m_N.FK_MapData = toDtl.No;
                                                 m2m_N.MyPK = toDtl.No + "_" + m2m.M2MNo + "_" + gedtl.ToString() + "_" + m2m.DtlObj;
                                                 m2m_N.EnOID = gedtl.OID;
+                                                m2m_N.InitMyPK();
                                                 m2m_N.DirectInsert();
                                             }
                                         }
@@ -4455,6 +4456,7 @@ namespace BP.WF
                         m2.Copy(item);
                         m2.EnOID = this.WorkID;
                         m2.FK_MapData = m2.FK_MapData.Replace("ND" + this.HisNode.NodeID, "ND" + nd.NodeID);
+                        m2.InitMyPK();
                         try
                         {
                             m2.DirectInsert();
@@ -4593,6 +4595,7 @@ namespace BP.WF
                                         m2m_N.FK_MapData = toDtl.No;
                                         m2m_N.MyPK = toDtl.No + "_" + m2m.M2MNo + "_" + gedtl.ToString() + "_" + m2m.DtlObj;
                                         m2m_N.EnOID = gedtl.OID;
+                                        m2m.InitMyPK();
                                         m2m_N.DirectInsert();
                                     }
                                 }

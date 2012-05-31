@@ -79,10 +79,8 @@ namespace BP.DA
 		/// <returns>sql</returns>
 		public static int Update(Entity en, string[] keys)
 		{
-           
 			if (en.EnMap.EnType==EnType.View)
 				return 0;
-
             try
             {
                 switch (en.EnMap.EnDBUrl.DBUrlType)
@@ -90,10 +88,12 @@ namespace BP.DA
                     case DBUrlType.AppCenterDSN:
                         switch (SystemConfig.AppCenterDBType)
                         {
-                            case DBType.SQL2000:
+                            case DBType.SQL2000_OK:
                             case DBType.Oracle9i:
                             case DBType.MySQL:
                                 return DBAccess.RunSQL(en.SQLCash.GetUpdateSQL(en, keys), SqlBuilder.GenerParas(en, keys));
+                            case DBType.InforMix:
+                                return DBAccess.RunSQL(en.SQLCash.GetUpdateSQL(en, keys), SqlBuilder.GenerParas_Update_InforMix(en, keys));
                             case DBType.Access:
                                 return DBAccess.RunSQL(SqlBuilder.UpdateOfMSAccess(en, keys));
                             default:

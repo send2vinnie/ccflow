@@ -1327,13 +1327,24 @@ namespace BP.En
                             return true;
                         else
                             return false;
-                    case DBType.SQL2000:
+
+                    case DBType.SQL2000_OK:
                         sql = "select xtype from sysobjects WHERE name =@v";
                         DataTable dt1 = DBAccess.RunSQLReturnTable(sql, "v", this.PhysicsTableExt);
                         if (dt1.Rows.Count == 0)
                             throw new Exception("@表不存在[" + this.PhysicsTableExt + "]");
 
                         if (dt1.Rows[0][0].ToString() == "V")
+                            return true;
+                        else
+                            return false;
+                    case DBType.InforMix:
+                        sql = "select tabtype from systables where tabname = '"+this.PhysicsTableExt.ToLower()+"'";
+                        DataTable dtaa = DBAccess.RunSQLReturnTable(sql);
+                        if (dtaa.Rows.Count == 0)
+                            throw new Exception("@表不存在[" + this.PhysicsTableExt + "]");
+
+                        if (dtaa.Rows[0][0].ToString() == "V")
                             return true;
                         else
                             return false;

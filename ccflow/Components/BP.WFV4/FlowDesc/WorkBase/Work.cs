@@ -1101,14 +1101,7 @@ namespace BP.WF
         public int Retrieve(string key, string empId, string fromdate, string todate)
         {
             QueryObject qo = new QueryObject(this);
-            if (empId == "all")
-            {
-                qo.AddWhere(WorkAttr.Rec, " in  ", "(" + Web.WebUser.HisEmpsOfPower.ToStringOfPK(",", true) + ")");
-            }
-            else
-            {
                 qo.AddWhere(WorkAttr.Rec, empId);
-            }
 
             qo.addAnd();
             qo.AddWhere(WorkAttr.RDT, ">=", fromdate);

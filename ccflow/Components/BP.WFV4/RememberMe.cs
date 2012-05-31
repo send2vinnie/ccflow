@@ -54,7 +54,7 @@ namespace BP.WF
 	/// <summary>
 	/// 记忆我
 	/// </summary>
-    public class RememberMe : Entity
+    public class RememberMe : EntityMyPK
     {
         #region 属性
         public string FK_Emp
@@ -66,6 +66,7 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(RememberMeAttr.FK_Emp, value);
+                this.MyPK = this.FK_Node + "_" + Web.WebUser.No;
             }
         }
         public string Objs
@@ -99,6 +100,7 @@ namespace BP.WF
             set
             {
                 this.SetValByKey(RememberMeAttr.FK_Node, value);
+                this.MyPK = this.FK_Node + "_" + Web.WebUser.No;
             }
         }
         public int NumOfEmps
@@ -168,8 +170,10 @@ namespace BP.WF
                 map.EnDesc = "记忆我";
                 map.EnType = EnType.Admin;
 
-                map.AddTBIntPK(RememberMeAttr.FK_Node, 0, "节点", false, false);
-                map.AddTBStringPK(RememberMeAttr.FK_Emp, "", "人员", true, false, 1, 30, 10);
+                map.AddMyPK();
+
+                map.AddTBInt(RememberMeAttr.FK_Node, 0, "节点", false, false);
+                map.AddTBString(RememberMeAttr.FK_Emp, "", "人员", true, false, 1, 30, 10);
 
                 map.AddTBString(RememberMeAttr.Objs, "", "分配人员", true, false, 0, 4000, 10);
                 map.AddTBString(RememberMeAttr.ObjsExt, "", "分配人员", true, false, 0, 4000, 10);
@@ -188,6 +192,7 @@ namespace BP.WF
         protected override bool beforeUpdateInsertAction()
         {
             this.FK_Emp = Web.WebUser.No;
+            this.MyPK = this.FK_Node + "_" + this.FK_Emp;
             return base.beforeUpdateInsertAction();
         }
     }

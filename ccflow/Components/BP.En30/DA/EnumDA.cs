@@ -12,7 +12,7 @@ namespace BP.DA
         /// <summary>
         /// sql 2000
         /// </summary>
-        SQL2000,
+        SQL2000_OK,
         /// <summary>
         /// oracle 9i 
         /// </summary>
@@ -32,7 +32,11 @@ namespace BP.DA
         /// <summary>
         /// MySQL
         /// </summary>
-        MySQL
+        MySQL,
+        /// <summary>
+        /// InforMix
+        /// </summary>
+        InforMix
     }
     /// <summary>
     /// 保管位置

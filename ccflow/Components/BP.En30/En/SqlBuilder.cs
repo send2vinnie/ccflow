@@ -135,13 +135,23 @@ namespace BP.En
         public static String GenerWhereByPK(Entity en, string dbStr)
         {
             if (en.PKCount == 1)
-                return en.EnMap.PhysicsTable + "." + en.PKField + "=" + dbStr + en.PK;
+            {
+                if (dbStr == "?")
+                    return en.EnMap.PhysicsTable + "." + en.PKField + "=" + dbStr;
+                else
+                    return en.EnMap.PhysicsTable + "." + en.PKField + "=" + dbStr + en.PK;
+            }
 
             string sql = " (1=1) ";
             foreach (Attr attr in en.EnMap.Attrs)
             {
                 if (attr.MyFieldType == FieldType.PK || attr.MyFieldType == FieldType.PKFK || attr.MyFieldType == FieldType.PKEnum)
-                    sql = sql + " AND " + attr.Field + "=" + dbStr + attr.Field;
+                {
+                    if (dbStr == "?")
+                        sql = sql + " AND " + attr.Field + "=" + dbStr;
+                    else
+                        sql = sql + " AND " + attr.Field + "=" + dbStr + attr.Field;
+                }
             }
             return sql;
         }
@@ -230,6 +240,42 @@ namespace BP.En
             }
             return sql.Substring(" (1=1)  AND ".Length);
         }
+        public static String GetKeyConditionOfInforMixForPara(Entity en)
+        {
+            // 不能删除物理表名称，会引起未定义列。
+
+            // 判断特殊情况, 
+            switch (en.PK)
+            {
+                case "OID":
+                    return en.EnMap.PhysicsTable + ".OID=?";
+                case "No":
+                    return en.EnMap.PhysicsTable + ".No=?";
+                case "MyPK":
+                    return en.EnMap.PhysicsTable + ".MyPK=?";
+                default:
+                    break;
+            }
+
+            string sql = " (1=1) ";
+            foreach (Attr attr in en.EnMap.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.PK || attr.MyFieldType == FieldType.PKFK || attr.MyFieldType == FieldType.PKEnum)
+                {
+                    if (attr.MyDataType == DataType.AppString)
+                    {
+                        sql = sql + " AND " + en.EnMap.PhysicsTable + "." + attr.Field + "=?";
+                        continue;
+                    }
+                    if (attr.MyDataType == DataType.AppInt)
+                    {
+                        sql = sql + " AND " + en.EnMap.PhysicsTable + "." + attr.Field + "=?";
+                        continue;
+                    }
+                }
+            }
+            return sql.Substring(" (1=1)  AND ".Length);
+        }
         #endregion
 
         /// <summary>
@@ -251,7 +297,7 @@ namespace BP.En
             string sql = "";
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                 case DBType.MySQL:
                     sql = SqlBuilder.SelectSQLOfMS(en, 1) + "   AND ( " + SqlBuilder.GenerWhereByPK(en, "@") + " )";
                     break;
@@ -260,6 +306,7 @@ namespace BP.En
                     sql = SqlBuilder.SelectSQLOfOLE(en, 1) + "  AND ( " + SqlBuilder.GenerWhereByPK(en, "@") + " )";
                     break;
                 case DBType.Oracle9i:
+                case DBType.InforMix:
                     sql = SqlBuilder.SelectSQLOfOra(en, 1) + "  AND ( " + SqlBuilder.GenerWhereByPK(en, ":") + " )";
                     break;
                 case DBType.DB2:
@@ -277,7 +324,7 @@ namespace BP.En
             string sql = null;
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     sql = SqlBuilder.SelectSQLOfMS(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;
                 case DBType.MySQL:
@@ -285,6 +332,9 @@ namespace BP.En
                     break;
                 case DBType.Oracle9i:
                     sql = SqlBuilder.SelectSQLOfOra(en, 1) + "AND (" + SqlBuilder.GenerWhereByPK(en, ":") + " )";
+                    break;
+                case DBType.InforMix:
+                    sql = SqlBuilder.SelectSQLOfInforMix(en, 1) + " WHERE (" + SqlBuilder.GenerWhereByPK(en, "?") + " )";
                     break;
                 case DBType.Access:
                     sql = SqlBuilder.SelectSQLOfOLE(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
@@ -301,7 +351,7 @@ namespace BP.En
         {
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                 case DBType.MySQL:
                 case DBType.Access:
                     if (en.EnMap.HisFKAttrs.Count == 0)
@@ -309,9 +359,8 @@ namespace BP.En
                     else
                         return SqlBuilder.SelectSQLOfMS(en, 1) + "  AND ( " + SqlBuilder.GetKeyConditionOfOraForPara(en) + " )";
                     return SqlBuilder.SelectSQLOfMS(en, 1) + "  AND ( " + SqlBuilder.GetKeyConditionOfMS(en) + " )";
-                //case DBType.Access:
-                //    return SqlBuilder.SelectSQLOfOLE(en, 1) + "  AND ( " + SqlBuilder.GetKeyConditionOfOLE(en) + " )";
                 case DBType.Oracle9i:
+                case DBType.InforMix:
                     if (en.EnMap.HisFKAttrs.Count == 0)
                         return SqlBuilder.SelectSQLOfOra(en, 1) + SqlBuilder.GetKeyConditionOfOraForPara(en);
                     else
@@ -415,17 +464,6 @@ namespace BP.En
                 from += fktable + " ,";
             }
 
-            //产生枚举表列表。
-            //Attrs enumAttrs=en.EnMap.HisEnumAttrs;
-            //foreach(Attr attr in enumAttrs)
-            //{
-            //    if (attr.MyFieldType==FieldType.RefText)
-            //        continue;
-            //    from += " (SELECT Lab, IntKey FROM Sys_Enum WHERE EnumKey='" + attr.UIBindKey + "' )  Enum_" + attr.Key + " ,";
-            //    //string enumTable = "Enum_"+attr.Key;
-            //    //from +=" (SELECT Lab, IntKey FROM Sys_Enum WHERE EnumKey='"+attr.UIBindKey+"' )  Enum_"+attr.Key+" ,";
-            //}
-
             from = from.Substring(0, from.Length - 1);
 
             string where = " WHERE ";
@@ -443,67 +481,54 @@ namespace BP.En
                 if (isAddAnd == false)
                 {
                     if (attr.MyDataType == DataType.AppString)
-                    {
-                        //where+= "( NVL("+mytable+"."+attr.Key+",'"+attr.DefaultVal+"')="+fktable+"."+en1.EnMap.GetFieldByKey(attr.UIRefKeyValue )+"  (+) )";
                         where += "(  " + mytable + "." + attr.Key + "=" + fktable + "." + en1.EnMap.GetFieldByKey(attr.UIRefKeyValue) + "  (+) )";
-                    }
                     else
-                    {
                         where += "(  " + mytable + "." + attr.Key + "=" + fktable + "." + en1.EnMap.GetFieldByKey(attr.UIRefKeyValue) + "  (+) )";
-                    }
+
                     isAddAnd = true;
                 }
                 else
                 {
                     if (attr.MyDataType == DataType.AppString)
-                    {
                         where += " AND (  " + mytable + "." + attr.Key + "=" + fktable + "." + en1.EnMap.GetFieldByKey(attr.UIRefKeyValue) + "  (+) )";
-                    }
                     else
-                    {
                         where += " AND (  " + mytable + "." + attr.Key + "=" + fktable + "." + en1.EnMap.GetFieldByKey(attr.UIRefKeyValue) + "  (+) )";
-                    }
-                    //where+= " AND ( "+mytable+"."+attr.Key+"="+fktable+"."+en1.EnMap.GetFieldByKey(attr.UIRefKeyValue )+")";
                 }
             }
 
-            //产生枚举 where .。
-            //foreach(Attr attr in enumAttrs)
-            //{
-            //    if (attr.MyFieldType==FieldType.RefText)
-            //        continue;
+            where = where.Replace("WHERE  AND", "WHERE");
+            where = where.Replace("WHERE AND", "WHERE");
+            return from + where;
+        }
+        public static string GenerFormWhereOfInforMix(Entity en)
+        {
+            string from = " FROM " + en.EnMap.PhysicsTable;
+            string mytable = en.EnMap.PhysicsTable;
+            Attrs fkAttrs = en.EnMap.HisFKAttrs;
+            string where = "";
+            bool isAddAnd = true;
 
-            //    string enumTable = "Enum_"+attr.Key;
-            //    if ( isAddAnd==false)
-            //    {
-            //        if (attr.MyDataType==DataType.AppString)
-            //        {
-            //            where+= "(   "+mytable+"."+attr.Key+"="+enumTable+".IntKey (+) ) ";
-            //        }
-            //        else
-            //        {
-            //            where+= "(  "+mytable+"."+attr.Key+"="+enumTable+".IntKey (+)) ";
-            //        }
-            //        isAddAnd=true;
-            //    }
-            //    else
-            //    {
-            //        if (attr.MyDataType==DataType.AppString)
-            //        {
-            //            where+= " AND ( "+mytable+"."+attr.Key+"="+enumTable+".IntKey (+)) ";
-            //        }
-            //        else
-            //        {
-            //            where+= " AND (  "+mytable+"."+attr.Key+"="+enumTable+".IntKey (+))  ";
-            //        } 
-            //    }
-            //}
+            // 开始形成 外键 where.
+            foreach (Attr attr in fkAttrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+
+                Entity en1 = attr.HisFKEn;
+                string fktable = en1.EnMap.PhysicsTable;
+                if (isAddAnd == true)
+                {
+                    isAddAnd = false;
+                    where += " LEFT JOIN " + fktable + "  " + fktable + "_" + attr.Key + "  ON " + mytable + "." + attr.Key + "=" + fktable + "_" + attr.Key + "." + en1.EnMap.GetFieldByKey(attr.UIRefKeyValue) ;
+                }
+                else
+                {
+                    where += " LEFT JOIN " + fktable + "  " + fktable + "_" + attr.Key + "  ON " + mytable + "." + attr.Key + "=" + fktable + "_" + attr.Key + "." + en1.EnMap.GetFieldByKey(attr.UIRefKeyValue);
+                }
+            }
 
             where = where.Replace("WHERE  AND", "WHERE");
             where = where.Replace("WHERE AND", "WHERE");
-
-            //if (where.IndexOf("WHERE  AND ") != -1)
-            //  where = where.Replace("WHERE  AND", "WHERE");
             return from + where;
         }
         /// <summary>
@@ -621,8 +646,10 @@ namespace BP.En
             switch (DBAccess.AppCenterDBType)
             {
                 case DBType.Oracle9i:
-                    return GenerCreateTableSQLOfOra(en);
-                case DBType.SQL2000:
+                    return GenerCreateTableSQLOfOra_OK(en);
+                case DBType.InforMix:
+                    return GenerCreateTableSQLOfInfoMix(en);
+                case DBType.SQL2000_OK:
                 case DBType.Access:
                     return GenerCreateTableSQLOfMS(en);
                 default:
@@ -635,7 +662,7 @@ namespace BP.En
         /// </summary>
         /// <param name="en"></param>
         /// <returns></returns>
-        public static string GenerCreateTableSQLOfOra(Entity en)
+        public static string GenerCreateTableSQLOfOra_OK(Entity en)
         {
             if (en.EnMap.PhysicsTable == null)
                 throw new Exception("您没有为[" + en.EnDesc + "],设置物理表。");
@@ -681,7 +708,62 @@ namespace BP.En
 
             return sql;
         }
+        public static string GenerCreateTableSQLOfInfoMix(Entity en)
+        {
+            if (en.EnMap.PhysicsTable == null)
+                throw new Exception("您没有为[" + en.EnDesc + "],设置物理表。");
 
+            if (en.EnMap.PhysicsTable.Trim().Length == 0)
+                throw new Exception("您没有为[" + en.EnDesc + "],设置物理表。");
+
+            string sql = "CREATE TABLE  " + en.EnMap.PhysicsTable + " (";
+            foreach (Attr attr in en.EnMap.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+
+                switch (attr.MyDataType)
+                {
+                    case DataType.AppString:
+                    case DataType.AppDate:
+                    case DataType.AppDateTime:
+                        if (attr.MaxLength >= 255)
+                        {
+                            if (attr.IsPK)
+                                sql += attr.Field + " lvarchar (" + attr.MaxLength + "),";
+                            else
+                                sql += attr.Field + " lvarchar (" + attr.MaxLength + ") ,";
+                        }
+                        else
+                        {
+                            if (attr.IsPK)
+                                sql += attr.Field + " varchar (" + attr.MaxLength + ") NOT NULL,";
+                            else
+                                sql += attr.Field + " varchar (" + attr.MaxLength + ") ,";
+                        }
+                        break;
+                    case DataType.AppRate:
+                    case DataType.AppFloat:
+                    case DataType.AppMoney:
+                    case DataType.AppDouble:
+                        sql += attr.Field + " float  ,";
+                        break;
+                    case DataType.AppBoolean:
+                    case DataType.AppInt:
+                        if (attr.IsPK)
+                            sql += attr.Field + " int8 NOT NULL,";
+                        else
+                            sql += attr.Field + " int8   ,";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            sql = sql.Substring(0, sql.Length - 1);
+            sql += ")";
+
+            return sql;
+        }
         /// <summary>
         /// 生成sql.
         /// </summary>
@@ -1054,15 +1136,105 @@ namespace BP.En
                         throw new Exception("@没有定义的数据类型! attr=" + attr.Key + " MyDataType =" + attr.MyDataType);
                 }
             }
-            //return  " SELECT TOP " +topNum.ToString()+" " +val.Substring(1) + " FROM "+en.EnMap.PhysicsTable;
+
             return " SELECT  " + val.Substring(1) + SqlBuilder.GenerFormWhereOfOra(en);
+        }
+        /// <summary>
+        /// SelectSQLOfInforMix
+        /// </summary>
+        /// <param name="en"></param>
+        /// <param name="topNum"></param>
+        /// <returns></returns>
+        protected static string SelectSQLOfInforMix(Entity en, int topNum)
+        {
+            string val = "";  
+            string mainTable = "";
+
+            if (en.EnMap.HisFKAttrs.Count != 0)
+                mainTable = en.EnMap.PhysicsTable + ".";
+
+            foreach (Attr attr in en.EnMap.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+                switch (attr.MyDataType)
+                {
+                    case DataType.AppString:
+                        if (attr.DefaultVal == null || attr.DefaultVal as string == "")
+                        {
+                            if (attr.IsKeyEqualField)
+                                val = val + ", " + mainTable + attr.Field;
+                            else
+                                val = val + "," + mainTable + attr.Field + " " + attr.Key;
+                        }
+                        else
+                        {
+                            val = val + ",NVL(" + mainTable + attr.Field + ", '" + attr.DefaultVal + "') " + attr.Key;
+                        }
+
+                        if (attr.MyFieldType == FieldType.FK || attr.MyFieldType == FieldType.PKFK)
+                        {
+                            Map map = attr.HisFKEn.EnMap;
+                            val = val + ", " + map.PhysicsTable + "_" + attr.Key + "." + map.GetFieldByKey(attr.UIRefKeyText) + " AS " + attr.Key + "Text";
+                        }
+                        break;
+                    case DataType.AppInt:
+
+                        val = val + ",NVL(" + mainTable + attr.Field + "," +
+                        attr.DefaultVal + ")   " + attr.Key + "";
+
+                        if (attr.MyFieldType == FieldType.Enum || attr.MyFieldType == FieldType.PKEnum)
+                        {
+                            Sys.SysEnums ses = new BP.Sys.SysEnums(attr.UIBindKey, attr.UITag);
+                            val = val + "," + ses.GenerCaseWhenForOracle(en.ToString(), mainTable, attr.Key, attr.Field, attr.UIBindKey,
+                                int.Parse(attr.DefaultVal.ToString()));
+                        }
+                        if (attr.MyFieldType == FieldType.FK || attr.MyFieldType == FieldType.PKFK)
+                        {
+                            Map map = attr.HisFKEn.EnMap;
+                            val = val + ", " + map.PhysicsTable + "_" + attr.Key + "." + map.GetFieldByKey(attr.UIRefKeyText) + "  AS " + attr.Key + "Text";
+                        }
+                        break;
+                    case DataType.AppFloat:
+                        val = val + ", NVL( round(" + mainTable + attr.Field + ",4) ," +
+                            attr.DefaultVal.ToString() + ") AS  " + attr.Key;
+                        break;
+                    case DataType.AppBoolean:
+                        if (attr.DefaultVal.ToString() == "0")
+                            val = val + ", NVL( " + mainTable + attr.Field + ",0) " + attr.Key;
+                        else
+                            val = val + ", NVL(" + mainTable + attr.Field + ",1) " + attr.Key;
+                        break;
+                    case DataType.AppDouble:
+                        val = val + ", NVL( round(" + mainTable + attr.Field + " ,4) ," +
+                            attr.DefaultVal.ToString() + ") " + attr.Key;
+                        break;
+                    case DataType.AppMoney:
+                        val = val + ", NVL( round(" + mainTable + attr.Field + ",4)," +
+                            attr.DefaultVal.ToString() + ") " + attr.Key;
+                        break;
+                    case DataType.AppDate:
+                    case DataType.AppDateTime:
+                        if (attr.DefaultVal == null || attr.DefaultVal.ToString() == "")
+                            val = val + "," + mainTable + attr.Field + " " + attr.Key;
+                        else
+                        {
+                            val = val + ",NVL(" + mainTable + attr.Field + ",'" +
+                                                         attr.DefaultVal.ToString() + "') " + attr.Key;
+                        }
+                        break;
+                    default:
+                        throw new Exception("@没有定义的数据类型! attr=" + attr.Key + " MyDataType =" + attr.MyDataType);
+                }
+            }
+            return " SELECT  " + val.Substring(1) + SqlBuilder.GenerFormWhereOfInforMix(en);
         }
 
         public static string SelectSQL(Entity en, int topNum)
         {
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     return SqlBuilder.SelectSQLOfMS(en, topNum);
                 case DBType.MySQL:
                     return SqlBuilder.SelectSQLOfMySQL(en, topNum);
@@ -1070,6 +1242,8 @@ namespace BP.En
                     return SqlBuilder.SelectSQLOfOLE(en, topNum);
                 case DBType.Oracle9i:
                     return SqlBuilder.SelectSQLOfOra(en, topNum);
+                case DBType.InforMix:
+                    return SqlBuilder.SelectSQLOfInforMix(en, topNum);
                 default:
                     throw new Exception("没有判断的情况");
             }
@@ -1085,11 +1259,12 @@ namespace BP.En
         {
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     return SqlBuilder.SelectCountSQLOfMS(en);
                 case DBType.Access:
                     return SqlBuilder.SelectSQLOfOLE(en, 0);
                 case DBType.Oracle9i:
+                case DBType.InforMix:
                     return SqlBuilder.SelectSQLOfOra(en, 0);
                 default:
                     return null;
@@ -1851,17 +2026,17 @@ namespace BP.En
 
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                 case DBType.Access:
                 case DBType.MySQL:
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
                         " WHERE " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;
-                //case DBType.Access:
-                //    sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
-                //        " WHERE " + SqlBuilder.GenerWhereByPK(en,"@");
-                //    break;
                 case DBType.Oracle9i:
+                    sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
+                        " WHERE " + SqlBuilder.GenerWhereByPK(en, ":");
+                    break;
+                case DBType.InforMix:
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
                         " WHERE " + SqlBuilder.GenerWhereByPK(en, ":");
                     break;
@@ -1869,6 +2044,167 @@ namespace BP.En
                     throw new Exception("no this case db type . ");
             }
             return sql.Replace(",=''", "");
+        }
+        public static Paras GenerParas_Update_InforMix(Entity en, string[] keys)
+        {
+            if (keys == null)
+                return GenerParas_Update_InforMix(en);
+
+            string mykeys = "@";
+            foreach (string key in keys)
+                mykeys += key + "@";
+
+            Map map = en.EnMap;
+            Paras ps = new Paras();
+            foreach (Attr attr in map.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+
+                if (attr.IsPK )
+                    continue;
+
+                if (mykeys.Contains("@" + attr.Key + "@") == false)
+                    continue;
+
+                switch (attr.MyDataType)
+                {
+                    case DataType.AppString:
+                        if (attr.UIIsDoc && attr.Key == "Doc")
+                        {
+                            string doc = en.GetValStrByKey(attr.Key).Replace('\'', '~');
+
+                            if (map.Attrs.Contains("DocLength"))
+                                en.SetValByKey("DocLength", doc.Length);
+
+                            if (doc.Length >= 2000)
+                            {
+                                Sys.SysDocFile.SetValV2(en.ToString(), en.PKVal.ToString(), doc);
+                                ps.Add(attr.Key, "");
+                            }
+                            else
+                            {
+                                ps.Add(attr.Key, en.GetValStrByKey(attr.Key).Replace('\'', '~'));
+                            }
+                        }
+                        else
+                        {
+                            ps.Add(attr.Key, en.GetValStrByKey(attr.Key).Replace('\'', '~'));
+                        }
+                        break;
+                    case DataType.AppBoolean:
+                    case DataType.AppInt:
+                        ps.Add(attr.Key, en.GetValIntByKey(attr.Key));
+                        break;
+                    case DataType.AppFloat:
+                    case DataType.AppDouble:
+                    case DataType.AppMoney:
+                        string str = en.GetValStrByKey(attr.Key).ToString();
+                        str = str.Replace("￥", "");
+                        str = str.Replace(",", "");
+                        if (string.IsNullOrEmpty(str))
+                            ps.Add(attr.Key, 0);
+                        else
+                            ps.Add(attr.Key, decimal.Parse(str));
+                        break;
+                    case DataType.AppDate: // 如果是日期类型。
+                    case DataType.AppDateTime:
+                        string da = en.GetValStringByKey(attr.Key);
+                        ps.Add(attr.Key, da);
+                        break;
+                    default:
+                        throw new Exception("@SqlBulider.update, 没有这个数据类型");
+                }
+            }
+            switch (en.PK)
+            {
+                case "OID":
+                case "WorkID":
+                case "FID":
+                    ps.Add(en.PK, en.GetValIntByKey(en.PK));
+                    break;
+                default:
+                    ps.Add(en.PK, en.GetValStrByKey(en.PK));
+                    break;
+            }
+            return ps;
+        }
+        public static Paras GenerParas_Update_InforMix(Entity en)
+        {
+            string mykeys = "@";
+
+            Map map = en.EnMap;
+            Paras ps = new Paras();
+            foreach (Attr attr in map.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+
+                if (attr.IsPK )
+                    continue;
+
+                switch (attr.MyDataType)
+                {
+                    case DataType.AppString:
+                        if (attr.UIIsDoc && attr.Key == "Doc")
+                        {
+                            string doc = en.GetValStrByKey(attr.Key).Replace('\'', '~');
+
+                            if (map.Attrs.Contains("DocLength"))
+                                en.SetValByKey("DocLength", doc.Length);
+
+                            if (doc.Length >= 2000)
+                            {
+                                Sys.SysDocFile.SetValV2(en.ToString(), en.PKVal.ToString(), doc);
+                                ps.Add(attr.Key, "");
+                            }
+                            else
+                            {
+                                ps.Add(attr.Key, en.GetValStrByKey(attr.Key).Replace('\'', '~'));
+                            }
+                        }
+                        else
+                        {
+                            ps.Add(attr.Key, en.GetValStrByKey(attr.Key).Replace('\'', '~'));
+                        }
+                        break;
+                    case DataType.AppBoolean:
+                    case DataType.AppInt:
+                        ps.Add(attr.Key, en.GetValIntByKey(attr.Key));
+                        break;
+                    case DataType.AppFloat:
+                    case DataType.AppDouble:
+                    case DataType.AppMoney:
+                        string str = en.GetValStrByKey(attr.Key).ToString();
+                        str = str.Replace("￥", "");
+                        str = str.Replace(",", "");
+                        if (string.IsNullOrEmpty(str))
+                            ps.Add(attr.Key, 0);
+                        else
+                            ps.Add(attr.Key, decimal.Parse(str));
+                        break;
+                    case DataType.AppDate: // 如果是日期类型。
+                    case DataType.AppDateTime:
+                        string da = en.GetValStringByKey(attr.Key);
+                        ps.Add(attr.Key, da);
+                        break;
+                    default:
+                        throw new Exception("@SqlBulider.update, 没有这个数据类型");
+                }
+            }
+
+
+            switch (en.PK)
+            {
+                case "OID":
+                case "WorkID":
+                    ps.Add(en.PK, en.GetValIntByKey(en.PK));
+                    break;
+                default:
+                    ps.Add(en.PK, en.GetValStrByKey(en.PK));
+                    break;
+            }
+            return ps;
         }
         public static Paras GenerParas(Entity en, string[] keys)
         {
@@ -1965,6 +2301,7 @@ namespace BP.En
                 foreach (string s in keys)
                     mykey += "@" + s;
 
+            string dbVarStr = en.HisDBVarStr;
             //  string dbstr = en.HisDBVarStr;
             Map map = en.EnMap;
             string val = "";
@@ -1988,7 +2325,10 @@ namespace BP.En
                             continue;
                 }
 
-                val = val + "," + attr.Field + "=" + en.HisDBVarStr + attr.Key;
+                if (dbVarStr == "?")
+                    val = val + "," + attr.Field + "=" + dbVarStr;
+                else
+                    val = val + "," + attr.Field + "=" + dbVarStr + attr.Key;
             }
             if (string.IsNullOrEmpty(val))
                 throw new Exception("@生成sql出现错误:" + map.EnDesc + "，" + en.ToString() + "，要更新的字段为空。");
@@ -1996,11 +2336,15 @@ namespace BP.En
             string sql = "";
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                 case DBType.Access:
                 case DBType.MySQL:
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
                         " WHERE " + SqlBuilder.GenerWhereByPK(en, "@");
+                    break;
+                case DBType.InforMix:
+                    sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
+                        " WHERE " + SqlBuilder.GenerWhereByPK(en, "?");
                     break;
                 case DBType.Oracle9i:
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
@@ -2026,6 +2370,9 @@ namespace BP.En
         public static string InsertForPara(Entity en)
         {
             string dbstr = en.HisDBVarStr;
+            if (dbstr == "?")
+                return InsertForPara_InforMix(en);
+
             bool isInnkey = false;
             if (en.IsOIDEntity)
             {
@@ -2048,6 +2395,35 @@ namespace BP.En
                 key = attr.Key;
                 field = field + ",[" + attr.Field + "]";
                 val = val + "," + dbstr + attr.Key;
+            }
+            string sql = "INSERT INTO " + en.EnMap.PhysicsTable + " (" +
+                field.Substring(1) + " ) VALUES ( " + val.Substring(1) + ")";
+            return sql;
+        }
+        public static string InsertForPara_InforMix(Entity en)
+        {
+            bool isInnkey = false;
+            if (en.IsOIDEntity)
+            {
+                EntityOID myen = en as EntityOID;
+                isInnkey = false; 
+            }
+
+            string key = "", field = "", val = "";
+            foreach (Attr attr in en.EnMap.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+
+                if (isInnkey)
+                {
+                    if (attr.Key == "OID")
+                        continue;
+                }
+
+                key = attr.Key;
+                field = field + ",[" + attr.Field + "]";
+                val = val + ",?";
             }
             string sql = "INSERT INTO " + en.EnMap.PhysicsTable + " (" +
                 field.Substring(1) + " ) VALUES ( " + val.Substring(1) + ")";

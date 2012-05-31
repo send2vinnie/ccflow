@@ -848,7 +848,7 @@ namespace BP.WF
             {
             }
 
-            sql = "CREATE VIEW V_FlowData  ";
+            sql = "CREATE VIEW V_FlowData (FK_FlowSort,FK_Flow,OID,FID,Title,WFState,CDT,FlowStarter,FlowStartRDT,FK_Dept,FK_NY,FlowDaySpan,FlowEmps,FlowEnder,FlowEnderRDT) ";
             //     sql += "\t\n /*  WorkFlow Data " + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
             sql += " AS ";
             foreach (Flow fl in fls)
@@ -2343,7 +2343,7 @@ namespace BP.WF
             string viewName = "V" + this.No;
             string sql = "CREATE VIEW " + viewName + " ";
             sql += "/* WorkFlow:" + this.Name + " Date:" + DateTime.Now.ToString("yyyy-MM-dd") + " */ ";
-            sql += "\r\n AS ";
+            sql += "\r\n (MyPK,FK_Node,OID,FID,RDT,FK_NY,CDT,Rec,Emps,NodeState,FK_Dept,MyNum) AS ";
             bool is1 = false;
             foreach (Node nd in nds)
             {
@@ -2356,6 +2356,7 @@ namespace BP.WF
                 switch (SystemConfig.AppCenterDBType)
                 {
                     case DBType.Oracle9i:
+                    case DBType.InforMix:
                         sql += "\r\n SELECT '" + nd.NodeID + "' || '_'|| OID||'_'|| FID  AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT,SUBSTR(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
                         break;
                     case DBType.MySQL:
@@ -2366,18 +2367,13 @@ namespace BP.WF
                         break;
                 }
             }
-            sql += "\r\n GO ";
+            if (SystemConfig.AppCenterDBType != DBType.InforMix)
+                sql += "\r\n GO ";
 
             if (DBAccess.IsExitsObject(viewName) == true)
                 DBAccess.RunSQL("DROP VIEW " + viewName);
 
-            try
-            {
-                DBAccess.RunSQL(sql);
-            }
-            catch
-            {
-            }
+            DBAccess.RunSQL(sql);
         }
         private void CheckRpt(Nodes nds)
         {
@@ -2390,8 +2386,11 @@ namespace BP.WF
             switch (SystemConfig.AppCenterDBType)
             {
                 case DBType.Oracle9i:
-                case DBType.SQL2000:
-                      sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+                case DBType.SQL2000_OK:
+                    sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
+                    break;
+                case DBType.InforMix:
+                    sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
                     break;
                 case DBType.MySQL:
                     sql = "SELECT  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " CHAR(NodeID) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
@@ -3298,8 +3297,8 @@ namespace BP.WF
             int idx = 0;
             string infoErr = "";
             string infoTable = "";
-            try
-            {
+            //try
+            //{
                 fl.DoDelData();
                 fl.DoDelete();
 
@@ -3550,6 +3549,7 @@ namespace BP.WF
                                 {
                                     cd.MyPK = DA.DBAccess.GenerOID().ToString();
                                 }
+
                                 try
                                 {
                                     cd.Insert();
@@ -4292,19 +4292,19 @@ namespace BP.WF
 
                 infoErr = "@执行期间出现如下非致命的错误：\t\r" + infoErr + "@ " + infoTable;
                 throw new Exception(infoErr);
-            }
-            catch (Exception ex)
-            {
-                try
-                {
-                    fl.DoDelete();
-                    throw new Exception("@" + infoErr + " @table=" + infoTable + "@" + ex.Message);
-                }
-                catch (Exception ex1)
-                {
-                    throw new Exception("@删除已经产生的错误的流程数据期间错误:" + ex1.Message );
-                }
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    try
+            //    {
+            //        fl.DoDelete();
+            //        throw new Exception("@" + infoErr + " @table=" + infoTable + "@" + ex.Message);
+            //    }
+            //    catch (Exception ex1)
+            //    {
+            //        throw new Exception("@删除已经产生的错误的流程数据期间错误:" + ex1.Message );
+            //    }
+            //}
         }
         public Node DoNewNode(int x, int y)
         {

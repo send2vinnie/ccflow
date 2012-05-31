@@ -996,16 +996,15 @@ namespace BP
                         }
                         try
                         {
-                            DBAccessOfOracle9i.RunSQL(SqlBuilder.GenerCreateTableSQLOfOra(myen));
+                            DBAccessOfOracle9i.RunSQL(SqlBuilder.GenerCreateTableSQLOfOra_OK(myen));
                         }
                         catch
                         {
 
                         }
-
                         break;
-                    case DBType.SQL2000:
-                        try
+                    case DBType.SQL2000_OK:
+                         try
                         {
                             if (myen.EnMap.PhysicsTable.Contains("."))
                                 continue;
@@ -1019,6 +1018,22 @@ namespace BP
                         {
                         }
                         DBAccessOfMSSQL2000.RunSQL(SqlBuilder.GenerCreateTableSQLOfMS(myen));
+                        break;
+                    case DBType.InforMix:
+                        try
+                        {
+                            if (myen.EnMap.PhysicsTable.Contains("."))
+                                continue;
+
+                            if (DBAccessOfMSSQL2000.IsExitsObject(myen.EnMap.PhysicsTable))
+                                continue;
+
+                            DBAccessOfMSSQL2000.RunSQL("drop table " + myen.EnMap.PhysicsTable);
+                        }
+                        catch
+                        {
+                        }
+                        DBAccessOfMSSQL2000.RunSQL(SqlBuilder.GenerCreateTableSQLOfInfoMix(myen));
                         break;
                     case DBType.Access:
                         try
@@ -1058,9 +1073,10 @@ namespace BP
                         switch (dbtype)
                         {
                             case DBType.Oracle9i:
+                            case DBType.InforMix:
                                 DBAccessOfOracle9i.RunSQL(SqlBuilder.Insert(en));
                                 break;
-                            case DBType.SQL2000:
+                            case DBType.SQL2000_OK:
                                 DBAccessOfMSSQL2000.RunSQL(SqlBuilder.Insert(en));
                                 break;
                             case DBType.Access:

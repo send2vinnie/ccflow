@@ -30,6 +30,10 @@ using MySql.Data;
 using MySql;
 using MySql.Data.MySqlClient;
 using MySql.Data.MySqlClient.Properties;
+using IBM.Data;
+using IBM.Data.Informix;
+using IBM.Data.Utilities;
+
 //using System.Web.Caching;
 
 namespace BP.DA
@@ -222,7 +226,7 @@ namespace BP.DA
             int i = 0;
             switch (BP.SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                 case DBType.Access:
                     ConnOfSQL connofsql = GetAppCenterDBConn as ConnOfSQL;
                     i = DBProcedure.RunSP(spName, connofsql.Conn);
@@ -241,6 +245,19 @@ namespace BP.DA
                         throw ex;
                     }
                     return i;
+                case DBType.InforMix:
+                    ConnOfInforMix connMix = GetAppCenterDBConn as ConnOfInforMix;
+                    try
+                    {
+                        i = DBProcedure.RunSP(spName, connMix.Conn);
+                        HisConnOfOras.PutPool(connMix);
+                    }
+                    catch (Exception ex)
+                    {
+                        HisConnOfOras.PutPool(connMix);
+                        throw ex;
+                    }
+                    return i;
                 default:
                     throw new Exception("Error: " + BP.SystemConfig.AppCenterDBType);
             }
@@ -249,11 +266,13 @@ namespace BP.DA
         {
             switch (BP.SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000:
-                case DBType.MySQL:
-                case DBType.Access:
-
+                case DBType.SQL2000_OK:
                     return DBProcedure.RunSP(spName, (SqlConnection)DBAccess.GetAppCenterDBConn);
+                case DBType.MySQL:
+                    return DBProcedure.RunSP(spName, (MySqlConnection)DBAccess.GetAppCenterDBConn);
+                case DBType.InforMix:
+                    return DBProcedure.RunSP(spName, (IfxConnection)DBAccess.GetAppCenterDBConn);
+                case DBType.Access:
                 case DBType.Oracle9i:
                     // return DBProcedure.RunSP(spName, (OracleConnection)DBAccess.GetAppCenterDBConn);
                     ConnOfOra connofora = GetAppCenterDBConn as ConnOfOra;
@@ -276,7 +295,7 @@ namespace BP.DA
             int i = 0;
             switch (BP.SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                 case DBType.MySQL:
                 case DBType.Access:
                     ConnOfSQL conn = GetAppCenterDBConn as ConnOfSQL;
@@ -304,6 +323,19 @@ namespace BP.DA
                         throw ex;
                     }
                     return i;
+                case DBType.InforMix:
+                    ConnOfInforMix connMix = GetAppCenterDBConn as ConnOfInforMix;
+                    try
+                    {
+                        i = DBProcedure.RunSP(spName, paras, connMix.Conn);
+                        HisConnOfOras.PutPool(connMix);
+                    }
+                    catch (Exception ex)
+                    {
+                        HisConnOfOras.PutPool(connMix);
+                        throw ex;
+                    }
+                    return i;
                 default:
                     throw new Exception("Error " + BP.SystemConfig.AppCenterDBType);
             }
@@ -320,9 +352,8 @@ namespace BP.DA
         {
             switch (BP.SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                 case DBType.Access:
-
                     return DBProcedure.RunSPReturnDataTable(spName, (SqlConnection)DBAccess.GetAppCenterDBConn);
                 case DBType.Oracle9i:
                     ConnOfOra connofora = GetAppCenterDBConn as ConnOfOra;
@@ -338,6 +369,20 @@ namespace BP.DA
                         throw ex;
                     }
                     return dt;
+                case DBType.InforMix:
+                    ConnOfInforMix connmix = GetAppCenterDBConn as ConnOfInforMix;
+                    DataTable dt1 = null;
+                    try
+                    {
+                        dt1 = DBProcedure.RunSPReturnDataTable(spName, connmix.Conn);
+                        HisConnOfOras.PutPool(connmix);
+                    }
+                    catch (Exception ex)
+                    {
+                        HisConnOfOras.PutPool(connmix);
+                        throw ex;
+                    }
+                    return dt1;
                 default:
                     throw new Exception("Error " + BP.SystemConfig.AppCenterDBType);
 
@@ -353,9 +398,8 @@ namespace BP.DA
         {
             switch (BP.SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                 case DBType.Access:
-
                     return DBProcedure.RunSPReturnDataTable(spName, paras, (SqlConnection)DBAccess.GetAppCenterDBConn);
                 case DBType.Oracle9i:
                     ConnOfOra connofora = GetAppCenterDBConn as ConnOfOra;
@@ -363,7 +407,12 @@ namespace BP.DA
                     DataTable dt = DBProcedure.RunSPReturnDataTable(spName, paras, connofora.Conn);
                     HisConnOfOras.PutPool(connofora);
                     return dt;
-                //return DBProcedure.RunSPReturnDataTable(spName,paras,(OracleConnection)DBAccess.GetAppCenterDBConn);
+                case DBType.InforMix:
+                    ConnOfInforMix connIFX = GetAppCenterDBConn as ConnOfInforMix;
+                    connIFX.AddSQL(spName);
+                    DataTable dt1 = DBProcedure.RunSPReturnDataTable(spName, paras, connIFX.Conn);
+                    HisConnOfOras.PutPool(connIFX);
+                    return dt1;
                 default:
                     throw new Exception("Error " + BP.SystemConfig.AppCenterDBType);
             }
@@ -387,6 +436,7 @@ namespace BP.DA
         public static BP.DA.ConnOfSQLs HisConnOfSQLs = null;
         public static BP.DA.ConnOfOLEs HisConnOfOLEs = null;
         public static BP.DA.ConnOfMySQLs HisConnOfMySQLs = null;
+        public static BP.DA.ConnOfInforMixs HisConnOfInforMix = null;
         #endregion
 
 
@@ -591,7 +641,7 @@ namespace BP.DA
                 string connstr = BP.SystemConfig.AppCenterDSN;
                 switch (AppCenterDBType)
                 {
-                    case DBType.SQL2000:
+                    case DBType.SQL2000_OK:
                         if (HisConnOfSQLs == null)
                         {
                             HisConnOfSQLs = new ConnOfSQLs();
@@ -612,6 +662,13 @@ namespace BP.DA
                             HisConnOfMySQLs.Init();
                         }
                         return HisConnOfMySQLs.GetOne();
+                    case DBType.InforMix:
+                        if (HisConnOfOras == null)
+                        {
+                            HisConnOfInforMix = new ConnOfInforMixs();
+                            HisConnOfInforMix.Init();
+                        }
+                        return HisConnOfInforMix.GetOne();
                     case DBType.Access:
                         if (HisConnOfOLEs == null)
                         {
@@ -650,8 +707,8 @@ namespace BP.DA
                 switch (AppCenterDBType)
                 {
                     case DBType.Oracle9i:
-                        return RunSQL("TRUNCATE TABLE " + table);
-                    case DBType.SQL2000:
+                    case DBType.SQL2000_OK:
+                    case DBType.InforMix:
                     case DBType.Access:
                         return RunSQL("DROP TABLE " + table);
                     default:
@@ -659,6 +716,9 @@ namespace BP.DA
                 }
             }
             return 0;
+
+            /* return RunSQL("TRUNCATE TABLE " + table);*/
+
         }
 
         public static int RunSQL(string sql, OleDbConnection conn, string dsn)
@@ -1066,13 +1126,15 @@ namespace BP.DA
 
             switch (AppCenterDBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     return RunSQL_200705_SQL(sql);
                 case DBType.Oracle9i:
                     Paras ps = new Paras();
                     return RunSQL_200705_Ora(sql,ps);
                 case DBType.MySQL:
                     return RunSQL_200705_MySQL(sql);
+                case DBType.InforMix:
+                    return RunSQL_201205_InforMix(sql);
                 case DBType.Access:
                     return RunSQL_200705_OLE(sql);
                 default:
@@ -1095,20 +1157,20 @@ namespace BP.DA
         public static int RunSQL(string sql, Paras paras)
         {
             RunSQLReturnTableCount++;
-            //   Log.DebugWriteInfo("NUMOF " + RunSQLReturnTableCount + "===RunSQLReturnTable sql=" + sql);
             if (sql == null || sql.Trim() == "")
                 return 1;
-
             try
             {
                 switch (AppCenterDBType)
                 {
-                    case DBType.SQL2000:
+                    case DBType.SQL2000_OK:
                         return RunSQL_200705_SQL(sql, paras);
                     case DBType.Oracle9i:
                         return RunSQL_200705_Ora(sql.Replace("]","").Replace("[",""), paras);
                     case DBType.MySQL:
                         return RunSQL_200705_MySQL(sql, paras);
+                    case DBType.InforMix:
+                        return RunSQL_201205_InforMix(sql, paras);
                     case DBType.Access:
                         return RunSQL_200705_OLE(sql, paras);
                     default:
@@ -1372,6 +1434,114 @@ namespace BP.DA
         {
             Paras ps = new Paras();
             return RunSQL_200705_OLE(sql, ps);
+        }
+
+        /// <summary>
+        /// 运行sql
+        /// </summary>
+        /// <param name="sql">sql</param>
+        /// <returns>执行结果</returns>
+        private static int RunSQL_201205_InforMix(string sql)
+        {
+            return RunSQL_201205_InforMix(sql, new Paras());
+
+            //ConnOfInforMix connofora = (ConnOfInforMix)DBAccess.GetAppCenterDBConn;
+            //IfxConnection conn = connofora.Conn;
+            //try
+            //{
+            //    if (conn == null)
+            //        conn = new IfxConnection(SystemConfig.AppCenterDSN);
+
+            //    if (conn.State != System.Data.ConnectionState.Open)
+            //        conn.Open();
+
+            //    IfxCommand cmd = new IfxCommand(sql, conn);
+            //    cmd.CommandType = CommandType.Text;
+            //    int i = cmd.ExecuteNonQuery();
+            //    cmd.Dispose();
+                
+            //    conn.Close();
+            //    conn.Dispose();
+
+            //    HisConnOfInforMix.PutPool(connofora);
+            //    return i;
+            //}
+            //catch (System.Exception ex)
+            //{
+            //    conn.Close();
+            //    conn.Dispose();
+
+            //    HisConnOfInforMix.PutPool(connofora);
+            //    if (BP.SystemConfig.IsDebug)
+            //    {
+            //        string msg = "RunSQL2   SQL=" + sql + ex.Message;
+            //        Log.DebugWriteError(msg);
+            //        throw new Exception(msg);
+            //    }
+            //    else
+            //    {
+            //        throw new Exception(ex.Message + " RUN SQL=" + sql);
+            //    }
+            //}
+            //finally
+            //{
+            //    if (SystemConfig.IsBSsystem_Test == false)
+            //    {
+            //        conn.Close();
+            //        conn.Dispose();
+            //    }
+
+            //    conn.Close();
+            //    HisConnOfInforMix.PutPool(connofora);
+            //}
+        }
+        private static int RunSQL_201205_InforMix(string sql, Paras paras)
+        {
+            if (paras.Count != 0)
+                sql = DealInforMixSQL(sql);
+
+            ConnOfInforMix connofora = (ConnOfInforMix)DBAccess.GetAppCenterDBConn;
+            //  connofora.AddSQL(sql); //增加.
+
+            IfxConnection conn = connofora.Conn;
+            try
+            {
+                if (conn == null)
+                    conn = new IfxConnection(SystemConfig.AppCenterDSN);
+
+                if (conn.State != System.Data.ConnectionState.Open)
+                {
+                    conn.ConnectionString = SystemConfig.AppCenterDSN;
+                    conn.Open();
+                }
+
+                IfxCommand cmd = new IfxCommand(sql, conn);
+                cmd.CommandType = CommandType.Text;
+                foreach (Para para in paras)
+                {
+                    IfxParameter oraP = new IfxParameter(para.ParaName, para.val);
+                    cmd.Parameters.Add(oraP);
+                }
+
+                int i = cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                conn.Close();
+                HisConnOfInforMix.PutPool(connofora);
+                return i;
+            }
+            catch (System.Exception ex)
+            {
+                conn.Close();
+                HisConnOfInforMix.PutPool(connofora);
+                string msg = "RunSQL2   SQL=" + sql + "\r\n Message=: " + ex.Message;
+                Log.DebugWriteError(msg);
+                throw new Exception(msg);
+            }
+            finally
+            {
+                conn.Close();
+                HisConnOfInforMix.PutPool(connofora);
+            }
         }
         #endregion
 
@@ -1798,19 +1968,44 @@ namespace BP.DA
                 HisConnOfSQLs.PutPool(connofObj);
             }
         }
-        /// <summary>
-        /// RunSQLReturnTable_200705_SQL
-        /// </summary>
-        /// <param name="selectSQL">要执行的sql</param>
-        /// <returns>返回table</returns>
+        private static DataTable RunSQLReturnTable_200705_SQL(string selectSQL)
+        {
+            ConnOfSQL connofObj = GetAppCenterDBConn as ConnOfSQL;
+            SqlConnection conn = connofObj.Conn;
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                    conn.Open();
+
+                SqlDataAdapter ada = new SqlDataAdapter(selectSQL, conn);
+                ada.SelectCommand.CommandType = CommandType.Text;
+                DataTable oratb = new DataTable("otb");
+                ada.Fill(oratb);
+                ada.Dispose();
+                HisConnOfSQLs.PutPool(connofObj);
+                return oratb;
+            }
+            catch (System.Exception ex)
+            {
+                HisConnOfSQLs.PutPool(connofObj);
+                string msg = "@运行查询在(RunSQLReturnTable_200705_SQL)出错 sql=" + selectSQL + " @异常信息：" + ex.Message;
+                Log.DebugWriteError(msg);
+                throw new Exception(msg);
+            }
+            finally
+            {
+                HisConnOfSQLs.PutPool(connofObj);
+            }
+        }
         private static DataTable RunSQLReturnTable_200705_SQL(string sql, Paras paras)
         {
             SqlConnection conn = new SqlConnection(SystemConfig.AppCenterDSN);
             if (conn.State != ConnectionState.Open)
                 conn.Open();
+
             SqlDataAdapter ada = new SqlDataAdapter(sql, conn);
             ada.SelectCommand.CommandType = CommandType.Text;
-            
+
             // 加入参数
             foreach (Para para in paras)
             {
@@ -1831,7 +2026,90 @@ namespace BP.DA
             {
                 ada.Dispose();
                 conn.Close();
-                throw new  Exception("SQL="+sql+" Exception="+ ex.Message);
+                throw new Exception("SQL=" + sql + " Exception=" + ex.Message);
+            }
+        }
+        private static string DealInforMixSQL(string sql)
+        {
+            string mysql = "";
+            if (sql.Contains("? ") == true || sql.Contains("?,") == true)
+            {
+                /*如果有空格,说明已经替换过了。*/
+                return sql;
+            }
+            else
+            {
+                sql += " ";
+                /*说明需要处理的变量.*/
+                string[] strs = sql.Split('?');
+                mysql = strs[0];
+                for (int i = 1; i < strs.Length; i++)
+                {
+                    string str = strs[i];
+                    switch (str.Substring(0, 1))
+                    {
+                        case " ":
+                            mysql += "?" + str;
+                            break;
+                        case ")":
+                            mysql += "?" + str;
+                            break;
+                        default:
+                            if (str.Contains(" ") == true)
+                                mysql += "?" + str.Substring(str.IndexOf(" "));
+                            else
+                                mysql += "?" + str;
+                            break;
+                    }
+                }
+            }
+            return mysql;
+        }
+        /// <summary>
+        /// RunSQLReturnTable_200705_InforMix
+        /// </summary>
+        /// <param name="selectSQL">要执行的sql</param>
+        /// <returns>返回table</returns>
+        private static DataTable RunSQLReturnTable_201205_InforMix(string sql, Paras paras)
+        {
+            if (paras.Count != 0 && sql.Contains("?") == false)
+            {
+                sql = DealInforMixSQL(sql);
+            }
+
+            IfxConnection conn = new IfxConnection(SystemConfig.AppCenterDSN);
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
+
+            IfxDataAdapter ada = new IfxDataAdapter(sql, conn);
+            ada.SelectCommand.CommandType = CommandType.Text;
+
+            // 加入参数
+            foreach (Para para in paras)
+            {
+                IfxParameter myParameter = new IfxParameter(para.ParaName,para.val);
+                myParameter.Size = para.Size;
+                ada.SelectCommand.Parameters.Add(myParameter);
+            }
+
+            try
+            {
+                DataTable oratb = new DataTable("otb");
+                ada.Fill(oratb);
+                ada.Dispose();
+                conn.Close();
+                return oratb;
+            }
+            catch (Exception ex)
+            {
+                ada.Dispose();
+                conn.Close();
+                throw new Exception("SQL=" + sql + " Exception=" + ex.Message);
+            }
+            finally
+            {
+                ada.Dispose();
+                conn.Close();
             }
         }
         /// <summary>
@@ -1842,33 +2120,6 @@ namespace BP.DA
         private static DataTable RunSQLReturnTable_200705_MySQL(string selectSQL)
         {
             return RunSQLReturnTable_200705_MySQL(selectSQL, new Paras());
-
-            //ConnOfMySQL connofObj = GetAppCenterDBConn as ConnOfMySQL;
-            //MySqlConnection conn = connofObj.Conn;
-            //try
-            //{
-            //    if (conn.State != ConnectionState.Open)
-            //        conn.Open();
-
-            //    MySqlDataAdapter ada = new MySqlDataAdapter(selectSQL, conn);
-            //    ada.SelectCommand.CommandType = CommandType.Text;
-            //    DataTable oratb = new DataTable("otb");
-            //    ada.Fill(oratb);
-            //    ada.Dispose();
-            //    HisConnOfMySQLs.PutPool(connofObj);
-            //    return oratb;
-            //}
-            //catch (System.Exception ex)
-            //{
-            //    HisConnOfMySQLs.PutPool(connofObj);
-            //    string msg = "@运行查询在(RunSQLReturnTable_200705_MySQL)出错 sql=" + selectSQL + " @异常信息：" + ex.Message;
-            //    Log.DebugWriteError(msg);
-            //    throw new Exception(msg);
-            //}
-            //finally
-            //{
-            //    HisConnOfMySQLs.PutPool(connofObj);
-            //}
         }
         /// <summary>
         /// RunSQLReturnTable_200705_SQL
@@ -1923,34 +2174,9 @@ namespace BP.DA
         /// </summary>
         /// <param name="selectSQL">要执行的sql</param>
         /// <returns>返回table</returns>
-        private static DataTable RunSQLReturnTable_200705_SQL(string selectSQL)
+        private static DataTable RunSQLReturnTable_201205_InforMix(string selectSQL)
         {
-            ConnOfSQL connofObj = GetAppCenterDBConn as ConnOfSQL;
-            SqlConnection conn = connofObj.Conn;
-            try
-            {
-                if (conn.State != ConnectionState.Open)
-                    conn.Open();
-
-                SqlDataAdapter ada = new SqlDataAdapter(selectSQL, conn);
-                ada.SelectCommand.CommandType = CommandType.Text;
-                DataTable oratb = new DataTable("otb");
-                ada.Fill(oratb);
-                ada.Dispose();
-                HisConnOfSQLs.PutPool(connofObj);
-                return oratb;
-            }
-            catch (System.Exception ex)
-            {
-                HisConnOfSQLs.PutPool(connofObj);
-                string msg = "@运行查询在(RunSQLReturnTable_200705_SQL)出错 sql=" + selectSQL + " @异常信息：" + ex.Message;
-                Log.DebugWriteError(msg);
-                throw new Exception(msg);
-            }
-            finally
-            {
-                HisConnOfSQLs.PutPool(connofObj);
-            }
+            return RunSQLReturnTable_201205_InforMix(selectSQL, new Paras());
         }
         /// <summary>
         /// RunSQLReturnTable_200705_SQL
@@ -2026,17 +2252,18 @@ namespace BP.DA
             if (sql == null || sql.Length == 0)
                 throw new Exception("要执行的 sql =null ");
 
-            Paras ps = new Paras();
             switch (AppCenterDBType)
             {
-                case DBType.SQL2000:
-                    return RunSQLReturnTable_200705_SQL(sql,ps);
+                case DBType.SQL2000_OK:
+                    return RunSQLReturnTable_200705_SQL(sql);
                 case DBType.Oracle9i:
-                    return RunSQLReturnTable_200705_Ora(sql,ps);
+                    return RunSQLReturnTable_200705_Ora(sql,new Paras());
+                case DBType.InforMix:
+                    return RunSQLReturnTable_201205_InforMix(sql, new Paras());
                 case DBType.MySQL:
-                    return RunSQLReturnTable_200705_MySQL(sql, ps);
+                    return RunSQLReturnTable_200705_MySQL(sql);
                 case DBType.Access:
-                    return RunSQLReturnTable_200705_OLE(sql,ps);
+                    return RunSQLReturnTable_200705_OLE(sql,new Paras());
                 default:
                     throw new Exception("@发现未知的数据库连接类型！");
             }
@@ -2064,10 +2291,12 @@ namespace BP.DA
 
             switch (AppCenterDBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     return RunSQLReturnTable_200705_SQL(sql, paras);
                 case DBType.Oracle9i:
                     return RunSQLReturnTable_200705_Ora(sql,paras);
+                case DBType.InforMix:
+                    return RunSQLReturnTable_201205_InforMix(sql, paras);
                 case DBType.MySQL:
                     return RunSQLReturnTable_200705_MySQL(sql, paras);
                 case DBType.Access:
@@ -2208,24 +2437,22 @@ namespace BP.DA
                 throw new Exception("@" + ps.SQL + "Val=" + str + ex.Message);
             }
         }
-
         public static int RunSQLReturnValInt(string sql)
         {
             object obj = DBAccess.RunSQLReturnVal(sql);
             if (obj == null)
-                throw new Exception("@没有获取您要查询的数据,请检查SQL:"+sql+" @关于查询出来的详细信息已经记录日志文件，请处理。");
-
-            return int.Parse(obj.ToString());
+                throw new Exception("@没有获取您要查询的数据,请检查SQL:" + sql + " @关于查询出来的详细信息已经记录日志文件，请处理。");
+            return Convert.ToInt32(obj);
         }
-        public static int RunSQLReturnValInt(string sql,Paras paras)
+        public static int RunSQLReturnValInt(string sql, Paras paras)
         {
-            return int.Parse(DA.DBAccess.RunSQLReturnVal(sql, paras).ToString());
+            return Convert.ToInt32(DA.DBAccess.RunSQLReturnVal(sql, paras));
         }
         public static int RunSQLReturnValInt(string sql, Paras paras, int isNullAsVal)
         {
             try
             {
-                return int.Parse(DA.DBAccess.RunSQLReturnVal(sql, paras).ToString());
+                return Convert.ToInt32(DA.DBAccess.RunSQLReturnVal(sql, paras));
             }
             catch
             {
@@ -2417,11 +2644,14 @@ namespace BP.DA
                 case DBType.Oracle9i:
                     dt = DBAccess.RunSQLReturnTable_200705_Ora(sql, paras);
                     break;
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     dt = DBAccess.RunSQLReturnTable_200705_SQL(sql, paras);
                     break;
                 case DBType.MySQL:
                     dt = DBAccess.RunSQLReturnTable_200705_MySQL(sql, paras);
+                    break;
+                case DBType.InforMix:
+                    dt = DBAccess.RunSQLReturnTable_201205_InforMix(sql, paras);
                     break;
                 case DBType.Access:
                     dt = DBAccess.RunSQLReturnTable_200705_OLE(sql, paras);
@@ -2448,8 +2678,11 @@ namespace BP.DA
                 case DBType.Oracle9i:
                     dt = DBAccess.RunSQLReturnTable_200705_Ora(sql, new Paras());
                     break;
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     dt = DBAccess.RunSQLReturnTable_200705_SQL(sql, new Paras());
+                    break;
+                case DBType.InforMix:
+                    dt = DBAccess.RunSQLReturnTable_201205_InforMix(sql, new Paras());
                     break;
                 case DBType.MySQL:
                     dt = DBAccess.RunSQLReturnTable_200705_MySQL(sql, new Paras());
@@ -2509,14 +2742,17 @@ namespace BP.DA
             {
                 case DBType.Access:
                     return false;
-                case DBType.SQL2000:
-                    sql = "select column_name, table_name,CONSTRAINT_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE table_name =@Tab ";
+                case DBType.SQL2000_OK:
+                    sql = "SELECT column_name, table_name,CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE table_name =@Tab ";
                     break;
                 case DBType.Oracle9i:
                     sql = "SELECT constraint_name, constraint_type,search_condition, r_constraint_name  from user_constraints WHERE table_name = upper(:tab) AND constraint_type = 'P'";
                     break;
                 case DBType.MySQL:
-                    sql = "select column_name, table_name,CONSTRAINT_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE table_name =@Tab ";
+                    sql = "SELECT column_name, table_name, CONSTRAINT_NAME from INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE table_name =@Tab ";
+                    break;
+                case DBType.InforMix:
+                    sql = "SELECT * FROM sysconstraints c inner join systables t on c.tabid = t.tabid where t.tabname = lower(?) and constrtype = 'P'";
                     break;
                 default:
                     throw new Exception("ssseerr ");
@@ -2544,8 +2780,10 @@ namespace BP.DA
                     if (obj.IndexOf(".") != -1)
                         obj = obj.Split('.')[1];
                     return IsExits("select tname from tab WHERE  tname = upper(:obj) ",ps);
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     return IsExits("SELECT name  FROM sysobjects  WHERE  name = '" + obj + "'");
+                case DBType.InforMix:
+                    return IsExits("select tabname from systables where tabname = '"+obj.ToLower()+"'");
                 case DBType.MySQL:
                     if (obj.IndexOf(".") != -1)
                         obj = obj.Split('.')[1];
@@ -2554,7 +2792,7 @@ namespace BP.DA
                     //return false ; //IsExits("SELECT * FROM MSysObjects WHERE (((MSysObjects.Name) =  '"+obj+"' ))");
                     return IsExits("SELECT * FROM MSysObjects WHERE Name =  '" + obj + "'");
                 default:
-                    throw new Exception("sss");
+                    throw new Exception("没有识别的数据库编号");
             }
         }
 
@@ -2594,14 +2832,8 @@ namespace BP.DA
             {
                 case DBType.Access:
                     return false;
-                    //DataTable dt = DBAccess.RunSQLReturnTable("SELECT * FROM " + table + " WHERE 1=0 ");
-                    //foreach (DataColumn dc in dt.Columns)
-                    //{
-                    //    if (dc.ColumnName == col)
-                    //        i = 1;
-                    //}
                     break;
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     i = DBAccess.RunSQLReturnValInt("SELECT  COUNT(*)  FROM information_schema.COLUMNS  WHERE TABLE_NAME='"+table+"' AND COLUMN_NAME='"+col+"'", 0);
                     break;
                 case DBType.MySQL:
@@ -2610,8 +2842,10 @@ namespace BP.DA
                 case DBType.Oracle9i:
                     if (table.IndexOf(".") != -1)
                         table = table.Split('.')[1];
-
                     i = DBAccess.RunSQLReturnValInt("SELECT COUNT(*) from user_tab_columns  WHERE table_name= upper(:tab) AND column_name= upper(:col) ", ps);
+                    break;
+                case DBType.InforMix:
+                    i = DBAccess.RunSQLReturnValInt("select count(*) from syscolumns c where tabid in (select tabid	from systables	where tabname = lower('" + table + "')) and c.colname = lower('" + col + "')", 0);
                     break;
                 default:
                     throw new Exception("error");
@@ -2624,7 +2858,7 @@ namespace BP.DA
         }
         #endregion
 
-        #region region
+        #region LoadConfig
         public static void LoadConfig(string cfgFile, string basePath)
         {
             if (!File.Exists(cfgFile))

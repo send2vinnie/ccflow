@@ -64,19 +64,19 @@ namespace BP.WF.DTS
                 fs.Insert();
                 foreach (string f in fls)
                 {
-                    try
-                    {
+                    //try
+                    //{
                         msg += "@开始调度流程模板文件:" + f;
                         Flow myflow = BP.WF.Flow.DoLoadFlowTemplate(fs.No, f);
                         msg += "@流程:" + myflow.Name + "装载成功。";
                         System.IO.FileInfo info = new System.IO.FileInfo(f);
                         myflow.Name = info.Name.Replace(".xml", "");
                         myflow.DirectUpdate();
-                    }
-                    catch (Exception ex)
-                    {
-                        msg += "@调度失败" + ex.Message;
-                    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    msg += "@调度失败" + ex.Message;
+                    //}
                 }
             }
  

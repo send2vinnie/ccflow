@@ -54,7 +54,12 @@ namespace BP.En
                 if (this._sql == null || this._sql.Length == 0)
                     sql = selecSQL + this._groupBy + this._orderBy;
                 else
-                    sql = selecSQL + "  AND ( " + this._sql + " ) " + _groupBy + this._orderBy;
+                {
+                    if (selecSQL.Contains("1=1"))
+                        sql = selecSQL + "  AND ( " + this._sql + " ) " + _groupBy + this._orderBy;
+                    else
+                        sql = selecSQL + " WHERE   ( " + this._sql + " ) " + _groupBy + this._orderBy;
+                }
 
 
                 sql = sql.Replace("  ", " ");
@@ -153,17 +158,19 @@ namespace BP.En
 			this._ens =ens;
             this.HisDBType = this._ens.GetNewEntity.EnMap.EnDBUrl.DBType;
 		}
-        public BP.DA.DBType HisDBType = DBType.SQL2000;
+        public BP.DA.DBType HisDBType = DBType.SQL2000_OK;
         public string HisVarStr
         {
             get
             {
                 switch (this.HisDBType)
                 {
-                    case DBType.SQL2000:
+                    case DBType.SQL2000_OK:
                     case DBType.Access:
                     case DBType.MySQL:
                         return "@";
+                    case DBType.InforMix:
+                        return "?";
                     default:
                         return ":";
                 }
@@ -281,7 +288,7 @@ namespace BP.En
                             break;
                         default:
                             //this.SQL = "( " + attr2Field(attr) + " " + exp + "  '" + this.HisVarStr + "FK_Dept%' )";
-                              this.SQL = "( " + attr2Field(attr) + " " + exp + "  '"+val+"%' )";
+                            this.SQL = "( " + attr2Field(attr) + " " + exp + "  '" + val + "%' )";
                             //this.MyParas.Add("FK_Dept", val);
                             break;
                     }
@@ -300,7 +307,11 @@ namespace BP.En
                 }
                 return;
             }
-            this.SQL = "( " + attr2Field(attr) + " " + exp +  this.HisVarStr + attr + ")";
+            if (this.HisVarStr == "?")
+                this.SQL = "( " + attr2Field(attr) + " " + exp + "?" + ")";
+            else
+                this.SQL = "( " + attr2Field(attr) + " " + exp + this.HisVarStr + attr + ")";
+
             this.MyParas.Add(attr, val);
         }
         public void AddWhereDept(string val)
@@ -351,7 +362,11 @@ namespace BP.En
                 return;
             }
 
-            this.SQL = "( " + attr + " " + exp + "  " + this.HisVarStr +  attr + " )";
+            if (this.HisVarStr == "?")
+                this.SQL = "( " + attr + " " + exp + "?)";
+            else
+                this.SQL = "( " + attr + " " + exp + "  " + this.HisVarStr + attr + " )";
+
             this.MyParas.Add(attr, val);
         }
 		/// <summary>
@@ -360,18 +375,22 @@ namespace BP.En
 		/// <param name="attr">属性</param>
 		/// <param name="exp">操作符号（根据不同的数据库）</param>
 		/// <param name="val">值</param>
-		public void AddWhere(string attr, string exp, int val)  
-		{
+        public void AddWhere(string attr, string exp, int val)
+        {
             if (attr == "RowNum")
             {
                 this.SQL = "( " + attr2Field(attr) + " " + exp + " " + val + ")";
             }
             else
             {
-                this.SQL = "( " + attr2Field(attr) + " " + exp + this.HisVarStr+ attr + ")";
+                if (this.HisVarStr == "?")
+                    this.SQL = "( " + attr2Field(attr) + " " + exp + "?)";
+                else
+                    this.SQL = "( " + attr2Field(attr) + " " + exp + this.HisVarStr + attr + ")";
+
                 this.MyParas.Add(attr, val);
             }
-		}
+        }
 		public void AddHD()
 		{
 			this.SQL="(  1=1 ) ";
@@ -392,7 +411,10 @@ namespace BP.En
         public void AddWhere(string attr, string exp, float val)
         {
             this.MyParas.Add(attr, val);
-            this.SQL = "( " + attr2Field(attr) + " " + exp + " "+this.HisVarStr + attr + ")";
+            if (this.HisVarStr == "?")
+                this.SQL = "( " + attr2Field(attr) + " " + exp + "?)";
+            else
+                this.SQL = "( " + attr2Field(attr) + " " + exp + " " + this.HisVarStr + attr + ")";
         }
 		/// <summary>
 		/// 增加条件(默认的是= )
@@ -460,7 +482,6 @@ namespace BP.En
 		public void addOr() 
 		{
 			this.SQL=" OR ";
-
 		}
 
 		#region 关于endsql
@@ -515,12 +536,6 @@ namespace BP.En
         {
             this._orderBy = " ORDER BY  " + this.HisMap.PhysicsTable + "." + attr2Field(attr1) + " DESC ," + this.HisMap.PhysicsTable + "." + attr2Field(attr2) + " DESC";
         }
-
-//		public void addOrderBy(string attr1, string attr2)
-//		{
-//			this._endSql=" ORDER BY  "+attr2Field(attr1) + ","+attr2Field(attr2);
-//		}
-
 		public void addOrderBy(string attr1,  string attr2)
 		{
             this._orderBy = " ORDER BY  " + attr2Field(attr1) + "," + attr2Field(attr2);
@@ -564,7 +579,6 @@ namespace BP.En
                     return DoGroupReturnTableSqlServer(en, attrsOfGroupKey, attrGroup, gw, ow);
             }
         }
-
         public DataTable DoGroupReturnTableOracle(Entity en, Attrs attrsOfGroupKey, Attr attrGroup, GroupWay gw, OrderWay ow )
         {
             #region  生成要查询的语句
@@ -877,6 +891,8 @@ namespace BP.En
             string pks = "";
             int i = 0;
             int paraI = 0;
+
+            string dbStr = SystemConfig.AppCenterDBVarStr;
             foreach (DataRow dr in dt.Rows)
             {
                 i++;
@@ -884,7 +900,11 @@ namespace BP.En
                 {
                     paraI++;
                     //pks += "'" + dr[0].ToString() + "'";
-                    pks += SystemConfig.AppCenterDBVarStr+"R" + paraI + ",";
+                    if (dbStr == "?")
+                        pks += "?,";
+                    else
+                        pks += SystemConfig.AppCenterDBVarStr + "R" + paraI + ",";
+
                     this.MyParasR.Add("R" + paraI, dr[0].ToString());
                     if (i >= to)
                         return pks.Substring(0, pks.Length - 1);
@@ -1059,6 +1079,43 @@ namespace BP.En
 
                             this.Top = pageSize;
                             return this.doEntitiesQuery();
+
+                        case DBType.InforMix:
+                            toIdx = top + pageSize;
+                            if (this._sql == "" || this._sql == null)
+                            {
+                                if (top == 0)
+                                    sql = " SELECT first  " + pageSize + "  " + this.En.PKField + " FROM " + map.PhysicsTable + "  order by " + attr2Field(orderBy) + isDescStr;
+                                else
+                                    sql = " SELECT  " + this.En.PKField + " FROM " + map.PhysicsTable + "  order by " + attr2Field(orderBy) + isDescStr;
+                            }
+                            else
+                            {
+                                if (top == 0)
+                                    sql = "SELECT first " + pageSize + " " + this.En.PKField + " FROM " + map.PhysicsTable + " WHERE " + this._sql + " order by " + attr2Field(orderBy) + isDescStr;
+                                else
+                                    sql = "SELECT  " + this.En.PKField + " FROM " + map.PhysicsTable + " WHERE " + this._sql + " order by " + attr2Field(orderBy) + isDescStr;
+                            }
+
+                            sql = sql.Replace("AND ( ( 1=1 ) )", " ");
+
+                            pks = this.GenerPKsByTableWithPara(pk, sql, top, top + pageSize);
+                            this.clear();
+                            this.MyParas = this.MyParasR;
+
+                            if (pks == null)
+                                this.AddHD_Not();
+                            else
+                                this.AddWhereIn(pk, "(" + pks + ")");
+
+                            if (isDesc)
+                                this.addOrderByDesc(orderBy);
+                            else
+                                this.addOrderBy(orderBy);
+
+                            this.Top = pageSize;
+                            return this.doEntitiesQuery();
+                        case DBType.SQL2000_OK:
                         default:
                             // sql = "SELECT  " + pk + " FROM " + map.PhysicsTable + " WHERE  order by  " + pk + isDesc;
                             toIdx = top + pageSize;
@@ -1234,7 +1291,8 @@ namespace BP.En
                         }
                     }
                     break;
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
+                case DBType.MySQL:
                 default:
                     break;
             }

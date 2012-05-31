@@ -389,6 +389,7 @@ namespace BP.Sys
             {
                 Entity en = this.GetNewEntity;
                 Paras ps = new Paras();
+
                 ps.SQL = "DELETE FROM " + en.EnMap.PhysicsTable + " WHERE " + key + "=" + en.HisDBVarStr + "p";
                 ps.Add("p", val);
                 return en.RunSQL(ps);

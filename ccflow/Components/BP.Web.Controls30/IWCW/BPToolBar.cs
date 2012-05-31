@@ -1215,7 +1215,7 @@ namespace BP.Web.Controls
                 Label lab = (Label)this.Page.FindControl("Lab_End");
                 lab.Text = "¹²[" + ddl.Items.Count + "]Ò³£¬[" + recordConut + "]Ìõ¼ÇÂ¼¡£";
 
-                if (page == 1 && en.EnMap.EnDBUrl.DBType == DBType.SQL2000)
+                if (page == 1 && en.EnMap.EnDBUrl.DBType == DBType.SQL2000_OK)
                 {
                     qo.Top = pageSize;
                     return qo;
@@ -1224,7 +1224,6 @@ namespace BP.Web.Controls
             }
             catch
             {
-
 
             }
 

@@ -191,6 +191,10 @@ namespace BP.WF
         public GenerFH()
         {
         }
+        /// <summary>
+        /// 产生分合流程控制流程
+        /// </summary>
+        /// <param name="FID"></param>
         public GenerFH(Int64 FID)
         {
             QueryObject qo = new QueryObject(this);
@@ -242,6 +246,7 @@ namespace BP.WF
                 map.EnDesc = "分合流程控制";
 
                 map.AddTBIntPK(GenerFHAttr.FID, 0, "流程ID", true, true);
+
                 map.AddTBString(GenerFHAttr.Title, null, "标题", true, false, 0, 4000, 10);
                 map.AddTBString(GenerFHAttr.GroupKey, null, "分组主键", true, false, 0, 3000, 10);
                 map.AddTBString(GenerFHAttr.FK_Flow, null, "流程", true, false, 0, 500, 10);

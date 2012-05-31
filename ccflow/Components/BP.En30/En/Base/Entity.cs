@@ -304,11 +304,14 @@ namespace BP.En
                 string field = this.EnMap.GetFieldByKey(attrKey);
                 switch (this.EnMap.EnDBUrl.DBType)
                 {
-                    case DBType.SQL2000:
+                    case DBType.SQL2000_OK:
                         sql = "SELECT CONVERT(INT, MAX(" + field + ") )+1 AS No FROM " + this.EnMap.PhysicsTable;
                         break;
                     case DBType.Oracle9i:
                     case DBType.MySQL:
+                        sql = "SELECT MAX(" + field + ") +1 AS No FROM " + this.EnMap.PhysicsTable;
+                        break;
+                    case DBType.InforMix:
                         sql = "SELECT MAX(" + field + ") +1 AS No FROM " + this.EnMap.PhysicsTable;
                         break;
                     case DBType.Access:
@@ -317,7 +320,7 @@ namespace BP.En
                     default:
                         throw new Exception("error");
                 }
-                string str = DBAccess.RunSQLReturnVal(sql).ToString();
+                string str = DBAccess.RunSQLReturnValInt(sql).ToString();
                 if (str == "0" || str == "")
                     str = "1";
                 return str.PadLeft(int.Parse(this.EnMap.CodeStruct), '0');
@@ -350,14 +353,15 @@ namespace BP.En
 
             switch (this.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     sql = "SELECT CONVERT(INT, MAX([" + field + "]) )+1 AS Num FROM " + this.EnMap.PhysicsTable + " WHERE " + attrGroupKey + "='" + attrGroupVal + "'";
                     break;
                 case DBType.Oracle9i:
+                case DBType.InforMix:
                     sql = "SELECT MAX( :f )+1 AS No FROM " + this.EnMap.PhysicsTable + " WHERE " + this.HisDBVarStr + "groupKey=" + this.HisDBVarStr + "groupVal ";
                     break;
                 case DBType.MySQL:
-                    sql = "SELECT MAX("+field+") +1 AS Num FROM " + this.EnMap.PhysicsTable + " WHERE " + attrGroupKey + "='" + attrGroupVal + "'";
+                    sql = "SELECT MAX(" + field + ") +1 AS Num FROM " + this.EnMap.PhysicsTable + " WHERE " + attrGroupKey + "='" + attrGroupVal + "'";
                     break;
                 case DBType.Access:
                     sql = "SELECT MAX([" + field + "]) +1 AS Num FROM " + this.EnMap.PhysicsTable + " WHERE " + attrGroupKey + "='" + attrGroupVal + "'";
@@ -401,9 +405,10 @@ namespace BP.En
             switch (this.EnMap.EnDBUrl.DBType)
             {
                 case DBType.Oracle9i:
+                case DBType.InforMix:
                     sql = "SELECT   MAX(" + f + ") +1 AS No FROM " + this.EnMap.PhysicsTable;
                     break;
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                     sql = "SELECT CONVERT(INT, MAX(" + this.EnMap.GetFieldByKey(attrKey) + ") )+1 AS No FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetFieldByKey(attrGroupKey1) + "='" + attrGroupVal1 + "' AND " + this.EnMap.GetFieldByKey(attrGroupKey2) + "='" + attrGroupVal2 + "'";
                     break;
                 case DBType.Access:
@@ -566,13 +571,14 @@ namespace BP.En
             {
                 switch (SystemConfig.AppCenterDBType)
                 {
-                    case DBType.SQL2000:
+                    case DBType.SQL2000_OK:
                         this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
                         break;
                     case DBType.Access:
                         this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
                         break;
                     case DBType.MySQL:
+                    case DBType.InforMix:
                     default:
                         this.RunSQL(this.SQLCash.Insert.Replace("[", "").Replace("]", ""), SqlBuilder.GenerParas(this, null));
                         break;
@@ -674,7 +680,7 @@ namespace BP.En
         {
             try
             {
-               return EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
+                return EnDA.Retrieve(this, this.SQLCash.Select, SqlBuilder.GenerParasPK(this));
             }
             catch
             {
@@ -900,11 +906,14 @@ namespace BP.En
                     switch (this.EnMap.EnDBUrl.DBType)
                     {
 
-                        case DBType.SQL2000:
+                        case DBType.SQL2000_OK:
                             selectSQL += SqlBuilder.GetKeyConditionOfMS(this);
                             break;
                         case DBType.Oracle9i:
                             selectSQL += SqlBuilder.GetKeyConditionOfOraForPara(this);
+                            break;
+                        case DBType.InforMix:
+                            selectSQL += SqlBuilder.GetKeyConditionOfInforMixForPara(this);
                             break;
                         case DBType.MySQL:
                             selectSQL += SqlBuilder.GetKeyConditionOfMS(this);
@@ -1126,7 +1135,8 @@ namespace BP.En
             switch (this.EnMap.EnDBUrl.DBType)
             {
                 case DBType.Oracle9i:
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
+                case DBType.MySQL:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.PK + " =" + this.HisDBVarStr + pk);
                 default:
                     throw new Exception("没有涉及到的类型。");
@@ -1144,7 +1154,9 @@ namespace BP.En
             switch (this.EnMap.EnDBUrl.DBType)
             {
                 case DBType.Oracle9i:
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
+                case DBType.InforMix:
+                case DBType.MySQL:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetAttrByKey(attr).Field + " =" + this.HisDBVarStr + attr, ps);
                 case DBType.Access:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetAttrByKey(attr).Field + " =" + this.HisDBVarStr + attr, ps);
@@ -1160,7 +1172,8 @@ namespace BP.En
             switch (this.EnMap.EnDBUrl.DBType)
             {
                 case DBType.Oracle9i:
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
+                case DBType.InforMix:
                 case DBType.Access:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetAttrByKey(attr1).Field + " =" + this.HisDBVarStr + attr1 + " AND " + this.EnMap.GetAttrByKey(attr2).Field + " =" + this.HisDBVarStr + attr2, ps);
                 default:
@@ -1177,7 +1190,7 @@ namespace BP.En
             switch (this.EnMap.EnDBUrl.DBType)
             {
                 case DBType.Oracle9i:
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                 case DBType.Access:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetAttrByKey(attr1).Field + " =" + this.HisDBVarStr + attr1 + " AND " + this.EnMap.GetAttrByKey(attr2).Field + " =" + this.HisDBVarStr + attr2 + " AND " + this.EnMap.GetAttrByKey(attr3).Field + " =:" + attr3, ps);
                 default:
@@ -1820,9 +1833,12 @@ namespace BP.En
             switch (DBAccess.AppCenterDBType)
             {
                 case DBType.Oracle9i:
-                    DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOfOra(this));
+                    DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOfOra_OK(this));
                     break;
-                case DBType.SQL2000:
+                case DBType.InforMix:
+                    DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOfInfoMix(this));
+                    break;
+                case DBType.SQL2000_OK:
                     DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOfMS(this));
                     break;
                 case DBType.MySQL:
@@ -1956,40 +1972,20 @@ namespace BP.En
                 this.SetValByKey(attr.Key + "Name", s);
             }
         }
-        private void CheckPhysicsTableSQL()
+        private void CheckPhysicsTable_SQL()
         {
-            string table=this.EnMap.PhysicsTable;
+            string table = this.EnMap.PhysicsTable;
             DBType dbtype = this.EnMap.EnDBUrl.DBType;
             string sqlFields = "";
             string sqlYueShu = "";
-            switch (SystemConfig.AppCenterDBType)
-            {
-                case DBType.SQL2000:
-                    sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
-                    sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('"+this.EnMap.PhysicsTable+"') ";
-                    break;
-                case DBType.Oracle9i:
-#warning 需要翻译
+           
                     sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
                     sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('" + this.EnMap.PhysicsTable + "') ";
-                    break;
-                case DBType.DB2:
-#warning 需要翻译
-                    sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
-                    sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('" + this.EnMap.PhysicsTable + "') ";
-                    break;
-                case DBType.MySQL:
-#warning 需要翻译
-                    sqlFields = "SELECT column_name as FName,data_type as FType,CHARACTER_MAXIMUM_LENGTH as FLen from information_schema.columns where table_name='" + this.EnMap.PhysicsTable + "'";
-                    sqlYueShu = "SELECT b.name, a.name FName from sysobjects b join syscolumns a on b.id = a.cdefault where a.id = object_id('" + this.EnMap.PhysicsTable + "') ";
-                    break;
-                default:
-                    throw new Exception("没有判断的数据库类型。");
-            }
+              
 
             DataTable dtAttr = DBAccess.RunSQLReturnTable(sqlFields);
             DataTable dtYueShu = DBAccess.RunSQLReturnTable(sqlYueShu);
-          
+
 
             #region 修复表字段。
             Attrs attrs = this.EnMap.Attrs;
@@ -2056,26 +2052,10 @@ namespace BP.En
                         {
                             /*类型正确，检查长度*/
                             if (Flen == null)
-                                throw new Exception(""+attr.Key+" -"+sqlFields);
+                                throw new Exception("" + attr.Key + " -" + sqlFields);
                             int len = int.Parse(Flen);
                             if (len < attr.MaxLength)
-                            {
-                                /*需要改变长度.*/
-                                switch (dbtype)
-                                {
-                                    case DBType.SQL2000:
-                                        DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " alter column " + attr.Key + " varchar(" + attr.MaxLength + ")");
-                                        continue;
-                                    case DBType.MySQL:
-                                        DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " MODIFY column " + attr.Key + " varchar(" + attr.MaxLength + ")");
-                                        continue;
-                                    case DBType.Oracle9i:
-                                        DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " modify " + attr.Key + " varchar2(" + attr.MaxLength + ")");
-                                        continue;
-                                    default:
-                                        throw new Exception("没有判断的类型。");
-                                }
-                            }
+                                DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " alter column " + attr.Key + " varchar(" + attr.MaxLength + ")");
                         }
                         else
                         {
@@ -2083,7 +2063,7 @@ namespace BP.En
                             foreach (DataRow dr in dtYueShu.Rows)
                             {
                                 if (dr["FName"].ToString().ToLower() == attr.Key.ToLower())
-                                    DBAccess.RunSQL("alter table " + table + " drop constraint " + dr[0].ToString()  );
+                                    DBAccess.RunSQL("alter table " + table + " drop constraint " + dr[0].ToString());
                             }
                             DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " drop column " + attr.Field);
                             DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " VARCHAR(" + attr.MaxLength + ") DEFAULT '" + attr.DefaultVal + "' NULL");
@@ -2115,7 +2095,7 @@ namespace BP.En
                             foreach (DataRow dr in dtYueShu.Rows)
                             {
                                 if (dr["FName"].ToString().ToLower() == attr.Key.ToLower())
-                                    DBAccess.RunSQL("alter table " + table + " drop constraint " + dr[0].ToString() );
+                                    DBAccess.RunSQL("alter table " + table + " drop constraint " + dr[0].ToString());
                             }
                             DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " drop column " + attr.Field);
                             DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " FLOAT DEFAULT '" + attr.DefaultVal + "' NULL");
@@ -2304,25 +2284,33 @@ namespace BP.En
                 return;
 
             // 如果不是主应用程序的数据库就不让执行检查. 考虑第三方的系统的安全问题.
-            if (this._enMap.EnDBUrl.DBUrlType 
+            if (this._enMap.EnDBUrl.DBUrlType
                 != DBUrlType.AppCenterDSN)
                 return;
 
             switch (SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000:
-                    
-                        this.CheckPhysicsTableSQL();
-                    return;
+                case DBType.SQL2000_OK:
+                    this.CheckPhysicsTable_SQL();
+                    break;
+                case DBType.Oracle9i:
+                case DBType.MySQL:
+                    this.CheckPhysicsTable_Ora();
+                    break;
+                case DBType.InforMix:
+                    this.CheckPhysicsTable_Informix();
+                    break;
                 default:
                     break;
             }
-
+        }
+        private void CheckPhysicsTable_Informix()
+        {
             #region 检查字段是否存在
             string sql = "SELECT *  FROM " + this.EnMap.PhysicsTable + " WHERE 1=2";
             DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
-            // 如果不存在.
+            //如果不存在.
             foreach (Attr attr in this.EnMap.Attrs)
             {
                 if (attr.MyFieldType == FieldType.RefText)
@@ -2350,11 +2338,165 @@ namespace BP.En
                         int len = attr.MaxLength;
                         if (len == 0)
                             len = 200;
-                        //throw new Exception("属性的最小长度不能为0。");
-                        if (dbtype == DBType.Access && len >= 254)
-                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + "  Memo DEFAULT '" + attr.DefaultVal + "' NULL");
+
+                        if (len >= 254)
+                            DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " add " + attr.Field + " lvarchar(" + len + ") default '" + attr.DefaultVal + "'");
                         else
-                            DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " VARCHAR(" + len + ") DEFAULT '" + attr.DefaultVal + "' NULL");
+                            DBAccess.RunSQL("alter table " + this.EnMap.PhysicsTable + " add " + attr.Field + " varchar(" + len + ") default '" + attr.DefaultVal + "'");
+                        break;
+                    case DataType.AppInt:
+                    case DataType.AppBoolean:
+                        DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " INT8 DEFAULT " + attr.DefaultVal + " ");
+                        break;
+                    case DataType.AppFloat:
+                    case DataType.AppMoney:
+                    case DataType.AppRate:
+                    case DataType.AppDouble:
+                        DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " FLOAT DEFAULT  " + attr.DefaultVal + " ");
+                        break;
+                    default:
+                        throw new Exception("error MyFieldType= " + attr.MyFieldType + " key=" + attr.Key);
+                }
+            }
+            #endregion
+
+            #region 检查字段长度是否符合最低要求
+            foreach (Attr attr in this.EnMap.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+                if (attr.MyDataType == DataType.AppDouble
+                    || attr.MyDataType == DataType.AppFloat
+                    || attr.MyDataType == DataType.AppInt
+                    || attr.MyDataType == DataType.AppMoney
+                    || attr.MyDataType == DataType.AppBoolean
+                    || attr.MyDataType == DataType.AppRate)
+                    continue;
+
+                int maxLen = attr.MaxLength;
+                dt = new DataTable();
+                sql = "select c.*  from syscolumns c inner join systables t on c.tabid = t.tabid where t.tabname = lower('"+this.EnMap.PhysicsTable.ToLower()+"') and c.colname = lower('"+attr.Key+"') and c.collength < "+attr.MaxLength;
+                dt = this.RunSQLReturnTable(sql);
+                if (dt.Rows.Count == 0)
+                    continue;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    try
+                    {
+                        if (attr.MaxLength >= 255)
+                            this.RunSQL("alter table " + dr["owner"] + "." + this.EnMap.PhysicsTableExt + " modify " + attr.Field + " lvarchar(" + attr.MaxLength + ")");
+                        else
+                            this.RunSQL("alter table " + dr["owner"] + "." + this.EnMap.PhysicsTableExt + " modify " + attr.Field + " varchar(" + attr.MaxLength + ")");
+                    }
+                    catch (Exception ex)
+                    {
+                        BP.DA.Log.DebugWriteWarning(ex.Message);
+                    }
+                }
+            }
+            #endregion
+
+            #region 检查枚举类型字段是否是INT 类型
+            Attrs attrs = this._enMap.HisEnumAttrs;
+            foreach (Attr attr in attrs)
+            {
+                if (attr.MyDataType != DataType.AppInt)
+                    continue;
+#warning 没有处理好。
+                continue;
+
+                sql = "SELECT DATA_TYPE FROM ALL_TAB_COLUMNS WHERE  TABLE_NAME='" + this.EnMap.PhysicsTableExt.ToLower() + "' AND COLUMN_NAME='" + attr.Field.ToLower() + "'";
+                string val = DBAccess.RunSQLReturnString(sql);
+                if (val == null)
+                    Log.DefaultLogWriteLineError("@没有检测到字段:" + attr.Key);
+
+                if (val.IndexOf("CHAR") != -1)
+                {
+                    /*如果它是 varchar 字段*/
+                    sql = "SELECT OWNER FROM ALL_TAB_COLUMNS WHERE upper(TABLE_NAME)='" + this.EnMap.PhysicsTableExt.ToUpper() + "' AND UPPER(COLUMN_NAME)='" + attr.Field.ToUpper() + "' ";
+                    string OWNER = DBAccess.RunSQLReturnString(sql);
+                    try
+                    {
+                        this.RunSQL("alter table  " + this.EnMap.PhysicsTableExt + " modify " + attr.Field + " NUMBER ");
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.DefaultLogWriteLineError("运行sql 失败:" + "alter table  " + this.EnMap.PhysicsTableExt + " modify " + attr.Field + " NUMBER " + ex.Message);
+                    }
+                }
+            }
+            #endregion
+
+            #region 检查枚举类型是否存在.
+            attrs = this._enMap.HisEnumAttrs;
+            foreach (Attr attr in attrs)
+            {
+                if (attr.MyDataType != DataType.AppInt)
+                    continue;
+                if (attr.UITag == null)
+                    continue;
+                try
+                {
+                    SysEnums ses = new SysEnums(attr.UIBindKey, attr.UITag);
+                    continue;
+                }
+                catch
+                {
+                }
+                string[] strs = attr.UITag.Split('@');
+                SysEnums ens = new SysEnums();
+                ens.Delete(SysEnumAttr.EnumKey, attr.UIBindKey);
+                foreach (string s in strs)
+                {
+                    if (s == "" || s == null)
+                        continue;
+
+                    string[] vk = s.Split('=');
+                    SysEnum se = new SysEnum();
+                    se.IntKey = int.Parse(vk[0]);
+                    se.Lab = vk[1];
+                    se.EnumKey = attr.UIBindKey;
+                    se.Insert();
+                }
+            }
+            #endregion
+            this.CreateIndexAndPK();
+        }
+        private void CheckPhysicsTable_Ora()
+        {
+            #region 检查字段是否存在
+            string sql = "SELECT *  FROM " + this.EnMap.PhysicsTable + " WHERE 1=2";
+            DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+
+            //如果不存在.
+            foreach (Attr attr in this.EnMap.Attrs)
+            {
+                if (attr.MyFieldType == FieldType.RefText)
+                    continue;
+
+                if (attr.IsPK)
+                    continue;
+
+                if (dt.Columns.Contains(attr.Key) == true)
+                    continue;
+
+                if (attr.Key == "AID")
+                {
+                    /* 自动增长列 */
+                    DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " INT  Identity(1,1)");
+                    continue;
+                }
+
+                /*不存在此列 , 就增加此列。*/
+                switch (attr.MyDataType)
+                {
+                    case DataType.AppString:
+                    case DataType.AppDate:
+                    case DataType.AppDateTime:
+                        int len = attr.MaxLength;
+                        if (len == 0)
+                            len = 200;
+                        DBAccess.RunSQL("ALTER TABLE " + this.EnMap.PhysicsTable + " ADD " + attr.Field + " VARCHAR(" + len + ") DEFAULT '" + attr.DefaultVal + "' NULL");
                         break;
                     case DataType.AppInt:
                     case DataType.AppBoolean:
@@ -2377,7 +2519,6 @@ namespace BP.En
             {
                 if (attr.MyFieldType == FieldType.RefText)
                     continue;
-
                 if (attr.MyDataType == DataType.AppDouble
                     || attr.MyDataType == DataType.AppFloat
                     || attr.MyDataType == DataType.AppInt
@@ -2388,28 +2529,20 @@ namespace BP.En
 
                 int maxLen = attr.MaxLength;
                 dt = new DataTable();
-                switch (this.EnMap.EnDBUrl.DBType)
+                sql = "SELECT DATA_LENGTH AS LEN, OWNER FROM ALL_TAB_COLUMNS WHERE upper(TABLE_NAME)='" + this.EnMap.PhysicsTableExt.ToUpper() + "' AND UPPER(COLUMN_NAME)='" + attr.Field.ToUpper() + "' AND DATA_LENGTH < " + attr.MaxLength;
+                dt = this.RunSQLReturnTable(sql);
+                if (dt.Rows.Count == 0)
+                    continue;
+                foreach (DataRow dr in dt.Rows)
                 {
-                    case BP.DA.DBType.Oracle9i:
-                        sql = "SELECT DATA_LENGTH AS LEN, OWNER FROM ALL_TAB_COLUMNS WHERE upper(TABLE_NAME)='" + this.EnMap.PhysicsTableExt.ToUpper() + "' AND UPPER(COLUMN_NAME)='" + attr.Field.ToUpper() + "' AND DATA_LENGTH < " + attr.MaxLength;
-                        dt = this.RunSQLReturnTable(sql);
-                        if (dt.Rows.Count == 0)
-                            continue;
-
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            try
-                            {
-                                this.RunSQL("alter table " + dr["OWNER"] + "." + this.EnMap.PhysicsTableExt + " modify " + attr.Field + " varchar2(" + attr.MaxLength + ")");
-                            }
-                            catch (Exception ex)
-                            {
-                                BP.DA.Log.DebugWriteWarning(ex.Message);
-                            }
-                        }
-                        break;
-                    default:
-                        continue;
+                    try
+                    {
+                        this.RunSQL("alter table " + dr["OWNER"] + "." + this.EnMap.PhysicsTableExt + " modify " + attr.Field + " varchar2(" + attr.MaxLength + ")");
+                    }
+                    catch (Exception ex)
+                    {
+                        BP.DA.Log.DebugWriteWarning(ex.Message);
+                    }
                 }
             }
             #endregion
@@ -2420,33 +2553,24 @@ namespace BP.En
             {
                 if (attr.MyDataType != DataType.AppInt)
                     continue;
-
-                switch (dbtype)
+                sql = "SELECT DATA_TYPE FROM ALL_TAB_COLUMNS WHERE upper(TABLE_NAME)='" + this.EnMap.PhysicsTableExt.ToUpper() + "' AND UPPER(COLUMN_NAME)='" + attr.Field.ToUpper() + "' ";
+                string val = DBAccess.RunSQLReturnString(sql);
+                if (val == null)
+                    Log.DefaultLogWriteLineError("@没有检测到字段eunm" + attr.Key);
+                if (val.IndexOf("CHAR") != -1)
                 {
-                    case DBType.Oracle9i:
-                        sql = "SELECT DATA_TYPE FROM ALL_TAB_COLUMNS WHERE upper(TABLE_NAME)='" + this.EnMap.PhysicsTableExt.ToUpper() + "' AND UPPER(COLUMN_NAME)='" + attr.Field.ToUpper() + "' ";
-                        string val = DBAccess.RunSQLReturnString(sql);
-                        if (val == null)
-                            Log.DefaultLogWriteLineError("@没有检测到字段eunm" + attr.Key);
-                        if (val.IndexOf("CHAR") != -1)
-                        {
-                            /*如果它是 varchar 字段*/
-                            sql = "SELECT OWNER FROM ALL_TAB_COLUMNS WHERE upper(TABLE_NAME)='" + this.EnMap.PhysicsTableExt.ToUpper() + "' AND UPPER(COLUMN_NAME)='" + attr.Field.ToUpper() + "' ";
-                            string OWNER = DBAccess.RunSQLReturnString(sql);
-                            try
-                            {
-                                this.RunSQL("alter table  " + this.EnMap.PhysicsTableExt + " modify " + attr.Field + " NUMBER ");
-                            }
-                            catch (Exception ex)
-                            {
-                                Log.DefaultLogWriteLineError("运行sql 失败:" + "alter table  " + this.EnMap.PhysicsTableExt + " modify " + attr.Field + " NUMBER " + ex.Message);
-                            }
-                        }
-                        break;
-                    default:
-                        break;
+                    /*如果它是 varchar 字段*/
+                    sql = "SELECT OWNER FROM ALL_TAB_COLUMNS WHERE upper(TABLE_NAME)='" + this.EnMap.PhysicsTableExt.ToUpper() + "' AND UPPER(COLUMN_NAME)='" + attr.Field.ToUpper() + "' ";
+                    string OWNER = DBAccess.RunSQLReturnString(sql);
+                    try
+                    {
+                        this.RunSQL("alter table  " + this.EnMap.PhysicsTableExt + " modify " + attr.Field + " NUMBER ");
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.DefaultLogWriteLineError("运行sql 失败:" + "alter table  " + this.EnMap.PhysicsTableExt + " modify " + attr.Field + " NUMBER " + ex.Message);
+                    }
                 }
-
             }
             #endregion
 
@@ -2456,10 +2580,8 @@ namespace BP.En
             {
                 if (attr.MyDataType != DataType.AppInt)
                     continue;
-
                 if (attr.UITag == null)
                     continue;
-
                 try
                 {
                     SysEnums ses = new SysEnums(attr.UIBindKey, attr.UITag);
@@ -2468,9 +2590,6 @@ namespace BP.En
                 catch
                 {
                 }
-
-                //try
-                //{
                 string[] strs = attr.UITag.Split('@');
                 SysEnums ens = new SysEnums();
                 ens.Delete(SysEnumAttr.EnumKey, attr.UIBindKey);
@@ -2486,17 +2605,9 @@ namespace BP.En
                     se.EnumKey = attr.UIBindKey;
                     se.Insert();
                 }
-                //}
-                //catch (Exception ex)
-                //{
-                //    throw new Exception("@自动增加枚举时出现错误，请确定您的格式是否正确。" + ex.Message + "attr.UIBindKey=" + attr.UIBindKey);
-                //}
             }
             #endregion
-
-
             this.CreateIndexAndPK();
-            //增加注释.
         }
         #endregion
 
@@ -2540,9 +2651,6 @@ namespace BP.En
                                 sql = sql.Replace("@" + a1.Key, "'" + this.GetValStrByKey(a1.Key) + "'");
                         }
 
-                        //sql = sql.Replace("''", "'");
-                        //  sql = sql.Replace("'''", "''");
-
                         sql = sql.Replace("''", "'");
                         string val = "";
                         try
@@ -2551,7 +2659,7 @@ namespace BP.En
                         }
                         catch (Exception ex)
                         {
-                            throw new Exception("@字段("+attr.Key+","+attr.Desc+")自动获取数据期间错误(有可能是您写的sql语句会返回多列多行的table,现在只要一列一行的table才能填充，请检查sql.):" + sql.Replace("'", "“") + " @Tech Info:" + ex.Message.Replace("'", "“") + "@执行的sql:" + sql);
+                            throw new Exception("@字段(" + attr.Key + "," + attr.Desc + ")自动获取数据期间错误(有可能是您写的sql语句会返回多列多行的table,现在只要一列一行的table才能填充，请检查sql.):" + sql.Replace("'", "“") + " @Tech Info:" + ex.Message.Replace("'", "“") + "@执行的sql:" + sql);
                         }
 
                         if (attr.IsNum)
@@ -2659,19 +2767,8 @@ namespace BP.En
                     throw new Exception("@在处理自动计算{" + this.EnDesc + "}：" + this.PK + "=" + this.PKVal + "时，属性[" + attr.Key + "]，计算内容[" + doc + "]，出现错误：" + ex.Message);
                 }
             }
-
-            //// 先处理js 计算问题。
-            //if (jsAttrs.Contains("@"))
-            //{
-            //    string[] attrsJS = jsAttrs.Split('@');
-            //    foreach (string str in attrsJS)
-            //    {
-
-            //    }
-            //}
         }
         #endregion
-
     }
     /// <summary>
     /// 数据实体集合

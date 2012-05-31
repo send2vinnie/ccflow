@@ -170,7 +170,7 @@ namespace BP.Sys
             return base.beforeUpdateInsertAction();
         }
         public void InitMyPK()
-        {
+        {   
             this.MyPK = this.FK_MapData + "_" + this.M2MNo + "_" + this.EnOID + "_" + this.DtlObj;
         }
     }

@@ -80,7 +80,10 @@ namespace BP.DA
                     case DBType.Oracle9i:
                         return ":";
                     case DBType.MySQL:
-                    case DBType.SQL2000:
+                    case DBType.SQL2000_OK:
+                        return "@";
+                    case DBType.InforMix:
+                        return "?";
                     default:
                         return "@";
                 }
@@ -98,12 +101,12 @@ namespace BP.DA
 					case DBUrlType.AppCenterDSN:
 						return DBAccess.AppCenterDBType ; 
 					case DBUrlType.DBAccessOfMSSQL2000:
-						return DBType.SQL2000;
+						return DBType.SQL2000_OK;
 					case DBUrlType.DBAccessOfOLE:
 						return DBType.Access;
 					case DBUrlType.DBAccessOfOracle9i1:
                     case DBUrlType.DBAccessOfOracle9i:
-						return DBType.Oracle9i ;				 
+						return DBType.Oracle9i ;
 					default:
 						throw new Exception("不明确的连接");
 				}

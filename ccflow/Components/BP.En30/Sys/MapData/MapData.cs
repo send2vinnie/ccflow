@@ -849,7 +849,7 @@ namespace BP.Sys
                                     continue;
                                 en.SetValByKey(dc.ColumnName, val.ToString().Replace(oldMapID, fk_mapdata));
                             }
-                            en.NoOfObj = "M2M_" + idx + "_" + fk_mapdata;
+                            //   en.NoOfObj = "M2M_" + idx + "_" + fk_mapdata;
                             en.Insert();
                         }
                         break;

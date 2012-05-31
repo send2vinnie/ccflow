@@ -1120,7 +1120,10 @@ namespace BP.Web
                     switch (en.EnMap.EnDBUrl.DBType)
                     {
                         case DBType.Oracle9i:
-                            sql += SqlBuilder.GenerCreateTableSQLOfOra(en) + " \n GO \n";
+                            sql += SqlBuilder.GenerCreateTableSQLOfOra_OK(en) + " \n GO \n";
+                            break;
+                        case DBType.InforMix:
+                            sql += SqlBuilder.GenerCreateTableSQLOfInfoMix(en) + " \n GO \n";
                             break;
                         default:
                             sql += SqlBuilder.GenerCreateTableSQLOfMS(en) + "\n GO \n";

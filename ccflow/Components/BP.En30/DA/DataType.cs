@@ -614,12 +614,15 @@ namespace BP.DA
                 string sql = "SELECT  " + exp + " as Num  ";
                 switch (SystemConfig.AppCenterDBType)
                 {
-                    case DBType.SQL2000:
+                    case DBType.SQL2000_OK:
                     case DBType.Access:
                         sql = "SELECT  " + exp + " as Num  ";
                         return DBAccess.RunSQLReturnValDecimal(sql, 0, 2);
                     case DBType.Oracle9i:
                         sql = "SELECT  " + exp + " NUM from DUAL ";
+                        return DBAccess.RunSQLReturnValDecimal(sql, 0, 2);
+                    case DBType.InforMix:
+                        sql = "SELECT  " + exp + " NUM from  taa_onerow ";
                         return DBAccess.RunSQLReturnValDecimal(sql, 0, 2);
                     default:
                         break;

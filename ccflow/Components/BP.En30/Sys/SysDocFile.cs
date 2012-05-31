@@ -420,9 +420,9 @@ namespace BP.Sys
                 map.AddTBString("D4", null, "D4", true, true, 0, 4000, 20);
                 map.AddTBString("D5", null, "D5", true, true, 0, 4000, 20);
                 map.AddTBString("D6", null, "D6", true, true, 0, 4000, 20);
-             
 
-                if (map.EnDBUrl.DBType != DBType.MySQL)
+
+                if (map.EnDBUrl.DBType == DBType.Oracle9i || map.EnDBUrl.DBType == DBType.SQL2000_OK)
                 {
                     map.AddTBString("D7", null, "D7", true, true, 0, 4000, 20);
                     map.AddTBString("D8", null, "D8", true, true, 0, 4000, 20);

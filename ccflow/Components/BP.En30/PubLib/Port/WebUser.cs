@@ -924,60 +924,6 @@ namespace BP.Web
         }
         #endregion 部门权限
 
-        #region 工作人员权限
-        /// <summary>
-        /// 工作人员权限
-        /// </summary>
-        //private static 县局 _His县局OfPower=null;
-        /// <summary>
-        /// 工作人员权限
-        /// </summary>
-        public static Emps HisEmpsOfPower
-        {
-            get
-            {
-                Paras ens = new Paras("p", WebUser.FK_Dept);
-
-                string sql = "";
-                switch (DBAccess.AppCenterDBType)
-                {
-                    case DBType.Oracle9i:
-                        sql = "select EmpID as OID,  Name||' '||No as Text from pub_emp WHERE fk_dept like :p%'";
-                        break;
-                    case DBType.SQL2000:
-                    case DBType.Access:
-                    case DBType.DB2:
-                        sql = "select EmpID as OID, No+' '+Name as Text from pub_emp WHERE fk_dept like :p%'";
-                        break;
-                    default:
-                        break;
-                }
-                DataTable dt = DBAccess.RunSQLReturnTable(sql);
-                Emps emps = new Emps();
-                foreach (DataRow dr in dt.Rows)
-                {
-                    emps.AddEntity(new Emp(dr[0].ToString()));
-                }
-                return emps;
-
-                //				if (WebUser._His县局OfPower==null)
-                //				{
-                //					string sql="select EmpID as OID, No+' '+Name as Text from pub_emp WHERE fk_dept like '"+WebUser.FK_Dept+"%'" ;
-                //					DataTable dt = DBAccess.RunSQLReturnTable(sql); 
-                //					县局 emps = new 县局();
-                //					foreach(DataRow dr in dt.Rows)
-                //					{
-                //						emps.AddEntity( new Emp(int.Parse(dr[0].ToString()))) ; 
-                //					}
-                //					_His县局OfPower=emps;
-                //				}
-                //				return _His县局OfPower;
-            }
-        }
-        #endregion 工作人员权限
-
-
-
         /// <summary>
         /// 当前共享的用户
         /// </summary>

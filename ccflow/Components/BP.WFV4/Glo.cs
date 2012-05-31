@@ -314,32 +314,32 @@ namespace BP.WF
             }
             return info + err;
         }
-        public static void ResetFlowView()
-        {
-            string sql = "DROP VIEW V_WF_Data ";
-            try
-            {
-                BP.DA.DBAccess.RunSQL(sql);
-            }
-            catch
-            {
-            }
+        //public static void ResetFlowView()
+        //{
+        //    string sql = "DROP VIEW V_WF_Data ";
+        //    try
+        //    {
+        //        BP.DA.DBAccess.RunSQL(sql);
+        //    }
+        //    catch
+        //    {
+        //    }
 
-            Flows fls = new Flows();
-            fls.RetrieveAll();
-            sql = "CREATE VIEW V_WF_Data AS ";
-            foreach (Flow fl in fls)
-            {
-                fl.CheckRpt();
-                sql += "\t\n SELECT '" + fl.No + "' as FK_Flow, '" + fl.Name + "' AS FlowName, '" + fl.FK_FlowSort + "' as FK_FlowSort,CDT,Emps,FID,FK_Dept,FK_NY,";
-                sql += "MyNum,OID,RDT,Rec,Title,WFState,FlowEmps,";
-                sql += "FlowStarter,FlowStartRDT,FlowEnder,FlowEnderRDT,FlowDaySpan FROM ND" + int.Parse(fl.No) + "Rpt";
-                sql += "\t\n  UNION";
-            }
-            sql = sql.Substring(0, sql.Length - 6);
-            sql += "\t\n GO";
-            BP.DA.DBAccess.RunSQL(sql);
-        }
+        //    Flows fls = new Flows();
+        //    fls.RetrieveAll();
+        //    sql = "CREATE VIEW V_WF_Data AS ";
+        //    foreach (Flow fl in fls)
+        //    {
+        //        fl.CheckRpt();
+        //        sql += "\t\n SELECT '" + fl.No + "' as FK_Flow, '" + fl.Name + "' AS FlowName, '" + fl.FK_FlowSort + "' as FK_FlowSort,CDT,Emps,FID,FK_Dept,FK_NY,";
+        //        sql += "MyNum,OID,RDT,Rec,Title,WFState,FlowEmps,";
+        //        sql += "FlowStarter,FlowStartRDT,FlowEnder,FlowEnderRDT,FlowDaySpan FROM ND" + int.Parse(fl.No) + "Rpt";
+        //        sql += "\t\n  UNION";
+        //    }
+        //    sql = sql.Substring(0, sql.Length - 6);
+        //    sql += "\t\n GO";
+        //    BP.DA.DBAccess.RunSQL(sql);
+        //}
         public static void Rtf2PDF(object pathOfRtf, object pathOfPDF)
         {
             Object Nothing = System.Reflection.Missing.Value;
@@ -371,14 +371,14 @@ namespace BP.WF
             get
             {
                 Paras p = new Paras();
-                p.SQL = "SELECT Msg FROM WF_Emp where No=@FK_Emp";
+                p.SQL = "SELECT Msg FROM WF_Emp where No=" + SystemConfig.AppCenterDBVarStr + "FK_Emp";
                 p.AddFK_Emp();
                 return DBAccess.RunSQLReturnString(p);
             }
             set
             {
                 Paras p = new Paras();
-                p.SQL = "UPDATE WF_Emp SET Msg=" + SystemConfig.AppCenterDBVarStr + "v WHERE No=" + SystemConfig.AppCenterDBVarStr + "FK_Emp";
+                p.SQL = "UPDATE WF_Emp SET Msg=" + SystemConfig.AppCenterDBVarStr + "v WHERE No=" + SystemConfig.AppCenterDBVarStr + "FK_Emp ";
                 p.AddFK_Emp();
                 p.Add("v", value);
                 DBAccess.RunSQL(p);

@@ -110,6 +110,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\DLL\ChineseConverter.dll</HintPath>
     </Reference>
+    <Reference Include="IBM.Data.Informix">
+      <HintPath>..\..\DLL\IBM.Data.Informix.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.4.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\DLL\MySql.Data.dll</HintPath>
@@ -143,6 +146,7 @@
     </Compile>
     <Compile Include="AtPara.cs" />
     <Compile Include="DA\Conn\ConnOfMySQL.cs" />
+    <Compile Include="DA\Conn\ConnOfInforMix.cs" />
     <Compile Include="DA\EnumDA.cs" />
     <Compile Include="DA\AppConfig.cs">
       <SubType>Code</SubType>
