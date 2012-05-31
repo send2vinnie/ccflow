@@ -62,6 +62,7 @@
     <Compile Include="Interface\IRule.cs" />
     <Compile Include="Interface\IStaff.cs" />
     <Compile Include="Interface\IUser.cs" />
+    <Compile Include="Model\Extend\EIP_Menu.ext.cs" />
     <Compile Include="Model\Port_Post.cs" />
     <Compile Include="Model\Port_PostDept.cs" />
     <Compile Include="Model\Port_Staff.cs" />
