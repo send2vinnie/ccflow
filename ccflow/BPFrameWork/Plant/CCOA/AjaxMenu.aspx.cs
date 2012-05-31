@@ -10,10 +10,8 @@ public partial class CCOA_AjaxMenu : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        BP.CCOA.EIP_Menu dal = new BP.CCOA.EIP_Menu();
+        BP.EIP.Port_Menu dal = new BP.EIP.Port_Menu();
         var ds = dal.GetJsonList("");
-
-
 
         string jsonData = JsonHelper.DataTable2Json(ds.Tables[0]);
 
