@@ -963,14 +963,13 @@ public partial class Comm_Dtl : WebPage
         #endregion 从表保存前处理事件.
 
 
-
         QueryObject qo = new QueryObject(dtls);
         switch (mdtl.DtlOpenType)
         {
             case DtlOpenType.ForEmp:
                 qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
-                //qo.addAnd();
-                //qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
+                qo.addAnd();
+                qo.AddWhere(GEDtlAttr.Rec, WebUser.No);
                 break;
             case DtlOpenType.ForWorkID:
                 qo.AddWhere(GEDtlAttr.RefPK, this.RefPKVal);
@@ -1028,7 +1027,7 @@ public partial class Comm_Dtl : WebPage
             try
             {
                 this.Pub1.Copy(dtl, dtl.OID.ToString(), map);
-
+                
                 if (dtl.OID < mdtl.RowsOfList + 2)
                 {
                     int myOID = dtl.OID;

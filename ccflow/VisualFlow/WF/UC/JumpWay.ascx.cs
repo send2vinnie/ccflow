@@ -106,11 +106,10 @@ public partial class WF_UC_JumpWay : BP.Web.UC.UCBase3
                 throw new Exception("未判断.");
         }
 
-
         string small = this.PageID;
         small = small.Replace("JumpWay", "");
-
         sql = sql.Replace("~", "'");
+
         DataTable dt = DBAccess.RunSQLReturnTable(sql);
         this.Add("<div align='center' ><div style='width:500px;text-align:center'>");
 

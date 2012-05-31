@@ -702,7 +702,10 @@ namespace BP.Web.Comm
                             case DBType.Oracle9i:
                                 where += " FK_Dept LIKE '%'||:V_Dept||'%'   AND ";
                                 break;
-                            case DBType.SQL2000:
+                            case DBType.InforMix:
+                                where += " FK_Dept LIKE '%'||:V_Dept||'%'   AND ";
+                                break;
+                            case DBType.SQL2000_OK:
                             default:
                                 where += " FK_Dept LIKE  "+SystemConfig.AppCenterDBVarStr+"V_Dept+'%'   AND ";
                                 //  WHERE += " FK_Dept LIKE '@V_Dept%'   AND ";

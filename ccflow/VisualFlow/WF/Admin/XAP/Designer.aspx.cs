@@ -46,6 +46,20 @@ public partial class Designer : System.Web.UI.Page
 
             #endregion 测试数据库是否连接成功。
 
+            #region 升级 informix
+            try
+            {
+                DBAccess.RunSQLReturnTable("SELECT MyPK FROM WF_RememberMe WHERE 1=2");
+            }
+            catch
+            {
+                DBAccess.RunSQL("DROP TABLE WF_RememberMe ");
+                RememberMe me = new RememberMe();
+                me.CheckPhysicsTable();
+            }
+            #endregion
+
+
             #region 修改Title在自由表单设计器中不能编辑。 5-15.
             DBAccess.RunSQL("UPDATE Sys_MapAttr SET EditType=0,UIVISIBLE=0 WHERE KeyOfEn='Title'");
             DBAccess.RunSQL("UPDATE Sys_MapDtl SET DtlOpenType=1 WHERE DtlOpenType=0");
@@ -235,7 +249,7 @@ public partial class Designer : System.Web.UI.Page
 
             #region 升级基础信息。 2011-11-02。 在过1个月去掉它。
             msg = "@补充数据时出现错误。";
-            sql = "SELECT count(*) FROM CN_City";
+            sql = "SELECT count(*) as Num FROM CN_City";
             if (BP.DA.DBAccess.RunSQLReturnValInt(sql) == 0)
             {
                 msg = "@补充数据时出现错误，获得文件。";
@@ -278,10 +292,11 @@ public partial class Designer : System.Web.UI.Page
             switch (DBAccess.AppCenterDBType)
             {
                 case DBType.Oracle9i:
+                case DBType.InforMix:
                 case DBType.MySQL:
                     sql = "ALTER TABLE WF_Track modify RDT varchar(20)";
                     break;
-                case DBType.SQL2000:
+                case DBType.SQL2000_OK:
                 default:
                     sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
                     break;
