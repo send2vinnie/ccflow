@@ -1,10 +1,17 @@
-﻿using System;
+﻿/***************************************************
+ * Author:王晓伟
+ * Date：2012-5-29
+ * Description：User（用户）数据访问类
+ * *************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BP.EIP.Interface;
 using BP.DA;
-using System.Data;using BP.EIP.Enum;
+using System.Data;
+using BP.EIP.Enum;
+using BP.EIP.Enum;
 
 namespace BP.EIP.DAL
 {
@@ -72,15 +79,8 @@ namespace BP.EIP.DAL
         public int BatchSetDefaultRole(string[] userIds, string roleId)
         {
             string strSQL = "UPDATE PORT_EMPSTATION SET FK_STATION='{0}' WHERE FK_EMP IN ({1})";
-            string arrUserIds = "";
-            if (userIds.Length > 0)
-            {
-                for (int i = 0; i < userIds.Length; i++)
-                {
-                    arrUserIds = arrUserIds + "'" + userIds[i] + "',";
-                }
-                arrUserIds = arrUserIds.Substring(0, arrUserIds.Length - 1);
-            }
+            string arrUserIds = Tool.ArrayToString(userIds);
+
             strSQL = string.Format(strSQL, roleId, arrUserIds);
 
             return DBAccess.RunSQL(strSQL);
@@ -94,7 +94,7 @@ namespace BP.EIP.DAL
             DataTable dt = DBAccess.RunSQLReturnTable(strSQL);
             if (dt == null || dt.Rows.Count == 0)
             {
-                return new string[]{};
+                return new string[] { };
             }
             string[] roleIds = new string[dt.Rows.Count];
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -120,15 +120,7 @@ namespace BP.EIP.DAL
 
         public int RemoveUserFromRole(string userId, string[] removeRoleIds)
         {
-            string roleIds = "";
-            if (removeRoleIds.Length > 0)
-            {
-                for (int i = 0; i < removeRoleIds.Length; i++)
-                {
-                    roleIds = roleIds + "'" + removeRoleIds[i] + "',";
-                }
-                roleIds = roleIds.Substring(0, roleIds.Length - 1);
-            }
+            string roleIds = Tool.ArrayToString(removeRoleIds);
 
             string strSQL = @"DELETE PORT_EMPSTATION WHERE FK_EMP ='{0}' AND FK_STATSION IN {1}";
             strSQL = string.Format(strSQL, userId, roleIds);
@@ -145,7 +137,17 @@ namespace BP.EIP.DAL
 
         public CurrentUser AccountActivation(string uid, out StatusCode statusCode, out string statusMessage)
         {
-            throw new NotImplementedException();
+            string strSQL = @"UPDATE PORT_EMP SET Status='1' WHERE NO = '{0}'";
+            strSQL = string.Format(strSQL, uid);
+
+            ///TODO:没有实现
+
+            CurrentUser curUser = new CurrentUser();
+
+            statusCode = Enum.StatusCode.Success;
+            statusMessage = "";
+
+            return curUser;
         }
 
         public CurrentUser LoginByUid(string uid, out StatusCode statusCode, out string statusMessage)
@@ -160,7 +162,19 @@ namespace BP.EIP.DAL
 
         public CurrentUser UserLogOn(string userName, string password, out StatusCode statusCode, out string statusMessage)
         {
-            throw new NotImplementedException();
+            Port.Emp user = new Port.Emp();
+            user.Name = userName;
+            user.Pass = password;
+            BP.Web.WebUser.SignInOfGener(user);
+
+            user = BP.Web.WebUser.HisEmp;
+
+            CurrentUser curUser = new CurrentUser();
+
+            statusCode = Enum.StatusCode.Success;
+            statusMessage = "";
+
+            return curUser;
         }
 
         public CurrentUser UserLogOn(string userName, string password, string ipAddress, out StatusCode statusCode, out string statusMessage)
@@ -170,22 +184,62 @@ namespace BP.EIP.DAL
 
         public void Exit()
         {
-            throw new NotImplementedException();
+            BP.Web.WebUser.Exit();
         }
 
         public int ServerCheckOnLine()
         {
-            throw new NotImplementedException();
+            string strSQL = @"SELECT * FROM PORT_EMP WHERE ISLOGIN = '1'";
+
+            return DBAccess.RunSQLReturnCOUNT(strSQL);
         }
 
         public int SetPassword(string[] userIds, string password, out StatusCode statusCode, out string statusMessage)
         {
-            throw new NotImplementedException();
+            string strSQL = "UPDATE PORT_EMP SET PASS = '{0}' WHERE NO IN {1}";
+            string arrUserIds = Tool.ArrayToString(userIds);
+            strSQL = string.Format(strSQL, password, arrUserIds);
+
+            try
+            {
+                statusCode = StatusCode.Success;
+                statusMessage = "";
+                return DBAccess.RunSQL(strSQL);
+            }
+            catch (Exception ex)
+            {
+                statusCode = StatusCode.Exception;
+                statusMessage = ex.Message;
+            }
+
+            return 0;
         }
 
-        public int ChangePassword(string oldPassword, string newPassword, out StatusCode statusCode, out string statusMessage)
+        public int ChangePassword(string userId, string oldPassword, string newPassword, out StatusCode statusCode, out string statusMessage)
         {
-            throw new NotImplementedException();
+            Port_Emp emp = new Port_Emp(userId);
+            if (emp.Pass!=oldPassword)
+            {
+                statusCode = Enum.StatusCode.Error;
+                statusMessage = "原始密码输入不正确，请重新输入！";
+                return 0;
+            }
+            string strSQL = "UPDATE PORT_EMP SET PASS = '{0}' WHERE NO=‘{1}’";
+            strSQL = string.Format(strSQL, newPassword, userId);
+
+            try
+            {
+                statusCode = StatusCode.Success;
+                statusMessage = "";
+                return DBAccess.RunSQL(strSQL);
+            }
+            catch (Exception ex)
+            {
+                statusCode = StatusCode.Exception;
+                statusMessage = ex.Message;
+            }
+
+            return 0;
         }
 
         public bool Exists(string No)

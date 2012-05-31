@@ -7,5 +7,12 @@ namespace BP.EIP
 {
     public class CurrentUser : BP.Web.WebUser
     {
+        public string No
+        {
+            get
+            {
+                return BP.Web.WebUser.No;
+            }
+        }
     }
 }

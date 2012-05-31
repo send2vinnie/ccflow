@@ -140,11 +140,12 @@ namespace BP.EIP.Interface
         /// <summary>
         /// 修改密码
         /// </summary>
+        /// <param name="userId">用户Id</param>
         /// <param name="oldPassword">原始密码</param>
         /// <param name="newPassword">新密码</param>
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状消息</param>
         /// <returns>影响行数</returns>
-        int ChangePassword(string oldPassword, string newPassword, out StatusCode statusCode, out string statusMessage);
+        int ChangePassword(string userId,string oldPassword, string newPassword, out StatusCode statusCode, out string statusMessage);
     }
 }

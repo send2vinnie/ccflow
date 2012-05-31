@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BP.DA;
 using BP.En;
+using BP.EIP.Enum;
 
 namespace BP.EIP
 {
@@ -17,7 +18,6 @@ namespace BP.EIP
         public const string IsUSBKEY = "IsUSBKEY";
         public const string FK_Emp = "FK_Emp";
         public const string IsLogin = "IsLogin";
-        public const string AuditStatus = "AuditStatus";
         public const string Status = "Status";
     }
 
@@ -148,26 +148,11 @@ namespace BP.EIP
         /// <summary>
         /// 授权状态
         /// </summary>
-        public int AuditStatus
+        public AuditStatus Status
         {
             get
             {
-                return this.GetValIntByKey(Port_EmpAttr.AuditStatus);
-            }
-            set
-            {
-                this.SetValByKey(Port_EmpAttr.AuditStatus, value);
-            }
-        }
-
-        /// <summary>
-        /// 状态：0-失效；1-有效
-        /// </summary>
-        public int Status
-        {
-            get
-            {
-                return this.GetValIntByKey(Port_EmpAttr.Status);
+                return (AuditStatus)this.GetValIntByKey(Port_EmpAttr.Status);
             }
             set
             {
@@ -218,7 +203,6 @@ namespace BP.EIP
                 map.AddTBString(Port_EmpAttr.IsUSBKEY, null, "", true, false, 0, 100, 100);
                 map.AddTBString(Port_EmpAttr.FK_Emp, null, "", true, false, 0, 50, 50);
                 map.AddTBInt(Port_EmpAttr.IsLogin, 1, "是否已登录", true, false);
-                map.AddTBInt(Port_EmpAttr.AuditStatus, 1, "授权状态", true, false);
                 map.AddTBInt(Port_EmpAttr.Status, 1, "状态", true, false);
 
                 this._enMap = map;
