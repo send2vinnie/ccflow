@@ -45,7 +45,9 @@
   <ItemGroup>
     <Compile Include="AddrBook.cs" />
     <Compile Include="AddrBookDept.cs" />
-    <Compile Include="Article.cs" />
+    <Compile Include="Article.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ArticleType.cs" />
     <Compile Include="Base\FrontBasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -61,12 +63,9 @@
     <Compile Include="Model\APP_Domain.cs" />
     <Compile Include="Model\APP_Function.cs" />
     <Compile Include="Model\APP_FunctionOperate.cs" />
-    <Compile Include="Model\APP_Role.cs" />
-    <Compile Include="Model\APP_RoleDomain.cs" />
+    <Compile Include="Model\APP_StationDomain.cs" />
     <Compile Include="Model\APP_Rule.cs" />
-    <Compile Include="Model\APP_User.cs" />
-    <Compile Include="Model\APP_UserDomain.cs" />
-    <Compile Include="Model\APP_UserRole.cs" />
+    <Compile Include="Model\APP_EmpDomain.cs" />
     <Compile Include="Model\EIP_Dept.cs" />
     <Compile Include="Model\EIP_Emp.cs" />
     <Compile Include="Model\EIP_EmpPost.cs" />
@@ -74,9 +73,6 @@
     <Compile Include="Model\EIP_LayoutDetail.cs" />
     <Compile Include="Model\EIP_Menu.cs" />
     <Compile Include="Model\EIP_MenuOperate.cs" />
-    <Compile Include="Model\EIP_Post.cs" />
-    <Compile Include="Model\EIP_PostDept.cs" />
-    <Compile Include="Model\EIP_UserEPD.cs" />
     <Compile Include="Model\Extend\EIP_LayoutDetail.ext.cs" />
     <Compile Include="Model\Extend\EIP_Menu.ext.cs" />
     <Compile Include="Model\OA_AddrBook.cs" />

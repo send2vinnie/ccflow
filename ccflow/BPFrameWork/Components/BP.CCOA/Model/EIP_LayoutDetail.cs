@@ -21,11 +21,11 @@ namespace BP.CCOA
         public const string IsEdit = "IsEdit";
         public const string IsShow = "IsShow";
     }
-    
+
     public partial class EIP_LayoutDetail : EntityNoName
     {
         #region 属性
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -40,7 +40,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_LayoutDetailAttr.Layout_Id, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -55,7 +55,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_LayoutDetailAttr.ColumnNo, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -70,7 +70,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_LayoutDetailAttr.PanelId, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -85,7 +85,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_LayoutDetailAttr.PanelTitle, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -100,7 +100,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_LayoutDetailAttr.ShowCollapseButton, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -115,7 +115,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_LayoutDetailAttr.Width, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -130,7 +130,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_LayoutDetailAttr.Height, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -145,7 +145,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_LayoutDetailAttr.SeqNo, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -160,7 +160,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_LayoutDetailAttr.Url, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -190,9 +190,9 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_LayoutDetailAttr.IsShow, value);
             }
         }
-        
+
         #endregion
-        
+
         #region 构造方法
         /// <summary>
         /// 
@@ -210,7 +210,7 @@ namespace BP.CCOA
             this.Retrieve();
         }
         #endregion
-        
+
         public override Map EnMap
         {
             get
@@ -223,26 +223,26 @@ namespace BP.CCOA
                 map.EnDesc = "";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
-                
+
                 map.AddTBStringPK(EIP_LayoutDetailAttr.No, null, "", true, true, 0, 50, 50);
-                map.AddTBString(EIP_LayoutDetailAttr.Layout_Id, null, "", true, false, 0,  50, 50);
+                map.AddTBString(EIP_LayoutDetailAttr.Layout_Id, null, "", true, false, 0, 50, 50);
                 map.AddTBInt(EIP_LayoutDetailAttr.ColumnNo, 0, "", true, false);
-                map.AddTBString(EIP_LayoutDetailAttr.PanelId, null, "", true, false, 0,  10, 10);
-                map.AddTBString(EIP_LayoutDetailAttr.PanelTitle, null, "", true, false, 0,  20, 20);
-                map.AddBoolean(EIP_LayoutDetailAttr.ShowCollapseButton, true, "", true, false);
+                map.AddTBString(EIP_LayoutDetailAttr.PanelId, null, "", true, false, 0, 10, 10);
+                map.AddTBString(EIP_LayoutDetailAttr.PanelTitle, null, "", true, false, 0, 20, 20);
+                map.AddTBInt(EIP_LayoutDetailAttr.ShowCollapseButton, 1, "是否有收缩按钮", true, false);
                 map.AddTBInt(EIP_LayoutDetailAttr.Width, 0, "", true, false);
                 map.AddTBInt(EIP_LayoutDetailAttr.Height, 0, "", true, false);
                 map.AddTBInt(EIP_LayoutDetailAttr.SeqNo, 0, "", true, false);
-                map.AddTBString(EIP_LayoutDetailAttr.Url, null, "", true, false, 0,  200, 200);
-                map.AddBoolean(EIP_LayoutDetailAttr.IsEdit, true, "", true, false);
-                map.AddBoolean(EIP_LayoutDetailAttr.IsShow, true, "", true, false);
+                map.AddTBString(EIP_LayoutDetailAttr.Url, null, "", true, false, 0, 200, 200);
+                map.AddTBInt(EIP_LayoutDetailAttr.IsEdit, 1, "是否可以编辑", true, false);
+                map.AddTBInt(EIP_LayoutDetailAttr.IsShow, 1, "是否显示", true, false);
 
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
-    
+
     public partial class EIP_LayoutDetails : Entities
     {
         public override Entity GetNewEntity

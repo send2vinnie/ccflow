@@ -18,11 +18,11 @@ namespace BP.CCOA
         public const string IsDel = "IsDel";
         public const string Remarks = "Remarks";
     }
-    
+
     public partial class OA_Attachment : EntityNoName
     {
         #region 属性
-        
+
         /// <summary>
         /// 后缀（类型）
         /// </summary>
@@ -37,7 +37,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_AttachmentAttr.Suffix, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -52,7 +52,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_AttachmentAttr.Uploader, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -67,7 +67,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_AttachmentAttr.AttachmentName, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -82,7 +82,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_AttachmentAttr.FileNeme, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -97,7 +97,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_AttachmentAttr.FilePath, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -112,7 +112,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_AttachmentAttr.CreateTime, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -127,7 +127,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_AttachmentAttr.IsDel, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -142,9 +142,9 @@ namespace BP.CCOA
                 this.SetValByKey(OA_AttachmentAttr.Remarks, value);
             }
         }
-        
+
         #endregion
-        
+
         #region 构造方法
         /// <summary>
         /// 
@@ -162,7 +162,7 @@ namespace BP.CCOA
             this.Retrieve();
         }
         #endregion
-        
+
         public override Map EnMap
         {
             get
@@ -175,23 +175,23 @@ namespace BP.CCOA
                 map.EnDesc = "";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
-                
+
                 map.AddTBStringPK(OA_AttachmentAttr.No, null, "", true, true, 0, 50, 50);
-                map.AddTBString(OA_AttachmentAttr.Suffix, null, "后缀（类型）", true, false, 0,  10, 10);
-                map.AddTBString(OA_AttachmentAttr.Uploader, null, "", true, false, 0,  50, 50);
-                map.AddTBString(OA_AttachmentAttr.AttachmentName, null, "", true, false, 0,  100, 100);
-                map.AddTBString(OA_AttachmentAttr.FileNeme, null, "", true, false, 0,  200, 200);
-                map.AddTBString(OA_AttachmentAttr.FilePath, null, "", true, false, 0,  1000, 1000);
+                map.AddTBString(OA_AttachmentAttr.Suffix, null, "后缀（类型）", true, false, 0, 10, 10);
+                map.AddTBString(OA_AttachmentAttr.Uploader, null, "", true, false, 0, 50, 50);
+                map.AddTBString(OA_AttachmentAttr.AttachmentName, null, "", true, false, 0, 100, 100);
+                map.AddTBString(OA_AttachmentAttr.FileNeme, null, "", true, false, 0, 200, 200);
+                map.AddTBString(OA_AttachmentAttr.FilePath, null, "", true, false, 0, 1000, 1000);
                 map.AddTBDateTime(OA_AttachmentAttr.CreateTime, "创建时间", false, false);
-                map.AddBoolean(OA_AttachmentAttr.IsDel, false, "是否删除", false, false);
-                map.AddTBString(OA_AttachmentAttr.Remarks, null, "", true, false, 0,  1000, 1000);
-              
+                map.AddTBInt(OA_AttachmentAttr.IsDel, 0, "是否删除", false, false);
+                map.AddTBString(OA_AttachmentAttr.Remarks, null, "", true, false, 0, 1000, 1000);
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
-    
+
     public partial class OA_Attachments : Entities
     {
         public override Entity GetNewEntity

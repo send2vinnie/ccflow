@@ -11,23 +11,22 @@ namespace BP.CCOA
     {
         #region Extend Method
         /// <summary>
-        /// 
+        /// 获取菜单List，返回Json数据
         /// </summary>
         /// <param name="strWhere"></param>
         /// <returns></returns>
         public DataSet GetJsonList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append(" SELECT TOP 1000 [id],[pid],[text],[iconCls],[url]");
-            strSql.Append(" FROM [TJPLD_OA].[dbo].[V_MENU]");
+            strSql.Append(" SELECT id,pid,text,iconCls,url");
+            strSql.Append(" FROM V_MENU");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" WHERE " + strWhere);
             }
-            strSql.Append(" ORDER BY [id]");
+            strSql.Append(" ORDER BY id");
             return DBAccess.RunSQLReturnDataSet(strSql.ToString());
         }
-
         /// <summary>
         /// 获得数据列表
         /// </summary>

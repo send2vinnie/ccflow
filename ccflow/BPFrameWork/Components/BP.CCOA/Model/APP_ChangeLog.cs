@@ -153,7 +153,7 @@ namespace BP.CCOA
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("APP_ChangeLog");
+                Map map = new Map("Port_ChangeLog");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "";

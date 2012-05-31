@@ -121,7 +121,7 @@ namespace BP.CCOA
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("APP_Domain");
+                Map map = new Map("Port_Domain");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "";

@@ -9,6 +9,7 @@ namespace BP.EIP
 {
     public partial class Port_RuleAttr : EntityNoNameAttr
     {
+        public const string Code = "Code";
         public const string Permission = "Permission";
         public const string RulePolicy = "RulePolicy";
         public const string RuleGroup = "RuleGroup";
@@ -21,7 +22,21 @@ namespace BP.EIP
     public partial class Port_Rule : BaseEntity
     {
         #region 属性
-        
+
+        /// <summary>
+        /// 规则编码
+        /// </summary>
+        public string Code
+        {
+            get
+            {
+                return this.GetValStringByKey(Port_RuleAttr.Code);
+            }
+            set
+            {
+                this.SetValByKey(Port_RuleAttr.Code, value);
+            }
+        }
         /// <summary>
         /// 需要控制的权限名称
         /// </summary>
@@ -161,12 +176,13 @@ namespace BP.EIP
                 map.IsAutoGenerNo = false;
                 
                 map.AddTBStringPK(Port_RuleAttr.No, null, "主键", true, true, 0, 50, 50);
+                map.AddTBString(Port_RuleAttr.Code, null, "规则编码", true, false, 0, 100, 100);
                 map.AddTBString(Port_RuleAttr.Permission, null, "需要控制的权限名称", true, false, 0,  100, 100);
-                map.AddTBString(Port_RuleAttr.RulePolicy, null, "", true, false, 0,  200, 200);
-                map.AddTBString(Port_RuleAttr.RuleGroup, null, "规则的分组，提现友好性", true, false, 0,  50, 50);
-                map.AddTBString(Port_RuleAttr.Description, null, "", true, false, 0,  250, 250);
-                map.AddTBString(Port_RuleAttr.Perfix, null, "", true, false, 0,  2, 2);
-                map.AddTBString(Port_RuleAttr.RuleType, null, "", true, false, 0,  2, 2);
+                map.AddTBString(Port_RuleAttr.RulePolicy, null, "规则", true, false, 0,  1000, 1000);
+                map.AddTBString(Port_RuleAttr.RuleGroup, null, "规则的分组，体现友好性", true, false, 0,  50, 50);
+                map.AddTBString(Port_RuleAttr.Description, null, "描述", true, false, 0,  250, 250);
+                map.AddTBString(Port_RuleAttr.Perfix, null, "前缀", true, false, 0,  2, 2);
+                map.AddTBString(Port_RuleAttr.RuleType, null, "类型", true, false, 0,  2, 2);
                 map.AddTBString(Port_RuleAttr.FK_Domain, null, "所属管理域", true, false, 0,  50, 50);
               
                 this._enMap = map;

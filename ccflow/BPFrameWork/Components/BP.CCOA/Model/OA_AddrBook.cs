@@ -154,11 +154,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public String Birthday
+        public DateTime Birthday
         {
             get
             {
-                return this.GetValStringByKey(OA_AddrBookAttr.Birthday);
+                return this.GetValDateTime(OA_AddrBookAttr.Birthday);
             }
             set
             {
@@ -312,7 +312,7 @@ namespace BP.CCOA
                 map.AddTBString(OA_AddrBookAttr.Name, null, "", true, false, 0,  10, 10);
                 map.AddTBString(OA_AddrBookAttr.NickName, null, "", true, false, 0,  10, 10);
                 map.AddTBInt(OA_AddrBookAttr.Sex, 0, "", true, false);
-                map.AddTBString(OA_AddrBookAttr.Birthday, null, "", true, false, 0,  50, 50);
+                map.AddTBDateTime(OA_AddrBookAttr.Birthday, "生日", true, false);
                 map.AddTBString(OA_AddrBookAttr.Email, null, "", true, false, 0,  50, 50);
                 map.AddTBString(OA_AddrBookAttr.QQ, null, "", true, false, 0,  20, 20);
                 map.AddTBString(OA_AddrBookAttr.WorkUnit, null, "", true, false, 0,  50, 50);

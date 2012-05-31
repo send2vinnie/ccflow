@@ -76,7 +76,6 @@
     <Compile Include="Model\Port_Function.cs" />
     <Compile Include="Model\Port_FunctionOperate.cs" />
     <Compile Include="Model\Port_Menu.cs" />
-    <Compile Include="Model\Port_Operate.cs" />
     <Compile Include="Model\Port_Rule.cs" />
     <Compile Include="Model\Port_Station.cs" />
     <Compile Include="Model\Port_StationDomain.cs" />

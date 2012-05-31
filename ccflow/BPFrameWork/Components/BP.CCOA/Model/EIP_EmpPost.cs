@@ -14,11 +14,11 @@ namespace BP.CCOA
         public const string IsSub = "IsSub";
         public const string No = "No";
     }
-    
+
     public partial class EIP_EmpPost : EntityNoName
     {
         #region 属性
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -33,7 +33,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_EmpPostAttr.EmpId, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -48,7 +48,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_EmpPostAttr.PostId, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -63,7 +63,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_EmpPostAttr.IsSub, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -78,9 +78,9 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_EmpPostAttr.No, value);
             }
         }
-        
+
         #endregion
-        
+
         #region 构造方法
         /// <summary>
         /// 
@@ -98,7 +98,7 @@ namespace BP.CCOA
             this.Retrieve();
         }
         #endregion
-        
+
         public override Map EnMap
         {
             get
@@ -111,18 +111,18 @@ namespace BP.CCOA
                 map.EnDesc = "";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
-                
-                map.AddTBString(EIP_EmpPostAttr.EmpId, null, "", true, false, 0,  50, 50);
-                map.AddTBString(EIP_EmpPostAttr.PostId, null, "", true, false, 0,  50, 50);
-                map.AddBoolean(EIP_EmpPostAttr.IsSub, true, "", true, false);
+
+                map.AddTBString(EIP_EmpPostAttr.EmpId, null, "", true, false, 0, 50, 50);
+                map.AddTBString(EIP_EmpPostAttr.PostId, null, "", true, false, 0, 50, 50);
+                map.AddTBInt(EIP_EmpPostAttr.IsSub, 1, "是否次要职位", true, false);
                 map.AddTBStringPK(EIP_EmpPostAttr.No, null, "", true, true, 0, 50, 50);
-              
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
-    
+
     public partial class EIP_EmpPosts : Entities
     {
         public override Entity GetNewEntity

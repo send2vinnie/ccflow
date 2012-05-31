@@ -25,11 +25,11 @@ namespace BP.CCOA
         public const string UpDT = "UpDT";
         public const string Status = "Status";
     }
-    
+
     public partial class OA_Meeting : EntityNoName
     {
         #region 属性
-        
+
         /// <summary>
         /// 主键Id
         /// </summary>
@@ -44,7 +44,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.No, value);
             }
         }
-        
+
         /// <summary>
         /// 议题
         /// </summary>
@@ -59,7 +59,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.Topic, value);
             }
         }
-        
+
         /// <summary>
         /// 计划开始时间
         /// </summary>
@@ -74,7 +74,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.PlanStartTime, value);
             }
         }
-        
+
         /// <summary>
         /// 计划结束时间
         /// </summary>
@@ -89,7 +89,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.PlanEndTime, value);
             }
         }
-        
+
         /// <summary>
         /// 计划召开地址
         /// </summary>
@@ -104,7 +104,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.PlanAddress, value);
             }
         }
-        
+
         /// <summary>
         /// 计划参加人员
         /// </summary>
@@ -119,7 +119,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.PlanMembers, value);
             }
         }
-        
+
         /// <summary>
         /// 实际开始时间
         /// </summary>
@@ -134,7 +134,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.RealStartTime, value);
             }
         }
-        
+
         /// <summary>
         /// 实际结束时间
         /// </summary>
@@ -149,7 +149,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.RealEndTime, value);
             }
         }
-        
+
         /// <summary>
         /// 实际召开地址
         /// </summary>
@@ -164,7 +164,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.RealAddress, value);
             }
         }
-        
+
         /// <summary>
         /// 实际参加人员
         /// </summary>
@@ -179,7 +179,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.RealMembers, value);
             }
         }
-        
+
         /// <summary>
         /// 记录人
         /// </summary>
@@ -194,7 +194,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.Recorder, value);
             }
         }
-        
+
         /// <summary>
         /// 会议纪要
         /// </summary>
@@ -209,7 +209,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.Summary, value);
             }
         }
-        
+
         /// <summary>
         /// 更新人
         /// </summary>
@@ -224,7 +224,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.UpUser, value);
             }
         }
-        
+
         /// <summary>
         /// 更新时间
         /// </summary>
@@ -239,7 +239,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.UpDT, value);
             }
         }
-        
+
         /// <summary>
         /// 状态：0-未召开1-已召开
         /// </summary>
@@ -254,9 +254,9 @@ namespace BP.CCOA
                 this.SetValByKey(OA_MeetingAttr.Status, value);
             }
         }
-        
+
         #endregion
-        
+
         #region 构造方法
         /// <summary>
         /// 
@@ -274,7 +274,7 @@ namespace BP.CCOA
             this.Retrieve();
         }
         #endregion
-        
+
         public override Map EnMap
         {
             get
@@ -287,29 +287,29 @@ namespace BP.CCOA
                 map.EnDesc = "";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
-                
+
                 map.AddTBStringPK(OA_MeetingAttr.No, null, "主键Id", true, true, 0, 50, 50);
-                map.AddTBString(OA_MeetingAttr.Topic, null, "议题", true, false, 0,  50, 50);
+                map.AddTBString(OA_MeetingAttr.Topic, null, "议题", true, false, 0, 50, 50);
                 map.AddTBDateTime(OA_MeetingAttr.PlanStartTime, "计划开始时间", true, false);
                 map.AddTBDateTime(OA_MeetingAttr.PlanEndTime, "计划结束时间", true, false);
-                map.AddTBString(OA_MeetingAttr.PlanAddress, null, "计划召开地址", true, false, 0,  100, 100);
-                map.AddTBString(OA_MeetingAttr.PlanMembers, null, "计划参加人员", true, false, 0,  1000, 1000);
+                map.AddTBString(OA_MeetingAttr.PlanAddress, null, "计划召开地址", true, false, 0, 100, 100);
+                map.AddTBString(OA_MeetingAttr.PlanMembers, null, "计划参加人员", true, false, 0, 1000, 1000);
                 map.AddTBDateTime(OA_MeetingAttr.RealStartTime, "实际开始时间", true, false);
                 map.AddTBDateTime(OA_MeetingAttr.RealEndTime, "实际结束时间", true, false);
-                map.AddTBString(OA_MeetingAttr.RealAddress, null, "实际召开地址", true, false, 0,  100, 100);
-                map.AddTBString(OA_MeetingAttr.RealMembers, null, "实际参加人员", true, false, 0,  1000, 1000);
-                map.AddTBString(OA_MeetingAttr.Recorder, null, "记录人", true, false, 0,  50, 50);
-                map.AddTBString(OA_MeetingAttr.Summary, null, "会议纪要", true, false, 0,  16, 16);
-                map.AddTBString(OA_MeetingAttr.UpUser, null, "更新人", true, false, 0,  50, 50);
+                map.AddTBString(OA_MeetingAttr.RealAddress, null, "实际召开地址", true, false, 0, 100, 100);
+                map.AddTBString(OA_MeetingAttr.RealMembers, null, "实际参加人员", true, false, 0, 1000, 1000);
+                map.AddTBString(OA_MeetingAttr.Recorder, null, "记录人", true, false, 0, 50, 50);
+                map.AddTBString(OA_MeetingAttr.Summary, null, "会议纪要", true, false, 0, 16, 16);
+                map.AddTBString(OA_MeetingAttr.UpUser, null, "更新人", true, false, 0, 50, 50);
                 map.AddTBDateTime(OA_MeetingAttr.UpDT, "更新时间", true, false);
-                map.AddBoolean(OA_MeetingAttr.Status, true, "状态：0-未召开1-已召开", true, false);
-              
+                map.AddTBInt(OA_MeetingAttr.Status, 0, "状态：0-未召开1-已召开", true, false);
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
-    
+
     public partial class OA_Meetings : Entities
     {
         public override Entity GetNewEntity

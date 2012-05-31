@@ -9,7 +9,6 @@ namespace BP.CCOA
 {
     public partial class EIP_DeptAttr : EntityNoNameAttr
     {
-        public const string No = "No";
         public const string DeptNo = "DeptNo";
         public const string DeptName = "DeptName";
         public const string FullName = "FullName";
@@ -19,26 +18,11 @@ namespace BP.CCOA
         public const string UpUser = "UpUser";
         public const string Status = "Status";
     }
-    
+
     public partial class EIP_Dept : EntityNoName
     {
         #region 属性
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public String No
-        {
-            get
-            {
-                return this.GetValStringByKey(EIP_DeptAttr.No);
-            }
-            set
-            {
-                this.SetValByKey(EIP_DeptAttr.No, value);
-            }
-        }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -53,7 +37,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_DeptAttr.DeptNo, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -68,7 +52,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_DeptAttr.DeptName, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -83,7 +67,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_DeptAttr.FullName, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -98,7 +82,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_DeptAttr.Pid, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -113,7 +97,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_DeptAttr.CreateDate, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -128,7 +112,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_DeptAttr.UpDT, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -143,7 +127,7 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_DeptAttr.UpUser, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -158,9 +142,9 @@ namespace BP.CCOA
                 this.SetValByKey(EIP_DeptAttr.Status, value);
             }
         }
-        
+
         #endregion
-        
+
         #region 构造方法
         /// <summary>
         /// 
@@ -178,7 +162,7 @@ namespace BP.CCOA
             this.Retrieve();
         }
         #endregion
-        
+
         public override Map EnMap
         {
             get
@@ -191,23 +175,23 @@ namespace BP.CCOA
                 map.EnDesc = "";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
-                
+
                 map.AddTBStringPK(EIP_DeptAttr.No, null, "", true, true, 0, 50, 50);
-                map.AddTBString(EIP_DeptAttr.DeptNo, null, "", true, false, 0,  20, 20);
-                map.AddTBString(EIP_DeptAttr.DeptName, null, "", true, false, 0,  50, 50);
-                map.AddTBString(EIP_DeptAttr.FullName, null, "", true, false, 0,  100, 100);
-                map.AddTBString(EIP_DeptAttr.Pid, null, "", true, false, 0,  50, 50);
+                map.AddTBString(EIP_DeptAttr.DeptNo, null, "", true, false, 0, 20, 20);
+                map.AddTBString(EIP_DeptAttr.DeptName, null, "", true, false, 0, 50, 50);
+                map.AddTBString(EIP_DeptAttr.FullName, null, "", true, false, 0, 100, 100);
+                map.AddTBString(EIP_DeptAttr.Pid, null, "", true, false, 0, 50, 50);
                 map.AddTBDateTime(EIP_DeptAttr.CreateDate, "", true, false);
                 map.AddTBDateTime(EIP_DeptAttr.UpDT, "", true, false);
-                map.AddTBString(EIP_DeptAttr.UpUser, null, "", true, false, 0,  50, 50);
-                map.AddBoolean(EIP_DeptAttr.Status, true, "", true, false);
-              
+                map.AddTBString(EIP_DeptAttr.UpUser, null, "", true, false, 0, 50, 50);
+                map.AddTBInt(EIP_DeptAttr.Status, 1, "状态", true, false);
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
-    
+
     public partial class EIP_Depts : Entities
     {
         public override Entity GetNewEntity

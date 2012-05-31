@@ -7,44 +7,29 @@ using BP.En;
 
 namespace BP.CCOA
 {
-    public partial class APP_RoleDomainAttr : EntityNoNameAttr
+    public partial class APP_EmpDomainAttr : EntityNoNameAttr
     {
-        public const string No = "No";
-        public const string Role_Id = "Role_Id";
+        public const string User_Id = "User_Id";
         public const string Domain_Id = "Domain_Id";
+        public const string No = "No";
     }
     
-    public partial class APP_RoleDomain : EntityNoName
+    public partial class APP_EmpDomain : EntityNoName
     {
         #region 属性
         
         /// <summary>
         /// 
         /// </summary>
-        public String No
+        public String User_Id
         {
             get
             {
-                return this.GetValStringByKey(APP_RoleDomainAttr.No);
+                return this.GetValStringByKey(APP_EmpDomainAttr.User_Id);
             }
             set
             {
-                this.SetValByKey(APP_RoleDomainAttr.No, value);
-            }
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public String Role_Id
-        {
-            get
-            {
-                return this.GetValStringByKey(APP_RoleDomainAttr.Role_Id);
-            }
-            set
-            {
-                this.SetValByKey(APP_RoleDomainAttr.Role_Id, value);
+                this.SetValByKey(APP_EmpDomainAttr.User_Id, value);
             }
         }
         
@@ -55,11 +40,26 @@ namespace BP.CCOA
         {
             get
             {
-                return this.GetValStringByKey(APP_RoleDomainAttr.Domain_Id);
+                return this.GetValStringByKey(APP_EmpDomainAttr.Domain_Id);
             }
             set
             {
-                this.SetValByKey(APP_RoleDomainAttr.Domain_Id, value);
+                this.SetValByKey(APP_EmpDomainAttr.Domain_Id, value);
+            }
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public String No
+        {
+            get
+            {
+                return this.GetValStringByKey(APP_EmpDomainAttr.No);
+            }
+            set
+            {
+                this.SetValByKey(APP_EmpDomainAttr.No, value);
             }
         }
         
@@ -69,14 +69,14 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public APP_RoleDomain()
+        public APP_EmpDomain()
         {
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="No"></param>
-        public APP_RoleDomain(string No)
+        public APP_EmpDomain(string No)
         {
             this.No = No;
             this.Retrieve();
@@ -89,16 +89,16 @@ namespace BP.CCOA
             {
                 if (this._enMap != null)
                     return this._enMap;
-                Map map = new Map("APP_RoleDomain");
+                Map map = new Map("APP_EmpDomain");
                 map.DepositaryOfEntity = Depositary.None;
                 map.DepositaryOfMap = Depositary.Application;
                 map.EnDesc = "";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
                 
-                map.AddTBStringPK(APP_RoleDomainAttr.No, null, "", true, true, 0, 50, 50);
-                map.AddTBString(APP_RoleDomainAttr.Role_Id, null, "", true, false, 0,  50, 50);
-                map.AddTBString(APP_RoleDomainAttr.Domain_Id, null, "", true, false, 0,  50, 50);
+                map.AddTBString(APP_EmpDomainAttr.User_Id, null, "", true, false, 0,  50, 50);
+                map.AddTBString(APP_EmpDomainAttr.Domain_Id, null, "", true, false, 0,  50, 50);
+                map.AddTBStringPK(APP_EmpDomainAttr.No, null, "", true, true, 0, 50, 50);
               
                 this._enMap = map;
                 return this._enMap;
@@ -106,11 +106,11 @@ namespace BP.CCOA
         }
     }
     
-    public partial class APP_RoleDomains : Entities
+    public partial class APP_EmpDomains : Entities
     {
         public override Entity GetNewEntity
         {
-            get { return new APP_RoleDomain(); }
+            get { return new APP_EmpDomain(); }
         }
     }
 }

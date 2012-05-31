@@ -315,8 +315,6 @@ namespace BP.CCOA
                 map.AddTBDateTime(ChannelAttr.Created, "Updated", true, false);
                 map.AddTBInt(ChannelAttr.State, 1, "State", true, false);
 
-                map.AddBoolean("", true, "", true, false);
-
                 this._enMap = map;
                 return this._enMap;
             }
