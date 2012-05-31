@@ -29,7 +29,7 @@ namespace BP.EIP.Interface
         /// <summary>
         /// 获取上级部门成员
         /// </summary>
-        /// <param name="parentId">主键</param>
+        /// <param name="departmentId">主键</param>
         /// <returns>数据表</returns>
         DataTable GetParentStaffs(string departmentId);
         /// <summary>

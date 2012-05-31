@@ -104,7 +104,6 @@ namespace BP.EIP.Interface
         /// </summary>
         /// <param name="userName">用户名</param>
         /// <param name="password">密码</param>
-        /// <param name="ipAddress">IP地址</param>
         /// <param name="statusCode">返回状态码</param>
         /// <param name="statusMessage">返回状消息</param>
         /// <returns>登录实体类</returns>
