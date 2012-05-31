@@ -37,4 +37,10 @@
     <FlowData No="0201" Name="" CH="部门维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Depts"  Icon="" />
     <FlowData No="0202" Name="" CH="岗位维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Stations" Icon=""  />
     <FlowData No="0203" Name="" CH="操作员维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.WF.Port.Emps" Icon=""  />
+
+    <FlowData No="03" Name="" CH="项目管理(需要引用BP.Prj)"  W="700" H="800" Url=""    Icon="../Images/TreeMenu/Org.png"  />
+    <FlowData No="0301" Name="" CH="项目维护"  W="700" H="800" Url="/Comm/PanelEns.aspx?EnsName=BP.PRJ.Prjs"  Icon="" />
+    <FlowData No="0302" Name="" CH="资料树节点访问规则"  W="700" H="800" Url="/PRJ/NodeAccess.aspx"  Icon="" />
+
+    
 </NewDataSet>
