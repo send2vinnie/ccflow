@@ -47,6 +47,7 @@
     <Compile Include="CurrentUser.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
     <Compile Include="DAL\DomainDAL.cs" />
+    <Compile Include="DAL\PermissionDAL.cs" />
     <Compile Include="DAL\RoleDAL.cs" />
     <Compile Include="DAL\RuleDAL.cs" />
     <Compile Include="DAL\StaffDAL.cs" />
