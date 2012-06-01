@@ -98,7 +98,7 @@ public partial class WF_Admin_Action : WebPage
         tb.ID = "TB_Doc";
         tb.Columns = 60;
         tb.TextMode = TextBoxMode.MultiLine;
-        tb.Rows = 3;
+        tb.Rows = 5;
         tb.Text = mynde.DoDoc;
         this.Pub2.Add(tb);
         this.Pub2.AddHR();

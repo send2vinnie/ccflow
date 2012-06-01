@@ -137,7 +137,6 @@ public partial class Comm_Dtl : WebPage
             this.Button1.Enabled = false;
         }
 
-
         if (mdtl.HisDtlShowModel == DtlShowModel.Card)
         {
             this.Response.Redirect("DtlFrm.aspx?EnsName=" + this.EnsName + "&RefPKVal=" + this.RefPKVal+"&IsWap="+this.IsWap+"&FK_Node="+this.FK_Node, true);
