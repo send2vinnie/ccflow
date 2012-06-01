@@ -233,7 +233,7 @@ namespace BP.Sys
             if (this.Count == 0)
                 throw new Exception("@枚举值" + enumKey + "已被删除。");
 
-            sql = " CASE " + mTable + field;
+            sql = " CASE NVL(" + mTable + field+","+def+")";
             foreach (SysEnum se1 in this)
             {
                 sql += " WHEN " + se1.IntKey + " THEN '" + se1.Lab + "'";

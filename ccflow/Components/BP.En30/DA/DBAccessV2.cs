@@ -2104,6 +2104,9 @@ namespace BP.DA
             {
                 ada.Dispose();
                 conn.Close();
+                Log.DefaultLogWriteLineError(sql);
+                Log.DefaultLogWriteLineError(ex.Message);
+
                 throw new Exception("SQL=" + sql + " Exception=" + ex.Message);
             }
             finally
