@@ -70,5 +70,13 @@ namespace BP.EIP.Interface
         /// <param name="controlName">控件名称</param>
         /// <returns></returns>
         bool HavePermission(string functionId, string controlName);
+
+        /// <summary>
+        /// 添加权限
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="operateIds"></param>
+        /// <returns></returns>
+        bool InsertPermission(string roleId, string[] operateIds);
     }
 }
