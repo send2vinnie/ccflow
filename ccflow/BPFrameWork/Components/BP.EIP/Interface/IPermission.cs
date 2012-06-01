@@ -57,17 +57,18 @@ namespace BP.EIP.Interface
         DataTable GetDTByRole(string roleId);
 
         /// <summary>
-        /// 获取域中所有权限
-        /// </summary>
-        /// <param name="domainId">域Id</param>
-        /// <returns>数据集</returns>
-        DataTable GetDTByDomain(string domainId);
-
-        /// <summary>
         /// 按编码获取一个权限
         /// </summary>
         /// <param name="code">编号</param>
         /// <returns>实体</returns>
         BasePermission GetByCode(string code);
+
+        /// <summary>
+        /// 是否拥有权限
+        /// </summary>
+        /// <param name="functionId">功能ID</param>
+        /// <param name="controlName">控件名称</param>
+        /// <returns></returns>
+        bool HavePermission(string functionId, string controlName);
     }
 }
