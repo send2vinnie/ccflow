@@ -699,7 +699,6 @@ namespace BP.DA
         #region 在指定的Connection上执行 SQL 语句，返回受影响的行数
 
         #region OleDbConnection
-
         public static int RunSQLDropTable(string table)
         {
             if (IsExitsObject(table))
@@ -948,17 +947,47 @@ namespace BP.DA
         /// </summary>
         /// <param name="tab">物理表</param>
         /// <param name="pk">主键</param>
-        public static void CreatePK(string tab, string pk)
+        public static void CreatePK(string tab, string pk, DBType db)
         {
-            DBAccess.RunSQL("ALTER TABLE " + tab.ToUpper() + " ADD CONSTRAINT " + tab + "pk PRIMARY KEY(" + pk.ToUpper() + ")");
+            string sql;
+            switch (db)
+            {
+                case DBType.InforMix:
+                    sql = "ALTER TABLE " + tab.ToUpper() + " ADD CONSTRAINT  PRIMARY KEY(" + pk + ") CONSTRAINT " + tab + "pk ";
+                    break;
+                default:
+                    sql = "ALTER TABLE " + tab.ToUpper() + " ADD CONSTRAINT " + tab + "pk PRIMARY KEY(" + pk.ToUpper() + ")";
+                    break;
+            }
+            DBAccess.RunSQL(sql);
         }
-        public static void CreatePK(string tab, string pk1, string pk2)
+        public static void CreatePK(string tab, string pk1, string pk2, DBType db)
         {
-            DBAccess.RunSQL("ALTER TABLE " + tab.ToUpper() + " ADD CONSTRAINT " + tab + "pk  PRIMARY KEY(" + pk1.ToUpper() + "," + pk2.ToUpper() + ")");
+            string sql;
+            switch (db)
+            {
+                case DBType.InforMix:
+                    sql = "ALTER TABLE " + tab.ToUpper() + " ADD CONSTRAINT  PRIMARY KEY(" + pk1.ToUpper() + "," + pk2.ToUpper() + ") CONSTRAINT " + tab + "pk ";
+                    break;
+                default:
+                    sql = "ALTER TABLE " + tab.ToUpper() + " ADD CONSTRAINT " + tab + "pk  PRIMARY KEY(" + pk1.ToUpper() + "," + pk2.ToUpper() + ")";
+                    break;
+            }
+            DBAccess.RunSQL(sql);
         }
-        public static void CreatePK(string tab, string pk1, string pk2, string pk3)
+        public static void CreatePK(string tab, string pk1, string pk2, string pk3, DBType db)
         {
-            DBAccess.RunSQL("ALTER TABLE " + tab.ToUpper() + " ADD CONSTRAINT " + tab + "pk PRIMARY KEY(" + pk1.ToUpper() + "," + pk2.ToUpper() + "," + pk3.ToUpper() + ")");
+            string sql;
+            switch (db)
+            {
+                case DBType.InforMix:
+                    sql = "ALTER TABLE " + tab.ToUpper() + " ADD CONSTRAINT  PRIMARY KEY(" + pk1.ToUpper() + "," + pk2.ToUpper() + ","+pk3.ToUpper()+") CONSTRAINT " + tab + "pk ";
+                    break;
+                default:
+                    sql = "ALTER TABLE " + tab.ToUpper() + " ADD CONSTRAINT " + tab + "pk PRIMARY KEY(" + pk1.ToUpper() + "," + pk2.ToUpper() + "," + pk3.ToUpper() + ")";
+                    break;
+            }
+            DBAccess.RunSQL(sql);
         }
         #endregion
 
@@ -967,9 +996,9 @@ namespace BP.DA
         public static void CreatIndex(string table, string pk)
         {
             string sql = "";
-            sql = "DROP INDEX " + table + "." + table + "ID";
             try
             {
+                sql = "DROP INDEX " + table + "." + table + "ID";
                 DBAccess.RunSQL(sql);
             }
             catch

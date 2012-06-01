@@ -1854,54 +1854,57 @@ namespace BP.En
         }
         private void CreateIndexAndPK()
         {
-            #region 建立索引
-            try
+            if (this.EnMap.EnDBUrl.DBType != DBType.InforMix)
             {
-                int pkconut = this.PKCount;
-                if (pkconut == 1)
+                #region 建立索引
+                try
                 {
-                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
-                }
-                else if (pkconut == 2)
-                {
-                    string pk0 = this.PKs[0];
-                    string pk1 = this.PKs[1];
-                    DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
-                }
-                else if (pkconut == 3)
-                {
-                    try
+                    int pkconut = this.PKCount;
+                    if (pkconut == 1)
+                    {
+                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
+                    }
+                    else if (pkconut == 2)
                     {
                         string pk0 = this.PKs[0];
                         string pk1 = this.PKs[1];
-                        string pk2 = this.PKs[2];
-                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
                     }
-                    catch
+                    else if (pkconut == 3)
                     {
+                        try
+                        {
+                            string pk0 = this.PKs[0];
+                            string pk1 = this.PKs[1];
+                            string pk2 = this.PKs[2];
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    else if (pkconut == 4)
+                    {
+                        try
+                        {
+                            string pk0 = this.PKs[0];
+                            string pk1 = this.PKs[1];
+                            string pk2 = this.PKs[2];
+                            string pk3 = this.PKs[3];
+                            DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2, pk3);
+                        }
+                        catch
+                        {
+                        }
                     }
                 }
-                else if (pkconut == 4)
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        string pk0 = this.PKs[0];
-                        string pk1 = this.PKs[1];
-                        string pk2 = this.PKs[2];
-                        string pk3 = this.PKs[3];
-                        DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2, pk3);
-                    }
-                    catch
-                    {
-                    }
+                    Log.DefaultLogWriteLineError(ex.Message);
+                    throw ex;
                 }
+                #endregion
             }
-            catch (Exception ex)
-            {
-                Log.DefaultLogWriteLineError(ex.Message);
-                throw ex;
-            }
-            #endregion
 
             #region 建立主键
             if (DBAccess.IsExitsTabPK(this.EnMap.PhysicsTable) == false)
@@ -1913,7 +1916,7 @@ namespace BP.En
                     {
                         try
                         {
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, this.PKField);
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, this.PKField, this.EnMap.EnDBUrl.DBType);
                             DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
                         }
                         catch (Exception ex)
@@ -1926,7 +1929,7 @@ namespace BP.En
                         {
                             string pk0 = this.PKs[0];
                             string pk1 = this.PKs[1];
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1);
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, this.EnMap.EnDBUrl.DBType);
                             DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
                         }
                         catch
@@ -1940,7 +1943,7 @@ namespace BP.En
                             string pk0 = this.PKs[0];
                             string pk1 = this.PKs[1];
                             string pk2 = this.PKs[2];
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, pk2, this.EnMap.EnDBUrl.DBType);
                             DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
                         }
                         catch
@@ -2215,7 +2218,7 @@ namespace BP.En
                     {
                         try
                         {
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, this.PKField);
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, this.PKField, this.EnMap.EnDBUrl.DBType);
                             DBAccess.CreatIndex(this.EnMap.PhysicsTable, this.PKField);
                         }
                         catch (Exception ex)
@@ -2228,7 +2231,7 @@ namespace BP.En
                         {
                             string pk0 = this.PKs[0];
                             string pk1 = this.PKs[1];
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1);
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, this.EnMap.EnDBUrl.DBType);
                             DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1);
                         }
                         catch
@@ -2242,7 +2245,7 @@ namespace BP.En
                             string pk0 = this.PKs[0];
                             string pk1 = this.PKs[1];
                             string pk2 = this.PKs[2];
-                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, pk2);
+                            DBAccess.CreatePK(this.EnMap.PhysicsTable, pk0, pk1, pk2, this.EnMap.EnDBUrl.DBType);
                             DBAccess.CreatIndex(this.EnMap.PhysicsTable, pk0, pk1, pk2);
                         }
                         catch
