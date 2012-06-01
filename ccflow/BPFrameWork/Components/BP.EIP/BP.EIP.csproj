@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasePermission.cs" />
     <Compile Include="CurrentUser.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
     <Compile Include="DAL\DomainDAL.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Enum\AuditStatus.cs" />
     <Compile Include="Interface\IBase.cs" />
     <Compile Include="Interface\IDomain.cs" />
+    <Compile Include="Interface\IPermission.cs" />
     <Compile Include="Interface\IRole.cs" />
     <Compile Include="Interface\IRule.cs" />
     <Compile Include="Interface\IStaff.cs" />
