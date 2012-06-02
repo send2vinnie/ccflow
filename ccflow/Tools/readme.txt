@@ -1,0 +1,1 @@
+如果是win7+ 以上的系统，或者64位系统 .iewebcontrols.msi 可以不安装.
