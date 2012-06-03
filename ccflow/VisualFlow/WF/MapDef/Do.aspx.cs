@@ -196,7 +196,6 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                         case "IsPass":
                             MapDtl dtl = new MapDtl(this.FK_MapData);
                             dtl.IsEnablePass = true; /*更新是否启动审核分组字段.*/
-                            dtl.Update();
                             MapAttr attr = new MapAttr();
                             attr.FK_MapData = this.FK_MapData;
                             attr.KeyOfEn = "Check_Note";
@@ -267,6 +266,7 @@ public partial class Comm_MapDef_Do : BP.Web.WebPage
                             attr.DefVal = "0";
                             attr.Insert();
 
+                            dtl.Update();
                             this.WinClose();
                             return;
                         default:

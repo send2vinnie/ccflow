@@ -930,7 +930,7 @@ namespace BP.Web.Comm
                         switch (SystemConfig.AppCenterDBType)
                         {
                             case DBType.Oracle9i:
-                            case DBType.InforMix:
+                            case DBType.Informix:
                                 where += " FK_Dept LIKE '%'||:V_Dept||'%'   AND ";
                                 break;
                             case DBType.SQL2000_OK:

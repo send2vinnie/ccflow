@@ -46,7 +46,7 @@ public partial class Designer : System.Web.UI.Page
 
             #endregion 测试数据库是否连接成功。
 
-            #region 升级 informix
+            #region 升级 Informix
             try
             {
                 DBAccess.RunSQLReturnTable("SELECT MyPK FROM WF_RememberMe WHERE 1=2");
@@ -292,7 +292,7 @@ public partial class Designer : System.Web.UI.Page
             switch (DBAccess.AppCenterDBType)
             {
                 case DBType.Oracle9i:
-                case DBType.InforMix:
+                case DBType.Informix:
                 case DBType.MySQL:
                     sql = "ALTER TABLE WF_Track modify RDT varchar(20)";
                     break;
