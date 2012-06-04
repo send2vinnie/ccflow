@@ -11,7 +11,7 @@
 <body>
     <form id="Form1" runat="server">
     <table cellspacing="0" cellpadding="0" width="100%" border="0">
-        <tr>
+        <tr style="display:none;">
             <td height="25" width="30%" align="right">
                 No ：
             </td>
@@ -40,7 +40,7 @@
                 Pid ：
             </td>
             <td height="25" width="*" align="left">
-                <asp:TextBox ID="txtPid" runat="server" Width="200px"></asp:TextBox>
+               <lizard:XDropDownList ID="ddlPid" runat="server" Width="200" />
             </td>
         </tr>
         <tr>

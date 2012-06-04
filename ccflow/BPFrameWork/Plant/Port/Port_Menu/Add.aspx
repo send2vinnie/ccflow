@@ -14,14 +14,6 @@
     <table cellspacing="0" cellpadding="0" width="100%" border="0">
         <tr>
             <td height="25" width="30%" align="right">
-                No ：
-            </td>
-            <td height="25" width="*" align="left">
-                <asp:TextBox ID="txtNo" runat="server" Width="200px"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td height="25" width="30%" align="right">
                 MenuNo ：
             </td>
             <td height="25" width="*" align="left">
@@ -86,24 +78,24 @@
         </tr>
         <tr>
             <td height="25" width="30%" align="right">
-                Status ：
+                所属系统 ：
             </td>
             <td height="25" width="*" align="left">
-                <asp:TextBox ID="txtStatus" runat="server" Width="200px"></asp:TextBox>
+                <lizard:XDropDownList ID="ddlApp" runat="server" Width="100px" />
             </td>
         </tr>
     </table>
-    </td> </tr>
-    <tr>
-        <td class="tdbg" align="center" valign="bottom">
-            <asp:Button ID="btnSave" runat="server" Text="保存" OnClick="btnSave_Click" class="inputbutton"
-                onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
-            </asp:Button>
-            <asp:Button ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" class="inputbutton"
-                onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
-            </asp:Button>
-        </td>
-    </tr>
+    <table>
+        <tr>
+            <td class="tdbg" align="center" valign="bottom">
+                <asp:Button ID="btnSave" runat="server" Text="保存" OnClick="btnSave_Click" class="inputbutton"
+                    onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
+                </asp:Button>
+                <asp:Button ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" class="inputbutton"
+                    onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
+                </asp:Button>
+            </td>
+        </tr>
     </table>
     <br />
     </form>

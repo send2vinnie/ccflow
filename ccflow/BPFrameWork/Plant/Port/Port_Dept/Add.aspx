@@ -14,10 +14,10 @@
     <table cellspacing="0" cellpadding="0" width="100%" border="0">
         <tr>
             <td height="25" width="30%" align="right">
-                No ：
+                编码 ：
             </td>
             <td height="25" width="*" align="left">
-                <asp:TextBox ID="txtNo" runat="server" Width="200px"></asp:TextBox>
+                <asp:TextBox ID="txtCode" runat="server" Width="200px"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -38,10 +38,10 @@
         </tr>
         <tr>
             <td height="25" width="30%" align="right">
-                Pid ：
+                上级部门 ：
             </td>
             <td height="25" width="*" align="left">
-                <asp:TextBox ID="txtPid" runat="server" Width="200px"></asp:TextBox>
+                <lizard:XDropDownList ID="ddlPid" runat="server" Width="200" />
             </td>
         </tr>
         <tr>

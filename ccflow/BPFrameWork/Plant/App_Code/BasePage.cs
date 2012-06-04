@@ -39,4 +39,8 @@ public class BasePage : BP.Web.WebPage
         }
         return idlist;
     }
+
+    protected int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
+
+    public virtual void BindDropDownList(){}
 }

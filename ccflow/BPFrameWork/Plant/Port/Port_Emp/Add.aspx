@@ -17,15 +17,7 @@
                 <table cellspacing="0" cellpadding="0" width="100%" border="0">
                     <tr>
                         <td height="25" width="30%" align="right">
-                            No ：
-                        </td>
-                        <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNo" runat="server" Width="200px"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="25" width="30%" align="right">
-                            名称 ：
+                            用户名 ：
                         </td>
                         <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtName" runat="server" Width="200px"></asp:TextBox>
@@ -41,10 +33,10 @@
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            部门, 外键:对应物理表:Po ：
+                            部门：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtFK_Dept" runat="server" Width="200px"></asp:TextBox>
+                            <lizard:XDropDownList ID="ddlFK_Dept" runat="server" Width="200" />
                         </td>
                     </tr>
                     <tr>
@@ -65,15 +57,7 @@
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            KeyPass ：
-                        </td>
-                        <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtKeyPass" runat="server" Width="200px"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="25" width="30%" align="right">
-                            IsUSBKEY ：
+                            USB认证登录 ：
                         </td>
                         <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtIsUSBKEY" runat="server" Width="200px"></asp:TextBox>
@@ -81,7 +65,15 @@
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            FK_Emp ：
+                            认证密码 ：
+                        </td>
+                        <td height="25" width="*" align="left">
+                            <asp:TextBox ID="txtKeyPass" runat="server" Width="200px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="25" width="30%" align="right">
+                            员工姓名 ：
                         </td>
                         <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtFK_Emp" runat="server" Width="200px"></asp:TextBox>
@@ -89,10 +81,10 @@
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            Status ：
+                            状态 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:CheckBox ID="chkStatus" Text="Status" runat="server" Checked="False" />
+                            <asp:CheckBox ID="chkStatus" runat="server" Checked="False" />
                         </td>
                     </tr>
                 </table>

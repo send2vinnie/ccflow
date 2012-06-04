@@ -17,17 +17,26 @@ namespace BP.EIP.Web.Port_Menu
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                BindDropDownList();
+            }
+        }
 
+        private void BindDropDownList()
+        {
+            Port_Apps list = new Port_Apps();
+            list.RetrieveAll();
+            this.ddlApp.DataSource = list;
+            this.ddlApp.DataTextField = "AppName";
+            this.ddlApp.DataValueField = "No";
+            this.ddlApp.DataBind();
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
 
             string strErr = "";
-            if (this.txtNo.Text.Trim().Length == 0)
-            {
-                strErr += "No不能为空！\\n";
-            }
             if (this.txtMenuNo.Text.Trim().Length == 0)
             {
                 strErr += "MenuNo不能为空！\\n";
@@ -60,17 +69,12 @@ namespace BP.EIP.Web.Port_Menu
             {
                 strErr += "Path不能为空！\\n";
             }
-            if (!PageValidate.IsNumber(txtStatus.Text))
-            {
-                strErr += "Status格式错误！\\n";
-            }
 
             if (strErr != "")
             {
                 MessageBox.Show(this, strErr);
                 return;
             }
-            string No = this.txtNo.Text;
             string MenuNo = this.txtMenuNo.Text;
             string Pid = this.txtPid.Text;
             string FK_Function = this.txtFK_Function.Text;
@@ -79,10 +83,10 @@ namespace BP.EIP.Web.Port_Menu
             string Img = this.txtImg.Text;
             string Url = this.txtUrl.Text;
             string Path = this.txtPath.Text;
-            int Status = int.Parse(this.txtStatus.Text);
+            int Status = 1;
 
             BP.EIP.Port_Menu model = new EIP.Port_Menu();
-            model.No = No;
+            model.No = Guid.NewGuid().ToString();
             model.MenuNo = MenuNo;
             model.Pid = Pid;
             model.FK_Function = FK_Function;
@@ -92,6 +96,7 @@ namespace BP.EIP.Web.Port_Menu
             model.Url = Url;
             model.Path = Path;
             model.Status = Status;
+            model.FK_App = this.ddlApp.SelectedValue;
 
             model.Insert();
 

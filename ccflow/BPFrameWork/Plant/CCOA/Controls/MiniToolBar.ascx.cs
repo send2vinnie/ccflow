@@ -48,13 +48,17 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        InitToolBar();
+        if (!Page.IsPostBack)
+        {
+            InitToolBar();
+        }
     }
 
     private void InitToolBar()
     {
         AddLinkButton("icon-reload", "返回", RetrunUrl);
         AddLinkButton("icon-addfolder", "增加", AddUrl);
+        AddClickButton("icon-addfolder", "增加（弹窗）", "add()");
         AddClickButton("icon-remove", "删除", "getSelectedIdList()");
         //AddSeparator();
         //AddLinkButton("icon-reload", "刷新", RefreshUrl);

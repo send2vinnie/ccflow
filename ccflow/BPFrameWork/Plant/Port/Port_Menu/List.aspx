@@ -9,7 +9,7 @@
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
     <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
-    <script type="text/javascript">
+    <%-- <script type="text/javascript">
         function getSelectedNode() {
             var tree = mini.get("tree1");
             var node = tree.getSelectedNode();
@@ -19,7 +19,7 @@
                 alert("请选中节点");
             }
         }
-    </script>
+    </script>--%>
 </head>
 <body>
     <form id="Form1" runat="server">
@@ -31,8 +31,15 @@
                 <div>
                     <h3>
                         选择系统</h3>
-                    <ul id="tree1" class="mini-tree" url="../../DataUser/tree.txt" style="width: 200px;
+                    <%--<ul id="tree1" class="mini-tree" url="../../DataUser/tree.txt" style="width: 200px;
                         padding: 5px;" showtreeicon="true" textfield="text" idfield="id" onnodeclick="getSelectedNode">
+                    </ul>--%>
+                    <ul>
+                        <%foreach (BP.EIP.Port_App item in AppList)
+                          {%>
+                        <li><a href="List.aspx?app=<%=item.No %>">
+                            <%=item.AppName %></a> </li>
+                        <% } %>
                     </ul>
                 </div>
             </td>

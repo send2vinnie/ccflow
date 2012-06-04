@@ -17,14 +17,6 @@
                 <table cellspacing="0" cellpadding="0" width="100%" border="0">
                     <tr>
                         <td height="25" width="30%" align="right">
-                            No ：
-                        </td>
-                        <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNo" runat="server" Width="200px"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="25" width="30%" align="right">
                             名称 ：
                         </td>
                         <td height="25" width="*" align="left">
@@ -41,7 +33,7 @@
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            Description ：
+                            描述 ：
                         </td>
                         <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtDescription" runat="server" Width="200px"></asp:TextBox>
@@ -49,7 +41,7 @@
                     </tr>
                     <tr>
                         <td height="25" width="30%" align="right">
-                            Status ：
+                            状态 ：
                         </td>
                         <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtStatus" runat="server" Width="200px"></asp:TextBox>

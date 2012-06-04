@@ -9,12 +9,13 @@ using Lizard.Common;
 using System.Drawing;
 using LTP.Accounts.Bus;
 using BP.CCOA;
+using System.Collections;
 namespace BP.EIP.Web.Port_Menu
 {
-    public partial class List : Page
+    public partial class List : BasePage
     {
         private int m_PageIndex = 1;
-        private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
+        //private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
         BP.EIP.Port_Menu Port_Menu = new BP.EIP.Port_Menu();
         string[] columns = { 
                    Port_MenuAttr.MenuNo,
@@ -24,10 +25,28 @@ namespace BP.EIP.Web.Port_Menu
                    Port_MenuAttr.Path
                    };
 
+        IDictionary<string, object> dicApp
+        {
+            get
+            {
+                return (IDictionary<string, object>)Session["SelectedApp"];
+            }
+            set
+            {
+                Session["SelectedApp"] = value;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
+                if (Request.QueryString["app"] != null)
+                {
+                    dicApp = new Dictionary<string, object>();
+                    dicApp.Add("FK_APP", Request.QueryString["app"]);
+                }
+
                 int rowsCount = this.GetQueryRowsCount();
                 this.XPager1.InitControl(this.m_PageSize, rowsCount);
                 BindData();
@@ -55,7 +74,7 @@ namespace BP.EIP.Web.Port_Menu
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-          
+
         }
 
         #region gridView
@@ -81,7 +100,7 @@ namespace BP.EIP.Web.Port_Menu
             string searchValue = Request.QueryString["searchvalue"];
             BP.EIP.Port_Menu Port_Menu = new BP.EIP.Port_Menu();
             DataTable Port_MenuTable = XQueryTool.Query<BP.EIP.Port_Menu>(
-                Port_Menu, columns, searchValue, m_PageIndex, m_PageSize, null);
+                Port_Menu, columns, searchValue, m_PageIndex, m_PageSize, dicApp);
 
             gridView.DataSource = Port_MenuTable;
             gridView.DataBind();
@@ -150,9 +169,14 @@ namespace BP.EIP.Web.Port_Menu
 
         #endregion
 
-
-
-
-
+        public Port_Apps AppList
+        {
+            get
+            {
+                Port_Apps apps = new Port_Apps();
+                apps.RetrieveAll();
+                return apps;
+            }
+        }
     }
 }

@@ -6,6 +6,8 @@
 <link href="../../Comm/Scripts/miniui/themes/default/miniui.css" rel="stylesheet"
     type="text/css" />
 <script type="text/javascript">
+    //mini.parse();
+
     function getsearchvalue() {
         var searchVaue = mini.get("#txtValue").getValue();
         //window.location.href = "list.aspx?searchvalue=" + searchVaue;
@@ -39,6 +41,23 @@
             },
             error: function () {
                 alert('删除失败！');
+            }
+        });
+    }
+
+    function add() {
+        //alert("start");
+        mini.openTop({
+            url: "Port_Dept/Add.aspx",
+            title: "新增", width: 600, height: 360,
+            onload: function () {
+                //alert("success!");
+                //var iframe = this.getIFrameEl();
+                //var data = { action: "new" };
+                //iframe.contentWindow.SetData(data);
+            },
+            ondestory: function (action) {
+                //grid.reload();
             }
         });
     }

@@ -24,10 +24,6 @@ namespace BP.EIP.Web.Port_Station
         {
 
             string strErr = "";
-            if (this.txtNo.Text.Trim().Length == 0)
-            {
-                strErr += "No不能为空！\\n";
-            }
             if (this.txtName.Text.Trim().Length == 0)
             {
                 strErr += "名称不能为空！\\n";
@@ -50,7 +46,7 @@ namespace BP.EIP.Web.Port_Station
                 MessageBox.Show(this, strErr);
                 return;
             }
-            string No = this.txtNo.Text;
+            string No = Guid.NewGuid().ToString();
             string Name = this.txtName.Text;
             int StaGrade = int.Parse(this.txtStaGrade.Text);
             string Description = this.txtDescription.Text;

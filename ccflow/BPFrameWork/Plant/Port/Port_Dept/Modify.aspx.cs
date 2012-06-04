@@ -11,33 +11,43 @@ using System.Web.UI.HtmlControls;
 using System.Text;
 using Lizard.Common;
 using LTP.Accounts.Bus;
+using BP.EIP.Interface;
 namespace BP.EIP.Web.Port_Dept
 {
-    public partial class Modify : Page
+    public partial class Modify : BasePage
     {
-
+        private string id = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
                 {
-                    string No = Request.Params["id"];
-                    ShowInfo(No);
+                    id = Request.Params["id"];
+
+                    ShowInfo(id);
                 }
+            }
+        }
+        public override void BindDropDownList()
+        {
+            DataTable dt = new DataTable();
+            IDepartment iDal = BP.EIP.DALFactory.DataAccess.CreateDepartment();
+            if (!string.IsNullOrEmpty(id))
+            {
+                dt = iDal.GetParentDepartments(id);
+                this.ddlPid.BindDataSource(dt, "Name", "No");
             }
         }
 
         private void ShowInfo(string No)
         {
-            //BP.EIP.BLL.Port_Dept bll = new BP.EIP.BLL.Port_Dept();
             BP.EIP.Port_Dept model = new EIP.Port_Dept(No);
             this.lblNo.Text = model.No;
             this.txtName.Text = model.Name;
             this.txtFullName.Text = model.FullName;
-            this.txtPid.Text = model.Pid;
+            this.ddlPid.SelectedValue = model.Pid;
             this.txtStatus.Text = model.Status.ToString();
-
         }
 
         public void btnSave_Click(object sender, EventArgs e)
@@ -52,10 +62,6 @@ namespace BP.EIP.Web.Port_Dept
             {
                 strErr += "FullName不能为空！\\n";
             }
-            if (this.txtPid.Text.Trim().Length == 0)
-            {
-                strErr += "Pid不能为空！\\n";
-            }
             if (!PageValidate.IsNumber(txtStatus.Text))
             {
                 strErr += "Status格式错误！\\n";
@@ -69,7 +75,7 @@ namespace BP.EIP.Web.Port_Dept
             string No = this.lblNo.Text;
             string Name = this.txtName.Text;
             string FullName = this.txtFullName.Text;
-            string Pid = this.txtPid.Text;
+            string Pid = this.ddlPid.SelectedValue;
             int Status = int.Parse(this.txtStatus.Text);
 
             BP.EIP.Port_Dept model = new EIP.Port_Dept(No);

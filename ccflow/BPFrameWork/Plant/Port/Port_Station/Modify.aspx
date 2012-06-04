@@ -15,7 +15,7 @@
         <tr>
             <td class="tdbg">
                 <table cellspacing="0" cellpadding="0" width="100%" border="0">
-                    <tr>
+                    <tr style="display:none;">
                         <td height="25" width="30%" align="right">
                             No ：
                         </td>
