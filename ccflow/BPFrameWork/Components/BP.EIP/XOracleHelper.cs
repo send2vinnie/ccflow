@@ -51,7 +51,8 @@ namespace BP.EIP
                 {
                     trans.Dispose();
                 }
-                HisConnOfSQLs.PutPool(connofora);
+                //HisConnOfSQLs.PutPool(connofora);
+                HisConnOfOras.PutPool(connofora);
             }
         }
     }
