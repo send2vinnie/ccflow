@@ -62,11 +62,19 @@ namespace BP.WF
         /// <summary>
         /// 按上一步操作人员
         /// </summary>
-        ByPreviousOper=6,
+        ByPreviousOper = 6,
         /// <summary>
         /// 按上一步操作人员并自动跳转
         /// </summary>
-        ByPreviousOperSkip=7
+        ByPreviousOperSkip = 7,
+        /// <summary>
+        /// 按指定节点的岗位计算
+        /// </summary>
+        BySpecNodeStation = 8,
+        /// <summary>
+        /// 按岗位与部门交集计算
+        /// </summary>
+        ByDeptAndStation = 9
     }
     /// <summary>
     /// 节点工作退回规则
@@ -394,6 +402,11 @@ namespace BP.WF
         /// 是否可以原路返回
         /// </summary>
         public const string IsBackTracking = "IsBackTracking";
+        /// <summary>
+        /// 是否起用投递路径自动记忆功能?
+        /// </summary>
+        public const string IsRM = "IsRM";
+
         public const string FormType = "FormType";
         public const string FormUrl = "FormUrl";
         /// <summary>
@@ -1928,6 +1941,16 @@ namespace BP.WF
                 return this.GetValBooleanByKey(NodeAttr.IsBackTracking);
             }
         }
+        /// <summary>
+        /// 是否启用自动记忆功能
+        /// </summary>
+        public bool IsRememberMe
+        {
+            get
+            {
+                return this.GetValBooleanByKey(NodeAttr.IsRM);
+            }
+        }
         public bool IsCanDelFlow
         {
             get
@@ -2098,16 +2121,6 @@ namespace BP.WF
             get
             {
                 if (this.HisSubFlows.Length > 2)
-                    return true;
-                else
-                    return false;
-            }
-        }
-        public bool IsSetDept
-        {
-            get
-            {
-                if (this.HisDeptStrs.Length > 3)
                     return true;
                 else
                     return false;
@@ -2380,8 +2393,7 @@ namespace BP.WF
                 //map.AddTBStringDoc(NodeAttr.DoWhatMsg, null, "提示执行信息", true, false);
 
 
-                map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10);
-                
+                map.AddTBString(NodeAttr.RecipientSQL, null, "访问规则设置", true, false, 0, 500, 10);
 
                 map.AddTBString(NodeAttr.Doc, null, BP.Sys.Language.GetValByUserLang("Desc", "描述"), true, false, 0, 100, 10);
                 map.AddBoolean(NodeAttr.IsTask, true, "允许分配工作否?", true, true);
@@ -2403,6 +2415,7 @@ namespace BP.WF
                 map.AddBoolean(NodeAttr.IsCanDelFlow, false, "是否可以删除流程", true, true);
                 map.AddBoolean(NodeAttr.IsForceKill, false, "是否可以强制删除了流程(对合流点有效)", true, true);
                 map.AddBoolean(NodeAttr.IsBackTracking, false, "是否可以在退回后原路返回(只有启用退回功能才有效)", true, true, true);
+                map.AddBoolean(NodeAttr.IsRM, true, "是否起用投递路径自动记忆功能?", true, true, true);
 
                 map.AddBoolean(NodeAttr.IsHandOver, false, "是否可以移交", true, true);
                 map.AddTBInt(NodeAttr.PassRate, 100, "通过率", true, true);

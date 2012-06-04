@@ -949,6 +949,7 @@ namespace BP.WF
                 #region 对访问规则进行检查
                 switch (nd.HisDeliveryWay)
                 {
+                   
                     case DeliveryWay.ByStation:
                         if (nd.HisStations.Count == 0)
                             rpt += "<font color=red>您设置了该节点的访问规则是按岗位，但是您没有为节点绑定岗位。</font>";
@@ -961,9 +962,28 @@ namespace BP.WF
                         if (nd.HisNodeEmps.Count == 0)
                             rpt += "<font color=red>您设置了该节点的访问规则是按人员，但是您没有为节点绑定人员。</font>";
                         break;
+                    case DeliveryWay.BySpecNodeStation: /*按指定的岗位计算.*/
+                        if (nd.RecipientSQL.Trim().Length == 0)
+                        {
+                            rpt += "<font color=red>您设置了该节点的访问规则是按指定的岗位计算，但是你没有在</font>";
+                        }
+                        else
+                        {
+                            if (DataType.IsNumStr(nd.RecipientSQL) == false)
+                            {
+                                rpt += "<font color=red>您没有设置指定岗位的节点编号，目前设置的为{"+nd.RecipientSQL+"}</font>";
+                                //Node mynd = new Node(int.Parse(nd.RecipientSQL));
+                                //if (mynd.FK_Flow != this.No)
+                                //{
+                                //   // rpt += "<font color=red>节点设置</font>";
+                                //}
+                            }
+                        }
+                        break;
                     case DeliveryWay.BySQL:
                         if (nd.RecipientSQL.Trim().Length == 0)
                             rpt += "<font color=red>您设置了该节点的访问规则是按SQL查询，但是您没有在节点属性里设置查询sql，此sql的要求是查询必须包含No,Name两个列，sql表达式里支持@+字段变量，详细参考开发手册 。</font>";
+
                         else
                         {
                             try
