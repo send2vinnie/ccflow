@@ -19,7 +19,7 @@ namespace BP.EIP.DAL
             return DBAccess.RunSQLReturnTable(sql).Rows.Count > 0;
         }
 
-        public bool IsAuthorized(string permissionItemCode)
+        public bool IsAuthorized(string permissionCode)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace BP.EIP.DAL
         public DataTable GetMenus(string appName)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append(" SELECT TOP 1000 id,pid,text,iconCls,url");
+            strSql.Append(" SELECT id,pid,text,iconCls,url");
             strSql.Append(" FROM V_MENU");
             strSql.Append(" WHERE APPNAME='" + appName + "'");
             strSql.Append(" ORDER BY id");

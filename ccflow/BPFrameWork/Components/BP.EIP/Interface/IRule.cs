@@ -19,9 +19,9 @@ namespace BP.EIP.Interface
         /// <summary>
         /// 02.当前用户是否有相应的操作权限
         /// </summary>
-        /// <param name="permissionItemCode">操作权限编号</param>
+        /// <param name="permissionCode">操作权限编号</param>
         /// <returns>是否有权限</returns>
-        bool IsAuthorized(string permissionItemCode);
+        bool IsAuthorized(string permissionCode);
         /// <summary>
         /// 根据应用获取相应的菜单列表
         /// </summary>
