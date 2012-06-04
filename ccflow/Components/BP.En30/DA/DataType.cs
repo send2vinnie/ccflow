@@ -621,7 +621,7 @@ namespace BP.DA
                     case DBType.Oracle9i:
                         sql = "SELECT  " + exp + " NUM from DUAL ";
                         return DBAccess.RunSQLReturnValDecimal(sql, 0, 2);
-                    case DBType.InforMix:
+                    case DBType.Informix:
                         sql = "SELECT  " + exp + " NUM from  taa_onerow ";
                         return DBAccess.RunSQLReturnValDecimal(sql, 0, 2);
                     default:

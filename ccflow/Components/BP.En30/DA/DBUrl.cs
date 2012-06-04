@@ -82,7 +82,7 @@ namespace BP.DA
                     case DBType.MySQL:
                     case DBType.SQL2000_OK:
                         return "@";
-                    case DBType.InforMix:
+                    case DBType.Informix:
                         return "?";
                     default:
                         return "@";

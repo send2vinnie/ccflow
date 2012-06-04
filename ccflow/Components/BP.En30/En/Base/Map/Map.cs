@@ -1338,7 +1338,7 @@ namespace BP.En
                             return true;
                         else
                             return false;
-                    case DBType.InforMix:
+                    case DBType.Informix:
                         sql = "select tabtype from systables where tabname = '"+this.PhysicsTableExt.ToLower()+"'";
                         DataTable dtaa = DBAccess.RunSQLReturnTable(sql);
                         if (dtaa.Rows.Count == 0)

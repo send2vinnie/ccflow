@@ -13,25 +13,25 @@ namespace BP.DA
     /// <summary>
     /// SqlConnection
     /// </summary>
-    public class ConnOfInforMix : ConnBase
+    public class ConnOfInformix : ConnBase
     {
         public new IfxConnection Conn = null;
-        public ConnOfInforMix()
+        public ConnOfInformix()
         {
         }
     }
     /// <summary>
     /// SqlConnections
     /// </summary>
-    public class ConnOfInforMixs : System.Collections.CollectionBase
+    public class ConnOfInformixs : System.Collections.CollectionBase
     {
         /// <summary>
         /// SqlConnections
         /// </summary>
-        public ConnOfInforMixs()
+        public ConnOfInformixs()
         {
         }
-        public void Add(ConnOfInforMix conn)
+        public void Add(ConnOfInformix conn)
         {
             this.InnerList.Add(conn);
         }
@@ -42,20 +42,20 @@ namespace BP.DA
         {
             for (int i = 0; i <= 3; i++)
             {
-                ConnOfInforMix conn = new ConnOfInforMix();
+                ConnOfInformix conn = new ConnOfInformix();
                 conn.IDX = i;
                 this.Add(conn);
             }
         }
         public bool isLock = false;
-        public ConnOfInforMix GetOne()
+        public ConnOfInformix GetOne()
         {
             while (isLock)
             {
                 ;
             }
             isLock = true;
-            foreach (ConnOfInforMix conn in this)
+            foreach (ConnOfInformix conn in this)
             {
                 if (conn.IsUsing == false)
                 {
@@ -69,7 +69,7 @@ namespace BP.DA
             }
 
             //如果没有新的连接。
-            ConnOfInforMix nconn = new ConnOfInforMix();
+            ConnOfInformix nconn = new ConnOfInformix();
             nconn.IDX = this.Count;
             nconn.Conn = new IfxConnection(SystemConfig.AppCenterDSN);
             nconn.IsUsing = true;

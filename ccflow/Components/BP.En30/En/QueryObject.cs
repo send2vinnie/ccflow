@@ -169,7 +169,7 @@ namespace BP.En
                     case DBType.Access:
                     case DBType.MySQL:
                         return "@";
-                    case DBType.InforMix:
+                    case DBType.Informix:
                         return "?";
                     default:
                         return ":";
@@ -1080,7 +1080,7 @@ namespace BP.En
                             this.Top = pageSize;
                             return this.doEntitiesQuery();
 
-                        case DBType.InforMix:
+                        case DBType.Informix:
                             toIdx = top + pageSize;
                             if (this._sql == "" || this._sql == null)
                             {

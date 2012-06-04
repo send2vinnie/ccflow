@@ -1019,7 +1019,7 @@ namespace BP
                         }
                         DBAccessOfMSSQL2000.RunSQL(SqlBuilder.GenerCreateTableSQLOfMS(myen));
                         break;
-                    case DBType.InforMix:
+                    case DBType.Informix:
                         try
                         {
                             if (myen.EnMap.PhysicsTable.Contains("."))
@@ -1073,7 +1073,7 @@ namespace BP
                         switch (dbtype)
                         {
                             case DBType.Oracle9i:
-                            case DBType.InforMix:
+                            case DBType.Informix:
                                 DBAccessOfOracle9i.RunSQL(SqlBuilder.Insert(en));
                                 break;
                             case DBType.SQL2000_OK:

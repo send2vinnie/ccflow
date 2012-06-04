@@ -349,7 +349,7 @@ namespace BP.Web
                         case DBType.Oracle9i:
                             sql += SqlBuilder.GenerCreateTableSQLOfOra_OK(en) + " \n GO \n";
                             break;
-                        case DBType.InforMix:
+                        case DBType.Informix:
                             sql += SqlBuilder.GenerCreateTableSQLOfInfoMix(en) + " \n GO \n";
                             break;
                         default:

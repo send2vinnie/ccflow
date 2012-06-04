@@ -34,9 +34,9 @@ namespace BP.DA
         /// </summary>
         MySQL,
         /// <summary>
-        /// InforMix
+        /// Informix
         /// </summary>
-        InforMix
+        Informix
     }
     /// <summary>
     /// 保管位置

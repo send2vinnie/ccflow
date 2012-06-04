@@ -1050,8 +1050,8 @@ namespace BP
                         return BP.DA.DBType.MySQL;
                     case "Access":
                         return BP.DA.DBType.Access;
-                    case "InforMix":
-                        return BP.DA.DBType.InforMix;
+                    case "Informix":
+                        return BP.DA.DBType.Informix;
                     default:
                         return BP.DA.DBType.Oracle9i;
                 }
@@ -1068,7 +1068,7 @@ namespace BP
                 {
                     case BP.DA.DBType.Oracle9i:
                         return ":";
-                    case BP.DA.DBType.InforMix:
+                    case BP.DA.DBType.Informix:
                         return "?";
                     default:
                         return "@";
@@ -1088,7 +1088,7 @@ namespace BP
                         return "substr";
                     case BP.DA.DBType.SQL2000_OK:
                         return "substring";
-                    case BP.DA.DBType.InforMix:
+                    case BP.DA.DBType.Informix:
                         return "MySubString";
                     case BP.DA.DBType.Access:
                         return "Mid";
@@ -1105,7 +1105,7 @@ namespace BP
                 {
                     case BP.DA.DBType.Oracle9i:
                     case BP.DA.DBType.MySQL:
-                    case BP.DA.DBType.InforMix:
+                    case BP.DA.DBType.Informix:
                         return "||";
                     default:
                         return "+";

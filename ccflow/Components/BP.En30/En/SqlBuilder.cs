@@ -240,7 +240,7 @@ namespace BP.En
             }
             return sql.Substring(" (1=1)  AND ".Length);
         }
-        public static String GetKeyConditionOfInforMixForPara(Entity en)
+        public static String GetKeyConditionOfInformixForPara(Entity en)
         {
             // 不能删除物理表名称，会引起未定义列。
 
@@ -306,7 +306,7 @@ namespace BP.En
                     sql = SqlBuilder.SelectSQLOfOLE(en, 1) + "  AND ( " + SqlBuilder.GenerWhereByPK(en, "@") + " )";
                     break;
                 case DBType.Oracle9i:
-                case DBType.InforMix:
+                case DBType.Informix:
                     sql = SqlBuilder.SelectSQLOfOra(en, 1) + "  AND ( " + SqlBuilder.GenerWhereByPK(en, ":") + " )";
                     break;
                 case DBType.DB2:
@@ -333,8 +333,8 @@ namespace BP.En
                 case DBType.Oracle9i:
                     sql = SqlBuilder.SelectSQLOfOra(en, 1) + "AND (" + SqlBuilder.GenerWhereByPK(en, ":") + " )";
                     break;
-                case DBType.InforMix:
-                    sql = SqlBuilder.SelectSQLOfInforMix(en, 1) + " WHERE (" + SqlBuilder.GenerWhereByPK(en, "?") + " )";
+                case DBType.Informix:
+                    sql = SqlBuilder.SelectSQLOfInformix(en, 1) + " WHERE (" + SqlBuilder.GenerWhereByPK(en, "?") + " )";
                     break;
                 case DBType.Access:
                     sql = SqlBuilder.SelectSQLOfOLE(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
@@ -360,7 +360,7 @@ namespace BP.En
                         return SqlBuilder.SelectSQLOfMS(en, 1) + "  AND ( " + SqlBuilder.GetKeyConditionOfOraForPara(en) + " )";
                     return SqlBuilder.SelectSQLOfMS(en, 1) + "  AND ( " + SqlBuilder.GetKeyConditionOfMS(en) + " )";
                 case DBType.Oracle9i:
-                case DBType.InforMix:
+                case DBType.Informix:
                     if (en.EnMap.HisFKAttrs.Count == 0)
                         return SqlBuilder.SelectSQLOfOra(en, 1) + SqlBuilder.GetKeyConditionOfOraForPara(en);
                     else
@@ -500,7 +500,7 @@ namespace BP.En
             where = where.Replace("WHERE AND", "WHERE");
             return from + where;
         }
-        public static string GenerFormWhereOfInforMix(Entity en)
+        public static string GenerFormWhereOfInformix(Entity en)
         {
             string from = " FROM " + en.EnMap.PhysicsTable;
             string mytable = en.EnMap.PhysicsTable;
@@ -647,7 +647,7 @@ namespace BP.En
             {
                 case DBType.Oracle9i:
                     return GenerCreateTableSQLOfOra_OK(en);
-                case DBType.InforMix:
+                case DBType.Informix:
                     return GenerCreateTableSQLOfInfoMix(en);
                 case DBType.SQL2000_OK:
                 case DBType.Access:
@@ -1140,12 +1140,12 @@ namespace BP.En
             return " SELECT  " + val.Substring(1) + SqlBuilder.GenerFormWhereOfOra(en);
         }
         /// <summary>
-        /// SelectSQLOfInforMix
+        /// SelectSQLOfInformix
         /// </summary>
         /// <param name="en"></param>
         /// <param name="topNum"></param>
         /// <returns></returns>
-        protected static string SelectSQLOfInforMix(Entity en, int topNum)
+        protected static string SelectSQLOfInformix(Entity en, int topNum)
         {
             string val = "";  
             string mainTable = "";
@@ -1227,7 +1227,7 @@ namespace BP.En
                         throw new Exception("@没有定义的数据类型! attr=" + attr.Key + " MyDataType =" + attr.MyDataType);
                 }
             }
-            return " SELECT  " + val.Substring(1) + SqlBuilder.GenerFormWhereOfInforMix(en);
+            return " SELECT  " + val.Substring(1) + SqlBuilder.GenerFormWhereOfInformix(en);
         }
 
         public static string SelectSQL(Entity en, int topNum)
@@ -1242,8 +1242,8 @@ namespace BP.En
                     return SqlBuilder.SelectSQLOfOLE(en, topNum);
                 case DBType.Oracle9i:
                     return SqlBuilder.SelectSQLOfOra(en, topNum);
-                case DBType.InforMix:
-                    return SqlBuilder.SelectSQLOfInforMix(en, topNum);
+                case DBType.Informix:
+                    return SqlBuilder.SelectSQLOfInformix(en, topNum);
                 default:
                     throw new Exception("没有判断的情况");
             }
@@ -1264,7 +1264,7 @@ namespace BP.En
                 case DBType.Access:
                     return SqlBuilder.SelectSQLOfOLE(en, 0);
                 case DBType.Oracle9i:
-                case DBType.InforMix:
+                case DBType.Informix:
                     return SqlBuilder.SelectSQLOfOra(en, 0);
                 default:
                     return null;
@@ -2036,7 +2036,7 @@ namespace BP.En
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
                         " WHERE " + SqlBuilder.GenerWhereByPK(en, ":");
                     break;
-                case DBType.InforMix:
+                case DBType.Informix:
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
                         " WHERE " + SqlBuilder.GenerWhereByPK(en, ":");
                     break;
@@ -2045,10 +2045,10 @@ namespace BP.En
             }
             return sql.Replace(",=''", "");
         }
-        public static Paras GenerParas_Update_InforMix(Entity en, string[] keys)
+        public static Paras GenerParas_Update_Informix(Entity en, string[] keys)
         {
             if (keys == null)
-                return GenerParas_Update_InforMix(en);
+                return GenerParas_Update_Informix(en);
 
             string mykeys = "@";
             foreach (string key in keys)
@@ -2129,7 +2129,7 @@ namespace BP.En
             }
             return ps;
         }
-        public static Paras GenerParas_Update_InforMix(Entity en)
+        public static Paras GenerParas_Update_Informix(Entity en)
         {
             string mykeys = "@";
 
@@ -2342,7 +2342,7 @@ namespace BP.En
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
                         " WHERE " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;
-                case DBType.InforMix:
+                case DBType.Informix:
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
                         " WHERE " + SqlBuilder.GenerWhereByPK(en, "?");
                     break;
@@ -2371,7 +2371,7 @@ namespace BP.En
         {
             string dbstr = en.HisDBVarStr;
             if (dbstr == "?")
-                return InsertForPara_InforMix(en);
+                return InsertForPara_Informix(en);
 
             bool isInnkey = false;
             if (en.IsOIDEntity)
@@ -2400,7 +2400,7 @@ namespace BP.En
                 field.Substring(1) + " ) VALUES ( " + val.Substring(1) + ")";
             return sql;
         }
-        public static string InsertForPara_InforMix(Entity en)
+        public static string InsertForPara_Informix(Entity en)
         {
             bool isInnkey = false;
             if (en.IsOIDEntity)

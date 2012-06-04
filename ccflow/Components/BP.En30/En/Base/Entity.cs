@@ -311,7 +311,7 @@ namespace BP.En
                     case DBType.MySQL:
                         sql = "SELECT MAX(" + field + ") +1 AS No FROM " + this.EnMap.PhysicsTable;
                         break;
-                    case DBType.InforMix:
+                    case DBType.Informix:
                         sql = "SELECT MAX(" + field + ") +1 AS No FROM " + this.EnMap.PhysicsTable;
                         break;
                     case DBType.Access:
@@ -357,7 +357,7 @@ namespace BP.En
                     sql = "SELECT CONVERT(INT, MAX([" + field + "]) )+1 AS Num FROM " + this.EnMap.PhysicsTable + " WHERE " + attrGroupKey + "='" + attrGroupVal + "'";
                     break;
                 case DBType.Oracle9i:
-                case DBType.InforMix:
+                case DBType.Informix:
                     sql = "SELECT MAX( :f )+1 AS No FROM " + this.EnMap.PhysicsTable + " WHERE " + this.HisDBVarStr + "groupKey=" + this.HisDBVarStr + "groupVal ";
                     break;
                 case DBType.MySQL:
@@ -405,7 +405,7 @@ namespace BP.En
             switch (this.EnMap.EnDBUrl.DBType)
             {
                 case DBType.Oracle9i:
-                case DBType.InforMix:
+                case DBType.Informix:
                     sql = "SELECT   MAX(" + f + ") +1 AS No FROM " + this.EnMap.PhysicsTable;
                     break;
                 case DBType.SQL2000_OK:
@@ -578,7 +578,7 @@ namespace BP.En
                         this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
                         break;
                     case DBType.MySQL:
-                    case DBType.InforMix:
+                    case DBType.Informix:
                     default:
                         this.RunSQL(this.SQLCash.Insert.Replace("[", "").Replace("]", ""), SqlBuilder.GenerParas(this, null));
                         break;
@@ -912,8 +912,8 @@ namespace BP.En
                         case DBType.Oracle9i:
                             selectSQL += SqlBuilder.GetKeyConditionOfOraForPara(this);
                             break;
-                        case DBType.InforMix:
-                            selectSQL += SqlBuilder.GetKeyConditionOfInforMixForPara(this);
+                        case DBType.Informix:
+                            selectSQL += SqlBuilder.GetKeyConditionOfInformixForPara(this);
                             break;
                         case DBType.MySQL:
                             selectSQL += SqlBuilder.GetKeyConditionOfMS(this);
@@ -1155,7 +1155,7 @@ namespace BP.En
             {
                 case DBType.Oracle9i:
                 case DBType.SQL2000_OK:
-                case DBType.InforMix:
+                case DBType.Informix:
                 case DBType.MySQL:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetAttrByKey(attr).Field + " =" + this.HisDBVarStr + attr, ps);
                 case DBType.Access:
@@ -1173,7 +1173,7 @@ namespace BP.En
             {
                 case DBType.Oracle9i:
                 case DBType.SQL2000_OK:
-                case DBType.InforMix:
+                case DBType.Informix:
                 case DBType.Access:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetAttrByKey(attr1).Field + " =" + this.HisDBVarStr + attr1 + " AND " + this.EnMap.GetAttrByKey(attr2).Field + " =" + this.HisDBVarStr + attr2, ps);
                 default:
@@ -1835,7 +1835,7 @@ namespace BP.En
                 case DBType.Oracle9i:
                     DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOfOra_OK(this));
                     break;
-                case DBType.InforMix:
+                case DBType.Informix:
                     DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOfInfoMix(this));
                     break;
                 case DBType.SQL2000_OK:
@@ -1854,7 +1854,7 @@ namespace BP.En
         }
         private void CreateIndexAndPK()
         {
-            if (this.EnMap.EnDBUrl.DBType != DBType.InforMix)
+            if (this.EnMap.EnDBUrl.DBType != DBType.Informix)
             {
                 #region ½¨Á¢Ë÷Òý
                 try
@@ -2300,7 +2300,7 @@ namespace BP.En
                 case DBType.MySQL:
                     this.CheckPhysicsTable_Ora();
                     break;
-                case DBType.InforMix:
+                case DBType.Informix:
                     this.CheckPhysicsTable_Informix();
                     break;
                 default:

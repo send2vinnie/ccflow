@@ -170,7 +170,7 @@ namespace BP.DA
                         conn.Open();
                     return DBProcedure.RunSP(spName, paras, conn);
                     break;
-                case DBType.InforMix:
+                case DBType.Informix:
                     IfxConnection conn1 = new IfxConnection(SystemConfig.AppCenterDSN);
                     if (conn1.State != ConnectionState.Open)
                         conn1.Open();
