@@ -2356,7 +2356,7 @@ namespace BP.WF
                 switch (SystemConfig.AppCenterDBType)
                 {
                     case DBType.Oracle9i:
-                    case DBType.InforMix:
+                    case DBType.Informix:
                         sql += "\r\n SELECT '" + nd.NodeID + "' || '_'|| OID||'_'|| FID  AS MyPK, '" + nd.NodeID + "' AS FK_Node,OID,FID,RDT,SUBSTR(RDT,1,7) AS FK_NY,CDT,Rec,Emps,NodeState,FK_Dept, 1 AS MyNum FROM ND" + nd.NodeID + " ";
                         break;
                     case DBType.MySQL:
@@ -2367,7 +2367,7 @@ namespace BP.WF
                         break;
                 }
             }
-            if (SystemConfig.AppCenterDBType != DBType.InforMix)
+            if (SystemConfig.AppCenterDBType != DBType.Informix)
                 sql += "\r\n GO ";
 
             if (DBAccess.IsExitsObject(viewName) == true)
@@ -2389,7 +2389,7 @@ namespace BP.WF
                 case DBType.SQL2000_OK:
                     sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
                     break;
-                case DBType.InforMix:
+                case DBType.Informix:
                     sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
                     break;
                 case DBType.MySQL:
