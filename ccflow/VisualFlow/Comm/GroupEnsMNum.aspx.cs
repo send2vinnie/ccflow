@@ -702,7 +702,7 @@ namespace BP.Web.Comm
                             case DBType.Oracle9i:
                                 where += " FK_Dept LIKE '%'||:V_Dept||'%'   AND ";
                                 break;
-                            case DBType.InforMix:
+                            case DBType.Informix:
                                 where += " FK_Dept LIKE '%'||:V_Dept||'%'   AND ";
                                 break;
                             case DBType.SQL2000_OK:
