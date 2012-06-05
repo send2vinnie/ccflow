@@ -57,6 +57,9 @@ public partial class WF_UC_Runing : BP.Web.UC.UCBase3
         }
 
         int colspan = 6;
+        if (this.PageSmall != "")
+            this.Pub1.AddBR();
+
         this.Pub1.AddTable("border=1px align=center width='960px'");
         this.Pub1.AddTR();
 

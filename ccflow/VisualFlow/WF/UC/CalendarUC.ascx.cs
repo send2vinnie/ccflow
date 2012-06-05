@@ -50,6 +50,7 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
         if (this.FK_Date == null)
         {
             DateTime firstDay = DataType.ParseSysDate2DateTime(this.FK_NY + "-01");
+            
             this.BindMonth(firstDay);
          //   this.BindLog();
         }
@@ -73,7 +74,7 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
         this.Pub1.AddTDTitle("到节点");
         this.Pub1.AddTDTitle("人员");
         this.Pub1.AddTDTitle("信息");
-        this.Pub1.AddTDTitle("日志");
+        this.Pub1.AddTDTitle("表单");
         this.Pub1.AddTREnd();
 
         DataTable dtLog = DBAccess.RunSQLReturnTable("SELECT a.*,b.Name FROM WF_Track a, WF_Flow b WHERE a.FK_Flow=b.No  AND  a.RDT LIKE '" + dt.ToString("yyyy-MM-dd") + "%' AND a.EmpFrom='" + WebUser.No + "'");
@@ -89,7 +90,7 @@ public partial class WF_UC_CalendarUC : BP.Web.UC.UCBase3
             this.Pub1.AddTD(dr["NDToT"].ToString());
             this.Pub1.AddTD(dr["EmpToT"].ToString());
             this.Pub1.AddTD(DataType.ParseText2Html(dr["Msg"].ToString()));
-            this.Pub1.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?DoType=View&MyPK=" + dr["MyPK"].ToString() + "','" + dr["MyPK"].ToString() + "');\">日志</a>");
+            this.Pub1.AddTD("<a href=\"javascript:WinOpen('WFRpt.aspx?DoType=View&MyPK=" + dr["MyPK"].ToString() + "','" + dr["MyPK"].ToString() + "');\">表单</a>");
             this.Pub1.AddTREnd();
             idx++;
         }

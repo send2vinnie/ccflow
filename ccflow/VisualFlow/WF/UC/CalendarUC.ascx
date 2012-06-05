@@ -2,7 +2,6 @@
 <%@ Register src="Pub.ascx" tagname="Pub" tagprefix="uc1" %>
 <script type="text/javascript">
     function CelldblClick(v1, v2) {
-
     }
 </script>
 <style type="text/css">

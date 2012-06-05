@@ -82,6 +82,9 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
         string cc = "<b>抄送("+DBAccess.RunSQLReturnValInt(sql1)+"/"+DBAccess.RunSQLReturnValInt(sql2)+")</b>";
 
         int colspan = 9;
+        if (this.PageSmall != "")
+            this.Pub1.AddBR();
+
         this.Pub1.AddTable("border=1px align=center width='960px' ");
         this.Pub1.AddCaption("<img src='./Img/Runing.gif' >&nbsp;<b>待办工作</b> - <a href='"+this.PageID+".aspx?DoType=CC'>"+cc+"</a>");
         this.Pub1.AddTR();
@@ -169,6 +172,8 @@ public partial class WF_UC_EmpWorks : BP.Web.UC.UCBase3
             groupVals += "@" + dr[this.GroupBy].ToString() + ",";
         }
 
+        if (this.PageSmall != "")
+            this.Pub1.AddBR();
         int colspan = 9;
         this.Pub1.AddTable("border=1px align=center width='960px' ");
         this.Pub1.AddCaption("<img src='./Img/Runing.gif' >&nbsp;<b><a href='" + this.PageID + ".aspx'>待办工作</a></b> - " + cc + "");

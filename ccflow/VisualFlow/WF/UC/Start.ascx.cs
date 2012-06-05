@@ -87,6 +87,20 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
             return;
         }
 
+        string pageid = this.Request.RawUrl.ToLower();
+        if (pageid.Contains("small"))
+        {
+            if (pageid.Contains("single"))
+                pageid = "SmallSingle";
+            else
+                pageid = "Small";
+            this.AddBR();
+        }
+        else
+        {
+            pageid = "";
+        }
+
         int colspan = 5;
         this.AddTable("width='960px' align=center");
         this.AddTR();
@@ -101,16 +115,7 @@ public partial class WF_UC_Start : BP.Web.UC.UCBase3
         this.AddTDTitle(this.ToE("Desc", "描述"));
         this.AddTREnd();
 
-        string pageid = this.Request.RawUrl.ToLower();
-        if (pageid.Contains("small"))
-        {
-            if (pageid.Contains("single"))
-                pageid = "SmallSingle";
-            else
-                pageid = "Small";
-        }
-        else
-            pageid = "";
+      
 
         int i = 0;
         bool is1 = false;
