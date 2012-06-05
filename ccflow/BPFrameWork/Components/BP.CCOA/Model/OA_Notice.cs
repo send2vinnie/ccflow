@@ -22,11 +22,11 @@ namespace BP.CCOA
         public const string Status = "Status";
         public const string AccessType = "AccessType";
     }
-    
+
     public partial class OA_Notice : EntityNoName
     {
         #region 属性
-        
+
         /// <summary>
         /// 发布人
         /// </summary>
@@ -41,7 +41,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.Author, value);
             }
         }
-        
+
         /// <summary>
         /// 点击量
         /// </summary>
@@ -56,7 +56,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.Clicks, value);
             }
         }
-        
+
         /// <summary>
         /// 更新人
         /// </summary>
@@ -71,7 +71,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.UpUser, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -86,7 +86,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.NoticeTitle, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -101,7 +101,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.NoticeSubTitle, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -116,7 +116,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.NoticeType, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -131,7 +131,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.NoticeContent, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -146,7 +146,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.CreateTime, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -161,7 +161,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.IsRead, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -176,7 +176,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.UpDT, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -203,9 +203,9 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.AccessType, value);
             }
         }
-        
+
         #endregion
-        
+
         #region 构造方法
         /// <summary>
         /// 
@@ -223,7 +223,7 @@ namespace BP.CCOA
             this.Retrieve();
         }
         #endregion
-        
+
         public override Map EnMap
         {
             get
@@ -236,27 +236,27 @@ namespace BP.CCOA
                 map.EnDesc = "";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
-                
+
                 map.AddTBStringPK(OA_NoticeAttr.No, null, "主键Id", true, true, 0, 50, 50);
-                map.AddTBString(OA_NoticeAttr.Author, null, "发布人", true, false, 0,  50, 50);
+                map.AddTBString(OA_NoticeAttr.Author, null, "发布人", true, false, 0, 50, 50);
                 map.AddTBInt(OA_NoticeAttr.Clicks, 0, "点击量", true, false);
-                map.AddTBString(OA_NoticeAttr.UpUser, null, "更新人", true, false, 0,  50, 50);
-                map.AddTBString(OA_NoticeAttr.NoticeTitle, null, "", true, false, 0,  200, 200);
-                map.AddTBString(OA_NoticeAttr.NoticeSubTitle, null, "", true, false, 0,  200, 200);
-                map.AddTBString(OA_NoticeAttr.NoticeType, null, "", true, false, 0,  1, 1);
+                map.AddTBString(OA_NoticeAttr.UpUser, null, "更新人", true, false, 0, 50, 50);
+                map.AddTBString(OA_NoticeAttr.NoticeTitle, null, "", true, false, 0, 200, 200);
+                map.AddTBString(OA_NoticeAttr.NoticeSubTitle, null, "", true, false, 0, 200, 200);
+                map.AddTBString(OA_NoticeAttr.NoticeType, null, "", true, false, 0, 1, 1);
                 map.AddTBStringDoc(OA_NoticeAttr.NoticeContent, "", "内容", true, false);
                 map.AddTBDateTime(OA_NoticeAttr.CreateTime, "创建时间", false, false);
                 map.AddTBInt(OA_NoticeAttr.IsRead, 0, "", true, false);
                 map.AddTBDateTime(OA_NoticeAttr.UpDT, "更新时间", false, false);
-                map.AddTBString(OA_NoticeAttr.AccessType, "D", "访问类型", true, false, 4, 4, 20);
+                map.AddTBString(OA_NoticeAttr.AccessType, null, "访问类型", true, false, 4, 4, 20);
                 map.AddTBInt(OA_NoticeAttr.Status, 0, "", true, false);
-              
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
-    
+
     public partial class OA_Notices : Entities
     {
         public override Entity GetNewEntity
