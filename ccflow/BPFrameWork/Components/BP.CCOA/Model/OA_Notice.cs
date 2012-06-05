@@ -20,6 +20,7 @@ namespace BP.CCOA
         public const string IsRead = "IsRead";
         public const string UpDT = "UpDT";
         public const string Status = "Status";
+        public const string AccessType = "AccessType";
     }
     
     public partial class OA_Notice : EntityNoName
@@ -190,6 +191,18 @@ namespace BP.CCOA
                 this.SetValByKey(OA_NoticeAttr.Status, value);
             }
         }
+
+        public string AccessType
+        {
+            get
+            {
+                return this.GetValStringByKey(OA_NoticeAttr.AccessType);
+            }
+            set
+            {
+                this.SetValByKey(OA_NoticeAttr.AccessType, value);
+            }
+        }
         
         #endregion
         
@@ -235,6 +248,7 @@ namespace BP.CCOA
                 map.AddTBDateTime(OA_NoticeAttr.CreateTime, "创建时间", false, false);
                 map.AddTBInt(OA_NoticeAttr.IsRead, 0, "", true, false);
                 map.AddTBDateTime(OA_NoticeAttr.UpDT, "更新时间", false, false);
+                map.AddTBString(OA_NoticeAttr.AccessType, "D", "访问类型", true, false, 4, 4, 20);
                 map.AddTBInt(OA_NoticeAttr.Status, 0, "", true, false);
               
                 this._enMap = map;
