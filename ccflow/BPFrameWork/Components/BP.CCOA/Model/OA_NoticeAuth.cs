@@ -10,7 +10,7 @@ namespace BP.CCOA
     public partial class OA_NoticeAuthAttr : EntityNoNameAttr
     {
         public const string FK_Notice = "FK_Notice";
-        public const string FK_Ids = "FK_Ids";
+        public const string FK_Id = "FK_Id";
     }
     
     public partial class OA_NoticeAuth : EntityNoName
@@ -33,17 +33,17 @@ namespace BP.CCOA
         }
         
         /// <summary>
-        /// 可以访问的主键集合，以|分隔
+        /// 可以访问的主键
         /// </summary>
-        public String FK_Ids
+        public String FK_Id
         {
             get
             {
-                return this.GetValStringByKey(OA_NoticeAuthAttr.FK_Ids);
+                return this.GetValStringByKey(OA_NoticeAuthAttr.FK_Id);
             }
             set
             {
-                this.SetValByKey(OA_NoticeAuthAttr.FK_Ids, value);
+                this.SetValByKey(OA_NoticeAuthAttr.FK_Id, value);
             }
         }
         
@@ -82,7 +82,7 @@ namespace BP.CCOA
                 
                 map.AddTBStringPK(OA_NoticeAuthAttr.No, null, "主键No", true, true, 0, 50, 50);
                 map.AddTBString(OA_NoticeAuthAttr.FK_Notice, null, "Notice公告外键", true, false, 0,  50, 50);
-                map.AddTBString(OA_NoticeAuthAttr.FK_Ids, null, "可以访问的主键集合，以|分隔", true, false, 0,  4000, 4000);
+                map.AddTBString(OA_NoticeAuthAttr.FK_Id, null, "可以访问的主键", true, false, 0,  4000, 4000);
               
                 this._enMap = map;
                 return this._enMap;
