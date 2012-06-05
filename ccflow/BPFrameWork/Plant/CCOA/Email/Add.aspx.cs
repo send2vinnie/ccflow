@@ -15,7 +15,10 @@ public partial class CCOA_Email_Add : BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!Page.IsPostBack)
+        {
+            this.txtAddresser.Text = BP.Web.WebUser.Name;
+        }
     }
 
     protected void btnSave_Click(object sender, EventArgs e)
@@ -47,10 +50,6 @@ public partial class CCOA_Email_Add : BasePage
         {
             strErr += "类型：0-普通1-重要2-紧急不能为空！\\n";
         }
-        //if (this.txtCategory.Text.Trim().Length == 0)
-        //{
-        //    strErr += "分类：0-收件箱1-草稿箱2-不能为空！\\n";
-        //}
 
         if (strErr != "")
         {

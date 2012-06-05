@@ -16,7 +16,7 @@
 
             portal = new mini.ux.Portal();
             portal.set({
-                style: "width: 100%;height:500px",
+                style: "width: 100%;height:525px",
                 columns: [250, "100%", 260]
             });
             portal.render(content);
@@ -106,7 +106,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
-    <div id="tabs1" class="mini-tabs" activeindex="0" style="width: 100%; height: 515px;">
+    <div id="tabs1" class="mini-tabs" activeindex="0" style="width: 100%; height: 545px;">
         <div title="工作台" iconcls="icon-add">
             <a href="#" onclick="openLayout()">布局设置</a> 
             <a href="#" onclick="saveLayout()">保存配置</a>

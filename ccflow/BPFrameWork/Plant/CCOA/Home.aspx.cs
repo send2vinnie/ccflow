@@ -8,13 +8,14 @@ using BP.CCOA;
 using BP.Port;
 using BP.EIP;
 
-public partial class CCOA_Home : System.Web.UI.Page
+public partial class CCOA_Home : BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
         {
             Session["CurrentApp"] = "OA";
+            this.CurrentUser = new CurrentUser();
             //Channel channel = new Channel();
             //channel.CheckPhysicsTable();
 
@@ -56,29 +57,34 @@ public partial class CCOA_Home : System.Web.UI.Page
 
             //BP.CCOA.EIP_Emp emp = new EIP_Emp();
             //emp.CheckPhysicsTable();
-            new OA_News().CheckPhysicsTable();
-            new OA_Notice().CheckPhysicsTable();
+            //new OA_News().CheckPhysicsTable();
+            //new OA_Notice().CheckPhysicsTable();
 
-            BP.CCOA.OA_AddrBook ad = new OA_AddrBook();
-            ad.CheckPhysicsTable();
+            //BP.CCOA.OA_AddrBook ad = new OA_AddrBook();
+            //ad.CheckPhysicsTable();
 
-            BP.CCOA.OA_AddrGrouping ag = new OA_AddrGrouping();
-            ag.CheckPhysicsTable();
+            //BP.CCOA.OA_AddrGrouping ag = new OA_AddrGrouping();
+            //ag.CheckPhysicsTable();
 
-            BP.CCOA.OA_Attachment oa = new OA_Attachment();
-            oa.CheckPhysicsTable();
+            //BP.CCOA.OA_Attachment oa = new OA_Attachment();
+            //oa.CheckPhysicsTable();
 
             //BP.CCOA.OA_Channel oa_channel = new OA_Channel();
             //oa_channel.CheckPhysicsTable();
 
-            BP.CCOA.OA_Meeting me = new OA_Meeting();
-            me.CheckPhysicsTable();
+            //BP.CCOA.OA_Meeting me = new OA_Meeting();
+            //me.CheckPhysicsTable();
 
-            BP.CCOA.OA_Message message = new OA_Message();
-            message.CheckPhysicsTable();
+            //BP.CCOA.OA_Message message = new OA_Message();
+            //message.CheckPhysicsTable();
 
-            BP.CCOA.OA_SMS sms = new OA_SMS();
-            sms.CheckPhysicsTable();
+            //BP.CCOA.OA_SMS sms = new OA_SMS();
+            //sms.CheckPhysicsTable();
+
+            //new BP.CCOA.EIP_Layout().CheckPhysicsTable();
+            //new BP.CCOA.EIP_LayoutDetail().CheckPhysicsTable();
+
+            new BP.CCOA.OA_NewsAttach().CheckPhysicsTable();
         }
     }
 }

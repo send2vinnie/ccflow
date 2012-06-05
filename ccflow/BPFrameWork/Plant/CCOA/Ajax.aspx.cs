@@ -14,6 +14,7 @@ public partial class EIP_Ajax : System.Web.UI.Page
         var ds = dal.GetJsonList("");
 
         string jsonData = JsonHelper.DataTable2Json(ds.Tables[0]);
+        jsonData = jsonData.Replace("showcollapsebutton", "showCollapseButton");
 
         Response.Write(jsonData);
     }

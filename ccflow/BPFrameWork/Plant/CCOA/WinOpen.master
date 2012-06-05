@@ -4,6 +4,7 @@
 <%@ Register Src="~/CCOA/Controls/Header.ascx" TagName="Header" TagPrefix="uc" %>
 <%@ Register Src="Controls/NavBar.ascx" TagName="NavBar" TagPrefix="uc1" %>
 <%@ Register Src="Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc2" %>
+<%@ Register Src="Controls/Bottom.ascx" TagName="Bottom" TagPrefix="uc3" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -27,54 +28,24 @@
     <form id="form1" runat="server">
     <div>
         <table width="100%">
-            <tr style="height: 80px;">
+            <tr>
                 <td>
-                    <div id="divTop">
-                        <uc:Header ID="Header1" runat="server" />
-                    </div>
-                    <div>
-                        <div class="clear hideSkiplink">
-                           <%-- <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false"
-                                IncludeStyleBlock="false" Orientation="Horizontal">
-                                <Items>
-                                    <asp:MenuItem NavigateUrl="~/CCOA/Home.aspx" Text="主页" />
-                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_AddrBook/List.aspx" Text="通讯录" />
-                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_AddrGrouping/List.aspx" Text="通讯录分组" />
-                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_Attachment/List.aspx" Text="附件" />
-                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_Email/List.aspx" Text="邮件" />
-                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_Meeting/List.aspx" Text="会议" />
-                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_Message/List.aspx" Text="短消息" />
-                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_News/List.aspx" Text="新闻" />
-                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_Notice/List.aspx" Text="通告" />
-                                    <asp:MenuItem NavigateUrl="~/CCOA/OA_SMS/List.aspx" Text="短信" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/App_Domain/List.aspx" Text="管理域" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/App_Role/List.aspx" Text="角色" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/App_User/List.aspx" Text="用户" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/EIP_Emp/List.aspx" Text="员工" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/EIP_Dept/List.aspx" Text="部门" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/EIP_Post/List.aspx" Text="岗位" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/EIP_Menu/List.aspx" Text="菜单" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/App_Rule/List.aspx" Text="规则" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/App_RoleDomain/List.aspx" Text="角色域" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/App_UserDomain/List.aspx" Text="用户域" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/App_UserRole/List.aspx" Text="用户角色" />
-                                    <asp:MenuItem NavigateUrl="~/GPM/App_Rule/List.aspx" Text="规则" />
-                                    <asp:MenuItem NavigateUrl="~/CCOA/Home.aspx" Text="OA" />
-                                    <asp:MenuItem NavigateUrl="~/About.aspx" Text="关于" />
-                                </Items>
-                            </asp:Menu>--%>
-                        </div>
-                    </div>
-                    <div style="clear: both;">
-                    </div>
+                    <uc:Header ID="Header1" runat="server" />
                 </td>
             </tr>
             <tr>
                 <td>
                     <div id="divBody">
-                      
-                        <div class="mini-splitter" style="width: 100%; height: 520px;">
+                        <div class="mini-splitter" style="width: 100%; height: 550px;">
                             <div size="16%" showcollapsebutton="true">
+                                <div style="height: 100px;">
+                                    <ul>
+                                        <li>用户名：
+                                            <%=BP.Web.WebUser.Name %></li>
+                                        <li>用户名：
+                                            <%=BP.Web.WebUser.Name %></li>
+                                    </ul>
+                                </div>
                                 <uc1:NavBar ID="NavBar1" runat="server" MenuUrl="AjaxMenu.aspx" />
                             </div>
                             <div showcollapsebutton="false">
@@ -87,12 +58,7 @@
             </tr>
             <tr>
                 <td>
-                    <div id="divBottom">
-                        <div style="background: #f1f6fa; height: 50px; border: solid 1px #E9f2fc; border-top: solid 3px #7286ab;
-                            line-height: 50px; padding-left: 40px;">
-                            <span style="color: #045395; font-size: 12px;">版权所有：陕汽汽车集团有限责任公司 汽车工程研究院-办公自动化系统</span>
-                        </div>
-                    </div>
+                    <uc3:Bottom ID="Bottom1" runat="server" />
                 </td>
             </tr>
         </table>

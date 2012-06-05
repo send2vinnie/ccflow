@@ -27,5 +27,9 @@ public partial class EIP_SaveLayout : System.Web.UI.Page
         {
             Response.Write("保存成功！");
         }
+        else
+        {
+            Response.Write("保存失败！");
+        }
     }
 }

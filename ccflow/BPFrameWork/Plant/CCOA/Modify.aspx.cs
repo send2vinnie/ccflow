@@ -43,6 +43,7 @@ namespace Lizard.OA.Web.EIP_LayoutDetail
             this.chkIsShow.Checked = model.IsShow;
             this.txtWidth.Text = model.Width.ToString();
             this.txtHeight.Text = model.Height.ToString();
+            this.txtUrl.Text = model.Url;
         }
 
         public void btnSave_Click(object sender, EventArgs e)

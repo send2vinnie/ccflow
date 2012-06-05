@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using BP.EIP;
 
 /// <summary>
 ///BasePage 的摘要说明
 /// </summary>
 public class BasePage : BP.Web.WebPage
 {
-	public BasePage()
-	{
-		//
-		//TODO: 在此处添加构造函数逻辑
-		//
-	}
+    public BasePage()
+    {
+        //
+        //TODO: 在此处添加构造函数逻辑
+        //
+    }
 
     private string GetSelIDlist(GridView gridView)
     {
@@ -42,5 +43,20 @@ public class BasePage : BP.Web.WebPage
 
     protected int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
 
-    public virtual void BindDropDownList(){}
+    public virtual void BindDropDownList() { }
+
+    public CurrentUser CurrentUser
+    {
+        get
+        {
+            if (Session["CurrentUser"] != null)
+                return (CurrentUser)Session["CurrentUser"];
+            else
+                return new CurrentUser();
+        }
+        set
+        {
+            Session["CurrentUser"] = value;
+        }
+    }
 }

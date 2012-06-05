@@ -44,10 +44,7 @@ namespace Lizard.OA.Web.OA_News
             {
                 strErr += "新闻标题不能为空！\\n";
             }
-            if (this.txtNewsSubTitle.Text.Trim().Length == 0)
-            {
-                strErr += "副标题不能为空！\\n";
-            }
+           
             if (this.ddlNewsType.SelectedValue.Trim().Length == 0)
             {
                 strErr += "新闻类型不能为空！\\n";
@@ -97,25 +94,28 @@ namespace Lizard.OA.Web.OA_News
             model.Status = Status ? 1 : 0;
             model.Insert();
 
-            //先上传，再保存
-            string uploadFile = UploadFile();
+            if (FileUpload1.HasFile)
+            {
+                //先上传，再保存
+                string uploadFile = UploadFile();
 
-            BP.CCOA.OA_Attachment attachment = new BP.CCOA.OA_Attachment();
-            attachment.No = Guid.NewGuid().ToString();
-            attachment.AttachmentName = FileUpload1.FileName;
-            attachment.FileNeme = FileUpload1.FileName;
-            attachment.FilePath = uploadFile;
-            attachment.CreateTime = DateTime.Now;
-            attachment.Suffix = Path.GetExtension(FileUpload1.FileName);
-            attachment.Uploader = BP.Web.WebUser.No;
-            attachment.Remarks = "";
-            attachment.Insert();
+                BP.CCOA.OA_Attachment attachment = new BP.CCOA.OA_Attachment();
+                attachment.No = Guid.NewGuid().ToString();
+                attachment.AttachmentName = FileUpload1.FileName;
+                attachment.FileNeme = FileUpload1.FileName;
+                attachment.FilePath = uploadFile;
+                attachment.CreateTime = DateTime.Now;
+                attachment.Suffix = Path.GetExtension(FileUpload1.FileName);
+                attachment.Uploader = BP.Web.WebUser.No;
+                attachment.Remarks = "";
+                attachment.Insert();
 
-            BP.CCOA.OA_NewsAttach na = new BP.CCOA.OA_NewsAttach();
-            na.No = Guid.NewGuid().ToString();
-            na.News_Id = model.No;
-            na.Attachment_Id = attachment.No;
-            na.Insert();
+                BP.CCOA.OA_NewsAttach na = new BP.CCOA.OA_NewsAttach();
+                na.No = Guid.NewGuid().ToString();
+                na.News_Id = model.No;
+                na.Attachment_Id = attachment.No;
+                na.Insert();
+            }
 
             Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "list.aspx");
         }
