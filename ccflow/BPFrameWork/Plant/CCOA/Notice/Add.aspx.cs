@@ -44,7 +44,7 @@ namespace Lizard.OA.Web.OA_Notice
             {
                 strErr += "发布人不能为空！\\n";
             }
-            if (!PageValidate.IsDateTime(txtCreateTime.Text))
+            if (!PageValidate.IsDateTime(xdpCreateTime.Text))
             {
                 strErr += "发布时间格式错误！\\n";
             }
@@ -60,7 +60,7 @@ namespace Lizard.OA.Web.OA_Notice
             string NoticeType = this.txtNoticeType.Text;
             string NoticeContent = this.txtNoticeContent.Text;
             string Author = this.txtAuthor.Text;
-            DateTime CreateTime = DateTime.Parse(this.txtCreateTime.Text);
+            DateTime CreateTime = DateTime.Parse(this.xdpCreateTime.Text);
 
             //Lizard.OA.Model.OA_Notice model = new Lizard.OA.Model.OA_Notice();
             BP.CCOA.OA_Notice model = new BP.CCOA.OA_Notice();
