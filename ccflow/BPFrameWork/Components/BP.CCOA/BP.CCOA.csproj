@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
@@ -107,6 +108,10 @@
     <Compile Include="XSqlServerQueryTool.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BP.EIP\BP.EIP.csproj">
+      <Project>{6EB21285-F55F-4942-BCD0-2EFAC1EE69E8}</Project>
+      <Name>BP.EIP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BP.GPM\BP.GPM.csproj">
       <Project>{88E210E2-1877-40D8-B669-EC08CA80DC34}</Project>
       <Name>BP.GPM</Name>

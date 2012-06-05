@@ -88,6 +88,10 @@ namespace BP.CCOA
 
         public virtual string GetQueryString(object objValue)
         {
+            if (objValue==null)
+            {
+                return "";
+            }
             string type = objValue.GetType().ToString();
             string where = " AND {0}='{1}'";
             switch (type)

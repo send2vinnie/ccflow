@@ -7,6 +7,8 @@ using BP.En;
 using BP.DA;
 using System.Data.SqlClient;
 using Lizard.DBUtility;
+using System.Data.OracleClient;
+using BP.EIP;
 
 namespace BP.CCOA
 {
@@ -21,8 +23,16 @@ namespace BP.CCOA
         public DataSet GetJsonList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select [column],[id],[title],[showCollapseButton],[height],[url] ");
-            strSql.Append(" FROM V_LAYOUT order by [column],seqno");
+            if (BP.DA.DBAccess.AppCenterDBType == DBType.Oracle9i)
+            {
+                strSql.Append(" SELECT \"COLUMN\",id,title,showCollapseButton,height,url ");
+                strSql.Append(" FROM V_LAYOUT order by \"COLUMN\",seqno");
+            }
+            else
+            {
+                strSql.Append("select [column],id,title,showCollapseButton,height,url ");
+                strSql.Append(" FROM V_LAYOUT order by [column],seqno");
+            }
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -160,29 +170,47 @@ namespace BP.CCOA
         /// </summary>
         public bool Update(IDictionary<string, string> keyValue)
         {
-            StringBuilder strSql = new StringBuilder();
+            StringBuilder sbrSql = new StringBuilder();
 
-            List<SqlParameter> parameters = new List<SqlParameter>();
+            List<SqlParameter> sqlParas = new List<SqlParameter>();
+            //List<OracleParameter> oraParas = new List<OracleParameter>();
+            List<string> strList = new List<string>();
 
             int i = 0;
             foreach (var item in keyValue)
             {
-                strSql.Append("update EIP_LayoutDetail set ");
-                strSql.Append("ColumnNo=@ColumnNo" + i + ",SeqNo=@SeqNo" + i);
-                strSql.Append(" where PanelId=@PanelId" + i + ";");
+                if (BP.DA.DBAccess.AppCenterDBType == DBType.Oracle9i)
+                {
+                    string strSql = "UPDATE EIP_LAYOUTDETAIL SET COLUMNNO='{1}',SEQNO='{2}' WHERE PANELID='{0}'";
+                    strSql = string.Format(strSql, item.Key, item.Value.Split('|')[0], item.Value.Split('|')[1]);
+                    strList.Add(strSql);
+                }
+                else
+                {
+                    sbrSql.Append("UPDATE EIP_LayoutDetail set ");
+                    sbrSql.Append("ColumnNo=@ColumnNo" + i + ",SeqNo=@SeqNo" + i);
+                    sbrSql.Append(" WHERE PanelId=@PanelId" + i + ";");
 
-                SqlParameter sp1 = new SqlParameter("@PanelId" + i, item.Key);
-                SqlParameter sp2 = new SqlParameter("@ColumnNo" + i, item.Value.Split('|')[0]);
-                SqlParameter sp3 = new SqlParameter("@SeqNo" + i, item.Value.Split('|')[1]);
+                    SqlParameter sp1 = new SqlParameter("@PanelId" + i, item.Key);
+                    SqlParameter sp2 = new SqlParameter("@ColumnNo" + i, item.Value.Split('|')[0]);
+                    SqlParameter sp3 = new SqlParameter("@SeqNo" + i, item.Value.Split('|')[1]);
 
-                parameters.Add(sp1);
-                parameters.Add(sp2);
-                parameters.Add(sp3);
+                    sqlParas.Add(sp1);
+                    sqlParas.Add(sp2);
+                    sqlParas.Add(sp3);
+                }
 
                 i++;
             }
-
-            int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters.ToArray());
+            int rows = 0;
+            if (BP.DA.DBAccess.AppCenterDBType == DBType.Oracle9i)
+            {
+                rows = XDBHelper.RunSql(strList);
+            }
+            else
+            {
+                rows = DbHelperSQL.ExecuteSql(sbrSql.ToString(), sqlParas.ToArray());
+            }
             if (rows > 0)
             {
                 return true;
