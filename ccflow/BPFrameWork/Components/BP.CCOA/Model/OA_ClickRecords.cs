@@ -13,6 +13,7 @@ namespace BP.CCOA
         public const string ObjectId = "ObjectId";
         public const string VisitDate = "VisitDate";
         public const string Clicks = "Clicks";
+        public const string VisitId = "VisitId";
     }
     
     public partial class OA_ClickRecords : EntityNoName
@@ -78,6 +79,21 @@ namespace BP.CCOA
                 this.SetValByKey(OA_ClickRecordsAttr.Clicks, value);
             }
         }
+
+        /// <summary>
+        /// 访问日期
+        /// </summary>
+        public String VisitId
+        {
+            get
+            {
+                return this.GetValStringByKey(OA_ClickRecordsAttr.VisitId);
+            }
+            set
+            {
+                this.SetValByKey(OA_ClickRecordsAttr.VisitId, value);
+            }
+        }
         
         #endregion
         
@@ -117,6 +133,7 @@ namespace BP.CCOA
                 map.AddTBString(OA_ClickRecordsAttr.ObjectId, null, "被点击的主键Id", true, false, 0,  50, 50);
                 map.AddTBString(OA_ClickRecordsAttr.VisitDate, null, "访问日期", true, false, 0,  20, 20);
                 map.AddTBInt(OA_ClickRecordsAttr.Clicks, 0, "点击次数", true, false);
+                map.AddTBString(OA_ClickRecordsAttr.VisitId, null, "访问人员", true, false, 0, 50, 50);
               
                 this._enMap = map;
                 return this._enMap;
