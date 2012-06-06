@@ -3,6 +3,7 @@ function DoAutoTo( fk_emp, empName )
 {
    if (window.confirm('您确定要把您的工作授权给['+fk_emp+']吗？')==false)
        return;
+
     var url='Do.aspx?DoType=AutoTo&FK_Emp='+fk_emp;
     WinShowModalDialog(url,'');
     alert('授权成功，请别忘记收回。'); 

@@ -184,7 +184,15 @@ namespace BP.Web.WF
                         this.WinClose();
                         return;
                     case "LogAs":
+                        BP.WF.Port.WFEmp wfemp = new BP.WF.Port.WFEmp(this.FK_Emp);
+                        if (wfemp.AuthorIsOK == false)
+                        {
+                            this.WinCloseWithMsg("ÊÚÈ¨Ê§°Ü");
+                            return;
+                        }
+
                         BP.Port.Emp emp1 = new BP.Port.Emp(this.FK_Emp);
+
                         BP.Web.WebUser.SignInOfGener(emp1, WebUser.SysLang, WebUser.No, true, false);
                         this.WinClose();
                         return;

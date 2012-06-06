@@ -242,7 +242,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
     void btn_Click(object sender, EventArgs e)
     {
         Button btn = (Button)sender;
-
         if (btn.ID == "Btn_Excel")
         {
             Node nd = new Node(this.FK_Node);
@@ -254,7 +253,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
 
             this.Pub2.BindPageIdx(qo.GetCount(), this.PageSize, this.PageIdx, "FlowSearch" + this.PageSmall + ".aspx?FK_Node=" + this.FK_Node);
             qo.DoQuery();
-
 
             try
             {
@@ -358,17 +356,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleMsg colspan=" + colspan + " align=left><img src='./Img/Start.gif' > <b><a href='FlowSearch" + this.PageSmall + ".aspx' >返回</a> - " + fl.Name + "</b></TD>");
         this.Pub1.AddTREnd();
-
-        // GEEntity ge = fl.HisFlowData;
-        //string ens = "ND" + int.Parse(fl.No) + "Rpt";
-        //this.Pub1.AddTR();
-        //this.Pub1.Add("<TD  class=TD  height=800px  width=100% >");
-        //string src = this.Request.ApplicationPath + "/Comm/PanelEns.aspx?EnsName=" + ens;
-        //this.Pub1.Add("<iframe ID='f23' frameborder=0   style='padding:0px;border:0px;'  leftMargin='0'  topMargin='0' src='" + src + "' height='100%' width='100%' scrolling=no  /></iframe>");
-        //this.Pub1.AddTDEnd();
-        //this.Pub1.AddTREnd();
-        //this.Pub1.AddTableEnd();
-        //return;
 
         this.Pub1.AddTR();
         this.Pub1.Add("<TD class=TitleTop colspan=" + colspan + "></TD>");
@@ -678,8 +665,6 @@ public partial class WF_UC_FlowSearch : BP.Web.UC.UCBase3
             default:
                 break;
         }
-
-
 
         if (this.FK_Flow != null)
         {

@@ -23,7 +23,6 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
     protected void Page_Load(object sender, EventArgs e)
     {
         this.Page.Title = this.ToE("Set","设置");
-
         if (WebUser.IsWap == true && this.RefNo == null)
         {
             this.BindTools();
@@ -54,6 +53,9 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
                 break;
             case "Auto":
                 BindAuto();
+                break;
+            case "AutoDtl":
+                BindAutoDtl();
                 break;
             case "Times": // 时效分析
                 BindTimes();
@@ -513,7 +515,6 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
     public void BindProfile()
     {
         BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(WebUser.No);
-
         if (WebUser.IsWap)
             this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
         else
@@ -547,21 +548,16 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.AddTD(tb);
         this.AddTREnd();
 
-
-
         this.AddTR();
         this.AddTD("信息接收方式");
         DDL ddl = new DDL();
         ddl.ID = "DDL_Way";
         ddl.BindSysEnum("AlertWay");
-
         //ddl.Items.Add(new ListItem("不接收", "0"));
         //ddl.Items.Add(new ListItem("手机短信", "1"));
         //ddl.Items.Add(new ListItem("邮件", "2"));
         //ddl.Items.Add(new ListItem("手机短信+邮件", "3"));
-
         ddl.SetSelectItem((int)emp.HisAlertWay);
-
         this.AddTD(ddl);
         this.AddTREnd();
 
@@ -775,13 +771,12 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         switch (BP.SystemConfig.AppCenterDBType)
         {
             case DBType.Oracle9i:
-                sql = "SELECT a.No || a.Name as Empstr,AuthorDate, a.No FROM WF_Emp a WHERE Author='" + WebUser.No + "' AND AuthorIsOK=1";
+                sql = "SELECT a.No || a.Name as Empstr,AuthorDate, a.No,AuthorToDate FROM WF_Emp a WHERE Author='" + WebUser.No + "' AND AuthorIsOK=1";
                 break;
             default:
-                sql = "SELECT a.No + a.Name as Empstr,AuthorDate, a.No FROM WF_Emp a WHERE Author='" + WebUser.No + "' AND AuthorIsOK=1";
+                sql = "SELECT a.No + a.Name as Empstr,AuthorDate, a.No ,AuthorToDate FROM WF_Emp a WHERE Author='" + WebUser.No + "' AND AuthorIsOK=1";
                 break;
         }
-
 
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
 
@@ -814,7 +809,7 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         this.Add("<ul>");
         foreach (DataRow dr in dt.Rows)
         {
-            this.AddLi("<a href=\"javascript:LogAs('" + dr[2] + "')\">" + this.ToE("Authorized", "授权人") + ":" + dr["Empstr"] + " - " + this.ToE("Date", "授权日期") + ":" + dr["AuthorDate"] + "</a>");
+            this.AddLi("<a href=\"javascript:LogAs('" + dr[2] + "')\">" + this.ToE("Authorized", "授权人") + ":" + dr["Empstr"] + "</a> - " + this.ToE("Date", "授权日期") + ":" + dr["AuthorDate"] + "，有效日期：" + dr["AuthorToDate"]);
         }
         this.Add("</ul>");
         this.AddFieldSetEnd();
@@ -823,17 +818,12 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
     {
         string sql = "SELECT a.No,a.Name,b.Name as DeptName FROM Port_Emp a, Port_Dept b WHERE a.FK_Dept=b.No AND a.FK_Dept LIKE '" + WebUser.FK_Dept + "%' ORDER  BY a.FK_Dept ";
         DataTable dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-
         if (WebUser.IsWap)
-            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >Home</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To5", "请选择您要授权的人员"));
+            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >Home</a>-<a href='" + this.PageID + ".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("To5", "请选择您要授权的人员"));
         else
-            this.AddFieldSet(this.ToE("To5", "请选择您要授权的人员")  );
-
-
-        //this.AddFieldSet(this.ToE("To5", "请选择您要授权的人员") );
+            this.AddFieldSet(this.ToE("To5", "请选择您要授权的人员"));
 
         string deptName = null;
-
         this.AddBR();
         this.Add(" <table width='80%' align=center border=1 > ");
         this.AddTR();
@@ -848,8 +838,6 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
             string fk_emp = dr["No"].ToString();
             if (fk_emp == "admin" || fk_emp == WebUser.No)
                 continue;
-
-
             idx++;
             if (dr["DeptName"].ToString() != deptName)
             {
@@ -864,26 +852,80 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
                 this.AddTDIdx(idx);
                 this.AddTD();
             }
-
-
             if (Glo.IsShowUserNoOnly)
-                this.AddTD("<a href=\"javascript:DoAutoTo('" + fk_emp + "','')\" >" + fk_emp + "</a>");
+                this.AddTD("<a href=\"" + this.PageID + ".aspx?RefNo=AutoDtl&FK_Emp=" + fk_emp + "\" >" + fk_emp + "</a>");
             else
-                this.AddTD("<a href=\"javascript:DoAutoTo('" + fk_emp + "','" + dr["Name"] + "')\" >" + fk_emp + " - " + dr["Name"] + "</a>");
-
+                this.AddTD("<a href=\"" + this.PageID + ".aspx?RefNo=AutoDtl&FK_Emp=" + fk_emp + "\" >" + fk_emp + "-" + dr["Name"] + "</a>");
             this.AddTREnd();
         }
         this.AddTableEnd();
         this.AddBR();
-
         this.AddFieldSetEnd();
+    }
+    /// <summary>
+    /// 授权明细
+    /// </summary>
+    public void BindAutoDtl()
+    {
+        if (WebUser.IsWap)
+            this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >Home</a>-<a href='" + this.PageID + ".aspx'>" + this.ToE("Set", "设置") + "</a>-授权详细信息");
+        else
+            this.AddFieldSet("授权详细信息");
+
+        Emp emp = new Emp(this.Request["FK_Emp"]);
+        this.AddBR();
+        this.AddTable();
+        this.AddTR();
+        this.AddTDTitle("项目");
+        this.AddTDTitle("内容");
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTD("授权给:");
+        this.AddTD(emp.No+"    "+emp.Name);
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTD("收回授权日期:");
+        TB tb = new TB();
+        tb.ID = "TB_DT";
+        System.DateTime dtNow = System.DateTime.Now;
+        dtNow = dtNow.AddDays(14);
+        tb.Text = dtNow.ToString(DataType.SysDataTimeFormat );
+        tb.ShowType = TBType.DateTime;
+        tb.Attributes["onfocus"] = "WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});";
+        this.AddTD(tb);
+        this.AddTREnd();
+
+        Button btnSaveIt = new Button();
+        btnSaveIt.ID = "Btn_Save";
+        btnSaveIt.Text = "Save";
+        btnSaveIt.Click += new EventHandler(btnSaveIt_Click);
+        this.AddTR();
+        this.AddTD("colspan=2", btnSaveIt);
+        this.AddTREnd();
+
+        this.AddTR();
+        this.AddTDBigDoc("colspan=2", "说明:在您确定了收回授权日期后，被授权人不能再以您的身份登陆，<br>如果未到指定的日期您可以取回授权。");
+        this.AddTREnd();
+        this.AddTableEnd();
+        this.AddFieldSetEnd();
+    }
+    void btnSaveIt_Click(object sender, EventArgs e)
+    {
+        BP.WF.Port.WFEmp emp = new BP.WF.Port.WFEmp(WebUser.No);
+        emp.AuthorDate = BP.DA.DataType.CurrentData;
+        emp.Author = this.Request["FK_Emp"];
+        emp.AuthorToDate = this.GetTBByID("TB_DT").Text;
+        emp.AuthorIsOK = true;
+        emp.Update();
+        this.Response.Redirect( this.PageID+ ".aspx", true);
     }
     public void BindPer()
     {
         if (WebUser.Auth != null)
         {
             this.AddFieldSet(this.ToE("Note", "提示"));
-
             this.AddBR();
             this.Add(this.ToE("To8", "您的登陆是授权模式，您不能查看个人信息。"));
             this.AddUL();
@@ -902,6 +944,8 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
             this.AddFieldSet("<a href=Home.aspx ><img src='./Img/Home.gif' border=0 >" + this.ToE("Home", "主页") + "</a>-<a href='"+this.PageID+".aspx'>" + this.ToE("Set", "设置") + "</a>-" + this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
         else
             this.AddFieldSet(this.ToE("BaseInfo", "基本信息") + WebUser.Auth);
+
+        this.Add("<p class=BigDoc >");
 
         this.Add(this.ToE("UserAcc", "用户帐号") + ":" + WebUser.No);
         this.Add(this.ToE("UserName", "用户名") + ":" + WebUser.Name);
@@ -922,13 +966,11 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         }
         else
         {
-            this.Add(this.ToE("To11", "授权情况：授权给") + "：<font color=green>" + au.Author + "</font>，" + this.ToE("Date", "授权日期") + " : <font color=green>" + au.AuthorDate + "</font> <a href=\"javascript:TakeBack('" + au.Author + "')\" >" + this.ToE("CelAu", "取消授权") + "</a>");
+            this.Add(this.ToE("To11", "授权情况：授权给") + "：<font color=green>" + au.Author + "</font>，" + this.ToE("Date", "授权日期") + " : <font color=green>" + au.AuthorDate + "</font>，收回授权日期： <font color=green>" + au.AuthorToDate + "</font>。<br>我要<a href=\"javascript:TakeBack('" + au.Author + "')\" >" + this.ToE("CelAu", "取消授权") + "</a>");
         }
 
-        this.AddBR();
 
-        this.Add("<a href='" + this.PageID + ".aspx?RefNo=Pass'>" + this.ToE("ChangePass", "修改密码") + "</a>");
-
+        this.Add("   我要<a href='" + this.PageID + ".aspx?RefNo=Pass'>" + this.ToE("ChangePass", "修改密码") + "</a>");
 
         this.AddBR("<hr><b>" + this.ToE("InfoAlert", "信息提示") + "：</b><a href='" + this.PageID + ".aspx?RefNo=Profile'>" + this.ToE("Edit", "设置/修改") + "</a>");
         this.Add("<br>" + this.ToE("ToAlert1", "接受短消息提醒手机号") + " : <font color=green>" + au.TelHtml + "</font>");
@@ -951,6 +993,10 @@ public partial class WF_UC_ToolWap : BP.Web.UC.UCBase3
         {
             this.Add(" - <font color=green>" + st.Name + "</font>");
         }
+
+
+        this.Add("</p>");
+
         this.AddFieldSetEnd();
     }
 }
