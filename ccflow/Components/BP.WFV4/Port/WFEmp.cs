@@ -64,6 +64,10 @@ namespace BP.WF.Port
         /// 是否处于授权状态
         /// </summary>
         public const string AuthorIsOK = "AuthorIsOK";
+        /// <summary>
+        /// 授权自动收回日期
+        /// </summary>
+        public const string AuthorToDate = "AuthorToDate";
         public const string Email = "Email";
         public const string AlertWay = "AlertWay";
         public const string Stas = "Stas";
@@ -207,6 +211,17 @@ namespace BP.WF.Port
                 SetValByKey(WFEmpAttr.AuthorDate, value);
             }
         }
+        public string AuthorToDate
+        {
+            get
+            {
+                return this.GetValStringByKey(WFEmpAttr.AuthorToDate);
+            }
+            set
+            {
+                SetValByKey(WFEmpAttr.AuthorToDate, value);
+            }
+        }
         public string FtpUrl
         {
             get
@@ -254,7 +269,18 @@ namespace BP.WF.Port
         {
             get
             {
-                return this.GetValBooleanByKey(WFEmpAttr.AuthorIsOK);
+                bool b= this.GetValBooleanByKey(WFEmpAttr.AuthorIsOK);
+                if (b == false)
+                    return false;
+
+                if (this.AuthorToDate.Length < 4)
+                    return true;
+
+                DateTime dt = DataType.ParseSysDateTime2DateTime(this.AuthorToDate);
+                if (dt > DateTime.Now)
+                    return false;
+
+                return true;
             }
             set
             {
@@ -312,6 +338,7 @@ namespace BP.WF.Port
                 map.AddTBString(WFEmpAttr.Author, null, "授权人", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.AuthorDate, null, "授权日期", true, true, 0, 50, 20);
                 map.AddTBInt(WFEmpAttr.AuthorIsOK, 0, "是否授权成功", true, true);
+                map.AddTBDate(WFEmpAttr.AuthorToDate, null, "授权到日期", true, true);
                 map.AddTBString(WFEmpAttr.Stas, null, "岗位s", true, true, 0, 3000, 20);
                 map.AddTBString(WFEmpAttr.FtpUrl, null, "FtpUrl", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.Msg, null, "Msg", true, true, 0, 4000, 20);
