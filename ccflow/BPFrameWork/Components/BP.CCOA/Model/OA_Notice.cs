@@ -248,7 +248,7 @@ namespace BP.CCOA
                 map.AddTBDateTime(OA_NoticeAttr.CreateTime, "创建时间", false, false);
                 map.AddTBInt(OA_NoticeAttr.IsRead, 0, "", true, false);
                 map.AddTBDateTime(OA_NoticeAttr.UpDT, "更新时间", false, false);
-                map.AddTBString(OA_NoticeAttr.AccessType, null, "访问类型", true, false, 4, 4, 20);
+                map.AddTBString(OA_NoticeAttr.AccessType, null, "访问类型", true, false, 0, 4, 20);
                 map.AddTBInt(OA_NoticeAttr.Status, 0, "", true, false);
 
                 this._enMap = map;
