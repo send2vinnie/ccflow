@@ -13,7 +13,7 @@
 
         <frameset cols="180,*" frameborder="NO" border="0" framespacing="0">
             <frame src="Left.aspx" name="leftFrame" noresize="noresize" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" target="main" ></frame>
-            <frame src="Welcome.aspx" name="main" marginwidth="0" marginheight="0" frameborder="0" scrolling="auto" target="_self" ></frame>
+            <frame src="../WF/StartSmall.aspx" name="main" marginwidth="0" marginheight="0" frameborder="0" scrolling="auto" target="_self" ></frame>
         </frameset>
     
     <frame  src="Bottom.aspx" noresize="noresize" frameborder="NO" name="btmFrame" scrolling="no" marginwidth="0" marginheight="0" target="_self"> 
