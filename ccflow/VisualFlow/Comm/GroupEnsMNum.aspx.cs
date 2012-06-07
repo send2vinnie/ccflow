@@ -705,7 +705,7 @@ namespace BP.Web.Comm
                             case DBType.Informix:
                                 where += " FK_Dept LIKE '%'||:V_Dept||'%'   AND ";
                                 break;
-                            case DBType.SQL2000_OK:
+                            case DBType.SQL2000:
                             default:
                                 where += " FK_Dept LIKE  "+SystemConfig.AppCenterDBVarStr+"V_Dept+'%'   AND ";
                                 //  WHERE += " FK_Dept LIKE '@V_Dept%'   AND ";
