@@ -2406,7 +2406,7 @@ namespace BP.WF
             switch (SystemConfig.AppCenterDBType)
             {
                 case DBType.Oracle9i:
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     sql = "SELECT distinct  KeyOfEn FROM Sys_MapAttr WHERE FK_MapData IN ( SELECT 'ND' " + SystemConfig.AppCenterDBAddStringStr + " cast(NodeID as varchar(20)) FROM WF_Node WHERE FK_Flow='" + this.No + "')";
                     break;
                 case DBType.Informix:

@@ -2226,7 +2226,7 @@ namespace BP.WF
 
                             tkParent.EmpTo = WebUser.No;
                             tkParent.EmpToT = WebUser.Name;
-                            tkParent.Msg = "<a href=WFRpt.aspx?FK_Flow=" + this.HisNode.FK_Flow + "&WorkID=" + this.HisWork.OID + " target=_b >调起子流程(" + this.HisNode.FlowName + ")</a>";
+                            tkParent.Msg = "<a href=NDRpt.aspx?FK_Flow=" + this.HisNode.FK_Flow + "&WorkID=" + this.HisWork.OID + " target=_b >调起子流程(" + this.HisNode.FlowName + ")</a>";
                             tkParent.MyPK = tkParent.WorkID + "_" + tkParent.FID + "_" + (int)tkParent.HisActionType + "_" + tkParent.NDFrom + "_" + DateTime.Now.ToString("yyMMddhhmmss");
                             tkParent.Insert();
                         }
