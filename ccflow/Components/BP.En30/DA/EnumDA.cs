@@ -12,7 +12,7 @@ namespace BP.DA
         /// <summary>
         /// sql 2000
         /// </summary>
-        SQL2000_OK,
+        SQL2000,
         /// <summary>
         /// oracle 9i 
         /// </summary>

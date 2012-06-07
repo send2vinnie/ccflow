@@ -164,7 +164,7 @@ namespace BP.DA
 		{
             switch (DBAccess.AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     SqlConnection conn = new SqlConnection(SystemConfig.AppCenterDSN);
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
@@ -219,7 +219,7 @@ namespace BP.DA
 		/// <returns>Ö´ÐÐºóµÄTable</returns>
 		public static DataTable RunSPReturnDataTable(string spName,  Paras paras )
 		{
-			if (DBAccess.AppCenterDBType==DBType.SQL2000_OK)
+			if (DBAccess.AppCenterDBType==DBType.SQL2000)
 				return DBProcedure.RunSPReturnDataTable(spName,paras,(SqlConnection)DBAccess.GetAppCenterDBConn );
 			else
 				return DBProcedure.RunSPReturnDataTable(spName,paras,(SqlConnection)DBAccess.GetAppCenterDBConn ); 

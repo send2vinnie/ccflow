@@ -226,7 +226,7 @@ namespace BP.DA
             int i = 0;
             switch (BP.SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.Access:
                     ConnOfSQL connofsql = GetAppCenterDBConn as ConnOfSQL;
                     i = DBProcedure.RunSP(spName, connofsql.Conn);
@@ -266,7 +266,7 @@ namespace BP.DA
         {
             switch (BP.SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     return DBProcedure.RunSP(spName, (SqlConnection)DBAccess.GetAppCenterDBConn);
                 case DBType.MySQL:
                     return DBProcedure.RunSP(spName, (MySqlConnection)DBAccess.GetAppCenterDBConn);
@@ -295,7 +295,7 @@ namespace BP.DA
             int i = 0;
             switch (BP.SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.MySQL:
                 case DBType.Access:
                     ConnOfSQL conn = GetAppCenterDBConn as ConnOfSQL;
@@ -352,7 +352,7 @@ namespace BP.DA
         {
             switch (BP.SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.Access:
                     return DBProcedure.RunSPReturnDataTable(spName, (SqlConnection)DBAccess.GetAppCenterDBConn);
                 case DBType.Oracle9i:
@@ -398,7 +398,7 @@ namespace BP.DA
         {
             switch (BP.SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.Access:
                     return DBProcedure.RunSPReturnDataTable(spName, paras, (SqlConnection)DBAccess.GetAppCenterDBConn);
                 case DBType.Oracle9i:
@@ -641,7 +641,7 @@ namespace BP.DA
                 string connstr = BP.SystemConfig.AppCenterDSN;
                 switch (AppCenterDBType)
                 {
-                    case DBType.SQL2000_OK:
+                    case DBType.SQL2000:
                         if (HisConnOfSQLs == null)
                         {
                             HisConnOfSQLs = new ConnOfSQLs();
@@ -706,7 +706,7 @@ namespace BP.DA
                 switch (AppCenterDBType)
                 {
                     case DBType.Oracle9i:
-                    case DBType.SQL2000_OK:
+                    case DBType.SQL2000:
                     case DBType.Informix:
                     case DBType.Access:
                         return RunSQL("DROP TABLE " + table);
@@ -1155,7 +1155,7 @@ namespace BP.DA
 
             switch (AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     return RunSQL_200705_SQL(sql);
                 case DBType.Oracle9i:
                     Paras ps = new Paras();
@@ -1192,7 +1192,7 @@ namespace BP.DA
             {
                 switch (AppCenterDBType)
                 {
-                    case DBType.SQL2000_OK:
+                    case DBType.SQL2000:
                         return RunSQL_200705_SQL(sql, paras);
                     case DBType.Oracle9i:
                         return RunSQL_200705_Ora(sql.Replace("]","").Replace("[",""), paras);
@@ -2286,7 +2286,7 @@ namespace BP.DA
 
             switch (AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     return RunSQLReturnTable_200705_SQL(sql);
                 case DBType.Oracle9i:
                     return RunSQLReturnTable_200705_Ora(sql,new Paras());
@@ -2323,7 +2323,7 @@ namespace BP.DA
 
             switch (AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     return RunSQLReturnTable_200705_SQL(sql, paras);
                 case DBType.Oracle9i:
                     return RunSQLReturnTable_200705_Ora(sql,paras);
@@ -2678,7 +2678,7 @@ namespace BP.DA
                 case DBType.Oracle9i:
                     dt = DBAccess.RunSQLReturnTable_200705_Ora(sql, paras);
                     break;
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     dt = DBAccess.RunSQLReturnTable_200705_SQL(sql, paras);
                     break;
                 case DBType.MySQL:
@@ -2712,7 +2712,7 @@ namespace BP.DA
                 case DBType.Oracle9i:
                     dt = DBAccess.RunSQLReturnTable_200705_Ora(sql, new Paras());
                     break;
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     dt = DBAccess.RunSQLReturnTable_200705_SQL(sql, new Paras());
                     break;
                 case DBType.Informix:
@@ -2776,7 +2776,7 @@ namespace BP.DA
             {
                 case DBType.Access:
                     return false;
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     sql = "SELECT column_name, table_name,CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE table_name =@Tab ";
                     break;
                 case DBType.Oracle9i:
@@ -2814,7 +2814,7 @@ namespace BP.DA
                     if (obj.IndexOf(".") != -1)
                         obj = obj.Split('.')[1];
                     return IsExits("select tname from tab WHERE  tname = upper(:obj) ",ps);
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     return IsExits("SELECT name  FROM sysobjects  WHERE  name = '" + obj + "'");
                 case DBType.Informix:
                     return IsExits("select tabname from systables where tabname = '"+obj.ToLower()+"'");
@@ -2867,7 +2867,7 @@ namespace BP.DA
                 case DBType.Access:
                     return false;
                     break;
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     i = DBAccess.RunSQLReturnValInt("SELECT  COUNT(*)  FROM information_schema.COLUMNS  WHERE TABLE_NAME='"+table+"' AND COLUMN_NAME='"+col+"'", 0);
                     break;
                 case DBType.MySQL:

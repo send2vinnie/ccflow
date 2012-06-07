@@ -80,7 +80,7 @@ namespace BP.DA
                     case DBType.Oracle9i:
                         return ":";
                     case DBType.MySQL:
-                    case DBType.SQL2000_OK:
+                    case DBType.SQL2000:
                         return "@";
                     case DBType.Informix:
                         return "?";
@@ -101,7 +101,7 @@ namespace BP.DA
 					case DBUrlType.AppCenterDSN:
 						return DBAccess.AppCenterDBType ; 
 					case DBUrlType.DBAccessOfMSSQL2000:
-						return DBType.SQL2000_OK;
+						return DBType.SQL2000;
 					case DBUrlType.DBAccessOfOLE:
 						return DBType.Access;
 					case DBUrlType.DBAccessOfOracle9i1:

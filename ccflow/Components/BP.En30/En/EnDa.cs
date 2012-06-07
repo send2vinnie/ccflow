@@ -88,7 +88,7 @@ namespace BP.DA
                     case DBUrlType.AppCenterDSN:
                         switch (SystemConfig.AppCenterDBType)
                         {
-                            case DBType.SQL2000_OK:
+                            case DBType.SQL2000:
                             case DBType.Oracle9i:
                             case DBType.MySQL:
                                 return DBAccess.RunSQL(en.SQLCash.GetUpdateSQL(en, keys), SqlBuilder.GenerParas(en, keys));

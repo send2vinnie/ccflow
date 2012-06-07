@@ -158,14 +158,14 @@ namespace BP.En
 			this._ens =ens;
             this.HisDBType = this._ens.GetNewEntity.EnMap.EnDBUrl.DBType;
 		}
-        public BP.DA.DBType HisDBType = DBType.SQL2000_OK;
+        public BP.DA.DBType HisDBType = DBType.SQL2000;
         public string HisVarStr
         {
             get
             {
                 switch (this.HisDBType)
                 {
-                    case DBType.SQL2000_OK:
+                    case DBType.SQL2000:
                     case DBType.Access:
                     case DBType.MySQL:
                         return "@";
@@ -1115,7 +1115,7 @@ namespace BP.En
 
                             this.Top = pageSize;
                             return this.doEntitiesQuery();
-                        case DBType.SQL2000_OK:
+                        case DBType.SQL2000:
                         default:
                             // sql = "SELECT  " + pk + " FROM " + map.PhysicsTable + " WHERE  order by  " + pk + isDesc;
                             toIdx = top + pageSize;
@@ -1291,7 +1291,7 @@ namespace BP.En
                         }
                     }
                     break;
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.MySQL:
                 default:
                     break;

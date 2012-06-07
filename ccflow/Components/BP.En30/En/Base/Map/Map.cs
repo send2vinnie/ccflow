@@ -1328,7 +1328,7 @@ namespace BP.En
                         else
                             return false;
 
-                    case DBType.SQL2000_OK:
+                    case DBType.SQL2000:
                         sql = "select xtype from sysobjects WHERE name =@v";
                         DataTable dt1 = DBAccess.RunSQLReturnTable(sql, "v", this.PhysicsTableExt);
                         if (dt1.Rows.Count == 0)

@@ -1043,7 +1043,7 @@ namespace BP
                 {
                     case "MSSQL2000":
                     case "MSSQL":
-                        return BP.DA.DBType.SQL2000_OK;
+                        return BP.DA.DBType.SQL2000;
                     case "Oracle":
                         return BP.DA.DBType.Oracle9i;
                     case "MySQL":
@@ -1086,7 +1086,7 @@ namespace BP
                 {
                     case BP.DA.DBType.Oracle9i:
                         return "substr";
-                    case BP.DA.DBType.SQL2000_OK:
+                    case BP.DA.DBType.SQL2000:
                         return "substring";
                     case BP.DA.DBType.Informix:
                         return "MySubString";

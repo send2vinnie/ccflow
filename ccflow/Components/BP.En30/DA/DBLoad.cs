@@ -39,7 +39,7 @@ namespace BP
 			SqlDataAdapter sqlada = null;
 			OracleDataAdapter oraada = null;
 			DBType dbt = DBAccess.AppCenterDBType;
-			if( dbt == DBType.SQL2000_OK )
+			if( dbt == DBType.SQL2000 )
 			{
 				sqlada = new SqlDataAdapter( select ,(SqlConnection)DBAccess.GetAppCenterDBConn );
 				SqlCommandBuilder bl = new SqlCommandBuilder( sqlada );

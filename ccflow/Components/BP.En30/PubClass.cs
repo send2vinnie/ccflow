@@ -1003,7 +1003,7 @@ namespace BP
 
                         }
                         break;
-                    case DBType.SQL2000_OK:
+                    case DBType.SQL2000:
                          try
                         {
                             if (myen.EnMap.PhysicsTable.Contains("."))
@@ -1076,7 +1076,7 @@ namespace BP
                             case DBType.Informix:
                                 DBAccessOfOracle9i.RunSQL(SqlBuilder.Insert(en));
                                 break;
-                            case DBType.SQL2000_OK:
+                            case DBType.SQL2000:
                                 DBAccessOfMSSQL2000.RunSQL(SqlBuilder.Insert(en));
                                 break;
                             case DBType.Access:

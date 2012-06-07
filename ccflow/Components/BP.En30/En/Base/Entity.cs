@@ -304,7 +304,7 @@ namespace BP.En
                 string field = this.EnMap.GetFieldByKey(attrKey);
                 switch (this.EnMap.EnDBUrl.DBType)
                 {
-                    case DBType.SQL2000_OK:
+                    case DBType.SQL2000:
                         sql = "SELECT CONVERT(INT, MAX(" + field + ") )+1 AS No FROM " + this.EnMap.PhysicsTable;
                         break;
                     case DBType.Oracle9i:
@@ -353,7 +353,7 @@ namespace BP.En
 
             switch (this.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     sql = "SELECT CONVERT(INT, MAX([" + field + "]) )+1 AS Num FROM " + this.EnMap.PhysicsTable + " WHERE " + attrGroupKey + "='" + attrGroupVal + "'";
                     break;
                 case DBType.Oracle9i:
@@ -408,7 +408,7 @@ namespace BP.En
                 case DBType.Informix:
                     sql = "SELECT   MAX(" + f + ") +1 AS No FROM " + this.EnMap.PhysicsTable;
                     break;
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     sql = "SELECT CONVERT(INT, MAX(" + this.EnMap.GetFieldByKey(attrKey) + ") )+1 AS No FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetFieldByKey(attrGroupKey1) + "='" + attrGroupVal1 + "' AND " + this.EnMap.GetFieldByKey(attrGroupKey2) + "='" + attrGroupVal2 + "'";
                     break;
                 case DBType.Access:
@@ -571,7 +571,7 @@ namespace BP.En
             {
                 switch (SystemConfig.AppCenterDBType)
                 {
-                    case DBType.SQL2000_OK:
+                    case DBType.SQL2000:
                         this.RunSQL(this.SQLCash.Insert, SqlBuilder.GenerParas(this, null));
                         break;
                     case DBType.Access:
@@ -906,7 +906,7 @@ namespace BP.En
                     switch (this.EnMap.EnDBUrl.DBType)
                     {
 
-                        case DBType.SQL2000_OK:
+                        case DBType.SQL2000:
                             selectSQL += SqlBuilder.GetKeyConditionOfMS(this);
                             break;
                         case DBType.Oracle9i:
@@ -1135,7 +1135,7 @@ namespace BP.En
             switch (this.EnMap.EnDBUrl.DBType)
             {
                 case DBType.Oracle9i:
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.MySQL:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.PK + " =" + this.HisDBVarStr + pk);
                 default:
@@ -1154,7 +1154,7 @@ namespace BP.En
             switch (this.EnMap.EnDBUrl.DBType)
             {
                 case DBType.Oracle9i:
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.Informix:
                 case DBType.MySQL:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetAttrByKey(attr).Field + " =" + this.HisDBVarStr + attr, ps);
@@ -1172,7 +1172,7 @@ namespace BP.En
             switch (this.EnMap.EnDBUrl.DBType)
             {
                 case DBType.Oracle9i:
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.Informix:
                 case DBType.Access:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetAttrByKey(attr1).Field + " =" + this.HisDBVarStr + attr1 + " AND " + this.EnMap.GetAttrByKey(attr2).Field + " =" + this.HisDBVarStr + attr2, ps);
@@ -1190,7 +1190,7 @@ namespace BP.En
             switch (this.EnMap.EnDBUrl.DBType)
             {
                 case DBType.Oracle9i:
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.Access:
                     return DBAccess.RunSQL("DELETE FROM " + this.EnMap.PhysicsTable + " WHERE " + this.EnMap.GetAttrByKey(attr1).Field + " =" + this.HisDBVarStr + attr1 + " AND " + this.EnMap.GetAttrByKey(attr2).Field + " =" + this.HisDBVarStr + attr2 + " AND " + this.EnMap.GetAttrByKey(attr3).Field + " =:" + attr3, ps);
                 default:
@@ -1838,7 +1838,7 @@ namespace BP.En
                 case DBType.Informix:
                     DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOfInfoMix(this));
                     break;
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     DBAccess.RunSQL(SqlBuilder.GenerCreateTableSQLOfMS(this));
                     break;
                 case DBType.MySQL:
@@ -2293,7 +2293,7 @@ namespace BP.En
 
             switch (SystemConfig.AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     this.CheckPhysicsTable_SQL();
                     break;
                 case DBType.Oracle9i:

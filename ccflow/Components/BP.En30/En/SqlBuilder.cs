@@ -297,7 +297,7 @@ namespace BP.En
             string sql = "";
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.MySQL:
                     sql = SqlBuilder.SelectSQLOfMS(en, 1) + "   AND ( " + SqlBuilder.GenerWhereByPK(en, "@") + " )";
                     break;
@@ -324,7 +324,7 @@ namespace BP.En
             string sql = null;
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     sql = SqlBuilder.SelectSQLOfMS(en, 1) + " AND " + SqlBuilder.GenerWhereByPK(en, "@");
                     break;
                 case DBType.MySQL:
@@ -351,7 +351,7 @@ namespace BP.En
         {
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.MySQL:
                 case DBType.Access:
                     if (en.EnMap.HisFKAttrs.Count == 0)
@@ -649,7 +649,7 @@ namespace BP.En
                     return GenerCreateTableSQLOfOra_OK(en);
                 case DBType.Informix:
                     return GenerCreateTableSQLOfInfoMix(en);
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.Access:
                     return GenerCreateTableSQLOfMS(en);
                 default:
@@ -1234,7 +1234,7 @@ namespace BP.En
         {
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     return SqlBuilder.SelectSQLOfMS(en, topNum);
                 case DBType.MySQL:
                     return SqlBuilder.SelectSQLOfMySQL(en, topNum);
@@ -1259,7 +1259,7 @@ namespace BP.En
         {
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     return SqlBuilder.SelectCountSQLOfMS(en);
                 case DBType.Access:
                     return SqlBuilder.SelectSQLOfOLE(en, 0);
@@ -2026,7 +2026,7 @@ namespace BP.En
 
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.Access:
                 case DBType.MySQL:
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
@@ -2336,7 +2336,7 @@ namespace BP.En
             string sql = "";
             switch (en.EnMap.EnDBUrl.DBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 case DBType.Access:
                 case DBType.MySQL:
                     sql = "UPDATE " + en.EnMap.PhysicsTable + " SET " + val.Substring(1) +
