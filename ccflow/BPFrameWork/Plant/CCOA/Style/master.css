@@ -17,7 +17,7 @@
     border-top: solid 3px #7286ab;
     font-size: 16px;
     font-family: 宋体;
-    font-weight:bold;
+    font-weight: bold;
 }
 
 .header
@@ -66,4 +66,53 @@
     list-style-type: none;
     padding-left: 5px;
     padding-right: 5px;
+}
+.login
+{
+    /* border: solid 1px #b7c2c9;*/
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    line-height: 166.6%;
+    margin-top: 248px;
+    margin-left: 418px;
+}
+.ErrorMsg
+{
+    font-size: 11px;
+    color: Red;
+}
+.inputText
+{
+    /*  background: rgb(238, 243, 248);   height: 20px;  line-height: 17px; font-size: 16px;     font-weight: 700;   padding-bottom: 6px;     padding-left: 8px;     padding-right: 8px;     padding-top: 7px;*/
+    border-style: none;
+    color: #333;
+    font-family: Verdana;
+    vertical-align: middle;
+}
+.loginButton
+{
+    background: url('Images/bg_v5.png') no-repeat 0 -208px;
+    width: 110px;
+    height: 35px;
+    text-align: center;
+    border-style: none;
+    cursor:pointer;
+}
+#loginBody
+{
+    width: 1195px;
+    height: 723px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#theme
+{
+    padding-bottom: 50px;
+    padding-top: 50px;
+    padding-right: 100px;
+    width: 900px;
+    height: 440px;
+    margin-left: auto;
+    margin-right: auto;
 }

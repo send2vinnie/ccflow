@@ -84,7 +84,12 @@ public partial class CCOA_Home : BasePage
             //new BP.CCOA.EIP_Layout().CheckPhysicsTable();
             //new BP.CCOA.EIP_LayoutDetail().CheckPhysicsTable();
 
-            new BP.CCOA.OA_NewsAttach().CheckPhysicsTable();
+            //new BP.CCOA.OA_NewsAttach().CheckPhysicsTable();
+
+            //new BP.CCOA.OA_ClickRecords().CheckPhysicsTable();
+            //new BP.CCOA.OA_NoticeAuth().CheckPhysicsTable();
+            //new BP.CCOA.OA_Notice().CheckPhysicsTable();
+            new BP.CCOA.OA_NewsAuth().CheckPhysicsTable();
         }
     }
 }

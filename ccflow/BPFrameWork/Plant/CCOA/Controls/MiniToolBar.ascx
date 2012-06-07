@@ -46,10 +46,12 @@
     }
 
     function add() {
-        //alert("start");
         mini.openTop({
             url: "Port_Dept/Add.aspx",
-            title: "新增", width: 600, height: 360,
+            title: "新增",
+            width: 600, 
+            height: 360,
+            showMaxButton: false,
             onload: function () {
                 //alert("success!");
                 //var iframe = this.getIFrameEl();
@@ -57,7 +59,14 @@
                 //iframe.contentWindow.SetData(data);
             },
             ondestory: function (action) {
-                //grid.reload();
+                if (action == "ok") {
+                    var iframe = this.getIFrameEl();
+                    var data = iframe.contentWindow.GetData();
+                    data = mini.clone(data);
+
+                    //btnEdit1.setValue(data.id);
+                    //btnEdit1.setText(data.text);
+                }
             }
         });
     }

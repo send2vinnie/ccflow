@@ -76,8 +76,16 @@
                             新闻类型 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <%--  <asp:TextBox ID="txtNewsType" runat="server" Width="200px"></asp:TextBox>--%>
                             <lizard:XDropDownList ID="ddlNewsType" runat="server" Width="100px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="25" width="30%" align="right">
+                            选择发布对象 ：
+                        </td>
+                        <td height="25" width="*" align="left">
+                            <lizard:XTextBox ID="xtxtReader" runat="server" Width="100px" />
+                            <a href="#" onclick="onSelect()">选择</a>
                         </td>
                     </tr>
                     <tr>

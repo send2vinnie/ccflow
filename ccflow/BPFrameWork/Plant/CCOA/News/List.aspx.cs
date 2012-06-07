@@ -36,6 +36,7 @@ namespace Lizard.OA.Web.OA_News
                 int rowsCount = this.GetQueryRowsCount();
                 this.XPager1.InitControl(this.m_PageSize, rowsCount);
 
+                //this.MiniToolBar1.AddClickButton("icon-addfolder", "增加（弹窗）", "add()");
                 BindData();
             }
         }

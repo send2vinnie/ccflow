@@ -4,47 +4,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link href="Style/master.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
-        .login
+        .style1
         {
-            background-image: url('Images/login.jpg') no-repeat;
-            border: solid 1px #e5e5e5;
-            margin-left: auto;
-            margin-right: auto;
-            width:300px;
+            height: 75px;
         }
     </style>
 </head>
-<body>
+<body style="background: #D6E2EE;">
     <form id="form1" runat="server">
-    <div>
-        <div class="login">
-            <table>
-                <tr>
-                    <td>
-                        用户名：
-                    </td>
-                    <td>
-                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        密码：
-                    </td>
-                    <td>
-                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <asp:Button ID="btnLogin" runat="server" Text="登录" /><asp:Button ID="btnReset" runat="server"
-                            Text="重置" />
-                    </td>
-                </tr>
-            </table>
+    <div id="loginBody" style="background: url('Images/login.jpg') no-repeat;">
+        <div id="theme">
+            <div class="login">
+                <div style="height:24px;">
+                    <asp:TextBox ID="txtUser" runat="server" CssClass="inputText" Width="223px" Height="14px"></asp:TextBox>
+                </div>
+                <div style="height:24px; margin-top:5px;">
+                    <asp:TextBox ID="txtPass" runat="server" CssClass="inputText"  Width="223px" Height="14px"></asp:TextBox>
+                </div>
+                <div style="height:24px; margin-top:82px; margin-left:24px;">
+                    <asp:Button ID="btnLogin" runat="server" OnClick="btnLogin_Click" CssClass="loginButton" />
+                </div>
+                <asp:Label ID="lblMsg" runat="server" CssClass="ErrorMsg" />
+            </div>
         </div>
     </div>
     </form>

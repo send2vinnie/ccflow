@@ -2,7 +2,7 @@
     Inherits="Lizard.OA.Web.OA_News.List" %>
 
 <%@ Register Src="~/CCOA/Controls/MiniPager.ascx" TagPrefix="xuc" TagName="MiniPager" %>
-<%@ Register Src="../Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
+<%@ Register Src="~/Comm/Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -13,13 +13,13 @@
 <body>
     <form runat="server">
     <div>
-        <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
+        <uc1:MiniToolBar ID="MiniToolBar1" runat="server" PopAddUrl="News/Add.aspx" />
         <!--Search end-->
         <br />
-        <lizard:XGridView ID="gridView" runat="server"  Width="100%" CellPadding="3"
-            OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
-            OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
-            RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated" CssClass="lizard-grid">
+        <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
+            BorderWidth="1px" DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
+            PageSize="10" RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated"
+            CssClass="lizard-grid">
             <Columns>
                 <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
                     <ItemTemplate>
@@ -45,7 +45,11 @@
                 <asp:BoundField DataField="CreateTime" HeaderText="发布时间" SortExpression="CreateTime"
                     ItemStyle-HorizontalAlign="Center" />
                 <asp:BoundField DataField="Clicks" HeaderText="点击量" SortExpression="Clicks" ItemStyle-HorizontalAlign="Center" />
-                <asp:BoundField DataField="IsRead" HeaderText="是否阅读" SortExpression="IsRead" ItemStyle-HorizontalAlign="Center" />
+                <asp:TemplateField HeaderText="是否阅读" SortExpression="IsRead" ItemStyle-HorizontalAlign="Center">
+                    <ItemTemplate>
+                        <asp:Label ID="lblIsRead" runat="server" Text='<%# XTool.ConvertBooleanText(Eval("IsRead")) %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="UpDT" HeaderText="更新时间" SortExpression="UpDT" ItemStyle-HorizontalAlign="Center"
                     Visible="false" />
                 <asp:BoundField DataField="UpUser" HeaderText="更新人" SortExpression="UpUser" ItemStyle-HorizontalAlign="Center"

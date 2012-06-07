@@ -70,7 +70,7 @@
                             新闻类型 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNewsType" runat="server" Width="200px"></asp:TextBox>
+                            <lizard:XDropDownList ID="ddlNewsType" runat="server" Width="100px" />
                         </td>
                     </tr>
                     <tr>
