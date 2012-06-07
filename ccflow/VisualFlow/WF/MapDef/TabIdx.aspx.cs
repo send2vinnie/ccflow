@@ -61,7 +61,7 @@ public partial class WF_MapDef_TabIdx : WebPage
             this.Pub1.AddTD(dr["Name"].ToString());
             this.Pub1.AddTD(dr["Idx"].ToString());
             this.Pub1.AddTD("<a href='TabIdx.aspx?DoType=Up&FK_MapData=" + this.FK_MapData + "&KeyOfEn=" + dr["KeyOfEn"].ToString() + "' ><img src='./../../Images/Btn/Up.gif' border=0></a>");
-            this.Pub1.AddTD("<a href='TabIdx.aspx?DoType=Up&FK_MapData=" + this.FK_MapData + "&KeyOfEn=" + dr["KeyOfEn"].ToString() + "' ><img src='./../../Images/Btn/Down.gif' border=0></a>");
+            this.Pub1.AddTD("<a href='TabIdx.aspx?DoType=Down&FK_MapData=" + this.FK_MapData + "&KeyOfEn=" + dr["KeyOfEn"].ToString() + "' ><img src='./../../Images/Btn/Down.gif' border=0></a>");
             this.Pub1.AddTREnd();
         }
         this.Pub1.AddTableEnd();

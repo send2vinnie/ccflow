@@ -107,6 +107,12 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
 
         if (s != null)
         {
+            if (this.PageID.Contains("Small"))
+            {
+                this.Add("<br/>");
+                this.Add("<br/>");
+            }
+
             s = s.Replace("@@", "@");
             s = s.Replace("@", "<BR>@");
             this.Add("<div style='width:500px;text-align:center'>");
@@ -115,13 +121,13 @@ public partial class WF_UC_MyFlowInfoWap : BP.Web.UC.UCBase3
             else
                 this.AddFieldSet("" + this.ToE("Note", "操作提示"), s);
 
-            this.Add("</div>");
+            this.Add("<br><br></div>");
+ 
             return;
         }
 
       //  string sql = "SELECT * FROM WF_EmpWorks WHERE FK_Emp='" + BP.Web.WebUser.No + "'  AND FK_Flow='" + this.FK_Flow + "' ORDER BY WorkID ";
         DataTable dt = BP.WF.Dev2Interface.DB_GenerEmpWorksOfDataTable();// BP.DA.DBAccess.RunSQLReturnTable(sql);
-
 
         int colspan = 9;
         this.AddTable("border=1px align=center width='80%'");

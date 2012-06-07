@@ -117,11 +117,14 @@ function FullIt(oldValue, tbid, fk_mapExt) {
     //执行m2m 关系填充.
     FullM2M(oldValue, fk_mapExt);
 }
-function openDiv(e, tbID) {
+//打开div.
+function openDiv_bak(e, tbID) {
+
     //alert(document.getElementById("divinfo").style.display);
     if (document.getElementById("divinfo").style.display == "none") {
         var txtObject = document.getElementById(tbID);
         var orgObject = document.getElementById("divinfo");
+
         var rect = getoffset(txtObject);
         orgObject.style.top = rect[0] + 22;
         orgObject.style.left = rect[1];
@@ -133,7 +136,25 @@ function openDiv(e, tbID) {
         txtObject.focus();
     }
 }
+function openDiv(e, tbID) {
+
+    //alert(document.getElementById("divinfo").style.display);
+    if (document.getElementById("divinfo").style.display == "none") {
+
+        var txtObject = document.getElementById(tbID);
+        var orgObject = document.getElementById("divinfo");
+        var rect = getoffset(txtObject);
+        var t = rect[0] + 22;
+        var l = rect[1];
+
+        orgObject.style.top = t + 'px';
+        orgObject.style.left = l + 'px';
+        orgObject.style.display = "block";
+        txtObject.focus();
+    }
+}
 function getoffset(e) {
+
     var t = e.offsetTop;
     var l = e.offsetLeft;
     while (e = e.offsetParent) {

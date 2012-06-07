@@ -74,9 +74,12 @@ public partial class WF_Chart : WebPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        string url = this.Request.ApplicationPath + "/WF/WorkOpt/OneWork/ChartTrack.aspx?FID=" + this.FID + "&FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
-        this.Response.Redirect(url,true);
-        return;
+        if (this.WorkID != 0)
+        {
+            string url = this.Request.ApplicationPath + "/WF/WorkOpt/OneWork/ChartTrack.aspx?FID=" + this.FID + "&FK_Flow=" + this.FK_Flow + "&WorkID=" + this.WorkID + "&FK_Node=" + this.FK_Node;
+            this.Response.Redirect(url, true);
+            return;
+        }
 
         switch (this.DoType)
         {

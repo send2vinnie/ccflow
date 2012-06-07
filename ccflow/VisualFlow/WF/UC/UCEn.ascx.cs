@@ -1187,14 +1187,11 @@ namespace BP.Web.Comm.UC.WF
                             ddlOper.Attributes["onchange"] = "DDLFullCtrl(this.value,\'" + ddlOper.ClientID + "\', \'" + me.MyPK + "\')";
                             break;
                         case MapExtXmlList.ActiveDDL:
-
                             DDL ddlPerant = this.GetDDLByID("DDL_" + me.AttrOfOper);
                             DDL ddlChild = this.GetDDLByID("DDL_" + me.AttrsOfActive);
                             if (ddlPerant == null || ddlChild == null)
                                 continue;
-
                             ddlPerant.Attributes["onchange"] = "DDLAnsc(this.value,\'" + ddlChild.ClientID + "\', \'" + me.MyPK + "\')";
-
                             // 处理默认选择。
                             string val = ddlPerant.SelectedItemStringVal;
                             string valClient = en.GetValStrByKey(me.AttrsOfActive); // ddlChild.SelectedItemStringVal;
