@@ -296,7 +296,7 @@ public partial class Designer : System.Web.UI.Page
                 case DBType.MySQL:
                     sql = "ALTER TABLE WF_Track modify RDT varchar(20)";
                     break;
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                 default:
                     sql = "ALTER TABLE WF_Track ALTER COLUMN RDT varchar(20)";
                     break;
