@@ -3221,7 +3221,8 @@ namespace BP.WF
         /// <returns></returns>
         public string DoOpenRpt()
         {
-            BP.PubClass.WinOpen("../WF/MapDef/WFRpt.aspx?FK_Flow=" + this.No + "&DoType=Edit&MyPK=ND" + int.Parse(this.No) + "Rpt", 700, 400);
+      //  http://localhost/ccflow/WF/MapDef/Rpt/Home.aspx?FK_MapData=ND14Rpt&FK_Flow=014
+            BP.PubClass.WinOpen("../WF/MapDef/Rpt/Home.aspx?FK_Flow=" + this.No + "&DoType=Edit&FK_MapData=ND" + int.Parse(this.No) + "Rpt", 700, 400);
             // BP.PubClass.WinOpen("../WF/SelfWFRpt.aspx?FK_Flow=" + this.No + "&DoType=Edit&RefNo=" + this.No, 700, 400);
             return null;
         }

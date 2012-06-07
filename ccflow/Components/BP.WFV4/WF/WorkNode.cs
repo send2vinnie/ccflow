@@ -3535,7 +3535,7 @@ namespace BP.WF
                     this.IsStopFlow = true;
                     this.AddToTrack(ActionType.FlowOver, WebUser.No, WebUser.Name,
                         this.HisNode.NodeID, this.HisNode.Name, "流程结束");
-                    return "工作已经成功处理(一个流程的工作)。";
+                    return "工作已经成功处理(一个流程的工作)。 @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
                     // string path = System.Web.HttpContext.Current.Request.ApplicationPath;
                     // return msg + "@符合工作流程完成条件" + this.HisFlowCompleteConditions.ConditionDesc + "" + overMsg + " @查看<img src='./../Images/Btn/PrintWorkRpt.gif' ><a href='WFRpt.aspx?WorkID=" + this.HisWork.OID + "&FID=" + this.HisWork.FID + "&FK_Flow=" + this.HisNode.FK_Flow + "'target='_blank' >工作报告</a>";
                 }
