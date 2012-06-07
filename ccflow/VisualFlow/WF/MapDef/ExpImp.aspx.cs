@@ -193,11 +193,11 @@ public partial class WF_MapDef_ExpImp : WebPage
         if (string.IsNullOrEmpty(this.FK_Flow) ==false)
         {
             this.Pub1.AddFieldSet("从本流程节点上导入");
-            DataTable dt = DBAccess.RunSQLReturnTable("SELECT NodeID,Name FROM WF_Node WHERE FK_Flow='" + this.FK_Flow + "'");
+            DataTable dt = DBAccess.RunSQLReturnTable("SELECT NodeID,Step,Name FROM WF_Node WHERE FK_Flow='" + this.FK_Flow + "'");
             this.Pub1.AddUL();
             foreach (DataRow dr in dt.Rows)
             {
-                this.Pub1.AddLi("ExpImp.aspx?DoType=Imp&FK_Flow=" + this.FK_Flow + "&RefNo=" + this.RefNo + "&FromMap=ND" + dr["NodeID"], dr["Name"].ToString());
+                this.Pub1.AddLi("ExpImp.aspx?DoType=Imp&FK_Flow=" + this.FK_Flow + "&RefNo=" + this.RefNo + "&FromMap=ND" + dr["NodeID"], "节点ID:"+dr["NodeID"]+",步骤:"+dr["Step"]+","+dr["Name"].ToString());
                 //  window.location.href = 'ExpImp.aspx?DoType=Imp&FK_Flow=" + fk_flow + "&RefNo=" +refno + "&FromMap=' + fk_Frm;
                 //     this.Pub1.AddLi("<a href=\"javascript:LoadFrm('" + this.FK_Flow + "','" + this.RefNo + "','ND" + dr["NodeID"] + "');\" >" + dr["Name"].ToString() + "</a>");
                 //  this.Pub1.AddLi("<a href=\"javascript:LoadFrm('" + this.FK_Flow + "','" + this.RefNo + "','ND" + dr["NodeID"] + "');\" >" + dr["Name"].ToString() + "</a>");
