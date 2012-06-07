@@ -83,3 +83,28 @@
 {
      
 }
+
+.newslist
+{
+    font-family: 宋体, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+.newslist ul
+{
+   padding:0px;
+   padding-left:10px;
+}
+.newslist ul li
+{
+    height: 20px;
+    line-height: 24px;
+    list-style-type:none;
+    border-style:none;
+    border-bottom-style:dotted;
+    border-bottom-width:1px;
+}
+.newslist ul li a
+{
+    text-decoration: none;
+    color: #772533;
+}

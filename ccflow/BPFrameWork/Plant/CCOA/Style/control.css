@@ -130,9 +130,22 @@
 
 .lizard-pager
 {
-    font-family:微软雅黑;
-    border:1px solid #e5e5e5;
+    font-family: 微软雅黑;
+    border: 1px solid #e5e5e5;
     background: #E7EBEF url(default/images/grid/footer.png) repeat-x 0 0;
+}
+
+#HeaderSmallToolBar
+{
+    background: url(../../CCOA/Images/toolbar_bg.jpg) repeat-x;
+    height: 32px;
+    color:#fff;
+    line-height:32px;
+    font-size:12px;
+}
+#HeaderSmallToolBar .userInfo
+{
+  margin-left:10px;   
 }
 
 

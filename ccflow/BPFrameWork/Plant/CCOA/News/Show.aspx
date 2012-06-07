@@ -10,17 +10,59 @@
         body
         {
             text-align: center;
+            background: #F8F8F8;
         }
         .NewsShow
         {
             font-family: 宋体, Arial, Helvetica, sans-serif;
             font-size: small;
             margin-top: 10px;
+            border: 1px solid #83ACCF;
+            background: #fff;
+        }
+        .NewsShow .contentTitle
+        {
+            background: url('../Images/3-1.jpg') repeat-x;
+            font-size: large;
+            text-align: center;
+            height: 60px;
+            line-height: 80px;
+        }
+        .NewsShow .contentSubTitle
+        {
+            font-size: medium;
+            text-align: center;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .NewsShow .content
+        {
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 50px;
         }
         .NewsTitle
         {
             font-family: 宋体, Arial, Helvetica, sans-serif;
             font-size: 18px;
+            background: url('../Images/title_bg.jpg');
+            height: 23px;
+            border-bottom: 1px solid #83ACCF;
+        }
+        .RelatedInfo
+        {
+            font-family: 宋体, Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            background: url('../Images/info_bg.jpg');
+            height: 23px;
+            border-bottom: 1px solid #83ACCF;
+        }
+        .NewsBottom
+        {
+            background: url('../Images/bottom_bg.jpg');
+            min-height: 30px;
+            line-height: 30px;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -59,46 +101,49 @@
         </tr>
     </table>
     <div style="width: 960px; margin-left: auto; margin-right: auto;">
-        <table width="100%" class="NewsShow">
+        <table width="100%" class="NewsShow" border="0" cellpadding="0" cellspacing="0">
             <tr>
-                <td bgcolor="#0099FF" colspan="3">
-                    <asp:Label ID="lblNewsTitle" runat="server" CssClass="NewsTitle"></asp:Label>
+                <td class="NewsTitle" colspan="3">
+                    <asp:Label ID="lblNewsTitle" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
-                <td>
-                    &nbsp;
-                </td>
-                <td bgcolor="#CCCCFF" colspan="2" style="text-align: right">
+                <td class="RelatedInfo" colspan="3" style="text-align: right">
                     发布部门：发布人：<asp:Label ID="lblAuthor" runat="server"></asp:Label>
                     发布于：<asp:Label ID="lblCreateTime" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="text-align: center">
-                    <asp:Label ID="lblNewsTitle0" runat="server" CssClass="NewsTitle"></asp:Label>
+                <td colspan="3" class="contentTitle">
+                    <asp:Label ID="lblNewsTitle0" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="text-align: center">
+                <td colspan="3" class="contentSubTitle">
                     <asp:Label ID="lblNewsSubTitle" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
-                <td colspan="3">
-                    <asp:Label ID="lblNewsContent" runat="server" Width="600px" ></asp:Label>
+                <td colspan="3" class="content">
+                    <asp:Label ID="lblNewsContent" runat="server" Width="938px"></asp:Label>
                 </td>
             </tr>
             <tr>
-                <td bgcolor="#CCCCFF" colspan="3">
+                <td class="NewsBottom" colspan="3">
                     <asp:Label ID="lblUpUser" runat="server"></asp:Label>
                     最后更新于<asp:Label ID="lblUpDT" runat="server"></asp:Label>
                     &nbsp; &nbsp;
                 </td>
             </tr>
             <tr>
-                <td bgcolor="#CCCCFF" colspan="3">
+                <td class="NewsBottom" colspan="3">
                     <uc2:Attachment ID="Attachment1" runat="server" EnumType="News" />
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;" class="NewsBottom" colspan="3">
+                    <input id="Button1" type="button" value="转发" />&nbsp;<input id="Button2" type="button"
+                        value="关闭" onclick="javascript:self.close()" />
                 </td>
             </tr>
         </table>

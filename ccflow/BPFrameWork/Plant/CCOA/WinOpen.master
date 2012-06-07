@@ -39,16 +39,8 @@
             <tr>
                 <td>
                     <div id="divBody">
-                        <div class="mini-splitter" style="width: 100%; height: 550px;">
+                        <div class="mini-splitter" style="width: 100%; height: 680px;">
                             <div size="16%" showcollapsebutton="true">
-                                <div style="height: 100px;">
-                                    <ul>
-                                        <li>用户名：
-                                            <%=BP.Web.WebUser.Name %></li>
-                                        <li>用户名：
-                                            <%=BP.Web.WebUser.Name %></li>
-                                    </ul>
-                                </div>
                                 <uc1:NavBar ID="NavBar1" runat="server" MenuUrl="AjaxMenu.aspx" />
                             </div>
                             <div showcollapsebutton="false">

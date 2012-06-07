@@ -832,6 +832,7 @@ input.mini-textarea
     text-align:left;    
     width:auto;
     overflow:auto;
+    background:#F8F8F8;
     
 }
 .mini-messagebox-content table

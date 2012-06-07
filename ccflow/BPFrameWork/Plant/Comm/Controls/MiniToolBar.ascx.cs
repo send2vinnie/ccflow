@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text;
 
-public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
+public partial class Comm_Controls_MiniToolBar : System.Web.UI.UserControl
 {
     /// <summary>
     /// 标题
@@ -20,6 +20,10 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     /// 
     /// </summary>
     public string AddUrl = "Add.aspx";
+    /// <summary>
+    /// 
+    /// </summary>
+    public string PopAddUrl = "Add.aspx";
     /// <summary>
     /// 
     /// </summary>
@@ -56,9 +60,9 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
 
     private void InitToolBar()
     {
-        //AddLinkButton("icon-reload", "返回", RetrunUrl);
+        AddLinkButton("icon-reload", "返回", RetrunUrl);
         AddLinkButton("icon-addfolder", "增加", AddUrl);
-        AddClickButton("icon-addfolder", "增加（弹窗）", "add()");
+        //AddClickButton("icon-addfolder", "增加（弹窗）", "add()");
         AddClickButton("icon-remove", "删除", "getSelectedIdList()");
         //AddSeparator();
         //AddLinkButton("icon-reload", "刷新", RefreshUrl);

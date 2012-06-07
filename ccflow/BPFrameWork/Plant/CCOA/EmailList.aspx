@@ -4,33 +4,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <style type="text/css">
-        .newslist
-        {
-            font-family: 宋体, Arial, Helvetica, sans-serif;
-            font-size: 12px;
-        }
-        .newslist ul li
-        {
-            height:auto;
-            line-height:20px;
-        }
-        .newslist ul li a
-        {
-            text-decoration:none;
-            color:Red;
-        }
-    </style>
+    <link href="Style/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body style="font-size: small">
     <form id="form1" runat="server">
     <div>
+        <asp:LinkButton ID="LinkButton1" runat="server">全部</asp:LinkButton>
+        &nbsp;
+        <asp:LinkButton ID="LinkButton2" runat="server">未读</asp:LinkButton>
+        &nbsp;
+        <asp:LinkButton ID="LinkButton3" runat="server">已读</asp:LinkButton>
         <div class="newslist">
             <ul>
                 <% foreach (BP.CCOA.OA_Email item in EmailList)
                    {%>
-                <li><a href="News/Show.aspx?id=<%=item.No%>" target="_blank">
-                    <%=item.Subject%></a></li>
+                <li>
+                    <img src="Images/gif/nav_title_sign.gif" />
+                    <a href="Email/Add.aspx">
+                        <%=item.Addresser %></a>&nbsp; <a href="Email/Show.aspx?id=<%=item.No%>" target="_blank">
+                            <%=item.Subject%></a></li>
                 <%} %>
             </ul>
         </div>

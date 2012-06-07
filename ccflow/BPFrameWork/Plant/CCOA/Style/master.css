@@ -22,8 +22,7 @@
 
 .header
 {
-    background: url(../../CCOA/Images/banner.jpg);
-    height: 60px;
+    height: 112px;
 }
 .header table
 {
@@ -97,7 +96,7 @@
     height: 35px;
     text-align: center;
     border-style: none;
-    cursor:pointer;
+    cursor: pointer;
 }
 #loginBody
 {
@@ -116,3 +115,44 @@
     margin-left: auto;
     margin-right: auto;
 }
+.ImageButton
+{
+    margin-top: 15px;
+    width: 72px;
+    height: 72px;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.ImageButton a
+{
+}
+.ImageButton a img
+{
+    border-style: none;
+    border: 0;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+.ImageButton a span
+{
+    color: #fff;
+    font-family: 宋体;
+    font-size: 13px;
+    text-align: center;
+    width: 72px;
+    font-weight: normal;
+}
+#imageTool ul
+{
+    margin: 0px;
+    padding: 0px;
+}
+#imageTool ul li
+{
+    width: 92px;
+    list-style-type: none;
+    float: left;
+}
+
+

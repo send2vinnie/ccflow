@@ -23,24 +23,32 @@ namespace Lizard.OA.Web.OA_Notice
                     strid = Request.Params["id"];
                     string NoticeId = strid;
                     ShowInfo(NoticeId);
+                    AddClicks(NoticeId);
                 }
             }
+        }
+
+        private void AddClicks(string NoticeId)
+        {
+            BP.CCOA.OA_Notice model = new BP.CCOA.OA_Notice(NoticeId);
+            model.Clicks = model.Clicks + 1;
+            model.Update();
         }
 
         private void ShowInfo(string NoticeId)
         {
             BP.CCOA.OA_Notice model = new BP.CCOA.OA_Notice(NoticeId);
-            //this.lblNewsId.Text = model.NewsId;
-            this.lblNewsTitle.Text = model.NoticeTitle;
-            this.lblNewsTitle0.Text = model.NoticeTitle;
-            this.lblNewsSubTitle.Text = model.NoticeSubTitle;
-            this.lblNewsType.Text = model.NoticeType;
-            this.lblNewsContent.Text = model.NoticeContent;
-            //this.Content = model.NewsContent;
+            //this.lblNoticeId.Text = model.NoticeId;
+            this.lblNoticeTitle.Text = model.NoticeTitle;
+            this.lblNoticeTitle0.Text = model.NoticeTitle;
+            this.lblNoticeSubTitle.Text = model.NoticeSubTitle;
+            this.lblNoticeType.Text = model.NoticeType;
+            this.lblNoticeContent.Text = model.NoticeContent;
+            //this.Content = model.NoticeContent;
             this.lblAuthor.Text = model.Author;
             this.lblCreateTime.Text = model.CreateTime.ToString();
             this.lblClicks.Text = model.Clicks.ToString();
-            this.lblIsRead.Text = model.IsRead == 1 ? "是" : "否";
+            //this.lblIsRead.Text = model.IsRead ? "是" : "否";
             this.lblUpDT.Text = model.UpDT.ToString();
             this.lblUpUser.Text = model.UpUser.ToString();
             //this.lblStatus.Text = model.Status ? "是" : "否";

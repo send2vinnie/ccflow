@@ -3,10 +3,15 @@
 
 <%@ Register Src="~/CCOA/Controls/Article_Newest.ascx" TagName="Article_Newest" TagPrefix="uc" %>
 <%@ Register Src="~/CCOA/Controls/Email.ascx" TagName="Email" TagPrefix="uc" %>
+<%@ Register Src="Controls/SystemAstrisk.ascx" TagName="SystemAstrisk" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="JS/Portal.js" type="text/javascript"></script>
     <link href="JS/portal.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
+
+        $(function () {
+            //showTime();
+        });
 
         var portal = null;
 
@@ -16,8 +21,8 @@
 
             portal = new mini.ux.Portal();
             portal.set({
-                style: "width: 100%;height:525px",
-                columns: [250, "100%", 260]
+                style: "width: 100%;height:825px",
+                columns: ["100%", 360]
             });
             portal.render(content);
 
@@ -106,10 +111,9 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
-    <div id="tabs1" class="mini-tabs" activeindex="0" style="width: 100%; height: 545px;">
+    <div id="tabs1" class="mini-tabs" activeindex="0" style="width: 100%; height: 675px;">
         <div title="工作台" iconcls="icon-add">
-            <a href="#" onclick="openLayout()">布局设置</a> 
-            <a href="#" onclick="saveLayout()">保存配置</a>
+            <uc1:SystemAstrisk ID="SystemAstrisk1" runat="server" />
             <div id="content">
             </div>
         </div>

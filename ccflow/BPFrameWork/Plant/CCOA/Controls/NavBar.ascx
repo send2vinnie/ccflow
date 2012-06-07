@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="NavBar.ascx.cs" Inherits="XControls_NavBar" %>
 <div id="navbar1" class="mini-navbartree" url="<%=MenuUrl %>" activeindex="0" style="width: 100%;
-    height: 440px;" autocollapse="true" idfield="id" parentfield="pid" textfield="text"
+    height: 540px;" autocollapse="true" idfield="id" parentfield="pid" textfield="text"
     resultastree="false" showTreeLines="false" onnodeselect="onNodeSelect">
 </div>
 <script type="text/javascript">

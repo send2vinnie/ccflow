@@ -1,28 +1,73 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Show.aspx.cs" Inherits="Lizard.OA.Web.OA_Notice.Show"
     Title="显示页" %>
 
+<%@ Register Src="../Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
+<%@ Register Src="../Controls/Attachment.ascx" TagName="Attachment" TagPrefix="uc2" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
     <style type="text/css">
         body
         {
-           text-align:center;
+            text-align: center;
+            background: #F8F8F8;
         }
-        .NewsShow
+        .NoticeShow
         {
             font-family: 宋体, Arial, Helvetica, sans-serif;
             font-size: small;
             margin-top: 10px;
+            border: 1px solid #83ACCF;
+            background: #fff;
         }
-        .NewsTitle
+        .NoticeShow .contentTitle
+        {
+            background: url('../Images/3-1.jpg') repeat-x;
+            font-size: large;
+            text-align: center;
+            height: 60px;
+            line-height: 80px;
+        }
+        .NoticeShow .contentSubTitle
+        {
+            font-size: medium;
+            text-align: center;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .NoticeShow .content
+        {
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 50px;
+        }
+        .NoticeTitle
         {
             font-family: 宋体, Arial, Helvetica, sans-serif;
             font-size: 18px;
+            background: url('../Images/title_bg.jpg');
+            height: 23px;
+            border-bottom: 1px solid #83ACCF;
+        }
+        .RelatedInfo
+        {
+            font-family: 宋体, Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            background: url('../Images/info_bg.jpg');
+            height: 23px;
+            border-bottom: 1px solid #83ACCF;
+        }
+        .NoticeBottom
+        {
+            background: url('../Images/bottom_bg.jpg');
+            min-height: 30px;
+            line-height: 30px;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
+    <form id="form1" runat="server">
     <table style="display: none" cellpadding="2" cellspacing="1" class="border">
         <tr>
             <td class="tdbg">
@@ -32,7 +77,7 @@
                             新闻类型 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:Label ID="lblNewsType" runat="server"></asp:Label>
+                            <asp:Label ID="lblNoticeType" runat="server"></asp:Label>
                         </td>
                     </tr>
                     <tr>
@@ -56,55 +101,53 @@
         </tr>
     </table>
     <div style="width: 960px; margin-left: auto; margin-right: auto;">
-        <table width="100%" class="NewsShow">
+        <table width="100%" class="NoticeShow" border="0" cellpadding="0" cellspacing="0">
             <tr>
-                <td bgcolor="#0099FF" colspan="3">
-                    <asp:Label ID="lblNewsTitle" runat="server" CssClass="NewsTitle"></asp:Label>
+                <td class="NoticeTitle" colspan="3">
+                    <asp:Label ID="lblNoticeTitle" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
-                <td>
-                    &nbsp;
-                </td>
-                <td bgcolor="#CCCCFF" colspan="2" style="text-align: right">
+                <td class="RelatedInfo" colspan="3" style="text-align: right">
                     发布部门：发布人：<asp:Label ID="lblAuthor" runat="server"></asp:Label>
                     发布于：<asp:Label ID="lblCreateTime" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="text-align: center">
-                    <asp:Label ID="lblNewsTitle0" runat="server" CssClass="NewsTitle"></asp:Label>
+                <td colspan="3" class="contentTitle">
+                    <asp:Label ID="lblNoticeTitle0" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
-                <td colspan="3" style="text-align: center">
-                    <asp:Label ID="lblNewsSubTitle" runat="server"></asp:Label>
+                <td colspan="3" class="contentSubTitle">
+                    <asp:Label ID="lblNoticeSubTitle" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
-                <td colspan="3">
-                    <asp:Label ID="lblNewsContent" runat="server" Width="600px" Height="500px"></asp:Label>
+                <td colspan="3" class="content">
+                    <asp:Label ID="lblNoticeContent" runat="server" Width="938px"></asp:Label>
                 </td>
             </tr>
             <tr>
-                <td bgcolor="#CCCCFF" colspan="3">
+                <td class="NoticeBottom" colspan="3">
                     <asp:Label ID="lblUpUser" runat="server"></asp:Label>
                     最后更新于<asp:Label ID="lblUpDT" runat="server"></asp:Label>
                     &nbsp; &nbsp;
                 </td>
             </tr>
             <tr>
-                <td>
-                    &nbsp;
+                <td class="NoticeBottom" colspan="3">
+                    <uc2:Attachment ID="Attachment1" runat="server" EnumType="Notice" />
                 </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
+            </tr>
+            <tr>
+                <td style="text-align:center;" class="NoticeBottom" colspan="3">
+                    <input id="Button1" type="button" value="转发" />&nbsp;<input id="Button2" type="button"
+                        value="关闭" onclick="javascript:self.close()" />
                 </td>
             </tr>
         </table>
     </div>
+    </form>
 </body>
 </html>
