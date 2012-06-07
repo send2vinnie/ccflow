@@ -44,5 +44,18 @@ namespace BP.EIP
                 BP.Web.WebUser.Name = _userName;
             }
         }
+
+        private string _depts;
+        public string Depts
+        {
+            get
+            {
+                if (BP.Web.WebUser.HisDepts != null)
+                {
+                    return BP.Web.WebUser.HisDepts[0].Name;
+                }
+                return string.Empty;
+            }
+        }
     }
 }

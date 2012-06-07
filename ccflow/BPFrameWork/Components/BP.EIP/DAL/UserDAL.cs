@@ -162,17 +162,33 @@ namespace BP.EIP.DAL
 
         public CurrentUser UserLogOn(string userName, string password, out StatusCode statusCode, out string statusMessage)
         {
-            Port.Emp user = new Port.Emp();
-            user.Name = userName;
-            user.Pass = password;
-            BP.Web.WebUser.SignInOfGener(user);
-
-            user = BP.Web.WebUser.HisEmp;
-
             CurrentUser curUser = new CurrentUser();
+            Port.Emp user = new Port.Emp();
+            user.RetrieveByAttr("Name", userName);
+            if (user.Name != userName)
+            {
+                statusCode = Enum.StatusCode.Error;
+                statusMessage = "用户不存在！";
+                return null;
+            }
+            if (user.Pass != password)
+            {
+                statusCode = Enum.StatusCode.Error;
+                statusMessage = "用户名或密码不正确！";
+                return null;
+            }
 
-            statusCode = Enum.StatusCode.Success;
-            statusMessage = "";
+            try
+            {
+                BP.Web.WebUser.SignInOfGener(user);
+                statusCode = Enum.StatusCode.Success;
+                statusMessage = "";
+            }
+            catch (Exception ex)
+            {
+                statusMessage = ex.Message;
+                statusCode = Enum.StatusCode.Exception;
+            }
 
             return curUser;
         }
@@ -218,7 +234,7 @@ namespace BP.EIP.DAL
         public int ChangePassword(string userId, string oldPassword, string newPassword, out StatusCode statusCode, out string statusMessage)
         {
             Port_Emp emp = new Port_Emp(userId);
-            if (emp.Pass!=oldPassword)
+            if (emp.Pass != oldPassword)
             {
                 statusCode = Enum.StatusCode.Error;
                 statusMessage = "原始密码输入不正确，请重新输入！";
