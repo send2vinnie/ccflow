@@ -12,7 +12,7 @@
     function GetData() {
         var tree = mini.get("tree1");
         var nodes = tree.getCheckedNodes();
-        var selecedDept = "";
+        var selecedDept = ""; 
         for (i = 0; i < nodes.length; i++) {
             var node = nodes[i];
             selecedDept += node.text + ",";
@@ -53,7 +53,7 @@
 </script>
 <div>
     <ul id="tree1" class="mini-tree" style="width: 280px; padding: 5px;" textfield="text"
-        idfield="id" url="../../DataUser/tree.txt" showcheckbox="true" parentfield="pid">
+        idfield="id" url="<%=Url %>" showcheckbox="true" parentfield="pid">
     </ul>
     <a class="mini-button" onclick="onOk" style="width: 60px; margin-right: 5px;">选择</a>
     <a class="mini-button" onclick="onCancel" style="width: 60px; margin-right: 5px;">取消</a>

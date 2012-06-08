@@ -11,4 +11,6 @@ public partial class CCOA_Controls_TreeList : System.Web.UI.UserControl
     {
 
     }
+
+    public string Url { get; set; }
 }

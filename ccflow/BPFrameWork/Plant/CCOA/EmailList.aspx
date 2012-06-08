@@ -9,11 +9,11 @@
 <body style="font-size: small">
     <form id="form1" runat="server">
     <div>
-        <asp:LinkButton ID="LinkButton1" runat="server">全部</asp:LinkButton>
+        <asp:LinkButton ID="lbtAll" runat="server" onclick="LinkButton1_Click">全部</asp:LinkButton>
         &nbsp;
-        <asp:LinkButton ID="LinkButton2" runat="server">未读</asp:LinkButton>
+        <asp:LinkButton ID="lbtUnRead" runat="server" onclick="lbtUnRead_Click">未读</asp:LinkButton>
         &nbsp;
-        <asp:LinkButton ID="LinkButton3" runat="server">已读</asp:LinkButton>
+        <asp:LinkButton ID="lbtReaded" runat="server" onclick="lbtReaded_Click">已读</asp:LinkButton>
         <div class="newslist">
             <ul>
                 <% foreach (BP.CCOA.OA_Email item in EmailList)

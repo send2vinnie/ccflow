@@ -139,14 +139,26 @@
 {
     background: url(../../CCOA/Images/toolbar_bg.jpg) repeat-x;
     height: 32px;
-    color:#fff;
-    line-height:32px;
-    font-size:12px;
+    color: #fff;
+    line-height: 32px;
+    font-size: 12px;
 }
 #HeaderSmallToolBar .userInfo
 {
-  margin-left:10px;   
+    margin-left: 10px;
 }
+
+.clock
+{
+    font-size: 13px;
+}
+.clock ul li
+{
+    font-size: 18px;
+    float: left;
+    list-style-type:none;
+}
+
 
 
 

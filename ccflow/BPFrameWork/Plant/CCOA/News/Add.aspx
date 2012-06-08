@@ -46,6 +46,39 @@
             var fileupload = mini.get("fileupload1");
             fileupload.startUpload();
         }
+
+        function onSelect(arg) {
+            var txtSelect = $("#xtxtReader");
+            var dataUrl = "";
+            if (arg == "dept") {
+                dataUrl = "../CCOA/Common/TreeList.aspx?type=" + arg;
+            }
+            else {
+                dataUrl = "../CCOA/Common/ListSelect.aspx?type=" + arg;
+            }
+
+            mini.openTop({
+                url: dataUrl,
+                showMaxButton: true,
+                title: "选择发布对象",
+                width: 650,
+                height: 380,
+                allowDrag: false,
+                allowResize: false,
+                onload: function () {
+                    var iframe = this.getIFrameEl();
+                    //iframe.contentWindow.SetData(null);
+                },
+                ondestory: function (action) {
+                    if (action == "ok") {
+                        var iframe = this.getIFrameEl();
+                        var data = iframe.contentWindow.GetData();
+                        data = mini.clone(data);
+                        txtSelect.val(data);
+                    }
+                }
+            });
+        }
         
     </script>
 </head>
@@ -60,7 +93,7 @@
                             新闻标题 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNewsTitle" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtNewsTitle" runat="server" Width="600px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +101,7 @@
                             副标题 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNewsSubTitle" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtNewsSubTitle" runat="server" Width="600px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -84,8 +117,9 @@
                             选择发布对象 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <lizard:XTextBox ID="xtxtReader" runat="server" Width="100px" />
-                            <a href="#" onclick="onSelect()">选择</a>
+                            按 <a href="#" onclick="onSelect('dept')">部门</a> <a href="#" onclick="onSelect('role')">
+                                角色</a> <a href="#" onclick="onSelect('emp')">人员</a><br />
+                            <lizard:XTextBox ID="xtxtReader" runat="server" Width="400px" Height="40px" />
                         </td>
                     </tr>
                     <tr>

@@ -2,6 +2,31 @@
 <%@ Register Src="ImageButton.ascx" TagName="ImageButton" TagPrefix="uc1" %>
 <%@ Register Src="JSClock.ascx" TagName="JSClock" TagPrefix="uc2" %>
 <link href="../Style/control.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+        var newDate = new Date();
+        newDate.setDate(newDate.getDate());
+        $('#Date').html(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
+
+        setInterval(function () {
+            var seconds = new Date().getSeconds();
+            $("#sec").html((seconds < 10 ? "0" : "") + seconds);
+        }, 1000);
+
+        setInterval(function () {
+            var minutes = new Date().getMinutes();
+            $("#min").html((minutes < 10 ? "0" : "") + minutes);
+        }, 1000);
+
+        setInterval(function () {
+            var hours = new Date().getHours();
+            $("#hours").html((hours < 10 ? "0" : "") + hours);
+        }, 1000);
+    }); 
+</script>
 <div class="header">
     <div style="height: 80px; font-size: 40px; font-family: Arial Unicode MS; font-weight: bold;
         background: url(../../CCOA/Images/top_bg.jpg) repeat-x;">
@@ -15,7 +40,7 @@
                 <td id="imageTool">
                     <ul>
                         <li>
-                            <uc1:ImageButton ID="ImageButton1" runat="server" ImageUrl="../../CCOA/Images/png48/Home.png"
+                            <uc1:ImageButton ID="ImageButton1" runat="server" LinkUrl="Home.aspx" ImageUrl="../../CCOA/Images/png48/Home.png"
                                 Text="工作台" />
                         </li>
                         <li>
@@ -40,7 +65,7 @@
                         </li>
                     </ul>
                 </td>
-                <td style="width: 260px;">
+                <td style="width: 260px; display: none;">
                     <span class="style2"><a href="../Home.aspx">CCOA</a></span> <span class="style2"><a
                         href="../Home.aspx">CCCRM</a></span> <span class="style2"><a href="../Home.aspx">CCIM</a></span>
                     <select id="selectSkin" onchange="onSkinChange(this.value)" style="width: 100px;">
@@ -53,6 +78,19 @@
                     </select>
                     <div id="showClock">
                         <%--<uc2:JSClock ID="JSClock1" runat="server" />--%>
+                    </div>
+                </td>
+                <td>
+                    <div class="clock">
+                        <div id="Date">
+                        </div>
+                        <ul>
+                            <li id="hours"></li>
+                            <li id="point">:</li>
+                            <li id="min"></li>
+                            <li id="point">:</li>
+                            <li id="sec"></li>
+                        </ul>
                     </div>
                 </td>
             </tr>

@@ -23,4 +23,17 @@ public partial class EIP_EmailList : System.Web.UI.Page
             return list;
         }
     }
+
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
+
+    }
+    protected void lbtUnRead_Click(object sender, EventArgs e)
+    {
+
+    }
+    protected void lbtReaded_Click(object sender, EventArgs e)
+    {
+
+    }
 }
