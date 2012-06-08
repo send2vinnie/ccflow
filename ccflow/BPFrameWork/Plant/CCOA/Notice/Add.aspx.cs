@@ -36,13 +36,13 @@ namespace Lizard.OA.Web.OA_Notice
             {
                 strErr += "通告类型不能为空！\\n";
             }
+            if (this.ddlAccessType.Text.Trim().Length == 0)
+            {
+                strErr += "发布类别不能为空！\\n";
+            }
             if (this.txtNoticeContent.Text.Trim().Length == 0)
             {
                 strErr += "通告内容不能为空！\\n";
-            }
-            if (this.txtAuthor.Text.Trim().Length == 0)
-            {
-                strErr += "发布人不能为空！\\n";
             }
             if (!PageValidate.IsDateTime(xdpCreateTime.Text))
             {
@@ -58,9 +58,10 @@ namespace Lizard.OA.Web.OA_Notice
             string NoticeTitle = this.txtNoticeTitle.Text;
             string NoticeSubTitle = this.txtNoticeSubTitle.Text;
             string NoticeType = this.txtNoticeType.Text;
+            string accessType = this.ddlAccessType.Text.Trim();
             string NoticeContent = this.txtNoticeContent.Text;
-            string Author = this.txtAuthor.Text;
-            DateTime CreateTime = DateTime.Parse(this.xdpCreateTime.Text);
+            string Author = CurrentUser.No;
+            DateTime CreateTime = DateTime.Now;
 
             //Lizard.OA.Model.OA_Notice model = new Lizard.OA.Model.OA_Notice();
             BP.CCOA.OA_Notice model = new BP.CCOA.OA_Notice();
@@ -68,6 +69,7 @@ namespace Lizard.OA.Web.OA_Notice
             model.NoticeTitle = NoticeTitle;
             model.NoticeSubTitle = NoticeSubTitle;
             model.NoticeType = NoticeType;
+            model.AccessType = accessType;
             model.NoticeContent = NoticeContent;
             model.Author = Author;
             model.CreateTime = DateTime.Now;
@@ -78,9 +80,12 @@ namespace Lizard.OA.Web.OA_Notice
             model.Status = 1;
 
             model.Insert();
+
+            XNoticeTool.InsertNoticeAuths(NoticeId, this.txtSelectedIds.Value);
+
             //BP.CCOA.OA_Notice bll = new BP.CCOA.OA_Notice();
             //bll.Add(model);
-            Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "add.aspx");
+            Lizard.Common.MessageBox.ShowAndRedirect(this, "保存成功！", "list.aspx");
 
         }
 

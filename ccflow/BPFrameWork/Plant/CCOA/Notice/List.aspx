@@ -15,11 +15,14 @@
     <form id="form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
     &nbsp;<!--Search end--><br />
-    <lizard:XGridView ID="gridView" runat="server"  Width="100%" CellPadding="3"
-        OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
-        OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
-        RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated" CssClass="lizard-grid">
-        <Columns>
+    <div>
+        <asp:LinkButton ID="lbtReaded" runat="server" OnClick="lbtReaded_Click">标记所有为已读</asp:LinkButton>
+    </div>
+    <lizard:xgridview id="gridView" runat="server" width="100%" cellpadding="3" onpageindexchanging="gridView_PageIndexChanging"
+        borderwidth="1px" datakeynames="No" onrowdatabound="gridView_RowDataBound" autogeneratecolumns="false"
+        pagesize="10" rowstyle-horizontalalign="Center" onrowcreated="gridView_OnRowCreated"
+        cssclass="lizard-grid">
+        <columns>
             <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
                 <ItemTemplate>
                     <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
@@ -43,6 +46,7 @@
                 ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="Clicks" HeaderText="点击量" SortExpression="Clicks" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="IsRead" HeaderText="是否阅读" SortExpression="IsRead" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="AccessType" HeaderText="发布类别" SortExpression="AccessType" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="UpDT" HeaderText="更新时间" SortExpression="UpDT" ItemStyle-HorizontalAlign="Center"
                 Visible="false" />
             <asp:BoundField DataField="UpUser" HeaderText="更新人" SortExpression="UpUser" ItemStyle-HorizontalAlign="Center"
@@ -57,8 +61,8 @@
                         Text="删除"></asp:LinkButton>
                 </ItemTemplate>
             </asp:TemplateField>
-        </Columns>
-    </lizard:XGridView>
+        </columns>
+    </lizard:xgridview>
     <xuc:XPager ID="XPager1" runat="server" OnPagerChanged="XPager1_PagerChanged" />
     </asp:Content>
     </form>

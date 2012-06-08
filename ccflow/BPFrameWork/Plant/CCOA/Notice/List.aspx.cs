@@ -159,5 +159,9 @@ namespace Lizard.OA.Web.OA_Notice
         }
 
         #endregion
-    }
+        protected void lbtReaded_Click(object sender, EventArgs e)
+        {
+
+        }
+}
 }

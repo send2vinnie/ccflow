@@ -25,7 +25,55 @@
 		    'insertunorderedlist', '|', 'emoticons', 'image', 'link']
             });
         });
-        
+
+        function SelectAccess() {
+
+            var authType = document.getElementById("ddlAccessType").value;
+
+            var formTitle = "选择" + authType;
+            var formUrl = "";
+            var width = 320;
+
+            switch (authType) {
+                case "部门":
+                    formUrl = "SelectAccess.aspx";
+                    break;
+                case "角色":
+                    formUrl = "SelectRole.aspx";
+                    width = 600;
+                    break;
+                case "人员":
+                    formUrl = "SelectPeople.aspx";
+                    width = 600;
+                    break;
+            }
+
+            mini.openTop({
+                url: "../../CCOA/Notice/" + formUrl,
+                showMaxButton: false,
+                title: formTitle,
+                width: width,
+                height: 420,
+                allowDrag: false,
+                allowResize: false,
+                onload: function () {
+
+                },
+                ondestory: function (action) {
+                    if (action == "ok") {
+                        var iframe = this.getIFrameEl();
+                        var data = iframe.contentWindow.GetData();
+                        var selectedDept = $("#txtSelected");
+                        selectedDept.val(data);
+
+                        var selectedIds = iframe.contentWindow.GetSelectedIds();
+                        var selecedDeptIdText = $("#txtSelectedIds");
+                        selecedDeptIdText.val(selectedIds);
+                    }
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
@@ -39,7 +87,7 @@
                             通告标题 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeTitle" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtNoticeTitle" class="mini-textbox" runat="server" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -47,7 +95,7 @@
                             副标题 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeSubTitle" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtNoticeSubTitle" class="mini-textbox" runat="server" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -55,7 +103,30 @@
                             通告类型 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeType" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtNoticeType" class="mini-combobox" runat="server" Width="200px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="25" width="30%" align="right">
+                            发布类别 ：
+                        </td>
+                        <td height="25" width="*" align="left">
+                            <asp:DropDownList ID="ddlAccessType" class="mini-combobox" runat="server" Width="200px">
+                                <asp:ListItem>部门</asp:ListItem>
+                                <asp:ListItem>角色</asp:ListItem>
+                                <asp:ListItem>人员</asp:ListItem>
+                            </asp:DropDownList>
+                            <a class="mini-button" href="#" onclick="SelectAccess()">选择</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            公告接收方 ：
+                            <asp:HiddenField ID="txtSelectedIds" runat="server" />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtSelected" CssClass="mini-textbox" TextMode="MultiLine" ReadOnly="true"
+                                runat="server" Height="53px" Width="599px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -65,30 +136,7 @@
                         <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtNoticeContent" runat="server" Width="600px" TextMode="MultiLine"
                                 Height="240px"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="25" width="30%" align="right">
-                            发布人 ：
-                        </td>
-                        <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtAuthor" runat="server" Width="200px"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="25" width="30%" align="right">
-                            发布时间 ：
-                        </td>
-                        <td height="25" width="*" align="left">
                             <lizard:XDatePicker ID="xdpCreateTime" runat="server" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="25" width="30%" align="right">
-                            状态 ：
-                        </td>
-                        <td height="25" width="*" align="left">
-                            <asp:CheckBox ID="chkStatus" Text="状态" runat="server" Checked="False" />
                         </td>
                     </tr>
                 </table>
