@@ -24,7 +24,7 @@ namespace BP.CCOA
         {
             OA_ClickRecords clickRecords = new OA_ClickRecords();
             int objectType = 1;
-            return clickRecords.InsertClickRecords(userId, objectType);
+            return clickRecords.SetAllRead(userId, objectType);
         }
     }
 }

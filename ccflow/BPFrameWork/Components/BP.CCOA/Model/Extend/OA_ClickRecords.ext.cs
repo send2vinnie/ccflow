@@ -14,7 +14,7 @@ namespace BP.CCOA
         /// <param name="visitId">阅读人</param>
         /// <param name="objectType">阅读类型</param>
         /// <returns></returns>
-        public bool InsertClickRecords(string visitId, int objectType)
+        public bool SetAllRead(string visitId, int objectType)
         {
             string guidFun = XFactoryManager.CreateFactory().GetGuidFunction();
             string timeFun = XFactoryManager.CreateFactory().GetServerTimeFunction();
