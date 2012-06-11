@@ -25,7 +25,13 @@
             var hours = new Date().getHours();
             $("#hours").html((hours < 10 ? "0" : "") + hours);
         }, 1000);
-    }); 
+    });
+
+
+    function buttonClick(title, url) {
+        addTab(title, url);
+    }
+
 </script>
 <div class="header">
     <div style="height: 80px; font-size: 40px; font-family: Arial Unicode MS; font-weight: bold;
@@ -41,27 +47,27 @@
                     <ul>
                         <li>
                             <uc1:ImageButton ID="ImageButton1" runat="server" LinkUrl="Home.aspx" ImageUrl="../../CCOA/Images/png48/Home.png"
-                                Text="工作台" />
+                                Title="工作台" OnClientClick="buttonClick" />
                         </li>
                         <li>
-                            <uc1:ImageButton ID="ImageButton2" runat="server" ImageUrl="../../CCOA/Images/png48/News.png"
-                                Text="我的资讯" />
+                            <uc1:ImageButton ID="ImageButton2" runat="server" LinkUrl="../../CCOA/News/List.aspx"
+                                ImageUrl="../../CCOA/Images/png48/News.png" Title="我的资讯" OnClientClick="buttonClick" />
                         </li>
                         <li>
                             <uc1:ImageButton ID="ImageButton3" runat="server" ImageUrl="../../CCOA/Images/png48/Schedule.png"
-                                Text="日程安排" />
+                                Title="日程安排" OnClientClick="buttonClick" />
                         </li>
                         <li>
-                            <uc1:ImageButton ID="ImageButton6" runat="server" ImageUrl="../../CCOA/Images/png48/Email.png"
-                                Text="我的邮件" />
+                            <uc1:ImageButton ID="ImageButton6" runat="server" LinkUrl="../../CCOA/Email/Inbox.aspx" ImageUrl="../../CCOA/Images/png48/Email.png"
+                                Title="我的邮件" OnClientClick="buttonClick" />
                         </li>
                         <li>
-                            <uc1:ImageButton ID="ImageButton4" runat="server" ImageUrl="../../CCOA/Images/png48/Address-Book.png"
-                                Text="通讯录" />
+                            <uc1:ImageButton ID="ImageButton4" runat="server" LinkUrl="../../CCOA/AddressBook/List.aspx"  ImageUrl="../../CCOA/Images/png48/Address-Book.png"
+                                Title="通讯录" OnClientClick="buttonClick" />
                         </li>
                         <li>
-                            <uc1:ImageButton ID="ImageButton5" runat="server" ImageUrl="../../CCOA/Images/png48/Config.png"
-                                Text="配置管理" />
+                            <uc1:ImageButton ID="ImageButton5" runat="server" LinkUrl="../../CCOA/Admin/Main.aspx" ImageUrl="../../CCOA/Images/png48/Config.png"
+                                Title="配置管理" OnClientClick="buttonClick" />
                         </li>
                     </ul>
                 </td>

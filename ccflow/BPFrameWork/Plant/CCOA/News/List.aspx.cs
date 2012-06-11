@@ -10,6 +10,7 @@ using System.Drawing;
 using LTP.Accounts.Bus;
 using BP.DA;
 using BP.CCOA;
+using BP.CCOA.Enum;
 namespace Lizard.OA.Web.OA_News
 {
     public partial class List : BasePage
@@ -79,15 +80,12 @@ namespace Lizard.OA.Web.OA_News
             //}
             #endregion
 
-
             string searchValue = Request.QueryString["searchvalue"];
             DataTable OA_NewsTable = XQueryTool.Query<BP.CCOA.OA_News>(OA_News, columns, searchValue,
                 m_PageIndex, m_PageSize, null);
 
             gridView.DataSource = OA_NewsTable;
             gridView.DataBind();
-
-
         }
 
         protected void gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -99,7 +97,7 @@ namespace Lizard.OA.Web.OA_News
         {
             if (e.Row.RowType == DataControlRowType.Header)
             {
-                //e.Row.Cells[0].Text = "<input id='Checkbox2' type='checkbox' onclick='CheckAll()'/><label></label>";
+                e.Row.Cells[0].Text = "<input id='Checkbox2' type='checkbox' onclick='CheckAll()'/><label></label>";
             }
         }
         protected void gridView_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -116,6 +114,14 @@ namespace Lizard.OA.Web.OA_News
                 //    e.Row.Cells[1].Text = obj1.ToString();
                 //}
             }
+        }
+
+        protected string IsRead(string id)
+        {
+            if (ClickHelper.IsReaded(id, CurrentUser.No))
+                return "是";
+            else
+                return "否";
         }
 
         private string GetSelIDlist()
@@ -143,5 +149,24 @@ namespace Lizard.OA.Web.OA_News
         }
 
         #endregion
-    }
+        protected void lbtMarkReaded_Click(object sender, EventArgs e)
+        {
+            ClickHelper.SetAllRead(CurrentUser.No, ClickObjType.News);
+        }
+        protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //IDictionary<string,object> dicFilter = new Dictionary<string,object>();
+            //dicFilter.Add("Category", ddlCategory.SelectedValue);
+
+            //DataTable OA_NewsTable = XQueryTool.Query<BP.CCOA.OA_News>(OA_News, columns, "",
+            //    m_PageIndex, m_PageSize, dicFilter);
+
+            //gridView.DataSource = OA_NewsTable;
+            //gridView.DataBind();
+        }
+        protected void btnOk_Click(object sender, EventArgs e)
+        {
+
+        }
+}
 }

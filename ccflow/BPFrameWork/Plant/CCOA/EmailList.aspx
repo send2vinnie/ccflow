@@ -9,7 +9,7 @@
 <body style="font-size: small">
     <form id="form1" runat="server">
     <div>
-        <asp:LinkButton ID="lbtAll" runat="server" onclick="LinkButton1_Click">全部</asp:LinkButton>
+        <asp:LinkButton ID="lbtAll" runat="server" onclick="lbtAll_Click">全部</asp:LinkButton>
         &nbsp;
         <asp:LinkButton ID="lbtUnRead" runat="server" onclick="lbtUnRead_Click">未读</asp:LinkButton>
         &nbsp;

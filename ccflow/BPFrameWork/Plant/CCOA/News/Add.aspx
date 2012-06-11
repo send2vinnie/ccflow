@@ -49,6 +49,7 @@
 
         function onSelect(arg) {
             var txtSelect = $("#xtxtReader");
+            var hfSelects = $("#hfSelects");
             var dataUrl = "";
             if (arg == "dept") {
                 dataUrl = "../CCOA/Common/TreeList.aspx?type=" + arg;
@@ -73,8 +74,10 @@
                     if (action == "ok") {
                         var iframe = this.getIFrameEl();
                         var data = iframe.contentWindow.GetData();
+                        var ids = iframe.contentWindow.GetSelectedIds();
                         data = mini.clone(data);
                         txtSelect.val(data);
+                        hfSelects.val(ids);
                     }
                 }
             });
@@ -120,6 +123,7 @@
                             按 <a href="#" onclick="onSelect('dept')">部门</a> <a href="#" onclick="onSelect('role')">
                                 角色</a> <a href="#" onclick="onSelect('emp')">人员</a><br />
                             <lizard:XTextBox ID="xtxtReader" runat="server" Width="400px" Height="40px" />
+                            <asp:HiddenField ID="hfSelects" runat="server" />
                         </td>
                     </tr>
                     <tr>

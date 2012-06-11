@@ -9,6 +9,9 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Text;
+using BP.CCOA.Enum;
+using BP.CCOA;
+
 namespace Lizard.OA.Web.OA_News
 {
     public partial class Show : BasePage
@@ -33,6 +36,8 @@ namespace Lizard.OA.Web.OA_News
             BP.CCOA.OA_News model = new BP.CCOA.OA_News(NewsId);
             model.Clicks = model.Clicks + 1;
             model.Update();
+
+            ClickHelper.ClickRecord(ClickObjType.News, NewsId, CurrentUser.No);
         }
 
         private void ShowInfo(string NewsId)

@@ -1,7 +1,29 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/CCOA/WinOpen.master" AutoEventWireup="true" CodeFile="Main.aspx.cs" Inherits="CCOA_Admin_Main" %>
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeFile="Main.aspx.cs" Inherits="CCOA_Admin_Main" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-</asp:Content>
-
+<head>
+    <style type="text/css">
+        .style1
+        {
+            width: 590px;
+            height: 417px;
+        }
+        .style2
+        {
+            height: 417px;
+            width: 245px;
+        }
+    </style>
+</head>
+<table>
+    <tr>
+        <td class="style2">
+            left
+        </td>
+        <td class="style1">
+            right ifame
+            <iframe id="frameConfig" style="height:400px; width:500px;">
+            
+            </iframe>
+        </td>
+    </tr>
+</table>

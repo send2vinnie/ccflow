@@ -49,6 +49,10 @@ namespace Lizard.OA.Web.OA_News
             {
                 strErr += "新闻类型不能为空！\\n";
             }
+            if (this.xtxtReader.Text.Trim().Length == 0)
+            {
+                strErr += "发布对象不能为空！\\n";
+            }
             if (this.txtNewsContent.Text.Trim().Length == 0)
             {
                 strErr += "新闻内容不能为空！\\n";
@@ -93,6 +97,20 @@ namespace Lizard.OA.Web.OA_News
             model.UpUser = UpUser;
             model.Status = Status ? 1 : 0;
             model.Insert();
+
+            string selectIds = hfSelects.Value;
+            if (selectIds.Length>0)
+            {
+                string[] ids = selectIds.Split(',');
+                foreach (string id in ids)
+                {
+                    BP.CCOA.OA_NewsAuth auth = new BP.CCOA.OA_NewsAuth();
+                    auth.No = Guid.NewGuid().ToString();
+                    auth.FK_News = model.No;
+                    auth.FK_Id = id;
+                    auth.Insert();
+                }
+            }
 
             if (FileUpload1.HasFile)
             {

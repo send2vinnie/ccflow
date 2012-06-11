@@ -15,6 +15,15 @@
     <div>
         <uc1:MiniToolBar ID="MiniToolBar1" runat="server" PopAddUrl="News/Add.aspx" />
         <!--Search end-->
+        <lizard:XDropDownList ID="ddlCategory" runat="server" Width="100">
+            <asp:ListItem Text="未读新闻" Value="1" />
+            <asp:ListItem Text="已读新闻" Value="2" />
+            <asp:ListItem Text="全部新闻" Value="3" />
+        </lizard:XDropDownList>
+        &nbsp;
+        <lizard:XDatePicker ID="xdpCreateDate" runat="server" />
+        &nbsp;<lizard:XButton ID="btnOk" runat="server" Text="确定" OnClick="btnOk_Click" />
+        &nbsp;<asp:LinkButton ID="lbtMarkReaded" runat="server" OnClick="lbtMarkReaded_Click">标记所有为已读</asp:LinkButton>
         <br />
         <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
             BorderWidth="1px" DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
@@ -47,7 +56,7 @@
                 <asp:BoundField DataField="Clicks" HeaderText="点击量" SortExpression="Clicks" ItemStyle-HorizontalAlign="Center" />
                 <asp:TemplateField HeaderText="是否阅读" SortExpression="IsRead" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="lblIsRead" runat="server" Text='<%# XTool.ConvertBooleanText(Eval("IsRead")) %>' />
+                        <asp:Label ID="lblIsRead" runat="server" Text='<%# IsRead(Eval("No").ToString()) %>' />
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="UpDT" HeaderText="更新时间" SortExpression="UpDT" ItemStyle-HorizontalAlign="Center"

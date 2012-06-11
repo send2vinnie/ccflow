@@ -12,11 +12,21 @@ public partial class CCOA_Controls_ImageButton : System.Web.UI.UserControl
 
     }
 
-    public string Text { get; set; }
+    public string Title { get; set; }
+
+    public string OnClientClick { get; set; }
 
     public string LinkUrl { get; set; }
 
     public string ImageUrl { get; set; }
 
     public string AlertText { get; set; }
+
+    protected string ClickEvent
+    {
+        get
+        {
+            return OnClientClick + "('" + Title + "','" + LinkUrl + "')";
+        }
+    }
 }

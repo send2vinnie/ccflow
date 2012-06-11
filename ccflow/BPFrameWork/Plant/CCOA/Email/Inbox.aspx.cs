@@ -91,7 +91,6 @@ namespace Lizard.OA.Web.OA_Email
 
             gridView.DataSource = OA_EmailTable;
             gridView.DataBind();
-
         }
 
         protected void gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -119,7 +118,6 @@ namespace Lizard.OA.Web.OA_Email
                 //{
                 //    e.Row.Cells[1].Text = obj1.ToString();
                 //}
-
             }
         }
 
