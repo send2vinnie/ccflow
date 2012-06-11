@@ -13,12 +13,12 @@ namespace BP.CCOA.Interface
 
         bool IsReaded(string objectId, string visitId);
 
-        List<string> GetReadedList(ClickObjType objType, string visitId);
-
         string GetVisitTime(string objectId, string visitId);
 
         DataTable GetObjectRecord(string objectId);
 
         DataTable GetVisitedRecord(string visitId);
+
+        bool SetAllRead(string visitId, ClickObjType objectType);
     }
 }

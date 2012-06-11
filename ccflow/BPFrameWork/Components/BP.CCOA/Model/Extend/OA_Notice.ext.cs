@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using BP.DA;
+using BP.CCOA.Enum;
 
 namespace BP.CCOA
 {
@@ -23,8 +24,7 @@ namespace BP.CCOA
         public bool SetAllRead(string userId)
         {
             OA_ClickRecords clickRecords = new OA_ClickRecords();
-            int objectType = 1;
-            return clickRecords.SetAllRead(userId, objectType);
+            return ClickHelper.SetAllRead(userId, ClickObjType.Notice);
         }
     }
 }
