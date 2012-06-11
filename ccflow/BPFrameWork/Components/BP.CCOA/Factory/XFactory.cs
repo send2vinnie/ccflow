@@ -24,5 +24,10 @@ namespace BP.CCOA
         /// <returns></returns>
         public abstract string GetGuidFunction();
 
+        /// <summary>
+        /// 获取阅读查询工具
+        /// </summary>
+        /// <returns></returns>
+        public abstract XReadQueryToolBase GetReadQueryTool();
     }
 }

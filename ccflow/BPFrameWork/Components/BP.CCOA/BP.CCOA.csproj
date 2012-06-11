@@ -58,6 +58,7 @@
     <Compile Include="Enum\ArticleStates.cs" />
     <Compile Include="Enum\ClickObjType.cs" />
     <Compile Include="Enum\MailCategory.cs" />
+    <Compile Include="Enum\ReadType.cs" />
     <Compile Include="Enum\TypeOfArticle.cs" />
     <Compile Include="Factory\Oracle\OA_NoticeOracleTool.cs" />
     <Compile Include="Factory\Oracle\XOracleFactory.cs" />
@@ -119,8 +120,15 @@
     <Compile Include="Utility\Helper.cs" />
     <Compile Include="Utility\IHelper.cs" />
     <Compile Include="XDeleteTool.cs" />
+    <Compile Include="Factory\Oracle\XOracleReadQueryTool.cs" />
+    <Compile Include="ReadHelper\XEmailReadHelper.cs" />
+    <Compile Include="ReadHelper\XNewsReadHelper.cs" />
+    <Compile Include="ReadHelper\XNoticeReadHelper.cs" />
     <Compile Include="XQueryTool.cs" />
     <Compile Include="Factory\Sqlserver\XSqlServerQueryTool.cs" />
+    <Compile Include="Factory\XReadQueryToolBase.cs" />
+    <Compile Include="ReadHelper\XReadHelperBase.cs" />
+    <Compile Include="ReadHelper\XReadHelpManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BP.EIP\BP.EIP.csproj">

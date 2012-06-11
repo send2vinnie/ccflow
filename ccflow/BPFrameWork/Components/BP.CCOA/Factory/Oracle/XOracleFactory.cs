@@ -26,5 +26,10 @@ namespace BP.CCOA
         {
             return "SYS_GUID()";
         }
+
+        public override XReadQueryToolBase GetReadQueryTool()
+        {
+            return new XOracleReadQueryTool();
+        }
     }
 }

@@ -26,5 +26,10 @@ namespace BP.CCOA
         {
             return "";
         }
+
+        public override XReadQueryToolBase GetReadQueryTool()
+        {
+            return null;
+        }
     }
 }
