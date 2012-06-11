@@ -27,7 +27,7 @@ namespace BP.CCOA
 
         private DataTable Query(string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, ReadType readType, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
-            string sql = "SELECT T.*, FUN_IS_READ(T." + pkColumnName + ",'" + userId + "') FROM " + tableName + " T WHERE 1=1 ";
+            string sql = "SELECT T.*, FUN_IS_READ(T." + pkColumnName + ",'" + userId + "') ReadFlag FROM " + tableName + " T WHERE 1=1 ";
             sql = string.Format(sql, rowNumFieldName);
             if (readType != ReadType.All)
             {
