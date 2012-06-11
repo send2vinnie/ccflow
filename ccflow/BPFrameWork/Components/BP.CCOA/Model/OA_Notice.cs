@@ -251,11 +251,13 @@ namespace BP.CCOA
                 map.AddTBString(OA_NoticeAttr.AccessType, null, "访问类型", true, false, 0, 4, 20);
                 map.AddTBInt(OA_NoticeAttr.Status, 0, "", true, false);
 
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
+
 
     public partial class OA_Notices : Entities
     {

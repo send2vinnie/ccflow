@@ -23,18 +23,7 @@ namespace BP.CCOA
 
         private static XQueryToolBase GetQueryTool()
         {
-            string m_DataBaseType = ConfigurationManager.AppSettings["AppCenterDBType"].ToUpper();
-            XQueryToolBase queryTool = null;
-            switch (m_DataBaseType)
-            {
-                case "ORACLE":
-                    queryTool = new XOracleQueryTool();
-                    break;
-                default:
-                    queryTool = new XSqlServerQueryTool();
-                    break;
-            }
-            return queryTool;
+            return XFactoryManager.CreateFactory().GetQueryTool();
         }
 
         public static int GetRowCount<T>(T entity, string[] columnNames,

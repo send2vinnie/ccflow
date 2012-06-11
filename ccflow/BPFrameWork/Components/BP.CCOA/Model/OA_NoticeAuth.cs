@@ -82,7 +82,7 @@ namespace BP.CCOA
                 
                 map.AddTBStringPK(OA_NoticeAuthAttr.No, null, "主键No", true, true, 0, 50, 50);
                 map.AddTBString(OA_NoticeAuthAttr.FK_Notice, null, "Notice公告外键", true, false, 0,  50, 50);
-                map.AddTBString(OA_NoticeAuthAttr.FK_Id, null, "可以访问的主键", true, false, 0,  4000, 4000);
+                map.AddTBString(OA_NoticeAuthAttr.FK_Id, null, "可以访问的主键", true, false, 0, 50, 50);
               
                 this._enMap = map;
                 return this._enMap;

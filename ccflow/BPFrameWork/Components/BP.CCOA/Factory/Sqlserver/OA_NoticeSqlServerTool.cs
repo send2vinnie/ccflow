@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BP.En;
 using BP.DA;
 
 namespace BP.CCOA
 {
-    public partial class XOracleQueryTool : XQueryToolBase
+    public partial class OA_NoticeSqlServerTool : OA_NoticeTool
     {
-        public override System.Data.DataTable Query<T>(T entity, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        public override System.Data.DataTable QueryNotice(string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
-            EntityNoName entityNoName = entity as EntityNoName;
-            string tableName = entityNoName.EnMap.PhysicsTable;
-
-            string sql = "SELECT * FROM " + tableName + " WHERE 1=1 ";
+            string sql = "SELECT row_number () OVER (ORDER BY {0}) AS RowNum,* FROM OA_NOTICE WHERE 1=1 ";
             sql = string.Format(sql, rowNumFieldName);
             if (whereValues != null)
             {
@@ -50,12 +46,8 @@ namespace BP.CCOA
             int startNo = (pageIndex - 1) * pageSize + 1;
             int endNo = startNo + pageSize - 1;
 
-            //sql += " AND ROWNUM BETWEEN {0} AND {1}";
-            sql = "SELECT T.*,ROWNUM ROW_NUM FROM ( " + sql + " ) T WHERE ROWNUM<={0}";
-            sql = string.Format(sql, endNo);
-            sql = "SELECT * FROM ( "+sql+") WHERE ROW_NUM>={0}";
-            sql = string.Format(sql, startNo);
-            //sql = string.Format(sql, startNo, endNo);
+            sql = "SELECT * FROM ( " + sql + " ) T WHERE RowNum BETWEEN {0} AND {1}";
+            sql = string.Format(sql, startNo, endNo);
 
             return DBAccess.RunSQLReturnTable(sql);
         }
