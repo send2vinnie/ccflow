@@ -44,11 +44,7 @@ namespace Lizard.OA.Web.OA_Notice
             {
                 strErr += "通告内容不能为空！\\n";
             }
-            if (!PageValidate.IsDateTime(xdpCreateTime.Text))
-            {
-                strErr += "发布时间格式错误！\\n";
-            }
-          
+           
             if (strErr != "")
             {
                 MessageBox.Show(this, strErr);

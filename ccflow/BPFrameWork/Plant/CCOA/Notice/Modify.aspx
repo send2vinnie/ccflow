@@ -99,7 +99,7 @@
                             通告标题 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeTitle" class="mini-textbox" runat="server" Width="200px"></asp:TextBox>
+                            <asp:TextBox ID="txtNoticeTitle" runat="server" Width="200px"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -151,7 +151,7 @@
                         </td>
                     </tr>
                 </table>
-                <script src="/js/calendar1.js" type="text/javascript"></script>
+               
             </td>
         </tr>
         <tr>

@@ -63,7 +63,7 @@
             var txtPeople = mini.get("txtPeople");
             var peopleName = txtPeople.value;
             var selectPeopleList = mini.get("selectPeople");
-            selectPeopleList.setUrl("LoadPeopleTree.aspx?PeopleName=" + peopleName);
+            selectPeopleList.setUrl("../Common/LoadPeopleTree.aspx?PeopleName=" + peopleName);
         }
 
         //选择
@@ -119,7 +119,7 @@
                 </ul>--%>
                 <h4 style="margin: 0; line-height: 22px; font-size: 13px;">
                     选择人员：</h4>
-                <div id="selectPeople" url="LoadPeopleTree.aspx" class="mini-listbox" style="width: 250px;
+                <div id="selectPeople" url="../Common/LoadPeopleTree.aspx" class="mini-listbox" style="width: 250px;
                     height: 200px;" showcheckbox="true" multiselect="true">
                     <div property="columns">
                         <div field="text" width="150" headeralign="center" allowsort="true">

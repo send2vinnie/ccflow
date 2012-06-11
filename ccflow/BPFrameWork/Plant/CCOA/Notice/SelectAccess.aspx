@@ -60,6 +60,13 @@
             CloseWindow("ok");
         }
 
+        function QueryDept() {
+            var deptName = mini.get('txtDepartment').value;
+            var tree = mini.get('tree1');
+            var url = "../Common/LoadDeptTree.aspx?DeptName=" + deptName;
+            tree.setUrl(url);
+        }
+
     </script>
 </head>
 <body>
@@ -70,6 +77,7 @@
                 <td colspan="2">
                     部门名称：
                     <input id="txtDepartment" class="mini-textbox" style="width: 160px;" />
+                    <a href="#" class="mini-button" onclick="QueryDept()">查询</a>
                 </td>
             </tr>
             <tr>
@@ -82,7 +90,7 @@
             <tr>
                 <td>
                     <ul id="tree1" class="mini-tree" style="width: 280px; padding: 5px;" textfield="text"
-                        idfield="id" url="LoadDeptTree.aspx" showcheckbox="true" parentfield="pid">
+                        idfield="id" url="../Common/LoadDeptTree.aspx" showcheckbox="true" parentfield="pid">
                     </ul>
                 </td>
             </tr>

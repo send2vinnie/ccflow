@@ -29,6 +29,7 @@
         function SelectAccess() {
 
             var authType = document.getElementById("ddlAccessType").value;
+            //            var authType = mini.get("ddlAccessType").value;
 
             var formTitle = "选择" + authType;
             var formUrl = "";
@@ -87,7 +88,8 @@
                             通告标题 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeTitle" class="mini-textbox" runat="server" Width="200px"></asp:TextBox>
+                            <lizard:xtextbox id="txtNoticeTitle" runat="server" width="200px">
+                            </lizard:xtextbox>
                         </td>
                     </tr>
                     <tr>
@@ -95,7 +97,8 @@
                             副标题 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeSubTitle" class="mini-textbox" runat="server" Width="200px"></asp:TextBox>
+                            <lizard:xtextbox id="txtNoticeSubTitle" runat="server" width="200px">
+                            </lizard:xtextbox>
                         </td>
                     </tr>
                     <tr>
@@ -103,7 +106,8 @@
                             通告类型 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeType" class="mini-combobox" runat="server" Width="200px"></asp:TextBox>
+                            <lizard:xtextbox id="txtNoticeType" runat="server" width="200px">
+                            </lizard:xtextbox>
                         </td>
                     </tr>
                     <tr>
@@ -111,11 +115,11 @@
                             发布类别 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:DropDownList ID="ddlAccessType" class="mini-combobox" runat="server" Width="200px">
+                            <lizard:xdropdownlist id="ddlAccessType" runat="server" width="200px">
                                 <asp:ListItem>部门</asp:ListItem>
                                 <asp:ListItem>角色</asp:ListItem>
                                 <asp:ListItem>人员</asp:ListItem>
-                            </asp:DropDownList>
+                            </lizard:xdropdownlist>
                             <a class="mini-button" href="#" onclick="SelectAccess()">选择</a>
                         </td>
                     </tr>
@@ -125,8 +129,9 @@
                             <asp:HiddenField ID="txtSelectedIds" runat="server" />
                         </td>
                         <td>
-                            <asp:TextBox ID="txtSelected" CssClass="mini-textbox" TextMode="MultiLine" ReadOnly="true"
-                                runat="server" Height="53px" Width="599px"></asp:TextBox>
+                            <lizard:xtextbox id="txtSelected" textmode="MultiLine" readonly="true" runat="server"
+                                height="53px" width="599px">
+                            </lizard:xtextbox>
                         </td>
                     </tr>
                     <tr>
@@ -134,9 +139,9 @@
                             通告内容 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeContent" runat="server" Width="600px" TextMode="MultiLine"
-                                Height="240px"></asp:TextBox>
-                            <lizard:XDatePicker ID="xdpCreateTime" runat="server" />
+                            <lizard:xtextbox id="txtNoticeContent" runat="server" width="600px" textmode="MultiLine"
+                                height="240px">
+                            </lizard:xtextbox>
                         </td>
                     </tr>
                 </table>
@@ -145,12 +150,12 @@
         </tr>
         <tr>
             <td class="tdbg" align="center" valign="bottom">
-                <asp:Button ID="btnSave" runat="server" Text="保存" OnClick="btnSave_Click" class="inputbutton"
+                <lizard:xbutton id="btnSave" runat="server" text="保存" onclick="btnSave_Click" class="inputbutton"
                     onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
-                </asp:Button>
-                <asp:Button ID="btnCancle" runat="server" Text="取消" OnClick="btnCancle_Click" class="inputbutton"
-                    onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
-                </asp:Button>
+                </lizard:xbutton>
+                <lizard:xbutton id="btnCancle" runat="server" text="取消" onclick="btnCancle_Click"
+                    class="inputbutton" onmouseover="this.className='inputbutton_hover'" onmouseout="this.className='inputbutton'">
+                </lizard:xbutton>
             </td>
         </tr>
     </table>

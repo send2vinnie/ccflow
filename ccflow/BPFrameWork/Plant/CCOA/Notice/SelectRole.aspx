@@ -53,7 +53,7 @@
             selectedList.selectAll();
             var items = selectedList.getSelecteds();
             if (items.length == 0) {
-                alert("请选择人员！");
+                alert("请选择角色！");
                 return;
             }
             CloseWindow("ok");
@@ -63,7 +63,7 @@
             var txtRole = mini.get("txtRole");
             var roleName = txtRole.value;
             var selectPeopleList = mini.get("selectPeople");
-            selectPeopleList.setUrl("LoadRoleTree.aspx?RoleName=" + roleName);
+            selectPeopleList.setUrl("../Common/LoadRoleTree.aspx?RoleName=" + roleName);
         }
 
         //选择
@@ -93,7 +93,7 @@
 
         //删除
         function DeleteSeleced() {
-            if (confirm("确定要删除选中的人员吗？")) {
+            if (confirm("确定要删除选中的角色吗？")) {
                 var selectedList = mini.get("selectedList");
                 var selectedItems = selectedList.getSelecteds();
                 selectedList.removeItems(selectedItems);
@@ -119,7 +119,7 @@
                 </ul>--%>
                 <h4 style="margin: 0; line-height: 22px; font-size: 13px;">
                     选择角色：</h4>
-                <div id="selectPeople" url="LoadRoleTree.aspx" class="mini-listbox" style="width: 250px;
+                <div id="selectPeople" url="../Common/LoadRoleTree.aspx" class="mini-listbox" style="width: 250px;
                     height: 200px;" showcheckbox="true" multiselect="true">
                     <div property="columns">
                         <div field="text" width="150" headeralign="center" allowsort="true">

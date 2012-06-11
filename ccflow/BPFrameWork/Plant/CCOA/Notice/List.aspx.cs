@@ -52,7 +52,7 @@ namespace Lizard.OA.Web.OA_Notice
         private int GetQueryRowsCount()
         {
             string searchValue = Request.QueryString["searchvalue"];
-         
+
             return XQueryTool.GetRowCount<BP.CCOA.OA_Notice>(OA_Notice, columns, searchValue);
         }
 
@@ -90,7 +90,9 @@ namespace Lizard.OA.Web.OA_Notice
             //}
             #endregion
             string searchValue = Request.QueryString["searchvalue"];
-            DataTable OA_NoticeTable = XQueryTool.Query<BP.CCOA.OA_Notice>(OA_Notice, columns, searchValue,
+            //DataTable OA_NoticeTable = XQueryTool.Query<BP.CCOA.OA_Notice>(OA_Notice, columns, searchValue,
+            //    m_PageIndex, m_PageSize, null);
+            DataTable OA_NoticeTable = bll.QueryNotice(CurrentUser.No, columns, searchValue,
                 m_PageIndex, m_PageSize, null);
 
             gridView.DataSource = OA_NoticeTable;
@@ -161,7 +163,8 @@ namespace Lizard.OA.Web.OA_Notice
         #endregion
         protected void lbtReaded_Click(object sender, EventArgs e)
         {
-
+            string userId = CurrentUser.No;
+            bool isSuccess = OA_Notice.SetAllRead(userId);
         }
-}
+    }
 }
