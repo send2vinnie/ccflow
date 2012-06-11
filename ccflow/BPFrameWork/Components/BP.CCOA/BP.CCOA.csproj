@@ -54,9 +54,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Channel.cs" />
+    <Compile Include="ClickHelper.cs" />
     <Compile Include="Enum\ArticleStates.cs" />
+    <Compile Include="Enum\ClickObjType.cs" />
     <Compile Include="Enum\MailCategory.cs" />
     <Compile Include="Enum\TypeOfArticle.cs" />
+    <Compile Include="Interface\IClick.cs" />
     <Compile Include="Model\OA_ClickRecords.cs" />
     <Compile Include="Model\OA_NoticeAuth.cs" />
     <Compile Include="Model\OA_NewsAuth.cs" />

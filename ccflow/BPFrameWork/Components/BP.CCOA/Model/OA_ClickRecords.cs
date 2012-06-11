@@ -15,11 +15,11 @@ namespace BP.CCOA
         public const string Clicks = "Clicks";
         public const string VisitId = "VisitId";
     }
-    
+
     public partial class OA_ClickRecords : EntityNoName
     {
         #region 属性
-        
+
         /// <summary>
         /// 类型（0-新闻，1-公告）
         /// </summary>
@@ -34,7 +34,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_ClickRecordsAttr.ObjectType, value);
             }
         }
-        
+
         /// <summary>
         /// 被点击的主键Id
         /// </summary>
@@ -49,7 +49,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_ClickRecordsAttr.ObjectId, value);
             }
         }
-        
+
         /// <summary>
         /// 访问日期
         /// </summary>
@@ -64,7 +64,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_ClickRecordsAttr.VisitDate, value);
             }
         }
-        
+
         /// <summary>
         /// 点击次数
         /// </summary>
@@ -94,9 +94,9 @@ namespace BP.CCOA
                 this.SetValByKey(OA_ClickRecordsAttr.VisitId, value);
             }
         }
-        
+
         #endregion
-        
+
         #region 构造方法
         /// <summary>
         /// 
@@ -114,7 +114,7 @@ namespace BP.CCOA
             this.Retrieve();
         }
         #endregion
-        
+
         public override Map EnMap
         {
             get
@@ -127,20 +127,20 @@ namespace BP.CCOA
                 map.EnDesc = "";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
-                
+
                 map.AddTBStringPK(OA_ClickRecordsAttr.No, null, "主键No", true, true, 0, 50, 50);
-                map.AddTBInt(OA_ClickRecordsAttr.ObjectType, 0, "类型（0-新闻，1-公告）", true, false);
-                map.AddTBString(OA_ClickRecordsAttr.ObjectId, null, "被点击的主键Id", true, false, 0,  50, 50);
-                map.AddTBString(OA_ClickRecordsAttr.VisitDate, null, "访问日期", true, false, 0,  20, 20);
+                map.AddTBInt(OA_ClickRecordsAttr.ObjectType, 0, "类型（0-新闻，1-公告,2-邮件）", true, false);
+                map.AddTBString(OA_ClickRecordsAttr.ObjectId, null, "被点击的主键Id", true, false, 0, 50, 50);
+                map.AddTBString(OA_ClickRecordsAttr.VisitDate, null, "访问日期", true, false, 0, 20, 20);
                 map.AddTBInt(OA_ClickRecordsAttr.Clicks, 0, "点击次数", true, false);
                 map.AddTBString(OA_ClickRecordsAttr.VisitId, null, "访问人员", true, false, 0, 50, 50);
-              
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
-    
+
     public partial class OA_ClickRecordss : Entities
     {
         public override Entity GetNewEntity
