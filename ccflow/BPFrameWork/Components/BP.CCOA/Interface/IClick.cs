@@ -9,7 +9,7 @@ namespace BP.CCOA.Interface
 {
     public interface IClick
     {
-        void ClickRecord(string objectId, string visitId);
+        void ClickRecord(ClickObjType objectType, string objectId, string visitId);
 
         bool IsReaded(string objectId, string visitId);
 

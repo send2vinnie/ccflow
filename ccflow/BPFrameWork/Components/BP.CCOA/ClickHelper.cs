@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BP.CCOA.Interface;
+using BP.CCOA.Enum;
 
 namespace BP.CCOA
 {
     public class ClickHelper : IClick
     {
-        public void ClickRecord(string objectId, string visitId)
+        public void ClickRecord(ClickObjType objectType,string objectId, string visitId)
         {
-            throw new NotImplementedException();
+            BP.CCOA.OA_ClickRecords click = new OA_ClickRecords();
+            click.No = Guid.NewGuid().ToString();
+            click.ObjectId = objectId;
+            click.ObjectType = (int)objectType;
+            click.VisitId = visitId;
+            click.VisitDate = DateTime.Now.ToString();
+
+            click.Insert();
         }
 
         public bool IsReaded(string objectId, string visitId)
