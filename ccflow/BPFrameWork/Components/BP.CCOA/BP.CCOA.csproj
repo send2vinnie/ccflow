@@ -59,12 +59,20 @@
     <Compile Include="Enum\ClickObjType.cs" />
     <Compile Include="Enum\MailCategory.cs" />
     <Compile Include="Enum\TypeOfArticle.cs" />
+    <Compile Include="Factory\Oracle\OA_NoticeOracleTool.cs" />
+    <Compile Include="Factory\Oracle\XOracleFactory.cs" />
+    <Compile Include="Factory\XToolBase.cs" />
+    <Compile Include="Model\Extend\OA_Notice.ext.cs" />
+    <Compile Include="Factory\Sqlserver\OA_NoticeSqlServerTool.cs" />
+    <Compile Include="Factory\OA_NoticeTool.cs" />
+    <Compile Include="Factory\XFactory.cs" />
+    <Compile Include="Factory\XFactoryManager.cs" />
+    <Compile Include="Factory\Sqlserver\XSqlServerFactory.cs" />
+    <Compile Include="Factory\Oracle\XOracleQueryTool.cs" />
+    <Compile Include="Factory\XQueryToolBase.cs" />
     <Compile Include="Interface\IClick.cs" />
     <Compile Include="Model\OA_ClickRecords.cs" />
-    <Compile Include="Model\OA_NoticeAuth.cs" />
     <Compile Include="Model\OA_NewsAuth.cs" />
-    <Compile Include="XOracleQueryTool.cs" />
-    <Compile Include="XQueryToolBase.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Model\APP_ChangeLog.cs" />
     <Compile Include="Model\APP_Domain.cs" />
@@ -96,6 +104,7 @@
     <Compile Include="Model\OA_NewsAttach.cs" />
     <Compile Include="Model\OA_Notice.cs" />
     <Compile Include="Model\OA_NoticeAttach.cs" />
+    <Compile Include="Model\OA_NoticeAuth.cs" />
     <Compile Include="Model\OA_SMS.cs" />
     <Compile Include="ProcessObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,7 +120,7 @@
     <Compile Include="Utility\IHelper.cs" />
     <Compile Include="XDeleteTool.cs" />
     <Compile Include="XQueryTool.cs" />
-    <Compile Include="XSqlServerQueryTool.cs" />
+    <Compile Include="Factory\Sqlserver\XSqlServerQueryTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BP.EIP\BP.EIP.csproj">
@@ -127,7 +136,9 @@
       <Name>BP.En30</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Model\Extend\OA_ClickRecords.ext.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BP.CCOA.Interface;
 
 namespace BP.CCOA
 {
@@ -22,5 +23,6 @@ namespace BP.CCOA
         /// </summary>
         /// <returns></returns>
         public abstract string GetGuidFunction();
+
     }
 }

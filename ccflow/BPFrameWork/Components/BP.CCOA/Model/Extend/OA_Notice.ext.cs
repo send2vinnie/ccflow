@@ -22,12 +22,9 @@ namespace BP.CCOA
         /// <returns></returns>
         public bool SetAllRead(string userId)
         {
-            string guidFun = XFactoryManager.CreateFactory().GetGuidFunction();
-            string timeFun = XFactoryManager.CreateFactory().GetServerTimeFunction();
-            string objectType = "1";
-            string sql = "INSERT INTO OA_CLICKRECORDS(NO,OBJECTTYPE,OBJECTID,VISITDATE,CLICKS,VISITID) SELECT {0},{1},NO,{2},1,{3} FROM OA_NOTICE WHERE NO NOT IN (SELECT OBJECTID FROM OA_CLICKRECORDS WHERE VISITID='{3}')";
-            sql = string.Format(sql, guidFun, objectType, timeFun, userId);
-            return DBAccess.RunSQL(sql) > 0;
+            OA_ClickRecords clickRecords = new OA_ClickRecords();
+            int objectType = 1;
+            return clickRecords.InsertClickRecords(userId, objectType);
         }
     }
 }
