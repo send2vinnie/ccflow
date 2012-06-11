@@ -20,4 +20,14 @@ public static class XTool
                 return "否";
         }
     }
+
+    public static string DateTimeConvert(DateTime datetime)
+    {
+        return datetime.ToString("yyyy-MM-dd");
+    }
+
+    public static string Now()
+    {
+        return DateTimeConvert(DateTime.Now);
+    }
 }
