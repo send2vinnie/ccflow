@@ -8,6 +8,31 @@ namespace BP.CCOA
 {
     public abstract partial class XReadHelperBase
     {
+
+        /// <summary>
+        /// 通过阅读类别查询
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public virtual DataTable QueryByType(string type, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        {
+            switch (type)
+            {
+                case "1":
+                    //未读
+                    return this.QueryNotReaded(userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
+                case "2":
+                    //已读
+                    return this.QueryReaded(userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
+                case "3":
+                    //全部
+                    return this.QueryAll(userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
+                default:
+                    throw new Exception("未实现查询！");
+            }
+        }
+
+
         /// <summary>
         /// 获取全部
         /// </summary>

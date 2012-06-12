@@ -135,11 +135,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public DateTime CreateTime
+        public String CreateTime
         {
             get
             {
-                return this.GetValDateTime(OA_NoticeAttr.CreateTime);
+                return this.GetValStringByKey(OA_NoticeAttr.CreateTime);
             }
             set
             {
@@ -165,11 +165,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public DateTime UpDT
+        public String UpDT
         {
             get
             {
-                return this.GetValDateTime(OA_NoticeAttr.UpDT);
+                return this.GetValStringByKey(OA_NoticeAttr.UpDT);
             }
             set
             {

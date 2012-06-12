@@ -19,12 +19,13 @@ namespace BP.CCOA
         public const string SendTime = "SendTime";
         public const string IsDel = "IsDel";
         public const string UpDT = "UpDT";
+        public const string IsRead = "IsRead";
     }
-    
+
     public partial class OA_Email : EntityNoName
     {
         #region 属性
-        
+
         /// <summary>
         /// 发件人
         /// </summary>
@@ -39,7 +40,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_EmailAttr.Addresser, value);
             }
         }
-        
+
         /// <summary>
         /// 收件人
         /// </summary>
@@ -54,7 +55,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_EmailAttr.Addressee, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -69,7 +70,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_EmailAttr.Subject, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -84,7 +85,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_EmailAttr.Content, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -99,7 +100,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_EmailAttr.PriorityLevel, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -114,7 +115,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_EmailAttr.Category, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -129,7 +130,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_EmailAttr.CreateTime, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -144,7 +145,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_EmailAttr.SendTime, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -159,7 +160,7 @@ namespace BP.CCOA
                 this.SetValByKey(OA_EmailAttr.IsDel, value);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -174,9 +175,24 @@ namespace BP.CCOA
                 this.SetValByKey(OA_EmailAttr.UpDT, value);
             }
         }
-        
+
+        /// <summary>
+        /// 是否已读
+        /// </summary>
+        public int IsRead
+        {
+            get
+            {
+                return this.GetValIntByKey(OA_EmailAttr.IsRead);
+            }
+            set
+            {
+                this.SetValByKey(OA_EmailAttr.IsRead, value);
+            }
+        }
+
         #endregion
-        
+
         #region 构造方法
         /// <summary>
         /// 
@@ -194,7 +210,7 @@ namespace BP.CCOA
             this.Retrieve();
         }
         #endregion
-        
+
         public override Map EnMap
         {
             get
@@ -207,25 +223,26 @@ namespace BP.CCOA
                 map.EnDesc = "";
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
-                
+
                 map.AddTBStringPK(OA_EmailAttr.No, null, "主键Id", true, true, 0, 50, 50);
-                map.AddTBString(OA_EmailAttr.Addresser, null, "发件人", true, false, 0,  10, 10);
-                map.AddTBString(OA_EmailAttr.Addressee, null, "收件人", true, false, 0,  1000, 1000);
-                map.AddTBString(OA_EmailAttr.Subject, null, "", true, false, 0,  200, 200);
-                map.AddTBString(OA_EmailAttr.Content, null, "", true, false, 0,  16, 16);
-                map.AddTBString(OA_EmailAttr.PriorityLevel, null, "", true, false, 0,  1, 1);
-                map.AddTBString(OA_EmailAttr.Category, null, "", true, false, 0,  1, 1);
-                map.AddTBString(OA_EmailAttr.CreateTime, null, "", true, false, 0,  50, 50);
-                map.AddTBString(OA_EmailAttr.SendTime, null, "", true, false, 0,  50, 50);
+                map.AddTBString(OA_EmailAttr.Addresser, null, "发件人", true, false, 0, 10, 10);
+                map.AddTBString(OA_EmailAttr.Addressee, null, "收件人", true, false, 0, 1000, 1000);
+                map.AddTBString(OA_EmailAttr.Subject, null, "", true, false, 0, 200, 200);
+                map.AddTBString(OA_EmailAttr.Content, null, "", true, false, 0, 16, 16);
+                map.AddTBString(OA_EmailAttr.PriorityLevel, null, "", true, false, 0, 1, 1);
+                map.AddTBString(OA_EmailAttr.Category, null, "", true, false, 0, 1, 1);
+                map.AddTBString(OA_EmailAttr.CreateTime, null, "", true, false, 0, 50, 50);
+                map.AddTBString(OA_EmailAttr.SendTime, null, "", true, false, 0, 50, 50);
                 map.AddTBInt(OA_EmailAttr.IsDel, 0, "", true, false);
-                map.AddTBString(OA_EmailAttr.UpDT, null, "", true, false, 0,  50, 50);
-              
+                map.AddTBString(OA_EmailAttr.UpDT, null, "", true, false, 0, 50, 50);
+                map.AddTBInt(OA_EmailAttr.IsRead, 0, "", true, false);
+
                 this._enMap = map;
                 return this._enMap;
             }
         }
     }
-    
+
     public partial class OA_Emails : Entities
     {
         public override Entity GetNewEntity
