@@ -20,10 +20,13 @@ namespace Lizard.OA.Web.OA_Email
 
         private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
 
-        private XEmailTool m_EmailTool = new XEmailTool(3);
+        private XEmailTool m_EmailTool = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string currentUser=CurrentUser.No;
+            currentUser="wss";
+            m_EmailTool = new XEmailTool(XEmailType.RecycleBox, currentUser);
             if (!Page.IsPostBack)
             {
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());

@@ -14,15 +14,18 @@ namespace Lizard.OA.Web.OA_Email
 {
     public partial class DraftBox : BasePage
     {
-        private  BP.CCOA.OA_Email bll = new BP.CCOA.OA_Email();
+        private BP.CCOA.OA_Email bll = new BP.CCOA.OA_Email();
 
         private int m_PageIndex = 1;
         private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
 
-        XEmailTool m_EmailTool = new XEmailTool(1);
+        XEmailTool m_EmailTool = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string currentUser=CurrentUser.No;
+            currentUser = "wss";
+            m_EmailTool = new XEmailTool(XEmailType.DraftBox, currentUser);
             if (!Page.IsPostBack)
             {
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
@@ -49,7 +52,7 @@ namespace Lizard.OA.Web.OA_Email
             return this.m_EmailTool.GetQueryRowsCount(searchValue);
         }
 
-     
+
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {

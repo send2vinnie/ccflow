@@ -21,16 +21,19 @@ namespace Lizard.OA.Web.OA_Email
 
         private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
 
-        XEmailTool m_EmailTool = new XEmailTool(0);
+        XEmailTool m_EmailTool;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string currentUserNo = CurrentUser.No;
+            currentUserNo = "wss";
+            m_EmailTool = new XEmailTool(XEmailType.InBox, currentUserNo);
             if (!Page.IsPostBack)
             {
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
                 //gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
                 btnDelete.Attributes.Add("onclick", "return confirm(\"你确认要删除吗？\")");
-
+                
                 int rowsCount = this.GetQueryRowsCount();
                 this.XPager1.InitControl(this.m_PageSize, rowsCount);
 
@@ -87,10 +90,28 @@ namespace Lizard.OA.Web.OA_Email
 
             string searchValue = Request.QueryString["searchvalue"];
 
-            DataTable OA_EmailTable = this.m_EmailTool.Query(searchValue, this.m_PageIndex, this.m_PageSize);
-
+            IDictionary<string, object> whereConditions = this.GetWhereConditon();
+            DataTable OA_EmailTable = this.m_EmailTool.Query(searchValue, this.m_PageIndex, this.m_PageSize, whereConditions);
             gridView.DataSource = OA_EmailTable;
             gridView.DataBind();
+        }
+
+        private IDictionary<string, object> GetWhereConditon()
+        {
+            IDictionary<string, object> whereConditions = new Dictionary<string, object>();
+            int selectedValue = int.Parse(this.ddlCategory.SelectedValue.ToString());
+            if (selectedValue <= 1)
+            {
+                whereConditions.Add(OA_EmailAttr.IsRead, selectedValue);
+            }
+
+            string sendTime = this.xdpCreateDate.Text;
+            if (sendTime != string.Empty)
+            {
+                whereConditions.Add("SUBSTR(" + OA_EmailAttr.SendTime + ",1,10)", sendTime);
+            }
+
+            return whereConditions;
         }
 
         protected void gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -154,5 +175,19 @@ namespace Lizard.OA.Web.OA_Email
         }
 
         #endregion
+        protected void btnOk_Click(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
+        protected void lbtReaded_Click(object sender, EventArgs e)
+        {
+            BP.CCOA.OA_Email email = new BP.CCOA.OA_Email();
+            string loginUser = CurrentUser.No;
+            loginUser = "wss";
+            if (email.SetAllRead(loginUser))
+            {
+                this.BindData();
+            }
+        }
     }
 }
