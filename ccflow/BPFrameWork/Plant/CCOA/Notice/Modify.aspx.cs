@@ -84,7 +84,7 @@ namespace Lizard.OA.Web.OA_Notice
             model.AccessType = accessType;
             model.NoticeContent = NoticeContent;
             model.Author = CurrentUser.No;
-            model.UpDT = DateTime.Now;
+            model.UpDT = XTool.Now();
             model.UpUser = BP.Web.WebUser.No;
 
             model.Update();

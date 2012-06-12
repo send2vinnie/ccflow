@@ -89,12 +89,31 @@ namespace Lizard.OA.Web.OA_Notice
             //    gridView.Columns[7].Visible = true;
             //}
             #endregion
-            string searchValue = Request.QueryString["searchvalue"];
-            //DataTable OA_NoticeTable = XQueryTool.Query<BP.CCOA.OA_Notice>(OA_Notice, columns, searchValue,
-            //    m_PageIndex, m_PageSize, null);
-            DataTable OA_NoticeTable = bll.QueryNotice(CurrentUser.No, columns, searchValue,
-                m_PageIndex, m_PageSize, null);
+            //string searchValue = Request.QueryString["searchvalue"];
 
+            //DataTable OA_NoticeTable = bll.QueryNotice(CurrentUser.No, columns, searchValue,
+            //    m_PageIndex, m_PageSize, null);
+
+            //gridView.DataSource = OA_NoticeTable;
+            //gridView.DataBind();
+
+            string searchValue = Request.QueryString["searchvalue"];
+            DataTable OA_NoticeTable = new DataTable();
+
+            string noticeTime = this.xdpCreateDate.Text;
+
+            IDictionary<string, object> whereConditions = new Dictionary<string, object>();
+
+            if (noticeTime != string.Empty)
+            {
+                whereConditions.Add("SUBSTR(" + OA_NoticeAttr.CreateTime + ",1,10)", noticeTime);
+            }
+
+            XReadHelperBase readHelper = XReadHelpManager.GetReadHelper(BP.CCOA.Enum.ClickObjType.Notice);
+
+            string userId = CurrentUser.No;
+            string type = this.ddlCategory.SelectedValue.ToString();
+            OA_NoticeTable = readHelper.QueryByType(type, userId, columns, searchValue, m_PageIndex, m_PageSize, whereConditions);
             gridView.DataSource = OA_NoticeTable;
             gridView.DataBind();
 
@@ -165,6 +184,10 @@ namespace Lizard.OA.Web.OA_Notice
         {
             string userId = CurrentUser.No;
             bool isSuccess = OA_Notice.SetAllRead(userId);
+        }
+        protected void btnOk_Click(object sender, EventArgs e)
+        {
+            this.BindData();
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Lizard.OA.Web.OA_Notice
             {
                 strErr += "通告内容不能为空！\\n";
             }
-           
+
             if (strErr != "")
             {
                 MessageBox.Show(this, strErr);
@@ -68,10 +68,10 @@ namespace Lizard.OA.Web.OA_Notice
             model.AccessType = accessType;
             model.NoticeContent = NoticeContent;
             model.Author = Author;
-            model.CreateTime = DateTime.Now;
+            model.CreateTime = XTool.Now();
             model.Clicks = 0;
             model.IsRead = 0;
-            model.UpDT = DateTime.Now;
+            model.UpDT = XTool.Now();
             model.UpUser = BP.Web.WebUser.No;
             model.Status = 1;
 

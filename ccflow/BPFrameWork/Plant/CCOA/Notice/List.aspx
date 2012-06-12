@@ -14,10 +14,16 @@
 <body>
     <form id="form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
-    &nbsp;<!--Search end--><br />
-    <div>
-        <asp:LinkButton ID="lbtReaded" CssClass="mini-button" runat="server" OnClick="lbtReaded_Click">标记所有为已读</asp:LinkButton>
-    </div>
+    <lizard:xdropdownlist id="ddlCategory" runat="server" width="100">
+        <asp:ListItem Text="未读通告" Value="1" />
+        <asp:ListItem Text="已读通告" Value="2" />
+        <asp:ListItem Text="全部通告" Value="3" />
+    </lizard:xdropdownlist>
+    &nbsp; 发布日期：
+    <lizard:xdatepicker id="xdpCreateDate" runat="server" />
+    &nbsp;<lizard:xbutton id="btnOk" runat="server" text="确定" onclick="btnOk_Click" />
+    &nbsp;
+    <asp:LinkButton ID="lbtReaded" CssClass="mini-button" runat="server" OnClick="lbtReaded_Click">标记所有为已读</asp:LinkButton>
     <br />
     <lizard:xgridview id="gridView" runat="server" width="100%" cellpadding="3" onpageindexchanging="gridView_PageIndexChanging"
         borderwidth="1px" datakeynames="No" onrowdatabound="gridView_RowDataBound" autogeneratecolumns="false"
