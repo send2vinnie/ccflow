@@ -61,8 +61,8 @@ namespace BP.CCOA
                     object objValue = keyAndValue.Value;
                     where = GetQueryString(objValue);
                     where = string.Format(where, fieldName, objValue);
+                    sql += where;
                 }
-                sql += where;
             }
             if (!string.IsNullOrEmpty(value) && columnNames.Length > 0)
             {
