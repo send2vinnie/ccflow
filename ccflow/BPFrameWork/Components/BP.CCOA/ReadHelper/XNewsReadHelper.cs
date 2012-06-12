@@ -11,5 +11,10 @@ namespace BP.CCOA
         {
             return "OA_NEWS";
         }
+
+        protected override string GetAuthoQueryCondtion(string userId)
+        {
+            return string.Empty;
+        }
     }
 }

@@ -11,5 +11,10 @@ namespace BP.CCOA
         {
             return "OA_NOTICE";
         }
+
+        protected override string GetAuthoQueryCondtion(string userId)
+        {
+            return "FUN_IS_HAVE_NOTICE_AUTHON(T.NO,T.ACCESSTYPE,'" + userId + "')='1'";
+        }
     }
 }

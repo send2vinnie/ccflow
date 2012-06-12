@@ -10,25 +10,26 @@ namespace BP.CCOA
 {
     public partial class XOracleReadQueryTool : XReadQueryToolBase
     {
-        public override System.Data.DataTable QueryAll(string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        public override System.Data.DataTable QueryAll(string authonQueryCondition, string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
-            return this.Query(tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, ReadType.All, whereValues, rowNumFieldName);
+            return this.Query(authonQueryCondition, tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, ReadType.All, whereValues, rowNumFieldName);
         }
 
-        public override System.Data.DataTable QueryNotReaded(string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        public override System.Data.DataTable QueryNotReaded(string authonQueryCondition, string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
-            return this.Query(tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, ReadType.NotRead, whereValues, rowNumFieldName);
+            return this.Query(authonQueryCondition, tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, ReadType.NotRead, whereValues, rowNumFieldName);
         }
 
-        public override DataTable QueryReaded(string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        public override DataTable QueryReaded(string authonQueryCondition, string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
-            return this.Query(tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, ReadType.Readed, whereValues, rowNumFieldName);
+            return this.Query(authonQueryCondition, tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, ReadType.Readed, whereValues, rowNumFieldName);
         }
 
-        private DataTable Query(string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, ReadType readType, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        private DataTable Query(string authonQueryCondition, string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, ReadType readType, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
             string sql = "SELECT T.*, FUN_IS_READ(T." + pkColumnName + ",'" + userId + "') ReadFlag FROM " + tableName + " T WHERE 1=1 ";
             sql = string.Format(sql, rowNumFieldName);
+            sql += " AND " + authonQueryCondition;
             if (readType != ReadType.All)
             {
                 sql += " AND FUN_IS_READ(T." + pkColumnName + ",'" + userId + "')=" + (int)readType;

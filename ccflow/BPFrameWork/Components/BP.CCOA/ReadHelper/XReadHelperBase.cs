@@ -50,7 +50,8 @@ namespace BP.CCOA
             XReadQueryToolBase readQueryTool = XFactoryManager.CreateFactory().GetReadQueryTool();
             string tableName = this.GetTableName();
             string pkColumnName = this.GetPkColumnName();
-            return readQueryTool.QueryAll(tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
+            string authonQueryCondition = this.GetAuthoQueryCondtion(userId);
+            return readQueryTool.QueryAll(authonQueryCondition, tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
         }
 
         /// <summary>
@@ -70,7 +71,8 @@ namespace BP.CCOA
             XReadQueryToolBase readQueryTool = XFactoryManager.CreateFactory().GetReadQueryTool();
             string tableName = this.GetTableName();
             string pkColumnName = this.GetPkColumnName();
-            return readQueryTool.QueryReaded(tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
+            string authonQueryCondition = this.GetAuthoQueryCondtion(userId);
+            return readQueryTool.QueryReaded(authonQueryCondition, tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
         }
 
         /// <summary>
@@ -90,7 +92,8 @@ namespace BP.CCOA
             XReadQueryToolBase readQueryTool = XFactoryManager.CreateFactory().GetReadQueryTool();
             string tableName = this.GetTableName();
             string pkColumnName = this.GetPkColumnName();
-            return readQueryTool.QueryNotReaded(tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
+            string authonQueryCondition = this.GetAuthoQueryCondtion(userId);
+            return readQueryTool.QueryNotReaded(authonQueryCondition, tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
         }
 
         /// <summary>
@@ -107,6 +110,12 @@ namespace BP.CCOA
         {
             return "NO";
         }
+
+        /// <summary>
+        /// 获取阅读权限条件
+        /// </summary>
+        /// <returns></returns>
+        protected abstract string GetAuthoQueryCondtion(string userId);
 
     }
 }

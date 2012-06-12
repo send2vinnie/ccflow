@@ -11,5 +11,10 @@ namespace BP.CCOA
         {
             return "OA_EMAIL";
         }
+
+        protected override string GetAuthoQueryCondtion(string userId)
+        {
+            return "FUN_IS_HAVE_EMAIL_AUTHON(T.NO,'" + userId + "')";
+        }
     }
 }

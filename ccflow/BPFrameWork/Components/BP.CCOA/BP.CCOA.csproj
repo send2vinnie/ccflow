@@ -74,6 +74,7 @@
     <Compile Include="Factory\XQueryToolBase.cs" />
     <Compile Include="Interface\IClick.cs" />
     <Compile Include="Model\OA_ClickRecords.cs" />
+    <Compile Include="Model\OA_EmailAuth.cs" />
     <Compile Include="Model\OA_NewsAuth.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Model\APP_ChangeLog.cs" />
