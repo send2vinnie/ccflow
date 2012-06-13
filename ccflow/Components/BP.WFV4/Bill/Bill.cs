@@ -275,10 +275,11 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValRefTextByKey(BillAttr.FK_Node);
+                Node nd = new Node(this.FK_Node);
+                return nd.Name;
+                //return this.GetValRefTextByKey(BillAttr.FK_Node);
             }
         }
-
         /// <summary>
         /// 单据打印时间
         /// </summary>
@@ -373,24 +374,17 @@ namespace BP.WF
                 map.EnDesc = "单据";
 
                 map.AddMyPKNoVisable();
+
                 map.AddTBInt(BillAttr.WorkID, 0, "工作ID", false, true);
                 map.AddTBInt(BillAttr.FID, 0, "FID", false, true);
                 map.AddTBString(BillAttr.FK_Flow, null, "流程", false, false, 0, 300, 5);
-             //   map.AddDDLEntities(BillAttr.FK_Flow, null, "流程", new Flows(), false);
-                //  map.AddTBString(BillAttr.FK_Flow, null, "流程", false, false, 0, 30, 5);
                 map.AddTBString(BillAttr.FK_BillType, null, "单据类型", false, false, 0, 300, 5);
-                //map.AddDDLEntities(BillAttr.FK_BillType, null, "单据类型", new BillTypes(), false);
                 map.AddTBString(BillAttr.Title, null, "标题", false, false, 0, 300, 5);
-                //map.AddDDLEntities(BillAttr.FK_Starter, null, "发起人", new BP.WF.Port.Emps(), false);
                 map.AddTBString(BillAttr.FK_Starter, null, "发起人", true, true, 0, 300, 5);
                 map.AddTBDateTime(BillAttr.StartDT, "发起时间", true, true);
 
-                //  map.AddTBString(BillAttr.FK_Flow, null, "流程", false, false, 0, 30, 5);
-                //map.AddTBString(BillAttr.FK_Bill, null, "FK_Bill", false, false, 0, 30, 5);
-
                 map.AddTBString(BillAttr.Url, null, "Url", false, false, 0, 500, 5);
                 map.AddTBString(BillAttr.FullPath, null, "FullPath", false, false, 0, 1000, 5);
-
 
                 map.AddDDLEntities(BillAttr.FK_Emp, null, "打印人", new Emps(), false);
                 map.AddTBDateTime(BillAttr.RDT, "打印时间", true, true);
@@ -431,16 +425,12 @@ namespace BP.WF
         public string DoOpen()
         {
             string path = System.Web.HttpContext.Current.Request.MapPath(this.Url);
-            //path = path.Replace("Flow\\DataUser", "DataUser");
-            //path = path.Replace("Flow\\", "");
-
             PubClass.OpenWordDocV2(path, this.FK_EmpT + "打印的" + this.FK_BillTypeT + ".doc");
             return null;
         }
         public string DoOpenPDF()
         {
             string path = System.Web.HttpContext.Current.Request.MapPath(this.Url);
-
             PubClass.OpenWordDocV2(path, this.FK_EmpT + "打印的" + this.FK_BillTypeT + ".pdf");
             return null;
         }

@@ -77,6 +77,7 @@ namespace BP.WF.Port
         public const string Style = "Style";
         public const string Msg = "Msg";
         public const string TM = "TM";
+        public const string UserSta = "UserSta";
         #endregion
     }
 	/// <summary>
@@ -101,6 +102,20 @@ namespace BP.WF.Port
             set
             {
                 SetValByKey(WFEmpAttr.AlertWay, (int)value);
+            }
+        }
+        /// <summary>
+        /// 用户状态
+        /// </summary>
+        public int UserSta
+        {
+            get
+            {
+                return this.GetValIntByKey(WFEmpAttr.UserSta);
+            }
+            set
+            {
+                SetValByKey(WFEmpAttr.UserSta, value);
             }
         }
         public string FK_Dept
@@ -325,16 +340,22 @@ namespace BP.WF.Port
                 if (this._enMap != null)
                     return this._enMap;
 
-                Map map = new Map("WF_Emp");
+                Map map = new Map();
+                map.PhysicsTable = "WF_Emp";
                 map.EnDesc = "操作员";
                 map.EnType = EnType.App;
+
                 map.AddTBStringPK(WFEmpAttr.No, null, "No", true, true, 1, 50, 20);
-                map.AddTBString(WFEmpAttr.Name, null, "Name", true, true, 0, 50, 20);
+                map.AddTBString(WFEmpAttr.Name, null, "Name", true,false, 0, 50, 20);
+                map.AddTBInt(WFEmpAttr.UserSta, 0, "用户状态", true, true);
+
                 map.AddTBString(WFEmpAttr.Tel, null, "Tel", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.FK_Dept, null, "FK_Dept", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.Email, null, "Email", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.TM, null, "即时通讯号", true, true, 0, 50, 20);
-                map.AddDDLSysEnum(WFEmpAttr.AlertWay, 3, "收听方式", true, true, WFEmpAttr.AlertWay);
+
+                map.AddDDLSysEnum(WFEmpAttr.AlertWay, 3, "收听方式", true, true, 
+                    WFEmpAttr.AlertWay);
                 map.AddTBString(WFEmpAttr.Author, null, "授权人", true, true, 0, 50, 20);
                 map.AddTBString(WFEmpAttr.AuthorDate, null, "授权日期", true, true, 0, 50, 20);
                 map.AddTBInt(WFEmpAttr.AuthorIsOK, 0, "是否授权成功", true, true);

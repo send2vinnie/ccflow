@@ -173,7 +173,7 @@ namespace BP.WF.Port
                 map.DepositaryOfEntity = Depositary.Application; //实体存放位置
                 map.EnDesc = this.ToE("Emp", "用户"); // "用户";       // 实体的描述.
                 map.EnType = EnType.App;   //实体类型。
-         //       map.Helper = "Emp.html";
+                //       map.Helper = "Emp.html";
                 #endregion
 
                 #region 字段
@@ -181,7 +181,8 @@ namespace BP.WF.Port
                 map.AddTBStringPK(EmpAttr.No, null, "编号", true, false, 1, 20, 100);
                 map.AddTBString(EmpAttr.Name, null, "名称", true, false, 0, 100, 100);
                 map.AddTBString(EmpAttr.Pass, "pub", "密码", false, false, 0, 20, 10);
-                map.AddDDLEntities(EmpAttr.FK_Dept, null, "部门", new BP.Port.Depts(), true);
+                map.AddDDLEntities(EmpAttr.FK_Dept, null, "部门", 
+                    new BP.Port.Depts(), true);
                 #endregion 字段
 
                 map.AddSearchAttr(EmpAttr.FK_Dept);
@@ -191,24 +192,48 @@ namespace BP.WF.Port
                 map.AttrsOfOneVSM.Add(new EmpStations(), new Stations(), EmpStationAttr.FK_Emp, EmpStationAttr.FK_Station, DeptAttr.Name, DeptAttr.No, "岗位权限");
                 map.AttrsOfOneVSM.Add(new EmpDepts(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "工作部门");
                 map.AttrsOfOneVSM.Add(new DeptSearchScorps(), new Depts(), EmpDeptAttr.FK_Emp, EmpDeptAttr.FK_Dept, DeptAttr.Name, DeptAttr.No, "查询权限");
-
                 #endregion
+
+                RefMethod rm = new RefMethod();
+                rm.Title = "禁用";
+                rm.Warning = "您确定要执行吗?";
+                rm.ClassMethodName = this.ToString() + ".DoDisableIt";
+                map.AddRefMethod(rm);
+
+                rm = new RefMethod();
+                rm.Title = "启用";
+                rm.Warning = "您确定要执行吗?";
+                rm.ClassMethodName = this.ToString() + ".DoEnableIt";
+                map.AddRefMethod(rm);
 
                 this._enMap = map;
                 return this._enMap;
             }
         }
-        public override Entities GetNewEntities
+        public string DoDisableIt()
         {
-            get { return new Emps(); }
+            WFEmp emp = new WFEmp(this.No);
+            emp.UserSta = 0;
+            emp.Update();
+            return "已经执行成功";
+        }
+        public string DoEnableIt()
+        {
+            WFEmp emp = new WFEmp(this.No);
+            emp.UserSta = 1;
+            emp.Update();
+            return "已经执行成功";
         }
 
         protected override bool beforeUpdate()
         {
             WFEmp emp = new WFEmp(this.No);
             emp.Update();
-
             return base.beforeUpdate();
+        }
+        public override Entities GetNewEntities
+        {
+            get { return new Emps(); }
         }
     }
 	/// <summary>

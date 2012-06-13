@@ -2872,7 +2872,6 @@ namespace BP.WF
             //this.HisCHOfFlow.Copy(gwf);
             //this.HisCHOfFlow.WorkID = this.HisWork.OID;
             //this.HisCHOfFlow.WFState = (int)WFState.Runing;
-
             ///* 说明没有这个记录 */
             //this.HisCHOfFlow.FK_Flow = this.HisNode.FK_Flow;
             //this.HisCHOfFlow.WFState = 0;
@@ -3283,14 +3282,19 @@ namespace BP.WF
                 cc.NodeID = this.HisNode.NodeID;
                 cc.Retrieve();
                 string ccTitle = cc.CCTitle.Clone() as string;
-                string ccDoc = cc.CCDoc.Clone() as string;
-
                 ccTitle = ccTitle.Replace("@WebUser.No", WebUser.No);
                 ccTitle = ccTitle.Replace("@WebUser.Name", WebUser.Name);
+                ccTitle = ccTitle.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                ccTitle = ccTitle.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
+                ccTitle = ccTitle.Replace("@RDT", DataType.CurrentData);
 
+
+                string ccDoc = cc.CCDoc.Clone() as string;
                 ccDoc = ccDoc.Replace("@WebUser.No", WebUser.No);
                 ccDoc = ccDoc.Replace("@WebUser.Name", WebUser.Name);
                 ccDoc = ccDoc.Replace("@RDT", DataType.CurrentData);
+                ccDoc = ccDoc.Replace("@WebUser.FK_Dept", WebUser.FK_Dept);
+                ccDoc = ccDoc.Replace("@WebUser.FK_DeptName", WebUser.FK_DeptName);
 
                 foreach (Attr item in this.rptGe.EnMap.Attrs)
                 {
@@ -3308,11 +3312,15 @@ namespace BP.WF
                 if (ccers.Rows.Count > 0)
                 {
                     msg += "@消息自动抄送给";
+                    string basePath = "http://" + System.Web.HttpContext.Current.Request.Url.Host;
+                    basePath += "/" + System.Web.HttpContext.Current.Request.ApplicationPath;
+                    string mailTemp = BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfDataUser + "\\EmailTemplete\\CC_" + WebUser.SysLang + ".txt");
+
                     foreach (DataRow dr in ccers.Rows)
                     {
                         ccDoc = ccDoc.Replace("@Accepter", dr[1].ToString());
                         ccTitle = ccTitle.Replace("@Accepter", dr[1].ToString());
-                        
+
                         CCList list = new CCList();
                         list.MyPK = this.WorkID + "_" + this.HisNode.NodeID + "_" + dr[0].ToString();
                         list.FK_Flow = this.HisNode.FK_Flow;
@@ -3336,6 +3344,19 @@ namespace BP.WF
                             list.Update();
                         }
                         msg += list.CCTo + "(" + dr[1].ToString() + ");";
+                        BP.WF.Port.WFEmp wfemp = new Port.WFEmp(list.CCTo);
+
+
+                        string sid = list.CCTo + "_" + list.RefWorkID + "_" + list.FK_Node + "_" + list.RDT;
+                        string url = basePath + "/WF/Do.aspx?DoType=OF&SID=" + sid;
+                        string urlWap = basePath + "/WF/Do.aspx?DoType=OF&SID=" + sid + "&IsWap=1";
+
+                        string mytemp = mailTemp.Clone() as string;
+                        mytemp = string.Format(mytemp, wfemp.Name, WebUser.Name, url, urlWap);
+
+                        BP.TA.SMS.AddMsg(list.RefWorkID + "_" + list.FK_Node + "_" + wfemp.No, wfemp.No, wfemp.HisAlertWay, wfemp.Tel,
+                   this.ToEP3("WN27", "工作抄送:{0}.工作:{1},发送人:{2},需您查阅",
+                   this.HisNode.FlowName, this.HisNode.Name, WebUser.Name),  wfemp.Email, null, mytemp);
                     }
                 }
                 //    BP.TA.SMS.AddMsg(
@@ -3430,8 +3451,8 @@ namespace BP.WF
 
             string basePath = "http://" + System.Web.HttpContext.Current.Request.Url.Host;
             basePath += "/" + System.Web.HttpContext.Current.Request.ApplicationPath;
-
             string mailTemp = BP.DA.DataType.ReadTextFile2Html(BP.SystemConfig.PathOfDataUser + "\\EmailTemplete\\" + WebUser.SysLang + ".txt");
+
             foreach (WorkerList wl in gwls)
             {
                 if (wl.IsEnable == false)
