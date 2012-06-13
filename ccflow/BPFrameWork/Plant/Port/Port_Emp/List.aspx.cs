@@ -52,7 +52,7 @@ namespace BP.EIP.Web.Port_Emp
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-          
+
         }
 
         #region gridView
@@ -148,9 +148,9 @@ namespace BP.EIP.Web.Port_Emp
 
         #endregion
 
+        protected void btnOK_Click(object sender, EventArgs e)
+        {
 
-
-
-
+        }
     }
 }

@@ -81,7 +81,6 @@
 
 .Memo table tr td
 {
-     
 }
 
 .newslist
@@ -91,20 +90,29 @@
 }
 .newslist ul
 {
-   padding:0px;
-   padding-left:10px;
+    padding: 0px;
+    padding-left: 10px;
 }
 .newslist ul li
 {
     height: 20px;
     line-height: 24px;
-    list-style-type:none;
-    border-style:none;
-    border-bottom-style:dotted;
-    border-bottom-width:1px;
+    list-style-type: none;
+    border-style: none;
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
 }
 .newslist ul li a
 {
     text-decoration: none;
     color: #772533;
+}
+
+.subtoolbar
+{
+    background:#e5e5e5;
+    margin-top:2px;
+    margin-bottom:2px;
+    border:1px solid #DCF0FB;
+    padding:2px;
 }

@@ -58,16 +58,16 @@
                                 Title="日程安排" OnClientClick="buttonClick" />
                         </li>
                         <li>
-                            <uc1:ImageButton ID="ImageButton6" runat="server" LinkUrl="../../CCOA/Email/Inbox.aspx" ImageUrl="../../CCOA/Images/png48/Email.png"
-                                Title="我的邮件" OnClientClick="buttonClick" />
+                            <uc1:ImageButton ID="ImageButton6" runat="server" LinkUrl="../../CCOA/Email/Inbox.aspx"
+                                ImageUrl="../../CCOA/Images/png48/Email.png" Title="我的邮件" OnClientClick="buttonClick" />
                         </li>
                         <li>
-                            <uc1:ImageButton ID="ImageButton4" runat="server" LinkUrl="../../CCOA/AddressBook/List.aspx"  ImageUrl="../../CCOA/Images/png48/Address-Book.png"
-                                Title="通讯录" OnClientClick="buttonClick" />
+                            <uc1:ImageButton ID="ImageButton4" runat="server" LinkUrl="../../CCOA/AddressBook/List.aspx"
+                                ImageUrl="../../CCOA/Images/png48/Address-Book.png" Title="通讯录" OnClientClick="buttonClick" />
                         </li>
                         <li>
-                            <uc1:ImageButton ID="ImageButton5" runat="server" LinkUrl="../../CCOA/Admin/Main.aspx" ImageUrl="../../CCOA/Images/png48/Config.png"
-                                Title="配置管理" OnClientClick="buttonClick" />
+                            <uc1:ImageButton ID="ImageButton5" runat="server" LinkUrl="../../CCOA/Admin/Main.aspx"
+                                ImageUrl="../../CCOA/Images/png48/Config.png" Title="配置管理" OnClientClick="buttonClick" />
                         </li>
                     </ul>
                 </td>
@@ -103,7 +103,8 @@
         </table>
     </div>
     <div id="HeaderSmallToolBar">
-        <span class="userInfo">欢迎您，<%=BP.Web.WebUser.Name %></span>
+        <span class="userInfo">欢迎您，<%=BP.Web.WebUser.Name %>&nbsp;&nbsp;
+            <asp:LinkButton ID="lbtExit" runat="server" OnClick="lbtExit_Click" ForeColor="Black">退出</asp:LinkButton></span>
     </div>
     <div style="clear: both;">
     </div>

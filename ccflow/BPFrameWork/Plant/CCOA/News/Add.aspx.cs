@@ -90,7 +90,7 @@ namespace Lizard.OA.Web.OA_News
             model.NewsType = NewsType;
             model.NewsContent = NewsContent;
             model.Author = Author;
-            model.CreateTime = DateTime.Now;
+            model.CreateTime = XTool.Now();
             model.Clicks = 0;
             model.IsRead = IsRead;
             model.UpDT = UpDT;

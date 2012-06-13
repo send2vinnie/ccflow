@@ -9,22 +9,24 @@
     <title></title>
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
+    <link href="../Style/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form runat="server">
     <div>
         <uc1:MiniToolBar ID="MiniToolBar1" runat="server" PopAddUrl="News/Add.aspx" />
         <!--Search end-->
-        <lizard:XDropDownList ID="ddlCategory" runat="server" Width="100">
-            <asp:ListItem Text="未读新闻" Value="1" />
-            <asp:ListItem Text="已读新闻" Value="2" />
-            <asp:ListItem Text="全部新闻" Value="3" />
-        </lizard:XDropDownList>
-        &nbsp;
-        <lizard:XDatePicker ID="xdpCreateDate" runat="server" />
-        &nbsp;<lizard:XButton ID="btnOk" runat="server" Text="确定" OnClick="btnOk_Click" />
-        &nbsp;<asp:LinkButton ID="lbtMarkReaded" runat="server" OnClick="lbtMarkReaded_Click">标记所有为已读</asp:LinkButton>
-        <br />
+        <div class="subtoolbar">
+            发布日期
+            <lizard:XDatePicker ID="xdpCreateDate" runat="server" />
+            &nbsp;
+            <lizard:XDropDownList ID="ddlCategory" runat="server" Width="100" CssClass="mini-combobox">
+                <asp:ListItem Text="未读新闻" Value="unread" />
+                <asp:ListItem Text="已读新闻" Value="read" />
+                <asp:ListItem Text="全部新闻" Value="all" />
+            </lizard:XDropDownList>
+            &nbsp;<lizard:XButton ID="btnOk" runat="server" Text="确定" OnClick="btnOk_Click" />
+            &nbsp;<asp:LinkButton ID="lbtMarkReaded" runat="server" OnClick="lbtMarkReaded_Click">标记所有为已读</asp:LinkButton></div>
         <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
             BorderWidth="1px" DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
             PageSize="10" RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated"

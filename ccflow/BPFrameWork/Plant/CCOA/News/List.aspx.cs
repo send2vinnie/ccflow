@@ -80,11 +80,37 @@ namespace Lizard.OA.Web.OA_News
             //}
             #endregion
 
-            string searchValue = Request.QueryString["searchvalue"];
-            DataTable OA_NewsTable = XQueryTool.Query<BP.CCOA.OA_News>(OA_News, columns, searchValue,
-                m_PageIndex, m_PageSize, null);
+            //string searchValue = Request.QueryString["searchvalue"];
+            //DataTable OA_NewsTable = XQueryTool.Query<BP.CCOA.OA_News>(OA_News, columns, searchValue,
+            //    m_PageIndex, m_PageSize, null);
 
-            gridView.DataSource = OA_NewsTable;
+            //gridView.DataSource = OA_NewsTable;
+            //gridView.DataBind();
+
+            DataTable dt = new DataTable();
+            XReadHelperBase readHelper = BP.CCOA.XReadHelpManager.GetReadHelper(ClickObjType.News);
+            string searchValue = Request.QueryString["searchvalue"];
+            string createDate = xdpCreateDate.Text;
+            IDictionary<string, object> dicFilter = null;
+            if (!string.IsNullOrEmpty(createDate))
+            {
+                dicFilter = new Dictionary<string, object>();
+                dicFilter.Add("SubStr(CreateTime,1,10)", createDate);
+            }
+
+            if (ddlCategory.SelectedValue == "read")
+            {
+                dt = readHelper.QueryReaded(CurrentUser.No, columns, searchValue, m_PageIndex, m_PageSize, dicFilter);
+            }
+            else if (ddlCategory.SelectedValue == "unread")
+            {
+                dt = readHelper.QueryNotReaded(CurrentUser.No, columns, searchValue, m_PageIndex, m_PageSize, dicFilter);
+            }
+            else
+            {
+                dt = readHelper.QueryAll(CurrentUser.No, columns, searchValue, m_PageIndex, m_PageSize, dicFilter);
+            }
+            gridView.DataSource = dt;
             gridView.DataBind();
         }
 
@@ -166,7 +192,7 @@ namespace Lizard.OA.Web.OA_News
         }
         protected void btnOk_Click(object sender, EventArgs e)
         {
-
+            BindData();
         }
-}
+    }
 }

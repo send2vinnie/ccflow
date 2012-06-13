@@ -14,7 +14,7 @@
                 <% foreach (BP.CCOA.OA_Notice item in NoticeList)
                    {%>
                 <li><img src="Images/gif/nav_title_sign.gif" /><a href="Notice/Show.aspx?id=<%=item.No%>" target="_blank">
-                    <%=item.NoticeTitle %></a>&nbsp;&nbsp;&nbsp;&nbsp;<%=item.Author %>&nbsp;&nbsp;&nbsp;&nbsp;<%=item.CreateTime.ToShortDateString() %></li>
+                    <%=item.NoticeTitle %></a>&nbsp;&nbsp;&nbsp;&nbsp;<%=item.Author %>&nbsp;&nbsp;&nbsp;&nbsp;<%=item.CreateTime %></li>
                 <%} %>
             </ul>
         </div>

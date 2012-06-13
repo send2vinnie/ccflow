@@ -18,7 +18,8 @@ public partial class Port_Home : System.Web.UI.Page
         //BP.CCOA.SysInfo sysInfo = new BP.CCOA.SysInfo();
         //sysInfo.CheckPhysicsTable();
 
-        new BP.EIP.Port_StationOperate().CheckPhysicsTable();
+        //new BP.EIP.Port_StationOperate().CheckPhysicsTable();
+        new BP.EIP.Port_Post().CheckPhysicsTable();
 
         if (!IsPostBack)
         {
@@ -28,25 +29,21 @@ public partial class Port_Home : System.Web.UI.Page
 
     public void BindSystem()
     {
-        string sql = "select * from Port_SysInfo order by SysGroup, SysOrder";
-        DataTable table = new DataTable();
-        table = DBAccess.RunSQLReturnTable(sql);
+        //string sql = "select * from Port_SysInfo order by SysGroup, SysOrder";
+        //DataTable table = new DataTable();
+        //table = DBAccess.RunSQLReturnTable(sql);
 
-        var groups = (from row in table.AsEnumerable()
-                     select row["SysGroupName"].ToString()).Distinct().ToList();
+        //var groups = (from row in table.AsEnumerable()
+        //             select row["SysGroupName"].ToString()).Distinct().ToList();
 
-        DataSource = new Dictionary<string, DataRow[]>();
+        //DataSource = new Dictionary<string, DataRow[]>();
 
-        foreach (string groupName in groups)
-        {
-            DataRow[] rows = (from row in table.AsEnumerable()
-                              where row["SysGroupName"].ToString() == groupName
-                              select row).ToArray();
-
-            DataSource.Add(groupName, rows);
-        }
-
-
+        //foreach (string groupName in groups)
+        //{
+        //    DataRow[] rows = (from row in table.AsEnumerable()
+        //                      where row["SysGroupName"].ToString() == groupName
+        //                      select row).ToArray();
+        //    DataSource.Add(groupName, rows);
+        //}
     }
-   
 }

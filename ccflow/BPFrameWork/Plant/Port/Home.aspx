@@ -248,7 +248,7 @@
                                 <br class="panel-clearer" />
                             </div>
                         </div>
-                        <div id="sidebar-left" class="sidebar">
+                       <%-- <div id="sidebar-left" class="sidebar">
                             <% 
                                 foreach (string key in DataSource.Keys)
                                 {%>
@@ -269,7 +269,7 @@
                                 </div>
                             </div>
                             <%} %>
-                        </div>
+                        </div>--%>
                         <div id="sidebar-right" class="sidebar">
                             <div class="block block-block" id="block-block-7">
                                 <div class="blockinner">

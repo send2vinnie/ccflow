@@ -21,7 +21,7 @@
                     <asp:TextBox ID="txtUser" runat="server" CssClass="inputText" Width="223px" Height="14px"></asp:TextBox>
                 </div>
                 <div style="height:24px; margin-top:5px;">
-                    <asp:TextBox ID="txtPass" runat="server" CssClass="inputText"  Width="223px" Height="14px"></asp:TextBox>
+                    <asp:TextBox ID="txtPass" runat="server" TextMode="Password" CssClass="inputText"  Width="223px" Height="14px"></asp:TextBox>
                 </div>
                 <div style="height:24px; margin-top:82px; margin-left:24px;">
                     <asp:Button ID="btnLogin" runat="server" OnClick="btnLogin_Click" CssClass="loginButton" />

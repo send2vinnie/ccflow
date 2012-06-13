@@ -2,22 +2,25 @@
     Inherits="BP.EIP.Web.Port_Emp.List" %>
 
 <%@ Register Src="../../CCOA/Controls/MiniToolBar.ascx" TagName="MiniToolBar" TagPrefix="uc1" %>
+<%@ Register Src="../Controls/TreeSelect.ascx" TagName="TreeSelect" TagPrefix="uc2" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-    <link href="../Style/control.css" rel="stylesheet" type="text/css" />
-    <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
-    <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
+    <!--#include file="../inc/html_head.inc" -->
 </head>
 <body>
     <form id="Form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
     &nbsp;<br />
-    <lizard:XGridView ID="gridView" runat="server"  Width="100%" CellPadding="3"
-        OnPageIndexChanging="gridView_PageIndexChanging" BorderWidth="1px" DataKeyNames="No"
-        OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false" PageSize="10"
-        RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">
+    <div class="subtoolbar">
+        选择部门：<uc2:TreeSelect ID="TreeSelect1" runat="server" Url="../Jsondata/DeptTree.aspx" />
+        &nbsp;<lizard:XButton ID="btnOK" runat="server" Text="确定" 
+            onclick="btnOK_Click" />
+    </div>
+    <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
+        BorderWidth="1px" DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
+        PageSize="10" RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated">
         <Columns>
             <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
                 <ItemTemplate>
@@ -25,19 +28,22 @@
                     <asp:HiddenField ID="DeleteNo" runat="server" Value='<%#Eval("No") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:BoundField DataField="No" HeaderText="No" SortExpression="No" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="No" HeaderText="No" SortExpression="No" ItemStyle-HorizontalAlign="Center"
+                Visible="false" />
             <asp:BoundField DataField="Name" HeaderText="名称" SortExpression="Name" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="Pass" HeaderText="密码" SortExpression="Pass" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="FK_Dept" HeaderText="部门, 外键:对应物理表:Po" SortExpression="FK_Dept"
-                ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="PID" HeaderText="PID" SortExpression="PID" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="PIN" HeaderText="PIN" SortExpression="PIN" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="FK_Dept" HeaderText="所属部门" SortExpression="FK_Dept" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="PID" HeaderText="PID" SortExpression="PID" ItemStyle-HorizontalAlign="Center"
+                Visible="false" />
+            <asp:BoundField DataField="PIN" HeaderText="PIN" SortExpression="PIN" ItemStyle-HorizontalAlign="Center"
+                Visible="false" />
             <asp:BoundField DataField="KeyPass" HeaderText="KeyPass" SortExpression="KeyPass"
+                ItemStyle-HorizontalAlign="Center" Visible="false" />
+            <asp:BoundField DataField="IsUSBKEY" HeaderText="是否使用USBKEY" SortExpression="IsUSBKEY"
                 ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="IsUSBKEY" HeaderText="IsUSBKEY" SortExpression="IsUSBKEY"
-                ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="FK_Emp" HeaderText="FK_Emp" SortExpression="FK_Emp" ItemStyle-HorizontalAlign="Center" />
-            <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="FK_Emp" HeaderText="对应员工" SortExpression="FK_Emp" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" ItemStyle-HorizontalAlign="Center"
+                Visible="false" />
             <asp:HyperLinkField HeaderText="详细" ControlStyle-Width="50" DataNavigateUrlFields="No"
                 DataNavigateUrlFormatString="Show.aspx?id={0}" Text="详细" />
             <asp:HyperLinkField HeaderText="编辑" ControlStyle-Width="50" DataNavigateUrlFields="No"
