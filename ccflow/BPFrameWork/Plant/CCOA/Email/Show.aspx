@@ -121,7 +121,7 @@
                     <tr>
                         <td align="center" valign="bottom" colspan="4">
                             <asp:Button ID="btnSave" runat="server" Text="发送" class="inputbutton" onmouseover="this.className='inputbutton_hover'"
-                                onmouseout="this.className='inputbutton'" OnClick="btnSave_Click1"></asp:Button>
+                                onmouseout="this.className='inputbutton'" OnClick="btnSave_Click"></asp:Button>
                         </td>
                     </tr>
                 </table>

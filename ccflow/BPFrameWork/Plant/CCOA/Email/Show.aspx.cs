@@ -72,7 +72,7 @@ public partial class CCOA_Email_Show : BasePage
         }
     }
 
-    protected void btnSave_Click1(object sender, EventArgs e)
+    protected void btnSave_Click(object sender, EventArgs e)
     {
         BP.CCOA.OA_Email model = new BP.CCOA.OA_Email(Request.Params["id"]);
         model.Category = "2";
