@@ -5,6 +5,8 @@ using BP.DA;
 using BP.En;
 using BP.Sys;
 using BP.Port;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BP.WF
 {
@@ -76,6 +78,24 @@ namespace BP.WF
     /// </summary>
     abstract public class Work : Entity
     {
+        /// <summary>
+        /// md5
+        /// </summary>
+        /// <returns></returns>
+        public string GenerHisMD5()
+        {
+            string str = "";
+            foreach (Attr attr in this.EnMap.Attrs)
+            {
+
+                object o = attr.DefaultVal;
+
+
+                 
+            }
+            return null;
+        }
+
         #region 基本属性(必须的属性)
         public override string PK
         {

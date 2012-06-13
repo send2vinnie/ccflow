@@ -76,12 +76,16 @@ namespace BP.WF.Ext
                 map.AddTBString(FlowAttr.RunObj, null, "运行内容", true, false, 0, 100, 10, true);
                 map.AddBoolean(FlowAttr.IsCanStart, true, this.ToE("IsCanRunBySelf", "可以独立启动否？(独立启动的流程可以显示在发起流程列表里)"), true, true, true);
 
+                map.AddBoolean(FlowAttr.IsMD5, false, "是否是数据加密流程(MD5数据加密防篡改)", true, true,true);
+
                 map.AddTBStringDoc(FlowAttr.Note, null, this.ToE("Note", "备注"), 
                     true, false, true);
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
 
                 map.AddDDLSysEnum(FlowAttr.AppType, (int)FlowAppType.Normal,"流程应用类型",
                   true, true, "FlowAppType", "@0=正常的@1=工程类(具有项目组概念)");
+
+
 
                 map.AddSearchAttr(BP.WF.FlowAttr.FK_FlowSort);
 
@@ -118,7 +122,7 @@ namespace BP.WF.Ext
                 rm.Title = "删除单个流程"; // this.ToE("DelFlowData", "删除数据"); // "删除数据";
                 rm.ClassMethodName = this.ToString() + ".DoDelDataOne";
                 rm.HisAttrs.AddTBInt("WorkID",0, "输入工作ID",true,false);
-                rm.HisAttrs.AddTBString("sd", null, "删除理由ID", true, false,0,100,100);
+                rm.HisAttrs.AddTBString("sd", null, "删除备注", true, false,0,100,100);
                 map.AddRefMethod(rm);
 
                 rm = new RefMethod();

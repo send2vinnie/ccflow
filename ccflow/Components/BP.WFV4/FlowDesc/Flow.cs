@@ -235,6 +235,10 @@ namespace BP.WF
         /// 是否起用
         /// </summary>
         public const string IsOK = "IsOK";
+        /// <summary>
+        /// 是否是MD5
+        /// </summary>
+        public const string IsMD5 = "IsMD5";
         public const string CCStas = "CCStas";
         public const string IsCCAll = "IsCCAll";
         public const string Note = "Note";
@@ -2740,6 +2744,20 @@ namespace BP.WF
                 this.SetValByKey(FlowAttr.IsCCAll, value);
             }
         }
+        /// <summary>
+        /// 是否是MD5加密流程
+        /// </summary>
+        public bool IsMD5
+        {
+            get
+            {
+                return this.GetValBooleanByKey(FlowAttr.IsMD5);
+            }
+            set
+            {
+                this.SetValByKey(FlowAttr.IsMD5, value);
+            }
+        }
         public bool IsCanStart
         {
             get
@@ -3114,6 +3132,7 @@ namespace BP.WF
                 map.AddDDLEntities(FlowAttr.FK_FlowSort, "01", this.ToE("FlowSort", "流程类别"), new FlowSorts(), false);
                 map.AddTBInt(FlowAttr.FlowType, (int)FlowType.Panel, "流程类型", false, false);
 
+
                 // @0=业务流程@1=公文流程.
                 map.AddTBInt(FlowAttr.FlowSheetType, (int)FlowSheetType.SheetFlow, "表单类型", false, false);
 
@@ -3139,6 +3158,8 @@ namespace BP.WF
                 map.AddTBDecimal(FlowAttr.AvgDay, 0, "平均运行用天", false, false);
                 map.AddTBString(FlowAttr.StartListUrl, null, this.ToE("StartListUrl", "导航Url"), true, false, 0, 500, 10, true);
                 map.AddTBInt(FlowAttr.AppType, 0, "应用类型", false, false);
+                map.AddTBInt(FlowAttr.IsMD5, 0, "IsMD5", false, false);
+
                 map.AddSearchAttr(FlowAttr.FK_FlowSort);
                 map.AddSearchAttr(FlowAttr.FlowRunWay);
 

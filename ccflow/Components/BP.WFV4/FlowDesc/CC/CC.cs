@@ -149,7 +149,12 @@ namespace BP.WF
         {
             get
             {
-                return this.GetValStringByKey(CCAttr.CCSQL);
+                string sql= this.GetValStringByKey(CCAttr.CCSQL);
+                sql = sql.Replace("~", "'");
+                sql = sql.Replace("¡®", "'");
+                sql = sql.Replace("¡¯", "'");
+                sql = sql.Replace("''", "'");
+                return sql;
             }
             set
             {

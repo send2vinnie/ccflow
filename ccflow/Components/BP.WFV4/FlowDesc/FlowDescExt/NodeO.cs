@@ -209,7 +209,7 @@ namespace BP.WF.Ext
                 map.AddTBString(NodeAttr.FocusField, null, "焦点字段", true, false, 0, 100, 10);
 
                 map.AddDDLSysEnum(NodeAttr.DeliveryWay, 0, "访问规则", true, true);
-                map.AddTBString(NodeAttr.RecipientSQL, null, "接受人SQL", true, false, 0, 500, 10, true);
+                map.AddTBString(NodeAttr.RecipientSQL, null, "访问规则处理内容", true, false, 0, 500, 10, true);
 
                 map.AddDDLSysEnum(NodeAttr.WhoExeIt, 0, "谁执行它",
               true, true, NodeAttr.WhoExeIt, "@0=操作员执行@1=机器执行@2=混合执行");
@@ -250,7 +250,7 @@ namespace BP.WF.Ext
            true, true, NodeAttr.ReturnRole);
 
                 map.AddTBString(BtnAttr.CCLab, "抄送", "抄送按钮标签", true, false, 0, 50, 10);
-                map.AddDDLSysEnum(NodeAttr.CCRole, 0, "操作规则",
+                map.AddDDLSysEnum(NodeAttr.CCRole, 0, "抄送规则",
            true, true, NodeAttr.CCRole);
 
 
