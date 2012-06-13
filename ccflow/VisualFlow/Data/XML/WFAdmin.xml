@@ -7,7 +7,7 @@
   <CondType No="CondPRI" CH="方向优先级计算设置" />
 
     <OneWork No="ChartTrack" CH="轨迹图" />
-    <OneWork No="ChartTime" CH="时间图" />
+    <OneWork No="ChartTime" CH="甘特图" />
     <OneWork No="Track" CH="流程日志" />
     <OneWork No="CH" CH="考核信息" />
     <OneWork No="NDRpt" CH="流程报表" />
