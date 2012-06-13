@@ -16,6 +16,14 @@
     <!--Search end-->
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="RecycleBox.aspx" DeleteUrl="Delete.aspx?EmailType=3"
         IsDeleteUrlHaveParamerter="true" />
+    <lizard:xdropdownlist id="ddlCategory" runat="server" width="100">
+        <asp:ListItem Text="全部邮件" Value="3" />
+        <asp:ListItem Text="未读邮件" Value="1" />
+        <asp:ListItem Text="已读邮件" Value="2" />
+    </lizard:xdropdownlist>
+    &nbsp; 发送日期：
+    <lizard:xdatepicker id="xdpCreateDate" runat="server" />
+    &nbsp;<lizard:xbutton id="btnOk" runat="server" text="确定" onclick="btnOk_Click" />
     <br />
     <lizard:xgridview id="gridView" runat="server" width="100%" cellpadding="3" onpageindexchanging="gridView_PageIndexChanging"
         borderwidth="1px" datakeynames="No" onrowdatabound="gridView_RowDataBound" autogeneratecolumns="false"
@@ -37,7 +45,12 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="Addresser" HeaderText="发件人" SortExpression="Addresser"
-                ItemStyle-HorizontalAlign="Center" />
+                ItemStyle-HorizontalAlign="Center" Visible="false"/>
+           <asp:TemplateField   HeaderText="发件人" SortExpression="Addresser" ItemStyle-HorizontalAlign="Center" >
+                <ItemTemplate>
+                  <asp:Label id="lblSendPeople" runat="server" text='<%# XEmailTool.GetSendPeople(Eval("Addresser")) %>' />
+                </ItemTemplate>
+                  </asp:TemplateField>
             <asp:BoundField DataField="Addressee" HeaderText="收件人" SortExpression="Addressee"
                 ItemStyle-HorizontalAlign="Center" Visible="false"/>
             <asp:BoundField DataField="PriorityLevel" HeaderText="类型：0-普通1-重要2-紧急" SortExpression="PriorityLevel"

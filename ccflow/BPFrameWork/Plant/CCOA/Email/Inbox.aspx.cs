@@ -26,14 +26,13 @@ namespace Lizard.OA.Web.OA_Email
         protected void Page_Load(object sender, EventArgs e)
         {
             string currentUserNo = CurrentUser.No;
-            currentUserNo = "wss";
             m_EmailTool = new XEmailTool(XEmailType.InBox, currentUserNo);
             if (!Page.IsPostBack)
             {
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
                 //gridView.HeaderStyle.BackColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_titlebgcolor"].ToString());
                 btnDelete.Attributes.Add("onclick", "return confirm(\"你确认要删除吗？\")");
-                
+
                 int rowsCount = this.GetQueryRowsCount();
                 this.XPager1.InitControl(this.m_PageSize, rowsCount);
 
@@ -89,9 +88,11 @@ namespace Lizard.OA.Web.OA_Email
             #endregion
 
             string searchValue = Request.QueryString["searchvalue"];
-
             IDictionary<string, object> whereConditions = this.GetWhereConditon();
-            DataTable OA_EmailTable = this.m_EmailTool.Query(searchValue, this.m_PageIndex, this.m_PageSize, whereConditions);
+            string queryType = this.ddlCategory.SelectedValue.ToString();
+            string user = CurrentUser.No;
+            user = "wss";
+            DataTable OA_EmailTable = this.m_EmailTool.Query(queryType, user, searchValue, this.m_PageIndex, this.m_PageSize, whereConditions);
             gridView.DataSource = OA_EmailTable;
             gridView.DataBind();
         }
@@ -99,12 +100,7 @@ namespace Lizard.OA.Web.OA_Email
         private IDictionary<string, object> GetWhereConditon()
         {
             IDictionary<string, object> whereConditions = new Dictionary<string, object>();
-            int selectedValue = int.Parse(this.ddlCategory.SelectedValue.ToString());
-            if (selectedValue <= 1)
-            {
-                whereConditions.Add(OA_EmailAttr.IsRead, selectedValue);
-            }
-
+        
             string sendTime = this.xdpCreateDate.Text;
             if (sendTime != string.Empty)
             {
@@ -183,7 +179,6 @@ namespace Lizard.OA.Web.OA_Email
         {
             BP.CCOA.OA_Email email = new BP.CCOA.OA_Email();
             string loginUser = CurrentUser.No;
-            loginUser = "wss";
             if (email.SetAllRead(loginUser))
             {
                 this.BindData();

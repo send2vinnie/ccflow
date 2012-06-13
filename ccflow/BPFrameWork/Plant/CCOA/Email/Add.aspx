@@ -41,25 +41,26 @@
             var buttonEdit = $("#txtAddressee");
 
             mini.openTop({
-                url: "../../CCOA/AddressBook/AddrTree.aspx",
+                url: "../CCOA/Common/ListSelect.aspx?type=emp",
                 showMaxButton: false,
-                title: "从通讯录中添加",
-                width: 400,
+                title: "选择人员",
+                width: 600,
                 height: 420,
+                allowResize: false,
                 onload: function () {
                     var iframe = this.getIFrameEl();
                     //iframe.contentWindow.SetData(null);
                 },
                 ondestory: function (action) {
-
                     if (action == "ok") {
                         var iframe = this.getIFrameEl();
 
                         var data = iframe.contentWindow.GetData();
-                        data = mini.clone(data);
+                        buttonEdit.val(data);
 
-                        //btnEdit1.setValue(data.id);
-                        //btnEdit1.setText(data.text);
+                        var selectedIds = iframe.contentWindow.GetSelectedIds();
+                        var selecedDeptIdText = $("#txtSelectedIds");
+                        selecedDeptIdText.val(selectedIds);
                     }
                 }
             });
@@ -79,6 +80,10 @@
                         </td>
                         <td height="25" width="*" align="left">
                             <asp:TextBox ID="txtEmailId" runat="server" Width="200px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                         </td>
                     </tr>
                     <tr>
@@ -102,7 +107,12 @@
                             <a href="#" onclick="onButtonEdit()">收件人</a> ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtAddressee" runat="server" class="mini-textbox" Width="200px"></asp:TextBox>
+                            <lizard:xtextbox id="txtAddressee" readonly="true" runat="server" width="200px">
+                            </lizard:xtextbox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
+                                ErrorMessage="收件人不能为空！" ControlToValidate="txtAddressee"></asp:RequiredFieldValidator>
+                            <asp:HiddenField ID="txtSelectedIds" runat="server" />
+                            <%--<asp:TextBox ID="txtAddressee" runat="server" class="mini-textbox" Width="200px"></asp:TextBox>--%>
                         </td>
                     </tr>
                     <tr>

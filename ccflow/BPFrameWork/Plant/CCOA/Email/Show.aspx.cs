@@ -13,6 +13,9 @@ using System.Text;
 public partial class CCOA_Email_Show : BasePage
 {
     public string strid = "";
+
+    private BP.CCOA.OA_Email m_OAEmail = new BP.CCOA.OA_Email();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -22,8 +25,24 @@ public partial class CCOA_Email_Show : BasePage
                 strid = Request.Params["id"];
                 string EmailId = strid;
                 ShowInfo(EmailId);
+                //BP.CCOA.OA_Email email = new BP.CCOA.OA_Email();
+                //email.SetReaded(EmailId);
+                this.SetRead(strid);
             }
         }
+    }
+
+    private void SetRead(string emailId)
+    {
+        BP.CCOA.OA_ClickRecords clickRecord = new BP.CCOA.OA_ClickRecords();
+        clickRecord.No = Guid.NewGuid().ToString();
+        clickRecord.VisitId = CurrentUser.No;
+        clickRecord.VisitDate = XTool.Now();
+        clickRecord.ObjectId = emailId;
+        clickRecord.Clicks = 1;
+        BP.CCOA.Enum.ClickObjType clickObjType = BP.CCOA.Enum.ClickObjType.Email;
+        clickRecord.ObjectType = (int)clickObjType;
+        clickRecord.Save();
     }
 
     private void ShowInfo(string EmailId)
@@ -33,13 +52,34 @@ public partial class CCOA_Email_Show : BasePage
         this.lblEmailId.Text = model.No;
         this.lblSubject.Text = model.Subject;
         this.lblAddresser.Text = model.Addresser;
-        this.lblAddressee.Text = model.Addressee;
+        //收件人
+        //this.lblAddressee.Text = model.Addressee;
+        this.lblAddressee.Text = this.m_OAEmail.GetEmailReceiver(EmailId);
         this.lblContent.Text = model.Content;
         this.lblPriorityLevel.Text = model.PriorityLevel;
         this.lblCategory.Text = model.Category;
         this.lblCreateTime.Text = model.CreateTime.ToString();
         this.lblSendTime.Text = model.SendTime.ToString();
         this.lblUpDT.Text = model.UpDT.ToString();
+
+        if (model.Category == "1")
+        {
+            this.btnSave.Visible = true;
+        }
+        else
+        {
+            this.btnSave.Visible = false;
+        }
+    }
+
+    protected void btnSave_Click1(object sender, EventArgs e)
+    {
+        BP.CCOA.OA_Email model = new BP.CCOA.OA_Email(Request.Params["id"]);
+        model.Category = "2";
+        if (model.Update() > 0)
+        {
+            Lizard.Common.MessageBox.ShowAndRedirect(this, "发送成功！", "DraftBox.aspx");
+        }
     }
 }
 

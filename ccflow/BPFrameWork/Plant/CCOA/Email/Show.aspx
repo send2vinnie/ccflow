@@ -33,9 +33,10 @@
             border-top-width: 2px;
             border-top-color: #333300;
         }
-        </style>
+    </style>
 </head>
 <body>
+    <form id="form1" runat="server">
     <table style="width: 100%;" cellpadding="2" cellspacing="1" class="border">
         <tr>
             <td class="tdbg">
@@ -117,9 +118,16 @@
                             <asp:Label ID="lblUpDT" runat="server"></asp:Label>
                         </td>
                     </tr>
+                    <tr>
+                        <td align="center" valign="bottom" colspan="4">
+                            <asp:Button ID="btnSave" runat="server" Text="发送" class="inputbutton" onmouseover="this.className='inputbutton_hover'"
+                                onmouseout="this.className='inputbutton'" OnClick="btnSave_Click1"></asp:Button>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>
     </table>
+    </form>
 </body>
 </html>

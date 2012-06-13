@@ -16,9 +16,9 @@
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="Inbox.aspx" DeleteUrl="Delete.aspx?EmailType=0"
         IsDeleteUrlHaveParamerter="true" />
     <lizard:xdropdownlist id="ddlCategory" runat="server" width="100">
-        <asp:ListItem Text="未读邮件" Value="0" />
-        <asp:ListItem Text="已读邮件" Value="1" />
-        <asp:ListItem Text="全部邮件" Value="2" />
+        <asp:ListItem Text="未读邮件" Value="1" />
+        <asp:ListItem Text="已读邮件" Value="2" />
+        <asp:ListItem Text="全部邮件" Value="3" />
     </lizard:xdropdownlist>
     &nbsp; 发送日期：
     <lizard:xdatepicker id="xdpCreateDate" runat="server" />
@@ -46,7 +46,12 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="Addresser" HeaderText="发件人" SortExpression="Addresser"
-                ItemStyle-HorizontalAlign="Center" />
+                ItemStyle-HorizontalAlign="Center" Visible="false"/>
+              <asp:TemplateField   HeaderText="发件人" SortExpression="Addresser" ItemStyle-HorizontalAlign="Center" >
+                <ItemTemplate>
+                  <asp:Label id="lblSendPeople" runat="server" text='<%# XEmailTool.GetSendPeople(Eval("Addresser")) %>' />
+                </ItemTemplate>
+                  </asp:TemplateField>
             <asp:BoundField DataField="Addressee" HeaderText="收件人" SortExpression="Addressee"
                 ItemStyle-HorizontalAlign="Center" Visible="false"/>
             <asp:BoundField DataField="PriorityLevel" HeaderText="类型：0-普通1-重要2-紧急" SortExpression="PriorityLevel"
@@ -54,9 +59,9 @@
             <asp:BoundField DataField="Category" HeaderText="分类：0-收件箱1-草稿箱2-" SortExpression="Category"
                 ItemStyle-HorizontalAlign="Center" Visible="false" />
              <asp:BoundField DataField="SendTime" HeaderText="发送时间" SortExpression="SendTime" ItemStyle-HorizontalAlign="Center" />
-                <asp:TemplateField   HeaderText="是否阅读" SortExpression="IsRead" ItemStyle-HorizontalAlign="Center" >
+                <asp:TemplateField   HeaderText="是否阅读" SortExpression="ReadFlag" ItemStyle-HorizontalAlign="Center" >
                 <ItemTemplate>
-                  <asp:Label id="lblClicks" runat="server" text='<%# XTool.ConvertBooleanText(Eval("IsRead")) %>' />
+                  <asp:Label id="lblClicks" runat="server" text='<%# XTool.ConvertBooleanText(Eval("ReadFlag")) %>' />
                 </ItemTemplate>
                   </asp:TemplateField>
             <asp:BoundField DataField="UpDT" HeaderText="更新时间" SortExpression="UpDT" Visible="false" ItemStyle-HorizontalAlign="Center" />

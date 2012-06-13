@@ -20,10 +20,13 @@ namespace Lizard.OA.Web.OA_Email
 
         private int m_PageSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString());
 
-        private XEmailTool m_EmailTool = new XEmailTool(2);
+        private XEmailTool m_EmailTool;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string currentUser = CurrentUser.No;
+            currentUser = "wss";
+            m_EmailTool = new XEmailTool(XEmailType.OutBox, currentUser);
             if (!Page.IsPostBack)
             {
                 //gridView.BorderColor = ColorTranslator.FromHtml(Application[Session["Style"].ToString() + "xtable_bordercolorlight"].ToString());
@@ -85,11 +88,31 @@ namespace Lizard.OA.Web.OA_Email
             #endregion
 
             string searchValue = Request.QueryString["searchvalue"];
-
-            DataTable OA_EmailTable = this.m_EmailTool.Query(searchValue, this.m_PageIndex, this.m_PageSize);
-
+            IDictionary<string, object> whereConditions = this.GetWhereConditon();
+            string queryType = "3";
+            string user = CurrentUser.No;
+            user = "wss";
+            DataTable OA_EmailTable = this.m_EmailTool.Query(queryType, user, searchValue, this.m_PageIndex, this.m_PageSize, whereConditions);
             gridView.DataSource = OA_EmailTable;
             gridView.DataBind();
+        }
+
+        private IDictionary<string, object> GetWhereConditon()
+        {
+            IDictionary<string, object> whereConditions = new Dictionary<string, object>();
+
+            string sendTime = this.xdpCreateDate.Text;
+            if (sendTime != string.Empty)
+            {
+                whereConditions.Add("SUBSTR(" + OA_EmailAttr.SendTime + ",1,10)", sendTime);
+            }
+
+            return whereConditions;
+        }
+
+        protected void btnOk_Click(object sender, EventArgs e)
+        {
+            this.BindData();
         }
 
         protected void gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)

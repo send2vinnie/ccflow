@@ -24,8 +24,7 @@ namespace Lizard.OA.Web.OA_Email
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            string currentUser=CurrentUser.No;
-            currentUser="wss";
+            string currentUser = CurrentUser.No;
             m_EmailTool = new XEmailTool(XEmailType.RecycleBox, currentUser);
             if (!Page.IsPostBack)
             {
@@ -87,13 +86,33 @@ namespace Lizard.OA.Web.OA_Email
             //}
             #endregion
 
-
+            string queryType = this.ddlCategory.SelectedValue.ToString();
             string searchValue = Request.QueryString["searchvalue"];
-
-            DataTable OA_EmailTable = this.m_EmailTool.Query(searchValue, this.m_PageIndex, this.m_PageSize);
+            IDictionary<string, object> whereConditions = this.GetWhereConditon();
+            string user = CurrentUser.No;
+            user = "wss";
+            DataTable OA_EmailTable = this.m_EmailTool.Query(queryType, user, searchValue, this.m_PageIndex, this.m_PageSize, whereConditions);
 
             gridView.DataSource = OA_EmailTable;
             gridView.DataBind();
+        }
+
+        private IDictionary<string, object> GetWhereConditon()
+        {
+            IDictionary<string, object> whereConditions = new Dictionary<string, object>();
+            int selectedValue = int.Parse(this.ddlCategory.SelectedValue.ToString());
+            if (selectedValue <= 1)
+            {
+                whereConditions.Add(OA_EmailAttr.IsRead, selectedValue);
+            }
+
+            string sendTime = this.xdpCreateDate.Text;
+            if (sendTime != string.Empty)
+            {
+                whereConditions.Add("SUBSTR(" + OA_EmailAttr.SendTime + ",1,10)", sendTime);
+            }
+
+            return whereConditions;
         }
 
         protected void gridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -158,5 +177,9 @@ namespace Lizard.OA.Web.OA_Email
         }
 
         #endregion
+        protected void btnOk_Click(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
     }
 }

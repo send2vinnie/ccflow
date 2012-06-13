@@ -14,6 +14,9 @@
 <body>
     <form id="form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" RefreshUrl="DraftBox.aspx" />
+    保存日期：
+    <lizard:xdatepicker id="xdpCreateDate" runat="server" />
+    &nbsp;<lizard:xbutton id="btnOk" runat="server" text="确定" onclick="btnOk_Click" />
     <br />
     <lizard:xgridview id="gridView" runat="server" width="100%" cellpadding="3" onpageindexchanging="gridView_PageIndexChanging"
         borderwidth="1px" datakeynames="No" onrowdatabound="gridView_RowDataBound" autogeneratecolumns="false"
@@ -35,17 +38,16 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="Addresser" HeaderText="发件人" SortExpression="Addresser"
-                ItemStyle-HorizontalAlign="Center" />
+                ItemStyle-HorizontalAlign="Center" Visible="false"/>
             <asp:BoundField DataField="Addressee" HeaderText="收件人" SortExpression="Addressee"
                 ItemStyle-HorizontalAlign="Center" Visible="false" />
-            <asp:BoundField DataField="SendTime" HeaderText="发送时间" SortExpression="SendTime" ItemStyle-HorizontalAlign="Center" />
-                <asp:TemplateField   HeaderText="是否阅读" SortExpression="IsRead" ItemStyle-HorizontalAlign="Center" >
+            
+              <asp:TemplateField   HeaderText="邮件类型" SortExpression="PriorityLevel" ItemStyle-HorizontalAlign="Center" >
                 <ItemTemplate>
-                  <asp:Label id="lblClicks" runat="server" text='<%# XTool.ConvertBooleanText(Eval("IsRead")) %>' />
+                  <asp:Label id="lblEmailType" runat="server" text='<%# XEmailTool.GetEmailTypeByCode(Eval("PriorityLevel")) %>' />
                 </ItemTemplate>
-                  </asp:TemplateField>
-            <asp:BoundField DataField="PriorityLevel" HeaderText="类型：0-普通1-重要2-紧急" SortExpression="PriorityLevel"
-                ItemStyle-HorizontalAlign="Center" Visible="false" />
+            </asp:TemplateField>
+            <asp:BoundField DataField="SendTime" HeaderText="保存时间" SortExpression="SendTime" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="Category" HeaderText="分类" SortExpression="Category" ItemStyle-HorizontalAlign="Center"
                 Visible="false" />
             <asp:BoundField DataField="UpDT" HeaderText="更新时间" SortExpression="UpDT" ItemStyle-HorizontalAlign="Center" Visible="false"/>
