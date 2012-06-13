@@ -15,7 +15,6 @@ public partial class CCOA_Email_Delete : BasePage
         string idList = Request.QueryString["idList"];
         string emailType = Request.QueryString["EmailType"];
         string currentUser = CurrentUser.No;
-        currentUser = "wss";
         if (!string.IsNullOrEmpty(idList))
         {
             BP.CCOA.OA_Email OA_Email = new OA_Email();

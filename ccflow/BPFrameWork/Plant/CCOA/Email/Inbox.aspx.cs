@@ -91,7 +91,6 @@ namespace Lizard.OA.Web.OA_Email
             IDictionary<string, object> whereConditions = this.GetWhereConditon();
             string queryType = this.ddlCategory.SelectedValue.ToString();
             string user = CurrentUser.No;
-            user = "wss";
             DataTable OA_EmailTable = this.m_EmailTool.Query(queryType, user, searchValue, this.m_PageIndex, this.m_PageSize, whereConditions);
             gridView.DataSource = OA_EmailTable;
             gridView.DataBind();

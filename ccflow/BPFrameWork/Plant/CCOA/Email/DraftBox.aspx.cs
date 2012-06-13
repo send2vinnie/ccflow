@@ -24,7 +24,6 @@ namespace Lizard.OA.Web.OA_Email
         protected void Page_Load(object sender, EventArgs e)
         {
             string currentUser=CurrentUser.No;
-            currentUser = "wss";
             m_EmailTool = new XEmailTool(XEmailType.DraftBox, currentUser);
             if (!Page.IsPostBack)
             {
@@ -92,7 +91,6 @@ namespace Lizard.OA.Web.OA_Email
             IDictionary<string, object> whereConditions = this.GetWhereConditon();
             string queryType = "3";
             string user = CurrentUser.No;
-            user = "wss";
             DataTable OA_EmailTable = this.m_EmailTool.Query(queryType, user, searchValue, this.m_PageIndex, this.m_PageSize, whereConditions);
             gridView.DataSource = OA_EmailTable;
             gridView.DataBind();
