@@ -27,11 +27,14 @@ namespace BP.CCOA
         /// </summary>
         /// <param name="deleteIds">删除邮件ID</param>
         /// <returns></returns>
-        public bool DeleteFromInputBox(string deleteIds)
+        public bool DeleteFromInputBox(string deleteIds, string userId)
         {
-            string sql = "UPDATE OA_EMAIL SET CATEGORY='{0}' WHERE NO IN ({1})";
-            sql = string.Format(sql, (int)MailCategory.RecycleBox, deleteIds);
+            string sql = "UPDATE OA_EMAILAUTH SET ISDELETE='1' WHERE FK_EMAIL IN ({0}) AND FK_ID='{1}'";
+            sql = string.Format(sql, deleteIds, userId);
             return DBAccess.RunSQL(sql) > 0;
+            //string sql = "UPDATE OA_EMAIL SET CATEGORY='{0}' WHERE NO IN ({1})";
+            //sql = string.Format(sql, (int)MailCategory.RecycleBox, deleteIds);
+            //return DBAccess.RunSQL(sql) > 0;
         }
 
         /// <summary>
