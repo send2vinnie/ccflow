@@ -119,7 +119,7 @@ namespace BP.CCOA
                 map.AddTBString(OA_EmailAuthAttr.FK_Email, null, "Email公告外键", true, false, 0, 50, 50);
                 map.AddTBString(OA_EmailAuthAttr.FK_Id, null, "可以访问的主键", true, false, 0, 50, 50);
                 map.AddTBString(OA_EmailAuthAttr.IsDelete, "0", "是否已删除", true, false, 0, 1, 1);
-                map.AddTBString(OA_EmailAuthAttr.Status, "0", "状态标记", true, false, 0, 1, 1);
+                map.AddTBString(OA_EmailAuthAttr.Status, "1", "状态标记", true, false, 0, 1, 1);
 
                 this._enMap = map;
                 return this._enMap;

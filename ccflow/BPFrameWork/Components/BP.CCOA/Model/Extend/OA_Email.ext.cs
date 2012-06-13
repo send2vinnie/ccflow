@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BP.DA;
 using BP.CCOA.Enum;
+using System.Data;
 
 namespace BP.CCOA
 {
@@ -32,10 +33,21 @@ namespace BP.CCOA
             string sql = "UPDATE OA_EMAILAUTH SET ISDELETE='1' WHERE FK_EMAIL IN ({0}) AND FK_ID='{1}'";
             sql = string.Format(sql, deleteIds, userId);
             return DBAccess.RunSQL(sql) > 0;
-            //string sql = "UPDATE OA_EMAIL SET CATEGORY='{0}' WHERE NO IN ({1})";
-            //sql = string.Format(sql, (int)MailCategory.RecycleBox, deleteIds);
-            //return DBAccess.RunSQL(sql) > 0;
         }
+
+        /// <summary>
+        /// 从垃圾箱删除邮件
+        /// </summary>
+        /// <param name="deleteIds"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool DeleteFromRecycleBox(string deleteIds, string userId)
+        {
+            string sql = "UPDATE OA_EMAILAUTH SET STATUS='0' WHERE FK_EMAIL IN ({0}) AND FK_ID='{1}'";
+            sql = string.Format(sql, deleteIds, userId);
+            return DBAccess.RunSQL(sql) > 0;
+        }
+
 
         /// <summary>
         /// 设置某个邮件已读
@@ -48,5 +60,26 @@ namespace BP.CCOA
             sql = string.Format(sql, emailId);
             return DBAccess.RunSQL(sql) > 0;
         }
+
+        /// <summary>
+        /// 获得邮件的收件人
+        /// </summary>
+        /// <param name="emailId"></param>
+        /// <returns></returns>
+        public string GetEmailReceiver(string emailId)
+        {
+            string sql = "SELECT NAME FROM PORT_EMP WHERE NO IN (SELECT FK_ID FROM OA_EMAILAUTH WHERE FK_EMAIL = '{0}')";
+            sql = string.Format(sql, emailId);
+            DataTable empTable = DBAccess.RunSQLReturnTable(sql);
+
+            string receiver = string.Empty;
+
+            foreach (DataRow empRow in empTable.Rows)
+            {
+                receiver += empRow[EIP.Port_EmpAttr.Name] + ",";
+            }
+            return receiver.TrimEnd(',');
+        }
+
     }
 }

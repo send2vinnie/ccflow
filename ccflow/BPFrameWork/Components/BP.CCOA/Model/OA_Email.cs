@@ -119,11 +119,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public DateTime CreateTime
+        public String CreateTime
         {
             get
             {
-                return this.GetValDateTime(OA_EmailAttr.CreateTime);
+                return this.GetValStringByKey(OA_EmailAttr.CreateTime);
             }
             set
             {
@@ -134,11 +134,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public DateTime SendTime
+        public String SendTime
         {
             get
             {
-                return this.GetValDateTime(OA_EmailAttr.SendTime);
+                return this.GetValStringByKey(OA_EmailAttr.SendTime);
             }
             set
             {
@@ -164,11 +164,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public DateTime UpDT
+        public String UpDT
         {
             get
             {
-                return this.GetValDateTime(OA_EmailAttr.UpDT);
+                return this.GetValStringByKey(OA_EmailAttr.UpDT);
             }
             set
             {
