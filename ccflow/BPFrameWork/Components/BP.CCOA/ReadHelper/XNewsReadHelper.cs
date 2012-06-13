@@ -12,9 +12,9 @@ namespace BP.CCOA
             return "OA_NEWS";
         }
 
-        protected override string GetAuthoQueryCondtion(string userId)
+        protected override void AddOtherConditions(string userId, IDictionary<string, object> whereValues)
         {
-            return string.Empty;
+
         }
     }
 }

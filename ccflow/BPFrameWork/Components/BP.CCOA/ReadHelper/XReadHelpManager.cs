@@ -8,12 +8,12 @@ namespace BP.CCOA
 {
     public partial class XReadHelpManager
     {
-        public static XReadHelperBase GetReadHelper(ClickObjType objType)
+        public static XReadHelperBase GetReadHelper(ClickObjType objType, string innerType = "")
         {
             switch (objType)
             {
                 case ClickObjType.Email:
-                    return new XEmailReadHelper();
+                    return new XEmailReadHelper(innerType);
                 case ClickObjType.News:
                     return new XNewsReadHelper();
                 case ClickObjType.Notice:

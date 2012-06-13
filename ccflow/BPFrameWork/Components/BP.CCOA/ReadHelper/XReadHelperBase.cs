@@ -50,9 +50,15 @@ namespace BP.CCOA
             XReadQueryToolBase readQueryTool = XFactoryManager.CreateFactory().GetReadQueryTool();
             string tableName = this.GetTableName();
             string pkColumnName = this.GetPkColumnName();
-            string authonQueryCondition = this.GetAuthoQueryCondtion(userId);
-            return readQueryTool.QueryAll(authonQueryCondition, tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
+            this.AddOtherConditions(userId, whereValues);
+            return readQueryTool.QueryAll(tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
         }
+
+        /// <summary>
+        /// 添加其他查询条件：如是否有权限阅读,其中是否有阅读权限必须实现
+        /// </summary>
+        /// <param name="userId"></param>
+        protected abstract void AddOtherConditions(string userId, IDictionary<string, object> whereValues);
 
         /// <summary>
         /// 获取所有已读
@@ -71,8 +77,8 @@ namespace BP.CCOA
             XReadQueryToolBase readQueryTool = XFactoryManager.CreateFactory().GetReadQueryTool();
             string tableName = this.GetTableName();
             string pkColumnName = this.GetPkColumnName();
-            string authonQueryCondition = this.GetAuthoQueryCondtion(userId);
-            return readQueryTool.QueryReaded(authonQueryCondition, tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
+            this.AddOtherConditions(userId, whereValues);
+            return readQueryTool.QueryReaded(tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
         }
 
         /// <summary>
@@ -92,8 +98,8 @@ namespace BP.CCOA
             XReadQueryToolBase readQueryTool = XFactoryManager.CreateFactory().GetReadQueryTool();
             string tableName = this.GetTableName();
             string pkColumnName = this.GetPkColumnName();
-            string authonQueryCondition = this.GetAuthoQueryCondtion(userId);
-            return readQueryTool.QueryNotReaded(authonQueryCondition, tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
+            this.AddOtherConditions(userId, whereValues);
+            return readQueryTool.QueryNotReaded(tableName, pkColumnName, userId, columnNames, value, pageIndex, pageSize, whereValues, rowNumFieldName);
         }
 
         /// <summary>
@@ -111,11 +117,6 @@ namespace BP.CCOA
             return "NO";
         }
 
-        /// <summary>
-        /// 获取阅读权限条件
-        /// </summary>
-        /// <returns></returns>
-        protected abstract string GetAuthoQueryCondtion(string userId);
 
     }
 }

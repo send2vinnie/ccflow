@@ -21,7 +21,7 @@ namespace BP.CCOA
         /// <param name="whereValues"></param>
         /// <param name="rowNumFieldName"></param>
         /// <returns></returns>
-        public virtual DataTable QueryAll(string authonQueryCondition, string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        public virtual DataTable QueryAll(string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
             return new DataTable();
         }
@@ -38,7 +38,7 @@ namespace BP.CCOA
         /// <param name="whereValues"></param>
         /// <param name="rowNumFieldName"></param>
         /// <returns></returns>
-        public virtual DataTable QueryReaded(string authonQueryCondition, string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        public virtual DataTable QueryReaded(string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
             return new DataTable();
         }
@@ -55,7 +55,7 @@ namespace BP.CCOA
         /// <param name="whereValues"></param>
         /// <param name="rowNumFieldName"></param>
         /// <returns></returns>
-        public virtual DataTable QueryNotReaded(string authonQueryCondition, string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        public virtual DataTable QueryNotReaded(string tableName, string pkColumnName, string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
             return new DataTable();
         }

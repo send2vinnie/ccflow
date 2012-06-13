@@ -12,9 +12,10 @@ namespace BP.CCOA
             return "OA_NOTICE";
         }
 
-        protected override string GetAuthoQueryCondtion(string userId)
+        protected override void AddOtherConditions(string userId, IDictionary<string, object> whereValues)
         {
-            return "FUN_IS_HAVE_NOTICE_AUTHON(T.NO,T.ACCESSTYPE,'" + userId + "')='1'";
+            whereValues.Add("FUN_IS_HAVE_NOTICE_AUTHON(T.NO,T.ACCESSTYPE,'" + userId + "')", "1");
         }
+
     }
 }

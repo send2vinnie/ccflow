@@ -13,6 +13,7 @@ namespace BP.CCOA
         {
             public const string FK_Email = "FK_Email";
             public const string FK_Id = "FK_Id";
+            public const string IsDelete = "IsDelete";
         }
     }
 
@@ -47,6 +48,21 @@ namespace BP.CCOA
             set
             {
                 this.SetValByKey(OA_EmailAuthAttr.FK_Id, value);
+            }
+        }
+
+        /// <summary>
+        /// 是否已删除
+        /// </summary>
+        public String IsDelete
+        {
+            get
+            {
+                return this.GetValStringByKey(OA_EmailAuthAttr.IsDelete);
+            }
+            set
+            {
+                this.SetValByKey(OA_EmailAuthAttr.IsDelete, value);
             }
         }
 
@@ -86,6 +102,7 @@ namespace BP.CCOA
                 map.AddTBStringPK(OA_EmailAuthAttr.No, null, "主键No", true, true, 0, 50, 50);
                 map.AddTBString(OA_EmailAuthAttr.FK_Email, null, "Email公告外键", true, false, 0, 50, 50);
                 map.AddTBString(OA_EmailAuthAttr.FK_Id, null, "可以访问的主键", true, false, 0, 50, 50);
+                map.AddTBString(OA_EmailAuthAttr.IsDelete, "0", "是否已删除", true, false, 0, 1, 1);
 
                 this._enMap = map;
                 return this._enMap;
