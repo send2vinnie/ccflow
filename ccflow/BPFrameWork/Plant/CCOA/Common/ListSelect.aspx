@@ -74,7 +74,7 @@
 
             //已选择
             var selectedList = mini.get("selectedList");
-            
+
             for (var i = 0; i < items.length; i++) {
                 var o = items[i];
                 selectedList.addItem(o);
@@ -115,8 +115,8 @@
             <td align="left">
                 <h4 style="margin: 0; line-height: 22px; font-size: 13px;">
                     选择：</h4>
-                <div id="selectList" url="<%=Url %>" class="mini-listbox" style="width: 250px;
-                    height: 200px;" showcheckbox="true" multiselect="true">
+                <div id="selectList" url="<%=Url %>" class="mini-listbox" style="width: 250px; height: 200px;"
+                    showcheckbox="true" multiselect="true">
                     <div property="columns">
                         <div field="text" width="150" headeralign="center" allowsort="true">
                             名称</div>
