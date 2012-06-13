@@ -31,10 +31,6 @@ namespace BP.DA
 			{
 				case DBUrlType.AppCenterDSN :
                     return DBAccess.RunSQL(en.SQLCash.Delete, SqlBuilder.GenerParasPK(en) );
-                //case DBUrlType.DBAccessOfMSSQL2000 :
-                //    return DBAccessOfMSSQL2000.RunSQL(SqlBuilder.DeleteForPara(en,"@"));
-                //case DBUrlType.DBAccessOfOracle9i :
-                //    return DBAccessOfOracle9i.RunSQL(SqlBuilder.DeleteForPara(en, ":"));
 				default :
 					throw new Exception("@没有设置类型。");
 			}

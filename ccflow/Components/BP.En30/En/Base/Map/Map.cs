@@ -792,7 +792,6 @@ namespace BP.En
         /// 构造涵数
         /// </summary>
         public Map() { }
-
         #endregion
 
         #region 属性

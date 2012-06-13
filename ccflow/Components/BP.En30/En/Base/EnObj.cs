@@ -104,7 +104,6 @@ namespace BP.En
 
         }
         #endregion
-
     }
     /// <summary>
     /// Entity 的摘要说明。
