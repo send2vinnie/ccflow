@@ -504,7 +504,6 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
                     this.Btn_Send.OnClientClick = "this.disabled=true;"; //this.disabled='disabled'; return true;";
                     this.Btn_Send.Click += new System.EventHandler(this.ToolBar1_ButtonClick);
                 }
-
             }
             else
             {
@@ -671,6 +670,12 @@ public partial class WF_UC_MyFlow : BP.Web.UC.UCBase3
     /// </summary>
     public void BindWork(BP.WF.Node nd, Work wk)
     {
+        if (nd.HisFlow.IsMD5)
+        {
+            this.UCEn1.AddMsgOfWarning("错误","数据已经被非法篡改，请通知管理员解决问题。");
+            return;
+        }
+
         if (this.IsPostBack == true)
             this.UCEn1.IsLoadData = false;
         else

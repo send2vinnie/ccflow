@@ -93,6 +93,7 @@ public partial class WF_WorkOpt_OneWork_Ath : BP.Web.WebPage
                 this.Pub1.AddTDIdx(idx);
 
                 this.Pub1.AddTD(bill.FK_BillTypeT);
+
                 this.Pub1.AddTD(bill.FK_NodeT);
                 this.Pub1.AddTD(bill.FK_EmpT);
                 this.Pub1.AddTD(bill.RDT);

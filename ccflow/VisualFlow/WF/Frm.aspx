@@ -1,6 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WF/WinOpen.master" AutoEventWireup="true" CodeFile="Frm.aspx.cs" Inherits="WF_Frm" %>
 <%@ Register src="UC/UCEn.ascx" tagname="UCEn" tagprefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <script language="JavaScript" src="./../Comm/JScript.js" type="text/javascript" ></script>
+    <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" defer="defer" type="text/javascript" ></script>
+	<script language="JavaScript" src="./Scripts/MapExt.js" type="text/javascript" ></script>
+    <script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' type="text/javascript"></script>
 <script language="javascript" >
 
     // 获取DDL值
@@ -95,8 +99,8 @@
         }
         return;
     }
-
     </script>
+
     <style type="text/css">
         .HBtn
         {
@@ -104,16 +108,12 @@
         	visibility:visible;
         }
     </style>
-	<script language="JavaScript" src="./../Comm/JScript.js" />
-   <script language="JavaScript" src="./../Comm/JS/Calendar/WdatePicker.js" defer="defer" />
-	<script language="JavaScript" src="./Scripts/MapExt.js" />
-    <script language='JavaScript' src='./Scripts/jquery-1.4.1.min.js' >
+	
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server" >
-<asp:Button ID="Btn_Save" runat="server" Text="保存"  CssClass="HBtn" Visible=true 
+<asp:Button ID="Btn_Save" runat="server" Text="保存"  CssClass="HBtn" Visible="true"  
         onclick="Btn_Save_Click"  />
-<asp:Button ID="Btn_Print" runat="server" Text="打印"  CssClass="HBtn" Visible=true />
+<asp:Button ID="Btn_Print" runat="server" Text="打印"  CssClass="HBtn" Visible="true" />
     <uc1:UCEn ID="UCEn1" runat="server" />
 </asp:Content>
-

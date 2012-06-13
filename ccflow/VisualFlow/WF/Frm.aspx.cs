@@ -166,10 +166,23 @@ public partial class WF_Frm : WebPage
         }
 
         Session["Count"] = null;
+        this.Btn_Save.Click+=new EventHandler(Btn_Save_Click);
+
+        //if (this.IsEdit)
+        //{
+        //    this.UCEn1.AddHR();
+        //    Button btn = new Button();
+        //    btn.ID = "Btn_Save";
+        //    btn.Click+=new EventHandler(Btn_Save_Click);
+        //    btn.Text = "Save";
+        //    this.UCEn1.Add(btn);
+        //}
+
         this.Btn_Save.Visible = this.IsEdit;
         this.Btn_Save.Enabled = this.IsEdit;
         this.Btn_Print.Visible = this.IsPrint;
         this.Btn_Print.Enabled = this.IsPrint;
+
         this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData + "&WorkID=" + this.WorkID + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
     }
     public void AddJSEvent(Entity en)

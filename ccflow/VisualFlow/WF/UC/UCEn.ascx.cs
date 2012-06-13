@@ -707,7 +707,7 @@ namespace BP.Web.Comm.UC.WF
                 if (gfs.Count == 1)
                     this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
                 else
-                    this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;<img src='"+appPath+"/WF/Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
+                    this.AddTD("colspan=4 class=GroupField valign='top' align=left ", "<div style='text-align:left; float:left'>&nbsp;<img src='" + appPath + "/WF/Style/Min.gif' alert='Min' id='Img" + gf.Idx + "' onclick=\"GroupBarClick('" + gf.Idx + "')\"  border=0 />&nbsp;" + gf.Lab + "</div><div style='text-align:right; float:right'></div>");
                 this.AddTREnd();
 
                 bool isHaveH = false;
@@ -747,7 +747,7 @@ namespace BP.Web.Comm.UC.WF
                         rowIdx++;
                         this.AddTR(" ID='" + currGF.Idx + "_" + rowIdx + "'");
 
-                        int h = attr.UIHeight+20;
+                        int h = attr.UIHeight + 20;
                         if (attr.UIIsEnable)
                             this.Add("<TD height='" + h.ToString() + "px'  colspan=4 width='100%' valign=top align=left>");
                         else
@@ -756,12 +756,9 @@ namespace BP.Web.Comm.UC.WF
                         this.Add("<div style='font-size:14px;color:black;' >");
                         Label lab = new Label();
                         lab.ID = "Lab" + attr.KeyOfEn;
-                        lab.Text = attr.Name ;
+                        lab.Text = attr.Name;
                         this.Add(lab);
                         this.Add("</div>");
-
-
-                       
 
                         TB mytbLine = new TB();
                         mytbLine.TextMode = TextBoxMode.MultiLine;
@@ -782,11 +779,11 @@ namespace BP.Web.Comm.UC.WF
 
                         mytbLine.Enabled = attr.UIIsEnable;
                         if (mytbLine.Enabled == false)
-                             mytbLine.Attributes.Add("readonly", "true");
+                            mytbLine.Attributes.Add("readonly", "true");
                         else
                             mytbLine.Attributes["class"] = "TBDoc";
 
-                        mytbLine.Attributes["style"] = "width:98%;height:"+attr.UIHeight+"px;padding: 0px;margin: 0px;";
+                        mytbLine.Attributes["style"] = "width:98%;height:" + attr.UIHeight + "px;padding: 0px;margin: 0px;";
                         this.Add(mytbLine);
 
                         if (mytbLine.Enabled)
@@ -820,7 +817,7 @@ namespace BP.Web.Comm.UC.WF
                         mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
                         if (mytbLine.Enabled == false)
                         {
-                           mytbLine.Attributes["class"] = "TBReadonly";
+                            mytbLine.Attributes["class"] = "TBReadonly";
                             mytbLine.Attributes.Add("readonly", "true");
                         }
                         mytbLine.Attributes["style"] = "width:98%;height:100%;padding: 0px;margin: 0px;";
@@ -900,7 +897,7 @@ namespace BP.Web.Comm.UC.WF
                                     {
                                         string v = en.GetValStrByKey(attr.KeyOfEn);
                                         if (v.Length == 0)
-                                            this.AddTD("<img src='"+appPath+"/DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
+                                            this.AddTD("<img src='" + appPath + "/DataUser/Siganture/" + WebUser.No + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                                         else
                                             this.AddTD("<img src='" + appPath + "/DataUser/Siganture/" + v + ".jpg' border=0 onerror=\"this.src='../DataUser/Siganture/UnName.jpg'\"/>");
                                     }
@@ -1049,8 +1046,8 @@ namespace BP.Web.Comm.UC.WF
                 }
                 this.InsertObjects(false);
             }
-            this.AddTableEnd();
 
+            this.AddTableEnd();
            
 
             #region 处理iFrom 的自适应的问题。
