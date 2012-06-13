@@ -33,23 +33,40 @@
             idList = idList.substring(0, idList.length - 1);
         }
 
-        $.ajax({
-            url: "Delete.aspx?idList=" + idList,
-            success: function (data) {
-                window.location.href = "<%=RefreshUrl %>";
-                //alert(data);
-            },
-            error: function () {
-                alert('删除失败！');
-            }
-        });
+        var isParam = "<%=IsDeleteUrlHaveParamerter %>";
+        if (isParam != "true") {
+            $.ajax({
+                url: "<%=DeleteUrl %>?idList=" + idList,
+                //            url: "Delete.aspx?idList=" + idList,
+                success: function (data) {
+                    window.location.href = "<%=RefreshUrl %>";
+                    //alert(data);
+                },
+                error: function () {
+                    alert('删除失败！');
+                }
+            });
+        }
+        else {
+            $.ajax({
+                url: "<%=DeleteUrl %>&idList=" + idList,
+                //            url: "Delete.aspx?idList=" + idList,
+                success: function (data) {
+                    window.location.href = "<%=RefreshUrl %>";
+                    //alert(data);
+                },
+                error: function () {
+                    alert('删除失败！');
+                }
+            });
+        }
     }
 
     function add() {
         mini.openTop({
             url: "Port_Dept/Add.aspx",
             title: "新增",
-            width: 600, 
+            width: 600,
             height: 360,
             showMaxButton: false,
             onload: function () {

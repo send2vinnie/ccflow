@@ -45,6 +45,9 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     /// </summary>
     public string SearchUrl = "#";
 
+    public bool CanAdd = true;
+
+    public string IsDeleteUrlHaveParamerter = "false";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -57,7 +60,7 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
     private void InitToolBar()
     {
         //AddLinkButton("icon-reload", "返回", RetrunUrl);
-        AddLinkButton("icon-addfolder", "增加", AddUrl);
+        AddLinkButton("icon-addfolder", "增加", AddUrl, CanAdd.ToString().ToLower());
         AddClickButton("icon-addfolder", "增加（弹窗）", "add()");
         AddClickButton("icon-remove", "删除", "getSelectedIdList()");
         //AddSeparator();
@@ -80,6 +83,15 @@ public partial class CCOA_Controls_MiniToolBar : System.Web.UI.UserControl
         sbrHtml.Append(this.ButtonContainers.InnerHtml);
         sbrHtml.AppendFormat("<a class='mini-button' iconcls='{0}' onclick='{1}'>{2}</a> ",
             new string[] { icon, clickevent, name });
+
+        this.ButtonContainers.InnerHtml = sbrHtml.ToString();
+    }
+    public void AddLinkButton(string icon, string name, string url, string isEnable)
+    {
+        StringBuilder sbrHtml = new StringBuilder();
+        sbrHtml.Append(this.ButtonContainers.InnerHtml);
+        sbrHtml.AppendFormat("<a class='mini-button' iconcls='{0}' href='{1}' enabled='{3}'>{2}</a> ",
+            new string[] { icon, url, name, isEnable });
 
         this.ButtonContainers.InnerHtml = sbrHtml.ToString();
     }
