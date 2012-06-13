@@ -114,7 +114,10 @@ namespace BP.Web.WF
                         GEDtl dtl = (GEDtl)dtls.GetNewEntity;
                         dtl.OID = this.RefOID;
                         if (dtl.RetrieveFromDBSources() == 0)
+                        {
+                            this.WinClose();
                             break;
+                        }
 
                         FrmEvents fes = new FrmEvents(this.EnsName); //获得事件.
 
@@ -140,6 +143,7 @@ namespace BP.Web.WF
                             this.WinCloseWithMsg(ex.Message);
                             break;
                         }
+                        this.WinClose();
                         break;
                     case "EmpDoUp":
                         BP.WF.Port.WFEmp ep = new BP.WF.Port.WFEmp(this.RefNo);

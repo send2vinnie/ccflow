@@ -763,7 +763,8 @@ namespace BP.Web.Comm.UC.WF
                         TB mytbLine = new TB();
                         mytbLine.TextMode = TextBoxMode.MultiLine;
                         mytbLine.ID = "TB_" + attr.KeyOfEn;
-                        mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn);
+                        mytbLine.Text = en.GetValStrByKey(attr.KeyOfEn).Replace("\\n", "\n");
+
 
                         /*
                         * ligf 

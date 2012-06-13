@@ -132,7 +132,7 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
         this.Pub1.AddTDTitle("编号");
         this.Pub1.AddTDTitle("名称");
         this.Pub1.AddTDTitle("显示方式");
-        this.Pub1.AddTDTitle("是否只读");
+        this.Pub1.AddTDTitle("是否可编辑？");
         this.Pub1.AddTDTitle("是否可打印");
         this.Pub1.AddTDTitle("");
         this.Pub1.AddTDTitle("");
@@ -160,7 +160,7 @@ public partial class WF_Admin_FlowFrms : BP.Web.WebPage
 
             CheckBox cb = new CheckBox();
             cb.ID = "CB_IsEdit_" + md.No;
-            cb.Text = "是否只读";
+            cb.Text = "是否可编辑？";
             cb.Checked = fn.IsEdit;
             this.Pub1.AddTD(cb);
 
