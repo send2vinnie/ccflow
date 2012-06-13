@@ -13,7 +13,7 @@ public static class XTool
         if (objValue == null) return "";
         else
         {
-            if (objValue.ToString().Length==0) return "";
+            if (objValue.ToString().Length == 0) return "";
             if (objValue.ToString() == "1")
                 return "是";
             else
@@ -23,7 +23,7 @@ public static class XTool
 
     public static string DateTimeConvert(DateTime datetime)
     {
-        return datetime.ToString("yyyy-MM-dd");
+        return datetime.ToString("yyyy-MM-dd HH:mm:ss");
     }
 
     public static string Now()
