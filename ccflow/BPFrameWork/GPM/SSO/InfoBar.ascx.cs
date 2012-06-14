@@ -56,9 +56,7 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
                 break;
         }
     }
-    /// <summary>
-    /// 桌面
-    /// </summary>
+
     public void Disktop()
     {
         /*获取到该人员可以显示的infobar. 使用矩阵输出。*/
@@ -67,6 +65,7 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
         ens.RetrieveAll();
 
         int cols = BP.Sys.GloVars.GetValByKeyInt("ColsOfSSO", 3);
+        cols = 4;
         BarEmps bes = new BarEmps();
         bes.InitMyBars();
 
@@ -95,15 +94,15 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
 
             #region 输出bar信息.
             this.AddTDBegin();
-            this.Add(@"<h4 style='background:url(Img/back.png) repeat-x;'><span style='float:left' height='38px'><b>" 
-                + en.Title 
-                + "</b></span> <span style='float:right; font-size:12px;'><a  style='text-decoration: none' href='" 
-                + en.MoreUrl + "'>" 
+            this.Add(@"<h4 style='background:url(Img/back.png) repeat-x;'><span style='float:left' height='38px'><b>"
+                + en.Title
+                + "</b></span> <span style='float:right; font-size:12px;'><a  style='text-decoration: none' href='"
+                + en.MoreUrl + "'>"
                 + en.MoreLab + "</a></span></h4>");
             //this.AddBR();
 
             this.Add(en.Doc);
-           
+
             this.AddTDEnd();
             #endregion 输出信息.
 
@@ -132,6 +131,48 @@ public partial class SSO_InfoBar : BP.Web.UC.UCBase
 
         #endregion 结束  [  信息发布 ]  矩阵输出
 
+    }
+    /// <summary>
+    /// 桌面
+    /// </summary>
+    public void DisktopV2()
+    {
+        /*获取到该人员可以显示的infobar. 使用矩阵输出。*/
+        Bars ens = new Bars();
+        ens.RetrieveAll();
+
+        int cols = BP.Sys.GloVars.GetValByKeyInt("ColsOfSSO", 3);
+        BarEmps bes = new BarEmps();
+        bes.InitMyBars();
+
+        bes.Retrieve(BarEmpAttr.FK_Emp, WebUser.No, BarEmpAttr.Idx);
+        string js = "<javascript>";
+        js += " \t\n CDrag.database.json = [";
+
+        foreach (BarEmp be in bes)
+        {
+            Bar en = ens.GetEntityByKey(BarAttr.No, be.FK_Bar) as Bar;
+            if (en == null)
+            {
+                be.Delete();
+                continue;
+            }
+            else
+            {
+                if (be.IsShow == false)
+                    continue;
+            }
+        }
+
+        //  string title="";
+        //  js+="\t\n { id: \"m_1_1\", title: \""+be.tit+"\", className: "News", src: "News" },";
+        //  js+= @"<h4 style='background:url(Img/back.png) repeat-x;'><span style='float:left' height='38px'><b>" 
+        //      + en.Title 
+        //      + "</b></span> <span style='float:right; font-size:12px;'><a  style='text-decoration: none' href='" 
+        //      + en.MoreUrl + "'>" 
+        //      + en.MoreLab + "</a></span></h4>");
+        //  this.Add(en.Doc);
+        //js += " ]; <javascript>";
     }
 
     #region 设置消息显示的顺序与位置

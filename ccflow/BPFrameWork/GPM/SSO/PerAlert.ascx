@@ -8,6 +8,7 @@
             <img alt="" src="<%=pl.ICON%>" width="16px" height="16px" border="0" />
             <%=pl.Name%>(<%=GetNum(pl)%>)</a>&nbsp;&nbsp;</li>
         <% } %>
+
         <li style="float: right;">
             <ul style="margin: 0; padding: 0;">
                 <li><a href='STemSettingPage.aspx'>密码设置 </a></li>
