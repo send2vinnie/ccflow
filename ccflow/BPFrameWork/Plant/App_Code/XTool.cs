@@ -30,4 +30,17 @@ public static class XTool
     {
         return DateTimeConvert(DateTime.Now);
     }
+
+    public static string GetCatelogyByCode(object code)
+    {
+        try
+        {
+            BP.CCOA.OA_Category category = new BP.CCOA.OA_Category(code.ToString());
+            return category.CategoryName;
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
 }
