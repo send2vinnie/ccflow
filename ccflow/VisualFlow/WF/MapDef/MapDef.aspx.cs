@@ -492,13 +492,9 @@ public partial class WF_MapDef_MapDef : WebPage
                 case MapExtXmlList.InputCheck: /*js 检查 */
                     TB tbJS = this.Pub1.GetTBByID("TB_" + me.AttrOfOper);
                     if (tbJS != null)
-                    {
                         tbJS.Attributes[me.Tag2] += me.Tag1 + "(this);";
-                    }
                     else
-                    {
                         me.Delete();
-                    }
                     break;
                 case MapExtXmlList.PopVal: //弹出窗.
                     TB tb = this.Pub1.GetTBByID("TB_" + me.AttrOfOper);

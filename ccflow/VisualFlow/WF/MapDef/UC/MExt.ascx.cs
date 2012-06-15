@@ -272,7 +272,8 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             is1 = this.AddTR(is1);
             TextBox tb = new TextBox();
             tb.ID = "TB_" + dtl.No;
-            tb.Columns = 50;
+            tb.Columns = 80;
+            tb.Rows = 3;
             tb.TextMode = TextBoxMode.MultiLine;
             foreach (string s in strs)
             {
@@ -292,7 +293,7 @@ public partial class WF_MapDef_UC_MExt : BP.Web.UC.UCBase3
             this.Pub2.AddTDEnd();
             this.Pub2.AddTREnd();
         }
-        this.Pub2.AddTableEnd();
+        this.Pub2.AddTableEndWithHR();
         Button mybtn = new Button();
         mybtn.ID = "Btn_Save";
         mybtn.Text = "保存";

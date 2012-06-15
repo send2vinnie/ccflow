@@ -83,17 +83,18 @@ public class Handler : IHttpHandler, IRequiresSessionState
        // key = "周";
         switch (me.ExtType)
         {
-            case BP.Sys.MapExtXmlList.DDLFullCtrl: // 级连ddl.
-                sql = this.DealSQL(me.DocOfSQLDeal, key);
-                dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
-                context.Response.Write(JSONTODT(dt));
-                return;
+            //case BP.Sys.MapExtXmlList.DDLFullCtrl: // 级连ddl.
+            //    sql = this.DealSQL(me.DocOfSQLDeal, key);
+            //    dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
+            //    context.Response.Write(JSONTODT(dt));
+            //    return;
             case BP.Sys.MapExtXmlList.ActiveDDL: // 动态填充ddl。
                 sql = this.DealSQL(me.DocOfSQLDeal, key);
                 dt = BP.DA.DBAccess.RunSQLReturnTable(sql);
                 context.Response.Write(JSONTODT(dt));
                 return;
             case BP.Sys.MapExtXmlList.TBFullCtrl: // 自动完成。
+            case BP.Sys.MapExtXmlList.DDLFullCtrl: // 级连ddl.
                 switch (context.Request.QueryString["DoType"])
                 {
                     case "ReqCtrl":

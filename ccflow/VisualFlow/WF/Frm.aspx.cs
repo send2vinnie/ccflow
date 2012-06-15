@@ -182,7 +182,6 @@ public partial class WF_Frm : WebPage
         this.Btn_Save.Enabled = this.IsEdit;
         this.Btn_Print.Visible = this.IsPrint;
         this.Btn_Print.Enabled = this.IsPrint;
-
         this.Btn_Print.Attributes["onclick"] = "window.showModalDialog('./FreeFrm/Print.aspx?FK_Node=" + this.FK_Node + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData + "&WorkID=" + this.WorkID + "', '', 'dialogHeight: 350px; dialogWidth:450px; center: yes; help: no'); return false;";
     }
     public void AddJSEvent(Entity en)
@@ -225,7 +224,6 @@ public partial class WF_Frm : WebPage
         wk.Rec = WebUser.No;
         wk.SetValByKey("FK_Dept", WebUser.FK_Dept);
         wk.SetValByKey("FK_NY", BP.DA.DataType.CurrentYearMonth);
-
         FrmEvents fes = new FrmEvents(this.FK_MapData);
         fes.DoEventNode(FrmEventList.SaveBefore, wk);
         try
@@ -247,9 +245,7 @@ public partial class WF_Frm : WebPage
             this.UCEn1.AlertMsg_Warning("错误", ex.Message + "@有可能此错误被系统自动修复,请您从新保存一次.");
             return;
         }
-
         this.Response.Redirect("Frm.aspx?OID=" + wk.GetValStringByKey("OID") + "&FK_Node=" + this.FK_Node + "&WorkID=" + this.WorkID + "&FID=" + this.FID + "&FK_MapData=" + this.FK_MapData, true);
-
         // wk.RetrieveFromDBSources();
         // this.UCEn1.ResetEnVal(wk);
         return;

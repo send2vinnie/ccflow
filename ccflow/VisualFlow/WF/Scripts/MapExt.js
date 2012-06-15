@@ -3,10 +3,11 @@ var oldValue = "";
 var oid ;
 var highlightindex = -1;
 function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
+
     openDiv(sender, tbid);
     var myEvent = event || window.event;
     var myKeyCode = myEvent.keyCode;
-    //获得ID为divinfo里面的DIV对象   
+    // 获得ID为divinfo里面的DIV对象 .  
     var autoNodes = $("#divinfo").children("div");
     if (myKeyCode == 38) {
         if (highlightindex != -1) {
@@ -56,7 +57,6 @@ function DoAnscToFillDiv(sender, e, tbid, fk_mapExt) {
 
             // 填充.
             FullIt(oldValue, tbid, fk_mapExt);
-
             highlightindex = -1;
         }
     }
@@ -100,12 +100,14 @@ function FullIt(oldValue, tbid, fk_mapExt) {
 
     if (oid == null)
         oid = GetQueryString('OID');
+
     if (oid == null)
         oid = GetQueryString('WorkID');
+
     if (oid == null)
         oid = 0;
 
-    //执行填充其它的控件.
+    //执行填充主表的控件.
     FullCtrl(oldValue, tbid, fk_mapExt);
 
     //执行个性化填充下拉框.
@@ -154,7 +156,6 @@ function openDiv(e, tbID) {
     }
 }
 function getoffset(e) {
-
     var t = e.offsetTop;
     var l = e.offsetLeft;
     while (e = e.offsetParent) {
@@ -196,6 +197,7 @@ function GenerPageKVs() {
 /* 自动填充 */
 function DDLFullCtrl(e, ddlChild, fk_mapExt) {
     GenerPageKVs();
+
     var json_data = { "Key": e, "FK_MapExt": fk_mapExt, "KVs": kvs };
     $.ajax({
         type: "get",
@@ -206,33 +208,11 @@ function DDLFullCtrl(e, ddlChild, fk_mapExt) {
         },
         success: function (data, textStatus) {
             var dataObj = eval("(" + data + ")"); //转换为json对象 
-
-            var beforeID = ddlChild.substring(0, ddlChild.indexOf('DDL_'));
-            var endId = ddlChild.substring(ddlChild.lastIndexOf('_'));
             for (var i in dataObj.Head) {
                 if (typeof (i) == "function")
                     continue;
-
-                for (var k in dataObj.Head[i]) {
-                    if (k == 'No' || k == 'Name')
-                        continue;
-//                    alert(k);
-//                    alert(dataObj.Head[i][k]);
-
-                    $("#" + beforeID + 'TB_' + k).val(dataObj.Head[i][k]);
-                    $("#" + beforeID + 'TB_' + k + endId).val(dataObj.Head[i][k]);
-
-                    $("#" + beforeID + 'DDL_' + k).val(dataObj.Head[i][k]);
-                    $("#" + beforeID + 'DDL_' + k + endId).val(dataObj.Head[i][k]);
-
-                    if (dataObj.Head[i][k] == '1') {
-                        $("#" + beforeID + 'CB_' + k).attr("checked", true);
-                        $("#" + beforeID + 'CB_' + k + endId).attr("checked", true);
-                    } else {
-                        $("#" + beforeID + 'CB_' + k).attr("checked", false);
-                        $("#" + beforeID + 'CB_' + k + endId).attr("checked", false);
-                    }
-                }
+                FullIt(e, ddlChild, fk_mapExt);
+                return;
             }
         },
         complete: function (XMLHttpRequest, textStatus) {
@@ -351,6 +331,9 @@ function FullM2M(key, fk_mapExt) {
 
 //填充明细.
 function FullDtl(key, fk_mapExt) {
+
+     
+
     GenerPageKVs();
     //FullM2M(key, fk_mapExt); //填充M2M.
     var json_data = { "Key": key, "FK_MapExt": fk_mapExt, "DoType": "ReqDtlFullList", "OID": oid, "KVs": kvs };
@@ -478,8 +461,18 @@ function FullCtrl(e, ctrlIdBefore, fk_mapExt) {
         },
         success: function (data, textStatus) {
             var dataObj = eval("(" + data + ")"); //转换为json对象 
-            var beforeID = ctrlIdBefore.substring(0, ctrlIdBefore.indexOf('TB_'));
-            var endId = ctrlIdBefore.substring(ctrlIdBefore.lastIndexOf('_'));
+            var beforeID = null;
+            var endId = null;
+
+            // 根据ddl 与 tb 不同。 
+            if (ctrlIdBefore.indexOf('DDL_') > 1) {
+                beforeID = ctrlIdBefore.substring(0, ctrlIdBefore.indexOf('DDL_'));
+                endId = ctrlIdBefore.substring(ctrlIdBefore.lastIndexOf('_'));
+            } else {
+                beforeID = ctrlIdBefore.substring(0, ctrlIdBefore.indexOf('TB_'));
+                endId = ctrlIdBefore.substring(ctrlIdBefore.lastIndexOf('_'));
+            }
+
             for (var i in dataObj.Head) {
                 if (typeof (i) == "function")
                     continue;
