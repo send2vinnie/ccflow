@@ -19,6 +19,7 @@ namespace Lizard.OA.Web.OA_Notice
         {
             if (!Page.IsPostBack)
             {
+                BindDropDownList();
                 if (Request.Params["id"] != null && Request.Params["id"].Trim() != "")
                 {
                     string NoticeId = Request.Params["id"];
@@ -27,12 +28,17 @@ namespace Lizard.OA.Web.OA_Notice
             }
         }
 
+        private void BindDropDownList()
+        {
+            XBindCategoryComboTool.BindCategory(XCategory.Notice, this.ddlNoticeType);
+        }
+
         private void ShowInfo(string NoticeId)
         {
             BP.CCOA.OA_Notice model = new BP.CCOA.OA_Notice(NoticeId);
             this.txtNoticeTitle.Text = model.NoticeTitle;
             this.txtNoticeSubTitle.Text = model.NoticeSubTitle;
-            this.txtNoticeType.Text = model.NoticeType;
+            this.ddlNoticeType.SelectedValue = model.NoticeType;
             this.txtNoticeContent.Text = model.NoticeContent;
             this.ddlAccessType.Text = model.AccessType;
             this.txtSelected.Text = XNoticeTool.GetSelecedNames(NoticeId, model.AccessType);
@@ -51,7 +57,7 @@ namespace Lizard.OA.Web.OA_Notice
             {
                 strErr += "副标题不能为空！\\n";
             }
-            if (this.txtNoticeType.Text.Trim().Length == 0)
+            if (this.ddlNoticeType.Text.Trim().Length == 0)
             {
                 strErr += "通告类型不能为空！\\n";
             }
@@ -73,7 +79,7 @@ namespace Lizard.OA.Web.OA_Notice
             string NoticeId = Request.Params["id"];
             string NoticeTitle = this.txtNoticeTitle.Text;
             string NoticeSubTitle = this.txtNoticeSubTitle.Text;
-            string NoticeType = this.txtNoticeType.Text;
+            string NoticeType = this.ddlNoticeType.SelectedValue.ToString();
             string NoticeContent = this.txtNoticeContent.Text;
             string accessType = this.ddlAccessType.Text.Trim();
 

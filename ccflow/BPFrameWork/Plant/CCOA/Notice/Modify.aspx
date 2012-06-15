@@ -114,8 +114,8 @@
                         <td height="25" width="30%" align="right">
                             通告类型 ：
                         </td>
-                        <td height="25" width="*" align="left">
-                            <asp:TextBox ID="txtNoticeType" runat="server" Width="200px"></asp:TextBox>
+                         <td height="25" width="*" align="left">
+                            <lizard:xdropdownlist id="ddlNoticeType" runat="server" width="200px" />
                         </td>
                     </tr>
                     <tr>

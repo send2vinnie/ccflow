@@ -106,8 +106,7 @@
                             通告类型 ：
                         </td>
                         <td height="25" width="*" align="left">
-                            <lizard:xtextbox id="txtNoticeType" runat="server" width="200px">
-                            </lizard:xtextbox>
+                            <lizard:xdropdownlist id="ddlNoticeType" runat="server" width="200px" />
                         </td>
                     </tr>
                     <tr>
