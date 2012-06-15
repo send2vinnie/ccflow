@@ -14,7 +14,7 @@ namespace BP.CCOA
 
         protected override void AddOtherConditions(string userId, IDictionary<string, object> whereValues)
         {
-
+            whereValues.Add("FUN_IS_HAVE_NEWS_AUTHON(T.NO,T.ACCESSTYPE,'" + userId + "')", "1");
         }
     }
 }

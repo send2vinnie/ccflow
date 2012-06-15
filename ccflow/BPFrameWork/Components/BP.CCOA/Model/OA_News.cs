@@ -20,6 +20,7 @@ namespace BP.CCOA
         public const string IsRead = "IsRead";
         public const string UpDT = "UpDT";
         public const string Status = "Status";
+        public const string AccessType = "AccessType";
     }
 
     public partial class OA_News : EntityNoName
@@ -134,11 +135,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public DateTime CreateTime
+        public string CreateTime
         {
             get
             {
-                return this.GetValDateTime(OA_NewsAttr.CreateTime);
+                return this.GetValStringByKey(OA_NewsAttr.CreateTime);
             }
             set
             {
@@ -164,11 +165,11 @@ namespace BP.CCOA
         /// <summary>
         /// 
         /// </summary>
-        public DateTime UpDT
+        public string UpDT
         {
             get
             {
-                return this.GetValDateTime(OA_NewsAttr.UpDT);
+                return this.GetValStringByKey(OA_NewsAttr.UpDT);
             }
             set
             {
@@ -188,6 +189,20 @@ namespace BP.CCOA
             set
             {
                 this.SetValByKey(OA_NewsAttr.Status, value);
+            }
+        }
+        /// <summary>
+        /// 访问类型
+        /// </summary>
+        public string AccessType
+        {
+            get
+            {
+                return this.GetValStringByKey(OA_NoticeAttr.AccessType);
+            }
+            set
+            {
+                this.SetValByKey(OA_NoticeAttr.AccessType, value);
             }
         }
 
@@ -232,9 +247,10 @@ namespace BP.CCOA
                 map.AddTBString(OA_NewsAttr.NewsSubTitle, null, "", true, false, 0, 200, 200);
                 map.AddTBString(OA_NewsAttr.NewsType, null, "", true, false, 0, 1, 1);
                 map.AddTBStringDoc(OA_NewsAttr.NewsContent, "", "内容", true, false);
-                map.AddTBDateTime(OA_NewsAttr.CreateTime, "创建时间", false, true);
+                map.AddTBString(OA_NewsAttr.CreateTime, null, "创建时间", true, false, 0, 50, 50);
                 map.AddTBInt(OA_NewsAttr.IsRead, 0, "", true, false);
-                map.AddTBDateTime(OA_NewsAttr.UpDT, "更新时间", false, true);
+                map.AddTBString(OA_NewsAttr.UpDT, null, "更新时间", true, false, 0, 50, 50);
+                map.AddTBString(OA_NoticeAttr.AccessType, null, "访问类型", true, false, 0, 4, 20);
                 map.AddTBInt(OA_NewsAttr.Status, 0, "", true, false);
 
                 this._enMap = map;

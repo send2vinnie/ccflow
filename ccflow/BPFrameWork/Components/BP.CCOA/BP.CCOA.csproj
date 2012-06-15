@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddrBook.cs" />
     <Compile Include="AddrBookDept.cs" />
     <Compile Include="Article.cs">
       <SubType>Code</SubType>
@@ -109,6 +108,7 @@
     <Compile Include="Model\OA_NoticeAttach.cs" />
     <Compile Include="Model\OA_NoticeAuth.cs" />
     <Compile Include="Model\OA_SMS.cs" />
+    <Compile Include="Model\Extend\OA_TodoWork.cs" />
     <Compile Include="ProcessObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSOCustomerModule.cs" />

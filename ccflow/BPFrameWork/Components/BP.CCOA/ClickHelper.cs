@@ -25,7 +25,13 @@ namespace BP.CCOA
 
         public static bool IsReaded(string objectId, string visitId)
         {
-            throw new NotImplementedException();
+            BP.CCOA.OA_ClickRecords records = new OA_ClickRecords();
+            records.RetrieveByAttrAnd("ObjectId", objectId, "VisitId", visitId);
+
+            if (records.IsBlank)
+                return false;
+            else
+                return true;
         }
 
         public static string GetVisitTime(string objectId, string visitId)
@@ -53,10 +59,23 @@ namespace BP.CCOA
         {
             string guidFun = XFactoryManager.CreateFactory().GetGuidFunction();
             string timeFun = XFactoryManager.CreateFactory().GetServerTimeFunction();
+            string tableName = "";
+            switch (objectType)
+            {
+                case ClickObjType.News:
+                    tableName = "OA_News";
+                    break;
+                case ClickObjType.Notice:
+                    tableName = "OA_Notice";
+                    break;
+                case ClickObjType.Email:
+                    tableName = "OA_Email";
+                    break;
+            }
             string sql = @"INSERT INTO OA_CLICKRECORDS(NO,OBJECTTYPE,OBJECTID,VISITDATE,CLICKS,VISITID) 
-                           SELECT {0},{1},NO,{2},1,{3} 
-                           FROM OA_NOTICE WHERE NO NOT IN (SELECT OBJECTID FROM OA_CLICKRECORDS WHERE VISITID='{3}')";
-            sql = string.Format(sql, guidFun, (int)objectType, timeFun, visitId);
+                           SELECT {0},{1},NO,{2},1,'{3}' 
+                           FROM {4} WHERE NO NOT IN (SELECT OBJECTID FROM OA_CLICKRECORDS WHERE VISITID='{3}')";
+            sql = string.Format(sql, guidFun, (int)objectType, timeFun, visitId, tableName);
             return DBAccess.RunSQL(sql) > 0;
         }
     }

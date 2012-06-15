@@ -18,7 +18,7 @@ namespace BP.EIP
             XDBHelper dbHelper = null;
             switch (AppCenterDBType)
             {
-                case DBType.SQL2000_OK:
+                case DBType.SQL2000:
                     dbHelper = new XSqlServerHelper();
                     break;
                 case DBType.Oracle9i:

@@ -228,7 +228,7 @@ namespace BP.CCOA
                 map.AddTBString(OA_EmailAttr.Addresser, null, "发件人", true, false, 0, 10, 10);
                 map.AddTBString(OA_EmailAttr.Addressee, null, "收件人", true, false, 0, 1000, 1000);
                 map.AddTBString(OA_EmailAttr.Subject, null, "", true, false, 0, 200, 200);
-                map.AddTBString(OA_EmailAttr.Content, null, "", true, false, 0, 16, 16);
+                map.AddTBStringDoc(OA_EmailAttr.Content, null, "", true, false);
                 map.AddTBString(OA_EmailAttr.PriorityLevel, null, "", true, false, 0, 1, 1);
                 map.AddTBString(OA_EmailAttr.Category, null, "", true, false, 0, 1, 1);
                 map.AddTBString(OA_EmailAttr.CreateTime, null, "", true, false, 0, 50, 50);

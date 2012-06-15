@@ -16,7 +16,7 @@ namespace BP.EIP
         public const string PIN = "PIN";
         public const string KeyPass = "KeyPass";
         public const string IsUSBKEY = "IsUSBKEY";
-        public const string FK_Emp = "FK_Emp";
+        public const string FK_Staff = "FK_Staff";
         public const string IsLogin = "IsLogin";
         public const string Status = "Status";
     }
@@ -122,11 +122,11 @@ namespace BP.EIP
         {
             get
             {
-                return this.GetValStringByKey(Port_EmpAttr.FK_Emp);
+                return this.GetValStringByKey(Port_EmpAttr.FK_Staff);
             }
             set
             {
-                this.SetValByKey(Port_EmpAttr.FK_Emp, value);
+                this.SetValByKey(Port_EmpAttr.FK_Staff, value);
             }
         }
 
@@ -148,11 +148,11 @@ namespace BP.EIP
         /// <summary>
         /// 授权状态
         /// </summary>
-        public AuditStatus Status
+        public int Status
         {
             get
             {
-                return (AuditStatus)this.GetValIntByKey(Port_EmpAttr.Status);
+                return this.GetValIntByKey(Port_EmpAttr.Status);
             }
             set
             {
@@ -201,7 +201,7 @@ namespace BP.EIP
                 map.AddTBString(Port_EmpAttr.PIN, null, "", true, false, 0, 100, 100);
                 map.AddTBString(Port_EmpAttr.KeyPass, null, "", true, false, 0, 100, 100);
                 map.AddTBString(Port_EmpAttr.IsUSBKEY, null, "", true, false, 0, 100, 100);
-                map.AddTBString(Port_EmpAttr.FK_Emp, null, "", true, false, 0, 50, 50);
+                map.AddTBString(Port_EmpAttr.FK_Staff, null, "", true, false, 0, 50, 50);
                 map.AddTBInt(Port_EmpAttr.IsLogin, 1, "是否已登录", true, false);
                 map.AddTBInt(Port_EmpAttr.Status, 1, "状态", true, false);
 

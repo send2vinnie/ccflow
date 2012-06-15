@@ -80,7 +80,6 @@ namespace BP.EIP
                 map.EnType = EnType.Sys;
                 map.IsAutoGenerNo = false;
                 
-                map.AddTBStringPK(Port_EmpStationAttr.No, null, "", true, true, 0, 50, 50);
                 map.AddTBString(Port_EmpStationAttr.FK_Emp, null, "", true, false, 0,  50, 50);
                 map.AddTBString(Port_EmpStationAttr.FK_Station, null, "工作岗位, 主外键:对应物理表:Port_Station,表描述:岗位", true, false, 0,  50, 50);
               

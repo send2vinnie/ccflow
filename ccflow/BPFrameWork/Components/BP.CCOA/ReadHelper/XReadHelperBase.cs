@@ -72,7 +72,8 @@ namespace BP.CCOA
         /// <param name="whereValues"></param>
         /// <param name="rowNumFieldName"></param>
         /// <returns></returns>
-        public virtual DataTable QueryReaded(string userId, string[] columnNames, string value, int pageIndex, int pageSize, IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
+        public virtual DataTable QueryReaded(string userId, string[] columnNames, string value, int pageIndex, int pageSize, 
+            IDictionary<string, object> whereValues = null, string rowNumFieldName = "No")
         {
             XReadQueryToolBase readQueryTool = XFactoryManager.CreateFactory().GetReadQueryTool();
             string tableName = this.GetTableName();
