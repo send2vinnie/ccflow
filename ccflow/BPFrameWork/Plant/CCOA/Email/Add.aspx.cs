@@ -20,7 +20,6 @@ public partial class CCOA_Email_Add : BasePage
         if (!Page.IsPostBack)
         {
             string currentUser = BP.Web.WebUser.Name;
-            currentUser = "wss";
             this.txtAddresser.Text = currentUser;
         }
     }
