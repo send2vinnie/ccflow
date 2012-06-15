@@ -144,6 +144,14 @@
                             </lizard:xtextbox>
                         </td>
                     </tr>
+                    <tr>
+                        <td height="25" width="30%" align="right">
+                            附件 ：
+                        </td>
+                        <td height="25" width="*" align="left">
+                            <asp:FileUpload ID="FileUpload1" runat="server" />
+                        </td>
+                    </tr>
                 </table>
                 <script src="/js/calendar1.js" type="text/javascript"></script>
             </td>

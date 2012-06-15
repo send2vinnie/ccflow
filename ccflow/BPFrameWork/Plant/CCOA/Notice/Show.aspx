@@ -137,7 +137,7 @@
             </tr>
             <tr>
                 <td class="NoticeBottom" colspan="3">
-                    <uc2:Attachment ID="Attachment1" runat="server" EnumType="Notice" />
+                    <uc2:Attachment ID="Attachment1" runat="server" EnumType="notice" />
                 </td>
             </tr>
             <tr>

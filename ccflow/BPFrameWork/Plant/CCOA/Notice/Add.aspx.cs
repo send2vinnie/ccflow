@@ -11,6 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Text;
 using Lizard.Common;
 using LTP.Accounts.Bus;
+using System.IO;
 namespace Lizard.OA.Web.OA_Notice
 {
     public partial class Add : BasePage
@@ -78,6 +79,22 @@ namespace Lizard.OA.Web.OA_Notice
             model.Insert();
 
             XNoticeTool.InsertNoticeAuths(NoticeId, this.txtSelectedIds.Value);
+
+            //保存附件
+            if (this.FileUpload1.HasFile)
+            {
+                string fileName = this.FileUpload1.FileName;
+                string saveFilePath = XAttachmentTool.UploadFile(this.FileUpload1, Request.PhysicalApplicationPath, this, Server.HtmlEncode(fileName));
+                string attachNo = string.Empty;
+                XAttachmentTool.InsertAttachment(fileName, fileName, saveFilePath, CurrentUser.No, out attachNo);
+
+                //插入公告附件表
+                BP.CCOA.OA_NoticeAttach noticeAttach = new BP.CCOA.OA_NoticeAttach();
+                noticeAttach.No = Guid.NewGuid().ToString();
+                noticeAttach.Notice_Id = NoticeId;
+                noticeAttach.Accachment_Id = attachNo;
+                noticeAttach.Insert();
+            }
 
             //BP.CCOA.OA_Notice bll = new BP.CCOA.OA_Notice();
             //bll.Add(model);
