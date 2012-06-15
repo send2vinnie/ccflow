@@ -14,22 +14,22 @@
 <body>
     <form id="form1" runat="server">
     <uc1:MiniToolBar ID="MiniToolBar1" runat="server" />
-    <lizard:xdropdownlist id="ddlCategory" runat="server" width="100">
+    <lizard:XDropDownList ID="ddlCategory" runat="server" Width="100">
         <asp:ListItem Text="未读通告" Value="1" />
         <asp:ListItem Text="已读通告" Value="2" />
         <asp:ListItem Text="全部通告" Value="3" />
-    </lizard:xdropdownlist>
+    </lizard:XDropDownList>
     &nbsp; 发布日期：
-    <lizard:xdatepicker id="xdpCreateDate" runat="server" />
-    &nbsp;<lizard:xbutton id="btnOk" runat="server" text="确定" onclick="btnOk_Click" />
+    <lizard:XDatePicker ID="xdpCreateDate" runat="server" />
+    &nbsp;<lizard:XButton ID="btnOk" runat="server" Text="确定" OnClick="btnOk_Click" />
     &nbsp;
     <asp:LinkButton ID="lbtReaded" CssClass="mini-button" runat="server" OnClick="lbtReaded_Click">标记所有为已读</asp:LinkButton>
     <br />
-    <lizard:xgridview id="gridView" runat="server" width="100%" cellpadding="3" onpageindexchanging="gridView_PageIndexChanging"
-        borderwidth="1px" datakeynames="No" onrowdatabound="gridView_RowDataBound" autogeneratecolumns="false"
-        pagesize="10" rowstyle-horizontalalign="Center" onrowcreated="gridView_OnRowCreated"
-        cssclass="lizard-grid">
-        <columns>
+    <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
+        BorderWidth="1px" DataKeyNames="No" OnRowDataBound="gridView_RowDataBound" AutoGenerateColumns="false"
+        PageSize="10" RowStyle-HorizontalAlign="Center" OnRowCreated="gridView_OnRowCreated"
+        CssClass="lizard-grid">
+        <Columns>
             <asp:TemplateField ControlStyle-Width="30" HeaderText="选择">
                 <ItemTemplate>
                     <asp:CheckBox ID="DeleteThis" onclick="javascript:CCA(this);" runat="server" />
@@ -46,23 +46,22 @@
             </asp:TemplateField>
             <asp:BoundField DataField="NoticeSubTitle" HeaderText="副标题" SortExpression="NoticeSubTitle"
                 ItemStyle-HorizontalAlign="Center" Visible="false" />
-            <asp:TemplateField   HeaderText="通告类型" SortExpression="NoticeType" ItemStyle-HorizontalAlign="Center" >
+            <asp:TemplateField HeaderText="通告类型" SortExpression="NoticeType" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
-                  <asp:Label id="lblNoticeType" runat="server" text='<%# XTool.GetCatelogyByCode(Eval("NoticeType")) %>' />
+                    <asp:Label ID="lblNoticeType" runat="server" Text='<%# XTool.GetCatelogyByCode(Eval("NoticeType")) %>' />
                 </ItemTemplate>
+            </asp:TemplateField>
             <asp:BoundField DataField="Author" HeaderText="发布人" SortExpression="Author" ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="CreateTime" HeaderText="发布时间" SortExpression="CreateTime"
                 ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="Clicks" HeaderText="点击量" SortExpression="Clicks" ItemStyle-HorizontalAlign="Center" />
-
-                       <asp:TemplateField   HeaderText="是否阅读" SortExpression="IsRead" ItemStyle-HorizontalAlign="Center" >
+            <asp:TemplateField HeaderText="是否阅读" SortExpression="IsRead" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
-                  <asp:Label id="lblClicks" runat="server" text='<%# XTool.ConvertBooleanText(Eval("ReadFlag")) %>' />
-
+                    <asp:Label ID="lblClicks" runat="server" Text='<%# XTool.ConvertBooleanText(Eval("ReadFlag")) %>' />
                 </ItemTemplate>
             </asp:TemplateField>
-
-            <asp:BoundField DataField="AccessType" HeaderText="发布类别" SortExpression="AccessType" ItemStyle-HorizontalAlign="Center" />
+            <asp:BoundField DataField="AccessType" HeaderText="发布类别" SortExpression="AccessType"
+                ItemStyle-HorizontalAlign="Center" />
             <asp:BoundField DataField="UpDT" HeaderText="更新时间" SortExpression="UpDT" ItemStyle-HorizontalAlign="Center"
                 Visible="false" />
             <asp:BoundField DataField="UpUser" HeaderText="更新人" SortExpression="UpUser" ItemStyle-HorizontalAlign="Center"
@@ -77,8 +76,8 @@
                         Text="删除"></asp:LinkButton>
                 </ItemTemplate>
             </asp:TemplateField>
-        </columns>
-    </lizard:xgridview>
+        </Columns>
+    </lizard:XGridView>
     <xuc:XPager ID="XPager1" runat="server" OnPagerChanged="XPager1_PagerChanged" />
     </form>
 </body>

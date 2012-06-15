@@ -87,30 +87,50 @@ namespace Lizard.OA.Web.OA_News
             //gridView.DataSource = OA_NewsTable;
             //gridView.DataBind();
 
-            DataTable dt = new DataTable();
-            XReadHelperBase readHelper = BP.CCOA.XReadHelpManager.GetReadHelper(ClickObjType.News);
+            //DataTable dt = new DataTable();
+            //XReadHelperBase readHelper = BP.CCOA.XReadHelpManager.GetReadHelper(ClickObjType.News);
+            //string searchValue = Request.QueryString["searchvalue"];
+            //string createDate = xdpCreateDate.Text;
+            //IDictionary<string, object> dicFilter = null;
+            //if (!string.IsNullOrEmpty(createDate))
+            //{
+            //    dicFilter = new Dictionary<string, object>();
+            //    dicFilter.Add("SubStr(CreateTime,1,10)", createDate);
+            //}
+
+            //if (ddlCategory.SelectedValue == "read")
+            //{
+            //    dt = readHelper.QueryReaded(CurrentUser.No, columns, searchValue, m_PageIndex, m_PageSize, dicFilter);
+            //}
+            //else if (ddlCategory.SelectedValue == "unread")
+            //{
+            //    dt = readHelper.QueryNotReaded(CurrentUser.No, columns, searchValue, m_PageIndex, m_PageSize, dicFilter);
+            //}
+            //else
+            //{
+            //    dt = readHelper.QueryAll(CurrentUser.No, columns, searchValue, m_PageIndex, m_PageSize, dicFilter);
+            //}
+            //gridView.DataSource = dt;
+            //gridView.DataBind();
+
             string searchValue = Request.QueryString["searchvalue"];
-            string createDate = xdpCreateDate.Text;
-            IDictionary<string, object> dicFilter = null;
-            if (!string.IsNullOrEmpty(createDate))
+            DataTable OA_NewsTable = new DataTable();
+
+            string noticeTime = this.xdpCreateDate.Text;
+
+            IDictionary<string, object> whereConditions = new Dictionary<string, object>();
+
+            if (noticeTime != string.Empty)
             {
-                dicFilter = new Dictionary<string, object>();
-                dicFilter.Add("SubStr(CreateTime,1,10)", createDate);
+                whereConditions.Add("SUBSTR(" + OA_NewsAttr.CreateTime + ",1,10)", noticeTime);
             }
 
-            if (ddlCategory.SelectedValue == "read")
-            {
-                dt = readHelper.QueryReaded(CurrentUser.No, columns, searchValue, m_PageIndex, m_PageSize, dicFilter);
-            }
-            else if (ddlCategory.SelectedValue == "unread")
-            {
-                dt = readHelper.QueryNotReaded(CurrentUser.No, columns, searchValue, m_PageIndex, m_PageSize, dicFilter);
-            }
-            else
-            {
-                dt = readHelper.QueryAll(CurrentUser.No, columns, searchValue, m_PageIndex, m_PageSize, dicFilter);
-            }
-            gridView.DataSource = dt;
+            XReadHelperBase readHelper = XReadHelpManager.GetReadHelper(BP.CCOA.Enum.ClickObjType.News);
+
+            string userId = CurrentUser.No;
+            string type = this.ddlCategory.SelectedValue.ToString();
+            OA_NewsTable = readHelper.QueryByType(type, userId, columns, searchValue, m_PageIndex, m_PageSize, whereConditions);
+            gridView.DataSource = OA_NewsTable;
             gridView.DataBind();
         }
 

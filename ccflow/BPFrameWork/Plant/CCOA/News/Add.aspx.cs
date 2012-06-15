@@ -79,7 +79,7 @@ namespace Lizard.OA.Web.OA_News
             string Author = this.txtAuthor.Text;
             //int Clicks = int.Parse(this.txtClicks.Text);
             bool IsRead = false;
-            DateTime UpDT = DateTime.Now;
+            //DateTime UpDT = XTool.Now();
             string UpUser = BP.Web.WebUser.No;
             bool Status = true;
 
@@ -93,7 +93,7 @@ namespace Lizard.OA.Web.OA_News
             model.CreateTime = XTool.Now();
             model.Clicks = 0;
             model.IsRead = IsRead;
-            model.UpDT = UpDT;
+            model.UpDT = XTool.Now();
             model.UpUser = UpUser;
             model.Status = Status ? 1 : 0;
             model.Insert();

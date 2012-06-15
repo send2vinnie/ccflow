@@ -47,10 +47,10 @@ public class XEmailTool
     {
         switch (emailType)
         {
-            case XEmailType.InBox:
-            case XEmailType.RecycleBox:
-                this.m_Dict.Add(OA_EmailAttr.Addressee, loginUser);
-                break;
+            //case XEmailType.InBox:
+            //case XEmailType.RecycleBox:
+            //    this.m_Dict.Add(OA_EmailAttr.Addressee, loginUser);
+            //    break;
             case XEmailType.OutBox:
             case XEmailType.DraftBox:
                 this.m_Dict.Add(OA_EmailAttr.Addresser, loginUser);

@@ -5,7 +5,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title></title>
-    <script language="javascript" src="/js/CheckBox.js" type="text/javascript"></script>
     <script src="../../Comm/Scripts/jquery-1.6.2.min.js" type="text/javascript"></script>
     <script src="../../Comm/Scripts/miniui/miniui.js" type="text/javascript"></script>
     <script src="../../Comm/Scripts/kindeditor/kindeditor.js" type="text/javascript"></script>

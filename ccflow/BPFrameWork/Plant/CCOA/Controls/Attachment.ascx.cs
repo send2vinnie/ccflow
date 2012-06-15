@@ -25,7 +25,7 @@ public partial class CCOA_Controls_Attachment : System.Web.UI.UserControl
 
     private void FillAttachList(string type)
     {
-        type = type.ToUpper();
+        type = type.ToLower();
         string id = Request.QueryString["id"];
         AttachList = new List<OA_Attachment>();
         switch (type)

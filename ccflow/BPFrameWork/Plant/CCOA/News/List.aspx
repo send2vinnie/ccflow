@@ -10,6 +10,57 @@
     <link href="../Style/control.css" rel="stylesheet" type="text/css" />
     <link href="../Style/demo.css" rel="stylesheet" type="text/css" />
     <link href="../Style/main.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        function CheckAll() {
+            var frm = document.forms[0];
+            for (var i = 0; i < frm.elements.length; i++) {
+                var e = frm.elements[i];
+                if ((e.name != 'allbox') && (e.type == 'checkbox')) {
+                    e.checked = frm.allbox.checked;
+                    alert('ddd');
+                    //                    if (frm.allbox.checked) {
+                    //                        hL(e);
+                    //                    } 
+                    //                    else {
+                    //                        dL(e);
+                    //                    } 
+                }
+            }
+        }
+        //CheckBox选择项
+        function CCA(CB) {
+            var frm = document.forms[0];
+            if (CB.checked)
+                hL(CB);
+            else
+                dL(CB);
+
+            var TB = TO = 0;
+            for (var i = 0; i < frm.elements.length; i++) {
+                var e = frm.elements[i];
+                if ((e.name != 'allbox') && (e.type == 'checkbox')) {
+                    TB++;
+                    if (e.checked)
+                        TO++;
+                }
+            }
+            //frm.allbox.checked = (TO == TB) ? true : false;
+            //alert(TO);
+        }
+
+
+        function hL(E) {
+            while (E.tagName != "TR")
+            { E = E.parentElement; }
+            E.className = "H";
+        }
+
+        function dL(E) {
+            while (E.tagName != "TR")
+            { E = E.parentElement; }
+            E.className = "";
+        }
+    </script>
 </head>
 <body>
     <form runat="server">
@@ -17,14 +68,13 @@
         <uc1:MiniToolBar ID="MiniToolBar1" runat="server" PopAddUrl="News/Add.aspx" />
         <!--Search end-->
         <div class="subtoolbar">
-            发布日期
-            <lizard:XDatePicker ID="xdpCreateDate" runat="server" />
-            &nbsp;
             <lizard:XDropDownList ID="ddlCategory" runat="server" Width="100" CssClass="mini-combobox">
-                <asp:ListItem Text="未读新闻" Value="unread" />
-                <asp:ListItem Text="已读新闻" Value="read" />
-                <asp:ListItem Text="全部新闻" Value="all" />
+                <asp:ListItem Text="未读新闻" Value="1" />
+                <asp:ListItem Text="已读新闻" Value="2" />
+                <asp:ListItem Text="全部新闻" Value="3" />
             </lizard:XDropDownList>
+            &nbsp; 发布日期
+            <lizard:XDatePicker ID="xdpCreateDate" runat="server" />
             &nbsp;<lizard:XButton ID="btnOk" runat="server" Text="确定" OnClick="btnOk_Click" />
             &nbsp;<asp:LinkButton ID="lbtMarkReaded" runat="server" OnClick="lbtMarkReaded_Click">标记所有为已读</asp:LinkButton></div>
         <lizard:XGridView ID="gridView" runat="server" Width="100%" CellPadding="3" OnPageIndexChanging="gridView_PageIndexChanging"
@@ -48,8 +98,11 @@
                 </asp:TemplateField>
                 <asp:BoundField DataField="NewsSubTitle" HeaderText="副标题" SortExpression="NewsSubTitle"
                     ItemStyle-HorizontalAlign="Center" Visible="false" />
-                <asp:BoundField DataField="NewsType" HeaderText="新闻类型" SortExpression="NewsType"
-                    ItemStyle-HorizontalAlign="Center" />
+                <asp:TemplateField HeaderText="新闻类型" SortExpression="NewsType" ItemStyle-HorizontalAlign="Center">
+                    <ItemTemplate>
+                        <asp:Label ID="lblNoticeType" runat="server" Text='<%# XTool.GetCatelogyByCode(Eval("NewsType")) %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="NewsContent" HeaderText="新闻内容" SortExpression="NewsContent"
                     ItemStyle-HorizontalAlign="Center" Visible="false" />
                 <asp:BoundField DataField="Author" HeaderText="发布人" SortExpression="Author" ItemStyle-HorizontalAlign="Center" />
